@@ -1,0 +1,9 @@
+# Git 配置变更检查工具依赖
+
+# Git 操作不需要额外依赖，使用内置的 subprocess 模块
+
+# 如果需要使用 gitpython 库（可选）
+# gitpython==3.1.40
+
+# 已有的依赖
+PyGithub==2.1.1
