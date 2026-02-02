@@ -31,8 +31,8 @@ def parse_arguments() -> argparse.Namespace:
     
     parser.add_argument(
         "--base-branch",
-        default="main",
-        help="基准分支（默认: main）"
+        default="bugfix",
+        help="基准分支（默认: bugfix）"
     )
     
     parser.add_argument(

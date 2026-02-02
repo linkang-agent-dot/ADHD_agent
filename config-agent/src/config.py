@@ -15,8 +15,8 @@ class CheckConfig:
     # 目标检查目录
     target_dir: str = "fo/"
     
-    # 基准分支
-    base_branch: str = "main"
+    # 基准分支 - 已修改为 bugfix
+    base_branch: str = "bugfix"
     
     # 比较分支（None 表示当前分支）
     compare_branch: Optional[str] = None
