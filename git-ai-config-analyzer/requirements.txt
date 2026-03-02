@@ -1,0 +1,11 @@
+# Git AI 配置分析器 - 依赖项
+
+# AI 相关
+openai>=1.0.0
+
+# 环境变量管理
+python-dotenv>=1.0.0
+
+# 测试
+pytest>=7.0.0
+pytest-cov>=4.0.0

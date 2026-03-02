@@ -1,0 +1,231 @@
+{
+  "meta": {
+    "event_name": "2026春节",
+    "benchmark_event": "2025春节"
+  },
+  "metrics_trend": [
+    {
+      "event": "2025周年庆",
+      "revenue": 1668966.19,
+      "arpu": 273.83,
+      "pay_rate": 34.43
+    },
+    {
+      "event": "2025音乐节",
+      "revenue": 320158.61,
+      "arpu": 74.84,
+      "pay_rate": 27.43
+    },
+    {
+      "event": "2025万圣节",
+      "revenue": 613401.28,
+      "arpu": 144.43,
+      "pay_rate": 30.09
+    },
+    {
+      "event": "2025感恩节",
+      "revenue": 722558.47,
+      "arpu": 161.72,
+      "pay_rate": 32.48
+    },
+    {
+      "event": "2025圣诞节",
+      "revenue": 938756.6,
+      "arpu": 193.88,
+      "pay_rate": 33.05
+    },
+    {
+      "event": "2026春节",
+      "revenue": 890703.55,
+      "arpu": 198.42,
+      "pay_rate": 32.66
+    },
+    {
+      "event": "2025春节（对标）",
+      "revenue": 502022.91,
+      "arpu": 90.83,
+      "pay_rate": 26.1
+    }
+  ],
+  "module_trend": [
+    {
+      "event": "2025周年庆",
+      "appearance": 980112.0,
+      "minigame": 112213.45,
+      "hybrid": 576640.74
+    },
+    {
+      "event": "2025音乐节",
+      "appearance": 80025.0,
+      "minigame": 52778.9,
+      "hybrid": 187354.71
+    },
+    {
+      "event": "2025万圣节",
+      "appearance": 320913.0,
+      "minigame": 71658.63,
+      "hybrid": 220829.65
+    },
+    {
+      "event": "2025感恩节",
+      "appearance": 285651.0,
+      "minigame": 140663.85,
+      "hybrid": 296243.62
+    },
+    {
+      "event": "2025圣诞节",
+      "appearance": 266769.0,
+      "minigame": 276193.03,
+      "hybrid": 395794.57
+    },
+    {
+      "event": "2026春节",
+      "appearance": 412540.31,
+      "minigame": 303807.97,
+      "hybrid": 174355.27
+    },
+    {
+      "event": "2025春节（对标）",
+      "appearance": 351700.0,
+      "minigame": 0.0,
+      "hybrid": 150322.91
+    }
+  ],
+  "user_tier_trend": [
+    {
+      "event": "2026春节",
+      "super_r": 542.04,
+      "big_r": 121.44,
+      "mid_r": 24.95
+    },
+    {
+      "event": "2025圣诞节",
+      "super_r": 528.21,
+      "big_r": 134.31,
+      "mid_r": 35.14
+    },
+    {
+      "event": "2025春节（对标）",
+      "super_r": 311.1,
+      "big_r": 73.7,
+      "mid_r": 18.1
+    }
+  ],
+  "sub_activity_detail": [
+    {
+      "name": "限定皮肤礼包",
+      "type": "外显",
+      "revenue": 245000.0,
+      "status": "Keep",
+      "reason": "高转化率，用户反馈积极，连续3期TOP1"
+    },
+    {
+      "name": "春节拼图大作战",
+      "type": "小游戏",
+      "revenue": 180000.0,
+      "status": "Keep",
+      "reason": "新增玩法，参与率超预期"
+    },
+    {
+      "name": "年兽养成计划",
+      "type": "养成",
+      "revenue": 95000.0,
+      "status": "Optimize",
+      "reason": "养成周期过长导致中途流失率高"
+    },
+    {
+      "name": "新春抽奖转盘",
+      "type": "混合",
+      "revenue": 120000.0,
+      "status": "Keep",
+      "reason": "经典保留玩法，稳定贡献营收"
+    }
+  ],
+  "module_classification": [
+    {
+      "name": "大富翁",
+      "module": "外显",
+      "note": "行军皮肤套装等"
+    },
+    {
+      "name": "对对碰",
+      "module": "混合",
+      "note": ""
+    },
+    {
+      "name": "MJ8",
+      "module": "小游戏",
+      "note": ""
+    },
+    {
+      "name": "BP",
+      "module": "混合",
+      "note": ""
+    },
+    {
+      "name": "挖孔小游戏",
+      "module": "小游戏",
+      "note": ""
+    },
+    {
+      "name": "预购连锁",
+      "module": "混合",
+      "note": ""
+    },
+    {
+      "name": "BINGO",
+      "module": "混合",
+      "note": ""
+    },
+    {
+      "name": "挖矿",
+      "module": "小游戏",
+      "note": ""
+    },
+    {
+      "name": "7日",
+      "module": "混合",
+      "note": ""
+    },
+    {
+      "name": "行军表情、行军特效",
+      "module": "外显",
+      "note": ""
+    },
+    {
+      "name": "抢购",
+      "module": "养成",
+      "note": ""
+    },
+    {
+      "name": "掉落转付费",
+      "module": "混合",
+      "note": ""
+    },
+    {
+      "name": "聚宝盆",
+      "module": "混合",
+      "note": ""
+    },
+    {
+      "name": "钓鱼",
+      "module": "小游戏",
+      "note": ""
+    },
+    {
+      "name": "春节gacha",
+      "module": "外显",
+      "note": ""
+    },
+    {
+      "name": "付费率宝箱",
+      "module": "混合",
+      "note": ""
+    },
+    {
+      "name": "周卡",
+      "module": "混合",
+      "note": ""
+    }
+  ]
+}

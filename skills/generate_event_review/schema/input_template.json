@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Event Review Input Data",
+  "description": "节日总结自动生成所需的标准化输入数据模板。用户需填写以下 6 部分数据。",
+  "type": "object",
+  "required": ["meta", "metrics_trend", "module_trend", "user_tier_trend", "sub_activity_detail", "module_classification"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "description": "A. 基础信息 - 活动元数据",
+      "required": ["event_name", "benchmark_event"],
+      "properties": {
+        "event_name": {
+          "type": "string",
+          "description": "当期活动名称",
+          "examples": ["2026春节"]
+        },
+        "benchmark_event": {
+          "type": "string",
+          "description": "对标活动名称（通常为去年同期活动）",
+          "examples": ["2025春节"]
+        }
+      }
+    },
+    "metrics_trend": {
+      "type": "array",
+      "description": "B. 核心大盘趋势数据 - 用于生成图1（折线图）。要求：至少包含近6个月的数据点，最后一个数据点为对标活动。",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["event", "revenue", "arpu", "pay_rate"],
+        "properties": {
+          "event": {
+            "type": "string",
+            "description": "活动名称",
+            "examples": ["2025周年庆", "2025音乐节"]
+          },
+          "revenue": {
+            "type": "number",
+            "description": "总营收（单位：美元）"
+          },
+          "arpu": {
+            "type": "number",
+            "description": "每付费用户平均收入 ARPU（单位：美元）"
+          },
+          "pay_rate": {
+            "type": "number",
+            "description": "付费率（百分比，如 12.5 表示 12.5%）"
+          }
+        }
+      }
+    },
+    "module_trend": {
+      "type": "array",
+      "description": "C. 模块表现趋势数据 - 用于生成图2（堆叠面积图）。要求：时间节点需与大盘趋势对应。",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["event", "appearance", "minigame", "hybrid"],
+        "properties": {
+          "event": {
+            "type": "string",
+            "description": "活动名称"
+          },
+          "appearance": {
+            "type": "number",
+            "description": "外显类模块营收"
+          },
+          "minigame": {
+            "type": "number",
+            "description": "小游戏模块营收"
+          },
+          "hybrid": {
+            "type": "number",
+            "description": "混合/养成模块营收"
+          }
+        }
+      }
+    },
+    "user_tier_trend": {
+      "type": "array",
+      "description": "D. 用户分层趋势数据 - 用于生成图3（分组柱状图）。",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["event", "super_r", "big_r", "mid_r"],
+        "properties": {
+          "event": {
+            "type": "string",
+            "description": "活动名称"
+          },
+          "super_r": {
+            "type": "number",
+            "description": "超R用户 ARPU"
+          },
+          "big_r": {
+            "type": "number",
+            "description": "大R用户 ARPU"
+          },
+          "mid_r": {
+            "type": "number",
+            "description": "中R用户 ARPU"
+          }
+        }
+      }
+    },
+    "sub_activity_detail": {
+      "type": "array",
+      "description": "E. 当期子活动明细 - 用于生成诊断表。",
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "revenue", "status", "reason"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "子活动名称"
+          },
+          "type": {
+            "type": "string",
+            "description": "活动类型（如：外显、小游戏、养成、混合）"
+          },
+          "revenue": {
+            "type": "number",
+            "description": "该子活动营收"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Keep", "Optimize"],
+            "description": "诊断状态：Keep=保留, Optimize=待优化"
+          },
+          "reason": {
+            "type": "string",
+            "description": "诊断理由说明"
+          }
+        }
+      }
+    },
+    "module_classification": {
+      "type": "array",
+      "description": "F. 模块分类映射 - 定义每个子活动/玩法归属哪个营收模块，用于模块付费分析。必填。",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "module"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "子活动/玩法名称，需与 sub_activity_detail 中的 name 一致"
+          },
+          "module": {
+            "type": "string",
+            "enum": ["外显", "小游戏", "养成", "混合"],
+            "description": "所属模块分类"
+          },
+          "note": {
+            "type": "string",
+            "description": "备注说明（可选）"
+          }
+        }
+      }
+    }
+  }
+}

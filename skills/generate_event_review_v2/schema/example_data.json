@@ -1,0 +1,261 @@
+{
+  "meta": {
+    "event_name": "2026春节活动",
+    "event_type": "节日活动",
+    "event_start_date": "2026-01-25",
+    "event_end_date": "2026-02-08",
+    "change_description": "本期新增了烟花大作战玩法，调整了许愿池概率从1.5%提升至2.0%，新增限定皮肤兑换路径",
+    "benchmark_event": "2025春节活动"
+  },
+  "reach_conversion": {
+    "stages": [
+      {"stage": "推送触达", "users": 1000000, "note": "全服推送"},
+      {"stage": "弹窗展示", "users": 800000, "note": ""},
+      {"stage": "点击进入", "users": 350000, "note": ""},
+      {"stage": "活动参与", "users": 200000, "note": "至少完成1次任务"},
+      {"stage": "付费转化", "users": 50000, "note": "产生付费行为"}
+    ],
+    "comparison": {
+      "benchmark_event": "2025春节活动",
+      "stages": [
+        {"stage": "推送触达", "users": 950000},
+        {"stage": "弹窗展示", "users": 750000},
+        {"stage": "点击进入", "users": 300000},
+        {"stage": "活动参与", "users": 180000},
+        {"stage": "付费转化", "users": 42000}
+      ]
+    }
+  },
+  "behavior_data": {
+    "metrics": [
+      {"metric_name": "日均DAU", "current_value": 500000, "benchmark_value": 480000, "unit": "人"},
+      {"metric_name": "活动参与率", "current_value": 45.2, "benchmark_value": 42.0, "unit": "%"},
+      {"metric_name": "人均参与次数", "current_value": 8.5, "benchmark_value": 7.2, "unit": "次"},
+      {"metric_name": "平均参与时长", "current_value": 25.3, "benchmark_value": 22.1, "unit": "分钟"}
+    ],
+    "daily_trend": [
+      {"date": "2026-01-25", "dau": 520000, "participate_rate": 46.1, "avg_actions": 9.0},
+      {"date": "2026-01-26", "dau": 510000, "participate_rate": 45.5, "avg_actions": 8.8},
+      {"date": "2026-01-27", "dau": 505000, "participate_rate": 45.0, "avg_actions": 8.5},
+      {"date": "2026-01-28", "dau": 498000, "participate_rate": 44.8, "avg_actions": 8.3},
+      {"date": "2026-01-29", "dau": 490000, "participate_rate": 44.5, "avg_actions": 8.2},
+      {"date": "2026-01-30", "dau": 495000, "participate_rate": 45.0, "avg_actions": 8.4},
+      {"date": "2026-01-31", "dau": 510000, "participate_rate": 46.0, "avg_actions": 9.0},
+      {"date": "2026-02-01", "dau": 520000, "participate_rate": 46.5, "avg_actions": 9.2},
+      {"date": "2026-02-02", "dau": 350000, "participate_rate": 30.0, "avg_actions": 4.5},
+      {"date": "2026-02-03", "dau": 490000, "participate_rate": 44.0, "avg_actions": 8.0},
+      {"date": "2026-02-04", "dau": 485000, "participate_rate": 43.5, "avg_actions": 7.8},
+      {"date": "2026-02-05", "dau": 480000, "participate_rate": 43.0, "avg_actions": 7.5},
+      {"date": "2026-02-06", "dau": 475000, "participate_rate": 42.5, "avg_actions": 7.3},
+      {"date": "2026-02-07", "dau": 470000, "participate_rate": 42.0, "avg_actions": 7.0},
+      {"date": "2026-02-08", "dau": 500000, "participate_rate": 45.0, "avg_actions": 8.5}
+    ]
+  },
+  "payment_overview": {
+    "time_series": [
+      {"event": "2025-08活动", "revenue": 850000, "pay_rate": 11.2, "arpu": 45.6, "arppu": 120.3},
+      {"event": "2025-09活动", "revenue": 920000, "pay_rate": 12.0, "arpu": 48.2, "arppu": 125.8},
+      {"event": "2025-10活动", "revenue": 780000, "pay_rate": 10.5, "arpu": 40.1, "arppu": 110.5},
+      {"event": "2025-11活动", "revenue": 950000, "pay_rate": 12.5, "arpu": 50.0, "arppu": 130.2},
+      {"event": "2025-12活动", "revenue": 1020000, "pay_rate": 13.0, "arpu": 52.5, "arppu": 135.0},
+      {"event": "2026春节活动", "revenue": 1150000, "pay_rate": 14.2, "arpu": 58.0, "arppu": 142.5}
+    ],
+    "yoy_benchmark": {
+      "event": "2025春节活动",
+      "revenue": 800000,
+      "pay_rate": 10.5,
+      "arpu": 42.0,
+      "arppu": 115.0
+    }
+  },
+  "r_tier_payment": {
+    "tiers": ["超R", "大R", "中R", "小R", "非R"],
+    "time_series": [
+      {
+        "event": "2025-08活动",
+        "data": {
+          "超R": {"revenue": 300000, "pay_rate": 95.0, "arpu": 5000, "arppu": 5263},
+          "大R": {"revenue": 250000, "pay_rate": 80.0, "arpu": 1200, "arppu": 1500},
+          "中R": {"revenue": 180000, "pay_rate": 55.0, "arpu": 300, "arppu": 545},
+          "小R": {"revenue": 80000, "pay_rate": 25.0, "arpu": 50, "arppu": 200},
+          "非R": {"revenue": 40000, "pay_rate": 5.0, "arpu": 5, "arppu": 100}
+        }
+      },
+      {
+        "event": "2025-09活动",
+        "data": {
+          "超R": {"revenue": 320000, "pay_rate": 96.0, "arpu": 5200, "arppu": 5416},
+          "大R": {"revenue": 270000, "pay_rate": 82.0, "arpu": 1300, "arppu": 1585},
+          "中R": {"revenue": 195000, "pay_rate": 57.0, "arpu": 320, "arppu": 561},
+          "小R": {"revenue": 90000, "pay_rate": 27.0, "arpu": 55, "arppu": 203},
+          "非R": {"revenue": 45000, "pay_rate": 5.5, "arpu": 5.5, "arppu": 100}
+        }
+      },
+      {
+        "event": "2025-10活动",
+        "data": {
+          "超R": {"revenue": 280000, "pay_rate": 93.0, "arpu": 4800, "arppu": 5161},
+          "大R": {"revenue": 230000, "pay_rate": 78.0, "arpu": 1100, "arppu": 1410},
+          "中R": {"revenue": 160000, "pay_rate": 52.0, "arpu": 280, "arppu": 538},
+          "小R": {"revenue": 70000, "pay_rate": 22.0, "arpu": 42, "arppu": 190},
+          "非R": {"revenue": 40000, "pay_rate": 4.8, "arpu": 4.5, "arppu": 93}
+        }
+      },
+      {
+        "event": "2025-11活动",
+        "data": {
+          "超R": {"revenue": 340000, "pay_rate": 96.5, "arpu": 5500, "arppu": 5699},
+          "大R": {"revenue": 280000, "pay_rate": 83.0, "arpu": 1350, "arppu": 1626},
+          "中R": {"revenue": 200000, "pay_rate": 58.0, "arpu": 330, "arppu": 568},
+          "小R": {"revenue": 85000, "pay_rate": 26.0, "arpu": 52, "arppu": 200},
+          "非R": {"revenue": 45000, "pay_rate": 5.2, "arpu": 5.2, "arppu": 100}
+        }
+      },
+      {
+        "event": "2025-12活动",
+        "data": {
+          "超R": {"revenue": 360000, "pay_rate": 97.0, "arpu": 5800, "arppu": 5979},
+          "大R": {"revenue": 300000, "pay_rate": 85.0, "arpu": 1400, "arppu": 1647},
+          "中R": {"revenue": 215000, "pay_rate": 60.0, "arpu": 350, "arppu": 583},
+          "小R": {"revenue": 95000, "pay_rate": 28.0, "arpu": 58, "arppu": 207},
+          "非R": {"revenue": 50000, "pay_rate": 5.8, "arpu": 6, "arppu": 103}
+        }
+      },
+      {
+        "event": "2026春节活动",
+        "data": {
+          "超R": {"revenue": 400000, "pay_rate": 98.0, "arpu": 6200, "arppu": 6326},
+          "大R": {"revenue": 330000, "pay_rate": 87.0, "arpu": 1550, "arppu": 1781},
+          "中R": {"revenue": 240000, "pay_rate": 63.0, "arpu": 380, "arppu": 603},
+          "小R": {"revenue": 110000, "pay_rate": 30.0, "arpu": 65, "arppu": 216},
+          "非R": {"revenue": 70000, "pay_rate": 7.0, "arpu": 8, "arppu": 114}
+        }
+      }
+    ]
+  },
+  "payment_conversion": {
+    "current": {
+      "event": "2026春节活动",
+      "price_tiers": [
+        {"price": 6, "purchases": 50000, "payers": 45000},
+        {"price": 30, "purchases": 30000, "payers": 22000},
+        {"price": 68, "purchases": 18000, "payers": 12000},
+        {"price": 128, "purchases": 8000, "payers": 5000},
+        {"price": 328, "purchases": 3000, "payers": 1800},
+        {"price": 648, "purchases": 1500, "payers": 900},
+        {"price": 1288, "purchases": 500, "payers": 300},
+        {"price": 3288, "purchases": 100, "payers": 60}
+      ]
+    },
+    "comparison": {
+      "event": "2025春节活动",
+      "price_tiers": [
+        {"price": 6, "purchases": 48000, "payers": 43000},
+        {"price": 30, "purchases": 28000, "payers": 20000},
+        {"price": 68, "purchases": 16000, "payers": 11000},
+        {"price": 128, "purchases": 7500, "payers": 4500},
+        {"price": 328, "purchases": 2800, "payers": 1600},
+        {"price": 648, "purchases": 1200, "payers": 700}
+      ]
+    }
+  },
+  "core_reward": {
+    "items": [
+      {
+        "reward_name": "SSR角色碎片",
+        "expected_value": 100,
+        "actual_value": 95,
+        "unit": "个",
+        "expected_cost": 3280,
+        "actual_cost": 3450,
+        "cost_unit": "元"
+      },
+      {
+        "reward_name": "限定皮肤",
+        "expected_value": 1,
+        "actual_value": 1,
+        "unit": "件",
+        "expected_cost": 648,
+        "actual_cost": 680,
+        "cost_unit": "元"
+      },
+      {
+        "reward_name": "SR角色碎片",
+        "expected_value": 50,
+        "actual_value": 32,
+        "unit": "个",
+        "expected_cost": 1000,
+        "actual_cost": 1580,
+        "cost_unit": "元"
+      },
+      {
+        "reward_name": "传说武器",
+        "expected_value": 1,
+        "actual_value": 1,
+        "unit": "把",
+        "expected_cost": 2000,
+        "actual_cost": 2100,
+        "cost_unit": "元"
+      }
+    ]
+  },
+  "gift_packages": {
+    "packages": [
+      {
+        "package_name": "新春超值礼包",
+        "price": 128,
+        "revenue": 640000,
+        "payers": 5000,
+        "description": "含SSR碎片x10+金币x100000"
+      },
+      {
+        "package_name": "每日特惠礼包",
+        "price": 6,
+        "revenue": 300000,
+        "payers": 50000,
+        "description": "含体力x120+抽奖券x5"
+      },
+      {
+        "package_name": "限时豪华礼包",
+        "price": 648,
+        "revenue": 194400,
+        "payers": 300,
+        "description": "含SSR碎片x50+限定皮肤碎片x10"
+      },
+      {
+        "package_name": "新手回归礼包",
+        "price": 30,
+        "revenue": 90000,
+        "payers": 3000,
+        "description": "含金币x50000+体力x200"
+      },
+      {
+        "package_name": "钻石月卡",
+        "price": 68,
+        "revenue": 68000,
+        "payers": 1000,
+        "description": "30天每日领取钻石x100"
+      }
+    ],
+    "comparison_packages": [
+      {
+        "package_name": "去年新春超值礼包",
+        "price": 128,
+        "revenue": 580000,
+        "payers": 4500
+      },
+      {
+        "package_name": "去年每日特惠礼包",
+        "price": 6,
+        "revenue": 270000,
+        "payers": 45000
+      },
+      {
+        "package_name": "去年限时豪华礼包",
+        "price": 648,
+        "revenue": 162000,
+        "payers": 250
+      }
+    ]
+  }
+}

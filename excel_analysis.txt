@@ -1,0 +1,234 @@
+Sheet names: ['科技节集卡册数值需求', '卡包BP数值', '节日三合一礼包投放数值', '配置辅助', '竞品参考']
+
+--- Sheet: 科技节集卡册数值需求 ---
+Shape: (200, 17)
+First 10 rows:
+                 1、卡片定价 Unnamed: 1 Unnamed: 2 Unnamed: 3 Unnamed: 4 Unnamed: 5 Unnamed: 6 Unnamed: 7 Unnamed: 8 Unnamed: 9 Unnamed: 10 Unnamed: 11 Unnamed: 12 Unnamed: 13 Unnamed: 14 Unnamed: 15 Unnamed: 16
+0                   NaN        1星卡        2星卡        3星卡        4星卡        5星卡        自选卡        NaN        NaN        NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN
+1                  卡片定价         50        100        500       1500       5000      20000        NaN        NaN        NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN
+2                  卡片美刀       0.05        0.1        0.5          2          8         20        NaN        NaN        NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN
+3                  回收积分          5         10         50        200        800          -        NaN        NaN        NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN
+4                  获取积分         50        100        500       2000       8000      20000        NaN        NaN        NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN
+5                   NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN     自选箱价值CD  60分钟加速价值CD         NaN         NaN         NaN         NaN         NaN
+6                   NaN       9.99      19.99      29.99        NaN        NaN        NaN        NaN        NaN        NaN         250         100         NaN         NaN         NaN         NaN         NaN
+7                   NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN      自选箱价值$   60分钟加速价值$         NaN         NaN         NaN         NaN         NaN
+8  2、卡册预期数量&奖励投放&整体卡册投放        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN           1        0.45         NaN         NaN         NaN         NaN         NaN
+9                  卡册编号       卡册主题      总卡册数量        1星卡        2星卡        3星卡        4星卡        5星卡    特殊5星稀有卡     卡片CD价值       节日自选箱    60分钟训练加速       特殊奖励1       特殊奖励2       奖励价值$      奖励CD价值      CD ROI
+
+Basic Audit Info:
+<class 'pandas.DataFrame'>
+RangeIndex: 200 entries, 0 to 199
+Data columns (total 17 columns):
+ #   Column       Non-Null Count  Dtype 
+---  ------       --------------  ----- 
+ 0   1、卡片定价       77 non-null     object
+ 1   Unnamed: 1   79 non-null     object
+ 2   Unnamed: 2   82 non-null     object
+ 3   Unnamed: 3   62 non-null     object
+ 4   Unnamed: 4   62 non-null     object
+ 5   Unnamed: 5   64 non-null     object
+ 6   Unnamed: 6   63 non-null     object
+ 7   Unnamed: 7   57 non-null     object
+ 8   Unnamed: 8   23 non-null     object
+ 9   Unnamed: 9   24 non-null     object
+ 10  Unnamed: 10  25 non-null     object
+ 11  Unnamed: 11  19 non-null     object
+ 12  Unnamed: 12  9 non-null      object
+ 13  Unnamed: 13  14 non-null     object
+ 14  Unnamed: 14  21 non-null     object
+ 15  Unnamed: 15  10 non-null     object
+ 16  Unnamed: 16  10 non-null     object
+dtypes: object(17)
+memory usage: 26.7+ KB
+
+
+Describe:
+       1、卡片定价  Unnamed: 1 Unnamed: 2 Unnamed: 3 Unnamed: 4 Unnamed: 5 Unnamed: 6 Unnamed: 7 Unnamed: 8  Unnamed: 9  Unnamed: 10  Unnamed: 11 Unnamed: 12 Unnamed: 13  Unnamed: 14  Unnamed: 15 Unnamed: 16
+count      77          79         82         62         62         64         63         57         23          24           25           19           9          14        21.00           10          10
+unique     48          38         33         35         34         40         41         37         21          22           17           12           9          14        20.00            9          10
+top      自选卡包           1          -          -          -          -          -          -     3（排行榜）           2            1           10       特殊奖励1       特殊奖励2         5.25         1250      CD ROI
+freq        6          17         10         16         14         11         11          9          2           2            4            3           1           1         2.00            2           1
+
+--- Sheet: 卡包BP数值 ---
+Shape: (50, 21)
+First 10 rows:
+             BP数值 Unnamed: 1 Unnamed: 2 Unnamed: 3 Unnamed: 4 Unnamed: 5 Unnamed: 6 Unnamed: 7 Unnamed: 8 Unnamed: 9 Unnamed: 10 Unnamed: 11 Unnamed: 12 Unnamed: 13 Unnamed: 14                            Unnamed: 15                              Unnamed: 16                            Unnamed: 17                            Unnamed: 18                                                                  Unnamed: 19                                                                    Unnamed: 20
+0  纯活跃获得经验，不算成本价值        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN         NaN         NaN                                    NaN                                      NaN                                    NaN                                    NaN                                                                          NaN                                                                            NaN
+1           满级20级        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN         NaN         NaN                                    NaN                                      NaN                                    NaN                                    NaN                                                                          NaN                                                                            NaN
+2         售价：4.99        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN         NaN         NaN                                    NaN                                      NaN                                    NaN                                    NaN                                                                          NaN                                                                            NaN
+3            付费价格       4.99        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN         NaN         NaN                                    NaN                                      NaN                                    NaN                                    NaN                                                                          NaN                                                                            NaN
+4          付费奖励价值         23        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN         NaN         NaN                                    NaN                                      NaN                                    NaN                                    NaN                                                                          NaN                                                                            NaN
+5           付费ROI   4.609218        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN         NaN         NaN                                    NaN                                      NaN                                    NaN                                    NaN                                                                          NaN                                                                            NaN
+6             NaN        NaN        NaN       免费奖励        NaN        NaN       付费奖励        NaN        NaN        NaN         NaN         NaN         NaN         NaN         NaN                                    NaN                                      NaN                                    NaN                                    NaN                                                                          NaN                                                                            NaN
+7              等级       需要积分       累积积分         奖励        NaN         数量       付费成本        奖励1       道具ID         数量        付费额度         奖励2        道具ID          数量        付费额度        {"typ":"item","id":xxx,"val":1}                                      NaN        {"typ":"item","id":xxx,"val":1}        {"typ":"item","id":xxx,"val":1}                                                                          NaN                                                                            NaN
+8               1        100        100       白色卡包  111110002          1       0.05       白色卡包  111110002          1        0.05        白色卡包   111110002           1        0.05  {"typ":"item","id":111110002,"val":1}  [{"typ":"item","id":111110002,"val":1}]  {"typ":"item","id":111110002,"val":1}  {"typ":"item","id":111110002,"val":1}  {"typ":"item","id":111110002,"val":1},{"typ":"item","id":111110002,"val":1}  [{"typ":"item","id":111110002,"val":1},{"typ":"item","id":111110002,"val":1}]
+9               2        100        200   60分钟训练加速   11111156          1       0.45       白色卡包  111110002          1        0.05      60分钟加速    11111105           1        0.45   {"typ":"item","id":11111156,"val":1}   [{"typ":"item","id":11111156,"val":1}]  {"typ":"item","id":111110002,"val":1}   {"typ":"item","id":11111105,"val":1}   {"typ":"item","id":111110002,"val":1},{"typ":"item","id":11111105,"val":1}   [{"typ":"item","id":111110002,"val":1},{"typ":"item","id":11111105,"val":1}]
+
+Basic Audit Info:
+<class 'pandas.DataFrame'>
+RangeIndex: 50 entries, 0 to 49
+Data columns (total 21 columns):
+ #   Column       Non-Null Count  Dtype 
+---  ------       --------------  ----- 
+ 0   BP数值         45 non-null     object
+ 1   Unnamed: 1   41 non-null     object
+ 2   Unnamed: 2   32 non-null     object
+ 3   Unnamed: 3   33 non-null     object
+ 4   Unnamed: 4   32 non-null     object
+ 5   Unnamed: 5   21 non-null     object
+ 6   Unnamed: 6   23 non-null     object
+ 7   Unnamed: 7   21 non-null     str   
+ 8   Unnamed: 8   21 non-null     object
+ 9   Unnamed: 9   21 non-null     object
+ 10  Unnamed: 10  23 non-null     object
+ 11  Unnamed: 11  21 non-null     str   
+ 12  Unnamed: 12  21 non-null     object
+ 13  Unnamed: 13  21 non-null     object
+ 14  Unnamed: 14  22 non-null     object
+ 15  Unnamed: 15  21 non-null     str   
+ 16  Unnamed: 16  20 non-null     str   
+ 17  Unnamed: 17  21 non-null     str   
+ 18  Unnamed: 18  21 non-null     str   
+ 19  Unnamed: 19  20 non-null     str   
+ 20  Unnamed: 20  20 non-null     str   
+dtypes: object(13), str(8)
+memory usage: 8.3+ KB
+
+
+Describe:
+              BP数值  Unnamed: 1  Unnamed: 2 Unnamed: 3  Unnamed: 4  Unnamed: 5  Unnamed: 6 Unnamed: 7  Unnamed: 8  Unnamed: 9  Unnamed: 10 Unnamed: 11  Unnamed: 12  Unnamed: 13  Unnamed: 14                           Unnamed: 15                             Unnamed: 16                            Unnamed: 17                           Unnamed: 18                                                                 Unnamed: 19                                                                   Unnamed: 20
+count           45          41          32         33          32          21       23.00         21          21          21         23.0          21           21           21        22.00                                    21                                      20                                     21                                    21                                                                          20                                                                            20
+unique          41          19          28         16          11           2        7.00          6           6           2          8.0           5            5            2         6.00                                     5                                       4                                      6                                     5                                                                          12                                                                            12
+top     获取x颗节日卡册星星         100           0   60分钟训练加速    11111156           1        0.45       绿色卡包   111110003           1          0.1      60分钟加速     11111105            1         0.45  {"typ":"item","id":11111156,"val":1}  [{"typ":"item","id":11111156,"val":1}]  {"typ":"item","id":111110003,"val":1}  {"typ":"item","id":11111105,"val":1}  {"typ":"item","id":111110003,"val":1},{"typ":"item","id":11111105,"val":1}  [{"typ":"item","id":111110003,"val":1},{"typ":"item","id":11111105,"val":1}]
+freq             4          20           2         10          10          20       10.00         10          10          20         10.0          10           10           20        10.00                                    10                                      10                                     10                                    10                                                                           5                                                                             5
+
+--- Sheet: 节日三合一礼包投放数值 ---
+Shape: (85, 13)
+First 10 rows:
+  节日三合一礼包                                                                                                              Unnamed: 1 Unnamed: 2 Unnamed: 3 Unnamed: 4 Unnamed: 5 Unnamed: 6 Unnamed: 7 Unnamed: 8 Unnamed: 9 Unnamed: 10 Unnamed: 11 Unnamed: 12
+0    卡册数值  https://docs.google.com/spreadsheets/d/1Ia-eYU96M6JqB94Dp_JwNE7mICuNhosfOdHLwARHrnU/edit?gid=1486790828#gid=1486790828        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN
+1     NaN                                                                                                                     NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN
+2     NaN                                                                                                                 实际价值（$）        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN
+3    白色卡包                                                                                                                  0.0691        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN
+4    绿色卡包                                                                                                                  0.1952        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN
+5    蓝色卡包                                                                                                                  0.7716        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN
+6    紫色卡包                                                                                                                  2.8882        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN
+7    白金卡包                                                                                                                  8.1374        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN
+8    专属卡包                                                                                                                    1.84        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN
+9    自选卡包                                                                                                                      15        NaN        NaN        NaN        NaN        NaN        NaN        NaN        NaN         NaN         NaN         NaN
+
+Basic Audit Info:
+<class 'pandas.DataFrame'>
+RangeIndex: 85 entries, 0 to 84
+Data columns (total 13 columns):
+ #   Column       Non-Null Count  Dtype 
+---  ------       --------------  ----- 
+ 0   节日三合一礼包      57 non-null     object
+ 1   Unnamed: 1   50 non-null     object
+ 2   Unnamed: 2   29 non-null     object
+ 3   Unnamed: 3   28 non-null     object
+ 4   Unnamed: 4   9 non-null      object
+ 5   Unnamed: 5   9 non-null      object
+ 6   Unnamed: 6   7 non-null      object
+ 7   Unnamed: 7   4 non-null      object
+ 8   Unnamed: 8   4 non-null      object
+ 9   Unnamed: 9   2 non-null      object
+ 10  Unnamed: 10  4 non-null      object
+ 11  Unnamed: 11  4 non-null      object
+ 12  Unnamed: 12  4 non-null      object
+dtypes: object(13)
+memory usage: 8.8+ KB
+
+
+Describe:
+        节日三合一礼包  Unnamed: 1 Unnamed: 2 Unnamed: 3 Unnamed: 4 Unnamed: 5 Unnamed: 6  Unnamed: 7  Unnamed: 8 Unnamed: 9 Unnamed: 10 Unnamed: 11  Unnamed: 12
+count     57.00          50         29         28          9          9          7           4           4          2           4           4            4
+unique    39.00          25         15         15          9          9          7           3           3          2           4           4            2
+top        4.99           1       3星新卡      3星自选卡       美刀价值        ROI     卡包/星星量           0           1       3星特殊        CD定价        美元定价           90
+freq       4.00           8          6          6          1          1          1           2           2          1           1           1            3
+
+--- Sheet: 配置辅助 ---
+Shape: (13, 14)
+First 10 rows:
+      配置相关 Unnamed: 1 Unnamed: 2 Unnamed: 3 Unnamed: 4 Unnamed: 5 Unnamed: 6 Unnamed: 7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Unnamed: 8                                                              Unnamed: 9                                                             Unnamed: 10                                                            Unnamed: 11                                                          Unnamed: 12 Unnamed: 13
+0     初始概率        NaN        NaN        NaN        NaN        NaN        NaN        NaN                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     NaN                                                                     NaN                                                                     NaN                                                                    NaN                                                                  NaN         NaN
+1      NaN       卡片数量       卡片保底       1星概率       2星概率       3星概率       4星概率       5星概率                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  {"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":9000}   {"typ":"card_star","id":2,"num":1,"args":[{"id":60011004}],"wgt":800}   {"typ":"card_star","id":3,"num":1,"args":[{"id":60011004}],"wgt":100}                                                                    NaN                                                                  NaN         NaN
+2     白色卡包          1          -        0.9       0.08       0.01     0.0049     0.0001                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {"drop": {"typ":"single_all","num":1,"args":[{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":9000},{"typ":"card_star","id":2,"num":1,"args":[{"id":60011004}],"wgt":800},{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004}],"wgt":100},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004}],"wgt":49},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004}],"wgt":1}]}]}}  {"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":8400}  {"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":1400}                                                                    NaN                                                                  NaN         NaN
+3     绿色卡包          1    至少1*2星+          -       0.84       0.14     0.0198     0.0002                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {"drop": {"typ":"single_all","num":1,"args":[{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":2,"num":1,"args":[{"id":60011004}],"wgt":8400},{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004}],"wgt":1400},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004}],"wgt":198},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004}],"wgt":2}]}]}}  {"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":8400}  {"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":1400}   {"typ":"card_star","id":4,"num":1,"args":[{"id":60011004}],"wgt":49}  {"typ":"card_star","id":5,"num":1,"args":[{"id":60011004}],"wgt":1}        ,,,,
+4     蓝色卡包          2    至少1*3星+       0.75       0.21      0.035     0.0048     0.0002   {"drop": {"typ":"single_all","num":1,"args":[{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":9000},{"typ":"card_star","id":2,"num":1,"args":[{"id":60011004}],"wgt":800},{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004}],"wgt":100},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004}],"wgt":49},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004}],"wgt":1}]},{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004}],"wgt":8750},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004}],"wgt":1240},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004}],"wgt":10}]},{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":9000},{"typ":"card_star","id":2,"num":1,"args":[{"id":60011004}],"wgt":800},{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004}],"wgt":100},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004}],"wgt":49},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004}],"wgt":1}]}]}}                                                                     NaN                                                                     NaN  {"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":198}  {"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":2}         NaN
+5     紫色卡包          3    至少1*4星+        0.3       0.36       0.26       0.07       0.01                                                                        {"drop": {"typ":"single_all","num":1,"args":[{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":9000},{"typ":"card_star","id":2,"num":1,"args":[{"id":60011004}],"wgt":800},{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004}],"wgt":100},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004}],"wgt":49},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004}],"wgt":1}]},{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004}],"wgt":8750},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004}],"wgt":1250}]},{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":9000},{"typ":"card_star","id":2,"num":1,"args":[{"id":60011004}],"wgt":800},{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004}],"wgt":100},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004}],"wgt":49},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004}],"wgt":1}]}]}}                                                                     NaN                                                                     NaN  {"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":198}  {"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":2}         NaN
+6     金色卡包          3     至少1*5星        0.3       0.36       0.26       0.07       0.01                                                                                                                                               {"drop": {"typ":"single_all","num":1,"args":[{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":9000},{"typ":"card_star","id":2,"num":1,"args":[{"id":60011004}],"wgt":800},{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004}],"wgt":100},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004}],"wgt":49},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004}],"wgt":1}]},{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004}],"wgt":1250}]},{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":9000},{"typ":"card_star","id":2,"num":1,"args":[{"id":60011004}],"wgt":800},{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004}],"wgt":100},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004}],"wgt":49},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004}],"wgt":1}]}]}}                                                                     NaN                                                                     NaN                                                                    NaN                                                                  NaN         NaN
+7  彩色卡包-挖孔          2      全部3星+          -          -        0.8       0.18       0.02                                                                                                                                                                                                                                                                                                                                                                                                                                               {"drop": {"typ":"single_all","num":1,"args":[{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004},{"id":60021306}],"wgt":8000},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004},{"id":60021306}],"wgt":1800},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004},{"id":60021306}],"wgt":200}]},{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004},{"id":60021306}],"wgt":8000},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004},{"id":60021306}],"wgt":1800},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004},{"id":60021306}],"wgt":200}]}]}}                                                                     NaN                                                                     NaN                                                                    NaN                                                                  NaN         NaN
+8  彩色卡包-挖矿          2      全部3星+          -          -        0.8       0.18       0.02                                                                                                                                                                                                                                                                                                                                                                                                                                               {"drop": {"typ":"single_all","num":1,"args":[{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004},{"id":60021305}],"wgt":8000},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004},{"id":60021305}],"wgt":1800},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004},{"id":60021305}],"wgt":200}]},{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004},{"id":60021305}],"wgt":8000},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004},{"id":60021305}],"wgt":1800},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004},{"id":60021305}],"wgt":200}]}]}}                                                                     NaN                                                                     NaN                                                                    NaN                                                                  NaN         NaN
+9  彩色卡包-弹珠          2      全部3星+          -          -        0.8       0.18       0.02                                                                                                                                                                                                                                                                                                                                                                                                                                               {"drop": {"typ":"single_all","num":1,"args":[{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004},{"id":60021308}],"wgt":8000},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004},{"id":60021308}],"wgt":1800},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004},{"id":60021308}],"wgt":200}]},{"typ":"single_random","num":1,"args":[{"typ":"card_star","id":3,"num":1,"args":[{"id":60011004},{"id":60021308}],"wgt":8000},{"typ":"card_star","id":4,"num":1,"args":[{"id":60011004},{"id":60021308}],"wgt":1800},{"typ":"card_star","id":5,"num":1,"args":[{"id":60011004},{"id":60021308}],"wgt":200}]}]}}                                                                     NaN                                                                     NaN                                                                    NaN                                                                  NaN         NaN
+
+Basic Audit Info:
+<class 'pandas.DataFrame'>
+RangeIndex: 13 entries, 0 to 12
+Data columns (total 14 columns):
+ #   Column       Non-Null Count  Dtype 
+---  ------       --------------  ----- 
+ 0   配置相关         11 non-null     str   
+ 1   Unnamed: 1   11 non-null     object
+ 2   Unnamed: 2   11 non-null     str   
+ 3   Unnamed: 3   11 non-null     object
+ 4   Unnamed: 4   11 non-null     object
+ 5   Unnamed: 5   11 non-null     object
+ 6   Unnamed: 6   11 non-null     object
+ 7   Unnamed: 7   11 non-null     object
+ 8   Unnamed: 8   11 non-null     str   
+ 9   Unnamed: 9   3 non-null      str   
+ 10  Unnamed: 10  5 non-null      str   
+ 11  Unnamed: 11  3 non-null      str   
+ 12  Unnamed: 12  3 non-null      str   
+ 13  Unnamed: 13  1 non-null      str   
+dtypes: object(6), str(8)
+memory usage: 1.6+ KB
+
+
+Describe:
+        配置相关  Unnamed: 1 Unnamed: 2 Unnamed: 3 Unnamed: 4  Unnamed: 5  Unnamed: 6  Unnamed: 7                                                              Unnamed: 8                                                              Unnamed: 9                                                             Unnamed: 10                                                            Unnamed: 11                                                          Unnamed: 12 Unnamed: 13
+count     11          11         11         11         11        11.0       11.00       11.00                                                                      11                                                                       3                                                                       5                                                                      3                                                                    3           1
+unique    11           4          7          5          6         6.0        6.00        5.00                                                                      11                                                                       2                                                                       4                                                                      2                                                                    2           1
+top     初始概率           2      全部3星+          -          -         0.8        0.18        0.02  {"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":9000}  {"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":8400}  {"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":1400}  {"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":198}  {"typ":"card_star","id":1,"num":1,"args":[{"id":60011004}],"wgt":2}        ,,,,
+freq       1           6          5          6          5         5.0        5.00        5.00                                                                       1                                                                       2                                                                       2                                                                      2                                                                    2           1
+
+--- Sheet: 竞品参考 ---
+Shape: (3, 11)
+First 10 rows:
+   Unnamed: 0  Unnamed: 1  Unnamed: 2  Unnamed: 3  Unnamed: 4  Unnamed: 5   参考数值  Unnamed: 7  Unnamed: 8          P2数值  Unnamed: 10
+0         NaN         NaN         NaN         NaN         NaN         NaN     金头        20.0         NaN  BUFF：训练速度+2%            1
+1         NaN         NaN         NaN         NaN         NaN         NaN  8小时加速        30.0         NaN         节日头像框            1
+2         NaN         NaN         NaN         NaN         NaN         NaN    NaN         NaN         NaN         节日自选箱           10
+
+Basic Audit Info:
+<class 'pandas.DataFrame'>
+RangeIndex: 3 entries, 0 to 2
+Data columns (total 11 columns):
+ #   Column       Non-Null Count  Dtype  
+---  ------       --------------  -----  
+ 0   Unnamed: 0   0 non-null      float64
+ 1   Unnamed: 1   0 non-null      float64
+ 2   Unnamed: 2   0 non-null      float64
+ 3   Unnamed: 3   0 non-null      float64
+ 4   Unnamed: 4   0 non-null      float64
+ 5   Unnamed: 5   0 non-null      float64
+ 6   参考数值         2 non-null      str    
+ 7   Unnamed: 7   2 non-null      float64
+ 8   Unnamed: 8   0 non-null      float64
+ 9   P2数值         3 non-null      str    
+ 10  Unnamed: 10  3 non-null      int64  
+dtypes: float64(8), int64(1), str(2)
+memory usage: 396.0 bytes
+
+
+Describe:
+       Unnamed: 0  Unnamed: 1  Unnamed: 2  Unnamed: 3  Unnamed: 4  Unnamed: 5  Unnamed: 7  Unnamed: 8  Unnamed: 10
+count         0.0         0.0         0.0         0.0         0.0         0.0    2.000000         0.0     3.000000
+mean          NaN         NaN         NaN         NaN         NaN         NaN   25.000000         NaN     4.000000
+std           NaN         NaN         NaN         NaN         NaN         NaN    7.071068         NaN     5.196152
+min           NaN         NaN         NaN         NaN         NaN         NaN   20.000000         NaN     1.000000
+25%           NaN         NaN         NaN         NaN         NaN         NaN   22.500000         NaN     1.000000
+50%           NaN         NaN         NaN         NaN         NaN         NaN   25.000000         NaN     1.000000
+75%           NaN         NaN         NaN         NaN         NaN         NaN   27.500000         NaN     5.500000
+max           NaN         NaN         NaN         NaN         NaN         NaN   30.000000         NaN    10.000000

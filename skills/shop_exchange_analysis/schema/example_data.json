@@ -1,0 +1,16 @@
+{
+  "activity_name": "推币机",
+  "items": [
+    {"item_name": "万能英雄碎片-橙色", "exchange_users": 72, "exchange_count": 1139, "avg_exchanges_per_user": 15.82, "avg_token_cost": 9491.67, "token_price": 600, "purchase_limit": 150, "saturation_rate": 10.55},
+    {"item_name": "英雄升星-橙色-大", "exchange_users": 28, "exchange_count": 216, "avg_exchanges_per_user": 7.71, "avg_token_cost": 9257.14, "token_price": 1200, "purchase_limit": 50, "saturation_rate": 15.43},
+    {"item_name": "高级奖池抽奖券", "exchange_users": 23, "exchange_count": 155, "avg_exchanges_per_user": 6.74, "avg_token_cost": 1010.87, "token_price": 150, "purchase_limit": 200, "saturation_rate": 3.37},
+    {"item_name": "军备图纸", "exchange_users": 79, "exchange_count": 520, "avg_exchanges_per_user": 6.58, "avg_token_cost": 987.34, "token_price": 150, "purchase_limit": 1000, "saturation_rate": 0.66},
+    {"item_name": "收藏品-橙色升星道具-传说", "exchange_users": 185, "exchange_count": 1525, "avg_exchanges_per_user": 8.24, "avg_token_cost": 618.24, "token_price": 75, "purchase_limit": 200, "saturation_rate": 4.12},
+    {"item_name": "装备材料-纳米材料", "exchange_users": 344, "exchange_count": 6624, "avg_exchanges_per_user": 19.26, "avg_token_cost": 770.23, "token_price": 40, "purchase_limit": 2000, "saturation_rate": 0.96},
+    {"item_name": "机能核心", "exchange_users": 33, "exchange_count": 969, "avg_exchanges_per_user": 29.36, "avg_token_cost": 2936.36, "token_price": 100, "purchase_limit": 500, "saturation_rate": 5.87},
+    {"item_name": "军备零件箱", "exchange_users": 336, "exchange_count": 4722, "avg_exchanges_per_user": 14.05, "avg_token_cost": 210.80, "token_price": 15, "purchase_limit": 5000, "saturation_rate": 0.28},
+    {"item_name": "2小时加速", "exchange_users": 87, "exchange_count": 4471, "avg_exchanges_per_user": 51.39, "avg_token_cost": 5139.08, "token_price": 100, "purchase_limit": 999, "saturation_rate": 5.14},
+    {"item_name": "60分钟训练加速", "exchange_users": 50, "exchange_count": 1203, "avg_exchanges_per_user": 24.06, "avg_token_cost": 1443.60, "token_price": 60, "purchase_limit": 9999, "saturation_rate": 0.24},
+    {"item_name": "高级资源自选宝箱10w", "exchange_users": 48, "exchange_count": 2215, "avg_exchanges_per_user": 46.15, "avg_token_cost": 2768.75, "token_price": 60, "purchase_limit": 9999, "saturation_rate": 0.46}
+  ]
+}

@@ -1,0 +1,40 @@
+你是一个专业的游戏配置分析专家。请分析以下配置文件的变更，并提供详细的分析报告。
+
+## 变更信息
+
+**文件路径**: {file_path}
+**表名**: {table_name}
+**变更类型**: {change_type}
+**相关提交**: {commits}
+
+## 变更内容
+
+### 新增内容
+```
+{added_lines}
+```
+
+### 删除内容
+```
+{removed_lines}
+```
+
+### 上下文
+```
+{context_lines}
+```
+
+## 请提供以下分析（以 JSON 格式输出）
+
+{{
+    "summary": "用一句话描述这个变更",
+    "purpose": "分析这个变更的目的",
+    "change_category": "功能新增/参数调整/Bug修复/结构重构/废弃移除 中的一个",
+    "is_new_feature_config": true或false,
+    "impact_assessment": "这个变更可能影响哪些系统或功能",
+    "sync_required": true或false,
+    "review_priority": "高/中/低",
+    "related_systems": ["可能影响的系统列表"]
+}}
+
+请只输出 JSON，不要有其他内容。

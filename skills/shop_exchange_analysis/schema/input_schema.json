@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ShopExchangeData",
+  "description": "兑换商店数据分析输入格式",
+  "type": "object",
+  "required": ["items"],
+  "properties": {
+    "activity_name": {
+      "type": "string",
+      "description": "活动名称，用于报告标题",
+      "default": "活动商店"
+    },
+    "shop_name": {
+      "type": "string",
+      "description": "商店名称（如有多个商店可区分）",
+      "default": ""
+    },
+    "items": {
+      "type": "array",
+      "description": "道具数据列表",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["item_name", "exchange_users", "exchange_count", "token_price", "purchase_limit"],
+        "properties": {
+          "item_name": {
+            "type": "string",
+            "description": "道具名称"
+          },
+          "exchange_users": {
+            "type": "integer",
+            "description": "兑换人次",
+            "minimum": 0
+          },
+          "exchange_count": {
+            "type": "integer",
+            "description": "兑换次数",
+            "minimum": 0
+          },
+          "avg_exchanges_per_user": {
+            "type": "number",
+            "description": "人均兑换次数（可自动计算：exchange_count / exchange_users）",
+            "minimum": 0
+          },
+          "avg_token_cost": {
+            "type": "number",
+            "description": "平均消耗代币（可自动计算：avg_exchanges_per_user × token_price）",
+            "minimum": 0
+          },
+          "token_price": {
+            "type": "integer",
+            "description": "代币单价",
+            "minimum": 0
+          },
+          "purchase_limit": {
+            "type": "integer",
+            "description": "限购数量",
+            "minimum": 1
+          },
+          "saturation_rate": {
+            "type": "number",
+            "description": "兑换饱和度 %（可自动计算：avg_exchanges_per_user / purchase_limit × 100）",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "category": {
+            "type": "string",
+            "description": "道具类别（留空则自动分类）",
+            "enum": ["主城皮肤", "英雄养成", "军备养成", "装备养成", "加速道具", "收藏品", "核心材料", "资源/抽奖", "其他"]
+          }
+        }
+      }
+    },
+    "category_rules": {
+      "type": "object",
+      "description": "自定义分类规则，key=类别名，value=关键词列表",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "description": "分析阈值配置",
+      "properties": {
+        "high_saturation": { "type": "number", "default": 10 },
+        "med_saturation": { "type": "number", "default": 5 },
+        "low_saturation": { "type": "number", "default": 1 },
+        "skin_price_threshold": { "type": "number", "default": 50000 }
+      }
+    }
+  }
+}

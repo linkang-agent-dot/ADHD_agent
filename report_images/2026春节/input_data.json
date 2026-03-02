@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "event_name": "2026春节",
+    "benchmark_event": "2025春节"
+  },
+  "metrics_trend": [
+    {"event": "2025周年庆", "revenue": 1668966.19, "arpu": 273.83, "pay_rate": 34.43},
+    {"event": "2025音乐节", "revenue": 320158.61, "arpu": 74.84, "pay_rate": 27.43},
+    {"event": "2025万圣节", "revenue": 613401.28, "arpu": 144.43, "pay_rate": 30.09},
+    {"event": "2025感恩节", "revenue": 722558.47, "arpu": 161.72, "pay_rate": 32.48},
+    {"event": "2025圣诞节", "revenue": 938756.60, "arpu": 193.88, "pay_rate": 33.05},
+    {"event": "2026春节", "revenue": 890703.55, "arpu": 198.42, "pay_rate": 32.66},
+    {"event": "2025春节", "revenue": 502022.91, "arpu": 90.83, "pay_rate": 26.10}
+  ],
+  "module_trend": [
+    {"event": "2025周年庆", "appearance": 980112, "minigame": 112213.45, "hybrid": 576640.74},
+    {"event": "2025音乐节", "appearance": 80025, "minigame": 52778.9, "hybrid": 187354.71},
+    {"event": "2025万圣节", "appearance": 320913, "minigame": 71658.63, "hybrid": 220829.65},
+    {"event": "2025感恩节", "appearance": 285651, "minigame": 140663.85, "hybrid": 296243.62},
+    {"event": "2025圣诞节", "appearance": 266769, "minigame": 276193.03, "hybrid": 395794.57},
+    {"event": "2026春节", "appearance": 412540.31, "minigame": 303807.97, "hybrid": 174355.27},
+    {"event": "2025春节", "appearance": 351700, "minigame": 0, "hybrid": 150322.91}
+  ],
+  "user_tier_trend": [
+    {"event": "2026春节", "super_r": 542.04, "big_r": 121.44, "mid_r": 24.95},
+    {"event": "2025圣诞节", "super_r": 528.21, "big_r": 134.31, "mid_r": 35.14},
+    {"event": "2025春节", "super_r": 311.1, "big_r": 73.7, "mid_r": 18.1}
+  ],
+  "sub_activity_detail": [
+    {"name": "行军皮肤套装", "type": "外显", "revenue": 278858, "status": "Keep", "reason": "无套装加持下依然大卖($27.8W)，美术/数值成功，维持高品质输出"},
+    {"name": "挖孔小游戏", "type": "小游戏", "revenue": 139588, "status": "Keep", "reason": "连续两期MVP($13.9W)，契合节日长在线时长，建议常态化每1-2月复刻"},
+    {"name": "钓鱼小游戏", "type": "小游戏", "revenue": 89134, "status": "Keep", "reason": "新增玩法惊喜表现($8.9W)，操作简单适合碎片时间，作为大节日第二玩法固定"},
+    {"name": "主城皮肤GACHA", "type": "外显", "revenue": 110983, "status": "Keep", "reason": "稳定贡献$11W，纯本体抽奖付费效果持平"},
+    {"name": "MJ8小游戏", "type": "小游戏", "revenue": 63457, "status": "Optimize", "reason": "低于挖孔和钓鱼($6.3W)，机制吸引力不足，需优化玩法深度"},
+    {"name": "养成抢购礼包", "type": "养成", "revenue": 58976, "status": "Optimize", "reason": "玩家注意力被小游戏吸走($5.9W)，直接买数值意愿低，建议整合进小游戏奖池"},
+    {"name": "通行证BP", "type": "混合", "revenue": 53264, "status": "Optimize", "reason": "同比下滑($5.3W vs去年$5.8W)，节日追求即时满足，长周期转化低，建议推7日冲刺版"},
+    {"name": "贬值皮肤", "type": "外显", "revenue": 35000, "status": "Optimize", "reason": "炒冷饭在春节吸引力弱($3.5W)，仅占本体30%，建议放入小游戏高级奖池"}
+  ],
+  "module_classification": [
+    {"name": "行军皮肤套装", "module": "外显", "note": "无套装加持"},
+    {"name": "挖孔小游戏", "module": "小游戏", "note": "连续两期MVP"},
+    {"name": "钓鱼小游戏", "module": "小游戏", "note": "新增玩法"},
+    {"name": "主城皮肤GACHA", "module": "外显", "note": "纯本体抽奖"},
+    {"name": "MJ8小游戏", "module": "小游戏", "note": "机制吸引力不足"},
+    {"name": "养成抢购礼包", "module": "养成", "note": "直接买数值"},
+    {"name": "通行证BP", "module": "混合", "note": "长周期付费"},
+    {"name": "贬值皮肤", "module": "外显", "note": "炒冷饭"}
+  ]
+}

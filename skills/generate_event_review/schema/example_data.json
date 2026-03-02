@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "event_name": "2026春节",
+    "benchmark_event": "2025春节"
+  },
+  "metrics_trend": [
+    {"event": "2025周年庆", "revenue": 1668966, "arpu": 273.83, "pay_rate": 15.2},
+    {"event": "2025音乐节", "revenue": 320158, "arpu": 74.84, "pay_rate": 8.1},
+    {"event": "2025万圣节", "revenue": 613401, "arpu": 144.43, "pay_rate": 10.5},
+    {"event": "2025感恩节", "revenue": 722558, "arpu": 161.72, "pay_rate": 11.3},
+    {"event": "2025圣诞节", "revenue": 938756, "arpu": 193.88, "pay_rate": 12.8},
+    {"event": "2026春节", "revenue": 890703, "arpu": 198.42, "pay_rate": 13.1},
+    {"event": "2025春节", "revenue": 502022, "arpu": 90.83, "pay_rate": 9.6}
+  ],
+  "module_trend": [
+    {"event": "2025周年庆", "appearance": 980112, "minigame": 112213, "hybrid": 429597},
+    {"event": "2025音乐节", "appearance": 80025, "minigame": 52778, "hybrid": 130443},
+    {"event": "2025万圣节", "appearance": 320913, "minigame": 71658, "hybrid": 233413},
+    {"event": "2025感恩节", "appearance": 285651, "minigame": 82368, "hybrid": 285651},
+    {"event": "2025圣诞节", "appearance": 266769, "minigame": 276193, "hybrid": 307486},
+    {"event": "2026春节", "appearance": 412540, "minigame": 303807, "hybrid": 162700}
+  ],
+  "user_tier_trend": [
+    {"event": "2026春节", "super_r": 542.04, "big_r": 121.44, "mid_r": 24.95},
+    {"event": "2025圣诞节", "super_r": 528.21, "big_r": 134.31, "mid_r": 35.14},
+    {"event": "2025春节", "super_r": 311.10, "big_r": 73.70, "mid_r": 18.10}
+  ],
+  "sub_activity_detail": [
+    {"name": "限定皮肤礼包", "type": "外显", "revenue": 245000, "status": "Keep", "reason": "高转化率，用户反馈积极，连续3期TOP1"},
+    {"name": "春节拼图大作战", "type": "小游戏", "revenue": 180000, "status": "Keep", "reason": "新增玩法，参与率超预期，ARPU贡献显著"},
+    {"name": "年兽养成计划", "type": "养成", "revenue": 95000, "status": "Optimize", "reason": "养成周期过长导致中途流失率高，需缩短反馈循环"},
+    {"name": "新春抽奖转盘", "type": "混合", "revenue": 120000, "status": "Keep", "reason": "经典保留玩法，稳定贡献营收"},
+    {"name": "红包雨限时挑战", "type": "小游戏", "revenue": 45000, "status": "Optimize", "reason": "奖励感知弱，参与率低于预期，需优化奖励梯度"},
+    {"name": "春联DIY工坊", "type": "外显", "revenue": 30000, "status": "Optimize", "reason": "素材库更新不足，用户创作热情不高"}
+  ],
+  "module_classification": [
+    {"name": "限定皮肤礼包", "module": "外显", "note": "高转化外显"},
+    {"name": "春节拼图大作战", "module": "小游戏", "note": "新增互动玩法"},
+    {"name": "年兽养成计划", "module": "养成", "note": "长周期养成"},
+    {"name": "新春抽奖转盘", "module": "混合", "note": "经典保留玩法"},
+    {"name": "红包雨限时挑战", "module": "小游戏", "note": "限时挑战"},
+    {"name": "春联DIY工坊", "module": "外显", "note": "UGC外显"}
+  ]
+}

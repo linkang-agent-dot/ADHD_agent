@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "event_name": "2025圣诞节",
+    "benchmark_event": "2024圣诞节"
+  },
+  "metrics_trend": [
+    {"event": "2025登月节", "revenue": 343079, "arpu": 78.56, "pay_rate": 19.45},
+    {"event": "2025周年庆", "revenue": 1668966, "arpu": 273.83, "pay_rate": 34.43},
+    {"event": "2025音乐节", "revenue": 320159, "arpu": 74.84, "pay_rate": 27.43},
+    {"event": "2025万圣节", "revenue": 613401, "arpu": 144.43, "pay_rate": 30.09},
+    {"event": "2025感恩节", "revenue": 722558, "arpu": 161.72, "pay_rate": 32.48},
+    {"event": "2025圣诞节", "revenue": 938757, "arpu": 193.88, "pay_rate": 33.05},
+    {"event": "2024圣诞节", "revenue": 535520, "arpu": 85.93, "pay_rate": 28.26}
+  ],
+  "module_trend": [
+    {"event": "2025登月节", "appearance": 156367, "minigame": 0, "hybrid": 174360},
+    {"event": "2025周年庆", "appearance": 980112, "minigame": 0, "hybrid": 529852},
+    {"event": "2025音乐节", "appearance": 80025, "minigame": 0, "hybrid": 210469},
+    {"event": "2025万圣节", "appearance": 320913, "minigame": 0, "hybrid": 319715},
+    {"event": "2025感恩节", "appearance": 285651, "minigame": 0, "hybrid": 432436},
+    {"event": "2025圣诞节", "appearance": 266769, "minigame": 276193, "hybrid": 377640}
+  ],
+  "user_tier_trend": [
+    {"event": "2025圣诞节", "super_r": 528.21, "big_r": 134.31, "mid_r": 35.14},
+    {"event": "2025感恩节", "super_r": 435.99, "big_r": 98.63, "mid_r": 23.57},
+    {"event": "2024圣诞节", "super_r": 327.29, "big_r": 83.23, "mid_r": 20.03}
+  ],
+  "sub_activity_detail": [
+    {"name": "主城皮肤GACHA", "type": "外显", "revenue": 169117, "status": "Keep", "reason": "纯本体抽奖付费效果尚可，部分付费路径转化到挖孔小游戏中，整体未衰减"},
+    {"name": "挖孔小游戏", "type": "小游戏", "revenue": 139043, "status": "Keep", "reason": "新增小游戏效果优秀(13.9W刀)，已落地持续上线"},
+    {"name": "斗士皮肤", "type": "外显", "revenue": 83460, "status": "Optimize", "reason": "付费及格(8W)但不及预期，皮肤吸引力低于机甲(付费占比45% vs 机甲70%)，制作成本更高；100刀后转化弱于不放回抽奖"},
+    {"name": "MJ8小游戏", "type": "小游戏", "revenue": 67897, "status": "Optimize", "reason": "不及预期，后续持续跟进优化玩法机制"},
+    {"name": "大富翁", "type": "小游戏", "revenue": 54425, "status": "Optimize", "reason": "有衰减趋势(周年庆12W→深海节4.9W→圣诞5.4W)，需新增玩法体验(奖励关、格子升级)"},
+    {"name": "通行证BP", "type": "混合", "revenue": 52449, "status": "Keep", "reason": "稳定贡献5.2W刀营收"},
+    {"name": "补付费活动(买三赠一+养成转盘)", "type": "养成", "revenue": 70000, "status": "Keep", "reason": "效果好各约3.5W刀，后续可持续跟进优化投放，随时根据流水补付费"},
+    {"name": "聚宝盆形式", "type": "混合", "revenue": 27691, "status": "Optimize", "reason": "付费效果偏弱，需用其他老形式迭代投放小游戏道具"},
+    {"name": "行军皮肤", "type": "外显", "revenue": 21109, "status": "Optimize", "reason": "效果一般2.1W刀，对比周年庆20.9W和复活节12.2W差距明显，需重构投放形式"}
+  ]
+}

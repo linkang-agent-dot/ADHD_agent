@@ -1,0 +1,7020 @@
+{
+  "meta": {
+    "event_name": "2026春节活动",
+    "event_type": "节日活动",
+    "event_start_date": "2026-01-12 00:00:00",
+    "event_end_date": "2026-02-03 00:00:00",
+    "change_description": "本期新增了步数倍率道具，即原来走1步，如果有X2 BUFF则算2步",
+    "benchmark_event": "2025春节活动、2025年圣诞节"
+  },
+  "reach_conversion": {
+    "stages": [
+      {
+        "stage": "点击进入",
+        "users": 20493.0,
+        "note": ""
+      },
+      {
+        "stage": "活动参与",
+        "users": 18564.0,
+        "note": "至少完成1次任务"
+      },
+      {
+        "stage": "付费转化",
+        "users": 2890.0,
+        "note": "产生付费行为"
+      }
+    ]
+  },
+  "behavior_data": {
+    "metrics": [
+      {
+        "metric_name": "使用抽奖道具数量",
+        "current_value": 18564.0,
+        "unit": "次",
+        "benchmark_value": 0
+      },
+      {
+        "metric_name": "春节骰子点数+1-30分钟-使用数量",
+        "current_value": 6654.0,
+        "unit": "次",
+        "benchmark_value": 0
+      },
+      {
+        "metric_name": "春节骰子点数X2-5分钟-使用数量",
+        "current_value": 897.0,
+        "unit": "次",
+        "benchmark_value": 0
+      },
+      {
+        "metric_name": "春节骰子点数X3-1分钟-使用数量",
+        "current_value": 211.0,
+        "unit": "次",
+        "benchmark_value": 0
+      },
+      {
+        "metric_name": "春节骰子点数+2-5分钟-使用数量",
+        "current_value": 3411.0,
+        "unit": "次",
+        "benchmark_value": 0
+      },
+      {
+        "metric_name": "春节骰子点数+2-10分钟-使用数量",
+        "current_value": 3306.0,
+        "unit": "次",
+        "benchmark_value": 0
+      },
+      {
+        "metric_name": "春节骰子点数+1-10分钟-使用数量",
+        "current_value": 16961.0,
+        "unit": "次",
+        "benchmark_value": 0
+      },
+      {
+        "metric_name": "春节骰子点数X2-10分钟-使用数量",
+        "current_value": 527.0,
+        "unit": "次",
+        "benchmark_value": 0
+      },
+      {
+        "metric_name": "春节骰子点数X3-3分钟-使用数量",
+        "current_value": 221.0,
+        "unit": "次",
+        "benchmark_value": 0
+      },
+      {
+        "metric_name": "春节骰子点数X3-5分钟-使用数量",
+        "current_value": 212.0,
+        "unit": "次",
+        "benchmark_value": 0
+      },
+      {
+        "metric_name": "春节骰子点数X3-10分钟-使用数量",
+        "current_value": 46.0,
+        "unit": "次",
+        "benchmark_value": 0
+      }
+    ]
+  },
+  "payment_overview": {
+    "time_series": [
+      {
+        "event": "2026春节",
+        "revenue": 102639.64,
+        "pay_rate": 0.1032,
+        "arpu": 7.468,
+        "arppu": 72.383
+      },
+      {
+        "event": "登月节",
+        "revenue": 206269.82,
+        "pay_rate": 0.071,
+        "arpu": 8.576,
+        "arppu": 120.838
+      },
+      {
+        "event": "周年庆",
+        "revenue": 285354.23,
+        "pay_rate": 0.0777,
+        "arpu": 10.432,
+        "arppu": 134.221
+      },
+      {
+        "event": "沙滩节",
+        "revenue": 165157.9,
+        "pay_rate": 0.057,
+        "arpu": 5.674,
+        "arppu": 99.553
+      },
+      {
+        "event": "端午节",
+        "revenue": 166821.3,
+        "pay_rate": 0.0445,
+        "arpu": 5.079,
+        "arppu": 114.183
+      },
+      {
+        "event": "拓荒节",
+        "revenue": 98834.0,
+        "pay_rate": 0.0305,
+        "arpu": 3.01,
+        "arppu": 98.653
+      },
+      {
+        "event": "科技节",
+        "revenue": 195466.0,
+        "pay_rate": 0.0539,
+        "arpu": 5.948,
+        "arppu": 110.246
+      },
+      {
+        "event": "复活节",
+        "revenue": 186615.0,
+        "pay_rate": 0.0368,
+        "arpu": 5.647,
+        "arppu": 153.467
+      },
+      {
+        "event": "情人节",
+        "revenue": 106505.0,
+        "pay_rate": 0.0305,
+        "arpu": 3.25,
+        "arppu": 106.399
+      }
+    ],
+    "yoy_benchmarks": [
+      {
+        "event": "2025春节",
+        "revenue": 151275.33,
+        "pay_rate": 0.0699,
+        "arpu": 7.181,
+        "arppu": 102.699
+      }
+    ],
+    "yoy_benchmark": {
+      "event": "2025春节",
+      "revenue": 151275.33,
+      "pay_rate": 0.0699,
+      "arpu": 7.181,
+      "arppu": 102.699
+    }
+  },
+  "r_tier_payment": {
+    "tiers": [
+      "超R",
+      "大R",
+      "中R"
+    ],
+    "time_series": [
+      {
+        "event": "2026春节",
+        "data": {
+          "超R": {
+            "revenue": 69576.97,
+            "pay_rate": 0.367,
+            "arpu": 61.682,
+            "arppu": 168.06
+          },
+          "大R": {
+            "revenue": 24350.27,
+            "pay_rate": 0.2568,
+            "arpu": 17.865,
+            "arppu": 69.572
+          },
+          "中R": {
+            "revenue": 7879.08,
+            "pay_rate": 0.1302,
+            "arpu": 1.94,
+            "arppu": 14.894
+          }
+        }
+      },
+      {
+        "event": "2025登月节",
+        "data": {
+          "超R": {
+            "revenue": 128668.04,
+            "pay_rate": 0.4974,
+            "arpu": 164.959,
+            "arppu": 331.619
+          },
+          "大R": {
+            "revenue": 41284.02,
+            "pay_rate": 0.3295,
+            "arpu": 31.635,
+            "arppu": 96.009
+          },
+          "中R": {
+            "revenue": 33929.43,
+            "pay_rate": 0.1255,
+            "arpu": 5.68,
+            "arppu": 45.239
+          }
+        }
+      },
+      {
+        "event": "2025周年庆",
+        "data": {
+          "超R": {
+            "revenue": 179641.08,
+            "pay_rate": 0.5751,
+            "arpu": 228.551,
+            "arppu": 397.436
+          },
+          "大R": {
+            "revenue": 55040.57,
+            "pay_rate": 0.4228,
+            "arpu": 40.831,
+            "arppu": 96.562
+          },
+          "中R": {
+            "revenue": 45994.72,
+            "pay_rate": 0.1498,
+            "arpu": 7.131,
+            "arppu": 47.614
+          }
+        }
+      },
+      {
+        "event": "2025沙滩节",
+        "data": {
+          "超R": {
+            "revenue": 106177.02,
+            "pay_rate": 0.4543,
+            "arpu": 136.65,
+            "arppu": 300.785
+          },
+          "大R": {
+            "revenue": 34601.06,
+            "pay_rate": 0.2991,
+            "arpu": 25.183,
+            "arppu": 84.187
+          },
+          "中R": {
+            "revenue": 22961.75,
+            "pay_rate": 0.1072,
+            "arpu": 3.363,
+            "arppu": 31.369
+          }
+        }
+      },
+      {
+        "event": "2025端午节",
+        "data": {
+          "超R": {
+            "revenue": 89929.96,
+            "pay_rate": 0.4372,
+            "arpu": 121.363,
+            "arppu": 277.562
+          },
+          "大R": {
+            "revenue": 46739.26,
+            "pay_rate": 0.2673,
+            "arpu": 34.042,
+            "arppu": 127.355
+          },
+          "中R": {
+            "revenue": 27993.51,
+            "pay_rate": 0.0884,
+            "arpu": 3.779,
+            "arppu": 42.738
+          }
+        }
+      },
+      {
+        "event": "2025拓荒节",
+        "data": {
+          "超R": {
+            "revenue": 71490.38,
+            "pay_rate": 0.3563,
+            "arpu": 96.478,
+            "arppu": 270.797
+          },
+          "大R": {
+            "revenue": 17007.69,
+            "pay_rate": 0.1952,
+            "arpu": 12.387,
+            "arppu": 63.462
+          },
+          "中R": {
+            "revenue": 10027.82,
+            "pay_rate": 0.0572,
+            "arpu": 1.354,
+            "arppu": 23.651
+          }
+        }
+      },
+      {
+        "event": "2025科技节",
+        "data": {
+          "超R": {
+            "revenue": 123936.34,
+            "pay_rate": 0.4837,
+            "arpu": 175.796,
+            "arppu": 363.45
+          },
+          "大R": {
+            "revenue": 37765.52,
+            "pay_rate": 0.3134,
+            "arpu": 28.246,
+            "arppu": 90.133
+          },
+          "中R": {
+            "revenue": 32121.63,
+            "pay_rate": 0.1152,
+            "arpu": 4.313,
+            "arppu": 37.438
+          }
+        }
+      },
+      {
+        "event": "2025复活节",
+        "data": {
+          "超R": {
+            "revenue": 113914.94,
+            "pay_rate": 0.4492,
+            "arpu": 175.254,
+            "arppu": 390.12
+          },
+          "大R": {
+            "revenue": 47557.58,
+            "pay_rate": 0.2619,
+            "arpu": 36.415,
+            "arppu": 139.057
+          },
+          "中R": {
+            "revenue": 24199.19,
+            "pay_rate": 0.0691,
+            "arpu": 3.23,
+            "arppu": 46.717
+          }
+        }
+      },
+      {
+        "event": "2025情人节",
+        "data": {
+          "超R": {
+            "revenue": 68672.2,
+            "pay_rate": 0.4,
+            "arpu": 114.454,
+            "arppu": 286.134
+          },
+          "大R": {
+            "revenue": 23167.23,
+            "pay_rate": 0.2129,
+            "arpu": 18.683,
+            "arppu": 87.755
+          },
+          "中R": {
+            "revenue": 13257.09,
+            "pay_rate": 0.0602,
+            "arpu": 1.825,
+            "arppu": 30.337
+          }
+        }
+      }
+    ]
+  },
+  "payment_conversion": {
+    "current": {
+      "event": "",
+      "price_tiers": [
+        {
+          "price": 1.99,
+          "purchases": 402.0,
+          "payers": 402.0
+        },
+        {
+          "price": 4.99,
+          "purchases": 61.0,
+          "payers": 61.0
+        },
+        {
+          "price": 6.98,
+          "purchases": 311.0,
+          "payers": 311.0
+        },
+        {
+          "price": 9.98,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 9.99,
+          "purchases": 26.0,
+          "payers": 26.0
+        },
+        {
+          "price": 11.97,
+          "purchases": 20.0,
+          "payers": 20.0
+        },
+        {
+          "price": 11.98,
+          "purchases": 16.0,
+          "payers": 16.0
+        },
+        {
+          "price": 14.98,
+          "purchases": 8.0,
+          "payers": 8.0
+        },
+        {
+          "price": 16.96,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 16.97,
+          "purchases": 77.0,
+          "payers": 77.0
+        },
+        {
+          "price": 19.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 19.98,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 19.99,
+          "purchases": 53.0,
+          "payers": 53.0
+        },
+        {
+          "price": 21.96,
+          "purchases": 9.0,
+          "payers": 9.0
+        },
+        {
+          "price": 21.98,
+          "purchases": 18.0,
+          "payers": 18.0
+        },
+        {
+          "price": 24.98,
+          "purchases": 6.0,
+          "payers": 6.0
+        },
+        {
+          "price": 26.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 26.97,
+          "purchases": 32.0,
+          "payers": 32.0
+        },
+        {
+          "price": 29.98,
+          "purchases": 8.0,
+          "payers": 8.0
+        },
+        {
+          "price": 29.99,
+          "purchases": 6.0,
+          "payers": 6.0
+        },
+        {
+          "price": 31.95,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 31.96,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 31.97,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 31.98,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 34.97,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 36.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 36.96,
+          "purchases": 39.0,
+          "payers": 39.0
+        },
+        {
+          "price": 36.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 39.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 39.98,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 41.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 41.95,
+          "purchases": 8.0,
+          "payers": 8.0
+        },
+        {
+          "price": 41.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 41.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 44.97,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 46.94,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 46.95,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 46.96,
+          "purchases": 8.0,
+          "payers": 8.0
+        },
+        {
+          "price": 49.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 49.97,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 49.98,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 49.99,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 51.94,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 51.95,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 51.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 56.95,
+          "purchases": 9.0,
+          "payers": 9.0
+        },
+        {
+          "price": 59.97,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 61.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 64.96,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 64.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 66.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 66.95,
+          "purchases": 22.0,
+          "payers": 22.0
+        },
+        {
+          "price": 69.97,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 69.98,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 71.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 71.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 74.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 76.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 76.94,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 76.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 76.96,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 79.98,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 81.93,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 81.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 84.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 84.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 86.94,
+          "purchases": 9.0,
+          "payers": 9.0
+        },
+        {
+          "price": 86.95,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 89.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 91.93,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 96.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 96.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 99.98,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 99.99,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 101.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 101.98,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 104.98,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 106.92,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 106.93,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 106.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 111.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 116.94,
+          "purchases": 5.0,
+          "payers": 5.0
+        },
+        {
+          "price": 119.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 121.91,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 121.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 126.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 129.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 131.91,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 131.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 136.93,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 136.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 146.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 149.96,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 149.98,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 151.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 156.91,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 156.92,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 156.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 156.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 156.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 159.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 166.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 166.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 166.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 166.94,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 166.95,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 169.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 169.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 169.97,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 176.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 176.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 179.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 184.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 186.92,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 186.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 191.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 191.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 196.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 196.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 196.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 201.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 206.85,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 206.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 209.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 211.87,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 211.88,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 216.93,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 221.88,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 231.83,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 236.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 239.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 241.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 256.87,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 256.88,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 259.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 266.88,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 266.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 269.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 271.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 274.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 276.77,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 276.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 279.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 286.91,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 291.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 296.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 299.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 306.9,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 311.82,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 314.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 316.92,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 321.88,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 324.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 329.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 336.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 349.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 354.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 366.85,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 369.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 386.9,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 399.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 411.88,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 411.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 419.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 426.88,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 436.73,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 439.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 456.88,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 456.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 456.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 466.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 469.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 476.78,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 499.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 499.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 506.85,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 529.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 566.89,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 569.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 641.77,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 659.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 686.87,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 736.86,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 746.83,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 746.85,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 766.87,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 786.71,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 901.81,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 956.8,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 961.79,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 976.82,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1226.79,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1396.69,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1521.7,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1549.82,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1676.71,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1766.7,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1784.77,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1796.59,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1806.74,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 1846.66,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1886.59,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1886.75,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2166.62,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2216.72,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2236.65,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2541.45,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2666.63,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 4881.25,
+          "purchases": 1.0,
+          "payers": 1.0
+        }
+      ]
+    },
+    "comparisons": [
+      {
+        "event": "2025春节",
+        "price_tiers": [
+          {
+            "price": 4.99,
+            "purchases": 177.0,
+            "payers": 177.0
+          },
+          {
+            "price": 9.98,
+            "purchases": 9.0,
+            "payers": 9.0
+          },
+          {
+            "price": 9.99,
+            "purchases": 51.0,
+            "payers": 51.0
+          },
+          {
+            "price": 14.98,
+            "purchases": 22.0,
+            "payers": 22.0
+          },
+          {
+            "price": 19.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 19.97,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 19.98,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 19.99,
+            "purchases": 407.0,
+            "payers": 407.0
+          },
+          {
+            "price": 24.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 24.96,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 24.97,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 24.98,
+            "purchases": 87.0,
+            "payers": 87.0
+          },
+          {
+            "price": 29.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 29.96,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 29.97,
+            "purchases": 6.0,
+            "payers": 6.0
+          },
+          {
+            "price": 29.98,
+            "purchases": 39.0,
+            "payers": 39.0
+          },
+          {
+            "price": 34.95,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 34.97,
+            "purchases": 27.0,
+            "payers": 27.0
+          },
+          {
+            "price": 39.96,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 39.98,
+            "purchases": 106.0,
+            "payers": 106.0
+          },
+          {
+            "price": 44.94,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 44.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 44.96,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 44.97,
+            "purchases": 23.0,
+            "payers": 23.0
+          },
+          {
+            "price": 49.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 49.95,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 49.96,
+            "purchases": 7.0,
+            "payers": 7.0
+          },
+          {
+            "price": 49.97,
+            "purchases": 8.0,
+            "payers": 8.0
+          },
+          {
+            "price": 49.99,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 54.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 54.95,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 54.96,
+            "purchases": 10.0,
+            "payers": 10.0
+          },
+          {
+            "price": 54.98,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 59.95,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 59.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 59.97,
+            "purchases": 33.0,
+            "payers": 33.0
+          },
+          {
+            "price": 64.94,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 64.95,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 64.96,
+            "purchases": 7.0,
+            "payers": 7.0
+          },
+          {
+            "price": 64.97,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 69.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 69.95,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 69.96,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 69.98,
+            "purchases": 19.0,
+            "payers": 19.0
+          },
+          {
+            "price": 74.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 74.95,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 74.97,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 79.94,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 79.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 79.96,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 79.97,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 84.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 84.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 84.95,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 84.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 89.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 89.97,
+            "purchases": 22.0,
+            "payers": 22.0
+          },
+          {
+            "price": 94.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 94.94,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 94.96,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 99.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 99.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 99.94,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 99.95,
+            "purchases": 17.0,
+            "payers": 17.0
+          },
+          {
+            "price": 99.96,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 99.99,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 104.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 104.94,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 104.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 104.98,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 109.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 109.94,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 109.95,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 109.96,
+            "purchases": 6.0,
+            "payers": 6.0
+          },
+          {
+            "price": 109.98,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 114.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 119.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 119.94,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 119.95,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 119.97,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 119.98,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 124.94,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 124.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 124.97,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 129.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 129.95,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 129.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 134.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 134.95,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 134.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 139.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 139.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 139.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 144.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 144.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 149.94,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 149.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 149.98,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 154.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 154.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 154.94,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 159.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 159.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 159.95,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 159.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 164.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 169.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 169.93,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 169.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 169.97,
+            "purchases": 16.0,
+            "payers": 16.0
+          },
+          {
+            "price": 174.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 174.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 179.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 179.96,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 184.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 184.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 189.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 189.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 189.96,
+            "purchases": 12.0,
+            "payers": 12.0
+          },
+          {
+            "price": 194.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 199.9,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 199.93,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 199.95,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 199.97,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 199.98,
+            "purchases": 7.0,
+            "payers": 7.0
+          },
+          {
+            "price": 204.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 204.94,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 209.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 209.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 209.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 209.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 209.95,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 209.97,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 214.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 214.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 219.87,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 219.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 219.92,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 219.94,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 219.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 219.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 224.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 224.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 224.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 229.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 229.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 229.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 234.92,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 234.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 239.89,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 239.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 239.95,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 244.82,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 244.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 244.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 244.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 249.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 249.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 249.94,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 254.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 254.93,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 259.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 264.82,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 269.85,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 269.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 269.96,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 274.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 274.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 274.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 279.93,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 289.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 294.86,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 299.97,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 309.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 309.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 319.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 319.96,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 329.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 334.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 334.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 339.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 344.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 359.85,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 359.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 359.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 369.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 374.76,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 374.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 384.86,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 389.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 399.74,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 399.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 399.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 404.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 424.76,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 424.9,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 444.83,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 444.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 449.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 454.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 459.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 469.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 504.86,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 529.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 534.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 539.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 549.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 549.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 549.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 564.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 569.59,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 569.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 574.86,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 589.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 599.88,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 614.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 659.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 664.83,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 689.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 709.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 739.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 754.83,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 824.81,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 839.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 899.91,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 929.82,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 939.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 1084.77,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 1159.74,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 1269.8,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 1319.85,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 1549.72,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 1869.67,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 1959.61,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 1984.53,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2024.59,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2044.63,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2049.66,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2104.58,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2104.64,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2234.65,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2274.54,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2324.58,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2374.58,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2399.55,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2429.64,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2439.6,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2829.53,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 5019.49,
+            "purchases": 1.0,
+            "payers": 1.0
+          }
+        ]
+      },
+      {
+        "event": "2025圣诞节",
+        "price_tiers": [
+          {
+            "price": 4.99,
+            "purchases": 303.0,
+            "payers": 303.0
+          },
+          {
+            "price": 9.98,
+            "purchases": 56.0,
+            "payers": 56.0
+          },
+          {
+            "price": 9.99,
+            "purchases": 43.0,
+            "payers": 43.0
+          },
+          {
+            "price": 14.97,
+            "purchases": 25.0,
+            "payers": 25.0
+          },
+          {
+            "price": 14.98,
+            "purchases": 9.0,
+            "payers": 9.0
+          },
+          {
+            "price": 19.96,
+            "purchases": 13.0,
+            "payers": 13.0
+          },
+          {
+            "price": 19.97,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 19.98,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 19.99,
+            "purchases": 215.0,
+            "payers": 215.0
+          },
+          {
+            "price": 24.95,
+            "purchases": 123.0,
+            "payers": 123.0
+          },
+          {
+            "price": 24.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 24.98,
+            "purchases": 46.0,
+            "payers": 46.0
+          },
+          {
+            "price": 29.94,
+            "purchases": 13.0,
+            "payers": 13.0
+          },
+          {
+            "price": 29.95,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 29.97,
+            "purchases": 13.0,
+            "payers": 13.0
+          },
+          {
+            "price": 29.98,
+            "purchases": 21.0,
+            "payers": 21.0
+          },
+          {
+            "price": 34.93,
+            "purchases": 6.0,
+            "payers": 6.0
+          },
+          {
+            "price": 34.94,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 34.96,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 34.97,
+            "purchases": 6.0,
+            "payers": 6.0
+          },
+          {
+            "price": 39.92,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 39.93,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 39.95,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 39.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 39.97,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 39.98,
+            "purchases": 25.0,
+            "payers": 25.0
+          },
+          {
+            "price": 44.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 44.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 44.94,
+            "purchases": 36.0,
+            "payers": 36.0
+          },
+          {
+            "price": 44.95,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 44.96,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 44.97,
+            "purchases": 10.0,
+            "payers": 10.0
+          },
+          {
+            "price": 49.93,
+            "purchases": 7.0,
+            "payers": 7.0
+          },
+          {
+            "price": 49.94,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 49.96,
+            "purchases": 7.0,
+            "payers": 7.0
+          },
+          {
+            "price": 49.97,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 49.99,
+            "purchases": 6.0,
+            "payers": 6.0
+          },
+          {
+            "price": 54.89,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 54.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 54.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 54.93,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 54.95,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 54.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 59.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 59.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 59.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 59.95,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 59.96,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 59.97,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 59.98,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 64.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 64.93,
+            "purchases": 16.0,
+            "payers": 16.0
+          },
+          {
+            "price": 64.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 64.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 64.96,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 69.92,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 69.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 69.96,
+            "purchases": 5.0,
+            "payers": 5.0
+          },
+          {
+            "price": 69.98,
+            "purchases": 10.0,
+            "payers": 10.0
+          },
+          {
+            "price": 74.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 74.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 74.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 74.97,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 79.9,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 79.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 79.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 79.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 79.96,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 79.97,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 84.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 84.91,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 84.92,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 84.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 89.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 89.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 89.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 89.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 89.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 89.97,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 94.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 94.93,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 94.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 99.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 99.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 99.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 99.99,
+            "purchases": 9.0,
+            "payers": 9.0
+          },
+          {
+            "price": 104.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 104.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 104.92,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 104.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 104.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 104.98,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 109.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 109.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 109.97,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 114.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 114.92,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 114.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 119.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 119.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 119.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 119.97,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 119.98,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 124.94,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 124.97,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 129.93,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 129.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 134.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 134.93,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 134.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 139.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 139.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 139.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 139.97,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 144.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 144.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 149.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 149.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 154.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 154.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 159.8,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 159.84,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 159.85,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 159.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 164.88,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 164.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 169.85,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 169.91,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 169.97,
+            "purchases": 4.0,
+            "payers": 4.0
+          },
+          {
+            "price": 174.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 174.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 174.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 179.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 184.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 184.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 189.77,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 189.93,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 189.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 194.92,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 194.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 199.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 199.98,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 209.68,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 209.85,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 209.86,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 214.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 214.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 214.91,
+            "purchases": 3.0,
+            "payers": 3.0
+          },
+          {
+            "price": 214.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 214.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 219.84,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 219.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 219.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 224.85,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 224.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 229.84,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 229.86,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 234.84,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 234.86,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 239.85,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 244.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 244.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 249.97,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 254.8,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 254.83,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 254.85,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 254.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 259.84,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 259.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 259.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 264.77,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 269.85,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 269.86,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 274.89,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 274.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 274.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 279.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 284.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 289.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 289.94,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 294.81,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 299.96,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 304.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 309.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 309.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 324.76,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 324.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 324.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 329.79,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 329.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 334.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 339.84,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 339.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 344.82,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 344.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 354.77,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 364.85,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 369.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 374.84,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 374.86,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 379.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 384.93,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 389.76,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 389.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 399.86,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 399.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 404.78,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 409.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 419.78,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 419.94,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 444.82,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 444.84,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 449.63,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 449.95,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 454.66,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 454.82,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 479.8,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 484.83,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 499.67,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 499.83,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 499.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 509.82,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 514.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 529.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 529.9,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 534.77,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 534.84,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 534.86,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 539.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 544.81,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 544.84,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 554.84,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 554.85,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 554.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 559.92,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 574.71,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 579.86,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 589.8,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 604.83,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 604.85,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 609.5,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 619.69,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 619.72,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 619.85,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 624.83,
+            "purchases": 2.0,
+            "payers": 2.0
+          },
+          {
+            "price": 624.91,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 634.79,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 639.72,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 644.78,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 644.83,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 654.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 659.8,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 664.75,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 669.83,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 669.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 679.88,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 694.79,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 699.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 714.7,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 744.72,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 744.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 749.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 764.79,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 769.75,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 789.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 839.81,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 864.86,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 944.7,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 1009.87,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 1014.74,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 1019.89,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 1309.85,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 1669.64,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 1879.69,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2344.32,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2439.38,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2479.53,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2499.49,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2574.49,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2709.13,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2789.38,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2794.6,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2824.54,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2853.98,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2859.47,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2904.55,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 2974.5,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 3084.53,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 3249.46,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 5234.26,
+            "purchases": 1.0,
+            "payers": 1.0
+          },
+          {
+            "price": 5824.37,
+            "purchases": 1.0,
+            "payers": 1.0
+          }
+        ]
+      }
+    ],
+    "comparison": {
+      "event": "2025春节",
+      "price_tiers": [
+        {
+          "price": 4.99,
+          "purchases": 177.0,
+          "payers": 177.0
+        },
+        {
+          "price": 9.98,
+          "purchases": 9.0,
+          "payers": 9.0
+        },
+        {
+          "price": 9.99,
+          "purchases": 51.0,
+          "payers": 51.0
+        },
+        {
+          "price": 14.98,
+          "purchases": 22.0,
+          "payers": 22.0
+        },
+        {
+          "price": 19.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 19.97,
+          "purchases": 5.0,
+          "payers": 5.0
+        },
+        {
+          "price": 19.98,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 19.99,
+          "purchases": 407.0,
+          "payers": 407.0
+        },
+        {
+          "price": 24.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 24.96,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 24.97,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 24.98,
+          "purchases": 87.0,
+          "payers": 87.0
+        },
+        {
+          "price": 29.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 29.96,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 29.97,
+          "purchases": 6.0,
+          "payers": 6.0
+        },
+        {
+          "price": 29.98,
+          "purchases": 39.0,
+          "payers": 39.0
+        },
+        {
+          "price": 34.95,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 34.97,
+          "purchases": 27.0,
+          "payers": 27.0
+        },
+        {
+          "price": 39.96,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 39.98,
+          "purchases": 106.0,
+          "payers": 106.0
+        },
+        {
+          "price": 44.94,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 44.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 44.96,
+          "purchases": 5.0,
+          "payers": 5.0
+        },
+        {
+          "price": 44.97,
+          "purchases": 23.0,
+          "payers": 23.0
+        },
+        {
+          "price": 49.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 49.95,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 49.96,
+          "purchases": 7.0,
+          "payers": 7.0
+        },
+        {
+          "price": 49.97,
+          "purchases": 8.0,
+          "payers": 8.0
+        },
+        {
+          "price": 49.99,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 54.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 54.95,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 54.96,
+          "purchases": 10.0,
+          "payers": 10.0
+        },
+        {
+          "price": 54.98,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 59.95,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 59.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 59.97,
+          "purchases": 33.0,
+          "payers": 33.0
+        },
+        {
+          "price": 64.94,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 64.95,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 64.96,
+          "purchases": 7.0,
+          "payers": 7.0
+        },
+        {
+          "price": 64.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 69.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 69.95,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 69.96,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 69.98,
+          "purchases": 19.0,
+          "payers": 19.0
+        },
+        {
+          "price": 74.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 74.95,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 74.97,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 79.94,
+          "purchases": 5.0,
+          "payers": 5.0
+        },
+        {
+          "price": 79.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 79.96,
+          "purchases": 5.0,
+          "payers": 5.0
+        },
+        {
+          "price": 79.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 84.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 84.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 84.95,
+          "purchases": 5.0,
+          "payers": 5.0
+        },
+        {
+          "price": 84.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 89.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 89.97,
+          "purchases": 22.0,
+          "payers": 22.0
+        },
+        {
+          "price": 94.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 94.94,
+          "purchases": 5.0,
+          "payers": 5.0
+        },
+        {
+          "price": 94.96,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 99.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 99.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 99.94,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 99.95,
+          "purchases": 17.0,
+          "payers": 17.0
+        },
+        {
+          "price": 99.96,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 99.99,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 104.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 104.94,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 104.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 104.98,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 109.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 109.94,
+          "purchases": 5.0,
+          "payers": 5.0
+        },
+        {
+          "price": 109.95,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 109.96,
+          "purchases": 6.0,
+          "payers": 6.0
+        },
+        {
+          "price": 109.98,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 114.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 119.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 119.94,
+          "purchases": 5.0,
+          "payers": 5.0
+        },
+        {
+          "price": 119.95,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 119.97,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 119.98,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 124.94,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 124.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 124.97,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 129.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 129.95,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 129.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 134.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 134.95,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 134.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 139.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 139.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 139.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 144.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 144.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 149.94,
+          "purchases": 5.0,
+          "payers": 5.0
+        },
+        {
+          "price": 149.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 149.98,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 154.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 154.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 154.94,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 159.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 159.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 159.95,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 159.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 164.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 169.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 169.93,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 169.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 169.97,
+          "purchases": 16.0,
+          "payers": 16.0
+        },
+        {
+          "price": 174.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 174.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 179.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 179.96,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 184.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 184.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 189.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 189.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 189.96,
+          "purchases": 12.0,
+          "payers": 12.0
+        },
+        {
+          "price": 194.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 199.9,
+          "purchases": 3.0,
+          "payers": 3.0
+        },
+        {
+          "price": 199.93,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 199.95,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 199.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 199.98,
+          "purchases": 7.0,
+          "payers": 7.0
+        },
+        {
+          "price": 204.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 204.94,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 209.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 209.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 209.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 209.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 209.95,
+          "purchases": 5.0,
+          "payers": 5.0
+        },
+        {
+          "price": 209.97,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 214.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 214.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 219.87,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 219.88,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 219.92,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 219.94,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 219.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 219.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 224.87,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 224.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 224.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 229.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 229.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 229.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 234.92,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 234.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 239.89,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 239.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 239.95,
+          "purchases": 5.0,
+          "payers": 5.0
+        },
+        {
+          "price": 244.82,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 244.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 244.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 244.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 249.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 249.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 249.94,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 254.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 254.93,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 259.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 264.82,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 269.85,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 269.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 269.96,
+          "purchases": 5.0,
+          "payers": 5.0
+        },
+        {
+          "price": 274.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 274.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 274.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 279.93,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 289.95,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 294.86,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 299.97,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 309.88,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 309.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 319.88,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 319.96,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 329.88,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 334.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 334.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 339.94,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 344.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 359.85,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 359.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 359.93,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 369.88,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 374.76,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 374.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 384.86,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 389.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 399.74,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 399.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 399.96,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 404.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 424.76,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 424.9,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 444.83,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 444.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 449.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 454.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 459.88,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 469.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 504.86,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 529.9,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 534.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 539.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 549.88,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 549.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 549.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 564.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 569.59,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 569.87,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 574.86,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 589.92,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 599.88,
+          "purchases": 4.0,
+          "payers": 4.0
+        },
+        {
+          "price": 614.87,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 659.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 664.83,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 689.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 709.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 739.91,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 754.83,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 824.81,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 839.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 899.91,
+          "purchases": 2.0,
+          "payers": 2.0
+        },
+        {
+          "price": 929.82,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 939.89,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1084.77,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1159.74,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1269.8,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1319.85,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1549.72,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1869.67,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1959.61,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 1984.53,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2024.59,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2044.63,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2049.66,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2104.58,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2104.64,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2234.65,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2274.54,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2324.58,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2374.58,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2399.55,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2429.64,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2439.6,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 2829.53,
+          "purchases": 1.0,
+          "payers": 1.0
+        },
+        {
+          "price": 5019.49,
+          "purchases": 1.0,
+          "payers": 1.0
+        }
+      ]
+    }
+  },
+  "core_reward": {
+    "items": [
+      {
+        "reward_name": "主城皮肤-预计产出",
+        "expected_value": 0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "expected_cost": 0,
+        "actual_cost": 779.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤-预计产出",
+        "expected_value": 15.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "expected_cost": 0,
+        "actual_cost": 9000.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 8998.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 9022.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 9026.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 9038.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 9078.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 9190.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 9280.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 9307.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 9344.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 9370.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 9738.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 9760.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 9890.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 12882.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "排行榜皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 20002.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 779.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 809.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 816.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 854.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 865.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 887.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 897.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 901.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 907.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 921.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 929.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 931.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 935.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 946.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 949.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 957.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 958.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 967.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 975.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 977.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 985.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1000.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1003.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1033.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1039.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1040.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1046.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1063.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1070.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1075.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1086.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1088.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1091.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1098.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1110.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1114.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1120.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1127.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1128.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1135.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1142.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1155.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1162.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1171.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1179.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1194.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1213.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1218.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1219.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1230.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1231.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1251.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1253.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1258.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1264.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1282.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1297.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1308.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1309.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1311.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1319.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1348.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1366.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1368.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1369.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1371.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1375.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1380.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1381.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1383.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1392.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1394.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1401.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1402.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1424.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1429.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1435.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1446.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1449.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1461.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1464.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1468.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1471.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1478.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1483.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1485.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1488.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1490.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1501.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1502.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1509.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1516.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1547.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1550.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1573.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1603.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1622.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1629.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1642.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1643.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1646.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1655.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1656.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1659.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1692.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1742.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1743.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1756.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1767.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1773.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1778.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1786.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1792.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1796.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1813.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1821.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1834.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1849.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1858.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1869.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1872.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1873.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 1977.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2037.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2039.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2071.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2114.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2115.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2122.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2132.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2196.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2203.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2247.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2354.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2411.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2435.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2478.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2485.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2496.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2516.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2736.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2799.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 2982.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 3004.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 3092.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 3401.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 3660.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 3783.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 4043.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 4075.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 4086.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 4118.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 4161.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 4176.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 4183.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 4286.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 4389.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 4417.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 4490.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 4640.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 4868.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 4945.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 6287.0,
+        "cost_unit": "美刀"
+      },
+      {
+        "reward_name": "主城皮肤",
+        "expected_value": 1.0,
+        "actual_value": 1.0,
+        "unit": "个",
+        "actual_cost": 10001.0,
+        "cost_unit": "美刀"
+      }
+    ]
+  },
+  "gift_packages": {
+    "packages": [
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 99.99,
+        "revenue": 3999.6,
+        "payers": 40.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 99.99,
+        "revenue": 499.95,
+        "payers": 5.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 99.99,
+        "revenue": 1699.83,
+        "payers": 17.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 29.99,
+        "revenue": 6177.94,
+        "payers": 206.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 19.99,
+        "revenue": 5437.28,
+        "payers": 272.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 99.99,
+        "revenue": 8799.12,
+        "payers": 88.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 49.99,
+        "revenue": 6198.76,
+        "payers": 124.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 99.99,
+        "revenue": 1199.88,
+        "payers": 12.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 49.99,
+        "revenue": 4449.11,
+        "payers": 89.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 1.99,
+        "revenue": 2314.37,
+        "payers": 1163.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 4.99,
+        "revenue": 3767.45,
+        "payers": 755.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 99.99,
+        "revenue": 4499.55,
+        "payers": 45.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 9.99,
+        "revenue": 3776.22,
+        "payers": 378.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 99.99,
+        "revenue": 2799.72,
+        "payers": 28.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 99.99,
+        "revenue": 99.99,
+        "payers": 1.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 99.99,
+        "revenue": 2099.79,
+        "payers": 21.0
+      },
+      {
+        "package_name": "春节抽奖成就礼包",
+        "price": 99.99,
+        "revenue": 6899.31,
+        "payers": 69.0
+      },
+      {
+        "package_name": "2025春节随机GACHA礼包",
+        "price": 99.99,
+        "revenue": 5099.49,
+        "payers": 21.0
+      },
+      {
+        "package_name": "2025春节随机GACHA礼包",
+        "price": 49.99,
+        "revenue": 5898.82,
+        "payers": 47.0
+      },
+      {
+        "package_name": "2025春节随机GACHA礼包",
+        "price": 19.99,
+        "revenue": 11194.4,
+        "payers": 264.0
+      },
+      {
+        "package_name": "2025春节GACHA礼包",
+        "price": 9.99,
+        "revenue": 999.0,
+        "payers": 78.0
+      },
+      {
+        "package_name": "2025春节GACHA礼包",
+        "price": 99.99,
+        "revenue": 10598.94,
+        "payers": 25.0
+      },
+      {
+        "package_name": "2025春节GACHA礼包",
+        "price": 49.99,
+        "revenue": 1849.63,
+        "payers": 18.0
+      },
+      {
+        "package_name": "2025春节GACHA礼包",
+        "price": 19.99,
+        "revenue": 959.52,
+        "payers": 36.0
+      },
+      {
+        "package_name": "2025春节GACHA礼包",
+        "price": 4.99,
+        "revenue": 888.22,
+        "payers": 145.0
+      }
+    ]
+  }
+}

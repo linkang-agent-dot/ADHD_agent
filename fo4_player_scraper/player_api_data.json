@@ -1,0 +1,1309 @@
+{
+  "dbrelate": [
+    {
+      "uid": "kjgwqwkky",
+      "pos1": "ST",
+      "pos1val": 123,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "854",
+      "skill_level": "3",
+      "attrA": 34,
+      "attrB": 123,
+      "attrC": 118,
+      "year_short": "26TY"
+    },
+    {
+      "uid": "kjvnrkmqq",
+      "pos1": "ST",
+      "pos1val": 118,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "844",
+      "skill_level": "3",
+      "attrA": 31,
+      "attrB": 118,
+      "attrC": 114,
+      "year_short": "25TS"
+    },
+    {
+      "uid": "kjgjwraao",
+      "pos1": "ST",
+      "pos1val": 117,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "848",
+      "skill_level": "3",
+      "attrA": 31,
+      "attrB": 117,
+      "attrC": 117,
+      "year_short": "WS"
+    },
+    {
+      "uid": "kgnnkdmqy",
+      "pos1": "ST",
+      "pos1val": 115,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "820",
+      "skill_level": "3",
+      "attrA": 30,
+      "attrB": 115,
+      "attrC": 109,
+      "year_short": "24TS"
+    },
+    {
+      "uid": "kjvpgnbjm",
+      "pos1": "ST",
+      "pos1val": 115,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "832",
+      "skill_level": "3",
+      "attrA": 30,
+      "attrB": 115,
+      "attrC": 112,
+      "year_short": "25TYN"
+    },
+    {
+      "uid": "kgnapklnv",
+      "pos1": "ST",
+      "pos1val": 114,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "807",
+      "skill_level": "3",
+      "attrA": 30,
+      "attrB": 114,
+      "attrC": 109,
+      "year_short": "24TY"
+    },
+    {
+      "uid": "kjvrpyzrd",
+      "pos1": "ST",
+      "pos1val": 114,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "834",
+      "skill_level": "3",
+      "attrA": 29,
+      "attrB": 114,
+      "attrC": 112,
+      "year_short": "24UCL"
+    },
+    {
+      "uid": "kjvqyzynw",
+      "pos1": "ST",
+      "pos1val": 113,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "836",
+      "skill_level": "3",
+      "attrA": 29,
+      "attrB": 113,
+      "attrC": 108,
+      "year_short": "WB"
+    },
+    {
+      "uid": "kgnrqrzrq",
+      "pos1": "ST",
+      "pos1val": 111,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "810",
+      "skill_level": "3",
+      "attrA": 28,
+      "attrB": 111,
+      "attrC": 111,
+      "year_short": "23UCL"
+    },
+    {
+      "uid": "kkymkrno",
+      "pos1": "ST",
+      "pos1val": 109,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "287",
+      "skill_level": "3",
+      "attrA": 28,
+      "attrB": 109,
+      "attrC": 103,
+      "year_short": "23TS"
+    },
+    {
+      "uid": "kgnlnbpyw",
+      "pos1": "ST",
+      "pos2": "CF",
+      "pos1val": 108,
+      "pos2val": 108,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "802",
+      "skill_level": "3",
+      "attrA": 27,
+      "attrB": 108,
+      "attrC": 108,
+      "year_short": "DC"
+    },
+    {
+      "uid": "kkoabajq",
+      "pos1": "ST",
+      "pos2": "CF",
+      "pos1val": 107,
+      "pos2val": 107,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "283",
+      "skill_level": "3",
+      "attrA": 27,
+      "attrB": 107,
+      "attrC": 107,
+      "year_short": "HG"
+    },
+    {
+      "uid": "kjvddgqdj",
+      "pos1": "ST",
+      "pos1val": 107,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "828",
+      "skill_level": "3",
+      "attrA": 27,
+      "attrB": 107,
+      "attrC": 109,
+      "year_short": "BLD"
+    },
+    {
+      "uid": "kkrqymdp",
+      "pos1": "ST",
+      "pos2": "CF",
+      "pos1val": 106,
+      "pos2val": 105,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "279",
+      "skill_level": "3",
+      "attrA": 26,
+      "attrB": 106,
+      "attrC": 102,
+      "year_short": "23TYN"
+    },
+    {
+      "uid": "kkgllozj",
+      "pos1": "ST",
+      "pos2": "CF",
+      "pos1val": 105,
+      "pos2val": 105,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "267",
+      "skill_level": "4",
+      "attrA": 26,
+      "attrB": 105,
+      "attrC": 100,
+      "year_short": "22TS"
+    },
+    {
+      "uid": "kkmogazb",
+      "pos1": "ST",
+      "pos1val": 105,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "272",
+      "skill_level": "3",
+      "attrA": 26,
+      "attrB": 105,
+      "attrC": 100,
+      "year_short": "BWC"
+    },
+    {
+      "uid": "kkdagvgd",
+      "pos1": "ST",
+      "pos1val": 105,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "273",
+      "skill_level": "3",
+      "attrA": 26,
+      "attrB": 105,
+      "attrC": 99,
+      "year_short": "WC22"
+    },
+    {
+      "uid": "kgnbjarqm",
+      "pos1": "ST",
+      "pos1val": 105,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "815",
+      "skill_level": "3",
+      "attrA": 27,
+      "attrB": 105,
+      "attrC": 104,
+      "year_short": "EU24"
+    },
+    {
+      "uid": "kqoraajy",
+      "pos1": "ST",
+      "pos1val": 103,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "259",
+      "skill_level": "3",
+      "attrA": 25,
+      "attrB": 103,
+      "attrC": 98,
+      "year_short": "22TYN"
+    },
+    {
+      "uid": "kqwlkrdj",
+      "pos1": "ST",
+      "pos1val": 102,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "250",
+      "skill_level": "4",
+      "attrA": 24,
+      "attrB": 102,
+      "attrC": 93,
+      "year_short": "21TS"
+    },
+    {
+      "uid": "kkqdzbrv",
+      "pos1": "ST",
+      "pos1val": 102,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "280",
+      "skill_level": "3",
+      "attrA": 24,
+      "attrB": 102,
+      "attrC": 96,
+      "year_short": "22UCL"
+    },
+    {
+      "uid": "kgmdzrgda",
+      "pos1": "ST",
+      "pos1val": 101,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "515",
+      "skill_level": "3",
+      "attrA": 21,
+      "attrB": 101,
+      "attrC": 89,
+      "year_short": "24PL"
+    },
+    {
+      "uid": "kqpdqjyo",
+      "pos1": "ST",
+      "pos1val": 101,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "253",
+      "skill_level": "3",
+      "attrA": 24,
+      "attrB": 101,
+      "attrC": 95,
+      "year_short": "BOE21"
+    },
+    {
+      "uid": "krnzykaw",
+      "pos1": "ST",
+      "pos1val": 99,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "241",
+      "skill_level": "3",
+      "attrA": 22,
+      "attrB": 99,
+      "attrC": 97,
+      "year_short": "21TYN"
+    },
+    {
+      "uid": "kgmmarnyw",
+      "pos1": "ST",
+      "pos1val": 99,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "513",
+      "skill_level": "3",
+      "attrA": 21,
+      "attrB": 99,
+      "attrC": 94,
+      "year_short": "23PL"
+    },
+    {
+      "uid": "kgmampjop",
+      "pos1": "ST",
+      "pos1val": 99,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "",
+      "liveperf": 2,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "517",
+      "skill_level": "3",
+      "attrA": 22,
+      "attrB": 101,
+      "attrC": 91,
+      "year_short": "25PL"
+    },
+    {
+      "uid": "kravdgpn",
+      "pos1": "ST",
+      "pos1val": 97,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "227",
+      "skill_level": "3",
+      "attrA": 22,
+      "attrB": 97,
+      "attrC": 88,
+      "year_short": "BOE"
+    },
+    {
+      "uid": "kgmlvqypd",
+      "pos1": "ST",
+      "pos1val": 94,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "511",
+      "skill_level": "3",
+      "attrA": 19,
+      "attrB": 94,
+      "attrC": 91,
+      "year_short": "22PL"
+    },
+    {
+      "uid": "krlpawpd",
+      "pos1": "ST",
+      "pos1val": 94,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "222",
+      "skill_level": "3",
+      "attrA": 21,
+      "attrB": 94,
+      "attrC": 92,
+      "year_short": "20TYN"
+    },
+    {
+      "uid": "krjbazmb",
+      "pos1": "ST",
+      "pos1val": 94,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "221",
+      "skill_level": "3",
+      "attrA": 19,
+      "attrB": 94,
+      "attrC": 93,
+      "year_short": "19UCL"
+    },
+    {
+      "uid": "kpnmqjmj",
+      "pos1": "ST",
+      "pos1val": 93,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "216",
+      "skill_level": "4",
+      "attrA": 19,
+      "attrB": 93,
+      "attrC": 89,
+      "year_short": "HOT"
+    },
+    {
+      "uid": "kgmvyomzo",
+      "pos1": "ST",
+      "pos1val": 93,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "508",
+      "skill_level": "3",
+      "attrA": 18,
+      "attrB": 93,
+      "attrC": 89,
+      "year_short": "21PL"
+    },
+    {
+      "uid": "kpnnrkak",
+      "pos1": "ST",
+      "pos1val": 91,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "217",
+      "skill_level": "4",
+      "attrA": 18,
+      "attrB": 91,
+      "attrC": 86,
+      "year_short": "COC"
+    },
+    {
+      "uid": "kglzwzrzg",
+      "pos1": "ST",
+      "pos1val": 88,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "503",
+      "skill_level": "3",
+      "attrA": 17,
+      "attrB": 88,
+      "attrC": 89,
+      "year_short": "19S"
+    },
+    {
+      "uid": "kglnpblak",
+      "pos1": "ST",
+      "pos1val": 88,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "506",
+      "skill_level": "3",
+      "attrA": 17,
+      "attrB": 88,
+      "attrC": 86,
+      "year_short": "20A"
+    },
+    {
+      "uid": "kpagngrm",
+      "pos1": "ST",
+      "pos1val": 86,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "203",
+      "skill_level": "3",
+      "attrA": 18,
+      "attrB": 86,
+      "attrC": 82,
+      "year_short": "18TY"
+    },
+    {
+      "uid": "kprlzojz",
+      "pos1": "ST",
+      "pos1val": 85,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "-1",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "206",
+      "skill_level": "3",
+      "attrA": 17,
+      "attrB": 85,
+      "attrC": 87,
+      "year_short": "TB"
+    },
+    {
+      "uid": "kglbkyvqr",
+      "pos1": "ST",
+      "pos1val": 85,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "502",
+      "skill_level": "3",
+      "attrA": 16,
+      "attrB": 85,
+      "attrC": 86,
+      "year_short": "19A"
+    },
+    {
+      "uid": "kglonypav",
+      "pos1": "ST",
+      "pos1val": 83,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "501",
+      "skill_level": "3",
+      "attrA": 16,
+      "attrB": 83,
+      "attrC": 86,
+      "year_short": "18S"
+    },
+    {
+      "uid": "kglomynlp",
+      "pos1": "ST",
+      "pos1val": 82,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "England",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "500",
+      "skill_level": "3",
+      "attrA": 17,
+      "attrB": 82,
+      "attrC": 85,
+      "year_short": "18A"
+    },
+    {
+      "uid": "koaadqkq",
+      "pos1": "ST",
+      "pos1val": 77,
+      "team_id": "21",
+      "team_name": "Bayern München",
+      "nation_squad_id": "1318",
+      "nation_squad_name": "",
+      "liveperf": 0,
+      "liveperfamount": 0,
+      "name": "H. Kane",
+      "pos": "ST",
+      "year": "300",
+      "skill_level": "3",
+      "attrA": 12,
+      "attrB": 77,
+      "attrC": 67,
+      "year_short": "LIVE"
+    }
+  ],
+  "attr": {
+    "sprintspeed": {
+      "name": "速度",
+      "value": 117
+    },
+    "acceleration": {
+      "name": "加速",
+      "value": 117
+    },
+    "finishing": {
+      "name": "射术",
+      "value": 131
+    },
+    "shotpower": {
+      "name": "射门力量",
+      "value": 126
+    },
+    "longshots": {
+      "name": "远射",
+      "value": 126
+    },
+    "positioning": {
+      "name": "站位",
+      "value": 128
+    },
+    "volleys": {
+      "name": "凌空抽射",
+      "value": 123
+    },
+    "penalties": {
+      "name": "罚点球",
+      "value": 128
+    },
+    "shortpassing": {
+      "name": "短传",
+      "value": 118
+    },
+    "vision": {
+      "name": "视野",
+      "value": 123
+    },
+    "crossing": {
+      "name": "传中",
+      "value": 105
+    },
+    "longpassing": {
+      "name": "长传",
+      "value": 124
+    },
+    "freekickaccuracy": {
+      "name": "任意球",
+      "value": 113
+    },
+    "curve": {
+      "name": "弧线",
+      "value": 124
+    },
+    "dribbling": {
+      "name": "盘带",
+      "value": 117
+    },
+    "ballcontrol": {
+      "name": "控球",
+      "value": 123
+    },
+    "agility": {
+      "name": "灵活",
+      "value": 113
+    },
+    "balance": {
+      "name": "平衡",
+      "value": 125
+    },
+    "reactions": {
+      "name": "反应",
+      "value": 117
+    },
+    "marking": {
+      "name": "人盯人",
+      "value": 70
+    },
+    "standingtackle": {
+      "name": "抢断",
+      "value": 73
+    },
+    "interceptions": {
+      "name": "战术意识",
+      "value": 67
+    },
+    "headingaccuracy": {
+      "name": "头球",
+      "value": 126
+    },
+    "slidingtackle": {
+      "name": "铲断",
+      "value": 67
+    },
+    "strength": {
+      "name": "强壮",
+      "value": 120
+    },
+    "stamina": {
+      "name": "体力",
+      "value": 118
+    },
+    "aggression": {
+      "name": "侵略性",
+      "value": 107
+    },
+    "jumping": {
+      "name": "弹跳",
+      "value": 116
+    },
+    "composure": {
+      "name": "冷静",
+      "value": 125
+    },
+    "gkdiving": {
+      "name": "GK手控球",
+      "value": 21
+    },
+    "gkhandling": {
+      "name": "GK手控球",
+      "value": 22
+    },
+    "gkkicking": {
+      "name": "GK大脚开球",
+      "value": 23
+    },
+    "gkreflexes": {
+      "name": "GK反应",
+      "value": 23
+    },
+    "gkpositioning": {
+      "name": "GK防守站位",
+      "value": 26
+    }
+  },
+  "traits": {
+    "cross-poacher": {
+      "id": "51",
+      "name": "偷猎者",
+      "desc": "在尝试接传中和禁区内倒三角回敲时，会触发短时间的加速效果"
+    },
+    "outside-foot-shot": {
+      "id": "25",
+      "name": "外脚背射门",
+      "desc": "擅长外脚背射门和传中"
+    },
+    "power-header": {
+      "id": "22",
+      "name": "善于头球",
+      "desc": "头球攻门强劲有力"
+    },
+    "play-maker": {
+      "id": "18",
+      "name": "中场指挥官 (AI)",
+      "desc": "(AI) 作为球队核心，通过传球组织进攻"
+    },
+    "long-shot-taker": {
+      "id": "16",
+      "name": "善于远射 (AI)",
+      "desc": "(AI) 经常尝试远射"
+    },
+    "long-passer": {
+      "id": "15",
+      "name": "善于长传 (AI)",
+      "desc": "(AI) 经常使用长传"
+    },
+    "finesse-shot": {
+      "id": "13",
+      "name": "善于搓射",
+      "desc": "精通弧线射门"
+    }
+  },
+  "db": {
+    "uid": "kjgwqwkky",
+    "year": 854,
+    "name": "Harry Kane",
+    "name_short": "H. Kane",
+    "ovr_ori": "0",
+    "height": 188,
+    "weight": 86,
+    "birthdate": "28.7.1993",
+    "age": 32,
+    "number": 9,
+    "league_id": 19,
+    "league_name": "Germany Bundesliga",
+    "team_id": 21,
+    "team_name": "Bayern München",
+    "team_search": "Bayern München 바이에른 뮌헨 拜仁慕尼黑 บาเยิร์น มิวนิค fcb,bayern,บาเยิร์น,เสือใต้",
+    "nation_squad_id": 1318,
+    "nation_squad_name": "",
+    "nation_id": 14,
+    "nation_search": "England 잉글랜드 英格兰 อังกฤษ",
+    "pos1": "ST",
+    "pos1val": 123,
+    "foot_pref": "right",
+    "foot_weak": "5",
+    "salary": 34,
+    "salary_kr": "0",
+    "allstat": 3402,
+    "workrate_def": "high",
+    "workrate_att": "high",
+    "skill_level": 3,
+    "liveperf": 0,
+    "liveperfamount": 0,
+    "lp": 0,
+    "pricekr": 0,
+    "update_statchange": 0,
+    "all_statchange": 0,
+    "skintonecode": "3",
+    "server": "th,vn,kr,cn",
+    "data_hash": "ab130452558e543dd60b6e5bf3d2ad99",
+    "updated_at": "2026-01-12 09:36:30",
+    "team_slug": "bayern-munchen",
+    "league_slug": "germany-bundesliga",
+    "nation_name": "England",
+    "bodytype_name": "普通",
+    "attrgroup": {
+      "labels": [
+        "速度",
+        "射门",
+        "传球",
+        "盘带",
+        "防守",
+        "强壮"
+      ],
+      "data": [
+        120,
+        131,
+        120,
+        121,
+        78,
+        119
+      ]
+    },
+    "season_full": "Team Of The Year 2026",
+    "season_name": "26ty",
+    "postlist": {
+      "1": {
+        "name": "ovr",
+        "text": "OVR",
+        "value": 123,
+        "rec_direction": ""
+      },
+      "2": {
+        "name": "st",
+        "text": "ST",
+        "value": 123,
+        "rec_direction": "rec-right"
+      },
+      "3": {
+        "name": "rw",
+        "text": "L/RW",
+        "value": 119,
+        "rec_direction": ""
+      },
+      "4": {
+        "name": "cf",
+        "text": "CF",
+        "value": 122,
+        "rec_direction": ""
+      },
+      "5": {
+        "name": "cam",
+        "text": "CAM",
+        "value": 121,
+        "rec_direction": ""
+      },
+      "6": {
+        "name": "rm",
+        "text": "L/RM",
+        "value": 119,
+        "rec_direction": ""
+      },
+      "7": {
+        "name": "cm",
+        "text": "CM",
+        "value": 116,
+        "rec_direction": ""
+      },
+      "8": {
+        "name": "cdm",
+        "text": "CDM",
+        "value": 99,
+        "rec_direction": ""
+      },
+      "9": {
+        "name": "rwb",
+        "text": "L/RWB",
+        "value": 97,
+        "rec_direction": ""
+      },
+      "10": {
+        "name": "rb",
+        "text": "L/RB",
+        "value": 95,
+        "rec_direction": ""
+      },
+      "11": {
+        "name": "cb",
+        "text": "CB",
+        "value": 92,
+        "rec_direction": ""
+      },
+      "12": {
+        "name": "gk",
+        "text": "GK",
+        "value": 33,
+        "rec_direction": ""
+      }
+    },
+    "post_current": "st",
+    "reputation": "Legendary",
+    "clubcareer": {
+      "1": {
+        "year": "2023",
+        "loan": false,
+        "teamname": "Bayern München",
+        "teamlink": "teamcolor=bayern-munchen",
+        "teamcolor": true
+      },
+      "2": {
+        "year": "2013 - 2023",
+        "loan": false,
+        "teamname": "Tottenham Hotspur",
+        "teamlink": "teamcolor=tottenham-hotspur",
+        "teamcolor": true
+      },
+      "3": {
+        "year": "2013 - 2013",
+        "loan": true,
+        "teamname": "Leicester City",
+        "teamlink": "teamcolor=leicester-city",
+        "teamcolor": true
+      },
+      "4": {
+        "year": "2012 - 2013",
+        "loan": true,
+        "teamname": "Norwich City",
+        "teamlink": "league=england-championship&team=norwich-city",
+        "teamcolor": false
+      },
+      "5": {
+        "year": "2012 - 2012",
+        "loan": false,
+        "teamname": "Tottenham Hotspur",
+        "teamlink": "teamcolor=tottenham-hotspur",
+        "teamcolor": true
+      },
+      "6": {
+        "year": "2012 - 2012",
+        "loan": true,
+        "teamname": "Millwall",
+        "teamlink": "league=england-championship&team=millwall",
+        "teamcolor": false
+      },
+      "7": {
+        "year": "2011 - 2011",
+        "loan": false,
+        "teamname": "Tottenham Hotspur",
+        "teamlink": "teamcolor=tottenham-hotspur",
+        "teamcolor": true
+      },
+      "8": {
+        "year": "2011 - 2011",
+        "loan": false,
+        "teamname": "Leyton Orient",
+        "teamlink": "league=england-league-one&team=leyton-orient",
+        "teamcolor": false
+      }
+    }
+  },
+  "pre": {
+    "uid": "kjgwqwkky",
+    "year": 854,
+    "name": "Harry Kane",
+    "name_short": "H. Kane",
+    "ovr_ori": "0",
+    "height": 188,
+    "weight": 86,
+    "birthdate": "28.7.1993",
+    "age": 32,
+    "number": 9,
+    "league_id": 19,
+    "league_name": "Germany Bundesliga",
+    "team_id": 21,
+    "team_name": "Bayern München",
+    "team_search": "Bayern München 바이에른 뮌헨 拜仁慕尼黑 บาเยิร์น มิวนิค fcb,bayern,บาเยิร์น,เสือใต้",
+    "nation_squad_id": 1318,
+    "nation_squad_name": "",
+    "nation_id": 14,
+    "nation_search": "England 잉글랜드 英格兰 อังกฤษ",
+    "pos1": "ST",
+    "foot_pref": "right",
+    "foot_weak": "5",
+    "salary": 34,
+    "salary_kr": "0",
+    "workrate_def": "high",
+    "workrate_att": "high",
+    "skill_level": 3,
+    "class": 5,
+    "lp": 0,
+    "pricekr": 0,
+    "update_statchange": 0,
+    "all_statchange": 0,
+    "skintonecode": "3",
+    "server": "th,vn,kr,cn",
+    "data_hash": "ab130452558e543dd60b6e5bf3d2ad99",
+    "updated_at": "2026-01-12 09:36:30",
+    "nation_slug": "england",
+    "team_slug": "bayern-munchen",
+    "league_slug": "germany-bundesliga",
+    "nation_name": "England",
+    "bodytype_name": "普通",
+    "attrgroup": {
+      "labels": [
+        "速度",
+        "射门",
+        "传球",
+        "盘带",
+        "防守",
+        "强壮"
+      ],
+      "data": [
+        120,
+        131,
+        120,
+        121,
+        78,
+        119
+      ]
+    },
+    "season_full": "Team Of The Year 2026",
+    "season_name": "26ty",
+    "postlist": {
+      "1": {
+        "name": "ovr",
+        "text": "OVR",
+        "value": 123,
+        "rec_direction": ""
+      },
+      "2": {
+        "name": "st",
+        "text": "ST",
+        "value": 123,
+        "rec_direction": "rec-right"
+      },
+      "3": {
+        "name": "rw",
+        "text": "L/RW",
+        "value": 119,
+        "rec_direction": ""
+      },
+      "4": {
+        "name": "cf",
+        "text": "CF",
+        "value": 122,
+        "rec_direction": ""
+      },
+      "5": {
+        "name": "cam",
+        "text": "CAM",
+        "value": 121,
+        "rec_direction": ""
+      },
+      "6": {
+        "name": "rm",
+        "text": "L/RM",
+        "value": 119,
+        "rec_direction": ""
+      },
+      "7": {
+        "name": "cm",
+        "text": "CM",
+        "value": 116,
+        "rec_direction": ""
+      },
+      "8": {
+        "name": "cdm",
+        "text": "CDM",
+        "value": 99,
+        "rec_direction": ""
+      },
+      "9": {
+        "name": "rwb",
+        "text": "L/RWB",
+        "value": 97,
+        "rec_direction": ""
+      },
+      "10": {
+        "name": "rb",
+        "text": "L/RB",
+        "value": 95,
+        "rec_direction": ""
+      },
+      "11": {
+        "name": "cb",
+        "text": "CB",
+        "value": 92,
+        "rec_direction": ""
+      },
+      "12": {
+        "name": "gk",
+        "text": "GK",
+        "value": 33,
+        "rec_direction": ""
+      }
+    },
+    "post_current": "st",
+    "reputation": "Legendary",
+    "clubcareer": true
+  },
+  "meta": {
+    "title": "Harry Kane 26TY - FC Online - 球员数据库 - FIFA Online 4",
+    "desc": "Harry Kane（Team Of The Year 2026），出生于1993年7月28日，现年32岁，是一名英格兰职业足球运动员，司职前锋，效力于 Bayern München 俱乐部（联赛：Germany Bundesliga）。他的总评(OVR)为126，花式技巧为★★★☆☆。他左右脚均衡（逆足 5）。其身高188厘米，体重86公斤，体型普通，身披 9 号球衣。\n\n他的主要能力值包括：射术 134、罚点球 131、站位 131、头球 129、远射 129、射门力量 129。"
+  }
+}

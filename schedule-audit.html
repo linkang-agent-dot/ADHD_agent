@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>排期审核对比工具 - 运营策划工具站</title>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+:root {
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --bg: #0f172a;
+  --card: #1e293b;
+  --card-hover: #334155;
+  --text: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --border: #334155;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #3b82f6;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 24px 20px; }
+header {
+  text-align: center;
+  padding: 32px 0 24px;
+}
+header h1 {
+  font-size: 28px;
+  background: linear-gradient(135deg, #818cf8, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+header p { color: var(--text-secondary); font-size: 14px; }
+.back-link {
+  display: inline-block;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 13px;
+  margin-bottom: 16px;
+  transition: color .2s;
+}
+.back-link:hover { color: var(--primary); }
+
+/* Steps */
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  transition: all .3s;
+}
+.step.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.step.done {
+  background: rgba(34,197,94,.15);
+  color: var(--success);
+  border-color: rgba(34,197,94,.3);
+}
+.step-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  background: rgba(255,255,255,.15);
+}
+.step.done .step-num { background: var(--success); color: #fff; }
+
+/* Card */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.card h2 {
+  font-size: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card h2 .icon { font-size: 20px; }
+
+/* Upload */
+.upload-zone {
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+}
+.upload-zone:hover, .upload-zone.dragover {
+  border-color: var(--primary);
+  background: rgba(99,102,241,.05);
+}
+.upload-zone.has-file {
+  border-color: var(--success);
+  background: rgba(34,197,94,.05);
+}
+.upload-zone input[type="file"] {
+  position: absolute; inset: 0;
+  opacity: 0; cursor: pointer;
+}
+.upload-zone .icon-upload { font-size: 36px; margin-bottom: 8px; }
+.upload-zone .label { font-size: 14px; color: var(--text-secondary); }
+.upload-zone .filename {
+  font-size: 14px; color: var(--success);
+  font-weight: 500; margin-top: 4px;
+}
+.upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* Config */
+.config-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.config-row label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  min-width: 100px;
+}
+.config-row input, .config-row select {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  flex: 1;
+  min-width: 0;
+}
+.config-row input:focus, .config-row select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 28px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-primary:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+.btn-secondary {
+  background: var(--card-hover);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: rgba(255,255,255,.1); }
+.btn-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Mapping table */
+.mapping-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 12px;
+}
+.mapping-table th {
+  background: var(--bg);
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+}
+.mapping-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(51,65,85,.5);
+  vertical-align: top;
+}
+.mapping-table tr:hover td { background: rgba(99,102,241,.04); }
+.mapping-table select {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  width: 100%;
+  max-width: 300px;
+}
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.tag-match { background: rgba(34,197,94,.15); color: var(--success); }
+.tag-miss { background: rgba(239,68,68,.15); color: var(--danger); }
+.tag-warn { background: rgba(245,158,11,.15); color: var(--warning); }
+.tag-info { background: rgba(99,102,241,.15); color: var(--info); }
+
+/* Report */
+.report-content {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px 28px;
+  line-height: 1.8;
+  overflow-x: auto;
+}
+.report-content h1 { font-size: 22px; margin: 16px 0 8px; color: #c4b5fd; }
+.report-content h2 { font-size: 18px; margin: 20px 0 10px; color: #a5b4fc; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.report-content h3 { font-size: 15px; margin: 16px 0 8px; color: #818cf8; }
+.report-content h4 { font-size: 14px; margin: 12px 0 6px; }
+.report-content blockquote {
+  border-left: 3px solid var(--primary);
+  padding: 4px 16px;
+  margin: 8px 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.report-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 13px;
+}
+.report-content th {
+  background: rgba(99,102,241,.1);
+  padding: 8px 10px;
+  text-align: left;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+.report-content td {
+  padding: 6px 10px;
+  border: 1px solid rgba(51,65,85,.5);
+}
+.report-content tr:nth-child(even) td { background: rgba(30,41,59,.5); }
+.report-content hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+.report-content strong { color: #fbbf24; }
+.report-content code { background: rgba(99,102,241,.15); padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+
+/* Loading */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px;
+  color: var(--text-secondary);
+}
+.spinner {
+  width: 24px; height: 24px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .upload-grid { grid-template-columns: 1fr; }
+  .steps { flex-wrap: wrap; }
+  .report-content { padding: 16px; }
+}
+
+/* Section visibility */
+.section { display: none; }
+.section.visible { display: block; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="./" class="back-link">&larr; 返回工具站首页</a>
+  <header>
+    <h1>排期审核对比工具</h1>
+    <p>上传排期审核表(xlsx) + 正式上线表(csv)，自动生成三维审核报告</p>
+  </header>
+
+  <!-- Steps indicator -->
+  <div class="steps">
+    <div class="step active" id="step1-indicator">
+      <span class="step-num">1</span> 上传文件
+    </div>
+    <div class="step" id="step2-indicator">
+      <span class="step-num">2</span> 确认映射
+    </div>
+    <div class="step" id="step3-indicator">
+      <span class="step-num">3</span> 查看报告
+    </div>
+  </div>
+
+  <!-- Step 1: Upload -->
+  <div class="section visible" id="step1">
+    <div class="card">
+      <h2><span class="icon">📁</span> 上传文件</h2>
+      <div class="upload-grid">
+        <div class="upload-zone" id="zone-xlsx">
+          <input type="file" accept=".xlsx,.xls" id="file-xlsx">
+          <div class="icon-upload">📊</div>
+          <div class="label">排期审核表 (.xlsx)</div>
+          <div class="filename" id="name-xlsx"></div>
+        </div>
+        <div class="upload-zone" id="zone-csv">
+          <input type="file" accept=".csv" id="file-csv">
+          <div class="icon-upload">📋</div>
+          <div class="label">正式上线表 (.csv)</div>
+          <div class="filename" id="name-csv"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="icon">⚙️</span> 配置</h2>
+      <div class="config-row">
+        <label>节日名称</label>
+        <input type="text" id="cfg-holiday" placeholder="如：2026情人节" value="">
+      </div>
+      <div class="config-row">
+        <label>节日关键词</label>
+        <input type="text" id="cfg-keywords" placeholder="逗号分隔，如：情人,valentine" value="">
+      </div>
+      <div class="config-row">
+        <label>活动别名</label>
+        <input type="text" id="cfg-aliases" placeholder='JSON格式，如：{"合成小游戏":"挖矿"}' value='{"合成小游戏":"挖矿"}'>
+      </div>
+      <div class="config-row">
+        <label>CSV编码</label>
+        <select id="cfg-encoding">
+          <option value="gbk" selected>GBK</option>
+          <option value="utf-8">UTF-8</option>
+          <option value="gb18030">GB18030</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" id="btn-analyze" disabled onclick="startAnalysis()">
+        开始分析
+      </button>
+    </div>
+  </div>
+
+  <!-- Step 2: Mapping -->
+  <div class="section" id="step2">
+    <div class="card">
+      <h2><span class="icon">🔗</span> 活动映射确认</h2>
+      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">
+        系统已自动匹配，请检查并调整。每行可选择多个上线表活动（按住Ctrl多选）。
+      </p>
+      <div id="mapping-container"></div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-secondary" onclick="goStep(1)">上一步</button>
+      <button class="btn btn-primary" onclick="confirmMapping()">确认并生成报告</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Report -->
+  <div class="section" id="step3">
+    <div class="card">
+      <h2><span class="icon">📄</span> 审核报告</h2>
+      <div class="btn-group" style="margin-top:0;margin-bottom:16px;justify-content:flex-end;">
+        <button class="btn btn-secondary" onclick="copyReport()">📋 复制 Markdown</button>
+        <button class="btn btn-secondary" onclick="downloadReport()">⬇ 下载 .md</button>
+      </div>
+      <div class="report-content" id="report-output"></div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-secondary" onclick="goStep(2)">返回映射</button>
+      <button class="btn btn-secondary" onclick="goStep(1)">重新开始</button>
+    </div>
+  </div>
+
+  <!-- Loading overlay -->
+  <div class="section" id="loading">
+    <div class="loading">
+      <div class="spinner"></div>
+      <span id="loading-text">正在解析文件...</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================
+// Constants
+// ============================
+const CFG = {
+  SERVER_FULL: 130,
+  SERVER_FULL_GRAY: 142,
+  SERVER_S6: 77,
+  SERVER_S35: 53,
+  GRAY_EXTRA: 12,
+  DEPLOY_OFFSET: 1,
+  XLSX_ROW_DATE_SERIAL: 3,
+  XLSX_ROW_DATA_START: 4,
+  XLSX_COL_DATE_START: 11,
+  XLSX_COL_DATE_END: 34,
+};
+
+// State
+let xlsxFile = null, csvFile = null;
+let xlsxData = null, csvData = null;
+let currentMapping = {};
+let reportMarkdown = '';
+
+// ============================
+// File Upload Handling
+// ============================
+document.getElementById('file-xlsx').addEventListener('change', e => {
+  xlsxFile = e.target.files[0];
+  if (xlsxFile) {
+    document.getElementById('name-xlsx').textContent = '✅ ' + xlsxFile.name;
+    document.getElementById('zone-xlsx').classList.add('has-file');
+  }
+  checkReady();
+});
+
+document.getElementById('file-csv').addEventListener('change', e => {
+  csvFile = e.target.files[0];
+  if (csvFile) {
+    document.getElementById('name-csv').textContent = '✅ ' + csvFile.name;
+    document.getElementById('zone-csv').classList.add('has-file');
+  }
+  checkReady();
+});
+
+function checkReady() {
+  document.getElementById('btn-analyze').disabled = !(xlsxFile && csvFile);
+}
+
+// ============================
+// Step Navigation
+// ============================
+function goStep(n) {
+  ['step1','step2','step3','loading'].forEach(id => {
+    document.getElementById(id).classList.remove('visible');
+  });
+  document.getElementById('step' + n).classList.add('visible');
+  for (let i = 1; i <= 3; i++) {
+    const el = document.getElementById('step' + i + '-indicator');
+    el.classList.remove('active','done');
+    if (i < n) el.classList.add('done');
+    else if (i === n) el.classList.add('active');
+  }
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function showLoading(text) {
+  document.getElementById('loading-text').textContent = text;
+  ['step1','step2','step3'].forEach(id => document.getElementById(id).classList.remove('visible'));
+  document.getElementById('loading').classList.add('visible');
+}
+
+// ============================
+// Excel Parsing
+// ============================
+function parseXlsx(buffer) {
+  const wb = XLSX.read(buffer, { type: 'array' });
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  const raw = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+
+  // Parse date columns (row 3 = date serials)
+  const dateMap = {};
+  for (let col = CFG.XLSX_COL_DATE_START; col < Math.min(CFG.XLSX_COL_DATE_END, (raw[3] || []).length); col++) {
+    const serial = raw[3][col];
+    if (serial && !isNaN(serial)) {
+      dateMap[col] = excelDateToJS(Number(serial));
+    }
+  }
+
+  // Parse activities (row 4+)
+  const activities = {};
+  for (let r = CFG.XLSX_ROW_DATA_START; r < raw.length; r++) {
+    const row = raw[r];
+    const name = String(row[0] || '').trim();
+    if (!name) continue;
+
+    const person = String(row[1] || '').trim();
+    const crossServer = String(row[3] || '').trim();
+    const serverCount = row[5];
+    const actCount = row[8];
+
+    // Collect date marks
+    const activeDates = [];
+    const markDetails = [];
+    for (let col = CFG.XLSX_COL_DATE_START; col < Math.min(CFG.XLSX_COL_DATE_END, row.length); col++) {
+      const val = row[col];
+      if (val !== '' && val !== false && val !== 0 && String(val).trim() !== '' && String(val) !== 'false' && String(val) !== '0') {
+        const dt = dateMap[col];
+        if (dt) {
+          activeDates.push(dt);
+          markDetails.push(fmtDate(dt, 'MM.DD') + '(' + String(val).trim() + ')');
+        }
+      }
+    }
+
+    activities[name] = {
+      person, crossServer, serverCount, actCount,
+      activeDates, markDetails,
+      start: activeDates.length ? new Date(Math.min(...activeDates.map(d => d.getTime()))) : null,
+      end: activeDates.length ? new Date(Math.max(...activeDates.map(d => d.getTime()))) : null,
+    };
+  }
+  return { dateMap, activities };
+}
+
+function excelDateToJS(serial) {
+  return new Date(Math.round((serial - 25569) * 86400 * 1000));
+}
+
+// ============================
+// CSV Parsing
+// ============================
+function parseCsv(buffer) {
+  const encoding = document.getElementById('cfg-encoding').value;
+  let text;
+  try {
+    text = new TextDecoder(encoding).decode(buffer);
+  } catch {
+    text = new TextDecoder('utf-8').decode(buffer);
+  }
+
+  const lines = text.split('\n').map(l => l.trim()).filter(l => l);
+  if (lines.length < 2) return {};
+
+  const activities = {};
+  for (let i = 1; i < lines.length; i++) {
+    const cols = parseCSVLine(lines[i]);
+    if (cols.length < 8) continue;
+
+    const clean = s => s.replace(/\t/g, '').trim();
+    const actId = clean(cols[0]);
+    const actName = clean(cols[1]);
+    const serversRaw = clean(cols[2]);
+    const crossRank = clean(cols[3]);
+    const crossServer = clean(cols[4]);
+    const startTime = clean(cols[5]);
+    const endTime = clean(cols[6]);
+    const duration = clean(cols[7]);
+
+    // Parse servers
+    const groupMatch = serversRaw.match(/^(\d+)组/);
+    const numGroups = groupMatch ? parseInt(groupMatch[1]) : 0;
+    const allServers = new Set(serversRaw.match(/\d{7}/g) || []);
+
+    if (!activities[actName]) activities[actName] = [];
+    activities[actName].push({
+      id: actId, startTime, endTime, duration,
+      crossRank, crossServer,
+      numGroups, numServers: allServers.size, allServers,
+    });
+  }
+  return activities;
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQuotes) {
+      if (ch === '"' && line[i + 1] === '"') { current += '"'; i++; }
+      else if (ch === '"') inQuotes = false;
+      else current += ch;
+    } else {
+      if (ch === '"') inQuotes = true;
+      else if (ch === ',') { result.push(current); current = ''; }
+      else current += ch;
+    }
+  }
+  result.push(current);
+  return result;
+}
+
+// ============================
+// Auto Matching
+// ============================
+function autoMatch(xlsxActs, csvActs) {
+  const aliases = getAliases();
+  const csvNames = Object.keys(csvActs);
+  const mapping = {};
+  const usedCsv = new Set();
+
+  for (const xName of Object.keys(xlsxActs)) {
+    const matches = [];
+    const xLower = xName.toLowerCase();
+    const xKeywords = extractKeywords(xName);
+
+    for (const cName of csvNames) {
+      const cLower = cName.toLowerCase();
+      let score = 0;
+
+      // Direct substring
+      if (xLower.includes(cLower) || cLower.includes(xLower)) { score = 100; }
+
+      // Keyword matching
+      if (score === 0) {
+        const cKeywords = extractKeywords(cName);
+        for (const kw of xKeywords) {
+          if (kw.length >= 2) {
+            if (cLower.includes(kw)) score += 20;
+            for (const ck of cKeywords) {
+              if (ck === kw) score += 15;
+            }
+          }
+        }
+      }
+
+      // Alias matching
+      if (score === 0) {
+        for (const [alias, real] of Object.entries(aliases)) {
+          if (xLower.includes(real.toLowerCase()) && cLower.includes(alias.toLowerCase())) {
+            score = 90;
+          }
+          if (xLower.includes(alias.toLowerCase()) && cLower.includes(real.toLowerCase())) {
+            score = 90;
+          }
+        }
+      }
+
+      if (score >= 20) matches.push({ name: cName, score });
+    }
+
+    // Sort by score, take all with score >= 30
+    matches.sort((a, b) => b.score - a.score);
+    const selected = matches.filter(m => m.score >= 30).map(m => m.name);
+    mapping[xName] = selected;
+    selected.forEach(n => usedCsv.add(n));
+  }
+
+  // Check unmatched CSV activities
+  const unmatchedCsv = csvNames.filter(n => !usedCsv.has(n));
+
+  // Try to assign unmatched CSV to existing xlsx via aliases
+  for (const cName of unmatchedCsv) {
+    const cLower = cName.toLowerCase();
+    for (const [alias, real] of Object.entries(aliases)) {
+      if (cLower.includes(alias.toLowerCase())) {
+        // Find xlsx activity that matches the real name
+        for (const xName of Object.keys(mapping)) {
+          if (xName.toLowerCase().includes(real.toLowerCase())) {
+            if (!mapping[xName].includes(cName)) {
+              mapping[xName].push(cName);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return mapping;
+}
+
+function extractKeywords(name) {
+  const noise = ['节日','通用','活动','2025','2026','schema','schema6','schema3','第','期',
+    '（','）','(',')','-','_','+','、',' ','不灰','跨服','全服','分组','单服',
+    '第一','第二','第三','第四','第五'];
+  let s = name.toLowerCase();
+  for (const n of noise) s = s.replace(new RegExp(escapeRegex(n), 'g'), ' ');
+  return s.split(/\s+/).filter(w => w.length >= 2);
+}
+
+function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+function getAliases() {
+  try { return JSON.parse(document.getElementById('cfg-aliases').value); }
+  catch { return {}; }
+}
+
+// ============================
+// Analysis Functions
+// ============================
+function isBugui(name) { return name.includes('不灰'); }
+
+function expectedServerCount(xName, isS6, isS35) {
+  if (isBugui(xName)) {
+    if (isS6) return CFG.SERVER_S6 + CFG.GRAY_EXTRA;
+    if (isS35) return CFG.SERVER_S35;
+    return CFG.SERVER_FULL_GRAY;
+  }
+  if (isS6) return CFG.SERVER_S6;
+  if (isS35) return CFG.SERVER_S35;
+  return CFG.SERVER_FULL;
+}
+
+function auditAll(xlsxActs, csvActs, mapping) {
+  const results = {
+    matched: [], xlsxMissing: [], csvMissing: [],
+    timeWithMarks: [], timeWithoutMarks: [],
+    crossMismatch: [], serverIssues: [], schemaSplits: [],
+    namingIssues: [],
+  };
+
+  const allMatchedCsv = new Set();
+
+  // --- Activity Matching ---
+  for (const [xName, csvNames] of Object.entries(mapping)) {
+    if (!xlsxActs[xName]) continue;
+    const xa = xlsxActs[xName];
+
+    if (!csvNames || csvNames.length === 0) {
+      results.xlsxMissing.push({ name: xName, person: xa.person, note: '上线表中无对应条目' });
+      continue;
+    }
+
+    let totalCount = 0;
+    const items = [];
+    let foundAny = false;
+
+    for (const cn of csvNames) {
+      if (csvActs[cn]) {
+        foundAny = true;
+        csvActs[cn].forEach(it => {
+          items.push({ csvName: cn, id: it.id, start: it.startTime, end: it.endTime });
+          totalCount++;
+        });
+        allMatchedCsv.add(cn);
+      }
+    }
+
+    if (foundAny) {
+      results.matched.push({ xName, person: xa.person, items, count: totalCount });
+    } else {
+      results.xlsxMissing.push({ name: xName, person: xa.person, note: '映射目标在上线表中未找到' });
+    }
+
+    // --- Time comparison ---
+    const csvItems = [];
+    for (const cn of csvNames) {
+      if (csvActs[cn]) csvActs[cn].forEach(it => csvItems.push({ name: cn, ...it }));
+    }
+
+    if (xa.activeDates.length > 0 && csvItems.length > 0) {
+      const comparisons = [];
+      csvItems.sort((a, b) => a.startTime.localeCompare(b.startTime));
+
+      for (const ci of csvItems) {
+        const csvStart = parseDateStr(ci.startTime);
+        let matchResult = '⚠️ 无法比对';
+
+        if (csvStart) {
+          const deployDay = new Date(csvStart.getTime() - CFG.DEPLOY_OFFSET * 86400000);
+          const schedDates = xa.activeDates.map(d => d.toDateString());
+
+          if (schedDates.includes(deployDay.toDateString())) {
+            matchResult = `✅ 匹配（排期${fmtDate(deployDay,'MM.DD')} → 上线${fmtDate(csvStart,'MM.DD')}，+${CFG.DEPLOY_OFFSET}天）`;
+          } else if (xa.start && xa.end) {
+            const rangeEnd = new Date(xa.end.getTime() + 86400000);
+            if (csvStart >= xa.start && csvStart <= rangeEnd) {
+              matchResult = '✅ 在排期覆盖范围内';
+            } else {
+              const diff = Math.round((csvStart - xa.start) / 86400000);
+              matchResult = `❌ 超出排期范围（差${diff > 0 ? '+' : ''}${diff}天）`;
+            }
+          }
+        }
+        comparisons.push({ csvName: ci.name, csvId: ci.id, start: ci.startTime, end: ci.endTime, duration: ci.duration, result: matchResult });
+      }
+      results.timeWithMarks.push({ xName, person: xa.person, marks: xa.markDetails, comparisons });
+    } else if (csvItems.length > 0) {
+      for (const ci of csvItems) {
+        results.timeWithoutMarks.push({ xName, csvName: ci.name, csvId: ci.id, start: ci.startTime, end: ci.endTime, duration: ci.duration });
+      }
+    }
+
+    // --- Server comparison ---
+    for (const cn of csvNames) {
+      if (!csvActs[cn]) continue;
+      const item = csvActs[cn][0];
+
+      // Cross type check
+      const xCross = xa.crossServer;
+      const cCross = item.crossServer;
+      if (xCross === '单服' && cCross !== '单服') {
+        results.crossMismatch.push({ xName, csvName: cn, xCross, cCross: `${cCross}(${item.numGroups}组/${item.numServers}服)`, note: '排期=单服，上线≠单服' });
+      } else if (xCross.includes('跨服') && cCross !== '跨服') {
+        results.crossMismatch.push({ xName, csvName: cn, xCross, cCross: `${cCross}(${item.numServers}服)`, note: `排期=${xCross}，上线=${cCross}` });
+      }
+
+      // Server count check
+      const isS6 = /schema6|_s6|-s6/i.test(cn);
+      const isS35 = /schema3|s3-5|schema3~5/i.test(cn);
+      const expected = expectedServerCount(xName, isS6, isS35);
+      if (item.numServers !== expected && item.numServers > 0) {
+        let note = `预期${expected}，实际${item.numServers}（差${item.numServers - expected > 0 ? '+' : ''}${item.numServers - expected}）`;
+        if (isBugui(xName) && item.numServers === CFG.SERVER_FULL) {
+          note = `"不灰"活动应有${CFG.SERVER_FULL_GRAY}服(含灰度)，实际只有${CFG.SERVER_FULL}`;
+        } else if (isBugui(xName) && item.numServers === CFG.SERVER_FULL_GRAY) {
+          continue; // Normal for bugui
+        }
+        results.serverIssues.push({ xName, csvName: cn, csvId: item.id, expected, actual: item.numServers, diff: item.numServers - expected, note });
+      }
+    }
+  }
+
+  // CSV missing
+  for (const cn of Object.keys(csvActs)) {
+    if (!allMatchedCsv.has(cn)) {
+      results.csvMissing.push({ name: cn, count: csvActs[cn].length, ids: csvActs[cn].map(i => i.id) });
+    }
+  }
+
+  // Schema split check
+  const schemaPairs = findSchemaPairs(csvActs);
+  for (const [s6, s35] of schemaPairs) {
+    const s6Servers = csvActs[s6][0].allServers;
+    const s35Servers = csvActs[s35][0].allServers;
+    const overlap = new Set([...s6Servers].filter(x => s35Servers.has(x)));
+    const combined = new Set([...s6Servers, ...s35Servers]);
+    results.schemaSplits.push({ s6, s35, s6Count: s6Servers.size, s35Count: s35Servers.size, combined: combined.size, overlap: overlap.size, ok: overlap.size === 0 });
+  }
+
+  // Naming check
+  const keywords = (document.getElementById('cfg-keywords').value || '').split(',').map(s => s.trim()).filter(Boolean);
+  const allHolidays = ['圣诞','万圣','感恩','登月','夏日','春节','新年','中秋','国庆','端午','元旦','复活'];
+  const otherHolidays = allHolidays.filter(h => !keywords.some(k => h.includes(k) || k.includes(h)));
+  const currentYear = new Date().getFullYear().toString();
+
+  for (const [name, items] of Object.entries(csvActs)) {
+    for (const h of otherHolidays) {
+      if (name.includes(h)) {
+        results.namingIssues.push({ csvName: name, ids: items.map(i => i.id), issue: `名称包含"${h}"，可能是旧模板` });
+        break;
+      }
+    }
+    const yearMatches = name.match(/20\d{2}/g) || [];
+    for (const y of yearMatches) {
+      if (y !== currentYear) {
+        results.namingIssues.push({ csvName: name, ids: items.map(i => i.id), issue: `年份为${y}，当前为${currentYear}` });
+      }
+    }
+  }
+
+  return results;
+}
+
+function findSchemaPairs(csvActs) {
+  const pairs = [];
+  const names = Object.keys(csvActs);
+  const s6Names = names.filter(n => /schema6|_schema6|-s6/i.test(n));
+  const s35Names = names.filter(n => /schema3|s3-5|schema3~5/i.test(n));
+
+  for (const s6 of s6Names) {
+    const base = s6.toLowerCase().replace(/schema6|_schema6|-schema6|-s6/gi, '').replace(/[-_ ]+/g, '');
+    for (const s35 of s35Names) {
+      const s35Base = s35.toLowerCase().replace(/schema3-5|schema3~5|_schema3-5|-s3-5|-schema3-5|schema3|schema4|schema5/gi, '').replace(/[-_ ]+/g, '');
+      if (base === s35Base) {
+        pairs.push([s6, s35]);
+        break;
+      }
+    }
+  }
+  return pairs;
+}
+
+// ============================
+// Report Generation
+// ============================
+function generateReport(results) {
+  const holiday = document.getElementById('cfg-holiday').value || '节日';
+  const today = new Date().toLocaleDateString('zh-CN', { year:'numeric', month:'2-digit', day:'2-digit' }).replace(/\//g, '.');
+  let md = '';
+
+  md += `# ${holiday}活动 - 排期审核 vs 正式上线 总结报告\n\n`;
+  md += `> 审核日期：${today}\n`;
+  md += `> 数据来源：排期审核表(xlsx) vs 正式上线表(csv)\n\n---\n\n`;
+
+  // 一、总览
+  const xlsxCount = Object.keys(xlsxData.activities).length;
+  const csvTotal = Object.values(csvData).reduce((s, v) => s + v.length, 0);
+  const csvUnique = Object.keys(csvData).length;
+  md += `## 一、总览\n\n`;
+  md += `| 维度 | 排期审核表 | 正式上线表 | 说明 |\n|------|-----------|-----------|------|\n`;
+  md += `| 活动数 | ${xlsxCount}项 | ${csvTotal}条记录(去重后${csvUnique}个) | 上线表含多期拆分 |\n\n---\n\n`;
+
+  // 二、活动条目匹配
+  md += `## 二、活动条目匹配（${xlsxCount}项排期 vs 上线表）\n\n`;
+  md += `### ✅ 已匹配：${results.matched.length}项\n\n`;
+  if (results.matched.length) {
+    md += `| # | 排期审核表 | 负责人 | 正式上线表 | 上线条数 |\n|---|-----------|--------|-----------|:-------:|\n`;
+    results.matched.forEach((m, i) => {
+      const desc = m.items.length <= 2
+        ? m.items.map(it => `${it.csvName}(${it.id})`).join(' + ')
+        : `${m.items[0].csvName}(${m.items[0].id}) 等${m.items.length}条`;
+      md += `| ${i + 1} | ${m.xName} | ${m.person} | ${desc} | ${m.count} |\n`;
+    });
+    md += '\n';
+  }
+
+  if (results.xlsxMissing.length) {
+    md += `### ❌ 排期表有但上线表缺失：${results.xlsxMissing.length}项\n\n`;
+    md += `| # | 活动 | 负责人 | 说明 |\n|---|------|--------|------|\n`;
+    results.xlsxMissing.forEach((m, i) => {
+      md += `| ${i + 1} | **${m.name}** | ${m.person} | ${m.note} |\n`;
+    });
+    md += '\n';
+  }
+
+  if (results.csvMissing.length) {
+    md += `### ❌ 上线表有但排期表缺失：${results.csvMissing.length}项\n\n`;
+    md += `| 活动 | 上线条数 | 活动ID |\n|------|:-------:|--------|\n`;
+    results.csvMissing.forEach(m => {
+      md += `| **${m.name}** | ${m.count} | ${m.ids.slice(0, 5).join('/')}${m.ids.length > 5 ? '...' : ''} |\n`;
+    });
+    md += '\n';
+  }
+  md += `---\n\n`;
+
+  // 三、上线时间对比
+  md += `## 三、上线时间对比\n\n`;
+  md += `### 规律\n\n排期标记日 = 部署操作日，实际上线 = 标记日 +${CFG.DEPLOY_OFFSET}天\n\n`;
+
+  if (results.timeWithMarks.length) {
+    md += `### 有日期标记的活动逐期比对\n\n`;
+    for (const item of results.timeWithMarks) {
+      md += `#### ${item.xName}（${item.person}）\n\n`;
+      md += `排期标记: ${item.marks.join(', ')}\n\n`;
+      md += `| 上线活动 | ID | 上线时间 | 时长 | 比对结果 |\n|---------|-----|---------|------|----------|\n`;
+      for (const c of item.comparisons) {
+        md += `| ${c.csvName} | ${c.csvId} | ${(c.start||'').slice(0,16)}~${(c.end||'').slice(0,16)} | ${c.duration} | ${c.result} |\n`;
+      }
+      md += '\n';
+    }
+  }
+
+  if (results.timeWithoutMarks.length) {
+    md += `### 无日期标记的活动（仅列出上线时间）\n\n`;
+    md += `| 排期活动 | 上线活动 | ID | 上线时间 | 时长 |\n|---------|---------|-----|---------|------|\n`;
+    for (const item of results.timeWithoutMarks) {
+      md += `| ${item.xName} | ${item.csvName} | ${item.csvId} | ${(item.start||'').slice(0,16)}~${(item.end||'').slice(0,16)} | ${item.duration} |\n`;
+    }
+    md += '\n';
+  }
+  md += `---\n\n`;
+
+  // 四、服务器配置对比
+  md += `## 四、服务器配置对比\n\n`;
+
+  if (results.crossMismatch.length) {
+    md += `### 跨服类型不匹配：${results.crossMismatch.length}项\n\n`;
+    md += `| # | 排期活动 | 上线活动 | 排期标注 | 上线实际 | 说明 |\n|---|---------|---------|---------|---------|------|\n`;
+    results.crossMismatch.forEach((m, i) => {
+      md += `| ${i + 1} | ${m.xName} | ${m.csvName} | ${m.xCross} | ${m.cCross} | ${m.note} |\n`;
+    });
+    md += '\n';
+  }
+
+  if (results.serverIssues.length) {
+    md += `### 服务器数量异常：${results.serverIssues.length}项\n\n`;
+    md += `| # | 活动 | ID | 预期 | 实际 | 差异 | 说明 |\n|---|------|----|:----:|:----:|:----:|------|\n`;
+    results.serverIssues.forEach((m, i) => {
+      md += `| ${i + 1} | ${m.csvName} | ${m.csvId} | ${m.expected} | ${m.actual} | ${m.diff > 0 ? '+' : ''}${m.diff} | ${m.note} |\n`;
+    });
+    md += '\n';
+  }
+
+  if (results.schemaSplits.length) {
+    const allOk = results.schemaSplits.every(s => s.ok);
+    md += `### Schema 分割完整性：${allOk ? '全部通过 ✅' : '存在问题 ❌'}\n\n`;
+    md += `| Schema6 | Schema3-5 | S6数 | S35数 | 合计 | 重叠 | 结果 |\n|---------|-----------|:----:|:-----:|:----:|:----:|------|\n`;
+    results.schemaSplits.forEach(s => {
+      md += `| ${s.s6} | ${s.s35} | ${s.s6Count} | ${s.s35Count} | ${s.combined} | ${s.overlap} | ${s.ok ? '✅' : '❌'} |\n`;
+    });
+    md += '\n';
+  }
+  md += '---\n\n';
+
+  // 五、命名问题
+  if (results.namingIssues.length) {
+    md += `## 五、活动命名问题\n\n`;
+    md += `| 上线表活动名 | ID | 问题 |\n|-------------|-----|------|\n`;
+    results.namingIssues.forEach(n => {
+      md += `| **${n.csvName}** | ${n.ids.slice(0, 3).join('/')} | ${n.issue} |\n`;
+    });
+    md += '\n---\n\n';
+  }
+
+  // 六、待确认事项
+  md += `## 六、待确认事项清单\n\n`;
+  const todos = [];
+  results.xlsxMissing.forEach(m => todos.push({ pri: '🔴高', item: `**${m.name}** 排期有但上线缺失`, note: m.note }));
+  results.csvMissing.filter(m => m.count >= 3).forEach(m => todos.push({ pri: '🔴高', item: `**${m.name}**(${m.count}条) 上线有但排期缺失`, note: '是否遗漏审核？' }));
+  if (results.crossMismatch.length) todos.push({ pri: '🟡中', item: `${results.crossMismatch.length}项**跨服类型不匹配**`, note: '确认哪方正确' });
+  if (results.serverIssues.length) todos.push({ pri: '🟡中', item: `${results.serverIssues.length}项**服务器数量异常**`, note: '确认是否有意为之' });
+  if (results.namingIssues.length) todos.push({ pri: '🟢低', item: `${results.namingIssues.length}个活动名称可能有误`, note: '旧模板/年份错误' });
+
+  if (todos.length) {
+    md += `| 序号 | 优先级 | 事项 | 说明 |\n|:----:|--------|------|------|\n`;
+    todos.forEach((t, i) => md += `| ${i + 1} | ${t.pri} | ${t.item} | ${t.note} |\n`);
+  } else {
+    md += '无待确认事项。\n';
+  }
+
+  return md;
+}
+
+// ============================
+// Utility
+// ============================
+function fmtDate(d, fmt) {
+  if (!d) return '';
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  if (fmt === 'MM.DD') return mm + '.' + dd;
+  return d.getFullYear() + '.' + mm + '.' + dd;
+}
+
+function parseDateStr(s) {
+  if (!s) return null;
+  s = s.trim();
+  const fmts = [
+    /^(\d{4})\.(\d{1,2})\.(\d{1,2})\s+(\d{1,2}):(\d{2}):(\d{2})$/,
+    /^(\d{4})\.(\d{1,2})\.(\d{1,2})$/,
+    /^(\d{4})-(\d{1,2})-(\d{1,2})\s+(\d{1,2}):(\d{2}):(\d{2})$/,
+    /^(\d{4})-(\d{1,2})-(\d{1,2})$/,
+  ];
+  for (const re of fmts) {
+    const m = s.match(re);
+    if (m) return new Date(+m[1], +m[2] - 1, +m[3], +(m[4]||0), +(m[5]||0), +(m[6]||0));
+  }
+  return null;
+}
+
+// ============================
+// UI Actions
+// ============================
+async function startAnalysis() {
+  showLoading('正在解析文件...');
+
+  try {
+    const [xlsxBuf, csvBuf] = await Promise.all([
+      xlsxFile.arrayBuffer(),
+      csvFile.arrayBuffer(),
+    ]);
+
+    showLoading('解析排期审核表...');
+    xlsxData = parseXlsx(xlsxBuf);
+
+    showLoading('解析正式上线表...');
+    csvData = parseCsv(csvBuf);
+
+    showLoading('自动匹配活动...');
+    currentMapping = autoMatch(xlsxData.activities, csvData);
+
+    renderMappingTable();
+    goStep(2);
+  } catch (err) {
+    alert('解析失败: ' + err.message);
+    goStep(1);
+  }
+}
+
+function renderMappingTable() {
+  const container = document.getElementById('mapping-container');
+  const csvNames = Object.keys(csvData);
+  let html = '<table class="mapping-table"><thead><tr><th>排期表活动</th><th>负责人</th><th>匹配的上线表活动（可多选）</th><th>状态</th></tr></thead><tbody>';
+
+  for (const [xName, selected] of Object.entries(currentMapping)) {
+    const xa = xlsxData.activities[xName];
+    if (!xa) continue;
+    const status = selected.length > 0
+      ? '<span class="tag tag-match">已匹配</span>'
+      : '<span class="tag tag-miss">未匹配</span>';
+
+    html += `<tr>
+      <td style="font-weight:500;white-space:nowrap;">${xName}</td>
+      <td style="color:var(--text-secondary);white-space:nowrap;">${xa.person}</td>
+      <td>
+        <select multiple size="${Math.min(5, Math.max(3, csvNames.length / 10 | 0))}" data-xlsx="${escapeHtml(xName)}" onchange="updateMapping(this)">
+          ${csvNames.map(cn => `<option value="${escapeHtml(cn)}" ${selected.includes(cn) ? 'selected' : ''}>${cn} (${csvData[cn].length}条)</option>`).join('')}
+        </select>
+      </td>
+      <td>${status}</td>
+    </tr>`;
+  }
+
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+function updateMapping(sel) {
+  const xName = sel.getAttribute('data-xlsx');
+  const selected = Array.from(sel.selectedOptions).map(o => o.value);
+  currentMapping[xName] = selected;
+}
+
+function confirmMapping() {
+  showLoading('正在生成审核报告...');
+  setTimeout(() => {
+    try {
+      const results = auditAll(xlsxData.activities, csvData, currentMapping);
+      reportMarkdown = generateReport(results);
+      document.getElementById('report-output').innerHTML = marked.parse(reportMarkdown);
+      goStep(3);
+    } catch (err) {
+      alert('生成报告失败: ' + err.message);
+      console.error(err);
+      goStep(2);
+    }
+  }, 100);
+}
+
+function copyReport() {
+  navigator.clipboard.writeText(reportMarkdown).then(() => {
+    const btn = event.target;
+    btn.textContent = '✅ 已复制';
+    setTimeout(() => btn.textContent = '📋 复制 Markdown', 2000);
+  });
+}
+
+function downloadReport() {
+  const holiday = document.getElementById('cfg-holiday').value || '节日';
+  const blob = new Blob([reportMarkdown], { type: 'text/markdown;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${holiday}_排期审核总结报告.md`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+</script>
+</body>
+</html>

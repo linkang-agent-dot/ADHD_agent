@@ -1,0 +1,257 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "活动复盘报告 V2 输入数据",
+  "description": "7 大数据块的完整 JSON Schema 定义",
+  "type": "object",
+  "required": ["meta", "reach_conversion", "behavior_data", "payment_overview", "r_tier_payment", "payment_conversion", "core_reward", "gift_packages"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["event_name", "change_description"],
+      "properties": {
+        "event_name": {"type": "string", "description": "当期活动名称"},
+        "event_type": {"type": "string", "description": "活动类型（节日/周年/联动等）"},
+        "event_start_date": {"type": "string", "format": "date", "description": "活动开始日期 ISO"},
+        "event_end_date": {"type": "string", "format": "date", "description": "活动结束日期 ISO"},
+        "change_description": {"type": "string", "description": "本期改动内容简述"},
+        "benchmark_event": {"type": "string", "description": "对标活动名称"}
+      }
+    },
+    "reach_conversion": {
+      "type": "object",
+      "required": ["stages"],
+      "properties": {
+        "stages": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": ["stage", "users"],
+            "properties": {
+              "stage": {"type": "string", "description": "阶段名称"},
+              "users": {"type": "number", "minimum": 0, "description": "该阶段人数"},
+              "note": {"type": "string", "description": "备注"}
+            }
+          }
+        },
+        "comparison": {
+          "type": "object",
+          "properties": {
+            "benchmark_event": {"type": "string"},
+            "stages": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["stage", "users"],
+                "properties": {
+                  "stage": {"type": "string"},
+                  "users": {"type": "number", "minimum": 0}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "behavior_data": {
+      "type": "object",
+      "required": ["metrics"],
+      "properties": {
+        "metrics": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["metric_name", "current_value", "unit"],
+            "properties": {
+              "metric_name": {"type": "string", "description": "指标名称"},
+              "current_value": {"type": "number", "description": "当期值"},
+              "benchmark_value": {"type": "number", "description": "对标值"},
+              "unit": {"type": "string", "description": "单位"}
+            }
+          }
+        },
+        "daily_trend": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["date", "dau"],
+            "properties": {
+              "date": {"type": "string", "format": "date"},
+              "dau": {"type": "number"},
+              "participate_rate": {"type": "number"},
+              "avg_actions": {"type": "number"}
+            }
+          }
+        }
+      }
+    },
+    "payment_overview": {
+      "type": "object",
+      "required": ["time_series"],
+      "properties": {
+        "time_series": {
+          "type": "array",
+          "minItems": 6,
+          "items": {
+            "type": "object",
+            "required": ["event", "revenue", "pay_rate", "arpu", "arppu"],
+            "properties": {
+              "event": {"type": "string", "description": "活动/月份名称"},
+              "revenue": {"type": "number", "minimum": 0, "description": "付费总额"},
+              "pay_rate": {"type": "number", "minimum": 0, "maximum": 100, "description": "付费率(%)"},
+              "arpu": {"type": "number", "minimum": 0, "description": "ARPU"},
+              "arppu": {"type": "number", "minimum": 0, "description": "ARPPU"}
+            }
+          }
+        },
+        "yoy_benchmark": {
+          "type": "object",
+          "properties": {
+            "event": {"type": "string"},
+            "revenue": {"type": "number", "minimum": 0},
+            "pay_rate": {"type": "number", "minimum": 0, "maximum": 100},
+            "arpu": {"type": "number", "minimum": 0},
+            "arppu": {"type": "number", "minimum": 0}
+          }
+        }
+      }
+    },
+    "r_tier_payment": {
+      "type": "object",
+      "required": ["tiers", "time_series"],
+      "properties": {
+        "tiers": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "R级名称列表"
+        },
+        "time_series": {
+          "type": "array",
+          "minItems": 6,
+          "items": {
+            "type": "object",
+            "required": ["event", "data"],
+            "properties": {
+              "event": {"type": "string"},
+              "data": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "required": ["revenue", "pay_rate", "arpu", "arppu"],
+                  "properties": {
+                    "revenue": {"type": "number", "minimum": 0},
+                    "pay_rate": {"type": "number", "minimum": 0, "maximum": 100},
+                    "arpu": {"type": "number", "minimum": 0},
+                    "arppu": {"type": "number", "minimum": 0}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "payment_conversion": {
+      "type": "object",
+      "required": ["current"],
+      "properties": {
+        "current": {
+          "type": "object",
+          "required": ["event", "price_tiers"],
+          "properties": {
+            "event": {"type": "string"},
+            "price_tiers": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": ["price", "purchases", "payers"],
+                "properties": {
+                  "price": {"type": "number", "minimum": 0, "description": "价位（元）"},
+                  "purchases": {"type": "number", "minimum": 0, "description": "购买笔数"},
+                  "payers": {"type": "number", "minimum": 0, "description": "购买人数"}
+                }
+              }
+            }
+          }
+        },
+        "comparison": {
+          "type": "object",
+          "properties": {
+            "event": {"type": "string"},
+            "price_tiers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["price", "purchases", "payers"],
+                "properties": {
+                  "price": {"type": "number", "minimum": 0},
+                  "purchases": {"type": "number", "minimum": 0},
+                  "payers": {"type": "number", "minimum": 0}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "core_reward": {
+      "type": "object",
+      "required": ["items"],
+      "properties": {
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["reward_name", "expected_value", "actual_value", "unit"],
+            "properties": {
+              "reward_name": {"type": "string", "description": "奖励名称"},
+              "expected_value": {"type": "number", "description": "预期产出数量"},
+              "actual_value": {"type": "number", "description": "实际产出数量"},
+              "unit": {"type": "string", "description": "产出单位"},
+              "expected_cost": {"type": "number", "description": "预期获取成本"},
+              "actual_cost": {"type": "number", "description": "实际获取成本"},
+              "cost_unit": {"type": "string", "description": "成本单位"}
+            }
+          }
+        }
+      }
+    },
+    "gift_packages": {
+      "type": "object",
+      "required": ["packages"],
+      "properties": {
+        "packages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["package_name", "price", "revenue", "payers"],
+            "properties": {
+              "package_name": {"type": "string", "description": "礼包名称"},
+              "price": {"type": "number", "minimum": 0, "description": "礼包价格"},
+              "revenue": {"type": "number", "minimum": 0, "description": "付费总额"},
+              "payers": {"type": "number", "minimum": 0, "description": "付费人数"},
+              "description": {"type": "string", "description": "礼包内容描述"}
+            }
+          }
+        },
+        "comparison_packages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["package_name", "price", "revenue", "payers"],
+            "properties": {
+              "package_name": {"type": "string"},
+              "price": {"type": "number", "minimum": 0},
+              "revenue": {"type": "number", "minimum": 0},
+              "payers": {"type": "number", "minimum": 0}
+            }
+          }
+        }
+      }
+    }
+  }
+}
