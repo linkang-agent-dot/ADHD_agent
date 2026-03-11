@@ -11,9 +11,19 @@ git -C C:\gdconfig branch --show-current
 切换：`git -C C:\gdconfig checkout -q <branch>; git -C C:\gdconfig pull -q`
 
 **S2 下载**
+
+多个编号时用**空格分隔**，需拆分为多次单独下载（工具不支持逗号或空格同时传入多个）：
+
 ```powershell
-echo "1`n<编号列表>`nn" | & "C:\gdconfig\scripts\GSheetDownloader.exe"
+# 单个表
+echo "1`n1111`nn" | & "C:\gdconfig\scripts\GSheetDownloader.exe"
+
+# 多个表（逐个执行，每次下载完成后再下一个）
+echo "1`n1168`nn" | & "C:\gdconfig\scripts\GSheetDownloader.exe"
+echo "1`n1111`nn" | & "C:\gdconfig\scripts\GSheetDownloader.exe"
 ```
+
+> 用户输入如 `1168 1111`（空格分隔），视为多张表，按顺序分别下载提交。
 
 **S3 读末尾8行确认** → 找 `成功: X, 失败: 0`
 - `json error on row` → 报错行号+字段，用 `git diff <file> | Select-Object -First 150` 定位，给出修正建议
