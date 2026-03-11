@@ -1,117 +1,88 @@
 # 配置表上传工具
 
-## 功能描述
-根据用户提供的截图或表名，自动识别配置表编号并批量上传到 gdconfig 仓库。
+触发词：P2导表、传表、导表、上传配置、用户给数字编号+分支
 
-## 触发条件
-当用户提到以下关键词时使用：
-- "上传配置表"、"上传表"、"upload config"、"传表"
-- "下载配置表"、"拉表"、"拉配置"
-- 用户发送包含 `fo\config\*.tsv` 文件列表的截图
+## 执行顺序（5步）
 
-## Token 优化指南（重要！）
-
-为减少 token 消耗，执行时遵循以下原则：
-
-1. **git 操作静默化**：使用 `-q` 参数抑制输出
-2. **不读取下载工具完整输出**：只读取最后 5 行确认结果
-3. **多分支批量操作**：尽量合并命令，减少轮次
-
-## 使用流程
-
-### 1. 识别配置表
-从用户提供的截图或文字中识别表名/编号。用户可能直接给编号（如 1111）或表名（如 item）。
-
-### 2. 常用配置表编号速查
-
-| 编号 | 表名 | 说明 |
-|------|------|------|
-| 1011 | i18n | 客户端本地化 |
-| 1111 | item | 道具表 |
-| 1118 | building | 建筑表 |
-| 1120 | drop | 掉落表 |
-| 1211 | buff | buff表 |
-| 1387 | city_effect | 城内特效 |
-| 1392 | city_effect_extent | 城内范围特效 |
-| 1920 | hero_data | 英雄表 |
-| 2011 | iap_config | 内购配置总表 |
-| 2111 | activity_calendar | 活动日历配置表 |
-| 2112 | activity_config | 活动配置表 |
-| 2118 | activity_rank_rewards | 活动排名奖励 |
-| 2119 | activity_ui_template | 活动UI模板 |
-| 2120 | activity_ui_module | 活动UI模块 |
-| 2122 | activity_rank_rule | 活动排名模板 |
-| 2136 | activity_cycle_period | 活动周期配置 |
-| 2138 | activity_proto_module | 活动类型和客户端协议模块 |
-| 2141 | activity_without_gacha_pool | 活动非放回抽奖池 |
-| 2142 | activity_without_gacha_reward | 活动非放回抽奖奖励 |
-| 2160 | activity_metro_grade | 挖矿评级 |
-| 2169 | activity_hud_entry_style | 活动HUD入口样式 |
-
-### 3. 切换分支（静默模式）
-
-使用 `-q` 参数减少输出：
-
+**S1 确认分支**
 ```powershell
-git -C C:\gdconfig checkout -q <分支名>; git -C C:\gdconfig pull -q
+git -C C:\gdconfig branch --show-current
 ```
+切换：`git -C C:\gdconfig checkout -q <branch>; git -C C:\gdconfig pull -q`
 
-**常用分支：** `hotfix`、`bugfix`、`dev`、`qa`
-
-### 4. 执行下载命令
-
+**S2 下载**
 ```powershell
 echo "1`n<编号列表>`nn" | & "C:\gdconfig\scripts\GSheetDownloader.exe"
 ```
 
-**示例：**
+**S3 读末尾8行确认** → 找 `成功: X, 失败: 0`
+- `json error on row` → 报错行号+字段，用 `git diff <file> | Select-Object -First 150` 定位，给出修正建议
+- `失败: X>0` → 报告错误
+
+**S4 查看改动**
 ```powershell
-echo "1`n1011 1111`nn" | & "C:\gdconfig\scripts\GSheetDownloader.exe"
+git -C C:\gdconfig diff --stat; git -C C:\gdconfig diff
 ```
+diff 极长时加 `| Select-Object -First 80`。摘要：提取 ID/名称，自然语言描述，不罗列 TSV。
 
-### 5. 验证结果（只读最后几行！）
-
-**关键优化**：命令输出会很长（1500+行），但只需读取输出文件的**最后 5 行**来确认结果：
-
-```
-Read 工具使用 offset: -5 参数
-```
-
-查找关键信息：`成功: X, 失败: 0` 即可确认下载成功。
-
-### 6. 多分支操作模板
-
-如果用户要传多个分支（如 bugfix + hotfix），按顺序执行：
-
+**S5 提交推送**
 ```powershell
-# 分支1
-git -C C:\gdconfig checkout -q bugfix; git -C C:\gdconfig pull -q
-echo "1`n<编号>`nn" | & "C:\gdconfig\scripts\GSheetDownloader.exe"
-
-# 分支2  
-git -C C:\gdconfig checkout -q hotfix; git -C C:\gdconfig pull -q
-echo "1`n<编号>`nn" | & "C:\gdconfig\scripts\GSheetDownloader.exe"
+git -C C:\gdconfig add .; git -C C:\gdconfig commit -m "[配置更新]<页签>-<分支>-<五字>"; git -C C:\gdconfig pull -q --rebase; git -C C:\gdconfig push
 ```
 
-### 7. 回复模板（简洁）
+---
 
-```
-✅ <分支名>: <编号列表> 下载成功，请手动检查后提交。
-```
+## 编号→页签速查
 
-多分支示例：
-```
-✅ bugfix: 1011 1111 下载成功
-✅ hotfix: 1011 1111 下载成功
-请手动检查后提交。
-```
+| 编号 | 页签 |
+|------|------|
+| 1011 | cn（i18n 全语言）|
+| 1111 | item |
+| 1118 | building |
+| 1120 | drop |
+| 1168 | get_access_group |
+| 1211 | buff |
+| 1387 | city_effect |
+| 1511 | display_key |
+| 1920 | hero_data |
+| 2011 | iap_config |
+| 2111 | activity_calendar |
+| 2112 | activity_config |
+| 2115 | activity_task |
+| 2116 | activity_item_exchange |
+| 2118 | activity_rank_rewards |
+| 2119 | activity_ui_template |
+| 2120 | activity_ui_module |
+| 2121 | activity_special |
+| 2122 | activity_rank_rule |
+| 2135 | activity_package |
+| 2136 | activity_cycle_period |
+| 2138 | activity_proto_module |
+| 2141 | activity_without_gacha_pool |
+| 2142 | activity_without_gacha_reward |
+| 2160 | activity_metro_grade |
+| 2169 | activity_hud_entry_style |
 
-## 完整编号查询
+## 常用 SheetID（需查页签时用）
+
+| 编号 | SheetID |
+|------|---------|
+| 1111 | 1FQqpeRfkXVwaEDSVi3oTaQNs2PLLDcsvQQmc-k0L3ws |
+| 1168 | 1KwX1xWoHHcmOGTaasZmMii2Al-YR_VXV3yoSGn3tBbA |
+| 2112 | 1IKUBw678b2PU1m0md1vR9GxcH2uTNyLbR7VWgyAJ57E |
+| 2118 | 1Nb23s9iVOiDzWGQlpHSRW5O0gIqd1ZiYNx9kYrDps2M |
+| 2120 | 1b8aDEJWh4cmWKqrrg_5ZAkk3VdTj9k_6SBFbEt0P9-0 |
+| 2121 | 1sicvhfxZhagLVmpEg4HDcaCnPWPgsWkhgZKC-HxCCuc |
+
+未知表查索引：
 ```powershell
-echo "1`n9999" | & "C:\gdconfig\scripts\GSheetDownloader.exe"
+$env:GOOGLE_WORKSPACE_PROJECT_ID = 'calm-repeater-489707-n1'
+gws sheets spreadsheets values get --params '{"spreadsheetId": "1wYJQoPcdmlw4HcjmR2QP41WP4Gb4k8Rd7iCJJX7H_8c", "range": "fw_gsheet_config!A1:F300"}'
 ```
 
-## 注意事项
-1. 工具路径：`C:\gdconfig\scripts\GSheetDownloader.exe`
-2. 表编号用空格分隔
-3. PowerShell 用 `;` 连接命令（不是 `&&`）
+## 回复格式
+```
+✅ <编号>(<页签>) → <分支> 提交成功
+commit: [配置更新]<页签>-<分支>-<五字>
+📝 +X/-Y行：<摘要>
+```

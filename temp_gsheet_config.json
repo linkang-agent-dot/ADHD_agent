@@ -1,0 +1,2406 @@
+﻿{
+  "majorDimension": "ROWS",
+  "range": "fw_gsheet_config!A1:F300",
+  "values": [
+    [
+      "閫氱敤",
+      "1011_i18n - 瀹㈡埛绔湰鍦板寲",
+      "i18n",
+      "11BIizMMOQRWzLZi9TjvxDxn_i0949wKwMX-T9_zlYTY",
+      "",
+      "1"
+    ],
+    [
+      "閫氱敤",
+      "1011_i18n - 瀹㈡埛绔湰鍦板寲-鍥芥湇",
+      "i18n",
+      "1x7E76B9U2CWzOgbuk60F6oEDo_4Lkz1MnRJYSA9m_CM",
+      "",
+      "2"
+    ],
+    [
+      "閫氱敤",
+      "1012_val_format - 鏁板瓧鏂囨湰鏄剧ず",
+      "val_format",
+      "1yEjUu7EmYuFwMbUOO8n08_b1ru5ba8PE-qTqBsoFqvo",
+      "",
+      "0"
+    ],
+    [
+      "閫氱敤",
+      "1013_const_config - 甯搁噺鏉傞」",
+      "const_config",
+      "1WKAxQDf0-7UZADWxef1wDQaN0chqPJNa3zEB81W9fho",
+      "",
+      "0"
+    ],
+    [
+      "閫氱敤",
+      "1014_statistical_data - 缁熻鏁版嵁",
+      "statistical_data",
+      "1xrIDRZjP6M80fm3fK2WgWMrJVEDeelVu41m4KZBNLDo",
+      "",
+      "0"
+    ],
+    [
+      "閫氱敤",
+      "1018_ab_test-AB娴嬭瘯",
+      "ab_test",
+      "1uv5WjowNwd7vdrmdwdp1xbrv4QvVB9oFw5Qj8oDYUU8",
+      "",
+      "0"
+    ],
+    [
+      "閫氱敤",
+      "1019_statistical_data_relation-1014琛ㄧ殑鏄犲皠鍏崇郴",
+      "statistical_data_relation",
+      "1a8ZkE7RR2C0SQYiDywgaZtR51mGbNLBIHhBFyLUu8ew",
+      "",
+      "0"
+    ],
+    [
+      "閫氱敤",
+      "1020_dlc_priority - dlc棰勫姞杞界殑浼樺厛绾?,
+      "dlc_priority",
+      "15XTwZU23pmfm_5zSRI2cxyVADu3EDW7j9L48UeGUcTw",
+      "",
+      "0"
+    ],
+    [
+      "閫氱敤",
+      "1021_china_holiday - 鍋囨湡琛?,
+      "china_holiday",
+      "1cQXwskSwzBVHWjzEvNQi3miRuxMyAelJ6sjnNPEFBQA",
+      "",
+      "0"
+    ],
+    [
+      "閫氱敤",
+      "1022_function_switch - 鍔熻兘寮€鍏宠〃",
+      "function_switch",
+      "13g8B_oZskkwJMHYtbK3o6mIu7-WqtwJ2_C_l5b4TmGQ",
+      "",
+      "0"
+    ],
+    [
+      "閫氱敤",
+      "1023_popwindow - 寮圭獥閰嶇疆",
+      "popwindow",
+      "1-VFj-Pzpn6OPIp2b0aAkAqWcDtfYxBFAiyVgPHP6SL4",
+      "",
+      "0"
+    ],
+    [
+      "閫氱敤",
+      "1024_merge_server_counter -鍚堟湇counter澶勭悊",
+      "merge_server_counter",
+      "1D8O13sJopJneDFZIhZwrsgZ-RkDJLTZQ-7fgpyP0B60",
+      "",
+      "0"
+    ],
+    [
+      "閫氱敤",
+      "1025_p2_hot_const_config - 鐑洿甯搁噺閰嶇疆鏆傛椂鐢ㄤ簬骞垮憡",
+      "hot_const_config",
+      "1P8C0r39xnVw4oTd1tboOkWf9yhuqude-1Zbih_uPcdc",
+      "",
+      "0"
+    ],
+    [
+      "閫氱敤",
+      "1026_domestic_channel-鍥藉唴鍥芥湇娓犻亾鏈嶇幆澧?,
+      "domestic_channel",
+      "1wQg3Avh3ch-pNjJLsKvBS5p5pXFJggTw-yDoqMCJ93U",
+      "",
+      "2"
+    ],
+    [
+      "閫氱敤",
+      "1027_channel_detail-鍥藉唴娓犻亾閰嶇疆",
+      "channel_detail",
+      "1s0oGEP9SKxgJCXR0PxG4iwuIq5sSeV1XUA4Swqjfpgg",
+      "",
+      "2"
+    ],
+    [
+      "閫氱敤",
+      "1028_google_smart_event - google smart event閰嶇疆",
+      "google_smart_event",
+      "12Yocwp0R9QYx3TUhKku7HYyWsqZbqWbmU5TAeaX8UIU",
+      "",
+      "0"
+    ],
+    [
+      "閫氱敤",
+      "1029_update_tips_version",
+      "update_tips_version",
+      "1Ff8YM6h4jAccHFDk5y6xJvTvVlBOKby7MiXu0GSZqFg",
+      "",
+      "0"
+    ],
+    [
+      "閫氱敤",
+      "1030_iaa_center",
+      "iaa_center",
+      "1IS_NmydqS-liPlcLX-N6DO77LgIJ8VXbkXaGRx2GMS0",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1110_asset - 璧勪骇绫诲瀷",
+      "asset",
+      "1iHJdjbLv6ZbIG1RU31DiE2f0eaQoJ6jDwwxO_53L8vs",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1111_item - 閬撳叿",
+      "item",
+      "1FQqpeRfkXVwaEDSVi3oTaQNs2PLLDcsvQQmc-k0L3ws",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1113_item_store - 閬撳叿鍟嗗簵",
+      "item_store",
+      "1jD-qEogS0gMNT2cqweRso2UOvhuNhf20bMilwInD9L0",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1114_rss - 璧勬簮",
+      "rss",
+      "1EWeHnNq6xoE7_BIRFun9nX6VjqYYhXuio5s8yFdI6bg",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1115_vm - 铏氭嫙璐у竵",
+      "vm",
+      "1EEQ4nOyz--fiTBJNnh06vLO0SJxujikSo-vFHa3Cd3s",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1116_xp - 缁忛獙鍊?,
+      "xp",
+      "1FS5iz67L6bsXnvyyXzH5CJIxiMiiVyvZrfHfWfv-EqE",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1117_recover - 鍙仮澶嶇殑",
+      "recover",
+      "1OlAHSa3qJ75OKxBCnAG--iDeXIY55p9tfWEugBslTfw",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1118_building - 寤虹瓚",
+      "building",
+      "1ES3syKlMbqqmZezWFCzwL0elIdrgvisiUTnBwJNRHrk",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1119_research - 鐮旂┒",
+      "research",
+      "1EXnI5ALHbaFr5S7wz-P2mNwo77srS8fPpMx6IpcNPcY",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1120_drop - 鎺夎惤",
+      "drop",
+      "16kv45KygAOMgvwMf6KDTVSkzKilESYv7yiVkQ1QVURw",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1121_soldier - 澹叺",
+      "soldier",
+      "1OICQIdJxy77vnDPvKh_POYrINpYs52akzOK7r4pJTRk",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1122_soldier_category - 澹叺鍒嗙被",
+      "soldier_category",
+      "1GKMH6sPwNfSCAA2smzXTrWScuI0YjDW0mWISazCy98s",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1124_speedup - 鍔犻€熷垎绫?,
+      "speedup",
+      "1sEkjDslIRu6a0xKqH_tZ4kLsQ2uG2NX4BuiuC9Xu-5o",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1125_building_slot - 寤虹瓚妲戒綅",
+      "building_slot",
+      "1CFArtlhTfliTc6I--HhDvYQHbJ2FPw3UoSDC5XVd2gQ",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1126_city_building_skin - 鍩庡唴寤虹瓚鐨偆",
+      "city_building_skin",
+      "1V7sOaz3JZnRotJDDUiXizp0rlItRwxPYt9s1sQGNoNM",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1127_building_build - 寤虹瓚寤洪€?,
+      "building_build",
+      "1Dlyk6JRGOYoVsSohfwXzbwN8wUvwlk1fGgBTzaDKtNw",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1128_instant_price_asset - 绔嬪埢瀹屾垚璧勪骇",
+      "instant_price_asset",
+      "1VcqCJX2_csCHtACvitgrA-kHvyW18ouAAugcOidnSxE",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1129_instant_price_time - 绔嬪埢瀹屾垚鏃堕棿",
+      "instant_price_time",
+      "1Wz8G4_Ek2fxQkTbngl1K6vuwSheADaFVxvrK3vXmJzs",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1130_building_function - 寤虹瓚鍔熻兘鎸夐挳",
+      "building_function",
+      "1ZLWpevpMjkOuK_uAogPbatTFW1xSf2pOkS8OAHhvjZ0",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1131_building_bubble - 寤虹瓚姘旀场鎸夐挳",
+      "building_bubble",
+      "1Q_tW1N3Bkito0w1b9DZQXyXVHNqWwOhkXPTbVxIuJqw",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1132_research_category - 鐮旂┒鍒嗙被",
+      "research_category",
+      "10DpHbT2D1Y5NIB39eE0VORWsRK1ikWviKrpKeLxDQzk",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1133_player_avatar - 鐜╁澶村儚",
+      "player_avatar",
+      "1l_Jyk73buY4bg4YG3CaqS4UgxN1gFckryff62YHWaTE",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1135_player_level - 鐜╁绛夌骇琛?,
+      "player_level",
+      "1gBFeXZQ5M2ML7iCUdN0-zFZZQ3bCF1ej1h7oszgT-cA",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1136_player_fashion - 鐜╁褰㈣薄琛?,
+      "player_fashion",
+      "1_x8Sqop1gh7L1OOXX8B5KJQ3an07GcNjlDTEnK63Hw4",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1137_hero_stationed - 鐜╁褰㈣薄琛?,
+      "hero_stationed",
+      "17dtRNci9RJ1zimcGdy2f7ohkS5kV7Grwm5b2Ezl17T4",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1138_hero_stationed_buff - 鐜╁褰㈣薄琛?,
+      "hero_stationed_buff",
+      "1xg_gfIwdatU8Or10uyT9p7v5U1dwleLcJ4UCcD4xAY0",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1139_p2_hero_stationed_exercise - 鏂楀＋椹绘墡绀煎寘",
+      "hero_stationed_exercise",
+      "1tRl50kqm0NgRRFPXUTdqYCUnxfYSiIrYh2F0xdak9-4",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1140_city_map_grid - 鍩庡唴鏍煎瓙",
+      "city_map_grid",
+      "1zvKkOpLDnYaoc9J9HQ0UFt3Y7Vho8TYntJMMFLMv6_w",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1142_avatar_frame - 澶村儚妗?,
+      "avatar_frame",
+      "1jBsZOuoMz3uwYHN-Tcotn8QPBgX5LYDpUHXVu2LzpiQ",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1143_city_wall_flag - 鍩庡鏃楀笢",
+      "city_wall_flag",
+      "1QxnbeR9nt74dRby0NjOvLLOgoalxF3KwqxvhuaTd1Tc",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1144_nation_flag - 鍥芥棗",
+      "nation_flag",
+      "1jWS7D1UEtzen3WiHdXyGFCaIDvEXuFLH9-i-bIRbQQg",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1145_tavern_login_reward - 閰掗鐧诲綍濂栧姳",
+      "tavern_login_reward",
+      "1SGD0140GUpvX_BbNsBLsT1bB3smW0K4X0dLwnpJxaQQ",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1146_tavern_bar_gift - 閰掗閰掍繚濂栧姳",
+      "tavern_bar_gift",
+      "1MagDkl4mLu8ghF8hHUNs_9_0LAXdqfyRxwW2ReYARFY",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1147_tavern_story_gift - 閰掗鎺㈤櫓瀹跺鍔?,
+      "tavern_story_gift",
+      "1eEeRDsMIJpl3PLTXnEm6dyC8_5JVaEiaf31rwBSgKSw",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1148_tavern_trader_list - 閰掗鍟嗕汉浜ゆ槗",
+      "tavern_trader_list",
+      "1dEl5ySOh037IobYcG1CBlnMAshCRnxFH0ItWQTq8Lu0",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1150_tavern_top_pool - 閰掗 gacha 鐨勫ぇ绫绘鐜?,
+      "tavern_top_pool",
+      "1rpjFHFb_vMTvuCv-pbpY37mV_n9YoDN5-OOcCpAcN_Q",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1151_secret_shop_item - 绁炵鍟嗗簵鐨勫晢鍝?,
+      "secret_shop_item",
+      "1t3P5mzwYzMSphXWjJnKFmYKS4ZSVyhyJERJwCTTBk2U",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1152_banana_hologram - 棣欒晧鎶曞奖浠?,
+      "banana_hologram",
+      "1xDym021QeFAeiUvYe0U7LfeZqBCsIMHYVTjEMVZsSbI",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1153_get_access - 鑾峰彇閫斿緞",
+      "get_access",
+      "1yy2HpW71a5aAv4iO1TEr45vPxhdRauC_489AV3hQ6K0",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1154_vip_shop - VIP鍟嗗簵",
+      "vip_shop",
+      "1p__rCf4z-QdMEzvC1YQWr6MXuVEZjvKy4_Kq6z9geAM",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1155_collection - 灞曡鍝?,
+      "collection",
+      "1tcwvMlNMyYqMX2fRGGFY_DuejsRzFGgbN58hHH24H3A",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1156_collection_group - 灞曡鍝佸浘閴?,
+      "collection_group",
+      "1HfJeg5eOFfPLjuN1GbOHeVZiAczgsS_-qxR-nswYgL4",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1157_collection_gacha_package - 灞曡鍝佸崱鍖?,
+      "collection_gacha_package",
+      "1PAnqArmAVGA5DbFWi3s25WfW6VH6YNp6ecK1PduxUCA",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1158_collection_gacha_reward - 灞曡鍝佸姹?,
+      "collection_gacha_reward",
+      "1QNn9nCkjEa8sMQt6torzf0b5S4jeTcJ3DsEFhdG9gq8",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1159_player_badge - 鐜╁寰界珷",
+      "player_badge",
+      "17yd2KMh3gcK9FftvuQFHSPZd1s5i0FbBaiMNDBM21gc",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1160_banana_decorations - 棣欒晧鍏夎氨浠姇褰辨晥鏋?,
+      "banana_decorations",
+      "14MXFhOB3txbrrr1XoJ3whI6e5FfDWfcViE99B5PtWl0",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1161_asset_retake - 璧勪骇鍥炴敹",
+      "asset_retake",
+      "1Ppx0J8koZf9kjSt77JamFzxFrLo64Fe6mEwaeLeXelc",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1162_asset_retake_shop - 閬撳叿鍥炴敹鍟嗗簵",
+      "asset_retake_shop",
+      "1j3kG9kTx83MZy5ofiVlivN0jy3opGojUdLY_G8ItK4Q",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1163_inner_coin - 鍐呭厖浠ｅ竵璧勪骇",
+      "inner_coin",
+      "1URE1zJ88ORZ2tfUJk1_unmOuOsTHvjmnqm7aYD9SCPQ",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1164_collection_power_buff - 灞曡鍝佹垬鍔涘睘鎬?,
+      "collection_power_buff",
+      "1y2BK2tsoD32FyCGo15fPy0eKChwp0A4yjTrcLmF46rM",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1165_stores - 鍟嗗簵琛楋紙鍟嗗簵鍏ュ彛鏁村悎锛?,
+      "stores",
+      "1mzRWSuJvb2tyUSLb-rVZj8bkFGF0i_3BmxBI473tSdc",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1166_soldier_arms - 澹叺鍐涘",
+      "soldier_arms",
+      "1ruOB1Lp59hBJF0TK70Rn-qX7LhEIfDy_Naj0rmkMXL0",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1167_arms_group -姝﹁绛夌骇",
+      "arms_group",
+      "1jzzy5U5RO_uAVKF1N4--vrz_V6JNAEmQmwGLIBvnSWo",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1168_get_access_group - 鑾峰彇閫斿緞缁勫悎",
+      "get_access_group",
+      "1KwX1xWoHHcmOGTaasZmMii2Al-YR_VXV3yoSGn3tBbA",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1169_city_area - 鍩庡唴鍖哄煙锛堝墠鏈熷唴瀹癸級",
+      "city_area",
+      "17VyjADRV28836Ua36YVjXu75GLtCd1hrFWmrpZf5PKg",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1170_paradeground - 鏍″満锛堥槄鍏靛満锛?,
+      "paradeground",
+      "14szKMJ9ggO-Ekeh6Kx13XZ0ScBhV5Zsyh-Z8y6MyaJw",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1171_building_reset_v36",
+      "building_reset_v36",
+      "1nJZ_HEeMgtHZOfJ-lD84o6Y2IQoUye_xoKzzNr3klhE",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1172_paradeground_soldiershow锛堥槄鍏靛満灞曠ず锛?,
+      "paradeground_soldiershow",
+      "1_I_d-7uGLhOyMdpo-_dQ-xxAr9fT4ZV7wVXo4l6LKQI",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1173_chat_skin锛堣亰澶╅摥鐗岋級",
+      "chat_skin",
+      "1mKaHyDbToHVIV9iyOQPFbJ88pwnjGy5-GeiUvRZHPBg",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1174_daily_growth - 姣忔棩鍙戝睍鎶ュ憡",
+      "daily_growth",
+      "15fkkujRaTPBbp0d9kRV3OkfPMqD7M21ZbRvY6B7ABYg",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1175_safe_box - 鍩庡唴淇濋櫓绠辩帺娉?,
+      "safe_box",
+      "162ahnuTGGhWArDnsGVKrHD7qPvhOP0X1Z69fdXr8FfE",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1176_collection_platform - 灞曡棣嗗睍鍙板煿鍏?,
+      "collection_platform",
+      "1hLT_WJayB2CHeKr_-nwhvL3qPimjkaEzzHIHNtELGEQ",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1177_citybeauty_reward - 绻佽崳搴﹀鍔?,
+      "citybeauty_reward",
+      "1SnetTrxYlcuwgt3fDRccRyMTcgq7miZCjWhmcapa5CY",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1178_battery_research_skill - 鐢垫睜绉戞妧鎶€鑳?,
+      "battery_research_skill",
+      "1KO8NUnHHHhizLCk4fkYaelQWJzYQc93r6Pqdqw7CpUU",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1179_capsule_rss_convert_cost - T6璧勬簮杞崲琛?,
+      "capsule_rss_convert_cost",
+      "1aZ8gEJz4J7gYdGriCJkci-97iD67n7j8rBWtauE9_1Q",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1180_map_emoji - 琛屽啗琛ㄦ儏琛?,
+      "map_emoji",
+      "1SloOHvSFrEJz7HaU8yur9Qt8dOzsmqa69DUBERkkBmw",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1181_p2_collection_filter-鏀惰棌鍝佺瓫閫?,
+      "collection_filter",
+      "1-KecBN2fPXx2UJ9oB2n4TcUoT-per57SFkhhivbkILo",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1182_collection_break_achievement - 鏀惰棌鍝佺獊鐮存垚灏?,
+      "collection_break_achievement",
+      "1l-e4x786Axqd25BUXaffDQmolCt-8DKgS484WMojUKA",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1183_item_bag_classification- 鑳屽寘缁熻瀹㈡埛绔厤缃?,
+      "item_bag_classification",
+      "1Bohzq2SXYVlJcTIMJvXH8g_rMWSHebiyLP2LXVENNZ0",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1197_wonder_reward_retake - 鍙戝皠鍙板埛濂栧洖鏀?,
+      "wonder_reward_retake",
+      "12PpsTTsZvm4XUMsDh3GUxo2CcsESaFhBOwiaA-FvWyA",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1198_tavern_change - 閰掗鍏煎琛ュ伩",
+      "tavern_change",
+      "1nc6HHxTCFW0J9kdbI57jeXhGL6yuNCnIAbXSlUSSEhg",
+      "",
+      "0"
+    ],
+    [
+      "璧勪骇",
+      "1199_research_change - 绉戠爺璋冩暣琛ュ伩",
+      "research_change",
+      "1-vujx_9TgWP_tX8Py9RgzONXaIjottQ39Llg5o33fUo",
+      "",
+      "0"
+    ],
+    [
+      "鐘舵€?,
+      "1211_buff - buff",
+      "buff",
+      "1qqn6vjWJ30-TW-kXzN3Aa9eS1fyoTFwPSWdXyNZbauc",
+      "",
+      "0"
+    ],
+    [
+      "鐘舵€?,
+      "1212_buff_category - buff鍒嗙被",
+      "buff_category",
+      "187cYIpR_4LS_XOUFDuP_PMjHqKPEt2mzIiRCOkISRr8",
+      "",
+      "0"
+    ],
+    [
+      "鐘舵€?,
+      "1213_buff_source - buff鏉ユ簮",
+      "buff_source",
+      "1lvhFEMtV4ZfBKZkY-u6U1WzM3APcwVqPCpYYGdNTh_g",
+      "",
+      "0"
+    ],
+    [
+      "鐘舵€?,
+      "1214_power - 鎴樻枟鍔?,
+      "power",
+      "1vKDV1ObUlO7Ff5qvsoSHQ7NzvnRK81TeEuwZheoxHuM",
+      "",
+      "0"
+    ],
+    [
+      "鐘舵€?,
+      "1215_power_category - 鎴樻枟鍔涘垎绫?,
+      "power_category",
+      "1I86uUt4RsxcTb7AfRUybh0D1nNOx2oTF--3IYHJiYh0",
+      "",
+      "0"
+    ],
+    [
+      "鐘舵€?,
+      "1216_power_source - 鎴樻枟鍔涙潵婧?,
+      "power_source",
+      "1p6s7FUkRa32ejiQO0EVoCjuYJTIGf33Qx2kaYuPX9Ko",
+      "",
+      "0"
+    ],
+    [
+      "鐘舵€?,
+      "1217_power_compare - 鐜╁鍜宯pc鎴樺姏瀵规瘮",
+      "power_compare",
+      "1KHXrSZYrFaxErcG5lfJ3cPRzsIZJBudEYvizcBQ4RnI",
+      "",
+      "0"
+    ],
+    [
+      "鐘舵€?,
+      "1218_player_data -  鐜╁鏁版嵁缁熻琛?,
+      "player_data",
+      "1BTMTVqnIBeGn8QSW6gLyoT0KAwIAsPIT_3-ql9nwm00",
+      "",
+      "0"
+    ],
+    [
+      "鐘舵€?,
+      "1220_city_manage - 鍩庡競绠＄悊",
+      "city_manage",
+      "1UWAP4imY2in0rBoxS6iow_fpq05l1Wc5AV9Irhdm-Kk",
+      "",
+      "0"
+    ],
+    [
+      "鐘舵€?,
+      "1221_buff_property - buff灞炴€?,
+      "buff_property",
+      "130kaH27FSatVtxtjLqvXGrVlhVViAhvpKaCE0R9hVco",
+      "",
+      "0"
+    ],
+    [
+      "鐘舵€?,
+      "1222_temporary_buff - 涓存椂buff/鍩庡競澧炵泭",
+      "temporary_buff",
+      "1Iz7G13fbTtvqTSIwQFdkg6P4TWch9fyoXL8E-hbt36Y",
+      "",
+      "0"
+    ],
+    [
+      "鐘舵€?,
+      "1223_citybeauty - 鍩庡競缇庤搴?,
+      "citybeauty",
+      "1J-usEmuCoe_awIuy9LPkalNWt3e2Uzg3gXoKMhNA0v8",
+      "",
+      "0"
+    ],
+    [
+      "鐘舵€?,
+      "1224_citybeauty_source - 鍩庡競缇庤搴︽潵婧?,
+      "citybeauty_source",
+      "1CpzHf3MlFkYNfkfiM8YTPcNbrR2a4_xg66aJrc9s7_g",
+      "",
+      "0"
+    ],
+    [
+      "鐘舵€?,
+      "1225_power_resolve-鎴樺姏鍒嗚В鎴愬氨濂栧姳",
+      "power_resolve",
+      "1gK0BDTyjS6jaNUGM233oqukuJSwEutL7FYThbpd__gw",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1312_city_skin - 鎹偣澶栬",
+      "city_skin",
+      "1f_UFBe0aZBJ9prAJP9AVHJOOoByXxq-kuC0IBU1zVA8",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1313_map_npc_refresh_zone - NPC鍒锋柊鍖哄煙瀹氫箟",
+      "map_npc_refresh_zone",
+      "1AWgd1JYC7lmHQ-6e4wvhL0mrG_9ARBmi5loEKilN7l8",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1314_map_npc_refresh_band - NPC鍒锋柊甯﹀埛鏂板瘑搴?,
+      "map_npc_refresh_band",
+      "1XoB_gD1vapK-JWjYZi0Cr8qBYWMUywS63TCPpTiMZJE",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1315_map_npc_moving - NPC宸￠€?,
+      "map_npc_moving",
+      "1_f1KVQOu1AtgHqueLRLKEd2dgeqF7Kze93ZkVd8kX5U",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1316_npc_gather - NPC閲囬泦鐐?,
+      "npc_gather",
+      "11JZCwwWnAxmfKB_3bB958nP3NLPxm7ed_6oNm5Kl21g",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1334_npc_gather_class - 閲囬泦鐐圭被鍨?,
+      "npc_gather_class",
+      "1SeZZ9owBvc1vs6eJ_GxBwVvxyX9s-joWpc-Dg75kXSU",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1317_npc_troop - NPC閮ㄩ槦",
+      "npc_troop",
+      "1fAJJJFA5fIDDoGFZbApIfhZYDmVC-IydP7bMuexG6qM",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1333_npc_troop_class-npc 閮ㄩ槦绫诲埆璇︽儏",
+      "npc_troop_class",
+      "15hbZheEdDv1ns4kDV_yqWZbJ273i-4vCXDXOyfYLn44",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1318_npc_city - NPC鍩庡",
+      "npc_city",
+      "1pAFMtK_Wo0x8XMeoZDzu3Llg-XiidxclHRTyfp2SSx8",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1319_search - 鎼滅储NPC",
+      "search",
+      "1Ljw-x6iSETCf-ViHIkatqpLfCLVkkbac5nm0r_aMu2s",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1320_intuitive_zoom - 鏃犳瀬缂╂斁",
+      "intuitive_zoom",
+      "1UFNWfaq-xa3HBi9ILaZSQ0ipJ5tzrSp2AaBbCUH5Ibs",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1321_march_type - 琛屽啗绫诲瀷",
+      "march_type",
+      "174Byzc8QAiR9ezD_lW_oMq_1zimqjMlGVB0WeTUHCZQ",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1323_special_troop - 鐗规畩閮ㄩ槦",
+      "special_troop",
+      "1eigAIJ0vC7-8_uxjMg4dj-AHU2tQEKdjkeqhQDnptFE",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1324_special_city_category - 鐗规畩澶у湴鍥惧煄甯傜被鍨?,
+      "special_city_category",
+      "1Pb1TSuXrM386oiEJCpzIiVsdnm2F-33slV0DYQS1YT4",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1326_npc_class - npc绫诲瀷",
+      "npc_class",
+      "12DpVgEgOv0uIC-buRMozpaBCKk6EADF814gu-_La-C4",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1327_special_building - 鐗规畩寤虹瓚",
+      "special_building",
+      "1wNhpviO0hgl4O6V562wXAAZJ0mrMyCwbh9fzeURxvCE",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1328_troop_show_info - 閮ㄩ槦闃靛瀷",
+      "troop_show_info",
+      "1odA2AwGFAGK0FR2KqJcE1Ax7mmsJf-Fq8HOKvj14cQs",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1329_chasing_distance_time - 杩藉嚮閲嶇畻琛屽啗绾块鐜?,
+      "chasing_distance_time",
+      "1T_V5AHhhJoWyDoQG3gRl0Fuug_nqSu_BCl6HYQMA9LA",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1330_ruin_play - 搴熷鐩稿叧鐜╂硶鍙傛暟",
+      "ruin_play",
+      "1zgljdHLBOE0KRrldHKlslKsM2s10DdDc8p2oDE6Mm3k",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1331_troop_formation - 閮ㄩ槦闃靛瀷",
+      "troop_formation",
+      "1qplBxHlRWZVcpYRlfHDAIL6hN8XRBs4bdhKzD33VaFE",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1332_map_fixed_point - 鍦板浘涓婂畾鐐圭殑鏁版嵁鍧愭爣",
+      "map_fixed_point",
+      "1Z2tX9S_H2RFFTdDQgoSU4T4mx2nnzz7eryBJjMiLjFY",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1335_map_mark - 鍦板浘鏍囪",
+      "map_mark",
+      "1yfVUoU4jN-84rXh3x8yBRn3nBK4fR4b1UH9CDaVfQkc",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1336_train_point - 鍚勪釜閮ㄨ惤鐨勭伀杞︼紝鍦ㄩ搧璺笂鍋滈潬鐨勭偣",
+      "train_point",
+      "1__dvlUsjdaYSAssbtjY8tSnw_AKYd2Ae9g7TywSzbQ8",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1337_territory_building - 棰嗗湡鐩稿叧寤虹瓚",
+      "territory_building",
+      "1zc53dwvX5-hMyPdao3YDytCQR_ulM9RWAYO5g3-S8wc",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1338_union_rss_spot - 鑱旂洘璧勬簮鐐?,
+      "union_rss_spot",
+      "1NBo__Xb6W1RSHyZgcRB8Df35ocd8T_mIvY5z-bpC7Zg",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1339_union_tower_cost - 鑱旂洘鍝ㄥ娑堣€楄〃",
+      "union_tower_cost",
+      "17qvEerskiuxqcyqmi27PxOJHMaRXqNuxMtBE1UOawXA",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1340_union_center_rank-鑱旂洘涓績淇缓椤哄簭鎺掑悕",
+      "union_center_rank",
+      "166Cdwnrz1isIcyt14P7np1FiUZkFBa2MoHATfmvtAbw",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1341_loot_be_assiged-鍙垎閰嶇殑鎴樺埄鍝?,
+      "loot_be_assigned",
+      "1qWgYUtjCz7eZULXGhMzLeXQLuIlVR6rKeLNL2ufry-U",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1342_map_unit_filter-澶у湴鍥惧崟浣嶇瓫閫夊櫒",
+      "map_unit_filter",
+      "1VJMJogNEz9QBGTbv-leWcgoBtnVL3PDo__sx4HnV0Ko",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1343_map_unit_legend-澶у湴鍥惧崟浣嶅浘渚?,
+      "map_unit_legend",
+      "11512xQitGjoSOdHW7Qx1jJTDPwXGOk3hlqTGuP7iyJg",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1344_map_player_building-鐜╁淇缓鐨勮仈鐩熷缓绛?,
+      "map_player_building",
+      "1KfIl74Y0oPV1o4jqHAx5KaDvRgmqfaszoucS7pclbPs",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1345_horde_train - 鐏溅杞﹀帰鍜屽姛鑳藉畾涔?,
+      "horde_train",
+      "1UJ3T8E8bJpOedm4glMFp4gxhOebl7HHcYdAQngwR-gQ",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1346_pass- 鍏冲崱鑱旈€氭€ч厤缃?,
+      "pass",
+      "1he7aha3SJorBV_YzZRO6OmjewszGnOSgzouixuad2r4",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1347_explore_relic-鍦板浘鎺㈢储鐐瑰潗鏍?,
+      "explore_relic",
+      "19SYH0SU-71fsEq3bgybbWxPssljD8cfQMYLPQJhv8zA",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1348_explore_categories-鍦板浘鎺㈢储鐐圭被,琛ㄧ幇鍜屾弿杩?,
+      "explore_categories",
+      "1BAkkTMcUHSMOkp1OrZxyc3mABI6jtXCLqfbJvON1JfM",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1349_explore_relic_reward-鎺㈢储鐩稿叧濂栧姳",
+      "explore_relic_reward",
+      "16cHU-cA5XfO5axz4hIaVSQKffGAb9OppIb1vxT0XtUc",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1353_fix_rail-閾佽建閰嶇疆",
+      "fix_rail",
+      "1oFC-3KmzdgwBdw2T4dSF5yhkP0-DDt8peX08XDGMPzg",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1355_transport_supplies_杩愯緭杞﹂厤缃?,
+      "transport_supplies",
+      "1TS_oXxeSB4Qsb9TGsKWDinmJ5npsiqFB_HJ9-HkBK6c",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1356_transport_mutant_refresh_鎶奸晼鍒锋€厤缃?,
+      "transport_mutant_refresh",
+      "1TsSDRKd6ryoZFoIw2G4WZEq3gsjDBPq8pGfMvd33Bxw",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1357_all_round_arena_score - 鍏ㄨ兘绔炴妧鍦虹Н鍒嗚〃",
+      "all_round_arena_score",
+      "1xcZ0rcLyRX6l9tcCA2sfIlnfHgZNhaIH5xpdYFQ98KU",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1358_all_round_arena_robot - 鍏ㄨ兘绔炴妧鍦烘満鍣ㄤ汉琛?,
+      "all_round_arena_robot",
+      "1XRsBxjdbRogkZao_9NU627JBUY9OdtqlhQLoCLFvNWI",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1359_elite_arena_robot-绮捐嫳绔炴妧鍦烘満鍣ㄤ汉琛?,
+      "elite_arena_robot",
+      "1cBK4RfnP1yx21PEwfzHGpKOc-16gVkJ2GyUtRwwg6z0",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1360_map_unit_render - 鍗曚綅妯″瀷琛ㄧ幇閰嶇疆",
+      "map_unit_render",
+      "1h8b-U_8rqMpMKLa-WfeG84nX6706OzHwWuzwkL7aXDk",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1361_hero_arena_score",
+      "hero_arena_score",
+      "14JIlG_zAP4BCLoeAArqFXPcQAtAks8u5XC0TZAkXyHc",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1362_hero_arena_robot",
+      "hero_arena_robot",
+      "1xteHekA_ZE7ssbymweoynqXAmxqjkUD-wY5AdPqivP8",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1363_npc_counter_class",
+      "npc_counter_class",
+      "1qrW3qBTgCdOVEvXfaotWMfS2MW2vZbgznuUZgq-q1MA",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1364_radar_robot - 闆疯揪pvp鏈哄櫒浜鸿〃",
+      "radar_robot",
+      "1-1FhVxsPcXsm20ydacBmEvAgL_aeyb4t0bxjZtYNLQk",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1365_march_effect - 琛屽啗鐗规晥琛?,
+      "march_effect",
+      "1mD_NfAS14odzRnCLGBhB5LDGMk1DH_aHB4BFX7VmS3U",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1366_chat_title - 鑱婂ぉ澶磋琛?,
+      "chat_title",
+      "13NM7loigqtWkUxxVRF7eSGkwQQjP-pJQPOfEvStD6KQ",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1367_mist_unlock_reward-杩烽浘鎺㈢储杩涘害濂栧姳閰嶇疆",
+      "mist_unlock_reward",
+      "1QNpjxMu_77QbL5_Q0cCuYd65PK9rIrwacpn-tMouMLY",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1368_mist_unlock_rank_reward-杩烽浘鎺㈢储鎺掑悕濂栧姳",
+      "mist_unlock_rank_reward",
+      "1o_pFxt1MPRV5Q3qR8s00hPQfiW1_7Y3ONpuPrsa-IZM",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1369_mist_unlock_main_quest-鏍稿績杩烽浘鐩爣",
+      "mist_unlock_main_quest",
+      "1T27hAucj6VskR97dneycze9hntvqMO9NJzzWn4ndy70",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1370_hero_statue-鑻遍泟闆曞儚琛?,
+      "hero_statue",
+      "12a4jYa02rIeIRmjEFz486T7rTeZWCi1xrLTmA3wLj5U",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1371_outbuilding-闄勫睘寤虹瓚琛?,
+      "outbuilding",
+      "1VWba2vxmxsu_8cIZ54_wkkLY8GwkXpTayvTjrJKhiEI",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1372_building_unit-瀹炰綋寤虹瓚琛?,
+      "building_unit",
+      "1RyYBCmpDOQshEzKSyaWJcp0HWXvLomZWmKIpFPYfpVA",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1373_elite_arena_map-绮捐嫳绔炴妧鍦哄湴鍥?,
+      "elite_arena_map",
+      "1nA0sEfgpnDTVOICh40C4ku072hRwW8p77U0emvySGxA",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1374_elite_arena_building-绮捐嫳绔炴妧鍦哄缓绛?,
+      "elite_arena_building",
+      "1nmC95CMeRaaZGFblYi9Ir0siP4yxF1bG9eGz9WiLBsE",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1375_elite_arena_ai-绮捐嫳绔炴妧鍦篴i",
+      "elite_arena_ai",
+      "18Nrf7oSsdDBiovsVzeaen-7zjcTIt8B6_Fk9ly5TDGA",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1376_elite_arena_reward-绮捐嫳绔炴妧鍦烘寫鎴樺鍔?,
+      "elite_arena_reward",
+      "1pFxCAzYNbDm7RApuAtCIvqOQhk_AOn2L5Jxh9vSwM5M",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1377_illustrate_reward-鍥鹃壌濂栧姳琛?,
+      "illustrate_reward",
+      "1q2rG1f3DkJxZjsVrGQqLQ1Vt7R47XGFAR_6zcYsxRZ4",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1378_p2_wonder_attach_buff-鎹偣鍗囩骇buff",
+      "wonder_attach_buff",
+      "1Vhk2FVwuuDwk8mTY7fsQnGDM8dxaNpZ533M_7HnSzEw",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1379_map_unit_sound - 澶у湴鍥惧崟浣嶇偣鍑诲拰琛岃蛋闊虫晥閰嶇疆",
+      "map_unit_sound",
+      "11m2HFxzjyOHDV3z1985J9BEO4HSLExb3pd1dRxRZPhU",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘-鍘熸湇鍦颁笅涓栫晫",
+      "1381_p2_uw_npc_gather -- 鍦颁笅鐭?,
+      "uw_npc_gather",
+      "1IP_06sEedaAHiFs1nwxKQgOqXWUA_fvhprbWyYnkVXc",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘-鍘熸湇鍦颁笅涓栫晫",
+      "1382_p2_uw_map_npc_refresh_band -- 鍦颁笅鍒锋柊甯?,
+      "uw_map_npc_refresh_band",
+      "1siN30PKXGKW-zzWESO13BMfSituw4bGZybwbhEfl4IE",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘-鍘熸湇鍦颁笅涓栫晫",
+      "1383_p2_uw_map_npc_refresh_zone -- 鍦颁笅鍖哄煙",
+      "uw_map_npc_refresh_zone",
+      "1VfLtoBt7NqH-MZWei_7ECdRJdH3iJUbndggsmTHkwXg",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘-鍘熸湇鍦颁笅涓栫晫",
+      "1384_p2_uw_search -- 鍦颁笅鎼滅储",
+      "uw_search",
+      "1573TA0fOofvSKjMT8Icg_teFdZBeOORqusXgo1aGCfQ",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘-鍘熸湇鍦颁笅涓栫晫",
+      "1385_p2_uw_map_unit_filter -- 鍦颁笅楂楲OD鏄剧ず",
+      "uw_map_unit_filter",
+      "1iHXGWdRs68_10XgTHRWG9mx7yVTRtF0Nln6iYAwYrfQ",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘-鍘熸湇鍦颁笅涓栫晫",
+      "1386_p2_uw_map_unit_legend -- 鍦颁笅鍥句緥",
+      "uw_map_unit_legend",
+      "1Ocy66Jqc9AMmh-Ap_QIJHuztu0JJuSQAgwAzCbmX7r4",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1387_p2_city_effect -- 涓诲煄鐗规晥",
+      "city_effect",
+      "1AgFJmnMyuNoyQYQXMmNSBSQLoczM6RRtbfllYZSFBDA",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1388_p2_city_suit_decoration -- 涓诲煄濂楄閰嶄欢",
+      "city_suit_decoration",
+      "1QyY5KiyjCr1GPHr-vuDikxBrgrGnPgxhK6AKHHWxNKU",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1389_p2_city_suit-- 涓诲煄濂楄",
+      "city_suit",
+      "1FX_vS4m3Eu68PfjNDKmGSCJ3REdvouGdh4o0sY4jL14",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1390_p2_march_effect_decoration -- 琛屽啗鐗规晥缁勪欢",
+      "march_effect_decoration",
+      "1QuFntc7IM3hGrtf9HmS1MoTQaavtWTtc1e3H1xGM8BA",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1391_p2_march_effect_suit -- 琛屽啗鐗规晥濂楄",
+      "march_effect_suit",
+      "1t6Ke-QijHHieu1DVZZkccWEERyDn77qCMOGtxQ0BXck",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1392_p2_city_effect_extent --鑼冨洿鐗规晥",
+      "city_effect_extent",
+      "1BuodrftG5WsxrPoL2rJ5azJFUdHWh10mF2qyqxvZHIE",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1393_p2_emoji_reward --琛屽啗琛ㄦ儏灞炴€у鍔?,
+      "emoji_reward",
+      "1pdKA64F2xrTg8wfsaUxDKe81EYjnfsPIDFvjnOH6OtE",
+      "",
+      "0"
+    ],
+    [
+      "鍦板浘",
+      "1394_p2_emoji_guide --琛屽啗鍥鹃壌椤?,
+      "emoji_guide",
+      "1l3wEVCaR90QhJVUP7AcUIaXbJQojSIt3okL_zHjjzKA",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1411_quest - 浠诲姟",
+      "quest",
+      "1sfYXE63I32yJBgON24c1Zb54GsCOuDPyLZUrUHLbi4I",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1414_daily_task_box - 鏃ュ父浠诲姟瀹濈",
+      "daily_task_box",
+      "1-pgPRvF9k_G1uBkO3O3D3TsIjIsm30b1s5Za0M8cz_w",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1415_achievement - 鎴愬氨",
+      "achievement",
+      "1A3hWvnjYRGB_GccRGUwQyu83gYU1dJXGu90_5pUt71M",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1416_ui_help - 寮圭獥寮曞鍛?,
+      "ui_help",
+      "1VmMKZBT7Tc6zZc5vmTlXcgHhpJRy21vbyOm_Qwqiw48",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1417_uranium_quest - 杩愯緭杞﹂€佽揪濂栧姳",
+      "uranium_quest",
+      "1kxn2VCCVOoWINF0Adh17MUHeasA-d5gKezKe19Uf_lA",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1418_elite_quest - 绮捐嫳绯荤粺浠诲姟閰嶇疆",
+      "elite_quest",
+      "18W5MIa77yaR16JLh1SGFPT3-gcfYqDvk1Lc3RzgoAj4",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1419_merit_quest - 鍐涘姛绯荤粺浠诲姟閰嶇疆",
+      "merit_quest",
+      "1vdJe-QcbxhN2RWrxOYQ2GfC2eEfg5fQ-hdE5NRvCfog",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1420_daily_quest_list - 姣忔棩浠诲姟妗ｄ綅閰嶇疆",
+      "daily_quest_list",
+      "1lfZpO0TKs8hZB1vsPZycovOKJjOzKUL66LGRwy3hUwg",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1421_chapter_quest-绔犺妭浠诲姟閰嶇疆",
+      "chapter_quest",
+      "1FcNQyLbXFAXj9_-GNXy90GT-seEg65ghcGW30JQoqLw",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1422_fte_chapter_quest-FTE绔犺妭浠诲姟閰嶇疆",
+      "fte_chapter_quest",
+      "1kJ_Xr-CzhcyFQ8t8dVaMiQZeEmoyvblTKAisTAVNzUo",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1423_daily_quest-姣忔棩浠诲姟琛?,
+      "daily_quest",
+      "11iZQzDB2wToePWp86rg72L9IRsaNU_W-daF5bXkFmTg",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1424_main_quest-涓荤嚎浠诲姟琛?,
+      "main_quest",
+      "1xCkefaiAj6d_L9u7uSUyI1VBhwczZugPNHTZz2Ob78U",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1425_compare_main_quest_old_and_new-鏂版棫浠诲姟瀵圭収琛?,
+      "compare_main_quest_old_and_new",
+      "1EbEeYeb8NLc123SOhzsjz2uHeNM8PuzT0D7RYKAVddE",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1426_chapter_quest_chat - 绔犺妭浠诲姟瀵硅瘽鍙婅〃鐜伴厤缃?,
+      "chapter_quest_chat",
+      "1n-VT-ur7jiWh63An67UldJ6t6Q9lGlslJTfk-LwS1Dk",
+      "",
+      "0"
+    ],
+    [
+      "瀵硅瘽",
+      "1427_dialogue-瀵硅瘽缁?,
+      "dialogue",
+      "1E1EoeYce1YmlBC8XiY4AXK5iJcP6o0cJqV-v7Pa1-RA",
+      "",
+      "0"
+    ],
+    [
+      "瀵硅瘽",
+      "1428_dialogue_details-瀵硅瘽缁勫唴姣忎竴鍙ョ殑璇︾粏閰嶇疆",
+      "dialogue_details",
+      "1OYow94-HaRIZ6ZxbgyDzIDagBhGMs_qukLhGWRUWNxY",
+      "",
+      "0"
+    ],
+    [
+      "瀵硅瘽",
+      "1429_dialogue_image-瀵硅瘽绔嬬粯涓庤鑹茬粦瀹氬叧绯?,
+      "dialogue_image",
+      "1ij7qGzC0WBI9-bvsZJVh2k2gupUVfSBO-Oy37RSbBVk",
+      "",
+      "0"
+    ],
+    [
+      "闆疯揪",
+      "1430_radar_lv - 闆疯揪琛?,
+      "radar_lv",
+      "1_3MjKgD2wuvABss-ljs9qMVRz75MT-wUpo3zF2km7Fs",
+      "",
+      "0"
+    ],
+    [
+      "闆疯揪",
+      "1431_radar_task - 闆疯揪浠诲姟琛?,
+      "radar_task",
+      "1D4mpFU0GddMMly4jsJRho9pIyoSGlV-a02fP0jqpr6M",
+      "",
+      "0"
+    ],
+    [
+      "闆疯揪",
+      "1432_radar_photo - 闆疯揪鏀堕泦鍥鹃壌琛?,
+      "radar_photo",
+      "1XPMRZWkEtYUenENLHDHIVAC7IXF4ix3VMRn-c9dNXeE",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1433_chapter_quest_version -绔犺妭鐗堟湰鍏煎閰嶇疆",
+      "chapter_quest_version",
+      "1ye7Pa-pEzRlNfgO2E8EzTGNyhNCCXSyBn7Te966eA8c",
+      "",
+      "0"
+    ],
+    [
+      "浠诲姟",
+      "1434_chapter_plot_review - 绔犺妭浠诲姟鍓ф儏鍥為【",
+      "chapter_plot_review",
+      "1v74tfuamkhhaQymocDf666R8FViXQcZgGkgz3td8x5U",
+      "",
+      "0"
+    ],
+    [
+      "闆疯揪",
+      "1435_radar_cond - 闆疯揪鎺㈢储浠诲姟鏉′欢琛?,
+      "radar_cond",
+      "1rtLsaYbSaVjek_MELmlVFciCZCqqA5mHRMCxx-bKsyQ",
+      "",
+      "0"
+    ],
+    [
+      "闆疯揪",
+      "1436_radar_dialog - 闆疯揪鎺㈢储浠诲姟姘旀场瀵硅瘽琛?,
+      "radar_dialog",
+      "1V4rtXNbkdYw1psiTdtHahH1MnPXocexB16I2cpPvJls",
+      "",
+      "0"
+    ],
+    [
+      "闆疯揪",
+      "1437_radar_refresh_radius - 闆疯揪鍗婂緞鍜屽搴斿埛浠诲姟涓暟閰嶇疆",
+      "radar_refresh_radius",
+      "1KncXq49A83C_pD9nGM_A-wgLpRd5bgcpRQFb_RyMeMQ",
+      "",
+      "0"
+    ],
+    [
+      "瀵硅瘽",
+      "1438_direction_mask_details - 寮曞閬僵澶村儚鏂囨湰",
+      "direction_mask_details",
+      "1RffhLbyog5CG6i7G78-x56ug-YmM-G-ewOGoEfx0oBQ",
+      "",
+      "0"
+    ],
+    [
+      "鍓嶆湡",
+      "1439_city_target - 鍓嶆湡鍩庡唴鐩爣",
+      "city_target",
+      "1SiE7xuSwKigRc2k85xWctbGfnh-_ux-6W7YtRYBPk20",
+      "",
+      "0"
+    ],
+    [
+      "璧勬簮",
+      "1511_display_key - 缇庢湳璧勬簮閰嶇疆琛?,
+      "display_key",
+      "1Oks7yHCxYnWxo1QiNdO5EYNET68l_aCzZU-58zATlLY",
+      "",
+      "0"
+    ],
+    [
+      "璧勬簮",
+      "1512_effect_list - 缇庢湳鐗规晥",
+      "effect_list",
+      "11TpByDhx3FzMRZYNEimZroz0hO6_NEioXiF8NHbOI6s",
+      "",
+      "0"
+    ],
+    [
+      "璧勬簮",
+      "1514_skill_act_list - 鍏电鎶€鑳芥晥鏋?,
+      "skill_act_list",
+      "1rKq387V--V5G_5RRcqjiiqshSgVJ80DXYg4DxfGtidw",
+      "",
+      "0"
+    ],
+    [
+      "璧勬簮",
+      "1520_snapshot_sticker - 鎴浘璐寸焊",
+      "snapshot_sticker",
+      "1i0qdQG733B1Ls6lpUXAFiKYujtdfggt6WJ1OY-r1DwQ",
+      "",
+      "0"
+    ],
+    [
+      "璧勬簮",
+      "1521_snapshot_brush - 鎴浘鐢荤瑪",
+      "snapshot_brush",
+      "1krL9utWs5o5Upv0DmpQ3mS_bzjvN0xc6zElLX3H7tpE",
+      "",
+      "0"
+    ],
+    [
+      "璧勬簮",
+      "1522_audio_list - 澹伴煶鍒楄〃",
+      "audio_list",
+      "1hl7myfux2gMW90zprU_bbIaAmGH2VsYQ1H_jI9Nwujc",
+      "",
+      "0"
+    ],
+    [
+      "璧勬簮",
+      "1523_bubble_icon-姘旀场HUD",
+      "bubble_icon",
+      "1qkQM1Whmanp7eTEgRn0YmeHoTgKWb1pTZ4pT81HLqws",
+      "",
+      "0"
+    ],
+    [
+      "璧勬簮",
+      "1524_rocket_part - 鐏妯″瀷",
+      "rocket_part",
+      "1luq4qQsNk9hN1Z3HjQVG2aKtUGN1fizGmxdL7z6NRG8",
+      "",
+      "0"
+    ],
+    [
+      "璧勬簮",
+      "1525_emoji_琛ㄦ儏鍖?,
+      "emoji",
+      "1GpiyK1ld1t8366zI4eYJ2_zIrMl1pNjAR3GRNd-yhc4",
+      "",
+      "0"
+    ],
+    [
+      "鎴樻枟",
+      "1611_battle_buff - 鎴樻枟buff",
+      "battle_buff",
+      "1ev3eqR6-dZgTyUpmoe2MwomXkTUn9N2wg6ppPu6P7xk",
+      "",
+      "0"
+    ],
+    [
+      "鎴樻枟",
+      "1612_battle_skill - 鎴樻枟鎶€鑳?,
+      "battle_skill",
+      "1roxzLVI8GyItwUa3zCsl7KiQmsBqIG8ulSEePlQlFZQ",
+      "",
+      "0"
+    ],
+    [
+      "鎴樻枟",
+      "1613_battle_damage - 鎴樻崯姣斾緥",
+      "battle_damage",
+      "1uXkLLy-9rZfuHZsbN_lqZoZKBGvGcmCoz51Vs0OgQgk",
+      "",
+      "0"
+    ],
+    [
+      "鎴樻枟",
+      "1614_battle_soldier_restraint - 鍏电鍏嬪埗绯绘暟",
+      "battle_soldier_restraint",
+      "1bdYZTvbGWmkAG_2fd9LaeEu5V1zYDBSrc_s6-6jrHNs",
+      "",
+      "0"
+    ],
+    [
+      "鎴樻枟",
+      "1615_battle_defense_tower - 闃插尽濉旂郴鏁?,
+      "battle_defense_tower",
+      "1hE64AAa5yoHMCFkQZbgbvgYRpm-t2yKDsEGCgOvRW8s",
+      "",
+      "0"
+    ],
+    [
+      "鎴樻枟",
+      "1616_battle_mail_config -鎴樻姤鏉傞」",
+      "battle_mail_config",
+      "1jX_bruOXYIacger2ul91FXTIwFEsskPJSYoutPg7glw",
+      "",
+      "0"
+    ],
+    [
+      "鎴樻枟",
+      "1617_battle_damage_show - 鎴樻崯鏄剧ず",
+      "battle_damage_show",
+      "1LM6LVGQm36NWbdgErhCsc87LIFdRj1hMKXCRIBhwAs4",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1711_mail - 閭欢",
+      "mail",
+      "1L0EUyu7XbSympwFjex5tnxoF2ZbGGQBVYgePxdyH1VU",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1712_radar - 鎯呮姤涓績",
+      "radar",
+      "1Qcj2C96rXjzfe2travYaLtLr7jfS1vdzXQzW76MuSlw",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1713_module - 妯″潡",
+      "module",
+      "17LzafuETjLJQEX_qUC7CQVQkuqGd8zr5lC4fiDeRk1c",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1714_mail_filter - 缇ゅ彂閭欢绛涢€夊櫒",
+      "mail_filter",
+      "1IEqrsmVKLWOxY4Yq_pqGBdLod7dCSxvgr2rmFZKi7IM",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1715_mail_category - 閭欢绫诲瀷",
+      "mail_category",
+      "1UPe1f-Yl2kSdMMgTsSNVHv6e6_mVe7jVn89lCtUduR8",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1716_special_mail_skill_content - 鐗规畩鎴樻枟閭欢鍐呭",
+      "special_mail_skill_content",
+      "1gBn1cAeyxbdW8jSwPZ3MlPiO-AnyZIfWAdflixvRwuE",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1720_arena_winning_reward - 鎴樺満鑳滃満濂栧姳",
+      "arena_winning_reward",
+      "13YLQSnDmw8jd4Rms6Hk3M8i73PYmljbw4cp2Lvv2bJU",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1731_horde - 閮ㄨ惤",
+      "horde",
+      "17F1PKkYXx1Iu6Act1agoJWAi8oS7LddZTLSOH4nwakc",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1732_energy - 鑳介噺绯荤粺",
+      "energy_gauge",
+      "1Gy0JA5VcluaLYCQf3h0eUWpoJrxGzbhWkXHV86dDcQ8",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1733_horde_store - 閮ㄨ惤鍟嗗簵",
+      "horde_store",
+      "1WHFIRQEgQj0rAHudgELLL0tMSi7mgztJbluH8GKOco0",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1734_horde_elite - 閮ㄨ惤绮捐嫳",
+      "horde_elite",
+      "1JLdercuM5_NtVF2XCsPSGWC4cydW5PZZ8slLoe1966E",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1735_reward_box -鍙戝皠濂栧姳琛?",
+      "reward_box",
+      "1VIJZ98_q8dmHYZiookpbLPlSUIurcYKylrv1qNr2Erg",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1736_horde_rank_reward - 璧涘鎺掑悕濂栧姳",
+      "horde_rank_reward",
+      "1v4WjdJhUIVIQpRZsdDKTf482vLcQDx4YLvHSsx_wtSw",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1737_rocket_reward_time_control -鏁ｈ惤濂栧姳鏃堕棿鎺у埗",
+      "rocket_reward_time_control",
+      "1d9kwhZ9B3ZEUqzcvIzpXAkPto_cqZlJkqTSl-TiZkNw",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1738_fte_npc_dialogue - FTE涓殑npc瀵硅瘽",
+      "fte_npc_dialogue",
+      "1511Y-b5AE50xjf5lfKK8NmWNIUu63vZlfAxDG0hVb5Y",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1739_horde_meta_game - 鐏鍙戝皠杩涘害娓告垙",
+      "horde_meta_game",
+      "1RaM884AE7S-g1FJ4vrqxbJgVns5g8fqtrG6BcIPgScs",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1740_horde_elite_npc - 閮ㄨ惤绮捐嫳鍗犱綅npc",
+      "horde_elite_npc",
+      "1SGRI0ayWw04rwOrq3vviWqEJU5gEEYR9DVWo-E8jEfA",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1741_horde_elite_right - 閮ㄨ惤绮捐嫳鏉冮檺",
+      "horde_elite_right",
+      "1INxtmUbWCl2-4sa3i8nbxfmPZzmOdLEo0S_E4FCJG7E",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1742_rankings - 鎺掕姒?,
+      "rankings",
+      "1sRHRJDcUI5IxMdIuAiVSyxoprvpFe_QRat2z-Cobgns",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1743_Tap4news - 鏂伴椈",
+      "tap4news",
+      "1xurYNvxVtPbdgTYC3mCyGBpbdG03rTYp2hX7zZXdNls",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1745_rocket_energy_speed - 鐏鍏呰兘鍙傛暟",
+      "rocket_energy_speed",
+      "1aynvDwkrRL20tUMnzn-Q6D8Wni_EPPIWZaKhIiZEXYg",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1746_trigger_plot - 瑙﹀彂鍓ф儏",
+      "trigger_plot",
+      "1ePHTxwI99GJ5HfU0NEiOo_YqheoDz8M7EjWED371buE",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1747_direction - 寮曞瑙勫垯",
+      "direction",
+      "1Y_29rWCkbJqijdmHw0YaVsZOBCKs78HeMO2E01zYE8w",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1754_survery_trigger -闂嵎瑙﹀彂",
+      "survery_trigger",
+      "1RXLVzprclWU8e6bjtkvreE5odOknxIfVxGjpW3cKP4Y",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1748_horde_rocket_technology-閮ㄨ惤绉戞妧",
+      "horde_rocket_technology",
+      "1pPI7XQei4oc9mcwmgWb7OIkfergiTv2Zsk-xiwhrZjY",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1749_horde_rocket_technology_category-閮ㄨ惤绉戞妧鍒嗙被",
+      "horde_rocket_technology_category",
+      "1oIZhcQHFMQXD5xUg3LgND9f4WhVFUUd1sZ1pI7rPrTY",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1750_horde_rocket_quest - 閮ㄨ惤鐏浠诲姟",
+      "horde_rocket_quest",
+      "1JPv_nD_S_8bhmvz2SjukUAzqez3qQa3rPd86o6VGNiI",
+      "",
+      "0"
+    ],
+    [
+      "闇镐富",
+      "1751_overlord-闇镐富涓庡ご琛旈厤缃?,
+      "overlord",
+      "1vPlEh45FkJoORx1CjXK-p8lTg-3RLllJiehQZl2nDI4",
+      "",
+      "0"
+    ],
+    [
+      "閮ㄨ惤",
+      "1752_horde_change - 閮ㄨ惤杞崲閰嶇疆",
+      "horde_change",
+      "1IhPQR8gu1XUifonTvjKeQlyUgzmQcS21FVI2aaMkHro",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1753_new_horde_elite - 閮ㄨ惤绮捐嫳澶磋",
+      "new_horde_elite",
+      "1xRpvn01ZkVANdD--smZCuTnsjlfw_C_LElc4Sw5legk",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1754_survery_trigger-闂嵎瑙﹀彂鍔熻兘",
+      "survery_trigger",
+      "1RXLVzprclWU8e6bjtkvreE5odOknxIfVxGjpW3cKP4Y",
+      "",
+      "0"
+    ],
+    [
+      "浜夐湼",
+      "1755_wonder_overlord_reward - 闇镐富濂栧姳",
+      "wonder_overlord_reward",
+      "1zyVM1r4nYXmLaL2H1Ha8JVOEw0qHf3cjb1YFIb1GEqs",
+      "",
+      "0"
+    ],
+    [
+      "浜夐湼",
+      "1756_wonder_overlord_buff - 闇镐富buff",
+      "wonder_overlord_buff",
+      "1RHUcndN6Qk6MGyw3qFU4en_gyH710q6Ss9vrTN7wiPM",
+      "",
+      "0"
+    ],
+    [
+      "浜夐湼",
+      "1757_wonder_donate - 寰侀€旀崘鐚?,
+      "wonder_donate",
+      "1IjTXKlPTiTP_TbMTR7oZU6bqrE5epCQUK_ZBHm0kou0",
+      "",
+      "0"
+    ],
+    [
+      "浜夐湼",
+      "1758_wonder_donate_rank - 寰侀€旀崘鐚帓琛?,
+      "wonder_donate_rank",
+      "1wVAxGLOqc9fOlyjqB3SlXJmnU4WB85ep7VVe3gGDLX8",
+      "",
+      "0"
+    ],
+    [
+      "浜夐湼",
+      "1759_wonder_donate_buff - 寰侀€旀崘鐚産uff",
+      "wonder_donate_buff",
+      "1YP83gZzbcpdeOOBnCARtCT_NN917t8gR7Un4zNvIIIQ",
+      "",
+      "0"
+    ],
+    [
+      "浜夐湼",
+      "1760_wonder_launch_reward - 鍙戝皠濂栧姳",
+      "wonder_launch_reward",
+      "1HQlA0lPLYJn2qas_jxc6HFN2SG_2hSthRnafGZclPyc",
+      "",
+      "0"
+    ],
+    [
+      "浜夐湼",
+      "1761_wonder_overlord_skill - 闇镐富鎶€鑳?,
+      "wonder_overlord_skill",
+      "1Fw0gmm67TlMNcMU7UkbCkvgv5rCxshbPALBvL91bnPw",
+      "",
+      "0"
+    ],
+    [
+      "鍐涘姛",
+      "1762_merit_rank - 鍐涜绛夌骇",
+      "merit_rank",
+      "1bQK300IL9E-RZ-TIWLzc4OhZQerzNlLrJSyGOIpH7nk",
+      "",
+      "0"
+    ],
+    [
+      "鍐涘姛",
+      "1763_merit_season - 鍐涘姛璧涘",
+      "merit_season",
+      "1PlYotxRFT3NKjN0dDj1ECLE7uhqB5iFtfUWTpDMqEBo",
+      "",
+      "0"
+    ],
+    [
+      "鍐涘姛",
+      "1764_merit_shop - 鍐涘姛鍟嗗簵",
+      "merit_shop",
+      "1Aknu6ftofPhjrsPzg369Sh7NdQ1FGRTSOHz5jcEM2eI",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1765_city_monkey_tips - 鍩庡競tips",
+      "city_monkey_tips",
+      "1yA_5xK3EbC54dwcht6fmjmOuOnm-KfURv-b7HWjFTjw",
+      "",
+      "0"
+    ],
+    [
+      "boss",
+      "1766_world_boss_damage_reward - 涓栫晫boss浼ゅ濂栧姳",
+      "world_boss_damage_reward",
+      "10m-uWe6FOROyCbYRef0o4apHNmxdoIdzkT9k0-0BA3Y",
+      "",
+      "0"
+    ],
+    [
+      "boss",
+      "1767_world_boss_last_hit_reward - 涓栫晫boss灏惧垁濂栧姳",
+      "world_boss_last_hit_reward",
+      "1RlA4tdNN-XY6WhVlgmqOtgQS_tjFnBxobYxYRs68odA",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1768_chapter_quest_function_unlock - 绔犺妭浠诲姟瑙ｉ攣鍔熻兘",
+      "chapter_quest_function_unlock",
+      "1N6sd4QiL5cUk2W110dw81EsuF_7ZJ2g7PI8bq4kdIE4",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1769_chapter_unlock_show - 绔犺妭瑙ｉ攣寮圭獥琛ㄧ幇",
+      "chapter_unlock_show",
+      "1xP2OV3QC1rjOocwal5OdnvTi0pIHQUJPeZ5oxCTMZQI",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1770_mail_merge_config - 閭欢鍚堝苟閰嶇疆",
+      "mail_merge_config",
+      "1TyXXFcIeLSwKGGYzF6fwAvKxlyfluSlvFeAwAZmPzzo",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1771_mail_battle_buff - 鎴樻姤澧炵泭鏄剧ず",
+      "mail_battle_buff",
+      "1V_Q2_UbmYY5H21VxvBKwyxOIEPwyFYMs89SiFMABVhc",
+      "",
+      "0"
+    ],
+    [
+      "boss",
+      "1772_world_boss_history_damage_reward - 涓栫晫boss鍘嗗彶鏈€楂樹激瀹冲",
+      "world_boss_history_damage_reward",
+      "1iSULV8M-21eDlRLO-skpwQjpbMPBik8y8m_MpA4t660",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1773_cd_bank_plan CD閾惰鎶曡祫鏂规",
+      "cd_bank_plan",
+      "12dbOJ5mI73bvvAHyfFtKr429NEEY-MY5wDVTdBnMoCo",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1774_cd_bank_growth CD閾惰閾惰鍗＄瓑绾?,
+      "cd_bank_growth",
+      "1cWeJrAubWdFHB1SfORJVFIffqw_MIHQ6D_1H5Pgn_v0",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1775_wonder_boss_damage_reward - wonder宸ㄧ尶浼ゅ妗ｄ綅濂栧姳",
+      "wonder_boss_damage_reward",
+      "1Vfa7GQOuK-CJiSxd3lHgnnj24AsEne8e6NlllUDr51A",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1776_direction_behavior_tree - 寮曞缂栬緫鍣ㄤ笌鏂板紩瀵?,
+      "direction_behavior_tree",
+      "1W_6B_rwkqwLtld-A2Fue_vRFkHbm0JS2VU255UIEFXs",
+      "",
+      "0"
+    ],
+    [
+      "鍚炲櫖鍩庡牎楠岃瘉",
+      "1776_direction_behavior_tree_mj9",
+      "direction_behavior_tree_mj9",
+      "1lzj0jlChyNvrj1eGgw71XhGXuFU2xS2kTrVgreHRx4c",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1777_tavern_mail_box - 閰掗淇＄",
+      "tavern_mail_box",
+      "1PA0XIq8pJWHZzgpSfFAQ4li8V3OijPvYmCkqiVJLrFM",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1778_tavern_reward - 閰掗濂栧姳",
+      "tavern_reward",
+      "1TF5eUXAIcNnOoEVHqknLkHTTiRXKtj9QczJYJ_xq9XY",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1779_challenge_hud - 鎸戞垬鐣岄潰",
+      "challenge_hud",
+      "1cUlMYW8PUGdsIwmoD7xmdKhZEEsKnHAIkaztXYK7-BA",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1780_server_shielding_words - 鏈嶅姟鍣ㄥ睆钄借瘝搴?,
+      "server_shielding_words",
+      "11ZbUdHVzHcLh3u-rFDPI5fe7VgGIbmcfy_AxYzQyKXs",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1781_intimacy_rank - 浜插瘑搴︾瓑绾?,
+      "intimacy_rank",
+      "11RJ1E_qdkqP26Jglkd9XQhMKn9R0JqXuhj2k0PGnJME",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1782_intimacy_behavior- 浜插瘑搴﹁涓?,
+      "intimacy_behavior",
+      "1DzYMY4BRDyv4-7noJSN3asNDlTY98gADAcUp92_DF5w",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1783_friend_recommend-濂藉弸鎺ㄨ崘鍙傛暟琛?,
+      "friend_recommend",
+      "18-pbycP_LvKBgvyzKp8PFM7L0n3wmr0h_ZPDeTP-JVU",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1784_wonder_boss_rally_reward-wonder宸ㄧ尶鍗曟闆嗙粨濂栧姳",
+      "wonder_boss_rally_reward",
+      "1T_9dBYgv2J_P-VRGIttzq1Vz3112qHg09o3PbWS9E9Y",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1785_entrust_choose_march - 鎵樼鍙€夎涓洪厤缃?,
+      "entrust_choose_march",
+      "1ncYL0D8lvA-zKf6UIomu4ezDYD6mT9ncePw_sp6dxus",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1786_citylayout_recommend - 鍩庡唴甯冨眬瀹樻柟鎺ㄨ崘",
+      "citylayout_recommend",
+      "1ndrSeWwnY6RoOgLAyg8EGzLU0m6yJQ5eFxtv1LjDGuA",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1787_message_board- 鐣欒█鏉?,
+      "message_board",
+      "1UxhucDPTw58XzbVpg5pKxzKlicbW5EcYzo8IgBZP3fM",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1788_player_queue-绌洪棽闃熷垪",
+      "player_queue",
+      "10yoaBJtYE691z1DBnGDSEDK7PuJjQPaMFBwJ8TA0U04",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1789_fte_game_choose-fte灏忔父鎴忛€夋嫨",
+      "fte_game_choose",
+      "1seTzq9UCpHkQd0f3RpMUkeRuaN6KxEzYtN2TgILT1C0",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1790_intimacy_effect - 浜插瘑搴︽晥鏋?,
+      "intimacy_effect",
+      "1JxAuoyo8IV85HBuhOd-kFbagFvVDrd30R_4re_jX5rM",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1791_collection_platform_maintain - 涓存椂鏀惰棌鍝佷繚鍏?,
+      "collection_platform_maintain",
+      "1bjVF4X9AkgBP2wYPIxMyCilDLztTp7k1Ld9ooILD0LQ",
+      "",
+      "0"
+    ],
+    [
+      "鍔熻兘",
+      "1792_troop_capacity_rent - 閮ㄩ槦瀹归噺绉熻祦",
+      "troop_capacity_rent",
+      "1j6vZ5Ge0eqmsy40cQjiWlt7gZEyKXsZsSCO3SeeVTLU",
+      "",
+      "0"
+    ],
+    [
+      "鑱旂洘",
+      "1811_union_class - 鑱旂洘闃剁骇",
+      "union_class",
+      "1BC7sL4AKE980Be0-U_L4a5Mmz3I9PqELWw0TxKIMyWI",
+      "",
+      "0"
+    ],
+    [
+      "鑱旂洘",
+      "1812_union_order - 甯淳鎸囦护",
+      "union_order",
+      "1xAU2sG12KP4KZD8o0yaZV2GFUsL0QHGJXRoxFdI4Pgk",
+      "",
+      "0"
+    ],
+    [
+      "鑱旂洘",
+      "1816_union_gift_level_鑱旂洘绀肩墿绛夌骇",
+      "union_gift_level",
+      "1JCUbUaZLBDqI4QJth64uBHcuVlT5oRKKAqwIY24Yr9o",
+      "",
+      "0"
+    ],
+    [
+      "鑱旂洘",
+      "1817_union_gift_quality_drop_鑱旂洘鍒嗕韩绀肩墿鍝佽川鎺夎惤",
+      "union_gift_quality_drop",
+      "1IMFWTHyn3i_mdfXutWkZyJZe8E49sKu-CHEYQCE4TgU",
+      "",
+      "0"
+    ],
+    [
+      "鑱旂洘",
+      "1818_union_research_鑱旂洘绉戞妧閰嶇疆",
+      "union_research",
+      "1WdrQOI_sT3zXVTqkmOiwpMMZPVVYQjWPXL-i9t9QAbg",
+      "",
+      "0"
+    ],
+    [
+      "鑱旂洘",
+      "1819_union_research_category_鑱旂洘绉戞妧缁勯厤缃?,
+      "union_research_category",
+      "1Z-gkorwIny23GymQRb5qz3RhFxTDkb1CRUiEr5L8j9M",
+      "",
+      "0"
+    ],
+    [
+      "鑱旂洘",
+      "1820_union_research_donation_rank_鑱旂洘绉戞妧鎹愮尞鎺掑悕",
+      "union_research_donation_rank",
+      "1fhuZAsuzMz9HMKsUzmW4-4JYBQxGiI4FphPCSxrpjX8",
+      "",
+      "0"
+    ]
+  ]
+}

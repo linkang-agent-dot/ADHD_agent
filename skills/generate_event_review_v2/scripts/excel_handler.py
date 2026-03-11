@@ -339,9 +339,18 @@ def _parse_reach_conversion(wb) -> dict:
     rows = _get_rows(wb, "触达转化")
     stages = []
 
-    # 检测有多少组对标列（从第4列开始，每2列一组：活动名称 + 人数）
     # 格式: col3=对标活动名称, col4=对标人数, col5=对标活动名称2, col6=对标人数2, ...
     comparisons_data = {}  # {benchmark_name: [stage_data]}
+
+    # 预扫描：找到每个对标列位置对应的活动名称（只在第一行填写）
+    col_to_benchmark = {}  # {col_idx: benchmark_name}
+    if rows:
+        first_row = rows[0]
+        col_idx = 3
+        while col_idx + 1 < len(first_row):
+            if first_row[col_idx]:
+                col_to_benchmark[col_idx] = str(first_row[col_idx]).strip()
+            col_idx += 2
 
     for row in rows:
         if len(row) < 2:
@@ -352,7 +361,6 @@ def _parse_reach_conversion(wb) -> dict:
 
         if stage_name and users is not None:
             user_count = _to_number(users)
-            # 跳过用户数为0的阶段（表示该活动不涉及此环节）
             if user_count <= 0:
                 continue
             stages.append({
@@ -361,26 +369,12 @@ def _parse_reach_conversion(wb) -> dict:
                 "note": note,
             })
 
-        # 对标数据：扫描从 col3 开始的每一对列 (名称, 人数)
-        col_idx = 3
-        while col_idx + 1 < len(row):
-            comp_name_val = row[col_idx]
+        # 对标数据：按预扫描的列位置读取
+        for col_idx, comp_event in col_to_benchmark.items():
+            if col_idx + 1 >= len(row):
+                continue
             comp_users_val = row[col_idx + 1]
-
-            if comp_name_val:
-                comp_event = str(comp_name_val).strip()
-                if comp_event not in comparisons_data:
-                    comparisons_data[comp_event] = []
-
-            # 找到最近设定的对标名（可能只在第一行填写）
-            # 遍历已有的 comparisons_data 找到对应列位置的名称
-            comp_event = None
-            for row_check in rows:
-                if len(row_check) > col_idx and row_check[col_idx]:
-                    comp_event = str(row_check[col_idx]).strip()
-                    break
-
-            if comp_event and comp_users_val is not None and stage_name:
+            if comp_users_val is not None and stage_name:
                 comp_count = _to_number(comp_users_val)
                 if comp_count > 0:
                     if comp_event not in comparisons_data:
@@ -389,8 +383,6 @@ def _parse_reach_conversion(wb) -> dict:
                         "stage": str(stage_name).strip(),
                         "users": comp_count,
                     })
-
-            col_idx += 2
 
     result = {"stages": stages}
     # 多对标数组

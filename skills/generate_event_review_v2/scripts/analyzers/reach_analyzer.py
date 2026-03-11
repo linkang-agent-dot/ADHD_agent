@@ -117,7 +117,10 @@ class ReachAnalyzer(BaseAnalyzer):
         if not has_critical:
             result.conclusion = "触达通路正常，各环节转化率在合理范围内"
         else:
-            bottleneck_name = bottleneck["from"] + "→" + bottleneck["to"] if conv_rates else "未知"
+            if conv_rates:
+                bottleneck_name = bottleneck["from"] + "→" + bottleneck["to"]
+            else:
+                bottleneck_name = "未知"
             result.conclusion = f"触达存在问题，{bottleneck_name} 环节存在显著流失"
 
         result.severity = severity

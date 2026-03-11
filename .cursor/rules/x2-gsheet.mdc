@@ -1,5 +1,5 @@
 ---
-description: X2导表、X2配置表同步、X2下载表、X2刷表、X2合并分支
+description: X2导表、X2配置表同步、X2下载表、X2刷表、X2合并分支、X2分支差异
 globs: 
 alwaysApply: false
 ---
@@ -16,7 +16,25 @@ alwaysApply: false
 - X2同步分支
 - X2冲突
 
+当用户提到以下关键词时，使用**分支差异汇总 Skill**：
+
+- 分支差异
+- 差异汇总
+- 对比分支
+- diff到表格
+- 差异GSheet
+- 查看分支改动
+- 分支对比
+
+## 分支别名速查
+
+| 别名 | 实际分支名 | 说明 |
+|------|-----------|------|
+| 掉落转付费 | `dev_X2-39183` | 掉落转付费功能分支 |
+
 ## 执行步骤
+
+### 配置表同步（下载/合并/冲突）
 
 1. **切换工作目录**到 `D:\UGit\x2gdconf`
 2. **读取主 Skill 文件**：`D:\UGit\x2gdconf\.cursor\skills\gsheet_sync\SKILL.md`
@@ -26,3 +44,10 @@ alwaysApply: false
    - 冲突处理 → `D:\UGit\x2gdconf\scripts\gsheet_skill_conflict.md`
    - 参考信息 → `D:\UGit\x2gdconf\scripts\gsheet_skill_reference.md`
 4. **按 Skill 规则执行操作**
+
+### 分支差异汇总到 Google Sheet
+
+1. **读取 Skill 文件**：`c:\ADHD_agent\.cursor\skills\branch-diff-gsheet\SKILL.md`
+2. 确认源分支和目标分支（可通过上方"分支别名速查"表匹配）
+3. 运行 `c:\ADHD_agent\scripts\create_diff_sheet.py`，或按 Skill 中描述的流程手动执行
+4. 返回 Google Sheet 链接给用户

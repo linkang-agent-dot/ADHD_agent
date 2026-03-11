@@ -65,6 +65,9 @@ class PaymentOverviewAnalyzer(BaseAnalyzer):
             f"ARPU {current.get('arpu', 0):.2f}, ARPPU {current.get('arppu', 0):.2f}"
         )
 
+        # 初始化 vs_avg 变量（避免 other_events 为空时 UnboundLocalError）
+        rev_vs_avg = pr_vs_avg = arpu_vs_avg = arppu_vs_avg = 0
+
         # 2. 与其他活动横向对比
         if other_events:
             avg_revenue = sum(e.get("revenue", 0) for e in other_events) / len(other_events)

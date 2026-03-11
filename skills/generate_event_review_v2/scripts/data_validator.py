@@ -100,8 +100,8 @@ def _validate_reach_conversion(rc: dict, errors: List[str]):
     user_counts = [s.get("users", 0) for s in stages]
     for i in range(1, len(user_counts)):
         if user_counts[i] > user_counts[i - 1]:
-            errors.append(
-                f"[reach_conversion] 警告: 第 {i+1} 层人数({user_counts[i]}) > 第 {i} 层({user_counts[i-1]})，漏斗不单调"
+            warnings.append(
+                f"[reach_conversion] 第 {i+1} 层人数({user_counts[i]}) > 第 {i} 层({user_counts[i-1]})，漏斗不单调"
             )
 
 
