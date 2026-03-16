@@ -15,10 +15,8 @@ import sys
 import time
 import argparse
 
-REPO_DIR = r"D:\UGit\x2gdconf"
-NPM_DIR = os.path.join(os.environ.get('APPDATA', ''), 'npm')
-RUN_GWS_JS = os.path.join(NPM_DIR, 'node_modules', '@googleworkspace', 'cli', 'run-gws.js')
-GWS_CMD = os.path.join(NPM_DIR, 'gws.cmd')
+REPO_DIR = r"D:\UGit\x2gdconf"  # default, overridden by --repo
+GWS_STDIN_WRAPPER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'gws_stdin.js')
 
 COLOR_HEADER = {"red": 0.75, "green": 0.82, "blue": 0.95}
 COLOR_ADDED = {"red": 0.85, "green": 0.95, "blue": 0.85}
@@ -38,56 +36,39 @@ def run_git(args):
     return result.stdout
 
 
-def run_gws(args, json_body=None):
-    """调用 gws API。大 payload 自动走 node 直连。"""
-    if json_body is not None:
-        json_str = json.dumps(json_body, ensure_ascii=False)
-        if len(json_str) > PAYLOAD_LIMIT:
-            return _run_gws_node(args, json_body)
+def run_gws(args, json_body=None, retries=2):
+    """通过 stdin 传递 JSON 调用 gws，彻底绕过 Windows 命令行长度限制。"""
+    stdin_payload = json.dumps({"args": args, "json": json_body}, ensure_ascii=False)
 
-    cmd = [GWS_CMD] + args
-    if json_body is not None:
-        cmd.extend(['--json', json.dumps(json_body, ensure_ascii=False)])
+    for attempt in range(retries + 1):
+        try:
+            result = subprocess.run(
+                ['node', GWS_STDIN_WRAPPER],
+                input=stdin_payload,
+                capture_output=True, text=True,
+                encoding='utf-8', errors='replace', timeout=120
+            )
+        except OSError as e:
+            print(f"  GWS OSError (attempt {attempt+1}): {e}", file=sys.stderr)
+            if attempt < retries:
+                time.sleep(1)
+                continue
+            return None
 
-    try:
-        result = subprocess.run(
-            cmd, capture_output=True, text=True,
-            encoding='utf-8', errors='replace'
-        )
-    except OSError:
-        return _run_gws_node(args, json_body)
+        if result.returncode != 0:
+            err = result.stderr.strip() or result.stdout.strip()
+            print(f"  GWS Error (attempt {attempt+1}): {err[:200]}", file=sys.stderr)
+            if attempt < retries:
+                time.sleep(1)
+                continue
+            return None
 
-    if result.returncode != 0:
-        print(f"  GWS Error: {result.stderr or result.stdout}", file=sys.stderr)
-        return None
-    try:
-        return json.loads(result.stdout)
-    except json.JSONDecodeError:
-        return result.stdout
+        try:
+            return json.loads(result.stdout)
+        except json.JSONDecodeError:
+            return result.stdout
 
-
-def _run_gws_node(args, json_body=None):
-    """直接调用 node run-gws.js，绕过 cmd.exe 8191 字符限制。"""
-    cmd = ['node', RUN_GWS_JS] + args
-    if json_body is not None:
-        cmd.extend(['--json', json.dumps(json_body, ensure_ascii=False)])
-
-    try:
-        result = subprocess.run(
-            cmd, capture_output=True, text=True,
-            encoding='utf-8', errors='replace', timeout=120
-        )
-    except OSError as e:
-        print(f"  Node Error: {e}", file=sys.stderr)
-        return None
-
-    if result.returncode != 0:
-        print(f"  Node GWS Error: {result.stderr}", file=sys.stderr)
-        return None
-    try:
-        return json.loads(result.stdout)
-    except json.JSONDecodeError:
-        return result.stdout
+    return None
 
 
 def get_changed_files(source, target):
@@ -167,11 +148,25 @@ def get_diff_data(filepath, source, target, header_cols=0):
     return results
 
 
+JSON_BODY_LIMIT = 20000  # gws.exe spawnSync 32767 limit minus args/escaping overhead
+
 def write_values_chunked(spreadsheet_id, sheet_name, values):
-    """分块写入数据，自动处理超长行。"""
-    for start in range(0, len(values), DATA_CHUNK_SIZE):
-        chunk = values[start:start + DATA_CHUNK_SIZE]
-        row_start = start + 1
+    """动态分块写入。确保每个 chunk 的 JSON body 不超过 gws.exe 命令行限制。"""
+    failed = 0
+    idx = 0
+    while idx < len(values):
+        chunk = []
+        body_len = 60  # {"values":[],"majorDimension":"ROWS"} overhead
+        while idx < len(values):
+            row_json_len = len(json.dumps(values[idx], ensure_ascii=False))
+            new_len = body_len + row_json_len + 2  # +2 for comma and bracket
+            if chunk and new_len > JSON_BODY_LIMIT:
+                break
+            chunk.append(values[idx])
+            body_len = new_len
+            idx += 1
+
+        row_start = idx - len(chunk) + 1
         body = {"values": chunk, "majorDimension": "ROWS"}
         params = json.dumps({
             "spreadsheetId": spreadsheet_id,
@@ -179,28 +174,15 @@ def write_values_chunked(spreadsheet_id, sheet_name, values):
             "valueInputOption": "RAW"
         })
 
-        json_str = json.dumps(body, ensure_ascii=False)
-        if len(json_str) > PAYLOAD_LIMIT:
-            for i, row in enumerate(chunk):
-                single_body = {"values": [row], "majorDimension": "ROWS"}
-                single_params = json.dumps({
-                    "spreadsheetId": spreadsheet_id,
-                    "range": f"'{sheet_name}'!A{row_start + i}",
-                    "valueInputOption": "RAW"
-                })
-                run_gws(
-                    ['sheets', 'spreadsheets', 'values', 'update',
-                     '--params', single_params],
-                    single_body
-                )
-                time.sleep(0.15)
-        else:
-            run_gws(
-                ['sheets', 'spreadsheets', 'values', 'update',
-                 '--params', params],
-                body
-            )
-        time.sleep(0.2)
+        result = run_gws(
+            ['sheets', 'spreadsheets', 'values', 'update', '--params', params],
+            body
+        )
+        if result is None:
+            failed += len(chunk)
+        time.sleep(0.25)
+    if failed:
+        print(f" [{failed} rows FAILED]", end='', flush=True)
 
 
 def build_format_requests(sheet_id, rows, col_count):
@@ -293,8 +275,13 @@ def main():
     parser = argparse.ArgumentParser(description='X2 配置表分支差异汇总 → Google Sheet')
     parser.add_argument('--source', required=True, help='源分支 (feature branch)，如 origin/dev_X2-39183')
     parser.add_argument('--target', default='origin/dev', help='目标分支 (基准)，默认 origin/dev')
+    parser.add_argument('--repo', default=None, help='配置表仓库路径（覆盖默认 REPO_DIR）')
     parser.add_argument('--title', default=None, help='Google Sheet 标题')
     args = parser.parse_args()
+
+    global REPO_DIR
+    if args.repo:
+        REPO_DIR = args.repo
 
     os.environ['GOOGLE_WORKSPACE_PROJECT_ID'] = 'calm-repeater-489707-n1'
 
