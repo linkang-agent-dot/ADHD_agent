@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "dws": {
+      "source": "git@git.tap4fun.com:skills/dingtalk-workspace.git",
+      "sourceType": "git",
+      "computedHash": "f2bb278a73f1d2477f1a91cf02da0d37ec72ede5c3176a67de331926dde99eb6"
+    },
+    "publish-skill": {
+      "source": "git@git.tap4fun.com:skills/publish-skill.git",
+      "sourceType": "git",
+      "computedHash": "8146e94a8c729fdc252fa3a7496d6089d0f85c7d7a055d0e7807081352ac26c9"
+    }
+  }
+}

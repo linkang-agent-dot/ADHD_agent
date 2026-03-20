@@ -42,6 +42,19 @@ CREATE TABLE IF NOT EXISTS checkpoint_logs (
     user_response TEXT DEFAULT '',
     was_on_track INTEGER DEFAULT 1
 );
+
+CREATE TABLE IF NOT EXISTS user_settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS chat_history (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role TEXT NOT NULL CHECK(role IN ('user', 'bot')),
+    content TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
 """
 
 
@@ -243,6 +256,58 @@ async def log_checkpoint(user_response: str, was_on_track: bool):
 
 
 # ── Stats ──
+
+
+async def get_setting(key: str, default: str | None = None) -> str | None:
+    db = await get_db()
+    cursor = await db.execute("SELECT value FROM user_settings WHERE key = ?", (key,))
+    row = await cursor.fetchone()
+    await db.close()
+    return row["value"] if row else default
+
+
+async def set_setting(key: str, value: str):
+    db = await get_db()
+    now = datetime.now().isoformat()
+    await db.execute(
+        """INSERT INTO user_settings (key, value, updated_at) VALUES (?, ?, ?)
+           ON CONFLICT(key) DO UPDATE SET value = ?, updated_at = ?""",
+        (key, value, now, value, now),
+    )
+    await db.commit()
+    await db.close()
+
+
+async def get_all_settings() -> dict:
+    db = await get_db()
+    cursor = await db.execute("SELECT key, value FROM user_settings")
+    rows = await cursor.fetchall()
+    await db.close()
+    return {r["key"]: r["value"] for r in rows}
+
+
+async def add_chat_message(role: str, content: str):
+    db = await get_db()
+    now = datetime.now().isoformat()
+    await db.execute(
+        "INSERT INTO chat_history (role, content, created_at) VALUES (?, ?, ?)",
+        (role, content, now),
+    )
+    await db.execute(
+        "DELETE FROM chat_history WHERE id NOT IN (SELECT id FROM chat_history ORDER BY id DESC LIMIT 50)"
+    )
+    await db.commit()
+    await db.close()
+
+
+async def get_recent_chat(limit: int = 6) -> list[dict]:
+    db = await get_db()
+    cursor = await db.execute(
+        "SELECT role, content FROM chat_history ORDER BY id DESC LIMIT ?", (limit,)
+    )
+    rows = await cursor.fetchall()
+    await db.close()
+    return [dict(r) for r in reversed(rows)]
 
 
 async def get_today_stats() -> dict:

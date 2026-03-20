@@ -238,55 +238,108 @@ async def daily_review(tasks: list[dict], stats: dict) -> str:
     )
 
 
-async def classify_message(user_text: str) -> dict:
-    """Classify user message: is it a task, a question, or chat?"""
-    prompt = f"""用户给 ADHD 任务助手发了一条消息：「{user_text}」
+async def classify_message(user_text: str, context_info: str = "") -> dict:
+    """Classify user message into: task / command / settings / chat."""
+    today_str = datetime.now().strftime('%Y-%m-%d %H:%M')
+    prompt = f"""# 意图分类
 
-请判断这条消息的意图，以 JSON 格式返回：
+你是 ADHD 用户的 Telegram 任务助手。根据用户消息和当前上下文，判断意图并返回JSON。
 
-如果是【记录任务/待办事项】，返回：
-{{
-  "intent": "task",
-  "title": "简洁的任务标题（不超过20字）",
-  "description": "",
-  "priority": "high/medium/low",
-  "estimated_minutes": 0,
-  "deadline": null
-}}
+## 当前上下文
+{context_info}
+当前时间: {today_str}
 
-如果是【提问/聊天/闲聊/询问机器人信息】，返回：
-{{
-  "intent": "chat",
-  "reply": "用温暖友好的语气回复用户的问题（你是一个ADHD任务助手，用MiniMax AI驱动，帮用户记任务、规划每天、提醒不要忘事）"
-}}
+## 助手功能概览
+任务记录 | AI每日规划 | 完成导航 | 定时Checkpoint | 喝水提醒 | 午休/晚休提醒 | 每日复盘 | 连续工作提醒 | 情绪支持 | 设置修改
+命令: /today /now /plan /review /help /settings
 
-判断规则：
-- 包含「做/写/提交/完成/准备/整理/对接/沟通/审核/开会」等动词的，一般是任务
-- 包含「？」「吗」「呢」「什么」「怎么」「哪个」等疑问词的，一般是提问
-- 打招呼、闲聊、问机器人状态的，是 chat
-- 如果提到「紧急」「马上」等词，priority 设为 high
-- 如果提到时间如「明天下午三点」，转成 YYYY-MM-DD 放 deadline
-- 只返回 JSON，不要其他文字"""
+## 四种意图及返回格式
+
+**task** — 用户描述了一件需要去做的事（不是已完成的事）
+{{"intent":"task","title":"简洁标题","priority":"high/medium/low","estimated_minutes":数字,"deadline":null或"YYYY-MM-DD","progress_note":"已有进度描述或null"}}
+
+**command** — 用户想触发一个操作（查看/完成/休息/规划等）
+可用: today, now, plan, review, complete, rest, help, settings
+{{"intent":"command","command":"命令名"}}
+
+**settings** — 用户想修改某个配置项的值
+可改: morning_hour, morning_minute, checkpoint_interval, rest_interval
+{{"intent":"settings","key":"设置项","value":"新值","confirm_text":"确认描述"}}
+
+**chat** — 闲聊、提问、反馈，不属于以上三种
+{{"intent":"chat","reply":"基于功能和上下文的具体有用回复，2-4句"}}
+
+## 核心判断原则
+
+1. **意图看本质**：不要匹配关键词，要理解用户真正想干什么。"交接完成了"是在说做完了（complete），不是在创建新任务。
+2. **上下文优先**：用户的消息可能很短或有指代（"这个""它""记一下"），必须结合「最近对话」和「当前状态」来理解。
+3. **完成 vs 新任务**：用户说某事"完成了/搞定了/做完了/弄好了/OK了" → command:complete。用户说"要做XX/帮我记XX" → task。区别在于事情是【已完成】还是【将要做】。
+4. **规划类**：用户问接下来做什么、该做什么、排优先级 → command:plan
+5. **设置类**：用户想调整时间/间隔/频率，通常含"改""调""太早/太晚/太频繁" → settings
+6. **chat 回复质量**：必须基于助手的真实功能回答，不要编造不存在的能力。回复要具体、有温度。
+
+## 格式示例（仅展示格式，不是穷举）
+
+"提交活动配置" → {{"intent":"task","title":"提交活动配置","priority":"medium","estimated_minutes":30,"deadline":null,"progress_note":null}}
+"做完了" → {{"intent":"command","command":"complete"}}
+"帮我规划一下" → {{"intent":"command","command":"plan"}}
+"早报改到10点" → {{"intent":"settings","key":"morning_hour","value":"10","confirm_text":"早报时间改为 10:00"}}
+"你有什么功能" → {{"intent":"chat","reply":"..."}}
+
+用户消息: "{user_text}"
+
+只返回一行JSON，不要其他任何文字。"""
 
     result = await _ask_ai(prompt, with_system=False)
     if result:
         text = result.strip()
         if text.startswith("```"):
             text = text.split("\n", 1)[1]
-            text = text.rsplit("```", 1)[0]
+            text = text.rsplit("```", 1)[0].strip()
+        start = text.find("{")
+        end = text.rfind("}") + 1
+        if start >= 0 and end > start:
+            text = text[start:end]
         try:
-            return json.loads(text)
+            parsed = json.loads(text)
+            intent = parsed.get("intent")
+            logger.info("classify_message: input=%r → intent=%s", user_text, intent)
+            if intent in ("task", "chat", "settings", "command"):
+                return parsed
         except json.JSONDecodeError:
-            pass
+            logger.warning("classify_message: failed to parse JSON: %s", text)
 
-    # fallback: simple heuristic
-    question_markers = ("?", "？", "吗", "呢", "什么", "怎么", "哪", "谁", "为什么", "是不是")
-    if any(m in user_text for m in question_markers):
+    # fallback heuristics
+    text_lower = user_text.lower().strip()
+
+    settings_keywords = ("改成", "调成", "调整", "太早", "太晚", "太频繁", "间隔", "改到", "设置")
+    if any(kw in text_lower for kw in settings_keywords):
+        return {"intent": "command", "command": "settings"}
+
+    command_hints = {
+        "today": ("任务", "剩下", "还有", "列表", "今天", "今日", "待办"),
+        "now": ("当前", "正在做", "在做"),
+        "plan": ("规划", "计划", "安排", "该做什么", "干什么", "推荐", "清单", "建议", "排序", "优先级", "先做"),
+        "review": ("复盘", "总结", "怎么样"),
+        "complete": ("完成", "做完", "搞定", "done"),
+        "rest": ("休息", "歇", "累"),
+        "settings": ("设置",),
+    }
+    for cmd, keywords in command_hints.items():
+        if any(kw in text_lower for kw in keywords):
+            return {"intent": "command", "command": cmd}
+
+    question_markers = ("?", "？", "吗", "呢", "什么", "怎么", "哪", "谁", "为什么", "是不是", "能不能", "可以吗")
+    chat_markers = ("你好", "hello", "hi", "嗨", "dd", "谢谢", "哈哈", "嗯", "好的", "ok", "不错", "可以")
+
+    if any(m in text_lower for m in question_markers):
         return {"intent": "chat", "reply": "我是你的 ADHD 任务助手 🧠\n\n直接发消息给我就能记录任务\n发 /help 查看完整用法"}
+    if text_lower in chat_markers or len(text_lower) <= 3:
+        return {"intent": "chat", "reply": "在的！有什么需要记录的吗？💬"}
 
     priority = "medium"
     for kw in ("紧急", "马上", "立刻", "urgent", "asap"):
-        if kw in user_text.lower():
+        if kw in text_lower:
             priority = "high"
             break
     return {

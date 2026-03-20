@@ -1,4 +1,6 @@
-> 对标活动: {{BENCHMARK_EVENT}} | 生成时间: {{GENERATED_AT}}
+> 对标活动: {{BENCHMARK_EVENT}} | 生成时间: {{GENERATED_AT}} | 完整版
+
+<table_of_contents/>
 
 ---
 
@@ -8,23 +10,35 @@
 {{EXECUTIVE_SUMMARY_SHORT}}
 </callout>
 
-{{EXECUTIVE_SUMMARY_DETAIL}}
+{{RISK_CALLOUT}}
 
 ---
 
-## 2. 核心大盘趋势
+## 2. 核心大盘指标
 
-**趋势判断: <span color="red">{{TREND_PATTERN}}</span>**
+{{CORE_METRICS_TABLE}}
+
+<callout icon="💡" color="gray_bg">
+{{CORE_METRICS_INSIGHT}}
+</callout>
+
+---
+
+## 3. 核心大盘趋势
+
+<callout icon="📊" color="blue_bg">
+	请在此处插入图表: 1\_Revenue\_Trend.png（核心大盘趋势折线图）
+</callout>
+
+**趋势判断: **<span color="red">**{{TREND_PATTERN}}**</span>
 
 {{TREND_DESCRIPTION}}
-
-**关键指标速览:**
 
 <table header-row="true">
 	<tr>
 		<td>指标</td>
 		<td>数值</td>
-		<td>环比</td>
+		<td>环比 (vs {{PREVIOUS_EVENT}})</td>
 		<td>同比 (vs {{BENCHMARK_EVENT}})</td>
 	</tr>
 	<tr>
@@ -47,44 +61,49 @@
 	</tr>
 </table>
 
+{{HISTORICAL_REVENUE_TABLE}}
+
 ---
 
-## 3. 模块营收结构
+## 4. 模块营收结构
 
-**当期模块占比:**
+<callout icon="📊" color="blue_bg">
+	请在此处插入图表: 2\_Module\_Structure.png（模块营收堆叠面积图）
+</callout>
 
-<table header-row="true">
-	<tr>
-		<td>模块</td>
-		<td>占比</td>
-		<td>营收</td>
-		<td>备注</td>
-	</tr>
-	<tr>
-		<td>外显类</td>
-		<td>{{MODULE_APPEARANCE_SHARE}}</td>
-		<td>${{MODULE_APPEARANCE_REVENUE}}</td>
-		<td>{{MODULE_APPEARANCE_NOTE}}</td>
-	</tr>
-	<tr>
-		<td><span color="red">**小游戏**</span></td>
-		<td><span color="red">**{{MODULE_MINIGAME_SHARE}}**</span></td>
-		<td><span color="red">**${{MODULE_MINIGAME_REVENUE}}**</span></td>
-		<td><span color="red">**{{MODULE_MINIGAME_NOTE}}**</span></td>
-	</tr>
-	<tr>
-		<td>混合/养成</td>
-		<td>{{MODULE_HYBRID_SHARE}}</td>
-		<td>${{MODULE_HYBRID_REVENUE}}</td>
-		<td>{{MODULE_HYBRID_NOTE}}</td>
-	</tr>
-</table>
+{{MODULE_DETAIL_TABLE}}
 
+<callout icon="💡" color="gray_bg">
 {{MODULE_INSIGHT}}
+</callout>
 
 ---
 
-## 4. 用户分层分析
+## 5. 各活动效率排名
+
+{{ACTIVITY_RANKING_TABLE}}
+
+<callout icon="🎯" color="purple_bg">
+{{EFFICIENCY_TIER_INSIGHT}}
+</callout>
+
+<callout icon="🔑" color="orange_bg">
+{{SUCCESS_MODEL_INSIGHT}}
+</callout>
+
+<callout icon="📎" color="gray_bg">
+{{SKU_EFFICIENCY_INSIGHT}}
+</callout>
+
+---
+
+## 6. 用户分层趋势
+
+<callout icon="📊" color="blue_bg">
+	请在此处插入图表: 3\_User\_Growth.png（用户分层 ARPU 分组柱状图）
+</callout>
+
+### 6.1 各层级 ARPU 对比
 
 <table header-row="true">
 	<tr>
@@ -98,25 +117,61 @@
 {{USER_TIER_TABLE_ROWS}}
 </table>
 
-{{USER_TIER_INSIGHT}}
+### 6.2 付费玩家人数趋势
+
+{{TIER_HEADCOUNT_TABLE}}
+
+### 6.3 趋势诊断
+
+{{TIER_TREND_DIAGNOSIS}}
 
 ---
 
-## 5. 子活动诊断
+## 7. 日维度营收分析（可选）
 
-### 5.1 Keep - 表现优秀，建议保留
+{{DAILY_RHYTHM_INSIGHT}}
+
+{{DAILY_REVENUE_TABLE}}
+
+---
+
+## 8. 子活动诊断
+
+### 8.1 Keep - 表现优秀，建议保留
 
 {{KEEP_LIST_NOTION}}
 
-### 5.2 Optimize - 待优化项
+### 8.2 Optimize - 待优化项
 
 {{OPTIMIZE_LIST_NOTION}}
 
+### 8.3 Watch - 需持续监控
+
+{{WATCH_LIST_NOTION}}
+
 ---
 
-## 6. Action Items
+## 9. Action Items
 
 {{ACTION_ITEMS_NOTION}}
+
+---
+
+## 10. 待人工补充清单
+
+<callout icon="📋" color="orange_bg">
+以下为数据分析无法覆盖的决策项，需人工补充后报告才算完整。
+</callout>
+
+{{HUMAN_CHECKLIST}}
+
+---
+
+## 11. 总结
+
+<callout icon="📝" color="blue_bg">
+{{FINAL_SUMMARY}}
+</callout>
 
 ---
 

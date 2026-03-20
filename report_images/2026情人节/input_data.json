@@ -1,0 +1,1276 @@
+{
+  "meta": {
+    "event_name": "2026情人节",
+    "benchmark_event": "2025情人节"
+  },
+  "metrics_trend": [
+    {
+      "event": "2026情人节",
+      "revenue": 839629,
+      "arpu": 41.08,
+      "pay_rate": 22.0,
+      "arppu": 186.73,
+      "skin_buff": "飙车族"
+    },
+    {
+      "event": "2026春节",
+      "revenue": 890703.55,
+      "arppu": 198.44,
+      "pay_rate": 32.66,
+      "arpu": 64.81,
+      "skin_buff": "飙车族",
+      "period_pay_share": 49.28
+    },
+    {
+      "event": "圣诞节",
+      "revenue": 938756.6,
+      "arppu": 193.86,
+      "pay_rate": 33.05,
+      "arpu": 64.07,
+      "skin_buff": "打击手",
+      "period_pay_share": 50.37
+    },
+    {
+      "event": "感恩节",
+      "revenue": 722558.47,
+      "arppu": 161.73,
+      "pay_rate": 32.48,
+      "arpu": 52.53,
+      "skin_buff": "全兵种-套装",
+      "period_pay_share": 43.67
+    },
+    {
+      "event": "万圣节",
+      "revenue": 613401.28,
+      "arppu": 144.4,
+      "pay_rate": 30.09,
+      "arpu": 43.45,
+      "skin_buff": "飙车族+打击手",
+      "period_pay_share": 37.8
+    },
+    {
+      "event": "音乐节",
+      "revenue": 320158.61,
+      "arppu": 74.85,
+      "pay_rate": 27.43,
+      "arpu": 20.53,
+      "skin_buff": "飙车族",
+      "period_pay_share": 28.3
+    },
+    {
+      "event": "周年庆",
+      "revenue": 1668966.19,
+      "arppu": 273.83,
+      "pay_rate": 34.43,
+      "arpu": 94.28,
+      "skin_buff": "全兵种-套装",
+      "period_pay_share": 46.94
+    },
+    {
+      "event": "登月节",
+      "revenue": 343079.11,
+      "arppu": 78.56,
+      "pay_rate": 19.45,
+      "arpu": 15.28,
+      "skin_buff": "打击手",
+      "period_pay_share": 27.41
+    },
+    {
+      "event": "深海节",
+      "revenue": 989346.71,
+      "arppu": 186.57,
+      "pay_rate": 29.78,
+      "arpu": 55.56,
+      "skin_buff": "全兵种-套装",
+      "period_pay_share": 33.6
+    },
+    {
+      "event": "拓荒节",
+      "revenue": 502055.52,
+      "arppu": 88.99,
+      "pay_rate": 32.97,
+      "arpu": 29.34,
+      "skin_buff": "飙车族",
+      "period_pay_share": 26.87
+    },
+    {
+      "event": "复活节",
+      "revenue": 981745.41,
+      "arppu": 147.78,
+      "pay_rate": 33.09,
+      "arpu": 48.9,
+      "skin_buff": "打击手",
+      "period_pay_share": 30.07
+    },
+    {
+      "event": "科技节",
+      "revenue": 1041296.6,
+      "arppu": 126.91,
+      "pay_rate": 41.69,
+      "arpu": 52.91,
+      "skin_buff": "全兵种-套装",
+      "period_pay_share": 45.13
+    },
+    {
+      "event": "2025情人节",
+      "revenue": 397995.91,
+      "arppu": 68.92,
+      "pay_rate": 28.09,
+      "arpu": 19.36,
+      "skin_buff": "飙车族",
+      "period_pay_share": 25.03
+    },
+    {
+      "event": "2025春节",
+      "revenue": 502022.91,
+      "arppu": 90.8,
+      "pay_rate": 26.1,
+      "arpu": 23.7,
+      "skin_buff": "射击手",
+      "period_pay_share": 29.08
+    },
+    {
+      "event": "2024圣诞节",
+      "revenue": 535520.11,
+      "arppu": 85.95,
+      "pay_rate": 28.26,
+      "arpu": 24.29,
+      "skin_buff": "打击手",
+      "period_pay_share": 27.72
+    },
+    {
+      "event": "2024感恩节",
+      "revenue": 626300.96,
+      "arppu": 84.76,
+      "pay_rate": 31.24,
+      "arpu": 26.48,
+      "skin_buff": "飙车族",
+      "period_pay_share": 27.97
+    },
+    {
+      "event": "2024万圣节",
+      "revenue": 556025.8,
+      "arppu": 82.97,
+      "pay_rate": 27.31,
+      "arpu": 22.66,
+      "skin_buff": "射击手",
+      "period_pay_share": 32.86
+    },
+    {
+      "event": "2024登月节",
+      "revenue": 498791.2,
+      "arppu": 79.3,
+      "pay_rate": 26.14,
+      "arpu": 20.73,
+      "skin_buff": "打击手",
+      "period_pay_share": 31.16
+    },
+    {
+      "event": "2024周年庆",
+      "revenue": 1299354.01,
+      "arppu": 163.32,
+      "pay_rate": 29.14,
+      "arpu": 47.59,
+      "skin_buff": "全兵种",
+      "period_pay_share": 25.69
+    },
+    {
+      "event": "2024沙滩节",
+      "revenue": 493369.9,
+      "arppu": 91.74,
+      "pay_rate": 18.41,
+      "arpu": 16.89,
+      "skin_buff": "打击手",
+      "period_pay_share": 30.08
+    },
+    {
+      "event": "2024端午节",
+      "revenue": 468681.56,
+      "arppu": 66.36,
+      "pay_rate": 21.18,
+      "arpu": 14.056,
+      "skin_buff": "飙车族",
+      "period_pay_share": 24.4
+    },
+    {
+      "event": "2024拓荒节",
+      "revenue": 302151.22,
+      "arppu": 43.27,
+      "pay_rate": 21.26,
+      "arpu": 9.2,
+      "skin_buff": "射击手",
+      "period_pay_share": 18.41
+    },
+    {
+      "event": "2024科技节",
+      "revenue": 447772.8,
+      "arppu": 57.83,
+      "pay_rate": 23.55,
+      "arpu": 13.62,
+      "skin_buff": "打击手",
+      "period_pay_share": 24.4
+    },
+    {
+      "event": "2024复活节",
+      "revenue": 501113.26,
+      "arppu": 64.76,
+      "pay_rate": 23.41,
+      "arpu": 15.16,
+      "skin_buff": "飙车族",
+      "period_pay_share": 28.8
+    },
+    {
+      "event": "2024情人节",
+      "revenue": 358510.41,
+      "arppu": 44.76,
+      "pay_rate": 24.27,
+      "arpu": 10.864,
+      "skin_buff": "射击手",
+      "period_pay_share": 20.69
+    }
+  ],
+  "module_trend": [
+    {
+      "event": "登月节",
+      "appearance": 68616,
+      "minigame": 137232,
+      "hybrid": 137232
+    },
+    {
+      "event": "深海节",
+      "appearance": 197869,
+      "minigame": 296804,
+      "hybrid": 494674
+    },
+    {
+      "event": "拓荒节",
+      "appearance": 100411,
+      "minigame": 150617,
+      "hybrid": 251028
+    },
+    {
+      "event": "复活节",
+      "appearance": 196349,
+      "minigame": 294524,
+      "hybrid": 490873
+    },
+    {
+      "event": "科技节",
+      "appearance": 208259,
+      "minigame": 312389,
+      "hybrid": 520649
+    },
+    {
+      "event": "2026情人节",
+      "appearance": 75737,
+      "minigame": 339622,
+      "hybrid": 424270
+    }
+  ],
+  "user_tier_trend": [
+    {
+      "event": "2026情人节",
+      "super_r": 475.58,
+      "big_r": 118.15,
+      "mid_r": 30.7,
+      "small_r": 1.73
+    },
+    {
+      "event": "2026春节",
+      "small_r": 1.73,
+      "mid_r": 24.95,
+      "big_r": 121.44,
+      "super_r": 542.04
+    },
+    {
+      "event": "圣诞节",
+      "small_r": 1.81,
+      "mid_r": 35.14,
+      "big_r": 134.31,
+      "super_r": 528.21
+    },
+    {
+      "event": "感恩节",
+      "small_r": 1.6,
+      "mid_r": 23.57,
+      "big_r": 98.63,
+      "super_r": 435.99
+    },
+    {
+      "event": "万圣节",
+      "small_r": 1.13,
+      "mid_r": 19.56,
+      "big_r": 90.48,
+      "super_r": 372.46
+    },
+    {
+      "event": "音乐节",
+      "small_r": 0.87,
+      "mid_r": 13.64,
+      "big_r": 52.89,
+      "super_r": 165.44
+    },
+    {
+      "event": "周年庆",
+      "small_r": 2.15,
+      "mid_r": 44.47,
+      "big_r": 213.37,
+      "super_r": 1022.53
+    },
+    {
+      "event": "登月节",
+      "small_r": 1.11,
+      "mid_r": 15.89,
+      "big_r": 53.62,
+      "super_r": 186.34
+    },
+    {
+      "event": "深海节",
+      "small_r": 1.53,
+      "mid_r": 30.38,
+      "big_r": 118.1,
+      "super_r": 660.18
+    },
+    {
+      "event": "拓荒节",
+      "small_r": 1.43,
+      "mid_r": 21.53,
+      "big_r": 76.11,
+      "super_r": 295.38
+    },
+    {
+      "event": "复活节",
+      "small_r": 2.05,
+      "mid_r": 36.23,
+      "big_r": 146.92,
+      "super_r": 567.56
+    },
+    {
+      "event": "科技节",
+      "small_r": 1.49,
+      "mid_r": 29.17,
+      "big_r": 126.44,
+      "super_r": 741.3
+    },
+    {
+      "event": "2025情人节",
+      "small_r": 1.19,
+      "mid_r": 14.67,
+      "big_r": 52.97,
+      "super_r": 261.02
+    },
+    {
+      "event": "2025春节",
+      "small_r": 1.0,
+      "mid_r": 18.1,
+      "big_r": 73.7,
+      "super_r": 311.1
+    },
+    {
+      "event": "2024圣诞节",
+      "small_r": 1.35,
+      "mid_r": 20.03,
+      "big_r": 83.23,
+      "super_r": 327.29
+    },
+    {
+      "event": "2024感恩节",
+      "small_r": 1.31,
+      "mid_r": 21.05,
+      "big_r": 96.96,
+      "super_r": 413.56
+    },
+    {
+      "event": "2024万圣节",
+      "small_r": 1.12,
+      "mid_r": 21.14,
+      "big_r": 102.5,
+      "super_r": 320.66
+    },
+    {
+      "event": "2024登月节",
+      "small_r": 0.83,
+      "mid_r": 16.01,
+      "big_r": 86.09,
+      "super_r": 350.57
+    },
+    {
+      "event": "2024周年庆",
+      "small_r": 1.81,
+      "mid_r": 40.44,
+      "big_r": 195.22,
+      "super_r": 831.36
+    },
+    {
+      "event": "2024沙滩节",
+      "small_r": 0.85,
+      "mid_r": 16.2,
+      "big_r": 80.9,
+      "super_r": 333.3
+    },
+    {
+      "event": "2024端午节",
+      "small_r": 0.77,
+      "mid_r": 15.0,
+      "big_r": 83.8,
+      "super_r": 308.2
+    },
+    {
+      "event": "2024拓荒节",
+      "small_r": 0.68,
+      "mid_r": 10.37,
+      "big_r": 41.12,
+      "super_r": 192.23
+    },
+    {
+      "event": "2024科技节",
+      "small_r": 0.97,
+      "mid_r": 15.77,
+      "big_r": 68.44,
+      "super_r": 306.78
+    },
+    {
+      "event": "2024复活节",
+      "small_r": 1.11,
+      "mid_r": 17.93,
+      "big_r": 91.04,
+      "super_r": 341.24
+    }
+  ],
+  "sub_activity_detail": [
+    {
+      "name": "挖孔小游戏",
+      "type": "小游戏",
+      "revenue": 243319,
+      "status": "Keep",
+      "reason": "绝对主力，48个SKU分层定价精细，9392人次，人均购买约2次，广覆盖+高频复购标杆"
+    },
+    {
+      "name": "云上探宝",
+      "type": "外显",
+      "revenue": 125495,
+      "status": "Optimize",
+      "reason": "收入不错但ARPPU仅17.57（机甲GACHA的1/3），高R参与深度不够，建议增加高价值保底"
+    },
+    {
+      "name": "机甲GACHA",
+      "type": "外显",
+      "revenue": 75801,
+      "status": "Keep",
+      "reason": "ARPPU 60.84，高R吸引力强，8个SKU单SKU效率全场最高（9475/SKU）"
+    },
+    {
+      "name": "节日大富翁",
+      "type": "小游戏",
+      "revenue": 75618,
+      "status": "Keep",
+      "reason": "覆盖5024人次，小游戏模块第二大收入来源，玩法成熟稳定"
+    },
+    {
+      "name": "限时抢购",
+      "type": "混合",
+      "revenue": 54615,
+      "status": "Keep",
+      "reason": "ARPPU 40.34，精准触达高付费意愿用户，14个SKU效率良好"
+    },
+    {
+      "name": "送花礼包",
+      "type": "外显",
+      "revenue": 50610,
+      "status": "Keep",
+      "reason": "ARPPU 165.93，情感向消费标杆，高R买单意愿极强"
+    },
+    {
+      "name": "情人节BP",
+      "type": "混合",
+      "revenue": 47665,
+      "status": "Optimize",
+      "reason": "覆盖4992人次但ARPPU仅9.55，定价过低或高级通行证升级率不足，建议优化BP档位设计"
+    },
+    {
+      "name": "通用转盘",
+      "type": "混合",
+      "revenue": 18829,
+      "status": "Optimize",
+      "reason": "65个SKU产出仅18829，单SKU平均290，效率极低，建议精简SKU集中到高转化档位"
+    },
+    {
+      "name": "聚宝盆",
+      "type": "混合",
+      "revenue": 3403,
+      "status": "Optimize",
+      "reason": "27个SKU产出极低，单SKU仅126，需重新评估玩法设计或考虑替换"
+    }
+  ],
+  "module_classification": [
+    {
+      "name": "挖孔小游戏",
+      "module": "小游戏",
+      "note": "本期MVP"
+    },
+    {
+      "name": "云上探宝",
+      "module": "外显",
+      "note": "GACHA类"
+    },
+    {
+      "name": "机甲GACHA",
+      "module": "外显",
+      "note": "GACHA类"
+    },
+    {
+      "name": "节日大富翁",
+      "module": "小游戏",
+      "note": "经典小游戏"
+    },
+    {
+      "name": "限时抢购",
+      "module": "混合",
+      "note": "限时促销"
+    },
+    {
+      "name": "送花礼包",
+      "module": "外显",
+      "note": "情感向外显"
+    },
+    {
+      "name": "情人节BP",
+      "module": "混合",
+      "note": "BP通行证"
+    },
+    {
+      "name": "通用转盘",
+      "module": "混合",
+      "note": "转盘"
+    },
+    {
+      "name": "聚宝盆",
+      "module": "混合",
+      "note": "养成类"
+    }
+  ],
+  "daily_revenue": [
+    {
+      "date": "2026-02-10",
+      "revenue": 3357.66,
+      "buyers": 174
+    },
+    {
+      "date": "2026-02-11",
+      "revenue": 40330.14,
+      "buyers": 1115
+    },
+    {
+      "date": "2026-02-12",
+      "revenue": 39315.09,
+      "buyers": 1320
+    },
+    {
+      "date": "2026-02-13",
+      "revenue": 27596.53,
+      "buyers": 908
+    },
+    {
+      "date": "2026-02-14",
+      "revenue": 30654.63,
+      "buyers": 1064
+    },
+    {
+      "date": "2026-02-15",
+      "revenue": 42052.69,
+      "buyers": 1025
+    },
+    {
+      "date": "2026-02-16",
+      "revenue": 22836.71,
+      "buyers": 989
+    },
+    {
+      "date": "2026-02-17",
+      "revenue": 75951.49,
+      "buyers": 1400
+    },
+    {
+      "date": "2026-02-18",
+      "revenue": 48479.5,
+      "buyers": 1425
+    },
+    {
+      "date": "2026-02-19",
+      "revenue": 45091.2,
+      "buyers": 1088
+    },
+    {
+      "date": "2026-02-20",
+      "revenue": 60018.57,
+      "buyers": 1410
+    },
+    {
+      "date": "2026-02-21",
+      "revenue": 44390.21,
+      "buyers": 1146
+    },
+    {
+      "date": "2026-02-22",
+      "revenue": 46433.48,
+      "buyers": 1170
+    },
+    {
+      "date": "2026-02-23",
+      "revenue": 62442.92,
+      "buyers": 1221
+    },
+    {
+      "date": "2026-02-24",
+      "revenue": 11726.02,
+      "buyers": 650
+    },
+    {
+      "date": "2026-02-25",
+      "revenue": 14755.22,
+      "buyers": 574
+    },
+    {
+      "date": "2026-02-26",
+      "revenue": 20487.66,
+      "buyers": 627
+    },
+    {
+      "date": "2026-02-27",
+      "revenue": 48710.08,
+      "buyers": 787
+    },
+    {
+      "date": "2026-02-28",
+      "revenue": 35808.41,
+      "buyers": 785
+    },
+    {
+      "date": "2026-03-01",
+      "revenue": 24457.09,
+      "buyers": 535
+    },
+    {
+      "date": "2026-03-02",
+      "revenue": 46517.82,
+      "buyers": 688
+    },
+    {
+      "date": "2026-03-03",
+      "revenue": 35500.14,
+      "buyers": 444
+    },
+    {
+      "date": "2026-03-04",
+      "revenue": 10455.22,
+      "buyers": 310
+    },
+    {
+      "date": "2026-03-05",
+      "revenue": 9627.83,
+      "buyers": 712
+    }
+  ],
+  "core_metrics_by_tier": {
+    "total": {
+      "active": 20439,
+      "buyers": 4496,
+      "event_revenue": 839629.16,
+      "total_revenue": 1703981.12,
+      "event_share": 49.27,
+      "buy_rate": 22.0,
+      "arppu": 186.75,
+      "arpu": 41.08
+    },
+    "paying": {
+      "active": 13615,
+      "buyers": 4496,
+      "event_revenue": 839629.16,
+      "total_revenue": 1703981.12,
+      "event_share": 49.27,
+      "buy_rate": 33.02,
+      "arppu": 186.75,
+      "arpu": 61.67
+    },
+    "xiaoR": {
+      "active": 7122,
+      "buyers": 795,
+      "event_revenue": 11808.21,
+      "total_revenue": 36513.32,
+      "event_share": 32.34,
+      "buy_rate": 11.16,
+      "arppu": 14.85,
+      "arpu": 1.66
+    },
+    "zhongR": {
+      "active": 3990,
+      "buyers": 1919,
+      "event_revenue": 122480.56,
+      "total_revenue": 309789.21,
+      "event_share": 39.54,
+      "buy_rate": 48.1,
+      "arppu": 63.83,
+      "arpu": 30.7
+    },
+    "daR": {
+      "active": 1357,
+      "buyers": 890,
+      "event_revenue": 160330.15,
+      "total_revenue": 354556.82,
+      "event_share": 45.22,
+      "buy_rate": 65.59,
+      "arppu": 180.15,
+      "arpu": 118.15
+    },
+    "chaoR": {
+      "active": 1146,
+      "buyers": 892,
+      "event_revenue": 545010.24,
+      "total_revenue": 1003121.77,
+      "event_share": 54.33,
+      "buy_rate": 77.84,
+      "arppu": 611.0,
+      "arpu": 475.58
+    }
+  },
+  "tier_headcount_trend": [
+    {
+      "event": "圣诞节",
+      "xiaoR": 7892,
+      "zhongR": 4234,
+      "daR": 1418,
+      "chaoR": 1108,
+      "total": 14652
+    },
+    {
+      "event": "感恩节",
+      "xiaoR": 7209,
+      "zhongR": 4043,
+      "daR": 1411,
+      "chaoR": 1093,
+      "total": 13756
+    },
+    {
+      "event": "万圣节",
+      "xiaoR": 7539,
+      "zhongR": 4120,
+      "daR": 1386,
+      "chaoR": 1071,
+      "total": 14116
+    },
+    {
+      "event": "音乐节",
+      "xiaoR": 8613,
+      "zhongR": 4481,
+      "daR": 1443,
+      "chaoR": 1059,
+      "total": 15596
+    },
+    {
+      "event": "周年庆",
+      "xiaoR": 10149,
+      "zhongR": 4941,
+      "daR": 1538,
+      "chaoR": 1075,
+      "total": 17703
+    },
+    {
+      "event": "登月节",
+      "xiaoR": 8618,
+      "zhongR": 4533,
+      "daR": 1426,
+      "chaoR": 993,
+      "total": 15570
+    },
+    {
+      "event": "深海节",
+      "xiaoR": 10299,
+      "zhongR": 5039,
+      "daR": 1473,
+      "chaoR": 1001,
+      "total": 17812
+    },
+    {
+      "event": "拓荒节",
+      "xiaoR": 9840,
+      "zhongR": 4942,
+      "daR": 1401,
+      "chaoR": 931,
+      "total": 17114
+    },
+    {
+      "event": "复活节",
+      "xiaoR": 12216,
+      "zhongR": 5444,
+      "daR": 1457,
+      "chaoR": 961,
+      "total": 20078
+    },
+    {
+      "event": "科技节",
+      "xiaoR": 11898,
+      "zhongR": 5427,
+      "daR": 1432,
+      "chaoR": 923,
+      "total": 19680
+    },
+    {
+      "event": "2026情人节",
+      "xiaoR": 12791,
+      "zhongR": 5492,
+      "daR": 1395,
+      "chaoR": 875,
+      "total": 20553
+    },
+    {
+      "event": "2025春节",
+      "xiaoR": 13074,
+      "zhongR": 5662,
+      "daR": 1429,
+      "chaoR": 902,
+      "total": 21067
+    }
+  ],
+  "activity_ranking": [
+    {
+      "name": "挖孔小游戏",
+      "module": "小游戏",
+      "revenue": 243319,
+      "share": 35.0,
+      "unique_buyers": 2389,
+      "event_arpu": 54.12,
+      "buy_times": 9392,
+      "sku_count": 48,
+      "times_arppu": 25.91,
+      "tier_breakdown": {
+        "chaoR": {
+          "buyers": 606,
+          "revenue": 166247.66
+        },
+        "daR": {
+          "buyers": 538,
+          "revenue": 45781.48
+        },
+        "zhongR": {
+          "buyers": 967,
+          "revenue": 29532.07
+        },
+        "xiaoR": {
+          "buyers": 278,
+          "revenue": 1896.82
+        }
+      }
+    },
+    {
+      "name": "云上探宝",
+      "module": "外显",
+      "revenue": 125495,
+      "share": 18.0,
+      "unique_buyers": 1648,
+      "event_arpu": 27.91,
+      "buy_times": 7144,
+      "sku_count": 28,
+      "times_arppu": 17.57,
+      "tier_breakdown": {
+        "chaoR": {
+          "buyers": 486,
+          "revenue": 81908.6
+        },
+        "daR": {
+          "buyers": 399,
+          "revenue": 25148.58
+        },
+        "zhongR": {
+          "buyers": 639,
+          "revenue": 17389.75
+        },
+        "xiaoR": {
+          "buyers": 124,
+          "revenue": 1169.49
+        }
+      }
+    },
+    {
+      "name": "机甲GACHA",
+      "module": "外显",
+      "revenue": 75801,
+      "share": 10.9,
+      "unique_buyers": 483,
+      "event_arpu": 16.86,
+      "buy_times": 1246,
+      "sku_count": 8,
+      "times_arppu": 60.84,
+      "tier_breakdown": {
+        "chaoR": {
+          "buyers": 174,
+          "revenue": 55707.84
+        },
+        "daR": {
+          "buyers": 111,
+          "revenue": 11591.52
+        },
+        "zhongR": {
+          "buyers": 169,
+          "revenue": 7941.97
+        },
+        "xiaoR": {
+          "buyers": 29,
+          "revenue": 559.61
+        }
+      }
+    },
+    {
+      "name": "节日大富翁",
+      "module": "小游戏",
+      "revenue": 75618,
+      "share": 10.9,
+      "unique_buyers": 1839,
+      "event_arpu": 16.82,
+      "buy_times": 5024,
+      "sku_count": 23,
+      "times_arppu": 15.05,
+      "tier_breakdown": {
+        "chaoR": {
+          "buyers": 582,
+          "revenue": 59230.34
+        },
+        "daR": {
+          "buyers": 433,
+          "revenue": 9348.79
+        },
+        "zhongR": {
+          "buyers": 693,
+          "revenue": 6416.37
+        },
+        "xiaoR": {
+          "buyers": 131,
+          "revenue": 637.16
+        }
+      }
+    },
+    {
+      "name": "限时抢购",
+      "module": "混合",
+      "revenue": 54615,
+      "share": 7.9,
+      "unique_buyers": 649,
+      "event_arpu": 12.15,
+      "buy_times": 1354,
+      "sku_count": 14,
+      "times_arppu": 40.34,
+      "tier_breakdown": {
+        "chaoR": {
+          "buyers": 302,
+          "revenue": 34070.65
+        },
+        "daR": {
+          "buyers": 183,
+          "revenue": 12256.3
+        },
+        "zhongR": {
+          "buyers": 151,
+          "revenue": 7947.81
+        },
+        "xiaoR": {
+          "buyers": 13,
+          "revenue": 339.86
+        }
+      }
+    },
+    {
+      "name": "送花礼包",
+      "module": "外显",
+      "revenue": 50610,
+      "share": 7.3,
+      "unique_buyers": 163,
+      "event_arpu": 11.26,
+      "buy_times": 305,
+      "sku_count": 8,
+      "times_arppu": 165.93,
+      "tier_breakdown": {
+        "chaoR": {
+          "buyers": 93,
+          "revenue": 46366.23
+        },
+        "daR": {
+          "buyers": 29,
+          "revenue": 3703.97
+        },
+        "zhongR": {
+          "buyers": 29,
+          "revenue": 459.6
+        },
+        "xiaoR": {
+          "buyers": 12,
+          "revenue": 79.88
+        }
+      }
+    },
+    {
+      "name": "情人节BP",
+      "module": "混合",
+      "revenue": 47665,
+      "share": 6.9,
+      "unique_buyers": 2247,
+      "event_arpu": 10.6,
+      "buy_times": 4992,
+      "sku_count": 14,
+      "times_arppu": 9.55,
+      "tier_breakdown": {
+        "chaoR": {
+          "buyers": 653,
+          "revenue": 20298.34
+        },
+        "daR": {
+          "buyers": 553,
+          "revenue": 12269.26
+        },
+        "zhongR": {
+          "buyers": 890,
+          "revenue": 13673.2
+        },
+        "xiaoR": {
+          "buyers": 151,
+          "revenue": 1436.08
+        }
+      }
+    },
+    {
+      "name": "通用转盘",
+      "module": "混合",
+      "revenue": 19004,
+      "share": 2.3,
+      "unique_buyers": 715,
+      "event_arpu": 4.23,
+      "buy_times": 2136,
+      "sku_count": 68,
+      "times_arppu": 8.90,
+      "tier_breakdown": {
+        "chaoR": {
+          "buyers": 250,
+          "revenue": 12441.25
+        },
+        "daR": {
+          "buyers": 195,
+          "revenue": 4365.43
+        },
+        "zhongR": {
+          "buyers": 228,
+          "revenue": 1889.63
+        },
+        "xiaoR": {
+          "buyers": 42,
+          "revenue": 156.47
+        }
+      }
+    },
+    {
+      "name": "聚宝盆",
+      "module": "混合",
+      "revenue": 3403,
+      "share": 0.5,
+      "unique_buyers": 345,
+      "event_arpu": 0.76,
+      "buy_times": 651,
+      "sku_count": 27,
+      "times_arppu": 5.23,
+      "tier_breakdown": {
+        "chaoR": {
+          "buyers": 93,
+          "revenue": 1302.78
+        },
+        "daR": {
+          "buyers": 102,
+          "revenue": 1120.98
+        },
+        "zhongR": {
+          "buyers": 133,
+          "revenue": 919.92
+        },
+        "xiaoR": {
+          "buyers": 17,
+          "revenue": 59.81
+        }
+      }
+    },
+    {
+      "name": "预购连锁",
+      "module": "混合",
+      "revenue": 26997,
+      "share": 3.2,
+      "event_arpu": 6.0,
+      "buy_times": 270,
+      "sku_count": 2,
+      "times_arppu": 99.99
+    },
+    {
+      "name": "情人节组队BP",
+      "module": "混合",
+      "revenue": 20799,
+      "share": 2.5,
+      "event_arpu": 4.63,
+      "buy_times": 1884,
+      "sku_count": 2,
+      "times_arppu": 11.04
+    },
+    {
+      "name": "行军特效",
+      "module": "外显",
+      "revenue": 14973,
+      "share": 1.8,
+      "event_arpu": 3.33,
+      "buy_times": 749,
+      "sku_count": 1,
+      "times_arppu": 19.99
+    },
+    {
+      "name": "节日特惠卡",
+      "module": "混合",
+      "revenue": 14670,
+      "share": 1.7,
+      "event_arpu": 3.26,
+      "buy_times": 957,
+      "sku_count": 22,
+      "times_arppu": 15.33
+    },
+    {
+      "name": "挖矿小游戏",
+      "module": "小游戏",
+      "revenue": 12448,
+      "share": 1.5,
+      "event_arpu": 2.77,
+      "buy_times": 2098,
+      "sku_count": 30,
+      "times_arppu": 5.93
+    },
+    {
+      "name": "行军表情",
+      "module": "外显",
+      "revenue": 10155,
+      "share": 1.2,
+      "event_arpu": 2.26,
+      "buy_times": 2033,
+      "sku_count": 1,
+      "times_arppu": 4.99
+    },
+    {
+      "name": "对对碰",
+      "module": "小游戏",
+      "revenue": 8237,
+      "share": 1.0,
+      "event_arpu": 1.83,
+      "buy_times": 892,
+      "sku_count": 8,
+      "times_arppu": 9.23
+    },
+    {
+      "name": "情人节自选周卡",
+      "module": "混合",
+      "revenue": 7988,
+      "share": 1.0,
+      "event_arpu": 1.78,
+      "buy_times": 182,
+      "sku_count": 5,
+      "times_arppu": 43.89
+    },
+    {
+      "name": "扭蛋机",
+      "module": "混合",
+      "revenue": 7430,
+      "share": 0.9,
+      "event_arpu": 1.65,
+      "buy_times": 463,
+      "sku_count": 5,
+      "times_arppu": 16.05
+    },
+    {
+      "name": "累充服务器礼包",
+      "module": "混合",
+      "revenue": 9328,
+      "share": 1.1,
+      "event_arpu": 2.07,
+      "buy_times": 689,
+      "sku_count": 5,
+      "times_arppu": 13.54
+    },
+    {
+      "name": "掉落转付费礼包",
+      "module": "混合",
+      "revenue": 4128,
+      "share": 0.5,
+      "event_arpu": 0.92,
+      "buy_times": 694,
+      "sku_count": 3,
+      "times_arppu": 5.95
+    },
+    {
+      "name": "酒馆登陆bp",
+      "module": "混合",
+      "revenue": 2994,
+      "share": 0.4,
+      "event_arpu": 0.67,
+      "buy_times": 125,
+      "sku_count": 2,
+      "times_arppu": 23.95
+    },
+    {
+      "name": "bingo宝箱",
+      "module": "混合",
+      "revenue": 1687,
+      "share": 0.2,
+      "event_arpu": 0.38,
+      "buy_times": 338,
+      "sku_count": 1,
+      "times_arppu": 4.99
+    },
+    {
+      "name": "情人节七日",
+      "module": "混合",
+      "revenue": 1302,
+      "share": 0.2,
+      "event_arpu": 0.29,
+      "buy_times": 261,
+      "sku_count": 5,
+      "times_arppu": 4.99
+    },
+    {
+      "name": "其他零散",
+      "module": "混合",
+      "revenue": 965,
+      "share": 0.1,
+      "event_arpu": 0.21,
+      "buy_times": 28,
+      "sku_count": 14,
+      "times_arppu": 34.46
+    }
+  ],
+    {
+      "event": "登月节",
+      "revenue": 343079
+    },
+    {
+      "event": "深海节",
+      "revenue": 989347
+    },
+    {
+      "event": "拓荒节",
+      "revenue": 502056
+    },
+    {
+      "event": "复活节",
+      "revenue": 981745
+    },
+    {
+      "event": "科技节",
+      "revenue": 1041297
+    },
+    {
+      "event": "2026情人节",
+      "revenue": 839629
+    },
+    {
+      "event": "2025春节",
+      "revenue": 502023
+    }
+  ]
+}

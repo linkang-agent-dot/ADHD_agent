@@ -41,11 +41,27 @@
           },
           "arpu": {
             "type": "number",
-            "description": "每付费用户平均收入 ARPU（单位：美元）"
+            "description": "ARPU（单位：美元）。若提供 paying_players 则自动计算 revenue/paying_players，此字段作为 fallback"
           },
           "pay_rate": {
             "type": "number",
-            "description": "付费率（百分比，如 12.5 表示 12.5%）"
+            "description": "付费率（百分比）。若提供 paying_players 则自动计算 buyers/paying_players，此字段作为 fallback"
+          },
+          "paying_players": {
+            "type": "number",
+            "description": "付费玩家活跃人数（ARPU和付费率的分母），可选"
+          },
+          "arppu": {
+            "type": "number",
+            "description": "付费玩家人均付费 ARPPU（单位：美元），可选"
+          },
+          "skin_buff": {
+            "type": "string",
+            "description": "皮肤BUFF类型（如：飙车族、打击手、全兵种-套装），可选"
+          },
+          "period_pay_share": {
+            "type": "number",
+            "description": "期间付费占比（百分比），可选"
           }
         }
       }
@@ -100,6 +116,10 @@
           "mid_r": {
             "type": "number",
             "description": "中R用户 ARPU"
+          },
+          "small_r": {
+            "type": "number",
+            "description": "小R用户 ARPU（xiaoR），可选"
           }
         }
       }
@@ -156,6 +176,133 @@
             "type": "string",
             "description": "备注说明（可选）"
           }
+        }
+      }
+    },
+    "core_metrics_by_tier": {
+      "type": "object",
+      "description": "G. 核心大盘R级分层明细 - 用于生成核心大盘指标表。可选，有则展示完整R级表。",
+      "properties": {
+        "total": {
+          "type": "object",
+          "description": "全体玩家汇总",
+          "properties": {
+            "active": {"type": "number", "description": "活跃人数"},
+            "buyers": {"type": "number", "description": "购买人数"},
+            "event_revenue": {"type": "number", "description": "节日礼包付费"},
+            "total_revenue": {"type": "number", "description": "总礼包付费"},
+            "event_share": {"type": "number", "description": "节日占比(%)"},
+            "buy_rate": {"type": "number", "description": "购买率(%)"},
+            "arppu": {"type": "number", "description": "ARPPU"},
+            "arpu": {"type": "number", "description": "ARPU"}
+          }
+        },
+        "paying": {
+          "type": "object",
+          "description": "付费玩家汇总（同 total 结构）"
+        },
+        "chaoR": {
+          "type": "object",
+          "description": "超R（同 total 结构）"
+        },
+        "daR": {
+          "type": "object",
+          "description": "大R（同 total 结构）"
+        },
+        "zhongR": {
+          "type": "object",
+          "description": "中R（同 total 结构）"
+        },
+        "xiaoR": {
+          "type": "object",
+          "description": "小R（同 total 结构）"
+        }
+      }
+    },
+    "module_detail": {
+      "type": "array",
+      "description": "H. 模块营收明细 - 用于生成模块营收结构详细表。可选，有则展示购买人次/ARPPU/节日ARPU等。",
+      "items": {
+        "type": "object",
+        "required": ["module", "revenue", "share"],
+        "properties": {
+          "module": {"type": "string", "description": "模块名称"},
+          "revenue": {"type": "number", "description": "收入"},
+          "share": {"type": "number", "description": "占比(%)"},
+          "buy_times": {"type": "number", "description": "购买人次"},
+          "times_arppu": {"type": "number", "description": "人次ARPPU"},
+          "event_arpu": {"type": "number", "description": "节日ARPU（/总付费人数）"},
+          "avg_purchases": {"type": "number", "description": "人均购买次数"}
+        }
+      }
+    },
+    "activity_ranking": {
+      "type": "array",
+      "description": "I. 各活动效率排名 - 用于生成完整活动排名表。可选，有则展示全部活动明细。",
+      "items": {
+        "type": "object",
+        "required": ["name", "module", "revenue"],
+        "properties": {
+          "name": {"type": "string", "description": "活动名称"},
+          "module": {"type": "string", "description": "所属模块"},
+          "revenue": {"type": "number", "description": "收入"},
+          "share": {"type": "number", "description": "占比(%)"},
+          "buy_times": {"type": "number", "description": "购买人次"},
+          "times_arppu": {"type": "number", "description": "人次ARPPU"},
+          "event_arpu": {"type": "number", "description": "节日ARPU"},
+          "sku_count": {"type": "number", "description": "SKU数量"},
+          "unique_buyers": {"type": "number", "description": "去重购买人数"},
+          "tier_breakdown": {
+            "type": "object",
+            "description": "各R级付费人数和金额拆分（可选）",
+            "properties": {
+              "chaoR": {"type": "object", "properties": {"buyers": {"type": "number"}, "revenue": {"type": "number"}}},
+              "daR": {"type": "object", "properties": {"buyers": {"type": "number"}, "revenue": {"type": "number"}}},
+              "zhongR": {"type": "object", "properties": {"buyers": {"type": "number"}, "revenue": {"type": "number"}}},
+              "xiaoR": {"type": "object", "properties": {"buyers": {"type": "number"}, "revenue": {"type": "number"}}}
+            }
+          }
+        }
+      }
+    },
+    "historical_revenue": {
+      "type": "array",
+      "description": "J. 历史活动营收排名 - 用于展示当期在历史中的位置。可选。",
+      "items": {
+        "type": "object",
+        "required": ["event", "revenue"],
+        "properties": {
+          "event": {"type": "string", "description": "活动名称"},
+          "revenue": {"type": "number", "description": "营收"}
+        }
+      }
+    },
+    "tier_headcount_trend": {
+      "type": "array",
+      "description": "K. 各R级付费人数历史趋势 - 用于展示12期人数变化。可选。",
+      "items": {
+        "type": "object",
+        "required": ["event"],
+        "properties": {
+          "event": {"type": "string", "description": "活动名称"},
+          "xiaoR": {"type": "number", "description": "小R付费人数"},
+          "zhongR": {"type": "number", "description": "中R付费人数"},
+          "daR": {"type": "number", "description": "大R付费人数"},
+          "chaoR": {"type": "number", "description": "超R付费人数"},
+          "total": {"type": "number", "description": "付费总人数"}
+        }
+      }
+    },
+    "daily_revenue": {
+      "type": "array",
+      "description": "L. 活动期间日维度营收 - 用于生成日营收曲线图，判断付费节奏类型。可选。",
+      "items": {
+        "type": "object",
+        "required": ["date", "revenue"],
+        "properties": {
+          "date": {"type": "string", "description": "日期，格式 YYYY-MM-DD"},
+          "revenue": {"type": "number", "description": "当日营收（美元）"},
+          "buyers": {"type": "number", "description": "当日去重付费人数"}
         }
       }
     }
