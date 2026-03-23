@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "id": "f988438d-d7a0-4f08-acae-eba56c7c1271",
+      "name": "小红书旅游热度推送",
+      "enabled": true,
+      "createdAtMs": 1774253342899,
+      "updatedAtMs": 1774253342899,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 11 * * 1-5",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "执行以下任务：\\n1. 调用 Python 脚本 C:\\\\Users\\\\linkang\\\\.openclaw\\\\workspace\\\\xiaohongshu_push.py\\n2. 获取小红书旅游热度Top5\\n3. 汇总成消息发送到飞书给我"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_e48f6c4c0395f45b74b51525f348678b"
+      },
+      "state": {
+        "nextRunAtMs": 1774323000000,
+        "runningAtMs": 1774253384514
+      }
+    }
+  ]
+}

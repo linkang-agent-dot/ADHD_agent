@@ -39,7 +39,7 @@ alwaysApply: false
 1. **切换工作目录**到 `D:\UGit\x2gdconf`
 2. **读取主 Skill 文件**：`D:\UGit\x2gdconf\.cursor\skills\gsheet_sync\SKILL.md`
 3. **根据用户意图读取对应分 Skill**：
-   - 下载/导表/刷表 → `D:\UGit\x2gdconf\scripts\gsheet_skill_download.md`
+   - 下载/导表/刷表 → `c:\ADHD_agent\.cursor\skills\x2-config-download\SKILL.md`（ADHD仓库维护）
    - 合并/merge → `D:\UGit\x2gdconf\scripts\gsheet_skill_merge.md`
    - 冲突处理 → `D:\UGit\x2gdconf\scripts\gsheet_skill_conflict.md`
    - 参考信息 → `D:\UGit\x2gdconf\scripts\gsheet_skill_reference.md`

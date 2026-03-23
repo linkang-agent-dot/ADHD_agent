@@ -1,0 +1,43 @@
+{
+  "6dd194dba62f724aadb3882ef6f59f8dea0ebc76fed4ee3975e98ef7d6e33706": {
+    "deviceId": "6dd194dba62f724aadb3882ef6f59f8dea0ebc76fed4ee3975e98ef7d6e33706",
+    "publicKey": "VCE_ObSt5pfcs4ZdiYWxT9QzE5GdyuOOf55tTCMcdAE",
+    "platform": "win32",
+    "clientId": "cli",
+    "clientMode": "cli",
+    "role": "operator",
+    "roles": [
+      "operator"
+    ],
+    "scopes": [
+      "operator.admin",
+      "operator.read",
+      "operator.write",
+      "operator.approvals",
+      "operator.pairing"
+    ],
+    "approvedScopes": [
+      "operator.admin",
+      "operator.read",
+      "operator.write",
+      "operator.approvals",
+      "operator.pairing"
+    ],
+    "tokens": {
+      "operator": {
+        "token": "u3uMTT0raEzyVXXFf36FPQGqHUXMKwg9pPEF03AQ1Go",
+        "role": "operator",
+        "scopes": [
+          "operator.admin",
+          "operator.approvals",
+          "operator.pairing",
+          "operator.read",
+          "operator.write"
+        ],
+        "createdAtMs": 1773735237377
+      }
+    },
+    "createdAtMs": 1773735237377,
+    "approvedAtMs": 1773735237377
+  }
+}

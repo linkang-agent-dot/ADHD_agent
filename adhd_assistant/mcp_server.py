@@ -10,11 +10,17 @@ import os
 import random
 import sqlite3
 from datetime import datetime, date
-from fastmcp import FastMCP
+
+try:
+    from fastmcp import FastMCP
+    mcp = FastMCP("adhd-tasks", instructions="ADHD 任务管理工具集。帮助用户记录、管理、完成每日待办任务。")
+except ImportError:
+    class _StubMCP:
+        def tool(self):
+            return lambda f: f
+    mcp = _StubMCP()
 
 DB_PATH = os.environ.get("DB_PATH", os.path.join(os.path.dirname(__file__), "adhd.db"))
-
-mcp = FastMCP("adhd-tasks", instructions="ADHD 任务管理工具集。帮助用户记录、管理、完成每日待办任务。")
 
 PRIORITY_EMOJI = {"high": "🔴", "medium": "🟡", "low": "⚪"}
 STATUS_EMOJI = {"completed": "✅", "in_progress": "🎯", "pending": "⏳", "postponed": "📌"}

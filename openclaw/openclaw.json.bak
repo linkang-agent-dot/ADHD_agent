@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.3.13",
+    "lastTouchedAt": "2026-03-17T08:38:03.320Z"
+  },
+  "env": {
+    "MINIMAX_API_KEY": "sk-cp-UZlYE7WEtHwVEgCKEZOpgSNezyVxA3mTGdUy8k0nkNJindUuOv_bUj2GlxO1VI6eTizdHvoR8tEHzaDBhTf4WEBuF2OZTuQ-kYHxi-amwfRtV8VG2CRKlaE",
+    "FEISHU_APP_SECRET": "rrIWGubFOkGdmLSeNRSqbeSwYCJ1LP8m"
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "minimax": {
+        "baseUrl": "https://api.minimax.chat/v1",
+        "apiKey": "${MINIMAX_API_KEY}",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "MiniMax-M2.5",
+            "name": "MiniMax M2.5",
+            "contextWindow": 131072,
+            "maxTokens": 4096
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "minimax/MiniMax-M2.5"
+      },
+      "memorySearch": {
+        "enabled": false
+      },
+      "compaction": {
+        "mode": "safeguard"
+      }
+    },
+    "list": [
+      {
+        "id": "main"
+      }
+    ]
+  },
+  "tools": {
+    "profile": "full"
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "botToken": "8350612048:AAF4v4BvSmEiMbs0CFP4eZa6TvW2AEqB_24",
+      "groupPolicy": "allowlist",
+      "streaming": "partial"
+    },
+    "feishu": {
+      "enabled": true,
+      "dmPolicy": "open",
+      "groupPolicy": "open",
+      "requireMention": true,
+      "streaming": true,
+      "accounts": {
+        "main": {
+          "appId": "cli_a934245330789ccf",
+          "appSecret": "${FEISHU_APP_SECRET}",
+          "botName": "OpenClaw Assistant"
+        }
+      }
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "port": 18790,
+    "auth": {
+      "mode": "token",
+      "token": "7d0dd71d747035eb12c4fdaaec6a22215f51bb3aa95446ba"
+    }
+  }
+}
