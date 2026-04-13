@@ -1,0 +1,794 @@
+
+<!-- ══ Section 11: 子活动趋势分析 ══ -->
+<div class="section">
+  <div class="section-title">子活动增长 & 衰减趋势分析</div>
+  <div style="margin-bottom:10px;font-size:12px;color:var(--text-muted)">
+    覆盖 32 个出现 2 期以上的子活动，基于线性回归分析趋势方向和强度<br>
+    <b>影响力 = 期均收入 × |标准化斜率|</b>（高收入 + 大变动 = 高影响力，优先展示）
+  </div>
+
+  <!-- 气泡散点图 -->
+  <div style="margin-bottom:28px">
+    <canvas id="trendBubbleChart" width="900" height="420" style="width:100%;max-width:900px;border-radius:10px;background:var(--card-bg)"></canvas>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('trendBubbleChart');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const PAD = { left: 80, right: 30, top: 40, bottom: 50 };
+    const plotW = W - PAD.left - PAD.right;
+    const plotH = H - PAD.top - PAD.bottom;
+
+    const data = [{"name": "挖孔小游戏礼包", "avg_rev": 162146.0, "norm_change": 21.7, "impact": 35204.0, "direction": "up", "appearances": 5}, {"name": "弹珠GACHA", "avg_rev": 145050.0, "norm_change": -10.6, "impact": 15316.0, "direction": "down", "appearances": 3}, {"name": "大富翁（非异族）", "avg_rev": 69826.0, "norm_change": 5.2, "impact": 3634.0, "direction": "up", "appearances": 5}, {"name": "异族大富翁", "avg_rev": 138456.0, "norm_change": -114.2, "impact": 158073.0, "direction": "down", "appearances": 2}, {"name": "限时抢购", "avg_rev": 46812.0, "norm_change": -8.4, "impact": 3909.0, "direction": "down", "appearances": 5}, {"name": "节日通行证", "avg_rev": 43811.0, "norm_change": 0.5, "impact": 215.0, "direction": "up", "appearances": 5}, {"name": "推币机系列", "avg_rev": 95872.0, "norm_change": 50.5, "impact": 48449.0, "direction": "up", "appearances": 2}, {"name": "周年庆返场", "avg_rev": 42889.0, "norm_change": -22.1, "impact": 9493.0, "direction": "down", "appearances": 4}, {"name": "机甲GACHA", "avg_rev": 69610.0, "norm_change": 17.8, "impact": 12382.0, "direction": "up", "appearances": 2}, {"name": "节日BP", "avg_rev": 22891.0, "norm_change": -1.0, "impact": 220.0, "direction": "down", "appearances": 6}, {"name": "MJ8小游戏", "avg_rev": 42175.0, "norm_change": -69.7, "impact": 29380.0, "direction": "down", "appearances": 3}, {"name": "挖矿小游戏", "avg_rev": 17936.0, "norm_change": 28.5, "impact": 5117.0, "direction": "up", "appearances": 7}, {"name": "自选周卡", "avg_rev": 16689.0, "norm_change": -25.1, "impact": 4187.0, "direction": "down", "appearances": 6}, {"name": "幸运多重礼GACHA", "avg_rev": 43754.0, "norm_change": -48.2, "impact": 21075.0, "direction": "down", "appearances": 2}, {"name": "预购连锁", "avg_rev": 21123.0, "norm_change": -24.5, "impact": 5169.0, "direction": "down", "appearances": 4}, {"name": "砍价系列", "avg_rev": 34780.0, "norm_change": -29.9, "impact": 10386.0, "direction": "down", "appearances": 2}, {"name": "春节抽奖成就礼包", "avg_rev": 31556.0, "norm_change": -155.2, "impact": 48963.0, "direction": "down", "appearances": 2}, {"name": "通用小额随机-转盘", "avg_rev": 20238.0, "norm_change": 34.5, "impact": 6983.0, "direction": "up", "appearances": 3}, {"name": "强消耗", "avg_rev": 11685.0, "norm_change": -42.9, "impact": 5013.0, "direction": "down", "appearances": 5}, {"name": "行军表情", "avg_rev": 8829.0, "norm_change": -3.2, "impact": 282.0, "direction": "down", "appearances": 6}, {"name": "对对碰", "avg_rev": 9271.0, "norm_change": -16.3, "impact": 1511.0, "direction": "down", "appearances": 5}, {"name": "2025深海节-节日礼包团购", "avg_rev": 20520.0, "norm_change": -25.1, "impact": 5151.0, "direction": "down", "appearances": 2}, {"name": "行军特效", "avg_rev": 10080.0, "norm_change": 19.0, "impact": 1913.0, "direction": "up", "appearances": 4}, {"name": "春节皮肤GACHA", "avg_rev": 18654.0, "norm_change": -129.1, "impact": 24091.0, "direction": "down", "appearances": 2}, {"name": "累充服务器", "avg_rev": 7046.0, "norm_change": -7.3, "impact": 514.0, "direction": "down", "appearances": 4}, {"name": "25感恩节每日补给升级礼包", "avg_rev": 8790.0, "norm_change": 0.6, "impact": 54.0, "direction": "up", "appearances": 3}, {"name": "掉落转付费礼包", "avg_rev": 5054.0, "norm_change": -0.3, "impact": 14.0, "direction": "down", "appearances": 5}, {"name": "GACHA每日礼包-登月节", "avg_rev": 6188.0, "norm_change": -75.7, "impact": 4686.0, "direction": "down", "appearances": 3}, {"name": "2023装饰兑换券礼包", "avg_rev": 5168.0, "norm_change": 29.8, "impact": 1539.0, "direction": "up", "appearances": 2}, {"name": "酒馆登陆bp", "avg_rev": 2951.0, "norm_change": -35.1, "impact": 1036.0, "direction": "down", "appearances": 3}, {"name": "聚宝盆", "avg_rev": 4042.0, "norm_change": -31.6, "impact": 1278.0, "direction": "down", "appearances": 2}, {"name": "情人节bingo活动宝箱礼包", "avg_rev": 2086.0, "norm_change": -38.3, "impact": 798.0, "direction": "down", "appearances": 2}];
+
+    const maxRev = Math.max(...data.map(d => d.avg_rev));
+    const changes = data.map(d => d.norm_change);
+    const maxChange = Math.max(Math.max(...changes.map(Math.abs)), 30);
+
+    function xScale(v) { return PAD.left + (v + maxChange) / (2 * maxChange) * plotW; }
+    function yScale(v) { return PAD.top + plotH - (v / maxRev) * plotH; }
+
+    const isDark = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim().startsWith('#1');
+
+    // 背景
+    ctx.fillStyle = isDark ? '#1a1a2e' : '#fafafa';
+    ctx.fillRect(0, 0, W, H);
+
+    // 网格
+    ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    for (let r = 0; r <= maxRev; r += 50000) {
+      const y = yScale(r);
+      ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(W - PAD.right, y); ctx.stroke();
+      ctx.fillStyle = isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.4)';
+      ctx.font = '10px system-ui';
+      ctx.textAlign = 'right';
+      ctx.fillText('$' + (r/1000).toFixed(0) + 'K', PAD.left - 8, y + 3);
+    }
+
+    // 0线
+    const zeroX = xScale(0);
+    ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(zeroX, PAD.top); ctx.lineTo(zeroX, H - PAD.bottom); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // 区域标签
+    ctx.font = 'bold 13px system-ui';
+    ctx.globalAlpha = 0.15;
+    ctx.fillStyle = '#ef4444';
+    ctx.textAlign = 'center';
+    ctx.fillText('◀ 衰减区', PAD.left + plotW * 0.2, PAD.top + 22);
+    ctx.fillStyle = '#22c55e';
+    ctx.fillText('增长区 ▶', W - PAD.right - plotW * 0.2, PAD.top + 22);
+    ctx.globalAlpha = 1;
+
+    // X轴标签
+    ctx.fillStyle = isDark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.5)';
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('← 衰减 (每期变化率 %) 增长 →', W / 2, H - 10);
+
+    // Y轴标签
+    ctx.save();
+    ctx.translate(16, H / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('期均收入 ($)', 0, 0);
+    ctx.restore();
+
+    // 气泡
+    const maxImpact = Math.max(...data.map(d => d.impact));
+    data.forEach(d => {
+      const x = xScale(d.norm_change);
+      const y = yScale(d.avg_rev);
+      const r = Math.max(6, Math.sqrt(d.impact / maxImpact) * 28);
+      const color = d.direction === 'up' ? '#22c55e' : '#ef4444';
+
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.2;
+      ctx.fill();
+      ctx.globalAlpha = 0.7;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      // 只给高影响力的标注名称
+      if (d.impact > maxImpact * 0.08 || d.avg_rev > maxRev * 0.3) {
+        ctx.fillStyle = isDark ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.7)';
+        ctx.font = '10px system-ui';
+        ctx.textAlign = d.norm_change > 0 ? 'left' : 'right';
+        const labelX = d.norm_change > 0 ? x + r + 4 : x - r - 4;
+        ctx.fillText(d.name, labelX, y - r - 2);
+      }
+    });
+
+    // 图例
+    ctx.font = '11px system-ui';
+    ctx.fillStyle = isDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)';
+    ctx.textAlign = 'left';
+    ctx.fillText('气泡大小 = 影响力（收入 × 变化率）', PAD.left + 4, H - PAD.bottom + 30);
+  });
+  </script>
+
+
+  <div style="margin-top:4px;margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <span style="background:#22c55e;color:#000;font-weight:800;font-size:12px;padding:4px 14px;border-radius:6px;letter-spacing:1px">▲ 增长趋势</span>
+      <span style="color:var(--text-muted);font-size:12px">10 个活动 · 按影响力排序</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:28px">#</th>
+            <th>活动</th>
+            <th class="num">期均收入</th>
+            <th class="num">每期变化</th>
+            <th class="num" title="线性回归R²，衡量趋势稳定性">R²</th>
+            <th style="width:65px" title="影响力 = 期均收入 × |变化率|">影响力</th>
+            <th style="width:210px">趋势线</th>
+            <th>各期收入</th>
+          </tr>
+        </thead>
+        <tbody>
+
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">1</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">推币机系列</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$96K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 51%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td>
+        <div style="width:60px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="131.3,38.0 131.3,34.0 194.0,6.0 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="131.3,34.0 194.0,6.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="131.3" cy="34.0" r="3.5" fill="#22c55e" opacity="1"/><circle cx="194.0" cy="6.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$72K → $120K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">2</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">挖孔小游戏礼包</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 5期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$162K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 22%</td>
+      <td class="num" style="font-size:11px">78%</td>
+      <td>
+        <div style="width:44px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="37.3,38.0 37.3,34.0 68.7,24.1 100.0,24.0 162.7,6.0 194.0,12.5 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="37.3,34.0 68.7,24.1 100.0,24.0 162.7,6.0 194.0,12.5" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="37.3" cy="34.0" r="3.5" fill="#22c55e" opacity="1"/><circle cx="68.7" cy="24.1" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="100.0" cy="24.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="162.7" cy="6.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="12.5" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$82K → $139K → $140K → $243K → $206K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">3</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">机甲GACHA</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日皮肤 · 2期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$70K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 18%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td>
+        <div style="width:15px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,34.0 162.7,6.0 162.7,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="6.0,34.0 162.7,6.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="34.0" r="3.5" fill="#22c55e" opacity="1"/><circle cx="162.7" cy="6.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$63K → $76K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">4</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">通用小额随机-转盘</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 3期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$20K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 35%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">19%</span></td>
+      <td>
+        <div style="width:9px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,34.0 68.7,6.0 162.7,21.8 162.7,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="6.0,34.0 68.7,6.0 162.7,21.8" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="34.0" r="3.5" fill="#22c55e" opacity="1"/><circle cx="68.7" cy="6.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="162.7" cy="21.8" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$5K → $37K → $19K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">5</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">挖矿小游戏</div>
+        <div style="font-size:10px;color:var(--text-muted)">挖矿小游戏 · 7期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$18K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 29%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">28%</span></td>
+      <td>
+        <div style="width:6px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,27.2 37.3,30.1 68.7,29.4 100.0,29.0 131.3,34.0 162.7,28.0 194.0,6.0 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="6.0,27.2 37.3,30.1 68.7,29.4 100.0,29.0 131.3,34.0 162.7,28.0 194.0,6.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="27.2" r="3.5" fill="#22c55e" opacity="1"/><circle cx="37.3" cy="30.1" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="68.7" cy="29.4" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="100.0" cy="29.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="131.3" cy="34.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="162.7" cy="28.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="6.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$16K → $9K → $11K → $12K → $0K → $14K → $64K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">6</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">大富翁（非异族）</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 5期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$70K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 5%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">30%</span></td>
+      <td>
+        <div style="width:5px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,19.9 37.3,21.2 68.7,34.0 162.7,13.1 194.0,6.0 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="6.0,19.9 37.3,21.2 68.7,34.0 162.7,13.1 194.0,6.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="19.9" r="3.5" fill="#22c55e" opacity="1"/><circle cx="37.3" cy="21.2" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="68.7" cy="34.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="162.7" cy="13.1" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="6.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$69K → $67K → $54K → $76K → $83K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">7</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">行军特效</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日皮肤 · 4期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$10K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 19%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">14%</span></td>
+      <td>
+        <div style="width:2px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="100.0,38.0 100.0,12.1 131.3,34.0 162.7,6.0 194.0,9.3 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="100.0,12.1 131.3,34.0 162.7,6.0 194.0,9.3" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="100.0" cy="12.1" r="3.5" fill="#22c55e" opacity="1"/><circle cx="131.3" cy="34.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="162.7" cy="6.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="9.3" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$12K → $0K → $15K → $13K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">8</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">2023装饰兑换券礼包</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$5K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 30%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td>
+        <div style="width:2px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,34.0 68.7,6.0 68.7,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="6.0,34.0 68.7,6.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="34.0" r="3.5" fill="#22c55e" opacity="1"/><circle cx="68.7" cy="6.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$4K → $6K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">9</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">节日通行证</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日BP · 5期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$44K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 0%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">0%</span></td>
+      <td>
+        <div style="width:0px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,19.8 37.3,34.0 68.7,6.0 100.0,27.2 194.0,21.3 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="6.0,19.8 37.3,34.0 68.7,6.0 100.0,27.2 194.0,21.3" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="19.8" r="3.5" fill="#22c55e" opacity="1"/><circle cx="37.3" cy="34.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="68.7" cy="6.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="100.0" cy="27.2" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="21.3" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$45K → $37K → $52K → $41K → $44K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">10</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">25感恩节每日补给升级礼包</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 3期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$9K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 1%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">0%</span></td>
+      <td>
+        <div style="width:0px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="37.3,38.0 37.3,7.8 100.0,34.0 194.0,6.0 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="37.3,7.8 100.0,34.0 194.0,6.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="37.3" cy="7.8" r="3.5" fill="#22c55e" opacity="1"/><circle cx="100.0" cy="34.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="6.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$9K → $8K → $9K</td>
+    </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <span style="background:#ef4444;color:#fff;font-weight:800;font-size:12px;padding:4px 14px;border-radius:6px;letter-spacing:1px">▼ 衰减趋势</span>
+      <span style="color:var(--text-muted);font-size:12px">22 个活动 · 按影响力排序</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:28px">#</th>
+            <th>活动</th>
+            <th class="num">期均收入</th>
+            <th class="num">每期衰减</th>
+            <th class="num" title="线性回归R²，衡量趋势稳定性">R²</th>
+            <th style="width:65px" title="影响力 = 期均收入 × |变化率|">影响力</th>
+            <th style="width:210px">趋势线</th>
+            <th>各期收入</th>
+          </tr>
+        </thead>
+        <tbody>
+
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">1</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">异族大富翁</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$138K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 114%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td>
+        <div style="width:60px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="100.0,38.0 100.0,6.0 131.3,34.0 131.3,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="100.0,6.0 131.3,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="100.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="131.3" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$217K → $59K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">2</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">春节抽奖成就礼包</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$32K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 155%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td>
+        <div style="width:19px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="100.0,38.0 100.0,6.0 131.3,34.0 131.3,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="100.0,6.0 131.3,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="100.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="131.3" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$56K → $7K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">3</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">MJ8小游戏</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 3期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$42K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 70%</td>
+      <td class="num" style="font-size:11px">91%</td>
+      <td>
+        <div style="width:11px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="68.7,38.0 68.7,6.0 100.0,12.2 131.3,34.0 131.3,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="68.7,6.0 100.0,12.2 131.3,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="68.7" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="100.0" cy="12.2" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="131.3" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$66K → $53K → $7K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">4</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">春节皮肤GACHA</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日皮肤 · 2期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$19K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 129%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td>
+        <div style="width:9px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="100.0,38.0 100.0,6.0 131.3,34.0 131.3,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="100.0,6.0 131.3,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="100.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="131.3" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$31K → $7K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">5</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">幸运多重礼GACHA</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$44K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 48%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td>
+        <div style="width:8px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.0 68.7,34.0 68.7,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.0 68.7,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="68.7" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$54K → $33K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">6</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">弹珠GACHA</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日皮肤 · 3期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$145K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 11%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td>
+        <div style="width:6px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.0 68.7,20.2 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.0 68.7,20.2 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="68.7" cy="20.2" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$160K → $145K → $130K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">7</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">砍价系列</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$35K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 30%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td>
+        <div style="width:4px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="37.3,38.0 37.3,6.0 131.3,34.0 131.3,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="37.3,6.0 131.3,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="37.3" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="131.3" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$40K → $30K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">8</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">周年庆返场</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 4期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$43K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 22%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">12%</span></td>
+      <td>
+        <div style="width:4px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,30.2 37.3,6.0 68.7,29.4 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,30.2 37.3,6.0 68.7,29.4 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="30.2" r="3.5" fill="#ef4444" opacity="1"/><circle cx="37.3" cy="6.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="68.7" cy="29.4" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$28K → $95K → $31K → $18K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">9</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">预购连锁</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 4期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$21K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 24%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">18%</span></td>
+      <td>
+        <div style="width:2px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="68.7,38.0 68.7,6.0 100.0,19.9 131.3,34.0 162.7,14.1 162.7,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="68.7,6.0 100.0,19.9 131.3,34.0 162.7,14.1" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="68.7" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="100.0" cy="19.9" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="131.3" cy="34.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="14.1" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$38K → $19K → $0K → $27K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">10</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">2025深海节-节日礼包团购</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$21K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 25%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td>
+        <div style="width:2px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="68.7,38.0 68.7,6.0 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="68.7,6.0 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="68.7" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$23K → $18K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">11</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">强消耗</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 5期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$12K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 43%</td>
+      <td class="num" style="font-size:11px">66%</td>
+      <td>
+        <div style="width:2px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.0 68.7,26.8 100.0,33.8 162.7,31.6 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.0 68.7,26.8 100.0,33.8 162.7,31.6 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="68.7" cy="26.8" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="100.0" cy="33.8" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="31.6" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$29K → $11K → $6K → $7K → $5K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">12</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">GACHA每日礼包-登月节</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日皮肤 · 3期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$6K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 76%</td>
+      <td class="num" style="font-size:11px">88%</td>
+      <td>
+        <div style="width:2px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="68.7,38.0 68.7,6.0 100.0,11.0 131.3,34.0 131.3,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="68.7,6.0 100.0,11.0 131.3,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="68.7" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="100.0" cy="11.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="131.3" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$10K → $8K → $0K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">13</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">自选周卡</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 6期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$17K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 25%</td>
+      <td class="num" style="font-size:11px">61%</td>
+      <td>
+        <div style="width:2px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.0 37.3,26.7 68.7,16.1 100.0,17.4 162.7,31.0 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.0 37.3,26.7 68.7,16.1 100.0,17.4 162.7,31.0 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="37.3" cy="26.7" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="68.7" cy="16.1" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="100.0" cy="17.4" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="31.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$32K → $12K → $22K → $21K → $8K → $5K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">14</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">限时抢购</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 5期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$47K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 8%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">11%</span></td>
+      <td>
+        <div style="width:1px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="68.7,38.0 68.7,6.0 100.0,20.1 131.3,34.0 162.7,14.6 194.0,19.3 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="68.7,6.0 100.0,20.1 131.3,34.0 162.7,14.6 194.0,19.3" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="68.7" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="100.0" cy="20.1" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="131.3" cy="34.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="14.6" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="19.3" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$71K → $44K → $19K → $55K → $46K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">15</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">对对碰</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 5期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$9K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 16%</td>
+      <td class="num" style="font-size:11px">56%</td>
+      <td>
+        <div style="width:1px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.0 68.7,17.1 100.0,34.0 162.7,25.4 194.0,27.3 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.0 68.7,17.1 100.0,34.0 162.7,25.4 194.0,27.3" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="68.7" cy="17.1" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="100.0" cy="34.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="25.4" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="27.3" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$14K → $11K → $6K → $8K → $8K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">16</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">聚宝盆</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$4K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 32%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td>
+        <div style="width:0px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="100.0,38.0 100.0,6.0 162.7,34.0 162.7,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="100.0,6.0 162.7,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="100.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="162.7" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$5K → $3K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">17</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">酒馆登陆bp</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日BP · 3期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$3K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 35%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">24%</span></td>
+      <td>
+        <div style="width:0px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.0 131.3,34.0 162.7,19.8 162.7,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.0 131.3,34.0 162.7,19.8" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="131.3" cy="34.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="19.8" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$5K → $1K → $3K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">18</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">情人节bingo活动宝箱礼包</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$2K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 38%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td>
+        <div style="width:0px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.0 162.7,34.0 162.7,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.0 162.7,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="162.7" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$2K → $2K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">19</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">累充服务器</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 4期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$7K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 7%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">41%</span></td>
+      <td>
+        <div style="width:0px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="37.3,38.0 37.3,19.9 131.3,6.0 162.7,20.4 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="37.3,19.9 131.3,6.0 162.7,20.4 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="37.3" cy="19.9" r="3.5" fill="#ef4444" opacity="1"/><circle cx="131.3" cy="6.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="20.4" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$7K → $8K → $7K → $6K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">20</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">行军表情</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日皮肤 · 6期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$9K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 3%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">1%</span></td>
+      <td>
+        <div style="width:0px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.7 68.7,7.3 100.0,9.7 131.3,34.0 162.7,8.7 194.0,6.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.7 68.7,7.3 100.0,9.7 131.3,34.0 162.7,8.7 194.0,6.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.7" r="3.5" fill="#ef4444" opacity="1"/><circle cx="68.7" cy="7.3" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="100.0" cy="9.7" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="131.3" cy="34.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="8.7" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$11K → $11K → $10K → $0K → $10K → $11K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">21</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">节日BP</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日BP · 6期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$23K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 1%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">0%</span></td>
+      <td>
+        <div style="width:0px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,21.2 37.3,28.0 68.7,26.2 100.0,33.9 162.7,6.0 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,21.2 37.3,28.0 68.7,26.2 100.0,33.9 162.7,6.0 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="21.2" r="3.5" fill="#ef4444" opacity="1"/><circle cx="37.3" cy="28.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="68.7" cy="26.2" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="100.0" cy="33.9" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="6.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$28K → $19K → $21K → $11K → $48K → $11K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">22</td>
+      <td>
+        <div style="font-weight:600;margin-bottom:2px">掉落转付费礼包</div>
+        <div style="font-size:10px;color:var(--text-muted)">节日特惠 · 5期</div>
+      </td>
+      <td class="num" style="font-size:14px;font-weight:600">$5K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 0%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">0%</span></td>
+      <td>
+        <div style="width:0px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div>
+      </td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,17.0 68.7,7.8 100.0,34.0 162.7,31.8 194.0,6.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,17.0 68.7,7.8 100.0,34.0 162.7,31.8 194.0,6.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="17.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="68.7" cy="7.8" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="100.0" cy="34.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="31.8" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$5K → $6K → $4K → $4K → $6K</td>
+    </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 分析洞察 -->
+  <div class="insight-box" style="margin-top:24px">
+    <div style="font-weight:700;margin-bottom:8px">趋势分析洞察</div>
+
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b style="color:#22c55e">最强增长</b>：推币机系列（期均 $96K，每期 +51%），最新一期 $120K</div>
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b style="color:#ef4444">最大衰减</b>：异族大富翁（期均 $138K，每期 -114%），最新一期 $59K</div>
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b>稳定增长（高R²）</b>：推币机系列、挖孔小游戏礼包、机甲GACHA — 高收入且趋势确定性强，可加大投入</div>
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b style="color:#ef4444">稳定衰减（需关注）</b>：异族大富翁、弹珠GACHA — 高收入但持续下滑，需考虑换新或创新</div>
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b style="color:#f59e0b">潜力新星</b>：推币机系列、机甲GACHA — 仅2期数据但表现上升，值得持续观察</div>
+
+  </div>
+</div>

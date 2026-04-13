@@ -1,0 +1,380 @@
+{"id":"60d0270962a4005e8b481e1f","name":"游戏","provider":1}
+{"id":"60d0287462a4005e8b481e21","name":"角色ID","algorithmId":["user_id"]}
+{"id":"60d0290162a4005e8b481e22","name":"角色注册服务器","algorithmId":["user_id"],"provider":2}
+{"id":"60d034b762a4005e8b481e31","name":"国家","provider":1}
+{"id":"60d148badbea7b252e4c99c9","name":"Tier","provider":1}
+{"id":"60d02f5c62a4005e8b481e27","name":"归因后Udid"}
+{"id":"60d0329d62a4005e8b481e2f","name":"设备平台","provider":1}
+{"id":"60d175e0dbea7b252e4c99e1","name":"安装日期","provider":1}
+{"id":"60d182b2dbea7b252e4c99f9","name":"注册日期","algorithmId":["user_id"],"provider":1}
+{"id":"60d1845bdbea7b252e4c9a01","name":"国家分组","provider":1}
+{"id":"60d19ec0f8e0ee6ed33cca43","name":"游戏包","provider":3}
+{"id":"60d19f05f8e0ee6ed33cca45","name":"Bundle ID","provider":3}
+{"id":"60d1a7c2f8e0ee6ed33cca7c","name":"安装cohort","algorithmId":["open_udid"]}
+{"id":"60d1aa45f8e0ee6ed33cca92","name":"注册cohort","algorithmId":["user_id"]}
+{"id":"60eb9ef5e023ba0836356abf","name":"设备注册服务器","provider":2}
+{"id":"610bab55af3acf174ba42fb5","name":"角色登录服务器","algorithmId":["user_id"],"provider":2}
+{"id":"610bab91af3acf174ba42fb8","name":"登录版本","provider":2}
+{"id":"61134266662008110963b44a","name":"CPU核数"}
+{"id":"611342c8662008110963b450","name":"操作系统"}
+{"id":"6113431f662008110963b452","name":"CPU 类型"}
+{"id":"61134b30662008110963b466","name":"网络类型"}
+{"id":"61134b6f662008110963b468","name":"机型"}
+{"id":"61134bb6662008110963b46a","name":"内存"}
+{"id":"61134bf2662008110963b46c","name":"GPU类型"}
+{"id":"61136d07662008110963b4ae","name":"是否滚服","provider":1}
+{"id":"611372fc662008110963b4c7","name":"是否首次注册","algorithmId":["user_id"],"provider":1}
+{"id":"61137609662008110963b4cd","name":"注册版本","provider":2}
+{"id":"611caa5db27d3b153da7dc29","name":"注册月份","algorithmId":["user_id"],"provider":1}
+{"id":"611caaa9b27d3b153da7dc2b","name":"安装月份","provider":1}
+{"id":"6135be4a08b0e51bd17c8a9a","name":"联盟名称"}
+{"id":"6135beb108b0e51bd17c8a9c","name":"是否加入联盟","algorithmId":["user_id"],"provider":1}
+{"id":"613f0c2b9fb4d013fcf40b4e","name":"CPU 频率"}
+{"id":"613f0c9e9fb4d013fcf40b50","name":"GPU名称"}
+{"id":"613f0cf59fb4d013fcf40b56","name":"GPU内存"}
+{"id":"614aeb4d711991163073f409","name":"角色累计付费额","algorithmId":["user_id"]}
+{"id":"6161422e4ab5af70942f4e26","name":"FTE最终步骤","algorithmId":["user_id"]}
+{"id":"6171101d7bc056555e8696be","name":"注册 IP"}
+{"id":"61713a497bc056555e86999b","name":"A|B 分组","games":["1038","1001"],"algorithmId":["user_id"],"provider":1}
+{"id":"61810f878192600c6cace2c8","name":"绑定账号类型","algorithmId":["user_id"]}
+{"id":"6188c07b0bf85369c540393e","name":"R分级"}
+{"id":"6188c4710bf85369c5403966","name":"付费等级"}
+{"id":"6188c9d10bf85369c54039c1","name":"角色等级","algorithmId":["user_id"]}
+{"id":"6188cb2c0bf85369c54039e0","name":"最新主基地等级","algorithmId":["user_id"]}
+{"id":"6188cce40bf85369c54039f8","name":"设备累计付费额","algorithmId":["open_udid"]}
+{"id":"6188ce100bf85369c5403a11","name":"阵营","games":["1041"],"algorithmId":["user_id"]}
+{"id":"6189048a0bf85369c5403d4f","name":"用户类型","provider":1}
+{"id":"619f3c22fe7f1321c8df50b9","name":"user id 末尾数字","algorithmId":["user_id"],"provider":1}
+{"id":"61a087630365d92ffc42213d","name":"角色最后一次付费日期","algorithmId":["user_id"],"provider":1}
+{"id":"61a087990365d92ffc422141","name":"设备最后一次付费日期","algorithmId":["open_udid"],"provider":1}
+{"id":"61a095130365d92ffc42227d","name":"角色最后一次付费间隔","algorithmId":["user_id"]}
+{"id":"61b995ca9f90d640423b4d1a","name":"设备最近20日是否付费","algorithmId":["open_udid"],"provider":1}
+{"id":"61b9a1979f90d640423b4e7c","name":"角色最近20日是否付费","algorithmId":["user_id"],"provider":1}
+{"id":"61cecd1ede4eb9538d072a80","name":"预测是否7日付费","games":["1041"],"algorithmId":["open_udid"],"provider":1}
+{"id":"61dbd5ef00047e342873f662","name":"角色破冰【分钟】","algorithmId":["user_id"]}
+{"id":"6214a89d27c6784e277ac779","name":"星期"}
+{"id":"62172e90df226f3295fbafd9","name":"GPU Version"}
+{"id":"62183eeedf226f3295fbc1b9","name":"是否完成前期常驻问卷","games":["1047","1038","1041","1076","1046","1012","1001"],"algorithmId":["user_id"],"provider":1}
+{"id":"621f0c3dafd5566167b04810","name":"FPS画质","algorithmId":["user_id"]}
+{"id":"62203493afd5566167b05ff0","name":"首充礼包","algorithmId":["user_id"]}
+{"id":"6220353bafd5566167b0600b","name":"第二次付费礼包","algorithmId":["user_id"]}
+{"id":"622035c4afd5566167b06022","name":"第三次付费礼包","algorithmId":["user_id"]}
+{"id":"62203697afd5566167b0603f","name":"首充金额","algorithmId":["user_id"]}
+{"id":"6220370eafd5566167b0604d","name":"第二次付费金额","algorithmId":["user_id"]}
+{"id":"62203747afd5566167b06059","name":"第三次付费金额","algorithmId":["user_id"]}
+{"id":"62280a4fafd5566167b0f519","name":"机型分档","provider":1}
+{"id":"62285837afd5566167b10074","name":"VIP用户","games":["1012","1041","1038","1001","1047"],"algorithmId":["user_id"],"provider":1}
+{"id":"62287cb5afd5566167b1075d","name":"区域-亚区","provider":1}
+{"id":"62288f79afd5566167b1092b","name":"国民收入中位数"}
+{"id":"622891bdafd5566167b10996","name":"国民收入平均值"}
+{"id":"622892d9afd5566167b109c1","name":"购买力平价"}
+{"id":"62289363afd5566167b109d5","name":"人口数"}
+{"id":"62289585afd5566167b10a1b","name":"区域","provider":1}
+{"id":"6228a7dbafd5566167b10c22","name":"安装渗透率"}
+{"id":"62295fefafd5566167b1176c","name":"安装 Cohort（7日间隔）","algorithmId":["open_udid"],"provider":1}
+{"id":"622962e6afd5566167b1180c","name":"注册 Cohort（7日间隔）","algorithmId":["user_id"],"provider":1}
+{"id":"62296532afd5566167b11875","name":"安装 Cohort（30日间隔）","algorithmId":["open_udid"],"provider":1}
+{"id":"62296764afd5566167b118ea","name":"安装 Cohort（90日间隔）","algorithmId":["open_udid"],"provider":1}
+{"id":"6229688aafd5566167b11972","name":"注册 Cohort（30日间隔）","algorithmId":["user_id"],"provider":1}
+{"id":"62296936afd5566167b119a3","name":"注册 Cohort（90日间隔）","algorithmId":["user_id"],"provider":1}
+{"id":"623c319caaba015c204c343b","name":"是否当日回收问卷","algorithmId":["user_id"],"provider":1}
+{"id":"623ecf13aaba015c204c601d","name":"问卷-性别","algorithmId":["user_id"],"provider":1}
+{"id":"623ed2deaaba015c204c607c","name":"是否博彩类玩家","algorithmId":["user_id"],"provider":1}
+{"id":"623ed3e3aaba015c204c6096","name":"是否战争策略玩家","algorithmId":["user_id"],"provider":1}
+{"id":"623ed464aaba015c204c609e","name":"是否RPG玩家","algorithmId":["user_id"],"provider":1}
+{"id":"623ed4f5aaba015c204c60a9","name":"是否模拟经营玩家","algorithmId":["user_id"],"provider":1}
+{"id":"623ed592aaba015c204c60b7","name":"是否其他类游戏玩家","algorithmId":["user_id"],"provider":1}
+{"id":"623ed62aaaba015c204c60be","name":"是否休闲类玩家","algorithmId":["user_id"],"disableGroupBy":true,"provider":1}
+{"id":"623ed6b6aaba015c204c60c4","name":"是否动作类玩家","algorithmId":["user_id"],"disableGroupBy":true,"provider":1}
+{"id":"623ed816aaba015c204c60e5","name":"是否FPS玩家","algorithmId":["user_id"],"provider":1}
+{"id":"623ed890aaba015c204c60ee","name":"是否体育类玩家","algorithmId":["open_udid"],"disableGroupBy":true,"provider":1}
+{"id":"62442cbdaaba015c204cc167","name":"总付费次数"}
+{"id":"6247f78daaba015c204d0c45","name":"设备首充礼包ID","algorithmId":["open_udid"]}
+{"id":"6247fbf8aaba015c204d0cb7","name":"设备首充礼包","algorithmId":["open_udid"]}
+{"id":"6247fea9aaba015c204d0cef","name":"设备第二次付费礼包","algorithmId":["open_udid"]}
+{"id":"6247ff32aaba015c204d0d6f","name":"设备第三次付费礼包","algorithmId":["open_udid"]}
+{"id":"624801b1aaba015c204d0dd3","name":"设备首充金额","algorithmId":["open_udid"]}
+{"id":"624801feaaba015c204d0ddb","name":"设备第二次付费金额","algorithmId":["open_udid"]}
+{"id":"6248024eaaba015c204d0de3","name":"设备第三次付费金额","algorithmId":["open_udid"]}
+{"id":"62621e72aaba015c204eb3ac","name":"角色注册服务器ID (可范围筛选)","algorithmId":["user_id"],"disableGroupBy":true}
+{"id":"62623d3baaba015c204eb5d6","name":"设备注册服务器ID（可范围筛选）","algorithmId":["open_udid"],"disableGroupBy":true}
+{"id":"62623e30aaba015c204eb5f1","name":"角色登录服务器ID （可范围筛选）","algorithmId":["user_id"]}
+{"id":"6264ecf2aaba015c204ed4e2","name":"真实登录服务器ID","provider":2}
+{"id":"627ce58aaaba015c20507e90","name":"语言","provider":1}
+{"id":"62ac19031d7d992333fcd7e3","name":"是否完成前期常驻问卷","games":["1047","1038","1012","1041","1046","1076"],"algorithmId":["open_udid"],"disableGroupBy":true,"provider":1}
+{"id":"62ac48191d7d992333fcdfc0","name":"问卷-性别","algorithmId":["open_udid"],"provider":1}
+{"id":"62ac489f1d7d992333fcdfcc","name":"是否博彩类玩家","algorithmId":["open_udid"],"provider":1}
+{"id":"62ac49891d7d992333fcdfe6","name":"是否战争策略玩家","algorithmId":["open_udid"],"provider":1}
+{"id":"62ac49e11d7d992333fcdfee","name":"是否RPG玩家","algorithmId":["open_udid"],"provider":1}
+{"id":"62ac4a181d7d992333fcdff5","name":"是否模拟经营玩家","algorithmId":["open_udid"],"provider":1}
+{"id":"62ac4a9f1d7d992333fce005","name":"是否其他类游戏玩家","algorithmId":["open_udid"],"provider":1}
+{"id":"62ac4b031d7d992333fce015","name":"是否休闲类玩家","algorithmId":["open_udid"],"disableGroupBy":true,"provider":1}
+{"id":"62ac4b351d7d992333fce01b","name":"是否动作类玩家","algorithmId":["open_udid"],"disableGroupBy":true,"provider":1}
+{"id":"62ac4ba71d7d992333fce023","name":"是否FPS玩家","algorithmId":["open_udid"],"provider":1}
+{"id":"62ac4d3f1d7d992333fce054","name":"是否体育类玩家","algorithmId":["user_id"],"disableGroupBy":true,"provider":1}
+{"id":"62b03a9a1d7d992333fd1807","name":"是否二次元类玩家","games":["1038","1041"],"algorithmId":["user_id"],"provider":1}
+{"id":"62b03b301d7d992333fd1818","name":"是否棋牌捕鱼类玩家","games":["1076"],"algorithmId":["user_id"],"provider":1}
+{"id":"62b03b901d7d992333fd1821","name":"是否恋爱/角色养成类玩家","games":["1076"],"algorithmId":["user_id"],"provider":1}
+{"id":"62b03be21d7d992333fd1828","name":"是否音乐/体育/跑酷类玩家","games":["1076"],"algorithmId":["user_id"],"provider":1}
+{"id":"62b03c2e1d7d992333fd1834","name":"是否休闲益智类玩家","games":["1076","1038"],"algorithmId":["user_id"],"provider":1}
+{"id":"62b03c971d7d992333fd1839","name":"是否休闲策略类玩家","games":["1076"],"algorithmId":["user_id"],"provider":1}
+{"id":"62b03d511d7d992333fd185d","name":"是否MOBA玩家","games":["1076"],"algorithmId":["user_id"],"provider":1}
+{"id":"62b03e1e1d7d992333fd1894","name":"是否MOBA玩家","games":["1076"],"algorithmId":["open_udid"],"provider":1}
+{"id":"62b03e9b1d7d992333fd18ae","name":"是否二次元玩家","games":["1038","1041"],"algorithmId":["open_udid"],"provider":1}
+{"id":"62b03ee81d7d992333fd18bb","name":"是否休闲益智类玩家","games":["1076"],"algorithmId":["open_udid"],"provider":1}
+{"id":"62b03f361d7d992333fd18c8","name":"是否休闲策略类玩家","games":["1076","1038"],"algorithmId":["open_udid"],"provider":1}
+{"id":"62b03ff21d7d992333fd18f0","name":"是否棋牌捕鱼类玩家","games":["1076"],"algorithmId":["open_udid"],"provider":1}
+{"id":"62b0403b1d7d992333fd18fd","name":"是否恋爱/角色养成类玩家","games":["1076"],"algorithmId":["open_udid"],"provider":1}
+{"id":"62b040761d7d992333fd190f","name":"是否音乐/体育/跑酷类玩家","games":["1076"],"algorithmId":["open_udid"],"provider":1}
+{"id":"62b9202d1d7d992333fde24e","name":"问卷-语种","provider":2}
+{"id":"62bad7531d7d992333fe1dc9","name":"注册小时","algorithmId":["user_id"],"provider":1}
+{"id":"62badadc1d7d992333fe1e62","name":"安装小时","algorithmId":["open_udid"],"provider":1}
+{"id":"62cfc929d81883725836c397","name":"是否马甲包","provider":1}
+{"id":"62d52a482b9e097119c49c28","name":"回归玩家","algorithmId":["user_id"],"disableGroupBy":true}
+{"id":"62d52d352b9e097119c49c88","name":"回归设备","algorithmId":["open_udid"],"disableGroupBy":true}
+{"id":"62d8f5e32b9e097119c4ee2e","name":"国家分组2022","provider":1}
+{"id":"62fc947f80784f418802ab80","name":"设备服务器分类","algorithmId":["open_udid"],"provider":2}
+{"id":"62fc954b80784f418802abab","name":"角色服务器分类","algorithmId":["user_id"],"provider":2}
+{"id":"62fcb2d680784f418802aff9","name":"GS/GM玩家标签","games":["1047","1038","1012","1041","1076"],"disableGroupBy":true}
+{"id":"62fda9b080784f418802befb","name":"活跃天数>30","disableGroupBy":true}
+{"id":"62fe172380784f418802ca7c","name":"活跃天数>60","disableGroupBy":true}
+{"id":"62ff63d880784f418802e35e","name":"角色首次付费间隔","algorithmId":["user_id"]}
+{"id":"62ff64f680784f418802e378","name":"设备首次付费间隔","algorithmId":["open_udid"]}
+{"id":"634cc5426a187c71b8558c55","name":"部门","games":["1014"],"provider":1}
+{"id":"635b8d27ba1b2f220978e473","name":"30日rlevel"}
+{"id":"635b8d4aba1b2f220978e47b","name":"60日rlevel"}
+{"id":"637b1890ba1b2f22097b2002","name":"P2临时标签","games":["1041"],"algorithmId":["open_udid"]}
+{"id":"63806aeaba1b2f22097bbd62","name":"用户兴趣画像","games":["1041"]}
+{"id":"63a16f2f6ffd8410864da48c","name":"AB分组-10181018","games":["1041","1089","1109","1114","1103","1096","1105","1076","1111","1108"]}
+{"id":"63a1727f6ffd8410864da507","name":"AB分组-10181017","games":["1089","1109","1108","1111","1114","1076","1041","1105","1096"]}
+{"id":"63a172a26ffd8410864da50c","name":"AB分组-10181016","games":["1041","1076"]}
+{"id":"63a172c76ffd8410864da50f","name":"AB分组-10181015","games":["1041","1089","1109","1114","1103","1105","1096","1076","1111","1108"]}
+{"id":"63a172f56ffd8410864da512","name":"AB分组-10181014","games":["1041","1089","1109","1114","1103","1096","1105","1076","1111","1108"]}
+{"id":"63a1731e6ffd8410864da518","name":"AB分组-10181011","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"63ac0fec6ffd8410864e52b2","name":"SLG-优势认同","games":["1041"]}
+{"id":"63ac10376ffd8410864e52c3","name":"SLG-乐趣感知","games":["1041"]}
+{"id":"63ac105c6ffd8410864e52c8","name":"泛用户-优势认同","games":["1041"]}
+{"id":"63ac107b6ffd8410864e52cb","name":"泛用户-乐趣感知","games":["1041"]}
+{"id":"63bd3d396ffd8410864fa17b","name":"内存分段","provider":1}
+{"id":"63bfbf086ffd8410864fd43a","name":"设备最后一次付费间隔","algorithmId":["open_udid"]}
+{"id":"63d8a56f6ffd841086511818","name":"是否Roguelike玩家","games":["1046"],"algorithmId":["user_id"],"disableGroupBy":true,"provider":1}
+{"id":"63d8a5ac6ffd84108651182e","name":"是否Roguelike玩家","games":["1046"],"algorithmId":["open_udid"],"disableGroupBy":true,"provider":1}
+{"id":"63d8b9a56ffd841086511dd0","name":"服务器当时Schema","games":["1041","1076"],"provider":2}
+{"id":"63d8bb906ffd841086511f24","name":"服务器最新Schema","games":["1041","1076"],"provider":2}
+{"id":"63ec401e3ee73c6b941ebd0e","name":"注册大版本(X.X.*)","provider":2}
+{"id":"63fd6ca1c2f843365696ea58","name":"AB分组-10181019","games":["1041","1089","1109","1114","1103","1096","1105","1076","1111","1108"]}
+{"id":"63fd6cd2c2f843365696ea63","name":"AB分组-10181020","games":["1041","1089","1109","1114","1103","1105","1096","1076","1111","1108"]}
+{"id":"63fd6cf4c2f843365696ea6a","name":"AB分组-10181021","games":["1041","1089","1109","1114","1103","1105","1096","1076","1111","1108"]}
+{"id":"63fda4edd72b6b7ed0162d72","name":"180日rlevel"}
+{"id":"6405876e62e1ac341b94df0e","name":"fte所选游戏","games":["1041","1076"]}
+{"id":"6433a8dee1587b7a492e6628","name":"AB分组-10181022","games":["1041","1089","1109","1114","1103","1096","1105","1076","1111","1108"]}
+{"id":"6433a911e1587b7a492e6647","name":"AB分组-10181023","games":["1041","1089","1109","1114","1103","1096","1105","1076","1111","1108"]}
+{"id":"6433a938e1587b7a492e664d","name":"AB分组-10181024","games":["1089","1109","1114","1041","1103","1108","1096","1111","1105","1076"]}
+{"id":"644a29287772e34003a80b36","name":"P2 建筑饱和度","games":["1041","1076"],"provider":1}
+{"id":"644a29987772e34003a80b63","name":"P2 科研饱和度","games":["1041","1076"],"provider":1}
+{"id":"644a29da7772e34003a80b6e","name":"P2 军备饱和度","games":["1041","1076"],"provider":1}
+{"id":"644a2b637772e34003a80bac","name":"P2 橙色收藏品饱和度","games":["1041","1076"],"provider":1}
+{"id":"644a2f127772e34003a80c0d","name":"P2 橙色英雄技能饱和度","games":["1041","1076"],"provider":1}
+{"id":"644a2ff47772e34003a80c42","name":"P2 兵种饱和度","games":["1041","1076"],"provider":1}
+{"id":"644a30607772e34003a80c4b","name":"KOW 兵种T6饱和度","games":["1038"],"provider":1}
+{"id":"644a31157772e34003a80c61","name":"KOW 橙色英雄军阶饱和度","games":["1038"],"provider":1}
+{"id":"644a315c7772e34003a80c6a","name":"KOW 科研饱和度","games":["1038"],"provider":1}
+{"id":"644a31b27772e34003a80c72","name":"KOW 建筑饱和度","games":["1038"],"provider":1}
+{"id":"644a33217772e34003a80ca4","name":"KOW 橙色英雄进修饱和度","games":["1038"],"provider":1}
+{"id":"644a33957772e34003a80cb1","name":"KOW 武器攻城饱和度[S3]","games":["1038"],"provider":1}
+{"id":"644a33df7772e34003a80cbb","name":"KOW 武器野战饱和度[S4]","games":["1038"],"provider":1}
+{"id":"644a34317772e34003a80cc2","name":"KOW 武器驻防饱和度[S3]","games":["1038"],"provider":1}
+{"id":"644a34637772e34003a80cd2","name":"KOW 飞机饱和度","games":["1038"],"provider":1}
+{"id":"644a34967772e34003a80cd7","name":"KOW 战舰饱和度","games":["1038"],"provider":1}
+{"id":"644a38827772e34003a80d8f","name":"P2 橙色战装饱和度","games":["1041","1076"],"provider":1}
+{"id":"644b81597772e34003a82ca1","name":"R分级（各游戏通用）"}
+{"id":"645b8f967772e34003a99d20","name":"AB分组-10181025","games":["1041","1089","1109","1114","1103","1096","1105","1076","1111","1108"]}
+{"id":"645b8fb27772e34003a99d27","name":"AB分组-10181026","games":["1096","1089","1109","1105","1041","1103","1108","1076"]}
+{"id":"645c801e7772e34003a9b3cf","name":"7日rlevel（各游戏通用）"}
+{"id":"645c81ca7772e34003a9b475","name":"7日rlevel"}
+{"id":"645c82897772e34003a9b4b4","name":"30日rlevel（各游戏通用）"}
+{"id":"645c82ad7772e34003a9b4bf","name":"60日rlevel（各游戏通用）"}
+{"id":"645c82cc7772e34003a9b4c2","name":"180日rlevel（各游戏通用）"}
+{"id":"6465cee87772e34003aaa265","name":"设备注册服务器开服星期","provider":1}
+{"id":"64743ed27772e34003ac3178","name":"AB分组-10181027","games":["1041","1089","1109","1114","1103","1096","1105","1076","1111","1108"]}
+{"id":"64a381970945b15f105c1c4b","name":"P2 橙色英雄经验饱和度","games":["1041","1076"],"provider":1}
+{"id":"64a382370945b15f105c1cbe","name":"KOW 橙色英雄经验饱和度","games":["1038"],"provider":1}
+{"id":"64c0f7fe95cbf751a5e6c782","name":"AB分组-10181028","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"64c0f85f95cbf751a5e6c78b","name":"AB分组-10181029","games":["1041","1089","1105","1076","1108"]}
+{"id":"64c0f88295cbf751a5e6c78e","name":"AB分组-10181030","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"64c0f8ae95cbf751a5e6c79c","name":"AB分组-10181031","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"64cb64f98117eb03b95a844a","name":"K1D2 建筑饱和度","games":["1047","1086"],"provider":1}
+{"id":"64cb653a8117eb03b95a846f","name":"K1D2 科研饱和度","games":["1047","1086"],"provider":1}
+{"id":"64cb65be8117eb03b95a85b7","name":"K1D2 英雄等级饱和度","games":["1047","1086"],"provider":1}
+{"id":"64cb66038117eb03b95a862f","name":"K1D2 英雄星级饱和度","games":["1047","1086"],"provider":1}
+{"id":"64d205eb8117eb03b95b43fb","name":"3日rlevel"}
+{"id":"64d206168117eb03b95b4410","name":"3日rlevel（各游戏通用）"}
+{"id":"64d60ca9f70d3e67401013c8","name":"AB分组-10181034","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"64e56918cfdea63e717e2d2b","name":"AB分组-10181033","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"64edc1352c4c257e4c782cb4","name":"K1D2 兵种进化饱和度","games":["1047","1086"],"provider":1}
+{"id":"64edc1812c4c257e4c782cbe","name":"K1D2 铁匠铺饱和度","games":["1047","1086"],"provider":1}
+{"id":"64f17dd95fc49f683bed5d2e","name":"K1D2 龙饱和度","games":["1047","1086"],"provider":1}
+{"id":"64f5a0188e25b331bf600cca","name":"K1D2 女巫试剂饱和度","games":["1047","1086"],"provider":1}
+{"id":"6502a0df33676a3ce9e30cb2","name":"K1D2 英雄装备饱和度","games":["1047","1086"],"provider":1}
+{"id":"6502db9133676a3ce9e3187d","name":"问卷-年龄分段","provider":1}
+{"id":"65090e71b0d2ff208fbfb766","name":"K1D2 龙装备饱和度","games":["1047","1086"],"provider":1}
+{"id":"6530e0836182e654535a4c8d","name":"K1D2 兵种天赋饱和度","games":["1047","1086"],"provider":1}
+{"id":"6530e0f96182e654535a4ca6","name":"K1D2 图鉴收藏饱和度","games":["1047","1086"],"provider":1}
+{"id":"653795a16182e654535b779b","name":"年"}
+{"id":"653a177a2c7f043f7ed73c84","name":"K1D2 女巫魔法石饱和度","games":["1047","1086"],"provider":1}
+{"id":"65409955153c4369e54f018e","name":"K1D2 召唤阵饱和度","games":["1047","1086"],"provider":1}
+{"id":"655180803fac97530a14f182","name":"AB分组-10181035","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"656e84b61890660c396dfff2","name":"是否首日付费用户","algorithmId":["user_id"],"provider":1}
+{"id":"656e85341890660c396e002f","name":"是否首日付费设备","algorithmId":["open_udid"],"provider":1}
+{"id":"6593782d9414677e88c4fb09","name":"AB分组-10181039","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"65937b479414677e88c4fdd0","name":"AB分组-10181038","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"65937b679414677e88c4fddf","name":"AB分组-10181037","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"65937ba39414677e88c4fdfe","name":"AB分组-10181036","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"65a102b6fbb31d298e465b72","name":"P2 红色战装饱和度","games":["1041","1076"],"provider":1}
+{"id":"65ae354d0178b9528e9b54b6","name":"BA 主城等级饱和度","games":["1012"],"provider":1}
+{"id":"65ae368f0178b9528e9b551e","name":"BA 主城荣耀饱和度","games":["1012"],"provider":1}
+{"id":"65ae37310178b9528e9b5538","name":"BA 主城天陨饱和度","games":["1012"],"provider":1}
+{"id":"65ae37ba0178b9528e9b556f","name":"BA 联合作战饱和度","games":["1012"],"provider":1}
+{"id":"65ae38760178b9528e9b5582","name":"BA t6兵种饱和度","games":["1012"],"provider":1}
+{"id":"65b89b33f8f7036c93f40842","name":"AB分组-10181040","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"65e576004c77736a2c06298c","name":"BA 宝物饱和度","games":["1012"],"provider":1}
+{"id":"65e576ce4c77736a2c0629fb","name":"BA 龙印饱和度","games":["1012"],"provider":1}
+{"id":"65e577494c77736a2c062a1c","name":"BA 装备饱和度","games":["1012"],"provider":1}
+{"id":"65e57d4f4c77736a2c062cc6","name":"BA 暴龙突破饱和度","games":["1012"],"provider":1}
+{"id":"65e57e504c77736a2c062cec","name":"BA 始祖龙突破饱和度","games":["1012"],"provider":1}
+{"id":"65e57ec34c77736a2c062d13","name":"BA 天演符文饱和度","games":["1012"],"provider":1}
+{"id":"65e57f304c77736a2c062d31","name":"BA 星图-陨星饱和度","games":["1012"],"provider":1}
+{"id":"65e57f844c77736a2c062d4f","name":"BA 星图-流星饱和度","games":["1012"],"provider":1}
+{"id":"65e57db74c77736a2c062cd5","name":"BA 双头龙突破饱和度","games":["1012"],"provider":1}
+{"id":"65fbe6bd1de4e44307bf7185","name":"玩家区域ID","games":["1047","1086"]}
+{"id":"6605456c1de4e44307c1a853","name":"AB分组-10181041","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"660545931de4e44307c1a85a","name":"AB分组-10181042","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"660be1146b56ab5b5edd6684","name":"玩家cohort聊天标签"}
+{"id":"660be32f6b56ab5b5edd6924","name":"玩家cohort7日聊天次数"}
+{"id":"661cc55f6aa4ea309c8834ad","name":"AB分组-10181043","games":["1041","1076"]}
+{"id":"66263c3b6aa4ea309c8c3e0b","name":"玩家cohort0日聊天次数"}
+{"id":"662b513d6aa4ea309c8e6f5e","name":"AB分组-10181044","games":["1041","1076"]}
+{"id":"662e0c546aa4ea309c8fd1de","name":"WZ T6饱和度","games":["1001"],"provider":1}
+{"id":"662e0d606aa4ea309c8fd2ce","name":"WZ 僚机饱和度","games":["1001"],"provider":1}
+{"id":"662e0dd36aa4ea309c8fd34b","name":"WZ 平衡勋章饱和度","games":["1001"],"provider":1}
+{"id":"662e0e0d6aa4ea309c8fd35a","name":"WZ 压制勋章饱和度","games":["1001"],"provider":1}
+{"id":"662e0e5c6aa4ea309c8fd3c9","name":"WZ 全体勋章饱和度","games":["1001"],"provider":1}
+{"id":"662e0e9d6aa4ea309c8fd3e9","name":"WZ 幽灵队长饱和度","games":["1001"],"provider":1}
+{"id":"662e0f4c6aa4ea309c8fd4b2","name":"WZ 黑芒套战斗天使饱和度","games":["1001"],"provider":1}
+{"id":"662e0f9c6aa4ea309c8fd51b","name":"WZ 决战套战斗天使饱和度","games":["1001"],"provider":1}
+{"id":"662e101a6aa4ea309c8fd583","name":"WZ 红1神器饱和度","games":["1001"],"provider":1}
+{"id":"662e10ee6aa4ea309c8fd61a","name":"WZ 红2神器饱和度","games":["1001"],"provider":1}
+{"id":"662f3b03cf576d259ee1cf50","name":"0日付费等级","games":["1047"]}
+{"id":"662f3b8ecf576d259ee1d03d","name":"7日付费等级","games":["1047"]}
+{"id":"662f3baecf576d259ee1d044","name":"14日付费等级","games":["1047"]}
+{"id":"662f3bcdcf576d259ee1d04f","name":"30日付费等级","games":["1047"]}
+{"id":"6641fd8e4ab7ad70aa140fb5","name":"BA t7兵种饱和度","games":["1012"],"provider":1}
+{"id":"6641fe544ab7ad70aa141118","name":"BA 天陨印记饱和度","games":["1012"],"provider":1}
+{"id":"6644182f31d8e33b66c24e28","name":"设备最后一次付费Cohort","algorithmId":["open_udid"]}
+{"id":"664418ca31d8e33b66c24e6d","name":"角色最后一次付费Cohort","algorithmId":["user_id"]}
+{"id":"6644584c31d8e33b66c284cb","name":"角色截止当日的总付费额","algorithmId":["user_id"]}
+{"id":"664458a831d8e33b66c2861a","name":"设备截止当日的总付费额","algorithmId":["open_udid"]}
+{"id":"664458c931d8e33b66c28629","name":"设备截止当日的总付费次数","algorithmId":["open_udid"]}
+{"id":"6644591831d8e33b66c286b2","name":"角色截止当日的总付费次数","algorithmId":["user_id"]}
+{"id":"664ae1ac74cad835573cbdad","name":"是否不爱玩游戏玩家","games":["1076"],"algorithmId":["open_udid"],"provider":1}
+{"id":"664ae20b74cad835573cbe2f","name":"是否不爱玩游戏玩家","games":["1076"],"algorithmId":["user_id"],"provider":1}
+{"id":"664aed7674cad835573ccec3","name":"是否AR类玩家","algorithmId":["open_udid"],"provider":1}
+{"id":"664aed9974cad835573ccf1f","name":"是否AR类玩家","algorithmId":["user_id"],"provider":1}
+{"id":"664aeddd74cad835573ccfa4","name":"是否动作格斗类玩家","algorithmId":["user_id"],"provider":1}
+{"id":"664aee1374cad835573ccfb3","name":"是否动作格斗类玩家","algorithmId":["open_udid"],"provider":1}
+{"id":"664aee3e74cad835573ccfe4","name":"是否大逃杀类玩家","algorithmId":["open_udid"],"disableGroupBy":true,"provider":1}
+{"id":"664aee6474cad835573cd080","name":"是否大逃杀类玩家","algorithmId":["user_id"],"disableGroupBy":true,"provider":1}
+{"id":"664aee9b74cad835573cd096","name":"是否文字冒险/AVG/视觉小说类玩家","algorithmId":["open_udid"],"provider":1}
+{"id":"664aeec474cad835573cd0aa","name":"是否文字冒险/AVG/视觉小说类玩家","algorithmId":["user_id"],"provider":1}
+{"id":"664aeef974cad835573cd11c","name":"是否解谜类玩家","algorithmId":["user_id"],"disableGroupBy":true,"provider":1}
+{"id":"664aef1c74cad835573cd15e","name":"是否解谜类玩家","algorithmId":["open_udid"],"disableGroupBy":true,"provider":1}
+{"id":"6653e73c91033c654b91ad15","name":"AB分组-10181046","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"6653e76691033c654b91ad41","name":"AB分组-10181047","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"6653f26291033c654b91b9d6","name":"AB分组-10181045","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"665ee15574c2021fee9a2578","name":"设备破冰【分钟】","algorithmId":["open_udid"]}
+{"id":"667a71d60e4ea04e92509a14","name":"AB分组-10181048","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"667a71ee0e4ea04e92509a24","name":"AB分组-10181049","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"667a720a0e4ea04e92509a3a","name":"AB分组-10181050","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"667a72200e4ea04e92509a70","name":"AB分组-10181051","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"668f4e67dabe4b3bdd44a828","name":"国家分组2024","provider":1}
+{"id":"66a842c71213c94d215317d0","name":"AB分组-10181052","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"66a842ea1213c94d21531851","name":"AB分组-10181053","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"66a843021213c94d215318d5","name":"AB分组-10181054","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"66a843191213c94d2153195d","name":"AB分组-10181055","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"66b08803eabaa237751bbc9d","name":"联盟战力"}
+{"id":"66b088d8eabaa237751bbcf4","name":"联盟战力排名"}
+{"id":"66d5777fbe17ff5999cdd97c","name":"BA 剑龙突破饱和度","games":["1012"],"provider":1}
+{"id":"66d9a937be17ff5999d046be","name":"AB分组-10181058","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"66d9a987be17ff5999d046db","name":"AB分组-10181056","games":["1041","1089","1103","1105","1076","1108"]}
+{"id":"66d9a9a4be17ff5999d046e7","name":"AB分组-10181057","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"66f8fb55be17ff5999e01b62","name":"商店包链接"}
+{"id":"67077615170d3c52b6af946b","name":"AB分组-10181001","games":["1089","1109","1114","1041","1103","1108","1096","1111","1105","1076"]}
+{"id":"670a08db6e2ea4139cb943a5","name":"AB分组-10181003","games":["1041","1089","1109","1114","1103","1105","1096","1076","1111","1108"]}
+{"id":"670a08e16e2ea4139cb943b7","name":"AB分组-10181007","games":["1041","1089","1109","1114","1103","1096","1105","1076","1111","1108"]}
+{"id":"670a08e46e2ea4139cb943c3","name":"AB分组-10181009","games":["1041","1089","1109","1114","1103","1105","1096","1076","1111","1108"]}
+{"id":"670a08eb6e2ea4139cb943d7","name":"AB分组-10181006","games":["1041","1089","1109","1114","1103","1096","1105","1076","1111","1108"]}
+{"id":"670a08ef6e2ea4139cb943e7","name":"AB分组-10181013","games":["1041","1089","1109","1114","1103","1096","1105","1076","1111","1108"]}
+{"id":"670a08f36e2ea4139cb943f2","name":"AB分组-10181002","games":["1041","1089","1109","1114","1103","1096","1105","1076","1111","1108"]}
+{"id":"670a08f96e2ea4139cb94403","name":"AB分组-10181032","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"670a08fe6e2ea4139cb94414","name":"AB分组-10181008","games":["1041","1089","1109","1114","1103","1096","1105","1076","1111","1108"]}
+{"id":"670a09026e2ea4139cb94423","name":"AB分组-10181044","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"670a09056e2ea4139cb94429","name":"AB分组-10181012","games":["1041","1089","1109","1114","1103","1096","1105","1076","1111","1108"]}
+{"id":"670a09126e2ea4139cb94450","name":"AB分组-10181010","games":["1041","1089","1109","1114","1103","1105","1096","1076","1111","1108"]}
+{"id":"670a09166e2ea4139cb94461","name":"AB分组-10181005","games":["1041","1089","1109","1114","1103","1105","1096","1076","1111","1108"]}
+{"id":"6711ef77f3cbfa421b1cd899","name":"k1d23 建筑饱和度","games":["1096"],"provider":1}
+{"id":"6711efe4f3cbfa421b1cd98a","name":"k1d23 公司总部饱和度","games":["1096"],"provider":1}
+{"id":"6711f035f3cbfa421b1cda4d","name":"k1d23 科技饱和度","games":["1096"],"provider":1}
+{"id":"67161d68f3cbfa421b1fa0d9","name":"k1d23 英雄装备饱和度","games":["1096"],"provider":1}
+{"id":"67187025f3cbfa421b20f86c","name":"AB分组-10181061","games":["1041","1089","1105","1103","1076","1108"]}
+{"id":"67189af7f3cbfa421b213fc4","name":"AB分组-10181060","games":["1041","1108","1076"]}
+{"id":"671ef9e8f3cbfa421b2551b3","name":"k1d23 改装车等级饱和度","games":["1096"],"provider":1}
+{"id":"671efa4ef3cbfa421b255248","name":"k1d23 橙色英雄等级饱和度","games":["1096"],"provider":1}
+{"id":"671efa92f3cbfa421b25527f","name":"k1d23 橙色英雄技能等级饱和度","games":["1096"],"provider":1}
+{"id":"671f4f7bf3cbfa421b25d9bc","name":"AB分组-10181059","games":["1041","1076"]}
+{"id":"6731b118fa9cb674e182bf31","name":"VIP积分等级","algorithmId":["user_id"]}
+{"id":"6735c43383c97f20d79a062e","name":"登录游戏包","provider":3}
+{"id":"6740201a4f60112ee5319c71","name":"是否参与首次KVK","games":["1041","1047"]}
+{"id":"674569e54f60112ee5371e2a","name":"AB分组-10181063","games":["1041","1089","1103","1076","1108"]}
+{"id":"674569e64f60112ee5371e48","name":"AB分组-10181062","games":["1041","1089","1103","1076","1108"]}
+{"id":"6746d9984f60112ee538dc0b","name":"设备注册服务器分组(临时)","games":["1047"],"provider":1}
+{"id":"6752a3156908680c5b5d7a43","name":"国家分组2025","provider":2}
+{"id":"6759290af8d39373bfab0fd0","name":"角色登录服务器（实时）","algorithmId":["user_id"],"provider":2}
+{"id":"67594efaf8d39373bfab84b3","name":"KVK联盟标签","games":["1047"],"algorithmId":["user_id"],"provider":1}
+{"id":"67594fecf8d39373bfab86e5","name":"KVK联盟分数","games":["1047"],"algorithmId":["user_id"]}
+{"id":"675959a6f8d39373bfab9e43","name":"安装年份","provider":1}
+{"id":"67888be197adb12709ca7245","name":"AB分组-10181064","games":["1041","1089","1103","1076","1108"]}
+{"id":"67bfca5b6a90de62e5474f17","name":"真实登录服务器开服日期","provider":1}
+{"id":"67c56879a67461657bafe43c","name":"AB分组-10181067","games":["1041","1089","1103","1076","1108"]}
+{"id":"67c6d50cae940b25ccfa296c","name":"AB分组-10181066","games":["1041","1089","1103","1076","1108"]}
+{"id":"67d3e071f56c9e4c8158409c","name":"冷库服务器（真实登录服务器）","games":["1096"],"provider":1}
+{"id":"67dc1af30a10155c22b35929","name":"AB分组-10181068","games":["1076","1089","1041","1108"]}
+{"id":"67e67ac674256b4e42d0cbfc","name":"AB分组-10181070","games":["1041","1076"]}
+{"id":"67eb9b4b55eae710582bf682","name":"AB分组-10181065","games":["1041","1089","1076","1108"]}
+{"id":"67fcd442f5e44b1c4cda6598","name":"X3 城建饱和度（总进度）","games":["1090"],"provider":1}
+{"id":"67fcd49ef5e44b1c4cda65e8","name":"X3 城建饱和度（SLG）","games":["1090"],"provider":1}
+{"id":"67fcd4f3f5e44b1c4cda666e","name":"X3 城建饱和度（X玩法）","games":["1090"],"provider":1}
+{"id":"67fcd54bf5e44b1c4cda66c3","name":"X3 科研饱和度","games":["1090"],"provider":1}
+{"id":"67fcd5f1f5e44b1c4cda6772","name":"X3 港口科研饱和度","games":["1090"],"provider":1}
+{"id":"6806f0c197ce376dd978769f","name":"当日是否首次付费","algorithmId":["open_udid"],"provider":1}
+{"id":"680ddb3127454d00357795f1","name":"AB分组-10181069","games":["1041","1108","1076"]}
+{"id":"680f070227454d0035788bd0","name":"AB分组-10181071","games":["1041","1108","1076"]}
+{"id":"682430b76ff00320fd64f41f","name":"周期(28天)"}
+{"id":"6864aac88499013a530de2c2","name":"AB分组-10181072","games":["1076","1041"]}
+{"id":"6889d7875ed4700fa252fcc6","name":"活跃天数>7","disableGroupBy":true}
+{"id":"688b646386365c40a951a3d8","name":"AB分组-10181073","games":["1041","1076"]}
+{"id":"68b1518a183c7a4f42b1b444","name":"活跃天数>180","disableGroupBy":true}
+{"id":"68ca495c368fd6668a7f72e8","name":"AB分组-10181075","games":["1041","1076"]}
+{"id":"68d205ac8cfcbd5aac6a5cee","name":"SLG行为得分标签"}
+{"id":"68d8bdc1e955175a6962e4e5","name":"AB分组-10181076","games":["1076","1041"]}
+{"id":"68db8f42e955175a69656ef4","name":"活跃天数>14","disableGroupBy":true}
+{"id":"68db8f61e955175a69656f25","name":"活跃天数>21","disableGroupBy":true}
+{"id":"68ef02f856eb86672d64dca0","name":"服务器开服N日注册","algorithmId":["open_udid"]}
+{"id":"68ef0c2756eb86672d64ebec","name":"服务器开服N日注册","algorithmId":["user_id"]}
+{"id":"69007b8e56eb86672d7286ce","name":"SLG行为细分得分标签"}
+{"id":"690455935000d62c8348f9b5","name":"活跃天数>3","disableGroupBy":true}
+{"id":"6971cd88cca47c1e0089fb3e","name":"真实登录服务器ID（UTC开服日期）","provider":2}
+{"id":"69ae403cc7bbf6219ae06a34","name":"AB分组-10181077","games":["1076","1041"]}
+{"id":"69b91d80cb0dcb4fdaacb73b","name":"海域","games":["1090"]}
+{"id":"69bbb54e1bb46832dd3d5712","name":"角色聊天AB测试#v1#260318","games":["1096"]}
+{"id":"69c0fecd19f9805faaa34fc8","name":"角色聊天AB测试#v2#260323","games":["1096"]}
+{"id":"69cb551be15e0a2935a05844","name":"AB分组-10181081","games":["1076","1041"]}

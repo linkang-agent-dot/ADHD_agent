@@ -1,0 +1,221 @@
+[
+  {
+    "cat": "节日付费",
+    "name": "累充",
+    "content": "复用",
+    "t": "48.5",
+    "plan": "-",
+    "art": "-",
+    "start": "07-09",
+    "end": "07-16",
+    "phases": [
+      {
+        "date": "07-09",
+        "text": "第一阶段"
+      },
+      {
+        "date": "07-16",
+        "text": "第二阶段"
+      }
+    ],
+    "has_color": true
+  },
+  {
+    "cat": "节日BP",
+    "name": "通行证",
+    "content": "换皮",
+    "t": "73.2",
+    "plan": "-",
+    "art": "待补充",
+    "start": "07-09",
+    "end": "07-16",
+    "phases": [
+      {
+        "date": "07-09",
+        "text": "第一期：大富翁"
+      },
+      {
+        "date": "07-16",
+        "text": "第二期：挖孔小游戏"
+      }
+    ],
+    "has_color": true
+  },
+  {
+    "cat": "强消耗活动",
+    "name": "强消耗",
+    "content": "复用",
+    "t": "50",
+    "plan": "-",
+    "art": "-",
+    "start": "07-09",
+    "end": "07-13",
+    "phases": [],
+    "has_color": true
+  },
+  {
+    "cat": "进度小游戏",
+    "name": "大富翁",
+    "content": "换皮",
+    "t": "87.5",
+    "plan": "-",
+    "art": "待补充",
+    "start": "07-09",
+    "end": "07-16",
+    "phases": [
+      {
+        "date": "07-09",
+        "text": "第一期：大富翁：装饰物"
+      },
+      {
+        "date": "07-16",
+        "text": "第二期：挖孔小游戏：主城特效"
+      }
+    ],
+    "has_color": true
+  },
+  {
+    "cat": "活跃类带小额付费活动：每周一个",
+    "name": "掉落转付费",
+    "content": "复用",
+    "t": "48.2",
+    "plan": "-",
+    "art": "待补充",
+    "start": "07-09",
+    "end": "07-15",
+    "phases": [],
+    "has_color": true
+  },
+  {
+    "cat": "活跃类带小额付费活动：每周一个",
+    "name": "7日",
+    "content": "复用",
+    "t": "暂无评分",
+    "plan": "-",
+    "art": "-",
+    "start": "07-16",
+    "end": "07-22",
+    "phases": [],
+    "has_color": true
+  },
+  {
+    "cat": "大地图玩法",
+    "name": "巨猿",
+    "content": "复用",
+    "t": "暂无评分",
+    "plan": "-",
+    "art": "-",
+    "start": "07-20",
+    "end": "07-22",
+    "phases": [],
+    "has_color": true
+  },
+  {
+    "cat": "付费率礼包",
+    "name": "每日节日付费率礼包",
+    "content": "复用",
+    "t": "暂无评分",
+    "plan": "-",
+    "art": "待补充",
+    "start": "07-09",
+    "end": "07-15",
+    "phases": [],
+    "has_color": true
+  },
+  {
+    "cat": "付费率礼包",
+    "name": "周卡",
+    "content": "复用",
+    "t": "26",
+    "plan": "-",
+    "art": "-",
+    "start": "07-16",
+    "end": "07-22",
+    "phases": [],
+    "has_color": true
+  },
+  {
+    "cat": "付费深度礼包",
+    "name": "抢购礼包",
+    "content": "复用",
+    "t": "61.5",
+    "plan": "-",
+    "art": "-",
+    "start": "07-14",
+    "end": "07-21",
+    "phases": [],
+    "has_color": true
+  },
+  {
+    "cat": "付费深度礼包",
+    "name": "小额转盘",
+    "content": "复用",
+    "t": "60",
+    "plan": "X2-节日小额随机-转盘形式",
+    "art": "待补充",
+    "start": "07-16",
+    "end": "07-22",
+    "phases": [],
+    "has_color": true
+  },
+  {
+    "cat": "联动礼包：行军表情礼包",
+    "name": "联动礼包-行军表情",
+    "content": "换皮",
+    "t": "暂无评分",
+    "plan": "X2_家具礼包联动行军表情",
+    "art": "待补充",
+    "start": "07-09",
+    "end": "07-15",
+    "phases": [],
+    "has_color": true
+  },
+  {
+    "cat": "联动礼包：连锁装饰礼包",
+    "name": "联动礼包-shop-柜台",
+    "content": "换皮",
+    "t": "暂无评分",
+    "plan": "-",
+    "art": "待补充",
+    "start": "07-09",
+    "end": "07-15",
+    "phases": [],
+    "has_color": true
+  },
+  {
+    "cat": "节日卡包",
+    "name": "节日卡包系统",
+    "content": "换皮",
+    "t": "暂无评分",
+    "plan": "-",
+    "art": "待补充",
+    "start": "07-09",
+    "end": "07-22",
+    "phases": [],
+    "has_color": true
+  },
+  {
+    "cat": "主城特效投放",
+    "name": "挖孔小游戏",
+    "content": "搬运",
+    "t": "83.5",
+    "plan": "挖掘小游戏",
+    "art": "待补充",
+    "start": "07-16",
+    "end": "07-22",
+    "phases": [],
+    "has_color": true
+  },
+  {
+    "cat": "主城特效投放",
+    "name": "主城特效系统",
+    "content": "搬运",
+    "t": "暂无评分",
+    "plan": "需补充案子",
+    "art": "待补充",
+    "start": "07-09",
+    "end": "07-22",
+    "phases": [],
+    "has_color": true
+  }
+]

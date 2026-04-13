@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260331_150324_039a3a",
+  "title": "改进机票脚本：直飞过滤功能",
+  "instructions": "用户反馈机票脚本 ctrip_tracker.py 的 --direct 参数没有真正过滤直飞，出来的还是日历最低价（含转机）。请研究：1. 携程网页版机票搜索结果页面中，是否有直飞/转机的标签或筛选选项？2. 如果有，能否通过爬取或解析页面内容来获取只看直飞的价格？3. 给出具体的实现方案。脚本路径：C:\\ADHD_agent\\openclaw\\workspace\\ctrip_tracker.py。请汇报调研结果和可行的解决方案。",
+  "context": "",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-03-31 15:03:24",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-03-31 15:14:04",
+  "completed_at": "2026-03-31 15:13:46"
+}

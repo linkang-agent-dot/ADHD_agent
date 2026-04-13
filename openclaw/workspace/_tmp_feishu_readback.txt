@@ -1,0 +1,26 @@
+﻿{
+  "code": 0,
+  "data": {
+    "items": [
+      {
+        "body": {
+          "content": "{\"text\":\"娴嬭瘯锛氳繖鏉℃秷鎭槸鍚︿贡鐮侊紵濡傛灉浣犵湅鍒版甯镐腑鏂囪鏄嶰K\"}"
+        },
+        "chat_id": "oc_0a0221a14304e40b0a4998028be80b5a",
+        "create_time": "1775144613558",
+        "deleted": false,
+        "message_id": "om_x100b53dca49a98acc30477137c16473",
+        "msg_type": "text",
+        "sender": {
+          "id": "cli_a934245330789ccf",
+          "id_type": "app_id",
+          "sender_type": "app",
+          "tenant_key": "17e9aec2671f9758"
+        },
+        "update_time": "1775144613558",
+        "updated": false
+      }
+    ]
+  },
+  "msg": "success"
+}

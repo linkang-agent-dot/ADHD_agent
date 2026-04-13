@@ -1,3 +1,62 @@
-2026/03/23-13:54:40.114 6ac4 Reusing MANIFEST C:\Users\linkang\.openclaw\browser\openclaw\user-data\Default\Local Storage\leveldb/MANIFEST-000001
-2026/03/23-13:54:40.121 6ac4 Recovering log #46
-2026/03/23-13:54:40.124 6ac4 Reusing old log C:\Users\linkang\.openclaw\browser\openclaw\user-data\Default\Local Storage\leveldb/000046.log 
+2026/03/27-00:27:52.406 19c Reusing MANIFEST C:\Users\linkang\.openclaw\browser\openclaw\user-data\Default\Local Storage\leveldb/MANIFEST-000001
+2026/03/27-00:27:52.415 19c Recovering log #77
+2026/03/27-00:27:52.416 19c Level-0 table #80: started
+2026/03/27-00:27:52.423 19c Level-0 table #80: 128682 bytes OK
+2026/03/27-00:27:52.428 19c Delete type=0 #77
+2026/03/27-01:21:53.202 4c44 Level-0 table #83: started
+2026/03/27-01:21:53.207 4c44 Level-0 table #83: 16070 bytes OK
+2026/03/27-01:21:53.211 4c44 Delete type=0 #81
+2026/03/27-01:21:53.211 4c44 Compacting 4@0 + 1@1 files
+2026/03/27-01:21:53.226 4c44 Generated table #84@0: 155 keys, 242684 bytes
+2026/03/27-01:21:53.226 4c44 Compacted 4@0 + 1@1 files => 242684 bytes
+2026/03/27-01:21:53.227 4c44 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/03/27-01:21:53.228 4c44 Delete type=2 #74
+2026/03/27-01:21:53.228 4c44 Delete type=2 #76
+2026/03/27-01:21:53.228 4c44 Delete type=2 #78
+2026/03/27-01:21:53.228 4c44 Delete type=2 #80
+2026/03/27-01:21:53.228 4c44 Delete type=2 #83
+2026/03/27-02:17:53.329 4c44 Level-0 table #86: started
+2026/03/27-02:17:53.335 4c44 Level-0 table #86: 15703 bytes OK
+2026/03/27-02:17:53.337 4c44 Delete type=0 #82
+2026/03/27-03:12:53.397 4c44 Level-0 table #88: started
+2026/03/27-03:12:53.402 4c44 Level-0 table #88: 15814 bytes OK
+2026/03/27-03:12:53.403 4c44 Delete type=0 #85
+2026/03/27-04:08:53.460 4c44 Level-0 table #90: started
+2026/03/27-04:08:53.464 4c44 Level-0 table #90: 15688 bytes OK
+2026/03/27-04:08:53.466 4c44 Delete type=0 #87
+2026/03/27-05:03:53.489 4c44 Level-0 table #92: started
+2026/03/27-05:03:53.495 4c44 Level-0 table #92: 15824 bytes OK
+2026/03/27-05:03:53.497 4c44 Delete type=0 #89
+2026/03/27-05:03:53.498 4c44 Compacting 4@0 + 1@1 files
+2026/03/27-05:03:53.511 4c44 Generated table #93@0: 155 keys, 242698 bytes
+2026/03/27-05:03:53.511 4c44 Compacted 4@0 + 1@1 files => 242698 bytes
+2026/03/27-05:03:53.512 4c44 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/03/27-05:03:53.512 4c44 Delete type=2 #84
+2026/03/27-05:03:53.512 4c44 Delete type=2 #86
+2026/03/27-05:03:53.512 4c44 Delete type=2 #88
+2026/03/27-05:03:53.512 4c44 Delete type=2 #90
+2026/03/27-05:03:53.513 4c44 Delete type=2 #92
+2026/03/27-05:59:53.525 4c44 Level-0 table #95: started
+2026/03/27-05:59:53.532 4c44 Level-0 table #95: 15812 bytes OK
+2026/03/27-05:59:53.534 4c44 Delete type=0 #91
+2026/03/27-06:54:53.547 4c44 Level-0 table #97: started
+2026/03/27-06:54:53.553 4c44 Level-0 table #97: 15752 bytes OK
+2026/03/27-06:54:53.555 4c44 Delete type=0 #94
+2026/03/27-07:50:53.568 4c44 Level-0 table #99: started
+2026/03/27-07:50:53.573 4c44 Level-0 table #99: 15764 bytes OK
+2026/03/27-07:50:53.575 4c44 Delete type=0 #96
+2026/03/27-08:45:53.587 4c44 Level-0 table #101: started
+2026/03/27-08:45:53.592 4c44 Level-0 table #101: 15798 bytes OK
+2026/03/27-08:45:53.594 4c44 Delete type=0 #98
+2026/03/27-08:45:53.594 4c44 Compacting 4@0 + 1@1 files
+2026/03/27-08:45:53.603 4c44 Generated table #102@0: 155 keys, 242691 bytes
+2026/03/27-08:45:53.604 4c44 Compacted 4@0 + 1@1 files => 242691 bytes
+2026/03/27-08:45:53.605 4c44 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/03/27-08:45:53.606 4c44 Delete type=2 #93
+2026/03/27-08:45:53.606 4c44 Delete type=2 #95
+2026/03/27-08:45:53.606 4c44 Delete type=2 #97
+2026/03/27-08:45:53.606 4c44 Delete type=2 #99
+2026/03/27-08:45:53.606 4c44 Delete type=2 #101
+2026/03/27-09:41:53.610 4c44 Level-0 table #104: started
+2026/03/27-09:41:53.616 4c44 Level-0 table #104: 15923 bytes OK
+2026/03/27-09:41:53.618 4c44 Delete type=0 #100

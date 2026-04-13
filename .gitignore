@@ -1,0 +1,12 @@
+# Sensitive config files (contain API keys / tokens)
+openclaw/openclaw.json
+openclaw/openclaw.json.bak*
+openclaw/identity/device-auth.json
+
+# Runtime log files
+openclaw/workspace/daemon_stdout.log
+openclaw/workspace/daemon_autoexec.log
+openclaw/workspace/daemon_watchdog.log
+
+# Large generated files
+game-localization-translator/scripts/translation_memory.json

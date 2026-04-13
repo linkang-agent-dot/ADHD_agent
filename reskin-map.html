@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>换皮配置关系图</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f1117; color: #e2e8f0; min-height: 100vh; }
+  .header { padding: 24px 32px 0; }
+  .header h1 { font-size: 20px; font-weight: 700; color: #f8fafc; letter-spacing: 0.5px; }
+  .header p { font-size: 13px; color: #64748b; margin-top: 4px; }
+  .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px 32px 32px; }
+  .panel { background: #161b27; border: 1px solid #1e2736; border-radius: 12px; padding: 20px; }
+  .panel-title { font-size: 13px; font-weight: 600; color: #94a3b8; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 16px; }
+  .matrix { display: grid; gap: 6px; }
+  .mat-head { background: #1a2235; border-radius: 6px; padding: 8px 6px; text-align: center; font-size: 11px; font-weight: 600; border: 1px solid var(--bd); display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--c); }
+  .mat-head .emoji { font-size: 16px; }
+  .mat-head .label { font-size: 10px; color: #64748b; font-weight: 400; }
+  .mat-row-label { background: #1a2235; border-radius: 6px; padding: 8px; display: flex; flex-direction: column; justify-content: center; cursor: pointer; border: 1.5px solid transparent; transition: all 0.15s; }
+  .mat-row-label:hover, .mat-row-label.active { border-color: #334155; background: #1e2a3d; }
+  .mat-row-label.active { border-color: #3b82f6; }
+  .mat-row-label .type-badge { font-size: 13px; font-weight: 800; color: #f8fafc; }
+  .mat-row-label .type-name { font-size: 10px; color: #64748b; margin-top: 2px; line-height: 1.3; }
+  .mat-cell { border-radius: 6px; padding: 7px 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-size: 10px; gap: 3px; border: 1px solid transparent; transition: all 0.15s; }
+  .mat-cell.hit { background: var(--bg); border-color: var(--bd); color: var(--c); }
+  .mat-cell.miss { background: #12161f; color: #2d3748; }
+  .mat-cell.hit .tables { font-size: 9px; color: #94a3b8; line-height: 1.4; }
+  .mat-cell.miss::after { content: '—'; font-size: 14px; }
+  .mat-cell .check { font-size: 13px; }
+  .chain-panel { display: flex; flex-direction: column; }
+  .chain-selector { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+  .type-btn { padding: 6px 14px; border-radius: 20px; border: 1.5px solid #1e2736; background: #12161f; color: #64748b; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .type-btn:hover { border-color: #334155; color: #cbd5e1; }
+  .type-btn.active { background: #1e3a5f; border-color: #3b82f6; color: #93c5fd; }
+  #chain-svg { width: 100%; height: 400px; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; padding: 14px 0 0; border-top: 1px solid #1e2736; margin-top: 14px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #94a3b8; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .info-bar { background: #1a2235; border: 1px solid #1e2736; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #94a3b8; min-height: 38px; display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+  .info-bar .table-id { font-weight: 700; color: #f8fafc; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>换皮配置关系图</h1>
+  <p>点击左侧类型行 或 顶部类型按钮，查看对应的表依赖链 · 点击节点查看说明</p>
+</div>
+
+<div class="layout">
+  <div class="panel">
+    <div class="panel-title">类型 × 模块矩阵</div>
+    <div class="matrix" id="matrix-container"></div>
+    <div class="legend" id="legend-container"></div>
+  </div>
+  <div class="panel chain-panel">
+    <div class="panel-title">表依赖链</div>
+    <div class="chain-selector" id="chain-selector"></div>
+    <svg id="chain-svg"></svg>
+    <div class="info-bar" id="info-bar"><span>👆 点击图中节点查看字段说明</span></div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════
+//  ██████  ██████  ████████  █████
+//  ██   ██ ██   ██    ██    ██   ██
+//  ██   ██ ███████    ██    ███████
+//  ██   ██ ██   ██    ██    ██   ██
+//  ██████  ██   ██    ██    ██   ██
+//
+//  ⚠ 以下数据区是唯一需要修改的地方 ⚠
+//  新增类型：在 TYPES 加一项，在 GRAPHS 加对应图，在 MATRIX_DATA 加行
+//  新增模块：在 MODULES 加一项，在 MATRIX_DATA 每行加对应单元格
+//  新增配置表：在 TABLE_INFO 加一项，在 GRAPHS 中使用
+// ════════════════════════════════════════════════════
+
+// ── 模块定义 ──────────────────────────────────────────
+// 每项：{ id, label, emoji, tables, color, bg, border }
+const MODULES = [
+  {
+    id: 'iap',
+    label: '礼包 IAP',
+    emoji: '📦',
+    tables: '2011/2013/2135',
+    color: '#f59e0b',
+    bg: 'rgba(245,158,11,0.12)',
+    border: 'rgba(245,158,11,0.35)',
+  },
+  {
+    id: 'lc',
+    label: '本地化 LC',
+    emoji: '🌐',
+    tables: '1011 i18n',
+    color: '#60a5fa',
+    bg: 'rgba(96,165,250,0.12)',
+    border: 'rgba(96,165,250,0.35)',
+  },
+  {
+    id: 'buff',
+    label: '属性 BUFF',
+    emoji: '⚡',
+    tables: '1211/2148/2171',
+    color: '#34d399',
+    bg: 'rgba(52,211,153,0.12)',
+    border: 'rgba(52,211,153,0.35)',
+  },
+  {
+    id: 'dk',
+    label: '外显资产 DK',
+    emoji: '🖼',
+    tables: '1511',
+    color: '#c084fc',
+    bg: 'rgba(192,132,252,0.12)',
+    border: 'rgba(192,132,252,0.35)',
+  },
+];
+
+// ── 活动类型定义 ──────────────────────────────────────
+// 每项：{ id, name, tables_count }
+const TYPES = [
+  { id: 'A', name: '普通活动礼包', tables: '2112/2115/2135/2013/2011' },
+  { id: 'B', name: '预购连锁礼包', tables: '2112/2135/2011' },
+  { id: 'C', name: '装饰物',       tables: '1111/1118/1127/1511/2148/2171/1168' },
+  { id: 'D', name: '集卡册',       tables: '1011/1511' },
+];
+
+// ── 矩阵数据 ──────────────────────────────────────────
+// key = 类型ID，value = { moduleId: { hit, desc } }
+// hit: true = 需要处理；false = 不涉及
+const MATRIX_DATA = {
+  A: {
+    iap:  { hit: true,  desc: '三表联动\n2011/2013/2135' },
+    lc:   { hit: true,  desc: '活动标题\n礼包标题 LC' },
+    buff: { hit: false, desc: '' },
+    dk:   { hit: true,  desc: '道具图标\n1511' },
+  },
+  B: {
+    iap:  { hit: true,  desc: '跳过 2013\n2011/2135' },
+    lc:   { hit: true,  desc: '活动标题 LC' },
+    buff: { hit: false, desc: '' },
+    dk:   { hit: true,  desc: 'chain 奖励\n道具图标' },
+  },
+  C: {
+    iap:  { hit: false, desc: '' },
+    lc:   { hit: true,  desc: '道具/涂饰\n解锁提示 LC' },
+    buff: { hit: true,  desc: 'BUFF 按★递增\npaint_buff' },
+    dk:   { hit: true,  desc: '每★独立 DK\n新装饰需录入' },
+  },
+  D: {
+    iap:  { hit: false, desc: '' },
+    lc:   { hit: true,  desc: '卡片/卡包\n主题 LC' },
+    buff: { hit: false, desc: '' },
+    dk:   { hit: true,  desc: '81卡片\n+9主题' },
+  },
+};
+
+// ── 配置表说明 ─────────────────────────────────────────
+// key = 表号，value = { name, desc, mod }
+// mod 必须是 MODULES 中某个 id，或 'core'
+const TABLE_INFO = {
+  '2112': { name: '活动配置',   desc: 'activity_config — 主活动行，父活动/任务/礼包引用', mod: 'core' },
+  '2115': { name: '活动任务',   desc: 'activity_task — 任务档位，奖励道具配置', mod: 'core' },
+  '2135': { name: '活动礼包',   desc: 'activity_package — 礼包行，col2 指向 2011 ID', mod: 'iap' },
+  '2011': { name: 'IAP产品',    desc: 'iap_config（A_STR_constant）— 必须新增，含 actv_id', mod: 'iap' },
+  '2013': { name: 'IAP模板',    desc: 'iap_config — 道具/礼包内容模板；预购连锁不走此表', mod: 'iap' },
+  '1011': { name: 'i18n本地化', desc: '全语言 LC key 文本；标准四列格式（KEY/key/中文/英文）', mod: 'lc' },
+  '1511': { name: 'display_key',desc: '视觉资源映射表，ID→美术路径；新素材需先录入 DK', mod: 'dk' },
+  '1111': { name: '道具定义',   desc: 'x2_item — 道具主表；type=statue_decorate/event/decorate_paint', mod: 'core' },
+  '1118': { name: '建筑升级',   desc: '装饰星级行，每★一行；扩星需改 max_lvl', mod: 'buff' },
+  '1127': { name: '放置解锁',   desc: '装饰放置条件；新装饰必须加行（subtab=4），扩星不需要', mod: 'core' },
+  '2148': { name: '装饰等级',   desc: '核心装饰表；col[14]=BUFF，col[16]=paint_buff，col[19]=2171行', mod: 'buff' },
+  '2171': { name: '涂饰技能',   desc: '装饰涂饰技能行，group_id 分组，每★一行', mod: 'buff' },
+  '1168': { name: '道具来源',   desc: '道具获取途径表；每星一行关联 2148 行 ID', mod: 'core' },
+  '1211': { name: 'BUFF表',     desc: 'buff 定义表；buff_a/buff_b ID 从此查', mod: 'buff' },
+};
+
+// ── 依赖图数据 ─────────────────────────────────────────
+// nodes: [{ id, x, y }]  x/y 为 0-1 相对坐标
+// edges: [{ from, to, label?, dashed? }]
+// note: 底部补充说明（可选）
+const GRAPHS = {
+  A: {
+    nodes: [
+      { id: '2112', x: 0.5,  y: 0.08 },
+      { id: '2115', x: 0.2,  y: 0.32 },
+      { id: '2135', x: 0.65, y: 0.32 },
+      { id: '2013', x: 0.2,  y: 0.62 },
+      { id: '2011', x: 0.65, y: 0.62 },
+      { id: '1511', x: 0.88, y: 0.08 },
+      { id: '1011', x: 0.12, y: 0.08 },
+    ],
+    edges: [
+      { from: '2112', to: '2115', label: 'typ:task' },
+      { from: '2112', to: '2135', label: 'typ:package' },
+      { from: '2112', to: '1511', label: 'show_hud' },
+      { from: '2112', to: '1011', label: 'LC key' },
+      { from: '2135', to: '2011', label: 'col2 iap' },
+      { from: '2011', to: '2013', label: 'condition' },
+      { from: '2115', to: '2013', label: 'condition' },
+      { from: '2013', to: '1511', label: 'display_key', dashed: true },
+      { from: '2013', to: '1011', label: 'pkg_title LC', dashed: true },
+    ],
+  },
+  B: {
+    nodes: [
+      { id: '2112', x: 0.5,  y: 0.08 },
+      { id: '2135', x: 0.5,  y: 0.40 },
+      { id: '2011', x: 0.5,  y: 0.72 },
+      { id: '1511', x: 0.82, y: 0.08 },
+      { id: '1011', x: 0.18, y: 0.08 },
+    ],
+    edges: [
+      { from: '2112', to: '2135', label: 'typ:package' },
+      { from: '2112', to: '1511', label: 'show_hud' },
+      { from: '2112', to: '1011', label: 'LC key' },
+      { from: '2135', to: '2011', label: 'col2 iap' },
+      { from: '2011', to: '1511', label: 'chain DK', dashed: true },
+    ],
+    note: '⚠ 不含 2013 — 预购连锁不走 iap_template 流程',
+  },
+  C: {
+    nodes: [
+      { id: '1111', x: 0.50, y: 0.08 },
+      { id: '2148', x: 0.30, y: 0.40 },
+      { id: '1118', x: 0.70, y: 0.40 },
+      { id: '1127', x: 0.88, y: 0.08 },
+      { id: '2171', x: 0.14, y: 0.72 },
+      { id: '1168', x: 0.45, y: 0.72 },
+      { id: '1211', x: 0.72, y: 0.72 },
+      { id: '1511', x: 0.12, y: 0.08 },
+      { id: '1011', x: 0.72, y: 0.08 },
+    ],
+    edges: [
+      { from: '1111', to: '1511', label: 'display_key' },
+      { from: '1111', to: '1011', label: 'LC key' },
+      { from: '1111', to: '2148', label: '关联装饰' },
+      { from: '1111', to: '1127', label: 'unlock_cost' },
+      { from: '2148', to: '1118', label: 'building_id' },
+      { from: '2148', to: '2171', label: 'col[19]' },
+      { from: '2148', to: '1168', label: '来源行' },
+      { from: '2148', to: '1211', label: 'buff_id' },
+    ],
+  },
+  D: {
+    nodes: [
+      { id: '1011', x: 0.50, y: 0.25 },
+      { id: '1511', x: 0.50, y: 0.65 },
+    ],
+    edges: [
+      { from: '1011', to: '1511', label: '资源 ID 引用' },
+    ],
+    note: '集卡册以本地化为主（6+1 区域结构）· 卡片/主题资源 ID → 1511',
+  },
+};
+
+// ════════════════════════════════════════════════════
+//  渲染层（一般不需要修改）
+// ════════════════════════════════════════════════════
+
+const MODULE_MAP = Object.fromEntries(MODULES.map(m => [m.id, m]));
+const MODULE_COLOR = { core: '#94a3b8', ...Object.fromEntries(MODULES.map(m => [m.id, m.color])) };
+
+let currentType = TYPES[0].id;
+
+// ── 构建矩阵 ──
+function buildMatrix() {
+  const cols = MODULES.length + 1;
+  const container = document.getElementById('matrix-container');
+  container.style.gridTemplateColumns = `100px repeat(${MODULES.length}, 1fr)`;
+
+  // 表头行
+  container.appendChild(Object.assign(document.createElement('div'), {}));
+  MODULES.forEach(mod => {
+    const h = document.createElement('div');
+    h.className = 'mat-head';
+    h.style.setProperty('--c', mod.color);
+    h.style.setProperty('--bd', mod.border);
+    h.innerHTML = `<span class="emoji">${mod.emoji}</span>${mod.label}<span class="label">${mod.tables}</span>`;
+    container.appendChild(h);
+  });
+
+  // 数据行
+  TYPES.forEach(type => {
+    const label = document.createElement('div');
+    label.className = 'mat-row-label' + (type.id === currentType ? ' active' : '');
+    label.dataset.type = type.id;
+    label.innerHTML = `<span class="type-badge">${type.id}</span><span class="type-name">${type.name}</span>`;
+    label.onclick = () => selectType(type.id);
+    container.appendChild(label);
+
+    MODULES.forEach(mod => {
+      const cell = document.createElement('div');
+      const data = MATRIX_DATA[type.id]?.[mod.id];
+      if (data?.hit) {
+        cell.className = 'mat-cell hit';
+        cell.style.setProperty('--c', mod.color);
+        cell.style.setProperty('--bg', mod.bg);
+        cell.style.setProperty('--bd', mod.border);
+        cell.innerHTML = `<span class="check">✓</span><span class="tables">${data.desc.replace(/\n/g, '<br>')}</span>`;
+      } else {
+        cell.className = 'mat-cell miss';
+      }
+      container.appendChild(cell);
+    });
+  });
+
+  // 图例
+  const legend = document.getElementById('legend-container');
+  [{ id: 'core', color: '#94a3b8', label: '活动主表' }, ...MODULES].forEach(m => {
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.innerHTML = `<div class="legend-dot" style="background:${m.color}"></div>${m.label || m.id}`;
+    legend.appendChild(item);
+  });
+}
+
+// ── 构建类型按钮 ──
+function buildSelector() {
+  const sel = document.getElementById('chain-selector');
+  TYPES.forEach(type => {
+    const btn = document.createElement('button');
+    btn.className = 'type-btn' + (type.id === currentType ? ' active' : '');
+    btn.textContent = `${type.id} ${type.name}`;
+    btn.onclick = () => selectType(type.id);
+    sel.appendChild(btn);
+  });
+}
+
+// ── 切换类型 ──
+function selectType(typeId) {
+  currentType = typeId;
+  document.querySelectorAll('.mat-row-label').forEach(el =>
+    el.classList.toggle('active', el.dataset.type === typeId));
+  document.querySelectorAll('.type-btn').forEach(el =>
+    el.classList.toggle('active', el.textContent.startsWith(typeId + ' ')));
+  drawChain(typeId);
+  document.getElementById('info-bar').innerHTML = '<span>👆 点击图中节点查看字段说明</span>';
+}
+
+// ── 绘制依赖链 ──
+function drawChain(typeId) {
+  const svg = document.getElementById('chain-svg');
+  const W = svg.clientWidth || svg.parentElement.clientWidth - 40;
+  const H = 400;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = '';
+
+  const g = GRAPHS[typeId];
+  if (!g) return;
+
+  // 箭头标记
+  const defs = svgEl('defs');
+  Object.entries({ core: '#94a3b8', ...Object.fromEntries(MODULES.map(m => [m.id, m.color])) })
+    .forEach(([mod, col]) => {
+      const marker = svgEl('marker', { id: `arrow-${mod}`, markerWidth: 8, markerHeight: 8, refX: 6, refY: 3, orient: 'auto' });
+      marker.appendChild(svgEl('path', { d: 'M0,0 L0,6 L8,3 z', fill: col, opacity: 0.7 }));
+      defs.appendChild(marker);
+    });
+  svg.appendChild(defs);
+
+  const pad = 48;
+  const nx = x => pad + x * (W - pad * 2);
+  const ny = y => 24 + y * (H - 56);
+
+  // 边
+  g.edges.forEach(e => {
+    const fn = g.nodes.find(n => n.id === e.from);
+    const tn = g.nodes.find(n => n.id === e.to);
+    if (!fn || !tn) return;
+    const mod = TABLE_INFO[e.from]?.mod || 'core';
+    const col = MODULE_COLOR[mod] || '#94a3b8';
+    const x1 = nx(fn.x), y1 = ny(fn.y), x2 = nx(tn.x), y2 = ny(tn.y);
+    const cx = (x1 + x2) / 2, cy = (y1 + y2) / 2 - 10;
+
+    svg.appendChild(svgEl('path', {
+      d: `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`,
+      stroke: col, 'stroke-width': 1.5, fill: 'none',
+      opacity: e.dashed ? 0.35 : 0.6,
+      'stroke-dasharray': e.dashed ? '4 3' : 'none',
+      'marker-end': `url(#arrow-${mod})`,
+    }));
+
+    if (e.label) {
+      const lx = x1 * 0.45 + x2 * 0.55 + cx * 0.1;
+      const ly = y1 * 0.45 + y2 * 0.55 + cy * 0.1 - 4;
+      const t = svgEl('text', { x: lx, y: ly, fill: col, 'font-size': 9, 'text-anchor': 'middle', opacity: 0.75 });
+      t.textContent = e.label;
+      svg.appendChild(t);
+    }
+  });
+
+  // 节点
+  g.nodes.forEach(n => {
+    const info = TABLE_INFO[n.id] || { name: n.id, desc: '', mod: 'core' };
+    const col = MODULE_COLOR[info.mod] || '#94a3b8';
+    const cx = nx(n.x), cy = ny(n.y);
+    const rw = 44, rh = 22;
+
+    const group = svgEl('g', { style: 'cursor:pointer', transform: `translate(${cx},${cy})` });
+    group.appendChild(svgEl('ellipse', { cx: 0, cy: 0, rx: rw + 4, ry: rh + 4, fill: col, opacity: 0.07 }));
+    const rect = svgEl('rect', { x: -rw, y: -rh, width: rw*2, height: rh*2, rx: 8, fill: '#1a2235', stroke: col, 'stroke-width': 1.5 });
+    const id_t = svgEl('text', { x: 0, y: -4, fill: col, 'font-size': 13, 'font-weight': 700, 'text-anchor': 'middle' });
+    id_t.textContent = n.id;
+    const nm_t = svgEl('text', { x: 0, y: 10, fill: '#94a3b8', 'font-size': 9, 'text-anchor': 'middle' });
+    nm_t.textContent = info.name;
+
+    group.appendChild(rect);
+    group.appendChild(id_t);
+    group.appendChild(nm_t);
+
+    group.addEventListener('mouseenter', () => { rect.setAttribute('stroke-width', 2.5); rect.setAttribute('fill', '#1e2d47'); });
+    group.addEventListener('mouseleave', () => { rect.setAttribute('stroke-width', 1.5); rect.setAttribute('fill', '#1a2235'); });
+    group.addEventListener('click', () => {
+      const bar = document.getElementById('info-bar');
+      bar.innerHTML = `<span class="table-id">${n.id}</span><span style="color:#334155">·</span><span style="color:${col};font-weight:600">${info.name}</span>&nbsp;<span style="color:#64748b">—</span>&nbsp;<span>${info.desc}</span>`;
+    });
+    svg.appendChild(group);
+  });
+
+  // 备注
+  if (g.note) {
+    const t = svgEl('text', { x: W / 2, y: H - 6, fill: '#f59e0b', 'font-size': 10, 'text-anchor': 'middle', opacity: 0.8 });
+    t.textContent = g.note;
+    svg.appendChild(t);
+  }
+}
+
+function svgEl(tag, attrs = {}) {
+  const e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v));
+  return e;
+}
+
+// ── 初始化 ──
+buildMatrix();
+buildSelector();
+window.addEventListener('load', () => drawChain(currentType));
+window.addEventListener('resize', () => drawChain(currentType));
+</script>
+</body>
+</html>

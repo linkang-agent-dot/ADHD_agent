@@ -1,0 +1,199 @@
+{
+  "target_sheet": "X2前期节日循环",
+  "all_sheets": [
+    {
+      "gid": 1540790559,
+      "title": "X2整体节日规划"
+    },
+    {
+      "gid": 1947628692,
+      "title": "评分表（每月更新）"
+    },
+    {
+      "gid": 975904745,
+      "title": "X2-10月万圣节（没写完）"
+    },
+    {
+      "gid": 1103447850,
+      "title": "X2-9月蒸汽庆典"
+    },
+    {
+      "gid": 1914018097,
+      "title": "X2-8月马戏节"
+    },
+    {
+      "gid": 1053666315,
+      "title": "X2-7月烟火庆典"
+    },
+    {
+      "gid": 287098073,
+      "title": "X2-6月拓荒节"
+    },
+    {
+      "gid": 166650109,
+      "title": "X2-5月占星节"
+    },
+    {
+      "gid": 923559126,
+      "title": "X2前期节日循环"
+    },
+    {
+      "gid": 425270657,
+      "title": "GEMINI审核"
+    },
+    {
+      "gid": 296374382,
+      "title": "分工"
+    }
+  ],
+  "schedule_data": {
+    "X2前期节日循环": [
+      [
+        "X2节日-第一期循环（前35天）"
+      ],
+      [
+        "优化方向"
+      ],
+      [
+        "分类",
+        "付费模块",
+        "功能修改",
+        "负责人",
+        "交接后负责人",
+        "活动id（QA页签）",
+        "数值",
+        "美术修改链接",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      [
+        "累充",
+        "累充",
+        "复用",
+        "liusiyi",
+        "liusiyi",
+        "211201012",
+        "https://docs.google.com/spreadsheets/d/1wVcImoZAj1Dw1N7oOJUdfBR9uPvqb-df91EZd6oO7u0/edit?gid=1856887470#gid=1856887470"
+      ],
+      [
+        "主城GACHA",
+        "GACHA+累计活动",
+        "复用",
+        "gongliang",
+        "linkang"
+      ],
+      [
+        "",
+        "每日GACHA礼包",
+        "新增",
+        "gongliang",
+        "linkang",
+        "",
+        "https://docs.google.com/spreadsheets/d/1WPw1Gig39XFDkSRjdmny-d7bBiAgd5Y5J68ubjwweYg/edit?gid=1010464761#gid=1010464761"
+      ],
+      [
+        "行军皮肤",
+        "节日BP",
+        "复用",
+        "minghao",
+        "minghao",
+        "",
+        "https://docs.google.com/spreadsheets/d/1WPw1Gig39XFDkSRjdmny-d7bBiAgd5Y5J68ubjwweYg/edit?gid=1799755956#gid=1799755956"
+      ],
+      [
+        "强消耗活动",
+        "强消耗扭蛋",
+        "复用",
+        "minghao",
+        "minghao",
+        "",
+        "https://docs.google.com/spreadsheets/d/1WPw1Gig39XFDkSRjdmny-d7bBiAgd5Y5J68ubjwweYg/edit?gid=443685334#gid=443685334"
+      ],
+      [
+        "装饰",
+        "普通大富翁-节日装饰",
+        "新增-替换装饰礼包",
+        "gongliang",
+        "minghao",
+        "",
+        "https://docs.google.com/spreadsheets/d/1aKrNYA-c9j6XF2x7abAvVGDgQa6zOG285pm_zvnUZGU/edit?gid=1702052981#gid=1702052981"
+      ],
+      [
+        "活跃类带小额付费活动：每周一个",
+        "掉落转付费",
+        "新增",
+        "linkang",
+        "linkang"
+      ],
+      [
+        "",
+        "7日",
+        "复用",
+        "liusiyi",
+        "liusiyi",
+        "211201011",
+        "https://docs.google.com/spreadsheets/d/1XL2Ox6td0Jym-h31yDcp3b2gFMMG5cSm_y-OzEI35BY/edit?gid=2033471579#gid=2033471579"
+      ],
+      [
+        "中小R付费",
+        "周卡",
+        "搬运",
+        "minghao",
+        "minghao",
+        "211201010",
+        "https://docs.google.com/spreadsheets/d/1WPw1Gig39XFDkSRjdmny-d7bBiAgd5Y5J68ubjwweYg/edit?gid=1345112498#gid=1345112498"
+      ],
+      [
+        "礼包付费",
+        "抢购礼包-养成下投放",
+        "新增",
+        "gongliang",
+        "liusiyi",
+        "21127223",
+        "https://docs.google.com/spreadsheets/d/1ceogA-kuwkT9E6r-6S4Bp1OCy77g5vq7aLgO076ICDY/edit?gid=529266165#gid=529266165"
+      ],
+      [
+        "节日卡包",
+        "节日卡包",
+        "用圣诞的",
+        "linkang",
+        "linkang"
+      ],
+      [],
+      [
+        "分析：不改变X2基本节日循环，新增已验证的P2形式到这个循环中优化付费"
+      ],
+      [
+        "新增内容解析：",
+        "",
+        "P2-ARPC"
+      ],
+      [
+        "每日GACHA礼包：小额付费，每日4.99，适配X2付费节奏",
+        "",
+        "0.6"
+      ],
+      [
+        "普通大富翁：节日进度转付费",
+        "",
+        "3.2"
+      ],
+      [
+        "掉落转付费：类似强消耗扭蛋，打野行为转付费",
+        "",
+        "0.5"
+      ],
+      [
+        "抢购礼包：优秀直购形式，投放养成线",
+        "",
+        "3.5"
+      ]
+    ],
+    "X2整体节日规划": []
+  }
+}

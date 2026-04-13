@@ -1,0 +1,8 @@
+{
+  "task_id": "confirm_20260402_204123_5ed1db",
+  "task": "Python回写GSheet(只覆盖reward列)",
+  "question": "我本机检测 C:\\ADHD_agent\\client_secret.json 不存在（Test-Path=False），所以 Python 仍无法 OAuth 写入。请确认你放置的实际路径（绝对路径）并确保文件在本机磁盘可见；回我一个路径即可。收到后我立刻回写 94 个单元格：\u0007ctivity_task_QA!G8421:G8514。",
+  "agent": "Cursor",
+  "timestamp": "2026-04-02 20:41:23",
+  "status": "pending"
+}

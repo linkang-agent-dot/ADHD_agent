@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260402_214524_eb0b61",
+  "title": "OpenClaw外部接入方案",
+  "instructions": "用户想知道：如何把 OpenClaw（虾哥）做成可以接入外部机器人的方案？\\n\\n请调研并回答：\\n1. OpenClaw 支持哪些外部接入方式（Webhook / API / MCP / 飞书机器人等）？\\n2. 如果要把 OpenClaw 暴露给外部系统（比如千川、或其他外部机器人），需要怎么配置？\\n3. OpenClaw 本身有没有开放 API 或者 MCP Server 能力？\\n4. 有没有现成的 skill 或方案可以让外部系统主动触发 OpenClaw 执行任务？\\n\\n背景：用户想把 OpenClaw 作为 AI 自动化中枢，接入其他外部工具/平台。",
+  "context": "用户想了解OpenClaw外部接入能力",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-04-02 21:45:24",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-04-02 21:45:25",
+  "completed_at": "2026-04-02 21:48:00"
+}

@@ -1,0 +1,8 @@
+﻿{
+  "spreadsheetId": {
+    "description": "The spreadsheet to apply the updates to.",
+    "location": "path",
+    "required": true,
+    "type": "string"
+  }
+}

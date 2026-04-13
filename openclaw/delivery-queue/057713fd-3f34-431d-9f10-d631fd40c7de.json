@@ -1,0 +1,30 @@
+{
+  "id": "057713fd-3f34-431d-9f10-d631fd40c7de",
+  "enqueuedAt": 1775358240857,
+  "channel": "feishu",
+  "to": "ou_e48f6c4c0395f45b74b51525f348678b",
+  "payloads": [
+    {
+      "text": "📊 小红书旅游热度Top5（2026-04-05）\n\n🏔️ 1. 个人向•去过的自然景点排名\n👍 8017 | @wx不同名",
+      "mediaUrl": "C:\\Users\\linkang\\.openclaw\\workspace\\uploads\\xhs_push_1.jpg",
+      "mediaUrls": [
+        "C:\\Users\\linkang\\.openclaw\\workspace\\uploads\\xhs_push_1.jpg"
+      ],
+      "replyToTag": false,
+      "replyToCurrent": false,
+      "audioAsVoice": false
+    }
+  ],
+  "gifPlayback": false,
+  "mirror": {
+    "sessionKey": "agent:main:main",
+    "agentId": "main",
+    "text": "📊 小红书旅游热度Top5（2026-04-05）\n\n🏔️ 1. 个人向•去过的自然景点排名\n👍 8017 | @wx不同名",
+    "mediaUrls": [
+      "C:\\Users\\linkang\\.openclaw\\workspace\\uploads\\xhs_push_1.jpg"
+    ]
+  },
+  "retryCount": 3,
+  "lastAttemptAt": 1775790503386,
+  "lastError": "Feishu account \"default\" not configured"
+}

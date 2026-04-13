@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260330_202147_c61f5e",
+  "title": "极点传媒logo黄色边缘精确修复",
+  "instructions": "Check and fix yellow/orange fringe pixels around the gold ring in the logo images.\n\nSource images:\n- C:\\Users\\linkang\\.openclaw\\media\\inbound\\dab95091-e150-45d6-84d6-f9d8fb2da2af.jpg\n- C:\\Users\\linkang\\.openclaw\\media\\inbound\\77b250f9-eb36-409f-be72-39a2b847f3cf.jpg\n\nAlready generated files to check (C:\\ADHD_agent\\openclaw\\workspace\\uploads\\):\n- jidian_100pct_v1.png through jidian_40pct_v2.png\n\nTask:\n1. Read each file with Python PIL/numpy\n2. Find ALL pixels where ANY RGB channel > 0 (non-black pixels)\n3. Report: for each file, list coordinates (x,y) and RGB values of any stray non-foreground pixels (pixels that are NOT part of the white star, gold ring, or white Chinese text)\n4. If stray pixels found: reprocess from source images using the correct method\n5. Save fixed files to C:\\ADHD_agent\\openclaw\\workspace\\uploads\\\n\nCorrect processing method:\n- Fill bottom-right decorative star region (x=940-1024, y=940-1024) with pure black (0,0,0)\n- Extract foreground using luminance threshold > 80 (background ~60-76, gold ring >300, white star >600)\n- Scale icon to 100%/80%/60%/40%, keep text at original size (564px wide)\n- Composite onto pure black 1024x1024 canvas\n\nReport all findings and saved files.",
+  "context": "",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-03-30 20:21:47",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-03-30 20:21:51",
+  "completed_at": "2026-03-30 20:24:29"
+}

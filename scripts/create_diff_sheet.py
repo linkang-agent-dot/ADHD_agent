@@ -6,6 +6,7 @@ X2 配置表分支差异汇总 → Google Sheet
 - 每个配置表一个页签
 - 新增行整行绿色，修改行仅变化的单元格标黄
 - 直接调用 node run-gws.js 绕过 cmd.exe 8191 字符限制
+- 写入前：单独成格的 \"\" → '\"\"'；行首 \"=\" 加 ' 转义，配合 USER_ENTERED 避免显示为空或被当公式
 """
 
 import subprocess
@@ -71,9 +72,16 @@ def run_gws(args, json_body=None, retries=2):
     return None
 
 
-def get_changed_files(source, target):
-    """获取两个分支间有差异的配置表文件列表（排除 i18n）。"""
-    output = run_git(["diff", "--name-only", f"{target}...{source}", "--", "fo/config/"])
+def get_changed_files(source, target, two_dot=False):
+    """获取两个分支间有差异的配置表文件列表（排除 i18n）。
+
+    two_dot=False: git 三路比较 target...source（自分叉点起 source 侧变更，默认）。
+    two_dot=True: git 两点比较 target source（两分支当前提交树直接对比，适合「反向」无三路差异时）。
+    """
+    if two_dot:
+        output = run_git(["diff", "--name-only", target, source, "--", "fo/config/"])
+    else:
+        output = run_git(["diff", "--name-only", f"{target}...{source}", "--", "fo/config/"])
     files = []
     for line in output.strip().split('\n'):
         line = line.strip()
@@ -105,9 +113,26 @@ def _pad_row(parts, expected_len):
     return parts
 
 
-def get_diff_data(filepath, source, target, header_cols=0):
-    """提取差异行。header_cols 用于补齐尾部空列。"""
-    diff_output = run_git(["diff", f"{target}...{source}", "--", filepath])
+def _gsheet_cell_for_write(cell):
+    """写入 GSheet 前的单元格文本：与 config-row-output 一致，并避免 USER_ENTERED 把 = 当头解析为公式。"""
+    s = cell
+    if s == '""':
+        s = "'" + '""'
+    elif s.startswith('='):
+        s = "'" + s
+    return s
+
+
+def _cells_for_gsheet_write(cells):
+    return [_gsheet_cell_for_write(c) for c in cells]
+
+
+def get_diff_data(filepath, source, target, header_cols=0, two_dot=False):
+    """提取差异行。header_cols 用于补齐尾部空列。+ 行为 source 侧，- 行为 target 侧。"""
+    if two_dot:
+        diff_output = run_git(["diff", target, source, "--", filepath])
+    else:
+        diff_output = run_git(["diff", f"{target}...{source}", "--", filepath])
     added_lines = []
     removed_lines = []
 
@@ -171,7 +196,8 @@ def write_values_chunked(spreadsheet_id, sheet_name, values):
         params = json.dumps({
             "spreadsheetId": spreadsheet_id,
             "range": f"'{sheet_name}'!A{row_start}",
-            "valueInputOption": "RAW"
+            # USER_ENTERED：前置 ' 对 \"\" / 行首 = 生效（与表格里粘贴行为一致）；行首 = 另见 _gsheet_cell_for_write
+            "valueInputOption": "USER_ENTERED"
         })
 
         result = run_gws(
@@ -277,6 +303,11 @@ def main():
     parser.add_argument('--target', default='origin/dev', help='目标分支 (基准)，默认 origin/dev')
     parser.add_argument('--repo', default=None, help='配置表仓库路径（覆盖默认 REPO_DIR）')
     parser.add_argument('--title', default=None, help='Google Sheet 标题')
+    parser.add_argument(
+        '--two-dot',
+        action='store_true',
+        help='使用两点 diff(target source) 对比分支 tip；三路无差异时用此选项',
+    )
     args = parser.parse_args()
 
     global REPO_DIR
@@ -287,7 +318,8 @@ def main():
 
     source = args.source
     target = args.target
-    title = args.title or f"X2 分支差异汇总 ({source.replace('origin/', '')} vs {target.replace('origin/', '')})"
+    suffix = ' tip两点' if args.two_dot else ''
+    title = args.title or f"X2 分支差异汇总 ({source.replace('origin/', '')} vs {target.replace('origin/', '')}){suffix}"
 
     print("=" * 60)
     print(f"  {title}")
@@ -297,7 +329,7 @@ def main():
     run_git(["fetch", "origin"])
 
     print("\n[2/5] 提取差异数据...")
-    changed_files = get_changed_files(source, target)
+    changed_files = get_changed_files(source, target, two_dot=args.two_dot)
     if not changed_files:
         print("  没有发现配置表差异。")
         return
@@ -306,7 +338,9 @@ def main():
     for filepath in changed_files:
         sheet_name = os.path.basename(filepath).replace('.tsv', '')
         header = get_header(filepath, source)
-        rows = get_diff_data(filepath, source, target, header_cols=len(header))
+        rows = get_diff_data(
+            filepath, source, target, header_cols=len(header), two_dot=args.two_dot
+        )
         if rows:
             all_data[filepath] = {'name': sheet_name, 'rows': rows, 'header': header}
             added_cnt = sum(1 for r in rows if r['type'] == 'added')
@@ -320,8 +354,21 @@ def main():
     print(f"\n[3/5] 创建 Google Sheet ({len(all_data)} 个页签)...")
     sheet_list = []
     for i, (filepath, info) in enumerate(all_data.items()):
+        # 默认页签仅约 1000 行，大表（如 iap_config）会写入失败，需按数据量扩网格
+        data_rows = len(info['rows']) + 1  # 表头 + 差异行
+        row_count = max(1000, data_rows + 100)
+        col_count = max(26, len(info['header']) + 2 + 10)
+        title = info['name'][:99] if len(info['name']) > 99 else info['name']
         sheet_list.append({
-            "properties": {"sheetId": i, "title": info['name'], "index": i}
+            "properties": {
+                "sheetId": i,
+                "title": title,
+                "index": i,
+                "gridProperties": {
+                    "rowCount": row_count,
+                    "columnCount": min(col_count, 400),
+                },
+            }
         })
 
     create_body = {
@@ -347,11 +394,11 @@ def main():
 
         header = info['header']
         col_count = len(header) + 1
-        header_row = ["变更类型"] + header
+        header_row = ["变更类型"] + _cells_for_gsheet_write(header)
         values = [header_row]
         for row in rows:
             label = "新增" if row['type'] == 'added' else "修改"
-            values.append([label] + row['cells'])
+            values.append([label] + _cells_for_gsheet_write(row['cells']))
 
         write_values_chunked(spreadsheet_id, sheet_name, values)
         print(" OK")

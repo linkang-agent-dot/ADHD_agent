@@ -1,0 +1,7 @@
+{
+  "task_id": "task_20260404_164319_c2023d",
+  "title": "机票推送直飞标识消失问题排查",
+  "status": "done",
+  "result": "## 结论\n\n### 根因（为何会「消失」）\n\n1. **`build_push_text` 把「是否展示直飞标签」绑死在 `--direct` 上**  \n   原先调用是 `show_direct=args.direct`。2026-03-31 修 BUG #2 后，`--direct` 变成「走直飞价抓取」；一旦定时任务或人工用 `python ctrip_tracker.py --full` / `--quick` **不带** `--direct`，`direct_info` 会一直是空字符串，推送里就像「直飞信息没了」。\n\n2. **`get_direct_tag()` 虽读了 `direct_airlines`，但返回值里从未带上航司**  \n   只根据 `airlines[0]` 判断是否输出，最终却只返回 ` ✈️直飞`，没有「+航司」。\n\n### `ROUTES` 配置\n\n`direct` / `direct_airlines` 本身是正常的；大阪 `direct: False`、无航司字符串，本来就不该出直飞标签。\n\n### 近期日志侧证\n\n`openclaw/cron/runs/ed08c32f-6c5c-4300-b0fd-e1cd974735fc.jsonl` 里有一条摘要推送文案为「低价 Top5：暂无数据」+ 底部「以上为日历最低价（含转机）…」——**没有任何逐条航线的 ✈️ 标注**；与「未带 `--direct` 或列表为空时看不到标签」一致。  \n`jobs.json` 里国际机票任务仍写的是 `ctrip_tracker.py --direct`，但若实际执行漏掉参数、或改跑 `--full` 提速，就会出现你看到的回归。\n\n---\n\n## 已做修改（`ctrip_tracker.py`）\n\n1. **推送默认带航线静态说明**：`build_push_text(..., show_route_tags=not args.no_route_tag, calendar_cheapest=not direct_only)`，与是否 `--direct` 抓价**脱钩**。  \n2. **`get_direct_tag`**：有航司时输出 ` ✈️直飞(川航3U/…)`，过长在约 72 字处截断加 `…`。  \n3. **脚注**：日历最低价模式与直飞采样模式分开说明（避免「价格是日历最低」却误读旁注）。  \n4. **新增 `--no-route-tag`**：需要极简文案时可关闭标签。  \n5. **自定义日期查询**：CLI 上 ` --only-direct` 与 `--direct` 一致，都会打印 `[直飞: …]`。\n\n本地快速验证：`东京` 得到 ` ✈️直飞(川航3U)`；`大阪` 在 Top5 里无 ✈️ 行尾标签，与配置一致。\n\n---\n\n**为何容易反复踩坑**：同一个 `--direct` 同时承担了「抓取模式」和「是否展示标签」两种语义；修抓取后若不调推送参数，表现就会变。现在展示用 `ROUTES` 静态元数据，抓价仍用 `--direct` / `--only-direct`，职责分开后，日常 `--full` 推送也会稳定带 ✈️+航司说明。",
+  "completed_at": "2026-04-04 16:49:16"
+}

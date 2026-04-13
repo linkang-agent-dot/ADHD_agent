@@ -1,0 +1,7 @@
+{
+  "task_id": "task_20260401_200151_1e183d",
+  "title": "Bug根因：1111表品质配置被冲",
+  "status": "done",
+  "result": "被冲字段：fo/config/item.tsv 中掉落转付费 6 行（111111116～121）Quality 实际为 0；按 Bgquality 应对齐为 4（1511010004）或 5（1511010005），与同 Source 11740000 的其它道具（如救美女掉落行）一致。无法在仓库内单独断定是合服/热更/手工哪一环节覆盖，建议对这几行做 git log -- fo/config/item.tsv 或查表 1111 导出来源。修复：已在 D:\\UGit\\x2gdconf\\fo\\config\\item.tsv 本地改正 Quality（116～118→4，119～121→5），未自动 git commit。",
+  "completed_at": "2026-04-01 20:37:51"
+}

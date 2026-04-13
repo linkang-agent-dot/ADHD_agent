@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>换皮 Skill 知识图谱</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    overflow: hidden;
+  }
+
+  #header {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 52px;
+    background: rgba(13,17,23,0.95);
+    border-bottom: 1px solid #21262d;
+    display: flex; align-items: center; padding: 0 20px;
+    z-index: 100;
+    gap: 16px;
+  }
+  #header h1 { font-size: 16px; font-weight: 600; color: #f0f6fc; }
+  #header .subtitle { font-size: 12px; color: #8b949e; }
+
+  #mode-tabs {
+    display: flex; gap: 6px; margin-left: auto;
+  }
+  .tab-btn {
+    padding: 5px 14px; border-radius: 6px; border: 1px solid #30363d;
+    background: transparent; color: #8b949e; cursor: pointer; font-size: 12px;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { background: #21262d; color: #e6edf3; }
+  .tab-btn.active { background: #1f6feb; border-color: #1f6feb; color: #fff; }
+
+  #canvas { position: fixed; top: 52px; left: 0; right: 0; bottom: 0; }
+
+  /* Sidebar */
+  #sidebar {
+    position: fixed; right: 0; top: 52px; bottom: 0;
+    width: 320px;
+    background: rgba(13,17,23,0.97);
+    border-left: 1px solid #21262d;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    z-index: 50;
+    padding: 20px;
+  }
+  #sidebar.open { transform: translateX(0); }
+  #sidebar h2 { font-size: 15px; color: #f0f6fc; margin-bottom: 8px; }
+  #sidebar .table-id { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  #sidebar .table-desc { font-size: 13px; color: #8b949e; margin-bottom: 16px; border-bottom: 1px solid #21262d; padding-bottom: 16px; }
+  #sidebar .section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #8b949e; margin-bottom: 8px; margin-top: 16px; }
+  #sidebar .field-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 6px; font-size: 12px; }
+  #sidebar .field-col { background: #21262d; color: #79c0ff; padding: 1px 6px; border-radius: 4px; font-family: monospace; flex-shrink: 0; }
+  #sidebar .field-name { color: #a5d6ff; font-family: monospace; }
+  #sidebar .field-action { margin-left: auto; flex-shrink: 0; }
+  .action-change { color: #ffa657; }
+  .action-keep { color: #56d364; }
+  .action-new { color: #ff7b72; }
+  .action-opt { color: #8b949e; }
+  #sidebar .dep-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: #21262d; border-radius: 4px; padding: 3px 8px;
+    font-size: 11px; margin: 3px 3px 0 0; cursor: pointer;
+    border: 1px solid #30363d; transition: all 0.15s;
+  }
+  #sidebar .dep-tag:hover { background: #30363d; }
+  #sidebar .dep-tag .arrow { color: #8b949e; font-size: 9px; }
+  #sidebar .pattern-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 12px;
+    font-size: 11px; margin: 2px; font-weight: 500;
+  }
+  #close-btn {
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none; color: #8b949e;
+    cursor: pointer; font-size: 18px; line-height: 1;
+  }
+  #close-btn:hover { color: #e6edf3; }
+
+  /* Legend */
+  #legend {
+    position: fixed; left: 16px; bottom: 20px;
+    background: rgba(13,17,23,0.9);
+    border: 1px solid #21262d;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 11px;
+    z-index: 50;
+  }
+  #legend .leg-title { color: #8b949e; margin-bottom: 8px; font-weight: 600; letter-spacing: 0.5px; }
+  .leg-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .leg-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .leg-label { color: #e6edf3; }
+
+  /* Tooltip */
+  #tooltip {
+    position: fixed;
+    background: rgba(22,27,34,0.98);
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 200;
+    max-width: 240px;
+  }
+  #tooltip .tt-id { font-weight: 700; color: #f0f6fc; }
+  #tooltip .tt-desc { color: #8b949e; margin-top: 2px; }
+
+  /* Pattern panel */
+  #pattern-panel {
+    position: fixed; left: 16px; top: 68px;
+    background: rgba(13,17,23,0.95);
+    border: 1px solid #21262d;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 11px;
+    z-index: 50;
+    width: 200px;
+  }
+  #pattern-panel .pp-title { color: #8b949e; margin-bottom: 10px; font-weight: 600; letter-spacing: 0.5px; }
+  .pattern-row {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 7px;
+    cursor: pointer; padding: 4px 6px; border-radius: 5px;
+    transition: background 0.15s;
+  }
+  .pattern-row:hover { background: #21262d; }
+  .pattern-row.active { background: #21262d; }
+  .pattern-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .pattern-name { color: #e6edf3; font-size: 11px; }
+  .pattern-count { margin-left: auto; color: #8b949e; font-size: 10px; }
+
+  svg .node circle {
+    cursor: pointer;
+    transition: r 0.2s;
+  }
+  svg .node:hover circle { filter: brightness(1.3); }
+  svg .link {
+    fill: none;
+    stroke-width: 1.5;
+    opacity: 0.5;
+  }
+  svg .link.highlight { opacity: 1; stroke-width: 2.5; }
+  svg .link.dimmed { opacity: 0.08; }
+  svg .node.dimmed circle { opacity: 0.15; }
+  svg .node.dimmed text { opacity: 0.15; }
+  svg .node.highlighted circle { filter: brightness(1.4); }
+  svg .node text { pointer-events: none; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <h1>⚙️ 换皮 Skill 知识图谱</h1>
+  <span class="subtitle">config-reskin · 13 模块 · P2/X2 双项目</span>
+  <div id="mode-tabs">
+    <button class="tab-btn active" onclick="setView('all')">全部模块</button>
+    <button class="tab-btn" onclick="setView('p2')">P2 项目</button>
+    <button class="tab-btn" onclick="setView('x2')">X2 项目</button>
+    <button class="tab-btn" onclick="setView('pattern')">组装模式</button>
+  </div>
+</div>
+
+<div id="canvas"></div>
+
+<div id="pattern-panel">
+  <div class="pp-title">▸ 组装模式</div>
+  <div class="pattern-row" onclick="highlightPattern('A')" data-pattern="A">
+    <div class="pattern-dot" style="background:#ffa657"></div>
+    <span class="pattern-name">A 普通活动礼包</span>
+    <span class="pattern-count">7表</span>
+  </div>
+  <div class="pattern-row" onclick="highlightPattern('B')" data-pattern="B">
+    <div class="pattern-dot" style="background:#79c0ff"></div>
+    <span class="pattern-name">B 预购连锁礼包</span>
+    <span class="pattern-count">6表</span>
+  </div>
+  <div class="pattern-row" onclick="highlightPattern('C')" data-pattern="C">
+    <div class="pattern-dot" style="background:#56d364"></div>
+    <span class="pattern-name">C 装饰物</span>
+    <span class="pattern-count">8表</span>
+  </div>
+  <div class="pattern-row" onclick="highlightPattern('D')" data-pattern="D">
+    <div class="pattern-dot" style="background:#bc8cff"></div>
+    <span class="pattern-name">D 集卡册</span>
+    <span class="pattern-count">6表</span>
+  </div>
+  <div class="pattern-row" onclick="highlightPattern('E')" data-pattern="E">
+    <div class="pattern-dot" style="background:#ff7b72"></div>
+    <span class="pattern-name">E 机甲累充</span>
+    <span class="pattern-count">4表</span>
+  </div>
+  <div class="pattern-row" onclick="highlightPattern('F')" data-pattern="F">
+    <div class="pattern-dot" style="background:#f78166"></div>
+    <span class="pattern-name">F 多条件连锁</span>
+    <span class="pattern-count">2表</span>
+  </div>
+  <div class="pattern-row" onclick="highlightPattern(null)" data-pattern="none" style="margin-top:6px; border-top:1px solid #21262d; padding-top:9px;">
+    <span class="pattern-name" style="color:#8b949e">✕ 清除高亮</span>
+  </div>
+</div>
+
+<div id="legend">
+  <div class="leg-title">模块分类</div>
+  <div class="leg-row"><div class="leg-dot" style="background:#1f6feb"></div><span class="leg-label">活动主体</span></div>
+  <div class="leg-row"><div class="leg-dot" style="background:#388bfd"></div><span class="leg-label">礼包系统</span></div>
+  <div class="leg-row"><div class="leg-dot" style="background:#56d364"></div><span class="leg-label">道具/装饰</span></div>
+  <div class="leg-row"><div class="leg-dot" style="background:#bc8cff"></div><span class="leg-label">集卡系统</span></div>
+  <div class="leg-row"><div class="leg-dot" style="background:#e3b341"></div><span class="leg-label">横切关注点</span></div>
+  <div class="leg-row" style="margin-top:8px; border-top:1px solid #21262d; padding-top:8px;">
+    <span style="color:#8b949e; font-size:10px;">点击节点查看详情 · 拖拽可移动</span>
+  </div>
+</div>
+
+<div id="tooltip">
+  <div class="tt-id" id="tt-id"></div>
+  <div class="tt-desc" id="tt-desc"></div>
+</div>
+
+<div id="sidebar">
+  <button id="close-btn" onclick="closeSidebar()">✕</button>
+  <div id="sidebar-content"></div>
+</div>
+
+<script>
+// ===================== DATA =====================
+const nodes = [
+  // 活动主体
+  { id: '2112', label: '2112', name: '活动主体', desc: '活动入口、时间窗口、banner、组件引用', group: 'activity', size: 38 },
+  // 礼包系统
+  { id: '2115', label: '2115', name: '活动任务', desc: '任务条件与奖励，「做XX得YY」的核心', group: 'package', size: 30 },
+  { id: '2135', label: '2135', name: '活动礼包', desc: '礼包挂载到活动的桥梁，head/chain row', group: 'package', size: 30 },
+  { id: '2011', label: '2011', name: '礼包规则', desc: 'IAP触发条件、时机、限购、服务器分发', group: 'package', size: 30 },
+  { id: '2013', label: '2013', name: '礼包内容模板', desc: '道具组合、价格、支付渠道（标准礼包用）', group: 'package', size: 26 },
+  // 道具/装饰
+  { id: '1111', label: '1111', name: '道具定义', desc: '所有道具的身份证：分类、效果、DK引用', group: 'item', size: 34 },
+  { id: '1118', label: '1118', name: '建筑升级', desc: '星级升级规则、升级消耗、属性增长', group: 'item', size: 24 },
+  { id: '2148', label: '2148', name: '装饰等级', desc: 'BUFF数值、涂饰开关、涂饰道具/技能引用', group: 'item', size: 26 },
+  { id: '2171', label: '2171', name: '装饰涂饰技能', desc: '涂饰激活后的技能效果（P2专属）', group: 'item', size: 22 },
+  { id: '1127', label: '1127', name: '放置解锁', desc: '建造界面出现的条件，新装饰必须加', group: 'item', size: 22 },
+  { id: '1168', label: '1168', name: '道具来源', desc: '道具详情页的获取途径展示配置', group: 'item', size: 22 },
+  // 集卡系统
+  { id: '6001', label: '6001', name: '集卡册(book)', desc: '集卡册顶层定义，引用group', group: 'card', size: 22 },
+  { id: '6002', label: '6002', name: '集卡组(group)', desc: '卡组奖励，引用card', group: 'card', size: 20 },
+  { id: '6003', label: '6003', name: '集卡卡片(card)', desc: '单张卡片，★5标识', group: 'card', size: 20 },
+  { id: '6004', label: '6004', name: '集卡商店', desc: '每次换节日必改goods_id', group: 'card', size: 20 },
+  // 横切
+  { id: '1511', label: '1511', name: '外显资产(DK)', desc: 'DK到美术资源路径的映射，所有图标的来源', group: 'cross', size: 28 },
+  { id: '1011', label: '1011', name: '本地化(LC)', desc: '所有玩家可见文字的翻译源', group: 'cross', size: 28 },
+  { id: '2121', label: '2121', name: '跳转链接', desc: 'jump_link机甲累充专用', group: 'activity', size: 18 },
+];
+
+const links = [
+  // 2112 → 子系统
+  { source: '2112', target: '2115', label: 'task ID', type: 'ref' },
+  { source: '2112', target: '2135', label: 'package ID', type: 'ref' },
+  { source: '2112', target: '2121', label: 'jump_link', type: 'ref' },
+  // 礼包链
+  { source: '2135', target: '2011', label: 'iap col3', type: 'ref' },
+  { source: '2135', target: '2112', label: 'actvstart反向', type: 'back' },
+  { source: '2011', target: '2112', label: 'actv_id反向', type: 'back' },
+  { source: '2013', target: '2011', label: 'config_id', type: 'ref' },
+  { source: '2115', target: '2013', label: 'fincond', type: 'ref' },
+  // 道具链
+  { source: '2115', target: '1111', label: 'reward ID', type: 'ref' },
+  { source: '2013', target: '1111', label: '道具组', type: 'ref' },
+  { source: '1111', target: '1511', label: 'display_key', type: 'ref' },
+  { source: '1111', target: '1168', label: 'get_access_group', type: 'ref' },
+  // 装饰子系统
+  { source: '2148', target: '1118', label: 'building ID', type: 'ref' },
+  { source: '2148', target: '1111', label: 'unlock/paint item', type: 'ref' },
+  { source: '2148', target: '2171', label: 'paint_skill', type: 'ref' },
+  { source: '2148', target: '1511', label: 'display_key', type: 'ref' },
+  { source: '1118', target: '1111', label: 'cost_asset', type: 'ref' },
+  { source: '1118', target: '1511', label: 'display_key', type: 'ref' },
+  { source: '1127', target: '1118', label: 'building_ids', type: 'ref' },
+  { source: '1127', target: '1111', label: 'unlock_cost', type: 'ref' },
+  { source: '1168', target: '2148', label: 'access_group', type: 'ref' },
+  // 集卡链
+  { source: '6001', target: '6002', label: 'group_id', type: 'ref' },
+  { source: '6002', target: '6003', label: 'card_id', type: 'ref' },
+  { source: '6002', target: '1111', label: 'rewards外键', type: 'ref' },
+  { source: '6001', target: '1111', label: 'rewards外键', type: 'ref' },
+  { source: '6004', target: '1111', label: 'goods_id', type: 'ref' },
+  // LC 横切
+  { source: '2112', target: '1011', label: 'text LC', type: 'lc' },
+  { source: '2115', target: '1011', label: 'task_desc LC', type: 'lc' },
+  { source: '2013', target: '1011', label: 'pkg_title LC', type: 'lc' },
+  { source: '1111', target: '1011', label: 'lc_name LC', type: 'lc' },
+  { source: '2148', target: '1011', label: 'lc_name LC', type: 'lc' },
+  { source: '2171', target: '1011', label: 'lc_name LC', type: 'lc' },
+  { source: '1127', target: '1011', label: 'unlock_desc LC', type: 'lc' },
+];
+
+const patterns = {
+  A: { name: '普通活动礼包', color: '#ffa657', nodes: ['2112','2115','2135','2013','2011','1011','1511'] },
+  B: { name: '预购连锁礼包', color: '#79c0ff', nodes: ['2112','2135','2011','1011','1511'] },
+  C: { name: '装饰物',       color: '#56d364', nodes: ['1111','1118','1127','2148','2171','1168','1011','1511'] },
+  D: { name: '集卡册',       color: '#bc8cff', nodes: ['1111','6001','6002','6003','6004','1011'] },
+  E: { name: '机甲累充',     color: '#ff7b72', nodes: ['2112','2115','2121','1111'] },
+  F: { name: '多条件连锁',   color: '#f78166', nodes: ['2112','2115'] },
+};
+
+const groupColors = {
+  activity: '#1f6feb',
+  package:  '#388bfd',
+  item:     '#56d364',
+  card:     '#bc8cff',
+  cross:    '#e3b341',
+};
+
+const nodeDetails = {
+  '2112': {
+    fields: [
+      { col: '[1]', name: 'A_INT_id', role: '活动行 ID', action: '换', actionClass: 'action-change' },
+      { col: '[3]', name: 'A_STR_constant', role: '组件类型', action: '不换', actionClass: 'action-keep' },
+      { col: '[8]', name: 'A_MAP_text', role: '活动标题/描述 LC key', action: '换', actionClass: 'action-change' },
+      { col: '[9]', name: 'A_ARR_activity_components', role: 'task→2115, package→2135', action: '换', actionClass: 'action-change' },
+      { col: '[14]', name: 'S_STR_banner_url', role: 'Banner图片路径', action: '换', actionClass: 'action-change' },
+      { col: '[18]', name: 'A_INT_show_hud', role: 'HUD图标ID', action: '换', actionClass: 'action-change' },
+    ],
+    patterns: ['A','B','D','E'],
+    notes: '所有活动配置的追踪起点。F模式整行复用不改。',
+  },
+  '2115': {
+    fields: [
+      { col: '[2]', name: 'A_INT_id', role: '任务行 ID (ID在col[1]!)', action: '换', actionClass: 'action-change' },
+      { col: '[5]', name: 'A_MAP_fincond', role: '完成条件，内含2013 ID', action: '换', actionClass: 'action-change' },
+      { col: '[7]', name: 'A_ARR_reward', role: '奖励道具列表', action: '换', actionClass: 'action-change' },
+      { col: '[8]', name: 'A_STR_task_desc', role: '任务描述 LC key', action: '换', actionClass: 'action-change' },
+    ],
+    patterns: ['A','B','E','F'],
+    notes: '⚠️ ID在col[1]，查询须加 --id-col 1',
+  },
+  '2135': {
+    fields: [
+      { col: '[1]', name: 'A_INT_id', role: '礼包行 ID', action: '换', actionClass: 'action-change' },
+      { col: '[3]', name: 'A_INT_iap', role: '关联2011 ID', action: '换', actionClass: 'action-change' },
+      { col: '[8]', name: 'A_STR_banner_url', role: '礼包banner图', action: '换', actionClass: 'action-change' },
+      { col: '[11]', name: 'S_MAP_filters', role: 'chain含actvstart.id', action: '换', actionClass: 'action-change' },
+    ],
+    patterns: ['A','B'],
+    notes: '预购连锁：chain row的filters含2112 ID，必须同步改',
+  },
+  '2011': {
+    fields: [
+      { col: '[1]', name: 'A_INT_id', role: '礼包规则 ID', action: '必须新增', actionClass: 'action-new' },
+      { col: '[9]', name: 'A_MAP_time_info', role: '展示时机，含actv_id→2112', action: '换', actionClass: 'action-change' },
+      { col: '[12]', name: 'A_ARR_iap_status', role: '礼包状态/累充关联', action: '看情况', actionClass: 'action-opt' },
+    ],
+    patterns: ['A','B'],
+    notes: 'A_STR_constant必须新增，不能复用旧ID',
+  },
+  '2013': {
+    fields: [
+      { col: '[1]', name: 'A_INT_id', role: '模板行 ID', action: '换', actionClass: 'action-change' },
+      { col: '[3]', name: 'A_INT_config_id', role: '关联2011 ID', action: '换', actionClass: 'action-change' },
+      { col: '[6]', name: 'A_STR_pkg_title', role: '礼包标题 LC key', action: '换', actionClass: 'action-change' },
+      { col: '[14-18]', name: 'A_ARR_*_items', role: '各类道具组', action: '换', actionClass: 'action-change' },
+    ],
+    patterns: ['A'],
+    notes: '预购连锁(B)不走2013，直接在2135 chain row定义内容',
+  },
+  '1111': {
+    fields: [
+      { col: '[0]', name: 'A_INT_id', role: '道具ID（9位vs8位注意）', action: '换', actionClass: 'action-change' },
+      { col: '[2]', name: 'A_STR_constant', role: '道具唯一标识', action: '必须新增', actionClass: 'action-new' },
+      { col: '[3]', name: 'A_STR_class', role: '道具分类', action: '不换', actionClass: 'action-keep' },
+      { col: '[6]', name: 'C_INT_display_key', role: '关联1511 DK', action: '换', actionClass: 'action-change' },
+      { col: '[9]', name: 'A_MAP_lc_name', role: '道具名 LC key', action: '换', actionClass: 'action-change' },
+    ],
+    patterns: ['C','A','B','D','E'],
+    notes: '⚠️ S2.5 外键验证必做：查S_STR_comment和lc_name是否含旧节日关键词',
+  },
+  '1118': {
+    fields: [
+      { col: '[0]', name: 'A_INT_id', role: '行ID=组×100+星级', action: '换', actionClass: 'action-change' },
+      { col: '[1]', name: 'A_INT_building_id', role: '建筑/装饰组ID', action: '换', actionClass: 'action-change' },
+      { col: '[6]', name: 'C_INT_display_key', role: '每星外观DK', action: '换', actionClass: 'action-change' },
+      { col: '[12]', name: 'A_INT_max_lvl', role: '最大星级', action: '扩星必改', actionClass: 'action-new' },
+    ],
+    patterns: ['C'],
+    notes: 'ID规则：组ID=1118xxx，行ID=组×100+星级',
+  },
+  '2148': {
+    fields: [
+      { col: '[0]', name: 'A_INT_id', role: '行ID=组×100+星级', action: '换', actionClass: 'action-change' },
+      { col: '[5]', name: 'A_INT_paint', role: '涂饰开关0/1', action: '扩星+涂饰', actionClass: 'action-change' },
+      { col: '[14]', name: 'A_ARR_BUFF', role: 'BUFF按星递增', action: '换', actionClass: 'action-change' },
+      { col: '[15]', name: 'C_ARR_paint_item', role: '涂饰道具ID', action: '换', actionClass: 'action-change' },
+      { col: '[19]', name: 'A_INT_decroation_paint_skill', role: '涂饰技能行→2171', action: '换', actionClass: 'action-change' },
+    ],
+    patterns: ['C'],
+    notes: 'P2专属：X2无涂饰系统(paint/paint_buff/paint_skill字段)',
+  },
+  '2171': {
+    fields: [
+      { col: '[0]', name: 'A_INT_id', role: '行ID=组×10+级别', action: '换', actionClass: 'action-change' },
+      { col: '[5]', name: 'C_MAP_lc_name', role: '技能名 LC key', action: '换', actionClass: 'action-change' },
+      { col: '[12]', name: 'A_ARR_status', role: '技能效果BUFF数组', action: '换', actionClass: 'action-change' },
+    ],
+    patterns: ['C'],
+    notes: '⚠️ P2专属！X2的2171是ActivityCollaborateTask，完全不同用途',
+  },
+  '1127': {
+    fields: [
+      { col: '[1]', name: 'A_INT_id', role: '行ID', action: '换', actionClass: 'action-change' },
+      { col: '[3]', name: 'A_ARR_building_ids', role: '关联1118建筑组ID', action: '换', actionClass: 'action-change' },
+      { col: '[10]', name: 'A_ARR_unlock_cost', role: '解锁消耗→1111道具', action: '换', actionClass: 'action-change' },
+      { col: '[14]', name: 'C_INT_subtab', role: '装饰固定=4', action: '不换', actionClass: 'action-keep' },
+    ],
+    patterns: ['C'],
+    notes: '旧装饰扩星不需要。仅新建筑/新装饰才加一行',
+  },
+  '1168': {
+    fields: [
+      { col: '[0]', name: 'A_INT_id', role: '行ID（1168xxxx）', action: '换', actionClass: 'action-change' },
+      { col: '[2]', name: 'A_STR_constant', role: '唯一标识', action: '必须新增', actionClass: 'action-new' },
+      { col: '[4]', name: 'C_ARR_access_group', role: '获取途径列表', action: '换', actionClass: 'action-change' },
+    ],
+    patterns: ['C'],
+    notes: '装饰物：每星一行，关联2148行ID',
+  },
+  '1511': {
+    fields: [
+      { col: '—', name: 'DK ID', role: 'key→美术资源路径映射', action: '按需录入', actionClass: 'action-change' },
+    ],
+    patterns: ['A','B','C','D'],
+    notes: '录入操作见 x2-dk-manager skill。新装饰每★需全部录入DK',
+  },
+  '1011': {
+    fields: [
+      { col: 'col1', name: 'LC_KEY', role: '完整LC key', action: '换', actionClass: 'action-change' },
+      { col: 'col2', name: 'key', role: '短key', action: '换', actionClass: 'action-change' },
+      { col: 'col3', name: '中文', role: '中文文本', action: '换', actionClass: 'action-change' },
+      { col: 'col4', name: 'English', role: '英文文本', action: '换', actionClass: 'action-change' },
+    ],
+    patterns: ['A','B','C','D','E'],
+    notes: '横切关注点。P2/X2结构相同。集卡册有6+1区域结构',
+  },
+  '6001': { fields: [{ col: '—', name: 'A_ARR_group_id', role: '引用6002组', action: '换', actionClass: 'action-change' }], patterns: ['D'], notes: '集卡册顶层，rewards外键必须逐一验证' },
+  '6002': { fields: [{ col: '—', name: 'A_ARR_card_id', role: '引用6003卡片', action: '换', actionClass: 'action-change' }], patterns: ['D'], notes: '组奖励每个item id都要查1111验证节日归属' },
+  '6003': { fields: [{ col: '—', name: 'A_INT_star', role: '5★标识', action: '换', actionClass: 'action-change' }], patterns: ['D'], notes: '单张卡片，col[2]=A_INT_star判断5★' },
+  '6004': { fields: [{ col: '—', name: 'goods_id', role: '当前节日保底卡包ID', action: '每次换节日必改', actionClass: 'action-new' }], patterns: ['D'], notes: '⚠️ 每次换节日必须同步更新goods_id' },
+  '2121': { fields: [{ col: '—', name: 'jump_link', role: '机甲累充跳转目标', action: '换', actionClass: 'action-change' }], patterns: ['E'], notes: '机甲累充专用，被2112的jump_link组件引用' },
+};
+
+const patternColors = { A:'#ffa657', B:'#79c0ff', C:'#56d364', D:'#bc8cff', E:'#ff7b72', F:'#f78166' };
+
+// ===================== D3 SETUP =====================
+const width = window.innerWidth;
+const height = window.innerHeight - 52;
+
+const svg = d3.select('#canvas')
+  .append('svg')
+  .attr('width', width)
+  .attr('height', height);
+
+// Arrow markers
+const defs = svg.append('defs');
+['ref','back','lc'].forEach(type => {
+  const colors = { ref: '#8b949e', back: '#388bfd', lc: '#e3b341' };
+  defs.append('marker')
+    .attr('id', `arrow-${type}`)
+    .attr('viewBox', '0 -5 10 10')
+    .attr('refX', 18)
+    .attr('refY', 0)
+    .attr('markerWidth', 6)
+    .attr('markerHeight', 6)
+    .attr('orient', 'auto')
+    .append('path')
+    .attr('d', 'M0,-5L10,0L0,5')
+    .attr('fill', colors[type]);
+});
+
+const g = svg.append('g');
+
+// Zoom
+svg.call(d3.zoom()
+  .scaleExtent([0.3, 3])
+  .on('zoom', e => g.attr('transform', e.transform)));
+
+// Force simulation
+const simulation = d3.forceSimulation(nodes)
+  .force('link', d3.forceLink(links).id(d => d.id).distance(d => d.type === 'lc' ? 180 : 110).strength(0.6))
+  .force('charge', d3.forceManyBody().strength(-600))
+  .force('center', d3.forceCenter(width / 2, height / 2))
+  .force('collision', d3.forceCollide(d => d.size + 20));
+
+// Links
+const linkGroup = g.append('g').attr('class', 'links');
+const link = linkGroup.selectAll('.link')
+  .data(links)
+  .enter().append('g').attr('class', 'link-group');
+
+const linkLine = link.append('line')
+  .attr('class', d => `link link-${d.type}`)
+  .attr('stroke', d => ({ ref:'#8b949e', back:'#388bfd', lc:'#e3b341' }[d.type]))
+  .attr('stroke-dasharray', d => d.type === 'back' ? '4,3' : d.type === 'lc' ? '2,4' : null)
+  .attr('marker-end', d => `url(#arrow-${d.type})`);
+
+// Nodes
+const nodeGroup = g.append('g').attr('class', 'nodes');
+const node = nodeGroup.selectAll('.node')
+  .data(nodes)
+  .enter().append('g')
+  .attr('class', 'node')
+  .call(d3.drag()
+    .on('start', dragStart)
+    .on('drag', dragged)
+    .on('end', dragEnd));
+
+node.append('circle')
+  .attr('r', d => d.size)
+  .attr('fill', d => groupColors[d.group])
+  .attr('stroke', d => d3.color(groupColors[d.group]).brighter(0.5))
+  .attr('stroke-width', 1.5);
+
+node.append('text')
+  .attr('text-anchor', 'middle')
+  .attr('dy', '0.35em')
+  .attr('font-size', d => d.size > 30 ? '14px' : d.size > 24 ? '12px' : '10px')
+  .attr('font-weight', '600')
+  .attr('fill', '#fff')
+  .text(d => d.label);
+
+// Node events
+node
+  .on('mouseenter', (event, d) => {
+    const tt = document.getElementById('tooltip');
+    document.getElementById('tt-id').textContent = `${d.id} — ${d.name}`;
+    document.getElementById('tt-desc').textContent = d.desc;
+    tt.style.opacity = 1;
+    tt.style.left = (event.clientX + 12) + 'px';
+    tt.style.top = (event.clientY - 10) + 'px';
+  })
+  .on('mousemove', (event) => {
+    const tt = document.getElementById('tooltip');
+    tt.style.left = (event.clientX + 12) + 'px';
+    tt.style.top = (event.clientY - 10) + 'px';
+  })
+  .on('mouseleave', () => {
+    document.getElementById('tooltip').style.opacity = 0;
+  })
+  .on('click', (event, d) => {
+    event.stopPropagation();
+    openSidebar(d);
+  });
+
+// Simulation tick
+simulation.on('tick', () => {
+  linkLine
+    .attr('x1', d => d.source.x)
+    .attr('y1', d => d.source.y)
+    .attr('x2', d => d.target.x)
+    .attr('y2', d => d.target.y);
+
+  node.attr('transform', d => `translate(${d.x},${d.y})`);
+});
+
+// ===================== DRAG =====================
+function dragStart(event, d) {
+  if (!event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x; d.fy = d.y;
+}
+function dragged(event, d) { d.fx = event.x; d.fy = event.y; }
+function dragEnd(event, d) {
+  if (!event.active) simulation.alphaTarget(0);
+  d.fx = null; d.fy = null;
+}
+
+// ===================== SIDEBAR =====================
+function openSidebar(d) {
+  const detail = nodeDetails[d.id] || {};
+  const patternList = (detail.patterns || []).map(p =>
+    `<span class="pattern-badge" style="background:${patternColors[p]}22;color:${patternColors[p]};border:1px solid ${patternColors[p]}55">${p} ${patterns[p]?.name||''}</span>`
+  ).join('');
+
+  const fieldRows = (detail.fields || []).map(f =>
+    `<div class="field-row">
+      <span class="field-col">${f.col}</span>
+      <span class="field-name">${f.name}</span>
+      <span class="field-action ${f.actionClass}">${f.action}</span>
+    </div>`
+  ).join('');
+
+  // Deps
+  const outDeps = links.filter(l => (l.source.id||l.source) === d.id)
+    .map(l => `<span class="dep-tag" onclick="focusNode('${l.target.id||l.target}')">→ <b>${l.target.id||l.target}</b> <span class="arrow">${l.label}</span></span>`).join('');
+  const inDeps = links.filter(l => (l.target.id||l.target) === d.id)
+    .map(l => `<span class="dep-tag" onclick="focusNode('${l.source.id||l.source}')"><b>${l.source.id||l.source}</b> → <span class="arrow">${l.label}</span></span>`).join('');
+
+  document.getElementById('sidebar-content').innerHTML = `
+    <div class="table-id" style="color:${groupColors[d.group]}">${d.id}</div>
+    <div style="font-size:15px;font-weight:600;color:#f0f6fc;margin-bottom:4px">${d.name}</div>
+    <div class="table-desc">${d.desc}</div>
+    ${detail.notes ? `<div style="background:#21262d;border-radius:6px;padding:8px 10px;font-size:12px;color:#ffa657;margin-bottom:12px">⚠️ ${detail.notes}</div>` : ''}
+    <div class="section-title">重点字段</div>
+    ${fieldRows || '<div style="color:#8b949e;font-size:12px">见 modules-p2.md</div>'}
+    <div class="section-title">参与组装模式</div>
+    <div>${patternList || '<span style="color:#8b949e;font-size:12px">暂无</span>'}</div>
+    ${outDeps ? `<div class="section-title">依赖（向外）</div><div>${outDeps}</div>` : ''}
+    ${inDeps ? `<div class="section-title">被引用（向内）</div><div>${inDeps}</div>` : ''}
+  `;
+
+  document.getElementById('sidebar').classList.add('open');
+  highlightNode(d.id);
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  clearHighlight();
+}
+
+function focusNode(id) {
+  const d = nodes.find(n => n.id === id);
+  if (d) openSidebar(d);
+}
+
+// ===================== HIGHLIGHT =====================
+let activePattern = null;
+
+function highlightPattern(p) {
+  activePattern = p;
+  document.querySelectorAll('.pattern-row').forEach(el => {
+    el.classList.toggle('active', el.dataset.pattern === p);
+  });
+
+  if (!p) {
+    clearHighlight();
+    return;
+  }
+
+  const patternNodes = new Set(patterns[p].nodes);
+  const patternLinks = new Set(
+    links.filter(l => patternNodes.has(l.source.id||l.source) && patternNodes.has(l.target.id||l.target))
+      .map((_, i) => i)
+  );
+
+  node.classed('highlighted', d => patternNodes.has(d.id));
+  node.classed('dimmed', d => !patternNodes.has(d.id));
+  linkLine.classed('highlight', (d, i) => patternLinks.has(i));
+  linkLine.classed('dimmed', (d, i) => !patternLinks.has(i));
+
+  node.select('circle').attr('stroke', d => {
+    if (patternNodes.has(d.id)) return patterns[p].color;
+    return d3.color(groupColors[d.group]).brighter(0.5);
+  }).attr('stroke-width', d => patternNodes.has(d.id) ? 3 : 1.5);
+}
+
+function highlightNode(id) {
+  const connectedIds = new Set([id]);
+  links.forEach(l => {
+    if ((l.source.id||l.source) === id) connectedIds.add(l.target.id||l.target);
+    if ((l.target.id||l.target) === id) connectedIds.add(l.source.id||l.source);
+  });
+
+  node.classed('highlighted', d => d.id === id);
+  node.classed('dimmed', d => !connectedIds.has(d.id));
+  linkLine.classed('highlight', d => (d.source.id||d.source) === id || (d.target.id||d.target) === id);
+  linkLine.classed('dimmed', d => (d.source.id||d.source) !== id && (d.target.id||d.target) !== id);
+}
+
+function clearHighlight() {
+  node.classed('highlighted dimmed', false);
+  linkLine.classed('highlight dimmed', false);
+  node.select('circle')
+    .attr('stroke', d => d3.color(groupColors[d.group]).brighter(0.5))
+    .attr('stroke-width', 1.5);
+}
+
+function setView(mode) {
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', ['all','p2','x2','pattern'][i] === mode);
+  });
+
+  if (mode === 'all') { clearHighlight(); return; }
+  if (mode === 'p2') {
+    const p2Only = new Set(['2112','2115','2135','2011','2013','1111','1118','2148','2171','1127','1168','1511','1011']);
+    applyNodeFilter(p2Only);
+  }
+  if (mode === 'x2') {
+    // X2 no 2171 no decor paint
+    const x2Nodes = new Set(['2112','2115','2135','2011','2013','1111','1118','2148','1127','1168','1511','1011','6001','6002','6003','6004']);
+    applyNodeFilter(x2Nodes);
+  }
+  if (mode === 'pattern') {
+    clearHighlight();
+  }
+}
+
+function applyNodeFilter(nodeSet) {
+  node.classed('dimmed', d => !nodeSet.has(d.id));
+  node.classed('highlighted', false);
+  linkLine.classed('dimmed', d => !nodeSet.has(d.source.id||d.source) || !nodeSet.has(d.target.id||d.target));
+  linkLine.classed('highlight', false);
+}
+
+svg.on('click', () => { closeSidebar(); clearHighlight(); });
+</script>
+</body>
+</html>

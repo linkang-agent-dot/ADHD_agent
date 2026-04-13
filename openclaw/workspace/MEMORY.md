@@ -60,6 +60,24 @@
 ```
 Cron job ID: f988438d-d7a0-4f08-acae-eba56c7c1271
 
+## 携程机票追踪器
+- 脚本：`C:\ADHD_agent\openclaw\workspace\ctrip_tracker.py`
+- 历史数据：`C:\ADHD_agent\openclaw\workspace\flight_data\flight_history.json`
+- 趋势图：`C:\ADHD_agent\openclaw\workspace\uploads\flight_trend.png`
+- 默认查询：成都出发，10 条热门航线，30-60 天 + 60-90 天窗口
+- 自定义用法：`python ctrip_tracker.py --dest 大阪 --from 2026-05-01 --to 2026-05-07`
+- Cron：工作日 11:30 自动推送
+
+## 运维手册
+
+详细的故障排查、踩坑记录、部署规范见 `workspace/OPS_RUNBOOK.md`。涵盖：
+- Windows 环境踩坑（.ps1 文件关联、编码、PowerShell 语法）
+- Gateway / Watchdog / Cron 运维
+- 携程机票监控反爬策略
+- Agent 行为管理（规则不生效、session 膨胀）
+- 飞书推送 API 用法
+- 故障速查表
+
 ## 重要历史决策
 
 - 模型选择：MiniMax-M2.5（从 Text-01 升级，Text-01 不会调用工具）

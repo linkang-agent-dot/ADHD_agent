@@ -1,0 +1,7 @@
+{
+  "task_id": "task_20260331_221847_722903",
+  "title": "X2合并：列出所有差异分支",
+  "status": "done",
+  "result": "差异分析完成：hotfix vs master_bugfix 共53个文件差异。分类：fo/config/21个、fo/i18n/17个、fo/json/10个、fo/s2c/3个、新增2个。根因：hotfix积累142个commit(活动配置/i18n/json等)未同步到master_bugfix，master_bugfix只有1个独有commit(军事发展科研改为随slg解锁,只改test1文件)。无冲突，已执行合并并创建merge commit，等待用户确认push。",
+  "completed_at": "2026-03-31 22:39:21"
+}

@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260330_183414_8309ef",
+  "title": "极点传媒logo背景色块修复",
+  "instructions": "修复极点传媒logo图片的背景问题。\n\n**问题描述：**\n当前生成的所有图片背景不是纯色，而是由多个不同深浅的灰色色块拼接而成，能看到明显的竖直接缝和色差。原本应该是纯净的单一黑色背景。\n\n**源文件（需要重新处理）：**\n- v1源: C:\\Users\\linkang\\.openclaw\\media\\inbound\\dab95091-e150-45d6-84d6-f9d8fb2da2af.jpg\n- v2源: C:\\Users\\linkang\\.openclaw\\media\\inbound\\77b250f9-eb36-409f-be72-39a2b847f3cf.jpg\n\n**正确的处理流程（必须这样做）：**\n\n1. 读取原图\n2. 去掉右下角装饰星星（水印）：在原图上把x=940-1024, y=940-1024区域填充为纯黑色(0,0,0)\n3. 裁出「图标」部分（x=0到455，高度0-1024）\n4. 裁出「文字」部分（x=460到1024，高度要包含完整文字）\n5. 图标按比例缩放（100%/80%/60%/40%），文字保持原始尺寸不变\n6. 将缩放后的图标 + 原始文字横向拼合\n7. 把拼合后的整体居中放入一个**全新的、干净的纯黑色(0,0,0)画布**中\n8. 画布尺寸：1024x1024\n\n**关键修复点：**\n- 最终的1024x1024背景画布必须是**完全纯净的单一黑色(0,0,0)**，不要有任何残留的原始背景像素\n- 用PIL时，先 Image.new('RGB', (1024, 1024), (0, 0, 0)) 创建纯黑画布，再把处理好的logo粘贴上去\n- 不要试图在原图上裁切后直接缩放——必须创建全新画布\n\n**输出文件（8个）：**\n保存到 C:\\ADHD_agent\\openclaw\\workspace\\uploads\\\n- jidian_100pct_v1.png, jidian_80pct_v1.png, jidian_60pct_v1.png, jidian_40pct_v1.png\n- jidian_100pct_v2.png, jidian_80pct_v2.png, jidian_60pct_v2.png, jidian_40pct_v2.png\n\n完成后列出所有保存的文件。",
+  "context": "背景有拼接色块问题，需要创建全新的纯黑(0,0,0)画布来放置处理好的logo，而不是复用原图背景。",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-03-30 18:34:14",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-03-30 18:34:16",
+  "completed_at": "2026-03-30 18:35:46"
+}

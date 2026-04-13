@@ -1,0 +1,11 @@
+{
+  "task_id": "task_20260401_212210_69cd1c2f",
+  "title": "查询1111表掉落转付费道具的名称和品质配置",
+  "instructions": "在 X2 游戏项目（master_bugfix 分支）的配置文件中，查询 1111 表中「掉落转付费」相关的道具配置：\n\n1. 掉落转付费的道具具体有哪些？列出道具名称和对应品质（Quality）\n2. 对应的 Bgquality（背板资源 ID）是多少\n3. 这些道具的 Source ID 是否为 11740000\n\n请直接列出完整的道具清单，包含：道具名称 | 品质 | 背板资源ID\n\n参考：截图显示的表中 Bgquality 字段如 1511010004，Quality 有 4 和 5 两种值。",
+  "context": "运营需要查询 1111 表中掉落转付费道具的具体配置：配了哪些道具、名称是什么、品质和背板资源 ID 各是多少。",
+  "submitted_by": "OpenClaw",
+  "priority": "normal",
+  "submitted_at": "2026-04-01 21:22:10",
+  "status": "done",
+  "completed_at": "2026-04-01 22:04:23"
+}

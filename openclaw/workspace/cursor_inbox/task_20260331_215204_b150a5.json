@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260331_215204_b150a5",
+  "title": "X2 config合并：hotfix → master_bugfix",
+  "instructions": "用 x2 config 下面的合并 skill，从 hotfix 分支往 master_bugfix 分支合并。\\n\\n请先找到 x2 项目的 config 目录和对应的合并 skill，理解用法后执行合并。\\n\\n需要确认：\\n1. x2 config 目录在哪里\\n2. 合并 skill 的使用方式\\n3. hotfix 和 master_bugfix 两个分支的当前状态\\n4. 执行合并并处理可能的冲突\\n\\n完成后汇报结果（成功/失败/有冲突需要手动处理）",
+  "context": "",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-03-31 21:52:04",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-03-31 21:52:05",
+  "completed_at": "2026-03-31 22:39:21"
+}

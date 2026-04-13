@@ -1,0 +1,278 @@
+{
+  "万圣节": {
+    "start": "2025-10-17",
+    "end": "2025-11-06",
+    "kpi": {
+      "revenue": 1991798.59,
+      "pay_users": 10366,
+      "active_users": 2704479,
+      "pay_rate": 0.38,
+      "arppu": 192.15,
+      "arpu": 0.7365
+    },
+    "rlevel": {
+      "chaoR": {
+        "active": 1048,
+        "payers": 921,
+        "revenue": 1023351.33,
+        "pay_rate": 87.9,
+        "arppu": 1111.13,
+        "arpu": 976.48
+      },
+      "daR": {
+        "active": 1391,
+        "payers": 1135,
+        "revenue": 411721.03,
+        "pay_rate": 81.6,
+        "arppu": 362.75,
+        "arpu": 295.99
+      },
+      "zhongR": {
+        "active": 4355,
+        "payers": 3060,
+        "revenue": 372918.03,
+        "pay_rate": 70.3,
+        "arppu": 121.87,
+        "arpu": 85.63
+      },
+      "xiaoR": {
+        "active": 8100,
+        "payers": 1971,
+        "revenue": 57805.89,
+        "pay_rate": 24.3,
+        "arppu": 29.33,
+        "arpu": 7.14
+      }
+    }
+  },
+  "感恩节": {
+    "start": "2025-11-13",
+    "end": "2025-12-04",
+    "kpi": {
+      "revenue": 1902045.79,
+      "pay_users": 9750,
+      "active_users": 2735632,
+      "pay_rate": 0.36,
+      "arppu": 195.08,
+      "arpu": 0.6953
+    },
+    "rlevel": {
+      "chaoR": {
+        "active": 1040,
+        "payers": 907,
+        "revenue": 1015291.62,
+        "pay_rate": 87.2,
+        "arppu": 1119.4,
+        "arpu": 976.24
+      },
+      "daR": {
+        "active": 1393,
+        "payers": 1090,
+        "revenue": 386836.55,
+        "pay_rate": 78.2,
+        "arppu": 354.9,
+        "arpu": 277.7
+      },
+      "zhongR": {
+        "active": 4116,
+        "payers": 2745,
+        "revenue": 337598.16,
+        "pay_rate": 66.7,
+        "arppu": 122.99,
+        "arpu": 82.02
+      },
+      "xiaoR": {
+        "active": 7544,
+        "payers": 1686,
+        "revenue": 46984.39,
+        "pay_rate": 22.3,
+        "arppu": 27.87,
+        "arpu": 6.23
+      }
+    }
+  },
+  "圣诞节": {
+    "start": "2025-12-12",
+    "end": "2026-01-01",
+    "kpi": {
+      "revenue": 2014761.11,
+      "pay_users": 9682,
+      "active_users": 2824648,
+      "pay_rate": 0.34,
+      "arppu": 208.09,
+      "arpu": 0.7133
+    },
+    "rlevel": {
+      "chaoR": {
+        "active": 1057,
+        "payers": 905,
+        "revenue": 1069408.14,
+        "pay_rate": 85.6,
+        "arppu": 1181.67,
+        "arpu": 1011.74
+      },
+      "daR": {
+        "active": 1361,
+        "payers": 1090,
+        "revenue": 423936.68,
+        "pay_rate": 80.1,
+        "arppu": 388.93,
+        "arpu": 311.49
+      },
+      "zhongR": {
+        "active": 4023,
+        "payers": 2742,
+        "revenue": 364351.13,
+        "pay_rate": 68.2,
+        "arppu": 132.88,
+        "arpu": 90.57
+      },
+      "xiaoR": {
+        "active": 7285,
+        "payers": 1757,
+        "revenue": 53939.36,
+        "pay_rate": 24.1,
+        "arppu": 30.7,
+        "arpu": 7.4
+      }
+    }
+  },
+  "春节": {
+    "start": "2026-01-13",
+    "end": "2026-02-08",
+    "kpi": {
+      "revenue": 2233587.28,
+      "pay_users": 10649,
+      "active_users": 3143677,
+      "pay_rate": 0.34,
+      "arppu": 209.75,
+      "arpu": 0.7105
+    },
+    "rlevel": {
+      "chaoR": {
+        "active": 1050,
+        "payers": 928,
+        "revenue": 1237722.15,
+        "pay_rate": 88.4,
+        "arppu": 1333.75,
+        "arpu": 1178.78
+      },
+      "daR": {
+        "active": 1300,
+        "payers": 1056,
+        "revenue": 440600.84,
+        "pay_rate": 81.2,
+        "arppu": 417.24,
+        "arpu": 338.92
+      },
+      "zhongR": {
+        "active": 3931,
+        "payers": 2688,
+        "revenue": 365482.67,
+        "pay_rate": 68.4,
+        "arppu": 135.97,
+        "arpu": 92.97
+      },
+      "xiaoR": {
+        "active": 6761,
+        "payers": 1636,
+        "revenue": 47596.71,
+        "pay_rate": 24.2,
+        "arppu": 29.09,
+        "arpu": 7.04
+      }
+    }
+  },
+  "情人节": {
+    "start": "2026-02-11",
+    "end": "2026-03-05",
+    "kpi": {
+      "revenue": 1821008.41,
+      "pay_users": 10435,
+      "active_users": 2618739,
+      "pay_rate": 0.4,
+      "arppu": 174.51,
+      "arpu": 0.6954
+    },
+    "rlevel": {
+      "chaoR": {
+        "active": 1057,
+        "payers": 936,
+        "revenue": 974262.27,
+        "pay_rate": 88.6,
+        "arppu": 1040.88,
+        "arpu": 921.72
+      },
+      "daR": {
+        "active": 1260,
+        "payers": 1012,
+        "revenue": 360579.79,
+        "pay_rate": 80.3,
+        "arppu": 356.3,
+        "arpu": 286.17
+      },
+      "zhongR": {
+        "active": 3758,
+        "payers": 2540,
+        "revenue": 311279.24,
+        "pay_rate": 67.6,
+        "arppu": 122.55,
+        "arpu": 82.83
+      },
+      "xiaoR": {
+        "active": 6700,
+        "payers": 1599,
+        "revenue": 48118.09,
+        "pay_rate": 23.9,
+        "arppu": 30.09,
+        "arpu": 7.18
+      }
+    }
+  },
+  "科技节": {
+    "start": "2026-03-13",
+    "end": "2026-04-03",
+    "kpi": {
+      "revenue": 1798726.49,
+      "pay_users": 9349,
+      "active_users": 2230027,
+      "pay_rate": 0.42,
+      "arppu": 192.4,
+      "arpu": 0.8066
+    },
+    "rlevel": {
+      "chaoR": {
+        "active": 1090,
+        "payers": 950,
+        "revenue": 1013570.89,
+        "pay_rate": 87.2,
+        "arppu": 1066.92,
+        "arpu": 929.88
+      },
+      "daR": {
+        "active": 1258,
+        "payers": 1023,
+        "revenue": 354047.78,
+        "pay_rate": 81.3,
+        "arppu": 346.09,
+        "arpu": 281.44
+      },
+      "zhongR": {
+        "active": 3670,
+        "payers": 2509,
+        "revenue": 283811.41,
+        "pay_rate": 68.4,
+        "arppu": 113.12,
+        "arpu": 77.33
+      },
+      "xiaoR": {
+        "active": 6381,
+        "payers": 1510,
+        "revenue": 43952.26,
+        "pay_rate": 23.7,
+        "arppu": 29.11,
+        "arpu": 6.89
+      }
+    }
+  }
+}

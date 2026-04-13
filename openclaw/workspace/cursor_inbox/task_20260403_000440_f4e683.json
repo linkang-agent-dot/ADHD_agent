@@ -1,0 +1,11 @@
+{
+  "task_id": "task_20260403_000440_f4e683",
+  "title": "AI提效日报-2026-04-02",
+  "instructions": "你是 AI 提效日报编辑。根据下面的数据 + WebSearch 搜索结果，输出一份精炼日报。\n\n【本地数据（直接使用，不要修改数字）】\n日期: 4月2日（周四）\n后台运行区间: 00:04 ~ 00:02\n任务: 共18个，完成14，失败4\n完成的任务:\n  - 查询 Cursor Agent 可用的 Skills 列表\n  - 查询 Cursor Agent 是否有爬虫相关技能\n  - 调研 webprobe skill 能否本地复用\n  - AI分享群内容框架规划\n  - Cursor当前使用的模型\n  - Cursor模型调用设置\n  - Cursor CLI调用方式\n  - 调研千川AI接入相关skill/项目\n  - OpenClaw外部接入方案\n  - OpenClaw外部接入方案-简化版\n  - 高频工作流AI应用场景总结\n  - AI应用场景-更多+优化格式\n  - AI日报-可群分享版\n  - AI提效日报-2026-04-02\n\nGitHub AI 趋势 Top1（已查好，直接用）:\nbytedance/deer-flow（56.6k⭐，2026-04-02更新）\nAn open-source long-horizon SuperAgent harness that research\nhttps://github.com/bytedance/deer-flow\n\n【需要你搜索的——小红书 AI 热点】\n用 WebSearch 搜索「小红书 AI提效工具 2026」，找 1 条最火的内容。\n要求：标题 + 一句话 + 链接（优先 xiaohongshu.com，搜不到就写「搜索\"小红书 AI工具\"」，禁止编URL）\n\n【输出规则】\n1. 直接输出下面的格式，第一个字必须是🤖，禁止任何前言/解释/附言\n2. 从完成的任务中挑 3 个最有实际产出的（优先选调研报告、配置生成、bug修复、方案输出，跳过纯查询类）\n3. 每个任务一句话总结它的价值，不超过20字\n4. 一句话总结不超过30字\n5. 全文300字以内\n\n🤖 AI 提效日报 | 4月2日（周四）\n\n📊 后台运行 00:04 ~ 00:02，完成 14 个任务，失败 4 个\n\n🔑 重点任务\n1. 任务名 → 价值\n2. 任务名 → 价值\n3. 任务名 → 价值\n\n🔥 小红书 AI 热点\n标题 + 说明 + 链接\n\n⭐ GitHub AI 趋势\nbytedance/deer-flow（56.6k⭐，2026-04-02更新）\nAn open-source long-horizon SuperAgent harness that research\nhttps://github.com/bytedance/deer-flow\n\n💡 一句话总结",
+  "submitted_by": "DailyReport",
+  "submitted_at": "2026-04-03 00:04:40",
+  "status": "done",
+  "priority": "normal",
+  "picked_at": "2026-04-03 00:04:45",
+  "completed_at": "2026-04-03 00:06:06"
+}

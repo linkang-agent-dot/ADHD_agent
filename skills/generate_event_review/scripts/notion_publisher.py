@@ -519,8 +519,8 @@ def generate_notion_content(data: dict, metrics: dict) -> str:
             rev_fmt = f'**\\${_fmt_revenue(t["event_revenue"])}**' if key == 'total' else (
                 f'<span color="red">**\\${_fmt_revenue(t["event_revenue"])}**</span>' if key == 'chaoR'
                 else f'\\${_fmt_revenue(t["event_revenue"])}')
-            arpu_fmt = f'**\\${t["arpu"]:.2f}**'
-            buy_rate_fmt = f'<span color="orange">{t["buy_rate"]:.1f}%</span>' if t.get("buy_rate", 100) < 15 else f'{t["buy_rate"]:.1f}%'
+            arpu_fmt = f'**\\${t.get("arpu", 0):.2f}**'
+            buy_rate_fmt = f'<span color="orange">{t.get("buy_rate", 0):.1f}%</span>' if t.get("buy_rate", 100) < 15 else f'{t.get("buy_rate", 0):.1f}%'
             rows.append(
                 f'<tr{row_color}>\n'
                 f'<td>**{label}**</td>\n'

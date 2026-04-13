@@ -1,0 +1,22 @@
+{
+  "春节(纯)": {
+    "start": "2026-01-13",
+    "end": "2026-02-01",
+    "total_revenue": 1691259.07,
+    "pay_users": 9082,
+    "active_users": 2855566,
+    "pay_rate": 0.32,
+    "arppu": 186.22,
+    "arpu": 0.59
+  },
+  "2月独立周期": {
+    "start": "2026-02-02",
+    "end": "2026-02-08",
+    "total_revenue": 525090.0,
+    "pay_users": 5714,
+    "active_users": 1996988,
+    "pay_rate": 0.29,
+    "arppu": 91.9,
+    "arpu": 0.26
+  }
+}

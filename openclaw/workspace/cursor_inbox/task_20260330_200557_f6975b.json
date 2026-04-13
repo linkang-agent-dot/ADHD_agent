@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260330_200557_f6975b",
+  "title": "极点传媒logo-图标缩小文字不变",
+  "instructions": "处理极点传媒品牌logo图片，生成图标缩小但文字不变尺寸的版本。\n\n**源文件：**\n- v1: C:\\Users\\linkang\\.openclaw\\media\\inbound\\dab95091-e150-45d6-84d6-f9d8fb2da2af.jpg\n- v2: C:\\Users\\linkang\\.openclaw\\media\\inbound\\77b250f9-eb36-409f-be72-39a2b847f3cf.jpg\n\n**图片结构（1024x1024）：**\n- 左侧图标（星星+金色圆环）：x=0 到 x=455\n- 右侧文字「极点传媒」：x=460 到 x=1024（文字区域原始宽度 564px）\n- 右下角有装饰星星（x=940-1024）：需要用纯黑色(0,0,0)填充去除\n\n**核心要求：**\n- 文字「极点传媒」保持原始尺寸 564px 不变\n- 只有左侧星星+圆环图标按比例缩小（100%、80%、60%、40%）\n- 缩小后的图标和原始尺寸文字横向拼接，整体居中放在 1024x1024 的纯黑(0,0,0)画布上\n\n**技术要求：**\n1. 图标区域（x=0-455）用亮度阈值法提取前景（阈值>100），背景填纯黑\n2. 文字区域（x=460-1024）同样用亮度阈值法提取前景，背景填纯黑\n3. 图标按目标比例缩放，文字保持 564px 宽度不变\n4. 最终画布必须是 100% 纯黑(0,0,0)，不能有任何残留灰色背景\n5. 用 Image.LANCZOS 进行高质量缩放\n\n**输出文件（8个）：**\n保存到 C:\\ADHD_agent\\openclaw\\workspace\\uploads\\\n- jidian_100pct_v1.png, jidian_80pct_v1.png, jidian_60pct_v1.png, jidian_40pct_v1.png\n- jidian_100pct_v2.png, jidian_80pct_v2.png, jidian_60pct_v2.png, jidian_40pct_v2.png\n\n完成后列出所有保存的文件。",
+  "context": "用户明确要求：文字保持原始尺寸564px不变，只有左侧星星+圆环图标按100%/80%/60%/40%缩小。背景必须是100%纯黑。",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-03-30 20:05:57",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-03-30 20:09:10",
+  "completed_at": "2026-03-30 20:11:35"
+}

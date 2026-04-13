@@ -1,0 +1,4 @@
+﻿returncode: 0
+stdout: b'[notify_done] \xe5\x8f\x91\xe9\x80\x81\xe5\xae\x8c\xe6\x88\x90\xe9\x80\x9a\xe7\x9f\xa5: [Test] \xe7\xbc\x96\xe7\xa0\x81\xe6\xb5\x8b\xe8\xaf\x95\r\n[notify_done] \xe2\x9c\x85 \xe9\xa3\x9e\xe4\xb9\xa6\xe9\x80\x9a\xe7\x9f\xa5\xe5\xb7\xb2\xe5\x8f\x91\xe9\x80\x81\r\n{"status": "sent", "task": "\xe7\xbc\x96\xe7\xa0\x81\xe6\xb5\x8b\xe8\xaf\x95", "timestamp": "2026-04-02 23:43:56"}\r\n'
+stderr: b''
+stdout hex: 5b6e6f746966795f646f6e655d20e58f91e98081e5ae8ce68890e9809ae79fa53a205b546573745d20e7bc96e7a081e6b58be8af950d0a5b6e6f746966795f646f6e655d20e29c8520e9a39ee4b9a6e9809ae79fa5e5b7b2e58f91e980810d0a7b22737461747573223a202273656e74222c20227461736b223a2022e7bc96e7a081e6b58be8af95222c202274696d657374616d70223a2022323032362d30342d30322032333a34333a3536227d0d0a

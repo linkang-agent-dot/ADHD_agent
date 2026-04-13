@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260331_113356_ce38f8",
+  "title": "BUG: 机票脚本 ctrip_tracker.py 查错",
+  "instructions": "用户报告机票追踪脚本有问题，请排查并修复：\\n\\n1. 脚本路径：C:\\ADHD_agent\\openclaw\\workspace\\ctrip_tracker.py\\n2. 问题描述：用户没有具体说明什么BUG，请先完整运行一次脚本，观察报错或异常输出\\n3. 运行环境：Python，已安装依赖（requests等）\\n4. 运行命令（quick模式）：python C:\\ADHD_agent\\openclaw\\workspace\\ctrip_tracker.py --quick\\n\\n请：\\n- 运行脚本，观察是否有报错\\n- 如果有报错，分析原因并修复\\n- 修复后重新运行验证\\n- 汇报结果",
+  "context": "",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-03-31 11:33:56",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-03-31 14:04:11",
+  "completed_at": "2026-03-31 14:03:30"
+}

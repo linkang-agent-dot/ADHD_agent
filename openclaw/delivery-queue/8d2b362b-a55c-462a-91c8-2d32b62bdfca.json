@@ -1,0 +1,30 @@
+{
+  "id": "8d2b362b-a55c-462a-91c8-2d32b62bdfca",
+  "enqueuedAt": 1775790319064,
+  "channel": "feishu",
+  "to": "ou_e48f6c4c0395f45b74b51525f348678b",
+  "payloads": [
+    {
+      "text": "📊 小红书旅游热度Top5（2026-04-10）\n\n1. 对国内城市旅游彻底祛魅了\n👍 11531 | @千灯灯",
+      "mediaUrl": "C:\\ADHD_agent\\openclaw\\workspace\\uploads\\xhs_push_1.jpg",
+      "mediaUrls": [
+        "C:\\ADHD_agent\\openclaw\\workspace\\uploads\\xhs_push_1.jpg"
+      ],
+      "replyToTag": false,
+      "replyToCurrent": false,
+      "audioAsVoice": false
+    }
+  ],
+  "gifPlayback": false,
+  "mirror": {
+    "sessionKey": "agent:main:main",
+    "agentId": "main",
+    "text": "📊 小红书旅游热度Top5（2026-04-10）\n\n1. 对国内城市旅游彻底祛魅了\n👍 11531 | @千灯灯",
+    "mediaUrls": [
+      "C:\\ADHD_agent\\openclaw\\workspace\\uploads\\xhs_push_1.jpg"
+    ]
+  },
+  "retryCount": 2,
+  "lastAttemptAt": 1775790503404,
+  "lastError": "Feishu account \"default\" not configured"
+}

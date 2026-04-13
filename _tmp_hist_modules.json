@@ -1,0 +1,307 @@
+{
+  "万圣节": {
+    "total": 637595.42,
+    "pack_count": 36,
+    "modules": {
+      "小游戏": 99324.13,
+      "外显": 355941.81,
+      "混合": 182329.48
+    },
+    "raw_rows": [
+      {
+        "iap_id_name": "2025万圣节弹珠随机GACHA礼包",
+        "pay_user_cnt": 889,
+        "revenue": 92701.69
+      },
+      {
+        "iap_id_name": "2025万圣节弹珠GACHA礼包",
+        "pay_user_cnt": 802,
+        "revenue": 67729.7
+      },
+      {
+        "iap_id_name": "机甲GACHA",
+        "pay_user_cnt": 390,
+        "revenue": 63419.41
+      },
+      {
+        "iap_id_name": "节日-幸运多重礼GACHA礼包",
+        "pay_user_cnt": 557,
+        "revenue": 54291.49
+      },
+      {
+        "iap_id_name": "2025复活节大富翁礼包",
+        "pay_user_cnt": 1259,
+        "revenue": 32760.19
+      },
+      {
+        "iap_id_name": "开箱强消耗钥匙礼包",
+        "pay_user_cnt": 871,
+        "revenue": 28548.91
+      },
+      {
+        "iap_id_name": "万圣节自选周卡-schema6",
+        "pay_user_cnt": 597,
+        "revenue": 28083.72
+      },
+      {
+        "iap_id_name": "2025万圣节bp礼包",
+        "pay_user_cnt": 907,
+        "revenue": 27732.54
+      },
+      {
+        "iap_id_name": "S6周年庆特效返场-1限时抢购礼包",
+        "pay_user_cnt": 399,
+        "revenue": 24910.18
+      },
+      {
+        "iap_id_name": "2024万圣节随机GACHA礼包",
+        "pay_user_cnt": 308,
+        "revenue": 24402.52
+      }
+    ]
+  },
+  "感恩节": {
+    "total": 788995.95,
+    "pack_count": 58,
+    "modules": {
+      "小游戏": 163298.1,
+      "外显": 108295.66,
+      "混合": 517402.19
+    },
+    "raw_rows": [
+      {
+        "iap_id_name": "挖孔小游戏礼包",
+        "pay_user_cnt": 1502,
+        "revenue": 82370.52
+      },
+      {
+        "iap_id_name": "节日大富翁",
+        "pay_user_cnt": 2009,
+        "revenue": 67470.32
+      },
+      {
+        "iap_id_name": "S300赛车特惠",
+        "pay_user_cnt": 360,
+        "revenue": 60478.33
+      },
+      {
+        "iap_id_name": "2024感恩节随机GACHA礼包",
+        "pay_user_cnt": 329,
+        "revenue": 52079.1
+      },
+      {
+        "iap_id_name": "黑五省省卡礼包",
+        "pay_user_cnt": 1804,
+        "revenue": 40762.88
+      },
+      {
+        "iap_id_name": "黑五英雄专属礼包",
+        "pay_user_cnt": 888,
+        "revenue": 40622.61
+      },
+      {
+        "iap_id_name": "2024感恩节GACHA礼包",
+        "pay_user_cnt": 403,
+        "revenue": 36029.36
+      },
+      {
+        "iap_id_name": "周年庆预购连锁_schema6",
+        "pay_user_cnt": 345,
+        "revenue": 34496.55
+      },
+      {
+        "iap_id_name": "S6周年庆特效返场-1限时抢购礼包",
+        "pay_user_cnt": 350,
+        "revenue": 28377.75
+      },
+      {
+        "iap_id_name": "S300赛车常驻-高级抽奖券",
+        "pay_user_cnt": 172,
+        "revenue": 27633.17
+      }
+    ]
+  },
+  "圣诞节": {
+    "total": 944318.11,
+    "pack_count": 51,
+    "modules": {
+      "小游戏": 286230.55,
+      "外显": 269914.19,
+      "混合": 388173.37
+    },
+    "raw_rows": [
+      {
+        "iap_id_name": "2025万圣节弹珠随机GACHA礼包",
+        "pay_user_cnt": 1317,
+        "revenue": 144918.98
+      },
+      {
+        "iap_id_name": "挖孔小游戏礼包",
+        "pay_user_cnt": 1961,
+        "revenue": 139060.88
+      },
+      {
+        "iap_id_name": "限时抢购",
+        "pay_user_cnt": 735,
+        "revenue": 70501.82
+      },
+      {
+        "iap_id_name": "MJ8小游戏",
+        "pay_user_cnt": 1281,
+        "revenue": 66077.45
+      },
+      {
+        "iap_id_name": "预购连锁",
+        "pay_user_cnt": 386,
+        "revenue": 38596.14
+      },
+      {
+        "iap_id_name": "通用小额随机-转盘",
+        "pay_user_cnt": 1208,
+        "revenue": 36975.91
+      },
+      {
+        "iap_id_name": "节日-幸运多重礼GACHA礼包",
+        "pay_user_cnt": 426,
+        "revenue": 33216.95
+      },
+      {
+        "iap_id_name": "斗士抽奖成就礼包",
+        "pay_user_cnt": 582,
+        "revenue": 31721.01
+      },
+      {
+        "iap_id_name": "2025周年庆返场买三赠一SCHEMA6",
+        "pay_user_cnt": 267,
+        "revenue": 30624.05
+      },
+      {
+        "iap_id_name": "圣诞节高级通行证_2025",
+        "pay_user_cnt": 1359,
+        "revenue": 27166.41
+      }
+    ]
+  },
+  "情人节": {
+    "total": 756226.32,
+    "pack_count": 57,
+    "modules": {
+      "小游戏": 391853.88,
+      "外显": 58164.09,
+      "混合": 306208.35
+    },
+    "raw_rows": [
+      {
+        "iap_id_name": "挖孔小游戏礼包",
+        "pay_user_cnt": 1649,
+        "revenue": 135035.7
+      },
+      {
+        "iap_id_name": "异族大富翁随机礼包",
+        "pay_user_cnt": 90,
+        "revenue": 74618.34
+      },
+      {
+        "iap_id_name": "云上探宝",
+        "pay_user_cnt": 1259,
+        "revenue": 73011.65
+      },
+      {
+        "iap_id_name": "推币机礼包",
+        "pay_user_cnt": 1152,
+        "revenue": 42149.08
+      },
+      {
+        "iap_id_name": "节日大富翁",
+        "pay_user_cnt": 1186,
+        "revenue": 42032.51
+      },
+      {
+        "iap_id_name": "限时抢购",
+        "pay_user_cnt": 442,
+        "revenue": 40039.02
+      },
+      {
+        "iap_id_name": "推币机随机GACHA礼包",
+        "pay_user_cnt": 494,
+        "revenue": 34908.54
+      },
+      {
+        "iap_id_name": "情人节BP",
+        "pay_user_cnt": 1559,
+        "revenue": 30128.15
+      },
+      {
+        "iap_id_name": "MJ8小游戏",
+        "pay_user_cnt": 845,
+        "revenue": 28400.57
+      },
+      {
+        "iap_id_name": "一番赏GACHA礼包",
+        "pay_user_cnt": 310,
+        "revenue": 25326.06
+      }
+    ]
+  },
+  "科技节": {
+    "total": 855121.03,
+    "pack_count": 49,
+    "modules": {
+      "小游戏": 484752.89,
+      "外显": 158529.5,
+      "混合": 211838.64
+    },
+    "raw_rows": [
+      {
+        "iap_id_name": "挖孔小游戏礼包",
+        "pay_user_cnt": 2710,
+        "revenue": 206191.07
+      },
+      {
+        "iap_id_name": "2026科技节弹珠GACHA",
+        "pay_user_cnt": 1170,
+        "revenue": 129800.34
+      },
+      {
+        "iap_id_name": "推币机礼包",
+        "pay_user_cnt": 1110,
+        "revenue": 64041.74
+      },
+      {
+        "iap_id_name": "挖矿小游戏活动",
+        "pay_user_cnt": 1176,
+        "revenue": 60391.12
+      },
+      {
+        "iap_id_name": "推币机随机GACHA礼包",
+        "pay_user_cnt": 458,
+        "revenue": 56054.41
+      },
+      {
+        "iap_id_name": "2025复活节大富翁礼包",
+        "pay_user_cnt": 1542,
+        "revenue": 47420.89
+      },
+      {
+        "iap_id_name": "限时抢购",
+        "pay_user_cnt": 447,
+        "revenue": 45857.6
+      },
+      {
+        "iap_id_name": "科技节高级通行证_2025",
+        "pay_user_cnt": 1180,
+        "revenue": 23588.2
+      },
+      {
+        "iap_id_name": "节日大富翁礼包",
+        "pay_user_cnt": 161,
+        "revenue": 18297.84
+      },
+      {
+        "iap_id_name": "周年庆预购连锁_schema6",
+        "pay_user_cnt": 180,
+        "revenue": 17998.2
+      }
+    ]
+  }
+}

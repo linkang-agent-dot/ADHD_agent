@@ -1,0 +1,12 @@
+{
+  "title": "Bug：activity_config.tsv 导出失败 JSON解析错误",
+  "instructions": "调查 X2 客户端配置导出失败问题：\n\n错误信息：\nactivity_config.tsv Load Failed: Additional text encountered after finished reading JSON content: . Path '', line 1, position 3.\n at Newtonsoft.Json.JsonTextReader.Read()\n at ConfigBuild.ClassType.IsDataValid(String data)\n\n基本信息：\n- 分支：master_bugfix\n- 出错表：activity_config.tsv\n- 出错位置：ClassType.cs:line 46，IsDataValid 方法里调用了 JsonConvert.DeserializeObject\n\n任务：\n1. 在 X2 项目（config 目录，master_bugfix 分支）中找到 activity_config.tsv\n2. 找出哪一行/哪个字段存了 JSON 格式数据但内容非法（多出来的文本导致JSON解析失败）\n3. 准确定位是哪个字段、哪一行、什么错误内容\n4. 给出修复建议\n\n注意：这是客户端导表工具（Newtonsoft.Json）解析 JSON 字段失败，不是服务端问题。",
+  "context": "客户端导表失败，activity_config.tsv 中某个 JSON 字段格式非法，导致 Newtonsoft.Json 解析失败。错误信息提示 Additional text encountered after finished reading JSON content，说明 JSON 字符串后面多了额外文本。",
+  "submitted_by": "OpenClaw",
+  "priority": "normal",
+  "task_id": "task_20260401_210620_bug",
+  "submitted_at": "2026-04-01 21:10:26",
+  "status": "done",
+  "picked_at": "2026-04-01 21:10:26",
+  "completed_at": "2026-04-01 21:16:31"
+}

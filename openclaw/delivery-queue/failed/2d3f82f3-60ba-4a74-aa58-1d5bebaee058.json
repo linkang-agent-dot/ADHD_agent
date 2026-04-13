@@ -1,0 +1,30 @@
+{
+  "id": "2d3f82f3-60ba-4a74-aa58-1d5bebaee058",
+  "enqueuedAt": 1774839933859,
+  "channel": "feishu",
+  "to": "ou_xxx",
+  "payloads": [
+    {
+      "text": "📊 小红书旅游热度Top5（2026-03-30）\n\n🎬 1. 爬山迷路…浪在旁边安静听👂攻略\n   👍33 | ⭐ | @🌊浪浪的小窝\n   📝 \"小小距离\"\"一点不累\"\"非常轻松\"\n果然人和人是不一样的hhhhh\n每条路都好像，努力上坡下坡\n浪：我也好累，休息一下\n#柴犬[话题]# #小狗日记[话题]#\n\n---每日11:00自动推送",
+      "mediaUrl": "C:\\Users\\linkang\\.openclaw\\workspace\\uploads\\push_1.jpg",
+      "mediaUrls": [
+        "C:\\Users\\linkang\\.openclaw\\workspace\\uploads\\push_1.jpg"
+      ],
+      "replyToTag": false,
+      "replyToCurrent": false,
+      "audioAsVoice": false
+    }
+  ],
+  "gifPlayback": false,
+  "mirror": {
+    "sessionKey": "agent:main:main",
+    "agentId": "main",
+    "text": "📊 小红书旅游热度Top5（2026-03-30）\n\n🎬 1. 爬山迷路…浪在旁边安静听👂攻略\n   👍33 | ⭐ | @🌊浪浪的小窝\n   📝 \"小小距离\"\"一点不累\"\"非常轻松\"\n果然人和人是不一样的hhhhh\n每条路都好像，努力上坡下坡\n浪：我也好累，休息一下\n#柴犬[话题]# #小狗日记[话题]#\n\n---每日11:00自动推送",
+    "mediaUrls": [
+      "C:\\Users\\linkang\\.openclaw\\workspace\\uploads\\push_1.jpg"
+    ]
+  },
+  "retryCount": 5,
+  "lastAttemptAt": 1775145660780,
+  "lastError": "Request failed with status code 400"
+}

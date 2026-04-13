@@ -1,0 +1,68 @@
+[
+  {
+    "label": "全体玩家",
+    "log_num": 130669,
+    "buy_num": 4783,
+    "pay_price": 823675.38,
+    "pay_total": 1708683.17,
+    "price_ratio": 48.2,
+    "buy_ratio": 0.0,
+    "arppu": 172.21,
+    "arpu": 6.3
+  },
+  {
+    "label": "付费玩家",
+    "log_num": 18247,
+    "buy_num": 4783,
+    "pay_price": 823675.38,
+    "pay_total": 1708389.04,
+    "price_ratio": 48.2,
+    "buy_ratio": 30.0,
+    "arppu": 172.21,
+    "arpu": 45.14
+  },
+  {
+    "label": "xiaoR",
+    "log_num": 10907,
+    "buy_num": 942,
+    "pay_price": 12842.57,
+    "pay_total": 44058.69,
+    "price_ratio": 29.1,
+    "buy_ratio": 10.0,
+    "arppu": 13.63,
+    "arpu": 1.18
+  },
+  {
+    "label": "zhongR",
+    "log_num": 4651,
+    "buy_num": 2032,
+    "pay_price": 118633.4,
+    "pay_total": 291064.66,
+    "price_ratio": 40.8,
+    "buy_ratio": 40.0,
+    "arppu": 58.38,
+    "arpu": 25.51
+  },
+  {
+    "label": "daR",
+    "log_num": 1492,
+    "buy_num": 911,
+    "pay_price": 162602.17,
+    "pay_total": 350105.04,
+    "price_ratio": 46.4,
+    "buy_ratio": 60.0,
+    "arppu": 178.49,
+    "arpu": 108.98
+  },
+  {
+    "label": "chaoR",
+    "log_num": 1197,
+    "buy_num": 898,
+    "pay_price": 529597.24,
+    "pay_total": 1023160.65,
+    "price_ratio": 51.8,
+    "buy_ratio": 80.0,
+    "arppu": 589.75,
+    "arpu": 442.44
+  }
+]

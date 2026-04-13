@@ -1,0 +1,19 @@
+﻿python : Traceback (most recent call last):
+所在位置 C:\Users\linkang\AppData\Local\Temp\ps-script-89831b67-da70-4776-a68c-bdcb02e36db0.ps1:83 字符: 1
++ python C:\ADHD_agent\tmp_parse_v2.py C:\ADHD_agent\tmp_template_utf8. ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\ADHD_agent\tmp_parse_v2.py", line 17, in <module>
+    data = json.loads(text, strict=False)
+  File "C:\Python314\Lib\json\__init__.py", line 365, in loads
+    return cls(**kw).decode(s)
+           ~~~~~~~~~~~~~~~~^^^
+  File "C:\Python314\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\json\decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Expecting ',' delimiter: line 8 column 8 (char 124)

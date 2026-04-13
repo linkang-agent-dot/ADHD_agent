@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260404_162324_ded601",
+  "title": "排查推送不成功的问题",
+  "instructions": "排查 OpenClaw 推送不成功的问题。已知信息：(1) 飞书推送失败可能涉及 cron 定时任务或主动推送逻辑；(2) 相关脚本包括 xiaohongshu_push.py（小红书旅游推送）和 ctrip_tracker.py（携程机票追踪）；(3) 飞书发送消息走的是 message 工具。请检查：(1) cron 任务配置是否正常；(2) 推送脚本的飞书 API 调用是否有报错；(3) 检查 workspace/OPS_RUNBOOK.md 中是否有关于推送失败的记录；(4) 检查 OpenClaw gateway 日志中是否有推送相关的错误。",
+  "context": "",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-04-04 16:23:24",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-04-04 16:23:26",
+  "completed_at": "2026-04-04 16:24:49"
+}

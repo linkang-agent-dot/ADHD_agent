@@ -1,0 +1,224 @@
+{
+  "main": {
+    "id": "28da61939160fe55",
+    "type": "split",
+    "children": [
+      {
+        "id": "4e5986b31dcc1cda",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1862043eea2d7033",
+            "type": "leaf",
+            "state": {
+              "type": "bases",
+              "state": {
+                "file": "未命名.base",
+                "viewName": "表格"
+              },
+              "icon": "lucide-table",
+              "title": "未命名"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "6d562a16dabb4855",
+    "type": "split",
+    "children": [
+      {
+        "id": "81ed8a17c44621b7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "69bfe00944a4b3c7",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "63e60ab716391b31",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "a7f3fc933f3a596e",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "4ef4ab31c3afe6ce",
+    "type": "split",
+    "children": [
+      {
+        "id": "105c7aa6832a04b2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5130efe6499e057f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "未命名.base",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "未命名 的反向链接列表"
+            }
+          },
+          {
+            "id": "cde162d5b032f44d",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "未命名.base",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "未命名 的出链列表"
+            }
+          },
+          {
+            "id": "eb2a15696d5515fb",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "4937949d392e8e61",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "708d1d1d6079fc5d",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "未命名.base",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "未命名 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "69bfe00944a4b3c7",
+  "lastOpenFiles": [
+    "openclaw/agents/main/sessions/sessions.json.lock",
+    "openclaw/agents/main/sessions/29ac139b-8f51-42e6-9597-777cc75421f3.jsonl.lock",
+    "openclaw/agents/main/sessions/caa6e63e-e41f-4d81-8619-0a6611cc4de5.jsonl.deleted.2026-04-10T01-05-08.625Z",
+    "openclaw/agents/main/sessions/c6243e7b-ee80-4c44-9fb8-0f4b99c819b9.jsonl",
+    "openclaw/agents/main/sessions/c6243e7b-ee80-4c44-9fb8-0f4b99c819b9.jsonl.lock",
+    "openclaw/cron/jobs.json.21180.406a2ac0d9e78188.tmp",
+    "openclaw/agents/main/sessions/29ac139b-8f51-42e6-9597-777cc75421f3.jsonl",
+    "openclaw/agents/main/sessions/d7772bff-ebf4-4376-8fae-8f452a076d5e.jsonl.reset.2026-04-09T20-03-06.251Z",
+    "openclaw/agents/main/sessions/d7772bff-ebf4-4376-8fae-8f452a076d5e.jsonl.lock",
+    "KB/方法论/运营全家桶概览.md",
+    "KB/方法论/工具选择与tokenmaxxing.md",
+    "KB/方法论/AI工作进化路径.md",
+    "KB/产出-工具与可视化/工具与可视化产出.md",
+    "KB/产出-本地化与美术/本地化与美术产出.md",
+    "KB/产出-配置仓库/导表合并与差异产出.md",
+    "KB/产出-数据分析/数据查询与评级产出.md",
+    "KB/产出-排期部署/排期审核与活动部署.md",
+    "KB/产出-配置换皮/换皮配置产出记录.md",
+    "KB/产出-节日复盘/其他节日复盘.md",
+    "KB/产出-节日复盘/复盘流水线.md",
+    "KB/产出-节日复盘/2026科技节复盘.md",
+    "KB/方法论",
+    "KB/产出-工具与可视化",
+    "_tmp_pptx_content.md",
+    "KB/Skills-其他/行程图生成.md",
+    "KB/Config-Library/配置案例集.md",
+    "KB/Config-Library/换皮规则详解.md",
+    "KB/Rules/Agent规则总览.md",
+    "KB/Skills-其他/前端设计.md",
+    "KB/Skills-其他/机票追踪.md",
+    "KB/Skills-其他/运维排障.md",
+    "KB/Skills-其他/YouTube视频分析.md",
+    "KB/Skills-其他/游戏本地化翻译.md",
+    "KB/Skills-其他/Skill开发与发布.md",
+    "KB/Skills-开发方法论/Agent开发方法论.md",
+    "KB/Skills-文档生成/文档工具集.md"
+  ]
+}

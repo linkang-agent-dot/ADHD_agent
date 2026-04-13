@@ -1,0 +1,210 @@
+{
+  "main": {
+    "id": "90f5bf3284675fb5",
+    "type": "split",
+    "children": [
+      {
+        "id": "bd73411b3ffc7c11",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "96dba334913cf0c0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "工作计划/2026-W16_本周工作计划.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2026-W16_本周工作计划"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "e540efb420058d15",
+    "type": "split",
+    "children": [
+      {
+        "id": "092a380d5568c4f4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "bf01dd4071b9ae35",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "a7e5ed4f57bf49dd",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "55f912ca682fe675",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "9f0656e21fa2447e",
+    "type": "split",
+    "children": [
+      {
+        "id": "47f69df9183a6050",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "70cc1433dfe2ddad",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "工作计划/2026-W16_本周工作计划.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "2026-W16_本周工作计划 的反向链接列表"
+            }
+          },
+          {
+            "id": "893eb70419e01994",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "工作计划/2026-W16_本周工作计划.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "2026-W16_本周工作计划 的出链列表"
+            }
+          },
+          {
+            "id": "13b0f35c38e721fb",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "6dad2bfee7b91be4",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "b9be80afe6791e25",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "工作计划/2026-W16_本周工作计划.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "2026-W16_本周工作计划 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "96dba334913cf0c0",
+  "lastOpenFiles": [
+    "工作计划/attachments/三日工作安排_2026-04-13.png",
+    "工作计划/2026-W16_本周工作计划.md",
+    "_首页.md",
+    "工作计划/attachments",
+    "工作计划",
+    "产出-数据分析/数据查询与评级产出.md",
+    "方法论/弹珠福利关卡设计框架.html",
+    "方法论/弹珠福利关卡数值设计.md",
+    "运营skill/Skills-游戏配置/P2配置上传.md",
+    "产出-节日复盘/其他节日复盘.md",
+    "产出-节日复盘/2026科技节复盘.md",
+    "产出-节日复盘/复盘流水线.md",
+    "产出-配置换皮/换皮配置产出记录.md",
+    "通用skill",
+    "运营skill/Skills-开发方法论/Agent开发方法论.md",
+    "运营skill/Skills-文档生成/文档工具集.md",
+    "通用skill/Skills-其他/YouTube视频分析.md",
+    "运营skill/游戏本地化翻译.md",
+    "运营skill",
+    "Rules/Agent规则总览.md",
+    "方法论/工具选择与tokenmaxxing.md"
+  ]
+}

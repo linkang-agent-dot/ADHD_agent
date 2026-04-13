@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>弹珠GACHA LC键值确认</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 { color: #58a6ff; margin-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; overflow: hidden; }
+        .card-header { background: #21262d; padding: 12px 16px; border-bottom: 1px solid #30363d; }
+        .card-title { color: #58a6ff; font-size: 14px; font-weight: 600; }
+        .card-body { padding: 16px; }
+        .screenshot { width: 100%; border-radius: 4px; margin-bottom: 12px; cursor: pointer; }
+        .screenshot:hover { opacity: 0.9; }
+        .lc-item { background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 12px; margin-bottom: 10px; }
+        .lc-key { color: #f85149; font-family: monospace; font-size: 12px; margin-bottom: 8px; word-break: break-all; }
+        .lc-row { display: flex; gap: 8px; margin-bottom: 6px; align-items: center; }
+        .lc-row label { width: 50px; color: #8b949e; font-size: 12px; }
+        .lc-row input { flex: 1; background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 10px; border-radius: 4px; font-size: 13px; }
+        .lc-row input:focus { outline: none; border-color: #58a6ff; }
+        .btn { background: #238636; color: #fff; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; margin-top: 20px; }
+        .btn:hover { background: #2ea043; }
+        .summary { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-top: 20px; }
+        .summary pre { background: #0d1117; padding: 12px; border-radius: 4px; font-size: 12px; overflow-x: auto; white-space: pre-wrap; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
+        .modal img { max-width: 95%; max-height: 95%; }
+        .modal.show { display: flex; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>P2DEV-141612 弹珠GACHA LC键值确认</h1>
+
+        <div class="grid" id="cardGrid"></div>
+
+        <button class="btn" onclick="saveLocal()">保存到本地</button>
+        <button class="btn" style="background:#30363d;" onclick="loadLocal()">加载本地数据</button>
+        <button class="btn" onclick="exportConfig()">导出配置JSON</button>
+
+        <div class="summary" id="summary" style="display:none;">
+            <h3 style="color:#58a6ff;margin-bottom:12px;">配置预览</h3>
+            <pre id="configPreview"></pre>
+        </div>
+    </div>
+
+    <div class="modal" id="modal" onclick="this.classList.remove('show')">
+        <img id="modalImg" src="">
+    </div>
+
+    <script>
+        const screenshots = [
+            {
+                file: 'file:///C:/Users/linkang/jira_img1.png',
+                title: '截图1 - 福利关卡触发弹窗',
+                keys: [
+                    { key: 'LC_EVENT_noumenon_gacha_welfare_title', cn: '福利关卡', en: 'BONUS ROUND' },
+                    { key: 'LC_EVENT_noumenon_gacha_welfare_desc', cn: '恭喜触发福利关卡！使用免费弹珠获取高级兑换券', en: 'Congrats! Use free marbles to earn premium tokens' }
+                ]
+            },
+            {
+                file: 'file:///C:/Users/linkang/jira_img2.png',
+                title: '截图2 - 道具本地化问题',
+                table: '1111',
+                keys: [
+                    { key: '(道具名称)', cn: '待确认道具ID后填写', en: '' }
+                ]
+            },
+            {
+                file: 'file:///C:/Users/linkang/jira_img3.png',
+                title: '截图3 - 高级兑换商店',
+                keys: [
+                    { key: 'LC_EVENT_noumenon_gacha_high_exchange_title', cn: '高级兑换商店', en: 'Premium Exchange' },
+                    { key: 'LC_EVENT_noumenon_gacha_high_exchange_desc', cn: '使用高级兑换券兑换奖励', en: 'Use premium tokens to exchange rewards' }
+                ]
+            },
+            {
+                file: 'file:///C:/Users/linkang/jira_img4.png',
+                title: '截图4 - 道具本地化问题',
+                table: '1111',
+                keys: [
+                    { key: '(道具名称)', cn: '待确认道具ID后填写', en: '' }
+                ]
+            }
+        ];
+
+        function renderCards() {
+            const grid = document.getElementById('cardGrid');
+            grid.innerHTML = screenshots.map((s, i) => `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">${s.title}</div>
+                    </div>
+                    <div class="card-body">
+                        <img class="screenshot" src="${s.file}" onclick="showModal('${s.file}')" onerror="this.style.display='none'">
+                        ${s.keys.map((k, j) => `
+                            <div class="lc-item">
+                                <div class="lc-key">${k.key}</div>
+                                <div class="lc-row">
+                                    <label>中文</label>
+                                    <input type="text" id="cn_${i}_${j}" value="${k.cn}">
+                                </div>
+                                <div class="lc-row">
+                                    <label>英文</label>
+                                    <input type="text" id="en_${i}_${j}" value="${k.en}">
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showModal(src) {
+            document.getElementById('modalImg').src = src;
+            document.getElementById('modal').classList.add('show');
+        }
+
+        function exportConfig() {
+            const config = {
+                created_at: new Date().toISOString(),
+                jira: 'P2DEV-141612',
+                lc_keys: []
+            };
+
+            screenshots.forEach((s, i) => {
+                s.keys.forEach((k, j) => {
+                    config.lc_keys.push({
+                        key: k.key,
+                        cn: document.getElementById(`cn_${i}_${j}`).value,
+                        en: document.getElementById(`en_${i}_${j}`).value
+                    });
+                });
+            });
+
+            document.getElementById('summary').style.display = 'block';
+            document.getElementById('configPreview').textContent = JSON.stringify(config, null, 2);
+
+            // 下载JSON
+            const blob = new Blob([JSON.stringify(config, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'lc-config.json';
+            a.click();
+        }
+
+        function saveLocal() {
+            const data = {};
+            screenshots.forEach((s, i) => {
+                s.keys.forEach((k, j) => {
+                    data[`cn_${i}_${j}`] = document.getElementById(`cn_${i}_${j}`).value;
+                    data[`en_${i}_${j}`] = document.getElementById(`en_${i}_${j}`).value;
+                });
+            });
+            localStorage.setItem('lc_review_data', JSON.stringify(data));
+            alert('已保存到浏览器本地');
+        }
+
+        function loadLocal() {
+            const saved = localStorage.getItem('lc_review_data');
+            if (!saved) {
+                alert('没有找到本地数据');
+                return;
+            }
+            const data = JSON.parse(saved);
+            Object.keys(data).forEach(key => {
+                const el = document.getElementById(key);
+                if (el) el.value = data[key];
+            });
+            alert('已加载本地数据');
+        }
+
+        renderCards();
+    </script>
+</body>
+</html>

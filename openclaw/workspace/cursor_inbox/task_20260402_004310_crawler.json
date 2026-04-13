@@ -1,0 +1,12 @@
+{
+  "title": "查询 Cursor Agent 是否有爬虫相关技能",
+  "instructions": "请确认 Cursor Agent 是否具备以下能力，如果具备请说明具体用法：\n\n1. **爬虫/数据抓取能力**：能否抓取网页内容、解析 HTML、从页面提取数据？\n2. **是否接入了 MediaCrawler**：能否操作小红书、抖音、B站、微博等平台的爬虫？\n3. **其他数据采集方式**：是否有 API 调用、Selenium/Playwright 等浏览器自动化能力？\n\n用户想知道他之前配置的 MediaCrawler MCP 服务（小红书、抖音爬虫）是否能在 Cursor 里直接使用。\n\n已知信息：\n- 本机 MediaCrawler MCP 运行在端口 18080\n- 小红书 MCP 运行在端口 18060（Docker 容器 xiaohongshu-mcp）\n\n请明确回答 Cursor 能否调用这些爬虫能力。",
+  "context": "用户想知道 Cursor Agent 是否有爬虫/数据抓取相关的技能，特别是他配置的那些 MCP 服务（MediaCrawler、小红书 MCP）能否在 Cursor 里使用。",
+  "submitted_by": "OpenClaw",
+  "priority": "normal",
+  "task_id": "task_20260402_004310_crawler",
+  "status": "done",
+  "submitted_at": "2026-04-02 00:44:10",
+  "picked_at": "2026-04-02 00:44:10",
+  "completed_at": "2026-04-02 00:44:54"
+}

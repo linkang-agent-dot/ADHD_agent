@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260404_161828_9015ff",
+  "title": "安装 whisper 模块",
+  "instructions": "在当前 Python 环境中安装 whisper 模块，以便语音转文字功能正常使用。执行命令：pip install openai-whisper 或 pip install whisper，然后验证 import whisper 成功。",
+  "context": "",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-04-04 16:18:28",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-04-04 16:18:30",
+  "completed_at": "2026-04-04 16:22:39"
+}

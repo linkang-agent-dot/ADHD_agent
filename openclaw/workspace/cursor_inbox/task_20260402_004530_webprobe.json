@@ -1,0 +1,12 @@
+{
+  "title": "调研 webprobe skill 能否本地复用",
+  "instructions": "用户想了解 webprobe 这个 skill 能否在本地复用，请做以下调研：\n\n1. 在 Cursor 的 skills 目录（可能是 ~/.cursor/skills 或类似路径）下查找是否有 webprobe 相关的 skill\n2. 查看 webprobe skill 的详情：\n   - 安装命令是什么\n   - 依赖的后端服务是什么\n   - 需要配置什么环境变量（特别是 WEBPROBE_URL）\n3. 分析本地复用的可行性：\n   - 如果后端是公司内部共享服务，是否有部署文档\n   - 是否有 Docker 镜像可以本地部署\n   - 需要问谁（维护者是谁）\n4. 给出建议：本地复用是否可行，如果可行需要哪些步骤\n\n已知信息：\n- webprobe 需要一个无头浏览器服务（Docker）\n- 需要配置 WEBPROBE_URL 环境变量指向服务地址\n- 可能是公司内部服务，有内部 skillsmp.tap4fun.com 平台\n\n请给出完整的调研报告。",
+  "context": "用户提供了 webprobe skill 的描述信息，想知道能否在公司内部环境复用这个 skill。需要调研：1) Cursor 是否有这个 skill 2) 后端服务如何本地部署 3) 需要问谁获取更多信息。",
+  "submitted_by": "OpenClaw",
+  "priority": "normal",
+  "task_id": "task_20260402_004530_webprobe",
+  "status": "done",
+  "submitted_at": "2026-04-02 00:46:05",
+  "picked_at": "2026-04-02 00:46:05",
+  "completed_at": "2026-04-02 00:47:28"
+}

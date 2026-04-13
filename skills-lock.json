@@ -1,6 +1,21 @@
 {
   "version": 1,
   "skills": {
+    "ai-to-sql": {
+      "source": "git@git.tap4fun.com:skills/bi/datain-ai-to-sql.git",
+      "sourceType": "git",
+      "computedHash": "c0ac35c3b50110d0cc57ee2aed6bb081c481cfebc0ffd2183a33a8057caffd46"
+    },
+    "dashboard-skill": {
+      "source": "git@git.tap4fun.com:skills/bi/datain-dashboard-skill.git",
+      "sourceType": "git",
+      "computedHash": "13e41cee4a31b16af63490d34d3b178f62cb4c7be14de67a359f6b027b933634"
+    },
+    "datain-skill": {
+      "source": "git@git.tap4fun.com:skills/bi/datain-skill.git",
+      "sourceType": "git",
+      "computedHash": "28b146bab451284bde9764c166b906c4168c13e46fffa97335cad721feac3ada"
+    },
     "dws": {
       "source": "git@git.tap4fun.com:skills/dingtalk-workspace.git",
       "sourceType": "git",
@@ -10,6 +25,11 @@
       "source": "git@git.tap4fun.com:skills/publish-skill.git",
       "sourceType": "git",
       "computedHash": "8146e94a8c729fdc252fa3a7496d6089d0f85c7d7a055d0e7807081352ac26c9"
+    },
+    "youtube-analyzer": {
+      "source": "git@git.tap4fun.com:skills/youtube-analyzer.git",
+      "sourceType": "git",
+      "computedHash": "e8d8d2e5855d6316ef401f9e6d7dcfe3556ebea8a470e5ee815171ececd47866"
     }
   }
 }

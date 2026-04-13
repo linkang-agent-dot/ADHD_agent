@@ -1,0 +1,7 @@
+{
+  "task_id": "task_20260404_161828_9015ff",
+  "title": "安装 whisper 模块",
+  "status": "done",
+  "result": "## 结果\n\n已用 **`python -m pip install openai-whisper`** 安装（对应 **`import whisper`** 的正确包名是 PyPI 上的 `openai-whisper`，不要用单独的 `whisper` 包，那是别的项目）。\n\n**本次一并装上的主要依赖：** `torch`、`tiktoken`、`numba`、`llvmlite` 等（其中 `torch` 约 114MB，安装会稍久）。\n\n**验证：**\n\n```text\nwhisper OK: 20250625\n```\n\n说明当前 Python（你这边是 **Python 3.14**，用户目录 `...\\python314\\site-packages`）里 **`import whisper` 已成功**，包版本为 **20250625**。\n\n**说明：** 首次跑转写时 Whisper 仍会按需下载模型文件；若遇到 FFmpeg 相关报错，需本机已安装 FFmpeg 并在 PATH 中。",
+  "completed_at": "2026-04-04 16:22:39"
+}

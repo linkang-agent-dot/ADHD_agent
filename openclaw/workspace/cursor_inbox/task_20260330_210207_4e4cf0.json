@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260330_210207_4e4cf0",
+  "title": "提高图片清晰度",
+  "instructions": "用户需要提高图片的清晰度/分辨率。\\n\\n图片路径：C:\\Users\\linkang\\.openclaw\\media\\inbound\\32adadcd-cf50-4791-b36c-0620109b48c8.png\\n\\n这是一张日程/预约表格截图，文字较小不清晰。\\n\\n请用以下方式处理（按优先级）：\\n1. 如果能识别图中内容，用原始数据/文本重新生成一张高清表格图片（字体大、清晰）\\n2. 如果无法识别内容，尝试使用图像超分辨率算法提升清晰度（如 Real-ESRGAN、Waifu2x 等）\\n3. 输出文件保存到：C:\\ADHD_agent\\openclaw\\workspace\\uploads\\hd_image.png\\n\\n生成的图片要：大字体、高清晰度、适合手机查看",
+  "context": "用户原话：'你提高点分辨率'，说明原图文字太小不清晰",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-03-30 21:02:07",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-03-30 21:02:07",
+  "completed_at": "2026-03-30 21:06:10"
+}

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026拓荒节弹珠GACHA - 配置生成器</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace; background: #0d1117; color: #c9d1d9; padding: 20px; line-height: 1.5; }
+        .container { max-width: 1500px; margin: 0 auto; }
+        h1 { color: #58a6ff; margin-bottom: 8px; font-size: 22px; }
+        .meta { color: #8b949e; font-size: 13px; margin-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: 400px 1fr; gap: 20px; }
+
+        .input-panel { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; height: fit-content; position: sticky; top: 20px; }
+        .input-section { margin-bottom: 16px; }
+        .input-title { color: #58a6ff; font-size: 13px; font-weight: 600; margin-bottom: 8px; border-bottom: 1px solid #30363d; padding-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
+        .input-row { display: flex; align-items: center; margin-bottom: 6px; gap: 8px; }
+        .input-row label { flex: 0 0 130px; font-size: 12px; color: #8b949e; }
+        .input-row input { flex: 1; background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 10px; border-radius: 4px; font-size: 13px; font-family: monospace; }
+        .input-row input:focus { outline: none; border-color: #58a6ff; }
+        .btn { background: #238636; color: #fff; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; width: 100%; margin-top: 12px; }
+        .btn:hover { background: #2ea043; }
+        .btn-sm { padding: 4px 8px; font-size: 11px; width: auto; margin: 0; }
+        .btn-danger { background: #da3633; }
+        .btn-danger:hover { background: #f85149; }
+        .btn-secondary { background: #30363d; }
+        .btn-secondary:hover { background: #484f58; }
+        .tag { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; margin-left: 4px; }
+        .tag-s { background: #f85149; }
+        .tag-a { background: #d29922; color: #000; }
+        .tag-b { background: #3fb950; color: #000; }
+
+        .output-panel { display: flex; flex-direction: column; gap: 16px; }
+        .output-section { background: #161b22; border: 1px solid #30363d; border-radius: 8px; overflow: hidden; }
+        .output-header { background: #21262d; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #30363d; flex-wrap: wrap; gap: 8px; }
+        .output-title { color: #58a6ff; font-size: 13px; font-weight: 600; }
+        .output-desc { color: #8b949e; font-size: 11px; margin-left: 8px; }
+        .output-actions { display: flex; gap: 6px; align-items: center; }
+        .copy-btn { background: #30363d; color: #c9d1d9; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+        .copy-btn:hover { background: #484f58; }
+        .output-content { padding: 12px 14px; overflow-x: auto; }
+        .output-content pre { margin: 0; font-size: 12px; white-space: pre-wrap; word-break: break-all; }
+        .output-content table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        .output-content th, .output-content td { padding: 6px 8px; text-align: left; border: 1px solid #30363d; position: relative; }
+        .output-content th { background: #21262d; color: #58a6ff; font-weight: 500; white-space: nowrap; }
+        .output-content td { font-family: monospace; max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .output-content td:hover { white-space: normal; word-break: break-all; }
+        .toast { position: fixed; top: 20px; right: 20px; background: #238636; color: #fff; padding: 10px 16px; border-radius: 6px; display: none; z-index: 1000; }
+        .error { color: #f85149; }
+
+        .shop-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; padding: 8px; background: #0d1117; border-radius: 6px; border: 1px solid #30363d; }
+        .shop-item input { width: 100px; }
+        .shop-item .item-name { flex: 1; font-size: 12px; }
+        .shop-item .item-price { width: 70px; }
+        .shop-item .item-limit { width: 50px; }
+        .shop-item .item-id { width: 100px; }
+        .shop-item-header { display: flex; gap: 8px; margin-bottom: 6px; font-size: 11px; color: #8b949e; padding: 0 8px; }
+
+        .col-selector { position: absolute; top: 100%; left: 0; background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 8px; z-index: 100; max-height: 300px; overflow-y: auto; min-width: 200px; display: none; }
+        .col-selector.show { display: block; }
+        .col-selector label { display: flex; align-items: center; gap: 6px; padding: 4px 0; font-size: 12px; cursor: pointer; }
+        .col-selector label:hover { color: #58a6ff; }
+
+        /* 保存和执行状态 */
+        .btn-save { background: #1f6feb; }
+        .btn-save:hover { background: #388bfd; }
+        .status-panel { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-top: 16px; }
+        .status-title { color: #58a6ff; font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+        .status-item { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #30363d; font-size: 13px; }
+        .status-item:last-child { border-bottom: none; }
+        .status-icon { width: 20px; text-align: center; }
+        .status-pending { color: #8b949e; }
+        .status-success { color: #3fb950; }
+        .status-error { color: #f85149; }
+        .status-running { color: #d29922; }
+        .execution-log { background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 12px; margin-top: 12px; font-size: 12px; max-height: 200px; overflow-y: auto; display: none; }
+        .execution-log.show { display: block; }
+
+        @media (max-width: 1000px) { .grid { grid-template-columns: 1fr; } .input-panel { position: static; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>2026拓荒节弹珠GACHA - 配置生成器</h1>
+        <div class="meta">活动ID: 21127806 | 可增删商品行和表格列 | 复制后直接粘贴到Google Sheet</div>
+
+        <div class="grid">
+            <div class="input-panel">
+                <div class="input-section">
+                    <div class="input-title">
+                        <span>高级商店商品</span>
+                        <button class="btn btn-sm btn-secondary" onclick="addShopItem()">+ 添加</button>
+                    </div>
+                    <div class="shop-item-header">
+                        <span style="width:100px">名称</span>
+                        <span style="width:100px">道具ID</span>
+                        <span style="width:70px">价格</span>
+                        <span style="width:50px">限购</span>
+                    </div>
+                    <div id="shopItems"></div>
+                </div>
+
+                <div class="input-section">
+                    <div class="input-title">里程碑配置</div>
+                    <div class="input-row"><label>福利关统计cat</label><input type="text" id="cat_id" placeholder="统计cat ID"></div>
+                    <div class="input-row"><label>里程碑奖励道具</label><input type="text" id="milestone_reward" value="11112649" placeholder="宝箱道具ID"></div>
+                </div>
+
+                <div class="input-section">
+                    <div class="input-title">ID范围</div>
+                    <div class="input-row"><label>2116起始ID</label><input type="text" id="exchange_start" value="21165100"></div>
+                    <div class="input-row"><label>2115起始ID</label><input type="text" id="task_start" value="211590100"></div>
+                    <div class="input-row"><label>2112新活动ID</label><input type="text" id="new_activity_id" value="21127807"></div>
+                </div>
+
+                <button class="btn" id="generateBtn">生成配置</button>
+                <button class="btn btn-save" id="saveBtn">保存配置到文件</button>
+
+                <!-- 执行状态面板 -->
+                <div class="status-panel" id="statusPanel" style="display:none;">
+                    <div class="status-title">执行状态</div>
+                    <div class="status-item" id="status2116">
+                        <span class="status-icon status-pending">○</span>
+                        <span>2116 activity_item_exchange (新增行)</span>
+                        <span style="margin-left:auto;color:#8b949e" id="status2116text">待执行</span>
+                    </div>
+                    <div class="status-item" id="status2121">
+                        <span class="status-icon status-pending">○</span>
+                        <span>2121 activity_special (修改 array)</span>
+                        <span style="margin-left:auto;color:#8b949e" id="status2121text">待执行</span>
+                    </div>
+                    <div class="status-item" id="status2112main">
+                        <span class="status-icon status-pending">○</span>
+                        <span>2112 主活动 (追加 exchange)</span>
+                        <span style="margin-left:auto;color:#8b949e" id="status2112maintext">待执行</span>
+                    </div>
+                    <div class="execution-log" id="executionLog"></div>
+                </div>
+            </div>
+
+            <div class="output-panel" id="outputPanel">
+                <div class="output-section">
+                    <div class="output-header">
+                        <div><span class="output-title">2116 activity_item_exchange</span><span class="output-desc" id="desc2116"></span></div>
+                        <div class="output-actions">
+                            <button class="copy-btn" onclick="toggleColSelector('2116')">选择列</button>
+                            <button class="copy-btn" onclick="copyTable('table2116')">复制</button>
+                        </div>
+                        <div class="col-selector" id="colSelector2116"></div>
+                    </div>
+                    <div class="output-content"><table id="table2116"><thead id="thead2116"></thead><tbody id="tbody2116"></tbody></table></div>
+                </div>
+
+                <div class="output-section">
+                    <div class="output-header">
+                        <div><span class="output-title">2115 activity_task</span><span class="output-desc" id="desc2115"></span></div>
+                        <div class="output-actions">
+                            <button class="copy-btn" onclick="toggleColSelector('2115')">选择列</button>
+                            <button class="copy-btn" onclick="copyTable('table2115')">复制</button>
+                        </div>
+                        <div class="col-selector" id="colSelector2115"></div>
+                    </div>
+                    <div class="output-content"><table id="table2115"><thead id="thead2115"></thead><tbody id="tbody2115"></tbody></table></div>
+                </div>
+
+                <div class="output-section">
+                    <div class="output-header">
+                        <div><span class="output-title">2121 activity_special</span><span class="output-desc">修改 high_exchange_shop (21219536)</span></div>
+                        <div class="output-actions">
+                            <button class="copy-btn" onclick="copyText('output2121')">复制</button>
+                        </div>
+                    </div>
+                    <div class="output-content"><pre id="output2121"></pre></div>
+                </div>
+
+                <div class="output-section">
+                    <div class="output-header">
+                        <div><span class="output-title">2112 主活动修改</span><span class="output-desc">修改 21127806 的 A_ARR_activity_components</span></div>
+                        <div class="output-actions">
+                            <button class="copy-btn" onclick="copyText('output2112main')">复制</button>
+                        </div>
+                    </div>
+                    <div class="output-content"><pre id="output2112main"></pre></div>
+                </div>
+
+                <div class="output-section">
+                    <div class="output-header">
+                        <div><span class="output-title">2112 activity_config (里程碑新活动)</span><span class="output-desc" id="desc2112"></span></div>
+                        <div class="output-actions">
+                            <button class="copy-btn" onclick="toggleColSelector('2112')">选择列</button>
+                            <button class="copy-btn" onclick="copyTable('table2112')">复制</button>
+                        </div>
+                        <div class="col-selector" id="colSelector2112"></div>
+                    </div>
+                    <div class="output-content"><table id="table2112"><thead id="thead2112"></thead><tbody id="tbody2112"></tbody></table></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">已复制</div>
+
+    <script>
+        const HEADERS = {
+            '2116': ['A_INT_group','A_INT_id','N_STR_comment','A_ARR_item_give','A_ARR_item_get','A_INT_display_order','A_INT_limit_num','A_INT_if_remind','A_INT_display','A_MAP_requirement','S_MAP_show_requirement','S_ARR_bargain_count','S_MAP_bargain_limit','C_INT_discount','A_STR_pkg_title','C_MAP_type_title'],
+            '2115': ['A_INT_group','A_INT_id','N_STR_comment','A_MAP_showcond','A_MAP_fincond','A_INT_pretrace','A_ARR_reward','A_STR_task_desc','A_MAP_task_label_1','A_MAP_task_label_2','A_INT_display_order','A_INT_displaykey','A_MAP_filter','A_INT_daily_reset','A_STR_banner','S_INT_redpoint_off','A_INT_country_use_type','A_INT_can_ad_reward'],
+            '2112': ['A_INT_id','S_STR_comment','A_STR_constant','A_INT_index','S_INT_priority','A_INT_base_activity_id','A_MAP_filter','A_MAP_text','A_ARR_activity_components','A_MAP_description','A_INT_ui_template','S_INT_rank_group','S_STR_banner_obj_url','S_STR_banner_url','S_STR_banner_version','A_INT_default_displaykey','A_INT_icon_displaykey','A_INT_show_hud','A_INT_calendar','A_ARR_calendar_reward','S_STR_calendar_banner_url','A_INT_dependent','S_STR_mini_banner_url','C_INT_display_flags','A_INT_country_use_type']
+        };
+
+        const colVisible = {
+            '2116': HEADERS['2116'].map(() => true),
+            '2115': HEADERS['2115'].map(() => true),
+            '2112': HEADERS['2112'].map(() => true)
+        };
+
+        const FIXED = {
+            premium_ticket: 111111018,
+            normal_ticket: 11112616,
+            normal_ball: 11112649,
+            existing_exchange: [21163279, 21163280],
+            exchange_group: 34
+        };
+
+        const MILESTONES = [
+            { level: 1, count: 3 },
+            { level: 2, count: 8 },
+            { level: 3, count: 18 },
+            { level: 4, count: 35 },
+            { level: 5, count: 55 },
+            { level: 6, count: 80 }
+        ];
+
+        // 商品列表 - 固定道具已填好ID
+        let shopItems = [
+            { name: 'S级皮肤', id: '11119472', price: 15000, limit: 1 },
+            { name: 'A级特效', id: '11119469', price: 5000, limit: 1 },
+            { name: 'A级组件1', id: '11119467', price: 5000, limit: 1 },
+            { name: 'A级组件2', id: '11119468', price: 5000, limit: 1 },
+            { name: 'B级皮肤1', id: '', price: 2000, limit: 1 },
+            { name: 'B级皮肤2', id: '11119473', price: 2000, limit: 1 },
+            { name: '碎片-艾里奥特', id: '11116272', price: 56, limit: 200 },
+            { name: '红色英雄材料', id: '11116390', price: 278, limit: 25 },
+            { name: '阶段自选箱', id: '111111030', price: 1000, limit: 5 },
+            { name: '普通弹珠x10', id: '11112649', price: 100, limit: 0, qty: 10 },
+            { name: '1高级→5普通', id: '11112616', price: 1, limit: 0, qty: 5 }
+        ];
+
+        function renderShopItems() {
+            const container = document.getElementById('shopItems');
+            container.innerHTML = '';
+            shopItems.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'shop-item';
+                div.innerHTML = `
+                    <input type="text" class="item-name" value="${item.name}" onchange="updateShopItem(${idx}, 'name', this.value)">
+                    <input type="text" class="item-id" value="${item.id}" placeholder="道具ID" onchange="updateShopItem(${idx}, 'id', this.value)">
+                    <input type="number" class="item-price" value="${item.price}" onchange="updateShopItem(${idx}, 'price', this.value)">
+                    <input type="number" class="item-limit" value="${item.limit}" onchange="updateShopItem(${idx}, 'limit', this.value)" title="0=不限">
+                    <button class="btn btn-sm btn-danger" onclick="removeShopItem(${idx})">×</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updateShopItem(idx, field, value) {
+            if (field === 'price' || field === 'limit') value = parseInt(value) || 0;
+            shopItems[idx][field] = value;
+        }
+
+        function addShopItem() {
+            shopItems.push({ name: '新商品', id: '', price: 100, limit: 1 });
+            renderShopItems();
+        }
+
+        function removeShopItem(idx) {
+            shopItems.splice(idx, 1);
+            renderShopItems();
+        }
+
+        function renderColSelector(tableKey) {
+            const container = document.getElementById('colSelector' + tableKey);
+            container.innerHTML = HEADERS[tableKey].map((col, idx) => `
+                <label>
+                    <input type="checkbox" ${colVisible[tableKey][idx] ? 'checked' : ''} onchange="toggleCol('${tableKey}', ${idx}, this.checked)">
+                    ${col}
+                </label>
+            `).join('');
+        }
+
+        function toggleColSelector(tableKey) {
+            const selector = document.getElementById('colSelector' + tableKey);
+            selector.classList.toggle('show');
+            setTimeout(() => {
+                document.addEventListener('click', function closeSelector(e) {
+                    if (!selector.contains(e.target) && !e.target.textContent.includes('选择列')) {
+                        selector.classList.remove('show');
+                        document.removeEventListener('click', closeSelector);
+                    }
+                });
+            }, 0);
+        }
+
+        function toggleCol(tableKey, idx, visible) {
+            colVisible[tableKey][idx] = visible;
+            generate();
+        }
+
+        function getVal(id) {
+            return document.getElementById(id).value.trim();
+        }
+
+        function renderTable(tableKey, headers, rows) {
+            const visibleCols = colVisible[tableKey];
+            const visibleHeaders = headers.filter((_, i) => visibleCols[i]);
+            const visibleRows = rows.map(row => row.filter((_, i) => visibleCols[i]));
+
+            const thead = document.getElementById('thead' + tableKey);
+            thead.innerHTML = '<tr>' + visibleHeaders.map(h => `<th>${h}</th>`).join('') + '</tr>';
+
+            const tbody = document.getElementById('tbody' + tableKey);
+            tbody.innerHTML = visibleRows.map(row => '<tr>' + row.map(v => `<td title="${String(v).replace(/"/g, '&quot;')}">${v}</td>`).join('') + '</tr>').join('');
+
+            const desc = document.getElementById('desc' + tableKey);
+            if (desc) desc.textContent = `${rows.length}行 × ${visibleHeaders.length}列`;
+        }
+
+        function generate() {
+            const inputs = {
+                cat_id: getVal('cat_id'),
+                milestone_reward: getVal('milestone_reward') || '11112649',
+                exchange_start: parseInt(getVal('exchange_start')) || 21165100,
+                task_start: parseInt(getVal('task_start')) || 211590100,
+                new_activity_id: getVal('new_activity_id') || '21127807'
+            };
+
+            generate2116(inputs);
+            generate2115(inputs);
+            generate2121(inputs);
+            generate2112main(inputs);
+            generate2112(inputs);
+        }
+
+        function generate2116(inputs) {
+            let id = inputs.exchange_start;
+            window.newExchangeIds = [];
+            const rows = [];
+
+            shopItems.forEach((item, idx) => {
+                const exchangeId = id++;
+                window.newExchangeIds.push(exchangeId);
+
+                const itemId = item.id || '________';
+                const itemQty = item.qty || 1;
+
+                const itemGive = JSON.stringify([{"asset":{"typ":"item","id":FIXED.premium_ticket,"val":item.price},"setting":{"serial_number":1,"ishighlight":false}}]);
+                const itemGet = JSON.stringify([{"asset":{"typ":"item","id":parseInt(itemId)||itemId,"val":itemQty},"setting":{"serial_number":1}}]);
+
+                rows.push([
+                    FIXED.exchange_group, exchangeId, `拓荒节弹珠-${item.name}`,
+                    itemGive, itemGet, 99990 - idx, item.limit,
+                    0, 0, '{}', '{}', '[]', '{}', 0, '{}', '{}'
+                ]);
+            });
+
+            renderTable('2116', HEADERS['2116'], rows);
+        }
+
+        function generate2115(inputs) {
+            if (!inputs.cat_id) {
+                document.getElementById('tbody2115').innerHTML = '<tr><td colspan="18" class="error">请填写福利关统计cat ID</td></tr>';
+                document.getElementById('thead2115').innerHTML = '';
+                window.taskIds = [];
+                return;
+            }
+
+            let id = inputs.task_start;
+            window.taskIds = [];
+            const rows = [];
+
+            MILESTONES.forEach((m, idx) => {
+                const taskId = id++;
+                window.taskIds.push(taskId);
+
+                const showcond = JSON.stringify({"op":"and","args":[{"op":"ge","typ":"actvstarttime","val":0},{"op":"ge","typ":"building","id":111811,"val":3}]});
+                const fincond = JSON.stringify({"cat":parseInt(inputs.cat_id),"val":m.count,"op":"ge"});
+                const reward = JSON.stringify([{"asset":{"typ":"item","id":parseInt(inputs.milestone_reward),"val":3+idx*2},"setting":{"serial_number":1,"ishighlight":false}}]);
+
+                rows.push([
+                    1, taskId, `拓荒节弹珠-里程碑${m.level}(${m.count}次)`,
+                    showcond, fincond, 1, reward, 'LC_EVENT_pioneer_milestone',
+                    '{}', '{}', 100 - idx, 0, '{}', 0, '""', 0, 0, 0
+                ]);
+            });
+
+            renderTable('2115', HEADERS['2115'], rows);
+        }
+
+        function generate2121(inputs) {
+            const output = document.getElementById('output2121');
+            if (!window.newExchangeIds || window.newExchangeIds.length === 0) {
+                output.textContent = '请先生成2116配置';
+                return;
+            }
+
+            const allIds = [...FIXED.existing_exchange, ...window.newExchangeIds];
+            output.textContent = `修改行: ID = 21219536 (high_exchange_shop)
+修改列: A_ARR_array
+
+原值: [21163279,21163280]
+
+新值:
+${JSON.stringify(allIds)}
+
+说明: 追加 ${window.newExchangeIds.length} 个新exchange ID`;
+        }
+
+        function generate2112main(inputs) {
+            const output = document.getElementById('output2112main');
+            if (!window.newExchangeIds || window.newExchangeIds.length === 0) {
+                output.textContent = '请先生成2116配置';
+                return;
+            }
+
+            // 生成新增的 exchange 组件引用
+            const newExchangeComponents = window.newExchangeIds.map(id => ({"typ":"exchange","id":id}));
+
+            output.textContent = `修改行: ID = 21127806 (拓荒节弹珠GACHA主活动)
+修改列: A_ARR_activity_components
+
+需要在现有 components 数组中追加以下 exchange 引用:
+
+${JSON.stringify(newExchangeComponents, null, 2)}
+
+或合并为一行:
+${JSON.stringify(newExchangeComponents)}
+
+说明:
+- 主活动 21127806 的 A_ARR_activity_components 需要包含所有 2116 exchange ID
+- 现有 high_exchange_shop 组件 (21219536) 的 A_ARR_array 也要同步更新 (见上方2121)
+- 两处都要改，缺一不可`;
+        }
+
+        function generate2112(inputs) {
+            if (!window.taskIds || window.taskIds.length === 0) {
+                document.getElementById('tbody2112').innerHTML = '<tr><td colspan="25" class="error">请先生成2115配置</td></tr>';
+                document.getElementById('thead2112').innerHTML = '';
+                return;
+            }
+
+            const components = window.taskIds.map(id => ({"typ":"task","id":id}));
+            const filter = JSON.stringify({"op":"ge","typ":"building","id":111811,"val":3});
+            const text = JSON.stringify({"group_label":"LC_EVENT_pioneer_label","label":"LC_EVENT_pioneer_milestone_label","title":"LC_EVENT_pioneer_milestone_title"});
+
+            const rows = [[
+                inputs.new_activity_id, '拓荒节弹珠-里程碑', 'pioneer_marble_milestone',
+                0, 0, inputs.new_activity_id, filter, text, JSON.stringify(components),
+                '{}', 0, 0, '""', '""', '1', 0, 0, 0, 0, '[]', '""', 0, '""', 0, 0
+            ]];
+
+            renderTable('2112', HEADERS['2112'], rows);
+        }
+
+        function copyTable(tableId) {
+            const table = document.getElementById(tableId);
+            const rows = table.querySelectorAll('tr');
+            let text = '';
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('th, td');
+                text += Array.from(cells).map(c => c.textContent).join('\t') + '\n';
+            });
+            navigator.clipboard.writeText(text).then(() => showToast());
+        }
+
+        function copyText(elementId) {
+            navigator.clipboard.writeText(document.getElementById(elementId).textContent).then(() => showToast());
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 1500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderShopItems();
+            renderColSelector('2116');
+            renderColSelector('2115');
+            renderColSelector('2112');
+            generate();
+        });
+
+        document.getElementById('generateBtn').addEventListener('click', generate);
+        document.getElementById('saveBtn').addEventListener('click', saveConfig);
+
+        // 保存配置到 JSON 文件
+        function saveConfig() {
+            const inputs = {
+                cat_id: getVal('cat_id'),
+                milestone_reward: getVal('milestone_reward') || '11112649',
+                exchange_start: parseInt(getVal('exchange_start')) || 21165100,
+                task_start: parseInt(getVal('task_start')) || 211590100,
+                new_activity_id: getVal('new_activity_id') || '21127807'
+            };
+
+            const config = {
+                meta: {
+                    activity_id: '21127806',
+                    activity_name: '2026拓荒节弹珠GACHA',
+                    created_at: new Date().toISOString(),
+                    status: 'pending'
+                },
+                inputs: inputs,
+                shop_items: shopItems,
+                changes: {
+                    '2116_new_rows': generate2116Data(inputs),
+                    '2121_update': {
+                        id: 21219536,
+                        field: 'A_ARR_array',
+                        old_value: FIXED.existing_exchange,
+                        new_value: [...FIXED.existing_exchange, ...window.newExchangeIds]
+                    },
+                    '2112_main_update': {
+                        id: 21127806,
+                        field: 'A_ARR_activity_components',
+                        append_exchanges: window.newExchangeIds.map(id => ({typ:'exchange',id:id}))
+                    },
+                    '2115_new_rows': generate2115Data(inputs),
+                    '2112_new_row': generate2112Data(inputs)
+                }
+            };
+
+            // 下载 JSON 文件
+            const blob = new Blob([JSON.stringify(config, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'pending-changes.json';
+            a.click();
+            URL.revokeObjectURL(url);
+
+            // 显示状态面板
+            document.getElementById('statusPanel').style.display = 'block';
+            showToast('配置已保存，请在IDE中确认执行');
+        }
+
+        // 生成数据函数（返回数据而不是渲染）
+        function generate2116Data(inputs) {
+            let id = inputs.exchange_start;
+            const rows = [];
+            shopItems.forEach((item, idx) => {
+                const exchangeId = id++;
+                const itemId = item.id || '________';
+                const itemQty = item.qty || 1;
+                rows.push({
+                    A_INT_group: FIXED.exchange_group,
+                    A_INT_id: exchangeId,
+                    N_STR_comment: `拓荒节弹珠-${item.name}`,
+                    A_ARR_item_give: [{"asset":{"typ":"item","id":FIXED.premium_ticket,"val":item.price},"setting":{"serial_number":1,"ishighlight":false}}],
+                    A_ARR_item_get: [{"asset":{"typ":"item","id":parseInt(itemId)||itemId,"val":itemQty},"setting":{"serial_number":1}}],
+                    A_INT_display_order: 99990 - idx,
+                    A_INT_limit_num: item.limit,
+                    A_INT_if_remind: 0,
+                    A_INT_display: 0,
+                    A_MAP_requirement: {},
+                    S_MAP_show_requirement: {},
+                    S_ARR_bargain_count: [],
+                    S_MAP_bargain_limit: {},
+                    C_INT_discount: 0,
+                    A_STR_pkg_title: {},
+                    C_MAP_type_title: {}
+                });
+            });
+            return rows;
+        }
+
+        function generate2115Data(inputs) {
+            if (!inputs.cat_id) return [];
+            let id = inputs.task_start;
+            const rows = [];
+            MILESTONES.forEach((m, idx) => {
+                rows.push({
+                    A_INT_group: 1,
+                    A_INT_id: id++,
+                    N_STR_comment: `拓荒节弹珠-里程碑${m.level}(${m.count}次)`,
+                    A_MAP_showcond: {"op":"and","args":[{"op":"ge","typ":"actvstarttime","val":0},{"op":"ge","typ":"building","id":111811,"val":3}]},
+                    A_MAP_fincond: {"cat":parseInt(inputs.cat_id),"val":m.count,"op":"ge"},
+                    A_INT_pretrace: 1,
+                    A_ARR_reward: [{"asset":{"typ":"item","id":parseInt(inputs.milestone_reward),"val":3+idx*2},"setting":{"serial_number":1,"ishighlight":false}}],
+                    A_STR_task_desc: 'LC_EVENT_pioneer_milestone',
+                    A_MAP_task_label_1: {},
+                    A_MAP_task_label_2: {},
+                    A_INT_display_order: 100 - idx,
+                    A_INT_displaykey: 0,
+                    A_MAP_filter: {},
+                    A_INT_daily_reset: 0,
+                    A_STR_banner: '""',
+                    S_INT_redpoint_off: 0,
+                    A_INT_country_use_type: 0,
+                    A_INT_can_ad_reward: 0
+                });
+            });
+            return rows;
+        }
+
+        function generate2112Data(inputs) {
+            if (!window.taskIds || window.taskIds.length === 0) return null;
+            return {
+                A_INT_id: inputs.new_activity_id,
+                S_STR_comment: '拓荒节弹珠-里程碑',
+                A_STR_constant: 'pioneer_marble_milestone',
+                A_INT_index: 0,
+                S_INT_priority: 0,
+                A_INT_base_activity_id: inputs.new_activity_id,
+                A_MAP_filter: {"op":"ge","typ":"building","id":111811,"val":3},
+                A_MAP_text: {"group_label":"LC_EVENT_pioneer_label","label":"LC_EVENT_pioneer_milestone_label","title":"LC_EVENT_pioneer_milestone_title"},
+                A_ARR_activity_components: window.taskIds.map(id => ({typ:'task',id:id})),
+                A_MAP_description: {},
+                A_INT_ui_template: 0,
+                S_INT_rank_group: 0,
+                S_STR_banner_obj_url: '""',
+                S_STR_banner_url: '""',
+                S_STR_banner_version: '1',
+                A_INT_default_displaykey: 0,
+                A_INT_icon_displaykey: 0,
+                A_INT_show_hud: 0,
+                A_INT_calendar: 0,
+                A_ARR_calendar_reward: [],
+                S_STR_calendar_banner_url: '""',
+                A_INT_dependent: 0,
+                S_STR_mini_banner_url: '""',
+                C_INT_display_flags: 0,
+                A_INT_country_use_type: 0
+            };
+        }
+
+        // 更新执行状态（供外部调用）
+        function updateStatus(key, status, text) {
+            const iconEl = document.querySelector(`#status${key} .status-icon`);
+            const textEl = document.getElementById(`status${key}text`);
+            iconEl.className = 'status-icon status-' + status;
+            iconEl.textContent = status === 'success' ? '✓' : status === 'error' ? '✗' : status === 'running' ? '◐' : '○';
+            textEl.textContent = text;
+            textEl.style.color = status === 'success' ? '#3fb950' : status === 'error' ? '#f85149' : status === 'running' ? '#d29922' : '#8b949e';
+        }
+
+        function appendLog(msg) {
+            const log = document.getElementById('executionLog');
+            log.classList.add('show');
+            log.innerHTML += msg + '<br>';
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // 暴露给外部
+        window.updateStatus = updateStatus;
+        window.appendLog = appendLog;
+    </script>
+</body>
+</html>

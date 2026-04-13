@@ -1,0 +1,18 @@
+﻿浠婃棩 outbox 浠诲姟鏁? 17
+[done] 鏌ヨ Cursor Agent 鍙敤鐨?Skills 鍒楄〃 | **鏂囨。涓庤〃鏍?*   `docx`銆乣pdf`銆乣pptx`銆乣xlsx`銆乣doc-coauthoring`銆乣google-docs`锛堝強 Google Docs 鐩稿叧 gws 鎶€鑳斤級  **鏁版嵁 / 杩愯惀鍒嗘瀽**   `data-a
+[done] 鏌ヨ Cursor Agent 鏄惁鏈夌埇铏浉鍏虫妧鑳?| - **HTTP API**锛氬彲浠ラ€氳繃缁堢璺戣剼鏈垨椤圭洰閲屽凡鏈夊鎴风锛屽彧瑕佺綉缁滃拰瀵嗛挜鍦ㄦ湰鏈哄彲鐢ㄣ€?  - **Playwright**锛歚media-crawler-mcp` 鐨?README 閲屽氨瑕佹眰 `uv run playwright 
+[done] 璋冪爺 webprobe skill 鑳藉惁鏈湴澶嶇敤 | - **涓嶇‘瀹氱偣**锛氬畼鏂规槸鍚﹀彧鏀寔鏌愪竴鍥哄畾 API銆佹槸鍚﹂渶瑕?VPN/璁よ瘉銆侀暅鍍忔槸鍚︽斁鍦ㄥ唴缃?registry鈥斺€旇繖浜?**蹇呴』鐪嬪畼鏂规枃妗ｆ垨闂淮鎶よ€?*锛岄伩鍏嶈嚜寤烘湇鍔℃帴鍙ｄ笉鍏煎銆? ---  ### 4. 寤鸿涓庢帹鑽愭楠? **缁撹绠€杩帮細
+[done] AI鍒嗕韩缇ゅ唴瀹规鏋惰鍒?| - **鏍稿績鍐呭鐐?*     - 杩戞湡鐪熷疄闇€姹傦細**鏋氫妇 Cursor Agent 鍙敤 skills**銆佷笌 Datain / gsheet / P2 瀵艰〃 绛夊煙 skills 鐨勫叧绯汇€?    - 鍙垎浜細`.cursor/skill
+[done] Cursor褰撳墠浣跨敤鐨勬ā鍨?| 鍦?Cursor 閲屽拰浣犲璇濈殑杩欐潯鍔╂墜韬唤鏄?**Composer**锛岀敱 **Cursor** 鑷爺/鎻愪緵锛屼笉鏄?OpenAI 鐨?GPT 绯诲垪锛屼篃涓嶆槸 Anthropic 鐨?Claude銆?  鍏蜂綋鍚庡彴浼氭寕鍝釜鎺ㄧ悊鏈嶅姟銆佹槸鍚﹀妯″瀷璺敱
+[done] Cursor妯″瀷璋冪敤璁剧疆 | 浠ヤ笂鍥炲宸叉兜鐩栦綘鐨勯棶棰橈紱椋炰功瀹屾垚閫氱煡宸插彂閫併€?
+[done] Cursor CLI璋冪敤鏂瑰紡 |  甯姪閲屽垪浜嗕笁涓紙鍏蜂綋瀛愬懡浠ゅ弬鏁板缓璁啀杩愯瀵瑰簲瀛愬懡浠ゆ垨鏌ユ枃妗ｏ級锛? - **`cursor tunnel`** 鈥?闅ч亾锛堜笌 vscode.dev 绛夎繙绋嬭闂浉鍏筹級 - **`cursor serve-web`** 鈥?鍦ㄦ祻瑙堝櫒閲岃窇缂栬緫鍣?
+[done] 璋冪爺鍗冨窛AI鎺ュ叆鐩稿叧skill/椤圭洰 | | **geiqin/oceanengine** | [github.com/geiqin/oceanengine](https://github.com/geiqin/oceanengine) | 鍖呭惈 `QIANCHUAN.md`锛屾湁鍗?
+[error] 鍗冨窛鏃燗PI鑳藉惁鑷姩鍖?| CLI 杩斿洖闈為浂: I: Provider Error We're having trouble connecting to the model provider. This might be temporary - please try 
+[error] 鏈€杩?澶╂渶鏈変环鍊肩殑AI搴旂敤鎬荤粨 | CLI 杩斿洖闈為浂: I: Provider Error We're having trouble connecting to the model provider. This might be temporary - please try 
+[error] 鍗冨窛鏃燗PI鑳藉惁鑷姩鍖?閲嶈瘯) | CLI 杩斿洖闈為浂: Connection lost, reconnecting... Retry attempt 1... I: Provider Error We're having trouble connecting to the m
+[done] OpenClaw澶栭儴鎺ュ叆鏂规 |  4. **鍜岄涔?TG 鐨勫叧绯?*锛氳嫢 `deliver: true`锛屽彲鎶婄粨鏋?**鎺ㄥ洖** 宸查厤缃殑 IM 娓犻亾锛堟枃妗ｉ噷 `channel` 鏋氫妇浠?WhatsApp/Telegram/Slack 绛変负涓伙紱椋炰功鏄惁鍑虹幇鍦ㄤ綘褰撳墠鐗堟湰鐨勬灇
+[done] OpenClaw澶栭儴鎺ュ叆鏂规-绠€鍖栫増 | 浠ヤ笂灏辨槸瀹屾暣鐨勭畝鍖栫増缁撹锛屾牳蹇冪粨璁烘槸锛? **澶栭儴绯荤粺锛堝崈宸濈瓑锛夌粺涓€璧伴涔︽満鍣ㄤ汉瑙﹀彂铏惧摜锛屾槸鏈€鐪佷簨銆佹渶绋崇殑鏂规銆?* 涓嶉渶瑕佹姌鑵剧綉缁滅┛閫忓拰 HTTP 鎺ュ彛瀵规帴锛岄涔﹁嚜宸辨湁瀹屾暣鐨?API 鍙互璁╀换浣曠郴缁熷彂娑堟伅杩涙潵锛岃櫨鍝ヨ礋璐ｅ搷搴斿拰鎵ц銆?
+[error] OpenClaw澶栭儴鎺ュ叆鏂规-鐩存帴鍙戞垜 | CLI 杩斿洖闈為浂: I: Provider Error We're having trouble connecting to the model provider. This might be temporary - please try 
+[done] 楂橀宸ヤ綔娴丄I搴旂敤鍦烘櫙鎬荤粨 |   - **CI/鑴氭湰鍖?diff 鎶ュ憡 + 鍚堝苟娓呭崟**鍙妸銆岀瓑浜洪棶銆佷汉鎻忚堪銆嶅彉鎴愩€岀偣涓€娆″嚭鎶ュ憡銆嶏紱鑺傜渷 **30鈥?0% 澧欓挓**杈冪幇瀹烇紝**鍚堝苟鏈韩**浠嶆湁鍐茬獊浜哄伐澶勭悊銆? - **瀵艰〃 JSON 鎶ラ敊锛垀6 min 绾у埆锛?*   
+[done] AI搴旂敤鍦烘櫙-鏇村+浼樺寲鏍煎紡 |  ### 鍦烘櫙11锛氬 Agent / 鍚庡彴浠诲姟闃熷垪 + 椋炰功瀹屾垚/纭閫氱煡 - **鑰楁椂**锛?0鈥?0 鍒嗛挓/杞紙鎺ョ嚎銆佹帓閿欍€佺湅鏃ュ織锛?- **鍋氫簡浠€涔?*锛氭妸銆岄渶瑕佷汉鐐圭‘璁ゃ€嶆垨銆屽仛瀹岃鎺ㄩ€併€嶇殑鐜妭鎺ュ埌椋炰功锛涢厤鍚?daemon/浠诲姟 J
+[done] AI鏃ユ姤-鍙兢鍒嗕韩鐗?| 姝ｆ枃宸插叏閮ㄥ啓鍦ㄤ笂闈紝鍙洿鎺ュ鍒惰繘缇ゃ€?*鏍囬 weekday**锛氫綘妯＄増閲屽啓鐨勩€屽懆涓夈€嶄笌褰撳ぉ瀹為檯 **2026-04-02 = 鍛ㄥ洓** 涓嶄竴鑷达紝鏃ユ姤閲屽凡鎸夊懆鍥涘啓锛涜嫢缇ら噷缁熶竴鐢ㄨ鏀挎棩鏈燂紝鎶婃嫭鍙烽噷鏀规垚浣犱滑鍙ｅ緞鍗冲彲銆? 椋炰功瀹屾垚閫氱煡宸插彂閫併€?

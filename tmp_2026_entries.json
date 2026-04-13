@@ -1,0 +1,1022 @@
+[
+  {
+    "id": "21127601",
+    "comment": "黑五英雄自选连锁",
+    "constant": "event_blackfri_hero_chain_gpk"
+  },
+  {
+    "id": "21127602",
+    "comment": "黑五省省卡",
+    "constant": "event_blackfri_pkg"
+  },
+  {
+    "id": "21127603",
+    "comment": "黑五满减折扣券礼包",
+    "constant": "event_thankgive_discount_pkg_2025"
+  },
+  {
+    "id": "21127604",
+    "comment": "感恩节-2025-wonder巨猿",
+    "constant": "event_thankgive_festival_hegemony_2025"
+  },
+  {
+    "id": "21127609",
+    "comment": "25感恩节-挖矿累积任务",
+    "constant": "metro_minigame_thankgive25_task"
+  },
+  {
+    "id": "21127610",
+    "comment": "感恩节星球套装-赛车活动-S6",
+    "constant": "event_s300_race_game_thankgive25_s6"
+  },
+  {
+    "id": "21127611",
+    "comment": "感恩节星球套装-赛车活动-积分任务",
+    "constant": "event_s300_race_game_task_thankgive25_s6"
+  },
+  {
+    "id": "21127612",
+    "comment": "感恩节星球套装-赛车活动-S3",
+    "constant": "event_s300_race_game_thankgive25_s3"
+  },
+  {
+    "id": "21127613",
+    "comment": "感恩节星球套装-赛车活动-积分任务",
+    "constant": "event_s300_race_game_task_thankgive25_s3"
+  },
+  {
+    "id": "21127614",
+    "comment": "节日大富翁进度活动（复活节）",
+    "constant": "event_fes_monopoly"
+  },
+  {
+    "id": "21127615",
+    "comment": "感恩节黑五满减-schema6",
+    "constant": "event_thankgive_discount_2"
+  },
+  {
+    "id": "21127616",
+    "comment": "25感恩节gacha-每日礼包",
+    "constant": "event_thankgive_2025_gacha_daily"
+  },
+  {
+    "id": "21127617",
+    "comment": "25感恩节-机甲累充",
+    "constant": "event_thankgive_2025_packge_name"
+  },
+  {
+    "id": "21127618",
+    "comment": "25感恩节-单笔充值-第一轮",
+    "constant": "event_thankgive_2025_single_recharge"
+  },
+  {
+    "id": "21127619",
+    "comment": "25感恩节-单笔充值-第二轮",
+    "constant": "event_thankgive_2025_single_recharge_2"
+  },
+  {
+    "id": "21127620",
+    "comment": "节日通用自选周卡（新版-科技节）-s3-5",
+    "constant": "event_fes_time_card_s5"
+  },
+  {
+    "id": "21127621",
+    "comment": "节日通用自选周卡（新版-科技节）-s6",
+    "constant": "event_fes_time_card_s6"
+  },
+  {
+    "id": "21127622",
+    "comment": "MJ8小游戏",
+    "constant": "event_mj8_game"
+  },
+  {
+    "id": "21127623",
+    "comment": "MJ8小游戏-bp",
+    "constant": "event_mj8_game_bp"
+  },
+  {
+    "id": "21127624",
+    "comment": "MJ8小游戏-鱿鱼游戏",
+    "constant": "event_fesgame_squid_game_mj8"
+  },
+  {
+    "id": "21127625",
+    "comment": "斗士皮肤-双奖池gacha_schema6",
+    "constant": "event_hero_gacha_2025"
+  },
+  {
+    "id": "21127626",
+    "comment": "25圣诞节-挖矿累积任务",
+    "constant": "metro_minigame_christ25_task"
+  },
+  {
+    "id": "21127627",
+    "comment": "斗士皮肤gacha-每日礼包-通用",
+    "constant": "event_hero_2025_gacha2_daily"
+  },
+  {
+    "id": "21127628",
+    "comment": "斗士皮肤-gacha累计任务",
+    "constant": "event_hero_2024_reward_gacha1"
+  },
+  {
+    "id": "21127629",
+    "comment": "斗士皮肤-单笔充值-第一轮",
+    "constant": "event_hero_2025_single_recharge"
+  },
+  {
+    "id": "21127630",
+    "comment": "复活节-预购连锁礼包_schema3-5",
+    "constant": "event_christ_pre_chain"
+  },
+  {
+    "id": "21127631",
+    "comment": "复活节-预购连锁礼包_schema6",
+    "constant": "event_christ_pre_chain_6"
+  },
+  {
+    "id": "21127632",
+    "comment": "节日活动-聚宝盆抽奖-第1期（大富翁）",
+    "constant": "event_treasure_bowl_fes_1"
+  },
+  {
+    "id": "21127633",
+    "comment": "节日活动-聚宝盆抽奖-第2期（弹珠gacha）",
+    "constant": "event_treasure_bowl_fes_2"
+  },
+  {
+    "id": "21127634",
+    "comment": "节日活动-聚宝盆抽奖-第3期（斗士皮肤）",
+    "constant": "event_treasure_bowl_fes_3"
+  },
+  {
+    "id": "21127635",
+    "comment": "节日活动-聚宝盆抽奖-第4期（强消耗）",
+    "constant": "event_treasure_bowl_fes_4"
+  },
+  {
+    "id": "21127636",
+    "comment": "节日活动-聚宝盆抽奖-第5期（mj8）",
+    "constant": "event_treasure_bowl_fes_5"
+  },
+  {
+    "id": "21127637",
+    "comment": "节日活动-聚宝盆抽奖-第6期（BP）",
+    "constant": "event_treasure_bowl_fes_6"
+  },
+  {
+    "id": "21127638",
+    "comment": "复活节2026-横版bp（循环宝箱无排行榜）",
+    "constant": "event_xmas_bp_2025"
+  },
+  {
+    "id": "21127639",
+    "comment": "25圣诞节-节日手札",
+    "constant": "event_christ_party"
+  },
+  {
+    "id": "21127640",
+    "comment": "圣诞节2025-弹珠GACHA",
+    "constant": "event_christ_reward_gacha1"
+  },
+  {
+    "id": "21127641",
+    "comment": "斗士皮肤-双奖池gacha_schema3",
+    "constant": "event_hero_gacha_2025_schema3"
+  },
+  {
+    "id": "21127642",
+    "comment": "节日活动-一番赏",
+    "constant": "event_server_gacha_2025"
+  },
+  {
+    "id": "21127643",
+    "comment": "感恩节星球套装-赛车活动-S6-灰度服",
+    "constant": "event_s300_race_game_thankgive25_s6_111"
+  },
+  {
+    "id": "21127644",
+    "comment": "感恩节星球套装-赛车活动-积分任务-灰度服",
+    "constant": "event_s300_race_game_task_thankgive25_s6_111"
+  },
+  {
+    "id": "21127645",
+    "comment": "25圣诞节BP-每日礼包",
+    "constant": "event_xmas_2025_bp_daily"
+  },
+  {
+    "id": "21127646",
+    "comment": "春节26.1月-限时抢购-S6-通用皮",
+    "constant": "event_flash_sale_s6_spring"
+  },
+  {
+    "id": "21127647",
+    "comment": "春节26.1月-限时抢购-S3-5-通用皮",
+    "constant": "event_flash_sale_s3_5_spring"
+  },
+  {
+    "id": "21127648",
+    "comment": "26春节-挖矿累积任务",
+    "constant": "metro_minigame_spring26_task"
+  },
+  {
+    "id": "21127649",
+    "comment": "圣诞节签到-2025-scheam3-5",
+    "constant": "event_xmas_login_2025_schema3"
+  },
+  {
+    "id": "21127650",
+    "comment": "圣诞买一送一-scheam6-第二期",
+    "constant": "event_christmas_free_gift_2025_3"
+  },
+  {
+    "id": "21127651",
+    "comment": "科技节2026-横版bp（循环宝箱无排行榜）",
+    "constant": "event_spring_bp_2026"
+  },
+  {
+    "id": "21127652",
+    "comment": "26春节-机甲累充",
+    "constant": "event_spring_2026_packge_name"
+  },
+  {
+    "id": "21127653",
+    "comment": "科技节2026-弹珠GACHA",
+    "constant": "event_sci_reward_gacha_2026"
+  },
+  {
+    "id": "21127654",
+    "comment": "异种蛮猴（改造猴的威胁）-节日版",
+    "constant": "event_special_mutant_event_fes"
+  },
+  {
+    "id": "21127655",
+    "comment": "科技节2026-弹珠-每日礼包",
+    "constant": "event_sci_reward_gacha_2026_daily"
+  },
+  {
+    "id": "21127656",
+    "comment": "26科技节-挖矿累积任务",
+    "constant": "metro_minigame_sci26_task"
+  },
+  {
+    "id": "21127657",
+    "comment": "26科技节-主城特效累充-联盟团购",
+    "constant": "event_techFestival_2026_city_effect_alliance"
+  },
+  {
+    "id": "21127658",
+    "comment": "26科技节-主城特效累充-服务器",
+    "constant": "event_sciFestival_2026_city_effect_server_vd"
+  },
+  {
+    "id": "21127659",
+    "comment": "26复活节-挖矿累积任务",
+    "constant": "metro_minigame_easter26_task"
+  },
+  {
+    "id": "21127692",
+    "comment": "复活节2026-主城特效累充-个人-bingo返利",
+    "constant": "event_techFestival_2026_city_effect_single_tech_2"
+  },
+  {
+    "id": "21127693",
+    "comment": "复活节-限时抢购-S6-通用皮（1、2期",
+    "constant": "event_easter_flash_sale_s6"
+  },
+  {
+    "id": "21127694",
+    "comment": "复活节-限时抢购-S3-5-通用皮（3期",
+    "constant": "event_easter_flash_sale_s3_5"
+  },
+  {
+    "id": "21127695",
+    "comment": "2026复活节-行军特效礼包",
+    "constant": "event_march_effect_2026_easter"
+  },
+  {
+    "id": "21127696",
+    "comment": "联动礼包-2026复活节",
+    "constant": "event_unite_3easter_2026"
+  },
+  {
+    "id": "21127697",
+    "comment": "复活节2026-行军表情礼包",
+    "constant": "event_easter_emoji_2026"
+  },
+  {
+    "id": "21127698",
+    "comment": "复活节-2026-wonder巨猿-砸金蛋",
+    "constant": "event_tech_festival_hegemony_2026"
+  },
+  {
+    "id": "21127699",
+    "comment": "复活节签到-2026",
+    "constant": "event_easter_login_2026"
+  },
+  {
+    "id": "21127700",
+    "comment": "节日钓鱼活动",
+    "constant": "event_fishing_game"
+  },
+  {
+    "id": "21127701",
+    "comment": "节日钓鱼BP活动",
+    "constant": "event_fishing_game_bp"
+  },
+  {
+    "id": "21127702",
+    "comment": "一番赏活动bp",
+    "constant": "event_server_gacha_bp"
+  },
+  {
+    "id": "21127703",
+    "comment": "春节2026-主城特效累充-联盟团购",
+    "constant": "event_spring_2025_city_effect_alliance"
+  },
+  {
+    "id": "21127704",
+    "comment": "节日活动-异族大富翁",
+    "constant": "event_monster_monopoly"
+  },
+  {
+    "id": "21127705",
+    "comment": "26新组件gacha-云上探宝",
+    "constant": "event_gird_gacha_2026"
+  },
+  {
+    "id": "21127706",
+    "comment": "异族大富翁-每日礼包",
+    "constant": "event_monster_monopoly_daily"
+  },
+  {
+    "id": "21127707",
+    "comment": "异族大富翁-体验卡礼包",
+    "constant": "event_monster_monopoly_pkg_2026"
+  },
+  {
+    "id": "21127708",
+    "comment": "26情人节-挖矿累积任务",
+    "constant": "metro_minigame_valentine26_task"
+  },
+  {
+    "id": "21127709",
+    "comment": "新组件gacha-云上探宝-每日礼包",
+    "constant": "event_gird_gacha_daily"
+  },
+  {
+    "id": "21127710",
+    "comment": "26情人节-机甲累充",
+    "constant": "event_valentine26_packge_name"
+  },
+  {
+    "id": "21127711",
+    "comment": "26情人节-单笔充值-第一轮",
+    "constant": "event_valentine26_single_recharge"
+  },
+  {
+    "id": "21127712",
+    "comment": "26情人节-单笔充值-第二轮",
+    "constant": "event_valentine26_single_recharge_2"
+  },
+  {
+    "id": "21127713",
+    "comment": "情人节2026-主城特效累充-个人",
+    "constant": "event_techFestival_2026_city_effect_single_vd"
+  },
+  {
+    "id": "21127714",
+    "comment": "情人节2026-主城特效累充-服务器",
+    "constant": "event_techFestival_2026_city_effect_server_vd"
+  },
+  {
+    "id": "21127715",
+    "comment": "26科技节-节日手札",
+    "constant": "event_techFestival_party"
+  },
+  {
+    "id": "21127716",
+    "comment": "科技节-限时抢购-S6-通用皮（1、2期",
+    "constant": "event_tech_flash_sale_s6"
+  },
+  {
+    "id": "21127717",
+    "comment": "科技节-限时抢购-S3-5-通用皮（3期",
+    "constant": "event_tech_flash_sale_s3_5"
+  },
+  {
+    "id": "21127718",
+    "comment": "异族大富翁-每日礼包",
+    "constant": "event_monster_monopoly_daily_pkg"
+  },
+  {
+    "id": "21127750",
+    "comment": "复活节彩蛋收集交换（春日野餐）",
+    "constant": "event_easter_egg_exchange"
+  },
+  {
+    "id": "21127751",
+    "comment": "节日大富翁组队子活动",
+    "constant": "event_fes_monopoly_team_game"
+  },
+  {
+    "id": "21127752",
+    "comment": "2026节日通用七日连胜活动",
+    "constant": "event_2026_7days_winbox"
+  },
+  {
+    "id": "21127753",
+    "comment": "26复活节-赛车活动-S6",
+    "constant": "event_race_game_sc26_s6"
+  },
+  {
+    "id": "21127754",
+    "comment": "26复活节-赛车活动-积分任务-S6",
+    "constant": "event_race_game_task_sc26_s6"
+  },
+  {
+    "id": "21127755",
+    "comment": "26复活节-赛车活动-S3",
+    "constant": "event_race_game_sc26_s3"
+  },
+  {
+    "id": "21127756",
+    "comment": "26复活节-赛车活动-积分任务-S3",
+    "constant": "event_race_game_task_sc26_s3"
+  },
+  {
+    "id": "21127757",
+    "comment": "26复活节-赛车活动-组队",
+    "constant": "event_race_game_team"
+  },
+  {
+    "id": "21127758",
+    "comment": "26复活节-赛车活动-组队-BP活动",
+    "constant": "event_race_game_team_bp"
+  },
+  {
+    "id": "21127759",
+    "comment": "26复活节-赛车活动-组队-连锁礼包",
+    "constant": "event_race_game_team_chain_pkg"
+  },
+  {
+    "id": "21127801",
+    "comment": "推币机-单服排行榜版",
+    "constant": "event_coin_pusher_single_server_rank"
+  },
+  {
+    "id": "21127802",
+    "comment": "推币机-灰度排行榜版",
+    "constant": "event_coin_pusher_single_server_rank_1"
+  },
+  {
+    "id": "21127803",
+    "comment": "节日卡包BP-通用版",
+    "constant": "event_fes_card_bp"
+  },
+  {
+    "id": "21127804",
+    "comment": "节日卡包通用-三合一礼包",
+    "constant": "event_fes_card_packgae"
+  },
+  {
+    "id": "21127805",
+    "comment": "OAP定存活动",
+    "constant": "event_oap_recharge"
+  },
+  {
+    "id": "21128001",
+    "comment": "节日占位符（上面都是节日）",
+    "constant": "fes_2"
+  },
+  {
+    "id": "21128002",
+    "comment": "异步假集结gve-第一次",
+    "constant": "fake_rally_gve_normal_0"
+  },
+  {
+    "id": "21128003",
+    "comment": "异步假集结gve-schema1",
+    "constant": "fake_rally_gve_normal_1"
+  },
+  {
+    "id": "21128004",
+    "comment": "异步假集结gve-schema2",
+    "constant": "fake_rally_gve_normal_2"
+  },
+  {
+    "id": "21128005",
+    "comment": "异步假集结gve-schema3",
+    "constant": "fake_rally_gve_army_equipment_1"
+  },
+  {
+    "id": "21128006",
+    "comment": "异步假集结gve-schema4",
+    "constant": "fake_rally_gve_army_equipment_2"
+  },
+  {
+    "id": "21128007",
+    "comment": "异步假集结gve-schema5",
+    "constant": "fake_rally_gve_army_equipment_3"
+  },
+  {
+    "id": "21128008",
+    "comment": "异步假集结gve-schema6",
+    "constant": "fake_rally_gve_army_equipment_4"
+  },
+  {
+    "id": "21128009",
+    "comment": "异步假集结gve-KVK1,2",
+    "constant": "fake_rally_gve_army_equipment_5"
+  },
+  {
+    "id": "21128010",
+    "comment": "异步假集结gve-KVK3,4",
+    "constant": "fake_rally_gve_army_equipment_6"
+  },
+  {
+    "id": "21128011",
+    "comment": "异步假集结gve-KVK5",
+    "constant": "fake_rally_gve_army_equipment_7"
+  },
+  {
+    "id": "21128020",
+    "comment": "kvk5主活动",
+    "constant": "event_kvk5"
+  },
+  {
+    "id": "21128021",
+    "comment": "kvk5排行榜与遗迹故事",
+    "constant": "event_kvk5_rank"
+  },
+  {
+    "id": "21128022",
+    "comment": "kvk5一网打尽",
+    "constant": "event_one_fell_swoop_kvk5"
+  },
+  {
+    "id": "21128023",
+    "comment": "kvk5野战区34",
+    "constant": "event_kvk5_battle_area_1"
+  },
+  {
+    "id": "21128024",
+    "comment": "kvk5野战区35",
+    "constant": "event_kvk5_battle_area_2"
+  },
+  {
+    "id": "21128025",
+    "comment": "kvk5野战区36",
+    "constant": "event_kvk5_battle_area_3"
+  },
+  {
+    "id": "21128031",
+    "comment": "基因bp（kvk5版）_新数值版",
+    "constant": "event_battle_pass_kvk5_new"
+  },
+  {
+    "id": "21128032",
+    "comment": "kvk5成就任务",
+    "constant": "event_kvk5_achievement"
+  },
+  {
+    "id": "21128033",
+    "comment": "kvk5-预热",
+    "constant": "event_kvk5_first_activity"
+  },
+  {
+    "id": "21128034",
+    "comment": "累计充值（kvk5）",
+    "constant": "event_iap_recharge_kvk5_new"
+  },
+  {
+    "id": "21128035",
+    "comment": "kvk5野战区34-总",
+    "constant": "event_kvk5_battle_area_total_1"
+  },
+  {
+    "id": "21128036",
+    "comment": "kvk5野战区35-总",
+    "constant": "event_kvk5_battle_area_total_2"
+  },
+  {
+    "id": "21128037",
+    "comment": "kvk5野战区36-总",
+    "constant": "event_kvk5_battle_area_total_3"
+  },
+  {
+    "id": "21128038",
+    "comment": "kvk历史战绩5",
+    "constant": "kvk_history_5"
+  },
+  {
+    "id": "21128039",
+    "comment": "军功battlepassk5",
+    "constant": "event_merit_battle_pass_kvk5"
+  },
+  {
+    "id": "21128040",
+    "comment": "基因bp（kvk1版）_v81",
+    "constant": "event_battle_pass_kvk1_v81"
+  },
+  {
+    "id": "21128041",
+    "comment": "基因bp（kvk2版）_v81",
+    "constant": "event_battle_pass_kvk2_v81"
+  },
+  {
+    "id": "21128042",
+    "comment": "基因bp（kvk3版）_v81",
+    "constant": "event_battle_pass_kvk3_v81"
+  },
+  {
+    "id": "21128043",
+    "comment": "基因bp（kvk4版）_v81",
+    "constant": "event_battle_pass_kvk4_v81"
+  },
+  {
+    "id": "21128044",
+    "comment": "基因bp（kvk5版）_v81",
+    "constant": "event_battle_pass_kvk5_v81"
+  },
+  {
+    "id": "21128050",
+    "comment": "基因冲刺kvk1",
+    "constant": "event_gene_consumption_task_kvk1"
+  },
+  {
+    "id": "21128051",
+    "comment": "基因冲刺kvk2",
+    "constant": "event_gene_consumption_task_kvk2"
+  },
+  {
+    "id": "21128052",
+    "comment": "基因冲刺kvk3",
+    "constant": "event_gene_consumption_task_kvk3"
+  },
+  {
+    "id": "21128053",
+    "comment": "基因冲刺kvk4",
+    "constant": "event_gene_consumption_task_kvk4"
+  },
+  {
+    "id": "21128054",
+    "comment": "基因冲刺kvk5",
+    "constant": "event_gene_consumption_task_kvk5"
+  },
+  {
+    "id": "21128055",
+    "comment": "基因冲刺kvk6",
+    "constant": "event_gene_consumption_task_kvk6"
+  },
+  {
+    "id": "21128060",
+    "comment": "kvk5占位符（上面都是KVK5-20-50）",
+    "constant": "fes_5"
+  },
+  {
+    "id": "21128061",
+    "comment": "可视化礼包1-连锁版",
+    "constant": "ct_event_map_pack"
+  },
+  {
+    "id": "21128062",
+    "comment": "可视化礼包2-连锁版",
+    "constant": "ct_event_map_pack_1"
+  },
+  {
+    "id": "21128063",
+    "comment": "可视化礼包3-连锁版",
+    "constant": "ct_event_map_pack_2"
+  },
+  {
+    "id": "21128064",
+    "comment": "机师触达框架活动",
+    "constant": "event_mecha_driver_frame"
+  },
+  {
+    "id": "21128065",
+    "comment": "机师活跃活动",
+    "constant": "event_mecha_driver_task"
+  },
+  {
+    "id": "21128066",
+    "comment": "开工日活动schema6",
+    "constant": "event_work_day_schema6"
+  },
+  {
+    "id": "21128068",
+    "comment": "小额连充-新.",
+    "constant": "event_ctn_recharge_1"
+  },
+  {
+    "id": "21128080",
+    "comment": "KVK3深海试炼",
+    "constant": "hero_cabin_skill_kvk_3"
+  },
+  {
+    "id": "21128081",
+    "comment": "其他KVK深海试炼",
+    "constant": "hero_cabin_skill_kvk_other"
+  },
+  {
+    "id": "21128082",
+    "comment": "巅峰领土战-手动版-兑换商店-合服补开",
+    "constant": "event_miniwar_exchange1"
+  },
+  {
+    "id": "21128083",
+    "comment": "kvk预热-红包活动",
+    "constant": "event_kvk_pre_hongbao"
+  },
+  {
+    "id": "21128084",
+    "comment": "kvk预热-bp",
+    "constant": "event_kvk_pre_bp"
+  },
+  {
+    "id": "21128085",
+    "comment": "KVK-荣誉殿堂评选活动",
+    "constant": "event_kvk_honor_hall"
+  },
+  {
+    "id": "21128086",
+    "comment": "KVK1-2预购连锁礼包_schema3-5",
+    "constant": "event_pre_chain_KVK1_s3"
+  },
+  {
+    "id": "21128087",
+    "comment": "KVK1-2预购连锁礼包_schema6",
+    "constant": "event_pre_chain_KVK1_s6"
+  },
+  {
+    "id": "21128088",
+    "comment": "KVK3预购连锁礼包_schema3-5",
+    "constant": "event_pre_chain_KVK3_s3"
+  },
+  {
+    "id": "21128089",
+    "comment": "KVK3预购连锁礼包_schema6",
+    "constant": "event_pre_chain_KVK3_s6"
+  },
+  {
+    "id": "21128090",
+    "comment": "KVK4预购连锁礼包_schema3-5",
+    "constant": "event_pre_chain_KVK4_s3"
+  },
+  {
+    "id": "21128091",
+    "comment": "KVK4预购连锁礼包_schema6",
+    "constant": "event_pre_chain_KVK4_s6"
+  },
+  {
+    "id": "21128092",
+    "comment": "KVK5预购连锁礼包_schema3-5",
+    "constant": "event_pre_chain_KVK5_s3"
+  },
+  {
+    "id": "21128093",
+    "comment": "KVK5预购连锁礼包_schema6",
+    "constant": "event_pre_chain_KVK5_s6"
+  },
+  {
+    "id": "21128094",
+    "comment": "KVK基因-新小额随机礼包-转盘形式",
+    "constant": "event_easter_2025_newwheel_kvk"
+  },
+  {
+    "id": "21128095",
+    "comment": "前期新手弹珠GACHA",
+    "constant": "event_3anni_reward_gacha_schema1"
+  },
+  {
+    "id": "21128096",
+    "comment": "前期新手单笔充值-帮派版本",
+    "constant": "event_union_recharge_6_fes_schema1"
+  },
+  {
+    "id": "21128097",
+    "comment": "前期-掉落转付费-掉落活动",
+    "constant": "event_labor_2025_2_drop_schema1"
+  },
+  {
+    "id": "21128098",
+    "comment": "前期-掉落转付费-礼包",
+    "constant": "event_labor_2025_2_drop_pkg_schema1"
+  },
+  {
+    "id": "21128099",
+    "comment": "前期-掉落转付费-主活动",
+    "constant": "event_labor_2025_shop_schema1"
+  },
+  {
+    "id": "21128100",
+    "comment": "前期-弹珠gacha-每日礼包",
+    "constant": "event_hallo_2025_gacha_daily_schema1"
+  },
+  {
+    "id": "21128101",
+    "comment": "KVK6预购连锁礼包_schema3-5",
+    "constant": "event_pre_chain_KVK6_s3"
+  },
+  {
+    "id": "21128102",
+    "comment": "KVK6预购连锁礼包_schema6",
+    "constant": "event_pre_chain_KVK6_s6"
+  },
+  {
+    "id": "21128200",
+    "comment": "kvk6主活动",
+    "constant": "event_kvk6"
+  },
+  {
+    "id": "21128201",
+    "comment": "kvk6排行榜与遗迹故事",
+    "constant": "event_kvk6_rank"
+  },
+  {
+    "id": "21128202",
+    "comment": "kvk6一网打尽",
+    "constant": "event_one_fell_swoop_kvk6"
+  },
+  {
+    "id": "21128203",
+    "comment": "kvk6野战区A-101",
+    "constant": "event_kvk6_battle_area_a_1"
+  },
+  {
+    "id": "21128204",
+    "comment": "kvk6野战区A-102",
+    "constant": "event_kvk6_battle_area_a_2"
+  },
+  {
+    "id": "21128205",
+    "comment": "kvk6野战区B-201",
+    "constant": "event_kvk6_battle_area_b_1"
+  },
+  {
+    "id": "21128206",
+    "comment": "kvk6野战区B-202",
+    "constant": "event_kvk6_battle_area_b_2"
+  },
+  {
+    "id": "21128207",
+    "comment": "基因bp（kvk6版）_新数值版",
+    "constant": "event_battle_pass_kvk6_new"
+  },
+  {
+    "id": "21128208",
+    "comment": "kvk6成就任务",
+    "constant": "event_kvk6_achievement"
+  },
+  {
+    "id": "21128209",
+    "comment": "kvk6-预热",
+    "constant": "event_kvk6_first_activity"
+  },
+  {
+    "id": "21128210",
+    "comment": "累计充值（kvk6）",
+    "constant": "event_iap_recharge_kvk6_new"
+  },
+  {
+    "id": "21128211",
+    "comment": "kvk历史战绩6",
+    "constant": "kvk_history_6"
+  },
+  {
+    "id": "21128212",
+    "comment": "K6个人养成线",
+    "constant": "event_personal_battle_pass_kvk6"
+  },
+  {
+    "id": "21128213",
+    "comment": "攻城掠地-kvk6",
+    "constant": "event_dungeon_warfare_k6"
+  },
+  {
+    "id": "21128214",
+    "comment": "KVK123帮派充值-D7-14",
+    "constant": "event_kvk_recharge_effect_alliance_1"
+  },
+  {
+    "id": "21128215",
+    "comment": "KVK123帮派充值-D15-21",
+    "constant": "event_kvk_recharge_effect_alliance_2"
+  },
+  {
+    "id": "21128216",
+    "comment": "KVK456帮派充值-D7-14",
+    "constant": "event_kvk_recharge_effect_alliance_3"
+  },
+  {
+    "id": "21128217",
+    "comment": "KVK456帮派充值-D15-21",
+    "constant": "event_kvk_recharge_effect_alliance_4"
+  },
+  {
+    "id": "21128218",
+    "comment": "KVK一次性周卡1-登录",
+    "constant": "event_s300_weekcard_1_kvk"
+  },
+  {
+    "id": "21128219",
+    "comment": "KVK123一次性周卡2-活跃",
+    "constant": "event_s300_weekcard_2_kvk_1"
+  },
+  {
+    "id": "21128220",
+    "comment": "KVK456一次性周卡2-活跃",
+    "constant": "event_s300_weekcard_2_kvk_2"
+  },
+  {
+    "id": "21128221",
+    "comment": "KVK123商店-普通商店",
+    "constant": "event_s300_shop_normal_kvk_1"
+  },
+  {
+    "id": "21128222",
+    "comment": "KVK123商店-折扣商店",
+    "constant": "event_s300_shop_discount_kvk_1"
+  },
+  {
+    "id": "21128223",
+    "comment": "KVK456商店-普通商店",
+    "constant": "event_s300_shop_normal_kvk_2"
+  },
+  {
+    "id": "21128224",
+    "comment": "KVK456商店-折扣商店",
+    "constant": "event_s300_shop_discount_kvk_2"
+  },
+  {
+    "id": "21128225",
+    "comment": "KVK123商店对应消耗活动-英雄",
+    "constant": "event_s300_power_up_hero_kvk"
+  },
+  {
+    "id": "21128226",
+    "comment": "KVK123商店对应消耗活动-机甲",
+    "constant": "event_s300_power_up_mecha_kvk"
+  },
+  {
+    "id": "21128227",
+    "comment": "KVK123商店对应消耗活动-战车",
+    "constant": "event_s300_power_up_tank_kvk"
+  },
+  {
+    "id": "21128228",
+    "comment": "KVK123商店对应消耗活动-收藏品",
+    "constant": "event_s300_power_up_collection_kvk"
+  },
+  {
+    "id": "21128229",
+    "comment": "KVK123商店对应消耗活动-装备",
+    "constant": "event_s300_power_up_equip_kvk"
+  },
+  {
+    "id": "21128230",
+    "comment": "KVK123商店对应消耗活动-军备",
+    "constant": "event_s300_power_up_army_kvk"
+  },
+  {
+    "id": "21128231",
+    "comment": "KVK123商店对应消耗活动-混合",
+    "constant": "event_s300_power_up_mix_kvk"
+  },
+  {
+    "id": "21128232",
+    "comment": "KVK456商店对应消耗活动-英雄",
+    "constant": "event_s300_power_up_hero_kvk2"
+  },
+  {
+    "id": "21128233",
+    "comment": "KVK456商店对应消耗活动-机甲",
+    "constant": "event_s300_power_up_mecha_kvk2"
+  },
+  {
+    "id": "21128234",
+    "comment": "KVK456商店对应消耗活动-战车",
+    "constant": "event_s300_power_up_tank_kvk2"
+  },
+  {
+    "id": "21128235",
+    "comment": "KVK456商店对应消耗活动-收藏品",
+    "constant": "event_s300_power_up_collection_kvk2"
+  },
+  {
+    "id": "21128236",
+    "comment": "KVK456商店对应消耗活动-装备",
+    "constant": "event_s300_power_up_equip_kvk2"
+  },
+  {
+    "id": "21128237",
+    "comment": "KVK456商店对应消耗活动-军备",
+    "constant": "event_s300_power_up_army_kvk2"
+  },
+  {
+    "id": "21128238",
+    "comment": "KVK456商店对应消耗活动-混合",
+    "constant": "event_s300_power_up_mix_kvk2"
+  }
+]

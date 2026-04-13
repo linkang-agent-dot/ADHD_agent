@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260331_152317_0773b2",
+  "title": "机票脚本：实现真正的直飞价格抓取",
+  "instructions": "机票脚本 ctrip_tracker.py 的 --direct 参数目前无法真正过滤直飞，价格还是日历最低价（含转机）。\\n\\n请实现真正的直飞价格抓取，方案建议：\\n1. 携程机票搜索结果页有「只看直飞」标签，研究能否在URL中添加参数直接锁定直飞结果\\n2. 如果URL参数不可行，研究是否有API接口或页面结构可以获取直飞价格\\n3. 修改 parse_calendar_prices 函数或新增专门函数来获取直飞价格\\n4. 测试验证：修改后运行 --direct --dest 日本 --from 2026-04-01 --to 2026-06-30，对比输出与原来的差异\\n\\n脚本路径：C:\\ADHD_agent\\openclaw\\workspace\\ctrip_tracker.py\\n\\n完成后请运行验证并汇报结果",
+  "context": "",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-03-31 15:23:17",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-03-31 17:12:58",
+  "completed_at": "2026-03-31 17:12:33"
+}

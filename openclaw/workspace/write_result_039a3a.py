@@ -1,0 +1,18 @@
+import sys, json, os
+from datetime import datetime
+sys.stdout.reconfigure(encoding='utf-8')
+
+result = {
+    "task_id": "task_20260331_150324_039a3a",
+    "title": "改进机票脚本：直飞过滤功能",
+    "status": "done",
+    "result": "调研+实现完成。核心发现：(1) directflight=1 URL参数不改变日历栏价格，日历栏永远显示含转机的全局最低价；(2) 每个日期搜索页面顶部有一个'直飞¥XXXX'标记，显示该日期直飞最低价。新增 --only-direct 参数：实现 fetch_direct_price() 和 scan_route_direct_prices() 两个函数，每次加载特定日期页面并解析'直飞¥'标记，采样多个日期取最低价。验证成功：成都-东京5月直飞最低¥1980（含转机仅¥1353，贵50%）。使用方式：python ctrip_tracker.py --dest 东京 --from 2026-05-01 --to 2026-05-20 --only-direct",
+    "completed_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+}
+
+outbox = r"C:\ADHD_agent\openclaw\workspace\cursor_outbox"
+os.makedirs(outbox, exist_ok=True)
+out_path = os.path.join(outbox, "task_20260331_150324_039a3a.json")
+with open(out_path, "w", encoding="utf-8") as f:
+    json.dump(result, f, ensure_ascii=False, indent=2)
+print("结果已写入:", out_path)

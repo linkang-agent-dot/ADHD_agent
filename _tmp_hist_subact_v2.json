@@ -1,0 +1,458 @@
+{
+  "万圣节": {
+    "total": 636593.05,
+    "subtypes": [
+      {
+        "sub": "弹珠/GACHA",
+        "revenue": 340450.46,
+        "share": 53.5,
+        "top_pack": "2025万圣节弹珠随机GACHA礼包"
+      },
+      {
+        "sub": "其他礼包",
+        "revenue": 76047.4,
+        "share": 11.9,
+        "top_pack": "开箱强消耗钥匙礼包"
+      },
+      {
+        "sub": "通行证/BP",
+        "revenue": 69208.53,
+        "share": 10.9,
+        "top_pack": "2025万圣节bp礼包"
+      },
+      {
+        "sub": "大富翁",
+        "revenue": 68743.59,
+        "share": 10.8,
+        "top_pack": "2025复活节大富翁礼包"
+      },
+      {
+        "sub": "限时特惠",
+        "revenue": 28308.59,
+        "share": 4.4,
+        "top_pack": "S6周年庆特效返场-1限时抢购礼包"
+      },
+      {
+        "sub": "挖矿小游戏",
+        "revenue": 16055.31,
+        "share": 2.5,
+        "top_pack": "挖矿小游戏活动"
+      },
+      {
+        "sub": "对对碰",
+        "revenue": 14009.5,
+        "share": 2.2,
+        "top_pack": "对对碰"
+      },
+      {
+        "sub": "行军表情/特效",
+        "revenue": 10958.04,
+        "share": 1.7,
+        "top_pack": "2025万圣节-行军表情"
+      },
+      {
+        "sub": "集结奖励",
+        "revenue": 8413.14,
+        "share": 1.3,
+        "top_pack": "2025万圣节集结奖励解锁礼包"
+      },
+      {
+        "sub": "装饰兑换",
+        "revenue": 4398.49,
+        "share": 0.7,
+        "top_pack": "2023装饰兑换券礼包"
+      }
+    ]
+  },
+  "感恩节": {
+    "total": 788995.95,
+    "subtypes": [
+      {
+        "sub": "其他礼包",
+        "revenue": 323453.9,
+        "share": 41.0,
+        "top_pack": "S300赛车特惠"
+      },
+      {
+        "sub": "弹珠/GACHA",
+        "revenue": 103911.99,
+        "share": 13.2,
+        "top_pack": "2024感恩节随机GACHA礼包"
+      },
+      {
+        "sub": "通行证/BP",
+        "revenue": 83194.96,
+        "share": 10.5,
+        "top_pack": "感恩节高级通行证_2025"
+      },
+      {
+        "sub": "挖孔小游戏",
+        "revenue": 82370.52,
+        "share": 10.4,
+        "top_pack": "挖孔小游戏礼包"
+      },
+      {
+        "sub": "大富翁",
+        "revenue": 67470.32,
+        "share": 8.6,
+        "top_pack": "节日大富翁"
+      },
+      {
+        "sub": "预购连锁",
+        "revenue": 63202.02,
+        "share": 8.0,
+        "top_pack": "周年庆预购连锁_schema6"
+      },
+      {
+        "sub": "限时特惠",
+        "revenue": 38332.77,
+        "share": 4.9,
+        "top_pack": "S6周年庆特效返场-1限时抢购礼包"
+      },
+      {
+        "sub": "挖矿小游戏",
+        "revenue": 13457.26,
+        "share": 1.7,
+        "top_pack": "挖矿小游戏活动"
+      },
+      {
+        "sub": "每日补给",
+        "revenue": 9263.45,
+        "share": 1.2,
+        "top_pack": "25感恩节每日补给升级礼包"
+      },
+      {
+        "sub": "装饰兑换",
+        "revenue": 4338.76,
+        "share": 0.5,
+        "top_pack": "2023装饰兑换券礼包"
+      }
+    ]
+  },
+  "圣诞节": {
+    "total": 941774.13,
+    "subtypes": [
+      {
+        "sub": "其他礼包",
+        "revenue": 264858.35,
+        "share": 28.1,
+        "top_pack": "MJ8小游戏"
+      },
+      {
+        "sub": "弹珠/GACHA",
+        "revenue": 229954.45,
+        "share": 24.4,
+        "top_pack": "2025万圣节弹珠随机GACHA礼包"
+      },
+      {
+        "sub": "挖孔小游戏",
+        "revenue": 139060.88,
+        "share": 14.8,
+        "top_pack": "挖孔小游戏礼包"
+      },
+      {
+        "sub": "限时特惠",
+        "revenue": 70501.82,
+        "share": 7.5,
+        "top_pack": "限时抢购"
+      },
+      {
+        "sub": "通行证/BP",
+        "revenue": 69802.33,
+        "share": 7.4,
+        "top_pack": "圣诞节高级通行证_2025"
+      },
+      {
+        "sub": "大富翁",
+        "revenue": 54452.78,
+        "share": 5.8,
+        "top_pack": "2025复活节大富翁礼包"
+      },
+      {
+        "sub": "预购连锁",
+        "revenue": 37896.21,
+        "share": 4.0,
+        "top_pack": "预购连锁"
+      },
+      {
+        "sub": "节日团购",
+        "revenue": 23095.3,
+        "share": 2.5,
+        "top_pack": "2025深海节-节日礼包团购"
+      },
+      {
+        "sub": "挖矿小游戏",
+        "revenue": 15176.75,
+        "share": 1.6,
+        "top_pack": "挖矿小游戏活动"
+      },
+      {
+        "sub": "行军表情/特效",
+        "revenue": 10718.52,
+        "share": 1.1,
+        "top_pack": "2025圣诞节-行军表情"
+      },
+      {
+        "sub": "对对碰",
+        "revenue": 10717.24,
+        "share": 1.1,
+        "top_pack": "对对碰"
+      },
+      {
+        "sub": "集结奖励",
+        "revenue": 8522.92,
+        "share": 0.9,
+        "top_pack": "2025圣诞节集结奖励解锁礼包"
+      },
+      {
+        "sub": "装饰兑换",
+        "revenue": 7016.58,
+        "share": 0.7,
+        "top_pack": "2023装饰兑换券礼包"
+      }
+    ]
+  },
+  "春节": {
+    "total": 1067907.03,
+    "subtypes": [
+      {
+        "sub": "其他礼包",
+        "revenue": 286085.48,
+        "share": 26.8,
+        "top_pack": "钓鱼活动礼包"
+      },
+      {
+        "sub": "大富翁",
+        "revenue": 278868.82,
+        "share": 26.1,
+        "top_pack": "2025异族大富翁"
+      },
+      {
+        "sub": "挖孔小游戏",
+        "revenue": 139651.51,
+        "share": 13.1,
+        "top_pack": "挖孔小游戏礼包"
+      },
+      {
+        "sub": "通行证/BP",
+        "revenue": 83566.23,
+        "share": 7.8,
+        "top_pack": "春节高级通行证_2025"
+      },
+      {
+        "sub": "推币机",
+        "revenue": 71647.22,
+        "share": 6.7,
+        "top_pack": "推币机礼包"
+      },
+      {
+        "sub": "弹珠/GACHA",
+        "revenue": 70171.98,
+        "share": 6.6,
+        "top_pack": "一番赏GACHA礼包"
+      },
+      {
+        "sub": "限时特惠",
+        "revenue": 63084.71,
+        "share": 5.9,
+        "top_pack": "限时抢购"
+      },
+      {
+        "sub": "行军表情/特效",
+        "revenue": 22138.91,
+        "share": 2.1,
+        "top_pack": "2026春节-行军特效"
+      },
+      {
+        "sub": "预购连锁",
+        "revenue": 19698.03,
+        "share": 1.8,
+        "top_pack": "预购连锁"
+      },
+      {
+        "sub": "挖矿小游戏",
+        "revenue": 13446.64,
+        "share": 1.3,
+        "top_pack": "挖矿小游戏活动"
+      },
+      {
+        "sub": "每日补给",
+        "revenue": 7735.13,
+        "share": 0.7,
+        "top_pack": "25感恩节每日补给升级礼包"
+      },
+      {
+        "sub": "集结奖励",
+        "revenue": 6117.74,
+        "share": 0.6,
+        "top_pack": "2026春节集结奖励解锁礼包"
+      },
+      {
+        "sub": "对对碰",
+        "revenue": 5694.63,
+        "share": 0.5,
+        "top_pack": "对对碰"
+      }
+    ]
+  },
+  "情人节": {
+    "total": 841201.57,
+    "subtypes": [
+      {
+        "sub": "其他礼包",
+        "revenue": 243983.93,
+        "share": 29.0,
+        "top_pack": "云上探宝"
+      },
+      {
+        "sub": "挖孔小游戏",
+        "revenue": 243458.03,
+        "share": 28.9,
+        "top_pack": "挖孔小游戏礼包"
+      },
+      {
+        "sub": "弹珠/GACHA",
+        "revenue": 77025.69,
+        "share": 9.2,
+        "top_pack": "机甲GACHA"
+      },
+      {
+        "sub": "大富翁",
+        "revenue": 75632.66,
+        "share": 9.0,
+        "top_pack": "节日大富翁"
+      },
+      {
+        "sub": "通行证/BP",
+        "revenue": 72076.79,
+        "share": 8.6,
+        "top_pack": "情人节BP"
+      },
+      {
+        "sub": "限时特惠",
+        "revenue": 54614.62,
+        "share": 6.5,
+        "top_pack": "限时抢购"
+      },
+      {
+        "sub": "预购连锁",
+        "revenue": 26997.3,
+        "share": 3.2,
+        "top_pack": "预购连锁"
+      },
+      {
+        "sub": "行军表情/特效",
+        "revenue": 25177.12,
+        "share": 3.0,
+        "top_pack": "2026情人节-行军特效"
+      },
+      {
+        "sub": "挖矿小游戏",
+        "revenue": 13998.47,
+        "share": 1.7,
+        "top_pack": "挖矿小游戏活动"
+      },
+      {
+        "sub": "对对碰",
+        "revenue": 8236.96,
+        "share": 1.0,
+        "top_pack": "对对碰"
+      }
+    ]
+  },
+  "科技节": {
+    "total": 855121.03,
+    "subtypes": [
+      {
+        "sub": "挖孔小游戏",
+        "revenue": 206191.07,
+        "share": 24.1,
+        "top_pack": "挖孔小游戏礼包"
+      },
+      {
+        "sub": "弹珠/GACHA",
+        "revenue": 130280.18,
+        "share": 15.2,
+        "top_pack": "2026科技节弹珠GACHA"
+      },
+      {
+        "sub": "推币机",
+        "revenue": 120096.15,
+        "share": 14.0,
+        "top_pack": "推币机礼包"
+      },
+      {
+        "sub": "大富翁",
+        "revenue": 82831.12,
+        "share": 9.7,
+        "top_pack": "2025复活节大富翁礼包"
+      },
+      {
+        "sub": "挖矿小游戏",
+        "revenue": 67939.23,
+        "share": 7.9,
+        "top_pack": "挖矿小游戏活动"
+      },
+      {
+        "sub": "通行证/BP",
+        "revenue": 59051.85,
+        "share": 6.9,
+        "top_pack": "科技节高级通行证_2025"
+      },
+      {
+        "sub": "限时特惠",
+        "revenue": 45857.6,
+        "share": 5.4,
+        "top_pack": "限时抢购"
+      },
+      {
+        "sub": "预购连锁",
+        "revenue": 36709.13,
+        "share": 4.3,
+        "top_pack": "周年庆预购连锁_schema6"
+      },
+      {
+        "sub": "其他礼包",
+        "revenue": 36607.04,
+        "share": 4.3,
+        "top_pack": "掉落转付费礼包"
+      },
+      {
+        "sub": "行军表情/特效",
+        "revenue": 24505.82,
+        "share": 2.9,
+        "top_pack": "2026复活节-行军特效"
+      },
+      {
+        "sub": "节日团购",
+        "revenue": 17944.73,
+        "share": 2.1,
+        "top_pack": "2025深海节-节日礼包团购"
+      },
+      {
+        "sub": "每日补给",
+        "revenue": 9370.91,
+        "share": 1.1,
+        "top_pack": "25感恩节每日补给升级礼包"
+      },
+      {
+        "sub": "对对碰",
+        "revenue": 7695.32,
+        "share": 0.9,
+        "top_pack": "对对碰"
+      },
+      {
+        "sub": "集结奖励",
+        "revenue": 6387.2,
+        "share": 0.7,
+        "top_pack": "2026科技节集结奖励解锁礼包"
+      },
+      {
+        "sub": "装饰兑换",
+        "revenue": 3653.68,
+        "share": 0.4,
+        "top_pack": "2023装饰兑换券礼包"
+      }
+    ]
+  }
+}

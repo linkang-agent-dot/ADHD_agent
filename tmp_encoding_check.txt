@@ -1,0 +1,20 @@
+﻿Total bytes: 765
+First 300 bytes: b'{\n  "majorDimension": "ROWS",\n  "range": "\'2026\xe8\x8a\x82\xe6\x97\xa5\xe6\x80\xbb\xe7\x94\x98\xe7\x89\xb9\xe5\x9b\xbe\'!A1:Z5",\n  "values": [\n    [\n      "",\n      "1\xe6\x9c\x88"\n    ],\n    [\n      "2024",\n      "1",\n      "2",\n      "3",\n      "4",\n      "5",\n      "6",\n      "7",\n      "8",\n      "9",\n      "10",\n      "11",\n      "12",\n      "13",\n      "1'
+
+utf-8 decode works, first 200 chars: {
+  "majorDimension": "ROWS",
+  "range": "'2026节日总甘特图'!A1:Z5",
+  "values": [
+    [
+      "",
+      "1月"
+    ],
+    [
+      "2024",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+   

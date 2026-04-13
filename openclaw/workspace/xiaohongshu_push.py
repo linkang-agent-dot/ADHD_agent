@@ -91,6 +91,24 @@ if __name__ == "__main__":
                     pass
         
         print(f"\n共 {len([r for r in results if r.get('img_path')])} 张图片已保存")
-        
+
+        # 飞书推送（与 async-notify 共用 IM API）
+        try:
+            _scripts = r'C:\ADHD_agent\.cursor\skills\async-notify\scripts'
+            if _scripts not in sys.path:
+                sys.path.insert(0, _scripts)
+            from feishu_helper import send_images, get_token
+
+            paths = [
+                r['img_path']
+                for r in results
+                if r.get('img_path') and os.path.isfile(r['img_path'])
+            ]
+            token = get_token()
+            send_images(paths, caption=msg, token=token)
+            print("飞书推送已发送（文字+封面图）")
+        except Exception as fe:
+            print(f"飞书推送失败: {fe}")
+
     except Exception as e:
         print(f"获取失败: {e}")

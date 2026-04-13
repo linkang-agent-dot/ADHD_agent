@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260330_201252_0d2e78",
+  "title": "极点传媒logo-检查并修复残余像素点",
+  "instructions": "检查并修复极点传媒logo图片中的残余像素点问题。\n\n**源文件：**\n- v1: C:\\Users\\linkang\\.openclaw\\media\\inbound\\dab95091-e150-45d6-84d6-f9d8fb2da2af.jpg\n- v2: C:\\Users\\linkang\\.openclaw\\media\\inbound\\77b250f9-eb36-409f-be72-39a2b847f3cf.jpg\n\n**当前已生成的文件（有问题，需要检查修复）：**\n- C:\\ADHD_agent\\openclaw\\workspace\\uploads\\jidian_100pct_v1.png\n- C:\\ADHD_agent\\openclaw\\workspace\\uploads\\jidian_80pct_v1.png\n- C:\\ADHD_agent\\openclaw\\workspace\\uploads\\jidian_60pct_v1.png\n- C:\\ADHD_agent\\openclaw\\workspace\\uploads\\jidian_40pct_v1.png\n- 以及 v2 同名文件\n\n**问题描述：**\n生成的图片中有残余的杂散像素点，可能是：\n1. 图标区域（x=0-455）和文字区域（x=460-1024）拼接处的边缘像素处理不干净\n2. 右下角装饰星星（x=940-1024, y=940-1024）去除不干净\n3. 背景中有零星的非黑色像素\n\n**任务：**\n1. 读取当前已生成的 jidian_60pct_v1.png，用 Python PIL/numpy 检查图片中所有非黑色（RGB任一分量>5）的像素坐标\n2. 找出哪些是非前景的杂散像素（不属于星星、金色圆环、文字的像素）\n3. 找出问题根源，从源图开始重新处理\n\n**正确的完整处理流程（必须从头正确执行）：**\n1. 读取源图\n2. 用纯黑色(0,0,0)填充右下角装饰星星区域 x=940-1024, y=940-1024\n3. 图标区域（x=0-455）用亮度阈值>100提取前景，白色星星亮度300+，金色圆环亮度也>100，背景亮度约60-76会被过滤掉\n4. 文字区域（x=460-1024）用亮度阈值>100提取前景，白色文字亮度200-700\n5. 图标按比例缩放（100%/80%/60%/40%），文字保持原始尺寸564px\n6. 创建全新纯黑(0,0,0)画布 1024x1024\n7. 横向拼接：左侧放缩小后的图标，右侧放原始尺寸文字，整体居中\n8. 保存到 C:\\ADHD_agent\\openclaw\\workspace\\uploads\\\n\n**注意事项：**\n- 用numpy找出所有非黑色像素的位置，判断是否是杂散点\n- 确保拼接处没有残留背景像素\n- 右下角装饰星星区域必须完全填黑，不能有任何残留\n\n完成后列出所有保存的文件，并报告修复了哪些问题。",
+  "context": "用户说图片中有残余的杂散像素点，需要检查并修复。重点检查：1)右下角水印去除是否干净 2)图标和文字拼接处是否有残留背景像素",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-03-30 20:12:52",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-03-30 20:12:54",
+  "completed_at": "2026-03-30 20:15:38"
+}

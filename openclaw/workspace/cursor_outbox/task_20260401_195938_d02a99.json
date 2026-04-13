@@ -1,0 +1,7 @@
+{
+  "task_id": "task_20260401_195938_d02a99",
+  "title": "Bug调查：1111表掉落转付费道具背板不显示",
+  "status": "done",
+  "result": "定位：背板依赖 item 表中 Source=11740000 的 Quality 与 Bgquality 一致。掉落转付费 6 个道具（ID 111111116～121）在 fo/config/item.tsv 中 Quality=0，而 Bgquality 为 1511010004（品质档4）或 1511010005（品质档5），错位导致 UI 背板不显示。已在本地路径 D:\\UGit\\x2gdconf\\fo\\config\\item.tsv 将 116～118 的 Quality 改为 4、119～121 改为 5，与 Bgquality 对齐。合表/热更具体哪一步写错需用 git blame 或导表源表追溯。",
+  "completed_at": "2026-04-01 20:37:51"
+}

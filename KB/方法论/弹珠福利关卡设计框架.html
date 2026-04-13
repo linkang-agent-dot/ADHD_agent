@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>弹珠福利关卡设计框架</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #f39c12, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px so55,255,255,0.1);
+        }
+        .section h2 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #f39c12;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section h2::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: #f39c12;
+            border-radius: 2px;
+        }
+
+        /* 玩家循环样式 */
+        .loop-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 30px 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .loop-step {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            padding: 16px 20px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 120px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .loop-step:hover, .loop-step.active {
+            border-color: #f39c12;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(243,156,18,0.3);
+        }
+        .loop-step .step-num {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 4px;
+        }
+        .loop-step .step-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .loop-arrow {
+            color: #f39c12;
+            font-size: 1.5rem;
+        }
+        .loop-return {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .loop-return span {
+            color: #f39c12;
+        }
+
+        /* 设计点卡片 */
+        .design-card {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border-left: 4px solid #3498db;
+        }
+        .design-card.motivation { border-left-color: #e74c3c; }
+        .design-card.economy { border-left-color: #2ecc71; }
+        .design-card.trigger { border-left-color: #9b59b6; }
+        .design-card.experience { border-left-color: #f39c12; }
+        .design-card.perception { border-left-color: #1abc9c; }
+        .design-card.reward { border-left-color: #e67e22; }
+        .design-card.retention { border-left-color: #3498db; }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .card-stage {
+            font-size: 0.8rem;
+            color: #888;
+            background: rgba(255,255,255,0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+        .card-question {
+            color: #e74c3c;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(231,76,60,0.1);
+            border-radius: 8px;
+        }
+        .card-question::before {
+            content: '❓ 问题：';
+            font-weight: 600;
+        }
+        .card-solution {
+            color: #2ecc71;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(46,204,113,0.1);
+            border-radius: 8px;
+        }
+        .card-solution::before {
+            content: '✅ 方案：';
+            font-weight: 600;
+        }
+        .card-reason {
+            color: #aaa;
+            font-size: 0.9rem;
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+        }
+        .card-reason::before {
+            content: '💡 原理：';
+            font-weight: 600;
+            color: #f39c12;
+        }
+
+        /* 数值表格 */
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .number-card {
+            background: rgba(0,0,0,0.2);
+            padding: 16px 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 3px solid #3498db;
+        }
+        .number-label { color: #aaa; }
+        .number-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #3498db;
+        }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>弹珠福利关卡设计框架</h1>
+
+        <!-- 设计目的 -->
+        <div class="section" id="purpose">
+            <h2>零、设计目的</h2>
+            <div style="background: linear-gradient(135deg, rgba(231,76,60,0.15), rgba(243,156,18,0.15)); border: 2px solid rgba(243,156,18,0.4); border-radius: 12px; padding: 24px;">
+                <div style="font-size: 1.2rem; font-weight: 600; color: #f39c12; margin-bottom: 16px;">核心问题</div>
+                <div style="font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6;">
+                    弹珠活动上线3期后，<span style="color: #e74c3c; font-weight: 600;">数据持续下跌，超R付费流失严重</span>
+                </div>
+
+                <div style="font-size: 1.2rem; font-weight: 600; color: #2ecc71; margin-bottom: 16px;">设计目标</div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                    <div style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 10px; border-left: 3px solid #e74c3c;">
+                        <div style="color: #e74c3c; font-weight: 600; margin-bottom: 8px;">挽回超R</div>
+                        <div style="color: #aaa; font-size: 0.9rem;">给超R玩家提供短期内的明确目标，提升付费体验</div>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 10px; border-left: 3px solid #f39c12;">
+                        <div style="color: #f39c12; font-weight: 600; margin-bottom: 8px;">新增玩法层</div>
+                        <div style="color: #aaa; font-size: 0.9rem;">参考挖孔活动，加入福利关卡机制，丰富游玩体验</div>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 10px; border-left: 3px solid #2ecc71;">
+                        <div style="color: #2ecc71; font-weight: 600; margin-bottom: 8px;">提升付费数据</div>
+                        <div style="color: #aaa; font-size: 0.9rem;">通过高价值返场道具和养成道具，拉动弹珠活动整体付费</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div style="font-size: 1rem; color: #888;">设计约束</div>
+                    <div style="display: flex; gap: 20px; margin-top: 10px; flex-wrap: wrap;">
+                        <span style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 6px 12px; border-radius: 6px; font-size: 0.9rem;">不能砍普通关产出（线上已跑多期）</span>
+                        <span style="background: rgba(243,156,18,0.2); color: #f39c12; padding: 6px 12px; border-radius: 6px; font-size: 0.9rem;">总ROI控制在2.1以内</span>
+                        <span style="background: rgba(52,152,219,0.2); color: #3498db; padding: 6px 12px; border-radius: 6px; font-size: 0.9rem;">不能改概率配置</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 玩家循环图 -->
+        <div class="section" id="player-loop">
+            <h2>一、玩家循环</h2>
+            <div class="loop-container">
+                <div class="loop-step motivation" data-stage="1">
+                    <div class="step-num">阶段1</div>
+                    <div class="step-name">进入活动</div>
+                </div>
+                <span class="loop-arrow">→</span>
+                <div class="loop-step economy" data-stage="2">
+                    <div class="step-num">阶段2</div>
+                    <div class="step-name">普通关游玩</div>
+                </div>
+                <span class="loop-arrow">→</span>
+                <div class="loop-step trigger" data-stage="3">
+                    <div class="step-num">阶段3</div>
+                    <div class="step-name">触发福利关</div>
+                </div>
+                <span class="loop-arrow">→</span>
+                <div class="loop-step experience" data-stage="4">
+                    <div class="step-num">阶段4</div>
+                    <div class="step-name">福利关游玩</div>
+                </div>
+                <span class="loop-arrow">→</span>
+                <div class="loop-step perception" data-stage="5">
+                    <div class="step-num">阶段5</div>
+                    <div class="step-name">获得高级券</div>
+                </div>
+                <span class="loop-arrow">→</span>
+                <div class="loop-step reward" data-stage="6">
+                    <div class="step-num">阶段6</div>
+                    <div class="step-name">高级商店兑换</div>
+                </div>
+                <span class="loop-arrow">→</span>
+                <div class="loop-step retention" data-stage="7">
+                    <div class="step-num">阶段7</div>
+                    <div class="step-name">持续/退出</div>
+                </div>
+                <div class="loop-return">
+                    <span>↩ 循环：</span>继续游玩 → 回到阶段2
+                </div>
+            </div>
+        </div>
+
+        <!-- 设计点详情 -->
+        <div class="section" id="design-points">
+            <h2>二、设计点与聚焦问题</h2>
+
+            <div class="design-card motivation">
+                <div class="card-header">
+                    <span class="card-stage">阶段1：进入活动</span>
+                    <span class="card-title">玩家动力</span>
+                </div>
+                <div class="card-question">玩家为什么要玩福利关？动力是什么？</div>
+                <div class="card-solution">福利关是额外福利，作为阶段奖励逻辑，提供高价值返场皮肤和养成道具</div>
+                <div class="card-reason">福利关本质是阶段奖励，玩家打普通关累计触发。核心吸引力是排行榜返场皮肤（1年独占期后开放）和红色英雄养成道具</div>
+            </div>
+
+            <div class="design-card economy">
+                <div class="card-header">
+                    <span class="card-stage">阶段2：普通关游玩</span>
+                    <span class="card-title">经济体系保护</span>
+                </div>
+                <div class="card-question">加了福利关后总ROI会超标，影响其他活动形式</div>
+                <div class="card-solution">福利关ROI增量控制在~27%，总ROI约2.07，不砍普通关产出</div>
+                <div class="card-reason">通过压缩高级券单位价值（$0.018/券），让福利关产出的道具价值可控。普通关已跑多期，玩家有预期，不能砍</div>
+            </div>
+
+            <div class="design-card trigger">
+                <div class="card-header">
+                    <span class="card-stage">阶段3：触发福利关</span>
+                    <span class="card-title">触发成本</span>
+                </div>
+                <div class="card-question">多久进一次福利关？频率太高没有稀缺感，太低没有参与感</div>
+                <div class="card-solution">50普通弹珠（约$30）进一次，中低频率，偏超R体验</div>
+                <div class="card-reason">福利关定位是超R的短期目标，不是普惠福利。$30一次的门槛让超R有明确的"再打一轮就能进"的目标感</div>
+            </div>
+
+            <div class="design-card experience">
+                <div class="card-header">
+                    <span class="card-stage">阶段4：福利关游玩</span>
+                    <span class="card-title">单轮体验</span>
+                </div>
+                <div class="card-question">福利关和普通关体验差异不大，没有"特别"的感觉</div>
+                <div class="card-solution">50福利弹珠自动发射，专属视觉效果，7洞口随机产出高级券（期望~450券）</div>
+                <div class="card-reason">福利关需要仪式感：专属弹珠、机器品质变化、明显的进入提示。让玩家感知"我在打一个特别的关卡"</div>
+            </div>
+
+            <div class="design-card perception">
+                <div class="card-header">
+                    <span class="card-stage">阶段5：获得高级券</span>
+                    <span class="card-title">价值感知</span>
+                </div>
+                <div class="card-question">玩家算不清券值多少钱，不知道要打多少次才能换到想要的</div>
+                <div class="card-solution">用小件兑换（100券=10弹珠）建立价值锚点，让玩家自己悟</div>
+                <div class="card-reason">不直接告诉玩家"1券=$0.018"，而是通过小件兑换让玩家在游玩中自然建立价值感知。第一次进福利关就能换点小东西，体验更顺滑</div>
+            </div>
+
+            <div class="design-card reward">
+                <div class="card-header">
+                    <span class="card-stage">阶段6：高级商店兑换</span>
+                    <span class="card-title">核心奖励获取</span>
+                </div>
+                <div class="card-question">皮肤价值$1500，但按ROI算玩家要花$5000才能换到；排行榜皮肤竞争成本差异大</div>
+                <div class="card-solution">拆成两类：皮肤不计ROI（独立价值，按品质定价），养成道具计ROI</div>
+                <div class="card-reason">皮肤是稀缺品/情感消费，玩家愿意额外付出；养成道具是刚需，必须保证ROI合理。排行榜溢价是"打败别人"的成本，返场的是道具不是竞争体验</div>
+            </div>
+
+            <div class="design-card retention">
+                <div class="card-header">
+                    <span class="card-stage">阶段7：持续/退出</span>
+                    <span class="card-title">长线留存</span>
+                </div>
+                <div class="card-question">攒券过程太平，缺少阶段性反馈；高级券只有皮肤一个出口会溢出</div>
+                <div class="card-solution">里程碑宝箱（6节点）提供随机惊喜；三条消耗路径：皮肤+养成道具+普通币兑换</div>
+                <div class="card-reason">里程碑变成"开箱时刻"，每个节点都是情绪峰值点。不同玩家不同需求：追皮肤的换皮肤，追养成的换红色英雄，都不想要的兑普通币保底</div>
+            </div>
+        </div>
+
+        <!-- 数值总览 -->
+        <div class="section" id="numbers">
+            <h2>三、核心数值</h2>
+            <div class="numbers-grid">
+                <div class="number-card">
+                    <span class="number-label">弹珠单价</span>
+                    <span class="number-value">$0.6</span>
+                </div>
+                <div class="number-card">
+                    <span class="number-label">进洞成本</span>
+                    <span class="number-value">50弹珠 (~$30)</span>
+                </div>
+                <div class="number-card">
+                    <span class="number-label">福利弹珠数量</span>
+                    <span class="number-value">50个/次</span>
+                </div>
+                <div class="number-card">
+                    <span class="number-label">高级券产出</span>
+                    <span class="number-value">~450券/次</span>
+                </div>
+                <div class="number-card">
+                    <span class="number-label">高级券单位价值</span>
+                    <span class="number-value">$0.018/券</span>
+                </div>
+                <div class="number-card">
+                    <span class="number-label">福利关ROI增量</span>
+                    <span class="number-value">~27%</span>
+                </div>
+                <div class="number-card">
+                    <span class="number-label">普通关ROI</span>
+                    <span class="number-value">1.8</span>
+                </div>
+                <div class="number-card">
+                    <span class="number-label">总ROI</span>
+                    <span class="number-value">~2.07</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 高级商店 -->
+        <div class="section" id="shop">
+            <h2>四、高级商店定价</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3 style="color: #e74c3c; margin-bottom: 12px; font-size: 1rem;">皮肤类（不计ROI，独立价值）</h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="background: rgba(0,0,0,0.3);">
+                            <th style="padding: 10px; text-align: left; color: #f39c12;">档位</th>
+                            <th style="padding: 10px; text-align: left; color: #f39c12;">单价</th>
+                            <th style="padding: 10px; text-align: left; color: #f39c12;">道具价值</th>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="padding: 10px; color: #e74c3c; font-weight: 600;">S级</td>
+                            <td style="padding: 10px;">15,000券</td>
+                            <td style="padding: 10px;">$1,500</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="padding: 10px; color: #9b59b6; font-weight: 600;">A级</td>
+                            <td style="padding: 10px;">5,000券</td>
+                            <td style="padding: 10px;">$500</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; color: #3498db; font-weight: 600;">B级</td>
+                            <td style="padding: 10px;">2,000券</td>
+                            <td style="padding: 10px;">$200</td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h3 style="color: #2ecc71; margin-bottom: 12px; font-size: 1rem;">养成道具类（计入ROI）</h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="background: rgba(0,0,0,0.3);">
+                            <th style="padding: 10px; text-align: left; color: #f39c12;">道具</th>
+                            <th style="padding: 10px; text-align: left; color: #f39c12;">单价</th>
+                            <th style="padding: 10px; text-align: left; color: #f39c12;">价值</th>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="padding: 10px;">红色英雄碎片</td>
+                            <td style="padding: 10px;">56券/个</td>
+                            <td style="padding: 10px;">$1/个</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="padding: 10px;">红色英雄技能材料</td>
+                            <td style="padding: 10px;">278券/个</td>
+                            <td style="padding: 10px;">$5/个</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; color: #888;">兜底：普通币</td>
+                            <td style="padding: 10px; color: #888;">1券→5普通券</td>
+                            <td style="padding: 10px; color: #888;">保底消耗</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 里程碑宝箱 -->
+        <div class="section" id="milestone">
+            <h2>五、里程碑宝箱</h2>
+            <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 20px;">
+                <div style="background: linear-gradient(135deg, rgba(243,156,18,0.2), rgba(231,76,60,0.2)); border: 1px solid rgba(243,156,18,0.3); border-radius: 10px; padding: 16px; text-align: center;">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #f39c12;">1</div>
+                    <div style="font-size: 1rem; margin: 6px 0;">3次</div>
+                    <div style="color: #888; font-size: 0.85rem;">~$90</div>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(243,156,18,0.2), rgba(231,76,60,0.2)); border: 1px solid rgba(243,156,18,0.3); border-radius: 10px; padding: 16px; text-align: center;">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #f39c12;">2</div>
+                    <div style="font-size: 1rem; margin: 6px 0;">8次</div>
+                    <div style="color: #888; font-size: 0.85rem;">~$240</div>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(243,156,18,0.2), rgba(231,76,60,0.2)); border: 1px solid rgba(243,156,18,0.3); border-radius: 10px; padding: 16px; text-align: center;">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #f39c12;">3</div>
+                    <div style="font-size: 1rem; margin: 6px 0;">18次</div>
+                    <div style="color: #888; font-size: 0.85rem;">~$540</div>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(243,156,18,0.2), rgba(231,76,60,0.2)); border: 1px solid rgba(243,156,18,0.3); border-radius: 10px; padding: 16px; text-align: center;">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #f39c12;">4</div>
+                    <div style="font-size: 1rem; margin: 6px 0;">35次</div>
+                    <div style="color: #888; font-size: 0.85rem;">~$1,050</div>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(243,156,18,0.2), rgba(231,76,60,0.2)); border: 1px solid rgba(243,156,18,0.3); border-radius: 10px; padding: 16px; text-align: center;">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #f39c12;">5</div>
+                    <div style="font-size: 1rem; margin: 6px 0;">55次</div>
+                    <div style="color: #888; font-size: 0.85rem;">~$1,650</div>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(243,156,18,0.2), rgba(231,76,60,0.2)); border: 1px solid rgba(243,156,18,0.3); border-radius: 10px; padding: 16px; text-align: center;">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #f39c12;">6</div>
+                    <div style="font-size: 1rem; margin: 6px 0;">80次</div>
+                    <div style="color: #888; font-size: 0.85rem;">~$2,400</div>
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+                <div style="background: rgba(149,165,166,0.2); border: 1px solid #95a5a6; border-radius: 10px; padding: 16px; text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #95a5a6;">70%</div>
+                    <div style="font-weight: 600; margin: 4px 0;">保底</div>
+                    <div style="color: #888; font-size: 0.85rem;">普通弹珠 x N</div>
+                </div>
+                <div style="background: rgba(52,152,219,0.2); border: 1px solid #3498db; border-radius: 10px; padding: 16px; text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #3498db;">25%</div>
+                    <div style="font-weight: 600; margin: 4px 0;">中奖</div>
+                    <div style="color: #888; font-size: 0.85rem;">高级券 2000-5000</div>
+                </div>
+                <div style="background: rgba(155,89,182,0.2); border: 1px solid #9b59b6; border-radius: 10px; padding: 16px; text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #9b59b6;">5%</div>
+                    <div style="font-weight: 600; margin: 4px 0;">大奖</div>
+                    <div style="color: #888; font-size: 0.85rem;">A级道具</div>
+                </div>
+                <div style="background: rgba(231,76,60,0.2); border: 1px solid #e74c3c; border-radius: 10px; padding: 16px; text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #e74c3c;">1%</div>
+                    <div style="font-weight: 600; margin: 4px 0;">终极</div>
+                    <div style="color: #888; font-size: 0.85rem;">S级道具</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 数值文档链接 -->
+        <div class="section">
+            <h2>六、数值文档</h2>
+            <a href="https://docs.google.com/spreadsheets/d/1Z-cCaIuYFAIcdWFBRwIc3m4fI0hW9NvS1K4EsucSyhc/edit?gid=1410863662#gid=1410863662" target="_blank" style="color: #3498db; font-size: 1.1rem;">
+                📊 Google Sheet - gacha(26拓荒节弹珠)
+            </a>
+        </div>
+    </div>
+</body>
+</html>

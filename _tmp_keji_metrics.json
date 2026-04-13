@@ -1,0 +1,37 @@
+{
+  "log_num": 17972,
+  "pay_num": 1576,
+  "pay_rate": 8.77,
+  "pay_total": 238509.82,
+  "arppu": 151.34,
+  "arpu": 13.27,
+  "chaor_pay": 166859.61,
+  "chaor_pct": 70.0,
+  "rlevel": {
+    "chaoR": {
+      "pay_cnt": 614,
+      "pay_total": 166859.61,
+      "arppu": 271.76
+    },
+    "daR": {
+      "pay_cnt": 436,
+      "pay_total": 45828.48,
+      "arppu": 105.11
+    },
+    "zhongR": {
+      "pay_cnt": 460,
+      "pay_total": 21972.65,
+      "arppu": 47.77
+    },
+    "feiR": {
+      "pay_cnt": 17,
+      "pay_total": 2519.61,
+      "arppu": 148.21
+    },
+    "xiaoR": {
+      "pay_cnt": 49,
+      "pay_total": 1329.47,
+      "arppu": 27.13
+    }
+  }
+}

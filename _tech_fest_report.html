@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔬 2026科技节 活动复盘报告</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222536;
+    --border: #2e3248;
+    --accent: #6c63ff;
+    --accent2: #00d4aa;
+    --accent3: #ff6b6b;
+    --accent4: #ffd166;
+    --text: #e2e8f0;
+    --text-muted: #8892a4;
+    --green: #22c55e;
+    --orange: #f97316;
+    --red: #ef4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  /* ── 顶栏 ── */
+  .header {
+    background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 48px 24px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+  .header h1 span { color: var(--accent); }
+  .meta-row { margin-top: 8px; display: flex; gap: 24px; font-size: 12px; color: var(--text-muted); }
+  .meta-row b { color: var(--text); }
+
+  /* ── 布局 ── */
+  .container { max-width: 1400px; margin: 0 auto; padding: 32px 48px 80px; }
+  .section { margin-bottom: 48px; }
+  .section-title {
+    font-size: 16px; font-weight: 700; color: var(--accent);
+    border-left: 3px solid var(--accent); padding-left: 12px;
+    margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;
+  }
+
+  /* ── KPI 卡片 ── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+    position: relative; overflow: hidden;
+    transition: transform .2s;
+  }
+  .kpi-card:hover { transform: translateY(-2px); }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: var(--accent);
+  }
+  .kpi-card.green::before { background: var(--green); }
+  .kpi-card.orange::before { background: var(--orange); }
+  .kpi-card.red::before { background: var(--red); }
+  .kpi-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .8px; }
+  .kpi-value { font-size: 26px; font-weight: 800; margin: 6px 0 4px; }
+  .kpi-change { font-size: 12px; }
+  .up { color: var(--green); }
+  .down { color: var(--red); }
+
+  /* ── 表格 ── */
+  .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    background: var(--surface2); padding: 12px 14px;
+    font-size: 11px; font-weight: 600; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: .6px;
+    border-bottom: 1px solid var(--border); text-align: left;
+    white-space: nowrap;
+  }
+  tbody td { padding: 11px 14px; border-bottom: 1px solid var(--border); }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(108,99,255,.05); }
+  .highlight-row { background: rgba(108,99,255,.08) !important; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .bold { font-weight: 700; }
+  .tag {
+    display: inline-block; padding: 2px 8px; border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+  }
+  .tag-game { background: rgba(0,212,170,.15); color: var(--accent2); }
+  .tag-visual { background: rgba(255,107,107,.15); color: var(--red); }
+  .tag-hybrid { background: rgba(108,99,255,.15); color: var(--accent); }
+  .tag-mine { background: rgba(255,209,102,.15); color: var(--accent4); }
+
+  /* ── R级表 ── */
+  .rtier-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .rtier-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px; text-align: center;
+  }
+  .rtier-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+  .rtier-now { font-size: 28px; font-weight: 800; color: var(--accent); }
+  .rtier-vs { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .rtier-change { font-size: 13px; font-weight: 700; color: var(--green); margin-top: 2px; }
+
+  /* ── 日收入 bar ── */
+  .daily-chart { padding: 8px 0; }
+  .day-row { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .day-label { width: 56px; font-size: 12px; color: var(--text-muted); flex-shrink: 0; text-align: right; }
+  .day-bar-wrap { flex: 1; background: var(--surface2); border-radius: 4px; height: 22px; position: relative; }
+  .day-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), #a78bfa); transition: width .3s; }
+  .day-bar.peak { background: linear-gradient(90deg, var(--accent4), #f97316); }
+  .day-val { width: 80px; font-size: 12px; font-variant-numeric: tabular-nums; color: var(--text); text-align: right; flex-shrink: 0; }
+
+  /* ── 活动诊断 ── */
+  .diag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .diag-card {
+    background: var(--surface); border-radius: 12px;
+    border: 1px solid var(--border); padding: 20px;
+  }
+  .diag-card.keep { border-left: 3px solid var(--green); }
+  .diag-card.optimize { border-left: 3px solid var(--orange); }
+  .diag-status { font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; }
+  .diag-status.keep { color: var(--green); }
+  .diag-status.optimize { color: var(--orange); }
+  .diag-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .diag-rev { font-size: 18px; font-weight: 800; color: var(--accent); margin-bottom: 8px; }
+  .diag-reason { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ── Action Items ── */
+  .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .action-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+  }
+  .action-p { font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 12px; padding: 4px 10px; border-radius: 6px; display: inline-block; }
+  .p0 { background: rgba(239,68,68,.15); color: var(--red); }
+  .p1 { background: rgba(249,115,22,.15); color: var(--orange); }
+  .p2 { background: rgba(108,99,255,.15); color: var(--accent); }
+  .action-item { font-size: 13px; margin-bottom: 10px; display: flex; gap: 8px; line-height: 1.5; }
+  .action-item::before { content: '→'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+
+  /* ── 模块饼图 ── */
+  .module-grid { display: grid; grid-template-columns: 240px 1fr; gap: 32px; align-items: center; }
+  .donut-wrap { position: relative; width: 200px; height: 200px; }
+  .donut-wrap svg { transform: rotate(-90deg); }
+  .donut-center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    text-align: center;
+  }
+  .donut-center-val { font-size: 20px; font-weight: 800; }
+  .donut-center-label { font-size: 11px; color: var(--text-muted); }
+  .module-legend { display: flex; flex-direction: column; gap: 14px; }
+  .legend-item { display: flex; align-items: center; gap: 12px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .legend-name { flex: 1; font-size: 13px; }
+  .legend-val { font-size: 14px; font-weight: 700; }
+  .legend-pct { font-size: 12px; color: var(--text-muted); margin-left: 6px; }
+
+  /* ── 折叠 ── */
+  details summary {
+    cursor: pointer; padding: 10px 14px;
+    font-size: 12px; color: var(--text-muted);
+    background: var(--surface2);
+    border-top: 1px solid var(--border);
+    user-select: none;
+  }
+  details summary:hover { color: var(--text); }
+
+  /* ── 页脚 ── */
+  .footer {
+    text-align: center; padding: 24px;
+    font-size: 12px; color: var(--text-muted);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── 响应式 ── */
+  @media (max-width: 1024px) {
+    .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+    .rtier-grid { grid-template-columns: repeat(2, 1fr); }
+    .diag-grid { grid-template-columns: 1fr; }
+    .action-grid { grid-template-columns: 1fr; }
+    .module-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ 顶栏 ══ -->
+<div class="header">
+  <h1>🔬 2026<span>科技节</span> 活动复盘报告</h1>
+  <div class="meta-row">
+    <span>活动周期：<b>2026-03-13 ~ 04-03</b></span>
+    <span>对标活动：<b>2026情人节</b></span>
+    <span>生成时间：<b>2026-04-07</b></span>
+    <span>数据来源：<b>v1041.ods_user_order + dim.iap</b></span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ══ Section 1: KPI ══ -->
+<div class="section">
+  <div class="section-title">核心指标</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">总营收</div>
+      <div class="kpi-value">$1,796,469</div>
+      <div class="kpi-change up">vs 情人节 +13.2%</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">节日礼包收入</div>
+      <div class="kpi-value">$855,121</div>
+      <div class="kpi-change" style="color:var(--text-muted)">占总收入 47.6%</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">ARPU</div>
+      <div class="kpi-value">$1.07</div>
+      <div class="kpi-change up">vs 情人节 +30.5%</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">付费率</div>
+      <div class="kpi-value">3.09%</div>
+      <div class="kpi-change up">vs 情人节 +0.63pp</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">付费人数</div>
+      <div class="kpi-value">4,903</div>
+      <div class="kpi-change" style="color:var(--text-muted)">ARPPU $174.40</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Section 2: 横向对比 ══ -->
+<div class="section">
+  <div class="section-title">近期节日横向对比（实时拉取）</div>
+  <div style="margin-bottom:10px;font-size:12px;color:var(--text-muted)">数据口径：全量 iap_type（含节日+日常礼包）· 活跃用户 = 节日期间任意一天登录过的去重用户 · 节日礼包 = iap_type=混合-节日活动</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>节日</th>
+          <th class="num">日期区间</th>
+          <th class="num">总营收</th>
+          <th class="num">节日礼包收入</th>
+          <th class="num">节日占比</th>
+          <th class="num">活跃用户</th>
+          <th class="num">付费率</th>
+          <th class="num">ARPPU</th>
+          <th class="num">ARPU</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🎃 万圣节</td>
+          <td class="num" style="color:var(--text-muted);font-size:12px">10-17~11-06</td>
+          <td class="num">$1,991,799</td>
+          <td class="num">$636,593</td>
+          <td class="num">32.0%</td>
+          <td class="num">2,704,479</td>
+          <td class="num">0.38%</td>
+          <td class="num">$192.15</td>
+          <td class="num">$0.74</td>
+        </tr>
+        <tr>
+          <td>🦃 感恩节</td>
+          <td class="num" style="color:var(--text-muted);font-size:12px">11-13~12-04</td>
+          <td class="num">$1,902,046</td>
+          <td class="num">$788,996</td>
+          <td class="num">41.5%</td>
+          <td class="num">2,735,632</td>
+          <td class="num">0.36%</td>
+          <td class="num">$195.08</td>
+          <td class="num">$0.70</td>
+        </tr>
+        <tr>
+          <td>🎄 圣诞节</td>
+          <td class="num" style="color:var(--text-muted);font-size:12px">12-12~01-01</td>
+          <td class="num">$2,014,761</td>
+          <td class="num">$941,774</td>
+          <td class="num">46.7%</td>
+          <td class="num">2,824,648</td>
+          <td class="num">0.34%</td>
+          <td class="num">$208.09</td>
+          <td class="num">$0.71</td>
+        </tr>
+        <tr>
+          <td style="color:var(--green);font-weight:600">🧧 春节（纯）</td>
+          <td class="num" style="color:var(--text-muted);font-size:12px">01-13~02-01</td>
+          <td class="num" style="color:var(--green);font-weight:700">$1,691,259</td>
+          <td class="num" style="color:var(--green);font-weight:700">$917,458</td>
+          <td class="num" style="color:var(--green);font-weight:700">48.0%</td>
+          <td class="num">2,855,566</td>
+          <td class="num">0.32%</td>
+          <td class="num" style="color:var(--green);font-weight:700">$186.22</td>
+          <td class="num">$0.59</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent4);font-weight:500">📅 2月独立周期</td>
+          <td class="num" style="color:var(--text-muted);font-size:12px">02-02~02-08</td>
+          <td class="num">$525,090</td>
+          <td class="num">$150,458</td>
+          <td class="num">47.6%</td>
+          <td class="num">1,996,988</td>
+          <td class="num">0.29%</td>
+          <td class="num">$91.90</td>
+          <td class="num">$0.26</td>
+        </tr>
+        <tr>
+          <td>💝 情人节</td>
+          <td class="num" style="color:var(--text-muted);font-size:12px">02-11~03-05</td>
+          <td class="num">$1,821,008</td>
+          <td class="num">$841,202</td>
+          <td class="num">46.2%</td>
+          <td class="num">2,618,739</td>
+          <td class="num">0.40%</td>
+          <td class="num">$174.51</td>
+          <td class="num">$0.70</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="bold">🔬 科技节</td>
+          <td class="num" style="color:var(--text-muted);font-size:12px">03-13~04-03</td>
+          <td class="num bold">$1,798,726</td>
+          <td class="num bold" style="color:var(--accent2)">$855,121</td>
+          <td class="num bold" style="color:var(--accent2)">47.5%</td>
+          <td class="num bold" style="color:var(--orange)">2,230,027 ↓</td>
+          <td class="num bold" style="color:var(--accent2)">0.42% ▲</td>
+          <td class="num bold">$192.40</td>
+          <td class="num bold" style="color:var(--accent)">$0.81 ▲</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;font-size:12px">
+    <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent2)">
+      <div style="color:var(--text-muted)">ARPU 最高</div>
+      <div style="font-weight:700;margin-top:2px">科技节 <span style="color:var(--accent2)">$0.81</span></div>
+      <div style="color:var(--text-muted);margin-top:2px">活跃少但人均消费高</div>
+    </div>
+    <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--green)">
+      <div style="color:var(--text-muted)">总收入最高</div>
+      <div style="font-weight:700;margin-top:2px">春节 <span style="color:var(--green)">$1,691,259</span></div>
+      <div style="color:var(--text-muted);margin-top:2px">异族大富翁主题；2月独立周期$525K另算</div>
+    </div>
+    <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent)">
+      <div style="color:var(--text-muted)">节日礼包占比最高</div>
+      <div style="font-weight:700;margin-top:2px">春节 <span style="color:var(--accent)">48.0%</span></div>
+      <div style="color:var(--text-muted);margin-top:2px">各期稳定在 47%~48%，独立周期也持平</div>
+    </div>
+    <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--orange)">
+      <div style="color:var(--text-muted)">活跃用户最少</div>
+      <div style="font-weight:700;margin-top:2px">科技节 <span style="color:var(--orange)">223万</span></div>
+      <div style="color:var(--text-muted);margin-top:2px">但付费率 0.42% 是最高</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Section 3: R级 ARPU 横向对比 ══ -->
+<div class="section">
+  <div class="section-title">各 R 级 ARPU 横向对比（近6期，全量口径）</div>
+  <div style="margin-bottom:14px;font-size:12px;color:var(--text-muted)">R级定义基于累计历史付费额快照（节日开始前一天）· ARPU = 节日期间总付费 / 当R级活跃用户数</div>
+
+  <!-- ARPU 折线趋势迷你图 -->
+  <div class="table-wrap" style="margin-bottom:20px">
+    <table>
+      <thead>
+        <tr>
+          <th>R级</th>
+          <th class="num">万圣节</th>
+          <th class="num">感恩节</th>
+          <th class="num">圣诞节</th>
+          <th class="num">🧧 春节</th>
+          <th class="num">情人节</th>
+          <th class="num" style="color:var(--accent)">科技节</th>
+          <th class="num">趋势</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--red);font-weight:700">🔴 超R ARPU</td>
+          <td class="num">$976</td>
+          <td class="num">$976</td>
+          <td class="num">$1,012</td>
+          <td class="num" style="color:var(--green);font-weight:700">$1,179 ★</td>
+          <td class="num">$922</td>
+          <td class="num bold" style="color:var(--accent)">$930</td>
+          <td class="num" style="color:var(--text-muted)">→ 稳定 $900-1000，春节爆峰</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">🟠 大R ARPU</td>
+          <td class="num">$296</td>
+          <td class="num">$278</td>
+          <td class="num" style="color:var(--green)">$311</td>
+          <td class="num" style="color:var(--green);font-weight:700">$339 ★</td>
+          <td class="num">$286</td>
+          <td class="num bold" style="color:var(--accent)">$281</td>
+          <td class="num" style="color:var(--text-muted)">→ 稳定 $280-340</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">🟡 中R ARPU</td>
+          <td class="num">$86</td>
+          <td class="num">$82</td>
+          <td class="num">$91</td>
+          <td class="num" style="color:var(--green);font-weight:700">$93 ★</td>
+          <td class="num">$83</td>
+          <td class="num bold" style="color:var(--red)">$77 ↓</td>
+          <td class="num" style="color:var(--orange)">⚠ 科技节6期最低</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">⚪ 小R ARPU</td>
+          <td class="num">$7.14</td>
+          <td class="num">$6.23</td>
+          <td class="num">$7.40</td>
+          <td class="num">$7.04</td>
+          <td class="num">$7.18</td>
+          <td class="num bold" style="color:var(--accent)">$6.89</td>
+          <td class="num" style="color:var(--text-muted)">→ 稳定 $6-7.5</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 付费率对比 -->
+  <div class="table-wrap" style="margin-bottom:20px">
+    <table>
+      <thead>
+        <tr>
+          <th>R级</th>
+          <th class="num">万圣节</th>
+          <th class="num">感恩节</th>
+          <th class="num">圣诞节</th>
+          <th class="num">🧧 春节</th>
+          <th class="num">情人节</th>
+          <th class="num" style="color:var(--accent)">科技节</th>
+          <th>评估</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--red);font-weight:700">🔴 超R 付费率</td>
+          <td class="num">87.9%</td>
+          <td class="num">87.2%</td>
+          <td class="num">85.6%</td>
+          <td class="num" style="color:var(--green);font-weight:700">88.4% ★</td>
+          <td class="num">88.6%</td>
+          <td class="num bold">87.2%</td>
+          <td style="color:var(--green)">稳定高转化，接近天花板</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">🟠 大R 付费率</td>
+          <td class="num" style="color:var(--green)">81.6% ★</td>
+          <td class="num">78.2%</td>
+          <td class="num">80.1%</td>
+          <td class="num">81.2%</td>
+          <td class="num">80.3%</td>
+          <td class="num bold">81.3%</td>
+          <td style="color:var(--green)">稳定 78-82%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">🟡 中R 付费率</td>
+          <td class="num" style="color:var(--green)">70.3% ★</td>
+          <td class="num">66.7%</td>
+          <td class="num">68.2%</td>
+          <td class="num">68.4%</td>
+          <td class="num">67.6%</td>
+          <td class="num bold">68.4%</td>
+          <td style="color:var(--text-muted)">万圣节最高，之后稳定 67-68%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">⚪ 小R 付费率</td>
+          <td class="num" style="color:var(--green)">24.3% ★</td>
+          <td class="num">22.3%</td>
+          <td class="num">24.1%</td>
+          <td class="num">24.2%</td>
+          <td class="num">23.9%</td>
+          <td class="num bold">23.7%</td>
+          <td style="color:var(--orange)">6期微降趋势，需要引导</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 超R/大R 收入贡献对比 -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>R级</th>
+          <th class="num">活跃</th>
+          <th class="num">付费</th>
+          <th class="num">付费率</th>
+          <th class="num">收入</th>
+          <th class="num">ARPU</th>
+          <th class="num">收入占比</th>
+        </tr>
+      </thead>
+      <caption style="text-align:left;padding:8px 14px;font-size:12px;color:var(--accent);font-weight:700;caption-side:top">▶ 科技节 R级收入结构</caption>
+      <tbody>
+        <tr>
+          <td style="color:var(--red);font-weight:700">🔴 超R</td>
+          <td class="num">1,090</td><td class="num">950</td>
+          <td class="num" style="color:var(--green)"><b>87.2%</b></td>
+          <td class="num" style="color:var(--red)"><b>$1,013,571</b></td>
+          <td class="num bold" style="color:var(--red)">$929.88</td>
+          <td class="num bold" style="color:var(--red)">56.4%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">🟠 大R</td>
+          <td class="num">1,258</td><td class="num">1,023</td>
+          <td class="num">81.3%</td>
+          <td class="num bold">$354,048</td>
+          <td class="num">$281.44</td>
+          <td class="num bold">19.7%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">🟡 中R</td>
+          <td class="num">3,670</td><td class="num">2,509</td>
+          <td class="num">68.4%</td>
+          <td class="num bold">$283,811</td>
+          <td class="num" style="color:var(--orange)">$77.33</td>
+          <td class="num bold">15.8%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">⚪ 小R</td>
+          <td class="num">6,381</td><td class="num">1,510</td>
+          <td class="num" style="color:var(--orange)">23.7%</td>
+          <td class="num bold">$43,952</td>
+          <td class="num">$6.89</td>
+          <td class="num bold">2.4%</td>
+        </tr>
+        <tr style="background:rgba(108,99,255,.06)">
+          <td class="bold">R级合计</td>
+          <td class="num">12,399</td><td class="num">5,992</td>
+          <td class="num">48.3%</td>
+          <td class="num bold" style="color:var(--accent)">$1,695,382</td>
+          <td class="num bold" style="color:var(--accent)">$136.74</td>
+          <td class="num bold" style="color:var(--accent)">94.3%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-top:12px;padding:12px 16px;background:rgba(249,115,22,.08);border-radius:8px;border-left:3px solid var(--orange);font-size:12px;line-height:1.7">
+    ⚠ <b style="color:var(--orange)">中R 预警</b>：科技节中R ARPU $77 是6期最低（峰值春节 $93，降幅 17%）。中R 是最大的可培育群体（3,670活跃），ARPU 下滑意味着他们在本期节日礼包的参与度下降，需要针对性提升低门槛礼包触达。
+  </div>
+</div>
+
+<!-- ══ Section 4: 大盘分层 ══ -->
+<div class="section">
+  <div class="section-title">科技节核心大盘（分 R 级，全量口径）</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>分层</th>
+          <th class="num">活跃人数</th>
+          <th class="num">付费人数</th>
+          <th class="num">付费率</th>
+          <th class="num">总收入</th>
+          <th class="num">收入占比</th>
+          <th class="num">ARPU</th>
+          <th class="num">vs 情人节 ARPU</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td class="bold">全体（R级用户合计）</td>
+          <td class="num">12,399</td><td class="num">5,992</td>
+          <td class="num">48.3%</td>
+          <td class="num bold">$1,695,382</td>
+          <td class="num">94.3%</td>
+          <td class="num bold" style="color:var(--accent)">$136.74</td>
+          <td class="num" style="color:var(--text-muted)">—</td>
+        </tr>
+        <tr>
+          <td style="color:var(--red);font-weight:600">🔴 超R</td>
+          <td class="num">1,090</td><td class="num">950</td>
+          <td class="num" style="color:var(--green)"><b>87.2%</b></td>
+          <td class="num bold" style="color:var(--red)">$1,013,571</td>
+          <td class="num bold" style="color:var(--red)">56.4%</td>
+          <td class="num bold" style="color:var(--red)">$929.88</td>
+          <td class="num">vs $921.72 <span style="color:var(--green)">+0.9%</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">🟠 大R</td>
+          <td class="num">1,258</td><td class="num">1,023</td>
+          <td class="num">81.3%</td>
+          <td class="num bold">$354,048</td>
+          <td class="num bold">19.7%</td>
+          <td class="num">$281.44</td>
+          <td class="num">vs $286.17 <span style="color:var(--orange)">-1.7%</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">🟡 中R</td>
+          <td class="num">3,670</td><td class="num">2,509</td>
+          <td class="num">68.4%</td>
+          <td class="num bold">$283,811</td>
+          <td class="num bold">15.8%</td>
+          <td class="num" style="color:var(--red)">$77.33 ↓</td>
+          <td class="num">vs $82.83 <span style="color:var(--red)">-6.6%</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">⚪ 小R</td>
+          <td class="num">6,381</td><td class="num">1,510</td>
+          <td class="num" style="color:var(--orange)">23.7%</td>
+          <td class="num bold">$43,952</td>
+          <td class="num bold">2.4%</td>
+          <td class="num">$6.89</td>
+          <td class="num">vs $7.18 <span style="color:var(--orange)">-4.0%</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ Section 5: 模块结构 ══ -->
+<div class="section">
+  <div class="section-title">模块收入结构</div>
+  <div class="module-grid">
+    <div class="donut-wrap">
+      <svg width="200" height="200" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="75" fill="none" stroke="#222536" stroke-width="28"/>
+        <!-- 节日特惠 81.8% -->
+        <circle cx="100" cy="100" r="75" fill="none" stroke="#00d4aa" stroke-width="28"
+          stroke-dasharray="385.5 471.2" stroke-dashoffset="0"/>
+        <!-- 节日皮肤 9.8% -->
+        <circle cx="100" cy="100" r="75" fill="none" stroke="#ff6b6b" stroke-width="28"
+          stroke-dasharray="46.2 471.2" stroke-dashoffset="-385.5"/>
+        <!-- 节日BP 6.9% -->
+        <circle cx="100" cy="100" r="75" fill="none" stroke="#6c63ff" stroke-width="28"
+          stroke-dasharray="32.5 471.2" stroke-dashoffset="-431.7"/>
+        <!-- 挖矿小游戏 1.6% -->
+        <circle cx="100" cy="100" r="75" fill="none" stroke="#ffd166" stroke-width="28"
+          stroke-dasharray="7.5 471.2" stroke-dashoffset="-464.2"/>
+      </svg>
+      <div class="donut-center">
+        <div class="donut-center-val">$855K</div>
+        <div class="donut-center-label">节日礼包</div>
+      </div>
+    </div>
+    <div class="module-legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#00d4aa"></div>
+        <div class="legend-name">节日特惠</div>
+        <div class="legend-val">$699,177<span class="legend-pct">81.8%</span></div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#ff6b6b"></div>
+        <div class="legend-name">节日皮肤</div>
+        <div class="legend-val">$83,539<span class="legend-pct">9.8%</span></div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#6c63ff"></div>
+        <div class="legend-name">节日BP</div>
+        <div class="legend-val">$59,052<span class="legend-pct">6.9%</span></div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#ffd166"></div>
+        <div class="legend-name">挖矿小游戏</div>
+        <div class="legend-val">$13,353<span class="legend-pct">1.6%</span></div>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--text-muted);line-height:1.6">
+        💡 分类依据 dim_iap.iap_type2 官方字段 · 节日特惠含挖孔/推币/大富翁/弹珠GACHA/限时抢购等全部玩法礼包
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Section 6: 礼包排名 ══ -->
+<div class="section">
+  <div class="section-title">各礼包效率排名（共 51 条 · iap_type2 分类）</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>礼包名称</th>
+          <th>模块</th>
+          <th class="num">收入</th>
+          <th class="num">占比</th>
+          <th class="num">购买人次</th>
+          <th class="num">去重人数</th>
+          <th class="num">人均次数</th>
+          <th class="num">人次ARPPU</th>
+          <th class="num">节日ARPU</th>
+        </tr>
+      </thead>
+      <tbody id="rank-body">
+        <!-- Top 20 -->
+        <tr class="highlight-row"><td>1</td><td class="bold">挖孔小游戏礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$206,191</td><td class="num">24.1%</td><td class="num">11,693</td><td class="num">2,710</td><td class="num">4.3x</td><td class="num">$17.63</td><td class="num bold" style="color:var(--accent2)">$76.09</td></tr>
+        <tr class="highlight-row"><td>2</td><td class="bold">2026科技节弹珠GACHA</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$129,800</td><td class="num">15.2%</td><td class="num">6,466</td><td class="num">1,170</td><td class="num">5.5x</td><td class="num">$20.07</td><td class="num bold" style="color:var(--accent2)">$110.94</td></tr>
+        <tr class="highlight-row"><td>3</td><td class="bold">推币机礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$64,042</td><td class="num">7.5%</td><td class="num">4,326</td><td class="num">1,110</td><td class="num">3.9x</td><td class="num">$14.80</td><td class="num bold">$57.70</td></tr>
+        <tr><td>4</td><td class="bold">推币机随机GACHA礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num bold">$56,054</td><td class="num">6.6%</td><td class="num">1,559</td><td class="num">458</td><td class="num">3.4x</td><td class="num">$35.96</td><td class="num bold" style="color:var(--accent2)">$122.39</td></tr>
+        <tr><td>5</td><td class="bold">挖矿小游戏活动</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$48,494</td><td class="num">5.7%</td><td class="num">7,859</td><td class="num">544</td><td class="num">14.4x</td><td class="num">$6.17</td><td class="num bold" style="color:var(--accent2)">$89.14</td></tr>
+        <tr><td>6</td><td class="bold">2025复活节大富翁礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$47,421</td><td class="num">5.5%</td><td class="num">4,911</td><td class="num">1,542</td><td class="num">3.2x</td><td class="num">$9.66</td><td class="num bold">$30.75</td></tr>
+        <tr><td>7</td><td class="bold">限时抢购</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$45,858</td><td class="num">5.4%</td><td class="num">1,240</td><td class="num">447</td><td class="num">2.8x</td><td class="num">$36.98</td><td class="num bold" style="color:var(--accent2)">$102.59</td></tr>
+        <tr><td>8</td><td class="bold">科技节高级通行证_2025</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num bold">$23,588</td><td class="num">2.8%</td><td class="num">1,180</td><td class="num">1,180</td><td class="num">1.0x</td><td class="num">$19.99</td><td class="num bold">$19.99</td></tr>
+        <tr><td>9</td><td class="bold">节日大富翁礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$18,298</td><td class="num">2.1%</td><td class="num">216</td><td class="num">161</td><td class="num">1.3x</td><td class="num">$84.71</td><td class="num bold" style="color:var(--accent2)">$113.65</td></tr>
+        <tr><td>10</td><td class="bold">周年庆预购连锁_schema6</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$17,998</td><td class="num">2.1%</td><td class="num">180</td><td class="num">180</td><td class="num">1.0x</td><td class="num">$99.99</td><td class="num bold" style="color:var(--accent2)">$99.99</td></tr>
+        <tr><td>11</td><td>2025深海节-节日礼包团购</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$17,945</td><td class="num">2.1%</td><td class="num">2,627</td><td class="num">1,224</td><td class="num">2.1x</td><td class="num">$6.83</td><td class="num">$14.66</td></tr>
+        <tr><td>12</td><td>万圣节小连锁随机礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$15,811</td><td class="num">1.8%</td><td class="num">3,378</td><td class="num">1,430</td><td class="num">2.4x</td><td class="num">$4.68</td><td class="num">$11.06</td></tr>
+        <tr><td>13</td><td>科技节初级通行证_2025</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num">$14,050</td><td class="num">1.6%</td><td class="num">2,010</td><td class="num">2,010</td><td class="num">1.0x</td><td class="num">$6.99</td><td class="num">$6.99</td></tr>
+        <tr><td>14</td><td>2026复活节-行军特效</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num">$13,253</td><td class="num">1.5%</td><td class="num">663</td><td class="num">663</td><td class="num">1.0x</td><td class="num">$19.99</td><td class="num">$19.99</td></tr>
+        <tr><td>15</td><td>节日大富翁</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$12,727</td><td class="num">1.5%</td><td class="num">2,422</td><td class="num">2,191</td><td class="num">1.1x</td><td class="num">$5.25</td><td class="num">$5.81</td></tr>
+        <tr><td>16</td><td>挖矿小游戏活动</td><td><span class="tag tag-mine">挖矿</span></td><td class="num">$11,897</td><td class="num">1.4%</td><td class="num">3,129</td><td class="num">1,038</td><td class="num">3.0x</td><td class="num">$3.80</td><td class="num">$11.46</td></tr>
+        <tr><td>17</td><td>2026科技节-行军表情</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num">$11,252</td><td class="num">1.3%</td><td class="num">2,255</td><td class="num">2,255</td><td class="num">1.0x</td><td class="num">$4.99</td><td class="num">$4.99</td></tr>
+        <tr><td>18</td><td>情人节BP</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num">$10,919</td><td class="num">1.3%</td><td class="num">1,148</td><td class="num">709</td><td class="num">1.6x</td><td class="num">$9.51</td><td class="num">$15.40</td></tr>
+        <tr><td>19</td><td>25感恩节每日补给升级礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$9,371</td><td class="num">1.1%</td><td class="num">4,709</td><td class="num">1,787</td><td class="num">2.6x</td><td class="num">$1.99</td><td class="num">$5.24</td></tr>
+        <tr><td>20</td><td>对对碰</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$7,695</td><td class="num">0.9%</td><td class="num">868</td><td class="num">510</td><td class="num">1.7x</td><td class="num">$8.87</td><td class="num">$15.09</td></tr>
+      </tbody>
+    </table>
+    <details>
+      <summary>▼ 展开查看剩余 31 条礼包（#21 ~ #51）</summary>
+      <table>
+        <tbody>
+          <tr><td style="padding:11px 14px">21</td><td style="padding:11px 14px">2026科技节集结奖励解锁礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$6,387</td><td class="num" style="padding:11px 14px">0.75%</td><td class="num" style="padding:11px 14px">1,280</td><td class="num" style="padding:11px 14px">1,279</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$4.99</td><td class="num" style="padding:11px 14px">$4.99</td></tr>
+          <tr><td style="padding:11px 14px">22</td><td style="padding:11px 14px">掉落转付费礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$6,030</td><td class="num" style="padding:11px 14px">0.71%</td><td class="num" style="padding:11px 14px">974</td><td class="num" style="padding:11px 14px">820</td><td class="num" style="padding:11px 14px">1.2x</td><td class="num" style="padding:11px 14px">$6.19</td><td class="num" style="padding:11px 14px">$7.35</td></tr>
+          <tr><td style="padding:11px 14px">23</td><td style="padding:11px 14px">2025深海节累充服务器礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$5,785</td><td class="num" style="padding:11px 14px">0.68%</td><td class="num" style="padding:11px 14px">502</td><td class="num" style="padding:11px 14px">502</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$11.52</td><td class="num" style="padding:11px 14px">$11.52</td></tr>
+          <tr><td style="padding:11px 14px">24</td><td style="padding:11px 14px">2025复活节-强消耗抽奖券礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$5,466</td><td class="num" style="padding:11px 14px">0.64%</td><td class="num" style="padding:11px 14px">389</td><td class="num" style="padding:11px 14px">280</td><td class="num" style="padding:11px 14px">1.4x</td><td class="num" style="padding:11px 14px">$14.05</td><td class="num" style="padding:11px 14px">$19.52</td></tr>
+          <tr><td style="padding:11px 14px">25</td><td style="padding:11px 14px">科技节自选周卡</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$5,184</td><td class="num" style="padding:11px 14px">0.61%</td><td class="num" style="padding:11px 14px">121</td><td class="num" style="padding:11px 14px">120</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$42.84</td><td class="num" style="padding:11px 14px">$43.20</td></tr>
+          <tr><td style="padding:11px 14px">26</td><td style="padding:11px 14px">节日大富翁组队礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$4,386</td><td class="num" style="padding:11px 14px">0.51%</td><td class="num" style="padding:11px 14px">439</td><td class="num" style="padding:11px 14px">279</td><td class="num" style="padding:11px 14px">1.6x</td><td class="num" style="padding:11px 14px">$9.99</td><td class="num" style="padding:11px 14px">$15.72</td></tr>
+          <tr><td style="padding:11px 14px">27</td><td style="padding:11px 14px">kvk基因高级bp通行证</td><td style="padding:11px 14px"><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="padding:11px 14px">$3,700</td><td class="num" style="padding:11px 14px">0.43%</td><td class="num" style="padding:11px 14px">37</td><td class="num" style="padding:11px 14px">37</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$99.99</td><td class="num" style="padding:11px 14px">$99.99</td></tr>
+          <tr><td style="padding:11px 14px">28</td><td style="padding:11px 14px">kvk基因bp通行证</td><td style="padding:11px 14px"><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="padding:11px 14px">$3,673</td><td class="num" style="padding:11px 14px">0.43%</td><td class="num" style="padding:11px 14px">245</td><td class="num" style="padding:11px 14px">244</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$14.99</td><td class="num" style="padding:11px 14px">$15.05</td></tr>
+          <tr><td style="padding:11px 14px">29</td><td style="padding:11px 14px">节日挖矿-砍价礼包-折扣5</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$3,401</td><td class="num" style="padding:11px 14px">0.40%</td><td class="num" style="padding:11px 14px">1,709</td><td class="num" style="padding:11px 14px">954</td><td class="num" style="padding:11px 14px">1.8x</td><td class="num" style="padding:11px 14px">$1.99</td><td class="num" style="padding:11px 14px">$3.56</td></tr>
+          <tr><td style="padding:11px 14px">30</td><td style="padding:11px 14px">改造猴特权-节日版</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$3,097</td><td class="num" style="padding:11px 14px">0.36%</td><td class="num" style="padding:11px 14px">310</td><td class="num" style="padding:11px 14px">310</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$9.99</td><td class="num" style="padding:11px 14px">$9.99</td></tr>
+          <tr><td style="padding:11px 14px">31</td><td style="padding:11px 14px">周年庆预购连锁礼包_schema3-5</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$2,900</td><td class="num" style="padding:11px 14px">0.34%</td><td class="num" style="padding:11px 14px">29</td><td class="num" style="padding:11px 14px">29</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$99.99</td><td class="num" style="padding:11px 14px">$99.99</td></tr>
+          <tr><td style="padding:11px 14px">32</td><td style="padding:11px 14px">酒馆登陆bp</td><td style="padding:11px 14px"><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="padding:11px 14px">$2,128</td><td class="num" style="padding:11px 14px">0.25%</td><td class="num" style="padding:11px 14px">150</td><td class="num" style="padding:11px 14px">87</td><td class="num" style="padding:11px 14px">1.7x</td><td class="num" style="padding:11px 14px">$14.19</td><td class="num" style="padding:11px 14px">$24.47</td></tr>
+          <tr><td style="padding:11px 14px">33</td><td style="padding:11px 14px">2026科技节wonder巨猿砸蛋锤礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$2,068</td><td class="num" style="padding:11px 14px">0.24%</td><td class="num" style="padding:11px 14px">207</td><td class="num" style="padding:11px 14px">207</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$9.99</td><td class="num" style="padding:11px 14px">$9.99</td></tr>
+          <tr><td style="padding:11px 14px">34</td><td style="padding:11px 14px">2025周年庆累充服务器礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$2,049</td><td class="num" style="padding:11px 14px">0.24%</td><td class="num" style="padding:11px 14px">100</td><td class="num" style="padding:11px 14px">100</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$20.49</td><td class="num" style="padding:11px 14px">$20.49</td></tr>
+          <tr><td style="padding:11px 14px">35</td><td style="padding:11px 14px">挖矿小游戏-卡包礼包-节日版本</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$1,996</td><td class="num" style="padding:11px 14px">0.23%</td><td class="num" style="padding:11px 14px">400</td><td class="num" style="padding:11px 14px">161</td><td class="num" style="padding:11px 14px">2.5x</td><td class="num" style="padding:11px 14px">$4.99</td><td class="num" style="padding:11px 14px">$12.40</td></tr>
+          <tr><td style="padding:11px 14px">36</td><td style="padding:11px 14px">2023装饰兑换券礼包</td><td style="padding:11px 14px"><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="padding:11px 14px">$1,894</td><td class="num" style="padding:11px 14px">0.22%</td><td class="num" style="padding:11px 14px">56</td><td class="num" style="padding:11px 14px">42</td><td class="num" style="padding:11px 14px">1.3x</td><td class="num" style="padding:11px 14px">$33.83</td><td class="num" style="padding:11px 14px">$45.11</td></tr>
+          <tr><td style="padding:11px 14px">37</td><td style="padding:11px 14px">2023装饰兑换券礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$1,759</td><td class="num" style="padding:11px 14px">0.21%</td><td class="num" style="padding:11px 14px">76</td><td class="num" style="padding:11px 14px">60</td><td class="num" style="padding:11px 14px">1.3x</td><td class="num" style="padding:11px 14px">$23.15</td><td class="num" style="padding:11px 14px">$29.32</td></tr>
+          <tr><td style="padding:11px 14px">38</td><td style="padding:11px 14px">成长线1+1礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$1,618</td><td class="num" style="padding:11px 14px">0.19%</td><td class="num" style="padding:11px 14px">184</td><td class="num" style="padding:11px 14px">154</td><td class="num" style="padding:11px 14px">1.2x</td><td class="num" style="padding:11px 14px">$8.80</td><td class="num" style="padding:11px 14px">$10.51</td></tr>
+          <tr><td style="padding:11px 14px">39</td><td style="padding:11px 14px">情人节bingo活动宝箱礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$1,502</td><td class="num" style="padding:11px 14px">0.18%</td><td class="num" style="padding:11px 14px">301</td><td class="num" style="padding:11px 14px">301</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$4.99</td><td class="num" style="padding:11px 14px">$4.99</td></tr>
+          <tr><td style="padding:11px 14px">40</td><td style="padding:11px 14px">2025复活节强消耗触发礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$1,333</td><td class="num" style="padding:11px 14px">0.16%</td><td class="num" style="padding:11px 14px">404</td><td class="num" style="padding:11px 14px">390</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$3.30</td><td class="num" style="padding:11px 14px">$3.42</td></tr>
+          <tr><td style="padding:11px 14px">41</td><td style="padding:11px 14px">挖矿小游戏</td><td style="padding:11px 14px"><span class="tag tag-mine">挖矿</span></td><td class="num" style="padding:11px 14px">$1,098</td><td class="num" style="padding:11px 14px">0.13%</td><td class="num" style="padding:11px 14px">219</td><td class="num" style="padding:11px 14px">142</td><td class="num" style="padding:11px 14px">1.5x</td><td class="num" style="padding:11px 14px">$5.01</td><td class="num" style="padding:11px 14px">$7.73</td></tr>
+          <tr><td style="padding:11px 14px">42</td><td style="padding:11px 14px">休眠仓</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$973</td><td class="num" style="padding:11px 14px">0.11%</td><td class="num" style="padding:11px 14px">195</td><td class="num" style="padding:11px 14px">83</td><td class="num" style="padding:11px 14px">2.3x</td><td class="num" style="padding:11px 14px">$4.99</td><td class="num" style="padding:11px 14px">$11.72</td></tr>
+          <tr><td style="padding:11px 14px">43</td><td style="padding:11px 14px">kvk基因高级bp通行证-V81-kvk5</td><td style="padding:11px 14px"><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="padding:11px 14px">$700</td><td class="num" style="padding:11px 14px">0.08%</td><td class="num" style="padding:11px 14px">7</td><td class="num" style="padding:11px 14px">7</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$99.99</td><td class="num" style="padding:11px 14px">$99.99</td></tr>
+          <tr><td style="padding:11px 14px">44</td><td style="padding:11px 14px">节日挖矿-砍价礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$695</td><td class="num" style="padding:11px 14px">0.08%</td><td class="num" style="padding:11px 14px">41</td><td class="num" style="padding:11px 14px">32</td><td class="num" style="padding:11px 14px">1.3x</td><td class="num" style="padding:11px 14px">$16.94</td><td class="num" style="padding:11px 14px">$21.71</td></tr>
+          <tr><td style="padding:11px 14px">45</td><td style="padding:11px 14px">千万下载礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$675</td><td class="num" style="padding:11px 14px">0.08%</td><td class="num" style="padding:11px 14px">77</td><td class="num" style="padding:11px 14px">43</td><td class="num" style="padding:11px 14px">1.8x</td><td class="num" style="padding:11px 14px">$8.77</td><td class="num" style="padding:11px 14px">$15.70</td></tr>
+          <tr><td style="padding:11px 14px">46</td><td style="padding:11px 14px">泳池派对礼包</td><td style="padding:11px 14px"><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="padding:11px 14px">$605</td><td class="num" style="padding:11px 14px">0.07%</td><td class="num" style="padding:11px 14px">23</td><td class="num" style="padding:11px 14px">11</td><td class="num" style="padding:11px 14px">2.1x</td><td class="num" style="padding:11px 14px">$26.29</td><td class="num" style="padding:11px 14px">$54.98</td></tr>
+          <tr><td style="padding:11px 14px">47</td><td style="padding:11px 14px">2022幼猴节gacha礼包</td><td style="padding:11px 14px"><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="padding:11px 14px">$480</td><td class="num" style="padding:11px 14px">0.06%</td><td class="num" style="padding:11px 14px">16</td><td class="num" style="padding:11px 14px">8</td><td class="num" style="padding:11px 14px">2.0x</td><td class="num" style="padding:11px 14px">$29.99</td><td class="num" style="padding:11px 14px">$59.98</td></tr>
+          <tr><td style="padding:11px 14px">48</td><td style="padding:11px 14px">挖矿小游戏-产量翻倍特权</td><td style="padding:11px 14px"><span class="tag tag-mine">挖矿</span></td><td class="num" style="padding:11px 14px">$359</td><td class="num" style="padding:11px 14px">0.04%</td><td class="num" style="padding:11px 14px">120</td><td class="num" style="padding:11px 14px">87</td><td class="num" style="padding:11px 14px">1.4x</td><td class="num" style="padding:11px 14px">$2.99</td><td class="num" style="padding:11px 14px">$4.12</td></tr>
+          <tr><td style="padding:11px 14px">49</td><td style="padding:11px 14px">基因bp通行证BP积分礼包</td><td style="padding:11px 14px"><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="padding:11px 14px">$295</td><td class="num" style="padding:11px 14px">0.03%</td><td class="num" style="padding:11px 14px">38</td><td class="num" style="padding:11px 14px">25</td><td class="num" style="padding:11px 14px">1.5x</td><td class="num" style="padding:11px 14px">$7.75</td><td class="num" style="padding:11px 14px">$11.78</td></tr>
+          <tr><td style="padding:11px 14px">50</td><td style="padding:11px 14px">转盘折扣小额</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$132</td><td class="num" style="padding:11px 14px">0.02%</td><td class="num" style="padding:11px 14px">13</td><td class="num" style="padding:11px 14px">11</td><td class="num" style="padding:11px 14px">1.2x</td><td class="num" style="padding:11px 14px">$10.14</td><td class="num" style="padding:11px 14px">$11.99</td></tr>
+          <tr><td style="padding:11px 14px">51</td><td style="padding:11px 14px">2023幼猴节-7日活动宝箱</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$90</td><td class="num" style="padding:11px 14px">0.01%</td><td class="num" style="padding:11px 14px">18</td><td class="num" style="padding:11px 14px">18</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$4.99</td><td class="num" style="padding:11px 14px">$4.99</td></tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+</div>
+
+<!-- ══ Section 7: 日收入 ══ -->
+<div class="section">
+  <div class="section-title">日收入走势（3.13 ~ 4.03）</div>
+  <div class="daily-chart">
+    <script>
+      const days = [
+        ['03-13',92830],['03-14',80966],['03-15',75303],['03-16',80704],
+        ['03-17',62763],['03-18',58695],['03-19',64968],['03-20',103585],
+        ['03-21',76176],['03-22',76392],['03-23',75173],['03-24',74371],
+        ['03-25',61160],['03-26',76653],['03-27',90762],['03-28',96476],
+        ['03-29',91760],['03-30',104638],['03-31',112312],['04-01',97358],
+        ['04-02',93075],['04-03',52608]
+      ];
+      const maxVal = Math.max(...days.map(d=>d[1]));
+      document.addEventListener('DOMContentLoaded', () => {
+        const wrap = document.querySelector('.daily-chart');
+        days.forEach(([label, val]) => {
+          const pct = (val / maxVal * 100).toFixed(1);
+          const isPeak = val === maxVal;
+          const row = document.createElement('div');
+          row.className = 'day-row';
+          row.innerHTML = `
+            <div class="day-label">${label}</div>
+            <div class="day-bar-wrap">
+              <div class="day-bar ${isPeak?'peak':''}" style="width:${pct}%"></div>
+            </div>
+            <div class="day-val">$${val.toLocaleString()}</div>
+          `;
+          wrap.appendChild(row);
+        });
+      });
+    </script>
+  </div>
+</div>
+
+<!-- ══ Section 8: 模块趋势 ══ -->
+<div class="section">
+  <div class="section-title">节日礼包模块趋势（近7期，含2月独立周期）</div>
+  <div style="margin-bottom:12px;font-size:12px;color:var(--text-muted)">
+    分类依据：dim_iap.iap_type2 官方字段 · 日期为实际礼包购买覆盖期
+  </div>
+
+  <!-- 堆叠柱状图 -->
+  <div id="module-stacked" style="display:flex;gap:6px;align-items:flex-end;height:240px;margin-bottom:20px;padding:0 4px">
+  </div>
+  <div style="display:flex;gap:24px;margin-bottom:24px;font-size:12px">
+    <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#00d4aa;display:inline-block"></span>节日特惠</span>
+    <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#ff6b6b;display:inline-block"></span>节日皮肤</span>
+    <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#6c63ff;display:inline-block"></span>节日BP</span>
+    <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#ffd166;display:inline-block"></span>挖矿小游戏</span>
+  </div>
+
+  <!-- 数字表格 -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>iap_type2</th>
+          <th class="num">🎃 万圣节<br><span style="font-weight:400;color:var(--text-muted)">10-17~11-06</span></th>
+          <th class="num">🦃 感恩节<br><span style="font-weight:400;color:var(--text-muted)">11-13~12-04</span></th>
+          <th class="num">🎄 圣诞节<br><span style="font-weight:400;color:var(--text-muted)">12-12~01-01</span></th>
+          <th class="num">🧧 春节<br><span style="font-weight:400;color:var(--text-muted)">01-13~02-08*</span></th>
+          <th class="num" style="color:var(--accent4)">📅 2月独立<br><span style="font-weight:400;color:var(--text-muted)">02-02~02-08</span></th>
+          <th class="num">💝 情人节<br><span style="font-weight:400;color:var(--text-muted)">02-11~03-05</span></th>
+          <th class="num" style="color:var(--accent)">🔬 科技节<br><span style="font-weight:400;color:var(--text-muted)">03-13~04-03</span></th>
+          <th class="num">趋势</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--accent2);font-weight:700">🎁 节日特惠</td>
+          <td class="num">$251,378<br><span style="color:var(--text-muted);font-size:11px">39.5%</span></td>
+          <td class="num">$584,683<br><span style="color:var(--text-muted);font-size:11px">74.1%</span></td>
+          <td class="num">$668,073<br><span style="color:var(--text-muted);font-size:11px">70.9%</span></td>
+          <td class="num" style="color:var(--green);font-weight:700">$676,222<br><span style="font-size:11px">83.4%</span></td>
+          <td class="num">$170,246<br><span style="color:var(--text-muted);font-size:11px">68.1%</span></td>
+          <td class="num">$533,450<br><span style="color:var(--text-muted);font-size:11px">63.4%</span></td>
+          <td class="num bold" style="color:var(--accent2)">$699,177<br><span style="font-size:11px">81.8%</span></td>
+          <td class="num" style="color:var(--green);font-size:16px">↑ 占比持续提升</td>
+        </tr>
+        <tr>
+          <td style="color:var(--red);font-weight:700">✨ 节日皮肤</td>
+          <td class="num" style="color:var(--green);font-weight:700">$299,951<br><span style="font-size:11px">47.1% ★</span></td>
+          <td class="num">$107,661<br><span style="color:var(--text-muted);font-size:11px">13.6%</span></td>
+          <td class="num">$188,722<br><span style="color:var(--text-muted);font-size:11px">20.0%</span></td>
+          <td class="num">$60,757<br><span style="color:var(--text-muted);font-size:11px">7.5%</span></td>
+          <td class="num">$64,593<br><span style="color:var(--text-muted);font-size:11px">25.8%</span></td>
+          <td class="num">$227,954<br><span style="color:var(--text-muted);font-size:11px">27.1%</span></td>
+          <td class="num bold" style="color:var(--red)">$83,539<br><span style="font-size:11px">9.8%</span></td>
+          <td class="num" style="color:var(--red);font-size:16px">↓↓ 科技节最低</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent);font-weight:700">🏆 节日BP</td>
+          <td class="num">$69,209<br><span style="color:var(--text-muted);font-size:11px">10.9%</span></td>
+          <td class="num" style="color:var(--green);font-weight:700">$83,195<br><span style="font-size:11px">10.5%</span></td>
+          <td class="num">$69,802<br><span style="color:var(--text-muted);font-size:11px">7.4%</span></td>
+          <td class="num">$61,184<br><span style="color:var(--text-muted);font-size:11px">7.5%</span></td>
+          <td class="num">$14,738<br><span style="color:var(--text-muted);font-size:11px">5.9%</span></td>
+          <td class="num">$65,799<br><span style="color:var(--text-muted);font-size:11px">7.8%</span></td>
+          <td class="num bold" style="color:var(--accent)">$59,052<br><span style="font-size:11px">6.9%</span></td>
+          <td class="num" style="color:var(--orange);font-size:16px">↓ 持续下滑</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent4);font-weight:700">⛏ 挖矿小游戏</td>
+          <td class="num">$16,055<br><span style="color:var(--text-muted);font-size:11px">2.5%</span></td>
+          <td class="num">$13,457<br><span style="color:var(--text-muted);font-size:11px">1.7%</span></td>
+          <td class="num">$15,177<br><span style="color:var(--text-muted);font-size:11px">1.6%</span></td>
+          <td class="num">$13,045<br><span style="color:var(--text-muted);font-size:11px">1.6%</span></td>
+          <td class="num">$379<br><span style="color:var(--text-muted);font-size:11px">0.2%</span></td>
+          <td class="num">$13,998<br><span style="color:var(--text-muted);font-size:11px">1.7%</span></td>
+          <td class="num bold" style="color:var(--accent4)">$13,353<br><span style="font-size:11px">1.6%</span></td>
+          <td class="num" style="color:var(--text-muted);font-size:16px">→ 稳定 $13-16K</td>
+        </tr>
+        <tr style="background:rgba(108,99,255,.06)">
+          <td class="bold">总计</td>
+          <td class="num">$636,593</td>
+          <td class="num">$788,996</td>
+          <td class="num">$941,774</td>
+          <td class="num" style="color:var(--green);font-weight:700">$917,458</td>
+          <td class="num" style="color:var(--accent4)">$150,458</td>
+          <td class="num">$841,202</td>
+          <td class="num bold" style="color:var(--accent)">$855,121</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:16px;padding:14px 18px;background:rgba(108,99,255,.08);border-radius:10px;border-left:3px solid var(--accent);font-size:13px;line-height:1.8">
+    <b style="color:var(--accent)">📊 结构性洞察（基于 iap_type2 官方分类，7期含2月独立周期）：</b>
+    <br>• <b style="color:var(--accent2)">节日特惠持续扩大</b>：万圣节仅 39.5%，春节达 83.4%，科技节 81.8%，涵盖挖孔/推币/大富翁/弹珠GACHA 等核心玩法礼包
+    <br>• <b style="color:var(--red)">节日皮肤科技节跌至最低 9.8%</b>（$83K）：万圣节弹珠+机甲GACHA 曾达 47.1%（$300K），情人节云上探宝拉到 27.1%，科技节缺乏强力皮肤内容
+    <br>• <b style="color:var(--accent4)">2月独立周期</b>（02-02~02-08，7天）：$150K 节日礼包收入，仅含推币机/一番赏/砍价/抢购 4 类活动，其余归入春节
+    <br>• <b style="color:var(--accent)">节日 BP 绝对值持续下滑</b>：感恩节 $83K → 科技节 $59K，占比从 10.5% 降至 6.9%
+    <br>• <b>挖矿小游戏</b>是唯一单独分类的玩法，稳定在 $13-16K（独立期仅$379因为只有7天）
+    <br>• ⚠ 注：科技节弹珠GACHA（$129K）在 dim_iap 中的 iap_type2 是<b style="color:var(--accent2)">节日特惠</b>而非节日皮肤，与万圣节弹珠（归为节日皮肤）的分类不同
+  </div>
+</div>
+
+
+<!-- ══ Section: 皮肤抽奖模块横向对比 ══ -->
+<div class="section">
+  <div class="section-title">皮肤抽奖模块 — 槽位横向对比</div>
+  <div style="margin-bottom:14px;font-size:12px;color:var(--text-muted)">
+    每个节日的<b>皮肤抽奖主玩法</b>槽位收入对比 · 不同节日使用不同形式（传统GACHA / 弹珠 / 骰子 / 云上探宝 / 推币机）<br>
+    目标：对比<b>同一功能位</b>的营收表现，评估形式替换的效果
+  </div>
+
+  <!-- 柱状图 -->
+  <div style="margin-bottom:28px">
+    <canvas id="skinSlotChart" width="860" height="380" style="width:100%;max-width:860px;border-radius:10px;background:var(--card-bg)"></canvas>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('skinSlotChart');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const PAD = { left: 70, right: 20, top: 50, bottom: 80 };
+    const plotW = W - PAD.left - PAD.right;
+    const plotH = H - PAD.top - PAD.bottom;
+
+    const isDark = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim().startsWith('#1');
+
+    const festivals = ["万圣节", "感恩节", "圣诞节", "春节", "情人节", "科技节"];
+    const formats = ["传统GACHA", "传统GACHA", "弹珠GACHA", "骰子", "云上探宝", "推币机+弹珠"];
+    const emojis = ["🎰", "🎰", "🔮", "🎲", "☁️", "🎯"];
+    const values = [61183.46, 103717.18, 144918.98, 110990.28, 125616.42, 249896.49];
+    const colors = ["#a78bfa", "#a78bfa", "#60a5fa", "#f97316", "#34d399", "#f472b6"];
+    const maxVal = 287380.96349999995;
+
+    // 背景
+    ctx.fillStyle = isDark ? '#1a1a2e' : '#fafafa';
+    ctx.fillRect(0, 0, W, H);
+
+    // 标题
+    ctx.fillStyle = isDark ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.7)';
+    ctx.font = 'bold 14px system-ui';
+    ctx.textAlign = 'left';
+    ctx.fillText('皮肤抽奖槽位收入 · 按形式标注', PAD.left, 28);
+
+    // 网格线
+    ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    for (let v = 0; v <= maxVal; v += 50000) {
+      const y = PAD.top + plotH - (v / maxVal) * plotH;
+      ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(W - PAD.right, y); ctx.stroke();
+      ctx.fillStyle = isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.4)';
+      ctx.font = '10px system-ui';
+      ctx.textAlign = 'right';
+      ctx.fillText('$' + (v/1000).toFixed(0) + 'K', PAD.left - 8, y + 3);
+    }
+
+    // 均值线
+    const avgY = PAD.top + plotH - (132720.46833333332 / maxVal) * plotH;
+    ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.2)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([6,4]);
+    ctx.beginPath(); ctx.moveTo(PAD.left, avgY); ctx.lineTo(W - PAD.right, avgY); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = isDark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)';
+    ctx.font = '10px system-ui';
+    ctx.textAlign = 'left';
+    ctx.fillText('均值 $' + Math.round(132720.46833333332/1000) + 'K', W - PAD.right - 70, avgY - 6);
+
+    // 柱子
+    const barWidth = plotW / festivals.length * 0.55;
+    const barGap = plotW / festivals.length;
+
+    festivals.forEach((fest, i) => {
+      const x = PAD.left + barGap * i + (barGap - barWidth) / 2;
+      const barH = (values[i] / maxVal) * plotH;
+      const y = PAD.top + plotH - barH;
+
+      // 柱子渐变
+      const grad = ctx.createLinearGradient(x, y, x, PAD.top + plotH);
+      grad.addColorStop(0, colors[i]);
+      grad.addColorStop(1, colors[i] + '44');
+      ctx.fillStyle = grad;
+
+      // 圆角矩形
+      const r = 4;
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + barWidth - r, y);
+      ctx.arcTo(x + barWidth, y, x + barWidth, y + r, r);
+      ctx.lineTo(x + barWidth, PAD.top + plotH);
+      ctx.lineTo(x, PAD.top + plotH);
+      ctx.lineTo(x, y + r);
+      ctx.arcTo(x, y, x + r, y, r);
+      ctx.fill();
+
+      // 边框
+      ctx.strokeStyle = colors[i];
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // 金额标签
+      ctx.fillStyle = isDark ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.75)';
+      ctx.font = 'bold 13px system-ui';
+      ctx.textAlign = 'center';
+      ctx.fillText('$' + Math.round(values[i]/1000) + 'K', x + barWidth/2, y - 8);
+
+      // 节日名
+      ctx.fillStyle = isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.5)';
+      ctx.font = '12px system-ui';
+      ctx.fillText(fest, x + barWidth/2, PAD.top + plotH + 20);
+
+      // 形式标签
+      ctx.fillStyle = colors[i];
+      ctx.font = 'bold 11px system-ui';
+      ctx.fillText(emojis[i] + ' ' + formats[i], x + barWidth/2, PAD.top + plotH + 38);
+    });
+  });
+  </script>
+
+  <!-- 数据表格 -->
+  <div class="table-wrap" style="margin-bottom:20px">
+    <table>
+      <thead>
+        <tr>
+          <th>节日</th>
+          <th>形式</th>
+          <th class="num">槽位收入</th>
+          <th class="num">vs 均值</th>
+          <th>礼包组成</th>
+          <th>分析</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td style="font-weight:600">万圣节</td>
+          <td>
+            <span style="background:#a78bfa22;color:#a78bfa;font-weight:700;font-size:11px;padding:3px 8px;border-radius:4px">
+              🎰 传统GACHA
+            </span>
+          </td>
+          <td class="num" style="font-weight:700;font-size:15px">$61K</td>
+          <td class="num" style="color:#ef4444;font-weight:600">-54%</td>
+          <td style="font-size:10px;color:var(--text-muted);max-width:280px">2024万圣节随机GACHA礼包($24K)、2024万圣节GACHA礼包($21K)、25万圣节gacha每日礼包($16K)</td>
+          <td style="font-size:11px">低于均值，传统GACHA形式吸引力待提升</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">感恩节</td>
+          <td>
+            <span style="background:#a78bfa22;color:#a78bfa;font-weight:700;font-size:11px;padding:3px 8px;border-radius:4px">
+              🎰 传统GACHA
+            </span>
+          </td>
+          <td class="num" style="font-weight:700;font-size:15px">$104K</td>
+          <td class="num" style="color:#ef4444;font-weight:600">-22%</td>
+          <td style="font-size:10px;color:var(--text-muted);max-width:280px">2024感恩节随机GACHA礼包($52K)、2024感恩节GACHA礼包($36K)、25感恩节本体gacha每日礼包($16K)</td>
+          <td style="font-size:11px">接近均值水平</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">圣诞节</td>
+          <td>
+            <span style="background:#60a5fa22;color:#60a5fa;font-weight:700;font-size:11px;padding:3px 8px;border-radius:4px">
+              🔮 弹珠GACHA
+            </span>
+          </td>
+          <td class="num" style="font-weight:700;font-size:15px">$145K</td>
+          <td class="num" style="color:#22c55e;font-weight:600">+9%</td>
+          <td style="font-size:10px;color:var(--text-muted);max-width:280px">2025万圣节弹珠随机GACHA礼包($145K)</td>
+          <td style="font-size:11px">接近均值水平</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">春节</td>
+          <td>
+            <span style="background:#f9731622;color:#f97316;font-weight:700;font-size:11px;padding:3px 8px;border-radius:4px">
+              🎲 骰子
+            </span>
+          </td>
+          <td class="num" style="font-weight:700;font-size:15px">$111K</td>
+          <td class="num" style="color:#ef4444;font-weight:600">-16%</td>
+          <td style="font-size:10px;color:var(--text-muted);max-width:280px">春节抽奖成就礼包($65K)、2025春节随机GACHA礼包($22K)、2025春节GACHA礼包($15K)、GACHA每日礼包-登月节($9K)</td>
+          <td style="font-size:11px">接近均值水平</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">情人节</td>
+          <td>
+            <span style="background:#34d39922;color:#34d399;font-weight:700;font-size:11px;padding:3px 8px;border-radius:4px">
+              ☁️ 云上探宝
+            </span>
+          </td>
+          <td class="num" style="font-weight:700;font-size:15px">$126K</td>
+          <td class="num" style="color:#ef4444;font-weight:600">-5%</td>
+          <td style="font-size:10px;color:var(--text-muted);max-width:280px">云上探宝($126K)</td>
+          <td style="font-size:11px">接近均值水平</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">科技节</td>
+          <td>
+            <span style="background:#f472b622;color:#f472b6;font-weight:700;font-size:11px;padding:3px 8px;border-radius:4px">
+              🎯 推币机+弹珠
+            </span>
+          </td>
+          <td class="num" style="font-weight:700;font-size:15px">$250K</td>
+          <td class="num" style="color:#22c55e;font-weight:600">+88%</td>
+          <td style="font-size:10px;color:var(--text-muted);max-width:280px">2026科技节弹珠GACHA($130K)、推币机礼包($64K)、推币机随机GACHA礼包($56K)</td>
+          <td style="font-size:11px">双形式叠加，收入远超单形式均值</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 洞察 -->
+  <div class="insight-box">
+    <div style="font-weight:700;margin-bottom:10px">皮肤抽奖槽位洞察</div>
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b style="color:#22c55e">最高收入</b>：科技节 (🎯 推币机+弹珠) $250K — 双形式策略使槽位收入达到单形式均值的 2.3x</div>
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b style="color:#ef4444">最低收入</b>：万圣节 (🎰 传统GACHA) $61K — 仅为最高值的 24%</div>
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b>形式演进</b>：传统GACHA($61K~$104K) → 弹珠($145K) → 骰子($111K) → 云上探宝($126K) → 推币机+弹珠($250K)</div>
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b>策略发现</b>：单形式均值 $109K，科技节双形式 $250K（+129%）— 同期投放两种皮肤玩法可显著拉升模块整体收入</div>
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b>弹珠GACHA趋势</b>：圣诞首期$145K（独占）→ 科技节2期$130K（与推币机并行）— 弹珠本身有 -10% 衰减，但推币机补位使槽位总量翻倍</div>
+
+  </div>
+</div>
+
+
+<!-- ══ Section 9: 子活动横向对比 ══ -->
+<div class="section">
+  <div class="section-title">子活动横向对比（近7期 · v6合并规则 · v5数据修正独立周期）</div>
+  <div style="margin-bottom:10px;font-size:12px;color:var(--text-muted)">
+    分类依据：dim_iap.iap_type2 + v6合并规则 · v5数据（独立周期仅含推币机/一番赏/砍价/抢购）· 按总收入降序 · 共54个子活动
+  </div>
+  <div class="table-wrap" style="max-height:800px;overflow-y:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>子活动（合并后）</th>
+          <th>模块</th>
+          <th class="num">总计</th>
+          <th class="num">🎃 万圣节</th>
+          <th class="num">🦃 感恩节</th>
+          <th class="num">🎄 圣诞节</th>
+          <th class="num">🧧 春节</th>
+          <th class="num" style="color:var(--accent4)">📅 2月独立</th>
+          <th class="num">💝 情人节</th>
+          <th class="num" style="color:var(--accent)">🔬 科技节</th>
+          <th class="num">期数</th>
+        </tr>
+      </thead>
+      <tbody>
+<tr><td style="color:var(--text-muted);font-size:10px">1</td><td style="font-weight:600">挖孔小游戏礼包</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$811K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$82K</td><td class="num">$139K</td><td class="num">$140K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$243K</td><td class="num">$206K</td><td class="num" style="font-size:10px">5</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">2</td><td style="font-weight:600">弹珠GACHA</td><td style="font-size:10px;color:var(--text-muted)">节日皮肤</td><td class="num" style="font-weight:700">$435K</td><td class="num">$160K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$145K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$130K</td><td class="num" style="font-size:10px">3</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">3</td><td style="font-weight:600">大富翁（非异族）</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$349K</td><td class="num">$69K</td><td class="num">$67K</td><td class="num">$54K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$76K</td><td class="num">$83K</td><td class="num" style="font-size:10px">5</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">4</td><td style="font-weight:600">异族大富翁</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$279K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$279K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">5</td><td style="font-weight:600">限时抢购</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$234K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$71K</td><td class="num">$44K</td><td class="num">$19K</td><td class="num">$55K</td><td class="num">$46K</td><td class="num" style="font-size:10px">5</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">6</td><td style="font-weight:600">节日通行证</td><td style="font-size:10px;color:var(--text-muted)">节日BP</td><td class="num" style="font-weight:700">$220K</td><td class="num">$45K</td><td class="num">$37K</td><td class="num">$52K</td><td class="num">$41K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$44K</td><td class="num" style="font-size:10px">5</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">7</td><td style="font-weight:600">推币机系列</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$192K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$72K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$120K</td><td class="num" style="font-size:10px">2</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">8</td><td style="font-weight:600">周年庆返场</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$172K</td><td class="num">$28K</td><td class="num">$95K</td><td class="num">$31K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$18K</td><td class="num" style="font-size:10px">4</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">9</td><td style="font-weight:600">机甲GACHA</td><td style="font-size:10px;color:var(--text-muted)">节日皮肤</td><td class="num" style="font-weight:700">$139K</td><td class="num">$63K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$76K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">2</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">10</td><td style="font-weight:600">节日BP</td><td style="font-size:10px;color:var(--text-muted)">节日BP</td><td class="num" style="font-weight:700">$138K</td><td class="num">$28K</td><td class="num">$19K</td><td class="num">$21K</td><td class="num">$11K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$48K</td><td class="num">$11K</td><td class="num" style="font-size:10px">6</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">11</td><td style="font-weight:600">挖矿小游戏</td><td style="font-size:10px;color:var(--text-muted)">挖矿小游戏</td><td class="num" style="font-weight:700">$132K</td><td class="num">$16K</td><td class="num">$11K</td><td class="num">$12K</td><td class="num">$13K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$14K</td><td class="num">$65K</td><td class="num" style="font-size:10px">6</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">12</td><td style="font-weight:600">MJ8小游戏</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$128K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$66K</td><td class="num">$62K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">2</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">13</td><td style="font-weight:600">云上探宝</td><td style="font-size:10px;color:var(--text-muted)">节日皮肤</td><td class="num" style="font-weight:700">$126K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$126K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">14</td><td style="font-weight:600">S300赛车系列</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$108K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$108K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$325</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">2</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">15</td><td style="font-weight:600">感恩节皮肤GACHA</td><td style="font-size:10px;color:var(--text-muted)">节日皮肤</td><td class="num" style="font-weight:700">$104K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$104K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">16</td><td style="font-weight:600">自选周卡</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$100K</td><td class="num">$32K</td><td class="num">$12K</td><td class="num">$22K</td><td class="num">$21K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$8K</td><td class="num">$5K</td><td class="num" style="font-size:10px">6</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">17</td><td style="font-weight:600">钓鱼系列</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$89K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$89K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">18</td><td style="font-weight:600">幸运多重礼GACHA</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$88K</td><td class="num">$54K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$33K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">2</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">19</td><td style="font-weight:600">预购连锁</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$85K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$38K</td><td class="num">$20K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$27K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">3</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">20</td><td style="font-weight:600">斗士抽奖系列</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$74K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$74K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">21</td><td style="font-weight:600">砍价系列</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$71K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$42K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$30K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">2</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">22</td><td style="font-weight:600">春节抽奖成就礼包</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$65K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$65K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">23</td><td style="font-weight:600">强消耗</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$62K</td><td class="num">$29K</td><td class="num">$3K</td><td class="num">$11K</td><td class="num">$6K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$7K</td><td class="num">$5K</td><td class="num" style="font-size:10px">6</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">24</td><td style="font-weight:600">万圣节皮肤GACHA</td><td style="font-size:10px;color:var(--text-muted)">节日皮肤</td><td class="num" style="font-weight:700">$61K</td><td class="num">$61K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">25</td><td style="font-weight:600">通用小额随机-转盘</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$61K</td><td class="num">$5K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$37K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$19K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">3</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">26</td><td style="font-weight:600">行军表情</td><td style="font-size:10px;color:var(--text-muted)">节日皮肤</td><td class="num" style="font-weight:700">$53K</td><td class="num">$11K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$11K</td><td class="num">$10K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$10K</td><td class="num">$11K</td><td class="num" style="font-size:10px">5</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">27</td><td style="font-weight:600">2025情人节送花礼包</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$51K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$51K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">28</td><td style="font-weight:600">对对碰</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$46K</td><td class="num">$14K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$11K</td><td class="num">$6K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$8K</td><td class="num">$8K</td><td class="num" style="font-size:10px">5</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">29</td><td style="font-weight:600">2025深海节-节日礼包团购</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$41K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$23K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$18K</td><td class="num" style="font-size:10px">2</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">30</td><td style="font-weight:600">黑五省省卡礼包</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$41K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$41K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">31</td><td style="font-weight:600">黑五英雄专属礼包</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$41K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$41K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">32</td><td style="font-weight:600">行军特效</td><td style="font-size:10px;color:var(--text-muted)">节日皮肤</td><td class="num" style="font-weight:700">$40K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$12K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$15K</td><td class="num">$13K</td><td class="num" style="font-size:10px">3</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">33</td><td style="font-weight:600">累充服务器</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$40K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$11K</td><td class="num">$6K</td><td class="num">$8K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$7K</td><td class="num">$8K</td><td class="num" style="font-size:10px">5</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">34</td><td style="font-weight:600">春节皮肤GACHA</td><td style="font-size:10px;color:var(--text-muted)">节日皮肤</td><td class="num" style="font-weight:700">$37K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$37K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">35</td><td style="font-weight:600">一番赏</td><td style="font-size:10px;color:var(--text-muted)">节日皮肤</td><td class="num" style="font-weight:700">$31K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$31K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">36</td><td style="font-weight:600">掉落转付费礼包</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$29K</td><td class="num">$5K</td><td class="num">$4K</td><td class="num">$6K</td><td class="num">$4K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$4K</td><td class="num">$6K</td><td class="num" style="font-size:10px">6</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">37</td><td style="font-weight:600">25感恩节每日补给升级礼包</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$26K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$9K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$8K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$9K</td><td class="num" style="font-size:10px">3</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">38</td><td style="font-weight:600">黑五满减礼包</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$25K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$25K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">39</td><td style="font-weight:600">2025周年庆-装饰许愿礼包</td><td style="font-size:10px;color:var(--text-muted)">节日皮肤</td><td class="num" style="font-weight:700">$22K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$22K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">40</td><td style="font-weight:600">情人节组队BP</td><td style="font-size:10px;color:var(--text-muted)">节日BP</td><td class="num" style="font-weight:700">$21K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$21K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">41</td><td style="font-weight:600">酒馆登陆bp</td><td style="font-size:10px;color:var(--text-muted)">节日BP</td><td class="num" style="font-weight:700">$21K</td><td class="num">$5K</td><td class="num">$4K</td><td class="num">$4K</td><td class="num">$3K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$3K</td><td class="num">$2K</td><td class="num" style="font-size:10px">6</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">42</td><td style="font-weight:600">2023装饰兑换券礼包</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$19K</td><td class="num">$4K</td><td class="num">$4K</td><td class="num">$7K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$4K</td><td class="num" style="font-size:10px">4</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">43</td><td style="font-weight:600">感恩节终极连锁礼包</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$19K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$19K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">44</td><td style="font-weight:600">GACHA每日礼包-登月节</td><td style="font-size:10px;color:var(--text-muted)">节日皮肤</td><td class="num" style="font-weight:700">$19K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$10K</td><td class="num">$9K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">2</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">45</td><td style="font-weight:600">万圣节小连锁随机礼包</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$16K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$16K</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">46</td><td style="font-weight:600">节日特惠卡</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$15K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$15K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">47</td><td style="font-weight:600">科技节套装S2折扣礼包</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$12K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$12K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">48</td><td style="font-weight:600">情人节bingo活动宝箱礼包</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$9K</td><td class="num">$2K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$2K</td><td class="num">$2K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$2K</td><td class="num">$2K</td><td class="num" style="font-size:10px">5</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">49</td><td style="font-weight:600">周年庆签到BP</td><td style="font-size:10px;color:var(--text-muted)">节日BP</td><td class="num" style="font-weight:700">$8K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$8K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">50</td><td style="font-weight:600">聚宝盆</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$8K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$5K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$3K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">2</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">51</td><td style="font-weight:600">2023感恩节黑五小额</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$7K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$7K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">52</td><td style="font-weight:600">周年庆预购连锁礼包_schema3-5</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$7K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$4K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$3K</td><td class="num" style="font-size:10px">2</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">53</td><td style="font-weight:600">付费率宝箱</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$7K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$7K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">1</td></tr>
+<tr><td style="color:var(--text-muted);font-size:10px">54</td><td style="font-weight:600">2025周年庆返场买三赠一SCHEMA3</td><td style="font-size:10px;color:var(--text-muted)">节日特惠</td><td class="num" style="font-weight:700">$6K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$2K</td><td class="num">$4K</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="font-size:10px">2</td></tr>
+</tbody>
+    </table>
+  </div>
+
+  <!-- 子活动诊断卡片 -->
+  <div style="margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+    <div style="background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.25);border-left:3px solid var(--accent2);border-radius:10px;padding:16px">
+      <div style="font-size:11px;font-weight:700;color:var(--accent2);letter-spacing:1px;margin-bottom:8px">🥇 BEST — 挖孔小游戏</div>
+      <div style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px">$82K → $139K → $140K → $243K → $206K</div>
+      <div style="font-size:12px;color:var(--text-muted);line-height:1.6">
+        5期连续出场，感恩→情人节稳步增长，情人节峰值 $243K。科技节 $206K 环比-15% 但仍是收入第一。
+        <br><b style="color:var(--accent2)">建议：稳固保留，关注是否到达增长天花板</b>
+      </div>
+    </div>
+    <div style="background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.25);border-left:3px solid var(--accent);border-radius:10px;padding:16px">
+      <div style="font-size:11px;font-weight:700;color:var(--accent);letter-spacing:1px;margin-bottom:8px">🚀 RISING — 推币机</div>
+      <div style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px">2月独立$72K → 科技节$120K（+68%）</div>
+      <div style="font-size:12px;color:var(--text-muted);line-height:1.6">
+        2月独立周期首上 $72K，情人节缺席，科技节回归增至 $120K。两次出场均创新高，增速最快的玩法。
+        <br><b style="color:var(--accent)">建议：常驻化，主推位扶持，增加高档位 SKU</b>
+      </div>
+    </div>
+    <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-left:3px solid var(--red);border-radius:10px;padding:16px">
+      <div style="font-size:11px;font-weight:700;color:var(--red);letter-spacing:1px;margin-bottom:8px">⚠ DECLINING — 通行证/BP</div>
+      <div style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px">科技节 $59K（7期正式节日最低）</div>
+      <div style="font-size:12px;color:var(--text-muted);line-height:1.6">
+        从感恩节 $83K 降至科技节 $59K，占比从 10.5% 降至 6.9%。玩家注意力被小游戏抢占，权益吸引力不足。
+        <br><b style="color:var(--red)">建议：与小游戏进度联动，重塑价值感</b>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- ══ Section: 子活动趋势分析 ══ -->
+<div class="section">
+  <div class="section-title">子活动增长 & 衰减趋势分析</div>
+  <div style="margin-bottom:10px;font-size:12px;color:var(--text-muted)">
+    覆盖 32 个出现 2 期以上的子活动 · 基于线性回归 · <b>v5数据（修正独立周期）</b><br>
+    <b>影响力 = 期均收入 × |标准化斜率|</b>
+  </div>
+  <canvas id="trendBubbleChart" width="900" height="420" style="width:100%;max-width:900px;border-radius:10px;background:var(--card-bg);margin-bottom:28px"></canvas>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('trendBubbleChart');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const PAD = { left: 80, right: 30, top: 40, bottom: 50 };
+    const plotW = W - PAD.left - PAD.right;
+    const plotH = H - PAD.top - PAD.bottom;
+    const data = [{"name": "挖孔小游戏礼包", "avg_rev": 162146, "norm_change": 21.7, "impact": 35204, "direction": "up"}, {"name": "弹珠GACHA", "avg_rev": 145050, "norm_change": -10.6, "impact": 15316, "direction": "down"}, {"name": "大富翁（非异族）", "avg_rev": 69826, "norm_change": 5.2, "impact": 3634, "direction": "up"}, {"name": "限时抢购", "avg_rev": 46812, "norm_change": -8.4, "impact": 3909, "direction": "down"}, {"name": "节日通行证", "avg_rev": 43902, "norm_change": 0.6, "impact": 261, "direction": "up"}, {"name": "推币机系列", "avg_rev": 95872, "norm_change": 50.5, "impact": 48449, "direction": "up"}, {"name": "周年庆返场", "avg_rev": 42889, "norm_change": -22.1, "impact": 9493, "direction": "down"}, {"name": "机甲GACHA", "avg_rev": 69610, "norm_change": 17.8, "impact": 12382, "direction": "up"}, {"name": "节日BP", "avg_rev": 22961, "norm_change": -0.9, "impact": 208, "direction": "down"}, {"name": "挖矿小游戏", "avg_rev": 21972, "norm_change": 33.4, "impact": 7341, "direction": "up"}, {"name": "MJ8小游戏", "avg_rev": 64052, "norm_change": -6.3, "impact": 4050, "direction": "down"}, {"name": "S300赛车系列", "avg_rev": 54161, "norm_change": -198.8, "impact": 107672, "direction": "down"}, {"name": "自选周卡", "avg_rev": 16689, "norm_change": -25.1, "impact": 4187, "direction": "down"}, {"name": "幸运多重礼GACHA", "avg_rev": 43754, "norm_change": -48.2, "impact": 21075, "direction": "down"}, {"name": "预购连锁", "avg_rev": 28197, "norm_change": -19.3, "impact": 5449, "direction": "down"}, {"name": "砍价系列", "avg_rev": 35632, "norm_change": -33.9, "impact": 12089, "direction": "down"}, {"name": "强消耗", "avg_rev": 10308, "norm_change": -30.3, "impact": 3120, "direction": "down"}, {"name": "通用小额随机-转盘", "avg_rev": 20238, "norm_change": 34.5, "impact": 6983, "direction": "up"}, {"name": "行军表情", "avg_rev": 10616, "norm_change": 0.0, "impact": 3, "direction": "up"}, {"name": "对对碰", "avg_rev": 9271, "norm_change": -16.3, "impact": 1511, "direction": "down"}, {"name": "2025深海节-节日礼包团购", "avg_rev": 20520, "norm_change": -25.1, "impact": 5151, "direction": "down"}, {"name": "行军特效", "avg_rev": 13473, "norm_change": 4.1, "impact": 550, "direction": "up"}, {"name": "累充服务器", "avg_rev": 8003, "norm_change": -6.8, "impact": 541, "direction": "down"}, {"name": "掉落转付费礼包", "avg_rev": 4831, "norm_change": 2.0, "impact": 97, "direction": "up"}, {"name": "25感恩节每日补给升级礼包", "avg_rev": 8790, "norm_change": 0.6, "impact": 54, "direction": "up"}, {"name": "酒馆登陆bp", "avg_rev": 3452, "norm_change": -15.0, "impact": 518, "direction": "down"}, {"name": "2023装饰兑换券礼包", "avg_rev": 4852, "norm_change": 0.9, "impact": 44, "direction": "up"}, {"name": "GACHA每日礼包-登月节", "avg_rev": 9324, "norm_change": -11.7, "impact": 1093, "direction": "down"}, {"name": "情人节bingo活动宝箱礼包", "avg_rev": 1866, "norm_change": -11.7, "impact": 219, "direction": "down"}, {"name": "聚宝盆", "avg_rev": 4042, "norm_change": -31.6, "impact": 1278, "direction": "down"}, {"name": "周年庆预购连锁礼包_schema3-5", "avg_rev": 3500, "norm_change": -34.3, "impact": 1200, "direction": "down"}, {"name": "2025周年庆返场买三赠一SCHEMA3", "avg_rev": 2949, "norm_change": 44.1, "impact": 1300, "direction": "up"}];
+    const maxRev = Math.max(...data.map(d => d.avg_rev));
+    const maxChange = Math.max(Math.max(...data.map(d => Math.abs(d.norm_change))), 30);
+    function xScale(v) { return PAD.left + (v + maxChange) / (2 * maxChange) * plotW; }
+    function yScale(v) { return PAD.top + plotH - (v / maxRev) * plotH; }
+    const isDark = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim().startsWith('#1');
+    ctx.fillStyle = isDark ? '#1a1a2e' : '#fafafa';
+    ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    for (let r = 0; r <= maxRev; r += 50000) {
+      const y = yScale(r);
+      ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(W - PAD.right, y); ctx.stroke();
+      ctx.fillStyle = isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.4)';
+      ctx.font = '10px system-ui'; ctx.textAlign = 'right';
+      ctx.fillText('$' + (r/1000).toFixed(0) + 'K', PAD.left - 8, y + 3);
+    }
+    const zeroX = xScale(0);
+    ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)';
+    ctx.lineWidth = 2; ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(zeroX, PAD.top); ctx.lineTo(zeroX, H - PAD.bottom); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = 'bold 13px system-ui'; ctx.globalAlpha = 0.15;
+    ctx.fillStyle = '#ef4444'; ctx.textAlign = 'center';
+    ctx.fillText('\u25c0 \u8870\u51cf\u533a', PAD.left + plotW * 0.2, PAD.top + 22);
+    ctx.fillStyle = '#22c55e';
+    ctx.fillText('\u589e\u957f\u533a \u25b6', W - PAD.right - plotW * 0.2, PAD.top + 22);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = isDark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.5)';
+    ctx.font = '11px system-ui'; ctx.textAlign = 'center';
+    ctx.fillText('\u2190 \u8870\u51cf (\u6bcf\u671f\u53d8\u5316\u7387 %) \u589e\u957f \u2192', W / 2, H - 10);
+    ctx.save(); ctx.translate(16, H / 2); ctx.rotate(-Math.PI / 2);
+    ctx.fillText('\u671f\u5747\u6536\u5165 ($)', 0, 0); ctx.restore();
+    const maxImpact = Math.max(...data.map(d => d.impact));
+    data.forEach(d => {
+      const x = xScale(d.norm_change); const y = yScale(d.avg_rev);
+      const r = Math.max(6, Math.sqrt(d.impact / maxImpact) * 28);
+      const color = d.direction === 'up' ? '#22c55e' : '#ef4444';
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = color; ctx.globalAlpha = 0.2; ctx.fill();
+      ctx.globalAlpha = 0.7; ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.stroke();
+      ctx.globalAlpha = 1;
+      if (d.impact > maxImpact * 0.08 || d.avg_rev > maxRev * 0.3) {
+        ctx.fillStyle = isDark ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.7)';
+        ctx.font = '10px system-ui';
+        ctx.textAlign = d.norm_change > 0 ? 'left' : 'right';
+        ctx.fillText(d.name, d.norm_change > 0 ? x + r + 4 : x - r - 4, y - r - 2);
+      }
+    });
+    ctx.font = '11px system-ui';
+    ctx.fillStyle = isDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)';
+    ctx.textAlign = 'left';
+    ctx.fillText('\u6c14\u6ce1\u5927\u5c0f = \u5f71\u54cd\u529b\uff08\u6536\u5165 \u00d7 \u53d8\u5316\u7387\uff09', PAD.left + 4, H - PAD.bottom + 30);
+  });
+  </script>
+
+
+  <div style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <span style="background:#22c55e;color:#000;font-weight:800;font-size:12px;padding:4px 14px;border-radius:6px">▲ 增长趋势</span>
+      <span style="color:var(--text-muted);font-size:12px">13 个活动</span>
+    </div>
+    <div class="table-wrap"><table><thead><tr>
+      <th style="width:28px">#</th><th>活动</th><th class="num">期均收入</th>
+      <th class="num">每期变化</th><th class="num">R²</th><th style="width:65px">影响力</th>
+      <th style="width:210px">趋势线</th><th>各期收入</th>
+    </tr></thead><tbody>
+
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">1</td>
+      <td><div style="font-weight:600;margin-bottom:2px">推币机系列</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$96K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 51%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td><div style="width:60px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="131.3,38.0 131.3,34.0 194.0,6.0 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="131.3,34.0 194.0,6.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="131.3" cy="34.0" r="3.5" fill="#22c55e" opacity="1"/><circle cx="194.0" cy="6.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$72K → $120K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">2</td>
+      <td><div style="font-weight:600;margin-bottom:2px">挖孔小游戏礼包</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 5期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$162K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 22%</td>
+      <td class="num" style="font-size:11px">78%</td>
+      <td><div style="width:44px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="37.3,38.0 37.3,34.0 68.7,24.1 100.0,24.0 162.7,6.0 194.0,12.5 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="37.3,34.0 68.7,24.1 100.0,24.0 162.7,6.0 194.0,12.5" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="37.3" cy="34.0" r="3.5" fill="#22c55e" opacity="1"/><circle cx="68.7" cy="24.1" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="100.0" cy="24.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="162.7" cy="6.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="12.5" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$82K → $139K → $140K → $243K → $206K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">3</td>
+      <td><div style="font-weight:600;margin-bottom:2px">机甲GACHA</div><div style="font-size:10px;color:var(--text-muted)">节日皮肤 · 2期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$70K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 18%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td><div style="width:15px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,34.0 162.7,6.0 162.7,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="6.0,34.0 162.7,6.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="34.0" r="3.5" fill="#22c55e" opacity="1"/><circle cx="162.7" cy="6.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$63K → $76K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">4</td>
+      <td><div style="font-weight:600;margin-bottom:2px">挖矿小游戏</div><div style="font-size:10px;color:var(--text-muted)">挖矿小游戏 · 6期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$22K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 33%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">42%</span></td>
+      <td><div style="width:9px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,31.2 37.3,34.0 68.7,33.1 100.0,32.6 162.7,32.3 194.0,6.0 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="6.0,31.2 37.3,34.0 68.7,33.1 100.0,32.6 162.7,32.3 194.0,6.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="31.2" r="3.5" fill="#22c55e" opacity="1"/><circle cx="37.3" cy="34.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="68.7" cy="33.1" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="100.0" cy="32.6" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="162.7" cy="32.3" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="6.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$16K → $11K → $12K → $13K → $14K → $65K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">5</td>
+      <td><div style="font-weight:600;margin-bottom:2px">通用小额随机-转盘</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 3期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$20K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 35%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">19%</span></td>
+      <td><div style="width:9px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,34.0 68.7,6.0 162.7,21.8 162.7,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="6.0,34.0 68.7,6.0 162.7,21.8" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="34.0" r="3.5" fill="#22c55e" opacity="1"/><circle cx="68.7" cy="6.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="162.7" cy="21.8" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$5K → $37K → $19K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">6</td>
+      <td><div style="font-weight:600;margin-bottom:2px">大富翁（非异族）</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 5期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$70K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 5%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">30%</span></td>
+      <td><div style="width:5px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,19.9 37.3,21.2 68.7,34.0 162.7,13.1 194.0,6.0 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="6.0,19.9 37.3,21.2 68.7,34.0 162.7,13.1 194.0,6.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="19.9" r="3.5" fill="#22c55e" opacity="1"/><circle cx="37.3" cy="21.2" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="68.7" cy="34.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="162.7" cy="13.1" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="6.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$69K → $67K → $54K → $76K → $83K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">7</td>
+      <td><div style="font-weight:600;margin-bottom:2px">2025周年庆返场买三赠一SCHEMA3</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$3K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 44%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td><div style="width:2px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="37.3,38.0 37.3,34.0 68.7,6.0 68.7,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="37.3,34.0 68.7,6.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="37.3" cy="34.0" r="3.5" fill="#22c55e" opacity="1"/><circle cx="68.7" cy="6.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$2K → $4K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">8</td>
+      <td><div style="font-weight:600;margin-bottom:2px">行军特效</div><div style="font-size:10px;color:var(--text-muted)">节日皮肤 · 3期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$13K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 4%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">15%</span></td>
+      <td><div style="width:1px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="100.0,38.0 100.0,34.0 162.7,6.0 194.0,23.2 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="100.0,34.0 162.7,6.0 194.0,23.2" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="100.0" cy="34.0" r="3.5" fill="#22c55e" opacity="1"/><circle cx="162.7" cy="6.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="23.2" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$12K → $15K → $13K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">9</td>
+      <td><div style="font-weight:600;margin-bottom:2px">节日通行证</div><div style="font-size:10px;color:var(--text-muted)">节日BP · 5期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$44K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 1%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">1%</span></td>
+      <td><div style="width:0px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,19.8 37.3,34.0 68.7,6.0 100.0,26.4 194.0,21.3 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="6.0,19.8 37.3,34.0 68.7,6.0 100.0,26.4 194.0,21.3" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="19.8" r="3.5" fill="#22c55e" opacity="1"/><circle cx="37.3" cy="34.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="68.7" cy="6.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="100.0" cy="26.4" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="21.3" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$45K → $37K → $52K → $41K → $44K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">10</td>
+      <td><div style="font-weight:600;margin-bottom:2px">掉落转付费礼包</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 6期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$5K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 2%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">3%</span></td>
+      <td><div style="width:0px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,15.8 37.3,34.0 68.7,7.6 100.0,30.8 162.7,28.8 194.0,6.0 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="6.0,15.8 37.3,34.0 68.7,7.6 100.0,30.8 162.7,28.8 194.0,6.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="15.8" r="3.5" fill="#22c55e" opacity="1"/><circle cx="37.3" cy="34.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="68.7" cy="7.6" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="100.0" cy="30.8" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="162.7" cy="28.8" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="6.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$5K → $4K → $6K → $4K → $4K → $6K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">11</td>
+      <td><div style="font-weight:600;margin-bottom:2px">25感恩节每日补给升级礼包</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 3期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$9K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 1%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">0%</span></td>
+      <td><div style="width:0px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="37.3,38.0 37.3,7.8 100.0,34.0 194.0,6.0 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="37.3,7.8 100.0,34.0 194.0,6.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="37.3" cy="7.8" r="3.5" fill="#22c55e" opacity="1"/><circle cx="100.0" cy="34.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="6.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$9K → $8K → $9K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">12</td>
+      <td><div style="font-weight:600;margin-bottom:2px">2023装饰兑换券礼包</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 4期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$5K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 1%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">0%</span></td>
+      <td><div style="width:0px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,27.8 37.3,28.3 68.7,6.0 194.0,34.0 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="6.0,27.8 37.3,28.3 68.7,6.0 194.0,34.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="27.8" r="3.5" fill="#22c55e" opacity="1"/><circle cx="37.3" cy="28.3" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="68.7" cy="6.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="34.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$4K → $4K → $7K → $4K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">13</td>
+      <td><div style="font-weight:600;margin-bottom:2px">行军表情</div><div style="font-size:10px;color:var(--text-muted)">节日皮肤 · 5期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$11K</td>
+      <td class="num" style="color:#22c55e;font-weight:700;font-size:14px">▲ 0%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">0%</span></td>
+      <td><div style="width:0px;height:6px;border-radius:3px;background:#22c55e;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,12.5 68.7,17.8 100.0,34.0 162.7,30.0 194.0,6.0 194.0,38.0" fill="#22c55e" opacity="0.08"/>
+      <polyline points="6.0,12.5 68.7,17.8 100.0,34.0 162.7,30.0 194.0,6.0" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="12.5" r="3.5" fill="#22c55e" opacity="1"/><circle cx="68.7" cy="17.8" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="100.0" cy="34.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="162.7" cy="30.0" r="2.5" fill="#22c55e" opacity="0.6"/><circle cx="194.0" cy="6.0" r="3.5" fill="#22c55e" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$11K → $11K → $10K → $10K → $11K</td>
+    </tr>
+</tbody></table></div></div>
+
+  <div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <span style="background:#ef4444;color:#fff;font-weight:800;font-size:12px;padding:4px 14px;border-radius:6px">▼ 衰减趋势</span>
+      <span style="color:var(--text-muted);font-size:12px">19 个活动</span>
+    </div>
+    <div class="table-wrap"><table><thead><tr>
+      <th style="width:28px">#</th><th>活动</th><th class="num">期均收入</th>
+      <th class="num">每期衰减</th><th class="num">R²</th><th style="width:65px">影响力</th>
+      <th style="width:210px">趋势线</th><th>各期收入</th>
+    </tr></thead><tbody>
+
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">1</td>
+      <td><div style="font-weight:600;margin-bottom:2px">S300赛车系列</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$54K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 199%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td><div style="width:60px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="37.3,38.0 37.3,6.0 162.7,34.0 162.7,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="37.3,6.0 162.7,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="37.3" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="162.7" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$108K → $0K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">2</td>
+      <td><div style="font-weight:600;margin-bottom:2px">幸运多重礼GACHA</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$44K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 48%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td><div style="width:12px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.0 68.7,34.0 68.7,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.0 68.7,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="68.7" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$54K → $33K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">3</td>
+      <td><div style="font-weight:600;margin-bottom:2px">弹珠GACHA</div><div style="font-size:10px;color:var(--text-muted)">节日皮肤 · 3期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$145K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 11%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td><div style="width:9px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.0 68.7,20.2 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.0 68.7,20.2 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="68.7" cy="20.2" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$160K → $145K → $130K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">4</td>
+      <td><div style="font-weight:600;margin-bottom:2px">砍价系列</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$36K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 34%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td><div style="width:7px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="37.3,38.0 37.3,6.0 131.3,34.0 131.3,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="37.3,6.0 131.3,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="37.3" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="131.3" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$42K → $30K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">5</td>
+      <td><div style="font-weight:600;margin-bottom:2px">周年庆返场</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 4期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$43K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 22%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">12%</span></td>
+      <td><div style="width:5px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,30.2 37.3,6.0 68.7,29.4 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,30.2 37.3,6.0 68.7,29.4 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="30.2" r="3.5" fill="#ef4444" opacity="1"/><circle cx="37.3" cy="6.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="68.7" cy="29.4" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$28K → $95K → $31K → $18K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">6</td>
+      <td><div style="font-weight:600;margin-bottom:2px">预购连锁</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 3期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$28K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 19%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">35%</span></td>
+      <td><div style="width:3px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="68.7,38.0 68.7,6.0 100.0,34.0 162.7,22.8 162.7,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="68.7,6.0 100.0,34.0 162.7,22.8" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="68.7" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="100.0" cy="34.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="22.8" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$38K → $20K → $27K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">7</td>
+      <td><div style="font-weight:600;margin-bottom:2px">2025深海节-节日礼包团购</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$21K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 25%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td><div style="width:3px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="68.7,38.0 68.7,6.0 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="68.7,6.0 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="68.7" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$23K → $18K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">8</td>
+      <td><div style="font-weight:600;margin-bottom:2px">自选周卡</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 6期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$17K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 25%</td>
+      <td class="num" style="font-size:11px">61%</td>
+      <td><div style="width:2px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.0 37.3,26.7 68.7,16.1 100.0,17.4 162.7,31.0 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.0 37.3,26.7 68.7,16.1 100.0,17.4 162.7,31.0 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="37.3" cy="26.7" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="68.7" cy="16.1" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="100.0" cy="17.4" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="31.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$32K → $12K → $22K → $21K → $8K → $5K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">9</td>
+      <td><div style="font-weight:600;margin-bottom:2px">MJ8小游戏</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$64K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 6%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td><div style="width:2px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="68.7,38.0 68.7,6.0 100.0,34.0 100.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="68.7,6.0 100.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="68.7" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="100.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$66K → $62K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">10</td>
+      <td><div style="font-weight:600;margin-bottom:2px">限时抢购</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 5期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$47K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 8%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">11%</span></td>
+      <td><div style="width:2px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="68.7,38.0 68.7,6.0 100.0,20.1 131.3,34.0 162.7,14.6 194.0,19.3 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="68.7,6.0 100.0,20.1 131.3,34.0 162.7,14.6 194.0,19.3" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="68.7" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="100.0" cy="20.1" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="131.3" cy="34.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="14.6" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="19.3" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$71K → $44K → $19K → $55K → $46K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">11</td>
+      <td><div style="font-weight:600;margin-bottom:2px">强消耗</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 6期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$10K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 30%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">39%</span></td>
+      <td><div style="width:2px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.0 37.3,34.0 68.7,25.1 100.0,31.6 162.7,29.5 194.0,31.7 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.0 37.3,34.0 68.7,25.1 100.0,31.6 162.7,29.5 194.0,31.7" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="37.3" cy="34.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="68.7" cy="25.1" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="100.0" cy="31.6" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="29.5" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="31.7" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$29K → $3K → $11K → $6K → $7K → $5K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">12</td>
+      <td><div style="font-weight:600;margin-bottom:2px">对对碰</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 5期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$9K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 16%</td>
+      <td class="num" style="font-size:11px">56%</td>
+      <td><div style="width:1px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.0 68.7,17.1 100.0,34.0 162.7,25.4 194.0,27.3 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.0 68.7,17.1 100.0,34.0 162.7,25.4 194.0,27.3" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="68.7" cy="17.1" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="100.0" cy="34.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="25.4" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="27.3" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$14K → $11K → $6K → $8K → $8K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">13</td>
+      <td><div style="font-weight:600;margin-bottom:2px">聚宝盆</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$4K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 32%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td><div style="width:1px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="100.0,38.0 100.0,6.0 162.7,34.0 162.7,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="100.0,6.0 162.7,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="100.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="162.7" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$5K → $3K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">14</td>
+      <td><div style="font-weight:600;margin-bottom:2px">周年庆预购连锁礼包_schema3-5</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 2期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$3K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 34%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td><div style="width:1px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="37.3,38.0 37.3,6.0 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="37.3,6.0 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="37.3" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$4K → $3K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">15</td>
+      <td><div style="font-weight:600;margin-bottom:2px">GACHA每日礼包-登月节</div><div style="font-size:10px;color:var(--text-muted)">节日皮肤 · 2期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$9K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 12%</td>
+      <td class="num" style="font-size:11px">100%</td>
+      <td><div style="width:1px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="68.7,38.0 68.7,6.0 100.0,34.0 100.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="68.7,6.0 100.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="68.7" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="100.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$10K → $9K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">16</td>
+      <td><div style="font-weight:600;margin-bottom:2px">累充服务器</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 5期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$8K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 7%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">17%</span></td>
+      <td><div style="width:0px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="37.3,38.0 37.3,6.0 68.7,34.0 100.0,20.5 162.7,27.0 194.0,22.9 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="37.3,6.0 68.7,34.0 100.0,20.5 162.7,27.0 194.0,22.9" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="37.3" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="68.7" cy="34.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="100.0" cy="20.5" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="27.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="22.9" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$11K → $6K → $8K → $7K → $8K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">17</td>
+      <td><div style="font-weight:600;margin-bottom:2px">酒馆登陆bp</div><div style="font-size:10px;color:var(--text-muted)">节日BP · 6期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$3K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 15%</td>
+      <td class="num" style="font-size:11px">93%</td>
+      <td><div style="width:0px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.0 37.3,17.0 68.7,18.8 100.0,26.2 162.7,25.9 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.0 37.3,17.0 68.7,18.8 100.0,26.2 162.7,25.9 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="37.3" cy="17.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="68.7" cy="18.8" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="100.0" cy="26.2" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="25.9" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$5K → $4K → $4K → $3K → $3K → $2K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">18</td>
+      <td><div style="font-weight:600;margin-bottom:2px">情人节bingo活动宝箱礼包</div><div style="font-size:10px;color:var(--text-muted)">节日特惠 · 5期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$2K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 12%</td>
+      <td class="num" style="font-size:11px">85%</td>
+      <td><div style="width:0px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,6.0 68.7,22.3 100.0,27.0 162.7,28.7 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,6.0 68.7,22.3 100.0,27.0 162.7,28.7 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="6.0" r="3.5" fill="#ef4444" opacity="1"/><circle cx="68.7" cy="22.3" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="100.0" cy="27.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="28.7" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$2K → $2K → $2K → $2K → $2K</td>
+    </tr>
+<tr>
+      <td style="color:var(--text-muted);font-size:11px;text-align:center">19</td>
+      <td><div style="font-weight:600;margin-bottom:2px">节日BP</div><div style="font-size:10px;color:var(--text-muted)">节日BP · 6期</div></td>
+      <td class="num" style="font-size:14px;font-weight:600">$23K</td>
+      <td class="num" style="color:#ef4444;font-weight:700;font-size:14px">▼ 1%</td>
+      <td class="num" style="font-size:11px"><span style="opacity:0.4">0%</span></td>
+      <td><div style="width:0px;height:6px;border-radius:3px;background:#ef4444;opacity:0.5"></div></td>
+      <td><svg width="200" height="40" style="vertical-align:middle">
+      <polygon points="6.0,38.0 6.0,21.2 37.3,28.0 68.7,26.2 100.0,33.6 162.7,6.0 194.0,34.0 194.0,38.0" fill="#ef4444" opacity="0.08"/>
+      <polyline points="6.0,21.2 37.3,28.0 68.7,26.2 100.0,33.6 162.7,6.0 194.0,34.0" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6.0" cy="21.2" r="3.5" fill="#ef4444" opacity="1"/><circle cx="37.3" cy="28.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="68.7" cy="26.2" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="100.0" cy="33.6" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="162.7" cy="6.0" r="2.5" fill="#ef4444" opacity="0.6"/><circle cx="194.0" cy="34.0" r="3.5" fill="#ef4444" opacity="1"/>
+    </svg></td>
+      <td style="font-size:10px;color:var(--text-muted);white-space:nowrap">$28K → $19K → $21K → $11K → $48K → $11K</td>
+    </tr>
+</tbody></table></div></div>
+<div class="insight-box" style="margin-top:24px"><div style="font-weight:700;margin-bottom:8px">趋势分析洞察</div>
+<div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b style="color:#22c55e">最强增长</b>：推币机系列（期均 $96K，每期 +51%）</div>
+<div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b style="color:#ef4444">最大衰减</b>：S300赛车系列（期均 $54K，每期 -199%）</div>
+<div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b>稳定增长（高R²）</b>：推币机系列、挖孔小游戏礼包、机甲GACHA</div>
+<div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b style="color:#ef4444">稳定衰减</b>：S300赛车系列、弹珠GACHA、MJ8小游戏</div>
+</div></div>
+
+<!-- ══ Section 10: 活动诊断 ══ -->
+<div class="section">
+  <div class="section-title">子活动诊断</div>
+  <div class="diag-grid">
+    <div class="diag-card keep">
+      <div class="diag-status keep">✅ KEEP</div>
+      <div class="diag-name">科技节特惠礼包系列</div>
+      <div class="diag-rev">$705,005</div>
+      <div class="diag-reason">贡献节日线 82.4%，是绝对核心收入抓手；多档位价格梯度设计合理，建议保留并优化高档位触达。</div>
+    </div>
+    <div class="diag-card keep">
+      <div class="diag-status keep">✅ KEEP</div>
+      <div class="diag-name">科技节通行证BP</div>
+      <div class="diag-rev">$56,702</div>
+      <div class="diag-reason">双BP稳定贡献 7.1%，具备中长期留存价值与每日付费锚定效果；建议保留并丰富权益层级。</div>
+    </div>
+    <div class="diag-card optimize">
+      <div class="diag-status optimize">🔧 OPTIMIZE</div>
+      <div class="diag-name">科技节主题皮肤</div>
+      <div class="diag-rev">$80,265</div>
+      <div class="diag-reason">较情人节占比从 15.5% 下滑至 10.0%，外显吸引力下降；建议强化稀缺性标签与套装联动，提升视觉转化。</div>
+    </div>
+    <div class="diag-card optimize">
+      <div class="diag-status optimize">🔧 OPTIMIZE</div>
+      <div class="diag-name">科技节小游戏挖矿</div>
+      <div class="diag-rev">$13,130</div>
+      <div class="diag-reason">体量偏小（1.6%），但有参与深度潜力；建议优化奖励可视化与进度感，提升付费转化。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Section 9: Action Items ══ -->
+<div class="section">
+  <div class="section-title">Action Items</div>
+  <div class="action-grid">
+    <div class="action-card">
+      <div class="action-p p0">P0 立即执行</div>
+      <div class="action-item">小游戏模块持续投入 — 挖孔/推币机/挖矿三玩法验证成功（合计 $330,624），下期保持并扩展高频复购设计</div>
+      <div class="action-item">弹珠GACHA 形式复用 — ARPU $110.94 为节日线第二，考虑在复活节 / 周年庆延续该形式</div>
+    </div>
+    <div class="action-card">
+      <div class="action-p p1">P1 下期优化</div>
+      <div class="action-item">外显模块重塑 — 主题皮肤收入下滑，需配合高品质内容或稀缺限定玩法提振</div>
+      <div class="action-item">小R 低门槛引导 — 11,154 活跃小R 仅 8.8% 付费，增加 $0.99~$1.99 低价入口礼包</div>
+      <div class="action-item">节日挖矿扩容 — $13,130 体量偏小，增加玩法深度和奖励档位</div>
+    </div>
+    <div class="action-card">
+      <div class="action-p p2">P2 中期规划</div>
+      <div class="action-item">礼包命名规范化 — 49 条中多条延用往期节日名，在科技节期间仍有购买，建议建立礼包生命周期管理机制</div>
+      <div class="action-item">头部依赖风险监控 — 超R 1,208 人贡献节日线 63.5%，持续跟踪超R 活跃留存</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  数据来源：v1041.ods_user_order + dim.iap（图表9 SQL）&nbsp;·&nbsp;
+  模块映射：iap_module_map.json&nbsp;·&nbsp;
+  自动生成于 2026-04-08
+</div>
+
+<script>
+// 模块趋势堆叠柱状图（7期，春节拆纯+2月独立周期）
+document.addEventListener('DOMContentLoaded', function() {
+  const festivals = ['🎃万圣节\n10月', '🦃感恩节\n11月', '🎄圣诞节\n12月', '🧧春节\n1月', '📅2月独立\n7天', '💝情人节\n2月', '🔬科技节\n3月'];
+  const data = [
+    // [节日特惠, 节日皮肤, 节日BP, 挖矿小游戏] — iap_type2 分类
+    [251378, 299951,  69209, 16055],  // 万圣节 10-17~11-06
+    [584683, 107661,  83195, 13457],  // 感恩节 11-13~12-04
+    [668073, 188722,  69802, 15177],  // 圣诞节 12-12~01-01
+    [763968, 69148, 71236, 13106],  // 春节 01-13~02-01
+    [87520, 57025, 5913, 0],  // 2月独立 02-02~02-08
+    [533450, 227954,  65799, 13998],  // 情人节 02-11~03-05
+    [699177,  83539,  59052, 13353],  // 科技节 03-13~04-03
+  ];
+  const colors = ['#00d4aa', '#ff6b6b', '#6c63ff', '#ffd166'];
+  const labels = ['节日特惠', '节日皮肤', '节日BP', '挖矿小游戏'];
+  const maxTotal = Math.max(...data.map(d => d.reduce((a,b)=>a+b,0)));
+  const wrap = document.getElementById('module-stacked');
+  const chartH = 220;
+
+  data.forEach((d, fi) => {
+    const total = d.reduce((a,b)=>a+b,0);
+    const colWrap = document.createElement('div');
+    colWrap.style.cssText = 'flex:1;display:flex;flex-direction:column;align-items:center;gap:4px';
+
+    const totalLabel = document.createElement('div');
+    totalLabel.style.cssText = 'font-size:10px;color:#8892a4;font-weight:600;white-space:nowrap';
+    totalLabel.textContent = '$' + (total/1000).toFixed(0) + 'K';
+    if (fi === 2) totalLabel.style.color = '#22c55e'; // 圣诞最高(正式节日)
+    colWrap.appendChild(totalLabel);
+
+    const barCol = document.createElement('div');
+    barCol.style.cssText = `width:100%;height:${chartH}px;display:flex;flex-direction:column-reverse;border-radius:6px;overflow:hidden;cursor:default`;
+
+    if (fi === 6) barCol.style.outline = '2px solid #6c63ff'; // 科技节
+    if (fi === 4) barCol.style.outline = '2px dashed #ffd166'; // 独立周期
+
+    d.forEach((val, mi) => {
+      const pct = (val / maxTotal * chartH);
+      const seg = document.createElement('div');
+      seg.style.cssText = `height:${pct}px;background:${colors[mi]};position:relative;transition:opacity .2s`;
+      seg.title = `${labels[mi]}: $${val.toLocaleString()} (${(val/total*100).toFixed(1)}%)`;
+      if (pct > 22) {
+        const pctLabel = document.createElement('div');
+        pctLabel.style.cssText = 'position:absolute;width:100%;text-align:center;top:50%;transform:translateY(-50%);font-size:10px;font-weight:700;color:rgba(0,0,0,0.6);pointer-events:none';
+        pctLabel.textContent = (val/total*100).toFixed(0) + '%';
+        seg.appendChild(pctLabel);
+      }
+      barCol.appendChild(seg);
+    });
+    colWrap.appendChild(barCol);
+
+    const nameLabel = document.createElement('div');
+    nameLabel.style.cssText = 'font-size:10px;color:#8892a4;text-align:center;white-space:pre-line;line-height:1.3;margin-top:4px';
+    nameLabel.textContent = festivals[fi];
+    if (fi === 6) nameLabel.style.color = '#6c63ff';
+    if (fi === 4) nameLabel.style.color = '#ffd166';
+    colWrap.appendChild(nameLabel);
+
+    wrap.appendChild(colWrap);
+  });
+});
+</script>
+
+</body>
+</html>

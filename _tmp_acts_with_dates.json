@@ -1,0 +1,463 @@
+[
+  {
+    "month": "7月",
+    "cat": "节日付费",
+    "name": "累充",
+    "content": "复用",
+    "t_score": "48.5",
+    "start": "2026-07-09",
+    "end": "2026-07-16",
+    "hex": "#C9DAF8",
+    "phases": [
+      {
+        "date": "07-09",
+        "label": "第一阶段"
+      },
+      {
+        "date": "07-16",
+        "label": "第二阶段"
+      }
+    ],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "节日BP",
+    "name": "通行证",
+    "content": "换皮",
+    "t_score": "73.2",
+    "start": "2026-07-09",
+    "end": "2026-07-16",
+    "hex": "#C9DAF8",
+    "phases": [
+      {
+        "date": "07-09",
+        "label": "第一期：大富翁"
+      },
+      {
+        "date": "07-16",
+        "label": "第二期：挖孔小游戏"
+      }
+    ],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "强消耗活动",
+    "name": "强消耗",
+    "content": "复用",
+    "t_score": "50",
+    "start": "2026-07-09",
+    "end": "2026-07-13",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "进度小游戏",
+    "name": "大富翁",
+    "content": "换皮",
+    "t_score": "87.5",
+    "start": "2026-07-09",
+    "end": "2026-07-16",
+    "hex": "#C9DAF8",
+    "phases": [
+      {
+        "date": "07-09",
+        "label": "第一期：大富翁：装饰物"
+      },
+      {
+        "date": "07-16",
+        "label": "第二期：挖孔小游戏：主城特效"
+      }
+    ],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "活跃带小额付费",
+    "name": "掉落转付费",
+    "content": "复用",
+    "t_score": "48.2",
+    "start": "2026-07-09",
+    "end": "2026-07-15",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "活跃带小额付费",
+    "name": "7日",
+    "content": "复用",
+    "t_score": "暂无",
+    "start": "2026-07-16",
+    "end": "2026-07-22",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "大地图玩法",
+    "name": "巨猿",
+    "content": "复用",
+    "t_score": "暂无",
+    "start": "2026-07-20",
+    "end": "2026-07-22",
+    "hex": "#D0E0E3",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "付费率礼包",
+    "name": "每日节日付费率礼包",
+    "content": "复用",
+    "t_score": "暂无",
+    "start": "2026-07-09",
+    "end": "2026-07-15",
+    "hex": "#D0E0E3",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "付费率礼包",
+    "name": "周卡",
+    "content": "复用",
+    "t_score": "26",
+    "start": "2026-07-16",
+    "end": "2026-07-22",
+    "hex": "#D0E0E3",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "付费深度礼包",
+    "name": "抢购礼包",
+    "content": "复用",
+    "t_score": "61.5",
+    "start": "2026-07-14",
+    "end": "2026-07-21",
+    "hex": "#D0E0E3",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "付费深度礼包",
+    "name": "小额转盘",
+    "content": "复用",
+    "t_score": "60",
+    "start": "2026-07-16",
+    "end": "2026-07-22",
+    "hex": "#D0E0E3",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "联动礼包",
+    "name": "联动礼包-行军表情",
+    "content": "换皮",
+    "t_score": "暂无",
+    "start": "2026-07-09",
+    "end": "2026-07-15",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "联动礼包",
+    "name": "联动礼包-shop-柜台",
+    "content": "换皮",
+    "t_score": "暂无",
+    "start": "2026-07-09",
+    "end": "2026-07-15",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "节日卡包",
+    "name": "节日卡包系统",
+    "content": "换皮",
+    "t_score": "暂无",
+    "start": "2026-07-09",
+    "end": "2026-07-22",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "主城特效",
+    "name": "挖孔小游戏",
+    "content": "搬运",
+    "t_score": "83.5",
+    "start": "2026-07-16",
+    "end": "2026-07-22",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "7月",
+    "cat": "主城特效",
+    "name": "主城特效系统",
+    "content": "搬运",
+    "t_score": "暂无",
+    "start": "2026-07-09",
+    "end": "2026-07-22",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "节日付费",
+    "name": "累充（三阶段）",
+    "content": "复用",
+    "t_score": "48.5",
+    "start": "2026-08-06",
+    "end": "2026-08-20",
+    "hex": "#C9DAF8",
+    "phases": [
+      {
+        "date": "08-06",
+        "label": "第一阶段"
+      },
+      {
+        "date": "08-13",
+        "label": "第二阶段"
+      },
+      {
+        "date": "08-20",
+        "label": "第三阶段"
+      }
+    ],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "节日BP",
+    "name": "通行证（三期）",
+    "content": "换皮",
+    "t_score": "73.2",
+    "start": "2026-08-06",
+    "end": "2026-08-20",
+    "hex": "#C9DAF8",
+    "phases": [
+      {
+        "date": "08-06",
+        "label": "第一期：GACHA"
+      },
+      {
+        "date": "08-13",
+        "label": "第二期：大富翁"
+      },
+      {
+        "date": "08-20",
+        "label": "第三期：挖孔小游戏"
+      }
+    ],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "节日卡包",
+    "name": "节日卡包系统",
+    "content": "换皮",
+    "t_score": "暂无",
+    "start": "2026-08-06",
+    "end": "2026-08-26",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "活跃带小额付费",
+    "name": "掉落转付费",
+    "content": "复用",
+    "t_score": "48.2",
+    "start": "2026-08-06",
+    "end": "2026-08-12",
+    "hex": "#C9DAF8",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "核心付费点",
+    "name": "弹珠GACHA ★",
+    "content": "搬运",
+    "t_score": "65.8",
+    "start": "2026-08-06",
+    "end": "2026-08-12",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "付费率礼包",
+    "name": "每日GACHA礼包",
+    "content": "复用",
+    "t_score": "暂无",
+    "start": "2026-08-06",
+    "end": "2026-08-12",
+    "hex": "#D0E0E3",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "付费深度礼包",
+    "name": "抢购礼包",
+    "content": "复用",
+    "t_score": "61.5",
+    "start": "2026-08-11",
+    "end": "2026-08-25",
+    "hex": "#D0E0E3",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "核心付费点",
+    "name": "大富翁 ★",
+    "content": "换皮",
+    "t_score": "87.5",
+    "start": "2026-08-13",
+    "end": "2026-08-19",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "强消耗活动",
+    "name": "强消耗扭蛋机",
+    "content": "复用",
+    "t_score": "暂无",
+    "start": "2026-08-13",
+    "end": "2026-08-17",
+    "hex": "#C9DAF8",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "活跃带小额付费",
+    "name": "7日活动",
+    "content": "复用",
+    "t_score": "暂无",
+    "start": "2026-08-13",
+    "end": "2026-08-19",
+    "hex": "#D0E0E3",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "付费率礼包",
+    "name": "付费率宝箱",
+    "content": "复用",
+    "t_score": "暂无",
+    "start": "2026-08-13",
+    "end": "2026-08-19",
+    "hex": "#D0E0E3",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "联动礼包",
+    "name": "联动礼包-行军表情",
+    "content": "换皮",
+    "t_score": "暂无",
+    "start": "2026-08-13",
+    "end": "2026-08-19",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "联动礼包",
+    "name": "联动礼包-shop-柜台",
+    "content": "换皮",
+    "t_score": "暂无",
+    "start": "2026-08-13",
+    "end": "2026-08-19",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "大地图玩法",
+    "name": "巨猿",
+    "content": "复用",
+    "t_score": "暂无",
+    "start": "2026-08-17",
+    "end": "2026-08-19",
+    "hex": "#D0E0E3",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "核心付费点",
+    "name": "挖孔小游戏 ★",
+    "content": "复用",
+    "t_score": "83.5",
+    "start": "2026-08-20",
+    "end": "2026-08-26",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "付费深度礼包",
+    "name": "砍价 ★",
+    "content": "搬运",
+    "t_score": "80",
+    "start": "2026-08-20",
+    "end": "2026-08-26",
+    "hex": "#D0E0E3",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "活跃带小额付费",
+    "name": "7日活动",
+    "content": "复用",
+    "t_score": "暂无",
+    "start": "2026-08-20",
+    "end": "2026-08-26",
+    "hex": "#D0E0E3",
+    "phases": [],
+    "segments": []
+  },
+  {
+    "month": "8月",
+    "cat": "付费率礼包",
+    "name": "周卡",
+    "content": "复用",
+    "t_score": "26",
+    "start": "2026-08-20",
+    "end": "2026-08-26",
+    "hex": "#FCE5CD",
+    "phases": [],
+    "segments": []
+  }
+]

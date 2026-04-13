@@ -1,0 +1,7 @@
+{
+  "task_id": "task_20260401_204011_b347d3",
+  "title": "查询1111表道路名称与品质对应关系",
+  "status": "done",
+  "result": "一、表与字段说明\n「1111表」在运营语境下对应 **道具表 item**（道具 ID 段 1111xxxx，掉落转付费道具为 111111116～111111121）。\n\n在 `D:\\UGit\\x2gdconf\\fo\\config\\item.tsv`（fwcli 行结构）中 **不存在名为 road_name / 道路名称 的列**。若需与运营表头对齐，请对方确认是否指：**Comment（S_STR_comment，中文备注名）**、**Class（A_STR_class）** 或 **LcName 内 LC_Key**。\n\n二、掉落转付费：配置侧「名称」→ Quality（品质档）→ Bgquality（背板资源）\n以下「名称」取 Comment；Source 均为 11740000。\n\n| 道具 Id | 名称(Comment) | Class | Quality | Bgquality |\n|---------|----------------|-------|---------|------------|\n| 111111116 | 掉落转付费-积分假道具 | event_progress | 4 | 1511010004 |\n| 111111117 | 掉落转付费-铁镐 | event | 4 | 1511010004 |\n| 111111118 | 掉落转付费-普通贝壳 | event | 4 | 1511010004 |\n| 111111119 | 掉落转付费-高级贝壳 | event | 5 | 1511010005 |\n| 111111120 | 掉落转付费-阶段奖励 | item_asset | 5 | 1511010005 |\n| 111111121 | 掉落转付费-黄金稿 | event | 5 | 1511010005 |\n\n归纳：**品质 4（紫档）** 对应 Bgquality **1511010004**；**品质 5（橙档）** 对应 **1511010005**。与此前背板修复一致。\n\n三、定义位置\n- **主数据**：`fo/config/item.tsv` 列 **Source / Quality / Bgquality**（及 DisplayKey、LcName 等展示列）。\n- **活动与模块**：`activity_config.tsv`、`activity_special.tsv`、`iap_template.tsv`、`iap_config.tsv` 中与 `LC_EVENT_droptopay_tuohuang_*`、`drop_topay` 等关联（非 item 表上的 road_name）。\n\n四、LC 文案 key（供对照「展示名」）\n- 117: LC_EVENT_droptopay_tuohuang_item1\n- 119: item2\n- 118: item3\n- 121: item4\n- 120: LC_EVENT_droptopay_tuohuang_box_name\n\n若运营表中有单独「道路名称」枚举，需从 **Google Sheet 源表**核对列名后再映射到上表。",
+  "completed_at": "2026-04-01 21:28:12"
+}

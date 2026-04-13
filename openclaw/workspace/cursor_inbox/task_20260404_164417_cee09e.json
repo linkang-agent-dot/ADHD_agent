@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260404_164417_cee09e",
+  "title": "机票直飞标识反复消失根因分析",
+  "instructions": "这个直飞标识的功能已经修了很多次了，每次修完过一段时间又会出现问题。请深入分析为什么会反复出现这个 bug：(1) git log 或文件历史中是否有相关修复记录；(2) 每次修复的具体改动是什么；(3) 分析为什么修复不能持久——是代码结构问题、测试覆盖问题还是维护过程中的遗漏；(4) 提出能持久解决问题的方案，比如加日志、加防护性检查、或者重构避免同类问题再次发生。相关文件：C:\\\\ADHD_agent\\\\openclaw\\\\workspace\\\\ctrip_tracker.py",
+  "context": "",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-04-04 16:44:17",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-04-04 16:49:23",
+  "completed_at": "2026-04-04 16:50:53"
+}

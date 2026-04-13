@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260330_203118_287e62",
+  "title": "极点传媒logo-金色弧线顶端白边修复",
+  "instructions": "修复极点传媒logo图片中金色弧线顶端的白色杂散像素问题。\n\n**源文件：**\n- v1: C:\\Users\\linkang\\.openclaw\\media\\inbound\\dab95091-e150-45d6-84d6-f9d8fb2da2af.jpg\n- v2: C:\\Users\\linkang\\.openclaw\\media\\inbound\\77b250f9-eb36-409f-be72-39a2b847f3cf.jpg\n\n**问题描述：**\n原图中，金色弧线（环绕星星的弧形线条）右上端顶点处有一个白色矩形杂散像素/光斑，这是原图设计遗留的问题，需要去除。\n\n**修复步骤：**\n1. 读取源图\n2. 找到金色弧线顶端（x约350-420, y约30-80区域）的白色杂散像素\n3. 用金色弧线周围的颜色填充/覆盖这个白色杂散像素，使其融入金色弧线\n4. 同时处理右下角装饰星星区域（x=940-1024, y=940-1024）填黑\n\n**然后生成最终图片：**\n用修复后的源图，生成8个文件：\n- 图标（星星+金色弧线）按100%/80%/60%/40%缩小\n- 文字「极点传媒」保持原始564px尺寸\n- 整体居中放入1024x1024纯黑(0,0,0)画布\n- 输出到 C:\\ADHD_agent\\openclaw\\workspace\\uploads\\\n\n**技术要点：**\n- 用亮度阈值>80提取前景（金色>300，白色星星>600，背景~60-76）\n- 用Image.LANCZOS高质量缩放\n- 最终画布100%纯黑\n\n输出文件：\n- jidian_100pct_v1.png, jidian_80pct_v1.png, jidian_60pct_v1.png, jidian_40pct_v1.png\n- jidian_100pct_v2.png, jidian_80pct_v2.png, jidian_60pct_v2.png, jidian_40pct_v2.png\n\n完成后列出所有文件。",
+  "context": "原图金色弧线右上端顶点处有白色矩形杂散像素需要去除。这是源图就有的问题，不是处理导致的。",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-03-30 20:31:18",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-03-30 20:31:23",
+  "completed_at": "2026-03-30 20:37:40"
+}

@@ -1,0 +1,18 @@
+---
+description: X2 x2-media — GRFal/生图生视频/切图时强制下载目录与 history 记录
+alwaysApply: false
+---
+
+# x2-media 执行约束（随 skill 分发的 Cursor Rule）
+
+当任务涉及 **生图、生视频、抠图、GRFal、切图/UI 拆解、技能图标、集卡、行军表情** 等，且应走 **x2-media** 工作流时：
+
+1. **读 skill**：遵循本包 `SKILL.md`，并按 Type Router 读取对应 `references/type-*.md`。
+2. **GRFal**：调用 `call_grfal.py` 时**必须**加 `--download-dir`（用户下载目录，如 `%USERPROFILE%\Downloads`），成功返回后由脚本用同一 Cookie 落盘；**禁止**只把内网/trycloudflare URL 丢给用户了事。
+3. **认证**：优先 `GRFAL_COOKIE`；缺失则引导运行 `scripts/get_grfal_cookie.py` 并配置环境变量。
+4. **history**：每次成功生成后向本 skill 目录下 `state/history.jsonl` **追加一行** JSON（`ts`、`type_key`、模型、`downloaded` 路径或 `result` URL、后端 `grfal`/`art-skills`）。
+5. **记忆 MCP（可选）**：仅当对话里**实际可用** `memory_search` / `memory_write` 时，任务开始检索、结束写入；**无 MCP 则跳过**——Skill 文案里的「hook」不代表 Cursor 已自动配置。
+6. **交付物**：用多次 `call_grfal`（可并行）完成；不要把「请运行我写的临时 xx.py」当主要交付。
+
+**补救下载**（仅有清单、无重新生图）：  
+`python call_grfal.py --fetch-manifest <manifest.json> --download-dir <目录>`（需 Cookie）。

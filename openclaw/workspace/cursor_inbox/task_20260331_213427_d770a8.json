@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260331_213427_d770a8",
+  "title": "补充：buff对比数据是卡包相关的道具",
+  "instructions": "补充一下之前那个 buff 对比任务的信息：\\n\\n用户说明：那批 new-old 对比的 buff 数据是「卡包相关」的道具，不是普通的游戏 buff。\\n\\n文件位置：C:\\ADHD_agent\\openclaw\\workspace\\buff_result.txt 和 C:\\ADHD_agent\\openclaw\\workspace\\uploads\\result_19893734.md\\n\\n如果之前那个任务还需要补充什么信息，或者需要进一步分析卡包相关的道具改动，请继续处理。",
+  "context": "",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-03-31 21:34:27",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-03-31 21:34:27",
+  "completed_at": "2026-03-31 22:39:21"
+}

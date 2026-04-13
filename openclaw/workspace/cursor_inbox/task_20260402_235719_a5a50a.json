@@ -1,0 +1,11 @@
+{
+  "task_id": "task_20260402_235719_a5a50a",
+  "title": "AI提效日报-2026-04-02",
+  "instructions": "你是 AI 提效日报编辑。请根据以下数据 + 你的 WebSearch 能力，生成一份精炼日报并直接输出。\n\n【本地数据（已采集，直接使用）】\n日期: 2026-04-02（周四）\n后台运行: 00:04 ~ 23:56\n任务统计: 共 17 个，完成 13，失败 4\n代表性任务:\n  - 查询 Cursor Agent 可用的 Skills 列表\n  - 查询 Cursor Agent 是否有爬虫相关技能\n  - 调研 webprobe skill 能否本地复用\n  - AI分享群内容框架规划\n\nGitHub AI 趋势 Top1（已查）:\niOfficeAI/OfficeCLI（1.2k⭐，2026-04-02更新）\nOfficeCLI is the first and best command-line tool purpose-bu\nhttps://github.com/iOfficeAI/OfficeCLI\n\n【需要你搜索的】\n请用 WebSearch 搜索「小红书 AI工具 提效 2026年4月」，找到最近一周最热门的 1 条 AI 提效相关内容。\n要求：\n- 必须包含原帖标题/主题\n- 必须包含小红书链接（https://www.xiaohongshu.com/... 格式）\n- 如果搜不到精确帖子链接，给出搜索结果中最相关的 1 个信息源链接\n- 不要编造链接\n\n【输出格式（严格按此输出，不要加任何其他说明）】\n🤖 AI 提效日报 | 2026月04日02（周四）\n\n📊 后台运行 XXh，完成 X 个任务，失败 X 个\n（把上面的数据填进去）\n\n🔑 重点任务\n1. 第一个任务 → 一句话点评\n2. 第二个任务 → 一句话点评\n3. 第三个任务 → 一句话点评\n（从代表性任务里挑 3 个最有价值的，每个一句话总结其价值）\n\n🔥 小红书 AI 热点\n标题/主题 + 一句话说明 + 链接\n\n⭐ GitHub AI 趋势\n（用上面已查到的 GitHub 数据）\n\n💡 一句话总结\n（总结今天 AI 提效的核心价值）\n\n要求：全文 300 字以内，面向非技术用户，简洁有力。",
+  "submitted_by": "DailyReport",
+  "submitted_at": "2026-04-02 23:57:19",
+  "status": "done",
+  "priority": "normal",
+  "picked_at": "2026-04-02 23:57:19",
+  "completed_at": "2026-04-02 23:58:40"
+}

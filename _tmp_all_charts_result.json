@@ -1,0 +1,412 @@
+{
+  "chart5_rlevel": [
+    {
+      "label": "全体玩家",
+      "log_num": 135089,
+      "buy_num": 4903,
+      "pay_price": 855102.09,
+      "pay_total": 1796468.88,
+      "price_ratio": 47.6,
+      "buy_ratio": 0.0,
+      "arppu": 174.4,
+      "arpu": 6.33
+    },
+    {
+      "label": "付费玩家",
+      "log_num": 18585,
+      "buy_num": 4903,
+      "pay_price": 855102.09,
+      "pay_total": 1796177.74,
+      "price_ratio": 47.6,
+      "buy_ratio": 30.0,
+      "arppu": 174.4,
+      "arpu": 46.01
+    },
+    {
+      "label": "xiaoR",
+      "log_num": 11154,
+      "buy_num": 983,
+      "pay_price": 13918.03,
+      "pay_total": 46839.73,
+      "price_ratio": 29.7,
+      "buy_ratio": 10.0,
+      "arppu": 14.16,
+      "arpu": 1.25
+    },
+    {
+      "label": "zhongR",
+      "log_num": 4712,
+      "buy_num": 2082,
+      "pay_price": 123572.26,
+      "pay_total": 306715.53,
+      "price_ratio": 40.3,
+      "buy_ratio": 40.0,
+      "arppu": 59.35,
+      "arpu": 26.23
+    },
+    {
+      "label": "daR",
+      "log_num": 1511,
+      "buy_num": 934,
+      "pay_price": 174948.45,
+      "pay_total": 381072.72,
+      "price_ratio": 45.9,
+      "buy_ratio": 60.0,
+      "arppu": 187.31,
+      "arpu": 115.78
+    },
+    {
+      "label": "chaoR",
+      "log_num": 1208,
+      "buy_num": 904,
+      "pay_price": 542663.35,
+      "pay_total": 1061549.76,
+      "price_ratio": 51.1,
+      "buy_ratio": 70.0,
+      "arppu": 600.29,
+      "arpu": 449.23
+    }
+  ],
+  "daily_revenue": [
+    {
+      "pay_date": "2026-03-13",
+      "festival_revenue": 46642.68,
+      "total_revenue": 92830.33
+    },
+    {
+      "pay_date": "2026-03-14",
+      "festival_revenue": 40468.39,
+      "total_revenue": 80965.63
+    },
+    {
+      "pay_date": "2026-03-15",
+      "festival_revenue": 43450.15,
+      "total_revenue": 75302.69
+    },
+    {
+      "pay_date": "2026-03-16",
+      "festival_revenue": 29115.03,
+      "total_revenue": 80703.54
+    },
+    {
+      "pay_date": "2026-03-17",
+      "festival_revenue": 27707.23,
+      "total_revenue": 62763.4
+    },
+    {
+      "pay_date": "2026-03-18",
+      "festival_revenue": 29938.46,
+      "total_revenue": 58694.51
+    },
+    {
+      "pay_date": "2026-03-19",
+      "festival_revenue": 25955.92,
+      "total_revenue": 64967.79
+    },
+    {
+      "pay_date": "2026-03-20",
+      "festival_revenue": 43030.82,
+      "total_revenue": 103585.23
+    },
+    {
+      "pay_date": "2026-03-21",
+      "festival_revenue": 33843.05,
+      "total_revenue": 76175.97
+    },
+    {
+      "pay_date": "2026-03-22",
+      "festival_revenue": 42348.04,
+      "total_revenue": 76391.51
+    },
+    {
+      "pay_date": "2026-03-23",
+      "festival_revenue": 25253.65,
+      "total_revenue": 75172.53
+    },
+    {
+      "pay_date": "2026-03-24",
+      "festival_revenue": 29328.35,
+      "total_revenue": 74370.5
+    },
+    {
+      "pay_date": "2026-03-25",
+      "festival_revenue": 22730.99,
+      "total_revenue": 61160.26
+    },
+    {
+      "pay_date": "2026-03-26",
+      "festival_revenue": 30840.17,
+      "total_revenue": 76652.71
+    },
+    {
+      "pay_date": "2026-03-27",
+      "festival_revenue": 62130.86,
+      "total_revenue": 90761.84
+    },
+    {
+      "pay_date": "2026-03-28",
+      "festival_revenue": 60666.54,
+      "total_revenue": 96475.77
+    },
+    {
+      "pay_date": "2026-03-29",
+      "festival_revenue": 64630.68,
+      "total_revenue": 91760.46
+    },
+    {
+      "pay_date": "2026-03-30",
+      "festival_revenue": 34276.99,
+      "total_revenue": 104638.33
+    },
+    {
+      "pay_date": "2026-03-31",
+      "festival_revenue": 47357.48,
+      "total_revenue": 112312.28
+    },
+    {
+      "pay_date": "2026-04-01",
+      "festival_revenue": 52723.5,
+      "total_revenue": 97358.01
+    },
+    {
+      "pay_date": "2026-04-02",
+      "festival_revenue": 53153.64,
+      "total_revenue": 93075.03
+    },
+    {
+      "pay_date": "2026-04-03",
+      "festival_revenue": 9528.41,
+      "total_revenue": 52608.17
+    }
+  ],
+  "pkg_breakdown": [
+    {
+      "iap_type": "混合-节日活动",
+      "pay_users": 4907,
+      "revenue": 855121.03,
+      "pct": 47.5
+    },
+    {
+      "iap_type": "英雄-英雄奖牌",
+      "pay_users": 4241,
+      "revenue": 101462.9,
+      "pct": 5.6
+    },
+    {
+      "iap_type": "SLG-SLG混合",
+      "pay_users": 2551,
+      "revenue": 100647.05,
+      "pct": 5.6
+    },
+    {
+      "iap_type": "混合-BP&月卡",
+      "pay_users": 3275,
+      "revenue": 90864.67,
+      "pct": 5.1
+    },
+    {
+      "iap_type": "SLG-基因片段",
+      "pay_users": 944,
+      "revenue": 72325.49,
+      "pct": 4.0
+    },
+    {
+      "iap_type": "英雄-英雄成长",
+      "pay_users": 1322,
+      "revenue": 61725.7,
+      "pct": 3.4
+    },
+    {
+      "iap_type": "混合-日常活动&礼包",
+      "pay_users": 1255,
+      "revenue": 59668.26,
+      "pct": 3.3
+    },
+    {
+      "iap_type": "机甲-机甲成长",
+      "pay_users": 751,
+      "revenue": 48758.54,
+      "pct": 2.7
+    },
+    {
+      "iap_type": "英雄装备+洗练-英雄装备",
+      "pay_users": 974,
+      "revenue": 45657.43,
+      "pct": 2.5
+    },
+    {
+      "iap_type": "SLG-加速",
+      "pay_users": 1061,
+      "revenue": 40368.57,
+      "pct": 2.2
+    },
+    {
+      "iap_type": "收藏品-收藏品",
+      "pay_users": 1254,
+      "revenue": 39396.51,
+      "pct": 2.2
+    },
+    {
+      "iap_type": "收藏品-BP&月卡",
+      "pay_users": 1626,
+      "revenue": 35463.43,
+      "pct": 2.0
+    },
+    {
+      "iap_type": "战车-战车成长",
+      "pay_users": 346,
+      "revenue": 31583.26,
+      "pct": 1.8
+    },
+    {
+      "iap_type": "军备+兵种技能-军备",
+      "pay_users": 931,
+      "revenue": 29309.9,
+      "pct": 1.6
+    },
+    {
+      "iap_type": "战车",
+      "pay_users": 184,
+      "revenue": 24571.9,
+      "pct": 1.4
+    },
+    {
+      "iap_type": "机甲-BP&月卡",
+      "pay_users": 1529,
+      "revenue": 19540.44,
+      "pct": 1.1
+    },
+    {
+      "iap_type": "机甲",
+      "pay_users": 301,
+      "revenue": 15736.54,
+      "pct": 0.9
+    },
+    {
+      "iap_type": "SLG-SLG",
+      "pay_users": 198,
+      "revenue": 14565.31,
+      "pct": 0.8
+    },
+    {
+      "iap_type": "卡册-卡册",
+      "pay_users": 838,
+      "revenue": 13164.23,
+      "pct": 0.7
+    },
+    {
+      "iap_type": "SLG-CD",
+      "pay_users": 2012,
+      "revenue": 12803.58,
+      "pct": 0.7
+    },
+    {
+      "iap_type": "收藏品-日常活动&礼包",
+      "pay_users": 284,
+      "revenue": 12360.2,
+      "pct": 0.7
+    },
+    {
+      "iap_type": "英雄装备+洗练-BP&月卡",
+      "pay_users": 762,
+      "revenue": 11277.5,
+      "pct": 0.6
+    },
+    {
+      "iap_type": "英雄-英雄双天赋",
+      "pay_users": 90,
+      "revenue": 10762.53,
+      "pct": 0.6
+    },
+    {
+      "iap_type": "SLG-电池",
+      "pay_users": 555,
+      "revenue": 10263.66,
+      "pct": 0.6
+    },
+    {
+      "iap_type": "SLG-胶囊",
+      "pay_users": 342,
+      "revenue": 10099.17,
+      "pct": 0.6
+    },
+    {
+      "iap_type": "机甲-机师",
+      "pay_users": 365,
+      "revenue": 8901.73,
+      "pct": 0.5
+    },
+    {
+      "iap_type": "SLG-纯资源",
+      "pay_users": 181,
+      "revenue": 4815.16,
+      "pct": 0.3
+    },
+    {
+      "iap_type": "英雄装备+洗练-日常活动&礼包",
+      "pay_users": 112,
+      "revenue": 4642.87,
+      "pct": 0.3
+    },
+    {
+      "iap_type": "军备+兵种技能-兵种技能",
+      "pay_users": 34,
+      "revenue": 3669.25,
+      "pct": 0.2
+    },
+    {
+      "iap_type": "小游戏-小猪",
+      "pay_users": 706,
+      "revenue": 2278.07,
+      "pct": 0.1
+    },
+    {
+      "iap_type": "小游戏-挖矿",
+      "pay_users": 243,
+      "revenue": 2221.35,
+      "pct": 0.1
+    },
+    {
+      "iap_type": "军备+兵种技能-高分子材料",
+      "pay_users": 43,
+      "revenue": 1519.41,
+      "pct": 0.1
+    },
+    {
+      "iap_type": "SLG-光谱芯片",
+      "pay_users": 49,
+      "revenue": 1183.34,
+      "pct": 0.1
+    },
+    {
+      "iap_type": "混合-装饰",
+      "pay_users": 38,
+      "revenue": 799.55,
+      "pct": 0.0
+    },
+    {
+      "iap_type": "英雄-BP&月卡",
+      "pay_users": 83,
+      "revenue": 593.81,
+      "pct": 0.0
+    },
+    {
+      "iap_type": "军备+兵种技能-BP&月卡",
+      "pay_users": 48,
+      "revenue": 399.2,
+      "pct": 0.0
+    },
+    {
+      "iap_type": "SLG-皮肤幻化",
+      "pay_users": 4,
+      "revenue": 199.96,
+      "pct": 0.0
+    },
+    {
+      "iap_type": "新前期",
+      "pay_users": 1,
+      "revenue": 4.99,
+      "pct": 0.0
+    }
+  ]
+}

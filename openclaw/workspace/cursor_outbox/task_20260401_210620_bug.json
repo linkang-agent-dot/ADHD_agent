@@ -1,0 +1,7 @@
+{
+  "task_id": "task_20260401_210620_bug",
+  "title": "Bug：activity_config.tsv 导出失败 JSON解析错误",
+  "status": "done",
+  "result": "调查结论（当前本机仓库）：\n\n1) 校验代码：`x2client` 中 `ClassType.IsDataValid`（`Packages/com.tfw.core@0.1.4/Editor/Config/Standalone/Types/ClassType.cs` 约 41–46 行）对 **Class 类型整格**执行 `JsonConvert.DeserializeObject(data)`；报错 `Additional text encountered after finished reading JSON content` 且 `Path ''` 表示 **整段单元格字符串在第一个完整 JSON 根之后仍有非空白字符**（常见：两段 JSON 粘在一起、复制表时多贴了说明文字、未闭合引号后多出内容等）。\n\n2) 实际扫描：`D:\\UGit\\x2gdconf` 当前分支为 **master_bugfix**。已对以下文件用 Python `json.JSONDecoder().raw_decode` 逐格检查（所有以 `{`/`[` 开头的单元格 + fwcli_type 中带 MAP/ARR/C* 的列）：\n- `fo/config/activity_config.tsv`\n- `cn/config/activity_config.tsv`\n- `x2client/.../P2/Config/fo/config/activity_config.tsv`\n- `Gen/tsv/activity_config.tsv`（gdconf 与 x2client）\n**均未发现 JSON 语法错误或「合法 JSON 后仍有尾随内容」**。\n\n3) 因此：你遇到的导表失败 **很可能来自当时工作区未同步的版本**（另一分支/未拉取/表内临时修改未进当前 clone），或 **非 fo 路径下的同名表**。建议：在报错机器上对 **实际参与导表的那份** `activity_config.tsv` 运行复扫脚本 `C:\\ADHD_agent\\scripts\\_scan_activity_config_json.py`（将脚本内 TSV 路径改为该文件），或 `git diff`/对比 GSheet 导出找出多出来的字符。\n\n4) 修复方向：定位到具体 **行号 + 列名（fw p2_title）+ 单元格原文** 后，删掉根 JSON 之后的冗余，或拆成合法单根 JSON；保存后重新导表验证。",
+  "completed_at": "2026-04-01 21:16:31"
+}

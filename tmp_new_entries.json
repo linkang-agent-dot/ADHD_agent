@@ -1,0 +1,5147 @@
+{
+  "86赛车": [
+    {
+      "id": "21127275",
+      "comment": "春节2025-七日-新版",
+      "constant": "event_spring_2025_7days"
+    },
+    {
+      "id": "21127276",
+      "comment": "春节2025-节日自选周卡",
+      "constant": "event_spring_time_card_2025"
+    },
+    {
+      "id": "21127277",
+      "comment": "春节2025-主城特效累充",
+      "constant": "event_springFestival_2025_city_effect"
+    },
+    {
+      "id": "21127278",
+      "comment": "节日累充-2025春节",
+      "constant": "event_2025springFestival_packge_name"
+    },
+    {
+      "id": "21127279",
+      "comment": "节日通用第一套-单笔充值-2026-春节",
+      "constant": "event_springFestival_single_recharge_2025"
+    },
+    {
+      "id": "21127280",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema3",
+      "constant": "metro_minigame_spring25_festival_1_schema3"
+    },
+    {
+      "id": "21127281",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema4",
+      "constant": "metro_minigame_spring25_festival_2_schema4"
+    },
+    {
+      "id": "21127282",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema5",
+      "constant": "metro_minigame_spring25_festival_3_schema5"
+    },
+    {
+      "id": "21127283",
+      "comment": "春节2025-行军表情礼包",
+      "constant": "event_springFestival_emoji_2025"
+    },
+    {
+      "id": "21127284",
+      "comment": "通用节日订阅卡累充-schema3",
+      "constant": "event_springFestival_2025_time_card_recharge"
+    },
+    {
+      "id": "21127285",
+      "comment": "通用节日订阅卡累充-schema4-6",
+      "constant": "event_springFestival_2025_time_card_recharge_schema4"
+    },
+    {
+      "id": "21127286",
+      "comment": "春节2025-装饰升级",
+      "constant": "event_lunar_2025_decoration"
+    },
+    {
+      "id": "21127287",
+      "comment": "春节-2026拜访",
+      "constant": "event_spring_visit_2025"
+    },
+    {
+      "id": "21127288",
+      "comment": "春节2025-掉落活动",
+      "constant": "event_spring_2025_drop"
+    },
+    {
+      "id": "21127289",
+      "comment": "春节2025-连锁礼包-schema3-5",
+      "constant": "event_spring_chain_pack_2025"
+    },
+    {
+      "id": "21127290",
+      "comment": "春节2025-强消耗-schema3-5",
+      "constant": "spring_2025_strong_consume"
+    },
+    {
+      "id": "21127291",
+      "comment": "春节2025-强消耗-schema6",
+      "constant": "spring_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127292",
+      "comment": "春节-2025-wonder巨猿",
+      "constant": "event_spring_festival_hegemony_25"
+    },
+    {
+      "id": "21127294",
+      "comment": "春节-2025-bp",
+      "constant": "event_spring_bp_2025"
+    },
+    {
+      "id": "21127295",
+      "comment": "春节2025-礼包（BP）",
+      "constant": "event_spring_pkg_2025"
+    },
+    {
+      "id": "21127296",
+      "comment": "春节-装饰兑换商店",
+      "constant": "event_lunar_2025_shop"
+    },
+    {
+      "id": "21127297",
+      "comment": "春节2025-连锁礼包-schema6",
+      "constant": "event_spring_chain_pack_2025_schema6"
+    },
+    {
+      "id": "21127302",
+      "comment": "情人节2025-节日自选周卡",
+      "constant": "event_valentine_time_card_2025"
+    },
+    {
+      "id": "21127303",
+      "comment": "情人节2026-七日-新版",
+      "constant": "event_valentine_2025_7days"
+    },
+    {
+      "id": "21127304",
+      "comment": "情人节多条件连锁礼包2025",
+      "constant": "event_valentine_chain_task_2025"
+    },
+    {
+      "id": "21127305",
+      "comment": "情人节2025-主城特效累充",
+      "constant": "event_valentine_2025_city_effect"
+    },
+    {
+      "id": "21127306",
+      "comment": "节日累充-2025情人节",
+      "constant": "event_2025valentine_packge_name"
+    },
+    {
+      "id": "21127307",
+      "comment": "情人节-单笔充值-2025",
+      "constant": "event_valentine_single_recharge_2025"
+    },
+    {
+      "id": "21127308",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema3",
+      "constant": "metro_minigame_valentine25_festival_1_schema3"
+    },
+    {
+      "id": "21127309",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema4",
+      "constant": "metro_minigame_valentine25_festival_2_schema4"
+    },
+    {
+      "id": "21127310",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema5",
+      "constant": "metro_minigame_valentine25_festival_3_schema5"
+    },
+    {
+      "id": "21127311",
+      "comment": "情人节2025-行军表情礼包",
+      "constant": "event_valentine_emoji_2025"
+    },
+    {
+      "id": "21127312",
+      "comment": "情人节2025-装饰升级",
+      "constant": "event_valentine_2025_decoration"
+    },
+    {
+      "id": "21127313",
+      "comment": "情人节2025-掉落活动",
+      "constant": "event_valentine_2025_drop"
+    },
+    {
+      "id": "21127314",
+      "comment": "情人节2026-强消耗-schema3-5",
+      "constant": "valentine_2025_strong_consume"
+    },
+    {
+      "id": "21127315",
+      "comment": "情人节2026-强消耗-schema6",
+      "constant": "valentine_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127316",
+      "comment": "情人节-2025-wonder巨猿",
+      "constant": "event_valentine_festival_hegemony_2025"
+    },
+    {
+      "id": "21127317",
+      "comment": "情人节2026组队BP",
+      "constant": "valentine_2025_team_bp"
+    },
+    {
+      "id": "21127318",
+      "comment": "情人节-装饰兑换商店",
+      "constant": "event_valentine_2025_shop"
+    },
+    {
+      "id": "21127319",
+      "comment": "情人节-2025-bp",
+      "constant": "event_valentine_bp_2025"
+    },
+    {
+      "id": "21127320",
+      "comment": "情人节2025-礼包（BP）",
+      "constant": "event_valentine_pkg_2025"
+    },
+    {
+      "id": "21127321",
+      "comment": "情人节连锁礼包-通用-schema3-5",
+      "constant": "event_valentine_chain_pack_2024_scheam3_5"
+    },
+    {
+      "id": "21127322",
+      "comment": "情人节连锁礼包-通用-schema6",
+      "constant": "event_valentine_chain_pack_2024_scheam6"
+    },
+    {
+      "id": "21127323",
+      "comment": "情人节2025-排行送花活动",
+      "constant": "event_valentine_flower_skin_rank"
+    },
+    {
+      "id": "21127324",
+      "comment": "周年庆返场2025-买三送一-schema3-5",
+      "constant": "event_valentine_free_gift_2025_schema3"
+    },
+    {
+      "id": "21127325",
+      "comment": "周年庆返场2025-买三送一-schema6",
+      "constant": "event_valentine_free_gift_2025_schema6"
+    },
+    {
+      "id": "21127326",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema3",
+      "constant": "metro_minigame_sci25_festival_1_schema3"
+    },
+    {
+      "id": "21127327",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema4",
+      "constant": "metro_minigame_sci25_festival_2_schema4"
+    },
+    {
+      "id": "21127328",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema5",
+      "constant": "metro_minigame_sci25_festival_3_schema5"
+    },
+    {
+      "id": "21127329",
+      "comment": "科技节-装饰兑换商店",
+      "constant": "event_sci_2025_shop"
+    },
+    {
+      "id": "21127330",
+      "comment": "科技节2025-装饰升级",
+      "constant": "event_sci_2025_decoration"
+    },
+    {
+      "id": "21127331",
+      "comment": "节日累充-2025科技节",
+      "constant": "event_sci_accum_recharge_2025"
+    },
+    {
+      "id": "21127332",
+      "comment": "科技节-买三送一-通用-schema3",
+      "constant": "event_sci_free_gift_2024_schema3"
+    },
+    {
+      "id": "21127333",
+      "comment": "科技节-买三送一-通用-schema6",
+      "constant": "event_sci_free_gift_2024_schema6"
+    },
+    {
+      "id": "21127334",
+      "comment": "节日通用自选周卡（新版-音乐节）",
+      "constant": "event_fes_time_card_1"
+    },
+    {
+      "id": "21127335",
+      "comment": "科技节2025-主城特效个人累充",
+      "constant": "event_techFestival_2025_city_effect_single"
+    },
+    {
+      "id": "21127336",
+      "comment": "科技节2025-主城特效服务器累充",
+      "constant": "event_techFestival_2025_city_effect_server"
+    },
+    {
+      "id": "21127339",
+      "comment": "节日通用2-强消耗-schema3-5（春节）",
+      "constant": "science_2025_strong_consume"
+    },
+    {
+      "id": "21127340",
+      "comment": "节日通用2-强消耗-schema6（春节）",
+      "constant": "science_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127341",
+      "comment": "科技节-2025-折扣礼包-schema3-5",
+      "constant": "science_2025_discount_pack"
+    },
+    {
+      "id": "21127342",
+      "comment": "科技节-2025-折扣礼包-schema6",
+      "constant": "science_2025_discount_pack_schema6"
+    },
+    {
+      "id": "21127343",
+      "comment": "科技节2026-七日-新版",
+      "constant": "event_sci_2025_7days"
+    },
+    {
+      "id": "21127344",
+      "comment": "科技节-单笔充值-2025-一期",
+      "constant": "event_sci_single_recharge_2025"
+    },
+    {
+      "id": "21127345",
+      "comment": "科技节-单笔充值-2025-二期",
+      "constant": "event_sci2_single_recharge_2025"
+    },
+    {
+      "id": "21127346",
+      "comment": "科技节2025-科技拼图活动",
+      "constant": "event_sci_2025_gift_send"
+    },
+    {
+      "id": "21127347",
+      "comment": "科技节2025-行军表情礼包",
+      "constant": "event_sci_emoji_2025"
+    },
+    {
+      "id": "21127348",
+      "comment": "节日-庆典抽奖通用",
+      "constant": "event_sci_lucky_star_2025"
+    },
+    {
+      "id": "21127349",
+      "comment": "科技节2025-gacha下半部分",
+      "constant": "event_sci_2025_gacha"
+    },
+    {
+      "id": "21127350",
+      "comment": "科技节2025-gacha下半部分-累计任务",
+      "constant": "event_sci_2025_gacha_accum"
+    },
+    {
+      "id": "21127351",
+      "comment": "科技节2025-gacha下半部分-每日礼包",
+      "constant": "event_sci_2025_gacha_daily"
+    },
+    {
+      "id": "21127352",
+      "comment": "复活节2025-行军表情礼包",
+      "constant": "event_easter_emoji_2025"
+    },
+    {
+      "id": "21127353",
+      "comment": "复活节2025-横版bp",
+      "constant": "event_easter_bp_2025"
+    },
+    {
+      "id": "21127354",
+      "comment": "复活节2025-礼包（BP）",
+      "constant": "event_easter_bp_pkg_2025"
+    },
+    {
+      "id": "21127355",
+      "comment": "装饰兑换商店-通用-感恩节",
+      "constant": "event_easter_2025_shop"
+    },
+    {
+      "id": "21127356",
+      "comment": "2025节日通用-七日-新版2（周年庆）",
+      "constant": "event_easter_2025_7days"
+    },
+    {
+      "id": "21127357",
+      "comment": "合成小游戏活动-25复活节版本-schema3",
+      "constant": "metro_minigame_easter25_festival_1_schema3"
+    },
+    {
+      "id": "21127358",
+      "comment": "合成小游戏活动-25复活节版本-schema4",
+      "constant": "metro_minigame_easter25_festival_2_schema4"
+    },
+    {
+      "id": "21127359",
+      "comment": "合成小游戏活动-25复活节版本-schema5",
+      "constant": "metro_minigame_easter25_festival_3_schema5"
+    },
+    {
+      "id": "21127360",
+      "comment": "复活节2025-交换活动",
+      "constant": "event_easter_gift_exchange_2025"
+    },
+    {
+      "id": "21127361",
+      "comment": "2025复活节行军特效贬值礼包",
+      "constant": "event_easter_march_effect_pkg"
+    },
+    {
+      "id": "21127362",
+      "comment": "节日大富翁进度活动（科技节）",
+      "constant": "event_easter_monopoly_2025"
+    },
+    {
+      "id": "21127363",
+      "comment": "节日通用-强消耗-schema3-5（科技节）",
+      "constant": "easter_2025_strong_consume"
+    },
+    {
+      "id": "21127364",
+      "comment": "节日通用-强消耗-schema6（科技节）",
+      "constant": "easter_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127365",
+      "comment": "节日通用自选周卡（新版-万圣节）",
+      "constant": "event_easter_time_card_2025"
+    },
+    {
+      "id": "21127366",
+      "comment": "复活节2025-彩蛋手札",
+      "constant": "event_easter_party"
+    },
+    {
+      "id": "21127367",
+      "comment": "复活节2025-gacha下半部分",
+      "constant": "event_easter_2025_gacha"
+    },
+    {
+      "id": "21127368",
+      "comment": "复活节2025-主城特效累充",
+      "constant": "event_easter_2025_city_effect"
+    },
+    {
+      "id": "21127369",
+      "comment": "节日累充-2025复活节",
+      "constant": "event_2025easter_packge_name"
+    },
+    {
+      "id": "21127370",
+      "comment": "复活节-单笔充值-2025-第一轮",
+      "constant": "event_easter_single_recharge_2025"
+    },
+    {
+      "id": "21127371",
+      "comment": "复活节签到-2025",
+      "constant": "event_easter_login_2024"
+    },
+    {
+      "id": "21127372",
+      "comment": "复活节-单笔充值-2025-第二轮",
+      "constant": "event_easter2_single_recharge_2025"
+    },
+    {
+      "id": "21127373",
+      "comment": "复活节2025-gacha-每日礼包",
+      "constant": "event_easter_2025_gacha_daily"
+    },
+    {
+      "id": "21127374",
+      "comment": "复活节连锁礼包-2025-schema3-5",
+      "constant": "event_easter_chain_pack_2024_scheam3_5"
+    },
+    {
+      "id": "21127375",
+      "comment": "复活节连锁礼包-2025-schema6",
+      "constant": "event_easter_chain_pack_2024_scheam6"
+    },
+    {
+      "id": "21127376",
+      "comment": "节日通用2025-七日-新版（万圣节）",
+      "constant": "event_easter2_2025_7days"
+    },
+    {
+      "id": "21127377",
+      "comment": "复活节-小额随机礼包-转盘形式-schema3-5",
+      "constant": "event_easter_2025_newwheel"
+    },
+    {
+      "id": "21127378",
+      "comment": "复活节-小额随机礼包-转盘形式-schema6",
+      "constant": "event_easter2_2025_newwheel"
+    },
+    {
+      "id": "21127379",
+      "comment": "通用-对对碰活动bp（每次要改HUD）",
+      "constant": "event_gift_bp"
+    },
+    {
+      "id": "21127380",
+      "comment": "拓荒节2025-装饰升级",
+      "constant": "event_labor_2025_decoration"
+    },
+    {
+      "id": "21127381",
+      "comment": "拓荒节2025-主城特效服务器累充",
+      "constant": "event_Festival_2025_city_effect_server"
+    },
+    {
+      "id": "21127382",
+      "comment": "科技节-掉落转付费-第一套",
+      "constant": "event_labor_2025_shop"
+    },
+    {
+      "id": "21127383",
+      "comment": "节日通用-掉落转付费-掉落活动",
+      "constant": "event_labor_2025_drop"
+    },
+    {
+      "id": "21127384",
+      "comment": "通用-付费率宝箱",
+      "constant": "event_labor_2025_payment"
+    },
+    {
+      "id": "21127385",
+      "comment": "情人节-限时抢购-S6-通用皮（1、2期",
+      "constant": "event_flash_sale_s6"
+    },
+    {
+      "id": "21127386",
+      "comment": "情人节-限时抢购-S3-5-通用皮（3期",
+      "constant": "event_flash_sale_s3_5"
+    },
+    {
+      "id": "21127387",
+      "comment": "科技节套装S2-通用gacha",
+      "constant": "event_sci_gacha_2025_s2"
+    },
+    {
+      "id": "21127388",
+      "comment": "科技节套装S2-通用累计活动",
+      "constant": "event_sci_2025_gacha_reward_2025_s2"
+    },
+    {
+      "id": "21127389",
+      "comment": "科技节套装S2-gacha下半部分",
+      "constant": "event_sci_2025_gacha_s2"
+    },
+    {
+      "id": "21127390",
+      "comment": "科技节套装S2-gacha下半部分-累计任务",
+      "constant": "event_sci_2025_gacha_accum_s2"
+    },
+    {
+      "id": "21127391",
+      "comment": "科技节套装S2-gacha下半部分-每日礼包",
+      "constant": "event_sci_2025_gacha_daily_s2"
+    },
+    {
+      "id": "21127392",
+      "comment": "科技节套装S2-横版bp",
+      "constant": "event_science_bp_title_2024_s2"
+    },
+    {
+      "id": "21127393",
+      "comment": "科技节套装S2-礼包（BP）",
+      "constant": "event_science_bp_pkg_title_2024_s2"
+    },
+    {
+      "id": "21127394",
+      "comment": "科技节套装S2通用-掉落活动",
+      "constant": "event_sci_2024_drop_s2"
+    },
+    {
+      "id": "21127395",
+      "comment": "科技节套装S2自选周卡",
+      "constant": "event_fes_time_card_1_s2"
+    },
+    {
+      "id": "21127396",
+      "comment": "科技节套装S2-单笔充值-2025-一期",
+      "constant": "event_sci_single_recharge_2025_s2"
+    },
+    {
+      "id": "21127397",
+      "comment": "科技节套装S2-单笔充值-2025-二期",
+      "constant": "event_sci2_single_recharge_2025_s2"
+    },
+    {
+      "id": "21127398",
+      "comment": "科技节套装S2-科技拼图活动",
+      "constant": "event_sci_2025_gift_send_s2"
+    },
+    {
+      "id": "21127399",
+      "comment": "科技节套装S2-行军表情礼包",
+      "constant": "event_sci_emoji_2025_s2"
+    },
+    {
+      "id": "21127400",
+      "comment": "科技节套装S2-2025-折扣礼包",
+      "constant": "science_2025_discount_pack_s2"
+    },
+    {
+      "id": "21127401",
+      "comment": "科技节套装S2-买三送一-通用-schema3",
+      "constant": "event_sci_free_gift_2024_schema3_s2"
+    },
+    {
+      "id": "21127402",
+      "comment": "科技节套装S2-主城特效个人累充",
+      "constant": "event_techFestival_2025_city_effect_single_s2"
+    },
+    {
+      "id": "21127403",
+      "comment": "科技节套装S2-主城特效服务器累充",
+      "constant": "event_techFestival_2025_city_effect_server_s2"
+    },
+    {
+      "id": "21127404",
+      "comment": "拓荒节2025-七日-新版",
+      "constant": "event_labor_2025_7days"
+    },
+    {
+      "id": "21127405",
+      "comment": "拓荒节2025-行军表情礼包",
+      "constant": "event_labor_emoji_2025"
+    },
+    {
+      "id": "21127406",
+      "comment": "合成小游戏活动-25拓荒节版本-schema3",
+      "constant": "metro_minigame_labor25_festival_1_schema3"
+    },
+    {
+      "id": "21127407",
+      "comment": "合成小游戏活动-25拓荒节版本-schema4",
+      "constant": "metro_minigame_labor25_festival_2_schema4"
+    },
+    {
+      "id": "21127408",
+      "comment": "合成小游戏活动-25拓荒节版本-schema5",
+      "constant": "metro_minigame_labor25_festival_3_schema5"
+    },
+    {
+      "id": "21127409",
+      "comment": "拓荒节多条件连锁礼包2025",
+      "constant": "event_labor_chain_task_2025"
+    },
+    {
+      "id": "21127410",
+      "comment": "拓荒节2025-主城特效累充",
+      "constant": "event_labor_2025_city_effect"
+    },
+    {
+      "id": "21127411",
+      "comment": "节日累充-2025拓荒节",
+      "constant": "event_2025labor_packge_name"
+    },
+    {
+      "id": "21127412",
+      "comment": "深海节-单笔充值-2025-第一轮",
+      "constant": "event_labor_single_recharge_2025"
+    },
+    {
+      "id": "21127413",
+      "comment": "深海节-单笔充值-2025-第二轮",
+      "constant": "event_labor2_single_recharge_2025"
+    },
+    {
+      "id": "21127414",
+      "comment": "拓荒节2025-gacha-每日礼包",
+      "constant": "event_labor_2025_gacha_daily"
+    },
+    {
+      "id": "21127415",
+      "comment": "节日通用-掉落转付费-礼包",
+      "constant": "event_labor_2025_drop_libao"
+    },
+    {
+      "id": "21127416",
+      "comment": "科技节套装S2-装饰兑换商店",
+      "constant": "event_sci_2025_shop_s2"
+    },
+    {
+      "id": "21127417",
+      "comment": "节日通用-战车自选gacha",
+      "constant": "event_tank_gacha_2025"
+    },
+    {
+      "id": "21127418",
+      "comment": "深海节预购连锁礼包_schema3-5",
+      "constant": "event_pre_chain"
+    },
+    {
+      "id": "21127419",
+      "comment": "2025深海节小额随机礼包",
+      "constant": "event_random_pkg_sea_2025"
+    },
+    {
+      "id": "21127420",
+      "comment": "深海节-2025-本体gacha",
+      "constant": "event_dragon_boat_festival_gacha_2025"
+    },
+    {
+      "id": "21127421",
+      "comment": "深海节2025-主城特效累充-联盟",
+      "constant": "event_techFestival_2025_city_effect_alliance"
+    },
+    {
+      "id": "21127422",
+      "comment": "感恩节-掉落转付费",
+      "constant": "event_labor_2025_shop_1"
+    },
+    {
+      "id": "21127423",
+      "comment": "通用-节日礼包团购",
+      "constant": "event_2025deep_sea_pkg"
+    },
+    {
+      "id": "21127424",
+      "comment": "深海节-节日手札",
+      "constant": "event_deepsea_party"
+    },
+    {
+      "id": "21127425",
+      "comment": "深海节-组件gacha",
+      "constant": "event_deepsea_2025_gacha2"
+    },
+    {
+      "id": "21127426",
+      "comment": "节日活动-聚宝盆抽奖-第1期（schema3~5）",
+      "constant": "event_treasure_bowl1_2025"
+    },
+    {
+      "id": "21127427",
+      "comment": "节日活动-聚宝盆抽奖-第2期（schema3~5）",
+      "constant": "event_treasure_bowl2_2025"
+    }
+  ],
+  "86异族大富翁": [
+    {
+      "id": "21127275",
+      "comment": "春节2025-七日-新版",
+      "constant": "event_spring_2025_7days"
+    },
+    {
+      "id": "21127276",
+      "comment": "春节2025-节日自选周卡",
+      "constant": "event_spring_time_card_2025"
+    },
+    {
+      "id": "21127277",
+      "comment": "春节2025-主城特效累充",
+      "constant": "event_springFestival_2025_city_effect"
+    },
+    {
+      "id": "21127278",
+      "comment": "节日累充-2025春节",
+      "constant": "event_2025springFestival_packge_name"
+    },
+    {
+      "id": "21127279",
+      "comment": "节日通用第一套-单笔充值-2026-春节",
+      "constant": "event_springFestival_single_recharge_2025"
+    },
+    {
+      "id": "21127280",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema3",
+      "constant": "metro_minigame_spring25_festival_1_schema3"
+    },
+    {
+      "id": "21127281",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema4",
+      "constant": "metro_minigame_spring25_festival_2_schema4"
+    },
+    {
+      "id": "21127282",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema5",
+      "constant": "metro_minigame_spring25_festival_3_schema5"
+    },
+    {
+      "id": "21127283",
+      "comment": "春节2025-行军表情礼包",
+      "constant": "event_springFestival_emoji_2025"
+    },
+    {
+      "id": "21127284",
+      "comment": "通用节日订阅卡累充-schema3",
+      "constant": "event_springFestival_2025_time_card_recharge"
+    },
+    {
+      "id": "21127285",
+      "comment": "通用节日订阅卡累充-schema4-6",
+      "constant": "event_springFestival_2025_time_card_recharge_schema4"
+    },
+    {
+      "id": "21127286",
+      "comment": "春节2025-装饰升级",
+      "constant": "event_lunar_2025_decoration"
+    },
+    {
+      "id": "21127287",
+      "comment": "春节-2026拜访",
+      "constant": "event_spring_visit_2025"
+    },
+    {
+      "id": "21127288",
+      "comment": "春节2025-掉落活动",
+      "constant": "event_spring_2025_drop"
+    },
+    {
+      "id": "21127289",
+      "comment": "春节2025-连锁礼包-schema3-5",
+      "constant": "event_spring_chain_pack_2025"
+    },
+    {
+      "id": "21127290",
+      "comment": "春节2025-强消耗-schema3-5",
+      "constant": "spring_2025_strong_consume"
+    },
+    {
+      "id": "21127291",
+      "comment": "春节2025-强消耗-schema6",
+      "constant": "spring_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127292",
+      "comment": "春节-2025-wonder巨猿",
+      "constant": "event_spring_festival_hegemony_25"
+    },
+    {
+      "id": "21127294",
+      "comment": "春节-2025-bp",
+      "constant": "event_spring_bp_2025"
+    },
+    {
+      "id": "21127295",
+      "comment": "春节2025-礼包（BP）",
+      "constant": "event_spring_pkg_2025"
+    },
+    {
+      "id": "21127296",
+      "comment": "春节-装饰兑换商店",
+      "constant": "event_lunar_2025_shop"
+    },
+    {
+      "id": "21127297",
+      "comment": "春节2025-连锁礼包-schema6",
+      "constant": "event_spring_chain_pack_2025_schema6"
+    },
+    {
+      "id": "21127302",
+      "comment": "情人节2025-节日自选周卡",
+      "constant": "event_valentine_time_card_2025"
+    },
+    {
+      "id": "21127303",
+      "comment": "情人节2026-七日-新版",
+      "constant": "event_valentine_2025_7days"
+    },
+    {
+      "id": "21127304",
+      "comment": "情人节多条件连锁礼包2025",
+      "constant": "event_valentine_chain_task_2025"
+    },
+    {
+      "id": "21127305",
+      "comment": "情人节2025-主城特效累充",
+      "constant": "event_valentine_2025_city_effect"
+    },
+    {
+      "id": "21127306",
+      "comment": "节日累充-2025情人节",
+      "constant": "event_2025valentine_packge_name"
+    },
+    {
+      "id": "21127307",
+      "comment": "情人节-单笔充值-2025",
+      "constant": "event_valentine_single_recharge_2025"
+    },
+    {
+      "id": "21127308",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema3",
+      "constant": "metro_minigame_valentine25_festival_1_schema3"
+    },
+    {
+      "id": "21127309",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema4",
+      "constant": "metro_minigame_valentine25_festival_2_schema4"
+    },
+    {
+      "id": "21127310",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema5",
+      "constant": "metro_minigame_valentine25_festival_3_schema5"
+    },
+    {
+      "id": "21127311",
+      "comment": "情人节2025-行军表情礼包",
+      "constant": "event_valentine_emoji_2025"
+    },
+    {
+      "id": "21127312",
+      "comment": "情人节2025-装饰升级",
+      "constant": "event_valentine_2025_decoration"
+    },
+    {
+      "id": "21127313",
+      "comment": "情人节2025-掉落活动",
+      "constant": "event_valentine_2025_drop"
+    },
+    {
+      "id": "21127314",
+      "comment": "情人节2026-强消耗-schema3-5",
+      "constant": "valentine_2025_strong_consume"
+    },
+    {
+      "id": "21127315",
+      "comment": "情人节2026-强消耗-schema6",
+      "constant": "valentine_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127316",
+      "comment": "情人节-2025-wonder巨猿",
+      "constant": "event_valentine_festival_hegemony_2025"
+    },
+    {
+      "id": "21127317",
+      "comment": "情人节2026组队BP",
+      "constant": "valentine_2025_team_bp"
+    },
+    {
+      "id": "21127318",
+      "comment": "情人节-装饰兑换商店",
+      "constant": "event_valentine_2025_shop"
+    },
+    {
+      "id": "21127319",
+      "comment": "情人节-2025-bp",
+      "constant": "event_valentine_bp_2025"
+    },
+    {
+      "id": "21127320",
+      "comment": "情人节2025-礼包（BP）",
+      "constant": "event_valentine_pkg_2025"
+    },
+    {
+      "id": "21127321",
+      "comment": "情人节连锁礼包-通用-schema3-5",
+      "constant": "event_valentine_chain_pack_2024_scheam3_5"
+    },
+    {
+      "id": "21127322",
+      "comment": "情人节连锁礼包-通用-schema6",
+      "constant": "event_valentine_chain_pack_2024_scheam6"
+    },
+    {
+      "id": "21127323",
+      "comment": "情人节2025-排行送花活动",
+      "constant": "event_valentine_flower_skin_rank"
+    },
+    {
+      "id": "21127324",
+      "comment": "周年庆返场2025-买三送一-schema3-5",
+      "constant": "event_valentine_free_gift_2025_schema3"
+    },
+    {
+      "id": "21127325",
+      "comment": "周年庆返场2025-买三送一-schema6",
+      "constant": "event_valentine_free_gift_2025_schema6"
+    },
+    {
+      "id": "21127326",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema3",
+      "constant": "metro_minigame_sci25_festival_1_schema3"
+    },
+    {
+      "id": "21127327",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema4",
+      "constant": "metro_minigame_sci25_festival_2_schema4"
+    },
+    {
+      "id": "21127328",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema5",
+      "constant": "metro_minigame_sci25_festival_3_schema5"
+    },
+    {
+      "id": "21127329",
+      "comment": "科技节-装饰兑换商店",
+      "constant": "event_sci_2025_shop"
+    },
+    {
+      "id": "21127330",
+      "comment": "科技节2025-装饰升级",
+      "constant": "event_sci_2025_decoration"
+    },
+    {
+      "id": "21127331",
+      "comment": "节日累充-2025科技节",
+      "constant": "event_sci_accum_recharge_2025"
+    },
+    {
+      "id": "21127332",
+      "comment": "科技节-买三送一-通用-schema3",
+      "constant": "event_sci_free_gift_2024_schema3"
+    },
+    {
+      "id": "21127333",
+      "comment": "科技节-买三送一-通用-schema6",
+      "constant": "event_sci_free_gift_2024_schema6"
+    },
+    {
+      "id": "21127334",
+      "comment": "节日通用自选周卡（新版-音乐节）",
+      "constant": "event_fes_time_card_1"
+    },
+    {
+      "id": "21127335",
+      "comment": "科技节2025-主城特效个人累充",
+      "constant": "event_techFestival_2025_city_effect_single"
+    },
+    {
+      "id": "21127336",
+      "comment": "科技节2025-主城特效服务器累充",
+      "constant": "event_techFestival_2025_city_effect_server"
+    },
+    {
+      "id": "21127339",
+      "comment": "节日通用2-强消耗-schema3-5（春节）",
+      "constant": "science_2025_strong_consume"
+    },
+    {
+      "id": "21127340",
+      "comment": "节日通用2-强消耗-schema6（春节）",
+      "constant": "science_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127341",
+      "comment": "科技节-2025-折扣礼包-schema3-5",
+      "constant": "science_2025_discount_pack"
+    },
+    {
+      "id": "21127342",
+      "comment": "科技节-2025-折扣礼包-schema6",
+      "constant": "science_2025_discount_pack_schema6"
+    },
+    {
+      "id": "21127343",
+      "comment": "科技节2026-七日-新版",
+      "constant": "event_sci_2025_7days"
+    },
+    {
+      "id": "21127344",
+      "comment": "科技节-单笔充值-通用-一期",
+      "constant": "event_sci_single_recharge_2025"
+    },
+    {
+      "id": "21127345",
+      "comment": "科技节-单笔充值-通用-二期（不用）",
+      "constant": "event_sci2_single_recharge_2025"
+    },
+    {
+      "id": "21127346",
+      "comment": "科技节2025-科技拼图活动",
+      "constant": "event_sci_2025_gift_send"
+    },
+    {
+      "id": "21127347",
+      "comment": "科技节2025-行军表情礼包",
+      "constant": "event_sci_emoji_2025"
+    },
+    {
+      "id": "21127348",
+      "comment": "节日-庆典抽奖通用",
+      "constant": "event_sci_lucky_star_2025"
+    },
+    {
+      "id": "21127349",
+      "comment": "科技节2025-gacha下半部分",
+      "constant": "event_sci_2025_gacha"
+    },
+    {
+      "id": "21127350",
+      "comment": "科技节2025-gacha下半部分-累计任务",
+      "constant": "event_sci_2025_gacha_accum"
+    },
+    {
+      "id": "21127351",
+      "comment": "科技节通用-gacha下半部分-每日礼包",
+      "constant": "event_sci_2025_gacha_daily"
+    },
+    {
+      "id": "21127352",
+      "comment": "复活节2025-行军表情礼包",
+      "constant": "event_easter_emoji_2025"
+    },
+    {
+      "id": "21127353",
+      "comment": "复活节2025-横版bp",
+      "constant": "event_easter_bp_2025"
+    },
+    {
+      "id": "21127354",
+      "comment": "复活节2025-礼包（BP）",
+      "constant": "event_easter_bp_pkg_2025"
+    },
+    {
+      "id": "21127355",
+      "comment": "装饰兑换商店-通用-感恩节",
+      "constant": "event_easter_2025_shop"
+    },
+    {
+      "id": "21127356",
+      "comment": "2025节日通用-七日-新版2（周年庆）",
+      "constant": "event_easter_2025_7days"
+    },
+    {
+      "id": "21127357",
+      "comment": "合成小游戏活动-25复活节版本-schema3",
+      "constant": "metro_minigame_easter25_festival_1_schema3"
+    },
+    {
+      "id": "21127358",
+      "comment": "合成小游戏活动-25复活节版本-schema4",
+      "constant": "metro_minigame_easter25_festival_2_schema4"
+    },
+    {
+      "id": "21127359",
+      "comment": "合成小游戏活动-25复活节版本-schema5",
+      "constant": "metro_minigame_easter25_festival_3_schema5"
+    },
+    {
+      "id": "21127360",
+      "comment": "复活节2025-交换活动",
+      "constant": "event_easter_gift_exchange_2025"
+    },
+    {
+      "id": "21127361",
+      "comment": "2025复活节行军特效贬值礼包",
+      "constant": "event_easter_march_effect_pkg"
+    },
+    {
+      "id": "21127362",
+      "comment": "节日大富翁进度活动（科技节）",
+      "constant": "event_easter_monopoly_2025"
+    },
+    {
+      "id": "21127363",
+      "comment": "节日通用-强消耗-schema3-5（科技节）",
+      "constant": "easter_2025_strong_consume"
+    },
+    {
+      "id": "21127364",
+      "comment": "节日通用-强消耗-schema6（科技节）",
+      "constant": "easter_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127365",
+      "comment": "节日通用自选周卡（新版-万圣节）",
+      "constant": "event_easter_time_card_2025"
+    },
+    {
+      "id": "21127366",
+      "comment": "复活节2025-彩蛋手札",
+      "constant": "event_easter_party"
+    },
+    {
+      "id": "21127367",
+      "comment": "复活节2025-gacha下半部分",
+      "constant": "event_easter_2025_gacha"
+    },
+    {
+      "id": "21127368",
+      "comment": "复活节2025-主城特效累充",
+      "constant": "event_easter_2025_city_effect"
+    },
+    {
+      "id": "21127369",
+      "comment": "节日累充-2025复活节",
+      "constant": "event_2025easter_packge_name"
+    },
+    {
+      "id": "21127370",
+      "comment": "复活节-单笔充值-2025-第一轮",
+      "constant": "event_easter_single_recharge_2025"
+    },
+    {
+      "id": "21127371",
+      "comment": "复活节签到-2025",
+      "constant": "event_easter_login_2024"
+    },
+    {
+      "id": "21127372",
+      "comment": "复活节-单笔充值-2025-第二轮",
+      "constant": "event_easter2_single_recharge_2025"
+    },
+    {
+      "id": "21127373",
+      "comment": "复活节2025-gacha-每日礼包",
+      "constant": "event_easter_2025_gacha_daily"
+    },
+    {
+      "id": "21127374",
+      "comment": "复活节连锁礼包-2025-schema3-5",
+      "constant": "event_easter_chain_pack_2024_scheam3_5"
+    },
+    {
+      "id": "21127375",
+      "comment": "复活节连锁礼包-2025-schema6",
+      "constant": "event_easter_chain_pack_2024_scheam6"
+    },
+    {
+      "id": "21127376",
+      "comment": "节日通用2025-七日-新版（万圣节）",
+      "constant": "event_easter2_2025_7days"
+    },
+    {
+      "id": "21127377",
+      "comment": "复活节-小额随机礼包-转盘形式-schema3-5",
+      "constant": "event_easter_2025_newwheel"
+    },
+    {
+      "id": "21127378",
+      "comment": "复活节-小额随机礼包-转盘形式-schema6",
+      "constant": "event_easter2_2025_newwheel"
+    },
+    {
+      "id": "21127379",
+      "comment": "通用-对对碰活动bp（每次要改HUD）",
+      "constant": "event_gift_bp"
+    },
+    {
+      "id": "21127380",
+      "comment": "拓荒节2025-装饰升级",
+      "constant": "event_labor_2025_decoration"
+    },
+    {
+      "id": "21127381",
+      "comment": "拓荒节2025-主城特效服务器累充",
+      "constant": "event_Festival_2025_city_effect_server"
+    },
+    {
+      "id": "21127382",
+      "comment": "科技节-掉落转付费-第一套",
+      "constant": "event_labor_2025_shop"
+    },
+    {
+      "id": "21127383",
+      "comment": "节日通用-掉落转付费-掉落活动",
+      "constant": "event_labor_2025_drop"
+    },
+    {
+      "id": "21127384",
+      "comment": "通用-付费率宝箱",
+      "constant": "event_labor_2025_payment"
+    },
+    {
+      "id": "21127385",
+      "comment": "情人节-限时抢购-S6-通用皮（1、2期",
+      "constant": "event_flash_sale_s6"
+    },
+    {
+      "id": "21127386",
+      "comment": "情人节-限时抢购-S3-5-通用皮（3期",
+      "constant": "event_flash_sale_s3_5"
+    },
+    {
+      "id": "21127387",
+      "comment": "科技节套装S2-通用gacha",
+      "constant": "event_sci_gacha_2025_s2"
+    },
+    {
+      "id": "21127388",
+      "comment": "科技节套装S2-通用累计活动",
+      "constant": "event_sci_2025_gacha_reward_2025_s2"
+    },
+    {
+      "id": "21127389",
+      "comment": "科技节套装S2-gacha下半部分",
+      "constant": "event_sci_2025_gacha_s2"
+    },
+    {
+      "id": "21127390",
+      "comment": "科技节套装S2-gacha下半部分-累计任务",
+      "constant": "event_sci_2025_gacha_accum_s2"
+    },
+    {
+      "id": "21127391",
+      "comment": "科技节套装S2-gacha下半部分-每日礼包",
+      "constant": "event_sci_2025_gacha_daily_s2"
+    },
+    {
+      "id": "21127392",
+      "comment": "科技节套装S2-横版bp",
+      "constant": "event_science_bp_title_2024_s2"
+    },
+    {
+      "id": "21127393",
+      "comment": "科技节套装S2-礼包（BP）",
+      "constant": "event_science_bp_pkg_title_2024_s2"
+    },
+    {
+      "id": "21127394",
+      "comment": "科技节套装S2通用-掉落活动",
+      "constant": "event_sci_2024_drop_s2"
+    },
+    {
+      "id": "21127395",
+      "comment": "科技节套装S2自选周卡",
+      "constant": "event_fes_time_card_1_s2"
+    },
+    {
+      "id": "21127396",
+      "comment": "科技节套装S2-单笔充值-2025-一期",
+      "constant": "event_sci_single_recharge_2025_s2"
+    },
+    {
+      "id": "21127397",
+      "comment": "科技节套装S2-单笔充值-2025-二期",
+      "constant": "event_sci2_single_recharge_2025_s2"
+    },
+    {
+      "id": "21127398",
+      "comment": "科技节套装S2-科技拼图活动",
+      "constant": "event_sci_2025_gift_send_s2"
+    },
+    {
+      "id": "21127399",
+      "comment": "科技节套装S2-行军表情礼包",
+      "constant": "event_sci_emoji_2025_s2"
+    },
+    {
+      "id": "21127400",
+      "comment": "科技节套装S2-2025-折扣礼包",
+      "constant": "science_2025_discount_pack_s2"
+    },
+    {
+      "id": "21127401",
+      "comment": "科技节套装S2-买三送一-通用-schema3",
+      "constant": "event_sci_free_gift_2024_schema3_s2"
+    },
+    {
+      "id": "21127402",
+      "comment": "科技节套装S2-主城特效个人累充",
+      "constant": "event_techFestival_2025_city_effect_single_s2"
+    },
+    {
+      "id": "21127403",
+      "comment": "科技节套装S2-主城特效服务器累充",
+      "constant": "event_techFestival_2025_city_effect_server_s2"
+    },
+    {
+      "id": "21127404",
+      "comment": "拓荒节2025-七日-新版",
+      "constant": "event_labor_2025_7days"
+    },
+    {
+      "id": "21127405",
+      "comment": "拓荒节2025-行军表情礼包",
+      "constant": "event_labor_emoji_2025"
+    },
+    {
+      "id": "21127406",
+      "comment": "合成小游戏活动-25拓荒节版本-schema3",
+      "constant": "metro_minigame_labor25_festival_1_schema3"
+    },
+    {
+      "id": "21127407",
+      "comment": "合成小游戏活动-25拓荒节版本-schema4",
+      "constant": "metro_minigame_labor25_festival_2_schema4"
+    },
+    {
+      "id": "21127408",
+      "comment": "合成小游戏活动-25拓荒节版本-schema5",
+      "constant": "metro_minigame_labor25_festival_3_schema5"
+    },
+    {
+      "id": "21127409",
+      "comment": "拓荒节多条件连锁礼包2025",
+      "constant": "event_labor_chain_task_2025"
+    },
+    {
+      "id": "21127410",
+      "comment": "拓荒节2025-主城特效累充",
+      "constant": "event_labor_2025_city_effect"
+    },
+    {
+      "id": "21127411",
+      "comment": "节日累充-2025拓荒节",
+      "constant": "event_2025labor_packge_name"
+    },
+    {
+      "id": "21127412",
+      "comment": "深海节-单笔充值-2025-第一轮",
+      "constant": "event_labor_single_recharge_2025"
+    },
+    {
+      "id": "21127413",
+      "comment": "深海节-单笔充值-2025-第二轮",
+      "constant": "event_labor2_single_recharge_2025"
+    },
+    {
+      "id": "21127414",
+      "comment": "拓荒节2025-gacha-每日礼包",
+      "constant": "event_labor_2025_gacha_daily"
+    },
+    {
+      "id": "21127415",
+      "comment": "节日通用-掉落转付费-礼包",
+      "constant": "event_labor_2025_drop_libao"
+    },
+    {
+      "id": "21127416",
+      "comment": "科技节套装S2-装饰兑换商店",
+      "constant": "event_sci_2025_shop_s2"
+    },
+    {
+      "id": "21127417",
+      "comment": "节日通用-战车自选gacha",
+      "constant": "event_tank_gacha_2025"
+    },
+    {
+      "id": "21127418",
+      "comment": "深海节预购连锁礼包_schema3-5",
+      "constant": "event_pre_chain"
+    },
+    {
+      "id": "21127419",
+      "comment": "2025深海节小额随机礼包",
+      "constant": "event_random_pkg_sea_2025"
+    },
+    {
+      "id": "21127420",
+      "comment": "深海节-2025-本体gacha",
+      "constant": "event_dragon_boat_festival_gacha_2025"
+    },
+    {
+      "id": "21127421",
+      "comment": "深海节2025-主城特效累充-联盟",
+      "constant": "event_techFestival_2025_city_effect_alliance"
+    },
+    {
+      "id": "21127422",
+      "comment": "感恩节-掉落转付费",
+      "constant": "event_labor_2025_shop_1"
+    },
+    {
+      "id": "21127423",
+      "comment": "通用-节日礼包团购",
+      "constant": "event_2025deep_sea_pkg"
+    },
+    {
+      "id": "21127424",
+      "comment": "深海节-节日手札",
+      "constant": "event_deepsea_party"
+    },
+    {
+      "id": "21127425",
+      "comment": "深海节-组件gacha",
+      "constant": "event_deepsea_2025_gacha2"
+    },
+    {
+      "id": "21127426",
+      "comment": "节日活动-聚宝盆抽奖-第1期（schema3~5）",
+      "constant": "event_treasure_bowl1_2025"
+    },
+    {
+      "id": "21127427",
+      "comment": "节日活动-聚宝盆抽奖-第2期（schema3~5）",
+      "constant": "event_treasure_bowl2_2025"
+    }
+  ],
+  "85大富翁组合": [],
+  "85节日卡册": [
+    {
+      "id": "21127275",
+      "comment": "春节2025-七日-新版",
+      "constant": "event_spring_2025_7days"
+    },
+    {
+      "id": "21127276",
+      "comment": "春节2025-节日自选周卡",
+      "constant": "event_spring_time_card_2025"
+    },
+    {
+      "id": "21127277",
+      "comment": "春节2025-主城特效累充",
+      "constant": "event_springFestival_2025_city_effect"
+    },
+    {
+      "id": "21127278",
+      "comment": "节日累充-2025春节",
+      "constant": "event_2025springFestival_packge_name"
+    },
+    {
+      "id": "21127279",
+      "comment": "节日通用第一套-单笔充值-2026-春节",
+      "constant": "event_springFestival_single_recharge_2025"
+    },
+    {
+      "id": "21127280",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema3",
+      "constant": "metro_minigame_spring25_festival_1_schema3"
+    },
+    {
+      "id": "21127281",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema4",
+      "constant": "metro_minigame_spring25_festival_2_schema4"
+    },
+    {
+      "id": "21127282",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema5",
+      "constant": "metro_minigame_spring25_festival_3_schema5"
+    },
+    {
+      "id": "21127283",
+      "comment": "春节2025-行军表情礼包",
+      "constant": "event_springFestival_emoji_2025"
+    },
+    {
+      "id": "21127284",
+      "comment": "通用节日订阅卡累充-schema3",
+      "constant": "event_springFestival_2025_time_card_recharge"
+    },
+    {
+      "id": "21127285",
+      "comment": "通用节日订阅卡累充-schema4-6",
+      "constant": "event_springFestival_2025_time_card_recharge_schema4"
+    },
+    {
+      "id": "21127286",
+      "comment": "春节2025-装饰升级",
+      "constant": "event_lunar_2025_decoration"
+    },
+    {
+      "id": "21127287",
+      "comment": "春节-2026拜访",
+      "constant": "event_spring_visit_2025"
+    },
+    {
+      "id": "21127288",
+      "comment": "春节2025-掉落活动",
+      "constant": "event_spring_2025_drop"
+    },
+    {
+      "id": "21127289",
+      "comment": "春节2025-连锁礼包-schema3-5",
+      "constant": "event_spring_chain_pack_2025"
+    },
+    {
+      "id": "21127290",
+      "comment": "春节2025-强消耗-schema3-5",
+      "constant": "spring_2025_strong_consume"
+    },
+    {
+      "id": "21127291",
+      "comment": "春节2025-强消耗-schema6",
+      "constant": "spring_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127292",
+      "comment": "春节-2025-wonder巨猿",
+      "constant": "event_spring_festival_hegemony_25"
+    },
+    {
+      "id": "21127294",
+      "comment": "春节-2025-bp",
+      "constant": "event_spring_bp_2025"
+    },
+    {
+      "id": "21127295",
+      "comment": "春节2025-礼包（BP）",
+      "constant": "event_spring_pkg_2025"
+    },
+    {
+      "id": "21127296",
+      "comment": "春节-装饰兑换商店",
+      "constant": "event_lunar_2025_shop"
+    },
+    {
+      "id": "21127297",
+      "comment": "春节2025-连锁礼包-schema6",
+      "constant": "event_spring_chain_pack_2025_schema6"
+    },
+    {
+      "id": "21127302",
+      "comment": "情人节2025-节日自选周卡",
+      "constant": "event_valentine_time_card_2025"
+    },
+    {
+      "id": "21127303",
+      "comment": "情人节2026-七日-新版",
+      "constant": "event_valentine_2025_7days"
+    },
+    {
+      "id": "21127304",
+      "comment": "情人节多条件连锁礼包2025",
+      "constant": "event_valentine_chain_task_2025"
+    },
+    {
+      "id": "21127305",
+      "comment": "情人节2025-主城特效累充",
+      "constant": "event_valentine_2025_city_effect"
+    },
+    {
+      "id": "21127306",
+      "comment": "节日累充-2025情人节",
+      "constant": "event_2025valentine_packge_name"
+    },
+    {
+      "id": "21127307",
+      "comment": "情人节-单笔充值-2025",
+      "constant": "event_valentine_single_recharge_2025"
+    },
+    {
+      "id": "21127308",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema3",
+      "constant": "metro_minigame_valentine25_festival_1_schema3"
+    },
+    {
+      "id": "21127309",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema4",
+      "constant": "metro_minigame_valentine25_festival_2_schema4"
+    },
+    {
+      "id": "21127310",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema5",
+      "constant": "metro_minigame_valentine25_festival_3_schema5"
+    },
+    {
+      "id": "21127311",
+      "comment": "情人节2025-行军表情礼包",
+      "constant": "event_valentine_emoji_2025"
+    },
+    {
+      "id": "21127312",
+      "comment": "情人节2025-装饰升级",
+      "constant": "event_valentine_2025_decoration"
+    },
+    {
+      "id": "21127313",
+      "comment": "情人节2025-掉落活动",
+      "constant": "event_valentine_2025_drop"
+    },
+    {
+      "id": "21127314",
+      "comment": "情人节2025-强消耗-schema3-5",
+      "constant": "valentine_2025_strong_consume"
+    },
+    {
+      "id": "21127315",
+      "comment": "情人节2025-强消耗-schema6",
+      "constant": "valentine_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127316",
+      "comment": "情人节-2025-wonder巨猿",
+      "constant": "event_valentine_festival_hegemony_2025"
+    },
+    {
+      "id": "21127317",
+      "comment": "情人节2026组队BP",
+      "constant": "valentine_2025_team_bp"
+    },
+    {
+      "id": "21127318",
+      "comment": "情人节-装饰兑换商店",
+      "constant": "event_valentine_2025_shop"
+    },
+    {
+      "id": "21127319",
+      "comment": "情人节-2025-bp",
+      "constant": "event_valentine_bp_2025"
+    },
+    {
+      "id": "21127320",
+      "comment": "情人节2025-礼包（BP）",
+      "constant": "event_valentine_pkg_2025"
+    },
+    {
+      "id": "21127321",
+      "comment": "情人节连锁礼包-通用-schema3-5",
+      "constant": "event_valentine_chain_pack_2024_scheam3_5"
+    },
+    {
+      "id": "21127322",
+      "comment": "情人节连锁礼包-通用-schema6",
+      "constant": "event_valentine_chain_pack_2024_scheam6"
+    },
+    {
+      "id": "21127323",
+      "comment": "情人节2025-排行送花活动",
+      "constant": "event_valentine_flower_skin_rank"
+    },
+    {
+      "id": "21127324",
+      "comment": "周年庆返场2025-买三送一-schema3-5",
+      "constant": "event_valentine_free_gift_2025_schema3"
+    },
+    {
+      "id": "21127325",
+      "comment": "周年庆返场2025-买三送一-schema6",
+      "constant": "event_valentine_free_gift_2025_schema6"
+    },
+    {
+      "id": "21127326",
+      "comment": "合成小游戏活动-25科技节版本-schema3",
+      "constant": "metro_minigame_sci25_festival_1_schema3"
+    },
+    {
+      "id": "21127327",
+      "comment": "合成小游戏活动-25科技节版本-schema4",
+      "constant": "metro_minigame_sci25_festival_2_schema4"
+    },
+    {
+      "id": "21127328",
+      "comment": "合成小游戏活动-25科技节版本-schema5",
+      "constant": "metro_minigame_sci25_festival_3_schema5"
+    },
+    {
+      "id": "21127329",
+      "comment": "科技节-装饰兑换商店",
+      "constant": "event_sci_2025_shop"
+    },
+    {
+      "id": "21127330",
+      "comment": "科技节2025-装饰升级",
+      "constant": "event_sci_2025_decoration"
+    },
+    {
+      "id": "21127331",
+      "comment": "节日累充-2025科技节",
+      "constant": "event_sci_accum_recharge_2025"
+    },
+    {
+      "id": "21127332",
+      "comment": "科技节-买三送一-通用-schema3",
+      "constant": "event_sci_free_gift_2024_schema3"
+    },
+    {
+      "id": "21127333",
+      "comment": "科技节-买三送一-通用-schema6",
+      "constant": "event_sci_free_gift_2024_schema6"
+    },
+    {
+      "id": "21127334",
+      "comment": "节日通用自选周卡（新版-音乐节）",
+      "constant": "event_fes_time_card_1"
+    },
+    {
+      "id": "21127335",
+      "comment": "科技节2025-主城特效个人累充",
+      "constant": "event_techFestival_2025_city_effect_single"
+    },
+    {
+      "id": "21127336",
+      "comment": "科技节2025-主城特效服务器累充",
+      "constant": "event_techFestival_2025_city_effect_server"
+    },
+    {
+      "id": "21127339",
+      "comment": "节日通用2-强消耗-schema3-5（春节）",
+      "constant": "science_2025_strong_consume"
+    },
+    {
+      "id": "21127340",
+      "comment": "节日通用2-强消耗-schema6（春节）",
+      "constant": "science_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127341",
+      "comment": "科技节-2025-折扣礼包-schema3-5",
+      "constant": "science_2025_discount_pack"
+    },
+    {
+      "id": "21127342",
+      "comment": "科技节-2025-折扣礼包-schema6",
+      "constant": "science_2025_discount_pack_schema6"
+    },
+    {
+      "id": "21127343",
+      "comment": "科技节2025-七日-新版",
+      "constant": "event_sci_2025_7days"
+    },
+    {
+      "id": "21127344",
+      "comment": "科技节-单笔充值-2025-一期",
+      "constant": "event_sci_single_recharge_2025"
+    },
+    {
+      "id": "21127345",
+      "comment": "科技节-单笔充值-2025-二期",
+      "constant": "event_sci2_single_recharge_2025"
+    },
+    {
+      "id": "21127346",
+      "comment": "科技节2025-科技拼图活动",
+      "constant": "event_sci_2025_gift_send"
+    },
+    {
+      "id": "21127347",
+      "comment": "科技节2025-行军表情礼包",
+      "constant": "event_sci_emoji_2025"
+    },
+    {
+      "id": "21127348",
+      "comment": "节日-庆典抽奖通用",
+      "constant": "event_sci_lucky_star_2025"
+    },
+    {
+      "id": "21127349",
+      "comment": "科技节2025-gacha下半部分",
+      "constant": "event_sci_2025_gacha"
+    },
+    {
+      "id": "21127350",
+      "comment": "科技节2025-gacha下半部分-累计任务",
+      "constant": "event_sci_2025_gacha_accum"
+    },
+    {
+      "id": "21127351",
+      "comment": "科技节2025-gacha下半部分-每日礼包",
+      "constant": "event_sci_2025_gacha_daily"
+    },
+    {
+      "id": "21127352",
+      "comment": "复活节2025-行军表情礼包",
+      "constant": "event_easter_emoji_2025"
+    },
+    {
+      "id": "21127353",
+      "comment": "复活节2025-横版bp",
+      "constant": "event_easter_bp_2025"
+    },
+    {
+      "id": "21127354",
+      "comment": "复活节2025-礼包（BP）",
+      "constant": "event_easter_bp_pkg_2025"
+    },
+    {
+      "id": "21127355",
+      "comment": "装饰兑换商店-通用-感恩节",
+      "constant": "event_easter_2025_shop"
+    },
+    {
+      "id": "21127356",
+      "comment": "2025节日通用-七日-新版2（周年庆）",
+      "constant": "event_easter_2025_7days"
+    },
+    {
+      "id": "21127357",
+      "comment": "合成小游戏活动-25复活节版本-schema3",
+      "constant": "metro_minigame_easter25_festival_1_schema3"
+    },
+    {
+      "id": "21127358",
+      "comment": "合成小游戏活动-25复活节版本-schema4",
+      "constant": "metro_minigame_easter25_festival_2_schema4"
+    },
+    {
+      "id": "21127359",
+      "comment": "合成小游戏活动-25复活节版本-schema5",
+      "constant": "metro_minigame_easter25_festival_3_schema5"
+    },
+    {
+      "id": "21127360",
+      "comment": "复活节2025-交换活动",
+      "constant": "event_easter_gift_exchange_2025"
+    },
+    {
+      "id": "21127361",
+      "comment": "2025复活节行军特效贬值礼包",
+      "constant": "event_easter_march_effect_pkg"
+    },
+    {
+      "id": "21127362",
+      "comment": "节日大富翁进度活动（圣诞节）",
+      "constant": "event_easter_monopoly_2025"
+    },
+    {
+      "id": "21127363",
+      "comment": "节日通用-强消耗-schema3-5（感恩节）",
+      "constant": "easter_2025_strong_consume"
+    },
+    {
+      "id": "21127364",
+      "comment": "节日通用-强消耗-schema6（感恩节）",
+      "constant": "easter_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127365",
+      "comment": "节日通用自选周卡（新版-万圣节）",
+      "constant": "event_easter_time_card_2025"
+    },
+    {
+      "id": "21127366",
+      "comment": "复活节2025-彩蛋手札",
+      "constant": "event_easter_party"
+    },
+    {
+      "id": "21127367",
+      "comment": "复活节2025-gacha下半部分",
+      "constant": "event_easter_2025_gacha"
+    },
+    {
+      "id": "21127368",
+      "comment": "复活节2025-主城特效累充",
+      "constant": "event_easter_2025_city_effect"
+    },
+    {
+      "id": "21127369",
+      "comment": "节日累充-2025复活节",
+      "constant": "event_2025easter_packge_name"
+    },
+    {
+      "id": "21127370",
+      "comment": "复活节-单笔充值-2025-第一轮",
+      "constant": "event_easter_single_recharge_2025"
+    },
+    {
+      "id": "21127371",
+      "comment": "复活节签到-2025",
+      "constant": "event_easter_login_2024"
+    },
+    {
+      "id": "21127372",
+      "comment": "复活节-单笔充值-2025-第二轮",
+      "constant": "event_easter2_single_recharge_2025"
+    },
+    {
+      "id": "21127373",
+      "comment": "复活节2025-gacha-每日礼包",
+      "constant": "event_easter_2025_gacha_daily"
+    },
+    {
+      "id": "21127374",
+      "comment": "复活节连锁礼包-2025-schema3-5",
+      "constant": "event_easter_chain_pack_2024_scheam3_5"
+    },
+    {
+      "id": "21127375",
+      "comment": "复活节连锁礼包-2025-schema6",
+      "constant": "event_easter_chain_pack_2024_scheam6"
+    },
+    {
+      "id": "21127376",
+      "comment": "节日通用2025-七日-新版（万圣节）",
+      "constant": "event_easter2_2025_7days"
+    },
+    {
+      "id": "21127377",
+      "comment": "复活节-小额随机礼包-转盘形式-schema3-5",
+      "constant": "event_easter_2025_newwheel"
+    },
+    {
+      "id": "21127378",
+      "comment": "复活节-小额随机礼包-转盘形式-schema6",
+      "constant": "event_easter2_2025_newwheel"
+    },
+    {
+      "id": "21127379",
+      "comment": "通用-对对碰活动bp（每次要改HUD）",
+      "constant": "event_gift_bp"
+    },
+    {
+      "id": "21127380",
+      "comment": "拓荒节2025-装饰升级",
+      "constant": "event_labor_2025_decoration"
+    },
+    {
+      "id": "21127381",
+      "comment": "拓荒节2025-主城特效服务器累充",
+      "constant": "event_Festival_2025_city_effect_server"
+    },
+    {
+      "id": "21127382",
+      "comment": "圣诞节-掉落转付费-第一套",
+      "constant": "event_labor_2025_shop"
+    },
+    {
+      "id": "21127383",
+      "comment": "节日通用-掉落转付费-掉落活动",
+      "constant": "event_labor_2025_drop"
+    },
+    {
+      "id": "21127384",
+      "comment": "通用-付费率宝箱",
+      "constant": "event_labor_2025_payment"
+    },
+    {
+      "id": "21127385",
+      "comment": "情人节-限时抢购-S6-通用皮",
+      "constant": "event_flash_sale_s6"
+    },
+    {
+      "id": "21127386",
+      "comment": "情人节-限时抢购-S3-5-通用皮",
+      "constant": "event_flash_sale_s3_5"
+    },
+    {
+      "id": "21127387",
+      "comment": "科技节套装S2-通用gacha",
+      "constant": "event_sci_gacha_2025_s2"
+    },
+    {
+      "id": "21127388",
+      "comment": "科技节套装S2-通用累计活动",
+      "constant": "event_sci_2025_gacha_reward_2025_s2"
+    },
+    {
+      "id": "21127389",
+      "comment": "科技节套装S2-gacha下半部分",
+      "constant": "event_sci_2025_gacha_s2"
+    },
+    {
+      "id": "21127390",
+      "comment": "科技节套装S2-gacha下半部分-累计任务",
+      "constant": "event_sci_2025_gacha_accum_s2"
+    },
+    {
+      "id": "21127391",
+      "comment": "科技节套装S2-gacha下半部分-每日礼包",
+      "constant": "event_sci_2025_gacha_daily_s2"
+    },
+    {
+      "id": "21127392",
+      "comment": "科技节套装S2-横版bp",
+      "constant": "event_science_bp_title_2024_s2"
+    },
+    {
+      "id": "21127393",
+      "comment": "科技节套装S2-礼包（BP）",
+      "constant": "event_science_bp_pkg_title_2024_s2"
+    },
+    {
+      "id": "21127394",
+      "comment": "科技节套装S2通用-掉落活动",
+      "constant": "event_sci_2024_drop_s2"
+    },
+    {
+      "id": "21127395",
+      "comment": "科技节套装S2自选周卡",
+      "constant": "event_fes_time_card_1_s2"
+    },
+    {
+      "id": "21127396",
+      "comment": "科技节套装S2-单笔充值-2025-一期",
+      "constant": "event_sci_single_recharge_2025_s2"
+    },
+    {
+      "id": "21127397",
+      "comment": "科技节套装S2-单笔充值-2025-二期",
+      "constant": "event_sci2_single_recharge_2025_s2"
+    },
+    {
+      "id": "21127398",
+      "comment": "科技节套装S2-科技拼图活动",
+      "constant": "event_sci_2025_gift_send_s2"
+    },
+    {
+      "id": "21127399",
+      "comment": "科技节套装S2-行军表情礼包",
+      "constant": "event_sci_emoji_2025_s2"
+    },
+    {
+      "id": "21127400",
+      "comment": "科技节套装S2-2025-折扣礼包",
+      "constant": "science_2025_discount_pack_s2"
+    },
+    {
+      "id": "21127401",
+      "comment": "科技节套装S2-买三送一-通用-schema3",
+      "constant": "event_sci_free_gift_2024_schema3_s2"
+    },
+    {
+      "id": "21127402",
+      "comment": "科技节套装S2-主城特效个人累充",
+      "constant": "event_techFestival_2025_city_effect_single_s2"
+    },
+    {
+      "id": "21127403",
+      "comment": "科技节套装S2-主城特效服务器累充",
+      "constant": "event_techFestival_2025_city_effect_server_s2"
+    },
+    {
+      "id": "21127404",
+      "comment": "拓荒节2025-七日-新版",
+      "constant": "event_labor_2025_7days"
+    },
+    {
+      "id": "21127405",
+      "comment": "拓荒节2025-行军表情礼包",
+      "constant": "event_labor_emoji_2025"
+    },
+    {
+      "id": "21127406",
+      "comment": "合成小游戏活动-25拓荒节版本-schema3",
+      "constant": "metro_minigame_labor25_festival_1_schema3"
+    },
+    {
+      "id": "21127407",
+      "comment": "合成小游戏活动-25拓荒节版本-schema4",
+      "constant": "metro_minigame_labor25_festival_2_schema4"
+    },
+    {
+      "id": "21127408",
+      "comment": "合成小游戏活动-25拓荒节版本-schema5",
+      "constant": "metro_minigame_labor25_festival_3_schema5"
+    },
+    {
+      "id": "21127409",
+      "comment": "拓荒节多条件连锁礼包2025",
+      "constant": "event_labor_chain_task_2025"
+    },
+    {
+      "id": "21127410",
+      "comment": "拓荒节2025-主城特效累充",
+      "constant": "event_labor_2025_city_effect"
+    },
+    {
+      "id": "21127411",
+      "comment": "节日累充-2025拓荒节",
+      "constant": "event_2025labor_packge_name"
+    },
+    {
+      "id": "21127412",
+      "comment": "深海节-单笔充值-2025-第一轮",
+      "constant": "event_labor_single_recharge_2025"
+    },
+    {
+      "id": "21127413",
+      "comment": "深海节-单笔充值-2025-第二轮",
+      "constant": "event_labor2_single_recharge_2025"
+    },
+    {
+      "id": "21127414",
+      "comment": "拓荒节2025-gacha-每日礼包",
+      "constant": "event_labor_2025_gacha_daily"
+    },
+    {
+      "id": "21127415",
+      "comment": "节日通用-掉落转付费-礼包",
+      "constant": "event_labor_2025_drop_libao"
+    },
+    {
+      "id": "21127416",
+      "comment": "科技节套装S2-装饰兑换商店",
+      "constant": "event_sci_2025_shop_s2"
+    },
+    {
+      "id": "21127417",
+      "comment": "节日通用-战车自选gacha",
+      "constant": "event_tank_gacha_2025"
+    },
+    {
+      "id": "21127418",
+      "comment": "深海节预购连锁礼包_schema3-5",
+      "constant": "event_pre_chain"
+    },
+    {
+      "id": "21127419",
+      "comment": "2025深海节小额随机礼包",
+      "constant": "event_random_pkg_sea_2025"
+    },
+    {
+      "id": "21127420",
+      "comment": "深海节-2025-本体gacha",
+      "constant": "event_dragon_boat_festival_gacha_2025"
+    },
+    {
+      "id": "21127421",
+      "comment": "深海节2025-主城特效累充-联盟",
+      "constant": "event_techFestival_2025_city_effect_alliance"
+    },
+    {
+      "id": "21127422",
+      "comment": "感恩节-掉落转付费",
+      "constant": "event_labor_2025_shop_1"
+    },
+    {
+      "id": "21127423",
+      "comment": "通用-节日礼包团购",
+      "constant": "event_2025deep_sea_pkg"
+    },
+    {
+      "id": "21127424",
+      "comment": "深海节-节日手札",
+      "constant": "event_deepsea_party"
+    },
+    {
+      "id": "21127425",
+      "comment": "深海节-组件gacha",
+      "constant": "event_deepsea_2025_gacha2"
+    },
+    {
+      "id": "21127426",
+      "comment": "节日活动-聚宝盆抽奖-第1期（schema3~5）",
+      "constant": "event_treasure_bowl1_2025"
+    },
+    {
+      "id": "21127427",
+      "comment": "节日活动-聚宝盆抽奖-第2期（schema3~5）",
+      "constant": "event_treasure_bowl2_2025"
+    },
+    {
+      "id": "21127428",
+      "comment": "节日活动-聚宝盆抽奖-第3期（schema3~5）",
+      "constant": "event_treasure_bowl3_2025"
+    },
+    {
+      "id": "21127429",
+      "comment": "节日活动-聚宝盆抽奖-第4期（schema3~5）",
+      "constant": "event_treasure_bowl4_2025"
+    },
+    {
+      "id": "21127430",
+      "comment": "合成小游戏活动-25深海节版本-schema3",
+      "constant": "metro_minigame_beach25_festival_1_schema3"
+    }
+  ],
+  "85彩蛋交换": [
+    {
+      "id": "21127275",
+      "comment": "春节2025-七日-新版",
+      "constant": "event_spring_2025_7days"
+    },
+    {
+      "id": "21127276",
+      "comment": "春节2025-节日自选周卡",
+      "constant": "event_spring_time_card_2025"
+    },
+    {
+      "id": "21127277",
+      "comment": "春节2025-主城特效累充",
+      "constant": "event_springFestival_2025_city_effect"
+    },
+    {
+      "id": "21127278",
+      "comment": "节日累充-2025春节",
+      "constant": "event_2025springFestival_packge_name"
+    },
+    {
+      "id": "21127279",
+      "comment": "节日通用第一套-单笔充值-2026-春节",
+      "constant": "event_springFestival_single_recharge_2025"
+    },
+    {
+      "id": "21127280",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema3",
+      "constant": "metro_minigame_spring25_festival_1_schema3"
+    },
+    {
+      "id": "21127281",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema4",
+      "constant": "metro_minigame_spring25_festival_2_schema4"
+    },
+    {
+      "id": "21127282",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema5",
+      "constant": "metro_minigame_spring25_festival_3_schema5"
+    },
+    {
+      "id": "21127283",
+      "comment": "春节2025-行军表情礼包",
+      "constant": "event_springFestival_emoji_2025"
+    },
+    {
+      "id": "21127284",
+      "comment": "通用节日订阅卡累充-schema3",
+      "constant": "event_springFestival_2025_time_card_recharge"
+    },
+    {
+      "id": "21127285",
+      "comment": "通用节日订阅卡累充-schema4-6",
+      "constant": "event_springFestival_2025_time_card_recharge_schema4"
+    },
+    {
+      "id": "21127286",
+      "comment": "春节2025-装饰升级",
+      "constant": "event_lunar_2025_decoration"
+    },
+    {
+      "id": "21127287",
+      "comment": "春节-2026拜访",
+      "constant": "event_spring_visit_2025"
+    },
+    {
+      "id": "21127288",
+      "comment": "春节2025-掉落活动",
+      "constant": "event_spring_2025_drop"
+    },
+    {
+      "id": "21127289",
+      "comment": "春节2025-连锁礼包-schema3-5",
+      "constant": "event_spring_chain_pack_2025"
+    },
+    {
+      "id": "21127290",
+      "comment": "春节2025-强消耗-schema3-5",
+      "constant": "spring_2025_strong_consume"
+    },
+    {
+      "id": "21127291",
+      "comment": "春节2025-强消耗-schema6",
+      "constant": "spring_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127292",
+      "comment": "春节-2025-wonder巨猿",
+      "constant": "event_spring_festival_hegemony_25"
+    },
+    {
+      "id": "21127294",
+      "comment": "春节-2025-bp",
+      "constant": "event_spring_bp_2025"
+    },
+    {
+      "id": "21127295",
+      "comment": "春节2025-礼包（BP）",
+      "constant": "event_spring_pkg_2025"
+    },
+    {
+      "id": "21127296",
+      "comment": "春节-装饰兑换商店",
+      "constant": "event_lunar_2025_shop"
+    },
+    {
+      "id": "21127297",
+      "comment": "春节2025-连锁礼包-schema6",
+      "constant": "event_spring_chain_pack_2025_schema6"
+    },
+    {
+      "id": "21127302",
+      "comment": "情人节2025-节日自选周卡",
+      "constant": "event_valentine_time_card_2025"
+    },
+    {
+      "id": "21127303",
+      "comment": "情人节2026-七日-新版",
+      "constant": "event_valentine_2025_7days"
+    },
+    {
+      "id": "21127304",
+      "comment": "情人节多条件连锁礼包2025",
+      "constant": "event_valentine_chain_task_2025"
+    },
+    {
+      "id": "21127305",
+      "comment": "情人节2025-主城特效累充",
+      "constant": "event_valentine_2025_city_effect"
+    },
+    {
+      "id": "21127306",
+      "comment": "节日累充-2025情人节",
+      "constant": "event_2025valentine_packge_name"
+    },
+    {
+      "id": "21127307",
+      "comment": "情人节-单笔充值-2025",
+      "constant": "event_valentine_single_recharge_2025"
+    },
+    {
+      "id": "21127308",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema3",
+      "constant": "metro_minigame_valentine25_festival_1_schema3"
+    },
+    {
+      "id": "21127309",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema4",
+      "constant": "metro_minigame_valentine25_festival_2_schema4"
+    },
+    {
+      "id": "21127310",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema5",
+      "constant": "metro_minigame_valentine25_festival_3_schema5"
+    },
+    {
+      "id": "21127311",
+      "comment": "情人节2025-行军表情礼包",
+      "constant": "event_valentine_emoji_2025"
+    },
+    {
+      "id": "21127312",
+      "comment": "情人节2025-装饰升级",
+      "constant": "event_valentine_2025_decoration"
+    },
+    {
+      "id": "21127313",
+      "comment": "情人节2025-掉落活动",
+      "constant": "event_valentine_2025_drop"
+    },
+    {
+      "id": "21127314",
+      "comment": "情人节2025-强消耗-schema3-5",
+      "constant": "valentine_2025_strong_consume"
+    },
+    {
+      "id": "21127315",
+      "comment": "情人节2025-强消耗-schema6",
+      "constant": "valentine_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127316",
+      "comment": "情人节-2025-wonder巨猿",
+      "constant": "event_valentine_festival_hegemony_2025"
+    },
+    {
+      "id": "21127317",
+      "comment": "情人节2026组队BP",
+      "constant": "valentine_2025_team_bp"
+    },
+    {
+      "id": "21127318",
+      "comment": "情人节-装饰兑换商店",
+      "constant": "event_valentine_2025_shop"
+    },
+    {
+      "id": "21127319",
+      "comment": "情人节-2025-bp",
+      "constant": "event_valentine_bp_2025"
+    },
+    {
+      "id": "21127320",
+      "comment": "情人节2025-礼包（BP）",
+      "constant": "event_valentine_pkg_2025"
+    },
+    {
+      "id": "21127321",
+      "comment": "情人节连锁礼包-通用-schema3-5",
+      "constant": "event_valentine_chain_pack_2024_scheam3_5"
+    },
+    {
+      "id": "21127322",
+      "comment": "情人节连锁礼包-通用-schema6",
+      "constant": "event_valentine_chain_pack_2024_scheam6"
+    },
+    {
+      "id": "21127323",
+      "comment": "情人节2025-排行送花活动",
+      "constant": "event_valentine_flower_skin_rank"
+    },
+    {
+      "id": "21127324",
+      "comment": "周年庆返场2025-买三送一-schema3-5",
+      "constant": "event_valentine_free_gift_2025_schema3"
+    },
+    {
+      "id": "21127325",
+      "comment": "周年庆返场2025-买三送一-schema6",
+      "constant": "event_valentine_free_gift_2025_schema6"
+    },
+    {
+      "id": "21127326",
+      "comment": "合成小游戏活动-25科技节版本-schema3",
+      "constant": "metro_minigame_sci25_festival_1_schema3"
+    },
+    {
+      "id": "21127327",
+      "comment": "合成小游戏活动-25科技节版本-schema4",
+      "constant": "metro_minigame_sci25_festival_2_schema4"
+    },
+    {
+      "id": "21127328",
+      "comment": "合成小游戏活动-25科技节版本-schema5",
+      "constant": "metro_minigame_sci25_festival_3_schema5"
+    },
+    {
+      "id": "21127329",
+      "comment": "科技节-装饰兑换商店",
+      "constant": "event_sci_2025_shop"
+    },
+    {
+      "id": "21127330",
+      "comment": "科技节2025-装饰升级",
+      "constant": "event_sci_2025_decoration"
+    },
+    {
+      "id": "21127331",
+      "comment": "节日累充-2025科技节",
+      "constant": "event_sci_accum_recharge_2025"
+    },
+    {
+      "id": "21127332",
+      "comment": "科技节-买三送一-通用-schema3",
+      "constant": "event_sci_free_gift_2024_schema3"
+    },
+    {
+      "id": "21127333",
+      "comment": "科技节-买三送一-通用-schema6",
+      "constant": "event_sci_free_gift_2024_schema6"
+    },
+    {
+      "id": "21127334",
+      "comment": "节日通用自选周卡（新版-音乐节）",
+      "constant": "event_fes_time_card_1"
+    },
+    {
+      "id": "21127335",
+      "comment": "科技节2025-主城特效个人累充",
+      "constant": "event_techFestival_2025_city_effect_single"
+    },
+    {
+      "id": "21127336",
+      "comment": "科技节2025-主城特效服务器累充",
+      "constant": "event_techFestival_2025_city_effect_server"
+    },
+    {
+      "id": "21127339",
+      "comment": "节日通用2-强消耗-schema3-5（春节）",
+      "constant": "science_2025_strong_consume"
+    },
+    {
+      "id": "21127340",
+      "comment": "节日通用2-强消耗-schema6（春节）",
+      "constant": "science_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127341",
+      "comment": "科技节-2025-折扣礼包-schema3-5",
+      "constant": "science_2025_discount_pack"
+    },
+    {
+      "id": "21127342",
+      "comment": "科技节-2025-折扣礼包-schema6",
+      "constant": "science_2025_discount_pack_schema6"
+    },
+    {
+      "id": "21127343",
+      "comment": "科技节2025-七日-新版",
+      "constant": "event_sci_2025_7days"
+    },
+    {
+      "id": "21127344",
+      "comment": "科技节-单笔充值-2025-一期",
+      "constant": "event_sci_single_recharge_2025"
+    },
+    {
+      "id": "21127345",
+      "comment": "科技节-单笔充值-2025-二期",
+      "constant": "event_sci2_single_recharge_2025"
+    },
+    {
+      "id": "21127346",
+      "comment": "科技节2025-科技拼图活动",
+      "constant": "event_sci_2025_gift_send"
+    },
+    {
+      "id": "21127347",
+      "comment": "科技节2025-行军表情礼包",
+      "constant": "event_sci_emoji_2025"
+    },
+    {
+      "id": "21127348",
+      "comment": "节日-庆典抽奖通用",
+      "constant": "event_sci_lucky_star_2025"
+    },
+    {
+      "id": "21127349",
+      "comment": "科技节2025-gacha下半部分",
+      "constant": "event_sci_2025_gacha"
+    },
+    {
+      "id": "21127350",
+      "comment": "科技节2025-gacha下半部分-累计任务",
+      "constant": "event_sci_2025_gacha_accum"
+    },
+    {
+      "id": "21127351",
+      "comment": "科技节2025-gacha下半部分-每日礼包",
+      "constant": "event_sci_2025_gacha_daily"
+    },
+    {
+      "id": "21127352",
+      "comment": "复活节2025-行军表情礼包",
+      "constant": "event_easter_emoji_2025"
+    },
+    {
+      "id": "21127353",
+      "comment": "复活节2025-横版bp",
+      "constant": "event_easter_bp_2025"
+    },
+    {
+      "id": "21127354",
+      "comment": "复活节2025-礼包（BP）",
+      "constant": "event_easter_bp_pkg_2025"
+    },
+    {
+      "id": "21127355",
+      "comment": "装饰兑换商店-通用-感恩节",
+      "constant": "event_easter_2025_shop"
+    },
+    {
+      "id": "21127356",
+      "comment": "2025节日通用-七日-新版2（周年庆）",
+      "constant": "event_easter_2025_7days"
+    },
+    {
+      "id": "21127357",
+      "comment": "合成小游戏活动-25复活节版本-schema3",
+      "constant": "metro_minigame_easter25_festival_1_schema3"
+    },
+    {
+      "id": "21127358",
+      "comment": "合成小游戏活动-25复活节版本-schema4",
+      "constant": "metro_minigame_easter25_festival_2_schema4"
+    },
+    {
+      "id": "21127359",
+      "comment": "合成小游戏活动-25复活节版本-schema5",
+      "constant": "metro_minigame_easter25_festival_3_schema5"
+    },
+    {
+      "id": "21127360",
+      "comment": "复活节2025-交换活动",
+      "constant": "event_easter_gift_exchange_2025"
+    },
+    {
+      "id": "21127361",
+      "comment": "2025复活节行军特效贬值礼包",
+      "constant": "event_easter_march_effect_pkg"
+    },
+    {
+      "id": "21127362",
+      "comment": "节日大富翁进度活动（圣诞节）",
+      "constant": "event_easter_monopoly_2025"
+    },
+    {
+      "id": "21127363",
+      "comment": "节日通用-强消耗-schema3-5（感恩节）",
+      "constant": "easter_2025_strong_consume"
+    },
+    {
+      "id": "21127364",
+      "comment": "节日通用-强消耗-schema6（感恩节）",
+      "constant": "easter_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127365",
+      "comment": "节日通用自选周卡（新版-万圣节）",
+      "constant": "event_easter_time_card_2025"
+    },
+    {
+      "id": "21127366",
+      "comment": "复活节2025-彩蛋手札",
+      "constant": "event_easter_party"
+    },
+    {
+      "id": "21127367",
+      "comment": "复活节2025-gacha下半部分",
+      "constant": "event_easter_2025_gacha"
+    },
+    {
+      "id": "21127368",
+      "comment": "复活节2025-主城特效累充",
+      "constant": "event_easter_2025_city_effect"
+    },
+    {
+      "id": "21127369",
+      "comment": "节日累充-2025复活节",
+      "constant": "event_2025easter_packge_name"
+    },
+    {
+      "id": "21127370",
+      "comment": "复活节-单笔充值-2025-第一轮",
+      "constant": "event_easter_single_recharge_2025"
+    },
+    {
+      "id": "21127371",
+      "comment": "复活节签到-2025",
+      "constant": "event_easter_login_2024"
+    },
+    {
+      "id": "21127372",
+      "comment": "复活节-单笔充值-2025-第二轮",
+      "constant": "event_easter2_single_recharge_2025"
+    },
+    {
+      "id": "21127373",
+      "comment": "复活节2025-gacha-每日礼包",
+      "constant": "event_easter_2025_gacha_daily"
+    },
+    {
+      "id": "21127374",
+      "comment": "复活节连锁礼包-2025-schema3-5",
+      "constant": "event_easter_chain_pack_2024_scheam3_5"
+    },
+    {
+      "id": "21127375",
+      "comment": "复活节连锁礼包-2025-schema6",
+      "constant": "event_easter_chain_pack_2024_scheam6"
+    },
+    {
+      "id": "21127376",
+      "comment": "节日通用2025-七日-新版（万圣节）",
+      "constant": "event_easter2_2025_7days"
+    },
+    {
+      "id": "21127377",
+      "comment": "复活节-小额随机礼包-转盘形式-schema3-5",
+      "constant": "event_easter_2025_newwheel"
+    },
+    {
+      "id": "21127378",
+      "comment": "复活节-小额随机礼包-转盘形式-schema6",
+      "constant": "event_easter2_2025_newwheel"
+    },
+    {
+      "id": "21127379",
+      "comment": "通用-对对碰活动bp（每次要改HUD）",
+      "constant": "event_gift_bp"
+    },
+    {
+      "id": "21127380",
+      "comment": "拓荒节2025-装饰升级",
+      "constant": "event_labor_2025_decoration"
+    },
+    {
+      "id": "21127381",
+      "comment": "拓荒节2025-主城特效服务器累充",
+      "constant": "event_Festival_2025_city_effect_server"
+    },
+    {
+      "id": "21127382",
+      "comment": "圣诞节-掉落转付费-第一套",
+      "constant": "event_labor_2025_shop"
+    },
+    {
+      "id": "21127383",
+      "comment": "节日通用-掉落转付费-掉落活动",
+      "constant": "event_labor_2025_drop"
+    },
+    {
+      "id": "21127384",
+      "comment": "通用-付费率宝箱",
+      "constant": "event_labor_2025_payment"
+    },
+    {
+      "id": "21127385",
+      "comment": "情人节-限时抢购-S6-通用皮",
+      "constant": "event_flash_sale_s6"
+    },
+    {
+      "id": "21127386",
+      "comment": "情人节-限时抢购-S3-5-通用皮",
+      "constant": "event_flash_sale_s3_5"
+    },
+    {
+      "id": "21127387",
+      "comment": "科技节套装S2-通用gacha",
+      "constant": "event_sci_gacha_2025_s2"
+    },
+    {
+      "id": "21127388",
+      "comment": "科技节套装S2-通用累计活动",
+      "constant": "event_sci_2025_gacha_reward_2025_s2"
+    },
+    {
+      "id": "21127389",
+      "comment": "科技节套装S2-gacha下半部分",
+      "constant": "event_sci_2025_gacha_s2"
+    },
+    {
+      "id": "21127390",
+      "comment": "科技节套装S2-gacha下半部分-累计任务",
+      "constant": "event_sci_2025_gacha_accum_s2"
+    },
+    {
+      "id": "21127391",
+      "comment": "科技节套装S2-gacha下半部分-每日礼包",
+      "constant": "event_sci_2025_gacha_daily_s2"
+    },
+    {
+      "id": "21127392",
+      "comment": "科技节套装S2-横版bp",
+      "constant": "event_science_bp_title_2024_s2"
+    },
+    {
+      "id": "21127393",
+      "comment": "科技节套装S2-礼包（BP）",
+      "constant": "event_science_bp_pkg_title_2024_s2"
+    },
+    {
+      "id": "21127394",
+      "comment": "科技节套装S2通用-掉落活动",
+      "constant": "event_sci_2024_drop_s2"
+    },
+    {
+      "id": "21127395",
+      "comment": "科技节套装S2自选周卡",
+      "constant": "event_fes_time_card_1_s2"
+    },
+    {
+      "id": "21127396",
+      "comment": "科技节套装S2-单笔充值-2025-一期",
+      "constant": "event_sci_single_recharge_2025_s2"
+    },
+    {
+      "id": "21127397",
+      "comment": "科技节套装S2-单笔充值-2025-二期",
+      "constant": "event_sci2_single_recharge_2025_s2"
+    },
+    {
+      "id": "21127398",
+      "comment": "科技节套装S2-科技拼图活动",
+      "constant": "event_sci_2025_gift_send_s2"
+    },
+    {
+      "id": "21127399",
+      "comment": "科技节套装S2-行军表情礼包",
+      "constant": "event_sci_emoji_2025_s2"
+    },
+    {
+      "id": "21127400",
+      "comment": "科技节套装S2-2025-折扣礼包",
+      "constant": "science_2025_discount_pack_s2"
+    },
+    {
+      "id": "21127401",
+      "comment": "科技节套装S2-买三送一-通用-schema3",
+      "constant": "event_sci_free_gift_2024_schema3_s2"
+    },
+    {
+      "id": "21127402",
+      "comment": "科技节套装S2-主城特效个人累充",
+      "constant": "event_techFestival_2025_city_effect_single_s2"
+    },
+    {
+      "id": "21127403",
+      "comment": "科技节套装S2-主城特效服务器累充",
+      "constant": "event_techFestival_2025_city_effect_server_s2"
+    },
+    {
+      "id": "21127404",
+      "comment": "拓荒节2025-七日-新版",
+      "constant": "event_labor_2025_7days"
+    },
+    {
+      "id": "21127405",
+      "comment": "拓荒节2025-行军表情礼包",
+      "constant": "event_labor_emoji_2025"
+    },
+    {
+      "id": "21127406",
+      "comment": "合成小游戏活动-25拓荒节版本-schema3",
+      "constant": "metro_minigame_labor25_festival_1_schema3"
+    },
+    {
+      "id": "21127407",
+      "comment": "合成小游戏活动-25拓荒节版本-schema4",
+      "constant": "metro_minigame_labor25_festival_2_schema4"
+    },
+    {
+      "id": "21127408",
+      "comment": "合成小游戏活动-25拓荒节版本-schema5",
+      "constant": "metro_minigame_labor25_festival_3_schema5"
+    },
+    {
+      "id": "21127409",
+      "comment": "拓荒节多条件连锁礼包2025",
+      "constant": "event_labor_chain_task_2025"
+    },
+    {
+      "id": "21127410",
+      "comment": "拓荒节2025-主城特效累充",
+      "constant": "event_labor_2025_city_effect"
+    },
+    {
+      "id": "21127411",
+      "comment": "节日累充-2025拓荒节",
+      "constant": "event_2025labor_packge_name"
+    },
+    {
+      "id": "21127412",
+      "comment": "深海节-单笔充值-2025-第一轮",
+      "constant": "event_labor_single_recharge_2025"
+    },
+    {
+      "id": "21127413",
+      "comment": "深海节-单笔充值-2025-第二轮",
+      "constant": "event_labor2_single_recharge_2025"
+    },
+    {
+      "id": "21127414",
+      "comment": "拓荒节2025-gacha-每日礼包",
+      "constant": "event_labor_2025_gacha_daily"
+    },
+    {
+      "id": "21127415",
+      "comment": "节日通用-掉落转付费-礼包",
+      "constant": "event_labor_2025_drop_libao"
+    },
+    {
+      "id": "21127416",
+      "comment": "科技节套装S2-装饰兑换商店",
+      "constant": "event_sci_2025_shop_s2"
+    },
+    {
+      "id": "21127417",
+      "comment": "节日通用-战车自选gacha",
+      "constant": "event_tank_gacha_2025"
+    },
+    {
+      "id": "21127418",
+      "comment": "深海节预购连锁礼包_schema3-5",
+      "constant": "event_pre_chain"
+    },
+    {
+      "id": "21127419",
+      "comment": "2025深海节小额随机礼包",
+      "constant": "event_random_pkg_sea_2025"
+    },
+    {
+      "id": "21127420",
+      "comment": "深海节-2025-本体gacha",
+      "constant": "event_dragon_boat_festival_gacha_2025"
+    },
+    {
+      "id": "21127421",
+      "comment": "深海节2025-主城特效累充-联盟",
+      "constant": "event_techFestival_2025_city_effect_alliance"
+    },
+    {
+      "id": "21127422",
+      "comment": "感恩节-掉落转付费",
+      "constant": "event_labor_2025_shop_1"
+    },
+    {
+      "id": "21127423",
+      "comment": "通用-节日礼包团购",
+      "constant": "event_2025deep_sea_pkg"
+    },
+    {
+      "id": "21127424",
+      "comment": "深海节-节日手札",
+      "constant": "event_deepsea_party"
+    },
+    {
+      "id": "21127425",
+      "comment": "深海节-组件gacha",
+      "constant": "event_deepsea_2025_gacha2"
+    },
+    {
+      "id": "21127426",
+      "comment": "节日活动-聚宝盆抽奖-第1期（schema3~5）",
+      "constant": "event_treasure_bowl1_2025"
+    },
+    {
+      "id": "21127427",
+      "comment": "节日活动-聚宝盆抽奖-第2期（schema3~5）",
+      "constant": "event_treasure_bowl2_2025"
+    },
+    {
+      "id": "21127428",
+      "comment": "节日活动-聚宝盆抽奖-第3期（schema3~5）",
+      "constant": "event_treasure_bowl3_2025"
+    },
+    {
+      "id": "21127429",
+      "comment": "节日活动-聚宝盆抽奖-第4期（schema3~5）",
+      "constant": "event_treasure_bowl4_2025"
+    },
+    {
+      "id": "21127430",
+      "comment": "合成小游戏活动-25深海节版本-schema3",
+      "constant": "metro_minigame_beach25_festival_1_schema3"
+    }
+  ],
+  "86挖孔": [
+    {
+      "id": "21127275",
+      "comment": "春节2025-七日-新版",
+      "constant": "event_spring_2025_7days"
+    },
+    {
+      "id": "21127276",
+      "comment": "春节2025-节日自选周卡",
+      "constant": "event_spring_time_card_2025"
+    },
+    {
+      "id": "21127277",
+      "comment": "春节2025-主城特效累充",
+      "constant": "event_springFestival_2025_city_effect"
+    },
+    {
+      "id": "21127278",
+      "comment": "节日累充-2025春节",
+      "constant": "event_2025springFestival_packge_name"
+    },
+    {
+      "id": "21127279",
+      "comment": "节日通用第一套-单笔充值-2026-春节",
+      "constant": "event_springFestival_single_recharge_2025"
+    },
+    {
+      "id": "21127280",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema3",
+      "constant": "metro_minigame_spring25_festival_1_schema3"
+    },
+    {
+      "id": "21127281",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema4",
+      "constant": "metro_minigame_spring25_festival_2_schema4"
+    },
+    {
+      "id": "21127282",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema5",
+      "constant": "metro_minigame_spring25_festival_3_schema5"
+    },
+    {
+      "id": "21127283",
+      "comment": "春节2025-行军表情礼包",
+      "constant": "event_springFestival_emoji_2025"
+    },
+    {
+      "id": "21127284",
+      "comment": "通用节日订阅卡累充-schema3",
+      "constant": "event_springFestival_2025_time_card_recharge"
+    },
+    {
+      "id": "21127285",
+      "comment": "通用节日订阅卡累充-schema4-6",
+      "constant": "event_springFestival_2025_time_card_recharge_schema4"
+    },
+    {
+      "id": "21127286",
+      "comment": "春节2025-装饰升级",
+      "constant": "event_lunar_2025_decoration"
+    },
+    {
+      "id": "21127287",
+      "comment": "春节-2026拜访",
+      "constant": "event_spring_visit_2025"
+    },
+    {
+      "id": "21127288",
+      "comment": "春节2025-掉落活动",
+      "constant": "event_spring_2025_drop"
+    },
+    {
+      "id": "21127289",
+      "comment": "春节2025-连锁礼包-schema3-5",
+      "constant": "event_spring_chain_pack_2025"
+    },
+    {
+      "id": "21127290",
+      "comment": "春节2025-强消耗-schema3-5",
+      "constant": "spring_2025_strong_consume"
+    },
+    {
+      "id": "21127291",
+      "comment": "春节2025-强消耗-schema6",
+      "constant": "spring_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127292",
+      "comment": "春节-2025-wonder巨猿",
+      "constant": "event_spring_festival_hegemony_25"
+    },
+    {
+      "id": "21127294",
+      "comment": "春节-2025-bp",
+      "constant": "event_spring_bp_2025"
+    },
+    {
+      "id": "21127295",
+      "comment": "春节2025-礼包（BP）",
+      "constant": "event_spring_pkg_2025"
+    },
+    {
+      "id": "21127296",
+      "comment": "春节-装饰兑换商店",
+      "constant": "event_lunar_2025_shop"
+    },
+    {
+      "id": "21127297",
+      "comment": "春节2025-连锁礼包-schema6",
+      "constant": "event_spring_chain_pack_2025_schema6"
+    },
+    {
+      "id": "21127302",
+      "comment": "情人节2025-节日自选周卡",
+      "constant": "event_valentine_time_card_2025"
+    },
+    {
+      "id": "21127303",
+      "comment": "情人节2026-七日-新版",
+      "constant": "event_valentine_2025_7days"
+    },
+    {
+      "id": "21127304",
+      "comment": "情人节多条件连锁礼包2025",
+      "constant": "event_valentine_chain_task_2025"
+    },
+    {
+      "id": "21127305",
+      "comment": "情人节2025-主城特效累充",
+      "constant": "event_valentine_2025_city_effect"
+    },
+    {
+      "id": "21127306",
+      "comment": "节日累充-2025情人节",
+      "constant": "event_2025valentine_packge_name"
+    },
+    {
+      "id": "21127307",
+      "comment": "情人节-单笔充值-2025",
+      "constant": "event_valentine_single_recharge_2025"
+    },
+    {
+      "id": "21127308",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema3",
+      "constant": "metro_minigame_valentine25_festival_1_schema3"
+    },
+    {
+      "id": "21127309",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema4",
+      "constant": "metro_minigame_valentine25_festival_2_schema4"
+    },
+    {
+      "id": "21127310",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema5",
+      "constant": "metro_minigame_valentine25_festival_3_schema5"
+    },
+    {
+      "id": "21127311",
+      "comment": "情人节2025-行军表情礼包",
+      "constant": "event_valentine_emoji_2025"
+    },
+    {
+      "id": "21127312",
+      "comment": "情人节2025-装饰升级",
+      "constant": "event_valentine_2025_decoration"
+    },
+    {
+      "id": "21127313",
+      "comment": "情人节2025-掉落活动",
+      "constant": "event_valentine_2025_drop"
+    },
+    {
+      "id": "21127314",
+      "comment": "情人节2026-强消耗-schema3-5",
+      "constant": "valentine_2025_strong_consume"
+    },
+    {
+      "id": "21127315",
+      "comment": "情人节2026-强消耗-schema6",
+      "constant": "valentine_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127316",
+      "comment": "情人节-2025-wonder巨猿",
+      "constant": "event_valentine_festival_hegemony_2025"
+    },
+    {
+      "id": "21127317",
+      "comment": "情人节2026组队BP",
+      "constant": "valentine_2025_team_bp"
+    },
+    {
+      "id": "21127318",
+      "comment": "情人节-装饰兑换商店",
+      "constant": "event_valentine_2025_shop"
+    },
+    {
+      "id": "21127319",
+      "comment": "情人节-2025-bp",
+      "constant": "event_valentine_bp_2025"
+    },
+    {
+      "id": "21127320",
+      "comment": "情人节2025-礼包（BP）",
+      "constant": "event_valentine_pkg_2025"
+    },
+    {
+      "id": "21127321",
+      "comment": "情人节连锁礼包-通用-schema3-5",
+      "constant": "event_valentine_chain_pack_2024_scheam3_5"
+    },
+    {
+      "id": "21127322",
+      "comment": "情人节连锁礼包-通用-schema6",
+      "constant": "event_valentine_chain_pack_2024_scheam6"
+    },
+    {
+      "id": "21127323",
+      "comment": "情人节2025-排行送花活动",
+      "constant": "event_valentine_flower_skin_rank"
+    },
+    {
+      "id": "21127324",
+      "comment": "周年庆返场2025-买三送一-schema3-5",
+      "constant": "event_valentine_free_gift_2025_schema3"
+    },
+    {
+      "id": "21127325",
+      "comment": "周年庆返场2025-买三送一-schema6",
+      "constant": "event_valentine_free_gift_2025_schema6"
+    },
+    {
+      "id": "21127326",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema3",
+      "constant": "metro_minigame_sci25_festival_1_schema3"
+    },
+    {
+      "id": "21127327",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema4",
+      "constant": "metro_minigame_sci25_festival_2_schema4"
+    },
+    {
+      "id": "21127328",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema5",
+      "constant": "metro_minigame_sci25_festival_3_schema5"
+    },
+    {
+      "id": "21127329",
+      "comment": "科技节-装饰兑换商店",
+      "constant": "event_sci_2025_shop"
+    },
+    {
+      "id": "21127330",
+      "comment": "科技节2025-装饰升级",
+      "constant": "event_sci_2025_decoration"
+    },
+    {
+      "id": "21127331",
+      "comment": "节日累充-2025科技节",
+      "constant": "event_sci_accum_recharge_2025"
+    },
+    {
+      "id": "21127332",
+      "comment": "科技节-买三送一-通用-schema3",
+      "constant": "event_sci_free_gift_2024_schema3"
+    },
+    {
+      "id": "21127333",
+      "comment": "科技节-买三送一-通用-schema6",
+      "constant": "event_sci_free_gift_2024_schema6"
+    },
+    {
+      "id": "21127334",
+      "comment": "节日通用自选周卡（新版-音乐节）",
+      "constant": "event_fes_time_card_1"
+    },
+    {
+      "id": "21127335",
+      "comment": "科技节2025-主城特效个人累充",
+      "constant": "event_techFestival_2025_city_effect_single"
+    },
+    {
+      "id": "21127336",
+      "comment": "科技节2025-主城特效服务器累充",
+      "constant": "event_techFestival_2025_city_effect_server"
+    },
+    {
+      "id": "21127339",
+      "comment": "节日通用2-强消耗-schema3-5（春节）",
+      "constant": "science_2025_strong_consume"
+    },
+    {
+      "id": "21127340",
+      "comment": "节日通用2-强消耗-schema6（春节）",
+      "constant": "science_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127341",
+      "comment": "科技节-2025-折扣礼包-schema3-5",
+      "constant": "science_2025_discount_pack"
+    },
+    {
+      "id": "21127342",
+      "comment": "科技节-2025-折扣礼包-schema6",
+      "constant": "science_2025_discount_pack_schema6"
+    },
+    {
+      "id": "21127343",
+      "comment": "科技节2026-七日-新版",
+      "constant": "event_sci_2025_7days"
+    },
+    {
+      "id": "21127344",
+      "comment": "科技节-单笔充值-通用-一期",
+      "constant": "event_sci_single_recharge_2025"
+    },
+    {
+      "id": "21127345",
+      "comment": "科技节-单笔充值-通用-二期（不用）",
+      "constant": "event_sci2_single_recharge_2025"
+    },
+    {
+      "id": "21127346",
+      "comment": "科技节2025-科技拼图活动",
+      "constant": "event_sci_2025_gift_send"
+    },
+    {
+      "id": "21127347",
+      "comment": "科技节2025-行军表情礼包",
+      "constant": "event_sci_emoji_2025"
+    },
+    {
+      "id": "21127348",
+      "comment": "节日-庆典抽奖通用",
+      "constant": "event_sci_lucky_star_2025"
+    },
+    {
+      "id": "21127349",
+      "comment": "科技节2025-gacha下半部分",
+      "constant": "event_sci_2025_gacha"
+    },
+    {
+      "id": "21127350",
+      "comment": "科技节2025-gacha下半部分-累计任务",
+      "constant": "event_sci_2025_gacha_accum"
+    },
+    {
+      "id": "21127351",
+      "comment": "科技节通用-gacha下半部分-每日礼包",
+      "constant": "event_sci_2025_gacha_daily"
+    },
+    {
+      "id": "21127352",
+      "comment": "复活节2025-行军表情礼包",
+      "constant": "event_easter_emoji_2025"
+    },
+    {
+      "id": "21127353",
+      "comment": "复活节2025-横版bp",
+      "constant": "event_easter_bp_2025"
+    },
+    {
+      "id": "21127354",
+      "comment": "复活节2025-礼包（BP）",
+      "constant": "event_easter_bp_pkg_2025"
+    },
+    {
+      "id": "21127355",
+      "comment": "装饰兑换商店-通用-感恩节",
+      "constant": "event_easter_2025_shop"
+    },
+    {
+      "id": "21127356",
+      "comment": "2025节日通用-七日-新版2（周年庆）",
+      "constant": "event_easter_2025_7days"
+    },
+    {
+      "id": "21127357",
+      "comment": "合成小游戏活动-25复活节版本-schema3",
+      "constant": "metro_minigame_easter25_festival_1_schema3"
+    },
+    {
+      "id": "21127358",
+      "comment": "合成小游戏活动-25复活节版本-schema4",
+      "constant": "metro_minigame_easter25_festival_2_schema4"
+    },
+    {
+      "id": "21127359",
+      "comment": "合成小游戏活动-25复活节版本-schema5",
+      "constant": "metro_minigame_easter25_festival_3_schema5"
+    },
+    {
+      "id": "21127360",
+      "comment": "复活节2025-交换活动",
+      "constant": "event_easter_gift_exchange_2025"
+    },
+    {
+      "id": "21127361",
+      "comment": "2025复活节行军特效贬值礼包",
+      "constant": "event_easter_march_effect_pkg"
+    },
+    {
+      "id": "21127362",
+      "comment": "节日大富翁进度活动（科技节）",
+      "constant": "event_easter_monopoly_2025"
+    },
+    {
+      "id": "21127363",
+      "comment": "节日通用-强消耗-schema3-5（科技节）",
+      "constant": "easter_2025_strong_consume"
+    },
+    {
+      "id": "21127364",
+      "comment": "节日通用-强消耗-schema6（科技节）",
+      "constant": "easter_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127365",
+      "comment": "节日通用自选周卡（新版-万圣节）",
+      "constant": "event_easter_time_card_2025"
+    },
+    {
+      "id": "21127366",
+      "comment": "复活节2025-彩蛋手札",
+      "constant": "event_easter_party"
+    },
+    {
+      "id": "21127367",
+      "comment": "复活节2025-gacha下半部分",
+      "constant": "event_easter_2025_gacha"
+    },
+    {
+      "id": "21127368",
+      "comment": "复活节2025-主城特效累充",
+      "constant": "event_easter_2025_city_effect"
+    },
+    {
+      "id": "21127369",
+      "comment": "节日累充-2025复活节",
+      "constant": "event_2025easter_packge_name"
+    },
+    {
+      "id": "21127370",
+      "comment": "复活节-单笔充值-2025-第一轮",
+      "constant": "event_easter_single_recharge_2025"
+    },
+    {
+      "id": "21127371",
+      "comment": "复活节签到-2025",
+      "constant": "event_easter_login_2024"
+    },
+    {
+      "id": "21127372",
+      "comment": "复活节-单笔充值-2025-第二轮",
+      "constant": "event_easter2_single_recharge_2025"
+    },
+    {
+      "id": "21127373",
+      "comment": "复活节2025-gacha-每日礼包",
+      "constant": "event_easter_2025_gacha_daily"
+    },
+    {
+      "id": "21127374",
+      "comment": "复活节连锁礼包-2025-schema3-5",
+      "constant": "event_easter_chain_pack_2024_scheam3_5"
+    },
+    {
+      "id": "21127375",
+      "comment": "复活节连锁礼包-2025-schema6",
+      "constant": "event_easter_chain_pack_2024_scheam6"
+    },
+    {
+      "id": "21127376",
+      "comment": "节日通用2025-七日-新版（万圣节）",
+      "constant": "event_easter2_2025_7days"
+    },
+    {
+      "id": "21127377",
+      "comment": "复活节-小额随机礼包-转盘形式-schema3-5",
+      "constant": "event_easter_2025_newwheel"
+    },
+    {
+      "id": "21127378",
+      "comment": "复活节-小额随机礼包-转盘形式-schema6",
+      "constant": "event_easter2_2025_newwheel"
+    },
+    {
+      "id": "21127379",
+      "comment": "通用-对对碰活动bp（每次要改HUD）",
+      "constant": "event_gift_bp"
+    },
+    {
+      "id": "21127380",
+      "comment": "拓荒节2025-装饰升级",
+      "constant": "event_labor_2025_decoration"
+    },
+    {
+      "id": "21127381",
+      "comment": "拓荒节2025-主城特效服务器累充",
+      "constant": "event_Festival_2025_city_effect_server"
+    },
+    {
+      "id": "21127382",
+      "comment": "科技节-掉落转付费-第一套",
+      "constant": "event_labor_2025_shop"
+    },
+    {
+      "id": "21127383",
+      "comment": "节日通用-掉落转付费-掉落活动",
+      "constant": "event_labor_2025_drop"
+    },
+    {
+      "id": "21127384",
+      "comment": "通用-付费率宝箱",
+      "constant": "event_labor_2025_payment"
+    },
+    {
+      "id": "21127385",
+      "comment": "情人节-限时抢购-S6-通用皮（1、2期",
+      "constant": "event_flash_sale_s6"
+    },
+    {
+      "id": "21127386",
+      "comment": "情人节-限时抢购-S3-5-通用皮（3期",
+      "constant": "event_flash_sale_s3_5"
+    },
+    {
+      "id": "21127387",
+      "comment": "科技节套装S2-通用gacha",
+      "constant": "event_sci_gacha_2025_s2"
+    },
+    {
+      "id": "21127388",
+      "comment": "科技节套装S2-通用累计活动",
+      "constant": "event_sci_2025_gacha_reward_2025_s2"
+    },
+    {
+      "id": "21127389",
+      "comment": "科技节套装S2-gacha下半部分",
+      "constant": "event_sci_2025_gacha_s2"
+    },
+    {
+      "id": "21127390",
+      "comment": "科技节套装S2-gacha下半部分-累计任务",
+      "constant": "event_sci_2025_gacha_accum_s2"
+    },
+    {
+      "id": "21127391",
+      "comment": "科技节套装S2-gacha下半部分-每日礼包",
+      "constant": "event_sci_2025_gacha_daily_s2"
+    },
+    {
+      "id": "21127392",
+      "comment": "科技节套装S2-横版bp",
+      "constant": "event_science_bp_title_2024_s2"
+    },
+    {
+      "id": "21127393",
+      "comment": "科技节套装S2-礼包（BP）",
+      "constant": "event_science_bp_pkg_title_2024_s2"
+    },
+    {
+      "id": "21127394",
+      "comment": "科技节套装S2通用-掉落活动",
+      "constant": "event_sci_2024_drop_s2"
+    },
+    {
+      "id": "21127395",
+      "comment": "科技节套装S2自选周卡",
+      "constant": "event_fes_time_card_1_s2"
+    },
+    {
+      "id": "21127396",
+      "comment": "科技节套装S2-单笔充值-2025-一期",
+      "constant": "event_sci_single_recharge_2025_s2"
+    },
+    {
+      "id": "21127397",
+      "comment": "科技节套装S2-单笔充值-2025-二期",
+      "constant": "event_sci2_single_recharge_2025_s2"
+    },
+    {
+      "id": "21127398",
+      "comment": "科技节套装S2-科技拼图活动",
+      "constant": "event_sci_2025_gift_send_s2"
+    },
+    {
+      "id": "21127399",
+      "comment": "科技节套装S2-行军表情礼包",
+      "constant": "event_sci_emoji_2025_s2"
+    },
+    {
+      "id": "21127400",
+      "comment": "科技节套装S2-2025-折扣礼包",
+      "constant": "science_2025_discount_pack_s2"
+    },
+    {
+      "id": "21127401",
+      "comment": "科技节套装S2-买三送一-通用-schema3",
+      "constant": "event_sci_free_gift_2024_schema3_s2"
+    },
+    {
+      "id": "21127402",
+      "comment": "科技节套装S2-主城特效个人累充",
+      "constant": "event_techFestival_2025_city_effect_single_s2"
+    },
+    {
+      "id": "21127403",
+      "comment": "科技节套装S2-主城特效服务器累充",
+      "constant": "event_techFestival_2025_city_effect_server_s2"
+    },
+    {
+      "id": "21127404",
+      "comment": "拓荒节2025-七日-新版",
+      "constant": "event_labor_2025_7days"
+    },
+    {
+      "id": "21127405",
+      "comment": "拓荒节2025-行军表情礼包",
+      "constant": "event_labor_emoji_2025"
+    },
+    {
+      "id": "21127406",
+      "comment": "合成小游戏活动-25拓荒节版本-schema3",
+      "constant": "metro_minigame_labor25_festival_1_schema3"
+    },
+    {
+      "id": "21127407",
+      "comment": "合成小游戏活动-25拓荒节版本-schema4",
+      "constant": "metro_minigame_labor25_festival_2_schema4"
+    },
+    {
+      "id": "21127408",
+      "comment": "合成小游戏活动-25拓荒节版本-schema5",
+      "constant": "metro_minigame_labor25_festival_3_schema5"
+    },
+    {
+      "id": "21127409",
+      "comment": "拓荒节多条件连锁礼包2025",
+      "constant": "event_labor_chain_task_2025"
+    },
+    {
+      "id": "21127410",
+      "comment": "拓荒节2025-主城特效累充",
+      "constant": "event_labor_2025_city_effect"
+    },
+    {
+      "id": "21127411",
+      "comment": "节日累充-2025拓荒节",
+      "constant": "event_2025labor_packge_name"
+    },
+    {
+      "id": "21127412",
+      "comment": "深海节-单笔充值-2025-第一轮",
+      "constant": "event_labor_single_recharge_2025"
+    },
+    {
+      "id": "21127413",
+      "comment": "深海节-单笔充值-2025-第二轮",
+      "constant": "event_labor2_single_recharge_2025"
+    },
+    {
+      "id": "21127414",
+      "comment": "拓荒节2025-gacha-每日礼包",
+      "constant": "event_labor_2025_gacha_daily"
+    },
+    {
+      "id": "21127415",
+      "comment": "节日通用-掉落转付费-礼包",
+      "constant": "event_labor_2025_drop_libao"
+    },
+    {
+      "id": "21127416",
+      "comment": "科技节套装S2-装饰兑换商店",
+      "constant": "event_sci_2025_shop_s2"
+    },
+    {
+      "id": "21127417",
+      "comment": "节日通用-战车自选gacha",
+      "constant": "event_tank_gacha_2025"
+    },
+    {
+      "id": "21127418",
+      "comment": "深海节预购连锁礼包_schema3-5",
+      "constant": "event_pre_chain"
+    },
+    {
+      "id": "21127419",
+      "comment": "2025深海节小额随机礼包",
+      "constant": "event_random_pkg_sea_2025"
+    },
+    {
+      "id": "21127420",
+      "comment": "深海节-2025-本体gacha",
+      "constant": "event_dragon_boat_festival_gacha_2025"
+    },
+    {
+      "id": "21127421",
+      "comment": "深海节2025-主城特效累充-联盟",
+      "constant": "event_techFestival_2025_city_effect_alliance"
+    },
+    {
+      "id": "21127422",
+      "comment": "感恩节-掉落转付费",
+      "constant": "event_labor_2025_shop_1"
+    },
+    {
+      "id": "21127423",
+      "comment": "通用-节日礼包团购",
+      "constant": "event_2025deep_sea_pkg"
+    },
+    {
+      "id": "21127424",
+      "comment": "深海节-节日手札",
+      "constant": "event_deepsea_party"
+    },
+    {
+      "id": "21127425",
+      "comment": "深海节-组件gacha",
+      "constant": "event_deepsea_2025_gacha2"
+    },
+    {
+      "id": "21127426",
+      "comment": "节日活动-聚宝盆抽奖-第1期（schema3~5）",
+      "constant": "event_treasure_bowl1_2025"
+    },
+    {
+      "id": "21127427",
+      "comment": "节日活动-聚宝盆抽奖-第2期（schema3~5）",
+      "constant": "event_treasure_bowl2_2025"
+    }
+  ],
+  "86前期月卡": [
+    {
+      "id": "21127275",
+      "comment": "春节2025-七日-新版",
+      "constant": "event_spring_2025_7days"
+    },
+    {
+      "id": "21127276",
+      "comment": "春节2025-节日自选周卡",
+      "constant": "event_spring_time_card_2025"
+    },
+    {
+      "id": "21127277",
+      "comment": "春节2025-主城特效累充",
+      "constant": "event_springFestival_2025_city_effect"
+    },
+    {
+      "id": "21127278",
+      "comment": "节日累充-2025春节",
+      "constant": "event_2025springFestival_packge_name"
+    },
+    {
+      "id": "21127279",
+      "comment": "节日通用第一套-单笔充值-2026-春节",
+      "constant": "event_springFestival_single_recharge_2025"
+    },
+    {
+      "id": "21127280",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema3",
+      "constant": "metro_minigame_spring25_festival_1_schema3"
+    },
+    {
+      "id": "21127281",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema4",
+      "constant": "metro_minigame_spring25_festival_2_schema4"
+    },
+    {
+      "id": "21127282",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema5",
+      "constant": "metro_minigame_spring25_festival_3_schema5"
+    },
+    {
+      "id": "21127283",
+      "comment": "春节2025-行军表情礼包",
+      "constant": "event_springFestival_emoji_2025"
+    },
+    {
+      "id": "21127284",
+      "comment": "通用节日订阅卡累充-schema3",
+      "constant": "event_springFestival_2025_time_card_recharge"
+    },
+    {
+      "id": "21127285",
+      "comment": "通用节日订阅卡累充-schema4-6",
+      "constant": "event_springFestival_2025_time_card_recharge_schema4"
+    },
+    {
+      "id": "21127286",
+      "comment": "春节2025-装饰升级",
+      "constant": "event_lunar_2025_decoration"
+    },
+    {
+      "id": "21127287",
+      "comment": "春节-2026拜访",
+      "constant": "event_spring_visit_2025"
+    },
+    {
+      "id": "21127288",
+      "comment": "春节2025-掉落活动",
+      "constant": "event_spring_2025_drop"
+    },
+    {
+      "id": "21127289",
+      "comment": "春节2025-连锁礼包-schema3-5",
+      "constant": "event_spring_chain_pack_2025"
+    },
+    {
+      "id": "21127290",
+      "comment": "春节2025-强消耗-schema3-5",
+      "constant": "spring_2025_strong_consume"
+    },
+    {
+      "id": "21127291",
+      "comment": "春节2025-强消耗-schema6",
+      "constant": "spring_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127292",
+      "comment": "春节-2025-wonder巨猿",
+      "constant": "event_spring_festival_hegemony_25"
+    },
+    {
+      "id": "21127294",
+      "comment": "春节-2025-bp",
+      "constant": "event_spring_bp_2025"
+    },
+    {
+      "id": "21127295",
+      "comment": "春节2025-礼包（BP）",
+      "constant": "event_spring_pkg_2025"
+    },
+    {
+      "id": "21127296",
+      "comment": "春节-装饰兑换商店",
+      "constant": "event_lunar_2025_shop"
+    },
+    {
+      "id": "21127297",
+      "comment": "春节2025-连锁礼包-schema6",
+      "constant": "event_spring_chain_pack_2025_schema6"
+    },
+    {
+      "id": "21127302",
+      "comment": "情人节2025-节日自选周卡",
+      "constant": "event_valentine_time_card_2025"
+    },
+    {
+      "id": "21127303",
+      "comment": "情人节2026-七日-新版",
+      "constant": "event_valentine_2025_7days"
+    },
+    {
+      "id": "21127304",
+      "comment": "情人节多条件连锁礼包2025",
+      "constant": "event_valentine_chain_task_2025"
+    },
+    {
+      "id": "21127305",
+      "comment": "情人节2025-主城特效累充",
+      "constant": "event_valentine_2025_city_effect"
+    },
+    {
+      "id": "21127306",
+      "comment": "节日累充-2025情人节",
+      "constant": "event_2025valentine_packge_name"
+    },
+    {
+      "id": "21127307",
+      "comment": "情人节-单笔充值-2025",
+      "constant": "event_valentine_single_recharge_2025"
+    },
+    {
+      "id": "21127308",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema3",
+      "constant": "metro_minigame_valentine25_festival_1_schema3"
+    },
+    {
+      "id": "21127309",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema4",
+      "constant": "metro_minigame_valentine25_festival_2_schema4"
+    },
+    {
+      "id": "21127310",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema5",
+      "constant": "metro_minigame_valentine25_festival_3_schema5"
+    },
+    {
+      "id": "21127311",
+      "comment": "情人节2025-行军表情礼包",
+      "constant": "event_valentine_emoji_2025"
+    },
+    {
+      "id": "21127312",
+      "comment": "情人节2025-装饰升级",
+      "constant": "event_valentine_2025_decoration"
+    },
+    {
+      "id": "21127313",
+      "comment": "情人节2025-掉落活动",
+      "constant": "event_valentine_2025_drop"
+    },
+    {
+      "id": "21127314",
+      "comment": "情人节2026-强消耗-schema3-5",
+      "constant": "valentine_2025_strong_consume"
+    },
+    {
+      "id": "21127315",
+      "comment": "情人节2026-强消耗-schema6",
+      "constant": "valentine_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127316",
+      "comment": "情人节-2025-wonder巨猿",
+      "constant": "event_valentine_festival_hegemony_2025"
+    },
+    {
+      "id": "21127317",
+      "comment": "情人节2026组队BP",
+      "constant": "valentine_2025_team_bp"
+    },
+    {
+      "id": "21127318",
+      "comment": "情人节-装饰兑换商店",
+      "constant": "event_valentine_2025_shop"
+    },
+    {
+      "id": "21127319",
+      "comment": "情人节-2025-bp",
+      "constant": "event_valentine_bp_2025"
+    },
+    {
+      "id": "21127320",
+      "comment": "情人节2025-礼包（BP）",
+      "constant": "event_valentine_pkg_2025"
+    },
+    {
+      "id": "21127321",
+      "comment": "情人节连锁礼包-通用-schema3-5",
+      "constant": "event_valentine_chain_pack_2024_scheam3_5"
+    },
+    {
+      "id": "21127322",
+      "comment": "情人节连锁礼包-通用-schema6",
+      "constant": "event_valentine_chain_pack_2024_scheam6"
+    },
+    {
+      "id": "21127323",
+      "comment": "情人节2025-排行送花活动",
+      "constant": "event_valentine_flower_skin_rank"
+    },
+    {
+      "id": "21127324",
+      "comment": "周年庆返场2025-买三送一-schema3-5",
+      "constant": "event_valentine_free_gift_2025_schema3"
+    },
+    {
+      "id": "21127325",
+      "comment": "周年庆返场2025-买三送一-schema6",
+      "constant": "event_valentine_free_gift_2025_schema6"
+    },
+    {
+      "id": "21127326",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema3",
+      "constant": "metro_minigame_sci25_festival_1_schema3"
+    },
+    {
+      "id": "21127327",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema4",
+      "constant": "metro_minigame_sci25_festival_2_schema4"
+    },
+    {
+      "id": "21127328",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema5",
+      "constant": "metro_minigame_sci25_festival_3_schema5"
+    },
+    {
+      "id": "21127329",
+      "comment": "科技节-装饰兑换商店",
+      "constant": "event_sci_2025_shop"
+    },
+    {
+      "id": "21127330",
+      "comment": "科技节2025-装饰升级",
+      "constant": "event_sci_2025_decoration"
+    },
+    {
+      "id": "21127331",
+      "comment": "节日累充-2025科技节",
+      "constant": "event_sci_accum_recharge_2025"
+    },
+    {
+      "id": "21127332",
+      "comment": "科技节-买三送一-通用-schema3",
+      "constant": "event_sci_free_gift_2024_schema3"
+    },
+    {
+      "id": "21127333",
+      "comment": "科技节-买三送一-通用-schema6",
+      "constant": "event_sci_free_gift_2024_schema6"
+    },
+    {
+      "id": "21127334",
+      "comment": "节日通用自选周卡（新版-音乐节）",
+      "constant": "event_fes_time_card_1"
+    },
+    {
+      "id": "21127335",
+      "comment": "科技节2025-主城特效个人累充",
+      "constant": "event_techFestival_2025_city_effect_single"
+    },
+    {
+      "id": "21127336",
+      "comment": "科技节2025-主城特效服务器累充",
+      "constant": "event_techFestival_2025_city_effect_server"
+    },
+    {
+      "id": "21127339",
+      "comment": "节日通用2-强消耗-schema3-5（春节）",
+      "constant": "science_2025_strong_consume"
+    },
+    {
+      "id": "21127340",
+      "comment": "节日通用2-强消耗-schema6（春节）",
+      "constant": "science_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127341",
+      "comment": "科技节-2025-折扣礼包-schema3-5",
+      "constant": "science_2025_discount_pack"
+    },
+    {
+      "id": "21127342",
+      "comment": "科技节-2025-折扣礼包-schema6",
+      "constant": "science_2025_discount_pack_schema6"
+    },
+    {
+      "id": "21127343",
+      "comment": "科技节2026-七日-新版",
+      "constant": "event_sci_2025_7days"
+    },
+    {
+      "id": "21127344",
+      "comment": "科技节-单笔充值-通用-一期",
+      "constant": "event_sci_single_recharge_2025"
+    },
+    {
+      "id": "21127345",
+      "comment": "科技节-单笔充值-通用-二期（不用）",
+      "constant": "event_sci2_single_recharge_2025"
+    },
+    {
+      "id": "21127346",
+      "comment": "科技节2025-科技拼图活动",
+      "constant": "event_sci_2025_gift_send"
+    },
+    {
+      "id": "21127347",
+      "comment": "科技节2025-行军表情礼包",
+      "constant": "event_sci_emoji_2025"
+    },
+    {
+      "id": "21127348",
+      "comment": "节日-庆典抽奖通用",
+      "constant": "event_sci_lucky_star_2025"
+    },
+    {
+      "id": "21127349",
+      "comment": "科技节2025-gacha下半部分",
+      "constant": "event_sci_2025_gacha"
+    },
+    {
+      "id": "21127350",
+      "comment": "科技节2025-gacha下半部分-累计任务",
+      "constant": "event_sci_2025_gacha_accum"
+    },
+    {
+      "id": "21127351",
+      "comment": "科技节通用-gacha下半部分-每日礼包",
+      "constant": "event_sci_2025_gacha_daily"
+    },
+    {
+      "id": "21127352",
+      "comment": "复活节2025-行军表情礼包",
+      "constant": "event_easter_emoji_2025"
+    },
+    {
+      "id": "21127353",
+      "comment": "复活节2025-横版bp",
+      "constant": "event_easter_bp_2025"
+    },
+    {
+      "id": "21127354",
+      "comment": "复活节2025-礼包（BP）",
+      "constant": "event_easter_bp_pkg_2025"
+    },
+    {
+      "id": "21127355",
+      "comment": "装饰兑换商店-通用-感恩节",
+      "constant": "event_easter_2025_shop"
+    },
+    {
+      "id": "21127356",
+      "comment": "2025节日通用-七日-新版2（周年庆）",
+      "constant": "event_easter_2025_7days"
+    },
+    {
+      "id": "21127357",
+      "comment": "合成小游戏活动-25复活节版本-schema3",
+      "constant": "metro_minigame_easter25_festival_1_schema3"
+    },
+    {
+      "id": "21127358",
+      "comment": "合成小游戏活动-25复活节版本-schema4",
+      "constant": "metro_minigame_easter25_festival_2_schema4"
+    },
+    {
+      "id": "21127359",
+      "comment": "合成小游戏活动-25复活节版本-schema5",
+      "constant": "metro_minigame_easter25_festival_3_schema5"
+    },
+    {
+      "id": "21127360",
+      "comment": "复活节2025-交换活动",
+      "constant": "event_easter_gift_exchange_2025"
+    },
+    {
+      "id": "21127361",
+      "comment": "2025复活节行军特效贬值礼包",
+      "constant": "event_easter_march_effect_pkg"
+    },
+    {
+      "id": "21127362",
+      "comment": "节日大富翁进度活动（科技节）",
+      "constant": "event_easter_monopoly_2025"
+    },
+    {
+      "id": "21127363",
+      "comment": "节日通用-强消耗-schema3-5（科技节）",
+      "constant": "easter_2025_strong_consume"
+    },
+    {
+      "id": "21127364",
+      "comment": "节日通用-强消耗-schema6（科技节）",
+      "constant": "easter_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127365",
+      "comment": "节日通用自选周卡（新版-万圣节）",
+      "constant": "event_easter_time_card_2025"
+    },
+    {
+      "id": "21127366",
+      "comment": "复活节2025-彩蛋手札",
+      "constant": "event_easter_party"
+    },
+    {
+      "id": "21127367",
+      "comment": "复活节2025-gacha下半部分",
+      "constant": "event_easter_2025_gacha"
+    },
+    {
+      "id": "21127368",
+      "comment": "复活节2025-主城特效累充",
+      "constant": "event_easter_2025_city_effect"
+    },
+    {
+      "id": "21127369",
+      "comment": "节日累充-2025复活节",
+      "constant": "event_2025easter_packge_name"
+    },
+    {
+      "id": "21127370",
+      "comment": "复活节-单笔充值-2025-第一轮",
+      "constant": "event_easter_single_recharge_2025"
+    },
+    {
+      "id": "21127371",
+      "comment": "复活节签到-2025",
+      "constant": "event_easter_login_2024"
+    },
+    {
+      "id": "21127372",
+      "comment": "复活节-单笔充值-2025-第二轮",
+      "constant": "event_easter2_single_recharge_2025"
+    },
+    {
+      "id": "21127373",
+      "comment": "复活节2025-gacha-每日礼包",
+      "constant": "event_easter_2025_gacha_daily"
+    },
+    {
+      "id": "21127374",
+      "comment": "复活节连锁礼包-2025-schema3-5",
+      "constant": "event_easter_chain_pack_2024_scheam3_5"
+    },
+    {
+      "id": "21127375",
+      "comment": "复活节连锁礼包-2025-schema6",
+      "constant": "event_easter_chain_pack_2024_scheam6"
+    },
+    {
+      "id": "21127376",
+      "comment": "节日通用2025-七日-新版（万圣节）",
+      "constant": "event_easter2_2025_7days"
+    },
+    {
+      "id": "21127377",
+      "comment": "复活节-小额随机礼包-转盘形式-schema3-5",
+      "constant": "event_easter_2025_newwheel"
+    },
+    {
+      "id": "21127378",
+      "comment": "复活节-小额随机礼包-转盘形式-schema6",
+      "constant": "event_easter2_2025_newwheel"
+    },
+    {
+      "id": "21127379",
+      "comment": "通用-对对碰活动bp（每次要改HUD）",
+      "constant": "event_gift_bp"
+    },
+    {
+      "id": "21127380",
+      "comment": "拓荒节2025-装饰升级",
+      "constant": "event_labor_2025_decoration"
+    },
+    {
+      "id": "21127381",
+      "comment": "拓荒节2025-主城特效服务器累充",
+      "constant": "event_Festival_2025_city_effect_server"
+    },
+    {
+      "id": "21127382",
+      "comment": "科技节-掉落转付费-第一套",
+      "constant": "event_labor_2025_shop"
+    },
+    {
+      "id": "21127383",
+      "comment": "节日通用-掉落转付费-掉落活动",
+      "constant": "event_labor_2025_drop"
+    },
+    {
+      "id": "21127384",
+      "comment": "通用-付费率宝箱",
+      "constant": "event_labor_2025_payment"
+    },
+    {
+      "id": "21127385",
+      "comment": "情人节-限时抢购-S6-通用皮（1、2期",
+      "constant": "event_flash_sale_s6"
+    },
+    {
+      "id": "21127386",
+      "comment": "情人节-限时抢购-S3-5-通用皮（3期",
+      "constant": "event_flash_sale_s3_5"
+    },
+    {
+      "id": "21127387",
+      "comment": "科技节套装S2-通用gacha",
+      "constant": "event_sci_gacha_2025_s2"
+    },
+    {
+      "id": "21127388",
+      "comment": "科技节套装S2-通用累计活动",
+      "constant": "event_sci_2025_gacha_reward_2025_s2"
+    },
+    {
+      "id": "21127389",
+      "comment": "科技节套装S2-gacha下半部分",
+      "constant": "event_sci_2025_gacha_s2"
+    },
+    {
+      "id": "21127390",
+      "comment": "科技节套装S2-gacha下半部分-累计任务",
+      "constant": "event_sci_2025_gacha_accum_s2"
+    },
+    {
+      "id": "21127391",
+      "comment": "科技节套装S2-gacha下半部分-每日礼包",
+      "constant": "event_sci_2025_gacha_daily_s2"
+    },
+    {
+      "id": "21127392",
+      "comment": "科技节套装S2-横版bp",
+      "constant": "event_science_bp_title_2024_s2"
+    },
+    {
+      "id": "21127393",
+      "comment": "科技节套装S2-礼包（BP）",
+      "constant": "event_science_bp_pkg_title_2024_s2"
+    },
+    {
+      "id": "21127394",
+      "comment": "科技节套装S2通用-掉落活动",
+      "constant": "event_sci_2024_drop_s2"
+    },
+    {
+      "id": "21127395",
+      "comment": "科技节套装S2自选周卡",
+      "constant": "event_fes_time_card_1_s2"
+    },
+    {
+      "id": "21127396",
+      "comment": "科技节套装S2-单笔充值-2025-一期",
+      "constant": "event_sci_single_recharge_2025_s2"
+    },
+    {
+      "id": "21127397",
+      "comment": "科技节套装S2-单笔充值-2025-二期",
+      "constant": "event_sci2_single_recharge_2025_s2"
+    },
+    {
+      "id": "21127398",
+      "comment": "科技节套装S2-科技拼图活动",
+      "constant": "event_sci_2025_gift_send_s2"
+    },
+    {
+      "id": "21127399",
+      "comment": "科技节套装S2-行军表情礼包",
+      "constant": "event_sci_emoji_2025_s2"
+    },
+    {
+      "id": "21127400",
+      "comment": "科技节套装S2-2025-折扣礼包",
+      "constant": "science_2025_discount_pack_s2"
+    },
+    {
+      "id": "21127401",
+      "comment": "科技节套装S2-买三送一-通用-schema3",
+      "constant": "event_sci_free_gift_2024_schema3_s2"
+    },
+    {
+      "id": "21127402",
+      "comment": "科技节套装S2-主城特效个人累充",
+      "constant": "event_techFestival_2025_city_effect_single_s2"
+    },
+    {
+      "id": "21127403",
+      "comment": "科技节套装S2-主城特效服务器累充",
+      "constant": "event_techFestival_2025_city_effect_server_s2"
+    },
+    {
+      "id": "21127404",
+      "comment": "拓荒节2025-七日-新版",
+      "constant": "event_labor_2025_7days"
+    },
+    {
+      "id": "21127405",
+      "comment": "拓荒节2025-行军表情礼包",
+      "constant": "event_labor_emoji_2025"
+    },
+    {
+      "id": "21127406",
+      "comment": "合成小游戏活动-25拓荒节版本-schema3",
+      "constant": "metro_minigame_labor25_festival_1_schema3"
+    },
+    {
+      "id": "21127407",
+      "comment": "合成小游戏活动-25拓荒节版本-schema4",
+      "constant": "metro_minigame_labor25_festival_2_schema4"
+    },
+    {
+      "id": "21127408",
+      "comment": "合成小游戏活动-25拓荒节版本-schema5",
+      "constant": "metro_minigame_labor25_festival_3_schema5"
+    },
+    {
+      "id": "21127409",
+      "comment": "拓荒节多条件连锁礼包2025",
+      "constant": "event_labor_chain_task_2025"
+    },
+    {
+      "id": "21127410",
+      "comment": "拓荒节2025-主城特效累充",
+      "constant": "event_labor_2025_city_effect"
+    },
+    {
+      "id": "21127411",
+      "comment": "节日累充-2025拓荒节",
+      "constant": "event_2025labor_packge_name"
+    },
+    {
+      "id": "21127412",
+      "comment": "深海节-单笔充值-2025-第一轮",
+      "constant": "event_labor_single_recharge_2025"
+    },
+    {
+      "id": "21127413",
+      "comment": "深海节-单笔充值-2025-第二轮",
+      "constant": "event_labor2_single_recharge_2025"
+    },
+    {
+      "id": "21127414",
+      "comment": "拓荒节2025-gacha-每日礼包",
+      "constant": "event_labor_2025_gacha_daily"
+    },
+    {
+      "id": "21127415",
+      "comment": "节日通用-掉落转付费-礼包",
+      "constant": "event_labor_2025_drop_libao"
+    },
+    {
+      "id": "21127416",
+      "comment": "科技节套装S2-装饰兑换商店",
+      "constant": "event_sci_2025_shop_s2"
+    },
+    {
+      "id": "21127417",
+      "comment": "节日通用-战车自选gacha",
+      "constant": "event_tank_gacha_2025"
+    },
+    {
+      "id": "21127418",
+      "comment": "深海节预购连锁礼包_schema3-5",
+      "constant": "event_pre_chain"
+    },
+    {
+      "id": "21127419",
+      "comment": "2025深海节小额随机礼包",
+      "constant": "event_random_pkg_sea_2025"
+    },
+    {
+      "id": "21127420",
+      "comment": "深海节-2025-本体gacha",
+      "constant": "event_dragon_boat_festival_gacha_2025"
+    },
+    {
+      "id": "21127421",
+      "comment": "深海节2025-主城特效累充-联盟",
+      "constant": "event_techFestival_2025_city_effect_alliance"
+    },
+    {
+      "id": "21127422",
+      "comment": "感恩节-掉落转付费",
+      "constant": "event_labor_2025_shop_1"
+    },
+    {
+      "id": "21127423",
+      "comment": "通用-节日礼包团购",
+      "constant": "event_2025deep_sea_pkg"
+    },
+    {
+      "id": "21127424",
+      "comment": "深海节-节日手札",
+      "constant": "event_deepsea_party"
+    },
+    {
+      "id": "21127425",
+      "comment": "深海节-组件gacha",
+      "constant": "event_deepsea_2025_gacha2"
+    }
+  ],
+  "86连胜7日": [
+    {
+      "id": "21127275",
+      "comment": "春节2025-七日-新版",
+      "constant": "event_spring_2025_7days"
+    },
+    {
+      "id": "21127276",
+      "comment": "春节2025-节日自选周卡",
+      "constant": "event_spring_time_card_2025"
+    },
+    {
+      "id": "21127277",
+      "comment": "春节2025-主城特效累充",
+      "constant": "event_springFestival_2025_city_effect"
+    },
+    {
+      "id": "21127278",
+      "comment": "节日累充-2025春节",
+      "constant": "event_2025springFestival_packge_name"
+    },
+    {
+      "id": "21127279",
+      "comment": "节日通用第一套-单笔充值-2026-春节",
+      "constant": "event_springFestival_single_recharge_2025"
+    },
+    {
+      "id": "21127280",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema3",
+      "constant": "metro_minigame_spring25_festival_1_schema3"
+    },
+    {
+      "id": "21127281",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema4",
+      "constant": "metro_minigame_spring25_festival_2_schema4"
+    },
+    {
+      "id": "21127282",
+      "comment": "合成小游戏活动-春节版本（1月循环）-schema5",
+      "constant": "metro_minigame_spring25_festival_3_schema5"
+    },
+    {
+      "id": "21127283",
+      "comment": "春节2025-行军表情礼包",
+      "constant": "event_springFestival_emoji_2025"
+    },
+    {
+      "id": "21127284",
+      "comment": "通用节日订阅卡累充-schema3",
+      "constant": "event_springFestival_2025_time_card_recharge"
+    },
+    {
+      "id": "21127285",
+      "comment": "通用节日订阅卡累充-schema4-6",
+      "constant": "event_springFestival_2025_time_card_recharge_schema4"
+    },
+    {
+      "id": "21127286",
+      "comment": "春节2025-装饰升级",
+      "constant": "event_lunar_2025_decoration"
+    },
+    {
+      "id": "21127287",
+      "comment": "春节-2026拜访",
+      "constant": "event_spring_visit_2025"
+    },
+    {
+      "id": "21127288",
+      "comment": "春节2025-掉落活动",
+      "constant": "event_spring_2025_drop"
+    },
+    {
+      "id": "21127289",
+      "comment": "春节2025-连锁礼包-schema3-5",
+      "constant": "event_spring_chain_pack_2025"
+    },
+    {
+      "id": "21127290",
+      "comment": "春节2025-强消耗-schema3-5",
+      "constant": "spring_2025_strong_consume"
+    },
+    {
+      "id": "21127291",
+      "comment": "春节2025-强消耗-schema6",
+      "constant": "spring_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127292",
+      "comment": "春节-2025-wonder巨猿",
+      "constant": "event_spring_festival_hegemony_25"
+    },
+    {
+      "id": "21127294",
+      "comment": "春节-2025-bp",
+      "constant": "event_spring_bp_2025"
+    },
+    {
+      "id": "21127295",
+      "comment": "春节2025-礼包（BP）",
+      "constant": "event_spring_pkg_2025"
+    },
+    {
+      "id": "21127296",
+      "comment": "春节-装饰兑换商店",
+      "constant": "event_lunar_2025_shop"
+    },
+    {
+      "id": "21127297",
+      "comment": "春节2025-连锁礼包-schema6",
+      "constant": "event_spring_chain_pack_2025_schema6"
+    },
+    {
+      "id": "21127302",
+      "comment": "情人节2025-节日自选周卡",
+      "constant": "event_valentine_time_card_2025"
+    },
+    {
+      "id": "21127303",
+      "comment": "情人节2026-七日-新版",
+      "constant": "event_valentine_2025_7days"
+    },
+    {
+      "id": "21127304",
+      "comment": "情人节多条件连锁礼包2025",
+      "constant": "event_valentine_chain_task_2025"
+    },
+    {
+      "id": "21127305",
+      "comment": "情人节2025-主城特效累充",
+      "constant": "event_valentine_2025_city_effect"
+    },
+    {
+      "id": "21127306",
+      "comment": "节日累充-2025情人节",
+      "constant": "event_2025valentine_packge_name"
+    },
+    {
+      "id": "21127307",
+      "comment": "情人节-单笔充值-2025",
+      "constant": "event_valentine_single_recharge_2025"
+    },
+    {
+      "id": "21127308",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema3",
+      "constant": "metro_minigame_valentine25_festival_1_schema3"
+    },
+    {
+      "id": "21127309",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema4",
+      "constant": "metro_minigame_valentine25_festival_2_schema4"
+    },
+    {
+      "id": "21127310",
+      "comment": "合成小游戏活动-情人节版本（2月循环）-schema5",
+      "constant": "metro_minigame_valentine25_festival_3_schema5"
+    },
+    {
+      "id": "21127311",
+      "comment": "情人节2025-行军表情礼包",
+      "constant": "event_valentine_emoji_2025"
+    },
+    {
+      "id": "21127312",
+      "comment": "情人节2025-装饰升级",
+      "constant": "event_valentine_2025_decoration"
+    },
+    {
+      "id": "21127313",
+      "comment": "情人节2025-掉落活动",
+      "constant": "event_valentine_2025_drop"
+    },
+    {
+      "id": "21127314",
+      "comment": "情人节2026-强消耗-schema3-5",
+      "constant": "valentine_2025_strong_consume"
+    },
+    {
+      "id": "21127315",
+      "comment": "情人节2026-强消耗-schema6",
+      "constant": "valentine_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127316",
+      "comment": "情人节-2025-wonder巨猿",
+      "constant": "event_valentine_festival_hegemony_2025"
+    },
+    {
+      "id": "21127317",
+      "comment": "情人节2026组队BP",
+      "constant": "valentine_2025_team_bp"
+    },
+    {
+      "id": "21127318",
+      "comment": "情人节-装饰兑换商店",
+      "constant": "event_valentine_2025_shop"
+    },
+    {
+      "id": "21127319",
+      "comment": "情人节-2025-bp",
+      "constant": "event_valentine_bp_2025"
+    },
+    {
+      "id": "21127320",
+      "comment": "情人节2025-礼包（BP）",
+      "constant": "event_valentine_pkg_2025"
+    },
+    {
+      "id": "21127321",
+      "comment": "情人节连锁礼包-通用-schema3-5",
+      "constant": "event_valentine_chain_pack_2024_scheam3_5"
+    },
+    {
+      "id": "21127322",
+      "comment": "情人节连锁礼包-通用-schema6",
+      "constant": "event_valentine_chain_pack_2024_scheam6"
+    },
+    {
+      "id": "21127323",
+      "comment": "情人节2025-排行送花活动",
+      "constant": "event_valentine_flower_skin_rank"
+    },
+    {
+      "id": "21127324",
+      "comment": "周年庆返场2025-买三送一-schema3-5",
+      "constant": "event_valentine_free_gift_2025_schema3"
+    },
+    {
+      "id": "21127325",
+      "comment": "周年庆返场2025-买三送一-schema6",
+      "constant": "event_valentine_free_gift_2025_schema6"
+    },
+    {
+      "id": "21127326",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema3",
+      "constant": "metro_minigame_sci25_festival_1_schema3"
+    },
+    {
+      "id": "21127327",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema4",
+      "constant": "metro_minigame_sci25_festival_2_schema4"
+    },
+    {
+      "id": "21127328",
+      "comment": "合成小游戏活动-科技节版本（3月循环）-schema5",
+      "constant": "metro_minigame_sci25_festival_3_schema5"
+    },
+    {
+      "id": "21127329",
+      "comment": "科技节-装饰兑换商店",
+      "constant": "event_sci_2025_shop"
+    },
+    {
+      "id": "21127330",
+      "comment": "科技节2025-装饰升级",
+      "constant": "event_sci_2025_decoration"
+    },
+    {
+      "id": "21127331",
+      "comment": "节日累充-2025科技节",
+      "constant": "event_sci_accum_recharge_2025"
+    },
+    {
+      "id": "21127332",
+      "comment": "科技节-买三送一-通用-schema3",
+      "constant": "event_sci_free_gift_2024_schema3"
+    },
+    {
+      "id": "21127333",
+      "comment": "科技节-买三送一-通用-schema6",
+      "constant": "event_sci_free_gift_2024_schema6"
+    },
+    {
+      "id": "21127334",
+      "comment": "节日通用自选周卡（新版-音乐节）",
+      "constant": "event_fes_time_card_1"
+    },
+    {
+      "id": "21127335",
+      "comment": "科技节2025-主城特效个人累充",
+      "constant": "event_techFestival_2025_city_effect_single"
+    },
+    {
+      "id": "21127336",
+      "comment": "科技节2025-主城特效服务器累充",
+      "constant": "event_techFestival_2025_city_effect_server"
+    },
+    {
+      "id": "21127339",
+      "comment": "节日通用2-强消耗-schema3-5（春节）",
+      "constant": "science_2025_strong_consume"
+    },
+    {
+      "id": "21127340",
+      "comment": "节日通用2-强消耗-schema6（春节）",
+      "constant": "science_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127341",
+      "comment": "科技节-2025-折扣礼包-schema3-5",
+      "constant": "science_2025_discount_pack"
+    },
+    {
+      "id": "21127342",
+      "comment": "科技节-2025-折扣礼包-schema6",
+      "constant": "science_2025_discount_pack_schema6"
+    },
+    {
+      "id": "21127343",
+      "comment": "科技节2026-七日-新版",
+      "constant": "event_sci_2025_7days"
+    },
+    {
+      "id": "21127344",
+      "comment": "科技节-单笔充值-通用-一期",
+      "constant": "event_sci_single_recharge_2025"
+    },
+    {
+      "id": "21127345",
+      "comment": "科技节-单笔充值-通用-二期（不用）",
+      "constant": "event_sci2_single_recharge_2025"
+    },
+    {
+      "id": "21127346",
+      "comment": "科技节2025-科技拼图活动",
+      "constant": "event_sci_2025_gift_send"
+    },
+    {
+      "id": "21127347",
+      "comment": "科技节2025-行军表情礼包",
+      "constant": "event_sci_emoji_2025"
+    },
+    {
+      "id": "21127348",
+      "comment": "节日-庆典抽奖通用",
+      "constant": "event_sci_lucky_star_2025"
+    },
+    {
+      "id": "21127349",
+      "comment": "科技节2025-gacha下半部分",
+      "constant": "event_sci_2025_gacha"
+    },
+    {
+      "id": "21127350",
+      "comment": "科技节2025-gacha下半部分-累计任务",
+      "constant": "event_sci_2025_gacha_accum"
+    },
+    {
+      "id": "21127351",
+      "comment": "科技节通用-gacha下半部分-每日礼包",
+      "constant": "event_sci_2025_gacha_daily"
+    },
+    {
+      "id": "21127352",
+      "comment": "复活节2025-行军表情礼包",
+      "constant": "event_easter_emoji_2025"
+    },
+    {
+      "id": "21127353",
+      "comment": "复活节2025-横版bp",
+      "constant": "event_easter_bp_2025"
+    },
+    {
+      "id": "21127354",
+      "comment": "复活节2025-礼包（BP）",
+      "constant": "event_easter_bp_pkg_2025"
+    },
+    {
+      "id": "21127355",
+      "comment": "装饰兑换商店-通用-感恩节",
+      "constant": "event_easter_2025_shop"
+    },
+    {
+      "id": "21127356",
+      "comment": "2025节日通用-七日-新版2（周年庆）",
+      "constant": "event_easter_2025_7days"
+    },
+    {
+      "id": "21127357",
+      "comment": "合成小游戏活动-25复活节版本-schema3",
+      "constant": "metro_minigame_easter25_festival_1_schema3"
+    },
+    {
+      "id": "21127358",
+      "comment": "合成小游戏活动-25复活节版本-schema4",
+      "constant": "metro_minigame_easter25_festival_2_schema4"
+    },
+    {
+      "id": "21127359",
+      "comment": "合成小游戏活动-25复活节版本-schema5",
+      "constant": "metro_minigame_easter25_festival_3_schema5"
+    },
+    {
+      "id": "21127360",
+      "comment": "复活节2025-交换活动",
+      "constant": "event_easter_gift_exchange_2025"
+    },
+    {
+      "id": "21127361",
+      "comment": "2025复活节行军特效贬值礼包",
+      "constant": "event_easter_march_effect_pkg"
+    },
+    {
+      "id": "21127362",
+      "comment": "节日大富翁进度活动（科技节）",
+      "constant": "event_easter_monopoly_2025"
+    },
+    {
+      "id": "21127363",
+      "comment": "节日通用-强消耗-schema3-5（科技节）",
+      "constant": "easter_2025_strong_consume"
+    },
+    {
+      "id": "21127364",
+      "comment": "节日通用-强消耗-schema6（科技节）",
+      "constant": "easter_2025_strong_consume_schema6"
+    },
+    {
+      "id": "21127365",
+      "comment": "节日通用自选周卡（新版-万圣节）",
+      "constant": "event_easter_time_card_2025"
+    },
+    {
+      "id": "21127366",
+      "comment": "复活节2025-彩蛋手札",
+      "constant": "event_easter_party"
+    },
+    {
+      "id": "21127367",
+      "comment": "复活节2025-gacha下半部分",
+      "constant": "event_easter_2025_gacha"
+    },
+    {
+      "id": "21127368",
+      "comment": "复活节2025-主城特效累充",
+      "constant": "event_easter_2025_city_effect"
+    },
+    {
+      "id": "21127369",
+      "comment": "节日累充-2025复活节",
+      "constant": "event_2025easter_packge_name"
+    },
+    {
+      "id": "21127370",
+      "comment": "复活节-单笔充值-2025-第一轮",
+      "constant": "event_easter_single_recharge_2025"
+    },
+    {
+      "id": "21127371",
+      "comment": "复活节签到-2025",
+      "constant": "event_easter_login_2024"
+    },
+    {
+      "id": "21127372",
+      "comment": "复活节-单笔充值-2025-第二轮",
+      "constant": "event_easter2_single_recharge_2025"
+    },
+    {
+      "id": "21127373",
+      "comment": "复活节2025-gacha-每日礼包",
+      "constant": "event_easter_2025_gacha_daily"
+    },
+    {
+      "id": "21127374",
+      "comment": "复活节连锁礼包-2025-schema3-5",
+      "constant": "event_easter_chain_pack_2024_scheam3_5"
+    },
+    {
+      "id": "21127375",
+      "comment": "复活节连锁礼包-2025-schema6",
+      "constant": "event_easter_chain_pack_2024_scheam6"
+    },
+    {
+      "id": "21127376",
+      "comment": "节日通用2025-七日-新版（万圣节）",
+      "constant": "event_easter2_2025_7days"
+    },
+    {
+      "id": "21127377",
+      "comment": "复活节-小额随机礼包-转盘形式-schema3-5",
+      "constant": "event_easter_2025_newwheel"
+    },
+    {
+      "id": "21127378",
+      "comment": "复活节-小额随机礼包-转盘形式-schema6",
+      "constant": "event_easter2_2025_newwheel"
+    },
+    {
+      "id": "21127379",
+      "comment": "通用-对对碰活动bp（每次要改HUD）",
+      "constant": "event_gift_bp"
+    },
+    {
+      "id": "21127380",
+      "comment": "拓荒节2025-装饰升级",
+      "constant": "event_labor_2025_decoration"
+    },
+    {
+      "id": "21127381",
+      "comment": "拓荒节2025-主城特效服务器累充",
+      "constant": "event_Festival_2025_city_effect_server"
+    },
+    {
+      "id": "21127382",
+      "comment": "科技节-掉落转付费-第一套",
+      "constant": "event_labor_2025_shop"
+    },
+    {
+      "id": "21127383",
+      "comment": "节日通用-掉落转付费-掉落活动",
+      "constant": "event_labor_2025_drop"
+    },
+    {
+      "id": "21127384",
+      "comment": "通用-付费率宝箱",
+      "constant": "event_labor_2025_payment"
+    },
+    {
+      "id": "21127385",
+      "comment": "情人节-限时抢购-S6-通用皮（1、2期",
+      "constant": "event_flash_sale_s6"
+    },
+    {
+      "id": "21127386",
+      "comment": "情人节-限时抢购-S3-5-通用皮（3期",
+      "constant": "event_flash_sale_s3_5"
+    },
+    {
+      "id": "21127387",
+      "comment": "科技节套装S2-通用gacha",
+      "constant": "event_sci_gacha_2025_s2"
+    },
+    {
+      "id": "21127388",
+      "comment": "科技节套装S2-通用累计活动",
+      "constant": "event_sci_2025_gacha_reward_2025_s2"
+    },
+    {
+      "id": "21127389",
+      "comment": "科技节套装S2-gacha下半部分",
+      "constant": "event_sci_2025_gacha_s2"
+    },
+    {
+      "id": "21127390",
+      "comment": "科技节套装S2-gacha下半部分-累计任务",
+      "constant": "event_sci_2025_gacha_accum_s2"
+    },
+    {
+      "id": "21127391",
+      "comment": "科技节套装S2-gacha下半部分-每日礼包",
+      "constant": "event_sci_2025_gacha_daily_s2"
+    },
+    {
+      "id": "21127392",
+      "comment": "科技节套装S2-横版bp",
+      "constant": "event_science_bp_title_2024_s2"
+    },
+    {
+      "id": "21127393",
+      "comment": "科技节套装S2-礼包（BP）",
+      "constant": "event_science_bp_pkg_title_2024_s2"
+    },
+    {
+      "id": "21127394",
+      "comment": "科技节套装S2通用-掉落活动",
+      "constant": "event_sci_2024_drop_s2"
+    },
+    {
+      "id": "21127395",
+      "comment": "科技节套装S2自选周卡",
+      "constant": "event_fes_time_card_1_s2"
+    },
+    {
+      "id": "21127396",
+      "comment": "科技节套装S2-单笔充值-2025-一期",
+      "constant": "event_sci_single_recharge_2025_s2"
+    },
+    {
+      "id": "21127397",
+      "comment": "科技节套装S2-单笔充值-2025-二期",
+      "constant": "event_sci2_single_recharge_2025_s2"
+    },
+    {
+      "id": "21127398",
+      "comment": "科技节套装S2-科技拼图活动",
+      "constant": "event_sci_2025_gift_send_s2"
+    },
+    {
+      "id": "21127399",
+      "comment": "科技节套装S2-行军表情礼包",
+      "constant": "event_sci_emoji_2025_s2"
+    },
+    {
+      "id": "21127400",
+      "comment": "科技节套装S2-2025-折扣礼包",
+      "constant": "science_2025_discount_pack_s2"
+    },
+    {
+      "id": "21127401",
+      "comment": "科技节套装S2-买三送一-通用-schema3",
+      "constant": "event_sci_free_gift_2024_schema3_s2"
+    },
+    {
+      "id": "21127402",
+      "comment": "科技节套装S2-主城特效个人累充",
+      "constant": "event_techFestival_2025_city_effect_single_s2"
+    },
+    {
+      "id": "21127403",
+      "comment": "科技节套装S2-主城特效服务器累充",
+      "constant": "event_techFestival_2025_city_effect_server_s2"
+    },
+    {
+      "id": "21127404",
+      "comment": "拓荒节2025-七日-新版",
+      "constant": "event_labor_2025_7days"
+    },
+    {
+      "id": "21127405",
+      "comment": "拓荒节2025-行军表情礼包",
+      "constant": "event_labor_emoji_2025"
+    },
+    {
+      "id": "21127406",
+      "comment": "合成小游戏活动-25拓荒节版本-schema3",
+      "constant": "metro_minigame_labor25_festival_1_schema3"
+    },
+    {
+      "id": "21127407",
+      "comment": "合成小游戏活动-25拓荒节版本-schema4",
+      "constant": "metro_minigame_labor25_festival_2_schema4"
+    },
+    {
+      "id": "21127408",
+      "comment": "合成小游戏活动-25拓荒节版本-schema5",
+      "constant": "metro_minigame_labor25_festival_3_schema5"
+    },
+    {
+      "id": "21127409",
+      "comment": "拓荒节多条件连锁礼包2025",
+      "constant": "event_labor_chain_task_2025"
+    },
+    {
+      "id": "21127410",
+      "comment": "拓荒节2025-主城特效累充",
+      "constant": "event_labor_2025_city_effect"
+    },
+    {
+      "id": "21127411",
+      "comment": "节日累充-2025拓荒节",
+      "constant": "event_2025labor_packge_name"
+    },
+    {
+      "id": "21127412",
+      "comment": "深海节-单笔充值-2025-第一轮",
+      "constant": "event_labor_single_recharge_2025"
+    },
+    {
+      "id": "21127413",
+      "comment": "深海节-单笔充值-2025-第二轮",
+      "constant": "event_labor2_single_recharge_2025"
+    },
+    {
+      "id": "21127414",
+      "comment": "拓荒节2025-gacha-每日礼包",
+      "constant": "event_labor_2025_gacha_daily"
+    },
+    {
+      "id": "21127415",
+      "comment": "节日通用-掉落转付费-礼包",
+      "constant": "event_labor_2025_drop_libao"
+    },
+    {
+      "id": "21127416",
+      "comment": "科技节套装S2-装饰兑换商店",
+      "constant": "event_sci_2025_shop_s2"
+    },
+    {
+      "id": "21127417",
+      "comment": "节日通用-战车自选gacha",
+      "constant": "event_tank_gacha_2025"
+    },
+    {
+      "id": "21127418",
+      "comment": "深海节预购连锁礼包_schema3-5",
+      "constant": "event_pre_chain"
+    },
+    {
+      "id": "21127419",
+      "comment": "2025深海节小额随机礼包",
+      "constant": "event_random_pkg_sea_2025"
+    },
+    {
+      "id": "21127420",
+      "comment": "深海节-2025-本体gacha",
+      "constant": "event_dragon_boat_festival_gacha_2025"
+    },
+    {
+      "id": "21127421",
+      "comment": "深海节2025-主城特效累充-联盟",
+      "constant": "event_techFestival_2025_city_effect_alliance"
+    },
+    {
+      "id": "21127422",
+      "comment": "感恩节-掉落转付费",
+      "constant": "event_labor_2025_shop_1"
+    },
+    {
+      "id": "21127423",
+      "comment": "通用-节日礼包团购",
+      "constant": "event_2025deep_sea_pkg"
+    },
+    {
+      "id": "21127424",
+      "comment": "深海节-节日手札",
+      "constant": "event_deepsea_party"
+    },
+    {
+      "id": "21127425",
+      "comment": "深海节-组件gacha",
+      "constant": "event_deepsea_2025_gacha2"
+    },
+    {
+      "id": "21127426",
+      "comment": "节日活动-聚宝盆抽奖-第1期（schema3~5）",
+      "constant": "event_treasure_bowl1_2025"
+    },
+    {
+      "id": "21127427",
+      "comment": "节日活动-聚宝盆抽奖-第2期（schema3~5）",
+      "constant": "event_treasure_bowl2_2025"
+    }
+  ]
+}

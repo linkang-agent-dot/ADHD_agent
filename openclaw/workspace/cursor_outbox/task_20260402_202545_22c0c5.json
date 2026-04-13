@@ -1,0 +1,7 @@
+{
+  "task_id": "task_20260402_202545_22c0c5",
+  "title": "千川无API能否自动化(重试)",
+  "status": "error",
+  "result": "CLI 返回非零: Connection lost, reconnecting...\nRetry attempt 1...\nI: Provider Error We're having trouble connecting to the model provider. This might be temporary - please try again in a moment.",
+  "completed_at": "2026-04-02 20:28:54"
+}

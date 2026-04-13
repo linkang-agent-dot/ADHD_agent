@@ -1,0 +1,26 @@
+﻿python : Traceback (most recent call last):
+所在位置 C:\Users\linkang\AppData\Local\Temp\ps-script-f6998198-c921-48c5-8e16-4ada843077e1.ps1:83 字符: 1
++ python skills/datain-skill/scripts/query_game.py -c query -g 1041 --s ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\ADHD_agent\skills\datain-skill\scripts\query_game.py", line 364, in <module>
+    main()
+    ~~~~^^
+  File "C:\ADHD_agent\skills\datain-skill\scripts\query_game.py", line 350, in main
+    "indicators": common.parse_json_arg(args.indicators),
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\ADHD_agent\skills\datain-skill\scripts\common.py", line 50, in parse_json_arg
+    return json.loads(value)
+           ~~~~~~~~~~^^^^^^^
+  File "C:\Python314\Lib\json\__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Python314\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\json\decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)

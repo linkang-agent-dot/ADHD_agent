@@ -1,0 +1,7 @@
+{
+  "task_id": "task_20260402_163113_240540",
+  "title": "调研千川AI接入相关skill/项目",
+  "status": "done",
+  "result": "| **geiqin/oceanengine** | [github.com/geiqin/oceanengine](https://github.com/geiqin/oceanengine) | 包含 `QIANCHUAN.md`，有千川 API 的 Go SDK 文档，较新但 star 少 | 2 |\n\n### 三、低代码集成平台（无需开发）\n\n| 平台 | 支持能力 |\n|------|---------|\n| **数环通 (solinkup)** | 千川 ↔ GitHub / 智谱AI 数据流，可视化配置，无代码对接 |\n| **集简云 (jijyun)** | 千川新建广告计划 → 钉钉/企微通知，可配置触发器 |\n\n---\n\n### 四、评价与落地建议\n\n**现状总结**：\n- 目前**没有**专门针对「巨量千川」（中国站）的现成 MCP skill，开源生态基本空白\n- 针对 TikTok Ads（海外版巨量引擎）的 MCP 项目有 2-3 个，但接口与千川国内 API 不通用\n- `bububa/oceanengine` 是覆盖最全的 SDK，但是 Go 语言，不适合直接接 Python-based Agent\n\n**落地建议（3 个路径）**：\n\n1. **最快：基于 `battyht/AD_MCP` 改造**\n   参考其结构（Node.js MCP Server），对接千川官方开放平台 API（`open.oceanengine.com`），自建一个千川 MCP Server，接入 Claude/Cursor Agent。工作量约 1-2 天。\n\n2. **稳健：用 OpenAPI MCP Generator 自动生成**\n   下载千川官方 OpenAPI 规范，用 `vincent-pli/openapi-mcpserver-generator` 自动生成 MCP Server 代码，再补充 Auth 逻辑。\n\n3. **无代码：先用数环通/集简云验证流程**\n   不写代码，直接在数环通上配置千川数据流，验证业务场景后再决定是否自建 MCP。\n\n**如果你们要自建千川 MCP skill，建议优先封装的接口**：广告报表查询（最高频）、广告计划状态变更通知、素材审核状态查询——这三个场景是 AI Agent 介入价值最高的地方。",
+  "completed_at": "2026-04-02 16:39:50"
+}

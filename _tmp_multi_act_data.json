@@ -1,0 +1,636 @@
+{
+  "装饰兑换券": {
+    "pay_total": 3813.64,
+    "payers_raw": 84,
+    "arppu_approx": 45.4,
+    "chaor_pay": 1144.67,
+    "chaor_pct": 30.0,
+    "rlevel": {
+      "zhongR": {
+        "cnt": 36,
+        "pay": 1589.46
+      },
+      "chaoR": {
+        "cnt": 16,
+        "pay": 1144.67
+      },
+      "daR": {
+        "cnt": 28,
+        "pay": 924.56
+      },
+      "feiR": {
+        "cnt": 1,
+        "pay": 119.98
+      },
+      "xiaoR": {
+        "cnt": 3,
+        "pay": 34.97
+      }
+    }
+  },
+  "周年庆": {
+    "pay_total": 24261.51,
+    "payers_raw": 349,
+    "arppu_approx": 69.52,
+    "chaor_pay": 14253.16,
+    "chaor_pct": 58.7,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 184,
+        "pay": 14253.16
+      },
+      "zhongR": {
+        "cnt": 68,
+        "pay": 3569.32
+      },
+      "daR": {
+        "cnt": 86,
+        "pay": 5739.14
+      },
+      "xiaoR": {
+        "cnt": 5,
+        "pay": 99.95
+      },
+      "feiR": {
+        "cnt": 6,
+        "pay": 599.94
+      }
+    }
+  },
+  "复活节-强消耗": {
+    "pay_total": 6807.05,
+    "payers_raw": 672,
+    "arppu_approx": 10.13,
+    "chaor_pay": 3934.82,
+    "chaor_pct": 57.8,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 236,
+        "pay": 3934.82
+      },
+      "zhongR": {
+        "cnt": 238,
+        "pay": 1471.49
+      },
+      "daR": {
+        "cnt": 169,
+        "pay": 1282.04
+      },
+      "xiaoR": {
+        "cnt": 27,
+        "pay": 110.72
+      },
+      "feiR": {
+        "cnt": 2,
+        "pay": 7.98
+      }
+    }
+  },
+  "大富翁": {
+    "pay_total": 95933.19,
+    "payers_raw": 4206,
+    "arppu_approx": 22.81,
+    "chaor_pay": 63248.05,
+    "chaor_pct": 65.9,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 1414,
+        "pay": 63248.05
+      },
+      "daR": {
+        "cnt": 985,
+        "pay": 18172.84
+      },
+      "zhongR": {
+        "cnt": 1501,
+        "pay": 12713.9
+      },
+      "xiaoR": {
+        "cnt": 283,
+        "pay": 1192.79
+      },
+      "feiR": {
+        "cnt": 23,
+        "pay": 605.61
+      }
+    }
+  },
+  "深海节": {
+    "pay_total": 26024.72,
+    "payers_raw": 1893,
+    "arppu_approx": 13.75,
+    "chaor_pay": 11173.21,
+    "chaor_pct": 42.9,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 705,
+        "pay": 11173.21
+      },
+      "daR": {
+        "cnt": 505,
+        "pay": 7589.35
+      },
+      "zhongR": {
+        "cnt": 595,
+        "pay": 6598.24
+      },
+      "xiaoR": {
+        "cnt": 84,
+        "pay": 613.98
+      },
+      "feiR": {
+        "cnt": 4,
+        "pay": 49.94
+      }
+    }
+  },
+  "复活节-行军特效": {
+    "pay_total": 13673.16,
+    "payers_raw": 684,
+    "arppu_approx": 19.99,
+    "chaor_pay": 5937.03,
+    "chaor_pct": 43.4,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 297,
+        "pay": 5937.03
+      },
+      "daR": {
+        "cnt": 188,
+        "pay": 3758.12
+      },
+      "zhongR": {
+        "cnt": 166,
+        "pay": 3318.34
+      },
+      "xiaoR": {
+        "cnt": 21,
+        "pay": 419.79
+      },
+      "feiR": {
+        "cnt": 12,
+        "pay": 239.88
+      }
+    }
+  },
+  "科技节-行军表情": {
+    "pay_total": 11666.62,
+    "payers_raw": 2337,
+    "arppu_approx": 4.99,
+    "chaor_pay": 3473.04,
+    "chaor_pct": 29.8,
+    "rlevel": {
+      "zhongR": {
+        "cnt": 870,
+        "pay": 4341.3
+      },
+      "chaoR": {
+        "cnt": 696,
+        "pay": 3473.04
+      },
+      "daR": {
+        "cnt": 576,
+        "pay": 2879.23
+      },
+      "xiaoR": {
+        "cnt": 179,
+        "pay": 893.21
+      },
+      "feiR": {
+        "cnt": 16,
+        "pay": 79.84
+      }
+    }
+  },
+  "科技节-巨猿砸蛋锤": {
+    "pay_total": 2077.92,
+    "payers_raw": 208,
+    "arppu_approx": 9.99,
+    "chaor_pay": 1098.9,
+    "chaor_pct": 52.9,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 110,
+        "pay": 1098.9
+      },
+      "daR": {
+        "cnt": 58,
+        "pay": 579.42
+      },
+      "zhongR": {
+        "cnt": 37,
+        "pay": 369.63
+      },
+      "xiaoR": {
+        "cnt": 2,
+        "pay": 19.98
+      },
+      "feiR": {
+        "cnt": 1,
+        "pay": 9.99
+      }
+    }
+  },
+  "科技节-弹珠GACHA": {
+    "pay_total": 131429.84,
+    "payers_raw": 1183,
+    "arppu_approx": 111.1,
+    "chaor_pay": 92423.02,
+    "chaor_pct": 70.3,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 451,
+        "pay": 92423.02
+      },
+      "daR": {
+        "cnt": 313,
+        "pay": 24849.06
+      },
+      "zhongR": {
+        "cnt": 371,
+        "pay": 12083.84
+      },
+      "feiR": {
+        "cnt": 13,
+        "pay": 1629.5
+      },
+      "xiaoR": {
+        "cnt": 35,
+        "pay": 444.42
+      }
+    }
+  },
+  "科技节-集结奖励": {
+    "pay_total": 6437.1,
+    "payers_raw": 1289,
+    "arppu_approx": 4.99,
+    "chaor_pay": 2325.34,
+    "chaor_pct": 36.1,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 466,
+        "pay": 2325.34
+      },
+      "zhongR": {
+        "cnt": 398,
+        "pay": 1991.01
+      },
+      "daR": {
+        "cnt": 363,
+        "pay": 1811.37
+      },
+      "xiaoR": {
+        "cnt": 54,
+        "pay": 269.46
+      },
+      "feiR": {
+        "cnt": 8,
+        "pay": 39.92
+      }
+    }
+  },
+  "感恩节-每日补给": {
+    "pay_total": 9420.66,
+    "payers_raw": 1798,
+    "arppu_approx": 5.24,
+    "chaor_pay": 3020.82,
+    "chaor_pct": 32.1,
+    "rlevel": {
+      "zhongR": {
+        "cnt": 674,
+        "pay": 3303.4
+      },
+      "chaoR": {
+        "cnt": 509,
+        "pay": 3020.82
+      },
+      "daR": {
+        "cnt": 442,
+        "pay": 2427.8
+      },
+      "xiaoR": {
+        "cnt": 165,
+        "pay": 632.82
+      },
+      "feiR": {
+        "cnt": 8,
+        "pay": 35.82
+      }
+    }
+  },
+  "万圣节-小连锁": {
+    "pay_total": 16181.19,
+    "payers_raw": 1459,
+    "arppu_approx": 11.09,
+    "chaor_pay": 7731.91,
+    "chaor_pct": 47.8,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 405,
+        "pay": 7731.91
+      },
+      "daR": {
+        "cnt": 348,
+        "pay": 4102.05
+      },
+      "zhongR": {
+        "cnt": 558,
+        "pay": 3651.47
+      },
+      "xiaoR": {
+        "cnt": 146,
+        "pay": 673.82
+      },
+      "feiR": {
+        "cnt": 2,
+        "pay": 21.94
+      }
+    }
+  },
+  "对对碰": {
+    "pay_total": 8010.27,
+    "payers_raw": 512,
+    "arppu_approx": 15.65,
+    "chaor_pay": 3581.5,
+    "chaor_pct": 44.7,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 187,
+        "pay": 3581.5
+      },
+      "daR": {
+        "cnt": 139,
+        "pay": 2213.48
+      },
+      "zhongR": {
+        "cnt": 169,
+        "pay": 1807.52
+      },
+      "feiR": {
+        "cnt": 2,
+        "pay": 314.95
+      },
+      "xiaoR": {
+        "cnt": 15,
+        "pay": 92.82
+      }
+    }
+  },
+  "情人节": {
+    "pay_total": 12690.31,
+    "payers_raw": 1023,
+    "arppu_approx": 12.4,
+    "chaor_pay": 6458.04,
+    "chaor_pct": 50.9,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 441,
+        "pay": 6458.04
+      },
+      "daR": {
+        "cnt": 279,
+        "pay": 3136.2
+      },
+      "zhongR": {
+        "cnt": 265,
+        "pay": 2581.57
+      },
+      "feiR": {
+        "cnt": 12,
+        "pay": 264.81
+      },
+      "xiaoR": {
+        "cnt": 26,
+        "pay": 249.69
+      }
+    }
+  },
+  "科技节-挖孔小游戏": {
+    "pay_total": 207638.25,
+    "payers_raw": 2731,
+    "arppu_approx": 76.03,
+    "chaor_pay": 137041.99,
+    "chaor_pct": 66.0,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 701,
+        "pay": 137041.99
+      },
+      "daR": {
+        "cnt": 619,
+        "pay": 43024.2
+      },
+      "zhongR": {
+        "cnt": 1095,
+        "pay": 24332.48
+      },
+      "xiaoR": {
+        "cnt": 299,
+        "pay": 1925.25
+      },
+      "feiR": {
+        "cnt": 17,
+        "pay": 1314.33
+      }
+    }
+  },
+  "挖矿小游戏": {
+    "pay_total": 69364.05,
+    "payers_raw": 2768,
+    "arppu_approx": 25.06,
+    "chaor_pay": 49547.4,
+    "chaor_pct": 71.4,
+    "rlevel": {
+      "zhongR": {
+        "cnt": 978,
+        "pay": 9363.99
+      },
+      "chaoR": {
+        "cnt": 723,
+        "pay": 49547.4
+      },
+      "xiaoR": {
+        "cnt": 550,
+        "pay": 3150.09
+      },
+      "daR": {
+        "cnt": 510,
+        "pay": 7112.92
+      },
+      "feiR": {
+        "cnt": 7,
+        "pay": 189.65
+      }
+    }
+  },
+  "掉落转付费": {
+    "pay_total": 6130.19,
+    "payers_raw": 824,
+    "arppu_approx": 7.44,
+    "chaor_pay": 2206.93,
+    "chaor_pct": 36.0,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 226,
+        "pay": 2206.93
+      },
+      "zhongR": {
+        "cnt": 326,
+        "pay": 1956.44
+      },
+      "daR": {
+        "cnt": 216,
+        "pay": 1597.42
+      },
+      "xiaoR": {
+        "cnt": 52,
+        "pay": 269.47
+      },
+      "feiR": {
+        "cnt": 4,
+        "pay": 99.93
+      }
+    }
+  },
+  "科技节-推币机": {
+    "pay_total": 122410.56,
+    "payers_raw": 1585,
+    "arppu_approx": 77.23,
+    "chaor_pay": 87419.42,
+    "chaor_pct": 71.4,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 550,
+        "pay": 87419.42
+      },
+      "daR": {
+        "cnt": 382,
+        "pay": 20801.38
+      },
+      "zhongR": {
+        "cnt": 505,
+        "pay": 10247.68
+      },
+      "feiR": {
+        "cnt": 17,
+        "pay": 2314.41
+      },
+      "xiaoR": {
+        "cnt": 131,
+        "pay": 1627.67
+      }
+    }
+  },
+  "改造猴特权": {
+    "pay_total": 3146.85,
+    "payers_raw": 315,
+    "arppu_approx": 9.99,
+    "chaor_pay": 1838.16,
+    "chaor_pct": 58.4,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 184,
+        "pay": 1838.16
+      },
+      "daR": {
+        "cnt": 78,
+        "pay": 779.22
+      },
+      "zhongR": {
+        "cnt": 46,
+        "pay": 459.54
+      },
+      "feiR": {
+        "cnt": 5,
+        "pay": 49.95
+      },
+      "xiaoR": {
+        "cnt": 2,
+        "pay": 19.98
+      }
+    }
+  },
+  "科技节-通行证": {
+    "pay_total": 37881.9,
+    "payers_raw": 3210,
+    "arppu_approx": 11.8,
+    "chaor_pay": 14326.71,
+    "chaor_pct": 37.8,
+    "rlevel": {
+      "zhongR": {
+        "cnt": 1085,
+        "pay": 11900.15
+      },
+      "chaoR": {
+        "cnt": 1129,
+        "pay": 14326.71
+      },
+      "daR": {
+        "cnt": 839,
+        "pay": 10115.61
+      },
+      "xiaoR": {
+        "cnt": 140,
+        "pay": 1329.6
+      },
+      "feiR": {
+        "cnt": 17,
+        "pay": 209.83
+      }
+    }
+  },
+  "科技节-周卡": {
+    "pay_total": 5383.75,
+    "payers_raw": 124,
+    "arppu_approx": 43.42,
+    "chaor_pay": 3589.22,
+    "chaor_pct": 66.7,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 78,
+        "pay": 3589.22
+      },
+      "daR": {
+        "cnt": 29,
+        "pay": 1159.71
+      },
+      "zhongR": {
+        "cnt": 13,
+        "pay": 434.86
+      },
+      "feiR": {
+        "cnt": 4,
+        "pay": 199.96
+      }
+    }
+  },
+  "限时抢购": {
+    "pay_total": 46107.55,
+    "payers_raw": 450,
+    "arppu_approx": 102.46,
+    "chaor_pay": 32781.54,
+    "chaor_pct": 71.1,
+    "rlevel": {
+      "chaoR": {
+        "cnt": 239,
+        "pay": 32781.54
+      },
+      "daR": {
+        "cnt": 119,
+        "pay": 8687.34
+      },
+      "zhongR": {
+        "cnt": 86,
+        "pay": 4348.75
+      },
+      "feiR": {
+        "cnt": 3,
+        "pay": 249.95
+      },
+      "xiaoR": {
+        "cnt": 3,
+        "pay": 39.97
+      }
+    }
+  }
+}

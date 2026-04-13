@@ -1,0 +1,7 @@
+{
+  "task_id": "task_20260402_124601_b9d0f9",
+  "title": "Cursor当前使用的模型",
+  "status": "done",
+  "result": "在 Cursor 里和你对话的这条助手身份是 **Composer**，由 **Cursor** 自研/提供，不是 OpenAI 的 GPT 系列，也不是 Anthropic 的 Claude。  \n具体后台会挂哪个推理服务、是否多模型路由，要以 Cursor 设置里 **Models / 所选模型** 为准；我这边无法替你读取你本机的 Cursor 配置界面。",
+  "completed_at": "2026-04-02 12:46:40"
+}

@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260404_162504_e483f7",
+  "title": "手动执行推送脚本",
+  "instructions": "请在当前环境执行以下推送脚本，验证推送是否成功：(1) 小红书旅游推送脚本：C:\\\\Users\\\\linkang\\\\.openclaw\\\\workspace\\\\xiaohongshu_push.py；(2) 携程机票追踪脚本：C:\\\\ADHD_agent\\\\openclaw\\\\workspace\\\\ctrip_tracker.py --quick。执行后检查飞书是否收到消息，如果失败请查看报错原因并修复。",
+  "context": "",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-04-04 16:25:04",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-04-04 16:25:06",
+  "completed_at": "2026-04-04 16:35:11"
+}

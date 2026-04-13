@@ -1,0 +1,45 @@
+﻿python : Traceback (most recent call last):
+所在位置 C:\Users\linkang\AppData\Local\Temp\ps-script-95146da1-e23d-40d4-8885-32148e194d5c.ps1:83 字符: 1
++ python C:\ADHD_agent\tmp_create_april_schedule.py get_sheet_id 2>&1 | ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\ADHD_agent\tmp_create_april_schedule.py", line 262, in <module>
+    sid, err = get_sheet_id(TEMPLATE_SPREADSHEET_ID, SHEET_NAME)
+               ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ADHD_agent\tmp_create_april_schedule.py", line 202, in get_sheet_id
+    data, err = run_gws_with_file(
+                ~~~~~~~~~~~~~~~~~^
+        ['sheets', 'spreadsheets', 'get'],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        params_dict={'spreadsheetId': spreadsheet_id}
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\ADHD_agent\tmp_create_april_schedule.py", line 92, in run_gws_with_file
+    result = subprocess.run(cmd, capture_output=True)
+  File "C:\Python314\Lib\subprocess.py", line 554, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\subprocess.py", line 1038, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\subprocess.py", line 1552, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+                             # no special security
+                             ^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                             cwd,
+                             ^^^^
+                             startupinfo)
+                             ^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] 系统找不到指定的文件。

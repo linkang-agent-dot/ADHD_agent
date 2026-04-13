@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260402_163113_240540",
+  "title": "调研千川AI接入相关skill/项目",
+  "instructions": "请在 GitHub 上搜索以下关键词，找出与「千川」（字节跳动数字化营销平台）相关的 AI 接入 skill、项目或工具：\n- 关键词：qiansichuan, 千川, bytedance ad, 巨量引擎 AI\n- 搜索 source:github\n- 重点关注：可以接入 AI Agent 使用的 skill、MCP 项目、自动化工具\n\n请列出找到的项目：名称、地址、功能简介、star数，最后给一个简短的评价和落地建议。",
+  "context": "用户想了解千川平台有没有可以接入AI的skill或开源项目",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-04-02 16:31:13",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-04-02 16:36:58",
+  "completed_at": "2026-04-02 16:39:50"
+}

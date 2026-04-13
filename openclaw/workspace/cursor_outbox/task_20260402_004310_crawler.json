@@ -1,0 +1,7 @@
+{
+  "task_id": "task_20260402_004310_crawler",
+  "title": "查询 Cursor Agent 是否有爬虫相关技能",
+  "status": "done",
+  "result": "- **HTTP API**：可以通过终端跑脚本或项目里已有客户端，只要网络和密钥在本机可用。  \n- **Playwright**：`media-crawler-mcp` 的 README 里就要求 `uv run playwright install`；是否已在你的环境里装好，以本机为准。  \n- **Selenium**：未在「技能列表」里看到专门 Skill；若本机装了，同样可以由 Agent **通过命令行/脚本** 驱动。\n\n---\n\n## 你关心的两台服务：**Cursor 能不能调用 18080 / 18060？**\n\n**能力上：可以。** Cursor 支持把 **MCP 服务**接到 Agent；只要：\n\n1. **18060 小红书 MCP**（`http://localhost:18060/mcp`）和 **18080 MediaCrawler**（SSE：`http://127.0.0.1:18080/sse`）进程/Docker 已启动；  \n2. 在 **Cursor 的 MCP 配置**里分别添加对应类型的条目（HTTP Streamable / SSE 等以 Cursor 当前版本为准）；  \n3. 连接成功后，Agent 侧会出现这些 MCP 的 **tools**，对话里才能直接调用。\n\n**若不想配 Cursor MCP**，工作区已 documented 的 **`mcporter`** 路线仍可走：配置 **`C:\\ADHD_agent\\mcporter.json`** 后，在终端执行例如：\n\n```powershell\nmcporter call xiaohongshu search_feeds keyword=关键词\nmcporter list xiaohongshu\n```\n\nAgent 也可以通过 **`run_terminal_cmd`** 替你执行 `mcporter`，这算**间接**使用 18060，而不是「MCP 工具面板直连」。\n\n---\n\n### 简短结论（给你转述用户）\n\n- **Cursor Agent 具备**：脚本级抓取、解析、API、（环境具备时）Playwright 等；**不依赖**单独叫「爬虫」的内置技能。  \n- **MediaCrawler / 小红书 MCP**：**协议上可以在 Cursor 里用**，前提是 **Cursor MCP 里已正确配置且服务在线**；**当前这次对话未看到已注册成功的爬虫 MCP 工具**。  \n- **18080、18060**：**能调用**，条件是 **MCP 服务运行中 + Cursor MCP 配置正确**；否则可用 **`mcporter` CLI** 作为替代调用 18060。",
+  "completed_at": "2026-04-02 00:44:54"
+}

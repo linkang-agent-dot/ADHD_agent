@@ -1,0 +1,12 @@
+{
+  "title": "查询 Cursor Agent 可用的 Skills 列表",
+  "instructions": "请列出 Cursor Agent（后台运行的 AI 编程助手）当前可用的所有 skills / 内置能力。\n\n包括但不限于：\n1. Cursor 内置支持哪些编程语言和框架\n2. 是否有文件处理、代码生成、调试等专项技能\n3. 是否有连接数据库、操作用户项目（X2游戏配置）等能力\n4. 是否有调用外部工具的能力（如浏览器、终端等）\n\n请用简洁的方式列出所有可用技能。",
+  "context": "用户想知道 Cursor Agent 有哪些内置技能/能力，想了解它能帮做什么。",
+  "submitted_by": "OpenClaw",
+  "priority": "normal",
+  "task_id": "task_20260402_004040_skills",
+  "status": "done",
+  "submitted_at": "2026-04-02 00:41:05",
+  "picked_at": "2026-04-02 00:41:05",
+  "completed_at": "2026-04-02 00:42:28"
+}

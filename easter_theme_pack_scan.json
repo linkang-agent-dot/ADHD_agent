@@ -1,0 +1,12 @@
+{
+  "project": "P2",
+  "tables": ["2115"],
+  "sheets": ["activity_task_QA"],
+  "columns": "A:AZ",
+  "replacements": {
+    "\"id\":11119997,": "\"id\":111110302,",
+    "\"id\":111110000,": "\"id\":111110303,"
+  },
+  "matchMode": "simple",
+  "dryRun": true
+}

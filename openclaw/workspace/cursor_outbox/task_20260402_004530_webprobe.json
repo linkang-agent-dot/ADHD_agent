@@ -1,0 +1,7 @@
+{
+  "task_id": "task_20260402_004530_webprobe",
+  "title": "调研 webprobe skill 能否本地复用",
+  "status": "done",
+  "result": "- **不确定点**：官方是否只支持某一固定 API、是否需要 VPN/认证、镜像是否放在内网 registry——这些 **必须看官方文档或问维护者**，避免自建服务接口不兼容。\n\n---\n\n### 4. 建议与推荐步骤\n\n**结论简述：**\n\n- **「在 Cursor 里复用 webprobe 这份 skill」——可行前提**：从 Git/SkillsMP **拿到完整 skill 包**并安装到 skills 目录；当前机器 **尚未安装**。  \n- **「完全本地化（含本机 Docker 跑浏览器服务）」——大概率可行**，但 **依赖具体镜像与 API 文档**；若公司已有共享 `WEBPROBE_URL`，通常 **直接连共享服务比自建更省事**。  \n- **本调研无法替代**：SkillsMP 详情页、webprobe 的 Git README、以及维护者提供的 `docker run` / `compose` 示例。\n\n**若决定落地，建议顺序：**\n\n1. 打开 `http://skillsmp.tap4fun.com`，找到 **webprobe**，记下 **Git 地址、安装步骤、WEBPROBE_URL 说明、Docker/部署段落**。  \n2. 将仓库克隆到 `C:\\Users\\linkang\\.cursor\\skills\\webprobe`（或团队统一路径），并按文档校验 Cursor 是否加载（必要时重启 Cursor / 查项目 rules）。  \n3. **二选一**：  \n   - 使用 **公司提供的 `WEBPROBE_URL`**（开发机 VPN 能访问即可）；或  \n   - 按文档 **本地 `docker run`/`docker compose`** 起服务，再设 `WEBPROBE_URL=http://localhost:...`。  \n4. 在 **OpenClaw / 调用方** 配置中与文档一致地注入 `WEBPROBE_URL`，用一次最小请求（若文档有 health check）验证。  \n5. 若文档缺失镜像或 URL，**向 GitLab 该仓库 Maintainer 或 SkillsMP 联系人**索取「官方镜像 + 示例环境变量 + 是否需鉴权」。\n\n---\n\n**调研局限（需你知情）**  \n\n- 未访问内网 **skillsmp.tap4fun.com** 的 webprobe 页面，**未获取**具体 `docker` 命令与安装一行命令。  \n- **WEBPROBE_URL** 是否还有 `WEBPROBE_TOKEN` 等附加变量，**本地无 skill 文件无法确认**。  \n\n以上均以 **2026-04-02** 对本工作区与上述路径的扫描为准；若你在其他目录已安装 webprobe，可把路径发我，可再针对性读 `SKILL.md` 补充一版「带原文引用」的说明。",
+  "completed_at": "2026-04-02 00:47:28"
+}

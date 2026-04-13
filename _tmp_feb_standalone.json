@@ -1,0 +1,585 @@
+{
+  "feb_standalone": {
+    "label": "2月独立周期",
+    "start": "2026-02-02",
+    "end": "2026-02-08",
+    "total": 249955.8,
+    "packs": [
+      {
+        "name": "异族大富翁随机礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 53367.14,
+        "buyers": 69,
+        "times": 786
+      },
+      {
+        "name": "推币机礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 38368.09,
+        "buyers": 1092,
+        "times": 4191
+      },
+      {
+        "name": "推币机随机GACHA礼包",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 33279.13,
+        "buyers": 474,
+        "times": 1087
+      },
+      {
+        "name": "一番赏GACHA礼包",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 23746.67,
+        "buyers": 298,
+        "times": 833
+      },
+      {
+        "name": "限时抢购",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 18664.75,
+        "buyers": 252,
+        "times": 525
+      },
+      {
+        "name": "砍价-欢乐币礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 16019.31,
+        "buyers": 657,
+        "times": 1869
+      },
+      {
+        "name": "周年庆签到BP",
+        "iap_type2": "混合-节日活动-节日BP",
+        "revenue": 8101.89,
+        "buyers": 810,
+        "times": 811
+      },
+      {
+        "name": "砍价-欢乐币随机礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 7760.92,
+        "buyers": 896,
+        "times": 2608
+      },
+      {
+        "name": "MJ8小游戏",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 7316.79,
+        "buyers": 271,
+        "times": 421
+      },
+      {
+        "name": "春节抽奖成就礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 7074.76,
+        "buyers": 149,
+        "times": 224
+      },
+      {
+        "name": "一番赏bp",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 6812.55,
+        "buyers": 442,
+        "times": 545
+      },
+      {
+        "name": "2025深海节累充服务器礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 6624.36,
+        "buyers": 564,
+        "times": 564
+      },
+      {
+        "name": "2025异族大富翁",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 5721.76,
+        "buyers": 122,
+        "times": 224
+      },
+      {
+        "name": "砍价bp典藏版通行证",
+        "iap_type2": "混合-节日活动-节日BP",
+        "revenue": 4585.44,
+        "buyers": 656,
+        "times": 656
+      },
+      {
+        "name": "2025春节GACHA礼包",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 3979.2,
+        "buyers": 36,
+        "times": 80
+      },
+      {
+        "name": "2025春节随机GACHA礼包",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 2629.33,
+        "buyers": 31,
+        "times": 67
+      },
+      {
+        "name": "2025周年庆累充服务器礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 1694.17,
+        "buyers": 83,
+        "times": 83
+      },
+      {
+        "name": "酒馆登陆bp",
+        "iap_type2": "混合-节日活动-节日BP",
+        "revenue": 829.38,
+        "buyers": 62,
+        "times": 62
+      },
+      {
+        "name": "砍价bp豪华版通行证",
+        "iap_type2": "混合-节日活动-节日BP",
+        "revenue": 717.6,
+        "buyers": 240,
+        "times": 240
+      },
+      {
+        "name": "砍价bp-差价",
+        "iap_type2": "混合-节日活动-节日BP",
+        "revenue": 503.99,
+        "buyers": 101,
+        "times": 101
+      },
+      {
+        "name": "GACHA每日礼包-登月节",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 499.0,
+        "buyers": 37,
+        "times": 100
+      },
+      {
+        "name": "预购连锁",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 299.97,
+        "buyers": 3,
+        "times": 3
+      },
+      {
+        "name": "2026春节-行军特效",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 259.87,
+        "buyers": 13,
+        "times": 13
+      },
+      {
+        "name": "挖矿小游戏活动",
+        "iap_type2": "混合-节日活动-挖矿小游戏",
+        "revenue": 175.65,
+        "buyers": 24,
+        "times": 35
+      },
+      {
+        "name": "节日-异族大富翁存钱罐礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 170.43,
+        "buyers": 57,
+        "times": 57
+      },
+      {
+        "name": "异族大富翁-体验卡礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 159.92,
+        "buyers": 8,
+        "times": 8
+      },
+      {
+        "name": "挖矿小游戏-产量翻倍特权",
+        "iap_type2": "混合-节日活动-挖矿小游戏",
+        "revenue": 113.62,
+        "buyers": 37,
+        "times": 38
+      },
+      {
+        "name": "2025春节-行军表情",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 99.8,
+        "buyers": 20,
+        "times": 20
+      },
+      {
+        "name": "挖矿小游戏",
+        "iap_type2": "混合-节日活动-挖矿小游戏",
+        "revenue": 89.82,
+        "buyers": 17,
+        "times": 18
+      },
+      {
+        "name": "转盘折扣小额",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 84.92,
+        "buyers": 6,
+        "times": 8
+      },
+      {
+        "name": "泳池派对礼包",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 59.94,
+        "buyers": 4,
+        "times": 6
+      },
+      {
+        "name": "千万下载礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 50.78,
+        "buyers": 17,
+        "times": 22
+      },
+      {
+        "name": "2022幼猴节gacha礼包",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 39.96,
+        "buyers": 2,
+        "times": 4
+      },
+      {
+        "name": "鱿鱼游戏复活币礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 29.94,
+        "buyers": 5,
+        "times": 6
+      },
+      {
+        "name": "鱿鱼游戏触发礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 24.95,
+        "buyers": 5,
+        "times": 5
+      }
+    ]
+  },
+  "cny_pure": {
+    "label": "春节(纯)",
+    "start": "2026-01-13",
+    "end": "2026-02-01",
+    "total": 811208.17,
+    "packs": [
+      {
+        "name": "挖孔小游戏礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 139651.51,
+        "buyers": 1791,
+        "times": 7949
+      },
+      {
+        "name": "2025异族大富翁",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 128007.14,
+        "buyers": 1376,
+        "times": 4686
+      },
+      {
+        "name": "钓鱼活动礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 79705.75,
+        "buyers": 1238,
+        "times": 4825
+      },
+      {
+        "name": "异族大富翁随机礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 68625.63,
+        "buyers": 159,
+        "times": 1437
+      },
+      {
+        "name": "春节抽奖成就礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 56037.49,
+        "buyers": 1235,
+        "times": 3051
+      },
+      {
+        "name": "MJ8小游戏",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 53130.63,
+        "buyers": 1087,
+        "times": 3337
+      },
+      {
+        "name": "限时抢购",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 44419.96,
+        "buyers": 445,
+        "times": 1004
+      },
+      {
+        "name": "春节高级通行证_2025",
+        "iap_type2": "混合-节日活动-节日BP",
+        "revenue": 21729.13,
+        "buyers": 1087,
+        "times": 1087
+      },
+      {
+        "name": "春节自选周卡",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 20930.33,
+        "buyers": 333,
+        "times": 467
+      },
+      {
+        "name": "2025春节随机GACHA礼包",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 19473.41,
+        "buyers": 253,
+        "times": 659
+      },
+      {
+        "name": "预购连锁",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 19298.07,
+        "buyers": 193,
+        "times": 193
+      },
+      {
+        "name": "春节初级通行证_2025",
+        "iap_type2": "混合-节日活动-节日BP",
+        "revenue": 12959.46,
+        "buyers": 1853,
+        "times": 1854
+      },
+      {
+        "name": "2026春节-行军特效",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 11794.1,
+        "buyers": 590,
+        "times": 590
+      },
+      {
+        "name": "2025春节GACHA礼包",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 11226.16,
+        "buyers": 205,
+        "times": 384
+      },
+      {
+        "name": "情人节BP",
+        "iap_type2": "混合-节日活动-节日BP",
+        "revenue": 11025.14,
+        "buyers": 568,
+        "times": 986
+      },
+      {
+        "name": "2025春节-行军表情",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 9780.4,
+        "buyers": 1958,
+        "times": 1960
+      },
+      {
+        "name": "钓鱼bp",
+        "iap_type2": "混合-节日活动-节日BP",
+        "revenue": 9430.56,
+        "buyers": 944,
+        "times": 944
+      },
+      {
+        "name": "挖矿小游戏活动",
+        "iap_type2": "混合-节日活动-挖矿小游戏",
+        "revenue": 9006.36,
+        "buyers": 792,
+        "times": 2364
+      },
+      {
+        "name": "异族大富翁-体验卡礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 8295.85,
+        "buyers": 415,
+        "times": 415
+      },
+      {
+        "name": "GACHA每日礼包-登月节",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 8193.58,
+        "buyers": 376,
+        "times": 1642
+      },
+      {
+        "name": "25感恩节每日补给升级礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 7735.13,
+        "buyers": 1605,
+        "times": 3887
+      },
+      {
+        "name": "异族大富翁每日礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 7280.41,
+        "buyers": 408,
+        "times": 1459
+      },
+      {
+        "name": "付费率宝箱",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 6856.26,
+        "buyers": 1374,
+        "times": 1374
+      },
+      {
+        "name": "2026春节集结奖励解锁礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 6052.87,
+        "buyers": 1213,
+        "times": 1213
+      },
+      {
+        "name": "对对碰",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 5694.63,
+        "buyers": 437,
+        "times": 737
+      },
+      {
+        "name": "2025科技节-强消耗抽奖券礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 5591.49,
+        "buyers": 226,
+        "times": 351
+      },
+      {
+        "name": "节日-异族大富翁存钱罐礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 5283.33,
+        "buyers": 1767,
+        "times": 1767
+      },
+      {
+        "name": "聚宝盆",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 4681.45,
+        "buyers": 439,
+        "times": 855
+      },
+      {
+        "name": "掉落转付费礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 3978.46,
+        "buyers": 557,
+        "times": 654
+      },
+      {
+        "name": "挖矿小游戏活动-1月循环（春节）关卡礼包",
+        "iap_type2": "混合-节日活动-挖矿小游戏",
+        "revenue": 2605.54,
+        "buyers": 222,
+        "times": 946
+      },
+      {
+        "name": "酒馆登陆bp",
+        "iap_type2": "混合-节日活动-节日BP",
+        "revenue": 2101.41,
+        "buyers": 113,
+        "times": 159
+      },
+      {
+        "name": "情人节bingo活动宝箱礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 1676.64,
+        "buyers": 336,
+        "times": 336
+      },
+      {
+        "name": "kvk基因高级bp通行证-V81-kvk5",
+        "iap_type2": "混合-节日活动-节日BP",
+        "revenue": 1599.84,
+        "buyers": 16,
+        "times": 16
+      },
+      {
+        "name": "2025科技节强消耗触发礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 1491.3,
+        "buyers": 348,
+        "times": 370
+      },
+      {
+        "name": "kvk基因bp通行证",
+        "iap_type2": "混合-节日活动-节日BP",
+        "revenue": 1124.25,
+        "buyers": 75,
+        "times": 75
+      },
+      {
+        "name": "挖矿小游戏",
+        "iap_type2": "混合-节日活动-挖矿小游戏",
+        "revenue": 1112.79,
+        "buyers": 124,
+        "times": 221
+      },
+      {
+        "name": "鱿鱼游戏触发礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 1088.19,
+        "buyers": 124,
+        "times": 181
+      },
+      {
+        "name": "基因bp通行证BP积分礼包",
+        "iap_type2": "混合-节日活动-节日BP",
+        "revenue": 814.26,
+        "buyers": 50,
+        "times": 74
+      },
+      {
+        "name": "kvk基因高级bp通行证",
+        "iap_type2": "混合-节日活动-节日BP",
+        "revenue": 399.96,
+        "buyers": 4,
+        "times": 4
+      },
+      {
+        "name": "挖矿小游戏-产量翻倍特权",
+        "iap_type2": "混合-节日活动-挖矿小游戏",
+        "revenue": 319.93,
+        "buyers": 81,
+        "times": 107
+      },
+      {
+        "name": "鱿鱼游戏复活币礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 289.42,
+        "buyers": 52,
+        "times": 58
+      },
+      {
+        "name": "千万下载礼包",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 215.4,
+        "buyers": 42,
+        "times": 60
+      },
+      {
+        "name": "泳池派对礼包",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 169.83,
+        "buyers": 9,
+        "times": 17
+      },
+      {
+        "name": "转盘折扣小额",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 164.88,
+        "buyers": 10,
+        "times": 12
+      },
+      {
+        "name": "2022幼猴节gacha礼包",
+        "iap_type2": "混合-节日活动-节日皮肤",
+        "revenue": 119.92,
+        "buyers": 4,
+        "times": 8
+      },
+      {
+        "name": "2023幼猴节-7日活动宝箱",
+        "iap_type2": "混合-节日活动-节日特惠",
+        "revenue": 39.92,
+        "buyers": 8,
+        "times": 8
+      }
+    ]
+  }
+}

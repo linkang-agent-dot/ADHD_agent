@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 工作流产出路径 · 近一周总结</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .header .label {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 12px;
+  }
+
+  .header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .header .subtitle {
+    color: #64748b;
+    font-size: 14px;
+  }
+
+  .header .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .stat-pill {
+    background: #1e2533;
+    border: 1px solid #2d3748;
+    border-radius: 24px;
+    padding: 8px 20px;
+    font-size: 13px;
+    color: #94a3b8;
+  }
+
+  .stat-pill strong {
+    color: #f8fafc;
+    font-size: 18px;
+    display: block;
+    text-align: center;
+  }
+
+  /* Main grid */
+  .grid {
+    max-width: 1060px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 800px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: #161b27;
+    border: 1px solid #1e2d40;
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    border-radius: 16px 16px 0 0;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--icon-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .card-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 4px;
+  }
+
+  .card-tag {
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--accent-bg);
+    padding: 2px 8px;
+    border-radius: 999px;
+    display: inline-block;
+  }
+
+  .card-desc {
+    font-size: 13.5px;
+    color: #94a3b8;
+    line-height: 1.75;
+    margin-bottom: 20px;
+  }
+
+  /* Sub-flows inside a card */
+  .subflows {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .subflow {
+    background: #0f1520;
+    border-radius: 10px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .subflow-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin-bottom: 8px;
+  }
+
+  .subflow-steps {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .step {
+    font-size: 11.5px;
+    color: #94a3b8;
+    background: #1a2235;
+    border-radius: 6px;
+    padding: 3px 9px;
+    white-space: nowrap;
+  }
+
+  .step-arrow {
+    color: #334155;
+    font-size: 12px;
+  }
+
+  .step.end {
+    color: var(--accent);
+    border: 1px solid var(--accent-bg);
+    background: var(--accent-bg);
+    font-weight: 600;
+  }
+
+  /* Colors per category */
+  .c1 { --accent: #60a5fa; --accent-bg: rgba(96,165,250,0.12); --icon-bg: rgba(96,165,250,0.12); }
+  .c2 { --accent: #34d399; --accent-bg: rgba(52,211,153,0.12); --icon-bg: rgba(52,211,153,0.12); }
+  .c3 { --accent: #a78bfa; --accent-bg: rgba(167,139,250,0.12); --icon-bg: rgba(167,139,250,0.12); }
+  .c4 { --accent: #38bdf8; --accent-bg: rgba(56,189,248,0.12); --icon-bg: rgba(56,189,248,0.12); }
+
+  /* Insight box */
+  .insight-box {
+    max-width: 1000px;
+    margin: 32px auto 0;
+    background: linear-gradient(135deg, rgba(96,165,250,0.05), rgba(167,139,250,0.05));
+    border: 1px solid #2d3748;
+    border-radius: 16px;
+    padding: 28px 32px;
+  }
+
+  .insight-box h3 {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 16px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .insight-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  .insight-list li {
+    font-size: 13.5px;
+    color: #cbd5e1;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    line-height: 1.65;
+  }
+
+  .insight-list li .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #60a5fa;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 48px;
+    color: #334155;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">Cursor AI · 工作流总结</div>
+  <h1>近一周 AI 主要产出路径</h1>
+  <div class="subtitle">2026 年 4 月 3 日 — 4 月 9 日</div>
+  <div class="stats-row">
+    <div class="stat-pill"><strong>5</strong>核心路径</div>
+    <div class="stat-pill"><strong>7+ 张表</strong>换皮单次涉及</div>
+    <div class="stat-pill"><strong>全程无感</strong>任务结束飞书通知</div>
+  </div>
+</div>
+
+<div class="grid">
+
+  <!-- Card 1: Config Pipeline -->
+  <div class="card c1">
+    <div class="card-header">
+      <div class="icon-box">⚙️</div>
+      <div>
+        <div class="card-title">配置工程化 · 提升重复操作效率</div>
+        <span class="card-tag">高频使用 · 减少手动 git 操作</span>
+      </div>
+    </div>
+    <div class="card-desc">
+      P2 配置表上传、分支合并、差异对比全部自动化。只需告诉 AI 表号和目标分支，剩下的操作由 Skill 标准流程接管，彻底解放重复的 git 操作。
+    </div>
+    <div class="subflows">
+
+      <div class="subflow">
+        <div class="subflow-title">📤 自动化传表</div>
+        <div class="subflow-steps">
+          <span class="step">指定表号 + 分支名</span>
+          <span class="step-arrow">→</span>
+          <span class="step">fwcli 下载 GSheet</span>
+          <span class="step-arrow">→</span>
+          <span class="step">格式校验</span>
+          <span class="step-arrow">→</span>
+          <span class="step">git commit + push</span>
+          <span class="step-arrow">→</span>
+          <span class="step end">✅ 飞书通知完成</span>
+        </div>
+      </div>
+
+      <div class="subflow">
+        <div class="subflow-title">🔀 自动分支合并 + 差异表生成</div>
+        <div class="subflow-steps">
+          <span class="step">指定源分支 A / B</span>
+          <span class="step-arrow">→</span>
+          <span class="step">读取两支分支配置</span>
+          <span class="step-arrow">→</span>
+          <span class="step">合并到 dev</span>
+          <span class="step-arrow">→</span>
+          <span class="step end">差异对照表写入 GSheet</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Card 2: GSheet Automation -->
+  <div class="card c2">
+    <div class="card-header">
+      <div class="icon-box">📊</div>
+      <div>
+        <div class="card-title">Google Sheets 自动化</div>
+        <span class="card-tag">高频使用 · 表格操作零手工</span>
+      </div>
+    </div>
+    <div class="card-desc">
+      把 GSheet 当核心数据中枢，AI 负责跨表读写、模板复制、公式生成与排期填充，消灭手工复制粘贴。
+    </div>
+    <div class="subflows">
+
+      <div class="subflow">
+        <div class="subflow-title">📅 活动排期表自动生成</div>
+        <div class="subflow-steps">
+          <span class="step">提供模板表 URL</span>
+          <span class="step-arrow">→</span>
+          <span class="step">提供数据源表 URL</span>
+          <span class="step-arrow">→</span>
+          <span class="step">AI 对齐字段填充</span>
+          <span class="step-arrow">→</span>
+          <span class="step end">新页签写入完成</span>
+        </div>
+      </div>
+
+      <div class="subflow">
+        <div class="subflow-title">📋 ID 列表 → 一键粘贴格式</div>
+        <div class="subflow-steps">
+          <span class="step">粘贴 JSON / ID 数组</span>
+          <span class="step-arrow">→</span>
+          <span class="step">AI 转换为 TSV 格式</span>
+          <span class="step-arrow">→</span>
+          <span class="step end">直接粘贴进 GSheet</span>
+        </div>
+      </div>
+
+      <div class="subflow">
+        <div class="subflow-title">🔗 跨表引用公式生成</div>
+        <div class="subflow-steps">
+          <span class="step">提供目标表 URL</span>
+          <span class="step-arrow">→</span>
+          <span class="step">AI 读取 Sheet 名</span>
+          <span class="step-arrow">→</span>
+          <span class="step end">输出 IMPORTRANGE 公式</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Card NEW: Reskin -->
+  <div class="card" style="--accent:#f59e0b; --accent-bg:rgba(245,158,11,0.12); --icon-bg:rgba(245,158,11,0.12); grid-column: 1 / -1;">
+    <div class="card-header">
+      <div class="icon-box">🎨</div>
+      <div>
+        <div class="card-title">换皮活动配置 · 自动化生成 & 二次审核</div>
+        <span class="card-tag">核心场景 · 多表联动 · 输出即可粘贴</span>
+      </div>
+    </div>
+    <div class="card-desc">
+      节日活动换皮是最复杂的重复性工作——一次换皮涉及 2112 / 2115 / 2135 / 2011 / 2013 / 1111 / 1511 等多张表，每张表字段含义不同、有外键依赖、有本地化要求。AI 接管整个流程：从读旧配置→分析命中模块→追踪依赖链→生成完整配置行，最后读 QA 表二次审核，确保不漏字段、不漏本地化。
+    </div>
+    <div class="subflows" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px;">
+
+      <div class="subflow">
+        <div class="subflow-title">🔄 配置自动生成</div>
+        <div class="subflow-steps">
+          <span class="step">粘贴旧活动配置行</span>
+          <span class="step-arrow">→</span>
+          <span class="step">AI 分析命中模块</span>
+          <span class="step-arrow">→</span>
+          <span class="step">外键 ID 逐一验证（1111）</span>
+          <span class="step-arrow">→</span>
+          <span class="step end">输出全表 TSV 一键粘贴</span>
+        </div>
+      </div>
+
+      <div class="subflow">
+        <div class="subflow-title">🔗 依赖链追踪</div>
+        <div class="subflow-steps">
+          <span class="step">2112 活动主体</span>
+          <span class="step-arrow">→</span>
+          <span class="step">2115 任务 / 2135 礼包</span>
+          <span class="step-arrow">→</span>
+          <span class="step">2011 规则 / 2013 内容模板</span>
+          <span class="step-arrow">→</span>
+          <span class="step end">跨表 ID 同步更新</span>
+        </div>
+      </div>
+
+      <div class="subflow">
+        <div class="subflow-title">📋 QA 表读表二次审核</div>
+        <div class="subflow-steps">
+          <span class="step">读取 QA 表页签</span>
+          <span class="step-arrow">→</span>
+          <span class="step">与生成配置交叉核验</span>
+          <span class="step-arrow">→</span>
+          <span class="step">检查本地化 LC Key 完整性</span>
+          <span class="step-arrow">→</span>
+          <span class="step end">输出审核结论 + 差异清单</span>
+        </div>
+      </div>
+
+      <div class="subflow">
+        <div class="subflow-title">📚 经验自动沉淀</div>
+        <div class="subflow-steps">
+          <span class="step">每轮换皮完成</span>
+          <span class="step-arrow">→</span>
+          <span class="step">新增坑点 / 规则写回 Skill</span>
+          <span class="step-arrow">→</span>
+          <span class="step">ID 对照更新 config-library</span>
+          <span class="step-arrow">→</span>
+          <span class="step end">下次换皮可直接复用</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Card 3: Config Review -->
+  <div class="card c3">
+    <div class="card-header">
+      <div class="icon-box">🔎</div>
+      <div>
+        <div class="card-title">配置检查 & 变更审查</div>
+        <span class="card-tag">中频使用 · 降低上线风险</span>
+      </div>
+    </div>
+    <div class="card-desc">
+      利用 AI 快速读取 git diff、审查配置变更，判断内容是否异常或与节日相关，配合 Skill 自动生成审查报告，减少人工 review 遗漏。
+    </div>
+    <div class="subflows">
+
+      <div class="subflow">
+        <div class="subflow-title">📸 截图 → 变更内容核查</div>
+        <div class="subflow-steps">
+          <span class="step">截图上传</span>
+          <span class="step-arrow">→</span>
+          <span class="step">AI 识别变更条目</span>
+          <span class="step-arrow">→</span>
+          <span class="step">git diff 深查</span>
+          <span class="step-arrow">→</span>
+          <span class="step end">给出阶段结论</span>
+        </div>
+      </div>
+
+      <div class="subflow">
+        <div class="subflow-title">📋 排期审查 Skill 全流程</div>
+        <div class="subflow-steps">
+          <span class="step">排期表 + 上线表</span>
+          <span class="step-arrow">→</span>
+          <span class="step">三维对比审核</span>
+          <span class="step-arrow">→</span>
+          <span class="step end">审查报告写入</span>
+        </div>
+      </div>
+
+      <div class="subflow">
+        <div class="subflow-title">🔍 配置 JSON 差异诊断</div>
+        <div class="subflow-steps">
+          <span class="step">粘贴两段 JSON</span>
+          <span class="step-arrow">→</span>
+          <span class="step">AI 逐字段对比</span>
+          <span class="step-arrow">→</span>
+          <span class="step end">定位问题字段</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Card 4: Async Notify -->
+  <div class="card c4">
+    <div class="card-header">
+      <div class="icon-box">🔔</div>
+      <div>
+        <div class="card-title">Cursor 任务完成通知</div>
+        <span class="card-tag">常驻机制 · 无需盯屏等待</span>
+      </div>
+    </div>
+    <div class="card-desc">
+      每次 AI 完成任务后，自动通过飞书推送结果摘要。执行期间可以去做别的事，完成后飞书 @ 提醒，形成"派任务 → 去忙别的 → 收通知"的完整异步闭环。
+    </div>
+    <div class="subflows">
+
+      <div class="subflow">
+        <div class="subflow-title">✅ 任务完成通知</div>
+        <div class="subflow-steps">
+          <span class="step">AI 完成任务</span>
+          <span class="step-arrow">→</span>
+          <span class="step">notify_done.py</span>
+          <span class="step-arrow">→</span>
+          <span class="step end">飞书推送结果摘要</span>
+        </div>
+      </div>
+
+      <div class="subflow">
+        <div class="subflow-title">❓ 需要决策时阻塞等待</div>
+        <div class="subflow-steps">
+          <span class="step">遇到不可逆操作</span>
+          <span class="step-arrow">→</span>
+          <span class="step">飞书发问</span>
+          <span class="step-arrow">→</span>
+          <span class="step">等待用户回复 yes/no</span>
+          <span class="step-arrow">→</span>
+          <span class="step end">继续执行</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Insights -->
+<div class="insight-box">
+  <h3>💡 关键洞察</h3>
+  <ul class="insight-list">
+    <li>
+      <div class="dot"></div>
+      <span><strong>换皮是最高价值场景</strong>：一次节日换皮涉及 7+ 张表、数十个外键 ID、N 条本地化，人工做容易漏。AI 接管后用 Skill 标准化流程执行，漏字段概率大幅下降，且每次的坑自动沉淀进 Skill 供下次复用。</span>
+    </li>
+    <li>
+      <div class="dot"></div>
+      <span><strong>Skill 是可积累的资产</strong>：配置换皮、P2 导表、排期审查都封装成 Skill，团队内可共用，新人也能通过 Skill 快速上手，经验不随人员流动丢失。</span>
+    </li>
+    <li>
+      <div class="dot"></div>
+      <span><strong>输出格式即产物</strong>：AI 的所有配置输出都是 TSV 格式，直接粘贴进 GSheet 即可，不需要二次加工，降低粘贴出错率。</span>
+    </li>
+    <li>
+      <div class="dot"></div>
+      <span><strong>飞书通知形成异步闭环</strong>：任务交给 AI 后人可以去做别的事，完成后飞书 @ 提醒，有效提升并行度，不用盯屏等结果。</span>
+    </li>
+  </ul>
+</div>
+
+<div class="footer">
+  数据来源：Cursor Agent 会话记录 · 2026-04-03 ~ 2026-04-09 · 自动分析生成
+</div>
+
+</body>
+</html>

@@ -1,0 +1,379 @@
+{"id":"60d309ab3c993223104495f7","name":"DNU"}
+{"id":"60d30b3d3c993223104495f8","name":"平均 EDAU"}
+{"id":"60d412c3e862647e69cfe707","name":"付费额"}
+{"id":"60d4131ae862647e69cfe709","name":"内购收入"}
+{"id":"60d414fde862647e69cfe712","name":"留存用户数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60d415d3e862647e69cfe713","name":"累计付费次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60d41631e862647e69cfe714","name":"累计付费额","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60d4165ae862647e69cfe715","name":"累计内购收入","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60d416a3e862647e69cfe716","name":"累计买量收入","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60d41994e862647e69cfe71b","name":"新增付费用户数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60d419c1e862647e69cfe71c","name":"累计付费用户数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60d421f0b75b54435c6225e7","name":"DAOT"}
+{"id":"60d42387b75b54435c6225ea","name":"留存率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60d427b0b75b54435c6225fa","name":"自然量占比"}
+{"id":"60d427e9b75b54435c6225fb","name":"留存衰减","cohort":true,"cohortUtils":["DAY","WEEK","MONTH"]}
+{"id":"60d4281cb75b54435c6225fc","name":"ARPU"}
+{"id":"60d42914b75b54435c6225fd","name":"ARPPU"}
+{"id":"60d42940b75b54435c6225fe","name":"ARPC"}
+{"id":"60d4296fb75b54435c6225ff","name":"付费率[日]"}
+{"id":"60d4299bb75b54435c622600","name":"LTV","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60d429cbb75b54435c622601","name":"付费LTV","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60d429fab75b54435c622602","name":"比0日LTV倍数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60d42a52b75b54435c622604","name":"单次付费行为收入","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60dd5edbb43a0503d75d88a6","name":"平均登录次数"}
+{"id":"60dd6006b43a0503d75d88a8","name":"分成后LTV","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60dd9a52b43a0503d75d88b6","name":"广告收入"}
+{"id":"60dd9afeb43a0503d75d88b7","name":"总收入"}
+{"id":"60dda0adb43a0503d75d88c0","name":"累计广告收入","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60dda1feb43a0503d75d88c2","name":"累计总收入","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60dec602b43a0503d75d88fd","name":"自然量"}
+{"id":"60ded269b43a0503d75d8910","name":"累计付费率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60ded3a2b43a0503d75d8914","name":"DAOT","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60dedc86b43a0503d75d8927","name":"付费后留存用户数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60deddf9b43a0503d75d8928","name":"付费后留存率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60df02d5b43a0503d75d8942","name":"ADPU","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60e2c151b43a0503d75d8998","name":"平均 EWAU"}
+{"id":"60e2c182b43a0503d75d8999","name":"平均 EMAU"}
+{"id":"60e547f308ad187ee56a76ca","name":"未流失用户数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"60e55e7161ef1c664b4035b1","name":"未流失率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60e66a07b1ed0473c4cc4f62","name":"未流失付费用户数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60e69b03b1ed0473c4cc4f82","name":"收入比6/0"}
+{"id":"60e69bfeb1ed0473c4cc4f83","name":"收入比13/6"}
+{"id":"60e69c62b1ed0473c4cc4f84","name":"收入比29/13"}
+{"id":"60e6b9c4b1ed0473c4cc4fb2","name":"平均采集次数"}
+{"id":"60e6ba5ab1ed0473c4cc4fb3","name":"平均采集资源量(k)"}
+{"id":"60e6bb8db1ed0473c4cc4fb5","name":"平均采集时长(分钟)"}
+{"id":"60e6c405b1ed0473c4cc4fc1","name":"平均战斗次数"}
+{"id":"60e6c63eb1ed0473c4cc4fc8","name":"平均战斗次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60e80465b1ed0473c4cc5009","name":"平均建造次数"}
+{"id":"60e804f5b1ed0473c4cc500f","name":"平均建造消耗加速(分钟)"}
+{"id":"60ebd70ae023ba0836356b1a","name":"付费用户数","cohort":true,"cohortUtils":["DAY"]}
+{"id":"60ebdb03e023ba0836356b20","name":"付费率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60ed231ee023ba0836356b72","name":"平均建造次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60ed2a74f727e75e6f7b6ab3","name":"平均建造消耗加速(分钟)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60ed43e4f727e75e6f7b6ad8","name":"平均科研次数"}
+{"id":"60ed44cef727e75e6f7b6ae0","name":"商店下载"}
+{"id":"60ed4531f727e75e6f7b6ae2","name":"商店卸载"}
+{"id":"60ed4626f727e75e6f7b6ae3","name":"商店收入(分成前)"}
+{"id":"60ed46c7f727e75e6f7b6ae4","name":"商店收入"}
+{"id":"60ed47ccf727e75e6f7b6ae7","name":"商店退款(分成前)"}
+{"id":"60ed4855f727e75e6f7b6aea","name":"商店退款"}
+{"id":"60ed48e3f727e75e6f7b6aeb","name":"商店美元收入(分成前)"}
+{"id":"60ed498ff727e75e6f7b6aee","name":"商店美元收入"}
+{"id":"60ed4a21f727e75e6f7b6aef","name":"苹果商店纯收入(分成前)"}
+{"id":"60ed4a99f727e75e6f7b6af0","name":"苹果商店纯收入"}
+{"id":"60ed4bb8f727e75e6f7b6af3","name":"Google商店纯收入(分成前)"}
+{"id":"60ed4c24f727e75e6f7b6af7","name":"Google商店纯收入"}
+{"id":"60ed4d14f727e75e6f7b6afa","name":"微信商店纯收入(分成前)"}
+{"id":"60ed4d5ff727e75e6f7b6afc","name":"微信商店纯收入"}
+{"id":"60ed5218f727e75e6f7b6b00","name":"平均科研次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60ed526af727e75e6f7b6b01","name":"支付宝商店纯收入(分成前)"}
+{"id":"60ed52bbf727e75e6f7b6b03","name":"支付宝商店纯收入"}
+{"id":"60ed53a6f727e75e6f7b6b04","name":"商店纯收入"}
+{"id":"60ed541ff727e75e6f7b6b06","name":"商店纯收入(分成前)"}
+{"id":"60ed54b3f727e75e6f7b6b09","name":"平均科研加速(分钟)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60ed5f3df727e75e6f7b6b10","name":"平均科研加速(分钟)"}
+{"id":"60ed618cf727e75e6f7b6b16","name":"平均采集次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60ed6203f727e75e6f7b6b17","name":"平均采集时长(分钟)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60efa0f1b021ca71a727c255","name":"建造参与率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60efa34fb021ca71a727c25a","name":"战斗参与率"}
+{"id":"60efa641b021ca71a727c261","name":"平均训练次数"}
+{"id":"60efa9c4b021ca71a727c265","name":"平均训练加速(分钟)"}
+{"id":"60efabf7b021ca71a727c26e","name":"建造参与率"}
+{"id":"60efacf0b021ca71a727c270","name":"采集参与率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60efadadb021ca71a727c271","name":"科研参与率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60efc610b021ca71a727c276","name":"采集参与率"}
+{"id":"60efc843b021ca71a727c279","name":"科研参与率"}
+{"id":"60efc99db021ca71a727c283","name":"预测10个月收入","cohort":true,"cohortUtils":["TO_DATE","DAY","WEEK"]}
+{"id":"60efc9ddb021ca71a727c284","name":"预测6个月收入","cohort":true,"cohortUtils":["TO_DATE","DAY","WEEK"]}
+{"id":"60efca2fb021ca71a727c286","name":"预测8个月收入","cohort":true,"cohortUtils":["TO_DATE","DAY","WEEK"]}
+{"id":"60efca8cb021ca71a727c287","name":"预测1年收入","cohort":true,"cohortUtils":["TO_DATE","DAY","WEEK"]}
+{"id":"60efd0e1b021ca71a727c28f","name":"训练参与率"}
+{"id":"60efd585b021ca71a727c290","name":"平均采集资源量(k)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60efe6d1b021ca71a727c29f","name":"平均训练次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60efe81eb021ca71a727c2a1","name":"平均训练加速(分钟)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60efe908b021ca71a727c2a2","name":"训练参与率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60eff311b021ca71a727c2a9","name":"战斗参与率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"60fea9c3b021ca71a727c39d","name":"平均 PVP 次数"}
+{"id":"60ffd0feb021ca71a727c3a4","name":"平均 PVE 次数"}
+{"id":"60ffd185b021ca71a727c3a5","name":"平均 GVE 次数"}
+{"id":"610bbc14af3acf174ba43050","name":"付费率[周]"}
+{"id":"610bbcd6af3acf174ba43054","name":"付费率[月]"}
+{"id":"610cd47faf3acf174ba4317b","name":"世界聊天用户数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"610cd4b1af3acf174ba4317c","name":"世界聊天用户数"}
+{"id":"610cd4ebaf3acf174ba4317d","name":"联盟聊天用户数"}
+{"id":"610cd518af3acf174ba4317e","name":"联盟聊天用户数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6110d6e6b51a72369447eaa5","name":"私聊用户数"}
+{"id":"6110d8c7b51a72369447eabc","name":"私聊用户数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"61110b43b51a72369447ebda","name":"平均邮件次数"}
+{"id":"61110c53b51a72369447ebdd","name":"平均私聊次数"}
+{"id":"61110d01b51a72369447ebe0","name":"私聊参与率"}
+{"id":"61110db7b51a72369447ebe3","name":"平均私聊对象数"}
+{"id":"61110e23b51a72369447ebe4","name":"平均联盟聊天次数"}
+{"id":"61110e90b51a72369447ebe5","name":"联盟聊天参与率"}
+{"id":"61110eeeb51a72369447ebe6","name":"平均世界聊天次数"}
+{"id":"61110f40b51a72369447ebe7","name":"世界聊天参与率"}
+{"id":"611386ab662008110963b51f","name":"平均战力"}
+{"id":"6113882e662008110963b542","name":"平均战力","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"611cabd1b27d3b153da7dc2f","name":"主基地等级平均值","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"611cadd1b27d3b153da7dc3c","name":"主基地等级中位数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"611cb071b27d3b153da7dc4f","name":"主基地等级平均值"}
+{"id":"611cb0afb27d3b153da7dc51","name":"主基地等级中位数"}
+{"id":"611cb5a7b27d3b153da7dc75","name":"角色等级平均值"}
+{"id":"611cb630b27d3b153da7dc7c","name":"角色等级平均值","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"611f102bb27d3b153da7dd92","name":"最新角色名称","cohort":true,"cohortUtils":["TO_DATE"]}
+{"id":"6125b041b27d3b153da7e3f0","name":"注册转化率"}
+{"id":"6128961db27d3b153da7e72d","name":"平均登录次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"61289682b27d3b153da7e72e","name":"单次登录在线时长","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"61289765b27d3b153da7e73e","name":"单次登录在线时长"}
+{"id":"612c7942b27d3b153da7e954","name":"平均 DAU"}
+{"id":"612c79aab27d3b153da7e955","name":"平均付费用户数[日]"}
+{"id":"612c7df2b27d3b153da7e97a","name":"平均  WAU"}
+{"id":"612c7e60b27d3b153da7e97e","name":"平均 MAU"}
+{"id":"612c7f7fb27d3b153da7e982","name":"平均付费用户数[周]"}
+{"id":"612c8051b27d3b153da7e984","name":"平均付费用户数[月]"}
+{"id":"612c8218b27d3b153da7e985","name":"平均 DAC"}
+{"id":"612c8297b27d3b153da7e986","name":"平均 WAC"}
+{"id":"612c8314b27d3b153da7e988","name":"平均 MAC"}
+{"id":"61306d4fc9a510001eac8e93","name":"PVP 参与率"}
+{"id":"61306de4c9a510001eac8e95","name":"PVE 参与率"}
+{"id":"61306f03c9a510001eac8e9b","name":"GVE 参与率"}
+{"id":"61306fa6c9a510001eac8ea1","name":"PVP 参与率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"61307015c9a510001eac8ea4","name":"PVE 参与率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6130707ac9a510001eac8ea6","name":"GVE 参与率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"61307769c9a510001eac8eb5","name":"平均 PVP 次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"613077f4c9a510001eac8eb8","name":"平均 PVE 次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"61307874c9a510001eac8ebf","name":"平均 GVE 次数","cohort":true,"cohortUtils":["WEEK","DAY","MONTH","YEAR"]}
+{"id":"6130a852c9a510001eac8fe9","name":"邮件用户数"}
+{"id":"6130a8d2c9a510001eac8ff6","name":"邮件参与率"}
+{"id":"6130aa38c9a510001eac9006","name":"邮件用户数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6131c359c9a510001eac9106","name":"平均邮件次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6131c4cdc9a510001eac911e","name":"邮件参与率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6131c734c9a510001eac9129","name":"平均私聊次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6131c828c9a510001eac912c","name":"私聊参与率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6131cafac9a510001eac9139","name":"平均私聊对象数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6131ccefc9a510001eac913d","name":"平均联盟聊天次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6131ce11c9a510001eac913e","name":"联盟聊天参与率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6131cfa6c9a510001eac9144","name":"平均世界聊天次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6131d05ec9a510001eac9145","name":"世界聊天参与率","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6131dc18c842a71cd22616a4","name":"平均战斗用户数"}
+{"id":"6131dca1c842a71cd22616a7","name":"平均 PVP 用户数"}
+{"id":"6131dd22c842a71cd22616a8","name":"平均 PVE 用户数"}
+{"id":"6131e154c16fa172055d221d","name":"平均 GVE 用户数"}
+{"id":"6131e658465a937e5baf11d4","name":"平均战斗用户数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6131e7fc08b0e51bd17c8911","name":"平均 PVP 用户数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6131e87e08b0e51bd17c8912","name":"平均 PVE 用户数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6131e93108b0e51bd17c8913","name":"平均 GVE 用户数","cohort":true,"cohortUtils":["WEEK","DAY","MONTH","YEAR"]}
+{"id":"6135ae3908b0e51bd17c8a4f","name":"联盟名称","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"6135aeaf08b0e51bd17c8a50","name":"联盟战力排名","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"61517ed3703b82544fd7fa96","name":"留存率(分钟)","cohort":true,"cohortUtils":["MINUTE"]}
+{"id":"61764d8f1e949b1d542e6818","name":"预测半年周比","cohort":true,"cohortUtils":["TO_DATE","DAY","WEEK"]}
+{"id":"618c9364c18a301d0315774a","name":"当前阶段付费额","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"61a485150365d92ffc423a08","name":"退款(分成前)"}
+{"id":"61ad78fc0365d92ffc42a86d","name":"华为海外商店纯收入（分成前）"}
+{"id":"61ad7a050365d92ffc42a88b","name":"华为海外商店纯收入"}
+{"id":"61ad7bab0365d92ffc42a8bd","name":"应用宝商店纯收入"}
+{"id":"61ad7c700365d92ffc42a8ef","name":"应用宝商店纯收入（分成前）"}
+{"id":"61cec649de4eb9538d0729b8","name":"预测7日付费","games":["1041"],"cohort":true,"cohortUtils":["TO_DATE"]}
+{"id":"61e10d0222f2d73d42a36642","name":"苹果商店退款"}
+{"id":"61e10d8022f2d73d42a36677","name":"Google商店退款"}
+{"id":"623d27a2aaba015c204c4447","name":"当日回收问卷数量"}
+{"id":"62415160aaba015c204c7f05","name":"累计付费用户数(up5)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"62415216aaba015c204c7f26","name":"累计付费率(up5)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"624152f2aaba015c204c7f44","name":"新增付费用户数(up5)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"624153d2aaba015c204c7f80","name":"付费用户数(up5)","cohort":true,"cohortUtils":["DAY"]}
+{"id":"6241547baaba015c204c7f98","name":"付费率(up5)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"62a0647629623a09ef1ca33a","name":"DMOT"}
+{"id":"62a066bc29623a09ef1ca3b7","name":"DMOT","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"62a3024829623a09ef1cdd1f","name":"XSOLLA商店纯收入（分成前）"}
+{"id":"62a302e229623a09ef1cdd35","name":"XSOLLA商店纯收入"}
+{"id":"62aa919c47d9172d662749b0","name":"世界观/题材满意比例（NPS算法）"}
+{"id":"62ab24e61d7d992333fcbfb8","name":"美术满意比例（NPS算法）"}
+{"id":"62ab25441d7d992333fcbfc7","name":"独特性满意比例（NPS算法）"}
+{"id":"62ab258c1d7d992333fcbfd2","name":"趣味性满意比例（NPS算法）"}
+{"id":"62ab25d91d7d992333fcbfd6","name":"操作满意比例（NPS算法）"}
+{"id":"62ab26211d7d992333fcbfe1","name":"NPS"}
+{"id":"62ac12cd1d7d992333fcd645","name":"休闲益智类占比"}
+{"id":"62ac132b1d7d992333fcd65c","name":"累计在线时长","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"62ac133d1d7d992333fcd665","name":"RPG类占比"}
+{"id":"62ac13a11d7d992333fcd674","name":"MOBA类占比"}
+{"id":"62ac24671d7d992333fcd9f4","name":"战争策略类占比"}
+{"id":"62ac254c1d7d992333fcda30","name":"休闲策略类占比"}
+{"id":"62ac25b31d7d992333fcda48","name":"模拟经营类占比"}
+{"id":"62ac25e91d7d992333fcda4e","name":"二次元类占比"}
+{"id":"62ac26311d7d992333fcda5c","name":"棋牌捕鱼类占比"}
+{"id":"62ac267d1d7d992333fcda67","name":"音乐/体育/跑酷类占比"}
+{"id":"62ac26d41d7d992333fcda84","name":"恋爱/角色养成类占比"}
+{"id":"62ac27361d7d992333fcda98","name":"其它类占比"}
+{"id":"62ac27801d7d992333fcdaa4","name":"不爱玩手游类占比"}
+{"id":"62ac28331d7d992333fcdabc","name":"博彩类占比"}
+{"id":"62ac28ba1d7d992333fcdad7","name":"平均年龄"}
+{"id":"62ac29011d7d992333fcdadd","name":"男性占比"}
+{"id":"62ac292d1d7d992333fcdae7","name":"女性占比"}
+{"id":"62ac29741d7d992333fcdaf1","name":"性别-其他占比"}
+{"id":"62ac301c1d7d992333fcdc20","name":"新玩家占比"}
+{"id":"62ac30651d7d992333fcdc25","name":"老手新号占比"}
+{"id":"62ac30b91d7d992333fcdc2e","name":"回归玩家占比"}
+{"id":"62ac3ebe1d7d992333fcde63","name":"下载渠道-应用商店占比"}
+{"id":"62ac3f021d7d992333fcde6d","name":"下载渠道-FaceBook占比"}
+{"id":"62ac3f2c1d7d992333fcde72","name":"下载渠道-Google占比"}
+{"id":"62ac3f651d7d992333fcde79","name":"下载渠道-YouTube占比"}
+{"id":"62ac3fa51d7d992333fcde7f","name":"下载渠道-Instagram,Blogger等社交展示类媒体占比"}
+{"id":"62ac3fe31d7d992333fcde8d","name":"下载渠道-其它网站/App占比"}
+{"id":"62ac40121d7d992333fcde93","name":"下载渠道-忘记了占比"}
+{"id":"62ac47601d7d992333fcdfab","name":"DNU回收问卷数量"}
+{"id":"62b0117c1d7d992333fd1164","name":"战争策略类用户数"}
+{"id":"62b033cc1d7d992333fd1737","name":"博彩类用户数"}
+{"id":"62b033ff1d7d992333fd1741","name":"模拟经营类用户数"}
+{"id":"62b034501d7d992333fd1748","name":"RPG类用户数"}
+{"id":"62b0361e1d7d992333fd177b","name":"其它类用户数"}
+{"id":"62b036781d7d992333fd1788","name":"不喜欢玩手游用户数"}
+{"id":"62b043931d7d992333fd1979","name":"MOBA用户数"}
+{"id":"62b043fe1d7d992333fd1987","name":"休闲益智类用户数"}
+{"id":"62b044341d7d992333fd198b","name":"休闲策略类用户数"}
+{"id":"62b044751d7d992333fd1994","name":"棋牌捕鱼类用户数"}
+{"id":"62b044a01d7d992333fd1996","name":"恋爱/角色养成类用户数"}
+{"id":"62b044ef1d7d992333fd19a0","name":"音乐/体育/跑酷类用户数"}
+{"id":"62b565431d7d992333fd93bf","name":"ARPU","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"62beb7cd1d7d992333fe7e83","name":"游戏占比（社媒关注）","games":["1038"]}
+{"id":"62bec0d71d7d992333fe7f9d","name":"科技占比（社媒关注）","games":["1038"]}
+{"id":"62c288ed1d7d992333feb915","name":"影视/音乐占比（社媒关注）","games":["1038"]}
+{"id":"62c289561d7d992333feb91f","name":"颜值达人占比（社媒关注）","games":["1038"]}
+{"id":"62c289881d7d992333feb923","name":"运动健身占比（社媒关注）","games":["1038"]}
+{"id":"62c28a121d7d992333feb933","name":"时尚/美妆占比（社媒关注）","games":["1038"]}
+{"id":"62c28a301d7d992333feb937","name":"生活占比（社媒关注）","games":["1038"]}
+{"id":"62c28a8e1d7d992333feb941","name":"动物占比（社媒关注）","games":["1038"]}
+{"id":"62c28aae1d7d992333feb945","name":"美食/烹饪占比（社媒关注）","games":["1038"]}
+{"id":"62c28af01d7d992333feb951","name":"军事/历史占比（社媒关注）","games":["1038"]}
+{"id":"62c28b311d7d992333feb962","name":"时事新闻/网络热点占比（社媒关注）","games":["1038"]}
+{"id":"62c28c331d7d992333feb99d","name":"旅行占比（社媒关注）","games":["1038"]}
+{"id":"62c28c601d7d992333feb9ab","name":"搞笑剧情占比（社媒关注）","games":["1038"]}
+{"id":"62c28c8f1d7d992333feb9b3","name":"汽车占比（社媒关注）","games":["1038"]}
+{"id":"62c28cc71d7d992333feb9bc","name":"漫画/番剧或其他相关作品占比（社媒关注）","games":["1038"]}
+{"id":"62c28d141d7d992333feb9c9","name":"其他内容占比（社媒关注）","games":["1038"]}
+{"id":"62c28d411d7d992333feb9d4","name":"很少浏览社媒占比","games":["1038"]}
+{"id":"62c297e71d7d992333febc16","name":"15-17岁占比"}
+{"id":"62c29f7e1d7d992333febd8f","name":"18-22岁占比"}
+{"id":"62c29ff11d7d992333febd9e","name":"23-25岁占比"}
+{"id":"62c2a07d1d7d992333febdb1","name":"26-30岁占比"}
+{"id":"62c2a0bc1d7d992333febdb5","name":"31-35岁占比"}
+{"id":"62c2a0fa1d7d992333febdbf","name":"36-40岁占比"}
+{"id":"62c2a11d1d7d992333febdc2","name":"41-45岁占比"}
+{"id":"62c2a14d1d7d992333febdc8","name":"46-50岁占比"}
+{"id":"62c2a1841d7d992333febdd0","name":"51-55岁占比"}
+{"id":"62c2a1ac1d7d992333febddb","name":"56-60岁占比"}
+{"id":"62c2a1d21d7d992333febddf","name":"61岁及以上占比"}
+{"id":"62e257aca2f7ec4d30e236b3","name":"平均付费$5 DAC"}
+{"id":"62f61971033de3350ab2ce4e","name":"ADPU 增长衰减","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"62fc876180784f418802a978","name":"付费-不愿透露付费情况","games":["1012"]}
+{"id":"62fc96ca80784f418802abf8","name":"动作格斗类占比"}
+{"id":"62fc985880784f418802ac46","name":"AR类占比"}
+{"id":"62fc98ed80784f418802ac56","name":"文字冒险/AVG/视觉小说类占比"}
+{"id":"630d83932de3062eba89cf51","name":"付费次数"}
+{"id":"630f2dd4200294063fdfca20","name":"付费-几乎不付费","games":["1012"]}
+{"id":"630f2e9f200294063fdfca30","name":"付费-低于$50","games":["1012"]}
+{"id":"630f2fec200294063fdfca49","name":"付费-$101 - $500","games":["1012"]}
+{"id":"630f2ed3200294063fdfca3b","name":"付费-$51 - $100","games":["1012"]}
+{"id":"630f3034200294063fdfca53","name":"付费-$501 - $1,000","games":["1012"]}
+{"id":"630f3065200294063fdfca61","name":"付费-$1,001 - $2,000","games":["1012"]}
+{"id":"630f308b200294063fdfca63","name":"付费-超过$2,000","games":["1012"]}
+{"id":"634107b86a187c71b854b5ff","name":"留存衰减(7:1)"}
+{"id":"6341081c6a187c71b854b61b","name":"留存衰减(30:14)"}
+{"id":"6341086d6a187c71b854b62f","name":"留存衰减(60:30)"}
+{"id":"634108a76a187c71b854b630","name":"留存衰减(30:7)"}
+{"id":"63410daf6a187c71b854b6fb","name":"留存衰减(14:7)"}
+{"id":"63410e046a187c71b854b700","name":"留存衰减(90:60)"}
+{"id":"6375faccba1b2f22097ad81a","name":"平均战损（仅GVG、PVP）"}
+{"id":"6375fc28ba1b2f22097ad83b","name":"平均战损（仅GVG、PVP）","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6391b8d96ffd8410864ca433","name":"ARPPU","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"63d72dd06ffd84108650f246","name":"当前阶段付费周比","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"63d9d96d022b7909be3a3b6f","name":"预估付费额"}
+{"id":"63e9e6298df76f55e818a1f5","name":"留存衰减(2:1)"}
+{"id":"643d144c795fcc0b1cf832b1","name":"战力总和","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"6440dd19795fcc0b1cf89690","name":"Paypal商店纯收入"}
+{"id":"6440dda6795fcc0b1cf896b1","name":"airwallex商店纯收入"}
+{"id":"6440de0e795fcc0b1cf896c8","name":"Paypal商店纯收入(分成前)"}
+{"id":"6440de59795fcc0b1cf896cd","name":"airwallex商店纯收入(分成前)"}
+{"id":"644769497772e34003a7c1b1","name":"[获取量]cohort平均代币","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"644769497772e34003a7c1b3","name":"[存量]cohort平均代币","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"644769497772e34003a7c1b5","name":"[使用量]cohort平均代币","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"644769497772e34003a7c1b7","name":"[获取量]平均代币"}
+{"id":"644769497772e34003a7c1b9","name":"[存量]平均代币"}
+{"id":"6447694a7772e34003a7c1bb","name":"[使用量]平均代币"}
+{"id":"6467209c7772e34003aacd49","name":"MRPPU"}
+{"id":"64758eda7772e34003ac60fd","name":"比7日LTV倍数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"6477fc4f7772e34003acb30b","name":"adyen商店纯收入（分成前）"}
+{"id":"6477fda17772e34003acb36e","name":"adyen商店纯收入"}
+{"id":"64b77727e438eb102eb0326d","name":"flexion商店纯收入"}
+{"id":"64b77b7de438eb102eb03376","name":"国内华为商店纯收入"}
+{"id":"64b77ba0e438eb102eb0337e","name":"oppo商店纯收入"}
+{"id":"64b77bc3e438eb102eb03387","name":"小米商店纯收入"}
+{"id":"64b77bf1e438eb102eb033aa","name":"九游商店纯收入"}
+{"id":"64d49a81f70d3e67400fea90","name":"Paypal商店退款"}
+{"id":"65236d3436601c59bf780203","name":"累计科研次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"65236eed36601c59bf7803b1","name":"累计科研消耗加速","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6523743936601c59bf780abb","name":"累计采集次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"65239dbb36601c59bf782228","name":"累计采集时长（分钟）","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"65239fcf36601c59bf78234a","name":"累计采集数量(k)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6523a13136601c59bf782429","name":"累计训练次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6523a25336601c59bf782490","name":"累计训练消耗加速","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6523a8e236601c59bf782773","name":"累计PVP 次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6523a96836601c59bf7827ab","name":"累计PVE 次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6523ab0d36601c59bf782877","name":"累计GVE 次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6523b33836601c59bf782ab2","name":"累计私聊次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6523b4d636601c59bf782b0e","name":"累计联盟聊天次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"6523b5ed36601c59bf782b4c","name":"累计世界聊天次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"65449be2590a12564a18ac3a","name":"被广告吸引尝试游戏占比"}
+{"id":"6544a3e0590a12564a18b18e","name":"被朋友邀请尝试游戏占比"}
+{"id":"6544a5b4590a12564a18b2ec","name":"社交网络讨论尝试游戏占比"}
+{"id":"6544a73c590a12564a18b370","name":"应用商店推荐尝试游戏占比"}
+{"id":"6502cf9d33676a3ce9e31609","name":"活跃用户平均年龄"}
+{"id":"6544a85b590a12564a18b3f7","name":"主播推荐尝试游戏占比"}
+{"id":"6544a8e5590a12564a18b43c","name":"其他原因尝试游戏占比"}
+{"id":"6544a984590a12564a18b48b","name":"尝鲜尝试游戏占比"}
+{"id":"651269d948aae956213aae23","name":"留存衰减(7:3)"}
+{"id":"6523663436601c59bf77faa9","name":"累计建造次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"652369ac36601c59bf77feca","name":"累计建造消耗加速","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"65b224450178b9528e9c34a6","name":"代币付费额"}
+{"id":"65b2331c0178b9528e9c38f6","name":"代币收入"}
+{"id":"65b2338b0178b9528e9c3909","name":"非代币付费额"}
+{"id":"65b235580178b9528e9c3983","name":"非代币内购收入"}
+{"id":"65b3537dfd89e91be6fdfcd4","name":"平均 YAU"}
+{"id":"65b3540cfd89e91be6fdfd24","name":"ARPU(年)"}
+{"id":"65b35ee9fd89e91be6fe0098","name":"ARPPU(年)"}
+{"id":"65bcbd1122aac833a739310d","name":"购买代币人数"}
+{"id":"65bcbed622aac833a7393227","name":"平均 代币DAC"}
+{"id":"65dd82ec78d5653b565ddf76","name":"payermax商店纯收入（分成前）"}
+{"id":"65dd837c78d5653b565ddfc0","name":"payermax商店纯收入"}
+{"id":"65fba51c4c77736a2c0b60d0","name":"累计付费额半年比","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"65fd33341de4e44307bfc4ce","name":"分成后付费LTV","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"661623166aa4ea309c869ac5","name":"累计原始内购收入","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"6616261d6aa4ea309c869d61","name":"原始内购收入"}
+{"id":"661628146aa4ea309c869f0a","name":"原始总收入"}
+{"id":"6616657f6aa4ea309c86b7b6","name":"原始累计总收入","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"66433b9d31d8e33b66c23276","name":"区间付费用户数(排除0日)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"66433c1e31d8e33b66c23312","name":"区间付费率(排除0日)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"66433ef031d8e33b66c2362d","name":"区间付费用户数(排除0~1日)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"66433f3e31d8e33b66c23675","name":"区间付费用户数(排除0~2日)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"66433f6e31d8e33b66c23684","name":"区间付费率(排除0~1日)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"66433fa331d8e33b66c23690","name":"区间付费率(排除0~2日)","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"665fc9d274c2021fee9a65c6","name":"累计付费用户数（分钟）","cohort":true,"cohortUtils":["MINUTE"]}
+{"id":"665fcb0f74c2021fee9a6683","name":"累计付费率（分钟）","cohort":true,"cohortUtils":["MINUTE"]}
+{"id":"6670f88e53708019e4850a95","name":"平均付费$10 DAC"}
+{"id":"66835deaf1a6f965e494e9ae","name":"累计人均在线时长","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"66977826dabe4b3bdd4963c4","name":"华为h5商店纯收入（分成前）"}
+{"id":"6697789fdabe4b3bdd496416","name":"华为h5商店纯收入"}
+{"id":"66a1e5b21213c94d214e8820","name":"去重付费用户数"}
+{"id":"66a1e6711213c94d214e88aa","name":"ARPPU（去重）"}
+{"id":"66a1ef351213c94d214e9f14","name":"去重 AU"}
+{"id":"66a1f01f1213c94d214ea12f","name":"ARPU（去重）"}
+{"id":"66d05e77be17ff5999cb3e31","name":"累计人均付费次数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"670f6d67f3cbfa421b1b692b","name":"广告LTV","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"670f7622f3cbfa421b1b7228","name":"累计带来广告收入人数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"670f7bf0f3cbfa421b1b7c68","name":"看过广告LTV","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"670f8b0cf3cbfa421b1b8ba5","name":"总LTV","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"67a575d22ac2434b3f5ca510","name":"ARPC","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR","TO_DATE"]}
+{"id":"67e247eef6a1867612a25ca3","name":"角色等级中位数"}
+{"id":"67e24822f6a1867612a25ce7","name":"角色等级中位数","cohort":true,"cohortUtils":["DAY","WEEK","MONTH","YEAR"]}
+{"id":"68b14a5d183c7a4f42b1aa93","name":"最新战力","cohort":true,"cohortUtils":["TO_DATE","DAY"]}

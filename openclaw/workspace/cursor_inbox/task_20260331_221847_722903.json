@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260331_221847_722903",
+  "title": "X2合并：列出所有差异分支",
+  "instructions": "在执行合并之前，先把 hotfix 和 master_bugfix 两个分支之间的所有差异都列出来：\\n\\n1. 找到 x2 项目的位置（可能在 C:\\ 或其他盘符下的 x2 目录）\\n2. 对比 hotfix 和 master_bugfix 两个分支的差异\\n3. 列出所有有差异的文件，包括：文件名、差异类型（新增/修改/删除）、差异行数\\n4. 给出完整的差异报告，再进行合并操作\\n\\n先列差异，合并操作等用户确认后再执行",
+  "context": "",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-03-31 22:18:47",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-03-31 22:18:47",
+  "completed_at": "2026-03-31 22:39:21"
+}

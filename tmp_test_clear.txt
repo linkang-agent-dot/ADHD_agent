@@ -1,0 +1,9 @@
+﻿Testing clear...
+Stdout: {
+  "error": {
+    "code": 400,
+    "message": "Invalid --params JSON: key must be a string at line 1 column 2",
+    "reason": "validationError"
+  }
+}
+

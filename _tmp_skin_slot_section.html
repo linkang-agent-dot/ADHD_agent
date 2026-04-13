@@ -1,0 +1,219 @@
+
+<!-- ══ Section: 皮肤抽奖模块横向对比 ══ -->
+<div class="section">
+  <div class="section-title">皮肤抽奖模块 — 槽位横向对比</div>
+  <div style="margin-bottom:14px;font-size:12px;color:var(--text-muted)">
+    每个节日的<b>皮肤抽奖主玩法</b>槽位收入对比 · 不同节日使用不同形式（传统GACHA / 弹珠 / 骰子 / 云上探宝 / 推币机）<br>
+    目标：对比<b>同一功能位</b>的营收表现，评估形式替换的效果
+  </div>
+
+  <!-- 柱状图 -->
+  <div style="margin-bottom:28px">
+    <canvas id="skinSlotChart" width="860" height="380" style="width:100%;max-width:860px;border-radius:10px;background:var(--card-bg)"></canvas>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('skinSlotChart');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const PAD = { left: 70, right: 20, top: 50, bottom: 80 };
+    const plotW = W - PAD.left - PAD.right;
+    const plotH = H - PAD.top - PAD.bottom;
+
+    const isDark = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim().startsWith('#1');
+
+    const festivals = ["万圣节", "感恩节", "圣诞节", "春节", "情人节", "科技节"];
+    const formats = ["传统GACHA", "传统GACHA", "弹珠GACHA", "骰子", "云上探宝", "推币机+弹珠"];
+    const emojis = ["🎰", "🎰", "🔮", "🎲", "☁️", "🎯"];
+    const values = [61183.46, 103717.18, 144918.98, 110990.28, 125616.42, 249896.49];
+    const colors = ["#a78bfa", "#a78bfa", "#60a5fa", "#f97316", "#34d399", "#f472b6"];
+    const maxVal = 287380.96349999995;
+
+    // 背景
+    ctx.fillStyle = isDark ? '#1a1a2e' : '#fafafa';
+    ctx.fillRect(0, 0, W, H);
+
+    // 标题
+    ctx.fillStyle = isDark ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.7)';
+    ctx.font = 'bold 14px system-ui';
+    ctx.textAlign = 'left';
+    ctx.fillText('皮肤抽奖槽位收入 · 按形式标注', PAD.left, 28);
+
+    // 网格线
+    ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    for (let v = 0; v <= maxVal; v += 50000) {
+      const y = PAD.top + plotH - (v / maxVal) * plotH;
+      ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(W - PAD.right, y); ctx.stroke();
+      ctx.fillStyle = isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.4)';
+      ctx.font = '10px system-ui';
+      ctx.textAlign = 'right';
+      ctx.fillText('$' + (v/1000).toFixed(0) + 'K', PAD.left - 8, y + 3);
+    }
+
+    // 均值线
+    const avgY = PAD.top + plotH - (132720.46833333332 / maxVal) * plotH;
+    ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.2)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([6,4]);
+    ctx.beginPath(); ctx.moveTo(PAD.left, avgY); ctx.lineTo(W - PAD.right, avgY); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = isDark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)';
+    ctx.font = '10px system-ui';
+    ctx.textAlign = 'left';
+    ctx.fillText('均值 $' + Math.round(132720.46833333332/1000) + 'K', W - PAD.right - 70, avgY - 6);
+
+    // 柱子
+    const barWidth = plotW / festivals.length * 0.55;
+    const barGap = plotW / festivals.length;
+
+    festivals.forEach((fest, i) => {
+      const x = PAD.left + barGap * i + (barGap - barWidth) / 2;
+      const barH = (values[i] / maxVal) * plotH;
+      const y = PAD.top + plotH - barH;
+
+      // 柱子渐变
+      const grad = ctx.createLinearGradient(x, y, x, PAD.top + plotH);
+      grad.addColorStop(0, colors[i]);
+      grad.addColorStop(1, colors[i] + '44');
+      ctx.fillStyle = grad;
+
+      // 圆角矩形
+      const r = 4;
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + barWidth - r, y);
+      ctx.arcTo(x + barWidth, y, x + barWidth, y + r, r);
+      ctx.lineTo(x + barWidth, PAD.top + plotH);
+      ctx.lineTo(x, PAD.top + plotH);
+      ctx.lineTo(x, y + r);
+      ctx.arcTo(x, y, x + r, y, r);
+      ctx.fill();
+
+      // 边框
+      ctx.strokeStyle = colors[i];
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // 金额标签
+      ctx.fillStyle = isDark ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.75)';
+      ctx.font = 'bold 13px system-ui';
+      ctx.textAlign = 'center';
+      ctx.fillText('$' + Math.round(values[i]/1000) + 'K', x + barWidth/2, y - 8);
+
+      // 节日名
+      ctx.fillStyle = isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.5)';
+      ctx.font = '12px system-ui';
+      ctx.fillText(fest, x + barWidth/2, PAD.top + plotH + 20);
+
+      // 形式标签
+      ctx.fillStyle = colors[i];
+      ctx.font = 'bold 11px system-ui';
+      ctx.fillText(emojis[i] + ' ' + formats[i], x + barWidth/2, PAD.top + plotH + 38);
+    });
+  });
+  </script>
+
+  <!-- 数据表格 -->
+  <div class="table-wrap" style="margin-bottom:20px">
+    <table>
+      <thead>
+        <tr>
+          <th>节日</th>
+          <th>形式</th>
+          <th class="num">槽位收入</th>
+          <th class="num">vs 均值</th>
+          <th>礼包组成</th>
+          <th>分析</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td style="font-weight:600">万圣节</td>
+          <td>
+            <span style="background:#a78bfa22;color:#a78bfa;font-weight:700;font-size:11px;padding:3px 8px;border-radius:4px">
+              🎰 传统GACHA
+            </span>
+          </td>
+          <td class="num" style="font-weight:700;font-size:15px">$61K</td>
+          <td class="num" style="color:#ef4444;font-weight:600">-54%</td>
+          <td style="font-size:10px;color:var(--text-muted);max-width:280px">2024万圣节随机GACHA礼包($24K)、2024万圣节GACHA礼包($21K)、25万圣节gacha每日礼包($16K)</td>
+          <td style="font-size:11px">低于均值，传统GACHA形式吸引力待提升</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">感恩节</td>
+          <td>
+            <span style="background:#a78bfa22;color:#a78bfa;font-weight:700;font-size:11px;padding:3px 8px;border-radius:4px">
+              🎰 传统GACHA
+            </span>
+          </td>
+          <td class="num" style="font-weight:700;font-size:15px">$104K</td>
+          <td class="num" style="color:#ef4444;font-weight:600">-22%</td>
+          <td style="font-size:10px;color:var(--text-muted);max-width:280px">2024感恩节随机GACHA礼包($52K)、2024感恩节GACHA礼包($36K)、25感恩节本体gacha每日礼包($16K)</td>
+          <td style="font-size:11px">接近均值水平</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">圣诞节</td>
+          <td>
+            <span style="background:#60a5fa22;color:#60a5fa;font-weight:700;font-size:11px;padding:3px 8px;border-radius:4px">
+              🔮 弹珠GACHA
+            </span>
+          </td>
+          <td class="num" style="font-weight:700;font-size:15px">$145K</td>
+          <td class="num" style="color:#22c55e;font-weight:600">+9%</td>
+          <td style="font-size:10px;color:var(--text-muted);max-width:280px">2025万圣节弹珠随机GACHA礼包($145K)</td>
+          <td style="font-size:11px">接近均值水平</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">春节</td>
+          <td>
+            <span style="background:#f9731622;color:#f97316;font-weight:700;font-size:11px;padding:3px 8px;border-radius:4px">
+              🎲 骰子
+            </span>
+          </td>
+          <td class="num" style="font-weight:700;font-size:15px">$111K</td>
+          <td class="num" style="color:#ef4444;font-weight:600">-16%</td>
+          <td style="font-size:10px;color:var(--text-muted);max-width:280px">春节抽奖成就礼包($65K)、2025春节随机GACHA礼包($22K)、2025春节GACHA礼包($15K)、GACHA每日礼包-登月节($9K)</td>
+          <td style="font-size:11px">接近均值水平</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">情人节</td>
+          <td>
+            <span style="background:#34d39922;color:#34d399;font-weight:700;font-size:11px;padding:3px 8px;border-radius:4px">
+              ☁️ 云上探宝
+            </span>
+          </td>
+          <td class="num" style="font-weight:700;font-size:15px">$126K</td>
+          <td class="num" style="color:#ef4444;font-weight:600">-5%</td>
+          <td style="font-size:10px;color:var(--text-muted);max-width:280px">云上探宝($126K)</td>
+          <td style="font-size:11px">接近均值水平</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">科技节</td>
+          <td>
+            <span style="background:#f472b622;color:#f472b6;font-weight:700;font-size:11px;padding:3px 8px;border-radius:4px">
+              🎯 推币机+弹珠
+            </span>
+          </td>
+          <td class="num" style="font-weight:700;font-size:15px">$250K</td>
+          <td class="num" style="color:#22c55e;font-weight:600">+88%</td>
+          <td style="font-size:10px;color:var(--text-muted);max-width:280px">2026科技节弹珠GACHA($130K)、推币机礼包($64K)、推币机随机GACHA礼包($56K)</td>
+          <td style="font-size:11px">双形式叠加，收入远超单形式均值</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 洞察 -->
+  <div class="insight-box">
+    <div style="font-weight:700;margin-bottom:10px">皮肤抽奖槽位洞察</div>
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b style="color:#22c55e">最高收入</b>：科技节 (🎯 推币机+弹珠) $250K — 双形式策略使槽位收入达到单形式均值的 2.3x</div>
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b style="color:#ef4444">最低收入</b>：万圣节 (🎰 传统GACHA) $61K — 仅为最高值的 24%</div>
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b>形式演进</b>：传统GACHA($61K~$104K) → 弹珠($145K) → 骰子($111K) → 云上探宝($126K) → 推币机+弹珠($250K)</div>
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b>策略发现</b>：单形式均值 $109K，科技节双形式 $250K（+129%）— 同期投放两种皮肤玩法可显著拉升模块整体收入</div>
+    <div style="margin-bottom:6px;font-size:12px;line-height:1.7"><b>弹珠GACHA趋势</b>：圣诞首期$145K（独占）→ 科技节2期$130K（与推币机并行）— 弹珠本身有 -10% 衰减，但推币机补位使槽位总量翻倍</div>
+
+  </div>
+</div>

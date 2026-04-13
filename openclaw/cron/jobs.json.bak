@@ -2,30 +2,102 @@
   "version": 1,
   "jobs": [
     {
-      "id": "f988438d-d7a0-4f08-acae-eba56c7c1271",
-      "name": "小红书旅游热度推送",
+      "id": "aa7a03fc-d3f3-4670-a745-c28e1c28d810",
+      "name": "旅游攻略汇总推送",
       "enabled": true,
-      "createdAtMs": 1774253342899,
-      "updatedAtMs": 1774253342899,
+      "createdAtMs": 1774323335662,
+      "updatedAtMs": 1775963400236,
       "schedule": {
         "kind": "cron",
-        "expr": "30 11 * * 1-5",
+        "expr": "0 11 * * *",
         "tz": "Asia/Shanghai"
       },
       "sessionTarget": "isolated",
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "执行以下任务：\\n1. 调用 Python 脚本 C:\\\\Users\\\\linkang\\\\.openclaw\\\\workspace\\\\xiaohongshu_push.py\\n2. 获取小红书旅游热度Top5\\n3. 汇总成消息发送到飞书给我"
+        "message": "请执行以下步骤推送小红书旅游内容：\n1. 运行 python C:\\Users\\linkang\\.openclaw\\workspace\\xiaohongshu_push_v3.py 获取今日小红书旅游热度内容和封面图\n2. 读取运行结果（图片在 C:\\ADHD_agent\\openclaw\\workspace\\uploads\\push_1.jpg ~ push_5.jpg）\n3. 把内容+封面图一起推送到飞书，每条笔记发一条消息（文字+对应图片）"
       },
       "delivery": {
-        "mode": "announce",
+        "mode": "direct",
         "channel": "feishu",
-        "to": "ou_e48f6c4c0395f45b74b51525f348678b"
+        "target": "user:ou_e48f6c4c0395f45b74b51525f348678b"
       },
       "state": {
-        "nextRunAtMs": 1774323000000,
-        "runningAtMs": 1774253384514
+        "nextRunAtMs": 1776049200000,
+        "lastRunAtMs": 1775962800016,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 600220,
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 11,
+        "runningAtMs": 1776049200004
+      }
+    },
+    {
+      "id": "ed08c32f-6c5c-4300-b0fd-e1cd974735fc",
+      "name": "国际机票推送",
+      "enabled": true,
+      "createdAtMs": 1774326644918,
+      "updatedAtMs": 1775963488328,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 11 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "请执行以下步骤推送国际机票日报：\n1. 运行 exec: python C:\\ADHD_agent\\openclaw\\workspace\\ctrip_tracker.py --direct\n2. 读取脚本的控制台输出作为推送文案\n3. 读取 C:\\ADHD_agent\\openclaw\\workspace\\uploads\\flight_trend.png 作为趋势图\n4. 把文案和趋势图一起发送到飞书"
+      },
+      "delivery": {
+        "mode": "direct",
+        "channel": "feishu",
+        "target": "user:ou_e48f6c4c0395f45b74b51525f348678b"
+      },
+      "state": {
+        "nextRunAtMs": 1776049200000,
+        "lastRunAtMs": 1775963400236,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 88092,
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 11,
+        "runningAtMs": 1776049200004
+      }
+    },
+    {
+      "id": "rules-refresh-daily",
+      "name": "Cursor协作规则刷新",
+      "enabled": true,
+      "createdAtMs": 1774862400000,
+      "updatedAtMs": 1776042074439,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "【每日规则刷新】请记住以下 Cursor 协作规则（每天提醒一次）：\n\n1. 当用户要求让 Cursor 做某件事时，必须执行：\npython \"C:\\ADHD_agent\\.cursor\\skills\\async-notify\\scripts\\submit_task.py\" --title \"任务标题\" --instructions \"具体指令\" --submitted-by \"OpenClaw\" --notify\n\n2. 当用户回复了 Cursor 发来的飞书确认消息时，必须执行：\npython \"C:\\ADHD_agent\\.cursor\\skills\\async-notify\\scripts\\confirm_write.py\" --task-id \"task_id\" --decision auto --reply \"用户回复原文\"\n\n3. 查看当前 Cursor 任务队列：\npython \"C:\\ADHD_agent\\.cursor\\skills\\async-notify\\scripts\\submit_task.py\" --list\n\n4. 查看已完成任务结果：\npython \"C:\\ADHD_agent\\.cursor\\skills\\async-notify\\scripts\\submit_task.py\" --results\n\n以上规则已写入 AGENTS.md，请确认记住。无需回复，静默确认即可。"
+      },
+      "delivery": {
+        "mode": "silent",
+        "channel": "feishu",
+        "target": "user:ou_e48f6c4c0395f45b74b51525f348678b"
+      },
+      "state": {
+        "consecutiveErrors": 2,
+        "nextRunAtMs": 1776128400000,
+        "lastRunAtMs": 1776042000005,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 74434,
+        "lastDeliveryStatus": "unknown",
+        "lastError": "Delivering to Feishu requires target <chatId|user:openId|chat:chatId>"
       }
     }
   ]

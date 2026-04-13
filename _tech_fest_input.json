@@ -1,0 +1,877 @@
+{
+  "meta": {
+    "event_name": "2026科技节",
+    "benchmark_event": "2026情人节"
+  },
+  "metrics_trend": [
+    {
+      "event": "2025周年庆",
+      "revenue": 1869056,
+      "arpu": 0.72,
+      "arppu": 31.48,
+      "pay_rate": 2.3
+    },
+    {
+      "event": "2025万圣节",
+      "revenue": 1878406,
+      "arpu": 0.87,
+      "arppu": 34.72,
+      "pay_rate": 2.5
+    },
+    {
+      "event": "2025感恩节",
+      "revenue": 1784793,
+      "arpu": 0.84,
+      "arppu": 34.15,
+      "pay_rate": 2.47
+    },
+    {
+      "event": "2025圣诞节",
+      "revenue": 1982241,
+      "arpu": 0.84,
+      "arppu": 36.73,
+      "pay_rate": 2.28
+    },
+    {
+      "event": "2026科技节",
+      "revenue": 1796469,
+      "arpu": 1.07,
+      "arppu": 34.52,
+      "pay_rate": 3.09
+    },
+    {
+      "event": "2026情人节",
+      "revenue": 1586878,
+      "arpu": 0.82,
+      "arppu": 33.3,
+      "pay_rate": 2.46
+    }
+  ],
+  "module_trend": [
+    {
+      "event": "2025周年庆",
+      "appearance": 97616,
+      "minigame": 10228,
+      "hybrid": 267549
+    },
+    {
+      "event": "2025万圣节",
+      "appearance": 250788,
+      "minigame": 11284,
+      "hybrid": 268707
+    },
+    {
+      "event": "2025感恩节",
+      "appearance": 98061,
+      "minigame": 13219,
+      "hybrid": 624834
+    },
+    {
+      "event": "2025圣诞节",
+      "appearance": 184192,
+      "minigame": 15056,
+      "hybrid": 716135
+    },
+    {
+      "event": "2026情人节",
+      "appearance": 95108,
+      "minigame": 7113,
+      "hybrid": 510445
+    },
+    {
+      "event": "2026科技节",
+      "appearance": 80265,
+      "minigame": 13130,
+      "hybrid": 708208
+    }
+  ],
+  "user_tier_trend": [
+    {
+      "event": "2026情人节",
+      "super_r": 315.0,
+      "big_r": 94.0,
+      "mid_r": 25.5,
+      "small_r": 5.2
+    },
+    {
+      "event": "2026科技节",
+      "super_r": 600.29,
+      "big_r": 187.31,
+      "mid_r": 59.35,
+      "small_r": 14.16
+    }
+  ],
+  "sub_activity_detail": [
+    {
+      "name": "科技节特惠礼包系列",
+      "type": "混合",
+      "revenue": 705005,
+      "status": "Keep",
+      "reason": "贡献节日线82.4%，是绝对核心收入抓手；多档位价格梯度设计合理，建议保留并优化高档位触达"
+    },
+    {
+      "name": "科技节主题皮肤",
+      "type": "外显",
+      "revenue": 80265,
+      "status": "Optimize",
+      "reason": "较情人节占比从15.5%下滑至10.0%，外显吸引力下降；建议强化稀缺性标签与套装联动，提升视觉转化"
+    },
+    {
+      "name": "科技节通行证BP",
+      "type": "混合",
+      "revenue": 56702,
+      "status": "Keep",
+      "reason": "双BP稳定贡献7.1%，具备中长期留存价值与每日付费锚定效果；建议保留并丰富权益层级"
+    },
+    {
+      "name": "科技节小游戏挖矿",
+      "type": "小游戏",
+      "revenue": 13130,
+      "status": "Optimize",
+      "reason": "体量偏小（1.6%），但有参与深度潜力；建议优化奖励可视化与进度感，提升付费转化"
+    }
+  ],
+  "module_classification": [
+    {
+      "name": "科技节特惠礼包系列",
+      "module": "混合",
+      "note": "节日特惠主线"
+    },
+    {
+      "name": "科技节通行证BP",
+      "module": "混合",
+      "note": "通行证养成"
+    },
+    {
+      "name": "科技节主题皮肤",
+      "module": "外显",
+      "note": "主题外显皮肤"
+    },
+    {
+      "name": "科技节小游戏挖矿",
+      "module": "小游戏",
+      "note": "挖矿小游戏"
+    }
+  ],
+  "core_metrics_by_tier": {
+    "total": {
+      "total_revenue": 1796469,
+      "event_revenue": 855102,
+      "event_share": 47.6,
+      "arppu": 174.4,
+      "arpu": 6.33,
+      "buy_rate": 3.63,
+      "active": 135089,
+      "buyers": 4903
+    },
+    "chaoR": {
+      "event_revenue": 542663,
+      "total_revenue": 1061550,
+      "event_share": 63.5,
+      "arppu": 600.29,
+      "arpu": 449.23,
+      "buy_rate": 74.8,
+      "active": 1208,
+      "buyers": 904
+    },
+    "daR": {
+      "event_revenue": 174948,
+      "total_revenue": 381073,
+      "event_share": 20.5,
+      "arppu": 187.31,
+      "arpu": 115.78,
+      "buy_rate": 61.8,
+      "active": 1511,
+      "buyers": 934
+    },
+    "zhongR": {
+      "event_revenue": 123572,
+      "total_revenue": 306716,
+      "event_share": 14.4,
+      "arppu": 59.35,
+      "arpu": 26.23,
+      "buy_rate": 44.2,
+      "active": 4712,
+      "buyers": 2082
+    },
+    "xiaoR": {
+      "event_revenue": 13918,
+      "total_revenue": 46840,
+      "event_share": 1.6,
+      "arppu": 14.16,
+      "arpu": 1.25,
+      "buy_rate": 8.8,
+      "active": 11154,
+      "buyers": 983
+    }
+  },
+  "module_detail": [
+    {
+      "module": "科技节特惠礼包系列",
+      "revenue": 705005,
+      "share": 82.4,
+      "buy_times": 0,
+      "times_arppu": 0,
+      "event_arpu": 143.79,
+      "avg_purchases": 0
+    },
+    {
+      "module": "科技节主题皮肤",
+      "revenue": 80265,
+      "share": 9.4,
+      "buy_times": 0,
+      "times_arppu": 0,
+      "event_arpu": 16.37,
+      "avg_purchases": 0
+    },
+    {
+      "module": "科技节通行证BP",
+      "revenue": 56702,
+      "share": 6.6,
+      "buy_times": 0,
+      "times_arppu": 0,
+      "event_arpu": 11.57,
+      "avg_purchases": 0
+    },
+    {
+      "module": "科技节小游戏挖矿",
+      "revenue": 13130,
+      "share": 1.5,
+      "buy_times": 0,
+      "times_arppu": 0,
+      "event_arpu": 2.68,
+      "avg_purchases": 0
+    }
+  ],
+  "activity_ranking": [
+    {
+      "name": "挖孔小游戏礼包",
+      "module": "小游戏",
+      "revenue": 206191.07,
+      "share": 24.11,
+      "buy_times": 11693,
+      "unique_buyers": 2710,
+      "times_arppu": 17.63,
+      "event_arpu": 76.09,
+      "sku_count": 0
+    },
+    {
+      "name": "2026科技节弹珠GACHA",
+      "module": "外显",
+      "revenue": 129800.34,
+      "share": 15.18,
+      "buy_times": 6466,
+      "unique_buyers": 1170,
+      "times_arppu": 20.07,
+      "event_arpu": 110.94,
+      "sku_count": 0
+    },
+    {
+      "name": "推币机礼包",
+      "module": "小游戏",
+      "revenue": 64041.74,
+      "share": 7.49,
+      "buy_times": 4326,
+      "unique_buyers": 1110,
+      "times_arppu": 14.8,
+      "event_arpu": 57.7,
+      "sku_count": 0
+    },
+    {
+      "name": "挖矿小游戏活动",
+      "module": "小游戏",
+      "revenue": 60391.12,
+      "share": 7.06,
+      "buy_times": 10988,
+      "unique_buyers": 1176,
+      "times_arppu": 5.5,
+      "event_arpu": 51.35,
+      "sku_count": 0
+    },
+    {
+      "name": "推币机随机GACHA礼包",
+      "module": "小游戏",
+      "revenue": 56054.41,
+      "share": 6.56,
+      "buy_times": 1559,
+      "unique_buyers": 458,
+      "times_arppu": 35.96,
+      "event_arpu": 122.39,
+      "sku_count": 0
+    },
+    {
+      "name": "2025复活节大富翁礼包",
+      "module": "小游戏",
+      "revenue": 47420.89,
+      "share": 5.55,
+      "buy_times": 4911,
+      "unique_buyers": 1542,
+      "times_arppu": 9.66,
+      "event_arpu": 30.75,
+      "sku_count": 0
+    },
+    {
+      "name": "限时抢购",
+      "module": "混合",
+      "revenue": 45857.6,
+      "share": 5.36,
+      "buy_times": 1240,
+      "unique_buyers": 447,
+      "times_arppu": 36.98,
+      "event_arpu": 102.59,
+      "sku_count": 0
+    },
+    {
+      "name": "科技节高级通行证_2025",
+      "module": "混合",
+      "revenue": 23588.2,
+      "share": 2.76,
+      "buy_times": 1180,
+      "unique_buyers": 1180,
+      "times_arppu": 19.99,
+      "event_arpu": 19.99,
+      "sku_count": 0
+    },
+    {
+      "name": "节日大富翁礼包",
+      "module": "小游戏",
+      "revenue": 18297.84,
+      "share": 2.14,
+      "buy_times": 216,
+      "unique_buyers": 161,
+      "times_arppu": 84.71,
+      "event_arpu": 113.65,
+      "sku_count": 0
+    },
+    {
+      "name": "周年庆预购连锁_schema6",
+      "module": "混合",
+      "revenue": 17998.2,
+      "share": 2.1,
+      "buy_times": 180,
+      "unique_buyers": 180,
+      "times_arppu": 99.99,
+      "event_arpu": 99.99,
+      "sku_count": 0
+    },
+    {
+      "name": "2025深海节-节日礼包团购",
+      "module": "混合",
+      "revenue": 17944.73,
+      "share": 2.1,
+      "buy_times": 2627,
+      "unique_buyers": 1224,
+      "times_arppu": 6.83,
+      "event_arpu": 14.66,
+      "sku_count": 0
+    },
+    {
+      "name": "万圣节小连锁随机礼包",
+      "module": "混合",
+      "revenue": 15811.22,
+      "share": 1.85,
+      "buy_times": 3378,
+      "unique_buyers": 1430,
+      "times_arppu": 4.68,
+      "event_arpu": 11.06,
+      "sku_count": 0
+    },
+    {
+      "name": "科技节初级通行证_2025",
+      "module": "混合",
+      "revenue": 14049.9,
+      "share": 1.64,
+      "buy_times": 2010,
+      "unique_buyers": 2010,
+      "times_arppu": 6.99,
+      "event_arpu": 6.99,
+      "sku_count": 0
+    },
+    {
+      "name": "2026复活节-行军特效",
+      "module": "外显",
+      "revenue": 13253.37,
+      "share": 1.55,
+      "buy_times": 663,
+      "unique_buyers": 663,
+      "times_arppu": 19.99,
+      "event_arpu": 19.99,
+      "sku_count": 0
+    },
+    {
+      "name": "节日大富翁",
+      "module": "小游戏",
+      "revenue": 12726.78,
+      "share": 1.49,
+      "buy_times": 2422,
+      "unique_buyers": 2191,
+      "times_arppu": 5.25,
+      "event_arpu": 5.81,
+      "sku_count": 0
+    },
+    {
+      "name": "2026科技节-行军表情",
+      "module": "外显",
+      "revenue": 11252.45,
+      "share": 1.32,
+      "buy_times": 2255,
+      "unique_buyers": 2255,
+      "times_arppu": 4.99,
+      "event_arpu": 4.99,
+      "sku_count": 0
+    },
+    {
+      "name": "情人节BP",
+      "module": "混合",
+      "revenue": 10918.52,
+      "share": 1.28,
+      "buy_times": 1148,
+      "unique_buyers": 709,
+      "times_arppu": 9.51,
+      "event_arpu": 15.4,
+      "sku_count": 0
+    },
+    {
+      "name": "25感恩节每日补给升级礼包",
+      "module": "混合",
+      "revenue": 9370.91,
+      "share": 1.1,
+      "buy_times": 4709,
+      "unique_buyers": 1787,
+      "times_arppu": 1.99,
+      "event_arpu": 5.24,
+      "sku_count": 0
+    },
+    {
+      "name": "对对碰",
+      "module": "小游戏",
+      "revenue": 7695.32,
+      "share": 0.9,
+      "buy_times": 868,
+      "unique_buyers": 510,
+      "times_arppu": 8.87,
+      "event_arpu": 15.09,
+      "sku_count": 0
+    },
+    {
+      "name": "2026科技节集结奖励解锁礼包",
+      "module": "混合",
+      "revenue": 6387.2,
+      "share": 0.75,
+      "buy_times": 1280,
+      "unique_buyers": 1279,
+      "times_arppu": 4.99,
+      "event_arpu": 4.99,
+      "sku_count": 0
+    },
+    {
+      "name": "掉落转付费礼包",
+      "module": "混合",
+      "revenue": 6030.26,
+      "share": 0.71,
+      "buy_times": 974,
+      "unique_buyers": 820,
+      "times_arppu": 6.19,
+      "event_arpu": 7.35,
+      "sku_count": 0
+    },
+    {
+      "name": "2025深海节累充服务器礼包",
+      "module": "混合",
+      "revenue": 5784.98,
+      "share": 0.68,
+      "buy_times": 502,
+      "unique_buyers": 502,
+      "times_arppu": 11.52,
+      "event_arpu": 11.52,
+      "sku_count": 0
+    },
+    {
+      "name": "2025复活节-强消耗抽奖券礼包",
+      "module": "混合",
+      "revenue": 5466.11,
+      "share": 0.64,
+      "buy_times": 389,
+      "unique_buyers": 280,
+      "times_arppu": 14.05,
+      "event_arpu": 19.52,
+      "sku_count": 0
+    },
+    {
+      "name": "科技节自选周卡",
+      "module": "混合",
+      "revenue": 5183.79,
+      "share": 0.61,
+      "buy_times": 121,
+      "unique_buyers": 120,
+      "times_arppu": 42.84,
+      "event_arpu": 43.2,
+      "sku_count": 0
+    },
+    {
+      "name": "节日大富翁组队礼包",
+      "module": "小游戏",
+      "revenue": 4385.61,
+      "share": 0.51,
+      "buy_times": 439,
+      "unique_buyers": 279,
+      "times_arppu": 9.99,
+      "event_arpu": 15.72,
+      "sku_count": 0
+    },
+    {
+      "name": "kvk基因高级bp通行证",
+      "module": "混合",
+      "revenue": 3699.63,
+      "share": 0.43,
+      "buy_times": 37,
+      "unique_buyers": 37,
+      "times_arppu": 99.99,
+      "event_arpu": 99.99,
+      "sku_count": 0
+    },
+    {
+      "name": "kvk基因bp通行证",
+      "module": "混合",
+      "revenue": 3672.55,
+      "share": 0.43,
+      "buy_times": 245,
+      "unique_buyers": 244,
+      "times_arppu": 14.99,
+      "event_arpu": 15.05,
+      "sku_count": 0
+    },
+    {
+      "name": "2023装饰兑换券礼包",
+      "module": "外显",
+      "revenue": 3653.68,
+      "share": 0.43,
+      "buy_times": 132,
+      "unique_buyers": 81,
+      "times_arppu": 27.68,
+      "event_arpu": 45.11,
+      "sku_count": 0
+    },
+    {
+      "name": "节日挖矿-砍价礼包-折扣5",
+      "module": "小游戏",
+      "revenue": 3400.91,
+      "share": 0.4,
+      "buy_times": 1709,
+      "unique_buyers": 954,
+      "times_arppu": 1.99,
+      "event_arpu": 3.56,
+      "sku_count": 0
+    },
+    {
+      "name": "改造猴特权-节日版",
+      "module": "混合",
+      "revenue": 3096.9,
+      "share": 0.36,
+      "buy_times": 310,
+      "unique_buyers": 310,
+      "times_arppu": 9.99,
+      "event_arpu": 9.99,
+      "sku_count": 0
+    },
+    {
+      "name": "周年庆预购连锁礼包_schema3-5",
+      "module": "混合",
+      "revenue": 2899.71,
+      "share": 0.34,
+      "buy_times": 29,
+      "unique_buyers": 29,
+      "times_arppu": 99.99,
+      "event_arpu": 99.99,
+      "sku_count": 0
+    },
+    {
+      "name": "酒馆登陆bp",
+      "module": "混合",
+      "revenue": 2128.5,
+      "share": 0.25,
+      "buy_times": 150,
+      "unique_buyers": 87,
+      "times_arppu": 14.19,
+      "event_arpu": 24.47,
+      "sku_count": 0
+    },
+    {
+      "name": "2026科技节wonder巨猿砸蛋锤礼包",
+      "module": "外显",
+      "revenue": 2067.93,
+      "share": 0.24,
+      "buy_times": 207,
+      "unique_buyers": 207,
+      "times_arppu": 9.99,
+      "event_arpu": 9.99,
+      "sku_count": 0
+    },
+    {
+      "name": "2025周年庆累充服务器礼包",
+      "module": "混合",
+      "revenue": 2049.0,
+      "share": 0.24,
+      "buy_times": 100,
+      "unique_buyers": 100,
+      "times_arppu": 20.49,
+      "event_arpu": 20.49,
+      "sku_count": 0
+    },
+    {
+      "name": "挖矿小游戏-卡包礼包-节日版本",
+      "module": "小游戏",
+      "revenue": 1996.0,
+      "share": 0.23,
+      "buy_times": 400,
+      "unique_buyers": 161,
+      "times_arppu": 4.99,
+      "event_arpu": 12.4,
+      "sku_count": 0
+    },
+    {
+      "name": "成长线1+1礼包",
+      "module": "混合",
+      "revenue": 1618.38,
+      "share": 0.19,
+      "buy_times": 184,
+      "unique_buyers": 154,
+      "times_arppu": 8.8,
+      "event_arpu": 10.51,
+      "sku_count": 0
+    },
+    {
+      "name": "情人节bingo活动宝箱礼包",
+      "module": "混合",
+      "revenue": 1501.99,
+      "share": 0.18,
+      "buy_times": 301,
+      "unique_buyers": 301,
+      "times_arppu": 4.99,
+      "event_arpu": 4.99,
+      "sku_count": 0
+    },
+    {
+      "name": "2025复活节强消耗触发礼包",
+      "module": "混合",
+      "revenue": 1332.96,
+      "share": 0.16,
+      "buy_times": 404,
+      "unique_buyers": 390,
+      "times_arppu": 3.3,
+      "event_arpu": 3.42,
+      "sku_count": 0
+    },
+    {
+      "name": "挖矿小游戏",
+      "module": "小游戏",
+      "revenue": 1097.81,
+      "share": 0.13,
+      "buy_times": 219,
+      "unique_buyers": 142,
+      "times_arppu": 5.01,
+      "event_arpu": 7.73,
+      "sku_count": 0
+    },
+    {
+      "name": "休眠仓",
+      "module": "混合",
+      "revenue": 973.05,
+      "share": 0.11,
+      "buy_times": 195,
+      "unique_buyers": 83,
+      "times_arppu": 4.99,
+      "event_arpu": 11.72,
+      "sku_count": 0
+    },
+    {
+      "name": "kvk基因高级bp通行证-V81-kvk5",
+      "module": "混合",
+      "revenue": 699.93,
+      "share": 0.08,
+      "buy_times": 7,
+      "unique_buyers": 7,
+      "times_arppu": 99.99,
+      "event_arpu": 99.99,
+      "sku_count": 0
+    },
+    {
+      "name": "节日挖矿-砍价礼包",
+      "module": "小游戏",
+      "revenue": 694.59,
+      "share": 0.08,
+      "buy_times": 41,
+      "unique_buyers": 32,
+      "times_arppu": 16.94,
+      "event_arpu": 21.71,
+      "sku_count": 0
+    },
+    {
+      "name": "千万下载礼包",
+      "module": "混合",
+      "revenue": 675.23,
+      "share": 0.08,
+      "buy_times": 77,
+      "unique_buyers": 43,
+      "times_arppu": 8.77,
+      "event_arpu": 15.7,
+      "sku_count": 0
+    },
+    {
+      "name": "泳池派对礼包",
+      "module": "混合",
+      "revenue": 604.77,
+      "share": 0.07,
+      "buy_times": 23,
+      "unique_buyers": 11,
+      "times_arppu": 26.29,
+      "event_arpu": 54.98,
+      "sku_count": 0
+    },
+    {
+      "name": "2022幼猴节gacha礼包",
+      "module": "外显",
+      "revenue": 479.84,
+      "share": 0.06,
+      "buy_times": 16,
+      "unique_buyers": 8,
+      "times_arppu": 29.99,
+      "event_arpu": 59.98,
+      "sku_count": 0
+    },
+    {
+      "name": "挖矿小游戏-产量翻倍特权",
+      "module": "小游戏",
+      "revenue": 358.8,
+      "share": 0.04,
+      "buy_times": 120,
+      "unique_buyers": 87,
+      "times_arppu": 2.99,
+      "event_arpu": 4.12,
+      "sku_count": 0
+    },
+    {
+      "name": "基因bp通行证BP积分礼包",
+      "module": "混合",
+      "revenue": 294.62,
+      "share": 0.03,
+      "buy_times": 38,
+      "unique_buyers": 25,
+      "times_arppu": 7.75,
+      "event_arpu": 11.78,
+      "sku_count": 0
+    },
+    {
+      "name": "转盘折扣小额",
+      "module": "混合",
+      "revenue": 131.87,
+      "share": 0.02,
+      "buy_times": 13,
+      "unique_buyers": 11,
+      "times_arppu": 10.14,
+      "event_arpu": 11.99,
+      "sku_count": 0
+    },
+    {
+      "name": "2023幼猴节-7日活动宝箱",
+      "module": "混合",
+      "revenue": 89.82,
+      "share": 0.01,
+      "buy_times": 18,
+      "unique_buyers": 18,
+      "times_arppu": 4.99,
+      "event_arpu": 4.99,
+      "sku_count": 0
+    }
+  ],
+  "daily_revenue": [
+    {
+      "date": "2026-03-13",
+      "revenue": 92830
+    },
+    {
+      "date": "2026-03-14",
+      "revenue": 80966
+    },
+    {
+      "date": "2026-03-15",
+      "revenue": 75303
+    },
+    {
+      "date": "2026-03-16",
+      "revenue": 80704
+    },
+    {
+      "date": "2026-03-17",
+      "revenue": 62763
+    },
+    {
+      "date": "2026-03-18",
+      "revenue": 58695
+    },
+    {
+      "date": "2026-03-19",
+      "revenue": 64968
+    },
+    {
+      "date": "2026-03-20",
+      "revenue": 103585
+    },
+    {
+      "date": "2026-03-21",
+      "revenue": 76176
+    },
+    {
+      "date": "2026-03-22",
+      "revenue": 76392
+    },
+    {
+      "date": "2026-03-23",
+      "revenue": 75173
+    },
+    {
+      "date": "2026-03-24",
+      "revenue": 74371
+    },
+    {
+      "date": "2026-03-25",
+      "revenue": 61160
+    },
+    {
+      "date": "2026-03-26",
+      "revenue": 76653
+    },
+    {
+      "date": "2026-03-27",
+      "revenue": 90762
+    },
+    {
+      "date": "2026-03-28",
+      "revenue": 96476
+    },
+    {
+      "date": "2026-03-29",
+      "revenue": 91760
+    },
+    {
+      "date": "2026-03-30",
+      "revenue": 104638
+    },
+    {
+      "date": "2026-03-31",
+      "revenue": 112312
+    },
+    {
+      "date": "2026-04-01",
+      "revenue": 97358
+    },
+    {
+      "date": "2026-04-02",
+      "revenue": 93075
+    },
+    {
+      "date": "2026-04-03",
+      "revenue": 52608
+    }
+  ]
+}

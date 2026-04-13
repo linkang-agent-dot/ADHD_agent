@@ -1,0 +1,12 @@
+{
+  "task_id": "task_20260404_164319_c2023d",
+  "title": "机票推送直飞标识消失问题排查",
+  "instructions": "排查携程机票追踪脚本 ctrip_tracker.py 中直飞标识消失的问题。已知情况：用户反馈推送消息中是否直飞的信息没有了，原本每条航线会标注✈️直飞+航司。请检查 get_direct_tag() 函数、build_push_text() 中 direct_info 传入逻辑、ROUTES 列表的 direct 字段配置，以及最近推送日志。",
+  "context": "",
+  "submitted_by": "OpenClaw",
+  "submitted_at": "2026-04-04 16:43:19",
+  "priority": "normal",
+  "status": "done",
+  "picked_at": "2026-04-04 16:45:26",
+  "completed_at": "2026-04-04 16:49:16"
+}

@@ -1,0 +1,7 @@
+{
+  "task_id": "task_20260402_125331_a1b696",
+  "title": "Cursor CLI调用方式",
+  "status": "done",
+  "result": "\n帮助里列了三个（具体子命令参数建议再运行对应子命令或查文档）：\n\n- **`cursor tunnel`** — 隧道（与 vscode.dev 等远程访问相关）\n- **`cursor serve-web`** — 在浏览器里跑编辑器 UI 的服务端模式\n- **`cursor agent`** — 在终端里启动 Cursor Agent\n\n说明：在你当前版本上执行 `cursor agent --help` 仍只打印总帮助，**子命令的细粒度参数以官方文档或后续版本 `--help` 为准**。\n\n### 如何让系统能找到 `cursor`\n\n在 Windows 上一般要在 Cursor 里把 CLI 装到 PATH（常见做法与 VS Code 类似：**命令面板**里搜 **Shell Command** / **安装 `cursor` 命令** 一类选项）。装好后终端里直接打 `cursor` 即可。\n\n---\n\n## 2. Cursor Agent CLI（文档 / 独立安装）\n\n官网文档入口：**[Cursor CLI | Cursor Docs](https://cursor.com/docs/cli/overview)**；另有面向自动化的介绍（含安装脚本、在终端里跑 Agent 等）：**[Cursor · CLI](https://cursor.com/cli)**。\n\n常见叙述是：用官方提供的安装方式把 **Agent CLI** 装到环境里后，可在终端里做 Agent 对话与自动化（文档中提过 `agent chat \"...\"` 这类用法）。**这与 `cursor.exe` 是否同源、命令名是 `cursor agent` 还是独立的 `agent`，以你本机安装结果和当前文档为准**——以官网为准。\n\n---\n\n## 3. 建议你怎么核对「当前机器到底支持啥」\n\n1. `cursor --help` — 桌面版总帮助（你已有一份完整列表）。  \n2. `cursor -v` — 确认版本。  \n3. 打开 **[CLI 文档](https://cursor.com/docs/cli/overview)** 和 **[Parameters](https://cursor.com/docs/cli/reference/parameters)** 看 Agent/脚本参数。\n\n若你补充一下目标是「只打开工程」还是「无头跑 Agent/CI」，可以收窄到一两条最稳的调用方式（例如是否必须用 `cursor agent` 或独立 `agent`）。",
+  "completed_at": "2026-04-02 12:55:39"
+}
