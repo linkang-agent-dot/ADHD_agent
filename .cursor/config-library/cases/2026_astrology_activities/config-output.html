@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>X2 占星节 2026 — 活动配置换皮</title>
+<style>
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; max-width: 1100px; margin: 0 auto; padding: 24px; background: #f5f7fa; }
+  h1 { color: #1a1a2e; border-bottom: 3px solid #6c5ce7; padding-bottom: 8px; }
+  h2 { color: #6c5ce7; margin-top: 32px; }
+  h3 { color: #333; margin-top: 20px; }
+  .card { background: white; border-radius: 10px; padding: 20px; margin: 16px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .status-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+  .reuse { background: #d4edda; color: #155724; }
+  .reskin { background: #fff3cd; color: #856404; }
+  .new { background: #cce5ff; color: #004085; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #6c5ce7; color: white; padding: 8px 12px; text-align: left; }
+  td { padding: 7px 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+  tr:hover td { background: #f8f9ff; }
+  .code { font-family: 'Consolas', monospace; background: #f0f0f5; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+  .paste-box { background: #1e1e2e; color: #cdd6f4; padding: 16px; border-radius: 8px; font-family: monospace; font-size: 11px; white-space: pre-wrap; word-break: break-all; margin: 12px 0; }
+  .copy-btn { background: #6c5ce7; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; margin-bottom: 8px; }
+  .copy-btn:hover { background: #5a4fcf; }
+  .warn { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px 16px; border-radius: 4px; margin: 8px 0; font-size: 13px; }
+  .info { background: #e8f4fd; border-left: 4px solid #6c5ce7; padding: 10px 16px; border-radius: 4px; margin: 8px 0; font-size: 13px; }
+  .field-row { display: flex; gap: 8px; margin: 4px 0; font-size: 13px; }
+  .field-name { color: #6c5ce7; font-weight: bold; min-width: 120px; }
+  .field-val { color: #2d3436; font-family: monospace; }
+  .highlight { background: #fffde7; font-weight: bold; }
+  .dim { color: #999; }
+</style>
+</head>
+<body>
+
+<h1>X2 占星节 2026 — 活动配置换皮</h1>
+<p class="dim">生成时间：2026-04-27 | 节日 BP 道具：观星球 11119497</p>
+
+<!-- ==================== 总览 ==================== -->
+<h2>一、三个活动处理方案</h2>
+<div class="card">
+<table>
+  <tr>
+    <th>功能</th><th>处理方式</th><th>活动 ID</th><th>Constant</th><th>说明</th>
+  </tr>
+  <tr class="highlight">
+    <td>周卡</td>
+    <td><span class="status-badge reskin">换皮</span></td>
+    <td><span class="code">211201010</span></td>
+    <td><span class="code">event_fes_time_card</span></td>
+    <td>活动行可复用，但 package 必须换为占星节专属包；旧 213521001–004 仍指向通用 2011/2013，礼包不会按占星节生效</td>
+  </tr>
+  <tr>
+    <td>抢购礼包</td>
+    <td><span class="status-badge reuse">复用</span></td>
+    <td><span class="code">21127223</span></td>
+    <td><span class="code">event_flash_sale_2026</span></td>
+    <td>前期节日-限时抢购，含 flash_sale_buy_duration / gacha / popup / raffle 组件，无需新建活动行</td>
+  </tr>
+  <tr class="highlight">
+    <td>GACHA每日礼包</td>
+    <td><span class="status-badge reskin">换皮</span></td>
+    <td><span class="code">21127355</span> (新建)</td>
+    <td><span class="code">event_fes_star_gacha_daily</span></td>
+    <td>基于 21127224（前期节日模板）新建；packages 需换为占星节 BP 礼包</td>
+  </tr>
+</table>
+</div>
+
+<!-- ==================== 新活动行 ==================== -->
+<h2>二、2112 新增行 — GACHA每日礼包（21127355）</h2>
+<div class="card">
+
+<h3>字段说明</h3>
+<div class="field-row"><span class="field-name">ID</span><span class="field-val highlight">21127355</span></div>
+<div class="field-row"><span class="field-name">comment</span><span class="field-val">占星节-2026-每日gacha礼包</span></div>
+<div class="field-row"><span class="field-name">constant</span><span class="field-val highlight">event_fes_star_gacha_daily</span></div>
+<div class="field-row"><span class="field-name">index</span><span class="field-val">0</span></div>
+<div class="field-row"><span class="field-name">priority</span><span class="field-val">49996</span></div>
+<div class="field-row"><span class="field-name">base_activity_id</span><span class="field-val">21127224</span></div>
+<div class="field-row"><span class="field-name">filter</span><span class="field-val">{"op":"ge","typ":"building","id":111811,"val":5}</span></div>
+<div class="field-row"><span class="field-name">text</span><span class="field-val">{"label":"LC_EVENT_holiday_daily_iap","title":"LC_EVENT_holiday_daily_iap"}</span></div>
+<div class="field-row"><span class="field-name">components</span><span class="field-val">[{"typ":"weekly_pay_ratio","id":21217037},{"typ":"task","id":211551456},{"typ":"package","id":21353117},{"typ":"package","id":21353118},{"typ":"package","id":21353119},{"typ":"package","id":21353120},{"typ":"package","id":21353121}]</span></div>
+<div class="field-row"><span class="field-name">description</span><span class="field-val">{"rule":"LC_EVENT_mystery_treasure_rule"}</span></div>
+<div class="field-row"><span class="field-name">ui_template</span><span class="field-val">21191335</span></div>
+<div class="field-row"><span class="field-name">rank_group</span><span class="field-val">0</span></div>
+<div class="field-row"><span class="field-name">banner_url</span><span class="field-val highlight">assets/x2/operation/EventBanner/summer_bp_gacha_pkg_banner.png</span></div>
+<div class="field-row"><span class="field-name">其余字段</span><span class="field-val dim">与模板 21127224 完全一致</span></div>
+
+<div class="warn">
+⚠️ <strong>每日礼包依赖需补齐</strong>：2112 QA 表已引用 21353117–21353121，但 2135 表当前还没有这些行；不能复用 21353111–21353115，因为它们挂的 2011（2011920005–2011920009）仍绑定模板活动 21127224，且 2013 礼包内容还是旧 BP 道具 11119473。需新建 2135 + 2011 + 2013，BP 道具改为观星球 11119497。
+</div>
+
+<h3>线上已写入行（2112 QA 表当前状态）</h3>
+<button class="copy-btn" onclick="copyRow()">复制到剪贴板</button>
+<div class="paste-box" id="pasteRow">	21127355	占星节-2026-每日gacha礼包	event_fes_star_gacha_daily	0	49996	21127224	{"op":"ge","typ":"building","id":111811,"val":5}	{"label":"LC_EVENT_holiday_daily_iap","title":"LC_EVENT_holiday_daily_iap"}	[{"typ":"weekly_pay_ratio","id":21217037},{"typ":"task","id":211551456},{"typ":"package","id":21353117},{"typ":"package","id":21353118},{"typ":"package","id":21353119},{"typ":"package","id":21353120},{"typ":"package","id":21353121}]	{"rule":"LC_EVENT_mystery_treasure_rule"}	21191335	0	'""	assets/x2/operation/EventBanner/summer_bp_gacha_pkg_banner.png	1	0	0	211200212	0	[]	'""	0	1511031035	1	'""	0</div>
+</div>
+
+<!-- ==================== 每日礼包依赖修正 ==================== -->
+<h2>三、GACHA每日礼包依赖修正</h2>
+<div class="card">
+<p>检查结果：模板中的 5 个每日包（21353111–21353115）当前挂到 2011920005–2011920009，不适合占星节直接复用。</p>
+<div class="info">
+  修正方案：
+  <ul>
+    <li>新建 2135：21353117–21353121，对应 2112 components 已引用的 5 个包。</li>
+    <li>新建 2011：2011920106–2011920110，time_info 绑定占星节每日礼包活动 21127355。</li>
+    <li>新建 2013：2013920102–2013920106，复制原每日礼包结构，将 BP 道具从 11119473 替换为观星球 11119497。</li>
+  </ul>
+</div>
+
+<h3>2135 activity_package 新增行</h3>
+<div class="paste-box">	21353117	占星节每日礼包-day_1	2011920106	0	{}	[]	0	15111111	NULL	NULL	{}	999	0	NULL	NULL	0	1
+	21353118	占星节每日礼包-day_2	2011920107	86400000	{}	[]	0	15111111	NULL	NULL	{"op":"and", "args": [{"op":"ge","typ":"activity_time","id":21127355,"val":86400000}]}	999	0	NULL	NULL	0	1
+	21353119	占星节每日礼包-day_3	2011920108	172800000	{}	[]	0	15111111	NULL	NULL	{"op":"and", "args": [{"op":"ge","typ":"activity_time","id":21127355,"val":172800000}]}	999	0	NULL	NULL	0	1
+	21353120	占星节每日礼包-day_4	2011920109	259200000	{}	[]	0	15111111	NULL	NULL	{"op":"and", "args": [{"op":"ge","typ":"activity_time","id":21127355,"val":259200000}]}	999	0	NULL	NULL	0	1
+	21353121	占星节每日礼包-day_5	2011920110	345600000	{}	[]	0	15111111	NULL	NULL	{"op":"and", "args": [{"op":"ge","typ":"activity_time","id":21127355,"val":345600000}]}	999	0	NULL	NULL	0	1</div>
+
+<h3>2011 iap_config 新增行</h3>
+<div class="paste-box">	2011920106	2026占星节每日礼包-1	normal_pkg	normal		True	{"typ":"schema","id":[1,2,3,4,5,6,13,14,15,16,17,55]}	1	{"normal":[{"actv_id":21127355}]}	{}	{}	[{"typ":"recharge_actv","id":211200093,"arg1":1511018855,"val":1}]	0	{}	common	0	0		0
+	2011920107	2026占星节每日礼包-2	normal_pkg	normal		True	{"typ":"schema","id":[1,2,3,4,5,6,13,14,15,16,17,55]}	1	{"normal":[{"actv_id":21127355}]}	{}	{}	[{"typ":"recharge_actv","id":211200093,"arg1":1511018855,"val":1}]	0	{}	common	0	0		0
+	2011920108	2026占星节每日礼包-3	normal_pkg	normal		True	{"typ":"schema","id":[1,2,3,4,5,6,13,14,15,16,17,55]}	1	{"normal":[{"actv_id":21127355}]}	{}	{}	[{"typ":"recharge_actv","id":211200093,"arg1":1511018855,"val":1}]	0	{}	common	0	0		0
+	2011920109	2026占星节每日礼包-4	normal_pkg	normal		True	{"typ":"schema","id":[1,2,3,4,5,6,13,14,15,16,17,55]}	1	{"normal":[{"actv_id":21127355}]}	{}	{}	[{"typ":"recharge_actv","id":211200093,"arg1":1511018855,"val":1}]	0	{}	common	0	0		0
+	2011920110	2026占星节每日礼包-5	normal_pkg	normal		True	{"typ":"schema","id":[1,2,3,4,5,6,13,14,15,16,17,55]}	1	{"normal":[{"actv_id":21127355}]}	{}	{}	[{"typ":"recharge_actv","id":211200093,"arg1":1511018855,"val":1}]	0	{}	common	0	0		0</div>
+
+<h3>2013 iap_template 新增行</h3>
+<div class="paste-box">	2013920102	normal	2011920106	2014001	2026占星节每日礼包-1	LC_IAP_festival_treasury	LC_IAP_packet_desc	4.99	[{"pay_type":"gplay", "product_id": "x2_0499_cd_an"},{"pay_type":"ios", "product_id": "ape_0499_cd_ios"},{"pay_type":"aggregate", "product_id": "x2_0499_cd_an"}]	{"limit_cnt":1,"limit_type":"period"}	0	1250	0	[]	[]	[]	[]	[{"asset":{"typ":"item","id":11119497,"val":10},"setting":{"serial_number":10,"ishighlight":false}},{"asset":{"typ":"item","id":11118501,"val":12},"setting":{"serial_number":10,"ishighlight":false}},{"asset":{"typ":"item","id":11114316,"val":1},"setting":{"serial_number":2,"ishighlight":false}},{"asset":{"typ":"xp","id":11161002,"val":1250},"setting":{"serial_number":1,"ishighlight":false}}]	[]	0	{}	2						[{"typ":"roi","tag":2,"val":296000}]	{}	0
+	2013920103	normal	2011920107	2014001	2026占星节每日礼包-2	LC_IAP_festival_treasury	LC_IAP_packet_desc	4.99	[{"pay_type":"gplay", "product_id": "x2_0499_cd_an"},{"pay_type":"ios", "product_id": "ape_0499_cd_ios"},{"pay_type":"aggregate", "product_id": "x2_0499_cd_an"}]	{"limit_cnt":1,"limit_type":"period"}	0	1250	0	[]	[]	[]	[]	[{"asset":{"typ":"item","id":11119497,"val":10},"setting":{"serial_number":10,"ishighlight":false}},{"asset":{"typ":"item","id":11116604,"val":30},"setting":{"serial_number":10,"ishighlight":false}},{"asset":{"typ":"item","id":11114316,"val":1},"setting":{"serial_number":2,"ishighlight":false}},{"asset":{"typ":"xp","id":11161002,"val":1250},"setting":{"serial_number":1,"ishighlight":false}}]	[]	0	{}	2						[{"typ":"roi","tag":2,"val":316000}]	{}	0
+	2013920104	normal	2011920108	2014001	2026占星节每日礼包-3	LC_IAP_festival_treasury	LC_IAP_packet_desc	4.99	[{"pay_type":"gplay", "product_id": "x2_0499_cd_an"},{"pay_type":"ios", "product_id": "ape_0499_cd_ios"},{"pay_type":"aggregate", "product_id": "x2_0499_cd_an"}]	{"limit_cnt":1,"limit_type":"period"}	0	1250	0	[]	[]	[]	[]	[{"asset":{"typ":"item","id":11119497,"val":10},"setting":{"serial_number":10,"ishighlight":false}},{"asset":{"typ":"item","id":11117069,"val":6},"setting":{"serial_number":10,"ishighlight":false}},{"asset":{"typ":"item","id":11114316,"val":1},"setting":{"serial_number":2,"ishighlight":false}},{"asset":{"typ":"xp","id":11161002,"val":1250},"setting":{"serial_number":1,"ishighlight":false}}]	[]	0	{}	2						[{"typ":"roi","tag":2,"val":276000}]	{}	0
+	2013920105	normal	2011920109	2014001	2026占星节每日礼包-4	LC_IAP_festival_treasury	LC_IAP_packet_desc	4.99	[{"pay_type":"gplay", "product_id": "x2_0499_cd_an"},{"pay_type":"ios", "product_id": "ape_0499_cd_ios"},{"pay_type":"aggregate", "product_id": "x2_0499_cd_an"}]	{"limit_cnt":1,"limit_type":"period"}	0	1250	0	[]	[]	[]	[]	[{"asset":{"typ":"item","id":11119497,"val":10},"setting":{"serial_number":10,"ishighlight":false}},{"asset":{"typ":"item","id":111110026,"val":36},"setting":{"serial_number":10,"ishighlight":false}},{"asset":{"typ":"item","id":11114316,"val":1},"setting":{"serial_number":2,"ishighlight":false}},{"asset":{"typ":"xp","id":11161002,"val":1250},"setting":{"serial_number":1,"ishighlight":false}}]	[]	0	{}	2						[{"typ":"roi","tag":2,"val":296000}]	{}	0
+	2013920106	normal	2011920110	2014001	2026占星节每日礼包-5	LC_IAP_festival_treasury	LC_IAP_packet_desc	4.99	[{"pay_type":"gplay", "product_id": "x2_0499_cd_an"},{"pay_type":"ios", "product_id": "ape_0499_cd_ios"},{"pay_type":"aggregate", "product_id": "x2_0499_cd_an"}]	{"limit_cnt":1,"limit_type":"period"}	0	1250	0	[]	[]	[]	[]	[{"asset":{"typ":"item","id":11119497,"val":10},"setting":{"serial_number":10,"ishighlight":false}},{"asset":{"typ":"item","id":11111105,"val":12},"setting":{"serial_number":10,"ishighlight":false}},{"asset":{"typ":"item","id":11114316,"val":1},"setting":{"serial_number":2,"ishighlight":false}},{"asset":{"typ":"xp","id":11161002,"val":1250},"setting":{"serial_number":1,"ishighlight":false}}]	[]	0	{}	2						[{"typ":"roi","tag":2,"val":366000}]	{}	0</div>
+
+<div class="warn">
+⚠️ 联动关系：2135 的 A_INT_iap 必须指向上述新 2011；2013 的 A_INT_config_id 也必须同步指向上述新 2011。若只新增 2011 而不新增/改 2013，礼包内容仍会落在旧 config_id 上。
+</div>
+</div>
+
+<!-- ==================== 复用活动细节 ==================== -->
+<h2>四、复用活动接入说明</h2>
+<div class="card">
+
+<h3>周卡（211201010）</h3>
+<table>
+  <tr><th>字段</th><th>值</th></tr>
+  <tr><td>Constant</td><td><span class="code">event_fes_time_card</span></td></tr>
+  <tr><td>当前 Components</td><td>4 个旧通用周卡包：<span class="code">213521001 / 213521002 / 213521003 / 213521004</span>（需替换）</td></tr>
+  <tr><td>应替换为</td><td>占星节专属周卡包：<span class="code">213521201 / 213521202 / 213521203 / 213521204</span>（建议 ID，当前 QA 表空位）</td></tr>
+  <tr><td>Base</td><td>自引用（211201010）</td></tr>
+  <tr><td>接入方式</td><td>活动行可复用，但必须覆盖 2112 components，使其指向占星节新 2135 包</td></tr>
+</table>
+<div class="warn">
+  ⚠️ 周卡不能只复用 <span class="code">211201010</span>。线上核对结果：旧包 <span class="code">213521001–004</span> 指向
+  <span class="code">2011920001–004</span>，这些 2011 的 <span class="code">iap_status</span> 仍绑定
+  <span class="code">recharge_actv=211200084</span>（夏日节/生命周期链路），2013 内容也仍是科技节周卡 LC 和旧道具。因此占星节需要完整新增/修正
+  <span class="code">2135 → 2011 → 2013</span> 链路。
+</div>
+<table>
+  <tr><th>层级</th><th>占星节建议 ID</th><th>处理要求</th></tr>
+  <tr><td>2112 components</td><td><span class="code">213521201–213521204</span></td><td>替换旧 <span class="code">213521001–004</span></td></tr>
+  <tr><td>2135 activity_package</td><td><span class="code">213521201–213521204</span></td><td>新建 4 行，分别指向 <span class="code">2011920102–2011920105</span></td></tr>
+  <tr><td>2011 iap_config</td><td><span class="code">2011920102–2011920105</span></td><td>现有行需修正触发关联：不能继续绑定 <span class="code">211200084</span>；应换为占星节对应生命周期/累充 ID（当前占星节礼包已使用 <span class="code">211200093</span>，需最终确认）</td></tr>
+  <tr><td>2013 iap_template</td><td><span class="code">2013920107–2013920110</span></td><td>当前缺失，需按价格档新建，并把 <span class="code">config_id</span> 指向对应 2011；LC/图标不改，49.99 全包内的 1111 解锁道具 effect 改绑新 2013（2013920102–0106 已被每日礼包占用）</td></tr>
+  <tr><td>2024 iap_custom_chest</td><td><span class="code">20246031–20246060</span></td><td>新增 30 个自选坑位，复制旧周卡奖励表，仅替换节日专属奖励 <span class="code">11119453→11119497</span>、<span class="code">11119473→11119517</span></td></tr>
+  <tr><td>落地明细</td><td colspan="2">完整 TSV 行见 <span class="code">weekly-card-config.md</span></td></tr>
+</table>
+
+<h3>抢购礼包（21127223）</h3>
+<table>
+  <tr><th>字段</th><th>值</th></tr>
+  <tr><td>Constant</td><td><span class="code">event_flash_sale_2026</span></td></tr>
+  <tr><td>Components</td><td>包含 flash_sale_buy_duration / flash_sale_gacha / flash_sale_popup / flash_sale_raffle 四个专用组件 + 9个包 + 任务</td></tr>
+  <tr><td>Filter</td><td>building 111811 ≥ Lv6</td></tr>
+  <tr><td>接入方式</td><td>直接使用此 ID，无需新建行</td></tr>
+</table>
+<div class="warn">抢购礼包组件中的 packages（21353103–21353116）为前期节日包装，确认是否需要换为占星节主题的 IAP 产品。如需换皮内容，需同步更新对应 2011/2013 行。</div>
+</div>
+
+<!-- ==================== 下一步 ==================== -->
+<h2>五、待完成事项</h2>
+<div class="card">
+<table>
+  <tr><th>#</th><th>事项</th><th>优先级</th></tr>
+  <tr><td>1</td><td>GACHA每日礼包：新建 2135 包（5个）+ 对应 2011/2013（观星球 11119497 内容）</td><td>⚠️ 高</td></tr>
+  <tr><td>2</td><td>GACHA每日礼包：填写 banner_url（占星节主题图）</td><td>中</td></tr>
+  <tr><td>3</td><td>GACHA每日礼包：确认 task 211551456 是否复用或需新建（内容是否与占星节匹配）</td><td>中</td></tr>
+  <tr><td>4</td><td>抢购礼包：确认 packages 21353103–21353116 是否需换为占星节主题</td><td>中</td></tr>
+  <tr><td>5</td><td>周卡：新增/修正占星节专属 2135/2011/2013 链路，并覆盖 2112 components，不能继续复用 213521001–004</td><td>⚠️ 高</td></tr>
+  <tr><td>6</td><td>三个活动均需加卡册奖励（参考夏日节配置中的卡册 item 给法）</td><td>低（卡册整体配置完成后统一处理）</td></tr>
+</table>
+</div>
+
+<script>
+function copyRow() {
+  const text = document.getElementById('pasteRow').innerText;
+  navigator.clipboard.writeText(text).then(() => alert('已复制到剪贴板！'));
+}
+</script>
+</body>
+</html>
