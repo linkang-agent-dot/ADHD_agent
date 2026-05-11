@@ -1,5 +1,5 @@
 {
-  "ts": 1774944319.0402236,
+  "ts": 1778237639.0947056,
   "data": {
     "1003_x2_ConstCommonEffector": {
       "category": "通用",
@@ -1317,7 +1317,7 @@
     },
     "CraftQueue": {
       "category": "资产",
-      "table_name": "1193_x2_test1_CraftQueue",
+      "table_name": "1193_x2_CraftQueue",
       "short_name": "CraftQueue",
       "spreadsheet_id": "1gHpAir8a1uR6T9ZSmBcF9vm_EqqgMc5Kh-pTfTEDzj8"
     },
@@ -1329,7 +1329,7 @@
     },
     "AdventureQueue": {
       "category": "资产",
-      "table_name": "1194_x2_test1_AdventureQueue",
+      "table_name": "1194_x2_AdventureQueue",
       "short_name": "AdventureQueue",
       "spreadsheet_id": "1-NtBr4P7O2xx3TWqm_0P7tZFjhYKpq6m-4lwnKCB9FI"
     },
@@ -5184,18 +5184,6 @@
       "table_name": "2130_x2_ActivityBattlePass",
       "short_name": "ActivityBattlePass",
       "spreadsheet_id": "1XfpgS-r7kTDk24t5mEE93uOy9u6wm_fub0txKMRDTwU"
-    },
-    "2131_x2_activity_battle_pass_level": {
-      "category": "活动",
-      "table_name": "2131_x2_activity_battle_pass_level",
-      "short_name": "activity_battle_pass_level",
-      "spreadsheet_id": "1CFoDVfINRdcjpuGpKbNz9f3WyFxIHW5dbayQDJy5evA"
-    },
-    "activity_battle_pass_level": {
-      "category": "活动",
-      "table_name": "2131_x2_activity_battle_pass_level",
-      "short_name": "activity_battle_pass_level",
-      "spreadsheet_id": "1CFoDVfINRdcjpuGpKbNz9f3WyFxIHW5dbayQDJy5evA"
     },
     "2131_x2_ActivityBattlePassLevel": {
       "category": "活动",
@@ -13116,18 +13104,6 @@
       "table_name": "2826_x2_test1_TowerChallengeNew",
       "short_name": "test1_TowerChallengeNew",
       "spreadsheet_id": "1qy4EUVwvb0Cd3r0P6XzT2HzccfP2TQJcRit6N20aQZI"
-    },
-    "1193_x2_test1_CraftQueue": {
-      "category": "资产",
-      "table_name": "1193_x2_test1_CraftQueue",
-      "short_name": "CraftQueue",
-      "spreadsheet_id": "1gHpAir8a1uR6T9ZSmBcF9vm_EqqgMc5Kh-pTfTEDzj8"
-    },
-    "1194_x2_test1_AdventureQueue": {
-      "category": "资产",
-      "table_name": "1194_x2_test1_AdventureQueue",
-      "short_name": "AdventureQueue",
-      "spreadsheet_id": "1-NtBr4P7O2xx3TWqm_0P7tZFjhYKpq6m-4lwnKCB9FI"
     }
   }
 }

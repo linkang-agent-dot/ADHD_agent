@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>
+(function () {
+  var VERIFY = "https://demo.tap4fun.com/demo-auth/verify";
+  var LOGIN  = "https://demo.tap4fun.com/demo-auth/login";
+  fetch(VERIFY, { credentials: "include" })
+    .then(function (r) { return r.json(); })
+    .then(function (info) {
+      if (!info.loggedIn) {
+        window.location.href = LOGIN + "?returnUrl=" + encodeURIComponent(window.location.href);
+      }
+    })
+    .catch(function () {
+      window.location.href = LOGIN + "?returnUrl=" + encodeURIComponent(window.location.href);
+    });
+})();
+</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>X2 夏日节（大富翁节）效果评估报告</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.7;color:#e6edf3;background:#0d1117;margin:0;padding:0}
+#content{max-width:1000px;margin:0 auto;padding:48px 32px 80px}
+h1{font-size:1.8em;font-weight:700;border-bottom:2px solid #30363d;padding-bottom:12px;margin-top:0}
+h2{font-size:1.4em;font-weight:600;color:#58a6ff;border-bottom:1px solid #21262d;padding-bottom:8px;margin-top:2em}
+h3{font-size:1.15em;font-weight:600;color:#79c0ff;margin-top:1.5em}
+h4{font-size:1em;font-weight:600;color:#d2a8ff;margin-top:1.2em}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:0.88em}
+th,td{border:1px solid #30363d;padding:8px 10px;text-align:left}
+th{background:#161b22;font-weight:600;color:#8b949e}
+td{background:#0d1117}
+tr:nth-child(even) td{background:#161b22}
+.highlight td{background:#1c2333!important;font-weight:600}
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px 20px;margin:16px 0}
+.card-title{font-weight:600;color:#58a6ff;margin-bottom:8px;font-size:1em}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.8em;font-weight:600;margin-right:4px}
+.tag-green{background:#1b4332;color:#4ade80}
+.tag-red{background:#3b1219;color:#f87171}
+.tag-yellow{background:#3b2e08;color:#fbbf24}
+.tag-blue{background:#0c2d48;color:#60a5fa}
+.conclusion-box{background:#1c2128;border-left:4px solid #58a6ff;padding:12px 16px;margin:12px 0;border-radius:0 6px 6px 0}
+.opt-box{background:#1c2128;border-left:4px solid #f0883e;padding:12px 16px;margin:12px 0;border-radius:0 6px 6px 0}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0}
+.kpi-card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;text-align:center}
+.kpi-value{font-size:1.6em;font-weight:700;color:#58a6ff}
+.kpi-label{font-size:0.8em;color:#8b949e;margin-top:4px}
+.kpi-sub{font-size:0.75em;color:#6e7681}
+a{color:#58a6ff;text-decoration:none}
+strong{color:#e6edf3}
+</style>
+</head>
+<body>
+<div id="content">
+
+<h1>X2 夏日节（大富翁节）效果评估报告</h1>
+<p style="color:#8b949e">2026-04-24 | 服务器 1006802 / 1006902 | 节日触发：开服 888h（第6周）</p>
+
+<!-- ===== KPI Overview ===== -->
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-value">+32%</div>
+    <div class="kpi-label">Cohort 周付费增量</div>
+    <div class="kpi-sub">新服 $1,049 vs 老服 $794</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">+3.9%</div>
+    <div class="kpi-label">付费率增量</div>
+    <div class="kpi-sub">10.1% vs 6.2%</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">-3%</div>
+    <div class="kpi-label">ARPPU 变化</div>
+    <div class="kpi-sub">$21.60 vs $22.37</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">2.5x</div>
+    <div class="kpi-label">新版节日 ARPU / 旧版</div>
+    <div class="kpi-sub">$0.66 vs $0.26</div>
+  </div>
+</div>
+
+<div class="conclusion-box">
+<strong>结论先行：</strong>新版节日带来 +32% 周付费增量，核心驱动力是激活了当周未付费的老付费玩家重新付费（付费率 +3.9%），未挤压已有付费点（非节日 ARPU 反而 +$0.49）。活跃面未扩大，但强消耗任务驱动核心玩家资源消耗深度显著提升（科研加速 +82%、建造加速 +37%）。
+</div>
+
+<!-- ===== 0. 数据筛选标准 ===== -->
+<h2>0. 数据筛选标准</h2>
+<table>
+<tr><th>项目</th><th>标准</th></tr>
+<tr><td>新服</td><td>1006802（开服 03-02）、1006902（开服 03-06）</td></tr>
+<tr><td>老服（对照组）</td><td>1006302、1006002、1005602、1004402</td></tr>
+<tr><td>匹配条件</td><td>小R 占比 >90%、中R+ 人数匹配、付费率 &plusmn;0.2%</td></tr>
+<tr><td>排除条件</td><td>DAU >1000 大服仅做参考</td></tr>
+<tr><td>R级分层</td><td>查 R级分层表</td></tr>
+<tr><td>节日触发</td><td>开服 888h（第37天），所有服均在开服第6周触发</td></tr>
+</table>
+
+<!-- ===== 1. 节日整体效果 ===== -->
+<h2>1. 节日整体效果</h2>
+
+<!-- 1.1 -->
+<h3>1.1 Cohort 周付费对比</h3>
+
+<h4>付费总额 $</h4>
+<table>
+<tr><th>开服周</th><th>1006902</th><th>1006802</th><th>新服均值</th><th>1006302</th><th>1006002</th><th>1005602</th><th>1004402</th><th>老服均值</th><th>新/老</th></tr>
+<tr><td>第1周</td><td>5,817</td><td>6,874</td><td><strong>6,346</strong></td><td>4,498</td><td>9,796</td><td>7,002</td><td>7,742</td><td><strong>7,260</strong></td><td>87%</td></tr>
+<tr><td>第2周</td><td>1,717</td><td>3,188</td><td><strong>2,453</strong></td><td>1,431</td><td>3,031</td><td>3,202</td><td>3,729</td><td><strong>2,848</strong></td><td>86%</td></tr>
+<tr><td>第3周</td><td>1,908</td><td>2,334</td><td><strong>2,121</strong></td><td>689</td><td>1,661</td><td>1,954</td><td>2,341</td><td><strong>1,661</strong></td><td>128%</td></tr>
+<tr><td>第4周</td><td>1,092</td><td>1,465</td><td><strong>1,279</strong></td><td>1,023</td><td>1,246</td><td>1,226</td><td>1,789</td><td><strong>1,321</strong></td><td>97%</td></tr>
+<tr><td>第5周</td><td>942</td><td>1,016</td><td><strong>979</strong></td><td>761</td><td>667</td><td>1,058</td><td>1,475</td><td><strong>990</strong></td><td>99%</td></tr>
+<tr class="highlight"><td><strong>第6周</strong></td><td><strong>754</strong></td><td><strong>1,344</strong></td><td><strong>1,049</strong></td><td>490</td><td>925</td><td>717</td><td>1,044</td><td><strong>794</strong></td><td><strong>132%</strong></td></tr>
+<tr><td>第7周</td><td>&mdash;</td><td>495</td><td>&mdash;</td><td>540</td><td>732</td><td>438</td><td>1,163</td><td><strong>718</strong></td><td>&mdash;</td></tr>
+<tr><td>第8周</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>259</td><td>987</td><td>632</td><td>1,544</td><td><strong>855</strong></td><td>&mdash;</td></tr>
+</table>
+
+<h4>ARPU / 付费率 / ARPPU（第4~6周）</h4>
+<table>
+<tr><th>指标</th><th>周</th><th>新服均值</th><th>老服均值</th><th>差异</th></tr>
+<tr><td rowspan="3">ARPU $</td><td>第4周</td><td>$0.91</td><td>$1.42</td><td>-36%</td></tr>
+<tr><td>第5周</td><td>$1.87</td><td>$1.65</td><td>+13%</td></tr>
+<tr class="highlight"><td><strong>第6周</strong></td><td><strong>$2.30</strong></td><td><strong>$1.41</strong></td><td><strong>+63%</strong></td></tr>
+<tr><td rowspan="3">付费率</td><td>第4周</td><td>8.4%</td><td>7.2%</td><td>+1.2%</td></tr>
+<tr><td>第5周</td><td>8.8%</td><td>7.6%</td><td>+1.2%</td></tr>
+<tr class="highlight"><td><strong>第6周</strong></td><td><strong>10.1%</strong></td><td><strong>6.2%</strong></td><td><strong>+3.9%</strong></td></tr>
+<tr><td rowspan="3">ARPPU $</td><td>第4周</td><td>$10.07</td><td>$21.46</td><td>-53%</td></tr>
+<tr><td>第5周</td><td>$21.41</td><td>$19.95</td><td>+7%</td></tr>
+<tr class="highlight"><td><strong>第6周</strong></td><td><strong>$21.60</strong></td><td><strong>$22.37</strong></td><td><strong>-3%</strong></td></tr>
+</table>
+
+<h4>节日 ARPU 贡献拆分（第6周）</h4>
+<table>
+<tr><th>来源</th><th>新服</th><th>老服</th><th>差值</th><th>占总增量</th></tr>
+<tr><td>节日模块</td><td>$0.66</td><td>$0.26</td><td>+$0.40</td><td>45%</td></tr>
+<tr><td>非节日模块</td><td>$1.64</td><td>$1.15</td><td>+$0.49</td><td>55%</td></tr>
+</table>
+
+<!-- 1.2 -->
+<h3>1.2 玩家节日付费数据</h3>
+
+<h4>付费玩家维度（第6周）</h4>
+<table>
+<tr><th>指标</th><th>新服均值</th><th>老服均值</th><th>差异</th></tr>
+<tr><td>累计付费人数</td><td>649</td><td>604</td><td>&mdash;</td></tr>
+<tr><td>付费后留存率</td><td>4.1%</td><td>6.0%</td><td>-1.9%</td></tr>
+<tr><td>付费玩家 ARPU</td><td>$1.61</td><td>$1.31</td><td>+23%</td></tr>
+<tr><td>新增付费人数</td><td>0.5</td><td>0.5</td><td>持平</td></tr>
+</table>
+
+<h4>分R级数据（第6周）</h4>
+<table>
+<tr><th>R级</th><th>付费额 新/老</th><th>付费率 新/老</th><th>ARPPU 新/老</th></tr>
+<tr><td>大R</td><td>$388 / $106 (+266%)</td><td>100% / 100%</td><td>$93.93 / $44.93 (+109%)</td></tr>
+<tr><td>中R</td><td>$389 / $465 (-16%)</td><td>30% / 28% (+2%)</td><td>$12.10 / $17.05 (-29%)</td></tr>
+<tr><td>小R</td><td>$81 / $113 (-28%)</td><td>6.8% / 2.8% (+4%)</td><td>$1.24 / $5.82 (-79%)</td></tr>
+<tr><td>非R</td><td>$0 / $0</td><td>0% / 0%</td><td>&mdash;</td></tr>
+</table>
+
+<!-- 1.3 -->
+<h3>1.3 玩家活跃行为数据</h3>
+
+<h4>PVE / GVE（第6周）</h4>
+<table>
+<tr><th>指标</th><th>新服均值</th><th>老服均值</th><th>差异</th></tr>
+<tr><td>PVE 参与率</td><td>67.1%</td><td>71.3%</td><td>-4.2%</td></tr>
+<tr><td>GVE 参与率</td><td>36.3%</td><td>43.4%</td><td>-7.1%</td></tr>
+<tr><td>PVE 人均次数</td><td>23.4</td><td>24.7</td><td>-5%</td></tr>
+<tr><td>GVE 人均次数</td><td>6.5</td><td>6.1</td><td>+7%</td></tr>
+</table>
+
+<h4>养成线消耗深度 &mdash; 人均加速消耗（分钟，第6周）</h4>
+<table>
+<tr><th>养成线</th><th>新服均值</th><th>老服均值</th><th>差异</th></tr>
+<tr class="highlight"><td><strong>科研加速</strong></td><td><strong>2,998</strong></td><td><strong>1,645</strong></td><td><strong>+82%</strong></td></tr>
+<tr class="highlight"><td><strong>建造加速</strong></td><td><strong>1,974</strong></td><td><strong>1,445</strong></td><td><strong>+37%</strong></td></tr>
+<tr><td>训练加速</td><td>1,232</td><td>1,202</td><td>+2%</td></tr>
+</table>
+
+<h4>强消耗任务归因</h4>
+<table>
+<tr><th>指标</th><th>新服均值</th><th>老服均值</th><th>差异</th></tr>
+<tr><td>任务参与者占加速消耗</td><td colspan="3">85-97%（新老服一致）</td></tr>
+<tr><td>科研人均（任务玩家）</td><td>3,924 分钟</td><td>1,918 分钟</td><td><strong>+105%</strong></td></tr>
+<tr><td>建筑人均（任务玩家）</td><td>5,529 分钟</td><td>4,079 分钟</td><td><strong>+36%</strong></td></tr>
+<tr><td>通用人均（任务玩家）</td><td>14,130 分钟</td><td>7,066 分钟</td><td><strong>+100%</strong></td></tr>
+</table>
+
+<h4>强消耗任务漏斗转化（status=5 完成领奖）</h4>
+<table>
+<tr><th>任务档</th><th>新服均值</th><th>老服均值</th><th>差异</th></tr>
+<tr><td>第1档</td><td>100%</td><td>100%</td><td>&mdash;</td></tr>
+<tr><td>第5档</td><td>93%</td><td>83%</td><td>+10%</td></tr>
+<tr><td>第8档</td><td>79%</td><td>57%</td><td><strong>+22%</strong></td></tr>
+<tr><td>第10档</td><td>48%</td><td>37%</td><td>+11%</td></tr>
+<tr><td>第13档</td><td>28%</td><td>16%</td><td><strong>+12%</strong></td></tr>
+</table>
+
+<!-- ===== 2. 节日设计效果拆解 ===== -->
+<h2>2. 节日设计效果拆解</h2>
+
+<h3>2.1 活跃行为 Review</h3>
+<table>
+<tr><th>模块</th><th>参与率</th><th>深度</th><th>设计目标达成</th></tr>
+<tr><td>大富翁</td><td>14.5%</td><td>人均 44 根骰子 / 30 圈</td><td>26%（设计 170 根 / 200 圈）</td></tr>
+<tr><td>强消耗</td><td>12.2%</td><td>人均 49-70（历史 13）</td><td>35%（设计 200）</td></tr>
+<tr><td>掉落</td><td>与历史持平</td><td>产出 6-8&times; 历史</td><td>仍距设计目标 3&times;</td></tr>
+<tr><td>BP</td><td>&mdash;</td><td>均值 L5</td><td>满级率 5.8%</td></tr>
+</table>
+
+<h3>2.2 整体付费效果 Review</h3>
+<table>
+<tr><th>指标</th><th>数值</th></tr>
+<tr><td>节日收入增幅</td><td>+103%（$168 &rarr; $341）</td></tr>
+<tr><td>新模块占增量</td><td>94%</td></tr>
+<tr><td>共有模块变化</td><td>+6.1%（安全无损）</td></tr>
+<tr><td>付费人数</td><td>持平（~8.5 人）</td></tr>
+</table>
+
+<h3>2.3 各模块付费效果 Review</h3>
+
+<div class="card">
+<div class="card-title">大富翁 <span class="tag tag-blue">占新增 58.5%</span></div>
+<table>
+<tr><th>指标</th><th>数值</th></tr>
+<tr><td>总收入</td><td>$189.83，8 名付费用户</td></tr>
+<tr><td>成就礼包</td><td>13 档仅 5 档有购买，超R 贡献 94.8%</td></tr>
+<tr><td>阶段奖励 ROI</td><td>0.37（成就礼包 2.42）</td></tr>
+<tr><td>进度天花板</td><td>30 圈（设计 200 圈）</td></tr>
+<tr><td>价格问题</td><td>档2 $99.99 直跳，档3-5 反而递减</td></tr>
+</table>
+</div>
+
+<div class="card">
+<div class="card-title">BP 通行证</div>
+<table>
+<tr><th>指标</th><th>数值</th></tr>
+<tr><td>均值等级</td><td>L5（满级 L25）</td></tr>
+<tr><td>满级门槛</td><td>411（三渠道产出仅 25-43%）</td></tr>
+<tr><td>通行证购买率</td><td>5.8%</td></tr>
+</table>
+</div>
+
+<div class="card">
+<div class="card-title">掉落转付费 <span class="tag tag-green">占新增 9.2%</span></div>
+<table>
+<tr><th>指标</th><th>数值</th></tr>
+<tr><td>收入</td><td>$14.98</td></tr>
+<tr><td>产出</td><td>6-8&times; 历史基准</td></tr>
+<tr><td>掉落付费率</td><td>27-44%</td></tr>
+</table>
+</div>
+
+<div class="card">
+<div class="card-title">抢购礼包 <span class="tag tag-red">$0 收入</span></div>
+<p>两个新服均 $0 收入，0% 购买率，完全无效。</p>
+</div>
+
+<!-- ===== 2.4 各活动优化 ===== -->
+<h3>2.4 各活动数据结论与优化方向</h3>
+<table>
+<tr><th>活动</th><th>变化</th><th>数据结论</th><th>优化方向</th></tr>
+<tr><td>GACHA+累计活动</td><td>原活动不变</td><td>共有模块 +6.1%，未被挤压，安全</td><td>不动</td></tr>
+<tr><td>每日GACHA礼包</td><td>新活动</td><td>收入 $2.50，占新增量 1.5%，贡献极低</td><td>投产比低，评估是否值得保留这个位置</td></tr>
+<tr><td>节日BP</td><td>新增大富翁投放</td><td>均值 L5（满级 L25），满级率 5.8%，通行证购买率 5.8%，三渠道产出仅 25-43% 设计目标</td><td>暂不动门槛（免费线 ROI 影响需单独评估）</td></tr>
+<tr><td>强消耗扭蛋</td><td>新增大富翁投放</td><td>参与率 12.2%，深度 3-5&times; 提升，新服漏斗转化显著优于老服（第13档 28% vs 16%），驱动 85-97% 加速消耗</td><td>深度提升有效但参与面窄，当前不动</td></tr>
+<tr><td>大富翁-节日装饰</td><td>新活动</td><td>收入 $94.92（占新增 58.5%），13 档成就礼包仅 5 档有购买，超R 贡献 94.8%，价格倒挂（档2 $99.99），玩家止步 30 圈，阶段奖励 ROI 0.37</td><td>成就礼包门槛下调至 30 圈内 8 档可达，价格严格递增 $1.99&rarr;$99.99，ROI 保持 1.90-2.42</td></tr>
+<tr><td>掉落转付费</td><td>新活动</td><td>收入 $14.98（占新增 9.2%），产出 6-8&times; 历史，达到预期</td><td>不动 ROI，奖励内容与档位不调整</td></tr>
+<tr><td>7日</td><td>新增大富翁投放</td><td>参与率 89-97%（最高），产出达到预期</td><td>不动 ROI，奖励内容与档位不调整</td></tr>
+<tr><td>周卡</td><td>新活动</td><td>收入 $49.99（占新增 30.8%），仅次于大富翁的第二大贡献模块</td><td>不动，表现健康</td></tr>
+<tr><td>抢购礼包-养成下投放</td><td>新活动</td><td>两个新服均 $0 收入，0% 购买率</td><td>砍掉，预算挪到成就礼包增加低门槛档位</td></tr>
+</table>
+
+<!-- ===== 3. 总结论 ===== -->
+<h2>3. 总结论</h2>
+
+<h3>Cohort 付费结论</h3>
+<table>
+<tr><th>结论</th><th>数据支撑</th></tr>
+<tr><td>节日周服务器 ARPU 新服显著高于老服</td><td>新服 $2.30 vs 老服 $1.41（+63%），节前收入持平</td></tr>
+<tr><td>节日贡献 $0.40，非节日贡献 $0.49</td><td>节日 ARPU：新 $0.66 / 老 $0.26；非节日 ARPU：新 $1.64 / 老 $1.15</td></tr>
+<tr><td>未挤压已有付费点</td><td>非节日 ARPU 新服反而更高（$1.64 > $1.15）</td></tr>
+</table>
+
+<h3>节日付费结论</h3>
+<table>
+<tr><th>结论</th><th>数据支撑</th></tr>
+<tr><td>新版节日付费是旧版的 2.5 倍</td><td>节日 ARPU 新服 $0.66 vs 老服 $0.26，增量 +$0.40</td></tr>
+<tr><td>增量由付费率驱动，非付费深度</td><td>付费率 +3.9%（10.1% vs 6.2%），ARPPU 持平 -3%</td></tr>
+<tr><td>节日激活了当周未付费的老付费玩家复购</td><td>新增付费人数 &asymp; 0（非新人破冰），但付费玩家付费率增量 +3.9%，增量来自老付费玩家复购</td></tr>
+<tr><td>大R 付费深度被有效拉动</td><td>大R ARPPU +109%（$93.93 vs $44.93）</td></tr>
+<tr><td>中小R 入场但只买入门档</td><td>小R 付费率 +4%，但 ARPPU 仅 $1.24</td></tr>
+<tr><td>非R 完全未破冰</td><td>新增付费人数 &asymp; 0</td></tr>
+<tr><td>抢购礼包完全无效</td><td>两个新服均 $0 收入</td></tr>
+</table>
+
+<h3>活跃结论</h3>
+<table>
+<tr><th>结论</th><th>数据支撑</th></tr>
+<tr><td>PVE/GVE 行为、参与率、深度服务器端均无提升</td><td>PVE 参与率 -4.2%，GVE -7.1%，人均次数持平</td></tr>
+<tr><td>强消耗任务驱动核心玩家资源消耗深度显著提升</td><td>科研加速 +82%，建造加速 +37%，85-97% 消耗来自任务参与者</td></tr>
+<tr><td>新服任务参与者人均消耗是老服的 1-2 倍</td><td>科研人均 +105%，建筑人均 +36%，通用 +100%</td></tr>
+<tr><td>深度提升来自更深的漏斗转化，非更多人参与</td><td>新服 28% 达第13档 vs 老服 16%，参与率持平</td></tr>
+<tr><td>7日、掉落产出均有提高且达到预期，不动 ROI，奖励内容与档位暂不调整</td><td>7日参与率 89-97%（最高），掉落产出 6-8&times; 历史基准</td></tr>
+</table>
+
+<h3>优化优先级</h3>
+<table>
+<tr><th>优先级</th><th>改动</th><th>预期效果</th></tr>
+<tr><td><span class="tag tag-red">高</span></td><td>成就礼包门槛下调至 30 圈内 8 档可达 + 价格严格递增</td><td>中小R ARPPU 从 $1.99 提升到 $15-20，拉动整体 ARPPU</td></tr>
+<tr><td><span class="tag tag-red">高</span></td><td>砍掉抢购礼包，预算挪到成就礼包低档位</td><td>消除无效付费点</td></tr>
+<tr><td><span class="tag tag-yellow">待评估</span></td><td>BP 满级门槛下调</td><td>免费线 ROI 影响需单独评估后决定</td></tr>
+</table>
+
+</div>
+</body>
+</html>

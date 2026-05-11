@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>21127807 机甲gacha 配置变更</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,monospace;background:#0d1117;color:#c9d1d9;padding:16px;line-height:1.5;font-size:13px}
+.container{max-width:1600px;margin:0 auto}
+h1{color:#58a6ff;font-size:20px;margin-bottom:4px}
+h2{color:#58a6ff;font-size:15px;margin:20px 0 6px;padding-bottom:4px;border-bottom:1px solid #30363d}
+.meta{color:#8b949e;font-size:12px;margin-bottom:12px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:8px;margin-bottom:8px;overflow:hidden}
+.card-h{background:#21262d;padding:8px 12px;border-bottom:1px solid #30363d;display:flex;justify-content:space-between;align-items:center}
+.card-t{color:#58a6ff;font-size:13px;font-weight:600}
+.card-b{padding:10px 12px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th,td{padding:5px 6px;text-align:left;border:1px solid #30363d}
+th{background:#21262d;color:#58a6ff;font-weight:500;white-space:nowrap;position:sticky;top:0}
+td{font-family:monospace}
+td.j{max-width:500px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+td.j:hover{white-space:normal;word-break:break-all}
+.chg{background:rgba(210,153,34,0.15)!important;border-left:3px solid #d29922}
+.new{background:rgba(63,185,80,0.1)!important;border-left:3px solid #3fb950}
+.del{background:rgba(248,81,73,0.08)!important;text-decoration:line-through;color:#8b949e}
+.tag{display:inline-block;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:600}
+.tag-chg{background:#d29922;color:#000}
+.tag-new{background:#3fb950;color:#000}
+.tag-ok{background:#30363d;color:#8b949e}
+.copy-btn{background:#30363d;color:#c9d1d9;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:11px}
+.copy-btn:hover{background:#484f58}
+.toast{position:fixed;top:16px;right:16px;background:#238636;color:#fff;padding:8px 14px;border-radius:6px;display:none;z-index:1000;font-size:12px;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.4)}
+.note{color:#8b949e;font-size:11px;margin:4px 0 8px;font-style:italic}
+pre{font-size:11px;white-space:pre-wrap;word-break:break-all;background:#0d1117;padding:8px;border-radius:4px;border:1px solid #30363d}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;margin:8px 0}
+.summary-item{background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:8px}
+.summary-label{font-size:11px;color:#8b949e}
+.summary-val{font-size:16px;font-weight:700;color:#58a6ff}
+
+/* ===== 配置直贴区 ===== */
+.paste-zone{background:#071810;border:1.5px solid #3fb950;border-radius:8px;margin:0 0 18px;overflow:hidden}
+.paste-zone-h{background:#0a2114;padding:8px 12px;border-bottom:1px solid #1f5c35;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.paste-zone-t{color:#3fb950;font-size:12px;font-weight:700;letter-spacing:0.3px}
+.paste-zone-hint{color:#6e9975;font-size:10px;margin-left:6px;font-style:italic}
+.paste-zone-b{padding:10px 12px;overflow-x:auto}
+.paste-btn{background:#238636;color:#fff;border:none;padding:5px 14px;border-radius:4px;cursor:pointer;font-size:12px;font-weight:700;white-space:nowrap;transition:background 0.1s}
+.paste-btn:hover{background:#2ea043}
+.paste-btn:active{background:#196c2e}
+.cell-btn{background:#1a3a22;color:#3fb950;border:1px solid #2e6b3a;padding:2px 7px;border-radius:3px;cursor:pointer;font-size:10px;font-weight:600;transition:background 0.1s}
+.cell-btn:hover{background:#2e6b3a}
+.pt table{font-size:11px;width:100%}
+.pt th{background:#0a2114;color:#3fb950;border-color:#1f5c35}
+.pt td{border-color:#1a3a22;background:#071810}
+.pt td.val{word-break:break-all;white-space:normal;max-width:600px;color:#e6edf3}
+.pt td.id-col{color:#8b949e;white-space:nowrap}
+.pt tr:hover td{background:#0d2918}
+.pt td.op{text-align:center;white-space:nowrap;width:60px}
+.section-sep{margin:6px 0 4px;font-size:10px;color:#8b949e;border-bottom:1px dashed #30363d;padding-bottom:3px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>21127807 机甲gacha-节日自选通用-新版 — 配置变更清单</h1>
+<div class="meta">
+基于已有线上配置，仅列出需变更的字段。<span class="tag tag-chg">黄色</span>=修改已有值 &nbsp; <span class="tag tag-new">绿色</span>=新增行 &nbsp; 灰色=不变 &nbsp; <span style="color:#3fb950;font-weight:700">■ 绿框</span>=可直接复制到配置表
+</div>
+
+<div class="summary-grid">
+<div class="summary-item"><div class="summary-label">涉及表</div><div class="summary-val">2154 / 2142 / 2013 / 2124</div></div>
+<div class="summary-item"><div class="summary-label">修改行</div><div class="summary-val">3行(2154) + 21行(2142) + 4行(2013) + 2行(2124)</div></div>
+<div class="summary-item"><div class="summary-label">新增行</div><div class="summary-val">0（全部在已有行上改）</div></div>
+<div class="summary-item"><div class="summary-label">不动的表</div><div class="summary-val">2112 / 2011 / 2135 / 2121</div></div>
+</div>
+
+<!-- 额外跟进项 -->
+<div class="card" style="border-color:#3fb950">
+<div class="card-h" style="background:#0a2114"><span class="card-t" style="color:#3fb950">✅ 所有疑点已确认 — 额外跟进项（不影响本次配置上线）</span></div>
+<div class="card-b">
+<table style="max-width:900px">
+<thead><tr><th>#</th><th>项目</th><th>结论</th><th>跟进动作</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>2121 array=[1,7,12,16]</td><td>格位索引（第1/7/12/16格可升层），写死设计，与 floor 成本无关</td><td>无需改动</td></tr>
+<tr><td>2</td><td>11118663 宝箱估价 $2.00</td><td>保守均值合理（军备图纸×2=$4、收藏品橙升星×4=$4、高级芯片×8=$1.01 定价确认、机能核心×1确认错误）</td><td>单独提单：11118663 select_box 机能核心 ×1 → ×3</td></tr>
+</tbody>
+</table>
+</div></div>
+
+<!-- 关键道具说明 -->
+<div class="card">
+<div class="card-h"><span class="card-t">关键道具备注</span></div>
+<div class="card-b">
+<table style="max-width:900px;font-size:11px">
+<thead><tr><th>道具 ID</th><th>道具名</th><th>单价</th><th>备注</th></tr></thead>
+<tbody>
+<tr><td>11112175</td><td>锤子（gacha 货币）</td><td>$5.50/个</td><td>= Token 单价，以往配置版本信息不同步已修正（大礼包 tok 数已对齐）</td></tr>
+<tr><td>11118663</td><td>多成长线自选宝箱2</td><td>$2.00/个（保守均值）</td><td>四选一：高级芯片×8($1.01) / 军备图纸×2($4.00) / 机能核心×1($0.67，配置有误应×3) / 收藏品橙升星×4($4.00)；均值$2.42，$2.00为保守估价</td></tr>
+<tr><td>11119797</td><td>外层自选宝箱</td><td>≈$2.00</td><td>上层自选箱，可选11118663或另一道具；2142 gacha 配置使用此 ID</td></tr>
+<tr><td>11118501</td><td>机能核心</td><td>$0.67/个</td><td>机甲养成线核心材料（手册§二：$100=150个）</td></tr>
+<tr><td>11116304</td><td>万能英雄碎片-橙</td><td>$2.50/个</td><td>英雄养成线</td></tr>
+<tr><td>11111158</td><td>8h训练加速</td><td>$3.63/个</td><td>SLG 通用</td></tr>
+<tr><td>11111109</td><td>24小时加速</td><td>$10.89/个</td><td>SLG 通用</td></tr>
+</tbody>
+</table>
+</div></div>
+
+<!-- ========== 数值总览 ========== -->
+<h2>数值总览</h2>
+<div class="card">
+<div class="card-h"><span class="card-t">21格奖励明细（每格单道具）</span></div>
+<div class="card-b">
+<table>
+<thead><tr><th>格位</th><th>层级</th><th>消耗</th><th>道具</th><th>ID</th><th>数量</th><th>单价</th><th>格价值</th><th>标记</th></tr></thead>
+<tbody>
+<tr style="background:#1a3a2a"><td>L1-1</td><td>L1</td><td>1tok</td><td>8h训练加速</td><td>11111158</td><td>5</td><td>$3.63</td><td>$18.15</td><td style="color:#3fb950">升层</td></tr>
+<tr><td>L1-2</td><td>L1</td><td>1tok</td><td>机甲经验-50000</td><td>11118004</td><td>40</td><td>$0.42</td><td>$16.80</td><td></td></tr>
+<tr><td>L1-3</td><td>L1</td><td>1tok</td><td>机能核心</td><td>11118501</td><td>27</td><td>$0.67</td><td>$18.09</td><td></td></tr>
+<tr><td>L1-4</td><td>L1</td><td>1tok</td><td>资源宝箱10w</td><td>11114330</td><td>130</td><td>$0.13</td><td>$16.90</td><td></td></tr>
+<tr><td>L1-5</td><td>L1</td><td>1tok</td><td>8h训练加速</td><td>11111158</td><td>5</td><td>$3.63</td><td>$18.15</td><td></td></tr>
+<tr><td>L1-6</td><td>L1</td><td>1tok</td><td>机甲经验-50000</td><td>11118004</td><td>40</td><td>$0.42</td><td>$16.80</td><td style="color:#f85149">降层</td></tr>
+<tr style="border-top:2px solid #30363d"><td colspan="7"><b>L1 合计 (6格×1tok=6tok/$33)</b></td><td><b>$104.89</b></td><td></td></tr>
+
+<tr style="background:#2a3a1a"><td>L2-1</td><td>L2</td><td>2tok</td><td>机能核心</td><td>11118501</td><td>50</td><td>$0.67</td><td>$33.50</td><td style="color:#3fb950">升层</td></tr>
+<tr><td>L2-2</td><td>L2</td><td>2tok</td><td>8h训练加速</td><td>11111158</td><td>8</td><td>$3.63</td><td>$29.04</td><td></td></tr>
+<tr><td>L2-3</td><td>L2</td><td>2tok</td><td>机甲经验-50000</td><td>11118004</td><td>70</td><td>$0.42</td><td>$29.40</td><td></td></tr>
+<tr><td>L2-4</td><td>L2</td><td>2tok</td><td>机能核心</td><td>11118501</td><td>50</td><td>$0.67</td><td>$33.50</td><td></td></tr>
+<tr><td>L2-5</td><td>L2</td><td>2tok</td><td>8h训练加速</td><td>11111158</td><td>8</td><td>$3.63</td><td>$29.04</td><td style="color:#f85149">降层</td></tr>
+<tr style="border-top:2px solid #30363d"><td colspan="7"><b>L2 合计 (5格×2tok=10tok/$55)</b></td><td><b>$154.48</b></td><td></td></tr>
+
+<tr style="background:#3a2a1a"><td>L3-1</td><td>L3</td><td>5tok</td><td>机能核心</td><td>11118501</td><td>75</td><td>$0.67</td><td>$50.25</td><td style="color:#3fb950">升层</td></tr>
+<tr class="new"><td>L3-2</td><td>L3</td><td>5tok</td><td><b>成长线宝箱自选2</b></td><td><b>11119797</b></td><td><b>23</b></td><td><b>$2.00</b></td><td><b>$46.00</b></td><td></td></tr>
+<tr><td>L3-3</td><td>L3</td><td>5tok</td><td>24小时加速</td><td>11111109</td><td>4</td><td>$10.89</td><td>$43.56</td><td></td></tr>
+<tr><td>L3-4</td><td>L3</td><td>5tok</td><td>机能核心</td><td>11118501</td><td>75</td><td>$0.67</td><td>$50.25</td><td style="color:#f85149">降层</td></tr>
+<tr style="border-top:2px solid #30363d"><td colspan="7"><b>L3 合计 (4格×5tok=20tok/$110)</b></td><td><b>$190.06</b></td><td></td></tr>
+
+<tr class="new" style="background:#3a1a1a"><td>L4-1</td><td>L4</td><td>10tok</td><td><b>成长线宝箱自选2</b></td><td><b>11119797</b></td><td><b>56</b></td><td><b>$2.00</b></td><td><b>$112.00</b></td><td style="color:#3fb950">升层</td></tr>
+<tr><td>L4-2</td><td>L4</td><td>10tok</td><td>机能核心</td><td>11118501</td><td>175</td><td>$0.67</td><td>$117.25</td><td></td></tr>
+<tr><td>L4-3</td><td>L4</td><td>10tok</td><td>24小时加速</td><td>11111109</td><td>10</td><td>$10.89</td><td>$108.90</td><td style="color:#f85149">降层</td></tr>
+<tr style="border-top:2px solid #30363d"><td colspan="7"><b>L4 合计 (3格×10tok=30tok/$165)</b></td><td><b>$338.15</b></td><td></td></tr>
+
+<tr style="background:#2a1a3a"><td>L5-1</td><td>L5</td><td>18tok</td><td>万能英雄碎片-橙</td><td>11116304</td><td>95</td><td>$2.50</td><td>$237.50</td><td style="color:#3fb950">升层</td></tr>
+<tr><td>L5-2</td><td>L5</td><td>18tok</td><td>机能核心</td><td>11118501</td><td>380</td><td>$0.67</td><td>$254.60</td><td style="color:#f85149">降层</td></tr>
+<tr style="border-top:2px solid #30363d"><td colspan="7"><b>L5 合计 (2格×18tok=36tok/$198)</b></td><td><b>$492.10</b></td><td></td></tr>
+
+<tr style="background:#1a2a3a"><td>L6-1</td><td>L6</td><td>25tok</td><td>机甲皮肤(自选)</td><td>11112330</td><td>1</td><td>—</td><td>—</td><td></td></tr>
+<tr style="border-top:2px solid #30363d"><td colspan="7"><b>L6 合计 (1格×25tok=25tok/$137.5)</b></td><td><b>皮肤</b></td><td></td></tr>
+
+<tr style="border-top:3px solid #58a6ff"><td colspan="7"><b>总计 (21格, 127tok, $698.50)</b></td><td><b>$1,247.62</b></td><td><b>ROI 1.77</b></td></tr>
+</tbody>
+</table>
+</div></div>
+
+<div class="card">
+<div class="card-h"><span class="card-t">养成线投放比例</span></div>
+<div class="card-b">
+<table style="max-width:700px">
+<thead><tr><th>养成线</th><th>道具</th><th>价值</th><th>占比</th><th>vs养成手册(超R)</th></tr></thead>
+<tbody>
+<tr><td><b>机甲</b></td><td>机能核心832 + 机甲经验150组</td><td>$591</td><td><b>46.2%</b></td><td>手册18.8% — 机甲主题活动合理偏高</td></tr>
+<tr><td><b>英雄</b></td><td>万能橙碎95</td><td>$237</td><td><b>18.6%</b></td><td>手册18.3% — 基本吻合</td></tr>
+<tr class="new"><td><b>玩家自选</b></td><td>成长线宝箱79个</td><td>$158</td><td><b>12.3%</b></td><td>覆盖装备/战车/机师/收藏品</td></tr>
+<tr><td><b>SLG通用</b></td><td>加速26+14 + 资源130</td><td>$264</td><td><b>20.6%</b></td><td>基础建设</td></tr>
+<tr><td colspan="2"><b>不含皮肤合计</b></td><td><b>$1,248</b></td><td><b>ROI 1.77</b></td><td></td></tr>
+</tbody>
+</table>
+</div></div>
+
+<!-- ========== 2154 ========== -->
+<h2>1. 2154 activity_without_gacha_floor — 改 3 行的 S_ARR_use_item</h2>
+<div class="note">仅 L4/L5/L6 的消耗数量变了，其余字段(drop/activity/floor)不动</div>
+
+<div class="card">
+<div class="card-h"><span class="card-t">2154 变更对比（参考用）</span><button class="copy-btn" onclick="copyTable('t2154')">复制对比表</button></div>
+<div class="card-b">
+<table id="t2154">
+<thead><tr><th>A_INT_id</th><th>N_STR_comment</th><th>A_INT_floor</th><th>S_ARR_use_item (旧)</th><th>S_ARR_use_item (新)</th><th>变化</th></tr></thead>
+<tbody>
+<tr><td>21540458</td><td>层1-机甲抽奖</td><td>1</td><td class="j">[{"typ":"item","id":11112175,"val":1}]</td><td class="j">不变</td><td><span class="tag tag-ok">不动</span></td></tr>
+<tr><td>21540459</td><td>层2-机甲抽奖</td><td>2</td><td class="j">[{"typ":"item","id":11112175,"val":2}]</td><td class="j">不变</td><td><span class="tag tag-ok">不动</span></td></tr>
+<tr><td>21540460</td><td>层3-机甲抽奖</td><td>3</td><td class="j">[{"typ":"item","id":11112175,"val":5}]</td><td class="j">不变</td><td><span class="tag tag-ok">不动</span></td></tr>
+<tr class="chg"><td>21540461</td><td>层4-机甲抽奖</td><td>4</td><td class="j">[{"typ":"item","id":11112175,"val":8}]</td><td class="j">[{"typ":"item","id":11112175,"val":10}]</td><td><span class="tag tag-chg">8→10</span></td></tr>
+<tr class="chg"><td>21540462</td><td>层5-机甲抽奖</td><td>5</td><td class="j">[{"typ":"item","id":11112175,"val":12}]</td><td class="j">[{"typ":"item","id":11112175,"val":18}]</td><td><span class="tag tag-chg">12→18</span></td></tr>
+<tr class="chg"><td>21540463</td><td>层6-机甲抽奖</td><td>6</td><td class="j">[{"typ":"item","id":11112175,"val":16}]</td><td class="j">[{"typ":"item","id":11112175,"val":25}]</td><td><span class="tag tag-chg">16→25</span></td></tr>
+</tbody>
+</table>
+</div></div>
+
+<!-- 2154 配置直贴区 -->
+<div class="paste-zone">
+<div class="paste-zone-h">
+  <div>
+    <span class="paste-zone-t">⚡ 配置直贴 — 2154（仅改 S_ARR_use_item，3行）</span>
+    <span class="paste-zone-hint">定位到对应行 → 双击 S_ARR_use_item 格 → 粘贴</span>
+  </div>
+  <button class="paste-btn" onclick="copyPasteCol('paste2154', 1)">复制全部新值 (3行)</button>
+</div>
+<div class="paste-zone-b pt">
+<table id="paste2154">
+<thead><tr><th>A_INT_id（定位用）</th><th>S_ARR_use_item 新值（粘贴到此列）</th><th>操作</th></tr></thead>
+<tbody>
+<tr>
+  <td class="id-col">21540461</td>
+  <td class="val">[{"typ":"item","id":11112175,"val":10}]</td>
+  <td class="op"><button class="cell-btn" onclick="copyCellPrev(this)">复制</button></td>
+</tr>
+<tr>
+  <td class="id-col">21540462</td>
+  <td class="val">[{"typ":"item","id":11112175,"val":18}]</td>
+  <td class="op"><button class="cell-btn" onclick="copyCellPrev(this)">复制</button></td>
+</tr>
+<tr>
+  <td class="id-col">21540463</td>
+  <td class="val">[{"typ":"item","id":11112175,"val":25}]</td>
+  <td class="op"><button class="cell-btn" onclick="copyCellPrev(this)">复制</button></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<!-- ========== 2142 ========== -->
+<h2>2. 2142 activity_without_gacha_reward — 改 21 行的 A_MAP_asset</h2>
+<div class="note">每格单道具。格式与已有行一致：group/id/comment/asset/probability/max/reward_index/probability_show/special_reward。改 asset 的 id+val 和 comment。</div>
+
+<div class="card">
+<div class="card-h"><span class="card-t">2142 变更对比（参考用）</span><button class="copy-btn" onclick="copyTable('t2142')">复制对比表</button></div>
+<div class="card-b">
+<table id="t2142">
+<thead><tr><th>A_INT_group</th><th>A_INT_id</th><th>N_STR_comment</th><th>A_MAP_asset</th><th>A_INT_probability</th><th>A_INT_max</th><th>A_INT_reward_index</th><th>A_INT_probability_show</th><th>A_INT_special_reward</th></tr></thead>
+<tbody id="t2142body"></tbody>
+</table>
+</div></div>
+
+<!-- 2142 配置直贴区 -->
+<div class="paste-zone">
+<div class="paste-zone-h">
+  <div>
+    <span class="paste-zone-t">⚡ 配置直贴 — 2142（全量21行，9列，可整体覆盖粘贴）</span>
+    <span class="paste-zone-hint">在配置表中选中目标区域左上角 → 粘贴</span>
+  </div>
+  <button class="paste-btn" onclick="copyPasteRows('paste2142')">复制全部 (21行 × 9列)</button>
+</div>
+<div class="paste-zone-b pt">
+<table id="paste2142">
+<thead><tr>
+  <th>A_INT_group</th><th>A_INT_id</th><th>N_STR_comment</th><th>A_MAP_asset</th>
+  <th>A_INT_probability</th><th>A_INT_max</th><th>A_INT_reward_index</th>
+  <th>A_INT_probability_show</th><th>A_INT_special_reward</th>
+</tr></thead>
+<tbody id="paste2142body"></tbody>
+</table>
+</div></div>
+
+<!-- ========== 2013 ========== -->
+<h2>3. 2013 iap_template — 改 4 行（限购 + 锤子数量）</h2>
+<div class="note">限购：改 A_MAP_limit.limit_cnt（2013101112 / 2013101114）。锤子对齐 floor 成本：改 A_ARR_other_items 中 id:11112175 的 val（2013101115 / 2013101116）。</div>
+
+<div class="card">
+<div class="card-h"><span class="card-t">2013 锚点礼包变更对比（参考用）</span><button class="copy-btn" onclick="copyTable('t2013')">复制对比表</button></div>
+<div class="card-b">
+<table id="t2013">
+<thead><tr><th>A_INT_id</th><th>N_STR_temp_desc</th><th>A_FLT_price</th><th>锤子旧→新</th><th>限购旧→新</th><th>新 A_ARR_other_items</th><th>新 A_MAP_limit</th></tr></thead>
+<tbody>
+<tr><td>2013101112</td><td>锚点_4.99</td><td>4.99</td><td>1→1</td><td>10→<b>3</b></td><td class="j chg">[{"asset":{"typ":"xp","id":11161002,"val":1250},"setting":{"serial_number":0,"ishighlight":false}},{"asset":{"typ":"item","id":11114316,"val":1},"setting":{"serial_number":1,"ishighlight":false}},{"asset":{"typ":"item","id":11112175,"val":1},"setting":{"serial_number":100,"ishighlight":true}}]</td><td class="chg">{"limit_cnt":3,"limit_type":"period"}</td></tr>
+<tr><td>2013101113</td><td>锚点_9.99</td><td>9.99</td><td>2→2</td><td>2→2</td><td class="j">不变</td><td>不变</td></tr>
+<tr class="chg"><td>2013101114</td><td>锚点_19.99</td><td>19.99</td><td>4→4</td><td>2→1</td><td class="j">不变</td><td class="chg">{"limit_cnt":1,"limit_type":"period"}</td></tr>
+<tr class="chg"><td>2013101115</td><td>锚点_49.99</td><td>49.99</td><td><b>8→10</b></td><td>1→1</td><td class="j chg">（仅改锤子 val:8→10，其余不变）</td><td>不变</td></tr>
+<tr class="chg"><td>2013101116</td><td>锚点_99.99</td><td>99.99</td><td><b>16→18</b></td><td>5→5</td><td class="j chg">（仅改锤子 val:16→18，其余不变）</td><td>不变</td></tr>
+</tbody>
+</table>
+</div></div>
+
+<!-- 2013 配置直贴区 -->
+<div class="paste-zone">
+<div class="paste-zone-h">
+  <div>
+    <span class="paste-zone-t">⚡ 配置直贴 — 2013 限购（改 A_MAP_limit，2行）</span>
+    <span class="paste-zone-hint">定位到对应行 → 双击 A_MAP_limit 格 → 粘贴</span>
+  </div>
+  <button class="paste-btn" onclick="copyPasteCol('paste2013', 1)">复制全部新值 (2行)</button>
+</div>
+<div class="paste-zone-b pt">
+<table id="paste2013">
+<thead><tr><th>A_INT_id（定位用）</th><th>A_MAP_limit 新值（粘贴到此列）</th><th>操作</th></tr></thead>
+<tbody>
+<tr>
+  <td class="id-col">2013101112</td>
+  <td class="val">{"limit_cnt":3,"limit_type":"period"}</td>
+  <td class="op"><button class="cell-btn" onclick="copyCellPrev(this)">复制</button></td>
+</tr>
+<tr>
+  <td class="id-col">2013101114</td>
+  <td class="val">{"limit_cnt":1,"limit_type":"period"}</td>
+  <td class="op"><button class="cell-btn" onclick="copyCellPrev(this)">复制</button></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<div class="paste-zone">
+<div class="paste-zone-h">
+  <div>
+    <span class="paste-zone-t">⚡ 配置直贴 — 2013 锤子数量（改 A_ARR_other_items 中 val，2行）</span>
+    <span class="paste-zone-hint">找到 id:11112175 的那项 → 只改 val 值，其余 JSON 不动</span>
+  </div>
+  <button class="paste-btn" onclick="copyPasteCol('paste2013b', 1)">复制全部新值 (2行)</button>
+</div>
+<div class="paste-zone-b pt">
+<table id="paste2013b">
+<thead><tr><th>A_INT_id（定位用）</th><th>锤子 val 新值（id:11112175 的 val 字段）</th><th>说明</th><th>操作</th></tr></thead>
+<tbody>
+<tr>
+  <td class="id-col">2013101115<br><span style="color:#6e9975;font-size:10px">锚点_$49.99</span></td>
+  <td class="val">10</td>
+  <td style="color:#8b949e;font-size:10px;white-space:nowrap">旧:8 → 新:10<br>对齐L4成本</td>
+  <td class="op"><button class="cell-btn" onclick="copyCellPrev2(this)">复制</button></td>
+</tr>
+<tr>
+  <td class="id-col">2013101116<br><span style="color:#6e9975;font-size:10px">锚点_$99.99</span></td>
+  <td class="val">18</td>
+  <td style="color:#8b949e;font-size:10px;white-space:nowrap">旧:16 → 新:18<br>对齐L5成本</td>
+  <td class="op"><button class="cell-btn" onclick="copyCellPrev2(this)">复制</button></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2>4. 2124 随机礼包权重 — 改 2 行（基于数值设计原则：随机≥锚点+10~20%）</h2>
+<div class="note">$49.99锚点 tok 8→10、$99.99锚点 tok 16→18 后，原随机礼包期望值已低于或仅略高于锚点，违反"随机溢价 10~20%"原则。$19.99 随机 E[5.06] 对比锚点 4tok = +26.4%，保持不变（略超上限但在可接受范围）。</div>
+
+<div class="card">
+<div class="card-h"><span class="card-t">2124 随机礼包权重变更对比</span></div>
+<div class="card-b">
+<table>
+<thead><tr><th>A_INT_id</th><th>价格</th><th>锚点tok</th><th>旧期望tok</th><th>旧溢价</th><th>新权重分布</th><th>新期望tok</th><th>新溢价</th></tr></thead>
+<tbody>
+<tr><td>21241684</td><td>$19.99</td><td>4</td><td>E[5.06]</td><td>+26.4%</td><td>不变</td><td>E[5.06]</td><td style="color:#3fb950">+26.4% — 保持</td></tr>
+<tr class="chg"><td>21241892</td><td>$49.99</td><td>10</td><td>E[9.50]</td><td style="color:#f85149">-5.0% ✗</td><td>10×150 / 11×100 / 13×50 / 15×20 / 17×10 / 20×5 / 25×2 / 30×1</td><td>E[11.54]</td><td style="color:#3fb950">+15.4% ✓</td></tr>
+<tr class="chg"><td>21241685</td><td>$99.99</td><td>18</td><td>E[18.55]</td><td style="color:#f85149">+3.1% ✗</td><td>18×150 / 20×100 / 23×50 / 26×20 / 29×10 / 33×5 / 38×2 / 55×1</td><td>E[20.58]</td><td style="color:#3fb950">+14.3% ✓</td></tr>
+</tbody>
+</table>
+</div></div>
+
+<!-- 2124 配置直贴区 -->
+<div class="paste-zone">
+<div class="paste-zone-h">
+  <div>
+    <span class="paste-zone-t">⚡ 配置直贴 — 2124（改 drop 权重字段，2行）</span>
+    <span class="paste-zone-hint">定位到对应行 → 双击 drop 权重列 → 粘贴整个 JSON</span>
+  </div>
+  <button class="paste-btn" onclick="copyPasteCol('paste2124', 1)">复制全部新值 (2行)</button>
+</div>
+<div class="paste-zone-b pt">
+<table id="paste2124">
+<thead><tr><th>A_INT_id（定位用）</th><th>drop 权重 JSON 新值</th><th>期望</th><th>操作</th></tr></thead>
+<tbody>
+<tr>
+  <td class="id-col">21241892<br><span style="color:#6e9975;font-size:10px">随机_$49.99</span></td>
+  <td class="val">{"typ":"single_random","num":1,"args":[{"typ":"item","id":11112175,"num":10,"wgt":150},{"typ":"item","id":11112175,"num":11,"wgt":100},{"typ":"item","id":11112175,"num":13,"wgt":50},{"typ":"item","id":11112175,"num":15,"wgt":20},{"typ":"item","id":11112175,"num":17,"wgt":10},{"typ":"item","id":11112175,"num":20,"wgt":5},{"typ":"item","id":11112175,"num":25,"wgt":2},{"typ":"item","id":11112175,"num":30,"wgt":1}]}</td>
+  <td style="color:#3fb950;white-space:nowrap;font-size:10px">E[11.54]<br>+15.4% vs锚</td>
+  <td class="op"><button class="cell-btn" onclick="copyCellPrev2(this)">复制</button></td>
+</tr>
+<tr>
+  <td class="id-col">21241685<br><span style="color:#6e9975;font-size:10px">随机_$99.99</span></td>
+  <td class="val">{"typ":"single_random","num":1,"args":[{"typ":"item","id":11112175,"num":18,"wgt":150},{"typ":"item","id":11112175,"num":20,"wgt":100},{"typ":"item","id":11112175,"num":23,"wgt":50},{"typ":"item","id":11112175,"num":26,"wgt":20},{"typ":"item","id":11112175,"num":29,"wgt":10},{"typ":"item","id":11112175,"num":33,"wgt":5},{"typ":"item","id":11112175,"num":38,"wgt":2},{"typ":"item","id":11112175,"num":55,"wgt":1}]}</td>
+  <td style="color:#3fb950;white-space:nowrap;font-size:10px">E[20.58]<br>+14.3% vs锚</td>
+  <td class="op"><button class="cell-btn" onclick="copyCellPrev2(this)">复制</button></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<!-- ========== 不动的表 ========== -->
+<h2>5. 不需要改的表</h2>
+<div class="card">
+<div class="card-h"><span class="card-t">以下配置不变</span></div>
+<div class="card-b">
+<table>
+<thead><tr><th>表</th><th>行ID</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>2112</td><td>21127807</td><td>activity_config 主行，components 引用不变</td></tr>
+<tr><td>2121</td><td>21219608</td><td>floor_gacha_upgrade_floor, array=[1,7,12,16] 不变（格位索引，非成本）</td></tr>
+<tr><td>2135</td><td>21353246-49</td><td>4个 package 入口行不变</td></tr>
+<tr><td>2011</td><td>2011100482-85</td><td>4个 iap_config 不变</td></tr>
+<tr><td>2154 L1-L3</td><td>21540458-60</td><td>前3层消耗不变</td></tr>
+<tr><td>2124</td><td>21241684</td><td>$19.99 随机礼包权重不变，E[5.06]，对锚点溢价 +26.4%</td></tr>
+</tbody>
+</table>
+</div></div>
+
+</div><!-- /container -->
+
+<div class="toast" id="toast">已复制</div>
+
+<script>
+// ========== 2142 reward data ==========
+const REWARDS = [
+  // L1 (6格, 1tok)
+  {g:883, id:21423180, c:"L1升层-8h训练加速x5",     asset:'{"typ":"item","id":11111158,"val":5}',   p:10000, max:1, ri:1,  ps:1100, sr:0},
+  {g:882, id:21423175, c:"L1-机甲经验-50000x40",     asset:'{"typ":"item","id":11118004,"val":40}',  p:5000,  max:1, ri:2,  ps:3300, sr:0},
+  {g:882, id:21423176, c:"L1-机能核心x27",           asset:'{"typ":"item","id":11118501,"val":27}',  p:5000,  max:1, ri:3,  ps:2000, sr:0},
+  {g:882, id:21423177, c:"L1-资源宝箱10wx130",       asset:'{"typ":"item","id":11114330,"val":130}', p:5000,  max:1, ri:4,  ps:900,  sr:0},
+  {g:882, id:21423178, c:"L1-8h训练加速x5",          asset:'{"typ":"item","id":11111158,"val":5}',   p:5000,  max:1, ri:5,  ps:2000, sr:0},
+  {g:882, id:21423179, c:"L1降层-机甲经验-50000x40", asset:'{"typ":"item","id":11118004,"val":40}',  p:5000,  max:1, ri:6,  ps:2000, sr:0},
+  // L2 (5格, 2tok)
+  {g:885, id:21423185, c:"L2升层-机能核心x50",       asset:'{"typ":"item","id":11118501,"val":50}',  p:10000, max:1, ri:7,  ps:800,  sr:0},
+  {g:884, id:21423181, c:"L2-8h训练加速x8",          asset:'{"typ":"item","id":11111158,"val":8}',   p:1600,  max:1, ri:8,  ps:600,  sr:0},
+  {g:884, id:21423182, c:"L2-机甲经验-50000x70",     asset:'{"typ":"item","id":11118004,"val":70}',  p:1600,  max:1, ri:9,  ps:600,  sr:0},
+  {g:884, id:21423183, c:"L2-机能核心x50",           asset:'{"typ":"item","id":11118501,"val":50}',  p:1600,  max:1, ri:10, ps:600,  sr:0},
+  {g:884, id:21423184, c:"L2降层-8h训练加速x8",      asset:'{"typ":"item","id":11111158,"val":8}',   p:1600,  max:1, ri:11, ps:600,  sr:0},
+  // L3 (4格, 5tok)
+  {g:887, id:21423189, c:"L3升层-机能核心x75",       asset:'{"typ":"item","id":11118501,"val":75}',  p:10000, max:1, ri:12, ps:800,  sr:0},
+  {g:886, id:21423186, c:"L3-成长线宝箱自选2x23",    asset:'{"typ":"item","id":11119797,"val":23}',  p:1600,  max:1, ri:13, ps:600,  sr:0},
+  {g:886, id:21423187, c:"L3-24小时加速x4",          asset:'{"typ":"item","id":11111109,"val":4}',   p:1600,  max:1, ri:14, ps:600,  sr:0},
+  {g:886, id:21423188, c:"L3降层-机能核心x75",       asset:'{"typ":"item","id":11118501,"val":75}',  p:1600,  max:1, ri:15, ps:600,  sr:0},
+  // L4 (3格, 10tok)
+  {g:889, id:21423192, c:"L4升层-成长线宝箱自选2x56",asset:'{"typ":"item","id":11119797,"val":56}',  p:10000, max:1, ri:16, ps:800,  sr:0},
+  {g:888, id:21423190, c:"L4-机能核心x175",          asset:'{"typ":"item","id":11118501,"val":175}', p:1600,  max:1, ri:17, ps:600,  sr:0},
+  {g:888, id:21423191, c:"L4降层-24小时加速x10",     asset:'{"typ":"item","id":11111109,"val":10}',  p:1600,  max:1, ri:18, ps:600,  sr:0},
+  // L5 (2格, 18tok)
+  {g:891, id:21423194, c:"L5升层-万能英雄碎片-橙x95",asset:'{"typ":"item","id":11116304,"val":95}',  p:10000, max:1, ri:19, ps:800,  sr:0},
+  {g:890, id:21423193, c:"L5降层-机能核心x380",      asset:'{"typ":"item","id":11118501,"val":380}', p:1600,  max:1, ri:20, ps:600,  sr:0},
+  // L6 (1格, 25tok)
+  {g:892, id:21423195, c:"L6-机甲皮肤-自选道具",     asset:'{"typ":"item","id":11112330,"val":1}',   p:40,    max:1, ri:21, ps:100,  sr:1}
+];
+
+function renderTables() {
+  // 对比表（带高亮）
+  const tbody = document.getElementById('t2142body');
+  tbody.innerHTML = REWARDS.map(r => `<tr class="chg">
+    <td>${r.g}</td><td>${r.id}</td><td>${r.c}</td>
+    <td class="j">${r.asset}</td>
+    <td>${r.p}</td><td>${r.max}</td><td>${r.ri}</td><td>${r.ps}</td><td>${r.sr}</td>
+  </tr>`).join('');
+
+  // 直贴表（干净无高亮，有操作列）
+  const pbody = document.getElementById('paste2142body');
+  pbody.innerHTML = REWARDS.map(r => `<tr>
+    <td class="id-col">${r.g}</td>
+    <td class="id-col">${r.id}</td>
+    <td>${r.c}</td>
+    <td class="val">${r.asset}</td>
+    <td>${r.p}</td><td>${r.max}</td><td>${r.ri}</td><td>${r.ps}</td><td>${r.sr}</td>
+  </tr>`).join('');
+}
+
+// ========== 复制工具函数 ==========
+
+// 复制上一个 td（2154/2013 用：操作列前一格就是值）
+function copyCellPrev(btn) {
+  const td = btn.closest('td').previousElementSibling;
+  navigator.clipboard.writeText(td.textContent.trim()).then(() => showToast('已复制单元格值'));
+}
+
+// 复制上上个 td（2124 用：操作列前有期望值列，再前一格才是权重JSON）
+function copyCellPrev2(btn) {
+  const td = btn.closest('td').previousElementSibling.previousElementSibling;
+  navigator.clipboard.writeText(td.textContent.trim()).then(() => showToast('已复制权重 JSON'));
+}
+
+// 复制指定列的所有数据行（colIdx 从0开始），换行分隔
+function copyPasteCol(tableId, colIdx) {
+  const rows = document.querySelectorAll(`#${tableId} tbody tr`);
+  const vals = Array.from(rows).map(r => r.querySelectorAll('td')[colIdx].textContent.trim());
+  navigator.clipboard.writeText(vals.join('\n')).then(() => showToast(`已复制 ${vals.length} 行`));
+}
+
+// 复制全部数据行为 TSV（跳过最后一列操作列，如果有 op class）
+function copyPasteRows(tableId) {
+  const table = document.getElementById(tableId);
+  const rows = table.querySelectorAll('tbody tr');
+  const lines = Array.from(rows).map(row => {
+    const cells = Array.from(row.querySelectorAll('td')).filter(td => !td.classList.contains('op'));
+    return cells.map(c => c.textContent.trim()).join('\t');
+  });
+  navigator.clipboard.writeText(lines.join('\n')).then(() => showToast(`已复制 ${lines.length} 行 × ${lines[0]?.split('\t').length || 0} 列`));
+}
+
+// 复制对比表（带表头）
+function copyTable(id) {
+  const table = document.getElementById(id);
+  const rows = table.querySelectorAll('tr');
+  const txt = Array.from(rows).map(row =>
+    Array.from(row.querySelectorAll('th, td')).map(c => c.textContent.trim()).join('\t')
+  ).join('\n');
+  navigator.clipboard.writeText(txt).then(() => showToast('已复制对比表'));
+}
+
+// 复制 pre 文本
+function copyText(id) {
+  navigator.clipboard.writeText(document.getElementById(id).textContent).then(() => showToast('已复制'));
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg || '已复制';
+  t.style.display = 'block';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.style.display = 'none', 1800);
+}
+
+document.addEventListener('DOMContentLoaded', renderTables);
+</script>
+</body>
+</html>

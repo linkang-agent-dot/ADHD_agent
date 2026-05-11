@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IAP 礼包同步工具 - Skill 文档</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #e4e4e4;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+
+    h1 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #00d9ff, #00ff88);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      text-align: center;
+      color: #888;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+    }
+    .card h2 {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card h2 .icon {
+      font-size: 1.6rem;
+    }
+
+    .problem-list, .feature-list {
+      list-style: none;
+    }
+    .problem-list li, .feature-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .problem-list li:last-child, .feature-list li:last-child {
+      border-bottom: none;
+    }
+    .check { color: #00ff88; font-weight: bold; }
+    .warn { color: #ffaa00; }
+
+    /* 成熟度指标 */
+    .maturity {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .maturity-item {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,217,255,0.1);
+      border-radius: 12px;
+    }
+    .maturity-item .value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00d9ff;
+    }
+    .maturity-item .label {
+      color: #888;
+      margin-top: 5px;
+    }
+
+    /* 进度条 */
+    .progress-bar {
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    .progress-bar .fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00d9ff, #00ff88);
+      border-radius: 4px;
+    }
+
+    /* 时间线 */
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, #00d9ff, #00ff88);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 30px;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -26px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      background: #00d9ff;
+      border-radius: 50%;
+      border: 2px solid #1a1a2e;
+    }
+    .timeline-item h3 {
+      color: #00d9ff;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    .timeline-item .problem {
+      color: #ff6b6b;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+    .timeline-item .solution {
+      color: #00ff88;
+      font-size: 0.9rem;
+    }
+
+    /* 风险表格 */
+    .risk-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .risk-table th, .risk-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .risk-table th {
+      color: #00d9ff;
+      font-weight: 600;
+    }
+    .risk-level {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .risk-low { background: rgba(0,255,136,0.2); color: #00ff88; }
+    .risk-medium { background: rgba(255,170,0,0.2); color: #ffaa00; }
+
+    /* 代码块 */
+    code {
+      background: rgba(0,0,0,0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Consolas', monospace;
+      font-size: 0.9rem;
+      color: #00d9ff;
+    }
+
+    .usage-cmd {
+      background: rgba(0,0,0,0.4);
+      padding: 15px 20px;
+      border-radius: 8px;
+      font-family: 'Monaco', 'Consolas', monospace;
+      margin: 15px 0;
+      border-left: 3px solid #00d9ff;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .stat-box {
+      background: rgba(0,0,0,0.2);
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .stat-box .num {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #00ff88;
+    }
+    .stat-box .desc {
+      font-size: 0.85rem;
+      color: #888;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>IAP 礼包同步工具</h1>
+    <p class="subtitle">QA 表 → 主数据表 增量同步 Skill</p>
+
+    <!-- 解决什么问题 -->
+    <div class="card">
+      <h2><span class="icon">🎯</span> 解决什么问题</h2>
+      <ul class="problem-list">
+        <li>
+          <span class="check">✓</span>
+          <div>
+            <strong>手动同步效率低</strong><br>
+            <span style="color:#888">QA 表有 6000+ 礼包，手动复制粘贴到主数据表耗时且易出错</span>
+          </div>
+        </li>
+        <li>
+          <span class="check">✓</span>
+          <div>
+            <strong>分类规则复杂</strong><br>
+            <span style="color:#888">礼包需要按名称关键词映射到 4 级分类体系，人工判断容易遗漏</span>
+          </div>
+        </li>
+        <li>
+          <span class="check">✓</span>
+          <div>
+            <strong>增量更新困难</strong><br>
+            <span style="color:#888">需要识别哪些是新礼包、哪些已存在，避免重复录入</span>
+          </div>
+        </li>
+        <li>
+          <span class="check">✓</span>
+          <div>
+            <strong>数据一致性</strong><br>
+            <span style="color:#888">确保 iap_id 格式统一（id_tempType），字段映射正确</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 成熟度 -->
+    <div class="card">
+      <h2><span class="icon">📊</span> 成熟度评估</h2>
+      <div class="maturity">
+        <div class="maturity-item">
+          <div class="value">85%</div>
+          <div class="label">功能完整度</div>
+          <div class="progress-bar"><div class="fill" style="width:85%"></div></div>
+        </div>
+        <div class="maturity-item">
+          <div class="value">90%</div>
+          <div class="label">稳定性</div>
+          <div class="progress-bar"><div class="fill" style="width:90%"></div></div>
+        </div>
+        <div class="maturity-item">
+          <div class="value">70%</div>
+          <div class="label">分类覆盖率</div>
+          <div class="progress-bar"><div class="fill" style="width:70%"></div></div>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="num">4259</div>
+          <div class="desc">最近一次同步数量</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">70+</div>
+          <div class="desc">分类规则数</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">~1579</div>
+          <div class="desc">待补充分类</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 抗风险措施 -->
+    <div class="card">
+      <h2><span class="icon">🛡️</span> 抗风险措施</h2>
+      <table class="risk-table">
+        <tr>
+          <th>风险场景</th>
+          <th>等级</th>
+          <th>应对措施</th>
+        </tr>
+        <tr>
+          <td>QA 表有重复 ID</td>
+          <td><span class="risk-level risk-low">低</span></td>
+          <td>写入前自动去重，同一 iap_id 只保留第一条</td>
+        </tr>
+        <tr>
+          <td>数据量超出读取范围</td>
+          <td><span class="risk-level risk-low">低</span></td>
+          <td>读取范围已扩展到 10000 行，覆盖当前数据量</td>
+        </tr>
+        <tr>
+          <td>API 调用失败</td>
+          <td><span class="risk-level risk-low">低</span></td>
+          <td>分批写入（每批 5 条），单批失败不影响其他批次</td>
+        </tr>
+        <tr>
+          <td>误覆盖已有数据</td>
+          <td><span class="risk-level risk-low">低</span></td>
+          <td>只做增量追加，不修改/删除已有数据</td>
+        </tr>
+        <tr>
+          <td>分类不准确</td>
+          <td><span class="risk-level risk-medium">中</span></td>
+          <td>未匹配的标记为"未分类"，后续可人工补充规则</td>
+        </tr>
+        <tr>
+          <td>命令行过长</td>
+          <td><span class="risk-level risk-low">低</span></td>
+          <td>使用临时 bash 脚本文件执行，避免参数长度限制</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- 迭代历程 -->
+    <div class="card">
+      <h2><span class="icon">🔄</span> 迭代历程</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <h3>V1.0 - 基础同步</h3>
+          <div class="problem">问题：需要手动同步礼包数据</div>
+          <div class="solution">方案：实现基于 temp_type 的自动分类和增量同步</div>
+        </div>
+        <div class="timeline-item">
+          <h3>V1.1 - 修复命令行过长</h3>
+          <div class="problem">问题：ENAMETOOLONG 错误，gws 命令参数过长</div>
+          <div class="solution">方案：改用临时 bash 脚本文件 + 分批写入（每批 5 条）</div>
+        </div>
+        <div class="timeline-item">
+          <h3>V1.2 - 分类规则重构</h3>
+          <div class="problem">问题：基于 temp_type 分类不准确，实际应按礼包名称分类</div>
+          <div class="solution">方案：重写为基于名称关键词匹配的 NAME_RULES 规则引擎（70+ 条规则）</div>
+        </div>
+        <div class="timeline-item">
+          <h3>V1.3 - 去重机制</h3>
+          <div class="problem">问题：QA 表存在 24 条重复 iap_id，导致主数据表出现重复</div>
+          <div class="solution">方案：写入前对 QA 数据按 iap_id 去重，同一 ID 只保留第一条</div>
+        </div>
+        <div class="timeline-item">
+          <h3>V1.4 - 扩展读取范围</h3>
+          <div class="problem">问题：部分礼包（如"掉落转付费"）未同步，因超出 5000 行读取范围</div>
+          <div class="solution">方案：读取范围从 A8:Z5000 扩展到 A8:Z10000</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 使用方式 -->
+    <div class="card">
+      <h2><span class="icon">⚡</span> 使用方式</h2>
+      <p style="margin-bottom:10px">预览模式（不写入，检查将同步的数据）：</p>
+      <div class="usage-cmd">node C:/Users/linkang/skills/iap-sync-to-master/sync_iap.js --dry-run</div>
+      <p style="margin-bottom:10px">执行同步：</p>
+      <div class="usage-cmd">node C:/Users/linkang/skills/iap-sync-to-master/sync_iap.js</div>
+      <p style="color:#888;margin-top:15px">或直接告诉 Claude："同步礼包" / "礼包同步" / "sync iap"</p>
+    </div>
+
+    <!-- 待优化 -->
+    <div class="card">
+      <h2><span class="icon">📝</span> 待优化项</h2>
+      <ul class="feature-list">
+        <li>
+          <span class="warn">○</span>
+          <div>补充更多分类规则，减少"未分类"礼包数量（当前约 1579 条）</div>
+        </li>
+        <li>
+          <span class="warn">○</span>
+          <div>支持多页签同步（如"掉落转付费"独立页签）</div>
+        </li>
+        <li>
+          <span class="warn">○</span>
+          <div>增加同步日志记录，便于追溯历史操作</div>
+        </li>
+      </ul>
+    </div>
+
+    <p style="text-align:center;color:#555;margin-top:30px">
+      Last updated: 2026-04-07 | iap-sync-to-master skill
+    </p>
+  </div>
+</body>
+</html>

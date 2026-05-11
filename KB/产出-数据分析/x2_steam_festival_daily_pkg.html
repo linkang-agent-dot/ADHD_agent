@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X2-9月蒸汽节 每日礼包 换皮数值</title>
+<style>
+  body { font-family: 'Microsoft YaHei', sans-serif; font-size:13px; margin:20px; background:#f5f5f5; color:#222; }
+  h1 { font-size:18px; margin-bottom:4px; }
+  h2 { font-size:15px; margin-top:24px; margin-bottom:6px; border-left:4px solid #4a90d9; padding-left:8px; }
+  h3 { font-size:13px; margin-top:16px; margin-bottom:4px; color:#444; }
+  .subtitle { color:#888; font-size:12px; margin-bottom:20px; }
+  table { border-collapse:collapse; width:100%; background:#fff; margin-bottom:12px; }
+  th { background:#4a90d9; color:#fff; padding:6px 8px; text-align:left; font-size:12px; }
+  td { padding:5px 8px; border:1px solid #ddd; font-size:12px; vertical-align:top; }
+  tr:nth-child(even) { background:#f9f9f9; }
+  .changed { background:#fff3cd !important; font-weight:bold; }
+  .pending { background:#ffe0e0 !important; color:#c00; font-weight:bold; }
+  .ok { color:#2a7a2a; }
+  .tag-changed { display:inline-block; background:#f0a500; color:#fff; border-radius:3px; padding:1px 5px; font-size:11px; margin-left:4px; }
+  .tag-pending { display:inline-block; background:#e33; color:#fff; border-radius:3px; padding:1px 5px; font-size:11px; margin-left:4px; }
+  .tag-ok { display:inline-block; background:#2a7a2a; color:#fff; border-radius:3px; padding:1px 5px; font-size:11px; margin-left:4px; }
+  .json-box { background:#1e1e1e; color:#d4d4d4; padding:8px 10px; border-radius:4px; font-family:monospace; font-size:11px; white-space:pre-wrap; word-break:break-all; margin:4px 0; position:relative; }
+  .json-box .highlight { color:#ffd700; font-weight:bold; }
+  .copy-btn { position:absolute; top:4px; right:6px; background:#4a90d9; color:#fff; border:none; border-radius:3px; padding:2px 8px; font-size:11px; cursor:pointer; }
+  .copy-btn:hover { background:#2a70b9; }
+  .day-block { background:#fff; border:1px solid #ddd; border-radius:6px; padding:12px 16px; margin-bottom:16px; }
+  .day-title { font-size:14px; font-weight:bold; color:#4a90d9; margin-bottom:8px; }
+  .day-theme { display:inline-block; background:#eaf2ff; color:#2a70b9; padding:2px 8px; border-radius:12px; font-size:12px; margin-left:8px; }
+  .section-box { background:#f0f4ff; border:1px solid #c5d8f5; border-radius:4px; padding:8px 12px; margin-bottom:8px; }
+  .placeholder { color:#c00; font-weight:bold; }
+  .note { color:#888; font-size:11px; font-style:italic; }
+  .summary-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:20px; }
+  .summary-card { background:#fff; border:1px solid #ddd; border-radius:6px; padding:10px; }
+  .summary-card .price { font-size:16px; font-weight:bold; color:#4a90d9; }
+  .summary-card .theme { font-size:12px; color:#666; margin:2px 0; }
+  .summary-card .cosmetic { font-size:11px; color:#888; border-top:1px dashed #eee; margin-top:6px; padding-top:6px; }
+  .change-table th { background:#555; }
+  .toast { display:none; position:fixed; bottom:30px; right:30px; background:#333; color:#fff; padding:8px 16px; border-radius:4px; font-size:13px; z-index:999; }
+</style>
+</head>
+<body>
+<div class="toast" id="toast">已复制到剪贴板</div>
+
+<h1>X2-9月蒸汽节 每日礼包 — 换皮数值设计</h1>
+<div class="subtitle">来源：P2 每日礼包数值表 → X2 换皮 | 生成日期：2026-04-23 | <span style="color:#c00">红色项 = 待填入蒸汽节道具ID</span></div>
+
+<!-- 换皮说明 -->
+<h2>换皮变更说明</h2>
+<table class="change-table">
+  <tr><th>位置</th><th>原 P2 道具</th><th>原 ID</th><th>X2 替换</th><th>新 ID</th><th>状态</th></tr>
+  <tr>
+    <td>day1 · 5000人里程碑 · 奖励1</td>
+    <td>2025深海节-旧装饰自选宝箱</td><td>11112547</td>
+    <td>通用-装饰自选宝箱</td><td>11119867</td>
+    <td><span class="tag-changed">已替换</span></td>
+  </tr>
+  <tr>
+    <td>day2 · 3000人里程碑 · 奖励1</td>
+    <td>行军表情-动态-鼓掌</td><td>11119101</td>
+    <td>蒸汽节行军表情</td><td class="placeholder">【待填_行军表情_ID】</td>
+    <td><span class="tag-pending">待填</span></td>
+  </tr>
+  <tr>
+    <td>day3 · 4000人里程碑 · 奖励1</td>
+    <td>2025深海节头像框-静态</td><td>11112548</td>
+    <td>蒸汽节头像框</td><td class="placeholder">【待填_头像框_ID】</td>
+    <td><span class="tag-pending">待填</span></td>
+  </tr>
+  <tr>
+    <td>day4 · 3000人里程碑 · 奖励1</td>
+    <td>铭牌-2023拓荒节铭牌</td><td>11117419</td>
+    <td>蒸汽节铭牌</td><td class="placeholder">【待填_铭牌_ID】</td>
+    <td><span class="tag-pending">待填</span></td>
+  </tr>
+  <tr>
+    <td>day5 · 3000人里程碑 · 奖励1</td>
+    <td>金刚紫色喷漆</td><td>11118855</td>
+    <td>蒸汽节染色道具</td><td class="placeholder">【待填_染色道具_ID】</td>
+    <td><span class="tag-pending">待填</span></td>
+  </tr>
+</table>
+<p class="note">其余所有道具（军备图纸/零件箱/收藏品升星/探测券/英雄升星/英雄经验/收藏品红/资源宝箱/机甲芯片宝箱/机能核心/机甲经验/加速）已确认在 X2 item 表存在，ID 直接沿用。</p>
+
+<!-- 总览 -->
+<h2>每日礼包总览</h2>
+<div class="summary-grid">
+  <div class="summary-card">
+    <div class="price">$1.99</div>
+    <div class="theme">DAY 1 · 军备</div>
+    <div>军备图纸 ×2<br>军备零件箱 ×5+3<br>总倍率 1.12x | 拿满 3.73x</div>
+    <div class="cosmetic">里程碑外显 5000人：<br>通用-装饰自选宝箱 <span class="tag-ok">已替换</span></div>
+  </div>
+  <div class="summary-card">
+    <div class="price">$2.99</div>
+    <div class="theme">DAY 2 · 收藏品橙</div>
+    <div>收藏品-橙色升星-传说 ×3<br>高级探测抽奖券 ×2<br>15分钟加速 ×2<br>总倍率 0.91x | 拿满 3.65x</div>
+    <div class="cosmetic">里程碑外显 3000人：<br><span class="placeholder">【待填_行军表情_ID】</span></div>
+  </div>
+  <div class="summary-card">
+    <div class="price">$4.99</div>
+    <div class="theme">DAY 3 · 英雄</div>
+    <div>英雄升星-橙色-小 ×3<br>英雄经验-5000 ×3<br>15分钟加速 ×3<br>总倍率 0.69x | 拿满 3.76x</div>
+    <div class="cosmetic">里程碑外显 4000人：<br><span class="placeholder">【待填_头像框_ID】</span></div>
+  </div>
+  <div class="summary-card">
+    <div class="price">$9.99</div>
+    <div class="theme">DAY 4 · 收藏品红</div>
+    <div>收藏品-红色升星-超凡 ×5<br>收藏品-橙色升星-传说 ×5<br>中级资源自选宝箱1w ×6<br>总倍率 0.64x | 拿满 3.53x</div>
+    <div class="cosmetic">里程碑外显 3000人：<br><span class="placeholder">【待填_铭牌_ID】</span></div>
+  </div>
+  <div class="summary-card">
+    <div class="price">$19.99</div>
+    <div class="theme">DAY 5 · 机甲</div>
+    <div>机甲芯片自选宝箱 ×6<br>传说机能核心 ×10<br>机甲经验-10000 ×5<br>总倍率 0.65x | 拿满 3.73x</div>
+    <div class="cosmetic">里程碑外显 3000人：<br><span class="placeholder">【待填_染色道具_ID】</span></div>
+  </div>
+</div>
+
+<!-- DAY 1 -->
+<div class="day-block">
+  <div class="day-title">DAY 1 — $1.99 <span class="day-theme">军备主题</span></div>
+  <table>
+    <tr><th>充值人数</th><th>奖励1</th><th>数量</th><th>奖励2</th><th>数量</th><th>奖励3</th><th>数量</th><th>倍率</th><th>拿满总倍率</th></tr>
+    <tr><td><b>主礼包 (0人)</b></td><td>军备图纸 11117069</td><td>2</td><td>军备零件箱 11117068</td><td>5</td><td>军备零件箱 11117068</td><td>3</td><td>1.12</td><td>3.73</td></tr>
+    <tr><td>500人</td><td>军备图纸 11117069</td><td>1</td><td>军备零件箱 11117068</td><td>5</td><td>军备零件箱 11117068</td><td>3</td><td>0.62</td><td></td></tr>
+    <tr><td>2000人</td><td>军备图纸 11117069</td><td>1</td><td>军备零件箱 11117068</td><td>5</td><td>军备零件箱 11117068</td><td>3</td><td>0.62</td><td></td></tr>
+    <tr class="changed"><td>5000人 🔄</td><td>通用-装饰自选宝箱 <b>11119867</b><span class="tag-changed">已替换</span></td><td>1</td><td>军备零件箱 11117068</td><td>5</td><td>军备零件箱 11117068</td><td>3</td><td>0.12</td><td></td></tr>
+    <tr><td>7000人</td><td>军备图纸 11117069</td><td>1</td><td>军备零件箱 11117068</td><td>5</td><td>军备零件箱 11117068</td><td>3</td><td>0.62</td><td></td></tr>
+    <tr><td>10000人</td><td>军备图纸 11117069</td><td>1</td><td>军备零件箱 11117068</td><td>5</td><td>军备零件箱 11117068</td><td>3</td><td>0.62</td><td></td></tr>
+  </table>
+  <h3>JSON 配置（含变更行）</h3>
+  <b>主礼包</b>
+  <div class="json-box" id="d1_main">[{"asset":{"typ":"item","id":11117069,"val":2},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11117068,"val":5},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11117068,"val":3},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d1_main')">复制</button></div>
+  <b>5000人里程碑 <span class="tag-changed">已替换11112547→11119867</span></b>
+  <div class="json-box" id="d1_5000">[{"asset":{"typ":"item","id":<span class="highlight">11119867</span>,"val":1},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11117068,"val":5},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11117068,"val":3},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d1_5000')">复制</button></div>
+  <b>其他里程碑（500/2000/7000/10000人，内容相同）</b>
+  <div class="json-box" id="d1_other">[{"asset":{"typ":"item","id":11117069,"val":1},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11117068,"val":5},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11117068,"val":3},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d1_other')">复制</button></div>
+</div>
+
+<!-- DAY 2 -->
+<div class="day-block">
+  <div class="day-title">DAY 2 — $2.99 <span class="day-theme">收藏品橙主题</span></div>
+  <table>
+    <tr><th>充值人数</th><th>奖励1</th><th>数量</th><th>奖励2</th><th>数量</th><th>奖励3</th><th>数量</th><th>倍率</th><th>拿满总倍率</th></tr>
+    <tr><td><b>主礼包 (0人)</b></td><td>收藏品-橙色升星道具-传说 11116604</td><td>3</td><td>高级探测抽奖券 11117024</td><td>2</td><td>15分钟加速 11111104</td><td>2</td><td>0.91</td><td>3.65</td></tr>
+    <tr><td>400人</td><td>收藏品-橙色升星道具-传说 11116604</td><td>2</td><td>高级探测抽奖券 11117024</td><td>1</td><td>15分钟加速 11111104</td><td>1</td><td>0.54</td><td></td></tr>
+    <tr><td>1000人</td><td>收藏品-橙色升星道具-传说 11116604</td><td>2</td><td>高级探测抽奖券 11117024</td><td>1</td><td>15分钟加速 11111104</td><td>1</td><td>0.54</td><td></td></tr>
+    <tr class="pending"><td>3000人 🔄</td><td><span class="placeholder">【待填_行军表情_ID】</span><span class="tag-pending">待填</span></td><td>1</td><td>高级探测抽奖券 11117024</td><td>1</td><td>15分钟加速 11111104</td><td>1</td><td>0.21</td><td></td></tr>
+    <tr><td>5000人</td><td>收藏品-橙色升星道具-传说 11116604</td><td>2</td><td>高级探测抽奖券 11117024</td><td>1</td><td>15分钟加速 11111104</td><td>1</td><td>0.54</td><td></td></tr>
+    <tr><td>8000人</td><td>收藏品-橙色升星道具-传说 11116604</td><td>3</td><td>高级探测抽奖券 11117024</td><td>2</td><td>15分钟加速 11111104</td><td>2</td><td>0.91</td><td></td></tr>
+  </table>
+  <h3>JSON 配置</h3>
+  <b>主礼包</b>
+  <div class="json-box" id="d2_main">[{"asset":{"typ":"item","id":11116604,"val":3},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11117024,"val":2},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11111104,"val":2},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d2_main')">复制</button></div>
+  <b>3000人里程碑 <span class="tag-pending">待填_行军表情_ID</span></b>
+  <div class="json-box" id="d2_3000">[{"asset":{"typ":"item","id":<span class="highlight">【待填_行军表情_ID】</span>,"val":1},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11117024,"val":1},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11111104,"val":1},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d2_3000')">复制</button></div>
+  <b>400/1000/5000人（内容相同）</b>
+  <div class="json-box" id="d2_mid">[{"asset":{"typ":"item","id":11116604,"val":2},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11117024,"val":1},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11111104,"val":1},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d2_mid')">复制</button></div>
+  <b>8000人</b>
+  <div class="json-box" id="d2_8000">[{"asset":{"typ":"item","id":11116604,"val":3},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11117024,"val":2},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11111104,"val":2},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d2_8000')">复制</button></div>
+</div>
+
+<!-- DAY 3 -->
+<div class="day-block">
+  <div class="day-title">DAY 3 — $4.99 <span class="day-theme">英雄主题</span></div>
+  <table>
+    <tr><th>充值人数</th><th>奖励1</th><th>数量</th><th>奖励2</th><th>数量</th><th>奖励3</th><th>数量</th><th>倍率</th><th>拿满总倍率</th></tr>
+    <tr><td><b>主礼包 (0人)</b></td><td>英雄升星-橙色-小 11116110</td><td>3</td><td>英雄经验-5000 11116004</td><td>3</td><td>15分钟加速 11111104</td><td>3</td><td>0.69</td><td>3.76</td></tr>
+    <tr><td>300人</td><td>英雄升星-橙色-小 11116110</td><td>2</td><td>英雄经验-5000 11116004</td><td>3</td><td>15分钟加速 11111104</td><td>3</td><td>0.49</td><td></td></tr>
+    <tr><td>1000人</td><td>英雄升星-橙色-小 11116110</td><td>3</td><td>英雄经验-5000 11116004</td><td>3</td><td>15分钟加速 11111104</td><td>3</td><td>0.69</td><td></td></tr>
+    <tr><td>2000人</td><td>英雄升星-橙色-小 11116110</td><td>3</td><td>英雄经验-5000 11116004</td><td>3</td><td>15分钟加速 11111104</td><td>3</td><td>0.69</td><td></td></tr>
+    <tr class="pending"><td>4000人 🔄</td><td><span class="placeholder">【待填_头像框_ID】</span><span class="tag-pending">待填</span></td><td>1</td><td>英雄经验-5000 11116004</td><td>3</td><td>15分钟加速 11111104</td><td>3</td><td>0.29</td><td></td></tr>
+    <tr><td>6000人</td><td>英雄升星-橙色-小 11116110</td><td>4</td><td>英雄经验-5000 11116004</td><td>3</td><td>15分钟加速 11111104</td><td>3</td><td>0.89</td><td></td></tr>
+  </table>
+  <h3>JSON 配置</h3>
+  <b>主礼包</b>
+  <div class="json-box" id="d3_main">[{"asset":{"typ":"item","id":11116110,"val":3},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11116004,"val":3},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11111104,"val":3},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d3_main')">复制</button></div>
+  <b>4000人里程碑 <span class="tag-pending">待填_头像框_ID</span></b>
+  <div class="json-box" id="d3_4000">[{"asset":{"typ":"item","id":<span class="highlight">【待填_头像框_ID】</span>,"val":1},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11116004,"val":3},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11111104,"val":3},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d3_4000')">复制</button></div>
+  <b>300人</b>
+  <div class="json-box" id="d3_300">[{"asset":{"typ":"item","id":11116110,"val":2},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11116004,"val":3},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11111104,"val":3},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d3_300')">复制</button></div>
+  <b>1000/2000人（内容相同）</b>
+  <div class="json-box" id="d3_mid">[{"asset":{"typ":"item","id":11116110,"val":3},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11116004,"val":3},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11111104,"val":3},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d3_mid')">复制</button></div>
+  <b>6000人</b>
+  <div class="json-box" id="d3_6000">[{"asset":{"typ":"item","id":11116110,"val":4},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11116004,"val":3},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11111104,"val":3},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d3_6000')">复制</button></div>
+</div>
+
+<!-- DAY 4 -->
+<div class="day-block">
+  <div class="day-title">DAY 4 — $9.99 <span class="day-theme">收藏品红主题</span></div>
+  <table>
+    <tr><th>充值人数</th><th>奖励1</th><th>数量</th><th>奖励2</th><th>数量</th><th>奖励3</th><th>数量</th><th>倍率</th><th>拿满总倍率</th></tr>
+    <tr><td><b>主礼包 (0人)</b></td><td>收藏品-红色升星道具-超凡 11118681</td><td>5</td><td>收藏品-橙色升星道具-传说 11116604</td><td>5</td><td>中级资源自选宝箱1w 11114329</td><td>6</td><td>0.64</td><td>3.53</td></tr>
+    <tr><td>200人</td><td>收藏品-红色升星道具-超凡 11118681</td><td>5</td><td>收藏品-橙色升星道具-传说 11116604</td><td>4</td><td>中级资源自选宝箱1w 11114329</td><td>6</td><td>0.60</td><td></td></tr>
+    <tr><td>800人</td><td>收藏品-红色升星道具-超凡 11118681</td><td>5</td><td>收藏品-橙色升星道具-传说 11116604</td><td>4</td><td>中级资源自选宝箱1w 11114329</td><td>6</td><td>0.60</td><td></td></tr>
+    <tr><td>1500人</td><td>收藏品-红色升星道具-超凡 11118681</td><td>5</td><td>收藏品-橙色升星道具-传说 11116604</td><td>5</td><td>中级资源自选宝箱1w 11114329</td><td>6</td><td>0.64</td><td></td></tr>
+    <tr class="pending"><td>3000人 🔄</td><td><span class="placeholder">【待填_铭牌_ID】</span><span class="tag-pending">待填</span></td><td>1</td><td>收藏品-橙色升星道具-传说 11116604</td><td>5</td><td>中级资源自选宝箱1w 11114329</td><td>6</td><td>0.24</td><td></td></tr>
+    <tr><td>5000人</td><td>收藏品-红色升星道具-超凡 11118681</td><td>7</td><td>收藏品-橙色升星道具-传说 11116604</td><td>5</td><td>中级资源自选宝箱1w 11114329</td><td>6</td><td>0.80</td><td></td></tr>
+  </table>
+  <h3>JSON 配置</h3>
+  <b>主礼包</b>
+  <div class="json-box" id="d4_main">[{"asset":{"typ":"item","id":11118681,"val":5},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11116604,"val":5},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11114329,"val":6},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d4_main')">复制</button></div>
+  <b>3000人里程碑 <span class="tag-pending">待填_铭牌_ID</span></b>
+  <div class="json-box" id="d4_3000">[{"asset":{"typ":"item","id":<span class="highlight">【待填_铭牌_ID】</span>,"val":1},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11116604,"val":5},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11114329,"val":6},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d4_3000')">复制</button></div>
+  <b>200/800人（收藏品橙×4）</b>
+  <div class="json-box" id="d4_low">[{"asset":{"typ":"item","id":11118681,"val":5},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11116604,"val":4},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11114329,"val":6},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d4_low')">复制</button></div>
+  <b>1500人（收藏品橙×5，与主礼包同）</b>
+  <div class="json-box" id="d4_1500">[{"asset":{"typ":"item","id":11118681,"val":5},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11116604,"val":5},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11114329,"val":6},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d4_1500')">复制</button></div>
+  <b>5000人（收藏品红×7）</b>
+  <div class="json-box" id="d4_5000">[{"asset":{"typ":"item","id":11118681,"val":7},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11116604,"val":5},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11114329,"val":6},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d4_5000')">复制</button></div>
+</div>
+
+<!-- DAY 5 -->
+<div class="day-block">
+  <div class="day-title">DAY 5 — $19.99 <span class="day-theme">机甲主题</span></div>
+  <table>
+    <tr><th>充值人数</th><th>奖励1</th><th>数量</th><th>奖励2</th><th>数量</th><th>奖励3</th><th>数量</th><th>倍率</th><th>拿满总倍率</th></tr>
+    <tr><td><b>主礼包 (0人)</b></td><td>机甲芯片自选宝箱 11118203</td><td>6</td><td>传说机能核心 11118501</td><td>10</td><td>机甲经验-10000 11118002</td><td>5</td><td>0.65</td><td>3.73</td></tr>
+    <tr><td>100人</td><td>机甲芯片自选宝箱 11118203</td><td>6</td><td>传说机能核心 11118501</td><td>10</td><td>机甲经验-10000 11118002</td><td>5</td><td>0.65</td><td></td></tr>
+    <tr><td>500人</td><td>机甲芯片自选宝箱 11118203</td><td>6</td><td>传说机能核心 11118501</td><td>10</td><td>机甲经验-10000 11118002</td><td>5</td><td>0.65</td><td></td></tr>
+    <tr><td>1000人</td><td>机甲芯片自选宝箱 11118203</td><td>6</td><td>传说机能核心 11118501</td><td>12</td><td>机甲经验-10000 11118002</td><td>5</td><td>0.72</td><td></td></tr>
+    <tr><td>2000人</td><td>机甲芯片自选宝箱 11118203</td><td>6</td><td>传说机能核心 11118501</td><td>12</td><td>机甲经验-10000 11118002</td><td>5</td><td>0.72</td><td></td></tr>
+    <tr class="pending"><td>3000人 🔄</td><td><span class="placeholder">【待填_染色道具_ID】</span><span class="tag-pending">待填</span></td><td>1</td><td>机甲芯片自选宝箱 11118203</td><td>6</td><td>机甲经验-10000 11118002</td><td>5</td><td>0.32</td><td></td></tr>
+  </table>
+  <h3>JSON 配置</h3>
+  <b>主礼包 / 100人 / 500人（内容相同）</b>
+  <div class="json-box" id="d5_main">[{"asset":{"typ":"item","id":11118203,"val":6},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11118501,"val":10},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11118002,"val":5},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d5_main')">复制</button></div>
+  <b>1000/2000人（机能核心×12）</b>
+  <div class="json-box" id="d5_1000">[{"asset":{"typ":"item","id":11118203,"val":6},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11118501,"val":12},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11118002,"val":5},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d5_1000')">复制</button></div>
+  <b>3000人里程碑 <span class="tag-pending">待填_染色道具_ID</span></b>
+  <div class="json-box" id="d5_3000">[{"asset":{"typ":"item","id":<span class="highlight">【待填_染色道具_ID】</span>,"val":1},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11118203,"val":6},"setting":{"serial_number":1}},{"asset":{"typ":"item","id":11118002,"val":5},"setting":{"serial_number":1}}]<button class="copy-btn" onclick="copyJSON('d5_3000')">复制</button></div>
+</div>
+
+<!-- 参考：P2礼包标准 -->
+<h2>参考：P2礼包标准（数值口径，沿用不变）</h2>
+<table>
+  <tr><th>价格</th><th>加速（通用）</th><th>物品探测券</th><th>收藏品-橙升星</th><th>收藏品-红升星</th><th>军备图纸</th><th>机甲芯片宝箱</th><th>机能核心</th></tr>
+  <tr><td>$0.99</td><td>120</td><td>2</td><td>2</td><td>1</td><td>—</td><td>—</td><td>—</td></tr>
+  <tr><td>$1.99</td><td>250</td><td>4</td><td>4</td><td>2</td><td>2</td><td>—</td><td>—</td></tr>
+  <tr><td>$2.99</td><td>380</td><td>6</td><td>6</td><td>4</td><td>3</td><td>—</td><td>—</td></tr>
+  <tr><td>$4.99</td><td>660</td><td>10</td><td>10</td><td>6</td><td>5</td><td>—</td><td>—</td></tr>
+  <tr><td>$9.99</td><td>1440</td><td>20</td><td>21</td><td>12</td><td>10</td><td>—</td><td>—</td></tr>
+  <tr><td>$19.99</td><td>2880</td><td>40</td><td>42</td><td>25</td><td>20</td><td>6</td><td>10</td></tr>
+  <tr><td>$49.99</td><td>7500</td><td>100</td><td>105</td><td>62</td><td>—</td><td>—</td><td>—</td></tr>
+  <tr><td>$99.99</td><td>15720</td><td>200</td><td>210</td><td>125</td><td>—</td><td>—</td><td>—</td></tr>
+</table>
+
+<div style="background:#fff3cd;border:1px solid #f0a500;border-radius:6px;padding:12px 16px;margin-top:16px;">
+  <b>⚠️ 待填项提醒（共4项）</b>
+  <ul style="margin:6px 0 0 16px;font-size:12px;">
+    <li><b>【待填_行军表情_ID】</b> — day2 · 3000人里程碑 · 蒸汽节行军表情道具</li>
+    <li><b>【待填_头像框_ID】</b> — day3 · 4000人里程碑 · 蒸汽节头像框道具</li>
+    <li><b>【待填_铭牌_ID】</b> — day4 · 3000人里程碑 · 蒸汽节铭牌道具</li>
+    <li><b>【待填_染色道具_ID】</b> — day5 · 3000人里程碑 · 蒸汽节染色/喷漆道具</li>
+  </ul>
+</div>
+
+<script>
+function copyJSON(id) {
+  var el = document.getElementById(id);
+  // Get text content without the button text
+  var text = el.childNodes[0].textContent || el.childNodes[0].nodeValue || '';
+  // If first node is text
+  var fullText = '';
+  el.childNodes.forEach(function(node) {
+    if (node.nodeType === 3) fullText += node.textContent;
+    else if (node.tagName === 'SPAN') fullText += node.textContent;
+  });
+  fullText = fullText.trim();
+  navigator.clipboard.writeText(fullText).then(function() {
+    var toast = document.getElementById('toast');
+    toast.style.display = 'block';
+    setTimeout(function(){ toast.style.display='none'; }, 1800);
+  });
+}
+</script>
+</body>
+</html>

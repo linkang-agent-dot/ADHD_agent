@@ -58,7 +58,7 @@ sys.path.insert(0, 'skills/generate_event_review/scripts')
 from excel_handler import generate_template, parse_excel, save_as_json
 
 # 生成模板到指定目录
-generate_template('report_images/<event_name_safe>/event_review_template.xlsx')
+generate_template('KB/产出-数据分析/<event_name_safe>/event_review_template.xlsx')
 ```
 
 或通过命令行：
@@ -74,7 +74,7 @@ python skills/generate_event_review/scripts/excel_handler.py generate -o <输出
 from excel_handler import parse_excel, save_as_json
 
 data = parse_excel('<Excel文件路径>')
-save_as_json(data, 'report_images/<event_name_safe>/input_data.json')
+save_as_json(data, 'KB/产出-数据分析/<event_name_safe>/input_data.json')
 ```
 
 解析器会自动跳过说明行和空行，并调用 `validate_input()` 校验数据完整性。如果校验失败，会抛出详细的中文错误信息（指出哪个 Sheet 哪一行有问题），此时应将错误信息反馈给用户修正。
@@ -163,7 +163,7 @@ save_as_json(data, 'report_images/<event_name_safe>/input_data.json')
 
 ```bash
 # 在项目根目录创建临时数据文件
-# 文件路径: report_images/{event_name}/input_data.json
+# 文件路径: KB/产出-数据分析/{event_name}/input_data.json
 ```
 
 #### 2.2 调用图表生成脚本
@@ -171,7 +171,7 @@ save_as_json(data, 'report_images/<event_name_safe>/input_data.json')
 运行 `scripts/chart_generator.py`:
 
 ```bash
-python skills/generate_event_review/scripts/chart_generator.py --input <数据JSON路径> --output_dir report_images/<event_name_safe>/
+python skills/generate_event_review/scripts/chart_generator.py --input <数据JSON路径> --output_dir KB/产出-数据分析/<event_name_safe>/
 ```
 
 其中 `<event_name_safe>` 是将活动名中的空格和特殊字符替换为下划线后的版本。
@@ -210,7 +210,7 @@ from chart_generator import compute_metrics
 # metrics 来自 Step 2 的 generate_all_charts() 返回值中的 metrics 字段
 notion_content = generate_notion_content(data, metrics)
 notion_title = generate_notion_title(data)
-wiki_content = generate_wiki_content(data, metrics, chart_dir='report_images/<event_name_safe>/')
+wiki_content = generate_wiki_content(data, metrics, chart_dir='KB/产出-数据分析/<event_name_safe>/')
 ```
 
 #### 3.0a Wiki 版本
@@ -362,7 +362,7 @@ Skill 执行完毕后，向用户返回以下交付物：
 
 ### 交付物 1: 图片文件
 
-3 张高清图表，已保存在 `report_images/{event_name}/` 目录：
+3 张高清图表，已保存在 `KB/产出-数据分析/{event_name}/` 目录：
 - `1_Revenue_Trend.png`
 - `2_Module_Structure.png`
 - `3_User_Growth.png`

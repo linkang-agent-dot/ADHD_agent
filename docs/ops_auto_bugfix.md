@@ -1,204 +1,302 @@
-# 定时查BUG / 改BUG 运维文档
+# 配置 BUG 修复运维文档
 
-> 最后更新: 2026-04-10
+> 最后更新: 2026-04-16
 > 适用项目: P2DEV (P2), X2
 
 ---
 
-## 一、流程概述
+## 🚨 强制规则（必读，违反 = 错误）
+
+### 规则 1：BUG 操作前必须用户确认
+**所有 Jira BUG 操作前都要先列方案让用户确认，不能自己点。**
+
+需确认的操作：
+- 写入 Google Sheet（暂存区 / 目标页签）
+- 加 Jira 评论 / 转派 / 关闭 / 改状态优先级
+
+正确做法：分析完问题 → 列「准备做什么」→ 等用户「OK / 改 / 转吧」再动手。
+唯一例外：用户明确说「直接改」「都做」时跳过确认。
+
+### 规则 2：写翻译暂存区前必须确认目标页签
+游戏代码引用形式 `LC_<tab>_<key>` 直接暴露页签：
+- `LC_minigame_xxx` → 写 minigame
+- `LC_EVENT_xxx` → 写 EVENT
+- `LC_ITEM_xxx` → 写 ITEM
+**不要默认 EVENT**，要先看 BUG 截图里的 raw key 推断目标页签。
+
+### 规则 3：每处理完一个 BUG 必须双沉淀
+无论修好/转派/搁置都必须：
+1. 更新 **配置知识库** `C:\ADHD_agent\.cursor\config-library\table-index.md` — 新表/新字段/新ID/新追踪链
+2. 更新 **本运维文档** `C:\ADHD_agent\docs\ops_auto_bugfix.md` — 历史记录追一行 + 新坑加 Review
+
+未沉淀视为未完成。
+
+### 规则 4：翻译类问题必须用 game-localization-translator skill
+不要手写 18 语言（会导致 JSON/shell 引号失败、术语不一致）。
+skill 会走完整流程：check_duplicates → lookup_tm → 18 语言 → 写暂存区。
+skill 路径: `C:\ADHD_agent\.agents\skills\game-localization-translator\SKILL.md`
+
+### 规则 5：规则文案类 BUG 必须有策划案
+不能靠猜。流程：读老规则 → 让用户提供策划案链接 → 写新规则 → 用户确认措辞 → 翻译 skill。
+
+---
+
+## 架构：巡检与修复分离（2026-04-16）
+
+巡检和修复拆成两个独立 agent，避免单 session 上下文膨胀（之前合在一起一天 $80+）。
+
+### 巡检 Agent（自动，不在本文档范围）
+- Windows Task Scheduler `ClaudeBugScan`
+- 脚本：`C:\Users\linkang\.claude\scripts\bug_scan.ps1` → `claude -p` 非交互
+- 工作日 9:23-20:23 每小时，每次全新进程，~$0.5
+- 产出文件：
+  - `C:\Users\linkang\_my_bugs_summary.txt` — 当前 BUG 快照（覆写）
+  - `C:\Users\linkang\_bug_scan_log.txt` — 巡检日志（追加）
+  - `C:\Users\linkang\_bugs_to_fix.txt` — 待修配置类清单（追加）
+
+### 修复 Agent（本文档，按需手动触发）
+- 用户看完巡检报告，开新会话说"修 P2DEV-XXXXX"
+- 修完即关，不拖 session
+
+## 一、修复流程概述
 
 ```
-定时触发 → Jira查BUG → 分类筛选 → 下载截图分析 → 查配置表定位 → 用户确认 → 修复 → 导表
+用户指定 BUG → 读运维文档 → Jira 拉详情 → 下载截图分析 → 查配置表定位
+  → ⚠️用户确认查询 → 提修复方案 → ⚠️用户确认方案 → 修复 → 导表 → Jira评论 → ⚠️双沉淀
 ```
 
-## 二、已知问题与注意事项（每次必查清单）
+## 二、每次修复检查清单
 
-### 2.1 Jira 连接
+- [ ] Jira 能连上吗？（SSL / VPN）
+- [ ] gws token 是否过期？(`gws auth login`)
+- [ ] 截图都下载分析了吗？
+- [ ] “XX节/节日”相关投放是否查了对应投放内容？（2112→2135→2011→2013→1111，尤其 BP 道具）
+- [ ] `2135 activity_package` 新增行是否写在 `B/A_INT_id` 连续区？不要写到尾部空洞导致 `fwcli` 遇到空 ID。
+- [ ] 写入/复查 `2013 iap_template` 是否查到 `AE` 列 `A_INT_country_use_type`？不要只查到 `AD`。
+- [ ] 修方案给用户确认了吗？（规则 1）
+- [ ] 翻译类用 skill 了吗？（规则 4）
+- [ ] 修完后双沉淀了吗？（规则 3）
+
+---
+
+## 三、已知问题与解决方案
+
+### 3.1 环境/连接问题
 
 | 问题 | 解决方案 |
 |------|---------|
-| SSL 证书吊销检查失败 (`CRYPT_E_REVOCATION_OFFLINE`) | curl 加 `--ssl-no-revoke`；Python 用 `ssl.CERT_NONE` |
-| 项目 key 不是 "P2"，是 **P2DEV** | JQL 中用 `project = P2DEV` |
-| X2 项目 key 是 **X2** | 正常 |
-| Bash 终端中文乱码 | 不用 print 直接输出，改为 Python 写文件再 Read |
-| BUG 描述字段几乎都为空 | QA 习惯只写标题+截图，必须下载附件图片分析 |
+| SSL 证书吊销失败 (`CRYPT_E_REVOCATION_OFFLINE`) | curl 加 `--ssl-no-revoke`；Python 用 `ssl.CERT_NONE` |
+| X2 i18n EVENT tab 超大（7200+行），搜索3000行会漏 | 先用二分法定位末尾行，再按范围搜索 |
+| 暂存区有 key ≠ EVENT tab 没有 | 先搜 EVENT 完整范围再判断；暂存区副本应在写入 EVENT 后清除 |
+| i18n 已配置但游戏仍显示 raw key / 旧值 | 根因是未触发导表部署；检查「解决」流程是否走完 |
+| 项目 key 不是 P2，是 **P2DEV** | JQL 用 `project = P2DEV` |
+| Bash 终端中文乱码 | 不直接 print，改 Python 写文件再 Read |
+| BUG 描述字段几乎都为空 | QA 只写标题+截图，必须下截图分析 |
+| `gws_stdin.js` 脚本 args 解析报错 | 改用 gws CLI / Python google-auth |
 
-### 2.2 配置表查询
+### 3.2 写 LC key 的两种方式
 
-| 问题 | 解决方案 |
-|------|---------|
-| `gws_stdin.js` 脚本 args 解析报错 | 待修复脚本，或直接用 gws CLI / Python google-auth 方式 |
-| gws token 过期 | 运行 `gws auth login` 重新认证 |
-| 查表前必须先查 table-index.md | 获取 SheetID 映射，否则不知道查哪个 spreadsheet |
+| 场景 | 写入位置 | API |
+|------|---------|-----|
+| **新建 key** | 「AI翻译暂存」页签 | `values().update()` 写 B~U 列 |
+| **更新已有 key** | 直接更新目标页签对应行 | `values().update()` 覆盖 C~T 列 |
 
-### 2.3 1011 (i18n) 表处理流程
+### 3.3 2111 缺配置行排查（活动无法后台开启）
 
-1011 类 BUG（LC key 缺失/文案错误）是最常见的配置类问题。使用 `game-localization-translator` skill 处理。
+排查步骤：
+1. BUG 标题确定活动类型
+2. 在 2112 模糊搜活动 ID（关键词：活动名/constant/注释）
+3. 确认该 activity_id 在 2111 中不存在
+4. 找同类老版行作模板
+5. 新 ID = 最后一行 ID + 1
+6. 用 `values().append()` 追加（表满行时不能 update）
+7. 导表到 bugfix 分支
+
+关键表：
+- 2111: `1OaExug4AwwFlGH6LGbBiMnvQF41hYg0LsXiMQZ9XX6g`，tab `activity_calendar_QA`
+- 2112: `1IKUBw678b2PU1m0md1vR9GxcH2uTNyLbR7VWgyAJ57E`，tab `activity_config_qa`
+
+### 3.4 1168 表写入列数不足（2026-04-28 踩坑）
+
+**现象**：用 `A:F` 查参考行，以为只有 6 列，写入时漏掉 G 列 `C_MAP_label_name`。
+
+**根因**：读参考行范围不够宽，`A:F` 仅 6 列，实际表有 7 列（G = `C_MAP_label_name`，固定值 `{}`）。碰巧 Google Sheets 自动继承了周围行的 `{}`，结果正确，但属于隐患。
+
+**正确做法**：读任何配置表参考行时，始终用 `A:H` 以上的范围，避免漏列。写入 1168 时 7 列都要显式填写，模板见 table-index.md § 1168 字段说明。
+
+### 3.5 X2 节日投放内容误复用（2026-04-29 踩坑）
+
+**现象**：`21127357` 占星节-2026-限时抢购的触发链能挂到活动，但 `2013` 模板奖励里混入了夏日节 BP/gacha 道具（如 `11119453` / `LC_ITEM_summer_2025_bp_item_title`、`11119473` / `LC_ITEM_summer_2025_gacha_item_title`）。
+
+**根因**：只检查了 `2112` 组件、`2135` 礼包和 `2011` 触发，没有继续检查 `2013` 实际投放内容和 `1111` 道具主题。
+
+**正确做法**：所有“XX节 / 节日 / 2026”相关投放都要查完整链路 `2112 → 2135 → 2011 → 2013 → 1111`。大富翁道具可能是通用复用；BP 道具必须确认是否为当前节日对应 BP，不能混用其他节日 BP。
+
+### 3.6 2013 iap_template 复查漏 AE 列（2026-04-29 踩坑）
+
+**现象**：新增 `2013` 行后只用 `A:AD` 写入或复查，输出里看不到 `A_INT_country_use_type`。
+
+**根因**：`2013 iap_template` 实际字段到 `AE` 列，`AE = A_INT_country_use_type`。`A:AD` 只到 `A_MAP_special_style`，不是完整字段范围。
+
+**正确做法**：读旧行、写新行、复查新增行都至少用 `A:AE`；新增礼包模板时显式填写 `A_INT_country_use_type`，通常沿用旧模板值 `0`。
+
+### 3.7 2135 activity_package 写到表尾空洞（2026-04-29 踩坑）
+
+**现象**：`2135` 新增礼包行写入成功，但 `fwcli googlexlsx` / 后续解析仍报某行 `A_INT_id` 为空。
+
+**根因**：`2135` 的 `A` 列是 `p2_title`，真正 ID 在 `B` 列；表中间可能存在空行再接旧数据。用 `len(values)+1` 或表格 grid 尾部写入，会把新增行放到很靠后的空洞之后，导致 `fwcli` 顺序解析时先遇到空 `A_INT_id`。
+
+**正确做法**：写入前检查 `B/A_INT_id` 的连续区和目标插入点。若中间空行不足以容纳新增行，需要在后续旧数据前插入行，再把新增行放进连续区；写完后用 `fwcli googlexlsx` 重拉目标表验证。
+
+---
+
+## 四、BUG 分类
+
+### 可自动修
+1. LC key 翻译缺失 / 文案错误 — 走翻译 skill
+2. ID 引用错误 — 如 actv_id 指向旧活动
+3. 字段值配置错误 — 数值/条件配错
+4. 缺失配置行 — 2111/2112/2115 等表新增
+5. 道具 icon 引用错误 — 1111 表 display_key
+6. 排名奖励引用错误 — 2118 表
+7. 活动规则文案更新 — 走规则 5 流程
+
+### 需人工
+1. 代码逻辑 BUG
+2. 美术资源（需设计出图）
+3. 交互/UX（需策划方案）
+
+---
+
+## 五、1011 翻译流程详解（最常见 BUG 类型）
 
 ```
-截图识别 LC key → check_duplicates.py 查重 → lookup_tm.py 查翻译记忆
-  → 生成 18 语言翻译 → 写入「AI翻译暂存」页签 → 通知 linkang → linkang review/导表/关 Jira
+截图识别 raw key → ⚠️确认目标页签 → check_duplicates 查重
+  → lookup_tm 查记忆 → 生成 18 语言 → 写暂存区 → linkang/转派人 review/导表/关 Jira
 ```
 
-**具体步骤：**
+具体步骤见翻译 skill 的 SKILL.md，关键点：
+- ID 全小写、不加页签前缀（`coin_pusher_xxx` 不是 `LC_minigame_coin_pusher_xxx`）
+- `\n` 保留为字面量
+- 参数 `{0}` 各语言数量一致
+- `cns` = `cn`
+- 索引/记忆过期：`scan_all_keys.py` / `build_translation_memory.py`
 
-1. **定位 LC key** — 从截图中识别显示为原始 key 的文本（如 `LC_EVENT_xxx`），确定中文应该是什么
-2. **Key 查重** — 运行 `python check_duplicates.py <key1> <key2> ...`
-   - 脚本目录: `C:\Users\linkang\.agents\skills\game-localization-translator\scripts\`
-   - 有冲突 → 复用已有 key 或换名
-   - 无冲突 → 继续
-3. **翻译记忆查询** — 运行 `python lookup_tm.py "中文文本1" "中文文本2" ...`
-   - 精确匹配 → 直接复用已有 18 语言翻译
-   - 部分匹配 → 沿用已有术语（如"探测"→SCAN）
-   - 无匹配 → AI 生成全新翻译
-4. **生成 18 语言** — 翻译顺序: cn → en → fr → de → po → zh → id → th → sp → ru → tr → vi → it → pl → ar → jp → kr → cns
-   - `cns` = `cn` 内容
-   - `\n` 保留为字面量，不拆行
-   - 参数 `{0}` 各语言数量一致
-5. **写入暂存区** — 用 Python Google Sheets API 写入「AI翻译暂存」页签
-   - 目标表格: `11BIizMMOQRWzLZi9TjvxDxn_i0949wKwMX-T9_zlYTY`
-   - 每行格式: [目标页签, ID, cn, en, fr, de, po, zh, id, th, sp, ru, tr, vi, it, pl, ar, jp, kr, cns]
-   - A 列设 checkbox（默认 false）
-6. **通知 linkang** — 汇报写了哪些 key，linkang 去暂存页签 review → 勾选 → 菜单提交
+---
 
-**linkang 后续操作：**
-- 在「AI翻译暂存」review 翻译质量
-- 勾选确认的行 → 菜单 "本地化工具 > 提交选中行"
-- Apps Script 自动追加到目标页签、生成 ID_int、标粉红背景
-- 导表、关 Jira
+## 六、定时任务配置
 
-**注意：**
-- 索引过期时运行 `python scan_all_keys.py` 刷新（46000+ key）
-- 翻译记忆过期时运行 `python build_translation_memory.py` 刷新（40000+ 条）
-- ID 格式: `[a-z0-9_]` 全小写语义化，不加页签前缀
-
-### 2.4 截图分析
-
-| 注意点 | 说明 |
-|--------|------|
-| 截图命名不规范 | 有些是 Cursor 自动生成的超长路径名 |
-| 截图可能是手机录屏截图 | 分辨率和比例可能不同 |
-| 红圈/箭头标注 | QA 会用红色标注问题区域，注意识别 |
-
-## 三、BUG 分类标准
-
-### 可自动修复类型
-1. **LC key 翻译缺失/文案错误** — 1011 表补中文 → 翻译 skill 扩 18 语言 → 交 linkang
-2. **ID 引用错误** — 如 2011 的 actv_id 指向错误活动
-3. **字段值配置错误** — 数值、条件配置不对
-4. **缺失配置行** — 需要在 2111/2112/2115 等表新增行
-5. **道具 icon 引用错误** — 1111 表 icon 字段指向错误资源
-6. **排名奖励引用错误** — 2118 表奖励指向旧活动
-
-### 需人工处理类型
-1. **代码逻辑 BUG** — 进度计算、领取判断、跳转逻辑等
-2. **美术资源问题** — 需要设计出新图
-3. **交互/UX 问题** — 需要策划确认方案
-
-## 四、定时任务配置
-
-### JQL 查询模板
+### JQL 模板
 ```
-# 查 linkang 的未解决 BUG
 assignee = linkang AND issuetype = Bug AND resolution = Unresolved ORDER BY priority DESC, created DESC
-
-# 查所有配置类 BUG（通过 component 筛选）
-project = P2DEV AND issuetype = Bug AND resolution = Unresolved AND component in ("J 节日", "C 常规其他") ORDER BY created DESC
 ```
 
 ### Python 查询模板
 ```python
 import urllib.request, base64, ssl, json, urllib.parse
-
 ctx = ssl.create_default_context()
-ctx.check_hostname = False
-ctx.verify_mode = ssl.CERT_NONE
-
+ctx.check_hostname = False; ctx.verify_mode = ssl.CERT_NONE
 auth = base64.b64encode(b'linkang:<TOKEN>').decode()
 jql = 'assignee = linkang AND issuetype = Bug AND resolution = Unresolved'
-params = urllib.parse.urlencode({'jql': jql, 'maxResults': 30, 'fields': 'key,summary,status,priority,created,description,attachment,components'})
+params = urllib.parse.urlencode({'jql': jql, 'maxResults': 30, 'fields': 'key,summary,priority'})
 url = f'https://jira.tap4fun.com/rest/api/2/search?{params}'
 req = urllib.request.Request(url, headers={'Authorization': f'Basic {auth}'})
-resp = urllib.request.urlopen(req, context=ctx)
-data = json.loads(resp.read().decode('utf-8'))
+data = json.loads(urllib.request.urlopen(req, context=ctx).read().decode('utf-8'))
 ```
 
-### 截图下载模板
+### 截图下载
 ```python
-# 下载附件
 att_url = 'https://jira.tap4fun.com/secure/attachment/{id}/{filename}'
-req = urllib.request.Request(att_url, headers={'Authorization': f'Basic {auth}'})
-resp = urllib.request.urlopen(req, context=ctx)
 ```
 
-## 五、每次执行检查清单
+### Jira 评论 / 转派
+```python
+# Comment
+url = f'https://jira.tap4fun.com/rest/api/2/issue/{KEY}/comment'
+body = json.dumps({'body': '...'}).encode('utf-8')
+# 用 POST + Content-Type: application/json
 
-- [ ] Jira 能连上吗？（SSL 问题、VPN 问题）
-- [ ] gws token 是否过期？
-- [ ] 有没有新增的 BUG？（对比上次查询结果）
-- [ ] 新 BUG 中哪些是配置类？
-- [ ] 配置类 BUG 中哪些可以自动修？
-- [ ] 截图都下载分析了吗？
-- [ ] 修复方案提交用户确认了吗？
-- [ ] **翻译类问题必须走 game-localization-translator skill**，不要手写 18 语言
+# Reassign
+url = f'https://jira.tap4fun.com/rest/api/2/issue/{KEY}/assignee'
+body = json.dumps({'name': 'username'}).encode('utf-8')
+# 用 PUT + Content-Type: application/json
+```
 
-## 六、Review 问题记录
-
-### 问题1: 不要手写 18 语言翻译
-- **场景**: 处理 LC key 翻译时，直接在 Python 代码中硬编码 18 语言的翻译文本
-- **问题**: 代码太长导致 JSON 解析失败、shell 引号冲突、翻译质量不可控
-- **正确做法**: 必须调用 `game-localization-translator` skill（/game-localization-translator），走完整的 check_duplicates → lookup_tm → 生成翻译 → 写入暂存区流程
-- **Why**: skill 有 TM 查重、术语一致性保障、标准写入模板，手写容易出错且不可复现
-
-### 问题2: 更新已有 key vs 新建 key 的写入方式不同
-- **已有 key**（如 `2025anni_marble_gacha_rule`）: 直接更新目标页签对应行（如 EVENT row 7380），用 `sheets_api.values().update()` 覆盖 C~T 列
-- **新建 key**（如 `marble_master_box_name`）: 写入「AI翻译暂存」页签，等用户 review 后提交
-
-### 问题3: 修改配置前必须等用户确认
-- **场景**: 查到问题后直接写入 Google Sheet + 导表 + 推送，跳过了用户确认
-- **正确做法**: 严格遵守两个确认点：
-  - **确认点1（查询结果）**: 展示"我查到了什么、问题在哪"，问"查询方式是否正确？"
-  - **确认点2（修复方案）**: 展示"要改哪个表、哪行、什么值"，问"确认后我执行修改并导表"
-  - 两个确认都通过后才能写入 Google Sheet → 导表 → 推送
-- **Why**: 配置改错了会影响线上，不可逆。用户需要在关键节点把关。
-- **唯一例外**: 用户明确说"直接改"时可以跳过确认
-
-### 问题4: 2111 缺配置行的排查流程
-- **症状**: "无法后台开启"、"2111表没有对应活动配置"
-- **排查步骤**:
-  1. 从 BUG 标题确定活动类型（如"机甲抽奖"）
-  2. 在 2112 (activity_config) 表模糊搜索新活动 ID（关键词：活动名/constant/注释）
-     - SheetID: `1IKUBw678b2PU1m0md1vR9GxcH2uTNyLbR7VWgyAJ57E`，tab: `activity_config_qa`
-  3. 确认该 activity_id 在 2111 中不存在
-  4. 找同类型老版行作为模板（相同 activity_id 的老行，或同类活动的行）
-  5. 新 ID = 最后一行 ID + 1，其余字段照抄模板
-  6. 用 `sheets_api.values().append()` 追加（表可能满行，不能用 update）
-  7. 导表到 bugfix 分支
-- **关键表**:
-  - 2111 SheetID: `1OaExug4AwwFlGH6LGbBiMnvQF41hYg0LsXiMQZ9XX6g`，tab: `activity_calendar_QA`
-  - 2112 SheetID: `1IKUBw678b2PU1m0md1vR9GxcH2uTNyLbR7VWgyAJ57E`，tab: `activity_config_qa`
-
-### 问题4: 规则文案类 BUG 需要策划案输入
-- 规则文案不能靠猜，必须拿到策划案（Google Sheet / 文档）再写
-- 流程: 读老规则 → 让用户提供策划案链接 → 基于策划案写新规则 → 用户确认措辞 → 翻译 skill 生成 18 语言
+---
 
 ## 七、历史记录
 
 ### 2026-04-10 首次试跑
-- 查到 linkang 18 个未解决 BUG
-- 5 个高优先级是代码逻辑类（机甲抽奖）
-- 6 个是 LC key 翻译缺失
-- 2 个是缺配置行（2111/2116）
-- 3 个是 icon/资源引用问题
-- gws_stdin.js 脚本报错，未能通过配置表验证
+- linkang 18 个未解决 BUG
+- 5 个高优先级代码逻辑（机甲抽奖）
+- 6 个 LC key 翻译缺失
+- 2 个缺配置行（2111/2116）
+- 3 个 icon/资源问题
 
-### 2026-04-10 修复记录
+### 2026-04-10 修复
 | BUG | 操作 | 状态 |
 |-----|------|------|
 | P2DEV-141612 | 4 个 2026pioneer item key 补翻译 → 暂存区 row 112-115 | 待 review |
-| P2DEV-141613 | 1111 item 111111017 去掉 bag 标签 → bugfix 分支已推送 | ✅ 已完成 |
-| P2DEV-141157 | 2026pioneer_marble_gacha_title 改为"庆典弹弹乐" → 直接更新 EVENT | ✅ 已完成 |
-| P2DEV-141128 | 2025anni_marble_gacha_rule 新增福利关卡/高级商店/里程碑规则 → 直接更新 EVENT row 7380 | ✅ 已完成 |
+| P2DEV-141613 | 1111 item 111111017 去掉 bag 标签 → bugfix 推送 | ✅ |
+| P2DEV-141157 | 2026pioneer_marble_gacha_title 改为"庆典弹弹乐" → 直接更新 EVENT | ✅ |
+| P2DEV-141128 | 2025anni_marble_gacha_rule 新增福利关卡/高级商店/里程碑规则 → EVENT row 7380 | ✅ |
 | P2DEV-141128 | marble_master_box_name/_desc 新建 → 暂存区 row 101-102 | 待 review |
-| P2DEV-141381 | mecha_gacha_rule 改为金字塔爬塔7条规则 → 直接更新 EVENT row 4996 | ✅ 已完成 |
-| P2DEV-141394 | 2111 新增 21117153→21127807 新版机甲gacha → bugfix 已推送 | ✅ 已完成 |
+| P2DEV-141381 | mecha_gacha_rule 改为金字塔爬塔7条规则 → EVENT row 4996 | ✅ |
+| P2DEV-141394 | 2111 新增 21117153→21127807 新版机甲gacha → bugfix 推送 | ✅ |
+
+### 2026-04-13 后续
+| BUG | 操作 | 状态 |
+|-----|------|------|
+| P2DEV-141128 | 弹珠规则 v2（措辞调整：触发福利关卡 → 激活高级福利弹珠关卡）→ EVENT row 7380 | ✅ v2 |
+| P2DEV-141374 | 锤子图标不一致：2154 确认配置正确 → 客户端写死 → 转派 moqi | ✅ 转派 |
+| P2DEV-141823 | 小丑宝箱怪虚弱描述显示 `LC_minigame_coin_pusher_monster_new_name`（用户已改）→ Jira 评论 → 已解决待验证(转 安春旭) | ✅ 已解决 |
+| P2DEV-141800 | 至尊宝箱缺文案：新建 `coin_pusher_ultimate_box_received_tip`(minigame 页签) → 转派 fanglingjia | ✅ 转派 |
+| P2DEV-141816 | 机甲升层道具不加阶段进度：2121 row 21219608 reward 从惊喜锤(11112175)改为星星进度(111111020) → bugfix 推送 | ✅ 已推送 |
+| P2DEV-141876 | 推币机规则显示道具ID当数量：2182(coinpusher) MonsterDrop.val是道具ID非数量，客户端应读arg2 → Jira评论已加 | ✅ 评论已加 |
+| X2-41933 | X2巨猿活动礼包名称描述：wonder_egg_pkg(1011087409)/wonder_egg_pkg_desc(1011087410) 已在 EVENT tab，暂存区副本已清除 → 根因是未导表/未点解决 → Jira 评论已加 | ⏳ 待导表确认 |
+| P2DEV-141181 | 彩蛋叠叠乐装饰技能描述错误：(1) 2171 row 21710171/175 lc_name _attack→_increase 导表bugfix已推；(2) LC文案 cn/zh/cns 修正主语方向+兵种名 | ✅ 已解决关闭 |
+| P2DEV-141816 | 机甲升层道具不加阶段进度：2121 row 21219608 reward改为星星进度 + 1011已导 | ✅ 已解决关闭 |
+| P2DEV-141876 | 推币机规则显示道具ID当数量：2182 MonsterDrop.val是道具ID，客户端应读arg2 → 转派 liyanghong | ✅ 已转派 |
+| P2DEV-141913 | 猿猴币储蓄计划累计返还气泡内容错误（用户已修） | ✅ 已解决关闭 |
+| P2DEV-141917 | 推币机老包新服卡迷雾（用户已修） | ✅ 已解决关闭 |
+| X2-41997 | X2巨猿弹窗每日击杀颜色太亮：festival_wonder_daily_rewards 18语言 #00ff00→#308F16 | ✅ 已解决关闭 |
+
+### 当前未解决（截至 2026-04-13）
+7 个：141816 / 141776 / 141772 / 141824 / 141395 / 141128 / X2-41742
+（141382 转 zhouyaoxu，141800 转 fanglingjia，141374 转 moqi，141823 已解决）
+
+### 2026-04-20 修复
+| BUG | 操作 | 状态 |
+|-----|------|------|
+| P2DEV-141612 | 1011 EVENT tab row 9520/9521 key 前缀错误修正：`LC_EVENT_2025anni_marble_gacha_mode_normal/advanced` → 去掉 `LC_EVENT_` 前缀 → 兑换商店页签显示问题修复；其余 key（2026pioneer item 系列 row9542-9552、surprise_tip row9544）已在 EVENT tab 有正确条目，待 linkang 导表生效 | ⏳ 待导表 |
+
+### 2026-04-27 修复
+| BUG | 操作 | 状态 |
+|-----|------|------|
+| P2DEV-142375 | 彩蛋节卡册buff描述15%≠实际20%：1011 ITEM tab 新增 `must_have_energy_item_desc8`（ID:1011144342，永久提升钢铁产出速度20%，18语言）；1111 item `11114465` lc_desc → desc8；已导表 | ✅ 待验证 |
+| P2DEV-142376 | 彩蛋节buff来源显示"礼包"：1211 新增 buff `121141501`（category=12121012，source=12136017 节日卡册）；1111 item `11114465` category_param buff id → 121141501；已导表 | ✅ 待验证 |
+| P2DEV-142377 | 节日卡包卡册还是复活节：2121 新增 21217586（节日卡包组件-拓荒节，arg1=60011005，array=[60040036~40]）；2112 新增 21129005（BP）引用21217586，新增 21129006（三合一礼包）| ✅ 待验证 |
+| P2DEV-142378 | 节日卡包HUD还是复活节：21129005/21129006 的 show_hud → 21680032（拓荒节2026 HUD） | ✅ 待验证 |
+
+### 2026-04-28 修复
+| BUG | 操作 | 状态 |
+|-----|------|------|
+| 1168补配 | 巨象-蒸汽霸主皮肤（40106201）在1168缺获取途径：新增 row859 id=11684900，access=[{"id":11531001,"args":["21127807"]}]（机甲gacha-节日自选通用-新版）| ✅ 待导表 |
+
+### 2026-04-29 修复
+| BUG | 操作 | 状态 |
+|-----|------|------|
+| X2-42591 | 国服 i18n 表（1JLYxVequku6nBW4kJUkAfnJCFv7p_M7nsANSctpXpAE）EVENT tab row3187 `2023_labor_wonder_rules` CN：4处"帮派"→"商会"（规则1×2、规则7×2）；国际表 cn/cns 列已正确，无需改动 | ✅ 已写入 |
+
+### 2026-04-30 修复
+| BUG | 操作 | 状态 |
+|-----|------|------|
+| P2DEV-142522 | BP无法购买：根因是2011 IAP(2011380052) actv_id绑死通用版21127803，拓荒节版21129005无对应IAP。修复：(1)2011 row3936 Col8 `actv_id`→`actv_base_id`(21127803)使所有节日版本共用；(2)2111新增 row2080 id=21117154→21129005(拓荒节卡包BP) | ⏳ 待导表验证 |
+| X2-42676 | 巨猿弹窗说明文字过长（notice_1，3行）：将 X2 i18n EVENT tab 行2745（2023_science_wonder_notice_1）18语言全部替换为 notice_2（行2746）短版内容；导表 1011_x2_i18n → master_bugfix（commit 9bf72702） | ✅ 待樊鑫验证关单 |
+
+### 2026-05-07 修复
+| BUG | 操作 | 状态 |
+|-----|------|------|
+| X2-42783 | 占星节任务奖励卡包未换皮：2115(activity_task) H列(A_ARR_reward) 批量替换59行，group2115115(9行) 11114016→11114019，group2115116(50行) 11114014→11114017；导表→master_bugfix commit d70864b；Jira评论+状态→待验证 | ✅ 待验证关单 |
+| X2-42826 | 节日卡包道具名称显示原始key：1111 item 11114017/18/19 lc_name/lc_desc txt 从 `lc_item_card_pack_name_XX` 改为 `LC_EVENT_item_card_pack_name_XX`；GSheet写入+行筛选导表→dev_26festival commit 286f866e7 | ✅ 待验证关单 |
+| P2DEV-142617 | 机甲自选星星进度道具描述不符：1011 i18n ITEM tab row4226 `actv_winstreak_star_desc`，旧="连胜活动星星道具，获取后可提升宝箱品质。"→新="机甲抽奖活动专属道具，积累星星可推进进度，解锁累计奖励！"，18语言；导表→bugfix commit 4e2b8a6af1；Jira评论已加 | ✅ 待验证关单 |

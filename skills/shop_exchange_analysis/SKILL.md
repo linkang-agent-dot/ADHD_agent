@@ -66,7 +66,7 @@ import sys
 sys.path.insert(0, 'skills/shop_exchange_analysis/scripts')
 from data_parser import generate_excel_template
 
-generate_excel_template('report_images/<activity_name>/shop_template.xlsx')
+generate_excel_template('KB/产出-数据分析/<activity_name>/shop_template.xlsx')
 ```
 
 2. 等待用户填写
@@ -217,7 +217,7 @@ notion_title = report_gen.generate_title()
 
 #### 4.3 本地 Markdown 版本
 
-同时保存一份到 `report_images/<activity_name>/商店兑换数据分析报告.md`
+同时保存一份到 `KB/产出-数据分析/<activity_name>/商店兑换数据分析报告.md`
 
 ---
 
@@ -225,7 +225,7 @@ notion_title = report_gen.generate_title()
 
 交付物清单：
 
-1. **5 张图表** - 保存在 `report_images/{activity_name}/` 目录
+1. **5 张图表** - 保存在 `KB/产出-数据分析/{activity_name}/` 目录
 2. **Notion 页面** - 已发布，返回页面 URL
 3. **Wiki 报告** - 聊天框直接输出（用户要求时）
 4. **本地 Markdown** - 保存在图表同目录
@@ -262,7 +262,7 @@ from main import run_shop_analysis
 result = run_shop_analysis(
     items=items_list,          # List[dict] 道具数据
     activity_name='推币机',     # 活动名称
-    output_dir='report_images/推币机/',  # 输出目录
+    output_dir='KB/产出-数据分析/推币机/',  # 输出目录
     output_format='both'       # 'notion' / 'wiki' / 'both'
 )
 

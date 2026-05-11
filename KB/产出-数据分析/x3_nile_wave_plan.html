@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 尼罗河活动 — 分波投放方案</title>
+<style>
+.save-bar{position:fixed;top:0;left:0;right:0;background:rgba(15,25,35,0.95);border-bottom:1px solid rgba(255,255,255,0.1);padding:8px 40px;display:flex;align-items:center;gap:12px;z-index:999;backdrop-filter:blur(10px)}
+.save-bar button{padding:6px 16px;border:none;border-radius:6px;font-size:0.8rem;cursor:pointer;font-weight:600}
+.save-bar .btn-save{background:#2ecc71;color:#0f1923}
+.save-bar .btn-save:hover{background:#27ae60}
+.save-bar .btn-load{background:#3498db;color:#fff}
+.save-bar .btn-load:hover{background:#2980b9}
+.save-bar .btn-export{background:#f39c12;color:#0f1923}
+.save-bar .btn-export:hover{background:#e67e22}
+.save-bar .status{font-size:0.75rem;color:#888}
+.save-bar .status.ok{color:#2ecc71}
+</style>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#0f1923;color:#e0e0e0;padding:24px 40px;max-width:1100px;margin:0 auto}
+h1{font-size:1.6rem;background:linear-gradient(90deg,#f5af19,#f12711);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.subtitle{color:#888;margin-bottom:20px;font-size:0.85rem}
+.section-title{font-size:1.05rem;color:#feca57;margin:28px 0 12px;padding-left:8px;border-left:3px solid #f39c12}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px;margin-bottom:16px}
+.comment{background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.12);border-radius:8px;padding:10px 16px;margin:8px 0 16px;font-size:0.85rem;color:#bbb;line-height:1.7;font-style:italic;min-height:36px}
+.comment::before{content:'\1F4AC ';font-style:normal}
+.insight{background:rgba(243,156,18,0.08);border-left:3px solid #f39c12;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size:0.85rem;line-height:1.7}
+.insight strong{color:#f1c40f}
+.conclusion{background:linear-gradient(135deg,rgba(46,204,113,0.12),rgba(39,174,96,0.06));border:2px solid #2ecc71;border-radius:12px;padding:20px;margin:20px 0}
+.conclusion h3{color:#2ecc71;margin-bottom:10px}
+.conclusion p{font-size:0.88rem;line-height:1.8}
+table{width:100%;border-collapse:collapse;font-size:0.78rem;margin:8px 0}
+th,td{padding:6px 10px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.06)}
+th{background:rgba(255,255,255,0.05);color:#aaa;font-size:0.7rem}
+td:first-child,th:first-child{text-align:left}
+
+/* 甘特图 */
+.gantt-container{padding:16px;overflow-x:auto}
+.gantt-header{display:flex;margin-left:140px;margin-bottom:8px}
+.gantt-day{width:42px;text-align:center;font-size:0.65rem;color:#666;flex-shrink:0}
+.gantt-day.highlight{color:#f39c12;font-weight:700}
+.gantt-row{display:flex;align-items:center;margin-bottom:4px;min-height:28px}
+.gantt-label{width:140px;flex-shrink:0;font-size:0.75rem;text-align:right;padding-right:10px;color:#aaa}
+.gantt-cells{display:flex;flex:1}
+.gantt-cell{width:42px;height:24px;flex-shrink:0;position:relative}
+.gantt-bar{position:absolute;top:2px;bottom:2px;left:1px;right:1px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:#fff;font-weight:600}
+.gantt-separator{height:1px;margin:8px 0;margin-left:140px;border-bottom:1px dashed rgba(255,255,255,0.1)}
+
+/* Wave 标签 */
+.wave{display:inline-block;padding:2px 10px;border-radius:12px;font-size:0.72rem;font-weight:700;margin-right:6px}
+.wave1{background:#2ecc71;color:#0f1923}
+.wave2{background:#f39c12;color:#0f1923}
+.wave3{background:#e74c3c;color:#fff}
+
+/* 对比 */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.compare-box{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px}
+.compare-box h4{font-size:0.9rem;margin-bottom:8px}
+.compare-box.old h4{color:#e74c3c}
+.compare-box.new h4{color:#2ecc71}
+
+/* 道具流 */
+.flow{display:flex;align-items:center;gap:6px;margin:8px 0;flex-wrap:wrap;font-size:0.8rem}
+.flow-item{background:rgba(52,152,219,0.15);border:1px solid rgba(52,152,219,0.4);padding:4px 10px;border-radius:6px;color:#3498db}
+.flow-item.pay{background:rgba(231,76,60,0.15);border-color:rgba(231,76,60,0.4);color:#e74c3c}
+.flow-item.free{background:rgba(46,204,113,0.15);border-color:rgba(46,204,113,0.4);color:#2ecc71}
+.flow-arrow{color:#555}
+</style>
+</head>
+<body style="padding-top:56px">
+<div class="save-bar">
+<button class="btn-save" onclick="saveComments()">💾 保存评论</button>
+<button class="btn-load" onclick="loadComments()">📂 加载评论</button>
+<button class="btn-export" onclick="exportComments()">📋 导出评论文本</button>
+<span class="status" id="saveStatus">未保存</span>
+</div>
+<h1>X3 尼罗河活动 — 分波投放方案</h1>
+<p class="subtitle">解决问题：当前 10 个活动同时开 → 4 天后断崖 | 方案：3 波错峰投放，持续 14 天付费驱动</p>
+
+<!-- 结论先行 -->
+<div class="conclusion">
+<h3>方案概要：D20 开始，分 3 波投放</h3>
+<p>
+<span class="wave wave1">Wave 1</span><strong>D20 全量开放</strong> — BP + 大转盘 + 拼图 + 累充 + 酒馆 + 兑换商店 → 核心循环+消耗出口同步启动<br>
+<span class="wave wave2">Wave 2</span><strong>D24 追加拜访</strong> — 拜访礼包$100 → 卡在断崖点，大R追加投资阻断衰减
+</p>
+</div>
+
+<!-- 问题诊断 -->
+<div class="section-title">问题诊断：为什么 4 天后断崖</div>
+<div class="insight">
+<strong>3月新服数据实证：</strong>10 个活动同时开 → D20-D23 日均 $3,352 → D24 断崖到 $1,668 → D25+ 跌至 $1,000<br>
+<strong>根因：</strong>所有付费决策点同时曝光，玩家 3 天内完成全部"一次性购买"（BP $5-20 + 拜访 $100），之后没有新的消费刺激<br>
+<strong>叠加因素：</strong>大转盘/兑换商店未触发 → 道具循环断裂 → 无持续消耗
+</div>
+
+<!-- 新旧对比 -->
+<div class="section-title">新旧方案对比</div>
+<div class="compare">
+<div class="compare-box old">
+<h4>当前方案（全部同开）</h4>
+<div style="font-size:0.82rem;line-height:1.8;color:#bbb">
+Day1-3: BP首购 + 拜访$100 + 累充 = <strong style="color:#2ecc71">集中爆发</strong><br>
+Day4: 跟Day1一样的内容 = <strong style="color:#e74c3c">没有新刺激</strong><br>
+Day5-14: 空转 = <strong style="color:#e74c3c">断崖 → $1,000/天</strong><br><br>
+收入曲线: ████▁▁▁▁▁▁▁▁▁▁
+</div>
+</div>
+<div class="compare-box new">
+<h4>优化方案（3 波错峰）</h4>
+<div style="font-size:0.82rem;line-height:1.8;color:#bbb">
+Day1-3: BP+大转盘+兑换+酒馆+拼图+累充 = <strong style="color:#2ecc71">全量循环启动</strong><br>
+Day5: 拜访$100 = <strong style="color:#f1c40f">卡在断崖前，大R追加投资</strong><br>
+Day5-14: 全模块运转 = <strong style="color:#f1c40f">双循环持续消耗</strong><br><br>
+收入曲线: ████████████████
+</div>
+</div>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<!-- 甘特图 -->
+<div class="section-title">分波排期甘特图</div>
+<div class="card">
+<div class="gantt-container" id="ganttArea"></div>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<!-- 每波详解 -->
+<div class="section-title"><span class="wave wave1">Wave 1</span> D20 全量开放 — 双循环 Day1 同步启动</div>
+<table>
+<tr><th>活动</th><th>付费类型</th><th>持续</th><th>角色</th></tr>
+<tr><td style="font-weight:bold">黄金卷轴 (大转盘)</td><td style="color:#e74c3c;font-weight:bold">$5-100 五档礼包</td><td>14天</td><td>核心消耗循环：恩典卷→抽奖→碎片</td></tr>
+<tr><td>圣甲虫试炼 (BP)</td><td style="color:#e74c3c">$5/$20 通行证</td><td>14天</td><td>恩典卷免费产出源，跟大转盘绑定</td></tr>
+<tr><td style="font-weight:bold">方尖碑集市 (兑换)</td><td style="color:#2ecc71;font-weight:bold">猫眼石币消耗</td><td>14天</td><td>道具消耗出口，Day1 即可兑换</td></tr>
+<tr><td>蓝莲花宴 (酒馆)</td><td style="color:#f39c12">排行榜</td><td>14天</td><td>积分累计 → 中后期排名竞争驱动</td></tr>
+<tr><td>象形密文 (拼图)</td><td style="color:#2ecc71">免费</td><td>14天</td><td>每日任务锚点 + 碎片产出</td></tr>
+<tr><td>黄金沙漏 (累充)</td><td style="color:#e74c3c">充多少送多少</td><td>14天</td><td>被动放大所有付费</td></tr>
+</table>
+
+<div class="flow">
+<span class="flow-item pay">买恩典卷礼包 $5-100</span>
+<span class="flow-arrow">→</span>
+<span class="flow-item">女王恩典卷</span>
+<span class="flow-arrow">←</span>
+<span class="flow-item free">BP每日任务产出</span>
+<span class="flow-arrow">│</span>
+<span class="flow-item pay">大转盘消耗</span>
+<span class="flow-arrow">→</span>
+<span class="flow-item free">碎片</span>
+</div>
+<div class="flow">
+<span class="flow-item free">碎片(转盘/酒馆/BP)</span>
+<span class="flow-arrow">→</span>
+<span class="flow-item">制作</span>
+<span class="flow-arrow">→</span>
+<span class="flow-item">猫眼石币</span>
+<span class="flow-arrow">→</span>
+<span class="flow-item pay">兑换商店消耗</span>
+</div>
+<div class="insight">
+<strong>为什么 6 个活动全量 Day1 开？</strong><br>
+• <strong>BP+大转盘绑定</strong>：恩典卷产出和消耗必须同时通 → 3月实证：分开配导致 691 个恩典卷 0 消耗<br>
+• <strong>兑换商店不延后</strong>：碎片→猫眼石币的制作链路 Day1 就有产出，兑换同步开让玩家看到"花猫眼石币能换什么" → 驱动大转盘消费（抽更多=碎片更多=猫眼石币更多=换更多好东西）<br>
+• <strong>排除活动</strong>：许愿池（跨服限制不上）、往昔盛典（未配置不上）、折扣券大转盘（追加内容不够不上）
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<div class="section-title"><span class="wave wave2">Wave 2</span> D24 追加拜访 — 卡在断崖点</div>
+<table>
+<tr><th>活动</th><th>付费类型</th><th>持续</th><th>为什么 Day5</th><th>设计意图</th></tr>
+<tr><td style="font-weight:bold">金字塔之城 (拜访)</td><td style="color:#e74c3c;font-weight:bold">$100 直购</td><td>10天</td><td>Day1-4 大R 已在转盘/排行投入了钱和精力 → Day5 拜访$100 是"追加投资"不是"冲动消费"</td><td>卡在断崖点，用高价值新内容阻断衰减</td></tr>
+</table>
+
+<div class="insight">
+<strong>为什么拜访放 D24（Day5）？</strong><br>
+• 3月数据实证：Day5（D24）是断崖起点（$3,352 → $1,668）<br>
+• Day1-4 大R 在大转盘已经花了 $50-200、排行榜已经冲了 4 天积分 → Day5 推 $100 拜访 = <strong>"已经投了这么多，再加 $100 保住排名优势"</strong><br>
+• 拜访是<strong>一次性大额购买</strong>，不需要持续消耗 → 精准制造一天的付费脉冲，阻断衰减
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<div class="section-title">不上线的活动</div>
+<table>
+<tr><th>活动</th><th>原因</th></tr>
+<tr><td>许愿池 (105010)</td><td>ActvType=50 跨服硬约束，TimeCycle 必须 TT=1 绝对时间，不支持 D20 开服时间触发</td></tr>
+<tr><td>往昔盛典 (101335)</td><td>TimeController 从未配置，历史上从未上线</td></tr>
+<tr><td>折扣券大转盘 (101024)</td><td>本期不上</td></tr>
+</table>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<!-- 14天付费节奏预期 -->
+<div class="section-title">14 天付费节奏预期</div>
+<div class="card">
+<table>
+<tr><th>Day</th><th>开服D</th><th>新开内容</th><th>付费驱动力</th><th>目标R级</th><th>预期节奏</th></tr>
+<tr style="background:rgba(46,204,113,0.06)"><td>1</td><td>D20</td><td><span class="wave wave1">W1</span> BP+大转盘+兑换+酒馆+拼图+累充</td><td>BP首购 + 恩典卷循环 + 兑换消耗</td><td>中R</td><td>首日付费峰值+双循环启动</td></tr>
+<tr style="background:rgba(46,204,113,0.04)"><td>2-4</td><td>D21-23</td><td>—</td><td>大转盘持续消耗+兑换消耗+酒馆积分</td><td>全R</td><td>双循环稳定运转</td></tr>
+<tr style="background:rgba(243,156,18,0.08)"><td><strong>5</strong></td><td><strong>D24</strong></td><td><span class="wave wave2">W2</span> <strong>拜访礼包 $100</strong></td><td><strong>大R 追加投资（沉没成本驱动）</strong></td><td><strong>大R+超R</strong></td><td><strong>断崖阻断 — 二次付费脉冲</strong></td></tr>
+<tr style="background:rgba(243,156,18,0.04)"><td>6-7</td><td>D25-26</td><td>—</td><td>大转盘+兑换+拜访持续+排行冲刺</td><td>全R</td><td>全模块运转</td></tr>
+<tr><td>8-11</td><td>D27-30</td><td>—</td><td>大转盘消耗+兑换冲刺+排行冲刺</td><td>全R</td><td>尾部消耗期</td></tr>
+<tr><td>12-14</td><td>D31-33</td><td>—</td><td>排行结算+末日清货</td><td>全R</td><td>自然收束</td></tr>
+</table>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<!-- 配置改动 -->
+<div class="section-title">配置改动清单</div>
+<table>
+<tr><th>活动</th><th>当前 TC</th><th>改为</th><th>TimeCycle 配置</th></tr>
+<tr><td>BP + 大转盘 + 兑换 + 酒馆 + 拼图 + 累充</td><td>TC=1825 (D20)</td><td><strong>不变（6个活动共用）</strong></td><td>TT=2, T='20d 00:00:00', 持续 14d</td></tr>
+<tr style="background:rgba(243,156,18,0.06)"><td><strong>拜访礼包（金字塔之城）</strong></td><td>TC=1825</td><td><strong>新 TC: D24</strong></td><td>TT=2, T='23d 00:00:00', 持续 10d</td></tr>
+<tr style="background:rgba(149,165,166,0.06)"><td><del>许愿池 / 往昔盛典 / 折扣券大转盘</del></td><td>—</td><td><strong>不上线</strong></td><td>—</td></tr>
+</table>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<script>
+// 甘特图
+const ganttArea = document.getElementById('ganttArea');
+const totalDays = 14;
+const dayOffset = 20; // D20 = Day1
+
+// 表头
+const header = document.createElement('div');
+header.className = 'gantt-header';
+for(let d=0;d<totalDays;d++){
+    const div = document.createElement('div');
+    div.className = 'gantt-day' + ([0,3,7].includes(d)?' highlight':'');
+    div.innerHTML = `D${d+dayOffset}<br>Day${d+1}`;
+    header.appendChild(div);
+}
+ganttArea.appendChild(header);
+
+const activities = [
+    {label:'Wave 1 (D20 Day1)',type:'sep'},
+    {label:'黄金卷轴(大转盘)',start:0,end:13,color:'#f39c12',text:'$5-100 核心循环'},
+    {label:'圣甲虫试炼(BP)',start:0,end:13,color:'#2ecc71',text:'$5-20 + 恩典卷产出'},
+    {label:'方尖碑集市(兑换)',start:0,end:13,color:'#e67e22',text:'猫眼石币消耗'},
+    {label:'蓝莲花宴(酒馆)',start:0,end:13,color:'#16a085',text:'排行榜'},
+    {label:'象形密文(拼图)',start:0,end:13,color:'#27ae60',text:'免费/碎片产出'},
+    {label:'黄金沙漏(累充)',start:0,end:13,color:'#1abc9c',text:'累充'},
+    {label:'Wave 2 (D24 Day5)',type:'sep'},
+    {label:'金字塔之城(拜访)',start:4,end:13,color:'#e74c3c',text:'$100 追加投资'},
+    {label:'不上线',type:'sep'},
+    {label:'❌ 许愿池',start:0,end:0,color:'transparent',text:''},
+    {label:'❌ 往昔盛典',start:0,end:0,color:'transparent',text:''},
+    {label:'❌ 折扣券大转盘',start:0,end:0,color:'transparent',text:''},
+];
+
+activities.forEach(a => {
+    if(a.type === 'sep'){
+        const sep = document.createElement('div');
+        sep.className = 'gantt-separator';
+        const lbl = document.createElement('div');
+        lbl.style.cssText = 'font-size:0.72rem;color:#f39c12;font-weight:600;margin:6px 0 2px;padding-left:140px';
+        lbl.textContent = a.label;
+        ganttArea.appendChild(lbl);
+        return;
+    }
+    const row = document.createElement('div');
+    row.className = 'gantt-row';
+    const label = document.createElement('div');
+    label.className = 'gantt-label';
+    label.textContent = a.label;
+    row.appendChild(label);
+    const cells = document.createElement('div');
+    cells.className = 'gantt-cells';
+    for(let d=0;d<totalDays;d++){
+        const cell = document.createElement('div');
+        cell.className = 'gantt-cell';
+        if(d >= a.start && d <= a.end){
+            const bar = document.createElement('div');
+            bar.className = 'gantt-bar';
+            bar.style.background = a.color;
+            if(d === a.start) bar.textContent = a.text;
+            cell.appendChild(bar);
+        }
+        cells.appendChild(cell);
+    }
+    row.appendChild(cells);
+    ganttArea.appendChild(row);
+});
+
+// 底部波次标注
+const waveRow = document.createElement('div');
+waveRow.className = 'gantt-row';
+waveRow.innerHTML = '<div class="gantt-label" style="color:#f39c12;font-weight:600">付费节奏</div>';
+const waveCells = document.createElement('div');
+waveCells.className = 'gantt-cells';
+const waveColors = ['#2ecc71','#2ecc71','#2ecc71','#2ecc71','#f39c12','#f39c12','#f39c12','#f39c12','#95a5a6','#95a5a6','#95a5a6','#95a5a6','#95a5a6','#95a5a6'];
+const waveLabels = ['W1','','','','W2拜访','','','','持续','','','收束','',''];
+for(let d=0;d<totalDays;d++){
+    const cell = document.createElement('div');
+    cell.className = 'gantt-cell';
+    const bar = document.createElement('div');
+    bar.className = 'gantt-bar';
+    bar.style.background = waveColors[d];
+    bar.style.opacity = '0.5';
+    bar.textContent = waveLabels[d];
+    cell.appendChild(bar);
+    waveCells.appendChild(cell);
+}
+waveRow.appendChild(waveCells);
+ganttArea.appendChild(waveRow);
+</script>
+<script>
+const STORAGE_KEY = 'x3_nile_wave_comments';
+
+function getComments() {
+    const comments = document.querySelectorAll('.comment');
+    const data = [];
+    comments.forEach((c, i) => {
+        data.push({ index: i, text: c.innerText.replace(/^💬\s*/, '').trim() });
+    });
+    return data;
+}
+
+function saveComments() {
+    const data = getComments();
+    // 存 localStorage
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    // 同时写文件（通过 download 触发）
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'x3_nile_wave_comments.json';
+    a.click();
+    URL.revokeObjectURL(url);
+
+    const status = document.getElementById('saveStatus');
+    status.textContent = '已保存 (' + new Date().toLocaleTimeString() + ')';
+    status.className = 'status ok';
+}
+
+function loadComments() {
+    // 先尝试 localStorage
+    let data = localStorage.getItem(STORAGE_KEY);
+    if (data) {
+        applyComments(JSON.parse(data));
+        document.getElementById('saveStatus').textContent = '已从缓存加载';
+        document.getElementById('saveStatus').className = 'status ok';
+        return;
+    }
+    // 否则选文件
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = function(e) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            const data = JSON.parse(ev.target.result);
+            applyComments(data);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            document.getElementById('saveStatus').textContent = '已从文件加载';
+            document.getElementById('saveStatus').className = 'status ok';
+        };
+        reader.readAsText(file);
+    };
+    input.click();
+}
+
+function applyComments(data) {
+    const comments = document.querySelectorAll('.comment');
+    data.forEach(d => {
+        if (d.index < comments.length && d.text && d.text !== '点击此处输入点评...') {
+            comments[d.index].innerText = d.text;
+            comments[d.index].style.color = '#e0e0e0';
+            comments[d.index].style.fontStyle = 'normal';
+        }
+    });
+}
+
+function exportComments() {
+    const data = getComments();
+    const sections = document.querySelectorAll('.section-title');
+    let text = '=== X3 尼罗河分波投放方案 — 评论汇总 ===\n';
+    text += '导出时间: ' + new Date().toLocaleString() + '\n\n';
+
+    const comments = document.querySelectorAll('.comment');
+    comments.forEach((c, i) => {
+        const content = c.innerText.replace(/^💬\s*/, '').trim();
+        if (content && content !== '点击此处输入点评...') {
+            // 找最近的上方 section-title
+            let section = '';
+            let el = c.previousElementSibling;
+            while (el) {
+                if (el.classList && el.classList.contains('section-title')) { section = el.textContent; break; }
+                if (el.classList && el.classList.contains('card-title')) { section = el.textContent; break; }
+                el = el.previousElementSibling;
+                if (!el && c.parentElement) {
+                    el = c.parentElement.previousElementSibling;
+                }
+            }
+            text += `[${section || '区块'+(i+1)}]\n${content}\n\n`;
+        }
+    });
+
+    // 复制到剪贴板
+    navigator.clipboard.writeText(text).then(() => {
+        document.getElementById('saveStatus').textContent = '已复制到剪贴板!';
+        document.getElementById('saveStatus').className = 'status ok';
+    }).catch(() => {
+        // fallback: download as txt
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'x3_nile_comments.txt'; a.click();
+        URL.revokeObjectURL(url);
+        document.getElementById('saveStatus').textContent = '已下载 txt';
+        document.getElementById('saveStatus').className = 'status ok';
+    });
+}
+
+// 自动加载上次保存
+window.addEventListener('load', () => {
+    const data = localStorage.getItem(STORAGE_KEY);
+    if (data) {
+        applyComments(JSON.parse(data));
+        document.getElementById('saveStatus').textContent = '自动恢复了上次评论';
+        document.getElementById('saveStatus').className = 'status ok';
+    }
+});
+
+// 输入时标记未保存
+document.querySelectorAll('.comment').forEach(c => {
+    c.addEventListener('input', () => {
+        document.getElementById('saveStatus').textContent = '有未保存的修改';
+        document.getElementById('saveStatus').className = 'status';
+    });
+    // 点击清除占位符
+    c.addEventListener('focus', function() {
+        if (this.innerText.replace(/^💬\s*/, '').trim() === '点击此处输入点评...') {
+            this.innerText = '';
+            this.style.color = '#e0e0e0';
+            this.style.fontStyle = 'normal';
+        }
+    });
+});
+</script>
+</body>
+</html>

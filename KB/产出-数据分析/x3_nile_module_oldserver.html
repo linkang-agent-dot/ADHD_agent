@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 尼罗河 · 老服首轮付费模块分析</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:#f0f2f5;color:#1a1a2e;font-size:14px}
+.hero{background:linear-gradient(135deg,#0f3460 0%,#16213e 55%,#1a1a2e 100%);color:#fff;padding:44px 64px 38px}
+.hero-tag{display:inline-block;background:#e67e22;color:#fff;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:3px 10px;border-radius:3px;margin-bottom:14px;text-transform:uppercase}
+.hero h1{font-size:1.9em;font-weight:800;line-height:1.3;margin-bottom:8px}
+.hero h1 em{color:#f0c040;font-style:normal}
+.hero-meta{color:#7a8fbb;font-size:12px;margin-top:10px;line-height:1.9}
+.verdict-wrap{max-width:1260px;margin:0 auto;padding:0 64px}
+.verdict{background:#fff;border-left:6px solid #e67e22;padding:16px 26px;margin:24px 0 0;border-radius:0 8px 8px 0;box-shadow:0 2px 14px rgba(0,0,0,.09)}
+.verdict .vl{font-size:11px;font-weight:700;letter-spacing:1.5px;color:#e67e22;text-transform:uppercase;margin-bottom:5px}
+.verdict p{font-size:13.5px;line-height:1.8;color:#222}
+.verdict b{color:#e94560}
+.main{max-width:1260px;margin:0 auto;padding:28px 64px 60px}
+.kpi3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.kpi-card{background:#fff;border-radius:10px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.07);border-top:4px solid #e67e22}
+.kpi-card.g{border-top-color:#27ae60}
+.kpi-card.b{border-top-color:#2980b9}
+.kpi-num{font-size:2em;font-weight:800;line-height:1.1}
+.kpi-num.or{color:#e67e22}.kpi-num.up{color:#27ae60}.kpi-num.bl{color:#2980b9}
+.kpi-lbl{font-size:12px;color:#666;margin-top:6px;line-height:1.5;font-weight:600}
+.kpi-sub{font-size:11px;color:#aaa;margin-top:3px}
+.sh{display:flex;align-items:center;gap:12px;margin:36px 0 16px}
+.sh-num{width:30px;height:30px;border-radius:50%;background:#e67e22;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sh-title{font-size:17px;font-weight:800;color:#1a1a2e}
+.sh-badge{font-size:11px;padding:2px 8px;border-radius:3px;font-weight:700;margin-left:4px}
+.sh-badge.pass{background:#d4edda;color:#155724}
+.sh-badge.warn{background:#fff3cd;color:#856404}
+.sh-badge.info{background:#d1ecf1;color:#0c5460}
+.card{background:#fff;border-radius:10px;padding:22px 26px;box-shadow:0 2px 10px rgba(0,0,0,.07);margin-bottom:16px}
+.card-title{font-size:12.5px;font-weight:700;color:#555;border-left:4px solid #e67e22;padding-left:10px;margin-bottom:14px;letter-spacing:.3px}
+.card-title.g{border-left-color:#27ae60}.card-title.b{border-left-color:#2980b9}.card-title.yl{border-left-color:#f0c040}.card-title.r{border-left-color:#e94560}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:#1a1a2e;color:#fff;padding:9px 12px;text-align:center;font-weight:600}
+th.left{text-align:left}
+td{padding:9px 12px;border-bottom:1px solid #f0f0f0;text-align:center}
+td.left{text-align:left}
+tr:hover td{background:#fafbff}
+.up{color:#27ae60;font-weight:700}.dn{color:#e74c3c;font-weight:700}
+.row-ctrl{background:#fff7f7}
+.row-exp{background:#f0f8ff}
+.row-agg{background:#1a1a2e!important}
+.row-agg td{color:#fff;font-weight:700}
+.row-hi{background:#fff8e1}
+.gold{color:#d4a017;font-weight:700}
+.or{color:#e67e22;font-weight:700}
+.insight-box{background:#e8f4fd;border-left:4px solid #2980b9;padding:11px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:12.5px;line-height:1.7}
+.insight-box b{color:#1a1a2e}
+.warn-box{background:#ffeaea;border-left:4px solid #e74c3c;padding:11px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:12px;line-height:1.65}
+.note-box{background:#fffbe6;border-left:4px solid #f0c040;padding:10px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:12px;line-height:1.65}
+.ok-box{background:#e8f8f0;border-left:4px solid #27ae60;padding:10px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:12px;line-height:1.65}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.attr-row{display:flex;align-items:center;gap:10px;margin:7px 0}
+.attr-lbl{width:120px;font-size:12px;color:#555;flex-shrink:0;text-align:right}
+.attr-bar-wrap{flex:1;background:#f0f2f5;border-radius:4px;height:26px;overflow:hidden;position:relative}
+.attr-bar{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 10px;font-size:11.5px;font-weight:700;color:#fff}
+.attr-val{width:64px;font-size:12.5px;font-weight:700;text-align:right;flex-shrink:0}
+.compare-badge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:10.5px;font-weight:700;margin-left:6px}
+.badge-up{background:#d4edda;color:#155724}
+.badge-dn{background:#fde8e8;color:#8b0000}
+.badge-neu{background:#e2e3e5;color:#383d41}
+.rec4{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rec-card{border-radius:8px;padding:14px 16px}
+.rec-card.keep{background:#e8f8f0;border-left:4px solid #27ae60}
+.rec-card.improve{background:#fff8e1;border-left:4px solid #f0c040}
+.rec-card.drop{background:#fef0f0;border-left:4px solid #e74c3c}
+.rc-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.keep .rc-tag{color:#27ae60}.improve .rc-tag{color:#b7850a}.drop .rc-tag{color:#c0392b}
+.rc-title{font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:4px}
+.rc-body{font-size:12px;color:#555;line-height:1.6}
+.footer{text-align:center;font-size:11px;color:#aaa;padding:24px 0;border-top:1px solid #e5e5e5;margin-top:8px}
+.vs-label{font-size:10.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 6px;border-radius:3px;margin:0 4px}
+.vs-old{background:#fff3cd;color:#856404}
+.vs-new{background:#d1ecf1;color:#0c5460}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-tag">付费模块对比分析 · 老服首轮 vs 新服复盘</div>
+  <h1>X3 尼罗河活动 · 老服首轮付费模块<br><em>特惠连锁仍是主力，主城皮肤礼包从第二大模块跌至第四</em></h1>
+  <div class="hero-meta">
+    老服首轮：28服 &nbsp;·&nbsp; 活动期间：2026-01-19 至 2026-02-02（15天）&nbsp;·&nbsp;
+    对比基准：新服复盘报告（80–86服，D21–D28）&nbsp;·&nbsp; <b style="color:#aac">出具日期：2026-05-09</b>
+  </div>
+</div>
+
+<div class="verdict-wrap">
+  <div class="verdict">
+    <div class="vl">一句话结论</div>
+    <p>老服首轮（Jan 2026）尼罗活动直接收入 <b>$32,839 / 28服，单服中位 $720</b>，模块结构为 <b>特惠连锁(42%) > 主城皮肤礼包(26%) > 家具礼包(16%)</b>；新服复盘（Apr 2026）主城皮肤礼包已跌至第四(11%)，BP通行证从1.5%跃升至30%。核心问题：<b>主城皮肤礼包（$99.99）购买力随活动重复度衰减显著</b>，需重点关注重上时的皮肤礼包转化预期。</p>
+  </div>
+</div>
+
+<!-- ═══ MAIN ═══ -->
+<div class="main">
+
+  <!-- ── Top KPI ── -->
+  <div style="height:24px"></div>
+  <div class="kpi3">
+    <div class="kpi-card">
+      <div class="kpi-num or">$32,839</div>
+      <div class="kpi-lbl">老服首轮尼罗直接总收入</div>
+      <div class="kpi-sub">28服参与 &nbsp;·&nbsp; Jan 19 – Feb 2，15天活动窗口</div>
+    </div>
+    <div class="kpi-card g">
+      <div class="kpi-num up">$720</div>
+      <div class="kpi-lbl">单服尼罗收入中位数</div>
+      <div class="kpi-sub">均值 $1,173（被大服1170/1400拉高）</div>
+    </div>
+    <div class="kpi-card b">
+      <div class="kpi-num bl">85</div>
+      <div class="kpi-lbl">主城皮肤礼包付费买家数</div>
+      <div class="kpi-sub">$99.99 限购1次 &nbsp;·&nbsp; 26/28服均有购买</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       一、付费模块结构对比（老 vs 新）
+  ══════════════════════════════════════ -->
+  <div class="sh">
+    <div class="sh-num">一</div>
+    <div class="sh-title">付费模块结构对比：老服首轮 vs 新服复盘</div>
+    <span class="sh-badge warn">主城皮肤 第二→第四，BP 1.5%→30%</span>
+  </div>
+
+  <div class="card">
+    <div class="card-title">模块收入份额对比（老服=28服15天 vs 新服=3服8天，均按全模块%）</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#e67e22;letter-spacing:1px;margin-bottom:12px">老服首轮 · Jan 2026</div>
+        <div class="attr-row">
+          <div class="attr-lbl">特惠连锁</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:42%;background:#e94560">42% · $13,700</div></div>
+        </div>
+        <div class="attr-row">
+          <div class="attr-lbl">主城皮肤礼包</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:26%;background:#e67e22">26% · $8,499</div></div>
+        </div>
+        <div class="attr-row">
+          <div class="attr-lbl">家具礼包</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:16%;background:#2980b9">16% · $5,157</div></div>
+        </div>
+        <div class="attr-row">
+          <div class="attr-lbl">其他/女王恩典卷</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:15%;background:#95a5a6">15% · $4,999</div></div>
+        </div>
+        <div class="attr-row">
+          <div class="attr-lbl">BP通行证</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:1.5%;background:#bdc3c7;min-width:36px">1.5%·$484</div></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#2980b9;letter-spacing:1px;margin-bottom:12px">新服复盘 · Apr 2026（3服W3窗口）</div>
+        <div class="attr-row">
+          <div class="attr-lbl">特惠连锁</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:33%;background:#e94560">33% · $584</div></div>
+        </div>
+        <div class="attr-row">
+          <div class="attr-lbl">BP通行证</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:30%;background:#27ae60">30% · $540</div></div>
+        </div>
+        <div class="attr-row">
+          <div class="attr-lbl">家具礼包</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:24%;background:#2980b9">24% · $420</div></div>
+        </div>
+        <div class="attr-row">
+          <div class="attr-lbl">主城皮肤礼包</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:11%;background:#e74c3c">11% · $200</div></div>
+        </div>
+        <div class="attr-row">
+          <div class="attr-lbl">女王恩典卷</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:2%;background:#bdc3c7;min-width:36px">2%·$30</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Pack 明细（老服首轮，全28服汇总）</div>
+    <table>
+      <tr>
+        <th class="left">Pack ID</th>
+        <th class="left">推断模块</th>
+        <th>价格</th>
+        <th>总订单</th>
+        <th>付费买家</th>
+        <th>总收入</th>
+        <th>参与服数</th>
+        <th>模块占比</th>
+      </tr>
+      <tr class="row-hi">
+        <td class="left">210617</td>
+        <td class="left">主城皮肤礼包（岛屿皮肤）</td>
+        <td>$99.99</td><td>85</td><td>85</td><td class="gold"><b>$8,499</b></td><td>26/28</td><td class="or">26%</td>
+      </tr>
+      <tr>
+        <td class="left">210616</td>
+        <td class="left">家具礼包</td>
+        <td>$19.99</td><td>258</td><td>258</td><td>$5,157</td><td>28/28</td><td>16%</td>
+      </tr>
+      <tr style="border-top:2px solid #eee">
+        <td class="left">210602</td>
+        <td class="left">特惠连锁 第1档</td>
+        <td>$4.99</td><td>628</td><td class="up">298</td><td>$3,134</td><td>28/28</td><td>10%</td>
+      </tr>
+      <tr>
+        <td class="left">210610</td>
+        <td class="left">特惠连锁 第5档</td>
+        <td>$99.99</td><td>35</td><td>11</td><td class="gold">$3,500</td><td>7/28</td><td>11%</td>
+      </tr>
+      <tr>
+        <td class="left">210608</td>
+        <td class="left">特惠连锁 第4档</td>
+        <td>$49.99</td><td>51</td><td>19</td><td>$2,549</td><td>10/28</td><td>8%</td>
+      </tr>
+      <tr>
+        <td class="left">210606</td>
+        <td class="left">特惠连锁 第3档</td>
+        <td>$19.99</td><td>115</td><td>47</td><td>$2,299</td><td>19/28</td><td>7%</td>
+      </tr>
+      <tr>
+        <td class="left">210604</td>
+        <td class="left">特惠连锁 第2档</td>
+        <td>$9.99</td><td>222</td><td>107</td><td>$2,218</td><td>28/28</td><td>7%</td>
+      </tr>
+      <tr class="row-agg">
+        <td class="left" colspan="2">特惠连锁 小计（210602-210610）</td>
+        <td>—</td><td>1,051</td><td>—</td><td><span class="up">$13,700</span></td><td>—</td><td>42%</td>
+      </tr>
+      <tr style="border-top:2px solid #eee">
+        <td class="left">210628</td>
+        <td class="left">特殊高价包（2服/4买家）</td>
+        <td>$99.99</td><td>17</td><td>4</td><td>$1,700</td><td>2/28</td><td>5%</td>
+      </tr>
+      <tr>
+        <td class="left">210615</td>
+        <td class="left">其他高价包</td>
+        <td>$99.99</td><td>9</td><td>4</td><td>$900</td><td>4/28</td><td>3%</td>
+      </tr>
+      <tr>
+        <td class="left">210622/626</td>
+        <td class="left">女王恩典卷高档</td>
+        <td>$49.99-99.99</td><td>20</td><td>13</td><td>$1,300</td><td>11/28</td><td>4%</td>
+      </tr>
+      <tr>
+        <td class="left">210624</td>
+        <td class="left">女王恩典卷/其他</td>
+        <td>$9.99</td><td>53</td><td>37</td><td>$529</td><td>23/28</td><td>2%</td>
+      </tr>
+      <tr>
+        <td class="left">210612/613</td>
+        <td class="left">BP通行证</td>
+        <td>$4.99/$19.99</td><td>79</td><td>64</td><td class="dn">$484</td><td>27/28</td><td class="dn">1.5%</td>
+      </tr>
+      <tr class="row-agg">
+        <td class="left" colspan="2">合计</td>
+        <td>—</td><td>—</td><td>—</td><td><span class="up">$32,839</span></td><td>28</td><td>100%</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       二、核心模块变化解读
+  ══════════════════════════════════════ -->
+  <div class="sh">
+    <div class="sh-num">二</div>
+    <div class="sh-title">核心模块变化解读</div>
+    <span class="sh-badge warn">皮肤礼包大幅衰减，BP大幅提升</span>
+  </div>
+
+  <div class="cols2">
+    <!-- 主城皮肤 -->
+    <div class="card">
+      <div class="card-title r">主城皮肤礼包（$99.99）— 从第二跌至第四</div>
+      <table>
+        <tr><th class="left">指标</th><th><span class="vs-label vs-old">老服首轮</span></th><th><span class="vs-label vs-new">新服复盘</span></th><th>变化</th></tr>
+        <tr><td class="left">模块收入排名</td><td class="gold">第二</td><td class="dn">第四</td><td><span class="dn">↓↓</span></td></tr>
+        <tr><td class="left">占总尼罗收入</td><td><b>26%</b></td><td><b>11%</b></td><td><span class="dn">−15ppt</span></td></tr>
+        <tr><td class="left">付费买家数</td><td>85人（26服有购买）</td><td>2人（3服，1服0购买）</td><td>—</td></tr>
+        <tr><td class="left">单服平均购买人数</td><td>85÷28 = <b>3.0人/服</b></td><td>2÷3 = <b>0.67人/服</b></td><td><span class="dn">−78%</span></td></tr>
+        <tr><td class="left">chaoR渗透率</td><td>—（未拆分）</td><td>18.2%（仅超R）</td><td>—</td></tr>
+      </table>
+      <div class="warn-box" style="margin-top:12px">
+        <b>核心问题：</b>老服首轮 3.0人/服 购买，新服仅 0.67人/服，chaoR 渗透率 18.2% 仍未及 daR。主城皮肤礼包在重上时每服买家预期应按<b>新服数据（0.67人/服）而非老服（3.0人/服）规划</b>，前者已消耗了大量首购意愿。
+      </div>
+    </div>
+
+    <!-- BP通行证 -->
+    <div class="card">
+      <div class="card-title g">BP通行证 — 从1.5%跃升至30%</div>
+      <table>
+        <tr><th class="left">指标</th><th><span class="vs-label vs-old">老服首轮</span></th><th><span class="vs-label vs-new">新服复盘</span></th><th>变化</th></tr>
+        <tr><td class="left">模块收入排名</td><td class="dn">第五（末位）</td><td class="up">第二</td><td><span class="up">↑↑↑</span></td></tr>
+        <tr><td class="left">占总尼罗收入</td><td><b>1.5%</b></td><td><b>30%</b></td><td><span class="up">+28.5ppt</span></td></tr>
+        <tr><td class="left">单服BP收入</td><td>$484÷28 = <b>$17/服</b></td><td>$540÷3 = <b>$180/服</b></td><td><span class="up">+$163/服</span></td></tr>
+        <tr><td class="left">付费买家渗透率</td><td>64人÷28服 ≈ 2.3人/服</td><td>25人÷3服 ≈ 8.3人/服</td><td><span class="up">+6人/服</span></td></tr>
+        <tr><td class="left">chaoR升档率</td><td>— （未拆）</td><td>71%（$9.99→$19.99）</td><td>—</td></tr>
+      </table>
+      <div class="ok-box" style="margin-top:12px">
+        <b>机制升级有效：</b>老版BP几乎无贡献（$17/服），新版BP大幅改善。推断老版BP内容/奖励设计对玩家吸引力不足，新版优化后成为第二大模块。<b>重上时应保留新版BP机制</b>，不要回退老版设计。
+      </div>
+    </div>
+  </div>
+
+  <div class="cols2">
+    <!-- 特惠连锁 -->
+    <div class="card">
+      <div class="card-title">特惠连锁礼包 — 双期稳定第一</div>
+      <table>
+        <tr><th class="left">指标</th><th><span class="vs-label vs-old">老服首轮</span></th><th><span class="vs-label vs-new">新服复盘</span></th></tr>
+        <tr><td class="left">模块排名</td><td class="up"><b>第一</b></td><td class="up"><b>第一</b></td></tr>
+        <tr><td class="left">收入占比</td><td>42%</td><td>33%</td></tr>
+        <tr><td class="left">第1档买家数</td><td>298人（全28服）</td><td>31人（7服）</td></tr>
+        <tr><td class="left">第5档（$99.99）渗透</td><td>11买家 / 7服</td><td>0 / 7服（HTML未见）</td></tr>
+        <tr><td class="left">主断崖位置</td><td>第2档→第3档（推断）</td><td>第1档→第2档（29%留存）</td></tr>
+      </table>
+      <div class="insight-box" style="margin-top:12px">
+        老服首轮连锁深度更高：$99.99 最高档有 11 人买（7服），占比达 25% 的连锁收入。新服第5档几乎无成交。老服大R（超R/大R）更愿意刷通全链；新服大断崖在第1→2档。
+      </div>
+    </div>
+
+    <!-- 家具礼包 -->
+    <div class="card">
+      <div class="card-title b">家具礼包（$19.99）— 最稳定模块</div>
+      <table>
+        <tr><th class="left">指标</th><th><span class="vs-label vs-old">老服首轮</span></th><th><span class="vs-label vs-new">新服复盘</span></th></tr>
+        <tr><td class="left">模块排名</td><td><b>第三</b></td><td><b>第三</b></td></tr>
+        <tr><td class="left">收入占比</td><td>16%</td><td>24%</td></tr>
+        <tr><td class="left">付费买家数</td><td>258人（28服全买）</td><td>21人（3服）</td></tr>
+        <tr><td class="left">单服均买</td><td>258÷28 = <b>9.2人/服</b></td><td>21÷3 = <b>7.0人/服</b></td></tr>
+        <tr><td class="left">ARPPU</td><td>$19.99（固定）</td><td>$19.99（固定）</td></tr>
+      </table>
+      <div class="insight-box" style="margin-top:12px">
+        两期均稳居第三，家具礼包是<b>最可预测的模块</b>：$19.99 固定价，中高R均可承受，单服 7-9 人购买，收入稳定。重上时这部分收入预期最可靠。
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       三、R级付费分布（老服首轮，全28服）
+  ══════════════════════════════════════ -->
+  <div class="sh">
+    <div class="sh-num">三</div>
+    <div class="sh-title">R级付费分布（全28服汇总，498名尼罗买家）</div>
+    <span class="sh-badge warn">超R贡献54%收入，皮肤礼包高度依赖超R</span>
+  </div>
+
+  <div class="card">
+    <div class="card-title">各R级 · 买家数 / 收入 / ARPPU</div>
+    <table>
+      <tr>
+        <th class="left">R级</th>
+        <th>买家数</th><th>占买家%</th>
+        <th>尼罗收入</th><th>收入占比</th>
+        <th>ARPPU</th>
+        <th>均历史累消</th>
+      </tr>
+      <tr class="row-hi">
+        <td class="left"><b>超R（chaoR）</b><br><small style="color:#888">历史累消 ≥$1,000</small></td>
+        <td class="up"><b>108</b></td><td>22%</td>
+        <td class="gold"><b>$16,853</b></td><td class="or"><b>54%</b></td>
+        <td><b>$146.55</b></td>
+        <td>$7,241</td>
+      </tr>
+      <tr>
+        <td class="left"><b>大R（daR）</b><br><small style="color:#888">$200–$999</small></td>
+        <td>145</td><td>29%</td>
+        <td>$7,416</td><td>24%</td>
+        <td>$49.77</td>
+        <td>$507</td>
+      </tr>
+      <tr>
+        <td class="left"><b>中R（zhongR）</b><br><small style="color:#888">$50–$199</small></td>
+        <td>125</td><td>25%</td>
+        <td>$4,678</td><td>15%</td>
+        <td>$37.42</td>
+        <td>$108</td>
+      </tr>
+      <tr>
+        <td class="left"><b>小R（xiaoR）</b><br><small style="color:#888">$1–$49</small></td>
+        <td>113</td><td>23%</td>
+        <td>$1,953</td><td>6%</td>
+        <td>$17.29</td>
+        <td>$22</td>
+      </tr>
+      <tr>
+        <td class="left"><b>非R（feiR）</b><br><small style="color:#888">历史0消费</small></td>
+        <td class="dn">7</td><td>1%</td>
+        <td class="dn">$80</td><td>0.3%</td>
+        <td>$11.42</td>
+        <td>$0</td>
+      </tr>
+      <tr class="row-agg">
+        <td class="left">合计（28服全量）</td>
+        <td>498</td><td>100%</td>
+        <td><span class="up">$30,980</span></td><td>100%</td>
+        <td>$62.17</td>
+        <td>—</td>
+      </tr>
+    </table>
+    <div class="insight-box" style="margin-top:12px">
+      <b>平均每服：</b>498 ÷ 28 = <b>17.8名尼罗买家/服</b>；其中超R 3.9人/服，大R 5.2人/服，中R 4.5人/服，小R 4.0人/服。超R人均花费 $146.55，是大R的 3×，是小R的 8.5×。
+    </div>
+  </div>
+
+  <div class="cols2">
+    <!-- 各模块 R级渗透 -->
+    <div class="card">
+      <div class="card-title r">各模块 R级渗透率（买该模块人数 / 该R级总买家）</div>
+      <table>
+        <tr>
+          <th class="left">R级</th>
+          <th>买家数</th>
+          <th>主城皮肤<br>($99.99)</th>
+          <th>家具礼包<br>($19.99)</th>
+          <th>特惠连锁<br>(任意档)</th>
+          <th>连锁深度<br>(≥$49.99)</th>
+          <th>BP</th>
+        </tr>
+        <tr class="row-hi">
+          <td class="left">超R</td><td>108</td>
+          <td class="gold"><b>38%</b> (41人)</td>
+          <td class="up"><b>69%</b> (75人)</td>
+          <td>70% (76人)</td>
+          <td class="up"><b>14%</b> (15人)</td>
+          <td>13% (14人)</td>
+        </tr>
+        <tr>
+          <td class="left">大R</td><td>145</td>
+          <td><b>18%</b> (26人)</td>
+          <td><b>55%</b> (80人)</td>
+          <td>60% (87人)</td>
+          <td>2% (3人)</td>
+          <td>12% (18人)</td>
+        </tr>
+        <tr>
+          <td class="left">中R</td><td>125</td>
+          <td>10% (13人)</td>
+          <td>48% (60人)</td>
+          <td>57% (71人)</td>
+          <td>1% (1人)</td>
+          <td>10% (12人)</td>
+        </tr>
+        <tr>
+          <td class="left">小R</td><td>113</td>
+          <td class="dn">4% (5人)</td>
+          <td>35% (40人)</td>
+          <td>58% (66人)</td>
+          <td class="dn">0%</td>
+          <td>14% (16人)</td>
+        </tr>
+        <tr>
+          <td class="left">非R</td><td>7</td>
+          <td class="dn">0%</td>
+          <td>43% (3人)</td>
+          <td>57% (4人)</td>
+          <td class="dn">0%</td>
+          <td>0%</td>
+        </tr>
+      </table>
+    </div>
+    <!-- 老服 vs 新服 R级对比 -->
+    <div class="card">
+      <div class="card-title b">老服 vs 新服 关键R级指标对比</div>
+      <table>
+        <tr><th class="left">指标</th><th><span class="vs-label vs-old">老服首轮</span></th><th><span class="vs-label vs-new">新服复盘</span></th></tr>
+        <tr><td class="left">超R主城皮肤渗透率</td>
+          <td class="gold"><b>38%</b> (41/108)</td>
+          <td><b>18.2%</b> (2/11，单服W3)</td>
+        </tr>
+        <tr><td class="left">大R主城皮肤渗透率</td>
+          <td><b>18%</b> (26/145)</td>
+          <td class="dn"><b>0%</b> (0/14)</td>
+        </tr>
+        <tr><td class="left">超R家具礼包渗透率</td>
+          <td class="up"><b>69%</b></td>
+          <td><b>54.6%</b></td>
+        </tr>
+        <tr><td class="left">大R家具礼包渗透率</td>
+          <td><b>55%</b></td>
+          <td><b>42.9%</b></td>
+        </tr>
+        <tr><td class="left">超R主城皮肤买家/服</td>
+          <td>41÷28 = <b>1.5人</b></td>
+          <td>2÷3 = <b>0.67人</b></td>
+        </tr>
+        <tr><td class="left">连锁深度买家（≥$49.99）</td>
+          <td>19人 (3.8%)</td>
+          <td>1人 (3.2%) / 3服</td>
+        </tr>
+        <tr><td class="left">BP买家/服</td>
+          <td>60÷28 = <b>2.1人/服</b></td>
+          <td>25÷3 = <b>8.3人/服</b></td>
+        </tr>
+      </table>
+      <div class="warn-box" style="margin-top:10px">
+        <b>皮肤礼包 重上关键风险：</b>大R皮肤渗透从 18%→0%（新服大R已不买皮肤）；超R从 38%→18.2%。重上时皮肤礼包的核心受众仅剩超R高档段，且渗透率已腰斩。
+      </div>
+      <div class="ok-box" style="margin-top:8px">
+        <b>家具礼包 稳定信号：</b>超R 69%→55%（轻微下滑），大R 55%→43%，整体仍是最稳定的模块，两期均有购买意愿。
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       四、单服收入分布（老服首轮）
+  ══════════════════════════════════════ -->
+  <div class="sh">
+    <div class="sh-num">四</div>
+    <div class="sh-title">单服尼罗收入分布（老服首轮）</div>
+    <span class="sh-badge info">方差大，大服/旧服是主要贡献</span>
+  </div>
+
+  <div class="card">
+    <div class="card-title">各服尼罗直接收入 TOP 10 vs 底部</div>
+    <table>
+      <tr>
+        <th class="left">服务器</th>
+        <th>活动前基线<br><small>(Jan8-18，11天)</small></th>
+        <th>活动期总收入<br><small>(Jan19-Feb8，21天)</small></th>
+        <th>尼罗直接收入</th>
+        <th>尼罗占活动期%</th>
+        <th>活动期日均 vs 活动前日均</th>
+      </tr>
+      <tr class="row-hi">
+        <td class="left">1170（超大老服 D~200）</td>
+        <td>$18,115</td><td>$67,201</td>
+        <td class="gold"><b>$5,963</b></td><td>8.9%</td>
+        <td><span class="up">+94%</span></td>
+      </tr>
+      <tr>
+        <td class="left">1400（大服 D~100）</td>
+        <td>$6,097</td><td>$19,151</td>
+        <td class="gold"><b>$3,389</b></td><td>17.7%</td>
+        <td><span class="up">+65%</span></td>
+      </tr>
+      <tr>
+        <td class="left">1590（活动期新开服）</td>
+        <td>$820 (1天)</td><td>$51,851</td>
+        <td><b>$2,864</b></td><td>5.5%</td>
+        <td><span style="color:#888">无可比基线</span></td>
+      </tr>
+      <tr>
+        <td class="left">1580（较新服 D~35）</td>
+        <td>$11,519</td><td>$35,600</td>
+        <td><b>$1,699</b></td><td>4.8%</td>
+        <td><span class="up">+62%</span></td>
+      </tr>
+      <tr>
+        <td class="left">1570（中等老服 D~80）</td>
+        <td>$26,783</td><td>$31,365</td>
+        <td><b>$1,699</b></td><td>5.4%</td>
+        <td><span class="dn">−39%</span></td>
+      </tr>
+      <tr>
+        <td class="left">1550（D~45）</td>
+        <td>$9,210</td><td>$16,805</td>
+        <td><b>$1,349</b></td><td>8.0%</td>
+        <td><span class="dn">−4%</span></td>
+      </tr>
+      <tr>
+        <td class="left">1460（D~95）</td>
+        <td>$7,315</td><td>$17,525</td>
+        <td><b>$1,319</b></td><td>7.5%</td>
+        <td><span class="up">+25%</span></td>
+      </tr>
+      <tr>
+        <td class="left">⋯</td><td colspan="5" style="color:#aaa">中段服省略</td>
+      </tr>
+      <tr>
+        <td class="left">1430（较新服 D~50）</td>
+        <td>$1,782</td><td>$808</td>
+        <td class="dn">$195</td><td>24.1%</td>
+        <td><span class="dn">−82%</span></td>
+      </tr>
+      <tr>
+        <td class="left">1410（较新服 D~55）</td>
+        <td>$2,490</td><td>$869</td>
+        <td class="dn">$155</td><td>17.8%</td>
+        <td><span class="dn">−82%</span></td>
+      </tr>
+      <tr class="row-agg">
+        <td class="left">全服汇总（28服）</td>
+        <td>—</td><td>—</td>
+        <td><span class="up">$32,839</span></td>
+        <td>—</td>
+        <td>—</td>
+      </tr>
+    </table>
+    <div class="note-box" style="margin-top:12px">
+      <b>分布规律：</b>①活动前日均越高的大服，活动期尼罗收入越高（1170=$5,963, 1400=$3,389）；②D60–D90中等老服（1410/1430）在活动期反而衰减严重（−82%），说明这个服龄的玩家活跃度低，活动拉不动；③活动期新开服（1590/1600/1610）体量最大但尼罗礼包占比最低（2-5%）
+    </div>
+  </div>
+
+  <div class="cols2">
+    <div class="card">
+      <div class="card-title">老服尼罗收入分层分布</div>
+      <table>
+        <tr><th class="left">收入区间</th><th>服务器数</th><th>占服总数</th><th>合计收入</th></tr>
+        <tr><td class="left">$3,000+ （超高）</td><td>2</td><td>7%</td><td class="gold">$9,352</td></tr>
+        <tr><td class="left">$1,000–$2,999</td><td>10</td><td>36%</td><td>$12,600</td></tr>
+        <tr><td class="left">$500–$999</td><td>8</td><td>29%</td><td>$5,300</td></tr>
+        <tr><td class="left">$200–$499</td><td>5</td><td>18%</td><td>$1,580</td></tr>
+        <tr><td class="left">$0–$199</td><td>3</td><td>11%</td><td class="dn">$504</td></tr>
+        <tr class="row-agg"><td class="left">合计</td><td>28</td><td>100%</td><td><span class="up">$29,336</span></td></tr>
+      </table>
+      <div class="insight-box" style="margin-top:10px">
+        前 12 服（43%）贡献了 $21,952（75%）的尼罗收入，头部效应显著。超大服（1170, 1400）两服贡献全体的28%。
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title b">新老服服体对比</div>
+      <table>
+        <tr><th class="left">指标</th><th><span class="vs-label vs-old">老服首轮（28服）</span></th><th><span class="vs-label vs-new">新服复盘（7服）</span></th></tr>
+        <tr><td class="left">活动窗口</td><td>全服统一日历（15天）</td><td>各服D21-D28（8天）</td></tr>
+        <tr><td class="left">单服尼罗收入均值</td><td>$1,173/服</td><td>$438/服（3匹配服）</td></tr>
+        <tr><td class="left">单服尼罗收入中位</td><td>$720/服</td><td>— （样本小）</td></tr>
+        <tr><td class="left">15天等效（新服×15/8）</td><td>$720</td><td>$822</td></tr>
+        <tr><td class="left">家具礼包单服买家</td><td>9.2人/服</td><td>7.0人/服</td></tr>
+        <tr><td class="left">主城皮肤单服买家</td><td class="gold"><b>3.0人/服</b></td><td class="dn"><b>0.67人/服</b></td></tr>
+      </table>
+      <div class="warn-box" style="margin-top:10px">
+        <b>重上核心风险：</b>主城皮肤礼包单服买家从 3.0→0.67，成因是<b>需求侧弱化</b>（新服玩家D21时96%尚未解锁大地图第二海域），<b>而非老服超R受众饱和</b>——两批玩家完全独立。重上时D21窗口按 <b>0.67人/服 × $99.99 = $67/服</b> 规划；服龄推至 D45+ 大地图开启后预计有所回升。
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       五：需求侧分析
+  ══════════════════════════════════════ -->
+  <div class="sh">
+    <div class="sh-num">五</div>
+    <div class="sh-title">需求侧分析 — 为何主城皮肤在新服疲软？</div>
+    <span class="sh-badge info">需求侧弱化，非人群饱和</span>
+  </div>
+
+  <div class="insight-box" style="margin-bottom:16px;font-size:13px">
+    <b>核心结论：</b>老服与新服玩家是完全独立的群体，不存在"上批超R已购"的饱和效应。皮肤礼包从第二跌至第四，根本原因是新服玩家 <b>游戏进度不足</b>（大地图仅开第一海域），皮肤改造全世界的价值感弱，装饰系统也尚在起步阶段。
+  </div>
+
+  <div class="cols2">
+    <div class="card">
+      <div class="card-title yl">假设①：大地图解锁率（originSeaArea 分布）</div>
+      <p style="font-size:12px;color:#555;margin-bottom:12px">
+        X3 服务器随服龄陆续开放更多海域（1→2→4→8）。<code>originSeaArea</code> 标记玩家所在海域，值 &gt;1 表示大地图扩展区已开启。
+      </p>
+      <table>
+        <tr>
+          <th class="left">海域</th>
+          <th><span class="vs-label vs-old">老服首轮付费人数</span></th>
+          <th>占比</th>
+          <th><span class="vs-label vs-new">新服D21付费人数</span></th>
+          <th>占比</th>
+        </tr>
+        <tr>
+          <td class="left">海域1（初始区）</td>
+          <td>86</td><td>20.7%</td>
+          <td>54</td><td class="dn"><b>96.4%</b></td>
+        </tr>
+        <tr>
+          <td class="left">海域2</td>
+          <td>134</td><td>32.2%</td>
+          <td>0</td><td>—</td>
+        </tr>
+        <tr>
+          <td class="left">海域4</td>
+          <td>87</td><td>20.9%</td>
+          <td>0</td><td>—</td>
+        </tr>
+        <tr>
+          <td class="left">海域8</td>
+          <td>109</td><td>26.2%</td>
+          <td>2</td><td>3.6%</td>
+        </tr>
+        <tr class="row-agg">
+          <td class="left">合计</td>
+          <td>416</td>
+          <td><span class="up">79.3% 在扩展区</span></td>
+          <td>56</td>
+          <td><span class="dn">3.6% 在扩展区</span></td>
+        </tr>
+      </table>
+      <div class="insight-box" style="margin-top:10px">
+        老服 <b>79.3%</b> 付费玩家在大地图扩展区（海域2/4/8）；新服 <b>96.4%</b> 仍在初始海域。差距 <b>22×</b>，说明新服活动时（D21）大地图尚未开启，皮肤改造整片世界的价值感极弱。
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title yl">假设②：装饰消费行为（活动窗口内）</div>
+      <p style="font-size:12px;color:#555;margin-bottom:12px">
+        指标：FurnitureDecorateSkinID 解锁人数（装饰皮肤激活）+ Item_151xxx 获取次数（家具/摆件道具使用）
+      </p>
+      <table>
+        <tr>
+          <th class="left">指标</th>
+          <th><span class="vs-label vs-old">老服（25服/14天）</span></th>
+          <th><span class="vs-label vs-new">新服（7服/D21-D27）</span></th>
+        </tr>
+        <tr>
+          <td class="left">活跃用户/服（均值）</td>
+          <td>2,637 人</td><td>873 人</td>
+        </tr>
+        <tr>
+          <td class="left">装饰皮肤解锁用户/服</td>
+          <td class="gold"><b>23.5 人</b></td><td>5.6 人</td>
+        </tr>
+        <tr>
+          <td class="left">装饰道具获取次数/服</td>
+          <td class="gold"><b>223 次</b></td><td>37.9 次</td>
+        </tr>
+        <tr>
+          <td class="left">每用户每日装饰获取率</td>
+          <td>0.60%/日</td><td>0.54%/日</td>
+        </tr>
+      </table>
+      <div class="warn-box" style="margin-top:10px">
+        绝对数上老服活跃更旺盛（活跃用户是新服3倍），但 <b>人均每日装饰道具获取率相近（0.60% vs 0.54%）</b>——装饰<em>习惯</em>本身并非主要差距，差距源于大地图开放程度（假设①）决定了装饰<em>容量</em>和<em>动力</em>。
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:0">
+    <div class="card-title r">需求侧小结</div>
+    <table>
+      <tr>
+        <th class="left">假设</th>
+        <th><span class="vs-label vs-old">老服</span></th>
+        <th><span class="vs-label vs-new">新服D21</span></th>
+        <th>差距</th>
+        <th class="left">解释力</th>
+      </tr>
+      <tr>
+        <td class="left">大地图已解锁（非初始海域付费者占比）</td>
+        <td class="gold"><b>79.3%</b></td>
+        <td class="dn"><b>3.6%</b></td>
+        <td><b>22×</b></td>
+        <td class="left"><b>★★★ 主要驱动</b>：进度决定皮肤价值感</td>
+      </tr>
+      <tr>
+        <td class="left">人均每日装饰行为频率</td>
+        <td>0.60%/日</td>
+        <td>0.54%/日</td>
+        <td>差距不显著</td>
+        <td class="left" style="color:#888">★☆☆ 次要，可不作为优化方向</td>
+      </tr>
+    </table>
+    <div class="insight-box" style="margin-top:10px">
+      <b>结论：</b>新服皮肤疲软的根本原因是 <b>游戏进度不足，大地图未开启（D21 时 96% 玩家在初始区）</b>。随服龄增长大地图陆续开放（参考老服分布），皮肤需求会自然回升。当前 D21 重上的服龄节点对皮肤礼包而言偏早，<b>建议将皮肤礼包首曝时机延后至服龄 D45+</b>（届时更多玩家进入扩展区，皮肤价值锚更强）。
+    </div>
+  </div>
+
+  <!-- 生命周期分析（10天粒度） -->
+  <div class="card" style="margin-top:16px">
+    <div class="card-title r">验证：服务器生命周期 vs 超R皮肤渗透率（全量49服 · 10天粒度）</div>
+    <p style="font-size:12px;color:#555;margin-bottom:14px">
+      覆盖所有曾跑过尼罗之辉的服务器（D0–D308），按活动开始时的服龄每10天分段。<code>超R</code>=活动前累计付费≥$1,000。柱条越长=渗透率越高，颜色标注关键区间。
+    </p>
+
+    <!-- 可视化bar chart - 10天粒度 -->
+    <div style="margin-bottom:18px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <span style="width:72px;font-size:11px;font-weight:700;text-align:right;color:#555">D0–D9</span>
+        <div style="background:#c0392b;height:20px;border-radius:3px;width:calc(23.5% * 2.5);min-width:22px;display:flex;align-items:center;padding-left:7px">
+          <span style="color:#fff;font-size:10.5px;font-weight:700">23.5%</span>
+        </div>
+        <span style="font-size:10px;color:#999">9服 · 17人<sup>*</sup></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <span style="width:72px;font-size:11px;font-weight:700;text-align:right;color:#555">D10–D19</span>
+        <div style="background:#e74c3c;height:20px;border-radius:3px;width:calc(12.5% * 2.5);min-width:22px;display:flex;align-items:center;padding-left:7px">
+          <span style="color:#fff;font-size:10.5px;font-weight:700">12.5%</span>
+        </div>
+        <span style="font-size:10px;color:#e74c3c;font-weight:600">低谷 · 7服 · 8人</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;background:#fff3cd;border-radius:4px;padding:2px 0">
+        <span style="width:72px;font-size:11px;font-weight:700;text-align:right;color:#e67e22">D20–D29</span>
+        <div style="background:#e67e22;height:20px;border-radius:3px;width:calc(16.7% * 2.5);min-width:22px;display:flex;align-items:center;padding-left:7px">
+          <span style="color:#fff;font-size:10.5px;font-weight:700">16.7%</span>
+        </div>
+        <span style="font-size:10px;color:#856404;font-weight:600">← 当前重上窗口 · 12服 · 24人</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;background:#d4edda;border-radius:4px;padding:2px 0">
+        <span style="width:72px;font-size:11px;font-weight:700;text-align:right;color:#27ae60">D30–D39</span>
+        <div style="background:#27ae60;height:20px;border-radius:3px;width:calc(40.0% * 2.5);min-width:22px;display:flex;align-items:center;padding-left:7px">
+          <span style="color:#fff;font-size:10.5px;font-weight:700">40.0%</span>
+        </div>
+        <span style="font-size:10px;color:#155724;font-weight:600">← 拐点！+140% · 2服 · 5人</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <span style="width:72px;font-size:11px;font-weight:700;text-align:right;color:#555">D40–D49</span>
+        <div style="background:#e67e22;height:20px;border-radius:3px;width:calc(16.7% * 2.5);min-width:22px;display:flex;align-items:center;padding-left:7px">
+          <span style="color:#fff;font-size:10.5px;font-weight:700">16.7%</span>
+        </div>
+        <span style="font-size:10px;color:#999">4服 · 6人</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <span style="width:72px;font-size:11px;font-weight:700;text-align:right;color:#555">D50–D59</span>
+        <div style="background:#f39c12;height:20px;border-radius:3px;width:calc(30.0% * 2.5);min-width:22px;display:flex;align-items:center;padding-left:7px">
+          <span style="color:#fff;font-size:10.5px;font-weight:700">30.0%</span>
+        </div>
+        <span style="font-size:10px;color:#999">2服 · 10人</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;background:#d4edda;border-radius:4px;padding:2px 0">
+        <span style="width:72px;font-size:11px;font-weight:700;text-align:right;color:#27ae60">D60–D69</span>
+        <div style="background:#1e8449;height:20px;border-radius:3px;width:calc(57.1% * 2.5);min-width:22px;display:flex;align-items:center;padding-left:7px">
+          <span style="color:#fff;font-size:10.5px;font-weight:700">57.1%</span>
+        </div>
+        <span style="font-size:10px;color:#155724;font-weight:600">← 最高峰 · 1服 · 7人</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <span style="width:72px;font-size:11px;font-weight:700;text-align:right;color:#555">D70–D79</span>
+        <div style="background:#2980b9;height:20px;border-radius:3px;width:calc(28.6% * 2.5);min-width:22px;display:flex;align-items:center;padding-left:7px">
+          <span style="color:#fff;font-size:10.5px;font-weight:700">28.6%</span>
+        </div>
+        <span style="font-size:10px;color:#999">1服 · 7人</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <span style="width:72px;font-size:11px;font-weight:700;text-align:right;color:#555">D80–D89</span>
+        <div style="background:#2980b9;height:20px;border-radius:3px;width:calc(28.6% * 2.5);min-width:22px;display:flex;align-items:center;padding-left:7px">
+          <span style="color:#fff;font-size:10.5px;font-weight:700">28.6%</span>
+        </div>
+        <span style="font-size:10px;color:#999">2服 · 14人</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <span style="width:72px;font-size:11px;font-weight:700;text-align:right;color:#555">D90–D99</span>
+        <div style="background:#2980b9;height:20px;border-radius:3px;width:calc(50.0% * 2.5);min-width:22px;display:flex;align-items:center;padding-left:7px">
+          <span style="color:#fff;font-size:10.5px;font-weight:700">50.0%</span>
+        </div>
+        <span style="font-size:10px;color:#999">1服 · 2人</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <span style="width:72px;font-size:11px;font-weight:700;text-align:right;color:#555">D100–D129</span>
+        <div style="background:#7f8c8d;height:20px;border-radius:3px;width:calc(25.0% * 2.5);min-width:22px;display:flex;align-items:center;padding-left:7px">
+          <span style="color:#fff;font-size:10.5px;font-weight:700">25.0%</span>
+        </div>
+        <span style="font-size:10px;color:#999">4服 · 24人</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <span style="width:72px;font-size:11px;font-weight:700;text-align:right;color:#555">D130+</span>
+        <div style="background:#7f8c8d;height:20px;border-radius:3px;width:calc(34.5% * 2.5);min-width:22px;display:flex;align-items:center;padding-left:7px">
+          <span style="color:#fff;font-size:10.5px;font-weight:700">34.5%</span>
+        </div>
+        <span style="font-size:10px;color:#999">4服 · 29人</span>
+      </div>
+    </div>
+
+    <!-- 数据表 - 10天粒度 -->
+    <table>
+      <tr>
+        <th class="left">服龄段</th>
+        <th>服数</th>
+        <th>总付费</th>
+        <th>超R</th>
+        <th>超R买皮肤</th>
+        <th>超R渗透率</th>
+        <th>R200+</th>
+        <th>R200+渗透率</th>
+      </tr>
+      <tr class="row-ctrl">
+        <td class="left">D0–D9</td>
+        <td>9</td><td>214</td><td>17</td><td>4</td>
+        <td>23.5%<sup>*</sup></td><td>66</td><td>18.2%</td>
+      </tr>
+      <tr class="row-ctrl">
+        <td class="left">D10–D19</td>
+        <td>7</td><td>52</td><td>8</td><td>1</td>
+        <td class="dn"><b>12.5%</b></td><td>28</td><td>21.4%</td>
+      </tr>
+      <tr class="row-hi">
+        <td class="left"><b>D20–D29</b></td>
+        <td>12</td><td>109</td><td>24</td><td>4</td>
+        <td class="dn"><b>16.7%</b></td><td>63</td><td class="dn"><b>15.9%</b></td>
+      </tr>
+      <tr class="row-exp">
+        <td class="left"><b>D30–D39</b></td>
+        <td>2</td><td>14</td><td>5</td><td>2</td>
+        <td class="gold"><b>40.0%</b></td><td>9</td><td class="up"><b>33.3%</b></td>
+      </tr>
+      <tr>
+        <td class="left">D40–D49</td>
+        <td>4</td><td>28</td><td>6</td><td>1</td>
+        <td>16.7%</td><td>12</td><td>16.7%</td>
+      </tr>
+      <tr>
+        <td class="left">D50–D59</td>
+        <td>2</td><td>27</td><td>10</td><td>3</td>
+        <td class="up">30.0%</td><td>21</td><td class="up">33.3%</td>
+      </tr>
+      <tr class="row-exp">
+        <td class="left"><b>D60–D69</b></td>
+        <td>1</td><td>16</td><td>7</td><td>4</td>
+        <td class="gold"><b>57.1%</b></td><td>12</td><td class="up"><b>33.3%</b></td>
+      </tr>
+      <tr>
+        <td class="left">D70–D79</td>
+        <td>1</td><td>22</td><td>7</td><td>2</td>
+        <td>28.6%</td><td>15</td><td>20.0%</td>
+      </tr>
+      <tr>
+        <td class="left">D80–D89</td>
+        <td>2</td><td>26</td><td>14</td><td>4</td>
+        <td>28.6%</td><td>23</td><td>17.4%</td>
+      </tr>
+      <tr>
+        <td class="left">D90–D99</td>
+        <td>1</td><td>6</td><td>2</td><td>1</td>
+        <td>50.0%</td><td>6</td><td>16.7%</td>
+      </tr>
+      <tr>
+        <td class="left">D100–D109</td>
+        <td>1</td><td>19</td><td>7</td><td>1</td>
+        <td class="dn">14.3%</td><td>15</td><td class="dn">6.7%</td>
+      </tr>
+      <tr>
+        <td class="left">D110–D119</td>
+        <td>1</td><td>6</td><td>4</td><td>0</td>
+        <td class="dn">0%</td><td>6</td><td class="dn">0%</td>
+      </tr>
+      <tr>
+        <td class="left">D120–D129</td>
+        <td>2</td><td>32</td><td>13</td><td>5</td>
+        <td class="up">38.5%</td><td>26</td><td>23.1%</td>
+      </tr>
+      <tr>
+        <td class="left">D160–D169</td>
+        <td>1</td><td>12</td><td>7</td><td>1</td>
+        <td>14.3%</td><td>9</td><td>11.1%</td>
+      </tr>
+      <tr>
+        <td class="left">D190–D199</td>
+        <td>1</td><td>12</td><td>6</td><td>2</td>
+        <td>33.3%</td><td>10</td><td>20.0%</td>
+      </tr>
+      <tr>
+        <td class="left">D220–D229</td>
+        <td>1</td><td>11</td><td>5</td><td>1</td>
+        <td>20.0%</td><td>6</td><td>16.7%</td>
+      </tr>
+      <tr>
+        <td class="left">D300–D309</td>
+        <td>1</td><td>16</td><td>11</td><td>7</td>
+        <td class="gold"><b>63.6%</b></td><td>16</td><td class="gold"><b>43.8%</b></td>
+      </tr>
+      <tr class="row-agg">
+        <td class="left">全量</td>
+        <td>49</td><td>622</td><td>153</td><td>43</td>
+        <td>28.1%</td><td>343</td><td>20.3%</td>
+      </tr>
+    </table>
+    <p style="font-size:10px;color:#aaa;margin-top:4px">
+      * D0–D9 的 23.5% 由 1570 服（D9, 3/5=60%）和 1580 服（D5, 1/2=50%）拉高，剔除后为 0%。<br>
+      D100+ 各段样本仅 1–2 服，渗透率波动大，需结合逐服明细理解。
+    </p>
+
+    <div class="warn-box" style="margin-top:12px">
+      <b>10 天粒度的生命周期结论：</b><br>
+      ① <b>D10–D29 是渗透低谷带</b>（12.5%–16.7%），当前重上窗口 D21–D28 正处其中；<br>
+      ② <b>D30–D39 出现首个拐点</b>（40.0%），渗透率从低谷直接翻倍（+140%），对应大地图开始扩展；<br>
+      ③ <b>D40–D49 回落至 16.7%</b>——说明"拐点"并非单调上行，而是 D30 和 D50 出现了两次跳升（D30 40%→D40 17%→D50 30%→D60 57%）；<br>
+      ④ <b>D60–D69 全局峰值 57.1%</b>，为 D20 区的 <b>3.4 倍</b>；<br>
+      ⑤ <b>D70–D89 稳定在 ~29%</b>，D100+ 波动大（单服样本）但中位 ~25%；<br>
+      ⑥ <b>操作建议</b>：皮肤礼包首曝窗口从 D21 延后至 <b>D50–D60</b>（第二次跳升区），或在 D21 先上连锁+家具+BP，D50 再以"限时返场"形式曝光皮肤。
+    </div>
+  </div>
+
+  <!-- 个别服务器明细（可折叠） -->
+  <details style="margin-top:8px;margin-bottom:16px">
+    <summary style="font-size:12px;font-weight:700;color:#555;cursor:pointer;padding:8px 0">
+      展开：49 服逐服明细（按D-day排序）
+    </summary>
+    <div class="card" style="margin-top:8px;max-height:400px;overflow-y:auto">
+      <table>
+        <tr><th class="left">服务器</th><th>D-day</th><th>总付费</th><th>超R</th><th>超R皮肤</th><th>渗透率</th><th>大R</th><th>大R皮肤</th></tr>
+        <tr><td class="left">1620</td><td>D0</td><td>22</td><td>1</td><td>0</td><td>0%</td><td>3</td><td>0</td></tr>
+        <tr><td class="left">1600</td><td>D1</td><td>33</td><td>2</td><td>0</td><td>0%</td><td>6</td><td>0</td></tr>
+        <tr><td class="left">1590</td><td>D1</td><td>44</td><td>2</td><td>0</td><td>0%</td><td>12</td><td>3</td></tr>
+        <tr><td class="left">1610</td><td>D1</td><td>37</td><td>1</td><td>0</td><td>0%</td><td>4</td><td>1</td></tr>
+        <tr><td class="left">1580</td><td>D5</td><td>26</td><td>2</td><td>1</td><td>50%</td><td>10</td><td>2</td></tr>
+        <tr><td class="left">1830</td><td>D5</td><td>11</td><td>3</td><td>0</td><td>0%</td><td>4</td><td>1</td></tr>
+        <tr><td class="left">1570</td><td>D9</td><td>38</td><td>5</td><td>3</td><td class="gold">60%</td><td>9</td><td>1</td></tr>
+        <tr style="background:#f8f8f8"><td class="left" colspan="8" style="font-size:10px;color:#888">── D10–D19 ──</td></tr>
+        <tr><td class="left">1560</td><td>D13</td><td>19</td><td>2</td><td>0</td><td>0%</td><td>7</td><td>1</td></tr>
+        <tr><td class="left">1550</td><td>D17</td><td>24</td><td>1</td><td>1</td><td>100%</td><td>10</td><td>4</td></tr>
+        <tr style="background:#fff8e1"><td class="left" colspan="8" style="font-size:10px;color:#856404">── D20–D29（当前重上窗口）──</td></tr>
+        <tr class="row-hi"><td class="left">1850</td><td>D20</td><td>2</td><td>2</td><td>0</td><td class="dn">0%</td><td>0</td><td>0</td></tr>
+        <tr class="row-hi"><td class="left">1840</td><td>D20</td><td>13</td><td>4</td><td>0</td><td class="dn">0%</td><td>4</td><td>0</td></tr>
+        <tr class="row-hi"><td class="left">1810</td><td>D20</td><td>8</td><td>1</td><td>1</td><td>100%</td><td>2</td><td>0</td></tr>
+        <tr class="row-hi"><td class="left">1540</td><td>D21</td><td>18</td><td>4</td><td>0</td><td class="dn">0%</td><td>5</td><td>1</td></tr>
+        <tr class="row-hi"><td class="left">1530</td><td>D25</td><td>17</td><td>4</td><td>1</td><td>25%</td><td>10</td><td>4</td></tr>
+        <tr class="row-hi"><td class="left">1790</td><td>D25</td><td>5</td><td>2</td><td>1</td><td>50%</td><td>3</td><td>0</td></tr>
+        <tr class="row-hi"><td class="left">1520</td><td>D29</td><td>23</td><td>4</td><td>1</td><td>25%</td><td>6</td><td>1</td></tr>
+        <tr style="background:#f8f8f8"><td class="left" colspan="8" style="font-size:10px;color:#888">── D30–D59 ──</td></tr>
+        <tr><td class="left">1510</td><td>D33</td><td>11</td><td>3</td><td>2</td><td class="gold">67%</td><td>3</td><td>1</td></tr>
+        <tr><td class="left">1500</td><td>D41</td><td>24</td><td>3</td><td>1</td><td>33%</td><td>5</td><td>1</td></tr>
+        <tr><td class="left">1490</td><td>D50</td><td>12</td><td>4</td><td>1</td><td>25%</td><td>6</td><td>2</td></tr>
+        <tr><td class="left">1480</td><td>D57</td><td>15</td><td>6</td><td>2</td><td>33%</td><td>5</td><td>2</td></tr>
+        <tr style="background:#e8f5e9"><td class="left" colspan="8" style="font-size:10px;color:#155724">── D60–D99（峰值区）──</td></tr>
+        <tr class="row-exp"><td class="left">1470</td><td>D65</td><td>16</td><td>7</td><td>4</td><td class="gold"><b>57%</b></td><td>5</td><td>0</td></tr>
+        <tr class="row-exp"><td class="left">1460</td><td>D73</td><td>22</td><td>7</td><td>2</td><td>29%</td><td>8</td><td>1</td></tr>
+        <tr class="row-exp"><td class="left">1450</td><td>D81</td><td>9</td><td>4</td><td>3</td><td class="gold"><b>75%</b></td><td>5</td><td>0</td></tr>
+        <tr class="row-exp"><td class="left">1440</td><td>D89</td><td>17</td><td>10</td><td>1</td><td>10%</td><td>4</td><td>0</td></tr>
+        <tr class="row-exp"><td class="left">1430</td><td>D97</td><td>6</td><td>2</td><td>1</td><td>50%</td><td>4</td><td>0</td></tr>
+        <tr style="background:#f8f8f8"><td class="left" colspan="8" style="font-size:10px;color:#888">── D100+ ──</td></tr>
+        <tr><td class="left">1420</td><td>D105</td><td>19</td><td>7</td><td>1</td><td>14%</td><td>8</td><td>0</td></tr>
+        <tr><td class="left">1410</td><td>D113</td><td>6</td><td>4</td><td>0</td><td>0%</td><td>2</td><td>0</td></tr>
+        <tr><td class="left">1400</td><td>D121</td><td>22</td><td>9</td><td>3</td><td>33%</td><td>8</td><td>1</td></tr>
+        <tr><td class="left">1390</td><td>D129</td><td>10</td><td>4</td><td>2</td><td>50%</td><td>5</td><td>0</td></tr>
+        <tr><td class="left">1350</td><td>D161</td><td>12</td><td>7</td><td>1</td><td>14%</td><td>2</td><td>0</td></tr>
+        <tr><td class="left">1310</td><td>D193</td><td>12</td><td>6</td><td>2</td><td>33%</td><td>4</td><td>0</td></tr>
+        <tr><td class="left">1270</td><td>D228</td><td>11</td><td>5</td><td>1</td><td>20%</td><td>1</td><td>0</td></tr>
+        <tr><td class="left">1170</td><td>D308</td><td>16</td><td>11</td><td>7</td><td class="gold"><b>64%</b></td><td>5</td><td>0</td></tr>
+      </table>
+      <p style="font-size:10px;color:#aaa;margin-top:4px">注：已省略超R=0且大R≤1的散量服务器（1630/1640/1670-1780等），这些服仅有1-3人的散买行为。</p>
+    </div>
+  </details>
+
+  <!-- ══════════════════════════════════════
+       重上建议
+  ══════════════════════════════════════ -->
+  <div class="sh">
+    <div class="sh-num" style="background:#555">议</div>
+    <div class="sh-title">重上方案建议</div>
+  </div>
+  <div class="rec4">
+    <div class="rec-card keep">
+      <div class="rc-tag">保留强化</div>
+      <div class="rc-title">特惠连锁 + 家具礼包</div>
+      <div class="rc-body">两期均稳定，家具礼包是最可预测的收入（$19.99限购，7-9人/服）。特惠连锁是最大入口，优化第1→2档断崖（新服29%留存）比老服更重要。</div>
+    </div>
+    <div class="rec-card keep">
+      <div class="rc-tag">保留（新版机制）</div>
+      <div class="rc-title">BP通行证（新版）</div>
+      <div class="rc-body">老版几乎失效（$17/服），新版跃升至第二（$180/服）。重上必须用新版BP设计，不要回退老版。同时落实"免费满级后弹购买引导"将完成感转化为付费。</div>
+    </div>
+    <div class="rec-card improve">
+      <div class="rc-tag">调整预期 + 窗口延后</div>
+      <div class="rc-title">主城皮肤礼包（$99.99）</div>
+      <div class="rc-body">已从老服第二(26%)跌至新服第四(11%)，单服买家 3.0→0.67。<b>根本原因：需求侧弱化</b>——D21新服玩家96%尚未解锁大地图第二海域，皮肤改造价值感低，非超R需求饱和。三点建议：①<b>重上服龄窗口延后至 D45+</b>（大地图开启后需求自然回升）；②皮肤礼包文案强调"解锁多片海域专属外观"稀缺感；③D21窗口仍按 $67/服 规划收入预期。</div>
+    </div>
+    <div class="rec-card drop">
+      <div class="rc-tag">重构或降优先级</div>
+      <div class="rc-title">女王恩典卷高档礼包</div>
+      <div class="rc-body">两期均失效：老服 $1,300 散布于 5-6 个小包，新服 $30（6单全在$4.99档）。$19.99/$49.99/$99.99 档零转化。高档重构为累充奖励形式，或整合进连锁/BP。</div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<div class="footer">
+  X3 尼罗河活动 老服首轮付费模块分析 &nbsp;·&nbsp; 对比基准：新服复盘报告（x3_nile_exec_summary.html） &nbsp;·&nbsp; 2026-05-09<br>
+  数据环境：TRINO_HF · v1090 · 老服首轮窗口 2026-01-19 至 2026-02-08 · 新服复盘 D21–D28 匹配对照法
+</div>
+
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>26春节活动配置详情</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #e8e8e8;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #ff6b6b, #feca57, #ff6b6b);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
+
+        .summary-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .summary-card h2 {
+            color: #feca57;
+            margin-bottom: 16px;
+            font-size: 1.3rem;
+        }
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .price-item {
+            background: rgba(255,107,107,0.15);
+            padding: 12px 16px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .price-item .name { color: #fff; }
+        .price-item .price { color: #ff6b6b; font-weight: bold; font-size: 1.1rem; }
+
+        .activity-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            margin-bottom: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .activity-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+        .card-header {
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .activity-id {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #fff;
+        }
+        .activity-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #fff;
+        }
+        .activity-type {
+            margin-left: auto;
+            background: rgba(254,202,87,0.2);
+            color: #feca57;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        .card-body { padding: 24px; }
+        .section { margin-bottom: 20px; }
+        .section:last-child { margin-bottom: 0; }
+        .section-title {
+            color: #a8a8a8;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        .reward-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .reward-item {
+            background: rgba(102,126,234,0.15);
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #b8c5f2;
+        }
+        .reward-item .num { color: #667eea; font-weight: bold; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        th {
+            background: rgba(255,255,255,0.05);
+            color: #a8a8a8;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+        td { color: #d8d8d8; }
+        tr:hover td { background: rgba(255,255,255,0.03); }
+        .highlight { color: #ff6b6b; font-weight: bold; }
+        .cost { color: #feca57; }
+
+        .pack-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: #fff;
+            margin-right: 8px;
+        }
+        .consume-info {
+            background: rgba(255,255,255,0.05);
+            padding: 12px 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .consume-info .icon { font-size: 1.5rem; }
+        .consume-info .text { color: #b8b8b8; }
+        .consume-info .item-name { color: #feca57; font-weight: 500; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>2026 春节活动配置详情</h1>
+
+        <!-- 礼包价格汇总 -->
+        <div class="summary-card">
+            <h2>礼包价格汇总</h2>
+            <div class="price-grid">
+                <div class="price-item">
+                    <span class="name">BP免费版</span>
+                    <span class="price">$4.99</span>
+                </div>
+                <div class="price-item">
+                    <span class="name">BP付费版</span>
+                    <span class="price">$19.99</span>
+                </div>
+                <div class="price-item">
+                    <span class="name">拜访礼包</span>
+                    <span class="price">$99.99</span>
+                </div>
+                <div class="price-item">
+                    <span class="name">许愿池</span>
+                    <span class="price">$4.99</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 101515 开箱 -->
+        <div class="activity-card">
+            <div class="card-header">
+                <span class="activity-id">101515</span>
+                <span class="activity-name">开箱</span>
+                <span class="activity-type">转盘抽奖</span>
+            </div>
+            <div class="card-body">
+                <div class="section">
+                    <div class="consume-info">
+                        <span class="icon">🎫</span>
+                        <span class="text">消耗道具: <span class="item-name">幸运之星 (ID:1090)</span></span>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-title">奖池 (RewardGroup=311)</div>
+                    <div class="reward-list">
+                        <span class="reward-item">钻石 <span class="num">x600</span></span>
+                        <span class="reward-item">30分钟通用加速 <span class="num">x3</span></span>
+                        <span class="reward-item">高级资源箱 <span class="num">x2</span></span>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-title">额外奖励 (OtherRewardGroup=3011)</div>
+                    <div class="reward-list">
+                        <span class="reward-item">黄金宝箱 <span class="num">x1</span></span>
+                        <span class="reward-item">精炼宝石 <span class="num">x40</span></span>
+                        <span class="reward-item">强化材料 <span class="num">x160</span></span>
+                        <span class="reward-item">钻石 <span class="num">x10000</span></span>
+                        <span class="reward-item">100 VIP积分 <span class="num">x100</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 100812 挑战活动 -->
+        <div class="activity-card">
+            <div class="card-header">
+                <span class="activity-id">100812</span>
+                <span class="activity-name">挑战活动</span>
+                <span class="activity-type">任务挑战</span>
+            </div>
+            <div class="card-body">
+                <div class="section">
+                    <div class="section-title">配置状态</div>
+                    <div class="consume-info">
+                        <span class="icon">⚠️</span>
+                        <span class="text">ContentID=812 在配置表中未找到匹配数据，可能为新配置尚未入表</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 102238 BP -->
+        <div class="activity-card">
+            <div class="card-header">
+                <span class="activity-id">102238</span>
+                <span class="activity-name">Battle Pass</span>
+                <span class="activity-type">通行证</span>
+            </div>
+            <div class="card-body">
+                <div class="section">
+                    <div class="section-title">礼包配置</div>
+                    <table>
+                        <tr>
+                            <th>礼包类型</th>
+                            <th>PackID</th>
+                            <th>价格</th>
+                        </tr>
+                        <tr>
+                            <td>免费通行证</td>
+                            <td>130020</td>
+                            <td class="highlight">$4.99</td>
+                        </tr>
+                        <tr>
+                            <td>付费通行证</td>
+                            <td>130021</td>
+                            <td class="highlight">$19.99</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="section">
+                    <div class="section-title">等级奖励</div>
+                    <div class="reward-list">
+                        <span class="reward-item">RewardGroup = <span class="num">137</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 105604 拜访礼包 -->
+        <div class="activity-card">
+            <div class="card-header">
+                <span class="activity-id">105604</span>
+                <span class="activity-name">拜访礼包</span>
+                <span class="activity-type">社交邀请</span>
+            </div>
+            <div class="card-body">
+                <div class="section">
+                    <div class="section-title">主礼包</div>
+                    <div class="consume-info">
+                        <span class="icon">🎁</span>
+                        <span class="text">PackID: 210816 | 价格: <span class="highlight">$99.99</span></span>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-title">邀请机制</div>
+                    <div class="reward-list">
+                        <span class="reward-item">邀请道具: 新春邀请函 <span class="num">(ID:1141)</span></span>
+                        <span class="reward-item">邀请奖励: 限定皮肤 <span class="num">(ID:1140)</span></span>
+                        <span class="reward-item">阶段奖励组: <span class="num">4</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 101827 拼图 -->
+        <div class="activity-card">
+            <div class="card-header">
+                <span class="activity-id">101827</span>
+                <span class="activity-name">拼图</span>
+                <span class="activity-type">收集玩法</span>
+            </div>
+            <div class="card-body">
+                <div class="section">
+                    <div class="section-title">配置信息</div>
+                    <div class="reward-list">
+                        <span class="reward-item">拼图尺寸: <span class="num">5x5</span></span>
+                        <span class="reward-item">任务组: TaskGroup = <span class="num">109</span></span>
+                        <span class="reward-item">完成奖励: RewardGroup = <span class="num">1027</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 105012 许愿池 -->
+        <div class="activity-card">
+            <div class="card-header">
+                <span class="activity-id">105012</span>
+                <span class="activity-name">许愿池</span>
+                <span class="activity-type">许愿抽奖</span>
+            </div>
+            <div class="card-body">
+                <div class="section">
+                    <div class="section-title">消耗礼包</div>
+                    <div class="consume-info">
+                        <span class="icon">💎</span>
+                        <span class="text">PackID: 1002001 | 价格: <span class="highlight">$4.99</span></span>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-title">奖池内容 (RewardGroup=105)</div>
+                    <div class="reward-list">
+                        <span class="reward-item">精美家具木匣 <span class="num">x1</span></span>
+                        <span class="reward-item">许愿池碎片 <span class="num">x25</span></span>
+                        <span class="reward-item">许愿池碎片 <span class="num">x20</span></span>
+                        <span class="reward-item">许愿池碎片 <span class="num">x16</span></span>
+                        <span class="reward-item">许愿池碎片 <span class="num">x14</span></span>
+                        <span class="reward-item">许愿池碎片 <span class="num">x12</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10071802 最佳酒馆 -->
+        <div class="activity-card">
+            <div class="card-header">
+                <span class="activity-id">10071802</span>
+                <span class="activity-name">最佳酒馆</span>
+                <span class="activity-type">积分玩法</span>
+            </div>
+            <div class="card-body">
+                <div class="section">
+                    <div class="section-title">积分档位配置</div>
+                    <div class="reward-list">
+                        <span class="reward-item">ScoreGroup: <span class="num">7181 ~ 7187</span> (7期循环)</span>
+                        <span class="reward-item">奖励组: RewardID = <span class="num">786041 ~ 786044</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 101338 兑换 -->
+        <div class="activity-card">
+            <div class="card-header">
+                <span class="activity-id">101338</span>
+                <span class="activity-name">兑换</span>
+                <span class="activity-type">道具兑换</span>
+            </div>
+            <div class="card-body">
+                <div class="section">
+                    <div class="consume-info">
+                        <span class="icon">🎟️</span>
+                        <span class="text">消耗道具: <span class="item-name">迎春礼券 (ID:1139)</span></span>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-title">兑换列表 (共14项)</div>
+                    <table>
+                        <tr>
+                            <th>物品名称</th>
+                            <th>数量</th>
+                            <th>消耗礼券</th>
+                        </tr>
+                        <tr><td>高级大礼包箱</td><td>x1</td><td class="cost">100</td></tr>
+                        <tr><td>头像框自选箱</td><td>x1</td><td class="cost">1000</td></tr>
+                        <tr><td>新春限定皮肤宝箱</td><td>x1</td><td class="cost">400</td></tr>
+                        <tr><td>建筑师折扣券</td><td>x1</td><td class="cost">4000</td></tr>
+                        <tr><td>商城折扣券</td><td>x1</td><td class="cost">3000</td></tr>
+                        <tr><td>稀有英雄装扮宝箱</td><td>x1</td><td class="cost">700</td></tr>
+                        <tr><td>通用加速碎片</td><td>x1</td><td class="cost">200</td></tr>
+                        <tr><td>高级大礼包箱</td><td>x1</td><td class="cost">200</td></tr>
+                        <tr><td>稀有英雄装扮宝箱</td><td>x1</td><td class="cost">50</td></tr>
+                        <tr><td>高级技能书</td><td>x1</td><td class="cost">20</td></tr>
+                        <tr><td>高级木材</td><td>x1</td><td class="cost">8</td></tr>
+                        <tr><td>硬木材</td><td>x1000</td><td class="cost">1</td></tr>
+                        <tr><td>冒险金币</td><td>x1000</td><td class="cost">1</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 100596 累充 -->
+        <div class="activity-card">
+            <div class="card-header">
+                <span class="activity-id">100596</span>
+                <span class="activity-name">累充</span>
+                <span class="activity-type">累计充值</span>
+            </div>
+            <div class="card-body">
+                <div class="section">
+                    <div class="section-title">档位奖励 (共10档)</div>
+                    <table>
+                        <tr>
+                            <th>累充金额</th>
+                            <th>奖励内容</th>
+                        </tr>
+                        <tr><td class="highlight">$100</td><td>高级大礼包箱 x5 + 5分钟通用加速 x80</td></tr>
+                        <tr><td class="highlight">$400</td><td>高级大礼包箱 x5 + 5分钟通用加速 x160</td></tr>
+                        <tr><td class="highlight">$1,000</td><td>高级大礼包箱 x10 + 5分钟通用加速 x240</td></tr>
+                        <tr><td class="highlight">$2,000</td><td>高级大礼包箱 x10 + 5分钟通用加速 x320</td></tr>
+                        <tr><td class="highlight">$4,000</td><td>高级大礼包箱 x20 + 5分钟通用加速 x400</td></tr>
+                        <tr><td class="highlight">$7,000</td><td>高级大礼包箱 x30 + 5分钟通用加速 x480</td></tr>
+                        <tr><td class="highlight">$10,000</td><td>高级大礼包箱 x40 + 5分钟通用加速 x560</td></tr>
+                        <tr><td class="highlight">$13,000</td><td>高级大礼包箱 x50 + 5分钟通用加速 x640</td></tr>
+                        <tr><td class="highlight">$16,000</td><td>高级大礼包箱 x70 + 5分钟通用加速 x720</td></tr>
+                        <tr><td class="highlight">$20,000</td><td>高级大礼包箱 x100 + 5分钟通用加速 x800</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

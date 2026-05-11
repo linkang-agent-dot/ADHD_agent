@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>占星节 2026 — 集卡册配置（X2）</title>
+<style>
+  body { font-family:-apple-system,'Segoe UI',sans-serif; max-width:1200px; margin:0 auto; padding:24px; background:#f5f7fa; }
+  h1 { color:#1a1a2e; border-bottom:3px solid #6c5ce7; padding-bottom:8px; }
+  h2 { color:#6c5ce7; margin-top:32px; }
+  h3 { color:#333; margin-top:20px; }
+  .card { background:white; border-radius:10px; padding:20px; margin:16px 0; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  th { background:#6c5ce7; color:white; padding:6px 10px; text-align:left; }
+  td { padding:5px 10px; border-bottom:1px solid #eee; vertical-align:top; }
+  tr:hover td { background:#f8f9ff; }
+  .code { font-family:Consolas,monospace; background:#f0f0f5; padding:1px 5px; border-radius:3px; font-size:11px; }
+  .paste-box { background:#1e1e2e; color:#cdd6f4; padding:14px; border-radius:8px; font-family:monospace; font-size:10px; white-space:pre; overflow-x:auto; word-break:break-all; margin:10px 0; }
+  .copy-btn { background:#6c5ce7; color:white; border:none; padding:5px 12px; border-radius:6px; cursor:pointer; font-size:11px; margin-bottom:6px; }
+  .copy-btn:hover { background:#5a4fcf; }
+  .warn { background:#fff3cd; border-left:4px solid #ffc107; padding:8px 14px; border-radius:4px; margin:8px 0; font-size:12px; }
+  .info { background:#e8f4fd; border-left:4px solid #6c5ce7; padding:8px 14px; border-radius:4px; margin:8px 0; font-size:12px; }
+  .ok { background:#d4edda; border-left:4px solid #28a745; padding:8px 14px; border-radius:4px; margin:8px 0; font-size:12px; }
+  .star3 { color:#007bff; font-weight:bold; }
+  .star4 { color:#9b59b6; font-weight:bold; }
+  .star5 { color:#f39c12; font-weight:bold; }
+  .tbd { background:#fff0f0; color:#c0392b; font-weight:bold; padding:1px 5px; border-radius:3px; }
+  .dim { color:#999; }
+  .field-row { display:flex; gap:8px; margin:3px 0; font-size:12px; }
+  .field-name { color:#6c5ce7; font-weight:bold; min-width:130px; }
+  .field-val { color:#2d3436; font-family:monospace; }
+</style>
+</head>
+<body>
+
+<h1>占星节 2026 — X2 集卡册配置</h1>
+<p class="dim">更新时间：2026-04-28 | 参照：圣诞庆典（11081002） | DK字段均为待定 | 卡名来源：设计文档《26版本占星节集卡册包装内容》 | 卡包ID：11114017/18/19（新建占星节专属）</p>
+
+<!-- ==================== 道具核实 ==================== -->
+<h2>一、1108 Book 奖励道具核实</h2>
+<div class="card">
+<table>
+  <tr><th>道具ID</th><th>名称</th><th>在1111主表？</th><th>2026占星节可用？</th></tr>
+  <tr><td><span class="code">11119523</span></td><td>柜台-占星节</td><td>✅ 有</td><td>✅ 占星节专属装饰，直接用</td></tr>
+  <tr><td><span class="code">11111082</span></td><td>特殊天赋道具</td><td>❌ 仅运营定价表</td><td>✅ 通用养成道具，可复用（同巨猿换皮记录）</td></tr>
+  <tr><td><span class="code">11111083</span></td><td>宝石升级道具</td><td>❌ 仅运营定价表</td><td>✅ 通用养成道具，可复用</td></tr>
+</table>
+<div class="ok">结论：Book 奖励三件全部直接复用圣诞庆典配置。</div>
+</div>
+
+<!-- ==================== ID总览 ==================== -->
+<h2>二、ID 分配总览</h2>
+<div class="card">
+<table>
+  <tr><th>表</th><th>ID</th><th>说明</th><th>数量</th></tr>
+  <tr><td>1108 CardGallaryBook</td><td><span class="code">11081003</span></td><td>占星奇遇</td><td>1</td></tr>
+  <tr><td>1107 CardGallaryGroup</td><td><span class="code">11073001–11073009</span></td><td>9组，DisplayOrder 11071026–034</td><td>9</td></tr>
+  <tr><td>1123 CardGallary</td><td><span class="code">11234001–11234086</span></td><td>54张卡，10步间隔</td><td>54</td></tr>
+  <tr><td>1109 CardGallaryStore</td><td><span class="code">11090021–11090023</span></td><td>3行商店</td><td>3</td></tr>
+</table>
+<div class="warn">⚠️ G7（探秘星空）设计文档有7个卡名，当前配置取前6个，屋顶观星暂未包含——确认保留哪6张。</div>
+</div>
+
+<!-- ==================== 1108 ==================== -->
+<h2>三、1108 CardGallaryBook（11081003）</h2>
+<div class="card">
+<div class="field-row"><span class="field-name">Id</span><span class="field-val">11081003</span></div>
+<div class="field-row"><span class="field-name">Comment</span><span class="field-val">占星奇遇</span></div>
+<div class="field-row"><span class="field-name">GroupID</span><span class="field-val">[11073001,11073002,11073003,11073004,11073005,11073006,11073007,11073008,11073009]</span></div>
+<div class="field-row"><span class="field-name">DisplayKey</span><span class="field-val">1511031105</span></div>
+<div class="field-row"><span class="field-name">DisplayKey1</span><span class="field-val">1511031106</span></div>
+<div class="field-row"><span class="field-name">DisplayKey2</span><span class="field-val">1511031107</span></div>
+<div class="field-row"><span class="field-name">DisplayKey3</span><span class="field-val">1511031108</span></div>
+<div class="field-row"><span class="field-name">FXDisplayKey</span><span class="field-val">0</span></div>
+<div class="field-row"><span class="field-name">LcName</span><span class="field-val">{"typ":"lc","txt":"LC_EVENT_item_card_book_title_3"}</span></div>
+<div class="field-row"><span class="field-name">LcDesc</span><span class="field-val">{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}</span></div>
+<div class="field-row"><span class="field-name">DisplayOrder</span><span class="field-val">99999999</span></div>
+<div class="field-row"><span class="field-name">CardPackID</span><span class="field-val">[11114017,11114018,11114019]</span></div>
+<div class="field-row"><span class="field-name">Rewards</span><span class="field-val">[{"typ":"item","id":11119523,"val":1},{"typ":"item","id":11111082,"val":10},{"typ":"item","id":11111083,"val":20}]</span></div>
+<div class="field-row"><span class="field-name">OpenTime</span><span class="field-val">[-1,-1]</span></div>
+<div class="field-row"><span class="field-name">OpenReq</span><span class="field-val">{"op":"eq","typ":"actvstart","id":21127355,"val":1}</span></div>
+<div class="field-row"><span class="field-name">OpenReq 说明</span><span class="field-val dim">绑定 21127355（占星节-2026-每日gacha礼包），与圣诞庆典复用现有活动的做法一致，无需新建2112行</span></div>
+
+<h3>可粘贴行</h3>
+<button class="copy-btn" onclick="copyEl('row1108')">复制1108行</button>
+<div class="paste-box" id="row1108">	11081003	占星奇遇	[11073001,11073002,11073003,11073004,11073005,11073006,11073007,11073008,11073009]	1511031105	1511031106	1511031107	1511031108	0	{"typ":"lc","txt":"LC_EVENT_item_card_book_title_3"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	99999999	[11114017,11114018,11114019]	[{"typ":"item","id":11119523,"val":1},{"typ":"item","id":11111082,"val":10},{"typ":"item","id":11111083,"val":20}]	[-1,-1]	{"op":"eq","typ":"actvstart","id":21127355,"val":1}</div>
+</div>
+
+<!-- ==================== 1107 ==================== -->
+<h2>四、1107 CardGallaryGroup（11073001–11073009）</h2>
+<div class="card">
+<div class="info">G1-3 奖励 = 探测抽奖券+抽卡币；G4-6 = 宝石升级道具+橙碎片；G7-9 = 占星节装饰道具（直接复用圣诞配置）</div>
+
+<table>
+  <tr><th>Id</th><th>分页名称</th><th>CardID</th><th>DisplayOrder</th><th>LcName (txt部分)</th><th>RewardsFirst</th><th>RewardsFollow</th></tr>
+  <tr><td><span class="code">11073001</span></td><td>占星师的日常</td><td>[11234001–006]</td><td>11071026</td><td>LC_EVENT_item_card_collection_title_26</td><td>[11117024×5, 11116402×5]</td><td>[11116402×5, rss 11144003×30000]</td></tr>
+  <tr><td><span class="code">11073002</span></td><td>赏星之旅</td><td>[11234011–016]</td><td>11071027</td><td>LC_EVENT_item_card_collection_title_27</td><td>[11117024×5, 11116402×5]</td><td>[11116402×5, rss 11144003×30000]</td></tr>
+  <tr><td><span class="code">11073003</span></td><td>学习占星</td><td>[11234021–026]</td><td>11071028</td><td>LC_EVENT_item_card_collection_title_28</td><td>[11117024×5, 11116402×5]</td><td>[11116402×5, rss 11144003×30000]</td></tr>
+  <tr><td><span class="code">11073004</span></td><td>制作星礼</td><td>[11234031–036]</td><td>11071029</td><td>LC_EVENT_item_card_collection_title_29</td><td>[11111083×2, 11116304×2]</td><td></td></tr>
+  <tr><td><span class="code">11073005</span></td><td>占卜时分</td><td>[11234041–046]</td><td>11071030</td><td>LC_EVENT_item_card_collection_title_30</td><td>[11111083×2, 11116304×2]</td><td></td></tr>
+  <tr><td><span class="code">11073006</span></td><td>许愿祈福</td><td>[11234051–056]</td><td>11071031</td><td>LC_EVENT_item_card_collection_title_31</td><td>[11111083×2, 11116304×2]</td><td></td></tr>
+  <tr><td><span class="code">11073007</span></td><td>探秘星空</td><td>[11234061–066]</td><td>11071032</td><td>LC_EVENT_item_card_collection_title_32</td><td>[11119512×1, 11119513×1]</td><td></td></tr>
+  <tr><td><span class="code">11073008</span></td><td>观星识器</td><td>[11234071–076]</td><td>11071033</td><td>LC_EVENT_item_card_collection_title_33</td><td>[11119508×1, 11119511×1]</td><td></td></tr>
+  <tr><td><span class="code">11073009</span></td><td>占星集市</td><td>[11234081–086]</td><td>11071034</td><td>LC_EVENT_item_card_collection_title_34</td><td>[11119509×1, 11119515×1]</td><td></td></tr>
+</table>
+
+<h3>可粘贴行</h3>
+<button class="copy-btn" onclick="copyEl('rows1107')">复制1107全部9行</button>
+<div class="paste-box" id="rows1107">	11073001	占星师的日常	[11234001,11234002,11234003,11234004,11234005,11234006]	1511031094	1511031103	1511031104	{"typ":"lc","txt":"LC_EVENT_item_card_collection_title_26"}		11071026	[{"typ":"item","id":11117024,"val":5},{"typ":"item","id":11116402,"val":5}]	[{"typ":"item","id":11116402,"val":5},{"typ":"rss","id":11144003,"val":30000}]
+	11073002	赏星之旅	[11234011,11234012,11234013,11234014,11234015,11234016]	1511031095	1511031103	1511031104	{"typ":"lc","txt":"LC_EVENT_item_card_collection_title_27"}		11071027	[{"typ":"item","id":11117024,"val":5},{"typ":"item","id":11116402,"val":5}]	[{"typ":"item","id":11116402,"val":5},{"typ":"rss","id":11144003,"val":30000}]
+	11073003	学习占星	[11234021,11234022,11234023,11234024,11234025,11234026]	1511031096	1511031103	1511031104	{"typ":"lc","txt":"LC_EVENT_item_card_collection_title_28"}		11071028	[{"typ":"item","id":11117024,"val":5},{"typ":"item","id":11116402,"val":5}]	[{"typ":"item","id":11116402,"val":5},{"typ":"rss","id":11144003,"val":30000}]
+	11073004	制作星礼	[11234031,11234032,11234033,11234034,11234035,11234036]	1511031097	1511031103	1511031104	{"typ":"lc","txt":"LC_EVENT_item_card_collection_title_29"}		11071029	[{"typ":"item","id":11111083,"val":2},{"typ":"item","id":11116304,"val":2}]
+	11073005	占卜时分	[11234041,11234042,11234043,11234044,11234045,11234046]	1511031098	1511031103	1511031104	{"typ":"lc","txt":"LC_EVENT_item_card_collection_title_30"}		11071030	[{"typ":"item","id":11111083,"val":2},{"typ":"item","id":11116304,"val":2}]
+	11073006	许愿祈福	[11234051,11234052,11234053,11234054,11234055,11234056]	1511031099	1511031103	1511031104	{"typ":"lc","txt":"LC_EVENT_item_card_collection_title_31"}		11071031	[{"typ":"item","id":11111083,"val":2},{"typ":"item","id":11116304,"val":2}]
+	11073007	探秘星空	[11234061,11234062,11234063,11234064,11234065,11234066]	1511031100	1511031103	1511031104	{"typ":"lc","txt":"LC_EVENT_item_card_collection_title_32"}		11071032	[{"typ":"item","id":11119512,"val":1},{"typ":"item","id":11119513,"val":1}]
+	11073008	观星识器	[11234071,11234072,11234073,11234074,11234075,11234076]	1511031101	1511031103	1511031104	{"typ":"lc","txt":"LC_EVENT_item_card_collection_title_33"}		11071033	[{"typ":"item","id":11119508,"val":1},{"typ":"item","id":11119511,"val":1}]
+	11073009	占星集市	[11234081,11234082,11234083,11234084,11234085,11234086]	1511031102	1511031103	1511031104	{"typ":"lc","txt":"LC_EVENT_item_card_collection_title_34"}		11071034	[{"typ":"item","id":11119509,"val":1},{"typ":"item","id":11119515,"val":1}]	</div>
+</div>
+
+<!-- ==================== 1123 ==================== -->
+<h2>五、1123 CardGallary — 54张（11234001–11234086）</h2>
+<div class="card">
+<div class="info">Category固定 11071001（废弃字段）| DisplayOrder = ID本身 | DisplayKey = 卡片图标DK（1511031037-90）| DisplayKey1 = 1511020219（集卡册普通边框，所有卡共用）| LcDesc固定 {"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}</div>
+<div class="ok">✅ G7「探秘星空」6张已确认：美术文件夹只有0-5共6张图，屋顶观星无图稿，配置取前6个正确。</div>
+
+<table>
+  <tr><th>Id</th><th>Comment(组)</th><th>Comment2(卡名)</th><th>Star</th><th>SendHonorCoin</th><th>Recycle</th><th>LC Key</th></tr>
+  <!-- G1 全★3 -->
+  <tr><td>11234001</td><td>占星师的日常</td><td>准备观星</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_255</td></tr>
+  <tr><td>11234002</td><td>占星师的日常</td><td>伸个懒腰</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_256</td></tr>
+  <tr><td>11234003</td><td>占星师的日常</td><td>打扫卫生</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_257</td></tr>
+  <tr><td>11234004</td><td>占星师的日常</td><td>调整角度</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_258</td></tr>
+  <tr><td>11234005</td><td>占星师的日常</td><td>眺望银河</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_259</td></tr>
+  <tr><td>11234006</td><td>占星师的日常</td><td>发现星座</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_260</td></tr>
+  <!-- G2 5★3+1★4 -->
+  <tr><td>11234011</td><td>赏星之旅</td><td>观星时刻</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_261</td></tr>
+  <tr><td>11234012</td><td>赏星之旅</td><td>登高寻星</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_262</td></tr>
+  <tr><td>11234013</td><td>赏星之旅</td><td>眺望星云</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_263</td></tr>
+  <tr><td>11234014</td><td>赏星之旅</td><td>共赏夜色</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_264</td></tr>
+  <tr><td>11234015</td><td>赏星之旅</td><td>分辨星座</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_265</td></tr>
+  <tr><td>11234016</td><td>赏星之旅</td><td>旷野赏星</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_266</td></tr>
+  <!-- G3 4★3+2★4 -->
+  <tr><td>11234021</td><td>学习占星</td><td>讨论天相</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_267</td></tr>
+  <tr><td>11234022</td><td>学习占星</td><td>调试星仪</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_268</td></tr>
+  <tr><td>11234023</td><td>学习占星</td><td>端详罗盘</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_269</td></tr>
+  <tr><td>11234024</td><td>学习占星</td><td>绘制星图</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_270</td></tr>
+  <tr><td>11234025</td><td>学习占星</td><td>阅读资料</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_271</td></tr>
+  <tr><td>11234026</td><td>学习占星</td><td>记录星象</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_272</td></tr>
+  <!-- G4 3★3+3★4 -->
+  <tr><td>11234031</td><td>制作星礼</td><td>星座刺绣</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_273</td></tr>
+  <tr><td>11234032</td><td>制作星礼</td><td>制作饼干</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_274</td></tr>
+  <tr><td>11234033</td><td>制作星礼</td><td>星火闪烁</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_275</td></tr>
+  <tr><td>11234034</td><td>制作星礼</td><td>裁星织月</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_276</td></tr>
+  <tr><td>11234035</td><td>制作星礼</td><td>美好友谊</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_277</td></tr>
+  <tr><td>11234036</td><td>制作星礼</td><td>赏玩星盒</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_278</td></tr>
+  <!-- G5 2★3+3★4+1★5 -->
+  <tr><td>11234041</td><td>占卜时分</td><td>准备卡牌</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_279</td></tr>
+  <tr><td>11234042</td><td>占卜时分</td><td>翻开答案</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_280</td></tr>
+  <tr><td>11234043</td><td>占卜时分</td><td>深夜奇迹</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_281</td></tr>
+  <tr><td>11234044</td><td>占卜时分</td><td>指点迷津</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_282</td></tr>
+  <tr><td>11234045</td><td>占卜时分</td><td>一起占卜</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_283</td></tr>
+  <tr><td>11234046</td><td>占卜时分</td><td>抽取星卡</td><td class="star5">★5</td><td>400</td><td>10</td><td>LC_EVENT_item_card_name_284</td></tr>
+  <!-- G6 1★3+4★4+1★5 -->
+  <tr><td>11234051</td><td>许愿祈福</td><td>许下心愿</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_285</td></tr>
+  <tr><td>11234052</td><td>许愿祈福</td><td>装满愿望</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_286</td></tr>
+  <tr><td>11234053</td><td>许愿祈福</td><td>星愿入瓶</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_287</td></tr>
+  <tr><td>11234054</td><td>许愿祈福</td><td>虔诚祝祷</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_288</td></tr>
+  <tr><td>11234055</td><td>许愿祈福</td><td>月下祈愿</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_289</td></tr>
+  <tr><td>11234056</td><td>许愿祈福</td><td>许愿树下</td><td class="star5">★5</td><td>400</td><td>10</td><td>LC_EVENT_item_card_name_290</td></tr>
+  <!-- G7 1★3+3★4+2★5（取前6，屋顶观星待确认） -->
+  <tr><td>11234061</td><td>探秘星空</td><td>发现星座</td><td class="star3">★3</td><td>100</td><td>1</td><td>LC_EVENT_item_card_name_291</td></tr>
+  <tr><td>11234062</td><td>探秘星空</td><td>星空课堂</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_292</td></tr>
+  <tr><td>11234063</td><td>探秘星空</td><td>模拟星系</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_293</td></tr>
+  <tr><td>11234064</td><td>探秘星空</td><td>遥指星斗</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_294</td></tr>
+  <tr><td>11234065</td><td>探秘星空</td><td>传授知识</td><td class="star5">★5</td><td>400</td><td>10</td><td>LC_EVENT_item_card_name_295</td></tr>
+  <tr><td>11234066</td><td>探秘星空</td><td>寻星之旅</td><td class="star5">★5</td><td>400</td><td>10</td><td>LC_EVENT_item_card_name_296</td></tr>
+  <!-- G8 3★4+3★5 -->
+  <tr><td>11234071</td><td>观星识器</td><td>拆解镜筒</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_297</td></tr>
+  <tr><td>11234072</td><td>观星识器</td><td>旋转星盘</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_298</td></tr>
+  <tr><td>11234073</td><td>观星识器</td><td>感受时间</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_299</td></tr>
+  <tr><td>11234074</td><td>观星识器</td><td>清扫灰尘</td><td class="star5">★5</td><td>400</td><td>10</td><td>LC_EVENT_item_card_name_300</td></tr>
+  <tr><td>11234075</td><td>观星识器</td><td>钻研星仪</td><td class="star5">★5</td><td>400</td><td>10</td><td>LC_EVENT_item_card_name_301</td></tr>
+  <tr><td>11234076</td><td>观星识器</td><td>参观模型</td><td class="star5">★5</td><td>400</td><td>10</td><td>LC_EVENT_item_card_name_302</td></tr>
+  <!-- G9 3★4+3★5 -->
+  <tr><td>11234081</td><td>占星集市</td><td>发现风铃</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_303</td></tr>
+  <tr><td>11234082</td><td>占星集市</td><td>眼前一亮</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_304</td></tr>
+  <tr><td>11234083</td><td>占星集市</td><td>共赏星灯</td><td class="star4">★4</td><td>200</td><td>2</td><td>LC_EVENT_item_card_name_305</td></tr>
+  <tr><td>11234084</td><td>占星集市</td><td>货架上新</td><td class="star5">★5</td><td>400</td><td>10</td><td>LC_EVENT_item_card_name_306</td></tr>
+  <tr><td>11234085</td><td>占星集市</td><td>介绍新品</td><td class="star5">★5</td><td>400</td><td>10</td><td>LC_EVENT_item_card_name_307</td></tr>
+  <tr><td>11234086</td><td>占星集市</td><td>一见倾心</td><td class="star5">★5</td><td>400</td><td>10</td><td>LC_EVENT_item_card_name_308</td></tr>
+</table>
+
+<h3>可粘贴行（54行）</h3>
+<button class="copy-btn" onclick="copyEl('rows1123')">复制1123全部54行</button>
+<div class="paste-box" id="rows1123">	11234001	占星师的日常	准备观星	11071001	3	1511031037	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_255"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234001	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234002	占星师的日常	伸个懒腰	11071001	3	1511031038	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_256"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234002	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234003	占星师的日常	打扫卫生	11071001	3	1511031039	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_257"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234003	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234004	占星师的日常	调整角度	11071001	3	1511031040	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_258"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234004	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234005	占星师的日常	眺望银河	11071001	3	1511031041	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_259"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234005	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234006	占星师的日常	发现星座	11071001	3	1511031042	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_260"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234006	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234011	赏星之旅	观星时刻	11071001	3	1511031043	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_261"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234011	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234012	赏星之旅	登高寻星	11071001	3	1511031044	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_262"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234012	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234013	赏星之旅	眺望星云	11071001	3	1511031045	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_263"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234013	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234014	赏星之旅	共赏夜色	11071001	3	1511031046	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_264"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234014	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234015	赏星之旅	分辨星座	11071001	3	1511031047	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_265"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234015	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234016	赏星之旅	旷野赏星	11071001	4	1511031048	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_266"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234016	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234021	学习占星	讨论天相	11071001	3	1511031049	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_267"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234021	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234022	学习占星	调试星仪	11071001	3	1511031050	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_268"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234022	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234023	学习占星	端详罗盘	11071001	3	1511031051	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_269"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234023	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234024	学习占星	绘制星图	11071001	3	1511031052	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_270"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234024	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234025	学习占星	阅读资料	11071001	4	1511031053	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_271"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234025	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234026	学习占星	记录星象	11071001	4	1511031054	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_272"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234026	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234031	制作星礼	星座刺绣	11071001	3	1511031055	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_273"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234031	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234032	制作星礼	制作饼干	11071001	3	1511031056	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_274"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234032	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234033	制作星礼	星火闪烁	11071001	3	1511031057	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_275"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234033	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234034	制作星礼	裁星织月	11071001	4	1511031058	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_276"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234034	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234035	制作星礼	美好友谊	11071001	4	1511031059	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_277"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234035	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234036	制作星礼	赏玩星盒	11071001	4	1511031060	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_278"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234036	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234041	占卜时分	准备卡牌	11071001	3	1511031061	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_279"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234041	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234042	占卜时分	翻开答案	11071001	3	1511031062	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_280"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234042	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234043	占卜时分	深夜奇迹	11071001	4	1511031063	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_281"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234043	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234044	占卜时分	指点迷津	11071001	4	1511031064	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_282"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234044	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234045	占卜时分	一起占卜	11071001	4	1511031065	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_283"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234045	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234046	占卜时分	抽取星卡	11071001	5	1511031066	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_284"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234046	400	10	[{"typ":"vm","id":11151001,"val":5}]
+	11234051	许愿祈福	许下心愿	11071001	3	1511031067	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_285"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234051	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234052	许愿祈福	装满愿望	11071001	4	1511031068	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_286"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234052	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234053	许愿祈福	星愿入瓶	11071001	4	1511031069	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_287"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234053	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234054	许愿祈福	虔诚祝祷	11071001	4	1511031070	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_288"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234054	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234055	许愿祈福	月下祈愿	11071001	4	1511031071	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_289"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234055	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234056	许愿祈福	许愿树下	11071001	5	1511031072	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_290"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234056	400	10	[{"typ":"vm","id":11151001,"val":5}]
+	11234061	探秘星空	发现星座	11071001	3	1511031073	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_291"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234061	100	1	[{"typ":"vm","id":11151001,"val":5}]
+	11234062	探秘星空	星空课堂	11071001	4	1511031074	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_292"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234062	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234063	探秘星空	模拟星系	11071001	4	1511031075	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_293"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234063	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234064	探秘星空	遥指星斗	11071001	4	1511031076	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_294"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234064	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234065	探秘星空	传授知识	11071001	5	1511031077	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_295"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234065	400	10	[{"typ":"vm","id":11151001,"val":5}]
+	11234066	探秘星空	寻星之旅	11071001	5	1511031078	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_296"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234066	400	10	[{"typ":"vm","id":11151001,"val":5}]
+	11234071	观星识器	拆解镜筒	11071001	4	1511031079	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_297"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234071	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234072	观星识器	旋转星盘	11071001	4	1511031080	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_298"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234072	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234073	观星识器	感受时间	11071001	4	1511031081	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_299"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234073	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234074	观星识器	清扫灰尘	11071001	5	1511031082	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_300"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234074	400	10	[{"typ":"vm","id":11151001,"val":5}]
+	11234075	观星识器	钻研星仪	11071001	5	1511031083	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_301"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234075	400	10	[{"typ":"vm","id":11151001,"val":5}]
+	11234076	观星识器	参观模型	11071001	5	1511031084	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_302"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234076	400	10	[{"typ":"vm","id":11151001,"val":5}]
+	11234081	占星集市	发现风铃	11071001	4	1511031085	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_303"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234081	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234082	占星集市	眼前一亮	11071001	4	1511031086	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_304"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234082	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234083	占星集市	共赏星灯	11071001	4	1511031087	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_305"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234083	200	2	[{"typ":"vm","id":11151001,"val":5}]
+	11234084	占星集市	货架上新	11071001	5	1511031088	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_306"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234084	400	10	[{"typ":"vm","id":11151001,"val":5}]
+	11234085	占星集市	介绍新品	11071001	5	1511031089	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_307"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234085	400	10	[{"typ":"vm","id":11151001,"val":5}]
+	11234086	占星集市	一见倾心	11071001	5	1511031090	1511020219	{"typ":"lc","txt":"LC_EVENT_item_card_name_308"}	{"typ":"lc","txt":"LC_ASSET_card_gallary_desc"}	11234086	400	10	[{"typ":"vm","id":11151001,"val":5}]</div>
+</div>
+
+<!-- ==================== 1109 ==================== -->
+<h2>六、1109 CardGallaryStore（11090021–11090023）</h2>
+<div class="card">
+<div class="info">格式完全照搬圣诞 11090011-013，仅 RequirementPurchase 中的活动ID替换为占星节2026新活动ID。</div>
+<table>
+  <tr><th>Id</th><th>GoodsId</th><th>Price</th><th>Limit</th><th>DisplayOrder</th><th>RequirementPurchase</th></tr>
+  <tr><td>11090021</td><td>item <strong>11114017</strong>×1</td><td>rss 11144013×15</td><td>monthly×20</td><td>1008</td><td>绑定 21127355</td></tr>
+  <tr><td>11090022</td><td>item <strong>11114018</strong>×1</td><td>rss 11144013×30</td><td>monthly×15</td><td>1009</td><td>绑定 21127355</td></tr>
+  <tr><td>11090023</td><td>item <strong>11114019</strong>×1</td><td>rss 11144013×150</td><td>monthly×10</td><td>1010</td><td>绑定 21127355</td></tr>
+</table>
+<h3>可粘贴行</h3>
+<button class="copy-btn" onclick="copyEl('rows1109')">复制1109全部3行</button>
+<div class="paste-box" id="rows1109">	11090021	占星节1-2星活动卡包	{"typ":"item","id":11114017,"val":1}	{"typ":"rss","id":11144013,"val":15}	{"limittype":"monthly", "limitcnt":20}	1008	{}	{"op":"and","args":[{"op":"ge","typ":"actvend","id":21127355,"val":1},{"op":"ge","typ":"actvopencnt","id":21127355,"val":1}]}
+	11090022	占星节1-3星活动卡包	{"typ":"item","id":11114018,"val":1}	{"typ":"rss","id":11144013,"val":30}	{"limittype":"monthly", "limitcnt":15}	1009	{}	{"op":"and","args":[{"op":"ge","typ":"actvend","id":21127355,"val":1},{"op":"ge","typ":"actvopencnt","id":21127355,"val":1}]}
+	11090023	占星节2-3星活动卡包	{"typ":"item","id":11114019,"val":1}	{"typ":"rss","id":11144013,"val":150}	{"limittype":"monthly", "limitcnt":10}	1010	{}	{"op":"and","args":[{"op":"ge","typ":"actvend","id":21127355,"val":1},{"op":"ge","typ":"actvopencnt","id":21127355,"val":1}]}</div>
+</div>
+
+<!-- ==================== LC ==================== -->
+<h2>七、本地化 LC Key 汇总</h2>
+<div class="card">
+<table>
+  <tr><th>用途</th><th>LC Key</th><th>中文文案</th></tr>
+  <tr><td>册名</td><td>LC_EVENT_item_card_book_title_3</td><td>占星奇遇</td></tr>
+  <tr><td>G1</td><td>LC_EVENT_item_card_collection_title_26</td><td>占星师的日常</td></tr>
+  <tr><td>G2</td><td>LC_EVENT_item_card_collection_title_27</td><td>赏星之旅</td></tr>
+  <tr><td>G3</td><td>LC_EVENT_item_card_collection_title_28</td><td>学习占星</td></tr>
+  <tr><td>G4</td><td>LC_EVENT_item_card_collection_title_29</td><td>制作星礼</td></tr>
+  <tr><td>G5</td><td>LC_EVENT_item_card_collection_title_30</td><td>占卜时分</td></tr>
+  <tr><td>G6</td><td>LC_EVENT_item_card_collection_title_31</td><td>许愿祈福</td></tr>
+  <tr><td>G7</td><td>LC_EVENT_item_card_collection_title_32</td><td>探秘星空</td></tr>
+  <tr><td>G8</td><td>LC_EVENT_item_card_collection_title_33</td><td>观星识器</td></tr>
+  <tr><td>G9</td><td>LC_EVENT_item_card_collection_title_34</td><td>占星集市</td></tr>
+  <tr><td>卡名</td><td>LC_EVENT_item_card_name_255 ~ _308</td><td>见第五节</td></tr>
+</table>
+</div>
+
+<!-- ==================== 1111 ==================== -->
+<h2>七.5、1111 Item（卡包道具：11114017–11114019）</h2>
+<div class="card">
+<div class="warn">⚠️ DK 1511031091-93 当前指向圣诞卡包图标作为临时占位。待美术提供占星节卡包专属图标后，替换 <code>DKUpload/Icon/DK_151103109x.png</code></div>
+<div class="info">格式参照圣诞 11114014-16。CategoryParam.drop.random_add 改为 <strong>11081003</strong>（占星节册 ID）</div>
+
+<table>
+  <tr><th>Id</th><th>Comment</th><th>DisplayKey</th><th>DisplayQuality</th><th>LcName</th><th>Drop（概率）</th></tr>
+  <tr><td>11114017</td><td>占星节★3-4卡包</td><td><span class="code">1511031091</span> [临时]</td><td>1511010121</td><td>LC_EVENT_item_card_pack_name_12</td><td>★3×9000 + ★4×1000</td></tr>
+  <tr><td>11114018</td><td>占星节★3-5卡包</td><td><span class="code">1511031092</span> [临时]</td><td>1511010121</td><td>LC_EVENT_item_card_pack_name_13</td><td>★3×8000 + ★4×1300 + ★5×200</td></tr>
+  <tr><td>11114019</td><td>占星节★4-5卡包</td><td><span class="code">1511031093</span> [临时]</td><td>1511010122</td><td>LC_EVENT_item_card_pack_name_14</td><td>★4×9500 + ★5×500</td></tr>
+</table>
+
+<h3>可粘贴行</h3>
+<button class="copy-btn" onclick="copyEl('rows1111')">复制1111全部3行</button>
+<div class="paste-box" id="rows1111">	11114017	占星节1-2星活动卡包：大概率开出1星，小概率开出2星	item_asset	0	0	1511031091	1511010121	{}	{"typ":"lc","txt":"LC_EVENT_item_card_pack_name_12"}	{"typ":"lc","txt":"LC_EVENT_item_card_pack_desc_12"}	{}	16	999999	99999	99999	["bag_other","card_pack"]	["bag","card_pack"]	{"drop":{"typ":"single_random","num":1,"args":[{"typ":"cardquality","id":3,"num":1,"random_add":11081003,"wgt":9000},{"typ":"cardquality","id":4,"num":1,"random_add":11081003,"wgt":1000}]}}	-1	0	[]	11740000	3	1511010003	0	0	1
+	11114018	占星节1-3星活动卡包：大概率开出1星，小概率开出2星，极小概率开出3星	item_asset	0	0	1511031092	1511010121	{}	{"typ":"lc","txt":"LC_EVENT_item_card_pack_name_13"}	{"typ":"lc","txt":"LC_EVENT_item_card_pack_desc_13"}	{}	19	999999	99999	99999	["bag_other","card_pack"]	["bag","card_pack"]	{"drop":{"typ":"single_random","num":1,"args":[{"typ":"cardquality","id":3,"num":1,"random_add":11081003,"wgt":8000},{"typ":"cardquality","id":4,"num":1,"random_add":11081003,"wgt":1300},{"typ":"cardquality","id":5,"num":1,"random_add":11081003,"wgt":200}]}}	-1	0	[]	11740000	3	1511010003	0	0	1
+	11114019	占星节2-3星活动卡包：大概率开出2星，小概率开出3星	item_asset	0	0	1511031093	1511010122	{}	{"typ":"lc","txt":"LC_EVENT_item_card_pack_name_14"}	{"typ":"lc","txt":"LC_EVENT_item_card_pack_desc_14"}	{}	36	999999	99999	99999	["bag_other","card_pack"]	["bag","card_pack"]	{"drop":{"typ":"single_random","num":1,"args":[{"typ":"cardquality","id":4,"num":1,"random_add":11081003,"wgt":9500},{"typ":"cardquality","id":5,"num":1,"random_add":11081003,"wgt":500}]}}	-1	0	[]	11740000	4	1511010004	0	0	1</div>
+</div>
+
+<!-- ==================== 待完成 ==================== -->
+<h2>八、待完成 / DK 总览</h2>
+<div class="card">
+<h3>DK 注册汇总</h3>
+<table>
+  <tr><th>DK Key</th><th>类型</th><th>用途</th><th>状态</th></tr>
+  <tr><td>1511031037–1511031090</td><td>Portrait</td><td>54张卡片图标（1123 DisplayKey）</td><td>✅ 已注册，图在 MiniGameCard/</td></tr>
+  <tr><td>1511031091–1511031093</td><td>Icon</td><td>3个卡包图标（1111 DisplayKey）</td><td>⚠️ 已注册，临时指向圣诞图标</td></tr>
+  <tr><td>待分配</td><td>Icon × 9</td><td>9组缩略图（1107 DisplayKey）</td><td>⏳ 等美术提供</td></tr>
+  <tr><td>待分配</td><td>IconBg × 2</td><td>占星节系列底板 未完成/已完成（1107 DK1/DK2）</td><td>⏳ 等美术提供</td></tr>
+  <tr><td>待分配</td><td>Icon/IconBg × 4+1</td><td>册封面图（1108 DK/DK1/DK2/DK3/FX）</td><td>⏳ 等美术提供</td></tr>
+</table>
+
+<h3>表配置状态</h3>
+<table>
+  <tr><th>#</th><th>事项</th><th>状态</th></tr>
+  <tr><td>1</td><td>G7屋顶观星确认</td><td>✅ 已确认：美术无图，6张正确</td></tr>
+  <tr><td>2</td><td>G2补图</td><td>✅ 已补全</td></tr>
+  <tr><td>3</td><td>1123 CardGallary（54行）</td><td>✅ 已写入 GSheet (2026-04-29) CardGallary!A7:N60</td></tr>
+  <tr><td>4</td><td>1109 CardGallaryStore（3行）</td><td>✅ 已写入 GSheet (2026-04-29) CardGallaryStore!A14:I16</td></tr>
+  <tr><td>5</td><td>1111 Item 卡包（3行）</td><td>✅ 已写入 X2 1111 GSheet (2026-04-29) item!A2188:AC2190，DK临时→待美术替换</td></tr>
+  <tr><td>6</td><td>1107 CardGallaryGroup（9行）</td><td>✅ 已写入 GSheet (2026-04-29) CardGallaryGroup!A7:L15</td></tr>
+  <tr><td>7</td><td>1108 CardGallaryBook（1行）</td><td>✅ 已更新 GSheet DK字段 (2026-04-29) E7:H7=1511031105/06/07/08</td></tr>
+  <tr><td>8</td><td>写入本地化文案</td><td>✅ 已写入 EVENT tab rows 7321~7326 (2026-04-29) 全70条LC key就绪</td></tr>
+  <tr><td>9</td><td>活动ID绑定 21127355</td><td>✅ 路线A复用现有活动</td></tr>
+</table>
+</div>
+
+<script>
+function copyEl(id) {
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(() => alert('已复制！'));
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>掉落活动专项回归 — X2 大富翁节（2026-04）</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2d3250;
+    --accent: #6c8cff;
+    --accent2: #ff6c8c;
+    --accent3: #6cffb0;
+    --accent4: #ffc46c;
+    --text: #e8eaf6;
+    --text-muted: #8c91b0;
+    --green: #4caf7d;
+    --red: #e05a5a;
+    --yellow: #f0b429;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ===== HEADER ===== */
+  .page-header {
+    padding: 36px 48px 28px;
+    background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .header-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--accent);
+    background: rgba(108,140,255,0.12); border: 1px solid rgba(108,140,255,0.3);
+    padding: 4px 10px; border-radius: 20px; margin-bottom: 10px;
+  }
+  .page-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+  .page-meta { display: flex; gap: 16px; flex-wrap: wrap; font-size: 11px; color: var(--text-muted); }
+  .page-meta span::before { content: '·'; margin-right: 4px; }
+  .page-meta span:first-child::before { content: ''; margin-right: 0; }
+
+  /* nav pills */
+  .nav-pills {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .nav-pill {
+    font-size: 11px; padding: 5px 14px; border-radius: 20px; cursor: pointer;
+    border: 1px solid var(--border); color: var(--text-muted);
+    background: var(--surface2); transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .nav-pill:hover { border-color: var(--accent); color: var(--accent); }
+  .nav-pill.active {
+    background: rgba(108,140,255,0.15); border-color: var(--accent); color: var(--accent); font-weight: 700;
+  }
+
+  /* ===== SECTIONS ===== */
+  .main { max-width: 1080px; margin: 0 auto; padding: 40px 48px 80px; }
+
+  .section { margin-bottom: 52px; scroll-margin-top: 120px; }
+  .section-anchor { display: block; height: 0; }
+
+  .section-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 20px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .section-title { font-size: 17px; font-weight: 700; }
+  .section-tag {
+    font-size: 10px; padding: 2px 8px; border-radius: 12px; font-weight: 600;
+    margin-left: auto;
+  }
+  .tag-blue { background: rgba(108,140,255,0.2); color: var(--accent); }
+  .tag-green { background: rgba(108,255,176,0.2); color: var(--accent3); }
+  .tag-yellow { background: rgba(255,196,108,0.2); color: var(--accent4); }
+  .tag-red { background: rgba(255,108,140,0.2); color: var(--accent2); }
+  .tag-gray { background: rgba(140,145,176,0.15); color: var(--text-muted); }
+
+  /* ===== KPI GRID ===== */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; margin-bottom: 32px; }
+  .kpi-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px; position: relative; overflow: hidden;
+  }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  }
+  .kpi-card.blue::before { background: var(--accent); }
+  .kpi-card.red::before { background: var(--accent2); }
+  .kpi-card.green::before { background: var(--accent3); }
+  .kpi-card.yellow::before { background: var(--accent4); }
+  .kpi-label { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
+  .kpi-value { font-size: 24px; font-weight: 800; line-height: 1.1; margin-bottom: 4px; }
+  .kpi-value.blue { color: var(--accent); }
+  .kpi-value.red { color: var(--accent2); }
+  .kpi-value.green { color: var(--accent3); }
+  .kpi-value.yellow { color: var(--accent4); }
+  .kpi-sub { font-size: 11px; color: var(--text-muted); }
+
+  /* ===== INSIGHT ===== */
+  .insight {
+    border-radius: 10px; padding: 16px 20px; margin: 12px 0;
+    font-size: 13px; line-height: 1.8; border-left: 3px solid;
+  }
+  .insight.blue { background: rgba(108,140,255,0.07); border-color: var(--accent); }
+  .insight.red { background: rgba(255,108,140,0.07); border-color: var(--accent2); }
+  .insight.green { background: rgba(108,255,176,0.07); border-color: var(--accent3); }
+  .insight.yellow { background: rgba(255,196,108,0.07); border-color: var(--accent4); }
+  .insight-title {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .insight.blue .insight-title { color: var(--accent); }
+  .insight.red .insight-title { color: var(--accent2); }
+  .insight.green .insight-title { color: var(--accent3); }
+  .insight.yellow .insight-title { color: var(--accent4); }
+  .insight p { margin-bottom: 6px; }
+  .insight p:last-child { margin-bottom: 0; }
+  strong { color: var(--accent); }
+
+  /* ===== TABLES ===== */
+  .table-wrap { overflow-x: auto; margin: 12px 0 16px; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: var(--surface2); color: var(--text-muted); font-weight: 600;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px;
+    padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid rgba(45,50,80,0.6); color: var(--text); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .bold { font-weight: 700; }
+  .accent { color: var(--accent); font-weight: 700; }
+  .green-c { color: var(--green); font-weight: 600; }
+  .red-c { color: var(--red); font-weight: 600; }
+  .yellow-c { color: var(--yellow); font-weight: 600; }
+  .muted { color: var(--text-muted); }
+  .center { text-align: center; }
+  .highlight-row td { background: rgba(108,140,255,0.06) !important; }
+  .highlight-row-green td { background: rgba(108,255,176,0.05) !important; }
+  .highlight-row-yellow td { background: rgba(255,196,108,0.05) !important; }
+  .highlight-row-red td { background: rgba(255,108,140,0.05) !important; }
+
+  /* ===== BADGE ===== */
+  .badge {
+    display: inline-block; font-size: 10px; padding: 2px 7px;
+    border-radius: 4px; font-weight: 700; vertical-align: middle;
+  }
+  .badge.new { background: rgba(108,255,176,0.2); color: var(--accent3); }
+  .badge.warn { background: rgba(255,196,108,0.2); color: var(--accent4); }
+  .badge.danger { background: rgba(255,108,140,0.2); color: var(--accent2); }
+  .badge.info { background: rgba(108,140,255,0.2); color: var(--accent); }
+  .badge.gray { background: rgba(140,145,176,0.15); color: var(--text-muted); }
+
+  /* ===== COMPARISON CARD ===== */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+  .compare-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .compare-card-title { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .compare-metric { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .compare-label { font-size: 12px; color: var(--text-muted); }
+  .compare-value { font-size: 14px; font-weight: 700; }
+
+  /* ===== BAR CHART ===== */
+  .bar-chart { margin: 16px 0; }
+  .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .bar-label { width: 120px; font-size: 12px; color: var(--text-muted); text-align: right; flex-shrink: 0; }
+  .bar-label.wide { width: 160px; }
+  .bar-track { flex: 1; background: var(--surface2); border-radius: 4px; height: 20px; position: relative; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 8px; min-width: 30px; transition: width 0.6s ease; }
+  .bar-text { font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap; }
+  .bar-amount { width: 70px; font-size: 12px; font-weight: 700; text-align: right; flex-shrink: 0; }
+
+  /* ===== FLOW DIAGRAM ===== */
+  .flow { display: flex; flex-direction: column; gap: 0; margin: 16px 0; }
+  .flow-node {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 16px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 8px; position: relative;
+  }
+  .flow-connector {
+    width: 2px; height: 16px; background: var(--border);
+    margin: 0 24px; flex-shrink: 0; align-self: center;
+  }
+  .flow-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .flow-content { flex: 1; }
+  .flow-title { font-size: 13px; font-weight: 600; }
+  .flow-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .flow-value { font-size: 14px; font-weight: 800; flex-shrink: 0; }
+
+  /* ===== TIMELINE ===== */
+  .timeline { position: relative; margin: 16px 0; }
+  .timeline-row {
+    display: flex; gap: 14px; margin-bottom: 8px;
+    padding: 10px 14px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 8px;
+    align-items: center;
+  }
+  .timeline-server { font-size: 12px; font-weight: 700; width: 80px; flex-shrink: 0; }
+  .timeline-bar-wrap { flex: 1; position: relative; height: 24px; }
+  .timeline-track { position: absolute; top: 10px; left: 0; right: 0; height: 2px; background: var(--surface2); border-radius: 1px; }
+  .timeline-block {
+    position: absolute; top: 4px; height: 16px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: #fff; white-space: nowrap;
+  }
+  .timeline-day { font-size: 10px; color: var(--text-muted); width: 60px; text-align: right; flex-shrink: 0; }
+
+  /* ===== SPLIT BOX ===== */
+  .split-box { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+  .box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+  }
+  .box-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 12px; }
+  .box-metric { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
+  .box-metric:last-child { margin-bottom: 0; }
+  .box-key { color: var(--text-muted); }
+  .box-val { font-weight: 700; }
+
+  /* ===== DIVIDER ===== */
+  hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+  p { margin-bottom: 10px; color: var(--text); font-size: 13px; line-height: 1.8; }
+  .text-muted { color: var(--text-muted); font-size: 12px; }
+  .mb-8 { margin-bottom: 8px; }
+  .mb-16 { margin-bottom: 16px; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="header-top">
+    <div>
+      <div class="header-badge">💧 掉落活动专项回归</div>
+      <div class="page-title">X2 大富翁节 · 掉落活动深度分析</div>
+      <div class="page-meta">
+        <span>2026-04-21</span>
+        <span>5服全量：1006702 / 802 / 902 / 1007002 / 102</span>
+        <span>历史对比：1002802 / 1003002（211200083）</span>
+        <span>BP 子报告</span>
+      </div>
+    </div>
+  </div>
+  <nav class="nav-pills">
+    <div class="nav-pill active" onclick="scrollTo('s0', this)">📋 背景</div>
+    <div class="nav-pill" onclick="scrollTo('s1', this)">🎯 结论1 · 参与深度</div>
+    <div class="nav-pill" onclick="scrollTo('s2', this)">📈 结论2 · 产出侧</div>
+    <div class="nav-pill" onclick="scrollTo('s3', this)">💰 结论3 · 付费协同</div>
+    <div class="nav-pill" onclick="scrollTo('s4', this)">🔢 参与率数据</div>
+    <div class="nav-pill" onclick="scrollTo('s5', this)">📦 人均产出</div>
+    <div class="nav-pill" onclick="scrollTo('s6', this)">⚔️ 战斗基数</div>
+    <div class="nav-pill" onclick="scrollTo('s7', this)">💊 BP 影响</div>
+    <div class="nav-pill" onclick="scrollTo('s8', this)">🧾 付费结构</div>
+  </nav>
+</div>
+
+<div class="main">
+
+  <!-- KPI ROW -->
+  <div class="kpi-grid" style="margin-top:32px">
+    <div class="kpi-card blue">
+      <div class="kpi-label">产出较历史基准</div>
+      <div class="kpi-value blue">6-8×</div>
+      <div class="kpi-sub">人均 ~8 → 42~64 个</div>
+    </div>
+    <div class="kpi-card yellow">
+      <div class="kpi-label">PVE drop触发率提升</div>
+      <div class="kpi-value yellow">2-3×</div>
+      <div class="kpi-sub">7.3% → 14.6~22.7%/战</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">GVE掉落（新增渠道）</div>
+      <div class="kpi-value green">~570个</div>
+      <div class="kpi-sub">占总产出约 23%</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">掉落参与者付费率</div>
+      <div class="kpi-value red">27-44%</div>
+      <div class="kpi-sub">全服付费率 3-6×</div>
+    </div>
+    <div class="kpi-card blue">
+      <div class="kpi-label">PVE 战斗次数增幅</div>
+      <div class="kpi-value blue">1.6×</div>
+      <div class="kpi-sub">44次 → 69次/人</div>
+    </div>
+    <div class="kpi-card yellow">
+      <div class="kpi-label">BP均值（参与 vs 未参与）</div>
+      <div class="kpi-value yellow">5×</div>
+      <div class="kpi-sub">186 vs 37（1006802）</div>
+    </div>
+  </div>
+
+  <!-- S0: 背景 -->
+  <div class="section" id="s0">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(108,140,255,0.15)">📋</div>
+      <div class="section-title">活动背景与时间轴</div>
+      <span class="section-tag tag-gray">背景</span>
+    </div>
+
+    <p>211200083（夏日节2025-掉落新服）是按新服开服顺序滚动投放的标准新服掉落活动，各服均在开服第 25-35 天触发。<strong>大富翁节替代了本批新服（1006702-1007102）的首个节日掉落槽位</strong>，211200083 紧随其后接续上线。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>服务器</th><th>开服日</th><th>大富翁节（11119453）</th><th>接续上线（211200083）</th><th class="num">开服天数</th><th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row"><td class="bold">1006702</td><td class="muted">~03-12</td><td>04-07~04-12（6天）</td><td>04-12~04-14</td><td class="num">第 26~31 天</td><td></td></tr>
+          <tr class="highlight-row"><td class="bold">1006802</td><td class="muted">~03-15</td><td>04-09~04-15（7天）</td><td>04-15~04-20</td><td class="num">第 25~31 天</td><td></td></tr>
+          <tr class="highlight-row"><td class="bold">1006902</td><td class="muted">~03-19</td><td>04-13~04-19（7天）</td><td>04-19~04-21</td><td class="num">第 25~31 天</td><td></td></tr>
+          <tr class="highlight-row"><td class="bold">1007002</td><td class="muted">~03-22</td><td>04-17~04-21（5天）</td><td>—</td><td class="num">第 26~30 天</td><td class="muted">截至04-21</td></tr>
+          <tr class="highlight-row"><td class="bold">1007102</td><td class="muted">~03-26</td><td>04-19~04-21（3天）</td><td>—</td><td class="num">第 24~26 天</td><td class="muted">截至04-21</td></tr>
+          <tr><td class="muted">1002802（参照）</td><td class="muted">~09-08</td><td class="muted">—</td><td class="muted">10-05~10-11（7天）</td><td class="num muted">第 27~33 天</td><td><span class="badge gray">历史基准</span></td></tr>
+          <tr><td class="muted">1003002（参照）</td><td class="muted">~09-22</td><td class="muted">—</td><td class="muted">10-19~10-25（7天）</td><td class="num muted">第 27~33 天</td><td><span class="badge gray">历史基准</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- reason_id 构成 -->
+    <p class="mb-8" style="margin-top:20px;"><strong>BP 道具（11119453）来源分布（5 服合计）：</strong></p>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <div class="bar-label">event_task</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:70%;background:rgba(108,140,255,0.6)">
+            <span class="bar-text">4,541 行 · 任务渠道</span>
+          </div>
+        </div>
+        <div class="bar-amount accent">4,541</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">july_gacha_2024</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:18%;background:rgba(255,196,108,0.6)">
+            <span class="bar-text">1,195</span>
+          </div>
+        </div>
+        <div class="bar-amount yellow-c">1,195</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label bold" style="color:var(--accent3)">activity_exchange</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:11%;background:rgba(108,255,176,0.6)">
+            <span class="bar-text">698 · 本次分析目标</span>
+          </div>
+        </div>
+        <div class="bar-amount green-c">698</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">其他</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:1%;background:rgba(140,145,176,0.4)">
+          </div>
+        </div>
+        <div class="bar-amount muted">45</div>
+      </div>
+    </div>
+
+    <div class="split-box">
+      <div class="box">
+        <div class="box-title">PVE 掉落（211201003）</div>
+        <div class="box-metric"><span class="box-key">活动记录数</span><span class="box-val">672</span></div>
+        <div class="box-metric"><span class="box-key">占比</span><span class="box-val green-c">96.3%</span></div>
+        <div class="box-metric"><span class="box-key">总道具</span><span class="box-val accent">2,493</span></div>
+        <div class="box-metric"><span class="box-key">参与人数</span><span class="box-val">57</span></div>
+      </div>
+      <div class="box">
+        <div class="box-title">GVE 掉落（21127225）<span class="badge new" style="margin-left:6px">新渠道</span></div>
+        <div class="box-metric"><span class="box-key">活动记录数</span><span class="box-val">26</span></div>
+        <div class="box-metric"><span class="box-key">占比</span><span class="box-val muted">3.7%</span></div>
+        <div class="box-metric"><span class="box-key">总道具</span><span class="box-val accent">570</span></div>
+        <div class="box-metric"><span class="box-key">参与人数</span><span class="box-val">13</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S1: 结论1 参与深度 -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(108,140,255,0.15)">🎯</div>
+      <div class="section-title">结论 1 · 参与深度——触达核心打野层，参与率与历史基准持平</div>
+      <span class="section-tag tag-blue">参与率</span>
+    </div>
+
+    <div class="insight blue">
+      <div class="insight-title">🤖 数据层</div>
+      <p>5 服参与率 5.6~16.1%，历史同类型新服基准（211200083）6.5~7.7%，整体相近。</p>
+      <p>1006902 参与率偏低（6.4%）根因是 <strong>PVE 渗透率仅 14.8%</strong>（1006802 为 31.0%），并非掉落活动本身问题。掉落参与者 100% 有 PVE 行为，未出现零战斗的 drop 用户。</p>
+    </div>
+    <div class="insight yellow">
+      <div class="insight-title">👤 判断层</div>
+      <p>活动没有拉动新玩家进入，触达的仍是<strong>本来就在打野的核心活跃层</strong>。1006902 低参与率是该服 PVE 基础活跃偏低的结果，与掉落设计无关。</p>
+    </div>
+    <div class="insight green">
+      <div class="insight-title">🔧 修改建议</div>
+      <p>关注各服 PVE 渗透率，掉落参与天花板由打野行为决定。若要提升参与广度，<strong>入口在 PVE 活跃引导，不在掉落本身</strong>。</p>
+    </div>
+
+    <!-- PVE 渗透率对比 -->
+    <p style="margin-top:20px;" class="mb-8"><strong>PVE 渗透率 vs 掉落参与率（1006802 vs 1006902）：</strong></p>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <div class="compare-card-title">1006802</div>
+        <div class="compare-metric"><span class="compare-label">活跃人数</span><span class="compare-value">248</span></div>
+        <div class="compare-metric"><span class="compare-label">PVE 玩家</span><span class="compare-value">77</span></div>
+        <div class="compare-metric"><span class="compare-label">PVE 渗透率</span><span class="compare-value green-c">31.0%</span></div>
+        <div class="compare-metric"><span class="compare-label">掉落参与</span><span class="compare-value">40</span></div>
+        <div class="compare-metric"><span class="compare-label">掉落参与率</span><span class="compare-value accent">16.1%</span></div>
+        <div class="compare-metric"><span class="compare-label">PVE→drop转化</span><span class="compare-value">51.9%</span></div>
+        <div class="compare-metric"><span class="compare-label">无PVE的drop用户</span><span class="compare-value green-c">0</span></div>
+      </div>
+      <div class="compare-card">
+        <div class="compare-card-title">1006902</div>
+        <div class="compare-metric"><span class="compare-label">活跃人数</span><span class="compare-value">283</span></div>
+        <div class="compare-metric"><span class="compare-label">PVE 玩家</span><span class="compare-value">42</span></div>
+        <div class="compare-metric"><span class="compare-label">PVE 渗透率</span><span class="compare-value red-c">14.8%</span></div>
+        <div class="compare-metric"><span class="compare-label">掉落参与</span><span class="compare-value">18</span></div>
+        <div class="compare-metric"><span class="compare-label">掉落参与率</span><span class="compare-value yellow-c">6.4%</span></div>
+        <div class="compare-metric"><span class="compare-label">PVE→drop转化</span><span class="compare-value">42.9%</span></div>
+        <div class="compare-metric"><span class="compare-label">无PVE的drop用户</span><span class="compare-value green-c">0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S2: 结论2 产出侧 -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(108,255,176,0.15)">📈</div>
+      <div class="section-title">结论 2 · 产出侧——新增付费点使掉落产出 6-8× 高于历史</div>
+      <span class="section-tag tag-green">产出分析</span>
+    </div>
+
+    <div class="insight green">
+      <div class="insight-title">🤖 数据层</div>
+      <p>大富翁节人均产出 42~64 个，历史 211200083 基准约 8 个，<strong>差距 6~8×</strong>。</p>
+      <p>四大来源拆解：<br>
+        ① PVE 战斗次数多了 <strong>1.6×</strong>（新服 69 次/人 vs 老服 44 次/人）<br>
+        ② PVE drop 触发率高了 <strong>2~3×</strong>（14.6~22.7% vs 7.2~7.3%/战）<br>
+        ③ 次均道具高了 <strong>1.7×</strong>（3.94~4.71 vs ~2.5）<br>
+        ④ GVE 掉落（21127225）是<span class="badge new" style="margin-left:4px">全新渠道</span>，老服有 GVE 战斗但完全无 GVE drop，新服 GVE 贡献约 570 个道具（占总量 ~23%）
+      </p>
+    </div>
+    <div class="insight yellow">
+      <div class="insight-title">👤 判断层</div>
+      <p>新增了付费点，提高了 PVE/GVE 行为的付费深度。<strong>战斗次数增加和触发率提升是付费驱动的结果</strong>，而不是玩家自然行为的变化；GVE 掉落的新增是对高活跃付费玩家的专属加深。</p>
+    </div>
+
+    <!-- 产出差距分解 -->
+    <p style="margin-top:20px;" class="mb-8"><strong>产出差距分解（历史基准 vs 大富翁节）：</strong></p>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <div class="bar-label wide">历史基准 人均</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:12%;background:rgba(140,145,176,0.4)">
+            <span class="bar-text">~8 个</span>
+          </div>
+        </div>
+        <div class="bar-amount muted">~8 个</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label wide">1006702 人均</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:64%;background:rgba(108,140,255,0.5)">
+            <span class="bar-text">41.2 个</span>
+          </div>
+        </div>
+        <div class="bar-amount accent">41.2</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label wide">1006802 人均</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:75%;background:rgba(108,140,255,0.6)">
+            <span class="bar-text">47.9 个</span>
+          </div>
+        </div>
+        <div class="bar-amount accent">47.9</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label wide" style="color:var(--accent3)">1006902 人均（最高）</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:100%;background:rgba(108,255,176,0.6)">
+            <span class="bar-text">63.8 个</span>
+          </div>
+        </div>
+        <div class="bar-amount green-c">63.8</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label wide" style="color:var(--red)">设计目标 人均</div>
+        <div class="bar-track" style="border:1px dashed var(--accent2)">
+          <div class="bar-fill" style="width:100%;background:rgba(255,108,140,0.15)">
+            <span class="bar-text" style="color:var(--accent2)">180 个（仍差 ~3×）</span>
+          </div>
+        </div>
+        <div class="bar-amount red-c">180</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S3: 结论3 付费协同 -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(255,196,108,0.15)">💰</div>
+      <div class="section-title">结论 3 · 付费协同——中层付费渠道，非大R消费焦点</div>
+      <span class="section-tag tag-yellow">付费</span>
+    </div>
+
+    <div class="insight yellow">
+      <div class="insight-title">🤖 数据层</div>
+      <p>5 服掉落参与者付费率 <strong>27~44%</strong>（剔除 1007102 小样本），全服付费率 5~10%，<strong>倍数 3~6×</strong>。</p>
+      <p>ARPPU 对比：掉落参与者 ~$17-22（订阅型小额礼包）；其他付费用户 ~$87-117（大额单次型），<strong>约为掉落参与者的 5~7×</strong>。</p>
+    </div>
+    <div class="insight blue">
+      <div class="insight-title">👤 判断层</div>
+      <p>掉落活动是<strong>付费玩家的深度参与渠道</strong>，不是拉新或广普渠道。高转化率说明付费玩家积极参与，但 ARPPU 差距说明真正的大 R 消费焦点不在掉落活动本身——<strong>掉落转化的是中层付费用户</strong>。</p>
+    </div>
+  </div>
+
+  <!-- S4: 参与率数据 -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(108,140,255,0.15)">🔢</div>
+      <div class="section-title">参与率详细数据</div>
+      <span class="section-tag tag-blue">数据详情 §2</span>
+    </div>
+
+    <p class="mb-8"><strong>大富翁节（当期）：</strong></p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>服务器</th><th>活动期</th><th class="num">活跃人数</th><th class="num">掉落参与</th><th class="num">参与率</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="bold">1006702</td><td>04-07~04-12</td><td class="num">199</td><td class="num bold">24</td><td class="num accent bold">12.1%</td></tr>
+          <tr class="highlight-row-green"><td class="bold">1006802</td><td>04-09~04-15</td><td class="num">248</td><td class="num bold">40</td><td class="num green-c bold">16.1%</td></tr>
+          <tr class="highlight-row-red"><td class="bold">1006902</td><td>04-13~04-19</td><td class="num">283</td><td class="num bold">18</td><td class="num red-c bold">6.4% ⚠️</td></tr>
+          <tr><td class="bold">1007002</td><td>04-17~04-21</td><td class="num">128</td><td class="num bold">15</td><td class="num accent bold">11.7%</td></tr>
+          <tr><td class="bold">1007102</td><td>04-19~04-21</td><td class="num">179</td><td class="num bold">10</td><td class="num yellow-c bold">5.6%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="mb-8" style="margin-top:20px;"><strong>历史对比（211200083 同类型小体量新服）：</strong></p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>服务器</th><th>活动期</th><th class="num">活跃人数</th><th class="num">掉落参与</th><th class="num">参与率</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">1002802</td><td class="muted">10-05~10-11（7天）</td><td class="num muted">495</td><td class="num muted">32</td><td class="num muted">6.5%</td></tr>
+          <tr><td class="muted">1003002</td><td class="muted">10-19~10-25（7天）</td><td class="num muted">492</td><td class="num muted">38</td><td class="num muted">7.7%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-muted">历史基准区间 6.5~7.7%，大富翁节 5 服中 3 服高于基准，1006902 偏低系 PVE 活跃问题。</p>
+  </div>
+
+  <!-- S5: 人均产出 -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(108,255,176,0.15)">📦</div>
+      <div class="section-title">人均产出 & 掉落分布</div>
+      <span class="section-tag tag-green">数据详情 §4-5</span>
+    </div>
+
+    <p class="mb-8"><strong>大富翁节（当期，参与者口径）：</strong></p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>服务器</th><th class="num">参与</th><th class="num">总道具</th><th class="num">均值</th><th class="num">P50</th><th class="num">P25</th><th class="num">P75</th><th class="num">次均道具</th><th class="num">人均触发</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1006702</td><td class="num">24</td><td class="num">989</td><td class="num bold">41.2</td><td class="num">24</td><td class="num muted">3</td><td class="num">72</td><td class="num muted">—</td><td class="num muted">—</td></tr>
+          <tr class="highlight-row"><td>1006802</td><td class="num">40</td><td class="num">1,914</td><td class="num accent bold">47.9</td><td class="num">17</td><td class="num muted">2</td><td class="num">95</td><td class="num bold">4.71</td><td class="num bold">10.2次</td></tr>
+          <tr class="highlight-row"><td>1006902</td><td class="num">18</td><td class="num">1,149</td><td class="num green-c bold">63.8</td><td class="num">58</td><td class="num muted">7</td><td class="num">112</td><td class="num bold">3.94</td><td class="num bold">16.2次</td></tr>
+          <tr><td>1007002</td><td class="num">15</td><td class="num muted">—</td><td class="num muted">—</td><td class="num muted">—</td><td class="num muted">—</td><td class="num muted">—</td><td class="num muted">—</td><td class="num muted">—</td></tr>
+          <tr style="background:var(--surface2)"><td class="bold">合计/均值</td><td class="num bold">82</td><td class="num bold">4,052</td><td class="num accent bold">~49</td><td class="num muted">—</td><td class="num muted">—</td><td class="num muted">—</td><td class="num muted">—</td><td class="num muted">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="mb-8" style="margin-top:20px;"><strong>历史基准 vs 大富翁节对比：</strong></p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>指标</th><th class="num">老掉落基准</th><th class="num">1006802（本期）</th><th class="num">1006902（本期）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>人均道具</td><td class="num muted">6~10（中位 ~8）</td><td class="num accent bold">47.9</td><td class="num green-c bold">63.8</td></tr>
+          <tr><td>次均道具</td><td class="num muted">2.1~2.9</td><td class="num bold">4.71</td><td class="num bold">3.94</td></tr>
+          <tr><td>人均触发次数</td><td class="num muted">2.9~3.5</td><td class="num bold">10.2</td><td class="num bold">16.2</td></tr>
+          <tr class="highlight-row-yellow"><td class="bold yellow-c">设计目标</td><td class="num muted">—</td><td class="num yellow-c bold" colspan="2">人均 180 道具（仍差约 3×）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <p class="mb-8"><strong>结算机制（5 服合计）：</strong></p>
+    <div class="split-box">
+      <div class="box">
+        <div class="box-title">PVE 掉落（211201003）</div>
+        <div class="box-metric"><span class="box-key">每次结算均值</span><span class="box-val">3.7 个/次</span></div>
+        <div class="box-metric"><span class="box-key">常见档位</span><span class="box-val">1个（占68%）</span></div>
+        <div class="box-metric"><span class="box-key">极端值</span><span class="box-val muted">198（疑暴击批量）</span></div>
+      </div>
+      <div class="box">
+        <div class="box-title">GVE 掉落（21127225）<span class="badge new" style="margin-left:4px">新渠道</span></div>
+        <div class="box-metric"><span class="box-key">每次结算均值</span><span class="box-val green-c">21.9 个/次（约 6× PVE）</span></div>
+        <div class="box-metric"><span class="box-key">常见档位</span><span class="box-val">整十档（10/20/30/40/50）</span></div>
+        <div class="box-metric"><span class="box-key">结算方式</span><span class="box-val muted">批量结算</span></div>
+      </div>
+    </div>
+
+    <p class="mb-8" style="margin-top:20px;"><strong>分服 GVE 产出（大富翁节新增渠道，无历史对照）：</strong></p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>服务器</th><th class="num">参与人数</th><th class="num">avg/次</th><th class="num">人均触发</th><th class="num">人均道具</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1006702</td><td class="num">5</td><td class="num">21.67</td><td class="num">1.2次</td><td class="num bold">26.0</td></tr>
+          <tr><td>1006802</td><td class="num">9</td><td class="num">20.0</td><td class="num">1.8次</td><td class="num bold">35.6</td></tr>
+          <tr><td>1006902</td><td class="num">4</td><td class="num">25.0</td><td class="num">2.5次</td><td class="num green-c bold">62.5</td></tr>
+          <tr><td>1007002</td><td class="num">2</td><td class="num">36.67</td><td class="num">1.5次</td><td class="num bold">55.0</td></tr>
+          <tr><td>1007102</td><td class="num">5</td><td class="num">31.25</td><td class="num">1.6次</td><td class="num bold">50.0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- S6: 战斗基数 -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(255,108,140,0.15)">⚔️</div>
+      <div class="section-title">战斗行为基数对比</div>
+      <span class="section-tag tag-red">数据详情 §6</span>
+    </div>
+
+    <p class="mb-8"><strong>PVE（battle_type=2）前后对比：</strong></p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>服务器</th><th>时期</th><th class="num">PVE战斗用户</th><th class="num">人均战斗</th><th class="num">drop触发/人</th><th class="num">drop触发率/战</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">1002802</td><td class="muted">老（211200083）</td><td class="num muted">107</td><td class="num muted">42.5次</td><td class="num muted">3.1</td><td class="num muted">7.3%</td></tr>
+          <tr><td class="muted">1003002</td><td class="muted">老（211200083）</td><td class="num muted">125</td><td class="num muted">44.5次</td><td class="num muted">3.2</td><td class="num muted">7.2%</td></tr>
+          <tr class="highlight-row"><td class="bold">1006802</td><td>大富翁节（新）</td><td class="num bold">83</td><td class="num bold">68.6次</td><td class="num bold">10.0</td><td class="num accent bold">14.6% ↑2×</td></tr>
+          <tr class="highlight-row"><td class="bold">1006902</td><td>大富翁节（新）</td><td class="num bold">52</td><td class="num bold">69.2次</td><td class="num bold">15.7</td><td class="num green-c bold">22.7% ↑3×</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="mb-8" style="margin-top:20px;"><strong>GVE（battle_type=3）对比——老服有战斗但无掉落：</strong></p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>服务器</th><th>时期</th><th class="num">GVE战斗用户</th><th class="num">人均战斗</th><th class="num">GVE drop/人</th><th>GVE 掉落</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="muted">1002802</td><td class="muted">老掉落</td><td class="num muted">34</td><td class="num muted">21.8次</td><td class="num muted">0</td><td><span class="badge danger">❌ 无</span></td></tr>
+          <tr><td class="muted">1003002</td><td class="muted">老掉落</td><td class="num muted">68</td><td class="num muted">27.7次</td><td class="num muted">0</td><td><span class="badge danger">❌ 无</span></td></tr>
+          <tr class="highlight-row-green"><td class="bold">1006802</td><td>大富翁节</td><td class="num bold">47</td><td class="num bold">43.6次</td><td class="num bold">1.8</td><td><span class="badge new">✅ 新增</span></td></tr>
+          <tr class="highlight-row-green"><td class="bold">1006902</td><td>大富翁节</td><td class="num bold">21</td><td class="num bold">45.4次</td><td class="num bold">2.5</td><td><span class="badge new">✅ 新增</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="insight green">
+      <div class="insight-title">📌 产出差距分解</div>
+      <p>战斗行为本身多了（PVE 69次 vs 44次，约 <strong>1.6×</strong>）× drop 触发率提升（7.3%→14.6~22.7%，约 <strong>2~3×</strong>）× 次均道具提升（约 <strong>1.7×</strong>）+ GVE 新渠道（约 <strong>23%</strong>）= 总产出 <strong>6~8×</strong> 跃升。</p>
+    </div>
+  </div>
+
+  <!-- S7: BP 影响 -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(255,196,108,0.15)">💊</div>
+      <div class="section-title">掉落活动对 BP 等级的影响</div>
+      <span class="section-tag tag-yellow">数据详情 §8</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>分组</th><th>服务器</th><th class="num">人数</th><th class="num">全渠道BP均值</th><th class="num">P50</th></tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row-green"><td class="bold green-c">参与掉落</td><td>1006802</td><td class="num">40</td><td class="num green-c bold">186.4</td><td class="num">139</td></tr>
+          <tr><td class="muted">未参与掉落</td><td>1006802</td><td class="num">40</td><td class="num muted">36.6</td><td class="num muted">27</td></tr>
+          <tr class="highlight-row-green"><td class="bold green-c">参与掉落</td><td>1006902</td><td class="num">18</td><td class="num green-c bold">259.3</td><td class="num">237</td></tr>
+          <tr><td class="muted">未参与掉落</td><td>1006902</td><td class="num">21</td><td class="num muted">49.0</td><td class="num muted">35</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="insight blue">
+      <div class="insight-title">💡 关键对比</div>
+      <p>参与掉落 vs 未参与，全渠道 BP 累计差距约 <strong>5×</strong>（186 vs 37 / 259 vs 49）。BP 满级约需 411 道具，参与掉落的玩家显著更接近满级，但仍未达到设计门槛。</p>
+    </div>
+
+    <!-- GVE 参与结构 -->
+    <p style="margin-top:20px;" class="mb-8"><strong>GVE 参与结构：</strong></p>
+    <div class="split-box">
+      <div class="box">
+        <div class="box-title">GVE 战斗用户（battle_type=3）</div>
+        <div class="box-metric"><span class="box-key">两服合计</span><span class="box-val">75</span></div>
+        <div class="box-metric"><span class="box-key">有 GVE drop 的</span><span class="box-val green-c">13（17.3%）</span></div>
+        <div class="box-metric"><span class="box-key">vs PVE 中 drop 率</span><span class="box-val muted">43~52%</span></div>
+        <div class="box-metric"><span class="box-key">链路完整率</span><span class="box-val green-c">100%</span></div>
+      </div>
+      <div class="box">
+        <div class="box-title">未收到 GVE drop 的原因（62人）</div>
+        <div class="box-metric"><span class="box-key">主城等级超范围</span><span class="box-val muted">3-17级限制</span></div>
+        <div class="box-metric"><span class="box-key">活动窗口外参与</span><span class="box-val muted">时间范围外</span></div>
+        <div class="box-metric"><span class="box-key">概率0结果</span><span class="box-val muted">正常随机结果</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S8: 付费结构 -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(255,196,108,0.15)">🧾</div>
+      <div class="section-title">付费协同详细数据</div>
+      <span class="section-tag tag-yellow">数据详情 §9-10</span>
+    </div>
+
+    <p class="mb-8"><strong>掉落参与者付费率（当期 5 服）：</strong></p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>服务器</th><th class="num">掉落参与</th><th class="num">付费参与</th><th class="num">掉落付费率</th><th class="num">全服付费</th><th class="num">全服活跃</th><th class="num">全服付费率</th><th class="num">倍数</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1006702</td><td class="num">24</td><td class="num">8</td><td class="num bold">33.3%</td><td class="num muted">11</td><td class="num muted">199</td><td class="num muted">5.5%</td><td class="num accent bold">6.0×</td></tr>
+          <tr><td>1006802</td><td class="num">40</td><td class="num">11</td><td class="num bold">27.5%</td><td class="num muted">20</td><td class="num muted">249</td><td class="num muted">8.0%</td><td class="num accent bold">3.4×</td></tr>
+          <tr><td>1006902</td><td class="num">18</td><td class="num">8</td><td class="num bold">44.4%</td><td class="num muted">15</td><td class="num muted">215</td><td class="num muted">7.0%</td><td class="num accent bold">6.4×</td></tr>
+          <tr><td>1007002</td><td class="num">15</td><td class="num">4</td><td class="num bold">26.7%</td><td class="num muted">6</td><td class="num muted">128</td><td class="num muted">4.7%</td><td class="num accent bold">5.7×</td></tr>
+          <tr><td>1007102 <span class="badge warn">小样本</span></td><td class="num">10</td><td class="num">6</td><td class="num yellow-c bold">60.0%*</td><td class="num muted">18</td><td class="num muted">179</td><td class="num muted">10.1%</td><td class="num accent bold">6.0×</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="mb-8" style="margin-top:20px;"><strong>礼包付费结构——掉落参与者 vs 其他付费用户：</strong></p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>服务器</th><th>分组</th><th class="num">付费人数</th><th class="num">估算总收入</th><th class="num">ARPPU</th><th>Top 3 礼包类型</th></tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row"><td>1006802</td><td class="bold green-c">掉落参与者</td><td class="num">11</td><td class="num">~$190</td><td class="num green-c bold">~$17</td><td class="muted">normal($71)、time_card($45)、scene($34)</td></tr>
+          <tr><td>1006802</td><td class="muted">其他付费用户</td><td class="num muted">9</td><td class="num muted">$1,053+</td><td class="num accent bold">~$117</td><td class="muted">normal($577)、vip($190)、mecha_first($160)</td></tr>
+          <tr class="highlight-row"><td>1006902</td><td class="bold green-c">掉落参与者</td><td class="num">8</td><td class="num">~$176</td><td class="num green-c bold">~$22</td><td class="muted">normal($76)、mecha_first($50)、time_card($30)</td></tr>
+          <tr><td>1006902</td><td class="muted">其他付费用户</td><td class="num muted">7</td><td class="num muted">$612+</td><td class="num accent bold">~$87</td><td class="muted">normal($404)、battle_pass($158)、fes_weekly($50)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="insight yellow">
+      <div class="insight-title">🔑 关键发现</div>
+      <p>掉落参与者 ARPPU 约为其他付费用户的 <strong>1/5~1/7</strong>（$17-22 vs $87-117）。</p>
+      <p>掉落参与者：<strong>订阅型消费</strong>（normal、time_card 为主）；其他付费用户：<strong>大额单次型</strong>（vip、mecha_first、fes_weekly）。</p>
+      <p>掉落活动触达的是<strong>中层付费用户</strong>，大 R 的消费渠道在 vip/mecha 等高单价品类。</p>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:24px 0;color:var(--text-muted);font-size:11px;border-top:1px solid var(--border);">
+    报告生成：Claude Code · 2026-04-21 &nbsp;|&nbsp; 数据来源：TRINO_HF · iceberg.v1089
+  </div>
+
+</div>
+
+<script>
+function scrollTo(id, el) {
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

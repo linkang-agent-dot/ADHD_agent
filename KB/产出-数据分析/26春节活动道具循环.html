@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>26春节活动 - 道具循环</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #e8e8e8;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 16px;
+            background: linear-gradient(90deg, #f5af19, #f12711);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        /* 核心道具卡片 */
+        .core-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .core-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .core-item .icon { font-size: 2.5rem; margin-bottom: 8px; }
+        .core-item .name { font-size: 1.1rem; font-weight: 600; color: #fff; }
+        .core-item .id { font-size: 0.8rem; color: #888; font-family: monospace; }
+        .core-item .usage { font-size: 0.85rem; color: #feca57; margin-top: 8px; }
+
+        /* 流程图 */
+        .flow-section {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .flow-title {
+            font-size: 1.4rem;
+            color: #feca57;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .flow-title .badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* 循环流程 */
+        .cycle-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .flow-node {
+            background: rgba(102,126,234,0.2);
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 16px 20px;
+            text-align: center;
+            min-width: 140px;
+        }
+        .flow-node.source { border-color: #2ecc71; background: rgba(46,204,113,0.15); }
+        .flow-node.consume { border-color: #e74c3c; background: rgba(231,76,60,0.15); }
+        .flow-node.reward { border-color: #f39c12; background: rgba(243,156,18,0.15); }
+        .flow-node .label { font-size: 0.75rem; color: #888; margin-bottom: 4px; }
+        .flow-node .value { font-size: 1rem; font-weight: 600; }
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+
+        /* 详细表格 */
+        .detail-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .detail-table th, .detail-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .detail-table th {
+            background: rgba(255,255,255,0.05);
+            color: #a8a8a8;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        .detail-table tr:hover td { background: rgba(255,255,255,0.03); }
+        .highlight { color: #ff6b6b; font-weight: bold; }
+        .green { color: #2ecc71; }
+        .yellow { color: #f1c40f; }
+        .blue { color: #3498db; }
+
+        /* 总结图 */
+        .summary-diagram {
+            background: rgba(0,0,0,0.3);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        .diagram-title {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 30px;
+        }
+        .diagram-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .diagram-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .diagram-box {
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 14px 20px;
+            text-align: center;
+            min-width: 120px;
+        }
+        .diagram-box.activity { background: linear-gradient(135deg, rgba(102,126,234,0.3), rgba(118,75,162,0.3)); border: 1px solid #667eea; }
+        .diagram-box.item { background: linear-gradient(135deg, rgba(243,156,18,0.3), rgba(241,196,15,0.3)); border: 1px solid #f39c12; }
+        .diagram-box.pack { background: linear-gradient(135deg, rgba(231,76,60,0.3), rgba(192,57,43,0.3)); border: 1px solid #e74c3c; }
+        .diagram-box .box-label { font-size: 0.7rem; color: #888; }
+        .diagram-box .box-value { font-size: 0.95rem; font-weight: 600; margin-top: 4px; }
+        .diagram-arrow { font-size: 1.2rem; color: #888; }
+        .diagram-arrow.down { transform: rotate(90deg); }
+        /* 甘特图样式 */
+        .gantt-container {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+        .gantt-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .gantt-header .gantt-label {
+            width: 180px;
+            flex-shrink: 0;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .gantt-dates {
+            display: flex;
+            flex: 1;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #888;
+        }
+        .gantt-dates span {
+            width: 6.67%;
+            text-align: center;
+        }
+        .gantt-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .gantt-row .gantt-label {
+            width: 180px;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+            color: #d8d8d8;
+        }
+        .gantt-bar-container {
+            flex: 1;
+            height: 24px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            position: relative;
+        }
+        .gantt-bar {
+            height: 100%;
+            border-radius: 4px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: all 0.3s;
+        }
+        .gantt-bar:hover {
+            filter: brightness(1.2);
+            box-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>2026 春节活动 - 道具循环分析</h1>
+        <p class="subtitle">核心道具产出与消耗关系</p>
+
+        <!-- 甘特图排期 -->
+        <div class="flow-section" style="margin-bottom: 30px;">
+            <div class="flow-title">
+                <span class="badge">排期</span>
+                活动时间甘特图 (2026年2月16日 - 3月2日)
+            </div>
+            <div class="gantt-container">
+                <div class="gantt-header">
+                    <div class="gantt-label">活动</div>
+                    <div class="gantt-dates">
+                        <span>16</span><span>17</span><span>18</span><span>19</span><span>20</span>
+                        <span>21</span><span>22</span><span>23</span><span>24</span><span>25</span>
+                        <span>26</span><span>27</span><span>28</span><span>1</span><span>2</span>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">开箱 (101515)</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-bar" style="width: 86.67%; background: linear-gradient(90deg, #e74c3c, #c0392b);" title="2/16-3/1 (14天)"></div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">挑战活动 (100812)</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-bar" style="width: 20%; background: linear-gradient(90deg, #3498db, #2980b9);" title="2/16-2/18 (3天)"></div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">BP (102238)</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-bar" style="width: 86.67%; background: linear-gradient(90deg, #9b59b6, #8e44ad);" title="2/16-3/1 (14天)"></div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">拜访礼包 (105604)</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-bar" style="width: 86.67%; background: linear-gradient(90deg, #e67e22, #d35400);" title="2/16-3/1 (14天)"></div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">拼图 (101827)</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-bar" style="width: 86.67%; background: linear-gradient(90deg, #1abc9c, #16a085);" title="2/16-3/1 (14天)"></div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">许愿池 (105012)</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-bar" style="width: 86.67%; background: linear-gradient(90deg, #f1c40f, #f39c12);" title="2/16-3/1 (14天)"></div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">最佳酒馆 (10071802)</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-bar" style="width: 86.67%; background: linear-gradient(90deg, #2ecc71, #27ae60);" title="2/16-3/1 (14天)"></div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">兑换 (101338)</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-bar" style="width: 100%; background: linear-gradient(90deg, #667eea, #764ba2);" title="2/16-3/2 (15天)"></div>
+                    </div>
+                </div>
+                <div class="gantt-row">
+                    <div class="gantt-label">累充 (100596)</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-bar" style="width: 86.67%; background: linear-gradient(90deg, #ff6b6b, #ee5a5a);" title="2/16-3/1 (14天)"></div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 16px; font-size: 0.85rem; color: #888;">
+                <span style="display: inline-block; width: 12px; height: 12px; background: #3498db; border-radius: 2px; margin-right: 6px;"></span>挑战活动仅3天 (2/16-2/18)
+                <span style="margin-left: 20px; display: inline-block; width: 12px; height: 12px; background: #667eea; border-radius: 2px; margin-right: 6px;"></span>兑换商店延长1天 (至3/2)
+            </div>
+        </div>
+
+        <!-- 核心道具 -->
+        <div class="core-items">
+            <div class="core-item">
+                <div class="icon">⭐</div>
+                <div class="name">幸运之星</div>
+                <div class="id">ID: 1090</div>
+                <div class="usage">开箱活动消耗</div>
+            </div>
+            <div class="core-item">
+                <div class="icon">🎫</div>
+                <div class="name">许愿池碎片</div>
+                <div class="id">ID: 1138</div>
+                <div class="usage">制作活动消耗 → 产出礼券</div>
+            </div>
+            <div class="core-item">
+                <div class="icon">🎟️</div>
+                <div class="name">迎春礼券</div>
+                <div class="id">ID: 1139</div>
+                <div class="usage">兑换活动消耗</div>
+            </div>
+            <div class="core-item">
+                <div class="icon">💌</div>
+                <div class="name">新春邀请函</div>
+                <div class="id">ID: 1141</div>
+                <div class="usage">拜访礼包邀请道具</div>
+            </div>
+        </div>
+
+        <!-- 循环1: 许愿池碎片循环 -->
+        <div class="flow-section">
+            <div class="flow-title">
+                <span class="badge">循环1</span>
+                许愿池碎片 → 迎春礼券 → 兑换奖励
+            </div>
+
+            <div class="cycle-flow">
+                <div class="flow-node source">
+                    <div class="label">产出来源</div>
+                    <div class="value">最佳酒馆</div>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-node item">
+                    <div class="label">获得</div>
+                    <div class="value">许愿池碎片</div>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-node consume">
+                    <div class="label">消耗于</div>
+                    <div class="value">制作活动</div>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-node item">
+                    <div class="label">产出</div>
+                    <div class="value">迎春礼券</div>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-node reward">
+                    <div class="label">用于</div>
+                    <div class="value">兑换商店</div>
+                </div>
+            </div>
+
+            <table class="detail-table">
+                <tr>
+                    <th>活动</th>
+                    <th>玩法</th>
+                    <th>产出道具</th>
+                    <th>数量</th>
+                </tr>
+                <tr>
+                    <td class="blue">最佳酒馆 (10071802)</td>
+                    <td>积分档位奖励 (7期循环)</td>
+                    <td>许愿池碎片</td>
+                    <td class="green">x1 / x2 / x3 / x4</td>
+                </tr>
+                <tr>
+                    <td class="blue">BP通行证 (102238)</td>
+                    <td>免费等级奖励</td>
+                    <td>许愿池碎片</td>
+                    <td class="green">x1 (部分等级)</td>
+                </tr>
+                <tr>
+                    <td class="blue">许愿池 (105012)</td>
+                    <td>抽奖奖池</td>
+                    <td>许愿池碎片</td>
+                    <td class="green">x12~25</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 循环2: 挑战活动直接产出礼券 -->
+        <div class="flow-section">
+            <div class="flow-title">
+                <span class="badge">循环2</span>
+                挑战活动 → 迎春礼券 → 兑换奖励
+            </div>
+
+            <div class="cycle-flow">
+                <div class="flow-node source">
+                    <div class="label">玩法</div>
+                    <div class="value">挑战活动</div>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-node item">
+                    <div class="label">直接产出</div>
+                    <div class="value">迎春礼券</div>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-node reward">
+                    <div class="label">用于</div>
+                    <div class="value">兑换商店</div>
+                </div>
+            </div>
+
+            <table class="detail-table">
+                <tr>
+                    <th>伤害档位</th>
+                    <th>产出迎春礼券</th>
+                </tr>
+                <tr><td>档位1</td><td class="yellow">x10</td></tr>
+                <tr><td>档位2</td><td class="yellow">x20</td></tr>
+                <tr><td>档位3</td><td class="yellow">x30</td></tr>
+                <tr><td>档位4</td><td class="yellow">x40</td></tr>
+                <tr><td>档位5</td><td class="yellow">x50</td></tr>
+                <tr><td>档位6</td><td class="yellow">x60</td></tr>
+                <tr><td>档位7</td><td class="yellow">x70</td></tr>
+                <tr><td>档位8</td><td class="yellow">x80</td></tr>
+            </table>
+        </div>
+
+        <!-- 兑换商店 -->
+        <div class="flow-section">
+            <div class="flow-title">
+                <span class="badge">消耗端</span>
+                兑换商店 (101338) - 消耗迎春礼券
+            </div>
+
+            <table class="detail-table">
+                <tr>
+                    <th>可兑换物品</th>
+                    <th>消耗礼券</th>
+                    <th>价值评估</th>
+                </tr>
+                <tr><td>建筑师折扣券</td><td class="highlight">4000</td><td>高价值</td></tr>
+                <tr><td>商城折扣券</td><td class="highlight">3000</td><td>高价值</td></tr>
+                <tr><td>头像框自选箱</td><td class="highlight">1000</td><td>中价值</td></tr>
+                <tr><td>稀有英雄装扮宝箱</td><td class="yellow">700</td><td>中价值</td></tr>
+                <tr><td>新春限定皮肤宝箱</td><td class="yellow">400</td><td>中价值</td></tr>
+                <tr><td>通用加速碎片</td><td class="green">200</td><td>基础</td></tr>
+                <tr><td>高级大礼包箱</td><td class="green">100~200</td><td>基础</td></tr>
+                <tr><td>高级技能书</td><td class="green">20</td><td>基础</td></tr>
+                <tr><td>硬木材 x1000</td><td class="green">1</td><td>保底</td></tr>
+            </table>
+        </div>
+
+        <!-- 开箱循环 -->
+        <div class="flow-section">
+            <div class="flow-title">
+                <span class="badge">循环3</span>
+                开箱活动 (101515) - 消耗幸运之星
+                <span style="background: #e74c3c; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; margin-left: 12px;">纯付费玩法</span>
+            </div>
+
+            <div class="cycle-flow">
+                <div class="flow-node pack">
+                    <div class="label">付费来源</div>
+                    <div class="value">礼包 / 钻石商店</div>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-node item">
+                    <div class="label">获得</div>
+                    <div class="value">幸运之星</div>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-node consume">
+                    <div class="label">消耗于</div>
+                    <div class="value">开箱抽奖</div>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-node reward">
+                    <div class="label">产出</div>
+                    <div class="value">钻石/加速/宝箱</div>
+                </div>
+            </div>
+
+            <h4 style="color: #f39c12; margin: 24px 0 12px; font-size: 1rem;">幸运之星礼包</h4>
+            <table class="detail-table">
+                <tr>
+                    <th>PackID</th>
+                    <th>价格</th>
+                    <th>幸运之星</th>
+                    <th>附赠内容</th>
+                </tr>
+                <tr>
+                    <td>209402</td>
+                    <td class="highlight">$2.99</td>
+                    <td class="yellow">x6</td>
+                    <td>高级技能书x15 + 钻石x1500 + VIP积分x15</td>
+                </tr>
+                <tr>
+                    <td>209404</td>
+                    <td class="highlight">$4.99</td>
+                    <td class="yellow">x8</td>
+                    <td>高级技能书x20 + 钻石x2500 + VIP积分x25</td>
+                </tr>
+                <tr>
+                    <td>209406</td>
+                    <td class="highlight">$9.99</td>
+                    <td class="yellow">x16</td>
+                    <td>高级技能书x40 + 钻石x5000 + VIP积分x50</td>
+                </tr>
+                <tr>
+                    <td>209408</td>
+                    <td class="highlight">$19.99</td>
+                    <td class="yellow">x32</td>
+                    <td>高级技能书x80 + 钻石x10000 + VIP积分x100</td>
+                </tr>
+                <tr>
+                    <td>209410</td>
+                    <td class="highlight">$49.99</td>
+                    <td class="yellow">x80</td>
+                    <td>高级技能书x200 + 钻石x25000 + VIP积分x250</td>
+                </tr>
+            </table>
+
+            <h4 style="color: #3498db; margin: 24px 0 12px; font-size: 1rem;">商店购买</h4>
+            <div class="consume-info">
+                <span class="icon">💎</span>
+                <span class="text">钻石商店: <span class="highlight">3000钻石</span> 可购买幸运之星</span>
+            </div>
+
+            <h4 style="color: #2ecc71; margin: 24px 0 12px; font-size: 1rem;">开箱奖池</h4>
+            <table class="detail-table">
+                <tr>
+                    <th>奖池类型</th>
+                    <th>奖励内容</th>
+                </tr>
+                <tr>
+                    <td>常规奖池 (311)</td>
+                    <td>钻石x600 + 30分钟加速x3 + 高级资源箱x2</td>
+                </tr>
+                <tr>
+                    <td>额外奖励 (3011)</td>
+                    <td>黄金宝箱x1 + 精炼宝石x40 + 强化材料x160 + 钻石x10000 + VIP积分x100</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 总结图 -->
+        <div class="summary-diagram">
+            <div class="diagram-title">道具循环总览</div>
+            <div class="diagram-content">
+                <!-- 付费入口 -->
+                <div class="diagram-row">
+                    <div class="diagram-box pack">
+                        <div class="box-label">付费</div>
+                        <div class="box-value">开箱礼包 $2.99~$49.99</div>
+                    </div>
+                    <div class="diagram-box pack">
+                        <div class="box-label">付费</div>
+                        <div class="box-value">BP $4.99/$19.99</div>
+                    </div>
+                    <div class="diagram-box pack">
+                        <div class="box-label">付费</div>
+                        <div class="box-value">拜访礼包 $99.99</div>
+                    </div>
+                    <div class="diagram-box pack">
+                        <div class="box-label">付费</div>
+                        <div class="box-value">许愿池 $4.99</div>
+                    </div>
+                    <div class="diagram-box pack">
+                        <div class="box-label">付费</div>
+                        <div class="box-value">累充 $100~$20000</div>
+                    </div>
+                </div>
+
+                <div class="diagram-row">
+                    <span class="diagram-arrow down">↓</span>
+                </div>
+
+                <!-- 免费玩法 -->
+                <div class="diagram-row">
+                    <div class="diagram-box activity">
+                        <div class="box-label">免费玩法</div>
+                        <div class="box-value">最佳酒馆</div>
+                    </div>
+                    <div class="diagram-box activity">
+                        <div class="box-label">免费玩法</div>
+                        <div class="box-value">挑战活动</div>
+                    </div>
+                    <div class="diagram-box activity">
+                        <div class="box-label">免费玩法</div>
+                        <div class="box-value">拼图任务</div>
+                    </div>
+                    <div class="diagram-box activity">
+                        <div class="box-label">免费玩法</div>
+                        <div class="box-value">BP免费轨</div>
+                    </div>
+                </div>
+
+                <div class="diagram-row">
+                    <span class="diagram-arrow down">↓</span>
+                </div>
+
+                <!-- 核心道具 -->
+                <div class="diagram-row">
+                    <div class="diagram-box item">
+                        <div class="box-label">核心道具</div>
+                        <div class="box-value">许愿池碎片</div>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box activity">
+                        <div class="box-label">制作</div>
+                        <div class="box-value">1碎片→1礼券</div>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box item">
+                        <div class="box-label">核心道具</div>
+                        <div class="box-value">迎春礼券</div>
+                    </div>
+                </div>
+
+                <div class="diagram-row">
+                    <span class="diagram-arrow down">↓</span>
+                </div>
+
+                <!-- 消耗端 -->
+                <div class="diagram-row">
+                    <div class="diagram-box activity">
+                        <div class="box-label">消耗</div>
+                        <div class="box-value">兑换商店</div>
+                    </div>
+                    <span class="diagram-arrow">→</span>
+                    <div class="diagram-box" style="background: linear-gradient(135deg, rgba(46,204,113,0.3), rgba(39,174,96,0.3)); border: 1px solid #2ecc71;">
+                        <div class="box-label">最终产出</div>
+                        <div class="box-value">折扣券/皮肤/加速</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 付费设计总结 -->
+        <div class="flow-section" style="margin-top: 30px;">
+            <div class="flow-title">
+                <span class="badge">设计总结</span>
+                付费点与免费玩法平衡
+            </div>
+            <table class="detail-table">
+                <tr>
+                    <th>类型</th>
+                    <th>活动</th>
+                    <th>付费点</th>
+                    <th>免费获取</th>
+                </tr>
+                <tr>
+                    <td>主付费</td>
+                    <td>BP通行证</td>
+                    <td class="highlight">$4.99 / $19.99</td>
+                    <td class="green">有免费轨奖励</td>
+                </tr>
+                <tr>
+                    <td>主付费</td>
+                    <td>拜访礼包</td>
+                    <td class="highlight">$99.99</td>
+                    <td class="green">邀请好友获得道具</td>
+                </tr>
+                <tr>
+                    <td>主付费</td>
+                    <td>许愿池</td>
+                    <td class="highlight">$4.99/次</td>
+                    <td class="green">碎片可通过玩法获得</td>
+                </tr>
+                <tr>
+                    <td>累计付费</td>
+                    <td>累充</td>
+                    <td class="highlight">$100~$20000</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>免费玩法</td>
+                    <td>最佳酒馆</td>
+                    <td>-</td>
+                    <td class="green">积分产出碎片</td>
+                </tr>
+                <tr>
+                    <td>免费玩法</td>
+                    <td>挑战活动</td>
+                    <td>-</td>
+                    <td class="green">直接产出礼券</td>
+                </tr>
+                <tr>
+                    <td>免费玩法</td>
+                    <td>拼图</td>
+                    <td>-</td>
+                    <td class="green">任务产出加速/抽奖券</td>
+                </tr>
+                <tr>
+                    <td>纯付费</td>
+                    <td>开箱</td>
+                    <td class="highlight">$2.99~$49.99 礼包 / 3000钻石</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>消耗端</td>
+                    <td>兑换</td>
+                    <td>-</td>
+                    <td class="green">礼券兑换奖励</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>

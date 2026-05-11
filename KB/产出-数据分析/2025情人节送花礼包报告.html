@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025 情人节送花礼包 - 数据报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d28;
+    --border: #2a2d3a;
+    --text: #e4e4e7;
+    --muted: #8b8d97;
+    --accent: #f43f5e;
+    --accent2: #8b5cf6;
+    --accent3: #06b6d4;
+    --accent4: #f59e0b;
+    --green: #22c55e;
+    --red: #ef4444;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle { color: var(--muted); font-size: 13px; margin-bottom: 32px; }
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 32px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  h3 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; color: var(--muted); }
+
+  /* Score Banner */
+  .score-banner {
+    background: linear-gradient(135deg, #1e1028, #28101a);
+    border: 1px solid #3d1a2e;
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .score-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 60% 40%, rgba(244,63,94,0.08), transparent 50%);
+  }
+  .score-number {
+    font-size: 72px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    position: relative;
+  }
+  .score-label {
+    font-size: 16px;
+    color: var(--muted);
+    margin-top: 8px;
+    position: relative;
+  }
+  .score-verdict {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 4px 16px;
+    border-radius: 20px;
+    background: rgba(239,68,68,0.15);
+    color: var(--red);
+    font-size: 14px;
+    font-weight: 600;
+    position: relative;
+  }
+
+  /* KPI Cards */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .kpi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .kpi-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .kpi-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .kpi-change {
+    font-size: 12px;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+  .kpi-change.down { color: var(--red); }
+  .kpi-change.up { color: var(--green); }
+
+  /* Chart Container */
+  .chart-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .chart-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .chart-box.full { grid-column: 1 / -1; }
+  .chart-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .chart-wrap { position: relative; height: 280px; }
+  .chart-wrap.tall { height: 340px; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th {
+    text-align: left;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.03);
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tag-random { background: rgba(139,92,246,0.15); color: var(--accent2); }
+  .tag-normal { background: rgba(6,182,212,0.15); color: var(--accent3); }
+
+  /* Score breakdown */
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .score-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .score-item-value {
+    font-size: 28px;
+    font-weight: 700;
+  }
+  .score-item-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .score-bar {
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.05);
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1s ease;
+  }
+
+  /* Insights */
+  .insight-list {
+    list-style: none;
+    padding: 0;
+  }
+  .insight-list li {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.7;
+    border-left: 3px solid var(--accent);
+  }
+  .insight-list li strong { color: var(--accent); }
+  .suggest-list li {
+    border-left-color: var(--green);
+  }
+  .suggest-list li strong { color: var(--green); }
+
+  /* YoY comparison bar */
+  .yoy-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0;
+  }
+  .yoy-bar {
+    height: 18px;
+    border-radius: 4px;
+    min-width: 4px;
+  }
+  .yoy-label { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+  @media (max-width: 768px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .chart-row { grid-template-columns: 1fr; }
+    .score-grid { grid-template-columns: repeat(2, 1fr); }
+    .score-number { font-size: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>2025 情人节送花礼包</h1>
+<p class="subtitle">P2 / Age of Apes &bull; 活动周期 2025-02-10 ~ 02-21 (12天) &bull; 数据源 Datain 数仓</p>
+
+<!-- Score Banner -->
+<div class="score-banner">
+  <div class="score-number">39.8</div>
+  <div class="score-label">综合效果评分 / 100</div>
+  <div class="score-verdict">不及格 - 付费覆盖面严重不足</div>
+</div>
+
+<!-- KPI Cards -->
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-value">$42,539</div>
+    <div class="kpi-label">总收入</div>
+    <div class="kpi-change down">-75.5% YoY</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">316</div>
+    <div class="kpi-label">付费人数</div>
+    <div class="kpi-change down">-89.5% YoY</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">1,011</div>
+    <div class="kpi-label">购买次数</div>
+    <div class="kpi-change down">-87.6% YoY</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">$134.62</div>
+    <div class="kpi-label">ARPPU</div>
+    <div class="kpi-change up">+132.5% YoY</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value">3.2x</div>
+    <div class="kpi-label">人均购买</div>
+    <div class="kpi-change" style="color:var(--muted)">复购尚可</div>
+  </div>
+</div>
+
+<!-- Charts Row 1: Daily Trend + Revenue by Price -->
+<div class="chart-row">
+  <div class="chart-box">
+    <div class="chart-title">每日收入与付费人数趋势</div>
+    <div class="chart-wrap tall">
+      <canvas id="dailyTrend"></canvas>
+    </div>
+  </div>
+  <div class="chart-box">
+    <div class="chart-title">各价格档位收入贡献</div>
+    <div class="chart-wrap tall">
+      <canvas id="priceRevenue"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Charts Row 2: Random vs Normal + R-level -->
+<div class="chart-row">
+  <div class="chart-box">
+    <div class="chart-title">Random vs Normal 对比</div>
+    <div class="chart-wrap">
+      <canvas id="typeCompare"></canvas>
+    </div>
+  </div>
+  <div class="chart-box">
+    <div class="chart-title">买家 R 级分布</div>
+    <div class="chart-wrap">
+      <canvas id="rLevel"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- SKU Detail Table -->
+<h2>各 SKU 明细数据</h2>
+<div class="chart-box" style="overflow-x:auto">
+  <table>
+    <thead>
+      <tr>
+        <th>iap_id</th>
+        <th>类型</th>
+        <th>定价</th>
+        <th class="num">付费人数</th>
+        <th class="num">购买次数</th>
+        <th class="num">收入 (USD)</th>
+        <th class="num">ARPPU</th>
+        <th class="num">人均购买</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2013101002</td>
+        <td><span class="tag tag-normal">Normal</span></td>
+        <td>$4.99</td>
+        <td class="num">163</td>
+        <td class="num">189</td>
+        <td class="num">$923.86</td>
+        <td class="num">$5.67</td>
+        <td class="num">1.16</td>
+      </tr>
+      <tr>
+        <td>2013101003</td>
+        <td><span class="tag tag-normal">Normal</span></td>
+        <td>$9.99</td>
+        <td class="num">52</td>
+        <td class="num">60</td>
+        <td class="num">$585.90</td>
+        <td class="num">$11.27</td>
+        <td class="num">1.15</td>
+      </tr>
+      <tr>
+        <td>2013100999</td>
+        <td><span class="tag tag-random">Random</span></td>
+        <td>$19.99</td>
+        <td class="num highlight">168</td>
+        <td class="num">309</td>
+        <td class="num">$6,011.91</td>
+        <td class="num">$35.79</td>
+        <td class="num">1.84</td>
+      </tr>
+      <tr>
+        <td>2013101004</td>
+        <td><span class="tag tag-normal">Normal</span></td>
+        <td>$19.99</td>
+        <td class="num">26</td>
+        <td class="num">34</td>
+        <td class="num">$661.66</td>
+        <td class="num">$25.45</td>
+        <td class="num">1.31</td>
+      </tr>
+      <tr>
+        <td>2013101000</td>
+        <td><span class="tag tag-random">Random</span></td>
+        <td>$49.99</td>
+        <td class="num">40</td>
+        <td class="num">110</td>
+        <td class="num">$5,308.90</td>
+        <td class="num">$132.72</td>
+        <td class="num">2.75</td>
+      </tr>
+      <tr>
+        <td>2013101005</td>
+        <td><span class="tag tag-normal">Normal</span></td>
+        <td>$49.99</td>
+        <td class="num">17</td>
+        <td class="num">19</td>
+        <td class="num">$912.31</td>
+        <td class="num">$53.67</td>
+        <td class="num">1.12</td>
+      </tr>
+      <tr>
+        <td>2013101001</td>
+        <td><span class="tag tag-random">Random</span></td>
+        <td>$99.99</td>
+        <td class="num">22</td>
+        <td class="num">81</td>
+        <td class="num">$7,811.69</td>
+        <td class="num">$355.08</td>
+        <td class="num">3.68</td>
+      </tr>
+      <tr style="background:rgba(244,63,94,0.05)">
+        <td>2013101006</td>
+        <td><span class="tag tag-normal">Normal</span></td>
+        <td>$99.99</td>
+        <td class="num">24</td>
+        <td class="num highlight">209</td>
+        <td class="num highlight">$20,322.91</td>
+        <td class="num highlight">$846.79</td>
+        <td class="num highlight">8.71</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Flower Item Production -->
+<h2>送花道具产出分析 (item 11112445)</h2>
+
+<!-- Flower KPI Cards -->
+<div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom:16px">
+  <div class="kpi-card">
+    <div class="kpi-value" style="font-size:20px">1,395,189</div>
+    <div class="kpi-label">总产出量</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value" style="font-size:20px">1,402,458</div>
+    <div class="kpi-label">总消耗 (送出)</div>
+    <div class="kpi-change" style="color:var(--green)">消耗率 100.5%</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value" style="font-size:20px">1,164,780</div>
+    <div class="kpi-label">收花道具 (被收到)</div>
+    <div class="kpi-change down">送出花朵的 83%</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-value" style="font-size:20px">28.2%</div>
+    <div class="kpi-label">付费产出占比</div>
+    <div class="kpi-change" style="color:var(--muted)">仅 ~558 人</div>
+  </div>
+</div>
+
+<div class="chart-row">
+  <div class="chart-box">
+    <div class="chart-title">每日产出 vs 消耗 vs 收花</div>
+    <div class="chart-wrap tall">
+      <canvas id="flowerDaily"></canvas>
+    </div>
+  </div>
+  <div class="chart-box">
+    <div class="chart-title">送花道具来源构成</div>
+    <div class="chart-wrap tall">
+      <canvas id="flowerSource"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Flower Source Detail Table -->
+<div class="chart-box" style="overflow-x:auto; margin-bottom:16px">
+  <div class="chart-title">来源明细 — 人均产出差异巨大</div>
+  <table>
+    <thead>
+      <tr>
+        <th>来源 (reason_id)</th>
+        <th class="num">产出量</th>
+        <th class="num">占比</th>
+        <th class="num">触及人数</th>
+        <th class="num">人均产出</th>
+        <th>解读</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>battle_pass_rewards</td>
+        <td class="num">430,150</td>
+        <td class="num">30.8%</td>
+        <td class="num">28,808</td>
+        <td class="num">14.9</td>
+        <td>BP 奖励（免费+付费轨），覆盖面最广</td>
+      </tr>
+      <tr>
+        <td>event_task</td>
+        <td class="num">369,840</td>
+        <td class="num">26.5%</td>
+        <td class="num">4,353</td>
+        <td class="num">85.0</td>
+        <td>活动任务，少数活跃玩家大量刷</td>
+      </tr>
+      <tr style="background:rgba(244,63,94,0.05)">
+        <td>inner_iap_pack</td>
+        <td class="num highlight">245,550</td>
+        <td class="num">17.6%</td>
+        <td class="num">169</td>
+        <td class="num highlight">1,453</td>
+        <td>内购礼包（$99.99 大R），人均产出极端</td>
+      </tr>
+      <tr style="background:rgba(244,63,94,0.03)">
+        <td>iap_pack</td>
+        <td class="num">142,510</td>
+        <td class="num">10.2%</td>
+        <td class="num">271</td>
+        <td class="num highlight">526</td>
+        <td>付费礼包，鲸鱼来源</td>
+      </tr>
+      <tr>
+        <td>big_r_deep_pay</td>
+        <td class="num">91,598</td>
+        <td class="num">6.6%</td>
+        <td class="num">16,242</td>
+        <td class="num">5.6</td>
+        <td>大R深度付费奖励，覆盖面广但量少</td>
+      </tr>
+      <tr>
+        <td>activity_package</td>
+        <td class="num">66,083</td>
+        <td class="num">4.7%</td>
+        <td class="num">17,058</td>
+        <td class="num">3.9</td>
+        <td>活动包裹，最广覆盖但人均最少</td>
+      </tr>
+      <tr>
+        <td>bp_pass_team</td>
+        <td class="num">40,690</td>
+        <td class="num">2.9%</td>
+        <td class="num">4,069</td>
+        <td class="num">10.0</td>
+        <td>BP 组队奖励</td>
+      </tr>
+      <tr>
+        <td>bp_pass_unlock + 补发</td>
+        <td class="num">8,768</td>
+        <td class="num">0.6%</td>
+        <td class="num">1,033</td>
+        <td class="num">8.5</td>
+        <td>BP 解锁 + 邮件补发</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Flower Flow Insight -->
+<div class="chart-box" style="margin-bottom:16px; border-left:3px solid var(--accent4);">
+  <div class="chart-title" style="color:var(--accent4)">送花道具流转关键发现</div>
+  <ul style="list-style:none; padding:0; font-size:13px; line-height:2;">
+    <li><strong style="color:var(--accent)">鲸鱼 vs 平民产出差距 373 倍</strong> — inner_iap_pack 人均 1,453 朵 vs activity_package 人均 3.9 朵</li>
+    <li><strong style="color:var(--accent)">末日集中消耗</strong> — 02-21 当日消耗 230,175 朵（占总消耗 16.4%），远超当日产出 42,193 朵，玩家囤积到最后一天集中送出</li>
+    <li><strong style="color:var(--accent)">17% 花朵"蒸发"</strong> — 送出 140 万但收到仅 116 万，差额 23.8 万朵可能被系统回收或过期作废</li>
+    <li><strong style="color:var(--accent4)">免费来源覆盖广但量少</strong> — BP+活动包触达 4.6 万人，但人均仅 10-15 朵，不足以产生有效送花行为</li>
+    <li><strong style="color:var(--accent4)">付费来源量大但人少</strong> — 内购仅 440 人贡献 28% 产出（38.8 万朵），送花活动的"社交"属性被付费壁垒削弱</li>
+  </ul>
+</div>
+
+<!-- Score Breakdown -->
+<h2>评分维度拆解</h2>
+<div class="score-grid">
+  <div class="score-item">
+    <div class="score-item-value" style="color:var(--red)">30</div>
+    <div class="score-item-label">收入规模 (25%)</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:30%;background:var(--red)"></div></div>
+  </div>
+  <div class="score-item">
+    <div class="score-item-value" style="color:var(--red)">20</div>
+    <div class="score-item-label">付费渗透 (25%)</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:20%;background:var(--red)"></div></div>
+  </div>
+  <div class="score-item">
+    <div class="score-item-value" style="color:var(--accent4)">65</div>
+    <div class="score-item-label">ARPPU 深度 (20%)</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:65%;background:var(--accent4)"></div></div>
+  </div>
+  <div class="score-item">
+    <div class="score-item-value" style="color:var(--accent4)">55</div>
+    <div class="score-item-label">价格梯度 (15%)</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:55%;background:var(--accent4)"></div></div>
+  </div>
+  <div class="score-item">
+    <div class="score-item-value" style="color:var(--red)">40</div>
+    <div class="score-item-label">时间节奏 (15%)</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width:40%;background:var(--red)"></div></div>
+  </div>
+</div>
+
+<!-- Insights -->
+<h2>关键问题</h2>
+<ul class="insight-list">
+  <li><strong>礼包付费人数过少</strong> - 仅 316 人购买送花礼包，送花机制对中低 R 用户缺乏吸引力，R4 及以下用户仅占 17.3%</li>
+  <li><strong>鲸鱼依赖症</strong> - R8+R7 占买家 59.5%，$99.99 档 46 人贡献 66% 收入（$28K）。大盘空心化严重</li>
+  <li><strong>道具产出贫富悬殊</strong> - 内购鲸鱼人均获得 1,453 朵花 vs 免费玩家人均仅 3.9 朵，相差 373 倍。免费玩家几乎无法参与送花</li>
+  <li><strong>社交属性被付费壁垒削弱</strong> - BP+活动包触达 4.6 万人但人均仅 10-15 朵，不够送一次有意义的花。送花变成了鲸鱼独享的付费行为</li>
+  <li><strong>末日囤积集中送出</strong> - 02-21 当日消耗 23 万朵（占总量 16.4%），是当日产出的 5.5 倍。玩家不是边玩边送，而是最后一天才突击</li>
+  <li><strong>17% 花朵蒸发</strong> - 送出 140 万花朵，但收花道具仅 116 万，约 24 万朵（17%）被系统回收/过期，玩家体验损失</li>
+  <li><strong>情人节无脉冲</strong> - 2/14 当日数据和前后持平，没有限时折扣或社交送礼加成，浪费了节日情绪杠杆</li>
+  <li><strong>$99.99 Normal 复购畸高</strong> - 24 人购买 209 次（人均 8.71 次），对应 inner_iap_pack 人均获得 1,453 朵</li>
+</ul>
+
+<h2>改进建议</h2>
+<ul class="insight-list suggest-list">
+  <li><strong>大幅提升免费产出</strong> - 免费玩家人均 3.9 朵完全不够用。应通过每日任务、登录奖励保证人均至少 30-50 朵，让所有人都能参与送花</li>
+  <li><strong>社交裂变</strong> - 送花行为关联社交奖励（互赠翻倍、排行榜展示、收花成就皮肤），让送花成为社交货币而非纯消费行为</li>
+  <li><strong>节日脉冲设计</strong> - 2/14 当日限时双倍花朵掉落或限定皮肤，制造 FOMO 效应</li>
+  <li><strong>引导即时消耗</strong> - 设置每日送花排行、阶段性收花奖励等，避免末日集中囤送的不健康节奏</li>
+  <li><strong>降低礼包门槛</strong> - 增加 $0.99/$1.99 首充引导包，让中低 R 也能用小钱买到有感的花朵数量</li>
+  <li><strong>限购与分层</strong> - $99.99 Normal 包设合理购买上限，避免鲸鱼刷量扭曲数据和活动公平性</li>
+</ul>
+
+<script>
+// -- Chart.js Global Config --
+Chart.defaults.color = '#8b8d97';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+Chart.defaults.font.family = '-apple-system, system-ui, sans-serif';
+Chart.defaults.font.size = 11;
+
+// -- 1. Daily Trend --
+new Chart(document.getElementById('dailyTrend'), {
+  type: 'bar',
+  data: {
+    labels: ['2/10','2/11','2/12','2/13','2/14','2/15','2/16','2/17','2/18','2/19','2/20','2/21'],
+    datasets: [
+      {
+        label: '收入 (USD)',
+        data: [4250.5, 6648.0, 5871.9, 5279.2, 5442.0, 1589.3, 2586.6, 3066.9, 1511.3, 1222.9, 2258.6, 2812.0],
+        backgroundColor: 'rgba(244,63,94,0.6)',
+        borderRadius: 4,
+        yAxisID: 'y',
+        order: 2
+      },
+      {
+        label: '付费人数',
+        data: [105, 86, 61, 46, 45, 27, 34, 27, 23, 19, 18, 12],
+        type: 'line',
+        borderColor: '#8b5cf6',
+        backgroundColor: 'rgba(139,92,246,0.1)',
+        pointBackgroundColor: '#8b5cf6',
+        pointRadius: 4,
+        tension: 0.3,
+        fill: true,
+        yAxisID: 'y1',
+        order: 1
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: { legend: { position: 'top', labels: { boxWidth: 12, padding: 16 } } },
+    scales: {
+      y: { position:'left', grid:{display:false}, ticks:{ callback: v=>'$'+v.toLocaleString() } },
+      y1: { position:'right', grid:{drawOnChartArea:false}, ticks:{ callback: v=>v+'人' } }
+    }
+  }
+});
+
+// -- 2. Revenue by Price Tier --
+new Chart(document.getElementById('priceRevenue'), {
+  type: 'doughnut',
+  data: {
+    labels: ['$4.99','$9.99','$19.99','$49.99','$99.99'],
+    datasets: [{
+      data: [923.86, 585.90, 6673.57, 6221.21, 28134.60],
+      backgroundColor: ['#06b6d4','#22d3ee','#8b5cf6','#a78bfa','#f43f5e'],
+      borderWidth: 0,
+      hoverOffset: 8
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '55%',
+    plugins: {
+      legend: { position:'right', labels:{ boxWidth:12, padding:12 } },
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            const total = ctx.dataset.data.reduce((a,b)=>a+b,0);
+            const pct = (ctx.raw/total*100).toFixed(1);
+            return `$${ctx.raw.toLocaleString()} (${pct}%)`;
+          }
+        }
+      }
+    }
+  }
+});
+
+// -- 3. Random vs Normal --
+new Chart(document.getElementById('typeCompare'), {
+  type: 'bar',
+  data: {
+    labels: ['付费人数', '购买次数', 'ARPPU ($)', '人均购买'],
+    datasets: [
+      {
+        label: 'Random (抽奖)',
+        data: [168, 500, 113.88, 2.98],
+        backgroundColor: 'rgba(139,92,246,0.7)',
+        borderRadius: 4
+      },
+      {
+        label: 'Normal (固定)',
+        data: [212, 511, 110.41, 2.41],
+        backgroundColor: 'rgba(6,182,212,0.7)',
+        borderRadius: 4
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position:'top', labels:{ boxWidth:12, padding:16 } } },
+    scales: {
+      y: { grid:{display:false} }
+    }
+  }
+});
+
+// -- 4. R-Level Distribution --
+new Chart(document.getElementById('rLevel'), {
+  type: 'bar',
+  data: {
+    labels: ['R8 鲸鱼\n>=10K','R7 大R\n>=5K','R6 中高R\n>=2K','R5 中R\n>=1K','R4 中低R\n>=500','R3 小R\n>=200','R2 微充\n>=50','R1 小额\n<50'],
+    datasets: [
+      {
+        label: '买过Random',
+        data: [100, 25, 16, 8, 4, 5, 5, 5],
+        backgroundColor: 'rgba(139,92,246,0.7)',
+        borderRadius: 4
+      },
+      {
+        label: '买过Normal',
+        data: [84, 31, 30, 26, 18, 7, 12, 4],
+        backgroundColor: 'rgba(6,182,212,0.7)',
+        borderRadius: 4
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    indexAxis: 'y',
+    plugins: { legend: { position:'top', labels:{ boxWidth:12, padding:16 } } },
+    scales: {
+      x: { stacked: false, grid:{display:false} },
+      y: { stacked: false }
+    }
+  }
+});
+
+// -- 5. Flower Daily Production vs Consumption --
+new Chart(document.getElementById('flowerDaily'), {
+  type: 'bar',
+  data: {
+    labels: ['2/10','2/11','2/12','2/13','2/14','2/15','2/16','2/17','2/18','2/19','2/20','2/21'],
+    datasets: [
+      {
+        label: '产出 (送花道具)',
+        data: [64299,181227,234161,138973,123558,158438,147189,86487,62301,94824,61539,42193],
+        backgroundColor: 'rgba(34,197,94,0.6)',
+        borderRadius: 4,
+        order: 3
+      },
+      {
+        label: '消耗 (送出)',
+        data: [60939,141646,169582,122313,119438,122181,145456,87067,67457,69535,66669,230175],
+        backgroundColor: 'rgba(244,63,94,0.6)',
+        borderRadius: 4,
+        order: 2
+      },
+      {
+        label: '收花 (被收到)',
+        data: [60939,141646,169582,122313,119438,122181,145456,87067,67457,69535,66669,112497],
+        type: 'line',
+        borderColor: '#f59e0b',
+        backgroundColor: 'rgba(245,158,11,0.1)',
+        pointBackgroundColor: '#f59e0b',
+        pointRadius: 3,
+        tension: 0.3,
+        fill: false,
+        order: 1
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { position: 'top', labels: { boxWidth: 12, padding: 12 } },
+      tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.raw.toLocaleString() } }
+    },
+    scales: {
+      y: { grid:{display:false}, ticks:{ callback: v => (v/1000).toFixed(0)+'K' } }
+    }
+  }
+});
+
+// -- 6. Flower Source Breakdown --
+new Chart(document.getElementById('flowerSource'), {
+  type: 'doughnut',
+  data: {
+    labels: ['BP 奖励 (30.8%)','活动任务 (26.5%)','内购礼包 (17.6%)','IAP 礼包 (10.2%)','大R深度付费 (6.6%)','活动包裹 (4.7%)','其他 (2.7%)'],
+    datasets: [{
+      data: [430150, 369840, 245550, 142510, 91598, 66083, 49458],
+      backgroundColor: ['#22c55e','#06b6d4','#f43f5e','#e11d48','#8b5cf6','#a78bfa','#64748b'],
+      borderWidth: 0,
+      hoverOffset: 8
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '50%',
+    plugins: {
+      legend: { position:'right', labels:{ boxWidth:10, padding:8, font:{size:11} } },
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            const total = ctx.dataset.data.reduce((a,b)=>a+b,0);
+            const pct = (ctx.raw/total*100).toFixed(1);
+            return ctx.raw.toLocaleString() + ' (' + pct + '%)';
+          }
+        }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

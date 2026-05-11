@@ -31,7 +31,7 @@ def run_shop_analysis(
     json_path: str = None,
     excel_path: str = None,
     activity_name: str = "活动商店",
-    output_dir: str = "report_images/shop_exchange/",
+    output_dir: str = "KB/产出-数据分析/shop_exchange/",
     output_format: str = "both",
     custom_category_rules: dict = None,
     thresholds: dict = None,
@@ -165,7 +165,7 @@ def main():
     parser = argparse.ArgumentParser(description="兑换商店数据分析")
     parser.add_argument("--input", type=str, help="输入 JSON 文件路径")
     parser.add_argument("--excel", type=str, help="输入 Excel 文件路径")
-    parser.add_argument("--output_dir", type=str, default="report_images/shop_exchange/", help="输出目录")
+    parser.add_argument("--output_dir", type=str, default="KB/产出-数据分析/shop_exchange/", help="输出目录")
     parser.add_argument("--activity", type=str, default="活动商店", help="活动名称")
     parser.add_argument("--format", type=str, default="both", choices=["notion", "wiki", "both", "markdown"],
                        help="输出格式")

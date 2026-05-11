@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>尼罗河活动检查报告 - 前期活动D21</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); min-height: 100vh; padding: 40px 20px; color: #e8e8e8; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { text-align: center; font-size: 2.2rem; margin-bottom: 8px; background: linear-gradient(90deg, #f5af19, #f12711); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { text-align: center; color: #888; margin-bottom: 30px; }
+        .status-banner { background: linear-gradient(135deg, rgba(46,204,113,0.2), rgba(39,174,96,0.2)); border: 2px solid #2ecc71; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 30px; }
+        .status-banner .icon { font-size: 3rem; }
+        .status-banner .text { font-size: 1.5rem; color: #2ecc71; font-weight: bold; margin-top: 8px; }
+        .status-banner .desc { color: #888; margin-top: 8px; }
+        .section { background: rgba(255,255,255,0.03); border-radius: 16px; padding: 24px; margin-bottom: 24px; border: 1px solid rgba(255,255,255,0.08); }
+        .section-title { font-size: 1.2rem; color: #feca57; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+        .badge { background: linear-gradient(135deg, #667eea, #764ba2); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; }
+        .badge.green { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .badge.orange { background: linear-gradient(135deg, #f39c12, #e67e22); }
+        .badge.red { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        th { background: rgba(255,255,255,0.05); color: #a8a8a8; font-size: 0.75rem; text-transform: uppercase; }
+        .check { color: #2ecc71; }
+        .warn { color: #f39c12; }
+        .error { color: #e74c3c; }
+        .highlight { color: #ff6b6b; font-weight: bold; }
+        .item-box { display: inline-block; background: rgba(243,156,18,0.15); border: 1px solid #f39c12; border-radius: 6px; padding: 6px 12px; margin: 4px; font-size: 0.85rem; }
+        .gantt-container { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 20px; }
+        .gantt-header, .gantt-row { display: flex; align-items: center; margin-bottom: 8px; }
+        .gantt-label { width: 150px; flex-shrink: 0; font-size: 0.85rem; }
+        .gantt-bar-container { flex: 1; height: 24px; background: rgba(255,255,255,0.05); border-radius: 4px; position: relative; }
+        .gantt-bar { height: 100%; border-radius: 4px; position: absolute; left: 0; }
+        .gantt-dates { display: flex; flex: 1; justify-content: space-between; font-size: 0.7rem; color: #888; }
+        .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .compare-box { background: rgba(255,255,255,0.02); border-radius: 10px; padding: 16px; }
+        .compare-box h4 { color: #a8a8a8; font-size: 0.85rem; margin-bottom: 12px; }
+        .flow-box { display: inline-block; background: rgba(102,126,234,0.2); border: 1px solid #667eea; border-radius: 8px; padding: 8px 14px; margin: 4px; font-size: 0.85rem; }
+        .arrow { color: #667eea; margin: 0 6px; }
+        .todo-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .todo-item:last-child { border-bottom: none; }
+        .todo-check { width: 20px; height: 20px; border-radius: 4px; margin-right: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+        .todo-check.done { background: #2ecc71; }
+        .todo-check.pending { background: #f39c12; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🏛️ 尼罗河活动检查报告</h1>
+    <p class="subtitle">前期活动 | 玩家生命周期 D21 开启 | 持续14天</p>
+
+    <div class="status-banner">
+        <div class="icon">✅</div>
+        <div class="text">可以直接上线！</div>
+        <div class="desc">8个活动配置完整，道具循环完善，礼包价格已配置</div>
+    </div>
+
+    <!-- 活动列表 -->
+    <div class="section">
+        <div class="section-title"><span class="badge green">8个活动</span>活动配置状态</div>
+        <table>
+            <tr><th>活动ID</th><th>活动名称</th><th>类型</th><th>ContentID</th><th>IsOn</th><th>状态</th></tr>
+            <tr><td>101023</td><td>黄金神殿</td><td>开箱</td><td>1023</td><td>1</td><td class="check">✅ 完整</td></tr>
+            <tr><td>102234</td><td>圣甲虫勋章</td><td>BP</td><td>2234</td><td>1</td><td class="check">✅ 完整</td></tr>
+            <tr><td>105602</td><td>尼罗河之旅</td><td>拜访礼包</td><td>5602</td><td>1</td><td class="check">✅ 完整</td></tr>
+            <tr><td>101825</td><td>沙漠绿洲</td><td>拼图</td><td>1825</td><td>1</td><td class="check">✅ 完整</td></tr>
+            <tr><td>105010</td><td>许愿池</td><td>许愿池</td><td>5010</td><td>1</td><td class="check">✅ 完整</td></tr>
+            <tr><td>10071801</td><td>沙漠盛宴</td><td>酒馆</td><td>718</td><td>1</td><td class="check">✅ 完整</td></tr>
+            <tr><td>101334</td><td>法老宝藏</td><td>兑换</td><td>1334</td><td>1</td><td class="check">✅ 完整</td></tr>
+            <tr><td>100594</td><td>黄金沙漏</td><td>累充</td><td>594</td><td>1</td><td class="check">✅ 完整</td></tr>
+        </table>
+    </div>
+
+    <!-- 核心道具 -->
+    <div class="section">
+        <div class="section-title"><span class="badge">道具</span>核心道具配置</div>
+        <table>
+            <tr><th>道具ID</th><th>道具名称</th><th>用途</th><th>产出来源</th><th>状态</th></tr>
+            <tr><td>1128</td><td>女王恩典卷</td><td>开箱消耗</td><td>53个奖励组 (礼包/BP/活动)</td><td class="check">✅</td></tr>
+            <tr><td>1129</td><td>猫眼石币</td><td>兑换商店消耗</td><td>7个奖励组 (制作活动产出)</td><td class="check">✅</td></tr>
+        </table>
+        <p style="margin-top:12px; color:#888; font-size:0.85rem;">💡 道具循环: 女王恩典卷→开箱 | 活动产出碎片→制作→猫眼石币→兑换商店</p>
+    </div>
+
+    <!-- 兑换商店 -->
+    <div class="section">
+        <div class="section-title"><span class="badge">兑换</span>法老宝藏商店 (14项)</div>
+        <table>
+            <tr><th>奖励</th><th>数量</th><th>消耗猫眼石币</th></tr>
+            <tr><td>随机传说折扣券</td><td>x1</td><td class="highlight">4000</td></tr>
+            <tr><td>头像框自选礼包</td><td>x1</td><td class="highlight">1000</td></tr>
+            <tr><td>传奇英雄装备宝箱</td><td>x1</td><td>700</td></tr>
+            <tr><td>尼罗回响（纪念卡）</td><td>x1</td><td>400</td></tr>
+            <tr><td>通用技能碎片</td><td>x1</td><td>200</td></tr>
+            <tr><td>万能传奇信物</td><td>x1</td><td>100 / 200</td></tr>
+            <tr><td>幸运英雄装备宝箱</td><td>x1</td><td>50</td></tr>
+            <tr><td>圣甲虫徽章</td><td>x1</td><td>30</td></tr>
+            <tr><td>神秘金属</td><td>x1</td><td>25</td></tr>
+            <tr><td>传奇技能书</td><td>x1</td><td>20</td></tr>
+            <tr><td>高级木板</td><td>x1</td><td>8</td></tr>
+            <tr><td>硬木板 / 冒险阅历</td><td>x1000</td><td>1</td></tr>
+        </table>
+    </div>
+
+    <!-- 礼包价格 -->
+    <div class="section">
+        <div class="section-title"><span class="badge">付费</span>礼包价格配置</div>
+        <table>
+            <tr><th>礼包类型</th><th>PackID</th><th>价格</th><th>状态</th></tr>
+            <tr><td>开箱礼包 (5档)</td><td>210602/210604/210606/210608/210610</td><td>$4.99 / $9.99 / $19.99 / $49.99 / $99.99</td><td class="check">✅</td></tr>
+            <tr><td>BP通行证</td><td>130020 / 130021</td><td>$4.99 / $19.99</td><td class="check">✅ 复用</td></tr>
+            <tr><td>许愿池</td><td>1002001</td><td>$4.99/次</td><td class="check">✅ 复用</td></tr>
+            <tr><td>拜访礼包</td><td>-</td><td>$99.99</td><td class="check">✅</td></tr>
+        </table>
+    </div>
+
+    <!-- 排期甘特图 -->
+    <div class="section">
+        <div class="section-title"><span class="badge">排期</span>活动甘特图 (D21-D35)</div>
+        <div class="gantt-container">
+            <div class="gantt-header">
+                <div class="gantt-label" style="color:#888;font-size:0.75rem;">活动</div>
+                <div class="gantt-dates">
+                    <span>D21</span><span>D23</span><span>D25</span><span>D27</span><span>D29</span><span>D31</span><span>D33</span><span>D35</span>
+                </div>
+            </div>
+            <div class="gantt-row"><div class="gantt-label">黄金神殿(开箱)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:93%;background:linear-gradient(90deg,#e74c3c,#c0392b);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">圣甲虫勋章(BP)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:93%;background:linear-gradient(90deg,#9b59b6,#8e44ad);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">尼罗河之旅(拜访)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:93%;background:linear-gradient(90deg,#e67e22,#d35400);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">沙漠绿洲(拼图)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:93%;background:linear-gradient(90deg,#1abc9c,#16a085);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">许愿池</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:93%;background:linear-gradient(90deg,#f1c40f,#f39c12);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">沙漠盛宴(酒馆)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:93%;background:linear-gradient(90deg,#2ecc71,#27ae60);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">法老宝藏(兑换)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:100%;background:linear-gradient(90deg,#667eea,#764ba2);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">黄金沙漏(累充)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:93%;background:linear-gradient(90deg,#ff6b6b,#ee5a5a);"></div></div></div>
+        </div>
+        <p style="margin-top:12px;font-size:0.8rem;color:#888;">
+            <span style="display:inline-block;width:10px;height:10px;background:#667eea;border-radius:2px;margin-right:4px;"></span>兑换商店延长1天(至D35)
+        </p>
+    </div>
+
+    <!-- 与春节活动对比 -->
+    <div class="section">
+        <div class="section-title"><span class="badge orange">对比</span>与春节活动差异</div>
+        <div class="compare-grid">
+            <div class="compare-box">
+                <h4>春节活动 (9个)</h4>
+                <p>开箱、<span class="highlight">挑战活动</span>、BP、拜访、拼图、许愿池、酒馆、兑换、累充</p>
+            </div>
+            <div class="compare-box">
+                <h4>尼罗河活动 (8个)</h4>
+                <p>开箱、BP、拜访、拼图、许愿池、酒馆、兑换、累充</p>
+                <p style="color:#f39c12;margin-top:8px;">⚠️ 缺少挑战活动 - 少一个免费产出渠道</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 上线前待办 -->
+    <div class="section">
+        <div class="section-title"><span class="badge red">待办</span>上线前需调整</div>
+        <div class="todo-item">
+            <div class="todo-check pending">!</div>
+            <div>
+                <strong>时间配置调整</strong>
+                <p style="color:#888;font-size:0.85rem;">当前: 固定日期 2026-01-19 → 需改为: D21触发 (TriggerType=2)</p>
+            </div>
+        </div>
+        <div class="todo-item">
+            <div class="todo-check done">✓</div>
+            <div>
+                <strong>活动配置</strong>
+                <p style="color:#888;font-size:0.85rem;">8个活动全部IsOn=1，无需修改</p>
+            </div>
+        </div>
+        <div class="todo-item">
+            <div class="todo-check done">✓</div>
+            <div>
+                <strong>道具配置</strong>
+                <p style="color:#888;font-size:0.85rem;">女王恩典卷、猫眼石币已配置完整</p>
+            </div>
+        </div>
+        <div class="todo-item">
+            <div class="todo-check done">✓</div>
+            <div>
+                <strong>礼包价格</strong>
+                <p style="color:#888;font-size:0.85rem;">开箱/BP/许愿池礼包价格已配置</p>
+            </div>
+        </div>
+        <div class="todo-item">
+            <div class="todo-check done">✓</div>
+            <div>
+                <strong>兑换商店</strong>
+                <p style="color:#888;font-size:0.85rem;">14个兑换项已配置，包含折扣券、装备、纪念卡等</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 道具循环图 -->
+    <div class="section">
+        <div class="section-title"><span class="badge">循环</span>道具投放循环</div>
+        <div style="text-align:center;padding:16px 0;">
+            <div style="margin-bottom:16px;">
+                <span class="flow-box" style="background:rgba(231,76,60,0.2);border-color:#e74c3c;">礼包 $4.99~$99.99</span>
+                <span class="arrow">→</span>
+                <span class="item-box">女王恩典卷</span>
+                <span class="arrow">→</span>
+                <span class="flow-box">黄金神殿(开箱)</span>
+                <span class="arrow">→</span>
+                <span class="flow-box" style="background:rgba(46,204,113,0.2);border-color:#2ecc71;">钻石/加速/宝箱</span>
+            </div>
+            <div style="margin-bottom:16px;">
+                <span class="flow-box">沙漠盛宴/BP/许愿池</span>
+                <span class="arrow">→</span>
+                <span class="item-box">碎片</span>
+                <span class="arrow">→</span>
+                <span class="flow-box">制作</span>
+                <span class="arrow">→</span>
+                <span class="item-box">猫眼石币</span>
+                <span class="arrow">→</span>
+                <span class="flow-box">法老宝藏(兑换)</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "_comment": "P2 集卡册美术参考图配置。更新参考图只需替换 img/ 目录下对应文件，路径无需改动。",
+
+  "characters": {
+    "roger":   "%TEMP%/p2_roger_correct.jpg",
+    "scott":   "%TEMP%/p2_scott.jpg",
+    "penguin": "%TEMP%/p2_penguin.jpg",
+    "_note": "角色立绘参考，生成套内卡时注入。更新方式：替换 Temp 下对应文件。"
+  },
+
+  "cover_style": {
+    "outline_ref":    "{SKILL_DIR}/references/img/cover_outline_style.png",
+    "monopoly_board": "{SKILL_DIR}/references/img/monopoly_board_ui.png",
+    "_note": "封面生成参考图。outline_ref 用于所有封面描边风格一致性；monopoly_board 仅大富翁组封面使用。更新方式：替换 img/ 目录下对应文件。"
+  },
+
+  "output": {
+    "cards_dir":  "%TEMP%/p2_cards/集卡册资源",
+    "covers_dir": "%TEMP%/p2_cards/covers",
+    "_note": "生成结果输出目录，配置线扫描此目录。"
+  },
+
+  "grfal": {
+    "token_path": "%USERPROFILE%/.config/grfal-api/token_store.json",
+    "api_url":    "http://172.20.90.45:6018",
+    "script":     "{REPO}/.cursor/skills/grfal-api/scripts/call_grfal.py"
+  },
+
+  "specs": {
+    "card_w": 240,
+    "card_h": 320,
+    "cover_w": 304,
+    "cover_h": 328,
+    "cover_gen_ratio": "1:1",
+    "_note": "套内卡 240×320，封面 1:1 白底生图后裁为 304×328 透明底。"
+  }
+}

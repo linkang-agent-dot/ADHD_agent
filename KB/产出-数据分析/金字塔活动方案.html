@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金字塔活动方案 - 前期活动(D21开启)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); min-height: 100vh; padding: 40px 20px; color: #e8e8e8; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 { text-align: center; font-size: 2.2rem; margin-bottom: 8px; background: linear-gradient(90deg, #f5af19, #f12711); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { text-align: center; color: #888; margin-bottom: 40px; }
+        .section { background: rgba(255,255,255,0.03); border-radius: 16px; padding: 24px; margin-bottom: 24px; border: 1px solid rgba(255,255,255,0.08); }
+        .section-title { font-size: 1.3rem; color: #feca57; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+        .badge { background: linear-gradient(135deg, #667eea, #764ba2); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        th { background: rgba(255,255,255,0.05); color: #a8a8a8; font-size: 0.75rem; text-transform: uppercase; }
+        .old { color: #e74c3c; text-decoration: line-through; }
+        .new { color: #2ecc71; font-weight: bold; }
+        .highlight { color: #ff6b6b; font-weight: bold; }
+        .note { color: #f39c12; font-size: 0.85rem; }
+        .gantt-container { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 20px; }
+        .gantt-header, .gantt-row { display: flex; align-items: center; margin-bottom: 8px; }
+        .gantt-label { width: 160px; flex-shrink: 0; font-size: 0.85rem; }
+        .gantt-bar-container { flex: 1; height: 24px; background: rgba(255,255,255,0.05); border-radius: 4px; position: relative; }
+        .gantt-bar { height: 100%; border-radius: 4px; position: absolute; left: 0; }
+        .gantt-dates { display: flex; flex: 1; justify-content: space-between; font-size: 0.7rem; color: #888; }
+        .flow-box { display: inline-block; background: rgba(102,126,234,0.2); border: 1px solid #667eea; border-radius: 8px; padding: 8px 14px; margin: 4px; }
+        .arrow { color: #667eea; margin: 0 8px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🏛️ 金字塔活动方案</h1>
+    <p class="subtitle">前期活动 | 玩家生命周期 D21 开启 | 持续14天</p>
+
+    <!-- 包装替换对照表 -->
+    <div class="section">
+        <div class="section-title"><span class="badge">核心</span>道具包装替换</div>
+        <table>
+            <tr><th>原道具</th><th>新道具</th><th>用途</th><th>备注</th></tr>
+            <tr><td class="old">幸运之星 (1090)</td><td class="new">金字塔钥匙</td><td>开箱消耗</td><td>付费礼包产出</td></tr>
+            <tr><td class="old">许愿池碎片 (1138)</td><td class="new">圣甲虫碎片</td><td>制作消耗→产出兑换币</td><td>免费玩法产出</td></tr>
+            <tr><td class="old">迎春礼券 (1139)</td><td class="new">法老金币</td><td>兑换商店消耗</td><td>核心兑换货币</td></tr>
+            <tr><td class="old">新春邀请函 (1141)</td><td class="new">探险邀请函</td><td>拜访礼包邀请道具</td><td>社交玩法</td></tr>
+        </table>
+    </div>
+
+    <!-- 活动包装替换 -->
+    <div class="section">
+        <div class="section-title"><span class="badge">活动</span>活动名称包装替换</div>
+        <table>
+            <tr><th>活动ID</th><th>原名称</th><th>新名称</th><th>玩法说明</th></tr>
+            <tr><td>101515</td><td class="old">开箱-迎春纳福</td><td class="new">金字塔宝藏</td><td>消耗钥匙开箱抽奖</td></tr>
+            <tr><td>100812</td><td class="old">挑战活动-瑞兽献</td><td class="new">法老试炼</td><td>伤害档位产出金币 (仅3天)</td></tr>
+            <tr><td>102238</td><td class="old">BP-金蛇贺岁</td><td class="new">探险通行证</td><td>等级奖励+付费轨</td></tr>
+            <tr><td>105604</td><td class="old">拜访礼包-新春酒馆</td><td class="new">探险营地</td><td>邀请好友获奖励</td></tr>
+            <tr><td>101827</td><td class="old">拼图-拼出新年景</td><td class="new">壁画拼图</td><td>完成任务收集碎片</td></tr>
+            <tr><td>105012</td><td class="old">许愿池</td><td class="new">圣甲虫祭坛</td><td>抽奖产出碎片</td></tr>
+            <tr><td>10071802</td><td class="old">最佳酒馆-千杯豪饮</td><td class="new">法老宴会</td><td>积分档位产出碎片 (7期)</td></tr>
+            <tr><td>101338</td><td class="old">兑换-新春商店</td><td class="new">金字塔商店</td><td>消耗金币兑换奖励</td></tr>
+            <tr><td>100596</td><td class="old">累充-新春献礼</td><td class="new">法老馈赠</td><td>累计充值奖励</td></tr>
+        </table>
+    </div>
+
+    <!-- 兑换商店调整 -->
+    <div class="section">
+        <div class="section-title"><span class="badge">兑换</span>金字塔商店奖励调整建议</div>
+        <table>
+            <tr><th>原奖励</th><th>新奖励</th><th>消耗金币</th><th>调整说明</th></tr>
+            <tr><td class="old">新春限定皮肤宝箱</td><td class="new">金字塔限定皮肤宝箱</td><td>400</td><td class="note">⚠️ 必换：皮肤主题需匹配</td></tr>
+            <tr><td class="old">稀有英雄装扮宝箱</td><td class="new">法老装扮宝箱</td><td>700</td><td class="note">⚠️ 必换：装扮主题需匹配</td></tr>
+            <tr><td>建筑师折扣券</td><td>建筑师折扣券</td><td>4000</td><td>保持不变</td></tr>
+            <tr><td>商城折扣券</td><td>商城折扣券</td><td>3000</td><td>保持不变</td></tr>
+            <tr><td>头像框自选箱</td><td>头像框自选箱</td><td>1000</td><td>保持不变</td></tr>
+            <tr><td>高级大礼包箱</td><td>高级大礼包箱</td><td>100~200</td><td>保持不变</td></tr>
+            <tr><td>通用加速碎片</td><td>通用加速碎片</td><td>200</td><td>保持不变</td></tr>
+            <tr><td>高级技能书</td><td>高级技能书</td><td>20</td><td>保持不变</td></tr>
+        </table>
+        <p style="margin-top:16px; color:#888; font-size:0.85rem;">💡 养成线奖励(加速/技能书/资源)保持不变，仅皮肤/装扮类需要更换主题包装</p>
+    </div>
+
+    <!-- 排期甘特图 -->
+    <div class="section">
+        <div class="section-title"><span class="badge">排期</span>活动甘特图 (D21开启，持续14天)</div>
+        <div class="gantt-container">
+            <div class="gantt-header">
+                <div class="gantt-label" style="color:#888; font-size:0.75rem;">活动</div>
+                <div class="gantt-dates">
+                    <span>D21</span><span>D22</span><span>D23</span><span>D24</span><span>D25</span>
+                    <span>D26</span><span>D27</span><span>D28</span><span>D29</span><span>D30</span>
+                    <span>D31</span><span>D32</span><span>D33</span><span>D34</span><span>D35</span>
+                </div>
+            </div>
+            <div class="gantt-row"><div class="gantt-label">金字塔宝藏(开箱)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:93.3%;background:linear-gradient(90deg,#e74c3c,#c0392b);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">法老试炼(挑战)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:20%;background:linear-gradient(90deg,#3498db,#2980b9);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">探险通行证(BP)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:93.3%;background:linear-gradient(90deg,#9b59b6,#8e44ad);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">探险营地(拜访)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:93.3%;background:linear-gradient(90deg,#e67e22,#d35400);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">壁画拼图</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:93.3%;background:linear-gradient(90deg,#1abc9c,#16a085);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">圣甲虫祭坛(许愿)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:93.3%;background:linear-gradient(90deg,#f1c40f,#f39c12);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">法老宴会(酒馆)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:93.3%;background:linear-gradient(90deg,#2ecc71,#27ae60);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">金字塔商店(兑换)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:100%;background:linear-gradient(90deg,#667eea,#764ba2);"></div></div></div>
+            <div class="gantt-row"><div class="gantt-label">法老馈赠(累充)</div><div class="gantt-bar-container"><div class="gantt-bar" style="width:93.3%;background:linear-gradient(90deg,#ff6b6b,#ee5a5a);"></div></div></div>
+        </div>
+        <div style="margin-top:12px;font-size:0.8rem;color:#888;">
+            <span style="display:inline-block;width:10px;height:10px;background:#3498db;border-radius:2px;margin-right:4px;"></span>法老试炼仅3天(D21-D23)
+            <span style="margin-left:16px;display:inline-block;width:10px;height:10px;background:#667eea;border-radius:2px;margin-right:4px;"></span>兑换商店延长1天(至D35)
+        </div>
+    </div>
+
+    <!-- 道具循环图 -->
+    <div class="section">
+        <div class="section-title"><span class="badge">循环</span>道具投放循环 (保持不变)</div>
+        <div style="text-align:center; padding:20px 0;">
+            <div style="margin-bottom:20px;">
+                <span class="flow-box" style="background:rgba(231,76,60,0.2);border-color:#e74c3c;">付费礼包 $2.99~$49.99</span>
+                <span class="arrow">→</span>
+                <span class="flow-box" style="background:rgba(243,156,18,0.2);border-color:#f39c12;">金字塔钥匙</span>
+                <span class="arrow">→</span>
+                <span class="flow-box">金字塔宝藏(开箱)</span>
+                <span class="arrow">→</span>
+                <span class="flow-box" style="background:rgba(46,204,113,0.2);border-color:#2ecc71;">钻石/加速/宝箱</span>
+            </div>
+            <div style="margin-bottom:20px;">
+                <span class="flow-box">法老宴会/BP免费轨/祭坛</span>
+                <span class="arrow">→</span>
+                <span class="flow-box" style="background:rgba(243,156,18,0.2);border-color:#f39c12;">圣甲虫碎片</span>
+                <span class="arrow">→</span>
+                <span class="flow-box">制作(1:1)</span>
+                <span class="arrow">→</span>
+                <span class="flow-box" style="background:rgba(243,156,18,0.2);border-color:#f39c12;">法老金币</span>
+            </div>
+            <div style="margin-bottom:20px;">
+                <span class="flow-box">法老试炼(挑战)</span>
+                <span class="arrow">→</span>
+                <span class="flow-box" style="background:rgba(243,156,18,0.2);border-color:#f39c12;">法老金币 x10~80</span>
+                <span class="arrow">→</span>
+                <span class="flow-box">金字塔商店</span>
+                <span class="arrow">→</span>
+                <span class="flow-box" style="background:rgba(46,204,113,0.2);border-color:#2ecc71;">折扣券/皮肤/装扮</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 需要配合修改的内容 -->
+    <div class="section">
+        <div class="section-title"><span class="badge">配套</span>需要配合修改的内容清单</div>
+        <table>
+            <tr><th>类型</th><th>内容</th><th>优先级</th><th>说明</th></tr>
+            <tr><td>道具图标</td><td>金字塔钥匙、圣甲虫碎片、法老金币、探险邀请函</td><td class="highlight">P0</td><td>4个核心道具图标</td></tr>
+            <tr><td>活动UI</td><td>9个活动的主界面背景、图标</td><td class="highlight">P0</td><td>埃及/金字塔主题</td></tr>
+            <tr><td>皮肤资源</td><td>金字塔限定皮肤</td><td class="highlight">P0</td><td>兑换商店核心奖励</td></tr>
+            <tr><td>装扮资源</td><td>法老装扮套装</td><td class="new">P1</td><td>兑换商店奖励</td></tr>
+            <tr><td>文案</td><td>活动描述、规则说明</td><td class="new">P1</td><td>埃及探险主题文案</td></tr>
+            <tr><td>邮件</td><td>活动开启/结束邮件</td><td>P2</td><td>更新主题包装</td></tr>
+            <tr><td>推送</td><td>活动推送文案</td><td>P2</td><td>更新主题包装</td></tr>
+        </table>
+    </div>
+
+    <!-- 礼包价格 -->
+    <div class="section">
+        <div class="section-title"><span class="badge">付费</span>礼包价格 (保持不变)</div>
+        <table>
+            <tr><th>礼包</th><th>价格</th><th>内容</th></tr>
+            <tr><td>金字塔钥匙礼包 x5档</td><td>$2.99 / $4.99 / $9.99 / $19.99 / $49.99</td><td>钥匙 + 技能书 + 钻石 + VIP积分</td></tr>
+            <tr><td>探险通行证(免费)</td><td>$4.99</td><td>解锁付费轨奖励</td></tr>
+            <tr><td>探险通行证(豪华)</td><td>$19.99</td><td>解锁付费轨 + 超级轨奖励</td></tr>
+            <tr><td>探险营地礼包</td><td>$99.99</td><td>限定皮肤 + 邀请道具</td></tr>
+            <tr><td>圣甲虫祭坛</td><td>$4.99/次</td><td>抽奖获得碎片</td></tr>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

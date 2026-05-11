@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X2 夏日节数据分析报告集</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2d3250;
+    --accent: #6c8cff;
+    --accent2: #ff6c8c;
+    --accent3: #6cffb0;
+    --accent4: #ffc46c;
+    --text: #e8eaf6;
+    --text-muted: #8c91b0;
+    --green: #4caf7d;
+    --red: #e05a5a;
+    --yellow: #f0b429;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ===== LAYOUT ===== */
+  .app { display: flex; height: 100vh; }
+
+  .sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .sidebar-header {
+    padding: 20px 16px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-logo {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .sidebar-subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .sidebar-nav { padding: 12px 8px; flex: 1; }
+
+  .nav-group-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    padding: 8px 8px 4px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 2px;
+    border: 1px solid transparent;
+  }
+
+  .nav-item:hover { background: var(--surface2); }
+
+  .nav-item.active {
+    background: rgba(108,140,255,0.12);
+    border-color: rgba(108,140,255,0.3);
+  }
+
+  .nav-icon {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .nav-icon.blue { background: rgba(108,140,255,0.2); }
+  .nav-icon.red { background: rgba(255,108,140,0.2); }
+  .nav-icon.green { background: rgba(108,255,176,0.2); }
+  .nav-icon.yellow { background: rgba(255,196,108,0.2); }
+
+  .nav-text { flex: 1; }
+  .nav-label { font-size: 13px; font-weight: 600; color: var(--text); }
+  .nav-desc { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+
+  .main { flex: 1; overflow-y: auto; }
+
+  .content { display: none; }
+  .content.active { display: block; }
+
+  /* ===== PAGE HEADER ===== */
+  .page-header {
+    padding: 32px 40px 24px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%);
+  }
+
+  .page-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    display: flex; gap: 16px; flex-wrap: wrap;
+  }
+
+  .page-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .page-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .page-subtitle { font-size: 14px; color: var(--text-muted); }
+
+  /* ===== CONTENT ===== */
+  .page-body { padding: 32px 40px; max-width: 1100px; }
+
+  /* ===== KPI CARDS ===== */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .kpi-card.blue::before { background: var(--accent); }
+  .kpi-card.red::before { background: var(--accent2); }
+  .kpi-card.green::before { background: var(--accent3); }
+  .kpi-card.yellow::before { background: var(--accent4); }
+
+  .kpi-label { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
+  .kpi-value { font-size: 26px; font-weight: 800; }
+  .kpi-value.blue { color: var(--accent); }
+  .kpi-value.red { color: var(--accent2); }
+  .kpi-value.green { color: var(--accent3); }
+  .kpi-value.yellow { color: var(--accent4); }
+  .kpi-change { font-size: 11px; margin-top: 4px; }
+  .kpi-change.up { color: var(--green); }
+  .kpi-change.down { color: var(--red); }
+  .kpi-change.neutral { color: var(--text-muted); }
+
+  /* ===== SECTIONS ===== */
+  .section { margin-bottom: 40px; }
+
+  .section-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .section-title .tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  .tag.blue { background: rgba(108,140,255,0.2); color: var(--accent); }
+  .tag.red { background: rgba(255,108,140,0.2); color: var(--accent2); }
+  .tag.green { background: rgba(108,255,176,0.2); color: var(--accent3); }
+  .tag.yellow { background: rgba(255,196,108,0.2); color: var(--accent4); }
+  .tag.gray { background: rgba(140,145,176,0.2); color: var(--text-muted); }
+
+  /* ===== TABLES ===== */
+  .table-wrap { overflow-x: auto; margin-bottom: 16px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  th {
+    background: var(--surface2);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .table-wrap table { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td.bold { font-weight: 700; }
+  td.green { color: var(--green); font-weight: 600; }
+  td.red { color: var(--red); font-weight: 600; }
+  td.yellow { color: var(--yellow); font-weight: 600; }
+  td.accent { color: var(--accent); font-weight: 700; }
+  td.muted { color: var(--text-muted); }
+  td.center { text-align: center; }
+
+  /* ===== INSIGHT BOXES ===== */
+  .insight {
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.8;
+    border-left: 3px solid;
+  }
+
+  .insight.blue { background: rgba(108,140,255,0.08); border-color: var(--accent); }
+  .insight.red { background: rgba(255,108,140,0.08); border-color: var(--accent2); }
+  .insight.green { background: rgba(108,255,176,0.08); border-color: var(--accent3); }
+  .insight.yellow { background: rgba(255,196,108,0.08); border-color: var(--accent4); }
+
+  .insight-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .insight.blue .insight-title { color: var(--accent); }
+  .insight.red .insight-title { color: var(--accent2); }
+  .insight.green .insight-title { color: var(--accent3); }
+  .insight.yellow .insight-title { color: var(--accent4); }
+
+  /* ===== FUNNEL ===== */
+  .funnel { display: flex; flex-direction: column; gap: 4px; margin: 16px 0; }
+
+  .funnel-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .funnel-bar {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    border-radius: 8px;
+    opacity: 0.08;
+  }
+
+  .funnel-label { flex: 1; font-size: 13px; font-weight: 600; z-index: 1; }
+  .funnel-value { font-size: 13px; font-weight: 700; z-index: 1; color: var(--accent); }
+  .funnel-rate { font-size: 11px; color: var(--text-muted); z-index: 1; min-width: 60px; text-align: right; }
+
+  /* ===== ATTRIBUTION ===== */
+  .attr-bar-container { margin: 16px 0; }
+
+  .attr-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .attr-label { width: 160px; font-size: 12px; color: var(--text-muted); text-align: right; flex-shrink: 0; }
+  .attr-bar-wrap { flex: 1; background: var(--surface2); border-radius: 4px; height: 22px; position: relative; }
+  .attr-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; }
+  .attr-bar-label { font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap; }
+  .attr-amount { width: 80px; font-size: 12px; font-weight: 700; text-align: right; flex-shrink: 0; }
+
+  /* ===== CONCLUSION CARDS ===== */
+  .conclusion-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-bottom: 24px; }
+
+  .conclusion-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+
+  .conclusion-num { font-size: 32px; font-weight: 900; opacity: 0.15; line-height: 1; margin-bottom: 8px; }
+  .conclusion-text { font-size: 13px; line-height: 1.7; color: var(--text); }
+  .conclusion-text strong { color: var(--accent); }
+
+  /* ===== BADGE ===== */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 700;
+    vertical-align: middle;
+  }
+
+  .badge.new { background: rgba(108,255,176,0.2); color: var(--accent3); }
+  .badge.shared { background: rgba(140,145,176,0.2); color: var(--text-muted); }
+  .badge.warn { background: rgba(255,196,108,0.2); color: var(--accent4); }
+  .badge.danger { background: rgba(255,108,140,0.2); color: var(--accent2); }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-item { margin-bottom: 12px; }
+  .progress-header { display: flex; justify-content: space-between; margin-bottom: 4px; }
+  .progress-label { font-size: 12px; color: var(--text-muted); }
+  .progress-value { font-size: 12px; font-weight: 700; }
+  .progress-track { height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+
+  /* ===== CODE BLOCK ===== */
+  .code-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+    color: #a8b5e0;
+    overflow-x: auto;
+    white-space: pre;
+    margin: 12px 0;
+  }
+
+  /* ===== SMALL HELPERS ===== */
+  .text-muted { color: var(--text-muted); }
+  .text-green { color: var(--green); }
+  .text-red { color: var(--red); }
+  .text-accent { color: var(--accent); }
+  .text-yellow { color: var(--yellow); }
+  .mb-8 { margin-bottom: 8px; }
+  .mb-16 { margin-bottom: 16px; }
+  .mb-24 { margin-bottom: 24px; }
+  p { margin-bottom: 12px; color: var(--text); font-size: 13px; line-height: 1.8; }
+  p strong { color: var(--accent); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+  /* ===== COMPARE TABLE ===== */
+  .compare-badge {
+    font-size: 11px; font-weight: 700;
+    padding: 3px 8px; border-radius: 4px;
+  }
+  .compare-badge.up { background: rgba(76,175,125,0.2); color: var(--green); }
+  .compare-badge.down { background: rgba(224,90,90,0.2); color: var(--red); }
+  .compare-badge.flat { background: rgba(140,145,176,0.15); color: var(--text-muted); }
+
+  /* HOME PAGE */
+  .home-hero {
+    padding: 60px 40px 40px;
+    background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .home-kpi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 32px; }
+
+  .report-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 32px 40px; }
+
+  .report-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .report-card:hover {
+    border-color: rgba(108,140,255,0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  .report-card-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+
+  .report-card-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .report-card-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+  .report-card-meta { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .report-card-tag {
+    font-size: 10px; padding: 3px 8px; border-radius: 4px;
+    background: var(--surface2); color: var(--text-muted);
+  }
+
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">X2 · 2026夏日节</div>
+      <div class="sidebar-title">数据分析报告集</div>
+      <div class="sidebar-subtitle">数据源：Datain v1089 · 2026-04-21</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group-label">报告目录</div>
+
+      <div class="nav-item active" onclick="switchTab('home', this)">
+        <div class="nav-icon blue">🏠</div>
+        <div class="nav-text">
+          <div class="nav-label">总览</div>
+          <div class="nav-desc">核心结论 & 导航</div>
+        </div>
+      </div>
+
+      <div class="nav-item" onclick="switchTab('report1', this)">
+        <div class="nav-icon blue">🎲</div>
+        <div class="nav-text">
+          <div class="nav-label">大富翁专项回归</div>
+          <div class="nav-desc">付费模块 · 成就礼包 · R级分析</div>
+        </div>
+      </div>
+
+      <div class="nav-item" onclick="switchTab('report2', this)">
+        <div class="nav-icon yellow">📊</div>
+        <div class="nav-text">
+          <div class="nav-label">节日总体数据分析</div>
+          <div class="nav-desc">新服 vs 老服 · 增长归因</div>
+        </div>
+      </div>
+
+      <div class="nav-item" onclick="switchTab('report3', this)">
+        <div class="nav-icon red">🔥</div>
+        <div class="nav-text">
+          <div class="nav-label">强消耗专项回归</div>
+          <div class="nav-desc">参与率 · 消耗深度 · 渠道分析</div>
+        </div>
+      </div>
+
+      <div class="nav-item" onclick="switchTab('report4', this)">
+        <div class="nav-icon green">🎫</div>
+        <div class="nav-text">
+          <div class="nav-label">BP专项回归</div>
+          <div class="nav-desc">骰子根因 · 等级分布 · 付费转化</div>
+        </div>
+      </div>
+
+      <div class="nav-item" onclick="switchTab('report5', this)">
+        <div class="nav-icon blue">💧</div>
+        <div class="nav-text">
+          <div class="nav-label">掉落活动专项回归</div>
+          <div class="nav-desc">参与深度 · 产出 6-8× · 付费协同</div>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+
+    <!-- HOME -->
+    <div id="home" class="content active">
+      <div class="home-hero">
+        <div class="page-meta">
+          <span>📅 2026-04-21</span>
+          <span>🎮 X2 大富翁节</span>
+          <span>🖥️ 服务器 1006802 · 1006902</span>
+        </div>
+        <div class="page-title">X2 夏日节数据分析报告集</div>
+        <div class="page-subtitle">包含大富翁专项、节日总体分析、强消耗渠道、BP 骰子根因四份深度回归报告</div>
+
+        <div class="home-kpi">
+          <div class="kpi-card blue">
+            <div class="kpi-label">节日收入增幅</div>
+            <div class="kpi-value blue">+103%</div>
+            <div class="kpi-change up">↑ $168 → $341 均值</div>
+          </div>
+          <div class="kpi-card yellow">
+            <div class="kpi-label">大富翁收入均值</div>
+            <div class="kpi-value yellow">$94.92</div>
+            <div class="kpi-change neutral">占新模块增量 59.4%</div>
+          </div>
+          <div class="kpi-card red">
+            <div class="kpi-label">超R收入集中度</div>
+            <div class="kpi-value red">94.8%</div>
+            <div class="kpi-change down">3人贡献 $179.88</div>
+          </div>
+          <div class="kpi-card green">
+            <div class="kpi-label">共有模块影响</div>
+            <div class="kpi-value green">+6.1%</div>
+            <div class="kpi-change up">新内容纯增量叠加</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="report-cards">
+        <div class="report-card" onclick="switchTab('report1', null)">
+          <div class="report-card-icon" style="background:rgba(108,140,255,0.15)">🎲</div>
+          <div class="report-card-title">大富翁专项回归</div>
+          <div class="report-card-desc">X2 首次上线大富翁形式。13档成就礼包仅5档有购买，超R贡献94.8%收入，核心问题是玩家进度推不动（止步30圈）。</div>
+          <div class="report-card-meta">
+            <span class="report-card-tag">成就礼包 13档</span>
+            <span class="report-card-tag">总收入 $189.83</span>
+            <span class="report-card-tag">8名付费用户</span>
+          </div>
+        </div>
+        <div class="report-card" onclick="switchTab('report2', null)">
+          <div class="report-card-icon" style="background:rgba(255,196,108,0.15)">📊</div>
+          <div class="report-card-title">节日总体数据分析</div>
+          <div class="report-card-desc">新服 vs 老服对照组。节日收入翻倍，但付费人数持平（8.5人）。94%增量来自3个新模块，共有模块安全无损。</div>
+          <div class="report-card-meta">
+            <span class="report-card-tag">4服对照组</span>
+            <span class="report-card-tag">ARPPU +91%</span>
+            <span class="report-card-tag">5个新模块</span>
+          </div>
+        </div>
+        <div class="report-card" onclick="switchTab('report3', null)">
+          <div class="report-card-icon" style="background:rgba(255,108,140,0.15)">🔥</div>
+          <div class="report-card-title">强消耗专项回归</div>
+          <div class="report-card-desc">大富翁投放让消耗深度3-5×跃升（人均13→49-70），但设计目标200无人达到。最高仅159，人均达成率35%。</div>
+          <div class="report-card-meta">
+            <span class="report-card-tag">参与率 12.2%</span>
+            <span class="report-card-tag">深度 3-5× 提升</span>
+            <span class="report-card-tag">9期历史对比</span>
+          </div>
+        </div>
+        <div class="report-card" onclick="switchTab('report4', null)">
+          <div class="report-card-icon" style="background:rgba(108,255,176,0.15)">🎫</div>
+          <div class="report-card-title">BP专项回归 · 骰子根因</div>
+          <div class="report-card-desc">三渠道经验产出仅25-43%设计目标。BP满级门槛建议从411降至200-250，L16+覆盖率预计从15%提升至60%+。</div>
+          <div class="report-card-meta">
+            <span class="report-card-tag">均值L5等级</span>
+            <span class="report-card-tag">通行证5.8%</span>
+            <span class="report-card-tag">满级率5.8%</span>
+          </div>
+        </div>
+        <div class="report-card" onclick="switchTab('report5', null)">
+          <div class="report-card-icon" style="background:rgba(108,140,255,0.15)">💧</div>
+          <div class="report-card-title">掉落活动专项回归</div>
+          <div class="report-card-desc">新增 GVE 掉落渠道，产出较历史基准 6-8×，但仍距设计目标 3×。触达核心打野层，参与率与历史持平；掉落转化中层付费用户，大R消费在 vip/mecha。</div>
+          <div class="report-card-meta">
+            <span class="report-card-tag">5服全量</span>
+            <span class="report-card-tag">产出 6-8× 跃升</span>
+            <span class="report-card-tag">掉落付费率 27-44%</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 0 40px 32px;">
+        <div class="section-title">核心优化建议汇总</div>
+        <div class="conclusion-grid">
+          <div class="conclusion-card">
+            <div class="conclusion-num" style="color:var(--accent)">01</div>
+            <div class="conclusion-text">
+              <strong>成就礼包价格梯度修正（高优先级）</strong><br>
+              前5档改为严格递增：$1.99→$4.99→$9.99→$19.99→$49.99，降低玩家付费门槛，参照P2做法前期转化后期吸金。
+            </div>
+          </div>
+          <div class="conclusion-card">
+            <div class="conclusion-num" style="color:var(--accent2)">02</div>
+            <div class="conclusion-text">
+              <strong>BP满级门槛从411降至200-250（高优先级）</strong><br>
+              产出和奖励结构不动，仅降所需道具量。L16+覆盖率预计从15%→60%+，满级触发购买意愿，通行证购买率有望从5.8%→8%+。
+            </div>
+          </div>
+          <div class="conclusion-card">
+            <div class="conclusion-num" style="color:var(--accent3)">03</div>
+            <div class="conclusion-text">
+              <strong>BP骰子前置（高优先级）</strong><br>
+              L21-L25的20根骰子提前分散到L11-L20，让均值玩家（实际L5-L7）能拿到更多骰子，提升棋盘推进深度。
+            </div>
+          </div>
+          <div class="conclusion-card">
+            <div class="conclusion-num" style="color:var(--accent4)">04</div>
+            <div class="conclusion-text">
+              <strong>深度进度驱动（中优先级）</strong><br>
+              30圈后设置装饰物目标，50-100圈设升级版装饰物，增强深度追求动力。当前阶段奖励ROI仅0.37，远低于成就礼包2.42。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORT 1: 大富翁专项回归 -->
+    <div id="report1" class="content">
+      <div class="page-header">
+        <div class="page-meta">
+          <span>📅 2026-04-21</span>
+          <span>🖥️ 1006802 (04-08~14) · 1006902 (04-12~19)</span>
+          <span>👥 各约 660 用户</span>
+        </div>
+        <div class="page-title">🎲 X2 大富翁专项数据回归</div>
+        <div class="page-subtitle">X2 首次上线大富翁形式（换皮自 P2 普通版），UI 从横屏改为竖屏</div>
+      </div>
+
+      <div class="page-body">
+        <!-- KPIs -->
+        <div class="kpi-grid">
+          <div class="kpi-card blue">
+            <div class="kpi-label">新服均值收入</div>
+            <div class="kpi-value blue">$94.92</div>
+            <div class="kpi-change neutral">占新模块增量 59.4%</div>
+          </div>
+          <div class="kpi-card red">
+            <div class="kpi-label">超R收入占比</div>
+            <div class="kpi-value red">94.8%</div>
+            <div class="kpi-change down">3名超R贡献 $179.88</div>
+          </div>
+          <div class="kpi-card yellow">
+            <div class="kpi-label">付费人数</div>
+            <div class="kpi-value yellow">8人</div>
+            <div class="kpi-change neutral">2服合计 1,327 用户</div>
+          </div>
+          <div class="kpi-card green">
+            <div class="kpi-label">成就礼包有效率</div>
+            <div class="kpi-value green">5/13</div>
+            <div class="kpi-change down">40圈后全部0购买</div>
+          </div>
+        </div>
+
+        <!-- CONCLUSIONS -->
+        <div class="section">
+          <div class="section-title">核心结论 <span class="tag blue">5条</span></div>
+          <div class="insight blue">
+            <div class="insight-title">📌 结论1 · 收入主力</div>
+            大富翁是节日新模块中<strong>收入贡献最大的</strong>：新服均值 $94.92，占 3 个新模块增量的 <strong>59.4%</strong>。
+          </div>
+          <div class="insight red">
+            <div class="insight-title">⚠️ 结论2 · 收入集中</div>
+            <strong>3 名超R贡献了 $179.88（占总收入 94.8%）</strong>，中R及以下只买了 $1.99 的入门礼包。高度鲸鱼依赖。
+          </div>
+          <div class="insight yellow">
+            <div class="insight-title">📌 结论3 · 档位浪费</div>
+            13档成就礼包设计，<strong>仅5档有购买，40圈及以上全部无人购买</strong>。绝大多数玩家进度未超过30圈。
+          </div>
+          <div class="insight green">
+            <div class="insight-title">✅ 结论4 · 共有模块安全</div>
+            加入大富翁后，共有模块收入仍持平（+7.6%），属<strong>纯增量叠加</strong>，没有蚕食。
+          </div>
+          <div class="insight red">
+            <div class="insight-title">🔍 结论5 · 根本问题</div>
+            核心问题不是礼包档数不够，而是<strong>玩家进度推不动</strong>：免费骰子覆盖~30圈，之后玩家缺乏动力继续。
+          </div>
+        </div>
+
+        <!-- OVERALL DATA -->
+        <div class="section">
+          <div class="section-title">整体数据 <span class="tag gray">3.1</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>指标</th><th class="num">1006902</th><th class="num">1006802</th><th class="num">新服均值</th></tr></thead>
+              <tbody>
+                <tr><td>大富翁付费人数</td><td class="num">5</td><td class="num">3</td><td class="num bold">4.0</td></tr>
+                <tr><td>大富翁订单数</td><td class="num">10</td><td class="num">7</td><td class="num bold">8.5</td></tr>
+                <tr><td>大富翁收入</td><td class="num">$57.90</td><td class="num">$131.93</td><td class="num accent bold">$94.92</td></tr>
+                <tr><td>大富翁ARPPU</td><td class="num">$11.58</td><td class="num">$43.98</td><td class="num bold">$23.73</td></tr>
+                <tr><td>人均订单</td><td class="num">2.0</td><td class="num">2.3</td><td class="num bold">2.1</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-muted">1006802 收入是 1006902 的 2.3 倍，差异主要来自一笔 $99.99 成就礼包2（占 1006802 大富翁收入 75.8%）。样本极小，单个大R行为即可大幅影响数据。</p>
+        </div>
+
+        <!-- ACHIEVEMENT PACKAGES -->
+        <div class="section">
+          <div class="section-title">成就礼包：设计13档，仅5档有购买 <span class="tag red">3.2</span></div>
+          <p class="text-muted mb-16">棋盘每圈约 13 格；触达购买率 = 实际购买人数 / 达到该圈数的玩家数</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>档位</th><th>圈数</th><th class="num">价格</th><th class="num">达到人数</th><th class="num">实际购买</th><th class="num">触达购买率</th><th class="num">收入</th><th>状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>礼包1</td><td>5圈</td><td class="num">$1.99</td><td class="num">25</td><td class="num bold">8</td><td class="num green">32%</td><td class="num">$15.92</td><td><span class="badge new">有购买</span></td></tr>
+                <tr><td>礼包2</td><td>10圈</td><td class="num">$99.99</td><td class="num">4</td><td class="num bold">1</td><td class="num green">25%</td><td class="num accent">$99.99</td><td><span class="badge new">有购买</span></td></tr>
+                <tr style="background:rgba(255,108,140,0.04)"><td>礼包3</td><td>15圈</td><td class="num">$49.99</td><td class="num">3</td><td class="num bold">0</td><td class="num red">0%</td><td class="num muted">$0</td><td><span class="badge danger">价格倒挂</span></td></tr>
+                <tr><td>礼包4</td><td>20圈</td><td class="num">$19.99</td><td class="num">3</td><td class="num bold">2</td><td class="num green">67%</td><td class="num">$39.98</td><td><span class="badge new">有购买</span></td></tr>
+                <tr><td>礼包5</td><td>30圈</td><td class="num">$9.99</td><td class="num">2</td><td class="num bold">1</td><td class="num green">50%</td><td class="num">$9.99</td><td><span class="badge new">有购买</span></td></tr>
+                <tr style="background:rgba(255,108,140,0.04)"><td>礼包6</td><td>40圈</td><td class="num">$4.99</td><td class="num">1</td><td class="num bold">0</td><td class="num red">0%</td><td class="num muted">$0</td><td><span class="badge danger">进度壁</span></td></tr>
+                <tr class="muted"><td>礼包7</td><td>50圈</td><td class="num">$4.99</td><td class="num muted">0</td><td class="num bold muted">0</td><td class="num muted">—</td><td class="num muted">$0</td><td><span class="badge shared">无人到达</span></td></tr>
+                <tr class="muted"><td>礼包8-13</td><td>60-200圈</td><td class="num muted">…</td><td class="num muted">0</td><td class="num bold muted">0</td><td class="num muted">—</td><td class="num muted">$0</td><td><span class="badge shared">无人到达</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="insight yellow">
+            <div class="insight-title">⚠️ 关键发现：价格倒挂</div>
+            礼包3（15圈/$49.99）触达购买率 0%，但礼包4（20圈/$19.99）却 67%：3 个人全部跳过了 $49.99 直接等到 $19.99，<strong>价格倒挂导致被主动跳过</strong>。
+          </div>
+        </div>
+
+        <!-- R LEVEL -->
+        <div class="section">
+          <div class="section-title">各R级付费情况 <span class="tag gray">3.4</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>R级</th><th class="num">付费人数</th><th class="num">收入</th><th class="num">ARPPU</th><th class="num">收入占比</th></tr></thead>
+              <tbody>
+                <tr><td class="bold">超R (≥$1,000)</td><td class="num">3</td><td class="num accent bold">$179.88</td><td class="num">$59.96</td><td class="num red bold">94.8%</td></tr>
+                <tr><td>大R ($500~1k)</td><td class="num">1</td><td class="num">$1.99</td><td class="num">$1.99</td><td class="num muted">1.0%</td></tr>
+                <tr><td>中大R ($200~500)</td><td class="num">1</td><td class="num">$1.99</td><td class="num">$1.99</td><td class="num muted">1.0%</td></tr>
+                <tr><td>中R ($50~200)</td><td class="num">2</td><td class="num">$3.98</td><td class="num">$1.99</td><td class="num muted">2.1%</td></tr>
+                <tr><td>小R (<$50)</td><td class="num">1</td><td class="num">$1.99</td><td class="num">$1.99</td><td class="num muted">1.0%</td></tr>
+                <tr style="background:var(--surface2)"><td class="bold">合计</td><td class="num bold">8</td><td class="num accent bold">$189.83</td><td class="num bold">$23.73</td><td class="num bold">100%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- REVENUE BREAKDOWN -->
+        <div class="section">
+          <div class="section-title">付费组成排行 <span class="tag gray">3.5</span></div>
+          <div class="attr-bar-container">
+            <div class="attr-row">
+              <div class="attr-label">成就礼包2 ($99.99)</div>
+              <div class="attr-bar-wrap">
+                <div class="attr-bar" style="width:52.7%;background:rgba(108,140,255,0.6)">
+                  <span class="attr-bar-label">52.7%</span>
+                </div>
+              </div>
+              <div class="attr-amount text-accent">$99.99</div>
+            </div>
+            <div class="attr-row">
+              <div class="attr-label">成就礼包4 ($19.99)</div>
+              <div class="attr-bar-wrap">
+                <div class="attr-bar" style="width:21.1%;background:rgba(108,140,255,0.5)">
+                  <span class="attr-bar-label">21.1%</span>
+                </div>
+              </div>
+              <div class="attr-amount text-accent">$39.98</div>
+            </div>
+            <div class="attr-row">
+              <div class="attr-label">成就礼包1 ($1.99)</div>
+              <div class="attr-bar-wrap">
+                <div class="attr-bar" style="width:8.4%;background:rgba(108,140,255,0.4)">
+                  <span class="attr-bar-label">8.4%</span>
+                </div>
+              </div>
+              <div class="attr-amount">$15.92</div>
+            </div>
+            <div class="attr-row">
+              <div class="attr-label">骰子锚点 $9.99</div>
+              <div class="attr-bar-wrap">
+                <div class="attr-bar" style="width:5.3%;background:rgba(255,196,108,0.5)">
+                  <span class="attr-bar-label">5.3%</span>
+                </div>
+              </div>
+              <div class="attr-amount text-yellow">$9.99</div>
+            </div>
+            <div class="attr-row">
+              <div class="attr-label">成就礼包5 ($9.99)</div>
+              <div class="attr-bar-wrap">
+                <div class="attr-bar" style="width:5.3%;background:rgba(108,140,255,0.3)">
+                  <span class="attr-bar-label">5.3%</span>
+                </div>
+              </div>
+              <div class="attr-amount">$9.99</div>
+            </div>
+            <div class="attr-row">
+              <div class="attr-label">存钱罐 ($2.99)</div>
+              <div class="attr-bar-wrap">
+                <div class="attr-bar" style="width:4.7%;background:rgba(108,255,176,0.4)">
+                  <span class="attr-bar-label">4.7%</span>
+                </div>
+              </div>
+              <div class="attr-amount text-green">$8.97</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DICE FUNNEL -->
+        <div class="section">
+          <div class="section-title">骰子归因漏斗 <span class="tag gray">7.1</span></div>
+          <div class="funnel">
+            <div class="funnel-row">
+              <div class="funnel-bar" style="width:100%;background:var(--accent)"></div>
+              <div class="funnel-label">活动期活跃用户</div>
+              <div class="funnel-value">661人</div>
+              <div class="funnel-rate">100%</div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-bar" style="width:14.5%;background:var(--accent)"></div>
+              <div class="funnel-label">参与大富翁（消耗过骰子）</div>
+              <div class="funnel-value">96人</div>
+              <div class="funnel-rate">14.5%</div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-bar" style="width:7.4%;background:var(--accent2)"></div>
+              <div class="funnel-label">BP渠道获取骰子（覆盖率最低）</div>
+              <div class="funnel-value">49人</div>
+              <div class="funnel-rate text-red">7.4%</div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-bar" style="width:0.8%;background:var(--accent4)"></div>
+              <div class="funnel-label">推进到30圈以上</div>
+              <div class="funnel-value">≈5人</div>
+              <div class="funnel-rate text-yellow">~0.8%</div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-bar" style="width:0%;background:var(--accent2)"></div>
+              <div class="funnel-label">购买40圈+成就礼包（礼包6-13）</div>
+              <div class="funnel-value text-red">0人</div>
+              <div class="funnel-rate text-red">0%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOP USERS -->
+        <div class="section">
+          <div class="section-title">Top 用户分析 <span class="tag gray">3.7</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>排名</th><th>服务器</th><th>R级</th><th class="num">历史累计</th><th class="num">大富翁付费</th><th>购买内容</th></tr></thead>
+              <tbody>
+                <tr><td>🥇 1</td><td>1006802</td><td><span class="badge warn">超R $3,047</span></td><td class="num">$3,046.52</td><td class="num accent bold">$104.97</td><td>礼包1+2+4</td></tr>
+                <tr><td>🥈 2</td><td>1006902</td><td><span class="badge warn">超R $2,573</span></td><td class="num">$2,573.06</td><td class="num accent bold">$49.94</td><td>礼包1×3+锚点×2+礼包4</td></tr>
+                <tr><td>🥉 3</td><td>1006802</td><td><span class="badge warn">超R $1,491</span></td><td class="num">$1,490.70</td><td class="num accent bold">$24.97</td><td>礼包1+存钱罐×2+礼包4</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- P2 COMPARE -->
+        <div class="section">
+          <div class="section-title">对比 P2 大富翁（春节异族版）<span class="tag gray">3.3</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>指标</th><th>P2 (成熟全服)</th><th>X2 (新服均值)</th><th>说明</th></tr></thead>
+              <tbody>
+                <tr><td>付费率</td><td>11.00%</td><td class="red">~0.6%</td><td class="muted">新服R级结构差异</td></tr>
+                <tr><td>ARPPU</td><td class="accent">$123.26</td><td>$23.73</td><td class="muted">X2 仅 P2 的 1/5</td></tr>
+                <tr><td>超R付费率</td><td>56.47%</td><td class="green">≈60%</td><td class="muted">超R意愿接近</td></tr>
+                <tr><td>超R ARPPU</td><td class="accent">$378.46</td><td>$59.96</td><td class="muted">X2进度止步30圈内</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="insight green">
+            <div class="insight-title">✅ 形式可行</div>
+            超R付费意愿与 P2 接近（~60%），形式本身可行。核心差异不在礼包档数，而在于<strong>进度驱动力不足</strong>——P2 有行军套装等高价值外显驱动，X2 缺少这类深度锚点。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORT 2: 节日总体分析 -->
+    <div id="report2" class="content">
+      <div class="page-header">
+        <div class="page-meta">
+          <span>📅 2026-04-21</span>
+          <span>🖥️ 新服2 + 老服4（对照组）</span>
+        </div>
+        <div class="page-title">📊 X2 前期节日新内容效果评估</div>
+        <div class="page-subtitle">新服 vs 老服对照，定量评估大富翁等5个新模块的增量贡献</div>
+      </div>
+
+      <div class="page-body">
+        <div class="kpi-grid">
+          <div class="kpi-card blue">
+            <div class="kpi-label">节日收入增幅</div>
+            <div class="kpi-value blue">+103%</div>
+            <div class="kpi-change up">$168 → $341 均值</div>
+          </div>
+          <div class="kpi-card yellow">
+            <div class="kpi-label">节日ARPPU增幅</div>
+            <div class="kpi-value yellow">+91%</div>
+            <div class="kpi-change up">$21 → $40</div>
+          </div>
+          <div class="kpi-card green">
+            <div class="kpi-label">付费人数变化</div>
+            <div class="kpi-value green">持平</div>
+            <div class="kpi-change neutral">新/老均 8.5 人</div>
+          </div>
+          <div class="kpi-card red">
+            <div class="kpi-label">新模块增量占比</div>
+            <div class="kpi-value red">94%</div>
+            <div class="kpi-change up">纯增量叠加</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">三大核心结论</div>
+          <div class="insight blue">
+            <div class="insight-title">💡 结论1 · 收入翻倍但入口没变宽</div>
+            节日收入 <strong>+103%</strong>（$168→$341），节日付费人数<strong>完全持平</strong>（均 8.5 人）。增长全部来自 ARPPU 拉升（$21→$40，+91%）。新内容没有把更多人拉进付费池，但让已付费用户花得多了将近一倍。
+          </div>
+          <div class="insight green">
+            <div class="insight-title">✅ 结论2 · 新模块纯增量，共有模块安全</div>
+            新内容是<strong>纯增量叠加</strong>，不是内部替代。唯一例外：连锁系 -85%，但被 GACHA（+150%）和通行证（+66%）对冲，共有模块合计仅 +6.1%，整体无损。
+          </div>
+          <div class="insight yellow">
+            <div class="insight-title">📌 结论3 · 大富翁撑主力，周卡锚高价，掉落引流</div>
+            大富翁 58.5%、自选周卡 30.8%、掉落转付费 9.2%，每日GACHA礼包 1.5%，抢购礼包 0%。
+          </div>
+        </div>
+
+        <!-- CORE METRICS -->
+        <div class="section">
+          <div class="section-title">核心指标对比（新服 vs 老服） <span class="tag gray">1.1</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>指标</th>
+                  <th class="num">老服① 1006002</th><th class="num">老服② 1005602</th>
+                  <th class="num">老服③ 1006302</th><th class="num">老服④ 1004402</th>
+                  <th class="num" style="background:rgba(108,140,255,0.1)">老服均值</th>
+                  <th class="num">新服 1006902</th><th class="num">新服 1006802</th>
+                  <th class="num" style="background:rgba(108,255,176,0.1)">新服均值</th>
+                  <th class="num">变化</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>节日付费人数</td>
+                  <td class="num muted">11</td><td class="num muted">8</td><td class="num muted">6</td><td class="num muted">9</td>
+                  <td class="num bold" style="background:rgba(108,140,255,0.05)">8.5</td>
+                  <td class="num">9</td><td class="num">8</td>
+                  <td class="num bold" style="background:rgba(108,255,176,0.05)">8.5</td>
+                  <td><span class="compare-badge flat">持平</span></td>
+                </tr>
+                <tr>
+                  <td>节日收入</td>
+                  <td class="num muted">$77.77</td><td class="num muted">$210.63</td><td class="num muted">$149.73</td><td class="num muted">$233.56</td>
+                  <td class="num bold" style="background:rgba(108,140,255,0.05)">$167.92</td>
+                  <td class="num">$318.57</td><td class="num">$362.61</td>
+                  <td class="num accent bold" style="background:rgba(108,255,176,0.05)">$340.59</td>
+                  <td><span class="compare-badge up">+103%</span></td>
+                </tr>
+                <tr>
+                  <td>节日ARPPU</td>
+                  <td class="num muted">$7.07</td><td class="num muted">$26.33</td><td class="num muted">$24.96</td><td class="num muted">$25.95</td>
+                  <td class="num bold" style="background:rgba(108,140,255,0.05)">$21.08</td>
+                  <td class="num">$35.40</td><td class="num">$45.33</td>
+                  <td class="num green bold" style="background:rgba(108,255,176,0.05)">$40.37</td>
+                  <td><span class="compare-badge up">+91%</span></td>
+                </tr>
+                <tr>
+                  <td>人均订单</td>
+                  <td class="num muted">2.1</td><td class="num muted">4.6</td><td class="num muted">4.5</td><td class="num muted">4.9</td>
+                  <td class="num bold" style="background:rgba(108,140,255,0.05)">4.0</td>
+                  <td class="num">4.8</td><td class="num">4.9</td>
+                  <td class="num bold" style="background:rgba(108,255,176,0.05)">4.8</td>
+                  <td><span class="compare-badge up">+20%</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ATTRIBUTION -->
+        <div class="section">
+          <div class="section-title">收入增长归因 <span class="tag gray">2.4</span></div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;">
+            <div class="attr-row">
+              <div class="attr-label">新增模块（大富翁+周卡+掉转+每日GACHA）</div>
+              <div class="attr-bar-wrap">
+                <div class="attr-bar" style="width:94%;background:linear-gradient(90deg,var(--accent),var(--accent3))">
+                  <span class="attr-bar-label">94.0% · +$162.38</span>
+                </div>
+              </div>
+              <div class="attr-amount text-accent">$162.38</div>
+            </div>
+            <div class="attr-row">
+              <div class="attr-label">共有模块自然波动</div>
+              <div class="attr-bar-wrap">
+                <div class="attr-bar" style="width:6%;background:rgba(140,145,176,0.4)">
+                  <span class="attr-bar-label" style="color:var(--text-muted)">6%</span>
+                </div>
+              </div>
+              <div class="attr-amount text-muted">$10.30</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NEW MODULES -->
+        <div class="section">
+          <div class="section-title">5个新模块各自角色 <span class="tag gray">模块三</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>新模块</th><th class="num">新服均值</th><th class="num">占新模块增量</th><th>核心特征</th><th>状态</th><th>专项回归</th></tr></thead>
+              <tbody>
+                <tr><td class="bold">🎲 大富翁</td><td class="num accent bold">$94.92</td><td class="num bold">58.5%</td><td>$1.99~$99.99 全档位，1006802 单笔$99.99</td><td><span class="badge new">收入主力</span></td><td><span class="badge new">✓ 已做</span></td></tr>
+                <tr><td class="bold">📅 自选周卡</td><td class="num">$49.99</td><td class="num">30.8%</td><td>两服精确各1人买 $49.99，高价稳定</td><td><span class="badge warn">人群极窄</span></td><td><span class="badge danger">✗ 不做</span></td></tr>
+                <tr><td class="bold">💧 掉落转付费</td><td class="num">$14.98</td><td class="num">9.2%</td><td>$4.99/$9.99 低单价引流</td><td><span class="badge new">引流效果</span></td><td><span class="badge new">✓ 已做</span></td></tr>
+                <tr><td>每日GACHA礼包</td><td class="num muted">$2.50</td><td class="num muted">1.5%</td><td>仅1006902触发1笔，样本太小</td><td><span class="badge shared">待验证</span></td><td><span class="badge danger">✗ 不做</span></td></tr>
+                <tr><td>抢购礼包-养成</td><td class="num muted">$0</td><td class="num muted">0%</td><td>已部署，本轮零购买</td><td><span class="badge shared">未起量</span></td><td><span class="badge danger">✗ 不做</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="insight blue" style="margin-top:14px;">
+            <div class="insight-title">📋 回归决策说明</div>
+            <p>✅ <strong>大富翁</strong>：增长贡献最大（58.5%），有完整活跃行为数据（棋盘进度、骰子消耗、付费分层），样本足够支撑深度分析。</p>
+            <p>✅ <strong>掉落转付费</strong>：有真实活跃行为（PVE/GVE 战斗触发掉落），可做渠道深度拆解与 BP 经验路径分析。</p>
+            <p>✗ <strong>自选周卡</strong>：两服各精确 1 人购买，<strong>样本太小（n=2）</strong>，无法做任何有效回归，等后续更多服数据积累。</p>
+            <p>✗ <strong>每日GACHA礼包</strong>：仅 1006902 触发 1 笔，样本太小，结论不可信。</p>
+            <p style="margin-bottom:0">✗ <strong>抢购礼包-养成</strong>：本轮零购买，无数据，待后续服验证。</p>
+          </div>
+        </div>
+
+        <!-- SHARED MODULES -->
+        <div class="section">
+          <div class="section-title">共有模块内部变化 <span class="tag gray">2.3 · 2.6</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>模块</th><th class="num">老服均值</th><th class="num">新服 1006902</th><th class="num">新服 1006802</th><th class="num">新服均值</th><th class="num">变化幅度</th></tr></thead>
+              <tbody>
+                <tr><td>强消耗（抽奖券）</td><td class="num">$38.71</td><td class="num">$44.95</td><td class="num">$14.98</td><td class="num">$29.97</td><td><span class="compare-badge down">-23%</span></td></tr>
+                <tr><td>通行证</td><td class="num">$23.46</td><td class="num">$31.95</td><td class="num">$45.93</td><td class="num bold">$38.94</td><td><span class="compare-badge up">+66%</span></td></tr>
+                <tr><td>GACHA</td><td class="num">$19.97</td><td class="num">$74.90</td><td class="num">$24.96</td><td class="num bold">$49.93</td><td><span class="compare-badge up">+150%</span></td></tr>
+                <tr><td>BP</td><td class="num">$23.72</td><td class="num">$14.98</td><td class="num">$19.97</td><td class="num">$17.48</td><td><span class="compare-badge down">-26%</span></td></tr>
+                <tr><td>Shop装饰</td><td class="num">$24.96</td><td class="num">$19.97</td><td class="num">$49.93</td><td class="num">$34.95</td><td><span class="compare-badge up">+40%</span></td></tr>
+                <tr style="background:rgba(255,108,140,0.04)"><td class="bold text-red">连锁系</td><td class="num">$29.62</td><td class="num">$3.96</td><td class="num">$4.96</td><td class="num red bold">$4.46</td><td><span class="compare-badge down">-85%</span></td></tr>
+                <tr><td>行军表情</td><td class="num">$7.49</td><td class="num">—</td><td class="num">$4.99</td><td class="num">$2.50</td><td><span class="compare-badge down">-67%</span></td></tr>
+                <tr style="background:var(--surface2)"><td class="bold">共有模块合计</td><td class="num bold">$167.92</td><td class="num bold">$190.71</td><td class="num bold">$165.72</td><td class="num green bold">$178.22</td><td><span class="compare-badge up">+6.1%</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-muted">连锁系下降最大（-$25），但被 GACHA 和通行证上升（+$46）对冲。新内容挤压的主要是低单价连锁玩法，高价值模块反而受益。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORT 3: 强消耗专项 -->
+    <div id="report3" class="content">
+      <div class="page-header">
+        <div class="page-meta">
+          <span>📅 2026-04-21</span>
+          <span>🖥️ 1006802 · 1006902</span>
+          <span>📈 对比 9 个历史周期</span>
+        </div>
+        <div class="page-title">🔥 强消耗专项回归</div>
+        <div class="page-subtitle">BP 经验三渠道（强消耗/掉落/七日任务）全部低于设计目标 25-43%，本报告对强消耗渠道单独深度回归</div>
+      </div>
+
+      <div class="page-body">
+        <div class="kpi-grid">
+          <div class="kpi-card green">
+            <div class="kpi-label">深度跃升倍数</div>
+            <div class="kpi-value green">3-5×</div>
+            <div class="kpi-change up">人均 13 → 49-70</div>
+          </div>
+          <div class="kpi-card yellow">
+            <div class="kpi-label">本期参与率</div>
+            <div class="kpi-value yellow">12.2%</div>
+            <div class="kpi-change neutral">65人 / 531 DAU</div>
+          </div>
+          <div class="kpi-card red">
+            <div class="kpi-label">设计目标达成率</div>
+            <div class="kpi-value red">35%</div>
+            <div class="kpi-change down">最高 159 / 目标 200</div>
+          </div>
+          <div class="kpi-card blue">
+            <div class="kpi-label">基础道具占消耗</div>
+            <div class="kpi-value blue">99%</div>
+            <div class="kpi-change neutral">付费道具路径几乎无人走</div>
+          </div>
+        </div>
+
+        <!-- MAIN CONCLUSION -->
+        <div class="section">
+          <div class="section-title">最终结论</div>
+          <div class="insight green">
+            <div class="insight-title">✅ 大富翁投放是唯一有效改善项</div>
+            大富翁投放（从 1006702 起）是本期强消耗唯一有效的改善项，带动消耗深度从历史人均 13 提升到 49-70，为 <strong>3-5× 的跃升</strong>。其余指标（参与率、消耗结构、付费协同）均无显著变化。
+          </div>
+          <div class="insight red">
+            <div class="insight-title">⚠️ 深度仍不达设计目标</div>
+            即使深度已是历史最高，仍无任何玩家达到设计目标 200（最高仅 159，人均达成率 35%）。根因是<strong>坑深任务设计要求过高</strong>，玩家的道具储量支撑不到目标线。
+          </div>
+          <div class="insight yellow">
+            <div class="insight-title">🔧 优化建议</div>
+            下一期降低强消耗坑深任务的完成门槛（如将 200 目标拆成更细的阶梯，或降低积分兑换比例），让投放带来的新增参与者能更顺畅地走完消耗路径，把深度提升的效果充分释放。
+          </div>
+        </div>
+
+        <!-- PARTICIPATION RATE -->
+        <div class="section">
+          <div class="section-title">参与率：小服历史对比 <span class="tag gray">可比组</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>服务器</th><th>活动期</th><th class="num">DAU</th><th class="num">强消耗参与</th><th class="num">参与率</th><th>说明</th></tr></thead>
+              <tbody>
+                <tr style="background:rgba(255,196,108,0.06)"><td class="bold">1006802（本期）</td><td>Apr 08-14</td><td class="num">248</td><td class="num">42</td><td class="num yellow bold">16.9%</td><td class="muted">中上水平</td></tr>
+                <tr style="background:rgba(255,108,140,0.06)"><td class="bold text-red">1006902（本期）</td><td>Apr 12-19</td><td class="num">283</td><td class="num">23</td><td class="num red bold">8.1%</td><td class="muted">接近下限 ⚠️</td></tr>
+                <tr><td>1007002</td><td>Apr 16-19</td><td class="num">124</td><td class="num">22</td><td class="num">17.7%</td><td></td></tr>
+                <tr><td>1006702</td><td>Apr 06-09</td><td class="num">152</td><td class="num">25</td><td class="num">16.4%</td><td class="muted">← 大富翁投放起点</td></tr>
+                <tr><td>1006102</td><td>Mar 16-19</td><td class="num">102</td><td class="num">34</td><td class="num green">33.3%</td><td class="muted">历史最高</td></tr>
+                <tr><td>1005802</td><td>Mar 05-08</td><td class="num">416</td><td class="num">69</td><td class="num">16.6%</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-muted">1006902 参与率（8.1%）接近历史下限，两服差距超 2 倍，值得持续追问。</p>
+        </div>
+
+        <!-- DEPTH -->
+        <div class="section">
+          <div class="section-title">消耗深度：投放后 3-5× 跃升 <span class="tag green">核心发现</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>服务器</th><th class="num">参与人数</th>
+                  <th class="num">第一档</th><th class="num">第二档</th><th class="num">第三档</th>
+                  <th class="num">人均</th><th class="num">最大值</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background:rgba(108,255,176,0.06)"><td class="bold text-green">1006902（本期）</td><td class="num">23</td><td class="num">12 (52%)</td><td class="num">2 (9%)</td><td class="num">8 (35%)</td><td class="num green bold">70.0</td><td class="num">159</td></tr>
+                <tr style="background:rgba(108,255,176,0.04)"><td class="bold text-green">1006802（本期）</td><td class="num">42</td><td class="num">25 (60%)</td><td class="num">10 (24%)</td><td class="num">7 (17%)</td><td class="num green bold">49.1</td><td class="num">123</td></tr>
+                <tr><td>1007002 Apr16</td><td class="num">22</td><td class="num">17 (77%)</td><td class="num">4 (18%)</td><td class="num">1 (5%)</td><td class="num">33.7</td><td class="num">117</td></tr>
+                <tr style="background:rgba(255,196,108,0.04)"><td class="bold text-yellow">1006702 Apr06</td><td class="num">25</td><td class="num">10 (40%)</td><td class="num">9 (36%)</td><td class="num">6 (24%)</td><td class="num yellow bold">63.0</td><td class="num">150</td></tr>
+                <tr class="muted"><td>1006302 Mar23</td><td class="num">31</td><td class="num">31 (100%)</td><td class="num">0</td><td class="num">0</td><td class="num muted">11.5</td><td class="num muted">34</td></tr>
+                <tr class="muted"><td>1006202 Mar19</td><td class="num">28</td><td class="num">27 (96%)</td><td class="num">1</td><td class="num">0</td><td class="num muted">17.6</td><td class="num muted">62</td></tr>
+                <tr class="muted"><td>更早期 3服</td><td class="num">~200+</td><td class="num">~100%</td><td class="num">0-1%</td><td class="num">0</td><td class="num muted">11-15</td><td class="num muted">42-96</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Depth progress visualization -->
+          <div style="margin-top:20px;">
+            <div class="progress-item">
+              <div class="progress-header">
+                <span class="progress-label">1006702（投放起点）人均 63.0</span>
+                <span class="progress-value text-yellow">31.5%</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width:31.5%;background:var(--accent4)"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-header">
+                <span class="progress-label">1006902（本期）人均 70.0</span>
+                <span class="progress-value text-green">35%</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width:35%;background:var(--accent3)"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-header">
+                <span class="progress-label">1006802（本期）人均 49.1</span>
+                <span class="progress-value text-green">24.5%</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width:24.5%;background:var(--accent3)"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-header">
+                <span class="progress-label">设计目标 200（未有人达到）</span>
+                <span class="progress-value text-red">目标线</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width:100%;background:rgba(255,108,140,0.3)"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STRUCTURE -->
+        <div class="section">
+          <div class="section-title">消耗结构 & 积分来源</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>积分类型</th><th class="num">1006802</th><th class="num">1006902</th><th class="num">占比（基础道具）</th></tr></thead>
+              <tbody>
+                <tr><td>11119278（基础道具积分）</td><td class="num">7,120</td><td class="num">5,154</td><td class="num green bold">99.1% / 98.2%</td></tr>
+                <tr><td>11119279（付费道具积分）</td><td class="num muted">66</td><td class="num muted">95</td><td class="num muted">0.9% / 1.8%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-muted">强消耗以基础道具为主（99%），付费道具路径几乎没人走，付费增量贡献极小。</p>
+
+          <div class="table-wrap" style="margin-top:16px;">
+            <table>
+              <thead><tr><th>渠道</th><th class="num">1006802 积分量</th><th class="num">1006802 人数</th><th class="num">1006902 积分量</th><th class="num">1006902 人数</th></tr></thead>
+              <tbody>
+                <tr><td>event_task（强消耗任务）</td><td class="num bold">8,693</td><td class="num">47人</td><td class="num bold">5,664</td><td class="num">24人</td></tr>
+                <tr style="background:rgba(255,196,108,0.04)"><td class="bold text-yellow">mail_event_reissue（补发）</td><td class="num yellow">1,387</td><td class="num">16人</td><td class="num yellow">1,268</td><td class="num">15人</td></tr>
+                <tr><td>activity_exchange</td><td class="num muted">54</td><td class="num muted">8人</td><td class="num muted">38</td><td class="num muted">4人</td></tr>
+                <tr><td>iap_pack</td><td class="num muted">30</td><td class="num muted">2人</td><td class="num muted">90</td><td class="num muted">4人</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="insight yellow">
+            <div class="insight-title">⚠️ 注意：补发比例偏高</div>
+            mail_event_reissue（补发）占总生成积分约 13%，涉及 15-16 人，比例明显偏高，需关注是否存在补发异常。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORT 4: BP专项 -->
+    <div id="report4" class="content">
+      <div class="page-header">
+        <div class="page-meta">
+          <span>📅 2026-04-21</span>
+          <span>🖥️ 1006802 · 1006902</span>
+          <span>📈 对比基准：1005402 (2026-02)</span>
+        </div>
+        <div class="page-title">🎫 BP 专项回归 · 大富翁骰子产出根因分析</div>
+        <div class="page-subtitle">三渠道经验产出仅 25-43% 设计目标，BP 满级率 5.8%，满级付费触发几乎未激活</div>
+      </div>
+
+      <div class="page-body">
+        <div class="kpi-grid">
+          <div class="kpi-card red">
+            <div class="kpi-label">三渠道经验达成率</div>
+            <div class="kpi-value red">27-35%</div>
+            <div class="kpi-change down">人均 110-143 / 目标 411</div>
+          </div>
+          <div class="kpi-card yellow">
+            <div class="kpi-label">BP 参与率</div>
+            <div class="kpi-value yellow">14-32%</div>
+            <div class="kpi-change up">是历史服 7.4% 的 2-3倍</div>
+          </div>
+          <div class="kpi-card blue">
+            <div class="kpi-label">L25 满级率</div>
+            <div class="kpi-value blue">5.8%</div>
+            <div class="kpi-change up">vs 历史服 2.7%</div>
+          </div>
+          <div class="kpi-card green">
+            <div class="kpi-label">通行证 P1→P2 升级率</div>
+            <div class="kpi-value green">71%</div>
+            <div class="kpi-change up">买了的人会深度购买</div>
+          </div>
+        </div>
+
+        <!-- THREE CONCLUSIONS -->
+        <div class="section">
+          <div class="section-title">三大结论与建议</div>
+          <div class="insight red">
+            <div class="insight-title">🎯 结论一：产出侧——经验道具严重不足</div>
+            三渠道均严重低于设计目标（25-43% 达成率）；BP 平均等级止于 L5，后段骰子几乎无人拿到。问题根因是<strong>经验道具总产出不足设计的 1/3</strong>，不是设计方向有问题，是门槛校准和实际活跃度对不上。<br><br>
+            <strong>修改建议：</strong>将满级所需道具从 ~411 降至 <strong>200-250</strong>，产出和奖励结构不动；L16+ 覆盖率预计从 15% → 60%+。
+          </div>
+          <div class="insight yellow">
+            <div class="insight-title">🎯 结论二：参与深度——高但未转化为进度</div>
+            新服 BP 参与率（14-32%）是成熟服（7.4%）的 2-3 倍，参与广度没有问题；但参与者人均道具收入仅 110-143，停留在 L5-L7。<strong>36% 的参与者是只做七日任务的零付费玩家</strong>，深度参与（三渠道全走）只占 37%。<br><br>
+            <strong>修改建议：</strong>满级门槛降低后，当前参与深度（110-143 道具）足以覆盖 L18-L22，继续观察数据。
+          </div>
+          <div class="insight green">
+            <div class="insight-title">🎯 结论三：付费率——满级触发机制未启动</div>
+            通行证购买率 5.8%（历史服 5.4%），基本持平；<strong>76% 玩家在满级后才购买解锁礼包</strong>，但 L25 满级率仅 5.8%，满级触发付费基本未激活。P1→P2 升级率高达 71%，<strong>买了的人会深度购买</strong>，瓶颈在首次转化。<br><br>
+            <strong>修改建议：</strong>降满级门槛 → 满级率↑ → 触发购买 → 通行证购买率有望从 5.8% → 8%+。
+          </div>
+        </div>
+
+        <!-- LEVEL DISTRIBUTION -->
+        <div class="section">
+          <div class="section-title">BP 等级分布 <span class="tag gray">支撑数据一</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>等级区间</th>
+                  <th class="num">1006802</th><th class="num">1006902</th><th class="num">两服合计</th>
+                  <th class="num">历史服1005402</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>L0（未达L1）</td><td class="num muted">14人 (17%)</td><td class="num muted">6人 (15%)</td><td class="num muted">20人 (17%)</td><td class="num muted">35人 (16%)</td></tr>
+                <tr><td class="bold text-red">L1–L5（大多数止步于此）</td><td class="num red">33人 (41%)</td><td class="num red">16人 (40%)</td><td class="num red bold">49人 (41%)</td><td class="num muted">83人 (37%)</td></tr>
+                <tr><td>L6–L10</td><td class="num">16人 (20%)</td><td class="num">7人 (17%)</td><td class="num">23人 (19%)</td><td class="num muted">35人 (16%)</td></tr>
+                <tr><td>L11–L15</td><td class="num">9人 (11%)</td><td class="num">4人 (10%)</td><td class="num">13人 (11%)</td><td class="num muted">13人 (6%)</td></tr>
+                <tr style="background:rgba(255,196,108,0.06)"><td class="bold text-yellow">L16+（骰子关键节点）</td><td class="num yellow bold">11人 (13.6%)</td><td class="num yellow bold">8人 (20%)</td><td class="num yellow bold">19人 (15.7%)</td><td class="num muted">11人 (4.9%)</td></tr>
+                <tr style="background:rgba(255,196,108,0.04)"><td class="bold">L21+（10根骰子节点）</td><td class="num">7人 (8.6%)</td><td class="num">6人 (15%)</td><td class="num">13人 (10.7%)</td><td class="num muted">8人 (3.6%)</td></tr>
+                <tr style="background:rgba(108,140,255,0.06)"><td class="bold text-accent">L25 满级</td><td class="num accent bold">4人 (4.9%)</td><td class="num accent bold">3人 (7.5%)</td><td class="num accent bold">7人 (5.8%)</td><td class="num muted">6人 (2.7%)</td></tr>
+                <tr style="background:var(--surface2)"><td class="bold">BP 参与总人数</td><td class="num bold">80人</td><td class="num bold">40人</td><td class="num bold">120人</td><td class="num muted">223人</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- EXP CHANNELS -->
+        <div class="section">
+          <div class="section-title">BP 经验来源 vs 设计目标 <span class="tag gray">支撑数据二</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>渠道</th><th class="num">1006802人均</th><th class="num">1006902人均</th><th class="num">设计目标</th><th class="num">达成率</th></tr></thead>
+              <tbody>
+                <tr><td>七日任务（覆盖89-97%）</td><td class="num">60.8</td><td class="num">64.3</td><td class="num muted">150</td><td class="num yellow bold">41-43%</td></tr>
+                <tr><td>强消耗 gacha（覆盖52-57%）</td><td class="num">49.1</td><td class="num">70.0</td><td class="num muted">200</td><td class="num red bold">25-35%</td></tr>
+                <tr><td>掉落转付费（覆盖45-49%）</td><td class="num">47.9</td><td class="num">63.8</td><td class="num muted">180</td><td class="num red bold">27-35%</td></tr>
+                <tr style="background:var(--surface2)"><td class="bold">三渠道合计人均</td><td class="num bold">110</td><td class="num bold">143</td><td class="num muted bold">411（满级）</td><td class="num red bold">27-35%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- DICE NODES -->
+        <div class="section">
+          <div class="section-title">骰子节点分布 <span class="tag gray">支撑数据五</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>骰子节点</th><th class="num">数量</th><th class="num">累积</th><th class="num">所需道具（期望）</th><th>当前覆盖</th></tr></thead>
+              <tbody>
+                <tr><td>L1</td><td class="num">5根</td><td class="num">5根</td><td class="num muted">~9道具</td><td><span class="badge new">✅ 可达</span></td></tr>
+                <tr><td>L2</td><td class="num">5根</td><td class="num">10根</td><td class="num muted">~20道具</td><td><span class="badge new">✅ 可达</span></td></tr>
+                <tr><td>L6</td><td class="num">5根</td><td class="num">15根</td><td class="num muted">~86道具</td><td><span class="badge new">✅ 可达</span></td></tr>
+                <tr><td>L10</td><td class="num">5根</td><td class="num">20根</td><td class="num muted">~154道具</td><td><span class="badge warn">⚠️ 部分</span></td></tr>
+                <tr style="background:rgba(255,196,108,0.06)"><td class="bold text-yellow">L16（关键节点）</td><td class="num yellow bold">5根</td><td class="num yellow bold">25根</td><td class="num yellow">~257道具</td><td><span class="badge warn">15.7% 达到</span></td></tr>
+                <tr style="background:rgba(255,108,140,0.04)"><td class="bold">L21</td><td class="num">10根</td><td class="num">35根</td><td class="num muted">~343道具</td><td><span class="badge danger">10.7% 达到</span></td></tr>
+                <tr style="background:rgba(255,108,140,0.04)"><td class="bold">L25 满级</td><td class="num">10根</td><td class="num">45根</td><td class="num muted">~411道具</td><td><span class="badge danger">5.8% 达到</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-muted">L1-L15 合计 20根（44%），L16-L25 合计 25根（56%）。后置结构是设计意图，无需改动；降门槛是让更多人能走到后置节点。</p>
+        </div>
+
+        <!-- PAYMENT CONV -->
+        <div class="section">
+          <div class="section-title">付费转化路径 <span class="tag gray">支撑数据四</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>指标</th><th class="num">1006802</th><th class="num">1006902</th><th class="num">两服合计</th><th class="num">历史服1005402</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>BP参与率</td><td class="num">32.3%</td><td class="num">14.1%</td><td class="num">22.8%</td><td class="num muted">23.4%</td></tr>
+                <tr><td class="bold">通行证购买率（BP参与者中）</td><td class="num bold">4.9%</td><td class="num bold">7.5%</td><td class="num accent bold">5.8%</td><td class="num muted">5.4%</td></tr>
+                <tr><td>L25 满级率</td><td class="num">4.9%</td><td class="num">7.5%</td><td class="num">5.8%</td><td class="num muted">2.7%</td></tr>
+                <tr style="background:rgba(108,255,176,0.06)"><td class="bold text-green">P1→P2 升级率</td><td class="num green bold">75%</td><td class="num green bold">67%</td><td class="num green bold">71%</td><td class="num muted">67%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="insight green">
+            <div class="insight-title">💡 瓶颈在首次转化，升级意愿不是问题</div>
+            P1→P2 升级率高达 67-75%，买了的人会深度购买。<strong>「满级后购买」触发机制几乎未激活</strong>（76%玩家满级后才买，但满级率只有5.8%）——降门槛是打通这条路的关键。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORT 5: 掉落活动专项 -->
+    <div id="report5" class="content">
+      <div class="page-header">
+        <div class="page-meta">
+          <span>📅 2026-04-21</span>
+          <span>🖥️ 5服全量：1006702 / 802 / 902 / 1007002 / 102</span>
+          <span>📈 历史对比：1002802 / 1003002（211200083）</span>
+        </div>
+        <div class="page-title">💧 掉落活动专项回归</div>
+        <div class="page-subtitle">BP 经验子报告 · 大富翁节新增 GVE 掉落渠道，产出 6-8× 历史基准，触达核心打野层</div>
+      </div>
+
+      <div class="page-body">
+        <div class="kpi-grid">
+          <div class="kpi-card red">
+            <div class="kpi-label">产出 vs 设计目标达成率</div>
+            <div class="kpi-value red">23-35%</div>
+            <div class="kpi-change down">实际 42~64 / 目标 180，差 ~3×</div>
+          </div>
+          <div class="kpi-card blue">
+            <div class="kpi-label">PVE 战斗深度提升</div>
+            <div class="kpi-value blue">1.6×</div>
+            <div class="kpi-change up">人均 44次 → 69次（付费驱动）</div>
+          </div>
+          <div class="kpi-card green">
+            <div class="kpi-label">掉落转付费新增贡献</div>
+            <div class="kpi-value green">9.2%</div>
+            <div class="kpi-change up">$14.98/服，占新模块总增量（$162）</div>
+          </div>
+          <div class="kpi-card yellow">
+            <div class="kpi-label">专属礼包主力档</div>
+            <div class="kpi-value yellow">$4.99</div>
+            <div class="kpi-change down">7/8笔集中此档，$19.99/$49.99 零购买</div>
+          </div>
+        </div>
+
+        <!-- 三大结论 -->
+        <div class="section">
+          <div class="section-title">三大结论</div>
+
+          <div class="insight green">
+            <div class="insight-title">🎯 结论1 · 参与深度——参与广度与历史持平，但 PVE/GVE 战斗深度显著提升</div>
+            5 服参与率 5.6~16.1%，历史基准（211200083）6.5~7.7%，整体相近。1006902 参与率偏低（6.4%）根因是 <strong>PVE 渗透率仅 14.8%</strong>（1006802 为 31.0%），并非掉落活动本身问题。掉落参与者 100% 有 PVE 行为，无零战斗 drop 用户。<br><br>
+            参与广度持平的同时，<strong>参与者的战斗深度显著提升</strong>：<br>
+            · PVE 人均战斗次数：<strong>历史 ~44 次 → 本期 69 次（+1.6×）</strong><br>
+            · GVE 战斗深度：老服同样有 GVE 战斗（21-28次/人），但<strong>完全没有 GVE drop 产出</strong>；本期新增 GVE 掉落渠道，参与者人均 GVE 战斗 43~45 次，drop 贡献约 570 个道具（占总量 23%）。<br><br>
+            <strong>修改建议：</strong>若要提升参与广度，入口在 PVE 活跃引导，不在掉落本身。
+          </div>
+
+          <div class="insight blue">
+            <div class="insight-title">🎯 结论2 · 产出侧——较历史大幅提升（6-8×），但仍未达到设计目标（差 ~3×）</div>
+            四大提升来源：① PVE 战斗次数多 <strong>1.6×</strong>（69次 vs 44次）；② PVE drop 触发率高 <strong>2~3×</strong>（14.6~22.7% vs 7.3%）；③ 次均道具高 <strong>1.7×</strong>（3.94~4.71 vs ~2.5）；④ <strong>GVE 掉落全新渠道</strong>，新服 GVE 贡献约 570 个道具（~23%）。<br><br>
+            综合以上，人均产出从历史基准 <strong>~8 个</strong>提升至本期 <strong>42~64 个（+6~8×）</strong>，是机制升级的实质性改善。<br><br>
+            但与此同时，<strong>仍未达到设计预期</strong>：掉落渠道设计目标为人均 <strong>180 个</strong>，实际仅完成 <strong>23~35%</strong>，距目标还差约 <strong>3×</strong>。根因是新服玩家整体活跃深度（战斗次数、掉落触发频率）仍低于设计假设的满活跃状态。<br><br>
+            <strong>修改建议：</strong>持续观察；如需提升产出，优先方向是提升 PVE 参与广度（当前 15~31%），而非调整单次 drop 产出。
+          </div>
+
+          <div class="insight yellow">
+            <div class="insight-title">🎯 结论3 · 付费协同——中层付费渠道，非大R消费焦点</div>
+            掉落参与者付费率 27~44%（全服 3~6×），但 ARPPU 仅 $17-22，其他付费用户 $87-117（<strong>5~7×</strong>）。掉落参与者偏向订阅型小额礼包（normal/time_card），其他付费用户以大额单次为主（vip/mecha_first）。<br><br>
+            掉落活动触达的是<strong>中层付费用户</strong>，大 R 消费焦点在 vip/mecha 等高单价品类。
+          </div>
+
+          <div class="insight red">
+            <div class="insight-title">🎯 结论4 · 专属引流礼包——$4.99 档有效，高档次漏斗在 $9.99 以上断裂</div>
+            活动内嵌 4 档专属引流礼包（$4.99 / $9.99 / $19.99 / $49.99），4 服有效窗口综合购买率约 <strong>9.5%</strong>，有效触达掉落参与者。<br><br>
+            · 购买高度集中在 <strong>$4.99 档（7/8 笔）</strong>，$9.99 仅 1 笔，<strong>$19.99 / $49.99 完全零购买</strong><br>
+            · 专属包总收入 $44.92，占掉落参与者总收入约 <strong>0.7%</strong>——<strong>引流价值大于直接变现价值</strong><br>
+            · 高档次礼包未被激活，说明掉落参与者愿意为活动小额付费，但不具备大额消费意愿<br><br>
+            <strong>设计含义：</strong>专属礼包定价上限维持 $9.99 以内即可覆盖主要转化人群；$19.99+ 档需配合更强的价值锚点或进度驱动才有机会激活。
+          </div>
+        </div>
+
+        <!-- 活动时间轴 -->
+        <div class="section">
+          <div class="section-title">活动背景 · 时间轴 <span class="tag gray">背景</span></div>
+          <p class="text-muted mb-16">大富翁节替代了本批新服（1006702-1007102）的首个节日掉落槽位，211200083 紧随接续上线。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>服务器</th><th>开服日</th><th>大富翁节（11119453）</th><th>接续（211200083）</th><th class="num">开服天数</th></tr></thead>
+              <tbody>
+                <tr><td class="bold">1006702</td><td class="muted">~03-12</td><td>04-07~04-12（6天）</td><td>04-12~04-14</td><td class="num">第 26~31 天</td></tr>
+                <tr><td class="bold">1006802</td><td class="muted">~03-15</td><td>04-09~04-15（7天）</td><td>04-15~04-20</td><td class="num">第 25~31 天</td></tr>
+                <tr><td class="bold">1006902</td><td class="muted">~03-19</td><td>04-13~04-19（7天）</td><td>04-19~04-21</td><td class="num">第 25~31 天</td></tr>
+                <tr><td class="bold">1007002</td><td class="muted">~03-22</td><td>04-17~04-21（5天）</td><td>—</td><td class="num">第 26~30 天</td></tr>
+                <tr><td class="bold">1007102</td><td class="muted">~03-26</td><td>04-19~04-21（3天）</td><td>—</td><td class="num">第 24~26 天</td></tr>
+                <tr><td class="muted">1002802（参照）</td><td class="muted">~09-08</td><td class="muted">—</td><td class="muted">10-05~10-11（7天）</td><td class="num muted">第 27~33 天</td></tr>
+                <tr><td class="muted">1003002（参照）</td><td class="muted">~09-22</td><td class="muted">—</td><td class="muted">10-19~10-25（7天）</td><td class="num muted">第 27~33 天</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="mb-8" style="margin-top:20px;"><strong>BP 道具（11119453）来源渠道分布（5 服合计）：</strong></p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>渠道</th><th class="num">行数</th><th>说明</th></tr></thead>
+              <tbody>
+                <tr><td>event_task</td><td class="num bold">4,541</td><td class="muted">任务渠道</td></tr>
+                <tr><td>july_gacha_2024</td><td class="num bold">1,195</td><td class="muted">gacha 渠道</td></tr>
+                <tr style="background:rgba(108,255,176,0.05)"><td class="bold text-accent">activity_exchange</td><td class="num accent bold">698</td><td><span class="badge new">本次分析目标</span></td></tr>
+                <tr><td class="muted">其他（邮件/IAP/卡片）</td><td class="num muted">45</td><td class="muted">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-wrap" style="margin-top:12px;">
+            <table>
+              <thead><tr><th>子活动类型</th><th class="num">记录数</th><th class="num">占比</th><th class="num">总道具</th><th class="num">参与人数</th></tr></thead>
+              <tbody>
+                <tr><td>PVE（211201003）</td><td class="num">672</td><td class="num green bold">96.3%</td><td class="num accent">2,493</td><td class="num">57</td></tr>
+                <tr><td>GVE（21127225）<span class="badge new" style="margin-left:6px">新渠道</span></td><td class="num">26</td><td class="num muted">3.7%</td><td class="num">570</td><td class="num">13</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 参与率 -->
+        <div class="section">
+          <div class="section-title">参与率数据 <span class="tag gray">§2</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>服务器</th><th>活动期</th><th class="num">活跃</th><th class="num">掉落参与</th><th class="num">参与率</th></tr></thead>
+              <tbody>
+                <tr><td class="bold">1006702</td><td>04-07~04-12</td><td class="num">199</td><td class="num bold">24</td><td class="num accent bold">12.1%</td></tr>
+                <tr style="background:rgba(108,255,176,0.05)"><td class="bold">1006802</td><td>04-09~04-15</td><td class="num">248</td><td class="num bold">40</td><td class="num" style="color:var(--green);font-weight:700">16.1%</td></tr>
+                <tr style="background:rgba(255,108,140,0.05)"><td class="bold">1006902</td><td>04-13~04-19</td><td class="num">283</td><td class="num bold">18</td><td class="num red bold">6.4% ⚠️</td></tr>
+                <tr><td class="bold">1007002</td><td>04-17~04-21</td><td class="num">128</td><td class="num bold">15</td><td class="num accent bold">11.7%</td></tr>
+                <tr><td class="bold">1007102</td><td>04-19~04-21</td><td class="num">179</td><td class="num bold">10</td><td class="num yellow bold">5.6%</td></tr>
+                <tr><td class="muted">1002802（历史基准）</td><td class="muted">10-05~10-11</td><td class="num muted">495</td><td class="num muted">32</td><td class="num muted">6.5%</td></tr>
+                <tr><td class="muted">1003002（历史基准）</td><td class="muted">10-19~10-25</td><td class="num muted">492</td><td class="num muted">38</td><td class="num muted">7.7%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="mb-8" style="margin-top:16px;"><strong>PVE 渗透率对比（1006902 低参与根因）：</strong></p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>服务器</th><th class="num">活跃</th><th class="num">PVE玩家</th><th class="num">PVE渗透率</th><th class="num">掉落参与</th><th class="num">PVE→drop率</th><th class="num">无PVE的drop用户</th></tr></thead>
+              <tbody>
+                <tr style="background:rgba(108,255,176,0.05)"><td class="bold">1006802</td><td class="num">248</td><td class="num">77</td><td class="num" style="color:var(--green);font-weight:700">31.0%</td><td class="num">40</td><td class="num">51.9%</td><td class="num" style="color:var(--green);font-weight:700">0</td></tr>
+                <tr style="background:rgba(255,108,140,0.05)"><td class="bold">1006902</td><td class="num">283</td><td class="num">42</td><td class="num red bold">14.8%</td><td class="num">18</td><td class="num">42.9%</td><td class="num" style="color:var(--green);font-weight:700">0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 人均产出 -->
+        <div class="section">
+          <div class="section-title">人均产出 & 战斗基数 <span class="tag gray">§4-6</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>指标</th><th class="num">历史基准（211200083）</th><th class="num">1006802（本期）</th><th class="num">1006902（本期）</th></tr></thead>
+              <tbody>
+                <tr><td>人均道具</td><td class="num muted">6~10（中位 ~8）</td><td class="num accent bold">47.9</td><td class="num" style="color:var(--green);font-weight:700">63.8</td></tr>
+                <tr><td>次均道具</td><td class="num muted">2.1~2.9</td><td class="num bold">4.71</td><td class="num bold">3.94</td></tr>
+                <tr><td>人均触发次数</td><td class="num muted">2.9~3.5</td><td class="num bold">10.2次</td><td class="num bold">16.2次</td></tr>
+                <tr><td>PVE 人均战斗次数</td><td class="num muted">42~44次</td><td class="num bold">68.6次</td><td class="num bold">69.2次</td></tr>
+                <tr><td>PVE drop 触发率/战</td><td class="num muted">7.2~7.3%</td><td class="num accent bold">14.6%</td><td class="num" style="color:var(--green);font-weight:700">22.7%</td></tr>
+                <tr style="background:rgba(255,108,140,0.05)"><td class="bold red">设计目标</td><td class="num muted">—</td><td class="num red bold" colspan="2">人均 180 道具（仍差约 3×）</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="mb-8" style="margin-top:16px;"><strong>GVE 掉落（新渠道，无历史对照）：</strong></p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>服务器</th><th class="num">参与</th><th class="num">avg/次</th><th class="num">人均触发</th><th class="num">人均道具</th></tr></thead>
+              <tbody>
+                <tr><td>1006702</td><td class="num">5</td><td class="num">21.67</td><td class="num">1.2次</td><td class="num bold">26.0</td></tr>
+                <tr><td>1006802</td><td class="num">9</td><td class="num">20.0</td><td class="num">1.8次</td><td class="num bold">35.6</td></tr>
+                <tr><td>1006902</td><td class="num">4</td><td class="num">25.0</td><td class="num">2.5次</td><td class="num" style="color:var(--green);font-weight:700">62.5</td></tr>
+                <tr><td>1007002</td><td class="num">2</td><td class="num">36.67</td><td class="num">1.5次</td><td class="num bold">55.0</td></tr>
+                <tr><td>1007102</td><td class="num">5</td><td class="num">31.25</td><td class="num">1.6次</td><td class="num bold">50.0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- BP 影响 & 付费协同 -->
+        <div class="section">
+          <div class="section-title">BP 影响 & 付费结构 <span class="tag gray">§8-10</span></div>
+
+          <p class="mb-8"><strong>掉落参与 vs 未参与 BP 均值（5× 差距）：</strong></p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>分组</th><th>服务器</th><th class="num">人数</th><th class="num">全渠道BP均值</th><th class="num">P50</th></tr></thead>
+              <tbody>
+                <tr style="background:rgba(108,255,176,0.05)"><td class="bold" style="color:var(--green)">参与掉落</td><td>1006802</td><td class="num">40</td><td class="num" style="color:var(--green);font-weight:700">186.4</td><td class="num">139</td></tr>
+                <tr><td class="muted">未参与</td><td>1006802</td><td class="num">40</td><td class="num muted">36.6</td><td class="num muted">27</td></tr>
+                <tr style="background:rgba(108,255,176,0.05)"><td class="bold" style="color:var(--green)">参与掉落</td><td>1006902</td><td class="num">18</td><td class="num" style="color:var(--green);font-weight:700">259.3</td><td class="num">237</td></tr>
+                <tr><td class="muted">未参与</td><td>1006902</td><td class="num">21</td><td class="num muted">49.0</td><td class="num muted">35</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="mb-8" style="margin-top:20px;"><strong>付费率 & 礼包结构对比：</strong></p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>服务器</th><th>分组</th><th class="num">付费人数</th><th class="num">估算收入</th><th class="num">ARPPU</th><th>Top礼包类型（消费模式）</th></tr></thead>
+              <tbody>
+                <tr style="background:rgba(108,255,176,0.05)"><td>1006802</td><td class="bold" style="color:var(--green)">掉落参与者</td><td class="num">11</td><td class="num">~$190</td><td class="num" style="color:var(--green);font-weight:700">~$17</td><td class="muted">normal / time_card（<strong>订阅型</strong>）</td></tr>
+                <tr><td>1006802</td><td class="muted">其他付费用户</td><td class="num muted">9</td><td class="num muted">$1,053+</td><td class="num accent bold">~$117</td><td class="muted">vip / mecha_first（<strong>大额单次型</strong>）</td></tr>
+                <tr style="background:rgba(108,255,176,0.05)"><td>1006902</td><td class="bold" style="color:var(--green)">掉落参与者</td><td class="num">8</td><td class="num">~$176</td><td class="num" style="color:var(--green);font-weight:700">~$22</td><td class="muted">normal / mecha_first（<strong>订阅型</strong>）</td></tr>
+                <tr><td>1006902</td><td class="muted">其他付费用户</td><td class="num muted">7</td><td class="num muted">$612+</td><td class="num accent bold">~$87</td><td class="muted">normal / battle_pass / fes_weekly（<strong>大额单次型</strong>）</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="insight yellow">
+            <div class="insight-title">🔑 关键发现</div>
+            掉落参与者 ARPPU 约为其他付费用户的 <strong>1/5~1/7</strong>（$17-22 vs $87-117）。掉落活动触达的是<strong>中层付费用户</strong>，大 R 的消费渠道在 vip/mecha 等高单价品类，掉落活动对大R并无增量拉动。
+          </div>
+        </div>
+
+        <!-- 专属引流礼包 -->
+        <div class="section">
+          <div class="section-title">专属引流礼包（2013500391-394） <span class="tag red">§11</span></div>
+          <p class="text-muted mb-16">活动内嵌 4 档专属礼包：$4.99 / $9.99 / $19.99 / $49.99，面向掉落参与者定向引流。</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>服务器</th><th class="num">掉落参与</th><th class="num">购买人数</th><th>购买档位</th><th class="num">收入</th><th class="num">购买率</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1006702</td><td class="num">24</td><td class="num muted">0</td><td class="muted">—</td><td class="num muted">$0</td><td class="num muted">0%（窗口仅6天）</td></tr>
+                <tr><td>1006802</td><td class="num">40</td><td class="num bold">3</td><td>$4.99×3</td><td class="num">$14.97</td><td class="num accent bold">7.5%</td></tr>
+                <tr><td>1006902</td><td class="num">18</td><td class="num bold">2</td><td>$4.99×1、$9.99×1</td><td class="num">$14.98</td><td class="num accent bold">11.1%</td></tr>
+                <tr><td>1007002</td><td class="num">15</td><td class="num bold">1</td><td>$4.99×1</td><td class="num">$4.99</td><td class="num accent bold">6.7%</td></tr>
+                <tr><td>1007102</td><td class="num">11</td><td class="num bold">2</td><td>$4.99×2</td><td class="num">$9.98</td><td class="num accent bold">18.2%</td></tr>
+                <tr style="background:var(--surface2)"><td class="bold">5服合计（排除1006702）</td><td class="num bold">84</td><td class="num bold">8</td><td class="muted">—</td><td class="num accent bold">$44.92</td><td class="num" style="color:var(--green);font-weight:700">9.5%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="text-muted mb-8" style="margin-top:16px;">各档购买分布：</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>档位</th><th class="num">购买笔数</th><th class="num">收入</th><th>状态</th></tr></thead>
+              <tbody>
+                <tr style="background:rgba(108,255,176,0.05)"><td class="bold">$4.99</td><td class="num" style="color:var(--green);font-weight:700">7笔</td><td class="num" style="color:var(--green);font-weight:700">$34.93</td><td><span class="badge new">主力档</span></td></tr>
+                <tr><td>$9.99</td><td class="num bold">1笔</td><td class="num">$9.99</td><td><span class="badge warn">零星</span></td></tr>
+                <tr style="background:rgba(255,108,140,0.05)"><td class="red">$19.99</td><td class="num muted">0</td><td class="num muted">$0</td><td><span class="badge danger">零购买</span></td></tr>
+                <tr style="background:rgba(255,108,140,0.05)"><td class="red">$49.99</td><td class="num muted">0</td><td class="num muted">$0</td><td><span class="badge danger">零购买</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="insight red">
+            <div class="insight-title">🔑 漏斗断裂点在 $9.99 以上</div>
+            购买漏斗在 $9.99 以上完全断裂，$19.99/$49.99 零购买。专属包<strong>引流价值（9.5% 参与者转化）大于直接变现价值</strong>（占掉落参与者总收入 0.7%）。礼包定价上限维持 <strong>$9.99 以内</strong>即可覆盖主要转化人群；高档次需配合更强价值锚点才有机会激活。
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function switchTab(id, el) {
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (el) el.classList.add('active');
+  else {
+    // find nav item by onclick
+    document.querySelectorAll('.nav-item').forEach(n => {
+      if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) {
+        n.classList.add('active');
+      }
+    });
+  }
+}
+</script>
+
+</body>
+</html>

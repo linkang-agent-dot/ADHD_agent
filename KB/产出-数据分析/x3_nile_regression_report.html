@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 尼罗河活动 数据回归报告（简洁版）</title>
+<style>
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;max-width:1260px;margin:0 auto;padding:24px;color:#333;background:#f5f6fa}
+h1{color:#1a1a2e;border-bottom:3px solid #e94560;padding-bottom:12px;margin-bottom:8px}
+h2{color:#16213e;border-left:5px solid #e94560;padding-left:14px;margin-top:40px}
+h3{color:#0f3460;margin-top:22px;padding-left:6px;border-left:3px solid #bbb}
+h4{color:#555;margin:14px 0 6px;font-size:0.95em}
+.card{background:#fff;border-radius:8px;padding:20px 24px;margin:14px 0;box-shadow:0 2px 10px rgba(0,0,0,0.07)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi{background:#fff;border-radius:8px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.kpi .v{font-size:1.9em;font-weight:700;color:#e94560}
+.kpi .l{font-size:0.82em;color:#666;margin-top:5px}
+table{width:100%;border-collapse:collapse;font-size:0.875em}
+th{background:#1a1a2e;color:#fff;padding:9px 10px;text-align:center}
+td{padding:8px 10px;border-bottom:1px solid #eee;text-align:center}
+tr:nth-child(even){background:#f9f9fb}
+.up{color:#27ae60;font-weight:700}
+.dn{color:#e74c3c;font-weight:700}
+.fl{color:#888}
+.note{background:#fffbe6;border-left:4px solid #f0c040;padding:11px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:0.875em}
+.ins{background:#e8f4fd;border-left:4px solid #3498db;padding:11px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:0.875em}
+.warn{background:#ffeaea;border-left:4px solid #e74c3c;padding:11px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:0.875em}
+.tag-done{background:#d4edda;color:#155724;padding:2px 7px;border-radius:3px;font-size:0.78em}
+.tag-wip{background:#fff3cd;color:#856404;padding:2px 7px;border-radius:3px;font-size:0.78em}
+.section-label{display:inline-block;background:#e94560;color:#fff;font-size:0.75em;padding:2px 8px;border-radius:3px;margin-right:6px;vertical-align:middle}
+.mod-block{border:1px solid #dde;border-radius:8px;padding:16px 20px;margin:12px 0}
+.mod-block h4{margin-top:0;color:#1a1a2e}
+.conclusion-dark{background:#1a1a2e;color:#fff;border-radius:8px;padding:20px 24px;margin:14px 0}
+.conclusion-dark p{color:#e0e0e0;margin:8px 0}
+.conclusion-dark b{color:#ffd700}
+</style>
+</head>
+<body>
+
+<h1>X3 尼罗河活动 · 数据回归报告</h1>
+<p style="color:#666;margin-top:0">
+  活动名称：尼罗河节日活动（visit_pack）&nbsp;|&nbsp;
+  分析日期：2026-05-08 &nbsp;|&nbsp;
+  活动范围：80–86服（D21–D35）&nbsp;|&nbsp;
+  活动机制：拜访礼包，每日发放 5 个邀请函（Item_1132）解锁礼包购买资格
+</p>
+
+<!-- ==================== KPI 卡片 ==================== -->
+<div class="card">
+  <div class="grid4">
+    <div class="kpi">
+      <div class="v">7/7</div>
+      <div class="l">全部服务器 W3 付费率 &gt; W2<br>（活动周高于活动前周）</div>
+    </div>
+    <div class="kpi">
+      <div class="v">+1.45ppt</div>
+      <div class="l">付费率净贡献<br><small style="color:#aaa">节日逆转自然衰减（-0.35ppt→+1.10ppt）</small></div>
+    </div>
+    <div class="kpi">
+      <div class="v">+$4,307</div>
+      <div class="l">收入净增量<br><small style="color:#aaa">82/84/85服匹配对照组</small></div>
+    </div>
+    <div class="kpi">
+      <div class="v">14%</div>
+      <div class="l">W3付费玩家中节日开单占比<br><small style="color:#aaa">节日礼包触发当周首单</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 一、总收入净增归因 ==================== -->
+<h2>一、总收入净增归因</h2>
+
+<div class="card">
+  <div class="ins">
+    节日活动逆转了自然衰减趋势，W2→W3 收入净增 <b>+$4,307</b>，其中非节日收入是增量主体（70%），节日礼包为直接贡献（30%）。
+  </div>
+
+  <div class="note">
+    <b>数据说明：</b>对照组（75+77服）W2→W3 收入自然变化 <b>-29.6%</b>；实验组（82/84/85服匹配对）逆势增长 <b>+10%</b>，净增 +$4,307。
+    匹配方法：按 W2 R级结构、DAU、大超R人数三维匹配，聚合后基准付费率近乎完美对齐（7.04% vs 7.02%）。
+  </div>
+
+  <h4>■ W2→W3 收入变化（匹配对照法）</h4>
+  <table>
+    <tr>
+      <th>组别</th>
+      <th>W2 收入</th>
+      <th>W3 收入</th>
+      <th>变化率</th>
+    </tr>
+    <tr style="background:#fff0f0">
+      <td><b>对照组（75+77服，无活动）</b></td>
+      <td>$3,069</td>
+      <td>$2,159</td>
+      <td><span class="dn">-29.6%</span></td>
+    </tr>
+    <tr>
+      <td><b>实验组（82+84+85服，有活动）</b></td>
+      <td>$3,069</td>
+      <td>$3,378</td>
+      <td><span class="up">+10.1%</span></td>
+    </tr>
+    <tr style="background:#1a1a2e;color:#fff;font-weight:700">
+      <td>净增量（逆转衰减后）</td>
+      <td>—</td>
+      <td><span style="color:#ffd700">+$4,307</span></td>
+      <td>—</td>
+    </tr>
+  </table>
+
+  <h4 style="margin-top:20px">■ W3 收入拆解：节日 vs 非节日（三服合计）</h4>
+  <table>
+    <tr>
+      <th>类别</th>
+      <th>金额</th>
+      <th>占净增量</th>
+    </tr>
+    <tr>
+      <td>节日礼包直接收入</td>
+      <td>$1,314</td>
+      <td>30%</td>
+    </tr>
+    <tr>
+      <td>非节日净增量</td>
+      <td>$2,993</td>
+      <td>70%</td>
+    </tr>
+    <tr style="background:#e8f4fd;font-weight:700">
+      <td>合计净增</td>
+      <td>$4,307</td>
+      <td>100%</td>
+    </tr>
+  </table>
+
+  <div class="warn">
+    <b>85服异常说明：</b>85服 W3 总收入 $7,062，远高于 82服（$2,812）和 84服（$2,129），其中非节日收入 $6,487，与该服高净值玩家集中付费有关，非完全由活动驱动。
+    若仅看 82+84服：节日礼包直接 ≈ $739，占两服 W3 总收入约 15%，结论方向不变。
+  </div>
+</div>
+
+<!-- ==================== 二、付费率归因 ==================== -->
+<h2>二、付费率归因</h2>
+
+<div class="card">
+  <div class="ins">
+    节日礼包通过触发当周首单，直接激活了约 <b>14% 的 W3 付费玩家</b>；其余付费率提升来自存量付费基础逆转自然衰减。节日对高质量服触发效果更强（20–21%），低质量服较弱（4–5%）。
+  </div>
+
+  <h4>■ 付费率归因数据（7服 + 聚合 + 对照）</h4>
+  <table>
+    <tr>
+      <th>服务器</th>
+      <th>W2 付费率</th>
+      <th>W3 付费率</th>
+      <th>Δ</th>
+      <th>节日开单人数</th>
+      <th>礼包当周首笔付费率<br><small>/付费者</small></th>
+      <th>礼包当周首笔付费率<br><small>/DAU</small></th>
+    </tr>
+    <tr style="background:#fff0f0;font-weight:700">
+      <td>对照（70-77聚合）</td>
+      <td>7.19%</td><td>6.84%</td>
+      <td><span class="dn">-0.35ppt ↓</span></td>
+      <td>0</td><td>0%</td><td>0%</td>
+    </tr>
+    <tr>
+      <td><b>80服(1790)</b></td>
+      <td>5.99%</td><td>6.65%</td>
+      <td><span class="up">+0.66ppt</span></td>
+      <td>1</td><td>4.2%</td><td>0.28%</td>
+    </tr>
+    <tr>
+      <td><b>81服(1800)</b></td>
+      <td>5.12%</td><td>6.16%</td>
+      <td><span class="up">+1.04ppt</span></td>
+      <td>1</td><td>4.5%</td><td>0.28%</td>
+    </tr>
+    <tr>
+      <td><b>82服(1810)</b></td>
+      <td>6.88%</td><td>8.12%</td>
+      <td><span class="up">+1.24ppt</span></td>
+      <td>6</td><td><b>21.4%</b></td><td><b>1.74%</b></td>
+    </tr>
+    <tr>
+      <td><b>83服(1820)</b></td>
+      <td>5.62%</td><td>6.25%</td>
+      <td><span class="up">+0.63ppt</span></td>
+      <td>4</td><td><b>16.7%</b></td><td><b>1.04%</b></td>
+    </tr>
+    <tr>
+      <td><b>84服(1830)</b></td>
+      <td>6.78%</td><td>8.20%</td>
+      <td><span class="up">+1.42ppt</span></td>
+      <td>4</td><td>15.4%</td><td>1.26%</td>
+    </tr>
+    <tr style="background:#f5f5ff">
+      <td><b>85服(1840) ⏳</b></td>
+      <td>7.43%</td><td>9.26%</td>
+      <td><span class="up">+1.83ppt ★</span></td>
+      <td>6</td><td><b>20.0%</b></td><td><b>1.85%</b></td>
+    </tr>
+    <tr style="background:#f5f5ff">
+      <td><b>86服(1850) ⏳⚠️ 4天</b></td>
+      <td>5.69%</td><td>6.72%</td>
+      <td><span class="up">+1.03ppt</span></td>
+      <td>0</td><td>0%</td><td>0%</td>
+    </tr>
+    <tr style="background:#e8f4fd;font-weight:700">
+      <td>80-85聚合</td>
+      <td>6.28%</td><td>7.38%</td>
+      <td><span class="up">+1.10ppt</span></td>
+      <td><b>22</b></td><td><b>14.3%</b></td><td><b>1.05%</b></td>
+    </tr>
+  </table>
+
+  <h4 style="margin-top:18px">■ 归因拆解小结</h4>
+  <table>
+    <tr><th>归因项</th><th>数值</th><th>占净贡献</th></tr>
+    <tr>
+      <td>对照自然变化</td>
+      <td><span class="dn">-0.35ppt</span></td>
+      <td class="fl">基准（自然衰减）</td>
+    </tr>
+    <tr>
+      <td>实验组 W2→W3</td>
+      <td><span class="up">+1.10ppt</span></td>
+      <td class="fl">—</td>
+    </tr>
+    <tr style="background:#e8f4fd;font-weight:700">
+      <td>节日净贡献（实验-对照）</td>
+      <td><span class="up">+1.45ppt</span></td>
+      <td>100%</td>
+    </tr>
+    <tr>
+      <td>节日开单直接贡献</td>
+      <td>+1.05ppt</td>
+      <td>72%</td>
+    </tr>
+    <tr>
+      <td>存量基础逆转衰减</td>
+      <td>+0.40ppt</td>
+      <td>28%</td>
+    </tr>
+    <tr style="background:#1a1a2e;color:#fff">
+      <td>验证</td>
+      <td colspan="2" style="color:#ffd700">1.05 / 7.38（W3付费率）= 14% ✓</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ==================== 三、ARPPU / 付费深度归因 ==================== -->
+<h2>三、ARPPU / 付费深度归因</h2>
+
+<div class="card">
+  <div class="ins">
+    节日礼包带来 <b>+$9.67/付费玩家</b> 的直接 ARPPU 贡献，但非节日消费深度低于自然预期 <b>-$7.57</b>，净增仅 +$2.10，与自然增长基本持平。节日没有带动存量付费玩家加深非节日消费。
+  </div>
+
+  <h4>■ ARPPU 归因（80-84服聚合 vs 70-77服聚合）</h4>
+  <table>
+    <tr>
+      <th>指标</th>
+      <th>对照（70-77服）</th>
+      <th>实验（80-84服）</th>
+    </tr>
+    <tr>
+      <td>W2 ARPPU</td>
+      <td>$72.29</td>
+      <td>$71.99</td>
+    </tr>
+    <tr>
+      <td>W3 ARPPU（实际）</td>
+      <td>$75.14</td>
+      <td>$76.90</td>
+    </tr>
+    <tr>
+      <td>自然增长率</td>
+      <td><span class="up">+3.9%</span></td>
+      <td class="fl">—</td>
+    </tr>
+    <tr>
+      <td>预期 W3 ARPPU（按对照增速）</td>
+      <td class="fl">—</td>
+      <td>$74.80</td>
+    </tr>
+    <tr style="background:#e8f4fd;font-weight:700">
+      <td>ARPPU 净增</td>
+      <td class="fl">—</td>
+      <td>+$2.10</td>
+    </tr>
+    <tr>
+      <td>其中：节日 ARPPU 直接贡献</td>
+      <td class="fl">—</td>
+      <td><span class="up">+$9.67</span></td>
+    </tr>
+    <tr>
+      <td>其中：非节日 ARPPU 变化</td>
+      <td class="fl">—</td>
+      <td><span class="dn">-$7.57（低于自然预期）</span></td>
+    </tr>
+  </table>
+
+  <div class="warn">
+    <b>85服排除说明：</b>85服 W3 ARPPU $235（非节日 $222），存在大R异常付费集中现象，已排除在 80-84服聚合计算之外，避免失真。
+  </div>
+</div>
+
+<!-- ==================== 四、整合结论 ==================== -->
+<h2>四、整合结论</h2>
+
+<div class="conclusion-dark">
+  <p>节日活动的核心价值在于<b>提升付费率</b>（让更多人付费），而非提升 ARPPU（让每人花更多）。</p>
+  <p>收入增量的主体是非节日部分（70%），其来源是付费人数增加，而非每人消费加深——节日通过触发开单带动了整体活跃消费，但没有改变单个付费玩家的消费档次。</p>
+</div>
+
+<div class="card">
+  <h4>■ 三维汇总</h4>
+  <table>
+    <tr>
+      <th>维度</th>
+      <th>节日礼包直接</th>
+      <th>非节日部分</th>
+      <th>说明</th>
+    </tr>
+    <tr>
+      <td><b>总收入净增（82/84/85服）</b></td>
+      <td>$1,314（30%）</td>
+      <td>$2,993（70%）</td>
+      <td>非节日收入增量是主体</td>
+    </tr>
+    <tr>
+      <td><b>付费率（80-84服）</b></td>
+      <td>+1.05ppt<br><small>（14%付费者节日开单）</small></td>
+      <td>+0.40ppt<br><small>（存量基础逆转衰减）</small></td>
+      <td>节日触发当周开单</td>
+    </tr>
+    <tr>
+      <td><b>ARPPU（80-84服）</b></td>
+      <td><span class="up">+$9.67</span></td>
+      <td><span class="dn">-$7.57（低于自然预期）</span></td>
+      <td>非节日消费深度未见提升</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ==================== 五、付费点分析 ==================== -->
+<h2>五、付费点分析</h2>
+
+<div class="card">
+  <div class="ins">
+    节日共五类付费模块，合计收入 <b>$1,774</b>。特惠连锁礼包（33%）与 BP 通行证（30%）是两大支柱，家具礼包（24%）稳居第二梯队，主城礼包（11%）依赖超R，女王恩典卷（2%）基本可忽略。
+  </div>
+
+  <h4>■ 模块总览</h4>
+  <table>
+    <tr>
+      <th>模块</th>
+      <th>iap_id</th>
+      <th>付费人数</th>
+      <th>付费率（/DAU）</th>
+      <th>收入</th>
+      <th>占节日%</th>
+    </tr>
+    <tr>
+      <td><b>特惠连锁礼包</b></td>
+      <td class="fl">210601–10611</td>
+      <td>31</td>
+      <td>1.49%</td>
+      <td>$584</td>
+      <td><span class="up">33%</span></td>
+    </tr>
+    <tr>
+      <td><b>家具礼包</b></td>
+      <td class="fl">210616</td>
+      <td>21</td>
+      <td>1.01%</td>
+      <td>$420</td>
+      <td>24%</td>
+    </tr>
+    <tr>
+      <td><b>BP 通行证</b></td>
+      <td class="fl">130020/21</td>
+      <td>25</td>
+      <td>1.20%</td>
+      <td>$540</td>
+      <td><span class="up">30%</span></td>
+    </tr>
+    <tr>
+      <td><b>主城礼包</b></td>
+      <td class="fl">210617</td>
+      <td>2</td>
+      <td>0.10%</td>
+      <td>$200</td>
+      <td>11%</td>
+    </tr>
+    <tr>
+      <td><b>女王恩典卷</b></td>
+      <td class="fl">210612–15</td>
+      <td>6</td>
+      <td>0.29%</td>
+      <td>$30</td>
+      <td><span class="dn">2%</span></td>
+    </tr>
+  </table>
+</div>
+
+<!-- 特惠连锁礼包 -->
+<h3>特惠连锁礼包</h3>
+<div class="card">
+  <div class="ins">
+    <b>收入占节日 33%（$584），节日模块第一。</b>在已有付费意愿的用户中变现加速效果显著，对 feiR（86% DAU）完全无触达。
+  </div>
+
+  <h4>■ 分 R 级付费数据</h4>
+  <table>
+    <tr>
+      <th>R 级</th>
+      <th>DAU</th>
+      <th>付费人数</th>
+      <th>付费率</th>
+      <th>ARPU</th>
+      <th>ARPPU</th>
+      <th>收入占比</th>
+    </tr>
+    <tr>
+      <td><b>chaoR</b></td>
+      <td>11</td><td>7</td>
+      <td><span class="up">63.6%</span></td>
+      <td>$26.33</td><td>$41.38</td>
+      <td>50%</td>
+    </tr>
+    <tr>
+      <td><b>daR</b></td>
+      <td>14</td><td>5</td>
+      <td>35.7%</td>
+      <td>$9.63</td><td>$26.96</td>
+      <td>23%</td>
+    </tr>
+    <tr>
+      <td><b>zhongR</b></td>
+      <td>91</td><td>14</td>
+      <td>15.4%</td>
+      <td>$1.37</td><td>$8.91</td>
+      <td>21%</td>
+    </tr>
+    <tr>
+      <td><b>xiaoR</b></td>
+      <td>182</td><td>5</td>
+      <td>2.8%</td>
+      <td>$0.19</td><td>$6.99</td>
+      <td>6%</td>
+    </tr>
+    <tr>
+      <td><b>feiR</b></td>
+      <td>1790</td><td>0</td>
+      <td><span class="dn">0%</span></td>
+      <td>$0</td><td class="fl">—</td>
+      <td>0%</td>
+    </tr>
+    <tr style="background:#e8f4fd;font-weight:700">
+      <td>聚合</td>
+      <td>2088</td><td>31</td>
+      <td>1.49%</td>
+      <td>$0.28</td><td>$18.84</td>
+      <td>100%</td>
+    </tr>
+  </table>
+
+  <h4 style="margin-top:18px">■ 付费漏斗</h4>
+  <table>
+    <tr>
+      <th>档位</th>
+      <th>价格</th>
+      <th>付费人数</th>
+      <th>留存率</th>
+    </tr>
+    <tr>
+      <td>付费 1</td><td>$4.99</td><td>31</td><td class="fl">—</td>
+    </tr>
+    <tr>
+      <td>付费 2</td><td>$9.99</td><td>9</td>
+      <td><span class="dn">29%（主断崖）</span></td>
+    </tr>
+    <tr>
+      <td>付费 3</td><td>$19.99</td><td>3</td><td>33%</td>
+    </tr>
+    <tr>
+      <td>付费 4</td><td>$49.99</td><td>1</td><td>33%</td>
+    </tr>
+    <tr>
+      <td>付费 5</td><td>$99.99</td><td>0</td>
+      <td><span class="dn">0%</span></td>
+    </tr>
+  </table>
+
+  <div class="note">
+    $4.99 档人均 2 单（多次复购），$9.99+ 以上各档 1 单。chaoR 连锁 ARPPU $41 vs chaoR 整体 ARPPU $893，约 1/22——连锁是零头消费，未有效拉深超R付费。该礼包对已有付费意愿的用户做变现加速有效，对 feiR（86% DAU）完全无触达。
+  </div>
+
+  <div class="ins">
+    <b>结论：</b>连锁在节日模块表现最佳，渗透率和付费率符合预期，付费深度不足。体验层主要问题：一是每日刷新机制与链式推进设计冲突（导致玩家重复买第1档而非向上推进）；二是单服皮肤奖励竞争不足，高价档转化动力缺失。
+  </div>
+
+  <h4>优化点</h4>
+  <ol>
+    <li><b>修复刷新与链式设计冲突：</b>将链式进度改为活动周期内持久化，避免每日重置打断连续转化路径。</li>
+    <li><b>皮肤奖励调整为 1 个（单服唯一/限量）：</b>增加高价档稀缺感，驱动 $19.99+ 转化。</li>
+    <li><b>新增每日 Gacha 礼包：</b>承接玩家"每日消费一次"的复购习惯，修复链式逻辑后补充对应收入缺口。</li>
+  </ol>
+</div>
+
+<!-- 家具礼包 -->
+<h3>家具礼包</h3>
+<div class="card">
+  <div class="ins">
+    <b>收入占节日 24%（$420），节日模块第二。</b>限购设计稳定可预期，$19.99 价格定位精准覆盖中高 R 层。
+  </div>
+
+  <h4>■ 分 R 级付费数据</h4>
+  <table>
+    <tr>
+      <th>R 级</th>
+      <th>DAU</th>
+      <th>付费人数</th>
+      <th>付费率</th>
+      <th>ARPPU</th>
+      <th>收入</th>
+    </tr>
+    <tr>
+      <td><b>chaoR</b></td>
+      <td>11</td><td>6</td>
+      <td><span class="up">54.6%</span></td>
+      <td>$19.99</td><td>$119.94</td>
+    </tr>
+    <tr>
+      <td><b>daR</b></td>
+      <td>14</td><td>6</td>
+      <td><span class="up">42.9%</span></td>
+      <td>$19.99</td><td>$119.94</td>
+    </tr>
+    <tr>
+      <td><b>zhongR</b></td>
+      <td>91</td><td>9</td>
+      <td>9.9%</td>
+      <td>$19.99</td><td>$179.91</td>
+    </tr>
+    <tr>
+      <td><b>xiaoR</b></td>
+      <td>182</td><td>0</td>
+      <td><span class="dn">0%</span></td>
+      <td class="fl">—</td><td>$0</td>
+    </tr>
+    <tr style="background:#e8f4fd;font-weight:700">
+      <td>聚合</td>
+      <td>2088</td><td>21</td>
+      <td>1.01%</td>
+      <td>$19.99</td><td>$419.79</td>
+    </tr>
+  </table>
+
+  <div class="note">
+    限购 1 次，ARPPU 固定 $19.99。chaoR/daR 渗透率高（54.6%/42.9%），$19.99 对这两档是顺手买。zhongR 贡献最多绝对收入（$179.91，43%），因其基数是 chaoR/daR 的 6–8 倍。xiaoR 完全无转化，门槛偏高。对比：daR 家具 ARPPU 占 daR 整体 ARPPU 的 11.8%，在家具/主城/连锁三类中对 daR 的相对贡献最高。
+  </div>
+
+  <div class="ins">
+    <b>结论：</b>家具礼包是性价比最高的节日固定产品，限购设计稳定可预期，$19.99 价格定位精准覆盖中高 R 层。
+  </div>
+
+  <h4>优化点</h4>
+  <ol>
+    <li><b>新增家具等级系统：</b>将一次性消费升级为可持续投入的养成线，拉高该模块天花板。</li>
+  </ol>
+</div>
+
+<!-- 主城礼包 -->
+<h3>主城礼包</h3>
+<div class="card">
+  <div class="ins">
+    <b>收入占节日 11%（$200），付费率 0.10%。</b>主城礼包是节日高价档标志性产品，当前受众仅限 chaoR，整体转化率不足。
+  </div>
+
+  <h4>■ 分 R 级付费数据</h4>
+  <table>
+    <tr>
+      <th>R 级</th>
+      <th>DAU</th>
+      <th>付费人数</th>
+      <th>付费率</th>
+      <th>ARPPU</th>
+      <th>收入</th>
+    </tr>
+    <tr>
+      <td><b>chaoR</b></td>
+      <td>11</td><td>2</td>
+      <td>18.2%</td>
+      <td>$99.99</td><td>$199.98</td>
+    </tr>
+    <tr>
+      <td><b>daR 及以下</b></td>
+      <td class="fl">—</td><td>0</td>
+      <td><span class="dn">0%</span></td>
+      <td class="fl">—</td><td>$0</td>
+    </tr>
+  </table>
+
+  <div class="note">
+    仅 2 笔订单，全部来自 chaoR（11 人中 2 人，18.2%），daR 及以下完全无转化。$99.99 对超R属于可承受范围但非"必买"，转化率仍有提升空间。数据波动性极高（±1 单对收入影响显著）。
+  </div>
+
+  <div class="ins">
+    <b>结论：</b>主城礼包是节日高价档标志性产品，当前受众仅限 chaoR，整体转化率不足。
+  </div>
+
+  <h4>优化点</h4>
+  <ol>
+    <li><b>暂不调整价格</b>（降价不一定能提升 daR 转化率），待后续通过提升主城美术设计质量（视觉冲击力、独特性）增强高价档购买驱动力。</li>
+  </ol>
+</div>
+
+<!-- BP 通行证 -->
+<h3>BP 通行证</h3>
+<div class="card">
+  <div class="ins">
+    <b>收入占节日 30%（$540），节日模块第二梯队。</b>两档定价合理，chaoR/daR 双档升档率 67–71%，$9.99→$19.99 跨档阻力低。BP 满级率 80%，设计节奏合理，买了基本能打完。
+  </div>
+
+  <h4>■ 分 R 级付费数据</h4>
+  <table>
+    <tr>
+      <th>R 级</th>
+      <th>DAU</th>
+      <th>BP 付费人数</th>
+      <th>付费率</th>
+      <th>ARPU</th>
+      <th>ARPPU</th>
+      <th>高级（$9.99）</th>
+      <th>至尊（$19.99）</th>
+      <th>双档购买率</th>
+    </tr>
+    <tr>
+      <td><b>chaoR</b></td>
+      <td>11</td><td>7</td>
+      <td><span class="up">63.6%</span></td>
+      <td>$16.35</td><td>$25.70</td>
+      <td>6人</td><td>6人</td>
+      <td><span class="up">71%</span></td>
+    </tr>
+    <tr>
+      <td><b>daR</b></td>
+      <td>14</td><td>6</td>
+      <td><span class="up">42.9%</span></td>
+      <td>$10.71</td><td>$24.98</td>
+      <td>5人</td><td>5人</td>
+      <td><span class="up">67%</span></td>
+    </tr>
+    <tr>
+      <td><b>zhongR</b></td>
+      <td>91</td><td>8</td>
+      <td>8.8%</td>
+      <td>$1.65</td><td>$18.74</td>
+      <td>5人</td><td>5人</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td><b>xiaoR</b></td>
+      <td>182</td><td>4</td>
+      <td>2.2%</td>
+      <td>$0.33</td><td>$14.99</td>
+      <td>2人</td><td>2人</td>
+      <td>0%</td>
+    </tr>
+    <tr>
+      <td><b>feiR</b></td>
+      <td>1790</td><td>0</td>
+      <td><span class="dn">0%</span></td>
+      <td>$0</td><td class="fl">—</td>
+      <td class="fl">—</td><td class="fl">—</td><td class="fl">—</td>
+    </tr>
+    <tr style="background:#e8f4fd;font-weight:700">
+      <td>聚合</td>
+      <td>2088</td><td>25</td>
+      <td>1.20%</td>
+      <td>$0.26</td><td>$21.59</td>
+      <td>18人</td><td>18人</td>
+      <td>44%</td>
+    </tr>
+  </table>
+
+  <h4 style="margin-top:18px">■ BP 满级率（activity 102204，满级 = 20 级）</h4>
+  <table>
+    <tr>
+      <th>分组</th>
+      <th>总人数</th>
+      <th>满级（20 级）</th>
+      <th>满级率</th>
+      <th>第 1 级即止</th>
+    </tr>
+    <tr>
+      <td><b>已购 BP</b></td>
+      <td>25</td><td>20</td>
+      <td><span class="up"><b>80%</b></span></td>
+      <td>0%</td>
+    </tr>
+    <tr>
+      <td><b>未购 BP</b></td>
+      <td>4,561</td><td>324</td>
+      <td>7.1%</td>
+      <td><span class="dn"><b>80.5%</b></span></td>
+    </tr>
+  </table>
+
+  <div class="note">
+    BP 对 daR/zhongR 的相对 ARPPU 占比（14.7%/25.3%）高于 chaoR（2.9%），是中低付费段的主要节日消费选项。324 名免费满级玩家是最精准的未转化潜在用户。
+  </div>
+
+  <div class="ins">
+    <b>结论：</b>BP 两档定价合理，chaoR/daR 双档升档率 67–71%，$9.99→$19.99 跨档阻力低。zhongR 升档率仅 25%，$19.99 是中 R 门槛。满级率 80% 说明 BP 设计节奏合理，买了基本能打完。324 名免费满级玩家是最精准的未转化潜在用户。
+  </div>
+
+  <h4>优化点</h4>
+  <ol>
+    <li><b>积分来源扩展：</b>当前仅 PVE/采集/雷达任务，建议加入高频日常行为（道具消耗、每日任务），目标将免费满级率从 7.1% 提升至 25%，再迭代。</li>
+    <li><b>已购 BP 积分加成特权：</b>BP 买家在所有积分获取途径额外加成，形成消费→参与正向循环，提升 BP 感知价值。</li>
+    <li><b>免费满级后自动弹出购买引导：</b>在玩家免费通关满级时触发 BP 购买窗口，将完成感转化为付费动机。</li>
+  </ol>
+</div>
+
+<!-- 女王恩典卷 -->
+<h3>女王恩典卷</h3>
+<div class="card">
+  <div class="warn">
+    <b>快速结论：</b>锚点礼包设计意图未落地。仅 $4.99 档有 6 单（$30），$19.99/$49.99/$99.99 档零成交，且购买主力为 xiaoR（3 人）而非高付费玩家。锚点的拉力完全没有起效，本期节日对该模块可忽略不计。
+  </div>
+</div>
+
+<!-- ========== 兑换商店 ========== -->
+<h2>六、兑换商店分析（猫眼石币兑换）</h2>
+
+<div class="card">
+  <h4>猫眼石币总体供需</h4>
+  <table>
+    <tr><th>指标</th><th>数值</th><th>说明</th></tr>
+    <tr>
+      <td>猫眼石币发放 — 幸运转盘</td>
+      <td>181,068 枚</td>
+      <td>668 名玩家通过女王恩宠转盘获得，人均 271 枚</td>
+    </tr>
+    <tr>
+      <td>猫眼石币发放 — 活动奖励</td>
+      <td>33,100 枚</td>
+      <td>336 名玩家（含累充/成就等活动），人均 98 枚</td>
+    </tr>
+    <tr>
+      <td><b>合计发放</b></td>
+      <td><b>214,168 枚</b></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>猫眼石币消耗（兑换商店）</td>
+      <td>166,298 枚</td>
+      <td>341 名玩家</td>
+    </tr>
+    <tr>
+      <td><b>整体消耗率</b></td>
+      <td><b>77.6%</b></td>
+      <td>高于邀请函利用率（58.5%），有币玩家倾向花掉</td>
+    </tr>
+    <tr>
+      <td>商店参与转化率</td>
+      <td>51.0%</td>
+      <td>341 / 668（获得转盘奖励者）</td>
+    </tr>
+  </table>
+</div>
+
+<div class="card">
+  <h4>各商品饱和度</h4>
+  <p style="color:#666;font-size:13px;margin:0 0 10px">饱和度 = 人均实际购买次数 / 单人上限（按购买者计）；基准人数：341 名商店参与者</p>
+  <table>
+    <tr>
+      <th>商品</th>
+      <th>价格(猫眼石币)</th>
+      <th>上限/人</th>
+      <th>购买人数</th>
+      <th>参与率</th>
+      <th>总购买量</th>
+      <th>人均</th>
+      <th>个人饱和度</th>
+    </tr>
+    <tr style="background:#e8f5e9">
+      <td>高级木材</td>
+      <td>8</td><td>300</td>
+      <td>260</td><td>76.2%</td>
+      <td>3,843</td><td>14.8</td><td>4.9%</td>
+    </tr>
+    <tr>
+      <td>冒险票 ×1000/次</td>
+      <td>1/次</td><td>9999（无限）</td>
+      <td>193</td><td>56.6%</td>
+      <td>6,030 次</td><td>31.3 次</td><td>—</td>
+    </tr>
+    <tr>
+      <td>硬木材 ×1000/次</td>
+      <td>1/次</td><td>9999（无限）</td>
+      <td>177</td><td>51.9%</td>
+      <td>4,672 次</td><td>26.4 次</td><td>—</td>
+    </tr>
+    <tr>
+      <td>高级英雄装备箱(小)</td>
+      <td>50</td><td>300</td>
+      <td>152</td><td>44.6%</td>
+      <td>714</td><td>4.7</td><td>1.6%</td>
+    </tr>
+    <tr>
+      <td>进阶技能片</td>
+      <td>20</td><td>300</td>
+      <td>122</td><td>35.8%</td>
+      <td>819</td><td>6.7</td><td>2.2%</td>
+    </tr>
+    <tr>
+      <td>装载积分</td>
+      <td>25</td><td>100</td>
+      <td>120</td><td>35.2%</td>
+      <td>606</td><td>5.1</td><td>5.1%</td>
+    </tr>
+    <tr>
+      <td>强化驱动器（两档合计）</td>
+      <td>100 / 200</td><td>5 + 100</td>
+      <td>109</td><td>32.0%</td>
+      <td>351</td><td>3.2</td><td>3.1%</td>
+    </tr>
+    <tr>
+      <td>沙漠假日装饰</td>
+      <td>400</td><td>99</td>
+      <td>40</td><td>11.7%</td>
+      <td>53</td><td>1.3</td><td>1.3%</td>
+    </tr>
+    <tr style="background:#e8f5e9">
+      <td><b>头像框选择器</b></td>
+      <td>1,000</td><td>1</td>
+      <td>26</td><td>7.6%</td>
+      <td>26</td><td>1.0</td><td><b>100%</b></td>
+    </tr>
+    <tr style="background:#e8f5e9">
+      <td><b>高级英雄装备箱(大)</b></td>
+      <td>700</td><td>3</td>
+      <td>26</td><td>7.6%</td>
+      <td>42</td><td>1.6</td><td><b>53.8%</b></td>
+    </tr>
+    <tr>
+      <td>圣甲虫矿石</td>
+      <td>30</td><td>100</td>
+      <td>19</td><td>5.6%</td>
+      <td>198</td><td>10.4</td><td>10.4%</td>
+    </tr>
+    <tr>
+      <td>通用加速片</td>
+      <td>200</td><td>100</td>
+      <td>12</td><td>3.5%</td>
+      <td>29</td><td>2.4</td><td>2.4%</td>
+    </tr>
+    <tr style="background:#fdecea">
+      <td>⚠️ 瑰宝折扣券</td>
+      <td>4,000</td><td>1</td>
+      <td><b>0</b></td><td>0%</td>
+      <td>0</td><td>0</td><td>0%</td>
+    </tr>
+  </table>
+
+  <div class="note">
+    商店共 13 个兑换项（含强化驱动器两档）；冒险票/硬木材按每次兑换 ×1000 换算实际次数。"个人饱和度"为购买者人均购买量占上限的比例，衡量已购用户的兑换深度。
+  </div>
+</div>
+
+<div class="card">
+  <div class="ins">
+    <b>结论：</b>
+    <ol>
+      <li><b>整体消耗率 77.6%</b>，高于邀请函利用率（58.5%）：拿到猫眼石币的玩家明显倾向于花出去，兑换动力强于获取动力。</li>
+      <li><b>高级木材是最大流量商品</b>（76.2% 参与率）：价格低（8 币）、用途广，是典型的"消耗性入口锚点"，推动了大多数玩家首次进店。</li>
+      <li><b>冒险票 + 硬木材合计 10,702 次有效兑换</b>，是猫眼石币的主要消耗出口；单次仅 1 币，设计上作为猫眼石币"清零"的低门槛通道发挥了作用。</li>
+      <li><b>高价值道具购买意愿分化明显</b>：
+        <ul>
+          <li>头像框选择器（1,000 币）：参与率仅 7.6%，但买的人全部达到限购上限（100% 饱和），目标用户群精准。</li>
+          <li>高级英雄装备箱大（700 币）：53.8% 个人饱和度，中高价位中饱和度最高，玩家对战力道具价值认可度高。</li>
+        </ul>
+      </li>
+      <li><b>沙漠假日装饰（400 币）参与率 11.7%</b>：节日限定皮肤道具在中高价位表现尚可，观察后续数据以评估节日皮肤溢价空间。</li>
+    </ol>
+  </div>
+
+  <h4>优化点</h4>
+  <ol>
+    <li><b>商店转化漏斗（获币→兑换）仍有 49% 未参与：</b>668 获币者中仅 341（51%）进行了兑换，可增加兑换商店的推送提醒或在活动界面设置直达入口，减少未消费流失。</li>
+    <li><b>沙漠假日装饰表现可观察：</b>400 币中高定价、参与率 11.7%，节日主题限定皮肤对部分玩家有吸引力，建议下期持续观察并配合更丰富的视觉展示，评估节日皮肤道具商业化潜力。</li>
+  </ol>
+</div>
+
+<!-- 兑换道具消耗量排名 -->
+<div class="card">
+  <h4>兑换道具消耗量排名（按兑换次数）</h4>
+  <p style="color:#666;font-size:13px;margin:0 0 10px">冒险票/硬木材每次兑换获得 ×1000，实际兑换次数 = 总数量 ÷ 1000；猫眼石币消耗 = 兑换次数 × 单次成本</p>
+  <table>
+    <tr>
+      <th>排名</th>
+      <th>商品</th>
+      <th>单次成本(猫眼石币)</th>
+      <th>兑换次数</th>
+      <th>参与人数</th>
+      <th>猫眼石币消耗(估)</th>
+    </tr>
+    <tr style="background:#e3f2fd">
+      <td>1</td><td>冒险票 ×1000</td><td>1/次</td>
+      <td><b>6,030</b></td><td>193</td><td>6,030</td>
+    </tr>
+    <tr style="background:#e3f2fd">
+      <td>2</td><td>硬木材 ×1000</td><td>1/次</td>
+      <td><b>4,044</b></td><td>175</td><td>4,044</td>
+    </tr>
+    <tr>
+      <td>3</td><td>高级木材</td><td>8</td>
+      <td>3,769</td><td>258</td><td>30,152</td>
+    </tr>
+    <tr>
+      <td>4</td><td>进阶技能片</td><td>20</td>
+      <td>819</td><td>122</td><td>16,380</td>
+    </tr>
+    <tr>
+      <td>5</td><td>高级英雄装备箱(小)</td><td>50</td>
+      <td>713</td><td>151</td><td>35,650</td>
+    </tr>
+    <tr>
+      <td>6</td><td>装载积分</td><td>25</td>
+      <td>606</td><td>120</td><td>15,150</td>
+    </tr>
+    <tr>
+      <td>7</td><td>强化驱动器（两档）</td><td>100 / 200</td>
+      <td>346</td><td>107</td><td>—</td>
+    </tr>
+    <tr>
+      <td>8</td><td>圣甲虫矿石</td><td>30</td>
+      <td>182</td><td>18</td><td>5,460</td>
+    </tr>
+    <tr style="background:#fff8e1">
+      <td>9</td><td>沙漠假日装饰</td><td>400</td>
+      <td>53</td><td>40</td><td>21,200</td>
+    </tr>
+    <tr>
+      <td>10</td><td>高级英雄装备箱(大)</td><td>700</td>
+      <td>39</td><td>25</td><td>27,300</td>
+    </tr>
+    <tr>
+      <td>11</td><td>通用加速片</td><td>200</td>
+      <td>29</td><td>12</td><td>5,800</td>
+    </tr>
+    <tr>
+      <td>12</td><td>头像框选择器</td><td>1,000</td>
+      <td>25</td><td>25</td><td>25,000</td>
+    </tr>
+    <tr style="color:#aaa">
+      <td>13</td><td>瑰宝折扣券</td><td>4,000</td>
+      <td>0</td><td>0</td><td>0</td>
+    </tr>
+  </table>
+  <div class="note">
+    注：猫眼石币消耗估算基于配置表单次成本，强化驱动器因两档定价（100/200币）无法精确拆分故标"—"；蓝色行为无限量兑换基础资源，参考其活跃程度而非饱和度。
+  </div>
+</div>
+
+
+<!-- ==================== 七、Datain 指标交叉验证 ==================== -->
+<h2>七、Datain 指标交叉验证</h2>
+
+<div class="card">
+  <div class="ins">
+    使用 Datain 平台（user_id 算法）对三项核心指标进行独立二次验证，与 Trino iap_price 口径结论对比。全量覆盖 70–85服共 14 台（86服 W3 数据不完整，排除），验证窗口与 Trino 一致（W2 = D14–D20，W3 = D21–D27）。
+  </div>
+  <div class="note">
+    <b>口径差异说明：</b>Datain 付费额使用 <code>pay_price</code>（多渠道原始定价，约为 USD 的 2×），ARPPU 使用 <code>去重付费用户数</code> 加权计算，付费率以 <code>去重付费人数 / 平均日 DAU</code> 为 proxy（绝对值约 Trino 口径的 2.5×，但方向可靠）。结论以<b>方向一致性</b>为验证标准，不以绝对数字对齐。
+  </div>
+</div>
+
+<!-- 7.1 总收入 -->
+<div class="card">
+  <h4>■ 7.1 总收入 W3/W2 变化（全量 70-77 vs 80-85）</h4>
+  <table>
+    <tr>
+      <th>服务器</th><th>组别</th>
+      <th>W2 收入</th><th>W3 收入</th><th>W3/W2 变化</th><th>备注</th>
+    </tr>
+    <tr style="background:#f5f5f5"><td>70服</td><td>对照</td><td>3,914</td><td>3,004</td><td>−23.2%</td><td></td></tr>
+    <tr style="background:#f5f5f5"><td>71服</td><td>对照</td><td>1,337</td><td>957</td><td>−28.4%</td><td></td></tr>
+    <tr style="background:#f5f5f5"><td>72服</td><td>对照</td><td>1,337</td><td>1,373</td><td>+2.7%</td><td></td></tr>
+    <tr style="background:#f5f5f5"><td>73服</td><td>对照</td><td>2,837</td><td>1,003</td><td>−64.6%</td><td>⚠ 大幅衰减</td></tr>
+    <tr style="background:#f5f5f5"><td>74服</td><td>对照</td><td>2,249</td><td>1,311</td><td>−41.7%</td><td></td></tr>
+    <tr style="background:#f5f5f5"><td>75服</td><td>对照</td><td>3,845</td><td>1,400</td><td>−63.6%</td><td>⚠</td></tr>
+    <tr style="background:#f5f5f5"><td>76服</td><td>对照</td><td>1,418</td><td>1,103</td><td>−22.2%</td><td></td></tr>
+    <tr style="background:#f5f5f5"><td>77服</td><td>对照</td><td>2,257</td><td>2,478</td><td>+9.8%</td><td>⚠ 无活动增长</td></tr>
+    <tr style="background:#fff3e0;font-weight:700">
+      <td>对照合计</td><td>70–77</td><td>19,194</td><td>12,629</td><td style="color:#c0392b">−34.2%</td>
+      <td>8服均值 −28.9%</td>
+    </tr>
+    <tr style="background:#e8f5e9"><td>80服</td><td>实验</td><td>2,072</td><td>2,751</td><td style="color:#27ae60"><b>+32.8%</b></td><td>✅ 强增长</td></tr>
+    <tr style="background:#e8f5e9"><td>81服</td><td>实验</td><td>1,079</td><td>794</td><td>−26.4%</td><td></td></tr>
+    <tr style="background:#e8f5e9"><td>82服</td><td>实验</td><td>2,508</td><td>2,481</td><td>−1.1%</td><td>接近持平</td></tr>
+    <tr style="background:#e8f5e9"><td>83服</td><td>实验</td><td>1,095</td><td>569</td><td>−48.0%</td><td>⚠ 大幅衰减</td></tr>
+    <tr style="background:#e8f5e9"><td>84服</td><td>实验</td><td>2,402</td><td>1,629</td><td>−32.2%</td><td></td></tr>
+    <tr style="background:#e8f5e9"><td>85服</td><td>实验</td><td>6,518</td><td>4,850</td><td>−25.6%</td><td>⚠ W2 大R集中拉高基准</td></tr>
+    <tr style="background:#1a7a3a;color:#fff;font-weight:700">
+      <td>实验合计</td><td>80–85</td><td>15,674</td><td>13,074</td><td style="color:#a8ffb0">−16.6%</td>
+      <td style="color:#ddd">6服均值 −16.8%</td>
+    </tr>
+  </table>
+  <div class="insight-box" style="margin-top:12px">
+    <b>验证结论：</b>实验组 −16.6% vs 对照组 −34.2%，差距 +17.6ppt，方向与 Trino 一致（Trino：实验 +10.1% vs 对照 −29.6%）✅<br>
+    85服 W2 异常高（大R集中 05-01 单日 2,231 单位）是实验组合计看起来衰减更多的主因；Trino 匹配法已控制此偏差。
+  </div>
+</div>
+
+<!-- 7.2 付费率 -->
+<div class="card">
+  <h4>■ 7.2 付费率 W2→W3 变化（proxy = 去重付费人 / 平均日 DAU）</h4>
+  <table>
+    <tr>
+      <th>服务器</th><th>组别</th>
+      <th>W2 付费人</th><th>W2 DAU</th><th>W2 付费率</th>
+      <th>W3 付费人</th><th>W3 DAU</th><th>W3 付费率</th>
+      <th>变化</th>
+    </tr>
+    <!-- 对照组 -->
+    <tr style="background:#f5f5f5"><td>70服</td><td>对照</td><td>62</td><td>357</td><td>17.4%</td><td>42</td><td>282</td><td>14.9%</td><td style="color:#c0392b">−2.5ppt</td></tr>
+    <tr style="background:#f5f5f5"><td>71服</td><td>对照</td><td>37</td><td>252</td><td>14.7%</td><td>30</td><td>201</td><td>14.9%</td><td>+0.2ppt</td></tr>
+    <tr style="background:#f5f5f5"><td>72服</td><td>对照</td><td>14</td><td>100</td><td>14.0%</td><td>10</td><td>76</td><td>13.1%</td><td style="color:#c0392b">−0.9ppt</td></tr>
+    <tr style="background:#f5f5f5"><td>73服</td><td>对照</td><td>23</td><td>116</td><td>19.9%</td><td>16</td><td>96</td><td>16.6%</td><td style="color:#c0392b">−3.3ppt</td></tr>
+    <tr style="background:#f5f5f5"><td>74服</td><td>对照</td><td>20</td><td>115</td><td>17.4%</td><td>14</td><td>101</td><td>13.8%</td><td style="color:#c0392b">−3.5ppt</td></tr>
+    <tr style="background:#f5f5f5"><td>75服</td><td>对照</td><td>32</td><td>172</td><td>18.6%</td><td>20</td><td>138</td><td>14.5%</td><td style="color:#c0392b">−4.1ppt</td></tr>
+    <tr style="background:#f5f5f5"><td>76服</td><td>对照</td><td>37</td><td>186</td><td>19.9%</td><td>30</td><td>140</td><td>21.4%</td><td style="color:#27ae60">+1.5ppt</td></tr>
+    <tr style="background:#f5f5f5"><td>77服</td><td>对照</td><td>36</td><td>204</td><td>17.7%</td><td>26</td><td>149</td><td>17.5%</td><td>−0.2ppt</td></tr>
+    <tr style="background:#fff3e0;font-weight:700">
+      <td>对照合计</td><td>70–77</td><td>261</td><td>1,502</td><td>17.4%</td><td>188</td><td>1,184</td><td>15.9%</td>
+      <td style="color:#c0392b">−1.5ppt</td>
+    </tr>
+    <!-- 实验组 -->
+    <tr style="background:#e8f5e9"><td>80服</td><td>实验</td><td>29</td><td>167</td><td>17.4%</td><td>22</td><td>127</td><td>17.3%</td><td>−0.1ppt</td></tr>
+    <tr style="background:#e8f5e9"><td>81服</td><td>实验</td><td>25</td><td>165</td><td>15.2%</td><td>21</td><td>132</td><td>15.9%</td><td style="color:#27ae60">+0.7ppt</td></tr>
+    <tr style="background:#e8f5e9"><td>82服</td><td>实验</td><td>29</td><td>161</td><td>18.0%</td><td>26</td><td>133</td><td>19.5%</td><td style="color:#27ae60">+1.5ppt</td></tr>
+    <tr style="background:#e8f5e9"><td>83服</td><td>实验</td><td>31</td><td>203</td><td>15.3%</td><td>21</td><td>145</td><td>14.5%</td><td style="color:#c0392b">−0.8ppt</td></tr>
+    <tr style="background:#e8f5e9"><td>84服</td><td>实验</td><td>30</td><td>178</td><td>16.8%</td><td>25</td><td>123</td><td>20.4%</td><td style="color:#27ae60"><b>+3.5ppt</b></td></tr>
+    <tr style="background:#e8f5e9"><td>85服</td><td>实验</td><td>38</td><td>169</td><td>22.5%</td><td>28</td><td>132</td><td>21.2%</td><td style="color:#c0392b">−1.3ppt</td></tr>
+    <tr style="background:#1a7a3a;color:#fff;font-weight:700">
+      <td>实验合计</td><td>80–85</td><td>182</td><td>1,043</td><td>17.4%</td><td>143</td><td>792</td><td>18.1%</td>
+      <td style="color:#a8ffb0">+0.6ppt</td>
+    </tr>
+  </table>
+
+  <table style="margin-top:14px">
+    <tr><th>口径</th><th>对照组变化</th><th>实验组变化</th><th>方向一致</th></tr>
+    <tr>
+      <td>Datain 全量（70-77 vs 80-85）</td>
+      <td style="color:#c0392b">−1.5ppt</td>
+      <td style="color:#27ae60">+0.6ppt</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Datain 匹配子集（75+77 vs 82+84）</td>
+      <td style="color:#c0392b">−2.1ppt</td>
+      <td style="color:#27ae60">+2.6ppt</td>
+      <td>✅</td>
+    </tr>
+    <tr style="background:#f0f8ff">
+      <td><b>Trino 匹配（75+77 vs 82+84+85，主参考）</b></td>
+      <td style="color:#c0392b"><b>−0.35ppt</b></td>
+      <td style="color:#27ae60"><b>+1.10ppt</b></td>
+      <td><b>✅ 基准</b></td>
+    </tr>
+  </table>
+  <div class="note" style="margin-top:10px">
+    Datain proxy 绝对值约为 Trino 的 2.5×，因分母为日均 DAU 而非 7 日去重用户数。方向完全一致。
+  </div>
+</div>
+
+<!-- 7.3 ARPPU -->
+<div class="card">
+  <h4>■ 7.3 ARPPU（去重）W2→W3 变化</h4>
+  <table>
+    <tr>
+      <th>服务器</th><th>组别</th>
+      <th>W2 ARPPU</th><th>W3 ARPPU</th><th>变化</th><th>备注</th>
+    </tr>
+    <tr style="background:#f5f5f5"><td>70服</td><td>对照</td><td>63.1</td><td>71.5</td><td style="color:#27ae60">+8.4</td><td></td></tr>
+    <tr style="background:#f5f5f5"><td>71服</td><td>对照</td><td>36.1</td><td>31.9</td><td style="color:#c0392b">−4.2</td><td></td></tr>
+    <tr style="background:#f5f5f5"><td>72服</td><td>对照</td><td>95.5</td><td>137.3</td><td style="color:#27ae60">+41.8</td><td>⚠ 少量高价单拉偏</td></tr>
+    <tr style="background:#f5f5f5"><td>73服</td><td>对照</td><td>123.3</td><td>62.7</td><td style="color:#c0392b">−60.6</td><td>⚠ 高价单流失</td></tr>
+    <tr style="background:#f5f5f5"><td>74服</td><td>对照</td><td>112.4</td><td>93.7</td><td style="color:#c0392b">−18.8</td><td></td></tr>
+    <tr style="background:#f5f5f5"><td>75服</td><td>对照</td><td>120.1</td><td>70.0</td><td style="color:#c0392b">−50.1</td><td></td></tr>
+    <tr style="background:#f5f5f5"><td>76服</td><td>对照</td><td>38.3</td><td>36.8</td><td style="color:#c0392b">−1.6</td><td></td></tr>
+    <tr style="background:#f5f5f5"><td>77服</td><td>对照</td><td>62.7</td><td>95.3</td><td style="color:#27ae60">+32.6</td><td></td></tr>
+    <tr style="background:#fff3e0;font-weight:700">
+      <td>对照加权均值</td><td>70–77</td><td>73.5</td><td>67.2</td>
+      <td style="color:#c0392b">−6.4</td><td>高波动，含 72/73 异常</td>
+    </tr>
+    <tr style="background:#e8f5e9"><td>80服</td><td>实验</td><td>71.5</td><td>125.0</td><td style="color:#27ae60"><b>+53.6</b></td><td>⚠ 高价单集中</td></tr>
+    <tr style="background:#e8f5e9"><td>81服</td><td>实验</td><td>43.2</td><td>37.8</td><td style="color:#c0392b">−5.3</td><td></td></tr>
+    <tr style="background:#e8f5e9"><td>82服</td><td>实验</td><td>86.5</td><td>95.4</td><td style="color:#27ae60">+8.9</td><td></td></tr>
+    <tr style="background:#e8f5e9"><td>83服</td><td>实验</td><td>35.3</td><td>27.1</td><td style="color:#c0392b">−8.2</td><td></td></tr>
+    <tr style="background:#e8f5e9"><td>84服</td><td>实验</td><td>80.1</td><td>65.2</td><td style="color:#c0392b">−14.9</td><td></td></tr>
+    <tr style="background:#e8f5e9"><td>85服</td><td>实验</td><td>171.5</td><td>173.2</td><td style="color:#27ae60">+1.7</td><td>大R服，ARPPU 基数高</td></tr>
+    <tr style="background:#1a7a3a;color:#fff;font-weight:700">
+      <td>实验加权均值</td><td>80–85</td><td>86.1</td><td>91.4</td>
+      <td style="color:#a8ffb0">+5.3</td><td style="color:#ddd"></td>
+    </tr>
+  </table>
+
+  <table style="margin-top:14px">
+    <tr>
+      <th>口径</th><th>对照 ARPPU 变化</th><th>实验 ARPPU 变化</th><th>净差（实验−对照）</th><th>方向</th>
+    </tr>
+    <tr>
+      <td>Datain 全量（70-77 vs 80-85）</td>
+      <td style="color:#c0392b">−6.4</td>
+      <td style="color:#27ae60">+5.3</td>
+      <td><b>+11.7</b>（pay_price）</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>Datain 匹配子集（75+77 vs 82+84）</td>
+      <td style="color:#c0392b">−5.4</td>
+      <td style="color:#c0392b">−2.6</td>
+      <td><b>+2.8</b>（pay_price）≈ <b>+$1.4</b> USD</td>
+      <td>✅</td>
+    </tr>
+    <tr style="background:#f0f8ff">
+      <td><b>Trino 匹配（80-84 vs 70-77，主参考）</b></td>
+      <td>+$2.9（自然增速）</td>
+      <td>+$4.9（含活动）</td>
+      <td><b>+$2.10 USD</b></td>
+      <td><b>✅ 基准</b></td>
+    </tr>
+  </table>
+  <div class="note" style="margin-top:10px">
+    Datain 匹配子集净差 +2.8（pay_price）÷ 换算系数 ~2 ≈ <b>+$1.4 USD</b>，与 Trino +$2.10 量级吻合。单服 ARPPU 波动较大（如 72服 +41.8、73服 −60.6），建议以匹配子集或加权均值解读。
+  </div>
+</div>
+
+<!-- 7.4 汇总 -->
+<div class="card">
+  <h4>■ 7.4 三指标验证汇总</h4>
+  <table>
+    <tr>
+      <th>指标</th>
+      <th>Trino 主口径（结论）</th>
+      <th>Datain 全量（二次验证）</th>
+      <th>Datain 匹配子集</th>
+      <th>方向一致</th>
+    </tr>
+    <tr>
+      <td><b>总收入 W3/W2</b></td>
+      <td>ctrl −29.6% / exp <b style="color:#27ae60">+10.1%</b></td>
+      <td>ctrl −34.2% / exp −16.6%</td>
+      <td>ctrl −36.4% / exp −21.9%</td>
+      <td style="color:#27ae60;font-weight:700">✅</td>
+    </tr>
+    <tr>
+      <td><b>付费率 W2→W3</b></td>
+      <td>ctrl −0.35ppt / exp <b style="color:#27ae60">+1.10ppt</b></td>
+      <td>ctrl −1.5ppt / exp +0.6ppt</td>
+      <td>ctrl −2.1ppt / exp +2.6ppt</td>
+      <td style="color:#27ae60;font-weight:700">✅</td>
+    </tr>
+    <tr>
+      <td><b>ARPPU 净差</b></td>
+      <td>实验 vs 对照 <b style="color:#27ae60">+$2.10</b></td>
+      <td>+11.7（pay_price 全量）</td>
+      <td>+2.8（pay_price）≈ +$1.4</td>
+      <td style="color:#27ae60;font-weight:700">✅</td>
+    </tr>
+  </table>
+  <div class="insight-box" style="margin-top:12px">
+    <b>总结：</b>Datain 独立验证三项指标方向全部与 Trino 主口径一致，实验组在付费总额、付费率、付费深度三个维度均显著优于对照组。Trino 匹配对照法（iap_price USD、三维匹配、批次差异已控）为最可信口径；Datain 全量数据提供了范围更广的佐证，两套数据互补形成完整验证链。
+  </div>
+  <div class="note">
+    <b>主要口径差异：</b>① Datain 付费额 = pay_price（含汇率折算，约为 USD 的 2×）；② Datain 付费率 proxy 分母为日均 DAU，非 7 日去重用户（绝对值约 Trino 的 2.5×）；③ 85服 W2 大R集中事件（单日 2,231）使实验组 Datain 合计 W3/W2 偏低，Trino 匹配法已消除此偏差。
+  </div>
+</div>
+
+</body>
+</html>

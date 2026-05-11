@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 尼罗河活动 · 结论先行</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:#f0f2f5;color:#1a1a2e;font-size:14px}
+
+/* ─── Hero ─── */
+.hero{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 55%,#0f3460 100%);color:#fff;padding:44px 64px 38px}
+.hero-tag{display:inline-block;background:#e94560;color:#fff;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:3px 10px;border-radius:3px;margin-bottom:14px;text-transform:uppercase}
+.hero h1{font-size:1.9em;font-weight:800;line-height:1.3;margin-bottom:8px}
+.hero h1 em{color:#f0c040;font-style:normal}
+.hero-meta{color:#7a8fbb;font-size:12px;margin-top:10px;line-height:1.9}
+
+/* ─── Verdict ─── */
+.verdict-wrap{max-width:1260px;margin:0 auto;padding:0 64px}
+.verdict{background:#fff;border-left:6px solid #27ae60;padding:16px 26px;margin:24px 0 0;border-radius:0 8px 8px 0;box-shadow:0 2px 14px rgba(0,0,0,.09)}
+.verdict .vl{font-size:11px;font-weight:700;letter-spacing:1.5px;color:#27ae60;text-transform:uppercase;margin-bottom:5px}
+.verdict p{font-size:13.5px;line-height:1.8;color:#222}
+.verdict b{color:#e94560}
+
+/* ─── Layout ─── */
+.main{max-width:1260px;margin:0 auto;padding:28px 64px 60px}
+
+/* ─── Top KPI ─── */
+.kpi3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.kpi-card{background:#fff;border-radius:10px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.07);border-top:4px solid #e94560}
+.kpi-card.g{border-top-color:#27ae60}
+.kpi-card.b{border-top-color:#2980b9}
+.kpi-num{font-size:2em;font-weight:800;line-height:1.1}
+.kpi-num.up{color:#27ae60}.kpi-num.dn{color:#e74c3c}.kpi-num.bl{color:#2980b9}
+.kpi-lbl{font-size:12px;color:#666;margin-top:6px;line-height:1.5;font-weight:600}
+.kpi-sub{font-size:11px;color:#aaa;margin-top:3px}
+.kpi-verdict{display:inline-block;margin-top:8px;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:700}
+.kpi-verdict.pos{background:#d4edda;color:#155724}
+.kpi-verdict.neutral{background:#fff3cd;color:#856404}
+
+/* ─── Section header ─── */
+.sh{display:flex;align-items:center;gap:12px;margin:36px 0 16px}
+.sh-num{width:30px;height:30px;border-radius:50%;background:#e94560;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sh-title{font-size:17px;font-weight:800;color:#1a1a2e}
+.sh-badge{font-size:11px;padding:2px 8px;border-radius:3px;font-weight:700;margin-left:4px}
+.sh-badge.pass{background:#d4edda;color:#155724}
+.sh-badge.warn{background:#fff3cd;color:#856404}
+
+/* ─── Card ─── */
+.card{background:#fff;border-radius:10px;padding:22px 26px;box-shadow:0 2px 10px rgba(0,0,0,.07);margin-bottom:16px}
+.card-title{font-size:12.5px;font-weight:700;color:#555;border-left:4px solid #e94560;padding-left:10px;margin-bottom:14px;letter-spacing:.3px}
+.card-title.g{border-left-color:#27ae60}.card-title.b{border-left-color:#2980b9}.card-title.yl{border-left-color:#f0c040}
+
+/* ─── Tables ─── */
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:#1a1a2e;color:#fff;padding:9px 12px;text-align:center;font-weight:600}
+th.left{text-align:left}
+td{padding:9px 12px;border-bottom:1px solid #f0f0f0;text-align:center}
+td.left{text-align:left}
+tr:hover td{background:#fafbff}
+.up{color:#27ae60;font-weight:700}.dn{color:#e74c3c;font-weight:700}
+.row-ctrl{background:#fff7f7}
+.row-exp{background:#f0f8ff}
+.row-agg{background:#1a1a2e!important}
+.row-agg td{color:#fff;font-weight:700}
+.row-agg .up{color:#4dd;}.row-agg .dn{color:#f88}
+.row-hi{background:#fffbe6}
+.gold{color:#d4a017;font-weight:700}
+
+/* ─── Insight callout ─── */
+.insight-box{background:#e8f4fd;border-left:4px solid #2980b9;padding:11px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:12.5px;line-height:1.7}
+.insight-box b{color:#1a1a2e}
+.warn-box{background:#ffeaea;border-left:4px solid #e74c3c;padding:11px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:12px;line-height:1.65}
+.note-box{background:#fffbe6;border-left:4px solid #f0c040;padding:10px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:12px;line-height:1.65}
+
+/* ─── Two-col ─── */
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+/* ─── Attribution bar ─── */
+.attr-row{display:flex;align-items:center;gap:10px;margin:7px 0}
+.attr-lbl{width:140px;font-size:12px;color:#555;flex-shrink:0;text-align:right}
+.attr-bar-wrap{flex:1;background:#f0f2f5;border-radius:4px;height:24px;overflow:hidden;position:relative}
+.attr-bar{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 10px;font-size:11.5px;font-weight:700;color:#fff}
+.attr-val{width:64px;font-size:12.5px;font-weight:700;text-align:right;flex-shrink:0}
+
+/* ─── Module grid ─── */
+.mod5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
+.mod-mini{background:#fff;border-radius:8px;padding:14px 14px;box-shadow:0 2px 8px rgba(0,0,0,.07);border-top:3px solid #ccc}
+.mod-mini.s5{border-top-color:#27ae60}.mod-mini.s4{border-top-color:#73c6b6}.mod-mini.s1{border-top-color:#e74c3c}
+.mod-mini .mm-name{font-size:11.5px;font-weight:700;color:#1a1a2e;margin-bottom:4px}
+.mod-mini .mm-stars{color:#f0c040;font-size:13px;letter-spacing:1px}
+.mod-mini .mm-stars .e{color:#ddd}
+.mod-mini .mm-tag{display:inline-block;margin-top:6px;padding:2px 6px;border-radius:3px;font-size:10.5px;font-weight:700}
+.mm-tag.keep{background:#d4edda;color:#155724}
+.mm-tag.fix{background:#fff3cd;color:#856404}
+.mm-tag.drop{background:#fde8e8;color:#8b0000}
+.mod-mini .mm-note{font-size:11px;color:#888;margin-top:5px;line-height:1.5}
+
+/* ─── Rec ─── */
+.rec4{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rec-card{border-radius:8px;padding:14px 16px}
+.rec-card.keep{background:#e8f8f0;border-left:4px solid #27ae60}
+.rec-card.improve{background:#fff8e1;border-left:4px solid #f0c040}
+.rec-card.drop{background:#fef0f0;border-left:4px solid #e74c3c}
+.rc-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.keep .rc-tag{color:#27ae60}.improve .rc-tag{color:#b7850a}.drop .rc-tag{color:#c0392b}
+.rc-title{font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:4px}
+.rc-body{font-size:12px;color:#555;line-height:1.6}
+
+/* ─── Tabs ─── */
+.tab-nav{display:grid;grid-template-columns:repeat(5,1fr);gap:0;background:#fff;border-radius:10px 10px 0 0;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.07)}
+.tab-btn{background:#fff;border:none;border-bottom:3px solid transparent;padding:14px 10px;cursor:pointer;text-align:center;transition:all .2s;font-family:inherit}
+.tab-btn:hover{background:#f5f6fa}
+.tab-btn.active{background:#1a1a2e;border-bottom-color:#e94560}
+.tab-btn.active .tb-name{color:#fff}
+.tab-btn.active .tb-stars{color:#f0c040}
+.tb-stars{font-size:15px;color:#f0c040;display:block;margin-bottom:4px}
+.tb-name{font-size:13px;font-weight:700;color:#1a1a2e;display:block;margin-bottom:5px}
+.tb-tag{display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:700}
+.keep-c{background:#d4edda;color:#155724}
+.fix-c{background:#fff3cd;color:#856404}
+.drop-c{background:#fde8e8;color:#8b0000}
+
+.tab-body{background:#fff;border-radius:0 0 10px 10px;padding:24px;box-shadow:0 2px 10px rgba(0,0,0,.07);margin-bottom:24px}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+.tp-section{font-size:12px;font-weight:700;letter-spacing:.5px;color:#666;text-transform:uppercase;border-bottom:2px solid #f0f0f0;padding-bottom:6px;margin-bottom:10px}
+.tp-ins{background:#e8f4fd;border-left:4px solid #2980b9;padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;line-height:1.75;color:#1a1a2e;margin-bottom:10px}
+.warn-tp{background:#ffeaea;border-left-color:#e74c3c}
+.tp-rec{padding:10px 14px;border-radius:6px;font-size:13px;line-height:1.7}
+.tp-rec.keep{background:#e8f8f0;border-left:4px solid #27ae60}
+.tp-rec.fix{background:#fff8e1;border-left:4px solid #f0c040}
+.tp-rec.drop{background:#fef0f0;border-left:4px solid #e74c3c}
+
+/* ─── Footer ─── */
+.footer{text-align:center;font-size:11px;color:#aaa;padding:24px 0;border-top:1px solid #e5e5e5;margin-top:8px}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-tag">数据回归报告 · 结论先行</div>
+  <h1>X3 尼罗河节日活动<br><em>visit_pack 机制验证有效，收入与付费率均逆转自然衰减</em></h1>
+  <div class="hero-meta">
+    活动服务器：80–86服 &nbsp;·&nbsp; 分析窗口：W3（D21–D28）&nbsp;·&nbsp;
+    匹配对照组：75+77服 vs 82+84+85服 &nbsp;·&nbsp; <b style="color:#aac">出具日期：2026-05-08</b>
+  </div>
+</div>
+
+<div class="verdict-wrap">
+  <div class="verdict">
+    <div class="vl">一句话结论</div>
+    <p>节日活动有效逆转了 W3 三项核心付费指标的自然衰减：<b>总收入净增 +$4,307（实验组 +10.1% vs 对照组 -29.6%）</b>；<b>付费率净增 +1.45ppt</b>，节日礼包直接贡献 72%；<b>ARPPU 净增 +$2.10</b>，节日礼包 ARPPU 直接贡献 +$9.67，但非节日消费深度未被带动（-$7.57）。visit_pack 机制在拉新付费和提升整体收入层面验证有效，但对存量付费玩家的消费加深效果有限。</p>
+  </div>
+</div>
+
+<!-- ═══ MAIN ═══ -->
+<div class="main">
+
+  <!-- ── Top KPI ── -->
+  <div style="height:24px"></div>
+  <div class="kpi3">
+    <div class="kpi-card g">
+      <div class="kpi-num up">+$4,307</div>
+      <div class="kpi-lbl">W3 收入净增量</div>
+      <div class="kpi-sub">实验组 +10.1%&nbsp;|&nbsp;对照组 −29.6%</div>
+      <div class="kpi-verdict pos">✓ 显著正向</div>
+    </div>
+    <div class="kpi-card g">
+      <div class="kpi-num up">+1.45ppt</div>
+      <div class="kpi-lbl">付费率净贡献</div>
+      <div class="kpi-sub">节日礼包直贡献 72%（+1.05ppt）</div>
+      <div class="kpi-verdict pos">✓ 显著正向</div>
+    </div>
+    <div class="kpi-card b">
+      <div class="kpi-num bl">+$2.10</div>
+      <div class="kpi-lbl">ARPPU 净增</div>
+      <div class="kpi-sub">节日 +$9.67，非节日 −$7.57</div>
+      <div class="kpi-verdict neutral">△ 有限，与自然持平</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       一、总收入净增归因
+  ══════════════════════════════════════ -->
+  <div class="sh">
+    <div class="sh-num">一</div>
+    <div class="sh-title">总收入净增归因</div>
+    <span class="sh-badge pass">实验组逆势增长 +10.1%，对照组衰减 −29.6%</span>
+  </div>
+
+  <!-- 结论先行 -->
+  <div class="card" style="border-left:5px solid #27ae60">
+    <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center">
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:1px;color:#27ae60;text-transform:uppercase;margin-bottom:8px">核心结论</div>
+        <p style="font-size:14px;line-height:1.85;color:#1a1a2e">
+          节日活动有效逆转了 W3 收入的自然衰减：对照组（无活动）W2→W3 自然下跌 <b style="color:#e74c3c">−29.6%</b>，实验组逆势增长 <b style="color:#27ae60">+10.1%</b>，净增 <b style="color:#27ae60">+$4,307</b>。<br>
+          净增量中节日礼包直接贡献 <b>30%（$1,314）</b>，非节日收入同步增长贡献 <b>70%（$2,993）</b>。匹配对照法排除批次差异，W2 基准收入两组均为 $3,069，对齐后结论可信。
+        </p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;min-width:220px">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#fff0f0;border-radius:6px;padding:10px 16px">
+          <span style="font-size:12px;color:#666">对照组自然变化</span>
+          <span style="font-size:1.4em;font-weight:800;color:#e74c3c">−29.6%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#f0fff4;border-radius:6px;padding:10px 16px">
+          <span style="font-size:12px;color:#666">实验组实际增长</span>
+          <span style="font-size:1.4em;font-weight:800;color:#27ae60">+10.1%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#1a1a2e;border-radius:6px;padding:10px 16px">
+          <span style="font-size:12px;color:#aaa">收入净增量</span>
+          <span style="font-size:1.4em;font-weight:800;color:#4ecdc4">+$4,307</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 支撑数据 -->
+  <div class="cols2">
+    <div class="card">
+      <div class="card-title">W2→W3 收入对比（匹配对照法）</div>
+      <table>
+        <tr><th class="left">组别</th><th>W2 收入</th><th>W3 收入</th><th>变化率</th></tr>
+        <tr class="row-ctrl">
+          <td class="left">对照组（75+77服，无活动）</td>
+          <td>$3,069</td><td>$2,159</td><td><span class="dn">−29.6%</span></td>
+        </tr>
+        <tr class="row-exp">
+          <td class="left">实验组（82+84+85服，有活动）</td>
+          <td>$3,069</td><td>$3,378</td><td><span class="up">+10.1%</span></td>
+        </tr>
+        <tr class="row-agg">
+          <td class="left">净增量（逆转衰减后）</td>
+          <td>—</td><td><span class="up">+$4,307</span></td><td>—</td>
+        </tr>
+      </table>
+      <div class="note-box" style="margin-top:12px">
+        <b>匹配说明：</b>按 W2 R级结构、DAU、大超R人数三维匹配，基准付费率对齐 7.04% vs 7.02%，W2 基准收入均为 $3,069
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">W3 净增量拆解：节日 vs 非节日</div>
+      <table>
+        <tr><th class="left">收入类别</th><th>金额</th><th>占净增量</th></tr>
+        <tr><td class="left">节日礼包直接收入</td><td>$1,314</td><td>30%</td></tr>
+        <tr><td class="left">非节日收入同步增长</td><td>$2,993</td><td>70%</td></tr>
+        <tr class="row-agg"><td class="left">合计净增</td><td><span class="up">$4,307</span></td><td>100%</td></tr>
+      </table>
+      <div style="margin-top:14px">
+        <div class="attr-row">
+          <div class="attr-lbl">节日礼包直接</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:30%;background:#e94560">30% · $1,314</div></div>
+        </div>
+        <div class="attr-row">
+          <div class="attr-lbl">非节日收入增量</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:70%;background:#2980b9">70% · $2,993</div></div>
+        </div>
+      </div>
+      <div class="warn-box" style="margin-top:12px">
+        <b>85服异常：</b>85服 W3 总收入 $7,062（非节日 $6,487），高净值玩家集中付费，非活动驱动。仅看 82+84服：节日礼包直接 ≈ $739（约 15%），结论方向不变。
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       二、付费率归因
+  ══════════════════════════════════════ -->
+  <div class="sh">
+    <div class="sh-num">二</div>
+    <div class="sh-title">付费率归因</div>
+    <span class="sh-badge pass">净贡献 +1.45ppt，全部 7 服正增长</span>
+  </div>
+
+  <!-- 结论先行 -->
+  <div class="card" style="border-left:5px solid #27ae60">
+    <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center">
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:1px;color:#27ae60;text-transform:uppercase;margin-bottom:8px">核心结论</div>
+        <p style="font-size:14px;line-height:1.85;color:#1a1a2e">
+          对照组 W3 付费率自然衰减 <b style="color:#e74c3c">−0.35ppt</b>，实验组（80–85服聚合）实际增长 <b style="color:#27ae60">+1.10ppt</b>，节日净贡献 <b style="color:#27ae60">+1.45ppt</b>，全部 7 服付费率均为正增长。<br>
+          净增中节日礼包当周首笔付费直接贡献 <b>72%（+1.05ppt）</b>，存量付费逆转自然衰减贡献 <b>28%（+0.40ppt）</b>。高质量服（W2付费率&gt;6.5%）礼包触发效果 15–21%，低质量服仅 4–5%。
+        </p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;min-width:220px">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#fff0f0;border-radius:6px;padding:10px 16px">
+          <span style="font-size:12px;color:#666">对照组自然变化</span>
+          <span style="font-size:1.4em;font-weight:800;color:#e74c3c">−0.35ppt</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#f0fff4;border-radius:6px;padding:10px 16px">
+          <span style="font-size:12px;color:#666">实验组实际增长</span>
+          <span style="font-size:1.4em;font-weight:800;color:#27ae60">+1.10ppt</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#1a1a2e;border-radius:6px;padding:10px 16px">
+          <span style="font-size:12px;color:#aaa">付费率净贡献</span>
+          <span style="font-size:1.4em;font-weight:800;color:#4ecdc4">+1.45ppt</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 支撑数据 -->
+  <div class="card">
+    <div class="card-title">各服 W2→W3 付费率明细</div>
+    <table>
+      <tr>
+        <th class="left">服务器</th>
+        <th>W2 付费率</th><th>W3 付费率</th><th>Δ</th>
+        <th>礼包当周首笔付费人数</th>
+        <th>首笔付费率/付费者</th>
+        <th>首笔付费率/DAU</th>
+      </tr>
+      <tr class="row-ctrl">
+        <td class="left">对照组（70–77服聚合）</td>
+        <td>7.19%</td><td>6.84%</td>
+        <td><span class="dn">−0.35ppt</span></td>
+        <td>—</td><td>—</td><td>—</td>
+      </tr>
+      <tr><td class="left">80服 (1790)</td><td>5.99%</td><td>6.65%</td><td><span class="up">+0.66ppt</span></td><td>1</td><td>4.2%</td><td>0.28%</td></tr>
+      <tr><td class="left">81服 (1800)</td><td>5.12%</td><td>6.16%</td><td><span class="up">+1.04ppt</span></td><td>1</td><td>4.5%</td><td>0.28%</td></tr>
+      <tr><td class="left">82服 (1810)</td><td>6.88%</td><td>8.12%</td><td><span class="up">+1.24ppt</span></td><td>6</td><td class="up">21.4%</td><td class="up">1.74%</td></tr>
+      <tr><td class="left">83服 (1820)</td><td>5.62%</td><td>6.25%</td><td><span class="up">+0.63ppt</span></td><td>4</td><td>16.7%</td><td>1.04%</td></tr>
+      <tr><td class="left">84服 (1830)</td><td>6.78%</td><td>8.20%</td><td><span class="up">+1.42ppt</span></td><td>4</td><td>15.4%</td><td>1.26%</td></tr>
+      <tr class="row-hi"><td class="left">85服 (1840) ⚠️异常</td><td>7.43%</td><td>9.26%</td><td><span class="up">+1.83ppt ★</span></td><td>6</td><td class="up">20.0%</td><td class="up">1.85%</td></tr>
+      <tr><td class="left">86服 (1850) ⏳仅4天</td><td>5.69%</td><td>6.72%</td><td><span class="up">+1.03ppt</span></td><td>0</td><td>0%</td><td>0%</td></tr>
+      <tr class="row-agg">
+        <td class="left">80–85服聚合</td>
+        <td>6.28%</td><td>7.38%</td>
+        <td><span class="up">+1.10ppt</span></td>
+        <td><b>22</b></td><td><b>14.3%</b></td><td><b>1.05%</b></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="cols2">
+    <div class="card">
+      <div class="card-title g">付费率净增归因拆解</div>
+      <table>
+        <tr><th class="left">归因项</th><th>数值</th><th>占净贡献</th></tr>
+        <tr class="row-ctrl"><td class="left">对照组自然变化（基准）</td><td><span class="dn">−0.35ppt</span></td><td>—</td></tr>
+        <tr><td class="left">实验组 W3 实际增长</td><td><span class="up">+1.10ppt</span></td><td>—</td></tr>
+        <tr class="row-agg"><td class="left">节日净贡献（实验−对照）</td><td><span class="up">+1.45ppt</span></td><td>100%</td></tr>
+        <tr><td class="left">└ 节日礼包首笔付费直接贡献</td><td>+1.05ppt</td><td class="up"><b>72%</b></td></tr>
+        <tr><td class="left">└ 存量基础逆转衰减</td><td>+0.40ppt</td><td>28%</td></tr>
+      </table>
+      <div class="insight-box" style="margin-top:12px">
+        验证：节日首笔付费人数 22 人 / W3 DAU 2,088 = <b>1.05%</b>，与归因一致 ✓
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">服务器质量与礼包触发效果</div>
+      <div style="margin:6px 0 12px">
+        <div class="attr-row">
+          <div class="attr-lbl" style="width:160px">高质量服（付费率&gt;6.5%）</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:100%;background:#27ae60">首笔付费率 15–21%</div></div>
+        </div>
+        <div class="attr-row">
+          <div class="attr-lbl" style="width:160px">低质量服（付费率&lt;6%）</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:24%;background:#e94560">4–5%</div></div>
+        </div>
+      </div>
+      <div class="note-box">
+        节日礼包对<b>存量付费意愿强的服触发效果更显著</b>（82/84/85服 15–21%），低付费基础服（80/81服）效果有限（4–5%）。礼包的作用是触发当周首笔付费，而非系统性改变付费行为。
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       三、ARPPU / 付费深度归因
+  ══════════════════════════════════════ -->
+  <div class="sh">
+    <div class="sh-num">三</div>
+    <div class="sh-title">ARPPU / 付费深度归因</div>
+    <span class="sh-badge warn">节日礼包拉了 +$9.67，但非节日消费同步少了 $7.57，净增仅 +$2.10</span>
+  </div>
+
+  <!-- 结论先行 -->
+  <div class="card" style="border-left:5px solid #2980b9">
+    <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center">
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:1px;color:#2980b9;text-transform:uppercase;margin-bottom:8px">核心结论</div>
+        <p style="font-size:14px;line-height:1.85;color:#1a1a2e">
+          节日礼包带来了 <b style="color:#e94560">+$9.67/付费玩家</b> 的直接消费，但同期非节日消费低于自然预期 <b style="color:#e74c3c">−$7.57</b>，两者相抵后 ARPPU 净增仅 <b style="color:#27ae60">+$2.10</b>，与对照组自然增速（+3.9%）基本持平。<br>
+          节日礼包消费在一定程度上<b>替代</b>了存量非节日消费，而非叠加在原有消费之上——节日对付费玩家的<b>消费深度拉动效果有限</b>。
+        </p>
+      </div>
+      <!-- 瀑布图式数字 -->
+      <div style="display:flex;flex-direction:column;gap:6px;min-width:220px">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#fff0f3;border-radius:6px;padding:10px 16px">
+          <span style="font-size:12px;color:#666">节日礼包直接拉升</span>
+          <span style="font-size:1.4em;font-weight:800;color:#e94560">+$9.67</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#fff0f0;border-radius:6px;padding:10px 16px">
+          <span style="font-size:12px;color:#666">非节日消费低于预期</span>
+          <span style="font-size:1.4em;font-weight:800;color:#e74c3c">−$7.57</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#1a1a2e;border-radius:6px;padding:10px 16px">
+          <span style="font-size:12px;color:#aaa">ARPPU 净增</span>
+          <span style="font-size:1.4em;font-weight:800;color:#4ecdc4">+$2.10</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 支撑数据 -->
+  <div class="cols2">
+    <div class="card">
+      <div class="card-title b">W2→W3 ARPPU 对比（80–84服 vs 70–77服）</div>
+      <table>
+        <tr><th class="left">指标</th><th>对照组（70–77服）</th><th>实验组（80–84服）</th></tr>
+        <tr><td class="left">W2 ARPPU（基准对齐）</td><td>$72.29</td><td>$71.99</td></tr>
+        <tr><td class="left">W3 ARPPU（实际）</td><td>$75.14</td><td>$76.90</td></tr>
+        <tr><td class="left">W2→W3 变化率</td><td class="up">+3.9%（自然增速）</td><td class="up">+6.8%</td></tr>
+        <tr><td class="left">预期 W3 ARPPU（按对照增速）</td><td>—</td><td style="color:#888">$74.80</td></tr>
+        <tr class="row-agg">
+          <td class="left">ARPPU 净增（实际 − 预期）</td>
+          <td>—</td>
+          <td><span class="up">+$2.10</span></td>
+        </tr>
+      </table>
+      <div class="warn-box" style="margin-top:12px">
+        <b>85服已排除：</b>85服 W3 ARPPU $235（非节日 $222），大R集中付费异常，排除后用 80–84服聚合，避免失真。
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">节日 vs 非节日 ARPPU 拆解</div>
+      <table>
+        <tr><th class="left">拆解项</th><th>数值</th><th>说明</th></tr>
+        <tr>
+          <td class="left">节日礼包直接 ARPPU</td>
+          <td><b style="color:#e94560">+$9.67</b></td>
+          <td>付费玩家人均节日礼包支出</td>
+        </tr>
+        <tr>
+          <td class="left">非节日 ARPPU vs 自然预期</td>
+          <td><b style="color:#e74c3c">−$7.57</b></td>
+          <td>低于按对照增速的预期值</td>
+        </tr>
+        <tr class="row-agg">
+          <td class="left">ARPPU 净增</td>
+          <td><span class="up">+$2.10</span></td>
+          <td>≈ 自然增速水平，未超预期</td>
+        </tr>
+      </table>
+      <div style="margin-top:14px">
+        <div class="attr-row">
+          <div class="attr-lbl" style="width:130px">节日礼包拉升</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:100%;background:#e94560">+$9.67</div></div>
+        </div>
+        <div class="attr-row">
+          <div class="attr-lbl" style="width:130px">非节日缺口</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:78%;background:#bbb">−$7.57</div></div>
+        </div>
+        <div class="attr-row">
+          <div class="attr-lbl" style="width:130px">净增结果</div>
+          <div class="attr-bar-wrap"><div class="attr-bar" style="width:22%;background:#27ae60">+$2.10</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       付费模块快览（分页签）
+  ══════════════════════════════════════ -->
+  <div class="sh">
+    <div class="sh-num" style="background:#555">附</div>
+    <div class="sh-title">付费模块结论</div>
+  </div>
+
+  <!-- 页签导航 -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab(0)">
+      <span class="tb-stars">★★★★★</span><br>
+      <span class="tb-name">特惠连锁礼包</span><br>
+      <span class="tb-tag keep-c">保留强化</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(1)">
+      <span class="tb-stars">★★★★<span style="color:#ddd">★</span></span><br>
+      <span class="tb-name">家具礼包</span><br>
+      <span class="tb-tag keep-c">保留</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(2)">
+      <span class="tb-stars">★★★★<span style="color:#ddd">★</span></span><br>
+      <span class="tb-name">主城礼包</span><br>
+      <span class="tb-tag keep-c">保留</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(3)">
+      <span class="tb-stars">★★★★<span style="color:#ddd">★</span></span><br>
+      <span class="tb-name">BP 通行证</span><br>
+      <span class="tb-tag fix-c">优化升档</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(4)">
+      <span class="tb-stars">★<span style="color:#ddd">★★★★</span></span><br>
+      <span class="tb-name">女王恩典卷</span><br>
+      <span class="tb-tag drop-c">重构</span>
+    </button>
+  </div>
+
+  <!-- 页签内容 -->
+  <div class="tab-body">
+
+    <!-- 0: 特惠连锁礼包 -->
+    <div class="tab-panel active" id="tab0">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px">
+        <div>
+          <div class="tp-section">分 R 级付费数据</div>
+          <table>
+            <tr><th class="left">R级</th><th>DAU</th><th>付费人数</th><th>付费率</th><th>ARPPU</th><th>收入占比</th></tr>
+            <tr><td class="left">chaoR</td><td>11</td><td>7</td><td class="up">63.6%</td><td>$41.38</td><td>50%</td></tr>
+            <tr><td class="left">daR</td><td>14</td><td>5</td><td>35.7%</td><td>$26.96</td><td>23%</td></tr>
+            <tr><td class="left">zhongR</td><td>91</td><td>14</td><td>15.4%</td><td>$8.91</td><td>21%</td></tr>
+            <tr><td class="left">xiaoR</td><td>182</td><td>5</td><td>2.8%</td><td>$6.99</td><td>6%</td></tr>
+            <tr><td class="left">feiR</td><td>1,790</td><td class="dn">0</td><td class="dn">0%</td><td>—</td><td>0%</td></tr>
+            <tr class="row-agg"><td class="left">聚合</td><td>2,088</td><td>31</td><td>1.49%</td><td>$18.84</td><td>100%</td></tr>
+          </table>
+        </div>
+        <div>
+          <div class="tp-section">付费漏斗（链式进度）</div>
+          <table>
+            <tr><th class="left">档位</th><th>价格</th><th>付费人数</th><th>留存率</th></tr>
+            <tr><td class="left">付费 1</td><td>$4.99</td><td>31</td><td>—</td></tr>
+            <tr><td class="left">付费 2</td><td>$9.99</td><td>9</td><td class="dn">29%（主断崖）</td></tr>
+            <tr><td class="left">付费 3</td><td>$19.99</td><td>3</td><td>33%</td></tr>
+            <tr><td class="left">付费 4</td><td>$49.99</td><td>1</td><td>33%</td></tr>
+            <tr><td class="left">付费 5</td><td>$99.99</td><td class="dn">0</td><td class="dn">0%</td></tr>
+          </table>
+          <div class="note-box" style="margin-top:10px;font-size:12px">节日模块收入第一：<b>$584，占节日 33%</b><br>chaoR 连锁 ARPPU $41 vs chaoR 整体 ARPPU $893，连锁仅占约 1/22，未有效拉深超R付费</div>
+        </div>
+        <div>
+          <div class="tp-section">结论</div>
+          <div class="tp-ins">在已有付费意愿的用户中变现加速效果显著，对 feiR（占 DAU 86%）完全无触达。渗透率和付费率符合预期，但付费深度不足，$4.99→$9.99 断崖（71% 流失）是核心问题。<br><br>体验层两个根本矛盾：① 每日刷新机制与链式推进设计冲突，导致玩家重复买第1档而非向上推进；② 皮肤奖励无稀缺感，高价档转化动力缺失。</div>
+          <div class="tp-section" style="margin-top:14px">优化点</div>
+          <div class="tp-rec keep" style="margin-bottom:8px">① <b>修复刷新与链式设计冲突：</b>链式进度改为活动周期内持久化，避免每日重置打断连续转化路径</div>
+          <div class="tp-rec keep" style="margin-bottom:8px">② <b>皮肤奖励改为单服唯一/限量：</b>增加高价档稀缺感，驱动 $19.99+ 转化</div>
+          <div class="tp-rec keep">③ <b>新增每日 Gacha 礼包：</b>承接"每日消费一次"复购习惯，修复链式逻辑后补充收入缺口</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1: 家具礼包 -->
+    <div class="tab-panel" id="tab1">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px">
+        <div>
+          <div class="tp-section">分 R 级付费数据</div>
+          <table>
+            <tr><th class="left">R级</th><th>DAU</th><th>付费人数</th><th>付费率</th><th>ARPPU</th><th>收入</th></tr>
+            <tr><td class="left">chaoR</td><td>11</td><td>6</td><td class="up">54.6%</td><td>$19.99</td><td>$119.94</td></tr>
+            <tr><td class="left">daR</td><td>14</td><td>6</td><td class="up">42.9%</td><td>$19.99</td><td>$119.94</td></tr>
+            <tr><td class="left">zhongR</td><td>91</td><td>9</td><td>9.9%</td><td>$19.99</td><td>$179.91</td></tr>
+            <tr><td class="left">xiaoR</td><td>182</td><td class="dn">0</td><td class="dn">0%</td><td>—</td><td>$0</td></tr>
+            <tr class="row-agg"><td class="left">聚合</td><td>2,088</td><td>21</td><td>1.01%</td><td>$19.99</td><td>$419.79</td></tr>
+          </table>
+        </div>
+        <div>
+          <div class="tp-section">关键数字</div>
+          <table>
+            <tr><th class="left">指标</th><th>数值</th></tr>
+            <tr><td class="left">节日模块排名</td><td>收入第二（$420，24%）</td></tr>
+            <tr><td class="left">定价</td><td>$19.99，限购1次</td></tr>
+            <tr><td class="left">ARPPU 固定</td><td>$19.99（限购锁死）</td></tr>
+            <tr><td class="left">zhongR 绝对收入占比</td><td>43%（基数最大）</td></tr>
+            <tr><td class="left">daR 家具占 daR ARPPU</td><td>11.8%（三类中最高）</td></tr>
+          </table>
+        </div>
+        <div>
+          <div class="tp-section">结论</div>
+          <div class="tp-ins">性价比最高的节日固定产品。限购设计稳定可预期，$19.99 价格精准覆盖中高R层：chaoR/daR 渗透率高（54.6%/42.9%），对这两档是顺手买；zhongR 贡献最多绝对收入（$179.91，43%）。xiaoR 完全无转化，门槛偏高但属预期。</div>
+          <div class="tp-section" style="margin-top:14px">优化点</div>
+          <div class="tp-rec keep">① <b>新增家具等级系统：</b>将一次性消费升级为可持续投入的养成线，突破当前限购1次的天花板，拉高模块整体 LTV</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2: 主城礼包 -->
+    <div class="tab-panel" id="tab2">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px">
+        <div>
+          <div class="tp-section">分 R 级付费数据</div>
+          <table>
+            <tr><th class="left">R级</th><th>DAU</th><th>付费人数</th><th>付费率</th><th>ARPPU</th><th>收入</th></tr>
+            <tr><td class="left">chaoR</td><td>11</td><td>2</td><td>18.2%</td><td>$99.99</td><td>$199.98</td></tr>
+            <tr><td class="left">daR 及以下</td><td>—</td><td class="dn">0</td><td class="dn">0%</td><td>—</td><td>$0</td></tr>
+            <tr class="row-agg"><td class="left">聚合</td><td>2,088</td><td>2</td><td>0.10%</td><td>$99.99</td><td>$199.98</td></tr>
+          </table>
+          <div class="warn-box" style="margin-top:10px;font-size:12px">仅 2 笔订单，数据波动性极高（±1 单对收入影响显著）</div>
+        </div>
+        <div>
+          <div class="tp-section">关键数字</div>
+          <table>
+            <tr><th class="left">指标</th><th>数值</th></tr>
+            <tr><td class="left">节日模块排名</td><td>收入第四（$200，11%）</td></tr>
+            <tr><td class="left">定价</td><td>$99.99，限购1次</td></tr>
+            <tr><td class="left">chaoR 转化率</td><td>18.2%（2/11人）</td></tr>
+            <tr><td class="left">daR 转化率</td><td class="dn">0%（目标未达）</td></tr>
+            <tr><td class="left">节日限定属性</td><td>有稀缺驱动，但不足</td></tr>
+          </table>
+        </div>
+        <div>
+          <div class="tp-section">结论</div>
+          <div class="tp-ins">节日高价档标志性产品，当前受众仅限 chaoR，整体转化率不足。$99.99 对超R属可承受但非"必买"，daR 完全无转化说明价值感知未达到付费决策门槛。</div>
+          <div class="tp-section" style="margin-top:14px">优化点</div>
+          <div class="tp-rec keep">① <b>暂不调整价格</b>（降价不一定能提升 daR 转化率）；通过提升主城美术设计质量（视觉冲击力、独特性）增强高价档购买驱动力，让 daR 产生"不买可惜"的稀缺感</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3: BP 通行证 -->
+    <div class="tab-panel" id="tab3">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px">
+        <div>
+          <div class="tp-section">分 R 级付费数据</div>
+          <table>
+            <tr><th class="left">R级</th><th>DAU</th><th>付费率</th><th>ARPPU</th><th>升档率</th></tr>
+            <tr><td class="left">chaoR</td><td>11</td><td class="up">63.6%</td><td>$25.70</td><td class="up">71%</td></tr>
+            <tr><td class="left">daR</td><td>14</td><td class="up">42.9%</td><td>$24.98</td><td class="up">67%</td></tr>
+            <tr><td class="left">zhongR</td><td>91</td><td>8.8%</td><td>$18.74</td><td class="dn">25%（门槛）</td></tr>
+            <tr><td class="left">xiaoR</td><td>182</td><td>2.2%</td><td>$14.99</td><td>0%</td></tr>
+            <tr><td class="left">feiR</td><td>1,790</td><td class="dn">0%</td><td>—</td><td>—</td></tr>
+            <tr class="row-agg"><td class="left">聚合</td><td>2,088</td><td>1.20%</td><td>$21.59</td><td>44%</td></tr>
+          </table>
+        </div>
+        <div>
+          <div class="tp-section">BP 满级率（20级）</div>
+          <table>
+            <tr><th class="left">分组</th><th>总人数</th><th>满级人数</th><th>满级率</th></tr>
+            <tr><td class="left">已购 BP</td><td>25</td><td>20</td><td class="up"><b>80%</b></td></tr>
+            <tr><td class="left">未购 BP</td><td>4,561</td><td>324</td><td>7.1%</td></tr>
+          </table>
+          <div class="note-box" style="margin-top:10px;font-size:12px">
+            节日模块收入第二梯队：<b>$540，占节日 30%</b><br>
+            BP 对 daR/zhongR 的 ARPPU 占比（14.7%/25.3%）高于 chaoR（2.9%），是中低付费段的主要节日消费选项<br>
+            <b>324 名免费满级玩家</b>是最精准的未转化潜在用户
+          </div>
+        </div>
+        <div>
+          <div class="tp-section">结论</div>
+          <div class="tp-ins">两档定价合理，chaoR/daR 升档顺畅（67–71%），$9.99→$19.99 跨档阻力低。zhongR 升档率仅 25%，$19.99 是中R消费门槛。满级率 80% 说明 BP 设计节奏合理，买了基本能打完。</div>
+          <div class="tp-section" style="margin-top:14px">优化点</div>
+          <div class="tp-rec fix" style="margin-bottom:8px">① <b>积分来源扩展：</b>当前仅 PVE/采集/雷达任务，加入高频日常行为（道具消耗/每日任务），目标免费满级率从 7.1% 提升至 25%，再迭代</div>
+          <div class="tp-rec fix" style="margin-bottom:8px">② <b>已购 BP 积分加成特权：</b>BP 买家额外加成，形成消费→参与正向循环，提升 BP 感知价值</div>
+          <div class="tp-rec fix">③ <b>免费满级后弹出购买引导：</b>精准触达 324 名免费满级玩家，将完成感转化为付费动机</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4: 女王恩典卷 -->
+    <div class="tab-panel" id="tab4">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px">
+        <div>
+          <div class="tp-section">各档成交数据</div>
+          <table>
+            <tr><th class="left">档位</th><th>成交单数</th><th>收入</th></tr>
+            <tr><td class="left">$4.99</td><td>6 单</td><td>$30</td></tr>
+            <tr><td class="left">$19.99</td><td class="dn"><b>0</b></td><td>$0</td></tr>
+            <tr><td class="left">$49.99</td><td class="dn"><b>0</b></td><td>$0</td></tr>
+            <tr><td class="left">$99.99</td><td class="dn"><b>0</b></td><td>$0</td></tr>
+            <tr class="row-agg"><td class="left">合计</td><td>6 单</td><td>$30</td></tr>
+          </table>
+        </div>
+        <div>
+          <div class="tp-section">购买结构</div>
+          <table>
+            <tr><th class="left">指标</th><th>内容</th></tr>
+            <tr><td class="left">购买主力 R级</td><td>xiaoR（3人）</td></tr>
+            <tr><td class="left">chaoR/daR 购买</td><td class="dn">无反应</td></tr>
+            <tr><td class="left">高档礼包触达</td><td class="dn">0%</td></tr>
+            <tr><td class="left">锚点效果</td><td class="dn">完全无效</td></tr>
+            <tr><td class="left">$4.99 档定性</td><td>入门触达，非锚点</td></tr>
+          </table>
+        </div>
+        <div>
+          <div class="tp-section">结论</div>
+          <div class="tp-ins warn-tp">锚点礼包设计意图完全未落地。$19.99/$49.99/$99.99 档零成交，购买主力为 xiaoR（3人）而非目标的 chaoR/daR——付费主力对本模块无反应。锚点拉力完全没有起效，本期节日该模块可忽略不计（$30）。</div>
+          <div class="tp-section" style="margin-top:14px">下期方向</div>
+          <div class="tp-rec drop">重构高档礼包内容，强化战力/稀缺感价值点；或将高档礼包改为累充奖励形式，避免空放锚点</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-body -->
+
+  <!-- ══════════════════════════════════════
+       下期优化建议
+  ══════════════════════════════════════ -->
+  <div class="sh">
+    <div class="sh-num" style="background:#555">议</div>
+    <div class="sh-title">下期优化建议</div>
+  </div>
+  <div class="rec4">
+    <div class="rec-card keep">
+      <div class="rc-tag">保留强化</div>
+      <div class="rc-title">visit_pack 核心机制</div>
+      <div class="rc-body">机制验证有效，建议提升邀请函日发放量（当前5个/天）或缩短首次兑换路径，目标邀请函利用率从 58.5% 提升至 70%+。</div>
+    </div>
+    <div class="rec-card improve">
+      <div class="rc-tag">重点关注</div>
+      <div class="rc-title">存量付费深度：非节日消费未被带动</div>
+      <div class="rc-body">节日礼包消费一定程度替代了非节日消费（−$7.57），下期可设计礼包购买后的非节日消费引导（如限时折扣、任务激励），防止替代效应。</div>
+    </div>
+    <div class="rec-card improve">
+      <div class="rc-tag">优化迭代</div>
+      <div class="rc-title">BP × zhongR 升档</div>
+      <div class="rc-body">zhongR 升档率 25%（远低于 daR 71%），建议免费满级后触发购买引导弹窗，将完成感转化为付费动机。</div>
+    </div>
+    <div class="rec-card drop">
+      <div class="rc-tag">重新设计</div>
+      <div class="rc-title">女王恩典卷高档礼包</div>
+      <div class="rc-body">$19.99/49.99/99.99 档零成交，锚点机制完全无效。建议重新规划高档礼包内容，强化战力/稀缺感价值点，或改为累充奖励形式。</div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+function switchTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+}
+</script>
+
+<div class="footer">
+  X3 尼罗河活动数据回归报告 &nbsp;·&nbsp; 分析：linkang@nibirutech.com &nbsp;·&nbsp; 2026-05-08<br>
+  数据环境：TRINO_HF · v1090 · W3 = D21–D28 · 匹配对照法（75+77服 vs 82+84+85服；ARPPU 用 80–84服）
+</div>
+
+</body>
+</html>

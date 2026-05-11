@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>巨象机甲皮肤配置生成器</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f1117; color: #e2e8f0; font-size: 13px; }
+
+  .layout { display: flex; min-height: 100vh; gap: 0; }
+
+  /* ── 左侧输入面板 ── */
+  .input-panel {
+    width: 300px; min-width: 300px;
+    background: #161b27;
+    border-right: 1px solid #2d3748;
+    padding: 20px 16px;
+    position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  }
+  .input-panel h1 { font-size: 14px; font-weight: 700; color: #7dd3fc; margin-bottom: 4px; }
+  .input-panel .subtitle { font-size: 11px; color: #64748b; margin-bottom: 20px; }
+
+  .section-label {
+    font-size: 11px; font-weight: 600; color: #94a3b8; letter-spacing: 0.05em;
+    text-transform: uppercase; margin: 16px 0 8px;
+    padding-bottom: 4px; border-bottom: 1px solid #2d3748;
+  }
+
+  .field { margin-bottom: 10px; }
+  .field label { display: block; font-size: 11px; color: #94a3b8; margin-bottom: 3px; }
+  .field input, .field textarea {
+    width: 100%; background: #0f1117; border: 1px solid #334155;
+    color: #e2e8f0; border-radius: 4px; padding: 6px 8px; font-size: 12px;
+    font-family: 'Consolas', monospace;
+    transition: border-color 0.15s;
+  }
+  .field input:focus, .field textarea:focus {
+    outline: none; border-color: #3b82f6; background: #131924;
+  }
+  .field input.dk-field { background: #1a1f2e; border-color: #2563eb44; }
+  .field input.url-field { background: #1a2218; border-color: #16a34a44; }
+  .field .hint { font-size: 10px; color: #475569; margin-top: 2px; }
+
+  .generate-btn {
+    width: 100%; padding: 10px; margin-top: 16px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff; border: none; border-radius: 6px; cursor: pointer;
+    font-size: 13px; font-weight: 600; transition: opacity 0.15s;
+  }
+  .generate-btn:hover { opacity: 0.9; }
+
+  /* ── 右侧输出面板 ── */
+  .output-panel { flex: 1; padding: 24px; overflow-x: auto; }
+  .output-panel h2 { font-size: 18px; font-weight: 700; color: #f1f5f9; margin-bottom: 6px; }
+  .output-panel .desc { font-size: 12px; color: #64748b; margin-bottom: 24px; }
+
+  .table-block { margin-bottom: 32px; }
+  .table-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .table-title { font-size: 13px; font-weight: 700; color: #7dd3fc; }
+  .table-meta { font-size: 11px; color: #475569; margin-top: 2px; }
+
+  .btn-row { display: flex; gap: 8px; }
+  .copy-btn {
+    padding: 5px 12px; background: #1e3a5f; color: #7dd3fc;
+    border: 1px solid #2563eb55; border-radius: 4px; cursor: pointer;
+    font-size: 11px; font-weight: 600; transition: all 0.15s;
+  }
+  .copy-btn:hover { background: #2563eb; color: #fff; }
+  .copy-btn.copied { background: #166534; color: #86efac; border-color: #16a34a55; }
+
+  .col-toggle-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .col-toggle {
+    padding: 2px 8px; background: #1e293b; border: 1px solid #334155;
+    border-radius: 3px; cursor: pointer; font-size: 10px; color: #64748b;
+    user-select: none; transition: all 0.1s;
+  }
+  .col-toggle.active { background: #1e3a5f; color: #7dd3fc; border-color: #2563eb55; }
+
+  .table-wrapper { overflow-x: auto; border-radius: 6px; border: 1px solid #1e293b; }
+  table { border-collapse: collapse; width: 100%; }
+  thead tr { background: #1e293b; }
+  thead th {
+    padding: 7px 10px; text-align: left; font-size: 10px; font-weight: 600;
+    color: #64748b; white-space: nowrap; border-bottom: 1px solid #334155;
+    letter-spacing: 0.03em;
+  }
+  tbody tr { border-bottom: 1px solid #1a2332; }
+  tbody tr:hover { background: #131924; }
+  tbody td {
+    padding: 7px 10px; font-size: 11px; color: #cbd5e1; white-space: nowrap;
+    font-family: 'Consolas', monospace; max-width: 280px; overflow: hidden; text-overflow: ellipsis;
+  }
+  td.empty-val { color: #334155; font-style: italic; }
+  td.pending { color: #f59e0b; background: #1a1400; }
+  td.fixed { color: #94a3b8; }
+
+  /* Toast */
+  #toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: #166534; color: #86efac; padding: 10px 18px;
+    border-radius: 6px; font-size: 12px; font-weight: 600;
+    opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 999;
+  }
+  #toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+<!-- ══════════════════════════ LEFT PANEL ══════════════════════════ -->
+<div class="input-panel">
+  <h1>机甲皮肤配置生成器</h1>
+  <p class="subtitle">巨象·新主题皮肤 / 3张表联动</p>
+
+  <div class="section-label">基础信息</div>
+  <div class="field">
+    <label>皮肤代号（LC key 后缀）</label>
+    <input type="text" id="skin_code" value="zhenqibazhu" />
+    <div class="hint">用于拼接 LC_HERO_mecha_name_XXX</div>
+  </div>
+  <div class="field">
+    <label>皮肤中文名</label>
+    <input type="text" id="skin_name_cn" value="蒸汽霸主" />
+  </div>
+  <div class="field">
+    <label>主色调（HEX，4011 display_skin_change）</label>
+    <input type="text" id="hex_color" value="#1c1508" placeholder="#1c1508" />
+  </div>
+
+  <div class="section-label">DK（美术提供后填）</div>
+  <div class="field">
+    <label>皮肤模型 DK（display_skin_key）</label>
+    <input type="text" id="dk_model" class="dk-field" placeholder="151XXXXXX" />
+    <div class="hint">4010 col[3][5] 和 4011 col[5] 共用</div>
+  </div>
+  <div class="field">
+    <label>皮肤图标 DK（skin icon）</label>
+    <input type="text" id="dk_icon" class="dk-field" placeholder="151XXXXXX" />
+    <div class="hint">4010 col[11]、4011 col[14]、1111 col[6] 共用</div>
+  </div>
+  <div class="field">
+    <label>Mask Color DK（4011 col[12]）</label>
+    <input type="text" id="dk_mask" class="dk-field" placeholder="151XXXXXX" />
+  </div>
+
+  <div class="section-label">URL（gacha 界面用，4011 col[21-23]）</div>
+  <div class="field">
+    <label>gacha_banner_url</label>
+    <input type="text" id="url_banner" class="url-field"
+      placeholder="assets/operation/P2dlcimg/activityImg/EventBanner_Obj_XXX.png" />
+  </div>
+  <div class="field">
+    <label>gacha_reward_url</label>
+    <input type="text" id="url_reward" class="url-field"
+      placeholder="assets/operation/P2dlcimg/activityImg/EventBanner_Obj_XXX.png" />
+  </div>
+  <div class="field">
+    <label>gacha_select_url</label>
+    <input type="text" id="url_select" class="url-field"
+      placeholder="assets/operation/P2dlcimg/llustration/llustrationFullXXX.png" />
+  </div>
+
+  <button class="generate-btn" onclick="generate()">生成配置行</button>
+</div>
+
+<!-- ══════════════════════════ RIGHT PANEL ══════════════════════════ -->
+<div class="output-panel">
+  <h2>配置行输出</h2>
+  <p class="desc">⚠ 黄色格 = 待填 DK/URL；直接点「复制」粘贴到 Google Sheet（Tab 分隔，含表头）</p>
+
+  <!-- TABLE 1: 1111 item -->
+  <div class="table-block" id="block_1111">
+    <div class="table-header">
+      <div>
+        <div class="table-title">1111 item — 道具行（1 行）</div>
+        <div class="table-meta">SheetID: 1FQqpeRfkXVwaEDSVi3oTaQNs2PLLDcsvQQmc-k0L3ws</div>
+      </div>
+      <div class="btn-row">
+        <button class="copy-btn" onclick="copyTable('tbl_1111', this)">复制 TSV</button>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table id="tbl_1111"><thead></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <!-- TABLE 2: 4010 mecha_skin -->
+  <div class="table-block" id="block_4010">
+    <div class="table-header">
+      <div>
+        <div class="table-title">4010 mecha_skin — 皮肤定义行（1 行）</div>
+        <div class="table-meta">SheetID: 1KWNZXyhUlI4UyREfENWe7yZvHSxWgpEtMv5T10G2X7w</div>
+      </div>
+      <div class="btn-row">
+        <button class="copy-btn" onclick="copyTable('tbl_4010', this)">复制 TSV</button>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table id="tbl_4010"><thead></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <!-- TABLE 3: 4011 mecha_colour -->
+  <div class="table-block" id="block_4011">
+    <div class="table-header">
+      <div>
+        <div class="table-title">4011 mecha_colour（mache_colour tab）— 颜色/URL 行（1 行）</div>
+        <div class="table-meta">SheetID: 1nl7w3Vfm1Wgv2ih5xKcPdLaIwfxv-ArWztVUSBlPnKY</div>
+      </div>
+      <div class="btn-row">
+        <button class="copy-btn" onclick="copyTable('tbl_4011', this)">复制 TSV</button>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table id="tbl_4011"><thead></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+</div><!-- /output-panel -->
+</div><!-- /layout -->
+
+<div id="toast">已复制到剪贴板</div>
+
+<script>
+// ─────────────────────────────────────────────
+// 固定 IDs
+const ITEM_ID    = '11118915';
+const SKIN_ID    = '40106201';
+const COLOUR_ID  = '40116201';
+const MECHA_ID   = '40011006';  // 巨象
+// ─────────────────────────────────────────────
+
+function v(id) { return document.getElementById(id).value.trim(); }
+
+function pending(val) {
+  return val === '' ? '__PENDING__' : val;
+}
+
+function generate() {
+  const code    = v('skin_code')    || 'zonglinnuxiang';
+  const nameCN  = v('skin_name_cn') || '丛林怒象';
+  const hex     = v('hex_color');
+  const dkModel = v('dk_model');
+  const dkIcon  = v('dk_icon');
+  const dkMask  = v('dk_mask');
+  const urlBan  = v('url_banner');
+  const urlRew  = v('url_reward');
+  const urlSel  = v('url_select');
+
+  const lcName     = `{"typ":"lc","txt":"LC_HERO_mecha_name_${code}"}`;
+  const lcDesc     = `{"typ":"lc","txt":"LC_HERO_mecha_skin_src_${code}"}`;
+  const lcNameItem = `{"typ":"lc","txt":"LC_HERO_mecha_name_${code}_item"}`;
+  const lcDescItem = `{"typ":"lc","txt":"LC_HERO_mecha_skin_src_${code}_item"}`;
+  const lcTipItem  = `{"typ":"lc","txt":"LC_HERO_mecha_skin_src_${code}_tips"}`;
+  const catParam   = `{"effect":[{"typ":"mecha_skin","id":${SKIN_ID},"val":-1},{"typ":"item","id":11111034,"val":10}]}`;
+
+  // ── 1111 item (25 cols) ──
+  const h1111 = [
+    'A_INT_id','S_STR_comment','A_STR_constant','A_STR_class','A_INT_quest_class',
+    'C_INT_display_order','C_INT_display_key','C_INT_display_quality','C_MAP_lc_upper_show',
+    'A_MAP_lc_name','C_MAP_lc_desc','C_MAP_lc_usetip','A_FLT_value',
+    'A_INT_max_own','A_INT_max_get','A_INT_max_use',
+    'C_ARR_display_labels','A_ARR_use_labels','A_MAP_category_param',
+    'A_INT_fixed_use','S_INT_use_now','C_ARR_drop_display',
+    'A_INT_source','A_INT_get_access_group','A_INT_country_use_type'
+  ];
+  const r1111 = [
+    ITEM_ID, `巨象${nameCN}`, '', 'mecha_skin', '31',
+    '0', pending(dkIcon), '15112564', '{}',
+    lcNameItem, lcDescItem, lcTipItem, '500',
+    '5', '1', '1',
+    '["bag_other"]', `["bag","${SKIN_ID}"]`, catParam,
+    '-1', '0', '[]',
+    '11740000', '0', '0'
+  ];
+
+  // ── 4010 mecha_skin (13 cols) ──
+  const h4010 = [
+    'A_INT_id','C_STR_comment','A_INT_mecha_id',
+    'C_INT_display_skin_key','A_INT_skin_level','C_INT_display_key',
+    'A_MAP_lc_name','C_MAP_lc_desc','C_INT_display_order',
+    'A_INT_preview','A_INT_mecha_colour_initial_id',
+    'C_INT_display_skin_colour_icon_key','A_MAP_showcond'
+  ];
+  const r4010 = [
+    SKIN_ID, `巨象${nameCN}`, MECHA_ID,
+    pending(dkModel), '0', pending(dkModel),
+    lcName, lcDesc, '10002',
+    '1', COLOUR_ID,
+    pending(dkIcon), '{}'
+  ];
+
+  // ── 4011 mecha_colour (26 cols) ──
+  const h4011 = [
+    'A_INT_id','C_STR_comment','C_STR_constant','A_INT_mecha_skin_id','A_INT_class',
+    'C_INT_display_skin_colour_key','A_MAP_lc_name','C_MAP_lc_desc','C_INT_display_order',
+    'A_ARR_status_active','A_ARR_innate_effect','A_ARR_items',
+    'C_INT_mask_color','A_INT_preview','C_INT_display_skin_colour_icon_key',
+    'C_STR_display_skin_change','A_MAP_showcond','A_INT_activity_select',
+    'C_INT_area','C_INT_camera_angle','C_MAP_mecha_actv_place',
+    'A_STR_gacha_banner_url','A_STR_gacha_reward_url','A_STR_gacha_select_url',
+    'C_INT_icon_display_key_type','C_INT_display_tag'
+  ];
+  const r4011 = [
+    COLOUR_ID, `巨象${nameCN}`, '',
+    SKIN_ID, '1',
+    pending(dkModel), lcName, lcDesc, '10001',
+    '[{"typ":"buff","id":121141050,"arg1":800}]',
+    '[{"typ":"buff","id":121136004,"arg1":300}]',
+    `[${ITEM_ID}]`,
+    pending(dkMask), '1', pending(dkIcon),
+    pending(hex), '{}', '0',
+    '600', '180', '{"x":-10000,"y":60,"z":300}',
+    pending(urlBan), pending(urlRew), pending(urlSel),
+    '0', '0'
+  ];
+
+  renderTable('tbl_1111', h1111, r1111);
+  renderTable('tbl_4010', h4010, r4010);
+  renderTable('tbl_4011', h4011, r4011);
+}
+
+function renderTable(tableId, headers, row) {
+  const table = document.getElementById(tableId);
+  const thead = table.querySelector('thead');
+  const tbody = table.querySelector('tbody');
+
+  thead.innerHTML = '<tr>' + headers.map(h =>
+    `<th title="${h}">${h}</th>`
+  ).join('') + '</tr>';
+
+  tbody.innerHTML = '<tr>' + row.map(val => {
+    if (val === '__PENDING__') return `<td class="pending">⚠ 待填</td>`;
+    if (val === '' || val === '""') return `<td class="empty-val">""</td>`;
+    return `<td class="fixed" title="${escHtml(val)}">${escHtml(truncate(val, 40))}</td>`;
+  }).join('') + '</tr>';
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function truncate(s, n) {
+  return s.length > n ? s.slice(0, n) + '…' : s;
+}
+
+// ─── Copy as TSV (Sheets-safe) ───────────────
+function copyTable(tableId, btn) {
+  const table = document.getElementById(tableId);
+  const rows = Array.from(table.querySelectorAll('tr'));
+  const tsv = rows.map(tr =>
+    Array.from(tr.querySelectorAll('th, td')).map(cell => {
+      let val = cell.getAttribute('title') || cell.textContent.trim();
+      if (val === '⚠ 待填') val = '';  // copy blank for pending
+      if (val === '""') val = "'\"\"";  // Sheets text prefix rule
+      return val;
+    }).join('\t')
+  ).join('\n');
+
+  navigator.clipboard.writeText(tsv).then(() => {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    showToast('已复制 TSV，直接粘贴到 Sheet 对应行');
+    setTimeout(() => { btn.textContent = '复制 TSV'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// 初始化渲染
+generate();
+</script>
+</body>
+</html>

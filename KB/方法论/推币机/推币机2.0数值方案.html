@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>推币机2.0 数值方案</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #232733;
+    --border: #2e3345;
+    --text: #e2e4ea;
+    --text2: #8b8fa4;
+    --accent: #6c8aff;
+    --accent2: #4a6aef;
+    --gold: #f5c542;
+    --gold2: #d4a832;
+    --purple: #b06cff;
+    --green: #3ecf8e;
+    --red: #f05656;
+    --orange: #f5a623;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1a1d2f 0%, #252a3a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 40px 24px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header h1 {
+    font-size: 24px; font-weight: 700; letter-spacing: .5px;
+    background: linear-gradient(90deg, var(--accent), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .header .sub { color: var(--text2); font-size: 13px; margin-top: 4px; }
+
+  /* Nav tabs */
+  .nav { display:flex; gap:4px; margin-top: 16px; flex-wrap: wrap; }
+  .nav-btn {
+    padding: 8px 18px; border-radius: 8px; border: 1px solid var(--border);
+    background: transparent; color: var(--text2); cursor: pointer;
+    font-size: 13px; font-weight: 500; transition: all .2s;
+  }
+  .nav-btn:hover { background: var(--surface2); color: var(--text); }
+  .nav-btn.active {
+    background: var(--accent2); color: #fff; border-color: var(--accent);
+  }
+
+  /* Main */
+  .main { max-width: 1200px; margin: 0 auto; padding: 24px 40px 80px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-size: 16px; font-weight: 600; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title .badge {
+    font-size: 11px; padding: 2px 8px; border-radius: 4px;
+    font-weight: 500;
+  }
+  .badge-new { background: rgba(62,207,142,.15); color: var(--green); }
+  .badge-gold { background: rgba(245,197,66,.15); color: var(--gold); }
+  .badge-purple { background: rgba(176,108,255,.15); color: var(--purple); }
+
+  /* Tables */
+  table {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+  }
+  th {
+    text-align: left; padding: 10px 12px;
+    background: var(--surface2); color: var(--text2);
+    font-weight: 500; font-size: 12px; text-transform: uppercase;
+    letter-spacing: .5px; border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td {
+    padding: 10px 12px; border-bottom: 1px solid rgba(46,51,69,.5);
+    vertical-align: top;
+  }
+  tr:hover td { background: rgba(108,138,255,.04); }
+  .num { font-family: 'SF Mono','Cascadia Code', monospace; font-size: 13px; }
+  .highlight { color: var(--gold); font-weight: 600; }
+  .green { color: var(--green); }
+  .red { color: var(--red); }
+  .purple { color: var(--purple); }
+  .accent { color: var(--accent); }
+  .dim { color: var(--text2); }
+  .right { text-align: right; }
+
+  /* JSON block */
+  .json-block {
+    background: #12141c; border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px; margin-top: 12px;
+    position: relative; overflow-x: auto;
+  }
+  .json-block pre {
+    font-family: 'SF Mono','Cascadia Code','Consolas', monospace;
+    font-size: 12px; line-height: 1.5; color: #a0b0d0;
+    white-space: pre-wrap; word-break: break-all;
+  }
+  .copy-btn {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text2); padding: 4px 12px; border-radius: 6px;
+    cursor: pointer; font-size: 11px; transition: all .2s;
+  }
+  .copy-btn:hover { background: var(--accent2); color: #fff; }
+  .copy-btn.copied { background: var(--green); color: #fff; border-color: var(--green); }
+
+  /* Summary boxes */
+  .summary-row { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+  .summary-box {
+    flex: 1; min-width: 200px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+  }
+  .summary-box .label { font-size: 12px; color: var(--text2); margin-bottom: 4px; }
+  .summary-box .value { font-size: 28px; font-weight: 700; font-family: 'SF Mono', monospace; }
+  .summary-box .note { font-size: 11px; color: var(--text2); margin-top: 4px; }
+
+  /* Progress bar */
+  .progress-track {
+    height: 6px; background: var(--surface2); border-radius: 3px;
+    margin: 8px 0; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 3px; transition: width .3s;
+  }
+
+  /* Comparison */
+  .cmp { display: inline-block; font-size: 11px; margin-left: 6px; }
+  .cmp-up { color: var(--green); }
+  .cmp-down { color: var(--red); }
+
+  /* Info callout */
+  .callout {
+    background: rgba(108,138,255,.08);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px; border-radius: 0 8px 8px 0;
+    margin: 16px 0; font-size: 13px; color: var(--text2);
+  }
+
+  /* Stage visual */
+  .stage-bar {
+    display: flex; align-items: end; gap: 2px; height: 80px; margin: 16px 0;
+  }
+  .stage-col {
+    flex: 1; border-radius: 4px 4px 0 0; transition: all .3s;
+    position: relative; min-width: 30px;
+  }
+  .stage-col .stage-label {
+    position: absolute; bottom: -20px; left: 50%;
+    transform: translateX(-50%); font-size: 10px; color: var(--text2);
+    white-space: nowrap;
+  }
+  .stage-col .stage-val {
+    position: absolute; top: -18px; left: 50%;
+    transform: translateX(-50%); font-size: 11px; font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ROI gauge */
+  .roi-row { display: flex; gap: 12px; margin: 12px 0; flex-wrap: wrap; }
+  .roi-item {
+    background: var(--surface2); border-radius: 8px; padding: 12px 16px;
+    flex: 1; min-width: 150px; text-align: center;
+  }
+  .roi-item .roi-label { font-size: 11px; color: var(--text2); }
+  .roi-item .roi-val { font-size: 22px; font-weight: 700; margin: 4px 0; font-family: monospace; }
+  .roi-item .roi-note { font-size: 10px; color: var(--text2); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .header { padding: 20px; }
+    .main { padding: 16px; }
+    .summary-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>P2 推币机 2.0 — 数值方案</h1>
+  <div class="sub">小丑宝箱 / 至尊宝箱 / 阶梯掉落 / 全服进度 &nbsp;|&nbsp; 2026-04-14</div>
+  <div class="nav">
+    <button class="nav-btn active" onclick="showTab('overview')">总览</button>
+    <button class="nav-btn" onclick="showTab('joker')">小丑宝箱怪</button>
+    <button class="nav-btn" onclick="showTab('jokerbox')">小丑宝箱奖池</button>
+    <button class="nav-btn" onclick="showTab('supreme')">至尊宝箱</button>
+    <button class="nav-btn" onclick="showTab('stage')">阶梯掉落</button>
+    <button class="nav-btn" onclick="showTab('config')">配置字段</button>
+    <button class="nav-btn" onclick="showTab('verify')">经济验证</button>
+    <button class="nav-btn" onclick="showTab('exchange')">兑换商店</button>
+    <button class="nav-btn" onclick="showTab('ranking')">排行榜</button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ==================== 总览 ==================== -->
+<div class="section active" id="sec-overview">
+  <div class="summary-row">
+    <div class="summary-box">
+      <div class="label">小丑宝箱期望价值</div>
+      <div class="value highlight">$2.09</div>
+      <div class="note">vs 普通宝箱 $1.15 <span class="cmp cmp-up">+82%</span></div>
+    </div>
+    <div class="summary-box">
+      <div class="label">至尊宝箱单次期望</div>
+      <div class="value purple">$14.69</div>
+      <div class="note">不放回 8 档等权随机</div>
+    </div>
+    <div class="summary-box">
+      <div class="label">大R宝箱ROI压缩</div>
+      <div class="value red">~27%</div>
+      <div class="note">vs 1.0 的 60.9% <span class="cmp cmp-down">-34pp</span></div>
+    </div>
+    <div class="summary-box">
+      <div class="label">首次币堆门槛</div>
+      <div class="value green">50银</div>
+      <div class="note">vs 1.0 的 50金 <span class="cmp cmp-down">降90%</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">设计目标 & 对应机制</div>
+    <table>
+      <tr><th style="width:30%">1.0 问题</th><th>数据表现</th><th>2.0 解决方案</th></tr>
+      <tr>
+        <td>ARPPU 偏低</td>
+        <td class="num">$27.51 <span class="dim">(vs 均值 $115.6, -76.2%)</span></td>
+        <td>兑换商店新增套装($600) + 红色英雄(碎片$1×300 + 技能材料$5×30)</td>
+      </tr>
+      <tr>
+        <td>中额转化断点</td>
+        <td class="num">$53-171 区间衰减 <span class="red">21.8%</span> <span class="dim">(恶化13.6pp)</span></td>
+        <td>首次币堆门槛降到50银 + 至尊宝箱渐进转化 + 小丑宝箱全服窗口</td>
+      </tr>
+      <tr>
+        <td>高分位 ROI 过高</td>
+        <td class="num">P75: <span class="red">144.7%</span> &nbsp; P90: <span class="red">174.3%</span></td>
+        <td>阶梯掉落：宝箱门槛从30银递增到150银，后期边际ROI降至~27%</td>
+      </tr>
+      <tr>
+        <td>缺乏全服互动</td>
+        <td class="dim">无全服进度机制</td>
+        <td>全服进度触发小丑宝箱怪，7天出现8次（每天1次+最后1天额外1次），制造集体消费窗口</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">三种宝箱价值对比</div>
+    <table>
+      <tr>
+        <th>宝箱类型</th><th>Drop1(道具)</th><th>Drop2(兑换道具)</th>
+        <th>合计期望</th><th>获取成本</th><th>单箱ROI</th><th>出现条件</th>
+      </tr>
+      <tr>
+        <td>普通问号宝箱(1111表)</td>
+        <td class="num">$0.816</td><td class="num">$0.330</td>
+        <td class="num highlight">$1.146</td><td class="num">~$2</td>
+        <td class="num">57.3%</td>
+        <td class="dim">50银币命中(阶梯)</td>
+      </tr>
+      <tr>
+        <td><span class="highlight">小丑宝箱</span></td>
+        <td class="num">$1.425</td><td class="num">$0.660</td>
+        <td class="num highlight">$2.085</td><td class="num">~$2(同)</td>
+        <td class="num green">104.3%</td>
+        <td class="dim">小丑怪存活时替代普通宝箱</td>
+      </tr>
+      <tr>
+        <td><span class="purple">至尊宝箱</span></td>
+        <td class="num" colspan="2">不放回8档·单奖励外显</td>
+        <td class="num purple">$14.69</td><td class="num">~$25-30</td>
+        <td class="num">49-59%</td>
+        <td class="dim">每10个宝箱触发 + 100+金币</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== 小丑宝箱怪 ==================== -->
+<div class="section" id="sec-joker">
+  <div class="card">
+    <div class="card-title">全服进度阈值 <span class="badge badge-new">NEW</span></div>
+    <div class="callout">
+      活动7天出现8只小丑怪（每天1次，最后1天额外1次）。阈值 = 全服累计得分（绝对值），基于历史大服12个+小服130个估算。<br>
+      Fallback：达到最晚触发时间后立即触发，无需等待进度。
+    </div>
+    <table>
+      <tr>
+        <th>序号</th><th>预期触发时点</th><th>全服累计阈值</th><th>估算累计得分</th><th>阈值/估算</th><th>Fallback(min)</th>
+      </tr>
+      <tr>
+        <td class="highlight">#1</td>
+        <td>t=16h (Day1)</td>
+        <td class="num highlight">100万</td>
+        <td class="num dim">159万</td>
+        <td class="num green">63%</td>
+        <td class="num">960</td>
+      </tr>
+      <tr>
+        <td class="highlight">#2</td>
+        <td>t=38h (Day2)</td>
+        <td class="num highlight">700万</td>
+        <td class="num dim">765万</td>
+        <td class="num green">91%</td>
+        <td class="num">2280</td>
+      </tr>
+      <tr>
+        <td class="highlight">#3</td>
+        <td>t=62h (Day3)</td>
+        <td class="num highlight">1500万</td>
+        <td class="num dim">1761万</td>
+        <td class="num green">85%</td>
+        <td class="num">3720</td>
+      </tr>
+      <tr>
+        <td class="highlight">#4</td>
+        <td>t=86h (Day4)</td>
+        <td class="num highlight">2300万</td>
+        <td class="num dim">2670万</td>
+        <td class="num green">86%</td>
+        <td class="num">5160</td>
+      </tr>
+      <tr>
+        <td class="highlight">#5</td>
+        <td>t=110h (Day5)</td>
+        <td class="num highlight">2900万</td>
+        <td class="num dim">3454万</td>
+        <td class="num green">84%</td>
+        <td class="num">6600</td>
+      </tr>
+      <tr>
+        <td class="highlight">#6</td>
+        <td>t=134h (Day6)</td>
+        <td class="num highlight">3700万</td>
+        <td class="num dim">4387万</td>
+        <td class="num green">84%</td>
+        <td class="num">8040</td>
+      </tr>
+      <tr>
+        <td class="highlight">#7</td>
+        <td>t=150h (Day7 早)</td>
+        <td class="num highlight">4400万</td>
+        <td class="num dim">5147万</td>
+        <td class="num green">86%</td>
+        <td class="num">9000</td>
+      </tr>
+      <tr>
+        <td class="highlight">#8</td>
+        <td>t=163h (Day7 晚)</td>
+        <td class="num highlight">5000万</td>
+        <td class="num dim">5847万</td>
+        <td class="num green">86%</td>
+        <td class="num">9780</td>
+      </tr>
+    </table>
+    <div class="callout" style="margin-top:16px">
+      7天总量估算：6116万。阈值取估算的 ~85%，保证正常节奏下自然触发。<br>
+      配置值：<code>ServerProgress = [1000000, 7000000, 15000000, 23000000, 29000000, 37000000, 44000000, 50000000]</code><br>
+      <code>ServerProgressFallback = [960, 2280, 3720, 5160, 6600, 8040, 9000, 9780]</code>（分钟）
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">小丑宝箱怪属性 <span class="badge badge-new">NEW</span></div>
+    <table>
+      <tr><th style="width:25%">字段</th><th>小丑怪(2182表)</th><th>普通怪(参考)</th><th>说明</th></tr>
+      <tr>
+        <td>MonsterTime</td>
+        <td class="num highlight">[120, 90]</td>
+        <td class="num dim">[120, 90]</td>
+        <td>刷新间隔2h, 存活1.5h（同普通怪）</td>
+      </tr>
+      <tr>
+        <td>InitialHP</td>
+        <td class="num highlight">[5000, 100000, 1000000, 10500, 9000]</td>
+        <td class="num dim">[5000, 100000, 1000000, 10500, 9000]</td>
+        <td>DAU×5000, 下限10w, 上限100w<br>击杀×1.05, 逃跑×0.9（同普通怪）</td>
+      </tr>
+      <tr>
+        <td>HpReturn</td>
+        <td class="num highlight">[500, 2000, 2000]</td>
+        <td class="num dim">[500, 2000, 2000]</td>
+        <td>血≤5%, 20%概率→20%（同普通怪）</td>
+      </tr>
+      <tr>
+        <td>Weakness</td>
+        <td class="num highlight">[2000, 10000]</td>
+        <td class="num dim">[2000, 10000]</td>
+        <td>血≤20%, 100%加伤（同普通怪）</td>
+      </tr>
+      <tr>
+        <td>CoinPileNum</td>
+        <td class="num highlight">64</td>
+        <td class="num dim">64</td>
+        <td>币堆银币64个（同普通怪）</td>
+      </tr>
+      <tr>
+        <td>FinalDrop</td>
+        <td class="num">复用普通怪, 数量×2</td>
+        <td class="num dim">标准FinalDrop</td>
+        <td>击杀奖励加倍</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">小丑怪存活期间掉落变化</div>
+    <table>
+      <tr><th>掉落项</th><th>普通怪期间</th><th>小丑怪期间</th></tr>
+      <tr>
+        <td>银币命中 → 宝箱</td>
+        <td>普通问号宝箱 (RandomBoxDrop)</td>
+        <td class="highlight">小丑宝箱 (JokerBoxDrop)</td>
+      </tr>
+      <tr>
+        <td>金币命中 → 币堆</td>
+        <td>不变</td>
+        <td>不变</td>
+      </tr>
+      <tr>
+        <td>至尊宝箱计数</td>
+        <td>普通宝箱计入</td>
+        <td class="green">小丑宝箱同样计入</td>
+      </tr>
+      <tr>
+        <td>阶梯掉落</td>
+        <td>适用</td>
+        <td class="green">同样适用</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== 小丑宝箱奖池 ==================== -->
+<div class="section" id="sec-jokerbox">
+  <div class="summary-row">
+    <div class="summary-box">
+      <div class="label">Drop1 道具池期望</div>
+      <div class="value" style="color:var(--accent)">$1.425</div>
+      <div class="note">vs 普通 $0.816 <span class="cmp cmp-up">+75%</span></div>
+    </div>
+    <div class="summary-box">
+      <div class="label">Drop2 兑换道具期望</div>
+      <div class="value" style="color:var(--accent)">$0.660</div>
+      <div class="note">vs 普通 $0.330 <span class="cmp cmp-up">+100%</span></div>
+    </div>
+    <div class="summary-box">
+      <div class="label">合计期望价值</div>
+      <div class="value highlight">$2.085</div>
+      <div class="note">普通 $1.146 的 <b>1.82x</b></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">普通问号宝箱 (11112723) — 1111表现有配置 <span class="badge badge-gold">参考/复制</span></div>
+    <div class="callout">2182 QA表现有的普通宝箱 RandomBoxDrop，期望 <b>$1.146</b>。格式已对齐 1111 表。</div>
+    <table>
+      <tr><th colspan="5">Drop1 道具池 (总权重585)</th><th colspan="4">Drop2 兑换道具池 (总权重106)</th></tr>
+      <tr><th>道具</th><th>typ</th><th>ID</th><th>num</th><th>wgt</th><th>道具</th><th>ID</th><th>num</th><th>wgt</th></tr>
+      <tr><td>限时buff</td><td class="num dim">killer_buff</td><td class="num dim">—</td><td class="num">1</td><td class="num">200</td>
+          <td>兑换道具</td><td class="num dim">11112778</td><td class="num">50</td><td class="num">100</td></tr>
+      <tr><td>1h训练加速</td><td class="num dim">item</td><td class="num dim">11111156</td><td class="num">1</td><td class="num">200</td>
+          <td>兑换道具</td><td class="num dim">11112778</td><td class="num">200</td><td class="num">5</td></tr>
+      <tr><td>2h训练加速</td><td class="num dim">item</td><td class="num dim">11111157</td><td class="num">1</td><td class="num">100</td>
+          <td>兑换道具</td><td class="num dim">11112778</td><td class="num">1000</td><td class="num">1</td></tr>
+      <tr><td>多养成线自选箱</td><td class="num dim">item</td><td class="num dim">11119797</td><td class="num">1</td><td class="num">20</td><td colspan="4"></td></tr>
+      <tr><td>英雄升星-橙色-中</td><td class="num dim">item</td><td class="num dim">11116111</td><td class="num">1</td><td class="num">10</td><td colspan="4"></td></tr>
+      <tr><td>8h训练加速</td><td class="num dim">item</td><td class="num dim">11111158</td><td class="num">1</td><td class="num">10</td><td colspan="4"></td></tr>
+      <tr><td>收藏品升星-传说</td><td class="num dim">item</td><td class="num dim">11116604</td><td class="num">5</td><td class="num">10</td><td colspan="4"></td></tr>
+      <tr><td>军备图纸</td><td class="num dim">item</td><td class="num dim">11117069</td><td class="num">5</td><td class="num">10</td><td colspan="4"></td></tr>
+      <tr><td>纳米材料</td><td class="num accent">material</td><td class="num dim">19345004</td><td class="num">20</td><td class="num">10</td><td colspan="4"></td></tr>
+      <tr><td>机能核心</td><td class="num dim">item</td><td class="num dim">11118501</td><td class="num">5</td><td class="num">10</td><td colspan="4"></td></tr>
+      <tr><td>万能碎片-橙色</td><td class="num dim">item</td><td class="num dim">11116304</td><td class="num">1</td><td class="num">5</td><td colspan="4"></td></tr>
+    </table>
+    <div class="json-block">
+      <button class="copy-btn" onclick="copyJson(this)">复制 普通宝箱 JSON</button>
+      <pre>{"drop":{"typ":"multi_all","num":1,"args":[{"typ":"single_random","num":1,"args":[{"typ":"killer_buff","wgt":200},{"typ":"item","id":11111156,"num":1,"wgt":200},{"typ":"item","id":11111157,"num":1,"wgt":100},{"typ":"item","id":11119797,"num":1,"wgt":20},{"typ":"item","id":11116111,"num":1,"wgt":10},{"typ":"item","id":11111158,"num":1,"wgt":10},{"typ":"item","id":11116604,"num":5,"wgt":10},{"typ":"item","id":11117069,"num":5,"wgt":10},{"typ":"material","id":19345004,"num":20,"wgt":10},{"typ":"item","id":11118501,"num":5,"wgt":10},{"typ":"item","id":11116304,"num":1,"wgt":5}]},{"typ":"single_random","num":1,"args":[{"typ":"item","id":11112778,"num":50,"wgt":100},{"typ":"item","id":11112778,"num":200,"wgt":5},{"typ":"item","id":11112778,"num":1000,"wgt":1}]}]}}</pre>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:8px 0;color:var(--text2);font-size:20px">▼ 小丑宝箱在此基础上调整 ▼</div>
+
+  <div class="callout">
+    基于 1111 表实际格式。外层 <code>{"drop":{...}}</code> 包装，纳米材料用 <code>"typ":"material"</code>，Drop2 权重结构 100/5/1（同普通宝箱）。
+  </div>
+
+  <div class="card">
+    <div class="card-title">Drop1 — 道具池 <span class="badge badge-gold">随机1次</span></div>
+    <table>
+      <tr>
+        <th>道具</th><th>typ</th><th>ID</th><th>美刀单价</th><th>数量</th>
+        <th>权重</th><th>概率</th><th>期望贡献</th><th>vs 普通(1111)</th>
+      </tr>
+      <tr>
+        <td>限时buff</td><td class="num dim">killer_buff</td><td class="num dim">—</td><td class="num">$0</td>
+        <td class="num">1</td><td class="num">150</td>
+        <td class="num dim">25.3%</td><td class="num">$0</td>
+        <td class="dim">wgt 200→150</td>
+      </tr>
+      <tr>
+        <td>1h训练加速</td><td class="num dim">item</td><td class="num dim">11111156</td><td class="num">$0.454</td>
+        <td class="num highlight">2</td><td class="num">200</td>
+        <td class="num dim">33.8%</td><td class="num">$0.307</td>
+        <td class="green">num 1→2</td>
+      </tr>
+      <tr>
+        <td>2h训练加速</td><td class="num dim">item</td><td class="num dim">11111157</td><td class="num">$0.907</td>
+        <td class="num">1</td><td class="num highlight">120</td>
+        <td class="num dim">20.3%</td><td class="num">$0.184</td>
+        <td class="green">wgt 100→120</td>
+      </tr>
+      <tr>
+        <td>多养成线自选箱</td><td class="num dim">item</td><td class="num dim">11119797</td><td class="num">$2.00</td>
+        <td class="num">1</td><td class="num highlight">30</td>
+        <td class="num dim">5.1%</td><td class="num">$0.101</td>
+        <td class="green">wgt 20→30</td>
+      </tr>
+      <tr>
+        <td>英雄升星-橙色-中</td><td class="num dim">item</td><td class="num dim">11116111</td><td class="num">$5.99</td>
+        <td class="num">1</td><td class="num highlight">15</td>
+        <td class="num dim">2.5%</td><td class="num">$0.152</td>
+        <td class="green">wgt 10→15</td>
+      </tr>
+      <tr>
+        <td>8h训练加速</td><td class="num dim">item</td><td class="num dim">11111158</td><td class="num">$3.63</td>
+        <td class="num">1</td><td class="num highlight">15</td>
+        <td class="num dim">2.5%</td><td class="num">$0.092</td>
+        <td class="green">wgt 10→15</td>
+      </tr>
+      <tr>
+        <td>收藏品升星-传说</td><td class="num dim">item</td><td class="num dim">11116604</td><td class="num">$0.50</td>
+        <td class="num highlight">8</td><td class="num highlight">15</td>
+        <td class="num dim">2.5%</td><td class="num">$0.101</td>
+        <td class="green">num 5→8, wgt +50%</td>
+      </tr>
+      <tr>
+        <td>军备图纸</td><td class="num dim">item</td><td class="num dim">11117069</td><td class="num">$0.83</td>
+        <td class="num highlight">8</td><td class="num highlight">15</td>
+        <td class="num dim">2.5%</td><td class="num">$0.168</td>
+        <td class="green">num 5→8, wgt +50%</td>
+      </tr>
+      <tr>
+        <td>纳米材料</td><td class="num accent">material</td><td class="num dim">19345004</td><td class="num">$0.25</td>
+        <td class="num highlight">30</td><td class="num">12</td>
+        <td class="num dim">2.0%</td><td class="num">$0.152</td>
+        <td class="green">num 20→30</td>
+      </tr>
+      <tr>
+        <td>机能核心</td><td class="num dim">item</td><td class="num dim">11118501</td><td class="num">$0.62</td>
+        <td class="num highlight">8</td><td class="num">12</td>
+        <td class="num dim">2.0%</td><td class="num">$0.100</td>
+        <td class="green">num 5→8</td>
+      </tr>
+      <tr>
+        <td>万能碎片-橙色</td><td class="num dim">item</td><td class="num dim">11116304</td><td class="num">$2.50</td>
+        <td class="num highlight">2</td><td class="num">8</td>
+        <td class="num dim">1.4%</td><td class="num">$0.068</td>
+        <td class="green">num 1→2</td>
+      </tr>
+      <tr style="background:var(--surface2)">
+        <td colspan="5"><b>合计</b></td>
+        <td class="num"><b>592</b></td><td></td>
+        <td class="num highlight"><b>$1.425</b></td><td></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Drop2 — 兑换道具池 <span class="badge badge-gold">随机1次·权重结构100/5/1</span></div>
+    <table>
+      <tr><th>道具</th><th>ID</th><th>单价</th><th>数量</th><th>权重</th><th>概率</th><th>期望道具数</th><th>期望美刀</th><th>vs 普通(1111)</th></tr>
+      <tr>
+        <td>兑换道具</td><td class="num dim">11112778</td><td class="num">$0.005</td>
+        <td class="num highlight">100</td><td class="num">100</td>
+        <td class="num dim">94.3%</td><td class="num">94.3</td><td class="num">$0.472</td>
+        <td class="green">num 50→100</td>
+      </tr>
+      <tr>
+        <td>兑换道具</td><td class="num dim">11112778</td><td class="num">$0.005</td>
+        <td class="num highlight">400</td><td class="num">5</td>
+        <td class="num dim">4.7%</td><td class="num">18.9</td><td class="num">$0.094</td>
+        <td class="green">num 200→400</td>
+      </tr>
+      <tr>
+        <td>兑换道具</td><td class="num dim">11112778</td><td class="num">$0.005</td>
+        <td class="num highlight">2000</td><td class="num">1</td>
+        <td class="num dim">0.9%</td><td class="num">18.9</td><td class="num">$0.094</td>
+        <td class="green">num 1000→2000</td>
+      </tr>
+      <tr style="background:var(--surface2)">
+        <td colspan="4"><b>合计</b></td>
+        <td class="num"><b>106</b></td><td></td>
+        <td class="num"><b>132.1</b></td>
+        <td class="num highlight"><b>$0.660</b></td>
+        <td></td>
+      </tr>
+    </table>
+    <div class="callout">vs 普通宝箱 Drop2 期望 66个兑换道具($0.330) → 小丑宝箱 132个($0.660)，<b>翻倍</b>。权重结构 100/5/1 与普通宝箱一致。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">完整 1111 表配置 JSON <span class="badge badge-purple">可直接粘贴</span></div>
+    <div class="callout">格式完全对齐 1111 表现有普通宝箱。外层 <code>{"drop":{...}}</code>，纳米材料 <code>"typ":"material"</code>，Drop2 权重 100/5/1。</div>
+    <div class="json-block">
+      <button class="copy-btn" onclick="copyJson(this)">复制JSON</button>
+      <pre>{"drop":{"typ":"multi_all","num":1,"args":[{"typ":"single_random","num":1,"args":[{"typ":"killer_buff","wgt":150},{"typ":"item","id":11111156,"num":2,"wgt":200},{"typ":"item","id":11111157,"num":1,"wgt":120},{"typ":"item","id":11119797,"num":1,"wgt":30},{"typ":"item","id":11116111,"num":1,"wgt":15},{"typ":"item","id":11111158,"num":1,"wgt":15},{"typ":"item","id":11116604,"num":8,"wgt":15},{"typ":"item","id":11117069,"num":8,"wgt":15},{"typ":"material","id":19345004,"num":30,"wgt":12},{"typ":"item","id":11118501,"num":8,"wgt":12},{"typ":"item","id":11116304,"num":2,"wgt":8}]},{"typ":"single_random","num":1,"args":[{"typ":"item","id":11112778,"num":100,"wgt":100},{"typ":"item","id":11112778,"num":400,"wgt":5},{"typ":"item","id":11112778,"num":2000,"wgt":1}]}]}}</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">普通宝箱(1111表原始) vs 小丑宝箱 对比</div>
+    <table>
+      <tr><th></th><th>普通问号宝箱(1111表)</th><th>小丑宝箱</th><th>变化</th></tr>
+      <tr>
+        <td>Drop1 期望</td>
+        <td class="num">$0.816</td>
+        <td class="num highlight">$1.425</td>
+        <td class="num green">+74.6%</td>
+      </tr>
+      <tr>
+        <td>Drop2 期望</td>
+        <td class="num">$0.330 <span class="dim">(66个)</span></td>
+        <td class="num highlight">$0.660 <span class="dim">(132个)</span></td>
+        <td class="num green">+100%</td>
+      </tr>
+      <tr>
+        <td><b>合计</b></td>
+        <td class="num"><b>$1.146</b></td>
+        <td class="num highlight"><b>$2.085</b></td>
+        <td class="num green"><b>+82%</b></td>
+      </tr>
+      <tr>
+        <td>Buff概率</td>
+        <td class="num dim">34.2% (200/585)</td>
+        <td class="num">25.3% (150/592)</td>
+        <td class="dim">降低buff占比</td>
+      </tr>
+      <tr>
+        <td>Drop2权重结构</td>
+        <td class="num dim">100/5/1</td>
+        <td class="num">100/5/1</td>
+        <td class="dim">结构一致，仅num翻倍</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== 至尊宝箱 ==================== -->
+<div class="section" id="sec-supreme">
+  <div class="summary-row">
+    <div class="summary-box">
+      <div class="label">单次期望(等权)</div>
+      <div class="value purple">$14.69</div>
+      <div class="note">8档不放回随机·单奖励外显</div>
+    </div>
+    <div class="summary-box">
+      <div class="label">8档全部获取总价值</div>
+      <div class="value highlight">$117.53</div>
+    </div>
+    <div class="summary-box">
+      <div class="label">首个获取成本</div>
+      <div class="value" style="color:var(--text2)">~$25-30</div>
+      <div class="note">10个普通箱 + 100金币推落</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">触发条件 <span class="badge badge-new">NEW</span></div>
+    <table>
+      <tr><th>参数</th><th>值</th><th>说明</th></tr>
+      <tr>
+        <td>触发间隔</td>
+        <td class="num highlight">每累计10个普通/小丑宝箱</td>
+        <td>计数不含至尊本身</td>
+      </tr>
+      <tr>
+        <td>首次掉落门槛</td>
+        <td class="num highlight">100枚金币推落</td>
+        <td>2倍币堆标准门槛(50金)</td>
+      </tr>
+      <tr>
+        <td>递增系数</td>
+        <td class="num highlight">12000 (万分位=120%)</td>
+        <td>第2次120金, 第3次144金, 第4次173金...</td>
+      </tr>
+    </table>
+    <div class="json-block">
+      <button class="copy-btn" onclick="copyJson(this)">复制JSON</button>
+      <pre>[10, 100, 12000]</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">至尊金币门槛递增表</div>
+    <table>
+      <tr><th>序号</th><th>金币门槛</th><th>累计成本(估)</th><th>递增计算</th></tr>
+      <tr><td>第1个</td><td class="num highlight">100</td><td class="num dim">~$25-30</td><td class="dim">基准</td></tr>
+      <tr><td>第2个</td><td class="num">120</td><td class="num dim">~$30-35</td><td class="num dim">100 × 1.2</td></tr>
+      <tr><td>第3个</td><td class="num">144</td><td class="num dim">~$35-42</td><td class="num dim">120 × 1.2</td></tr>
+      <tr><td>第4个</td><td class="num">173</td><td class="num dim">~$42-50</td><td class="num dim">144 × 1.2</td></tr>
+      <tr><td>第5个</td><td class="num">207</td><td class="num dim">~$50-60</td><td class="num dim">173 × 1.2</td></tr>
+      <tr><td>第6个</td><td class="num">249</td><td class="num dim">~$60-72</td><td class="num dim">207 × 1.2</td></tr>
+      <tr><td>第7个</td><td class="num">299</td><td class="num dim">~$72-86</td><td class="num dim">249 × 1.2</td></tr>
+      <tr><td>第8个</td><td class="num">358</td><td class="num dim">~$86-100</td><td class="num dim">299 × 1.2</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">不放回奖池 (8档) <span class="badge badge-purple">等权随机·不放回·单奖励外显</span></div>
+    <div class="callout">
+      每次开启至尊宝箱，从剩余未获取的档位中等概率随机 1 个。已获取的不再出现。<br>
+      <b>限制：每档仅 1 个奖励道具</b>，外显 1 个图标 + 数量。弹窗展示全部 8 档状态（已获/未获）。
+    </div>
+    <table>
+      <tr><th>档位</th><th>奖励道具</th><th>ID</th><th>数量</th><th>美刀价值</th><th>品质定位</th></tr>
+      <tr>
+        <td class="num">1</td>
+        <td>兑换道具</td><td class="num dim">11112778</td>
+        <td class="num">800</td>
+        <td class="num">$4.00</td>
+        <td class="dim">保底档</td>
+      </tr>
+      <tr>
+        <td class="num">2</td>
+        <td>2h训练加速</td><td class="num dim">11111157</td>
+        <td class="num">8</td>
+        <td class="num">$7.26</td>
+        <td class="dim">基础档</td>
+      </tr>
+      <tr>
+        <td class="num">3</td>
+        <td>收藏品升星-传说</td><td class="num dim">11116604</td>
+        <td class="num">25</td>
+        <td class="num">$12.50</td>
+        <td class="dim">中档</td>
+      </tr>
+      <tr>
+        <td class="num">4</td>
+        <td>兑换道具</td><td class="num dim">11112778</td>
+        <td class="num highlight">3000</td>
+        <td class="num highlight">$15.00</td>
+        <td class="dim">中档</td>
+      </tr>
+      <tr>
+        <td class="num">5</td>
+        <td>多养成线自选箱</td><td class="num dim">11119797</td>
+        <td class="num">6</td>
+        <td class="num highlight">$12.00</td>
+        <td class="dim">中高档</td>
+      </tr>
+      <tr>
+        <td class="num">6</td>
+        <td>万能碎片-橙色</td><td class="num dim">11116304</td>
+        <td class="num">6</td>
+        <td class="num highlight">$15.00</td>
+        <td class="dim">高档</td>
+      </tr>
+      <tr>
+        <td class="num">7</td>
+        <td>8h训练加速</td><td class="num dim">11111158</td>
+        <td class="num">6</td>
+        <td class="num purple">$21.77</td>
+        <td class="dim">高档</td>
+      </tr>
+      <tr>
+        <td class="num">8</td>
+        <td>兑换道具</td><td class="num dim">11112778</td>
+        <td class="num highlight">6000</td>
+        <td class="num purple">$30.00</td>
+        <td class="dim">顶级档</td>
+      </tr>
+      <tr style="background:var(--surface2)">
+        <td colspan="4"><b>平均期望 / 合计</b></td>
+        <td class="num highlight"><b>$14.69 / $117.53</b></td>
+        <td></td>
+      </tr>
+    </table>
+
+    <div class="callout" style="margin-top:12px">
+      <b>设计要点</b>：兑换道具分散在 3 个档位（#1 800个 / #4 3000个 / #8 6000个），<br>
+      既保证保底体验（#1），又提供兑换商店消费驱动力（#4、#8 大量兑换道具→换套装/红英雄）。<br>
+      非兑换道具的 5 个档位覆盖不同养成线，外显高品质道具图标更有冲击力。
+    </div>
+
+    <div class="json-block">
+      <button class="copy-btn" onclick="copyJson(this)">复制JSON</button>
+      <pre>{"drop":{"typ":"single_random","num":1,"args":[{"typ":"item","id":11112778,"num":800,"wgt":1},{"typ":"item","id":11111157,"num":8,"wgt":1},{"typ":"item","id":11116604,"num":25,"wgt":1},{"typ":"item","id":11112778,"num":3000,"wgt":1},{"typ":"item","id":11119797,"num":6,"wgt":1},{"typ":"item","id":11116304,"num":6,"wgt":1},{"typ":"item","id":11111158,"num":6,"wgt":1},{"typ":"item","id":11112778,"num":6000,"wgt":1}]}}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 阶梯掉落 ==================== -->
+<div class="section" id="sec-stage">
+  <div class="card">
+    <div class="card-title">新字段：A_ARR_CoinPusherItemDropEffect <span class="badge badge-new">格式变更</span></div>
+    <div class="callout">
+      <b>字段说明</b>：旁边新加字段 <code>A_ARR_CoinPusherItemDropEffect</code>，老字段 <code>A_ARR_MonsterDrop</code> 废弃但先不删。<br><br>
+      <b>单条结构</b>：<code>{"target_id":产出道具id, "min_idx":起始序号, "max_idx":结束序号, "source_id":触发道具id, "need_num":触发数量}</code><br><br>
+      <b>含义</b>：第 min_idx ~ max_idx 个 target_id（产出物），需要 need_num 个 source_id（触发物）。<br>
+      <b>最后一档</b>：max_idx 填大数（如 999999），保证不会达到。<br>
+      <b>排序建议</b>：同一个 target_id 的配置在一起（币堆1-5 → 币堆6-10 → 币堆11-9999 → 问号1-5 → ...）。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">道具ID 速查</div>
+    <table>
+      <tr><th>道具</th><th>ID</th><th>角色</th></tr>
+      <tr><td>金币</td><td class="num">11112721</td><td class="dim">source (触发)</td></tr>
+      <tr><td>银币</td><td class="num">11112722</td><td class="dim">source (触发)</td></tr>
+      <tr><td>问号宝箱</td><td class="num">11112723</td><td class="dim">target (产出) / source (触发至尊)</td></tr>
+      <tr><td>币堆道具</td><td class="num">11112724</td><td class="dim">target (产出)</td></tr>
+      <tr><td>至尊宝箱</td><td class="num">11112796</td><td class="dim">target (产出)</td></tr>
+      <tr><td>小丑宝箱</td><td class="num">11112797</td><td class="dim">target (产出) / source (小丑怪期间触发至尊)</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">普通/小丑宝箱阶梯 <span class="badge badge-new">NEW</span></div>
+    <div class="callout">
+      宝箱触发门槛随累计获取数递增。小丑怪期间的小丑宝箱同样适用此阶梯。<br>
+      核心效果：小R体验更好(降门槛)，大R边际ROI压缩(升门槛)。
+    </div>
+
+    <!-- Visual bar -->
+    <div style="padding: 30px 0 40px;">
+      <div class="stage-bar">
+        <div class="stage-col" style="height:20%;background:var(--green)">
+          <div class="stage-val green">30</div>
+          <div class="stage-label">#1-3</div>
+        </div>
+        <div class="stage-col" style="height:33%;background:var(--accent)">
+          <div class="stage-val accent">50</div>
+          <div class="stage-label">#4-8</div>
+        </div>
+        <div class="stage-col" style="height:47%;background:var(--gold2)">
+          <div class="stage-val" style="color:var(--gold)">70</div>
+          <div class="stage-label">#9-15</div>
+        </div>
+        <div class="stage-col" style="height:67%;background:var(--orange)">
+          <div class="stage-val" style="color:var(--orange)">100</div>
+          <div class="stage-label">#16-25</div>
+        </div>
+        <div class="stage-col" style="height:100%;background:var(--red)">
+          <div class="stage-val red">150</div>
+          <div class="stage-label">#26+</div>
+        </div>
+      </div>
+      <div style="text-align:center;font-size:11px;color:var(--text2);margin-top:8px">银币命中门槛 (枚)</div>
+    </div>
+
+    <table>
+      <tr>
+        <th>累计宝箱序号</th><th>触发条件</th><th>vs 1.0基准</th>
+        <th>目标玩家</th><th>预估单箱成本</th><th>宝箱ROI</th>
+      </tr>
+      <tr>
+        <td class="num green">第1-3个</td>
+        <td class="num highlight">30枚银币命中</td>
+        <td class="num green">60%</td>
+        <td>免费/微R</td>
+        <td class="num">~$1.3</td>
+        <td class="num green">~94%</td>
+      </tr>
+      <tr>
+        <td class="num">第4-8个</td>
+        <td class="num">50枚银币命中</td>
+        <td class="num">100%</td>
+        <td>小R ($20-50)</td>
+        <td class="num">~$2.0</td>
+        <td class="num">~61%</td>
+      </tr>
+      <tr>
+        <td class="num" style="color:var(--gold)">第9-15个</td>
+        <td class="num">70枚银币命中</td>
+        <td class="num" style="color:var(--orange)">140%</td>
+        <td>中R ($50-120)</td>
+        <td class="num">~$2.8</td>
+        <td class="num" style="color:var(--orange)">~44%</td>
+      </tr>
+      <tr>
+        <td class="num" style="color:var(--orange)">第16-25个</td>
+        <td class="num">100枚银币命中</td>
+        <td class="num red">200%</td>
+        <td>中大R ($120-300)</td>
+        <td class="num">~$4.0</td>
+        <td class="num red">~30%</td>
+      </tr>
+      <tr>
+        <td class="num red">第26个+</td>
+        <td class="num">150枚银币命中</td>
+        <td class="num red">300%</td>
+        <td>大R ($300+)</td>
+        <td class="num">~$6.0</td>
+        <td class="num red">~20%</td>
+      </tr>
+    </table>
+
+  </div>
+
+  <div class="card">
+    <div class="card-title">币堆阶梯 <span class="badge badge-new">NEW</span></div>
+    <div class="callout">
+      首次币堆大幅降低门槛(50金→50银)，快速让玩家体验币堆机制。之后逐步回归正常。<br>
+      解决"首次币堆没有推倒后失去体验感"的问题。
+    </div>
+    <table>
+      <tr>
+        <th>累计币堆序号</th><th>触发类型</th><th>触发门槛</th>
+        <th>vs 1.0 (50金)</th><th>说明</th>
+      </tr>
+      <tr>
+        <td class="num green">第1个</td>
+        <td class="highlight">银币 11112722</td>
+        <td class="num highlight">50枚</td>
+        <td class="num green">≈10% (大幅降低)</td>
+        <td>快速体验币堆，促进首次转化</td>
+      </tr>
+      <tr>
+        <td class="num">第2个</td>
+        <td>金币 11112721</td>
+        <td class="num">30枚</td>
+        <td class="num" style="color:var(--gold)">60%</td>
+        <td>适度提高，引入金币需求</td>
+      </tr>
+      <tr>
+        <td class="num">第3个+</td>
+        <td>金币 11112721</td>
+        <td class="num">50枚</td>
+        <td class="num">100%</td>
+        <td>恢复1.0标准</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">至尊宝箱触发（复习）</div>
+    <table>
+      <tr><th>场景</th><th>target</th><th>source</th><th>need_num</th><th>说明</th></tr>
+      <tr>
+        <td>普通怪期间</td>
+        <td class="num">至尊 11112796</td>
+        <td class="num">问号 11112723</td>
+        <td class="num">10</td>
+        <td>每累计10个问号宝箱 → 下一个变至尊</td>
+      </tr>
+      <tr>
+        <td class="highlight">小丑怪期间</td>
+        <td class="num">至尊 11112796</td>
+        <td class="num highlight">小丑 11112797</td>
+        <td class="num">10</td>
+        <td class="highlight">source 改为小丑宝箱id</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">完整配置 A：普通怪版本 (21820008 套装版本) <span class="badge badge-purple">CoinPusherItemDropEffect</span></div>
+    <div class="callout">
+      同 target_id 分组排列：币堆(3条) → 问号(5条) → 至尊(1条)，共 9 条。<br>
+      复制后直接贴到 <code>A_ARR_CoinPusherItemDropEffect</code> 字段。
+    </div>
+    <table style="font-size:12px">
+      <tr><th>序</th><th>target_id</th><th>min_idx</th><th>max_idx</th><th>source_id</th><th>need_num</th><th>说明</th></tr>
+      <tr><td>1</td><td class="num">11112724</td><td class="num">1</td><td class="num">1</td><td class="num">11112722</td><td class="num highlight">50</td><td class="dim">币堆第1个·50银</td></tr>
+      <tr><td>2</td><td class="num">11112724</td><td class="num">2</td><td class="num">2</td><td class="num">11112721</td><td class="num">30</td><td class="dim">币堆第2个·30金</td></tr>
+      <tr><td>3</td><td class="num">11112724</td><td class="num">3</td><td class="num">999999</td><td class="num">11112721</td><td class="num">50</td><td class="dim">币堆第3+个·50金</td></tr>
+      <tr><td>4</td><td class="num">11112723</td><td class="num">1</td><td class="num">3</td><td class="num">11112722</td><td class="num highlight">30</td><td class="dim">问号第1-3个·30银</td></tr>
+      <tr><td>5</td><td class="num">11112723</td><td class="num">4</td><td class="num">8</td><td class="num">11112722</td><td class="num">50</td><td class="dim">问号第4-8个·50银</td></tr>
+      <tr><td>6</td><td class="num">11112723</td><td class="num">9</td><td class="num">15</td><td class="num">11112722</td><td class="num">70</td><td class="dim">问号第9-15个·70银</td></tr>
+      <tr><td>7</td><td class="num">11112723</td><td class="num">16</td><td class="num">25</td><td class="num">11112722</td><td class="num">100</td><td class="dim">问号第16-25个·100银</td></tr>
+      <tr><td>8</td><td class="num">11112723</td><td class="num">26</td><td class="num">999999</td><td class="num">11112722</td><td class="num">150</td><td class="dim">问号第26+个·150银</td></tr>
+      <tr><td>9</td><td class="num">11112796</td><td class="num">1</td><td class="num">999999</td><td class="num">11112723</td><td class="num">10</td><td class="dim">至尊·每10问号</td></tr>
+    </table>
+    <div class="json-block">
+      <button class="copy-btn" onclick="copyJson(this)">复制 普通怪版本 JSON</button>
+      <pre>[{"target_id":11112724,"min_idx":1,"max_idx":1,"source_id":11112722,"need_num":50},{"target_id":11112724,"min_idx":2,"max_idx":2,"source_id":11112721,"need_num":30},{"target_id":11112724,"min_idx":3,"max_idx":999999,"source_id":11112721,"need_num":50},{"target_id":11112723,"min_idx":1,"max_idx":3,"source_id":11112722,"need_num":30},{"target_id":11112723,"min_idx":4,"max_idx":8,"source_id":11112722,"need_num":50},{"target_id":11112723,"min_idx":9,"max_idx":15,"source_id":11112722,"need_num":70},{"target_id":11112723,"min_idx":16,"max_idx":25,"source_id":11112722,"need_num":100},{"target_id":11112723,"min_idx":26,"max_idx":999999,"source_id":11112722,"need_num":150},{"target_id":11112796,"min_idx":1,"max_idx":999999,"source_id":11112723,"need_num":10}]</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">小丑怪版本 (21820009) — 配置同上 <span class="badge badge-green">与普通怪相同</span></div>
+    <div class="callout">
+      <b>计数层统一用问号宝箱(11112723)</b>，不配小丑宝箱 ID。<br>
+      代码层根据当前怪物 ID 自动替换显示：普通怪→问号宝箱，小丑怪→小丑宝箱。<br>
+      好处：计算时不用来回替换 ID，只在吐宝箱和展示时替换。<br><br>
+      <b>因此 21820009 的 CoinPusherItemDropEffect 和 21820008 完全一致，直接复制上面的 JSON 即可。</b>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">ROI 压缩效果对比</div>
+    <div class="roi-row">
+      <div class="roi-item">
+        <div class="roi-label">免费/微R</div>
+        <div class="roi-val green">~94%</div>
+        <div class="roi-note">1.0: ~61% | 提升体验</div>
+        <div class="progress-track"><div class="progress-fill" style="width:94%;background:var(--green)"></div></div>
+      </div>
+      <div class="roi-item">
+        <div class="roi-label">小R ($20-50)</div>
+        <div class="roi-val accent">~61%</div>
+        <div class="roi-note">1.0: ~61% | 持平</div>
+        <div class="progress-track"><div class="progress-fill" style="width:61%;background:var(--accent)"></div></div>
+      </div>
+      <div class="roi-item">
+        <div class="roi-label">中R ($50-170)</div>
+        <div class="roi-val" style="color:var(--orange)">~38%</div>
+        <div class="roi-note">1.0: ~61% | 下降23pp</div>
+        <div class="progress-track"><div class="progress-fill" style="width:38%;background:var(--orange)"></div></div>
+      </div>
+      <div class="roi-item">
+        <div class="roi-label">大R ($170+)</div>
+        <div class="roi-val red">~27%</div>
+        <div class="roi-note">1.0: ~61% | 下降34pp</div>
+        <div class="progress-track"><div class="progress-fill" style="width:27%;background:var(--red)"></div></div>
+      </div>
+    </div>
+    <div class="callout">
+      <b>核心逻辑</b>：宝箱ROI随消费深度递减 → 大R的边际价值转移到兑换商店(套装$600 + 红色英雄$450) → 形成深度付费路径而非无限刷宝箱。
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 配置字段 ==================== -->
+<div class="section" id="sec-config">
+  <div class="card">
+    <div class="card-title">CoinPusher 配置表新增字段一览 <span class="badge badge-new">NEW</span></div>
+    <table>
+      <tr><th>字段名</th><th>类型</th><th>描述</th><th>示例值</th></tr>
+      <tr>
+        <td class="num accent">JokerBoxDrop</td><td class="num dim">Drop</td>
+        <td>小丑宝箱奖池(单个single_random，仅外显1个奖励)</td>
+        <td class="dim">(见小丑宝箱页签完整JSON)</td>
+      </tr>
+      <tr>
+        <td class="num accent">SupremeBoxPool</td><td class="num dim">ARR,Effect</td>
+        <td>至尊宝箱不放回奖池(8档)</td>
+        <td class="dim">(见至尊宝箱页签完整JSON)</td>
+      </tr>
+      <tr>
+        <td class="num accent">SupremeBoxTrigger</td><td class="num dim">ARR,INT</td>
+        <td>[每X个触发, 首次金币门槛, 递增系数(万分位)]</td>
+        <td class="num">[10, 100, 12000]</td>
+      </tr>
+      <tr>
+        <td class="num accent">A_ARR_CoinPusherItemDropEffect</td><td class="num dim">ARR,Obj</td>
+        <td>新格式阶梯掉落（替代 A_ARR_MonsterDrop）<br>
+        单条: {target_id, min_idx, max_idx, source_id, need_num}</td>
+        <td class="dim">(见阶梯掉落页签完整JSON)</td>
+      </tr>
+      <tr>
+        <td class="num dim">A_ARR_MonsterDrop</td><td class="num dim">—</td>
+        <td class="dim">已废弃，先不删</td>
+        <td class="dim">—</td>
+      </tr>
+      <tr>
+        <td class="num accent">ServerProgress</td><td class="num dim">ARR,INT</td>
+        <td>全服累计得分阈值（绝对值，8档）</td>
+        <td class="num">[1000000, 7000000, 15000000, 23000000, 29000000, 37000000, 44000000, 50000000]</td>
+      </tr>
+      <tr>
+        <td class="num accent">ServerProgressFallback</td><td class="num dim">ARR,INT</td>
+        <td>最晚触发时间(分钟, 从活动开始计，8档)</td>
+        <td class="num">[960, 2280, 3720, 5160, 6600, 8040, 9000, 9780]</td>
+      </tr>
+      <tr>
+        <td class="num accent">ServerProgressFillRate</td><td class="num dim">INT</td>
+        <td>补进度速率(×DAU/min)</td>
+        <td class="num">10</td>
+      </tr>
+      <tr>
+        <td class="num dim" colspan="4" style="text-align:center;color:var(--text2)">
+          小丑怪属性（MonsterTime / InitialHP / HpReturn / Weakness / CoinPileNum）沿用2182表已有配置，无需新增字段
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">原有字段无变化</div>
+    <div class="callout">以下字段沿用1.0配置，不需修改：<br>
+    MonsterTime / InitialHP / HpReturn / Weakness / FreeLimit / DamageReward / NormalDrop / AdvancedDrop / FinalDrop / RandomBoxDrop / KillerBuff / NormalComsume / AdvancedComsume / AdvancedSwitch / AdvancedDur / GoldDrop / MonsterDrop / MonsterDropReplace / CoinDropPoints / MissedAttackPoints / GuaranteedReward / BaseDamage / Score / RatingBonus / CoinPileNum / TurretChargeTime / AttackLogLimit</div>
+  </div>
+</div>
+
+<!-- ==================== 经济验证 ==================== -->
+<div class="section" id="sec-verify">
+  <div class="card">
+    <div class="card-title">典型用户路径模拟</div>
+    <table>
+      <tr><th>用户类型</th><th>7天消费</th><th>宝箱获得</th><th>至尊获得</th><th>小丑箱获得</th><th>奖励总值(不含积分)</th><th>核心ROI</th></tr>
+      <tr>
+        <td class="green">免费/微R</td>
+        <td class="num">$0-5</td>
+        <td class="num">2-3个(降门槛)</td>
+        <td class="num dim">0</td>
+        <td class="num">0-1个</td>
+        <td class="num">$2.4-5.7</td>
+        <td class="num green">80-95%</td>
+      </tr>
+      <tr>
+        <td class="accent">小R</td>
+        <td class="num">$20-50</td>
+        <td class="num">6-12个</td>
+        <td class="num">0-1个</td>
+        <td class="num">2-4个</td>
+        <td class="num">$14-32</td>
+        <td class="num accent">55-65%</td>
+      </tr>
+      <tr>
+        <td style="color:var(--gold)">中R</td>
+        <td class="num">$50-170</td>
+        <td class="num">12-25个</td>
+        <td class="num">1-2个</td>
+        <td class="num">3-6个</td>
+        <td class="num">$35-80</td>
+        <td class="num" style="color:var(--orange)">42-55%</td>
+      </tr>
+      <tr>
+        <td class="red">大R</td>
+        <td class="num">$170-500+</td>
+        <td class="num">25-50个</td>
+        <td class="num">2-5个</td>
+        <td class="num">5-10个</td>
+        <td class="num">$75-180</td>
+        <td class="num red">35-45%</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">中R典型路径详解 (7天消费$100)</div>
+    <table>
+      <tr><th>阶段</th><th>行为</th><th>获得奖励</th><th>投入</th></tr>
+      <tr>
+        <td>Day 1-2</td>
+        <td>投币~300次(含免费)，获得3个宝箱(降门槛) + 首个币堆(50银即触发)</td>
+        <td class="num">宝箱 $3.66 + 币堆奖励</td>
+        <td class="num dim">~$20</td>
+      </tr>
+      <tr>
+        <td class="highlight">Day 2-3 (小丑怪)</td>
+        <td>小丑怪出现，集中消费，获5个小丑宝箱 + 第1个至尊</td>
+        <td class="num highlight">小丑 $10.24 + 至尊 $14.69</td>
+        <td class="num dim">~$35</td>
+      </tr>
+      <tr>
+        <td>Day 3-5</td>
+        <td>常规节奏，宝箱成本递增(70-100银)，获8个宝箱</td>
+        <td class="num">宝箱 $9.74 <span class="dim">(含阶梯衰减)</span></td>
+        <td class="num dim">~$30</td>
+      </tr>
+      <tr>
+        <td class="highlight">Day 6-7 (小丑怪)</td>
+        <td>第3只小丑怪+冲榜, 获3个小丑宝箱 + 积分奖励</td>
+        <td class="num highlight">小丑 $6.14 + 积分奖励</td>
+        <td class="num dim">~$15</td>
+      </tr>
+      <tr style="background:var(--surface2)">
+        <td><b>合计</b></td><td></td>
+        <td class="num highlight"><b>$44.47 + 积分奖励</b></td>
+        <td class="num"><b>$100</b></td>
+      </tr>
+    </table>
+    <div class="roi-row" style="margin-top:16px">
+      <div class="roi-item">
+        <div class="roi-label">核心ROI (不含积分)</div>
+        <div class="roi-val" style="color:var(--orange)">~44.5%</div>
+      </div>
+      <div class="roi-item">
+        <div class="roi-label">含积分预估总ROI</div>
+        <div class="roi-val accent">~65-75%</div>
+      </div>
+      <div class="roi-item">
+        <div class="roi-label">vs 1.0 同消费ROI</div>
+        <div class="roi-val red">-30~40pp</div>
+        <div class="roi-note">1.0: 100-120%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">大R消费路径引导</div>
+    <div class="callout">
+      <b>后期ROI递减，引导大R转向兑换商店深度消费：</b><br><br>
+      宝箱门槛升至150银(ROI~20%) → 边际价值降低 → 兑换商店成为主要价值来源：<br>
+      <b>· 套装组件</b>：$600 兑换道具 × 1件<br>
+      <b>· 红色英雄碎片</b>：$1 兑换道具 × 300件 = $300<br>
+      <b>· 红色英雄技能材料</b>：$5 兑换道具 × 30件 = $150<br><br>
+      兑换商店拉满(套装+红英雄)所需兑换道具 ≈ <b>$1,050</b> 等值<br>
+      按平均 20 token/$ 计，约需消费 <b>$52.5</b> 获得足够兑换道具，<br>
+      加上积分奖励路径，总消费深度可达 <b>$200-400</b>。
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 兑换商店 ==================== -->
+<div class="section" id="sec-exchange">
+  <div class="callout">
+    兑换道具 ID：<b>11112778</b>（推币机积分兑换）<br>
+    本期<b>不投套装装饰</b>（city_suit_decoration），城市皮肤仅通过排行榜发放。
+  </div>
+
+  <div class="card">
+    <div class="card-title">Schema 3-5（普通组）<span class="badge badge-new">不变</span></div>
+    <table>
+      <tr>
+        <th style="width:35%">道具</th><th>道具ID</th>
+        <th class="right">兑换价格</th><th class="right">上限</th><th>备注</th>
+      </tr>
+      <tr>
+        <td>主城皮肤-自选宝箱</td>
+        <td class="num">11112654</td>
+        <td class="num right dim">沿用</td>
+        <td class="right">1</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>万能英雄碎片-橙色</td>
+        <td class="num">11116304</td>
+        <td class="num right">5,000</td>
+        <td class="right">150</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>英雄升星-橙色-大</td>
+        <td class="num">11116112</td>
+        <td class="num right">4,000</td>
+        <td class="right">50</td>
+        <td class="dim">单包 800 经验</td>
+      </tr>
+      <tr>
+        <td>高级奖池抽奖券</td>
+        <td class="num">11116402</td>
+        <td class="num right">600</td>
+        <td class="right">200</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>军备图纸</td>
+        <td class="num">11117069</td>
+        <td class="num right">400</td>
+        <td class="right">1,000</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>收藏品-传说升星</td>
+        <td class="num">11116604</td>
+        <td class="num right">250</td>
+        <td class="right">1,000</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>纳米材料</td>
+        <td class="num">19345004</td>
+        <td class="num right dim">TBD</td>
+        <td class="right">2,000</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>机能核心</td>
+        <td class="num">11118501</td>
+        <td class="num right">2,000</td>
+        <td class="right">500</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>军备零件箱</td>
+        <td class="num">11117068</td>
+        <td class="num right">16</td>
+        <td class="right">5,000</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>2h 加速</td>
+        <td class="num">11111106</td>
+        <td class="num right">200</td>
+        <td class="right">999</td>
+        <td class="dim">120 分钟/张</td>
+      </tr>
+      <tr>
+        <td>60分钟训练加速</td>
+        <td class="num">11111156</td>
+        <td class="num right">100</td>
+        <td class="right">9,999</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>高级资源自选宝箱</td>
+        <td class="num">11114330</td>
+        <td class="num right">200</td>
+        <td class="right">9,999</td>
+        <td class="dim">×5 / 次，10w 资源</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Schema 6（高级组额外追加道具）<span class="badge badge-purple">含以上全部</span></div>
+    <table>
+      <tr>
+        <th style="width:35%">道具</th><th>道具ID</th>
+        <th class="right">兑换价格</th><th class="right">上限</th><th>备注</th>
+      </tr>
+      <tr>
+        <td>装备突破材料-晶体元件</td>
+        <td class="num">19345012</td>
+        <td class="num right dim">TBD</td>
+        <td class="right">200</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>收藏品-红色升星道具-超凡</td>
+        <td class="num">11118681</td>
+        <td class="num right">400</td>
+        <td class="right">150</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>T6军备养成-高分子材料</td>
+        <td class="num">11117511</td>
+        <td class="num right">1,000</td>
+        <td class="right">50</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>高级重铸矿晶</td>
+        <td class="num">11117425</td>
+        <td class="num right dim">TBD</td>
+        <td class="right">30</td>
+        <td></td>
+      </tr>
+    </table>
+    <div class="callout" style="margin-top:16px">
+      Schema6 包含 schema3-5 全部道具，再加以上4项（突破材料、收藏品超凡、T6材料、重铸矿晶）。
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 排行榜 ==================== -->
+<div class="section" id="sec-ranking">
+  <div class="callout">
+    本期皮肤系列：<b>巨龙套2026</b>（城市皮肤仅通过排行榜发放，不进兑换商店）<br>
+    本服 → 初级皮肤 &nbsp;|&nbsp; 跨服 → 高级皮肤
+  </div>
+
+  <div class="card">
+    <div class="card-title">本服排行榜 <span class="badge badge-new">普通主体 city_skin</span></div>
+    <table>
+      <tr>
+        <th style="width:15%">名次</th>
+        <th>主城皮肤</th>
+        <th>道具ID</th>
+        <th>有效期</th>
+        <th class="right">幻化刷</th>
+      </tr>
+      <tr style="background:rgba(245,197,66,.07)">
+        <td class="highlight"><b>#1</b></td>
+        <td>主城皮肤-巨龙套2026-初级皮肤</td>
+        <td class="num accent">111110342</td>
+        <td>永久</td>
+        <td class="num right">× 20</td>
+      </tr>
+      <tr>
+        <td><b>#2</b></td>
+        <td>主城皮肤-巨龙套2026-初级皮肤</td>
+        <td class="num accent">111110342</td>
+        <td>永久</td>
+        <td class="num right">× 10</td>
+      </tr>
+      <tr>
+        <td><b>#3</b></td>
+        <td>主城皮肤-巨龙套2026-初级皮肤</td>
+        <td class="num accent">111110342</td>
+        <td>永久</td>
+        <td class="num right">× 6</td>
+      </tr>
+      <tr>
+        <td>#4 — 10</td>
+        <td>主城皮肤-巨龙套2026-初级皮肤</td>
+        <td class="num accent">111110342</td>
+        <td>永久</td>
+        <td class="num right">× 2</td>
+      </tr>
+      <tr>
+        <td>#11 — 20</td>
+        <td>主城皮肤-巨龙套2026-初级皮肤</td>
+        <td class="num accent">111110342</td>
+        <td>永久</td>
+        <td class="num right">× 2</td>
+      </tr>
+      <tr>
+        <td>#21 — 50</td>
+        <td>主城皮肤-巨龙套2026-初级皮肤-7天</td>
+        <td class="num accent">111110344</td>
+        <td>7天</td>
+        <td class="num right">× 2</td>
+      </tr>
+      <tr>
+        <td class="dim">#51 — 100</td>
+        <td class="dim">—</td>
+        <td class="dim">—</td>
+        <td class="dim">—</td>
+        <td class="num right dim">× 2</td>
+      </tr>
+    </table>
+    <div class="callout" style="margin-top:16px">
+      <b>积分下限：360,000</b>（低于此分不发奖）
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">跨服排行榜 <span class="badge badge-purple">高级主体 city_skin</span></div>
+    <table>
+      <tr>
+        <th style="width:15%">名次</th>
+        <th>主城皮肤</th>
+        <th>道具ID</th>
+        <th>有效期</th>
+        <th class="right">幻化刷</th>
+      </tr>
+      <tr style="background:rgba(245,197,66,.07)">
+        <td class="highlight"><b>#1</b></td>
+        <td class="purple">主城皮肤-巨龙套2026高级皮肤</td>
+        <td class="num accent">111110346</td>
+        <td>永久</td>
+        <td class="num right">× 300</td>
+      </tr>
+      <tr>
+        <td><b>#2</b></td>
+        <td class="purple">主城皮肤-巨龙套2026高级皮肤</td>
+        <td class="num accent">111110346</td>
+        <td>永久</td>
+        <td class="num right">× 250</td>
+      </tr>
+      <tr>
+        <td><b>#3</b></td>
+        <td class="purple">主城皮肤-巨龙套2026高级皮肤</td>
+        <td class="num accent">111110346</td>
+        <td>永久</td>
+        <td class="num right">× 200</td>
+      </tr>
+      <tr>
+        <td>#4 — 10</td>
+        <td class="purple">主城皮肤-巨龙套2026高级皮肤</td>
+        <td class="num accent">111110346</td>
+        <td>永久</td>
+        <td class="num right">× 150</td>
+      </tr>
+      <tr>
+        <td>#11 — 15</td>
+        <td class="purple">主城皮肤-巨龙套2026高级皮肤</td>
+        <td class="num accent">111110346</td>
+        <td>永久</td>
+        <td class="num right">× 120</td>
+      </tr>
+      <tr>
+        <td>#16 — 30</td>
+        <td class="purple">主城皮肤-巨龙套2026高级皮肤-28天</td>
+        <td class="num accent">111110349</td>
+        <td>28天</td>
+        <td class="num right">× 60</td>
+      </tr>
+      <tr>
+        <td>#31 — 50</td>
+        <td class="purple">主城皮肤-巨龙套2026高级皮肤-14天</td>
+        <td class="num accent">111110348</td>
+        <td>14天</td>
+        <td class="num right">× 30</td>
+      </tr>
+      <tr>
+        <td>#51 — 100</td>
+        <td class="purple">主城皮肤-巨龙套2026高级皮肤-7天</td>
+        <td class="num accent">111110347</td>
+        <td>7天</td>
+        <td class="num right">× 15</td>
+      </tr>
+    </table>
+    <div class="callout" style="margin-top:16px">
+      <b>积分下限：80,000</b>（低于此分不发奖）
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">关联 Bug <span class="badge badge-gold">等待1111表 ID 落地</span></div>
+    <table>
+      <tr><th>Bug</th><th>表</th><th>操作</th><th>状态</th></tr>
+      <tr>
+        <td class="num accent">P2DEV-141772</td>
+        <td>2116</td>
+        <td>更新兑换商店 city_suit_decoration 为拓荒节 ID</td>
+        <td class="dim">⏳ 等待1111表</td>
+      </tr>
+      <tr>
+        <td class="num accent">P2DEV-141824</td>
+        <td>2182</td>
+        <td>更新 FinalDrop city_skin 为拓荒节 ID</td>
+        <td class="dim">⏳ 等待1111表</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+</div><!-- main -->
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function copyJson(btn) {
+  const pre = btn.parentElement.querySelector('pre');
+  const text = pre.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '已复制';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '复制JSON';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>

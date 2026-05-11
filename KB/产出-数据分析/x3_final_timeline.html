@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 尼罗河活动 — 最终排期方案</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#0f1923;color:#e0e0e0;padding:60px 40px 40px;max-width:1100px;margin:0 auto}
+h1{font-size:1.6rem;background:linear-gradient(90deg,#f5af19,#f12711);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.subtitle{color:#888;margin-bottom:20px;font-size:0.85rem}
+.section-title{font-size:1.05rem;color:#feca57;margin:28px 0 12px;padding-left:8px;border-left:3px solid #f39c12}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px;margin-bottom:16px}
+.comment{background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.12);border-radius:8px;padding:10px 16px;margin:8px 0 16px;font-size:0.85rem;color:#bbb;line-height:1.7;font-style:italic;min-height:36px}
+.comment::before{content:'\1F4AC ';font-style:normal}
+.insight{background:rgba(243,156,18,0.08);border-left:3px solid #f39c12;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size:0.85rem;line-height:1.7}
+.insight strong{color:#f1c40f}
+.conclusion{background:linear-gradient(135deg,rgba(46,204,113,0.12),rgba(39,174,96,0.06));border:2px solid #2ecc71;border-radius:12px;padding:20px;margin:20px 0}
+.conclusion h3{color:#2ecc71;margin-bottom:10px}
+.conclusion p{font-size:0.88rem;line-height:1.8}
+table{width:100%;border-collapse:collapse;font-size:0.78rem;margin:8px 0}
+th,td{padding:6px 10px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.06)}
+th{background:rgba(255,255,255,0.05);color:#aaa;font-size:0.7rem}
+td:first-child,th:first-child{text-align:left}
+.tl{margin:20px 0;position:relative;padding-left:24px}
+.tl::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:rgba(255,255,255,0.1)}
+.tl-item{position:relative;margin-bottom:16px;padding-left:20px}
+.tl-item::before{content:'';position:absolute;left:-20px;top:6px;width:12px;height:12px;border-radius:50%;border:2px solid #555}
+.tl-item.active::before{background:#2ecc71;border-color:#2ecc71}
+.tl-item.spike::before{background:#f39c12;border-color:#f39c12}
+.tl-item.decay::before{background:#e74c3c;border-color:#e74c3c}
+.tl-item.nile::before{background:#3498db;border-color:#3498db;width:14px;height:14px;left:-21px;top:5px}
+.tl-item.visit::before{background:#9b59b6;border-color:#9b59b6;width:14px;height:14px;left:-21px;top:5px}
+.tl-day{font-size:0.8rem;color:#f1c40f;font-weight:700}
+.tl-rev{font-size:0.75rem;color:#888;margin-left:8px}
+.tl-desc{font-size:0.82rem;color:#bbb;margin-top:4px;line-height:1.6}
+.tl-tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:0.68rem;margin-right:4px}
+.tl-tag.on{background:rgba(46,204,113,0.2);color:#2ecc71}
+.tl-tag.off{background:rgba(231,76,60,0.2);color:#e74c3c}
+.tl-tag.new{background:rgba(52,152,219,0.2);color:#3498db}
+.tl-tag.warn{background:rgba(243,156,18,0.2);color:#f39c12}
+.save-bar{position:fixed;top:0;left:0;right:0;background:rgba(15,25,35,0.95);border-bottom:1px solid rgba(255,255,255,0.1);padding:8px 40px;display:flex;align-items:center;gap:12px;z-index:999;backdrop-filter:blur(10px)}
+.save-bar button{padding:6px 16px;border:none;border-radius:6px;font-size:0.8rem;cursor:pointer;font-weight:600}
+.save-bar .btn-save{background:#2ecc71;color:#0f1923}
+.save-bar .btn-export{background:#f39c12;color:#0f1923}
+.save-bar .status{font-size:0.75rem;color:#888}
+.save-bar .status.ok{color:#2ecc71}
+</style>
+</head>
+<body>
+<div class="save-bar">
+<button class="btn-save" onclick="saveComments()">💾 保存</button>
+<button class="btn-export" onclick="exportComments()">📋 导出评论</button>
+<span class="status" id="saveStatus">未保存</span>
+</div>
+
+<h1>X3 尼罗河活动 — 最终排期方案</h1>
+<p class="subtitle">D20 全量开放 + D24 追加拜访 | 基于新服收入×活动排期×道具循环×冲突分析</p>
+
+<!-- 结论 -->
+<div class="conclusion">
+<h3>最终方案：D20 开启 6 个活动 + D24 追加拜访礼包</h3>
+<p>
+<strong>D20（开服第21天）：</strong>BP + 大转盘 + 兑换商店 + 酒馆 + 拼图 + 累充 → 恩典卷+猫眼石币双循环 Day1 即通<br>
+<strong>D24（开服第25天）：</strong>追加拜访礼包 $100 → 卡在断崖点，大R追加投资阻断衰减<br><br>
+<strong>为什么选 D20：</strong><br>
+① 永恒之岛首日效应（D17 $5,024）已过，D18-D19 回到 $2,750-3,400 基线<br>
+② 海妖系列（$225/天）和常驻礼包（$270/天）D18 后已稳定，尼罗河进场是纯增量<br>
+③ 冲突活动 D20 只剩海妖登录尾声（当天结束），净化试炼/永恒之岛均为间接付费，不争钱<br>
+④ 3月新服实证：D20 原本就是 TC=1825 的触发点，只需补齐缺失的大转盘/兑换/酒馆即可
+</p>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<!-- 甘特图 -->
+<div class="section-title">D15-D33 活动排期甘特图</div>
+<div class="card">
+<div id="ganttArea" style="overflow-x:auto;padding:8px 0"></div>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<!-- 时间轴 -->
+<div class="section-title">D15-D33 新服时间轴</div>
+
+<div class="tl">
+<div class="tl-item active">
+<div><span class="tl-day">D15</span><span class="tl-rev">$3,268</span></div>
+<div class="tl-desc">
+<span class="tl-tag off">猎杀BP 结束</span>
+<span class="tl-tag on">异域盛典 在跑</span>
+<span class="tl-tag on">海妖转盘 在跑</span><br>
+猎杀BP（$385/天）到期离场。异域盛典+海妖转盘还在。
+</div>
+</div>
+
+<div class="tl-item">
+<div><span class="tl-day">D16</span><span class="tl-rev">$2,911</span></div>
+<div class="tl-desc">
+<span class="tl-tag off">异域盛典 结束</span>
+<span class="tl-tag on">海妖转盘 最后一天</span><br>
+异域盛典（英雄抽卡）到期。海妖转盘明天也结束。收入自然回落。
+</div>
+</div>
+
+<div class="tl-item spike">
+<div><span class="tl-day">D17</span><span class="tl-rev">$5,024 ← 峰值</span></div>
+<div class="tl-desc">
+<span class="tl-tag off">海妖转盘 结束</span>
+<span class="tl-tag new">永恒之岛 首日</span>
+<span class="tl-tag new">净化试炼 首日</span>
+<span class="tl-tag new">船只改装 首日</span><br>
+<strong>永恒之岛首日效应</strong>：2102xx 限时礼包 +$560、50+$ 鲸鱼消费翻倍至 $1,280。<br>
+这波是大R为奇观争霸首日冲排名的集中消费，不可复制。
+</div>
+</div>
+
+<div class="tl-item">
+<div><span class="tl-day">D18</span><span class="tl-rev">$3,426</span></div>
+<div class="tl-desc">
+<span class="tl-tag on">永恒之岛 衰减中</span>
+<span class="tl-tag on">净化试炼 在跑</span>
+<span class="tl-tag on">船只改装 在跑</span><br>
+永恒之岛限时礼包 $560→$470（开始衰减）。海妖 $280 稳定。常驻 $364 稳定。<br>
+<strong>海妖和常驻已进入稳态</strong>，后续不再有大波动。
+</div>
+</div>
+
+<div class="tl-item">
+<div><span class="tl-day">D19</span><span class="tl-rev">$2,752</span></div>
+<div class="tl-desc">
+<span class="tl-tag off">船只改装 结束</span>
+<span class="tl-tag on">永恒之岛 继续衰减</span><br>
+2102xx 限时礼包 $470→$110（已衰减 80%）。明天尼罗河进场。
+</div>
+</div>
+
+<div class="tl-item nile">
+<div><span class="tl-day">D20</span><span class="tl-rev">$3,063 → 尼罗河全量开放</span></div>
+<div class="tl-desc">
+<span class="tl-tag off">海妖登录+排行 结束</span>
+<span class="tl-tag off">净化试炼 结束</span>
+<span class="tl-tag new">🔥 尼罗河 6 个活动开放</span><br>
+<strong>BP + 大转盘 + 兑换 + 酒馆 + 拼图 + 累充</strong> 同步启动。<br>
+海妖/净化试炼同日结束 → 冲突清零。永恒之岛还剩 2 天尾声（但限时礼包已衰到 $90，不构成竞争）。<br>
+恩典卷消耗循环 + 猫眼石币消耗循环 <strong>Day1 同步通路</strong>。
+</div>
+</div>
+
+<div class="tl-item">
+<div><span class="tl-day">D21</span><span class="tl-rev">$2,964</span></div>
+<div class="tl-desc">
+<span class="tl-tag on">尼罗河运转</span>
+<span class="tl-tag new">武道冠军 开始</span>
+<span class="tl-tag on">永恒之岛 尾声</span><br>
+尼罗河 Day2。武道冠军（链式礼包）同日开启，跟尼罗并行但不同付费管道。<br>
+BP 首购 + 大转盘首抽 + 酒馆积分启动中。
+</div>
+</div>
+
+<div class="tl-item">
+<div><span class="tl-day">D22-D23</span><span class="tl-rev">$3,693 / $3,689</span></div>
+<div class="tl-desc">
+<span class="tl-tag on">尼罗河运转</span>
+<span class="tl-tag off">永恒之岛 结束</span><br>
+尼罗河 Day3-4。永恒之岛完全结束 → 大R精力和资源释放到尼罗河。<br>
+大转盘消耗循环持续。猫眼石币开始积累。
+</div>
+</div>
+
+<div class="tl-item visit">
+<div><span class="tl-day">D24</span><span class="tl-rev">$1,668 → 追加拜访礼包 $100</span></div>
+<div class="tl-desc">
+<span class="tl-tag warn">⚠️ 断崖点</span>
+<span class="tl-tag new">🔥 拜访礼包 $100 开放</span><br>
+3月数据显示 Day5 开始断崖（$3,352→$1,668）。<strong>拜访礼包精准卡在断崖点</strong>：<br>
+大R 在 D20-D23 已投入排行榜+大转盘 → 拜访 $100 不是冲动消费，而是"保住排名优势的追加投资"。<br>
+一次性大额购买制造付费脉冲，阻断衰减趋势。
+</div>
+</div>
+
+<div class="tl-item">
+<div><span class="tl-day">D25-D27</span><span class="tl-rev">$1,100-1,700</span></div>
+<div class="tl-desc">
+<span class="tl-tag on">尼罗河全模块运转</span>
+<span class="tl-tag on">武道冠军 尾声</span>
+<span class="tl-tag on">生意兴隆 在跑</span><br>
+全模块持续运转。大转盘消耗 + 兑换消耗 + 酒馆排名冲刺。<br>
+D27 武道冠军结束 → 释放付费预算给尼罗。
+</div>
+</div>
+
+<div class="tl-item">
+<div><span class="tl-day">D28-D33</span><span class="tl-rev">$487-1,485</span></div>
+<div class="tl-desc">
+<span class="tl-tag on">尼罗河尾声</span>
+<span class="tl-tag new">30留大转盘 D29开</span><br>
+尼罗河后半段 + 30留大转盘（D29-D33）。排行结算、兑换清货、自然收束。
+</div>
+</div>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<!-- 冲突活动总结 -->
+<div class="section-title">D20 前后冲突活动状态</div>
+<table>
+<tr><th>活动</th><th>D17</th><th>D18</th><th>D19</th><th style="background:rgba(46,204,113,0.1)">D20 尼罗开</th><th>D21</th><th>D22+</th><th>跟尼罗冲突</th></tr>
+<tr><td>永恒之岛</td><td style="color:#f39c12">首日$560</td><td>$470</td><td>$110</td><td>$90</td><td>尾声</td><td style="color:#e74c3c">结束</td><td>🟢 已衰减到$90，不争钱</td></tr>
+<tr><td>海妖系列</td><td>$245</td><td>$280</td><td>$170</td><td style="color:#e74c3c">结束</td><td>—</td><td>—</td><td>🟢 D20当天结束</td></tr>
+<tr><td>净化试炼</td><td>在跑</td><td>在跑</td><td>在跑</td><td style="color:#e74c3c">结束</td><td>—</td><td>—</td><td>🟢 无直接付费，D20结束</td></tr>
+<tr><td>武道冠军</td><td>—</td><td>—</td><td>—</td><td>—</td><td style="color:#3498db">开始</td><td>在跑→D27止</td><td>🟡 有链式礼包，但不同付费管道</td></tr>
+</table>
+<div class="insight">
+<strong>D20 是冲突最小的窗口：</strong>永恒之岛限时礼包已从 $560 衰减到 $90（D20 只剩残值）；海妖和净化试炼 D20 当天结束；武道 D21 才开。<br>
+尼罗河 D20 进场面对的"竞争环境" = <strong>海妖稳态 $170/天（当日结束）+ 永恒之岛残值 $90 = 合计不到 $300</strong>。
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<!-- 最终配置 -->
+<div class="section-title">配置改动清单</div>
+<table>
+<tr><th>活动</th><th>TimeCycle</th><th>改动</th></tr>
+<tr><td>BP + 大转盘 + 兑换 + 酒馆 + 拼图 + 累充（6个）</td><td>TC=1825 (D20, 14天)</td><td><strong>不变</strong>（大转盘/兑换/酒馆需改 ActvOnline.TimeController 指向 1825）</td></tr>
+<tr style="background:rgba(155,89,182,0.06)"><td><strong>拜访礼包（金字塔之城）</strong></td><td><strong>新建 TC: D24</strong></td><td>TT=2, T='23d 00:00:00', 持续 10d（D24→D33）</td></tr>
+<tr style="background:rgba(149,165,166,0.06)"><td><del>许愿池 / 往昔盛典 / 折扣券大转盘</del></td><td>—</td><td>不上线</td></tr>
+</table>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<script>
+// ====== 甘特图 ======
+(function(){
+const area = document.getElementById('ganttArea');
+const startD = 15, endD = 33, totalD = endD - startD + 1;
+const cellW = 48;
+
+// 表头
+let hdr = '<div style="display:flex;margin-left:160px;margin-bottom:4px">';
+for(let d=startD;d<=endD;d++){
+    const hl = d===20||d===24 ? 'color:#f1c40f;font-weight:700' : 'color:#666';
+    hdr += `<div style="width:${cellW}px;text-align:center;font-size:0.65rem;flex-shrink:0;${hl}">D${d}</div>`;
+}
+hdr += '</div>';
+area.innerHTML = hdr;
+
+const bars = [
+    {label:'🔴 猎杀BP', s:6, e:15, c:'#2ecc71'},
+    {label:'🔴 异域盛典(抽卡)', s:14, e:16, c:'#9b59b6'},
+    {label:'🔴 海妖转盘', s:15, e:17, c:'#3498db'},
+    {label:'🟡 海妖登录+排行', s:13, e:20, c:'#1abc9c'},
+    {label:'🔴 船只改装(链式)', s:17, e:19, c:'#2980b9'},
+    {label:'🟡 净化试炼', s:17, e:20, c:'#e67e22'},
+    {label:'🟡 永恒之岛', s:17, e:22, c:'#d35400'},
+    {label:'sep', s:0, e:0},
+    {label:'🔥 BP(圣甲虫试炼)', s:20, e:33, c:'#2ecc71'},
+    {label:'🔥 大转盘(黄金卷轴)', s:20, e:33, c:'#f39c12'},
+    {label:'🔥 兑换(方尖碑集市)', s:20, e:33, c:'#e67e22'},
+    {label:'🔥 酒馆(蓝莲花宴)', s:20, e:33, c:'#16a085'},
+    {label:'🔥 拼图(象形密文)', s:20, e:33, c:'#27ae60'},
+    {label:'🔥 累充(黄金沙漏)', s:20, e:33, c:'#1abc9c'},
+    {label:'sep', s:0, e:0},
+    {label:'🔥 拜访(金字塔之城)', s:24, e:33, c:'#9b59b6'},
+    {label:'sep', s:0, e:0},
+    {label:'🔴 武道冠军(链式)', s:21, e:27, c:'#c0392b'},
+    {label:'🔴 生意兴隆(链式)', s:25, e:27, c:'#8e44ad'},
+    {label:'🔴 30留大转盘', s:29, e:33, c:'#e74c3c'},
+];
+
+bars.forEach(b => {
+    if(b.label === 'sep'){
+        area.innerHTML += '<div style="height:1px;margin:6px 0 6px 160px;border-bottom:1px dashed rgba(255,255,255,0.1)"></div>';
+        return;
+    }
+    let row = `<div style="display:flex;align-items:center;margin-bottom:3px;height:22px">`;
+    row += `<div style="width:160px;flex-shrink:0;text-align:right;padding-right:8px;font-size:0.72rem;color:#aaa;white-space:nowrap">${b.label}</div>`;
+    row += `<div style="display:flex;flex:1">`;
+    for(let d=startD;d<=endD;d++){
+        const inRange = d >= b.s && d <= b.e;
+        const isStart = d === Math.max(b.s, startD);
+        let bg = 'transparent';
+        let border = '';
+        let text = '';
+        if(inRange){
+            bg = b.c;
+            if(isStart) text = `D${b.s}-D${b.e}`;
+        }
+        // D20 竖线标记
+        const d20mark = d===20 ? 'border-left:2px solid rgba(46,204,113,0.6);' : '';
+        const d24mark = d===24 ? 'border-left:2px solid rgba(155,89,182,0.6);' : '';
+        row += `<div style="width:${cellW}px;height:18px;flex-shrink:0;position:relative;${d20mark}${d24mark}">`;
+        if(inRange){
+            const radius = d===b.s ? 'border-radius:4px 0 0 4px;' : d===b.e ? 'border-radius:0 4px 4px 0;' : '';
+            const opacity = b.label.startsWith('🔥') ? '1' : '0.7';
+            row += `<div style="position:absolute;top:1px;bottom:1px;left:0;right:0;background:${bg};opacity:${opacity};${radius}display:flex;align-items:center;padding-left:2px;font-size:0.58rem;color:#fff;white-space:nowrap;overflow:hidden">${text}</div>`;
+        }
+        row += '</div>';
+    }
+    row += '</div></div>';
+    area.innerHTML += row;
+});
+
+// D20 和 D24 标注线
+let anno = '<div style="display:flex;margin-left:160px;margin-top:4px">';
+for(let d=startD;d<=endD;d++){
+    let txt = '';
+    let style = 'color:#666';
+    if(d===20){txt='▲ 尼罗开';style='color:#2ecc71;font-weight:700'}
+    if(d===24){txt='▲ +拜访';style='color:#9b59b6;font-weight:700'}
+    anno += `<div style="width:${cellW}px;text-align:center;font-size:0.6rem;flex-shrink:0;${style}">${txt}</div>`;
+}
+anno += '</div>';
+area.innerHTML += anno;
+})();
+
+const STORAGE_KEY='x3_final_timeline_comments';
+function getComments(){const cs=document.querySelectorAll('.comment');return Array.from(cs).map((c,i)=>({index:i,text:c.innerText.replace(/^\uD83D\uDCAC\s*/,'').trim()}))}
+function saveComments(){const d=getComments();localStorage.setItem(STORAGE_KEY,JSON.stringify(d));const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='x3_final_timeline_comments.json';a.click();URL.revokeObjectURL(u);document.getElementById('saveStatus').textContent='已保存 ('+new Date().toLocaleTimeString()+')';document.getElementById('saveStatus').className='status ok'}
+function exportComments(){const d=getComments();let t='=== X3 尼罗河最终排期方案 — 评论 ===\n'+new Date().toLocaleString()+'\n\n';d.forEach((c,i)=>{if(c.text&&c.text!=='点击此处输入点评...'){t+='['+(i+1)+'] '+c.text+'\n\n'}});navigator.clipboard.writeText(t).then(()=>{document.getElementById('saveStatus').textContent='已复制到剪贴板!';document.getElementById('saveStatus').className='status ok'}).catch(()=>{const b=new Blob([t],{type:'text/plain'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='x3_final_comments.txt';a.click()})}
+window.addEventListener('load',()=>{const d=localStorage.getItem(STORAGE_KEY);if(d){const cs=document.querySelectorAll('.comment');JSON.parse(d).forEach(c=>{if(c.index<cs.length&&c.text&&c.text!=='点击此处输入点评...'){cs[c.index].innerText=c.text;cs[c.index].style.color='#e0e0e0';cs[c.index].style.fontStyle='normal'}});document.getElementById('saveStatus').textContent='自动恢复了上次评论';document.getElementById('saveStatus').className='status ok'}});
+document.querySelectorAll('.comment').forEach(c=>{c.addEventListener('input',()=>{document.getElementById('saveStatus').textContent='有未保存的修改';document.getElementById('saveStatus').className='status'});c.addEventListener('focus',function(){if(this.innerText.replace(/^\uD83D\uDCAC\s*/,'').trim()==='点击此处输入点评...'){this.innerText='';this.style.color='#e0e0e0';this.style.fontStyle='normal'}})});
+</script>
+</body>
+</html>

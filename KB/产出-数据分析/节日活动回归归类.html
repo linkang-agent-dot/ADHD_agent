@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>节日活动数据回归归类</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 20px; }
+        .toolbar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+        .toolbar input { flex: 1; min-width: 200px; padding: 10px 15px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
+        .toolbar button { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+        .btn-primary { background: #3498db; color: white; }
+        .btn-primary:hover { background: #2980b9; }
+        .btn-success { background: #27ae60; color: white; }
+        .btn-success:hover { background: #219a52; }
+        .btn-secondary { background: #95a5a6; color: white; }
+        .btn-secondary:hover { background: #7f8c8d; }
+        .stats { background: white; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 30px; flex-wrap: wrap; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .stat-item { display: flex; align-items: center; gap: 8px; }
+        .stat-item .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-total { background: #3498db; }
+        .dot-classified { background: #27ae60; }
+        .dot-pending { background: #e74c3c; }
+        .categories { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+        .category-tag { padding: 6px 12px; background: #ecf0f1; border-radius: 20px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .category-tag:hover { background: #3498db; color: white; }
+        .category-tag.active { background: #3498db; color: white; }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 15px; }
+        .card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.2s; }
+        .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); transform: translateY(-2px); }
+        .card.classified { border-left: 4px solid #27ae60; }
+        .card.pending { border-left: 4px solid #e74c3c; }
+        .card-title { font-size: 16px; font-weight: 600; color: #2c3e50; margin-bottom: 12px; }
+        .card-meta { font-size: 12px; color: #7f8c8d; margin-bottom: 12px; }
+        .card-input { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; transition: border-color 0.2s; }
+        .card-input:focus { outline: none; border-color: #3498db; }
+        .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+        .quick-tag { padding: 4px 10px; background: #f0f0f0; border-radius: 4px; font-size: 12px; cursor: pointer; transition: all 0.2s; }
+        .quick-tag:hover { background: #3498db; color: white; }
+        .hidden { display: none !important; }
+        .export-area { margin-top: 20px; }
+        .export-area textarea { width: 100%; height: 200px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; font-family: monospace; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>节日活动数据回归归类</h1>
+
+        <div class="toolbar">
+            <input type="text" id="searchInput" placeholder="搜索活动名称...">
+            <button class="btn-primary" onclick="filterByStatus('all')">全部</button>
+            <button class="btn-success" onclick="filterByStatus('classified')">已归类</button>
+            <button class="btn-secondary" onclick="filterByStatus('pending')">待归类</button>
+            <button class="btn-primary" onclick="exportData()">导出JSON</button>
+            <button class="btn-success" onclick="exportMarkdown()">导出MD</button>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item"><span class="dot dot-total"></span><span>总计: <strong id="statTotal">0</strong></span></div>
+            <div class="stat-item"><span class="dot dot-classified"></span><span>已归类: <strong id="statClassified">0</strong></span></div>
+            <div class="stat-item"><span class="dot dot-pending"></span><span>待归类: <strong id="statPending">0</strong></span></div>
+        </div>
+
+        <div class="categories" id="categoryFilter">
+            <span class="category-tag active" data-category="all">全部分类</span>
+        </div>
+
+        <div class="card-grid" id="cardGrid"></div>
+
+        <div class="export-area hidden" id="exportArea">
+            <textarea id="exportContent" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        const activities = [
+            { id: 1, title: "感恩节礼包", keywords: ["礼包", "付费", "ARPPU", "付费深度", "点击率"] },
+            { id: 2, title: "感恩节活动", keywords: ["兑换活动", "活跃活动", "消耗活动", "登录", "采集", "PVE", "GVE"] },
+            { id: 3, title: "圣诞节礼包活动", keywords: ["礼包", "兑换活动", "活跃活动", "点击率", "付费率"] },
+            { id: 4, title: "情人节登陆消耗打野", keywords: ["登陆", "消耗", "打野", "掉落", "触达率", "参与率"] },
+            { id: 5, title: "复活节登陆消耗打野", keywords: ["登陆", "消耗", "掉落", "曝光率", "参与率"] },
+            { id: 6, title: "2021万圣节礼包", keywords: ["礼包", "付费率", "付费深度", "触达率"] },
+            { id: 7, title: "2021万圣节活跃消耗", keywords: ["活跃", "消耗", "掉落", "触达率", "参与率"] },
+            { id: 8, title: "万圣节兑换商店", keywords: ["兑换商店", "道具消耗", "奖励兑换"] },
+            { id: 9, title: "2021感恩节极限狩猎", keywords: ["极限狩猎", "曝光率", "参与率", "难度设置"] },
+            { id: 10, title: "2021感恩节活跃消耗", keywords: ["活跃", "消耗", "掉落", "PVE", "GVE", "采集"] },
+            { id: 11, title: "2021感恩节礼包BP", keywords: ["礼包", "BP", "付费率", "付费深度"] },
+            { id: 12, title: "2021圣诞节活跃消耗", keywords: ["活跃", "消耗", "七日活动", "无尽战意"] },
+            { id: 13, title: "圣诞节gacha", keywords: ["gacha", "抽奖", "联欢惊喜", "付费", "兑换"] },
+            { id: 14, title: "7日活动", keywords: ["7日活动", "任务达成", "阶段奖励"] },
+            { id: 15, title: "2022情人节7日掉落", keywords: ["7日活动", "掉落", "触达率", "任务完成"] },
+            { id: 16, title: "复活节BP礼包", keywords: ["BP", "礼包", "付费率", "难度曲线"] },
+            { id: 17, title: "7月夏日活动", keywords: ["BP", "排行榜", "铭牌", "付费深度"] },
+            { id: 18, title: "万圣节付费内容", keywords: ["皮肤gacha", "BP", "付费率", "触达"] },
+            { id: 19, title: "万圣节活跃活动", keywords: ["活跃", "七日活动", "无尽战意", "触达率"] },
+            { id: 20, title: "感恩节gacha", keywords: ["gacha", "抽奖", "付费", "体验问题"] },
+            { id: 21, title: "圣诞节付费", keywords: ["付费", "gacha", "BP", "触达", "破冰"] },
+            { id: 22, title: "春节巨猿", keywords: ["巨猿", "参与率", "任务积分", "联盟"] },
+            { id: 23, title: "春节拜访活动", keywords: ["拜访", "社交", "参与率", "留言"] }
+        ];
+
+        const quickCategories = [
+            "礼包付费", "活跃消耗", "Gacha抽奖", "兑换商店", "BP通行证",
+            "7日活动", "掉落活动", "社交活动", "PVE/GVE", "排行榜"
+        ];
+
+        let classifications = JSON.parse(localStorage.getItem('activityClassifications') || '{}');
+        let currentFilter = 'all';
+        let currentCategory = 'all';
+
+        function init() {
+            renderCards();
+            updateStats();
+            updateCategoryFilter();
+            document.getElementById('searchInput').addEventListener('input', renderCards);
+        }
+
+        function renderCards() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const grid = document.getElementById('cardGrid');
+            grid.innerHTML = '';
+
+            activities.forEach(activity => {
+                const classification = classifications[activity.id] || '';
+                const isClassified = classification.trim() !== '';
+
+                // Filter by status
+                if (currentFilter === 'classified' && !isClassified) return;
+                if (currentFilter === 'pending' && isClassified) return;
+
+                // Filter by category
+                if (currentCategory !== 'all' && classification !== currentCategory) return;
+
+                // Filter by search
+                if (searchTerm && !activity.title.toLowerCase().includes(searchTerm)) return;
+
+                const card = document.createElement('div');
+                card.className = `card ${isClassified ? 'classified' : 'pending'}`;
+                card.innerHTML = `
+                    <div class="card-title">${activity.title}</div>
+                    <div class="card-meta">关键词: ${activity.keywords.slice(0, 4).join(', ')}</div>
+                    <input type="text" class="card-input" placeholder="输入归类..."
+                           value="${classification}"
+                           onchange="updateClassification(${activity.id}, this.value)"
+                           onkeyup="updateClassification(${activity.id}, this.value)">
+                    <div class="card-tags">
+                        ${quickCategories.map(cat =>
+                            `<span class="quick-tag" onclick="setCategory(${activity.id}, '${cat}')">${cat}</span>`
+                        ).join('')}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function updateClassification(id, value) {
+            classifications[id] = value;
+            localStorage.setItem('activityClassifications', JSON.stringify(classifications));
+            updateStats();
+            updateCategoryFilter();
+        }
+
+        function setCategory(id, category) {
+            classifications[id] = category;
+            localStorage.setItem('activityClassifications', JSON.stringify(classifications));
+            renderCards();
+            updateStats();
+            updateCategoryFilter();
+        }
+
+        function updateStats() {
+            const total = activities.length;
+            const classified = Object.values(classifications).filter(v => v && v.trim()).length;
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statClassified').textContent = classified;
+            document.getElementById('statPending').textContent = total - classified;
+        }
+
+        function updateCategoryFilter() {
+            const usedCategories = [...new Set(Object.values(classifications).filter(v => v && v.trim()))];
+            const container = document.getElementById('categoryFilter');
+            container.innerHTML = `<span class="category-tag ${currentCategory === 'all' ? 'active' : ''}" data-category="all" onclick="filterByCategory('all')">全部分类</span>`;
+            usedCategories.forEach(cat => {
+                container.innerHTML += `<span class="category-tag ${currentCategory === cat ? 'active' : ''}" data-category="${cat}" onclick="filterByCategory('${cat}')">${cat}</span>`;
+            });
+        }
+
+        function filterByStatus(status) {
+            currentFilter = status;
+            renderCards();
+        }
+
+        function filterByCategory(category) {
+            currentCategory = category;
+            renderCards();
+            updateCategoryFilter();
+        }
+
+        function exportData() {
+            const data = activities.map(a => ({
+                id: a.id,
+                title: a.title,
+                category: classifications[a.id] || ''
+            }));
+            const exportArea = document.getElementById('exportArea');
+            const exportContent = document.getElementById('exportContent');
+            exportArea.classList.remove('hidden');
+            exportContent.value = JSON.stringify(data, null, 2);
+        }
+
+        function exportMarkdown() {
+            const grouped = {};
+            activities.forEach(a => {
+                const cat = classifications[a.id] || '未归类';
+                if (!grouped[cat]) grouped[cat] = [];
+                grouped[cat].push(a.title);
+            });
+
+            let md = '# 节日活动数据回归归类\n\n';
+            Object.keys(grouped).sort().forEach(cat => {
+                md += `## ${cat}\n`;
+                grouped[cat].forEach(title => {
+                    md += `- ${title}\n`;
+                });
+                md += '\n';
+            });
+
+            const exportArea = document.getElementById('exportArea');
+            const exportContent = document.getElementById('exportContent');
+            exportArea.classList.remove('hidden');
+            exportContent.value = md;
+        }
+
+        init();
+    </script>
+</body>
+</html>

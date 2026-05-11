@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>巨猿砸金蛋 effect 配置</title>
+<style>
+  body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+  h2 { color: #9cdcfe; margin-top: 30px; margin-bottom: 8px; }
+  .block { background: #2d2d2d; border: 1px solid #444; border-radius: 4px; padding: 12px; margin-bottom: 4px; word-break: break-all; font-size: 13px; line-height: 1.6; }
+  .btn { margin-top: 6px; padding: 4px 14px; background: #0e639c; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 12px; }
+  .btn:hover { background: #1177bb; }
+  .btn.copied { background: #3a7a3a; }
+  .note { color: #808080; font-size: 12px; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<h1 style="color:#ce9178">巨猿砸金蛋 A_MAP_category_param 配置</h1>
+<p style="color:#808080">活动ID：21127302 | 字段：col[18] A_MAP_category_param | 2026-04-21</p>
+<p class="note">effect[0].arg1 = 2124新建全量Drop（21242007~21242013）| effect[1].arg1 = 2124随机Drop（21242000~21242006）</p>
+
+<h2>111111303 巨猿砸金蛋-1</h2>
+<div class="block" id="e1">{"effect":[{"id":111111301,"val":1,"arg1":21242007},{"arg1":21242000}]}</div>
+<button class="btn" onclick="copy('e1',this)">复制</button>
+
+<h2>111111304 巨猿砸金蛋-2</h2>
+<div class="block" id="e2">{"effect":[{"id":111111301,"val":1,"arg1":21242008},{"arg1":21242001}]}</div>
+<button class="btn" onclick="copy('e2',this)">复制</button>
+
+<h2>111111305 巨猿砸金蛋-3</h2>
+<div class="block" id="e3">{"effect":[{"id":111111301,"val":1,"arg1":21242009},{"arg1":21242002}]}</div>
+<button class="btn" onclick="copy('e3',this)">复制</button>
+
+<h2>111111306 巨猿砸金蛋-4</h2>
+<div class="block" id="e4">{"effect":[{"id":111111301,"val":1,"arg1":21242010},{"arg1":21242003}]}</div>
+<button class="btn" onclick="copy('e4',this)">复制</button>
+
+<h2>111111307 巨猿砸金蛋-5</h2>
+<div class="block" id="e5">{"effect":[{"id":111111301,"val":1,"arg1":21242011},{"arg1":21242004}]}</div>
+<button class="btn" onclick="copy('e5',this)">复制</button>
+
+<h2>111111308 巨猿砸金蛋-6</h2>
+<div class="block" id="e6">{"effect":[{"id":111111301,"val":1,"arg1":21242012},{"arg1":21242005}]}</div>
+<button class="btn" onclick="copy('e6',this)">复制</button>
+
+<h2>111111309 巨猿砸金蛋-7</h2>
+<div class="block" id="e7">{"effect":[{"id":111111301,"val":1,"arg1":21242013},{"arg1":21242006}]}</div>
+<button class="btn" onclick="copy('e7',this)">复制</button>
+
+<div style="margin:20px 0">
+<p class="note">↓ 一次复制全部7条，粘贴到 col[18] 第一行后向下填充</p>
+<button class="btn" style="font-size:14px;padding:8px 24px" onclick="copyAll()">复制全部 7 条</button>
+<span id="allStatus" style="margin-left:10px;color:#3a7a3a;font-size:12px"></span>
+</div>
+
+<hr style="border-color:#444;margin:30px 0">
+<h2 style="color:#ce9178">2124 新建条目（single_all 全量）</h2>
+<p class="note">已写入表，供参考核对</p>
+
+<table style="border-collapse:collapse;font-size:12px;width:100%">
+<tr style="color:#9cdcfe"><th style="text-align:left;padding:4px 8px">ID</th><th style="text-align:left;padding:4px 8px">备注</th><th style="text-align:left;padding:4px 8px">道具</th></tr>
+<tr><td style="padding:4px 8px">21242007</td><td style="padding:4px 8px">全量-1</td><td style="padding:4px 8px;color:#d7ba7d">加速×2, 观星球×2, 英雄经验10K×1, 初级资源箱×5, 军备零件×2, 机甲经验10K×1, 特殊天赋×1, 探测券×1</td></tr>
+<tr><td style="padding:4px 8px">21242008</td><td style="padding:4px 8px">全量-2</td><td style="padding:4px 8px;color:#d7ba7d">加速×3, 观星球×4, 英雄经验10K×2, 初级资源箱×10, 军备零件×5, 机甲经验10K×2, 特殊天赋×1, 探测券×1</td></tr>
+<tr><td style="padding:4px 8px">21242009</td><td style="padding:4px 8px">全量-3</td><td style="padding:4px 8px;color:#d7ba7d">加速×5, 观星球×6, 英雄经验10K×5, 中级资源箱×15, 军备零件×8, 机甲经验10K×5, 特殊天赋×2, 探测券×2</td></tr>
+<tr><td style="padding:4px 8px">21242010</td><td style="padding:4px 8px">全量-4</td><td style="padding:4px 8px;color:#d7ba7d">加速×10, 观星球×8, 英雄经验50K×2, 中级资源箱×10, 军备零件×12, 机甲经验50K×2, 特殊天赋×2, 探测券×2</td></tr>
+<tr><td style="padding:4px 8px">21242011</td><td style="padding:4px 8px">全量-5</td><td style="padding:4px 8px;color:#d7ba7d">加速×15, 观星球×10, 英雄经验50K×5, 中级资源箱×15, 军备零件×15, 机甲经验50K×5, 特殊天赋×3, 探测券×3</td></tr>
+<tr><td style="padding:4px 8px">21242012</td><td style="padding:4px 8px">全量-6</td><td style="padding:4px 8px;color:#d7ba7d">加速1h×2, 高级资源箱×10, 漫游骰子×4, 万能英雄碎片橙×2, 观星球×12, 特殊天赋×4, 探测券×4</td></tr>
+<tr><td style="padding:4px 8px">21242013</td><td style="padding:4px 8px">全量-7</td><td style="padding:4px 8px;color:#d7ba7d">加速1h×5, 高级资源箱×15, 漫游骰子×10, 万能英雄碎片橙×5, 观星球×15, 特殊天赋×5, 探测券×5</td></tr>
+</table>
+
+<script>
+function copyAll() {
+  const ids = ['e1','e2','e3','e4','e5','e6','e7'];
+  const text = ids.map(id => document.getElementById(id).innerText).join('\n');
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('allStatus').textContent = '已复制 ✓ 直接粘贴到 col[18] 第一格';
+    setTimeout(() => { document.getElementById('allStatus').textContent = ''; }, 3000);
+  });
+}
+function copy(id, btn) {
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '复制'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>

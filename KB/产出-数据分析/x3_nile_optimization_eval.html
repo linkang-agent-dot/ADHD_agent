@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 尼罗河 · 下期优化方案预估</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:#f0f2f5;color:#1a1a2e;font-size:14px}
+
+.hero{background:linear-gradient(135deg,#0f3460 0%,#16213e 55%,#1a1a2e 100%);color:#fff;padding:40px 64px 34px}
+.hero-tag{display:inline-block;background:#f0c040;color:#1a1a2e;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:3px 10px;border-radius:3px;margin-bottom:12px;text-transform:uppercase}
+.hero h1{font-size:1.8em;font-weight:800;line-height:1.35;margin-bottom:6px}
+.hero h1 em{color:#4ecdc4;font-style:normal}
+.hero-meta{color:#7a8fbb;font-size:12px;margin-top:8px;line-height:1.9}
+
+.main{max-width:1320px;margin:0 auto;padding:24px 64px 48px}
+
+/* section */
+.sh{display:flex;align-items:center;gap:12px;margin:32px 0 14px}
+.sh-num{width:30px;height:30px;border-radius:50%;background:#e94560;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sh-title{font-size:17px;font-weight:800;color:#1a1a2e}
+.sh-badge{font-size:11px;padding:2px 8px;border-radius:3px;font-weight:700;margin-left:4px}
+.sh-badge.up{background:#d4edda;color:#155724}
+.sh-badge.warn{background:#fff3cd;color:#856404}
+
+/* card */
+.card{background:#fff;border-radius:10px;padding:22px 26px;box-shadow:0 2px 10px rgba(0,0,0,.07);margin-bottom:16px}
+.card-title{font-size:12.5px;font-weight:700;color:#555;border-left:4px solid #e94560;padding-left:10px;margin-bottom:14px;letter-spacing:.3px}
+.card-title.g{border-left-color:#27ae60}.card-title.b{border-left-color:#2980b9}.card-title.yl{border-left-color:#f0c040}
+
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:#1a1a2e;color:#fff;padding:9px 12px;text-align:center;font-weight:600}
+th.left{text-align:left}
+td{padding:9px 12px;border-bottom:1px solid #f0f0f0;text-align:center}
+td.left{text-align:left}
+tr:hover td{background:#fafbff}
+.up{color:#27ae60;font-weight:700}.dn{color:#e74c3c;font-weight:700}
+.row-agg{background:#1a1a2e!important}.row-agg td{color:#fff;font-weight:700}
+.row-agg .up{color:#4dd}.row-agg .dn{color:#f88}
+.gold{color:#d4a017;font-weight:700}
+
+/* callouts */
+.insight-box{background:#e8f4fd;border-left:4px solid #2980b9;padding:11px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:12.5px;line-height:1.7}
+.warn-box{background:#ffeaea;border-left:4px solid #e74c3c;padding:11px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:12px;line-height:1.65}
+.note-box{background:#fffbe6;border-left:4px solid #f0c040;padding:10px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:12px;line-height:1.65}
+
+/* cols */
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+
+/* KPI cards */
+.kpi3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.kpi-card{background:#fff;border-radius:10px;padding:18px 20px;box-shadow:0 2px 10px rgba(0,0,0,.07);border-top:4px solid #e94560}
+.kpi-card.g{border-top-color:#27ae60}.kpi-card.b{border-top-color:#2980b9}
+.kpi-num{font-size:1.9em;font-weight:800;line-height:1.1}
+.kpi-num.up{color:#27ae60}.kpi-num.bl{color:#2980b9}
+.kpi-lbl{font-size:12px;color:#666;margin-top:5px;line-height:1.5;font-weight:600}
+.kpi-sub{font-size:11px;color:#aaa;margin-top:3px}
+
+/* waterfall numbers */
+.wf{display:flex;flex-direction:column;gap:5px;min-width:200px}
+.wf-row{display:flex;justify-content:space-between;align-items:center;border-radius:6px;padding:9px 14px}
+.wf-cur{background:#f0f2f5}.wf-new{background:#e8f8f0}.wf-delta{background:#1a1a2e}
+.wf-row .lbl{font-size:12px;color:#666}.wf-row .val{font-size:1.3em;font-weight:800}
+.wf-delta .lbl{color:#aaa}.wf-delta .val{color:#4ecdc4}
+
+/* funnel */
+.funnel{display:flex;align-items:flex-end;gap:6px;height:120px;margin:10px 0 6px}
+.funnel-bar{background:linear-gradient(180deg,#e94560,#c0392b);border-radius:4px 4px 0 0;flex:1;min-width:0;position:relative;transition:height .3s}
+.funnel-bar .fl{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700;color:#1a1a2e;white-space:nowrap}
+.funnel-bar .fv{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:700;color:#fff}
+.funnel-bar.new{background:linear-gradient(180deg,#27ae60,#1e8449)}
+
+/* rec cards */
+.rec-card{border-radius:8px;padding:14px 16px;margin-bottom:10px}
+.rec-card.keep{background:#e8f8f0;border-left:4px solid #27ae60}
+.rec-card.fix{background:#fff8e1;border-left:4px solid #f0c040}
+.rec-card.drop{background:#fef0f0;border-left:4px solid #e74c3c}
+
+.footer{text-align:center;font-size:11px;color:#aaa;padding:24px 0;border-top:1px solid #e5e5e5;margin-top:8px}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-tag">优化方案预估 · 基于尼罗活动回归数据</div>
+  <h1>X3 下期节日三项优化 <em>付费率 / ARPPU / 总额预估</em></h1>
+  <div class="hero-meta">
+    基线数据：尼罗活动 W3（D21–D28），80–85服聚合 &nbsp;·&nbsp; DAU 2,088 &nbsp;·&nbsp; 方案来源：工作表2 行125–224<br>
+    <b style="color:#aac">出具日期：2026-05-09 &nbsp;·&nbsp; 预估为 AI 基于回归漏斗外推，非实测数据</b>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ══ 汇总 KPI ══ -->
+<div style="height:20px"></div>
+<div class="kpi3">
+  <div class="kpi-card g">
+    <div class="kpi-num up">+$891</div>
+    <div class="kpi-lbl">三项优化合计增收预估</div>
+    <div class="kpi-sub">$1,160 → $2,051（+77%）</div>
+  </div>
+  <div class="kpi-card g">
+    <div class="kpi-num up">+1.7ppt</div>
+    <div class="kpi-lbl">付费率预估净增（加权）</div>
+    <div class="kpi-sub">三模块合并去重后的节日付费率提升</div>
+  </div>
+  <div class="kpi-card b">
+    <div class="kpi-num bl">$0.85 → $1.31</div>
+    <div class="kpi-lbl">全节日 ARPU 预估提升</div>
+    <div class="kpi-sub">+$0.46/人 (+54%)，DAU=2,088 基准</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     一、家具礼包 → 阶梯连锁
+══════════════════════════════════════ -->
+<div class="sh">
+  <div class="sh-num">1</div>
+  <div class="sh-title">家具礼包 → 阶梯连锁（3 × $19.99 = $60 坑深）</div>
+  <span class="sh-badge up">收入 +103%</span>
+</div>
+
+<div class="card" style="border-left:5px solid #27ae60">
+  <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center">
+    <div>
+      <div style="font-size:12px;font-weight:700;letter-spacing:1px;color:#27ae60;text-transform:uppercase;margin-bottom:8px">方案概述</div>
+      <p style="font-size:14px;line-height:1.85;color:#1a1a2e">
+        单购 $19.99 限1次 → <b>3 档链式连锁</b>，每档 $19.99 + 专属装饰奖励（黑猫→狮身人面→埃及节日卡），ROI 逐级递增 3200%→4000%→5000%。<br>
+        核心变化：<b>突破限购 1 次天花板</b>，用独占装饰的稀缺性驱动链式转化。同价不同品、逐级加码 — 链式留存预估远优于特惠连锁的跨价级断崖。
+      </p>
+    </div>
+    <div class="wf">
+      <div class="wf-row wf-cur"><span class="lbl">当前收入</span><span class="val" style="color:#666">$420</span></div>
+      <div class="wf-row wf-new"><span class="lbl">预估收入</span><span class="val" style="color:#27ae60">$851</span></div>
+      <div class="wf-row wf-delta"><span class="lbl">增量</span><span class="val">+$431</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="cols2">
+  <div class="card">
+    <div class="card-title g">链式漏斗预估 vs 现状</div>
+    <table>
+      <tr><th class="left">档位</th><th>价格</th><th>当前</th><th>预估人数</th><th>留存率</th><th>预估收入</th></tr>
+      <tr><td class="left">$19.99-1（黑猫装饰）</td><td>$19.99</td><td>21人</td><td><b>23人</b></td><td>—</td><td>$460</td></tr>
+      <tr><td class="left">$19.99-2（狮身人面像）</td><td>$19.99</td><td>—</td><td><b>13人</b></td><td class="up">57%</td><td>$260</td></tr>
+      <tr><td class="left">$19.99-3（埃及节日卡）</td><td>$19.99</td><td>—</td><td><b>6人</b></td><td>46%</td><td>$120</td></tr>
+      <tr class="row-agg"><td class="left">合计</td><td>$59.97</td><td>21人</td><td>23人</td><td>—</td><td class="up">$851</td></tr>
+    </table>
+    <div class="note-box" style="margin-top:10px">
+      <b>链式留存假设：</b>同价位（$19.99→$19.99）无价格断崖，ROI 递增 + 独占装饰驱动，预估 57%→46% 留存，远优于特惠连锁的 $4.99→$9.99 跨价级 29% 断崖。
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">三指标变化预估</div>
+    <table>
+      <tr><th class="left">指标</th><th>当前（尼罗 W3）</th><th>优化后预估</th><th>变化</th></tr>
+      <tr>
+        <td class="left"><b>付费率</b></td>
+        <td>1.01%（21/2088）</td><td>1.10%（23/2088）</td>
+        <td class="up">+0.10ppt</td>
+      </tr>
+      <tr>
+        <td class="left"><b>ARPPU</b></td>
+        <td>$19.99</td><td><b>$37.0</b></td>
+        <td class="up">+$17.0（+85%）</td>
+      </tr>
+      <tr>
+        <td class="left"><b>模块收入</b></td>
+        <td>$420</td><td><b>$851</b></td>
+        <td class="up">+$431（+103%）</td>
+      </tr>
+      <tr style="background:#f0f8ff">
+        <td class="left"><b>模块 ARPU</b></td>
+        <td>$0.20</td><td><b>$0.41</b></td>
+        <td class="up">+$0.21（+103%）</td>
+      </tr>
+    </table>
+    <div class="insight-box" style="margin-top:12px">
+      <b>核心提升来源：ARPPU。</b>付费率仅微增（同价位入口无变化），但坑深从 $19.99 → $60 打开了存量付费者的消费空间。预估 chaoR 平均消费从 $19.99→$53，daR 从 $19.99→$36。
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title yl">分 R 级影响预估</div>
+  <table>
+    <tr><th class="left">R 级</th><th>当前付费率</th><th>当前 ARPPU</th><th>预估付费率</th><th>预估 ARPPU</th><th>预估收入</th><th>变化</th></tr>
+    <tr><td class="left">chaoR（11人）</td><td>54.6%</td><td>$19.99</td><td>54.6%</td><td>$53</td><td>$318</td><td class="up">+$198（+166%）</td></tr>
+    <tr><td class="left">daR（14人）</td><td>42.9%</td><td>$19.99</td><td>42.9%</td><td>$36</td><td>$216</td><td class="up">+$96（+80%）</td></tr>
+    <tr><td class="left">zhongR（91人）</td><td>9.9%</td><td>$19.99</td><td>11%</td><td>$28</td><td>$280</td><td class="up">+$100（+56%）</td></tr>
+    <tr><td class="left">xiaoR（182人）</td><td>0%</td><td>—</td><td>0.5%</td><td>$19.99</td><td>$20</td><td>+$20（新增）</td></tr>
+  </table>
+  <div class="note-box" style="margin-top:10px">
+    chaoR/daR 作为链式主力贡献 63% 增量（预估 3 档全通过率 30-50%），zhongR 主要停留在 1-2 档。xiaoR 预估仅有极少数因装饰吸引力触发首购。
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     二、主城直购 → 连锁礼包
+══════════════════════════════════════ -->
+<div class="sh">
+  <div class="sh-num">2</div>
+  <div class="sh-title">主城直购 → 连锁礼包（$4.99 起步，坑深 $99→$184）</div>
+  <span class="sh-badge up">收入 +95%</span>
+</div>
+
+<div class="card" style="border-left:5px solid #2980b9">
+  <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center">
+    <div>
+      <div style="font-size:12px;font-weight:700;letter-spacing:1px;color:#2980b9;text-transform:uppercase;margin-bottom:8px">方案概述</div>
+      <p style="font-size:14px;line-height:1.85;color:#1a1a2e">
+        $99.99 单购 → <b>10 档连锁</b>（5 免费 + 5 付费），定价 $4.99→$9.99→$19.99→$49.99→$99.99 逐级攀升，最终解锁皮肤金字塔。<br>
+        核心变化：<b>入口价格从 $99.99 降至免费/4.99</b>，解决当前 daR 以下 0% 转化的根本问题。用高 ROI 连锁前期破冰，逐步引导向高价档推进。
+      </p>
+    </div>
+    <div class="wf">
+      <div class="wf-row wf-cur"><span class="lbl">当前收入</span><span class="val" style="color:#666">$200</span></div>
+      <div class="wf-row wf-new"><span class="lbl">预估收入</span><span class="val" style="color:#27ae60">$390</span></div>
+      <div class="wf-row wf-delta"><span class="lbl">增量</span><span class="val">+$190</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="cols2">
+  <div class="card">
+    <div class="card-title b">连锁漏斗预估（参考特惠连锁断崖）</div>
+    <table>
+      <tr><th class="left">档位</th><th>价格</th><th>当前</th><th>预估人数</th><th>留存率</th><th>预估收入</th></tr>
+      <tr style="background:#f5f5f5"><td class="left">免费 1</td><td>免费</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td class="left"><b>付费 1</b></td><td>$4.99</td><td>—</td><td><b>20人</b></td><td>—</td><td>$100</td></tr>
+      <tr style="background:#f5f5f5"><td class="left">免费 2</td><td>免费</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td class="left">付费 2</td><td>$9.99</td><td>—</td><td><b>7人</b></td><td class="dn">35%（主断崖）</td><td>$70</td></tr>
+      <tr style="background:#f5f5f5"><td class="left">免费 3</td><td>免费</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td class="left">付费 3</td><td>$19.99</td><td>—</td><td><b>4人</b></td><td>57%</td><td>$80</td></tr>
+      <tr style="background:#f5f5f5"><td class="left">免费 4</td><td>免费</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td class="left">付费 4</td><td>$49.99</td><td>—</td><td><b>2人</b></td><td>50%</td><td>$100</td></tr>
+      <tr style="background:#f5f5f5"><td class="left">免费 5</td><td>免费</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td class="left">付费 5（皮肤金字塔）</td><td>$99.99</td><td>2人</td><td><b>1人</b></td><td>50%</td><td>$100</td></tr>
+      <tr class="row-agg"><td class="left">合计</td><td>$184.95</td><td>2人</td><td>20人</td><td>—</td><td class="up">$450</td></tr>
+    </table>
+    <div class="warn-box" style="margin-top:10px">
+      <b>主要风险：$4.99→$9.99 断崖。</b>特惠连锁实测 71% 流失。主城连锁有免费档缓冲，预估略优（65% 流失 → 35% 留存），但仍是核心瓶颈。
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">三指标变化预估</div>
+    <table>
+      <tr><th class="left">指标</th><th>当前（尼罗 W3）</th><th>优化后预估</th><th>变化</th></tr>
+      <tr>
+        <td class="left"><b>付费率</b></td>
+        <td>0.10%（2/2088）</td><td><b>0.96%</b>（20/2088）</td>
+        <td class="up">+0.86ppt（10× 提升）</td>
+      </tr>
+      <tr>
+        <td class="left"><b>ARPPU</b></td>
+        <td>$99.99</td><td>$22.5</td>
+        <td class="dn">−$77.5（稀释效应）</td>
+      </tr>
+      <tr>
+        <td class="left"><b>模块收入</b></td>
+        <td>$200</td><td><b>$450</b></td>
+        <td class="up">+$250（+125%）</td>
+      </tr>
+      <tr style="background:#f0f8ff">
+        <td class="left"><b>模块 ARPU</b></td>
+        <td>$0.10</td><td><b>$0.22</b></td>
+        <td class="up">+$0.12（+125%）</td>
+      </tr>
+    </table>
+    <div class="insight-box" style="margin-top:12px">
+      <b>核心提升来源：付费率。</b>ARPPU 必然因低价入口稀释（$99.99→$22.5），但付费人数从 2→20 人的 10 倍增长远远弥补了 ARPPU 下降。<br>
+      <b>本质转变：</b>从"只卖超 R"（2 人 × $100）转为"广覆盖链式推进"（20 人 × $22.5），收入翻倍且风险更分散。
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     三、BP 新增积分权益
+══════════════════════════════════════ -->
+<div class="sh">
+  <div class="sh-num">3</div>
+  <div class="sh-title">BP 新增积分权益（双倍积分 + 4 处弹窗曝光）</div>
+  <span class="sh-badge up">收入 +50%</span>
+</div>
+
+<div class="card" style="border-left:5px solid #f0c040">
+  <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center">
+    <div>
+      <div style="font-size:12px;font-weight:700;letter-spacing:1px;color:#b7850a;text-transform:uppercase;margin-bottom:8px">方案概述</div>
+      <p style="font-size:14px;line-height:1.85;color:#1a1a2e">
+        新增至尊通行证<b>积分双倍</b>权益（购买后回补历史积分），并在 <b>4 个关键节点</b> 增加购买弹窗：积分不足、满级达成、购买等级、积分来源页。<br>
+        核心变化：<b>精准触达 324 名免费满级玩家</b>，将完成感转化为付费动机。纯加文本改动，开发成本最低。
+      </p>
+    </div>
+    <div class="wf">
+      <div class="wf-row wf-cur"><span class="lbl">当前收入</span><span class="val" style="color:#666">$540</span></div>
+      <div class="wf-row wf-new"><span class="lbl">预估收入</span><span class="val" style="color:#27ae60">$810</span></div>
+      <div class="wf-row wf-delta"><span class="lbl">增量</span><span class="val">+$270</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="cols2">
+  <div class="card">
+    <div class="card-title yl">转化漏斗预估</div>
+    <table>
+      <tr><th class="left">玩家群体</th><th>人数</th><th>当前转化</th><th>预估转化</th><th>新增人数</th><th>新增收入</th></tr>
+      <tr>
+        <td class="left"><b>免费满级玩家（弹窗触达）</b></td>
+        <td>324</td><td>0%</td><td class="up"><b>5–8%</b></td>
+        <td class="up">16–26人</td><td>$240–$390</td>
+      </tr>
+      <tr>
+        <td class="left">积分不足时的即时弹窗</td>
+        <td>~500</td><td>0%</td><td>0.5–1%</td>
+        <td>2–5人</td><td>$30–$75</td>
+      </tr>
+      <tr class="row-agg">
+        <td class="left">新增 BP 买家</td>
+        <td>—</td><td>—</td><td>—</td>
+        <td>18–31人</td><td class="up">$270–$465</td>
+      </tr>
+    </table>
+    <div class="note-box" style="margin-top:10px">
+      <b>324 免费满级玩家</b>是最精准的潜在用户池——他们已经完成了 BP 20 级内容，对 BP 价值有直观认知。弹窗引导在"完成感最高"的时刻出现，转化预估 5-8% 保守可靠。
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">三指标变化预估</div>
+    <table>
+      <tr><th class="left">指标</th><th>当前（尼罗 W3）</th><th>优化后预估</th><th>变化</th></tr>
+      <tr>
+        <td class="left"><b>付费率</b></td>
+        <td>1.20%（25/2088）</td><td><b>1.91%</b>（~40/2088）</td>
+        <td class="up">+0.72ppt</td>
+      </tr>
+      <tr>
+        <td class="left"><b>ARPPU</b></td>
+        <td>$21.59</td><td>$19.0</td>
+        <td class="dn">−$2.6（新用户稀释）</td>
+      </tr>
+      <tr>
+        <td class="left"><b>模块收入</b></td>
+        <td>$540</td><td><b>$810</b></td>
+        <td class="up">+$270（+50%）</td>
+      </tr>
+      <tr style="background:#f0f8ff">
+        <td class="left"><b>模块 ARPU</b></td>
+        <td>$0.26</td><td><b>$0.39</b></td>
+        <td class="up">+$0.13（+50%）</td>
+      </tr>
+    </table>
+    <div class="insight-box" style="margin-top:12px">
+      <b>核心提升来源：付费率。</b>新增用户以 zhongR/xiaoR 为主，大部分只买基础档（$14.99），升档率预估 15%（远低于 chaoR/daR 67-71%），导致 ARPPU 小幅稀释。但付费人数 +60% 带来的总量提升远大于 ARPPU 损失。<br>
+      <b>最高 ROI 优化：</b>纯文本改动，无美术/策划成本，预估收入 +$270。
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     汇总对比
+══════════════════════════════════════ -->
+<div class="sh">
+  <div class="sh-num" style="background:#555">汇</div>
+  <div class="sh-title">三项优化汇总对比</div>
+</div>
+
+<div class="card">
+  <div class="card-title">模块级预估汇总</div>
+  <table>
+    <tr>
+      <th class="left">优化项</th>
+      <th>当前收入</th><th>预估收入</th><th>收入变化</th>
+      <th>当前 ARPU</th><th>预估 ARPU</th><th>ARPU 变化</th>
+      <th>付费率变化</th><th>ARPPU 变化</th>
+      <th>开发成本</th>
+    </tr>
+    <tr>
+      <td class="left"><b>1. 家具→阶梯连锁</b></td>
+      <td>$420</td><td class="up"><b>$851</b></td><td class="up">+$431</td>
+      <td>$0.20</td><td class="up"><b>$0.41</b></td><td class="up">+$0.21</td>
+      <td>+0.10ppt</td><td class="up">+$17.0</td>
+      <td>中（换美术）</td>
+    </tr>
+    <tr>
+      <td class="left"><b>2. 主城→连锁</b></td>
+      <td>$200</td><td class="up"><b>$450</b></td><td class="up">+$250</td>
+      <td>$0.10</td><td class="up"><b>$0.22</b></td><td class="up">+$0.12</td>
+      <td class="up">+0.86ppt</td><td class="dn">−$77.5</td>
+      <td>中（换美术）</td>
+    </tr>
+    <tr>
+      <td class="left"><b>3. BP积分权益</b></td>
+      <td>$540</td><td class="up"><b>$810</b></td><td class="up">+$270</td>
+      <td>$0.26</td><td class="up"><b>$0.39</b></td><td class="up">+$0.13</td>
+      <td class="up">+0.72ppt</td><td class="dn">−$2.6</td>
+      <td style="color:#27ae60;font-weight:700">低（纯文本）</td>
+    </tr>
+    <tr class="row-agg">
+      <td class="left">三项合计</td>
+      <td>$1,160</td><td class="up"><b>$2,111</b></td><td class="up">+$951</td>
+      <td>$0.56</td><td class="up"><b>$1.01</b></td><td class="up">+$0.46</td>
+      <td>+1.7ppt</td><td>—</td>
+      <td>—</td>
+    </tr>
+  </table>
+</div>
+
+<!-- 总付费效果汇总（ARPU 为量化指标）-->
+<div class="card" style="border-left:5px solid #2980b9">
+  <div class="card-title b">总付费效果预估（ARPU 为量化指标，DAU=2,088）</div>
+  <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center">
+    <div>
+      <table>
+        <tr><th class="left">指标</th><th>当前（尼罗 W3）</th><th>优化后预估</th><th>变化</th></tr>
+        <tr>
+          <td class="left"><b>三项模块 ARPU</b></td>
+          <td>$0.56</td><td class="up"><b>$1.01</b></td>
+          <td class="up">+$0.46（+82%）</td>
+        </tr>
+        <tr>
+          <td class="left"><b>全节日 ARPU（5 模块）</b></td>
+          <td>$0.85</td><td class="up"><b>$1.31</b></td>
+          <td class="up"><b>+$0.46（+54%）</b></td>
+        </tr>
+        <tr>
+          <td class="left">节日总收入（5 模块）</td>
+          <td>$1,774</td><td class="up"><b>$2,725</b></td>
+          <td class="up">+$951</td>
+        </tr>
+        <tr>
+          <td class="left">不变模块（特惠连锁+女王）</td>
+          <td colspan="2" style="color:#888">$614（保持不变，待后续迭代）</td>
+          <td>—</td>
+        </tr>
+      </table>
+      <div class="insight-box" style="margin-top:12px">
+        <b>ARPU = 付费率 × ARPPU</b>，是综合衡量付费广度和深度的终极指标。三项优化预估将全节日 ARPU 从 <b>$0.85 → $1.31</b>，提升 <b>54%</b>。<br>
+        其中家具连锁贡献最大增量（+$0.21），核心靠 ARPPU 翻倍（$19.99→$37）；主城连锁和 BP 各贡献 +$0.12-0.13，核心靠付费率拉升（10× 和 +60%）。
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;min-width:220px">
+      <div style="display:flex;justify-content:space-between;align-items:center;background:#f0f2f5;border-radius:6px;padding:12px 16px">
+        <span style="font-size:12px;color:#666">当前全节日 ARPU</span>
+        <span style="font-size:1.5em;font-weight:800;color:#666">$0.85</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;background:#f0fff4;border-radius:6px;padding:12px 16px">
+        <span style="font-size:12px;color:#666">优化后 ARPU</span>
+        <span style="font-size:1.5em;font-weight:800;color:#27ae60">$1.31</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;background:#1a1a2e;border-radius:6px;padding:12px 16px">
+        <span style="font-size:12px;color:#aaa">ARPU 净增</span>
+        <span style="font-size:1.5em;font-weight:800;color:#4ecdc4">+54%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title g">优先级排序（效果 / 成本比）</div>
+  <div class="cols3">
+    <div class="rec-card keep">
+      <div style="font-size:10px;font-weight:700;color:#27ae60;letter-spacing:1px;margin-bottom:4px">P0 · 优先上线</div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:4px">③ BP 积分权益</div>
+      <div style="font-size:12px;color:#555;line-height:1.6">
+        开发成本最低（纯文本），增收 +$270（+50%），ROI 最高。<br>
+        324 名精准用户 × 弹窗触达 = 低风险高回报。
+      </div>
+    </div>
+    <div class="rec-card keep">
+      <div style="font-size:10px;font-weight:700;color:#27ae60;letter-spacing:1px;margin-bottom:4px">P1 · 本期落地</div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:4px">① 家具阶梯连锁</div>
+      <div style="font-size:12px;color:#555;line-height:1.6">
+        增收 +$431（+103%），核心靠 ARPPU 提升 85%。<br>
+        需换美术背景，但设计逻辑清晰，同价位链式风险可控。
+      </div>
+    </div>
+    <div class="rec-card fix">
+      <div style="font-size:10px;font-weight:700;color:#b7850a;letter-spacing:1px;margin-bottom:4px">P2 · 本期落地（关注断崖）</div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:4px">② 主城连锁礼包</div>
+      <div style="font-size:12px;color:#555;line-height:1.6">
+        付费率 10× 提升（0.10%→0.96%）潜力最大。<br>
+        但 $4.99→$9.99 断崖（预估 65% 流失）是核心风险，需上线后密切监控各档转化率。
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">预估假设与风险说明</div>
+  <div class="note-box">
+    <b>假设基线：</b>尼罗活动 W3 实测数据（80-85服，DAU 2,088），以特惠连锁漏斗形态为链式留存参考。新服玩家质量假设与 80-85 批次相近。
+  </div>
+  <div class="warn-box">
+    <b>主要风险：</b><br>
+    ① 同价位链式（$19.99×3）的实际留存率可能低于预估 57%，若玩家对装饰无感则退化为单购。<br>
+    ② 主城连锁 $4.99→$9.99 跨价断崖可能比特惠连锁更严重（主城主题受众更窄）。<br>
+    ③ BP 弹窗频次过高可能引起玩家反感，建议设置"每玩家最多弹 2 次"的频控。<br>
+    ④ ARPPU 稀释效应在主城模块尤为明显（$99.99→$22.5），需提前与管理层对齐"ARPPU 下降但总收入增长"的预期。
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<div class="footer">
+  X3 下期节日优化方案预估 &nbsp;·&nbsp; 基线：尼罗活动回归数据 &nbsp;·&nbsp; AI 外推，非实测 &nbsp;·&nbsp; 2026-05-09<br>
+  数据来源：Trino iap_price USD + Datain 交叉验证 &nbsp;·&nbsp; 方案来源：工作表2 行125–224
+</div>
+
+</body>
+</html>

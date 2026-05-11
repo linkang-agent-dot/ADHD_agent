@@ -34,7 +34,7 @@ CHROME_PATHS_MAC = [
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
 ]
 
-DEBUG_PORT = 9222
+DEBUG_PORT = 9223  # 避免与已运行的 Chrome 实例冲突（默认 9222 会被占用）
 DEFAULT_URL = "http://172.20.90.45:6018"
 
 
@@ -183,14 +183,17 @@ def launch_chrome(url, port=DEBUG_PORT):
     return proc
 
 
-def get_cdp_pages(port=DEBUG_PORT, retries=5):
+def get_cdp_pages(port=DEBUG_PORT, retries=15):
     for i in range(retries):
         try:
             req = urllib.request.Request(f"http://localhost:{port}/json/list")
             with urllib.request.urlopen(req, timeout=3) as r:
                 return json.loads(r.read().decode())
         except Exception:
+            if i == 0:
+                print(f"  等待 Chrome 调试端口 {port} 就绪...", flush=True)
             time.sleep(1)
+    print(f"  警告：无法连接到 Chrome 调试端口 {port}，将进入手动模式", flush=True)
     return None
 
 

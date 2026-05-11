@@ -1,12 +1,12 @@
 {
   "agent:main:main": {
-    "sessionId": "02b221c0-df57-40ad-9fad-ce4e6704fb23",
-    "updatedAt": 1776062324824,
+    "sessionId": "3e7c85d2-3624-46b1-b113-de052c992ff8",
+    "updatedAt": 1778486815178,
     "deliveryContext": {
       "to": "user:ou_e48f6c4c0395f45b74b51525f348678b"
     },
     "skillsSnapshot": {
-      "prompt": "\n\nThe following skills provide specialized instructions for specific tasks.\nUse the read tool to load a skill's file when the task matches its description.\nWhen a skill file references a relative path, resolve it against the skill directory (parent of SKILL.md / dirname of the path) and use that absolute path in tool commands.\n\n<available_skills>\n  <skill>\n    <name>feishu-doc</name>\n    <description>Feishu document read/write operations. Activate when user mentions Feishu docs, cloud docs, or docx links.\n</description>\n    <location>C:\\ADHD_agent\\openclaw\\extensions\\feishu\\skills\\feishu-doc\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-drive</name>\n    <description>Feishu cloud storage file management. Activate when user mentions cloud space, folders, drive.\n</description>\n    <location>C:\\ADHD_agent\\openclaw\\extensions\\feishu\\skills\\feishu-drive\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-perm</name>\n    <description>Feishu permission management for documents and files. Activate when user mentions sharing, permissions, collaborators.\n</description>\n    <location>C:\\ADHD_agent\\openclaw\\extensions\\feishu\\skills\\feishu-perm\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-wiki</name>\n    <description>Feishu knowledge base navigation. Activate when user mentions knowledge base, wiki, or wiki links.\n</description>\n    <location>C:\\ADHD_agent\\openclaw\\extensions\\feishu\\skills\\feishu-wiki\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>coding-agent</name>\n    <description>Delegate coding tasks to Codex, Claude Code, or Pi agents via background process. Use when: (1) building/creating new features or apps, (2) reviewing PRs (spawn in temp dir), (3) refactoring large codebases, (4) iterative coding that needs file exploration. NOT for: simple one-liner fixes (just edit), reading code (use read tool), thread-bound ACP harness requests in chat (for example spawn/run Codex or Claude Code in a Discord thread; use sessions_spawn with runtime:&quot;acp&quot;), or any work in ~/clawd workspace (never spawn agents here). Claude Code: use --print --permission-mode bypassPermissions (no PTY). Codex/Pi/OpenCode: pty:true required.</description>\n    <location>~/AppData\\Roaming\\npm\\node_modules\\openclaw\\skills\\coding-agent\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>healthcheck</name>\n    <description>Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).</description>\n    <location>~/AppData\\Roaming\\npm\\node_modules\\openclaw\\skills\\healthcheck\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>mcporter</name>\n    <description>Use the mcporter CLI to list, configure, auth, and call MCP servers/tools directly (HTTP or stdio), including ad-hoc servers, config edits, and CLI/type generation.</description>\n    <location>~/AppData\\Roaming\\npm\\node_modules\\openclaw\\skills\\mcporter\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>node-connect</name>\n    <description>Diagnose OpenClaw node connection and pairing failures for Android, iOS, and macOS companion apps. Use when QR/setup code/manual connect fails, local Wi-Fi works but VPS/tailnet does not, or errors mention pairing required, unauthorized, bootstrap token invalid or expired, gateway.bind, gateway.remote.url, Tailscale, or plugins.entries.device-pair.config.publicUrl.</description>\n    <location>~/AppData\\Roaming\\npm\\node_modules\\openclaw\\skills\\node-connect\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>openai-whisper</name>\n    <description>Local speech-to-text with the Whisper CLI (no API key).</description>\n    <location>~/AppData\\Roaming\\npm\\node_modules\\openclaw\\skills\\openai-whisper\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>skill-creator</name>\n    <description>Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill&apos;s description for better triggering accuracy.</description>\n    <location>~/.agents\\skills\\skill-creator\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>weather</name>\n    <description>Get current weather and forecasts via wttr.in or Open-Meteo. Use when: user asks about weather, temperature, or forecasts for any location. NOT for: historical weather data, severe weather alerts, or detailed meteorological analysis. No API key needed.</description>\n    <location>~/AppData\\Roaming\\npm\\node_modules\\openclaw\\skills\\weather\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>brainstorming</name>\n    <description>You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation.</description>\n    <location>~/.agents\\skills\\brainstorming\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>chart-visualization</name>\n    <description>This skill should be used when the user wants to visualize data. It intelligently selects the most suitable chart type from 26 available options, extracts parameters based on detailed specifications, and generates a chart image using a JavaScript script.</description>\n    <location>~/.agents\\skills\\chart-visualization\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>competitor-monitor</name>\n    <description>竞品游戏每日监控与日报生成。自动抓取应用商店、Discord、Reddit、SensorTower、data.ai 等多渠道数据，\n按日报模版生成竞品监控日报并写入 Obsidian。\nUse when: (1) 执行竞品监测/竞品日报任务,\n(2) 抓取特定竞品游戏的最新动态,\n(3) 定时任务触发的每日竞品监控。\nTriggers: &quot;竞品监测&quot;, &quot;竞品日报&quot;, &quot;竞品监控&quot;, &quot;competitor monitor&quot;,\n&quot;Last Asylum Plague&quot;, &quot;LAP监控&quot;, &quot;跑一下竞品&quot;, &quot;竞品数据&quot;\n</description>\n    <location>~/.agents\\skills\\competitor-monitor\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>competitor-recorder</name>\n    <description>竞品游戏的礼包和活动记录录入。当用户提供礼包或活动信息（口述、语音转文字、截图、录屏视频）时，按 Obsidian 模版格式写入对应游戏的独立笔记文件。适用场景：(1) 录入竞品礼包信息 (2) 录入竞品活动信息 (3) 用户说&quot;记录礼包/活动&quot;或提供游戏内截图/录屏要求记录时触发。</description>\n    <location>~/.agents\\skills\\competitor-recorder\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>data-analysis</name>\n    <description>Analyze datasets to extract insights, identify patterns, and generate reports. Use when exploring data, creating visualizations, or performing statistical analysis. Handles CSV, JSON, SQL queries, and Python pandas operations.</description>\n    <location>~/.agents\\skills\\data-analysis\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>datain-skill</name>\n    <description>Datain 数据平台查询工具，面向 SLG 手游的数据分析场景。支持三大能力： (1) 游戏数据查询 — 基于 ClickHouse 聚合宽表，通过指定维度、指标、标签查询运营与市场数据（DNU、留存、付费、Cohort 成长等）； (2) 发行素材查询 — 以素材为粒度的投放数据统计，分析展示、点击、花费、ROAS 等市场投放效果； (3) Datain 知识库 — 基于文档 RAG 检索回答 Datain 平台使用相关问题。 触发词：游戏数据、留存、付费、DNU、Cohort、收入、ROI、DAU、 素材分析、投放效果、ROAS、Datain、datain 帮助。\n</description>\n    <location>~/.agents\\skills\\datain-skill\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>dispatching-parallel-agents</name>\n    <description>Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies</description>\n    <location>~/.agents\\skills\\dispatching-parallel-agents\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>doc-coauthoring</name>\n    <description>Guide users through a structured workflow for co-authoring documentation. Use when user wants to write documentation, proposals, technical specs, decision docs, or similar structured content. This workflow helps users efficiently transfer context, refine content through iteration, and verify the doc works for readers. Trigger when user mentions writing docs, creating proposals, drafting specs, or similar documentation tasks.</description>\n    <location>~/.agents\\skills\\doc-coauthoring\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>docx</name>\n    <description>Use this skill whenever the user wants to create, read, edit, or manipulate Word documents (.docx files). Triggers include: any mention of &apos;Word doc&apos;, &apos;word document&apos;, &apos;.docx&apos;, or requests to produce professional documents with formatting like tables of contents, headings, page numbers, or letterheads. Also use when extracting or reorganizing content from .docx files, inserting or replacing images in documents, performing find-and-replace in Word files, working with tracked changes or comments, or converting content into a polished Word document. If the user asks for a &apos;report&apos;, &apos;memo&apos;, &apos;letter&apos;, &apos;template&apos;, or similar deliverable as a Word or .docx file, use this skill. Do NOT use for PDFs, spreadsheets, Google Docs, or general coding tasks unrelated to document generation.</description>\n    <location>~/.agents\\skills\\docx\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>executing-plans</name>\n    <description>Use when you have a written implementation plan to execute in a separate session with review checkpoints</description>\n    <location>~/.agents\\skills\\executing-plans\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>frontend-design</name>\n    <description>Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.</description>\n    <location>~/.agents\\skills\\frontend-design\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>game-localization-translator</name>\n    <description>游戏本地化翻译全流程工具。从UX截图或原始文本提取UI文本，自动查重、复用翻译记忆、生成18语言翻译， 支持写入暂存区review或直接写入目标页签。触发场景：游戏多语言配置、本地化翻译表、i18n配置、UI文本提取、 多语言扩散翻译、LC_Key生成、翻译存入表格、UX截图翻译、翻译LC、直出i18n。</description>\n    <location>~/.agents\\skills\\game-localization-translator\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>google-docs</name>\n    <description>Create and modify Google Docs documents. Read document content and structure, manage formatting, paragraphs, and styles. Use when working with Google Docs document management.</description>\n    <location>~/.agents\\skills\\google-docs\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>igame-skill</name>\n    <description>操作 iGame 游戏运营支撑平台，覆盖 32 个模块、1090 个接口。支持服务器导量管理、玩家查询/封号、邮件发送、活动管理、合服、热更、维护挂起、GM 操作等全部运营功能。支持 P2/BA/KOW/X1/X2/X9 全游戏。触发条件：(1) 提到&quot;服务器&quot;、&quot;导量&quot;、&quot;开服&quot;、&quot;停服&quot;、&quot;补量&quot;、&quot;备服&quot;、&quot;合服&quot;、&quot;热更&quot;、&quot;维护&quot;、&quot;审核服&quot;，(2) 提到&quot;玩家&quot;+&quot;封号/解封/查询/订单&quot;，(3) 提到&quot;发邮件&quot;、&quot;GM 操作&quot;、&quot;工具箱&quot;，(4) 提到 P2/X2/X9/KOW/BA + 任意运营操作，(5) 需要查询或操作 iGame 平台任何功能。</description>\n    <location>~/.agents\\skills\\igame-skill\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>mcp-builder</name>\n    <description>Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).</description>\n    <location>~/.agents\\skills\\mcp-builder\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>pdf</name>\n    <description>Use this skill whenever the user wants to do anything with PDF files. This includes reading or extracting text/tables from PDFs, combining or merging multiple PDFs into one, splitting PDFs apart, rotating pages, adding watermarks, creating new PDFs, filling PDF forms, encrypting/decrypting PDFs, extracting images, and OCR on scanned PDFs to make them searchable. If the user mentions a .pdf file or asks to produce one, use this skill.</description>\n    <location>~/.agents\\skills\\pdf\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>planning-with-files</name>\n    <description>Implements Manus-style file-based planning to organize and track progress on complex tasks. Creates task_plan.md, findings.md, and progress.md. Use when asked to plan out, break down, or organize a multi-step project, research task, or any work requiring &gt;5 tool calls. Supports automatic session recovery after /clear.</description>\n    <location>~/.agents\\skills\\planning-with-files\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>pptx</name>\n    <description>Use this skill any time a .pptx file is involved in any way — as input, output, or both. This includes: creating slide decks, pitch decks, or presentations; reading, parsing, or extracting text from any .pptx file (even if the extracted content will be used elsewhere, like in an email or summary); editing, modifying, or updating existing presentations; combining or splitting slide files; working with templates, layouts, speaker notes, or comments. Trigger whenever the user mentions &quot;deck,&quot; &quot;slides,&quot; &quot;presentation,&quot; or references a .pptx filename, regardless of what they plan to do with the content afterward. If a .pptx file needs to be opened, created, or touched, use this skill.</description>\n    <location>~/.agents\\skills\\pptx\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>subagent-driven-development</name>\n    <description>Use when executing implementation plans with independent tasks in the current session</description>\n    <location>~/.agents\\skills\\subagent-driven-development\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>systematic-debugging</name>\n    <description>Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes</description>\n    <location>~/.agents\\skills\\systematic-debugging\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>using-git-worktrees</name>\n    <description>Use when starting feature work that needs isolation from current workspace or before executing implementation plans - creates isolated git worktrees with smart directory selection and safety verification</description>\n    <location>~/.agents\\skills\\using-git-worktrees\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>using-superpowers</name>\n    <description>Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions</description>\n    <location>~/.agents\\skills\\using-superpowers\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>verification-before-completion</name>\n    <description>Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always</description>\n    <location>~/.agents\\skills\\verification-before-completion\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>writing-plans</name>\n    <description>Use when you have a spec or requirements for a multi-step task, before touching code</description>\n    <location>~/.agents\\skills\\writing-plans\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>writing-skills</name>\n    <description>Use when creating new skills, editing existing skills, or verifying skills work before deployment</description>\n    <location>~/.agents\\skills\\writing-skills\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>xlsx</name>\n    <description>Use this skill any time a spreadsheet file is the primary input or output. This means any task where the user wants to: open, read, edit, or fix an existing .xlsx, .xlsm, .csv, or .tsv file (e.g., adding columns, computing formulas, formatting, charting, cleaning messy data); create a new spreadsheet from scratch or from other data sources; or convert between tabular file formats. Trigger especially when the user references a spreadsheet file by name or path — even casually (like &quot;the xlsx in my downloads&quot;) — and wants something done to it or produced from it. Also trigger for cleaning or restructuring messy tabular data files (malformed rows, misplaced headers, junk data) into proper spreadsheets. The deliverable must be a spreadsheet file. Do NOT trigger when the primary deliverable is a Word document, HTML report, standalone Python script, database pipeline, or Google Sheets API integration, even if tabular data is involved.</description>\n    <location>~/.agents\\skills\\xlsx\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>ctrip-flight-ocr</name>\n    <description>携程机票截图OCR识别。当用户发送携程机票列表截图时使用。\n识别图中航班信息：出发地/目的地、日期、航班号、航空公司、起飞/到达时间、价格。\n输出格式化表格或简洁的机票推荐。\n</description>\n    <location>~/.openclaw\\workspace\\skills\\ctrip-flight-ocr\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>minimax-image-gen</name>\n    <description>使用 Minimax Image API 生成图片。支持文生图、13+ 种风格预设、跨平台。 neuroXY 专属画图技能！ Use when: 用户想生成图片、AI 画图、创建图像。 NOT for: 视频生成、动画制作。</description>\n    <location>~/.openclaw\\workspace\\skills\\minimax-image-gen\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>minimax-tts</name>\n    <description>Manage MiniMax Speech 2.8 T2A (text-to-audio) and voice catalog lookups. Trigger when you need a precise MiniMax voice_id, a Speech 2.8 TTS request, or to list the available MiniMax system/cloned/generated voices.</description>\n    <location>~/.openclaw\\workspace\\skills\\minimax-speech\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>Music Generation</name>\n    <description>Generate AI music with optimized prompts, style control, and production-ready audio output.</description>\n    <location>~/.openclaw\\workspace\\skills\\music-generation\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>ops-troubleshoot</name>\n    <description>OpenClaw 运维故障排查与修复。当遇到以下问题时自动触发：\nGateway 启动失败、记事本弹出、Cron 推送失败、Agent 超时、\nSession 膨胀、飞书发送失败、配置文件损坏、PowerShell 编码错误。\n覆盖 Windows 环境踩坑、进程管理、反爬应对、Agent 行为矫正。\n当用户提到&quot;挂了&quot;、&quot;报错&quot;、&quot;超时&quot;、&quot;弹窗&quot;、&quot;推送失败&quot;、&quot;启动失败&quot;、\n&quot;连不上&quot;、&quot;gateway&quot;、&quot;watchdog&quot;、&quot;cron 失败&quot;时使用。\n</description>\n    <location>~/.openclaw\\workspace\\skills\\ops-troubleshoot\\SKILL.md</location>\n  </skill>\n</available_skills>",
+      "prompt": "\n\nThe following skills provide specialized instructions for specific tasks.\nUse the read tool to load a skill's file when the task matches its description.\nWhen a skill file references a relative path, resolve it against the skill directory (parent of SKILL.md / dirname of the path) and use that absolute path in tool commands.\n\n<available_skills>\n  <skill>\n    <name>feishu-doc</name>\n    <description>Feishu document read/write operations. Activate when user mentions Feishu docs, cloud docs, or docx links.\n</description>\n    <location>C:\\ADHD_agent\\openclaw\\extensions\\feishu\\skills\\feishu-doc\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-drive</name>\n    <description>Feishu cloud storage file management. Activate when user mentions cloud space, folders, drive.\n</description>\n    <location>C:\\ADHD_agent\\openclaw\\extensions\\feishu\\skills\\feishu-drive\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-perm</name>\n    <description>Feishu permission management for documents and files. Activate when user mentions sharing, permissions, collaborators.\n</description>\n    <location>C:\\ADHD_agent\\openclaw\\extensions\\feishu\\skills\\feishu-perm\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-wiki</name>\n    <description>Feishu knowledge base navigation. Activate when user mentions knowledge base, wiki, or wiki links.\n</description>\n    <location>C:\\ADHD_agent\\openclaw\\extensions\\feishu\\skills\\feishu-wiki\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>coding-agent</name>\n    <description>Delegate coding tasks to Codex, Claude Code, or Pi agents via background process. Use when: (1) building/creating new features or apps, (2) reviewing PRs (spawn in temp dir), (3) refactoring large codebases, (4) iterative coding that needs file exploration. NOT for: simple one-liner fixes (just edit), reading code (use read tool), thread-bound ACP harness requests in chat (for example spawn/run Codex or Claude Code in a Discord thread; use sessions_spawn with runtime:&quot;acp&quot;), or any work in ~/clawd workspace (never spawn agents here). Claude Code: use --print --permission-mode bypassPermissions (no PTY). Codex/Pi/OpenCode: pty:true required.</description>\n    <location>~/AppData\\Roaming\\npm\\node_modules\\openclaw\\skills\\coding-agent\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>healthcheck</name>\n    <description>Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).</description>\n    <location>~/AppData\\Roaming\\npm\\node_modules\\openclaw\\skills\\healthcheck\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>mcporter</name>\n    <description>Use the mcporter CLI to list, configure, auth, and call MCP servers/tools directly (HTTP or stdio), including ad-hoc servers, config edits, and CLI/type generation.</description>\n    <location>~/AppData\\Roaming\\npm\\node_modules\\openclaw\\skills\\mcporter\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>node-connect</name>\n    <description>Diagnose OpenClaw node connection and pairing failures for Android, iOS, and macOS companion apps. Use when QR/setup code/manual connect fails, local Wi-Fi works but VPS/tailnet does not, or errors mention pairing required, unauthorized, bootstrap token invalid or expired, gateway.bind, gateway.remote.url, Tailscale, or plugins.entries.device-pair.config.publicUrl.</description>\n    <location>~/AppData\\Roaming\\npm\\node_modules\\openclaw\\skills\\node-connect\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>openai-whisper</name>\n    <description>Local speech-to-text with the Whisper CLI (no API key).</description>\n    <location>~/AppData\\Roaming\\npm\\node_modules\\openclaw\\skills\\openai-whisper\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>skill-creator</name>\n    <description>Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill&apos;s description for better triggering accuracy.</description>\n    <location>~/.agents\\skills\\skill-creator\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>weather</name>\n    <description>Get current weather and forecasts via wttr.in or Open-Meteo. Use when: user asks about weather, temperature, or forecasts for any location. NOT for: historical weather data, severe weather alerts, or detailed meteorological analysis. No API key needed.</description>\n    <location>~/AppData\\Roaming\\npm\\node_modules\\openclaw\\skills\\weather\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>brainstorming</name>\n    <description>You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation.</description>\n    <location>~/.agents\\skills\\brainstorming\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>chart-visualization</name>\n    <description>This skill should be used when the user wants to visualize data. It intelligently selects the most suitable chart type from 26 available options, extracts parameters based on detailed specifications, and generates a chart image using a JavaScript script.</description>\n    <location>~/.agents\\skills\\chart-visualization\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>competitor-monitor</name>\n    <description>竞品游戏每日监控与日报生成。自动抓取应用商店、Discord、Reddit、SensorTower、data.ai 等多渠道数据，\n按日报模版生成竞品监控日报并写入 Obsidian。\nUse when: (1) 执行竞品监测/竞品日报任务,\n(2) 抓取特定竞品游戏的最新动态,\n(3) 定时任务触发的每日竞品监控。\nTriggers: &quot;竞品监测&quot;, &quot;竞品日报&quot;, &quot;竞品监控&quot;, &quot;competitor monitor&quot;,\n&quot;Last Asylum Plague&quot;, &quot;LAP监控&quot;, &quot;跑一下竞品&quot;, &quot;竞品数据&quot;\n</description>\n    <location>~/.agents\\skills\\competitor-monitor\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>competitor-recorder</name>\n    <description>竞品游戏的礼包和活动记录录入。当用户提供礼包或活动信息（口述、语音转文字、截图、录屏视频）时，按 Obsidian 模版格式写入对应游戏的独立笔记文件。适用场景：(1) 录入竞品礼包信息 (2) 录入竞品活动信息 (3) 用户说&quot;记录礼包/活动&quot;或提供游戏内截图/录屏要求记录时触发。</description>\n    <location>~/.agents\\skills\\competitor-recorder\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>data-analysis</name>\n    <description>Analyze datasets to extract insights, identify patterns, and generate reports. Use when exploring data, creating visualizations, or performing statistical analysis. Handles CSV, JSON, SQL queries, and Python pandas operations.</description>\n    <location>~/.agents\\skills\\data-analysis\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>datain-skill</name>\n    <description>Datain 数据平台查询工具，面向 SLG 手游的数据分析场景。支持三大能力： (1) 游戏数据查询 — 基于 ClickHouse 聚合宽表，通过指定维度、指标、标签查询运营与市场数据（DNU、留存、付费、Cohort 成长等）； (2) 发行素材查询 — 以素材为粒度的投放数据统计，分析展示、点击、花费、ROAS 等市场投放效果； (3) Datain 知识库 — 基于文档 RAG 检索回答 Datain 平台使用相关问题。 触发词：游戏数据、留存、付费、DNU、Cohort、收入、ROI、DAU、 素材分析、投放效果、ROAS、Datain、datain 帮助。\n</description>\n    <location>~/.agents\\skills\\datain-skill\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>dispatching-parallel-agents</name>\n    <description>Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies</description>\n    <location>~/.agents\\skills\\dispatching-parallel-agents\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>doc-coauthoring</name>\n    <description>Guide users through a structured workflow for co-authoring documentation. Use when user wants to write documentation, proposals, technical specs, decision docs, or similar structured content. This workflow helps users efficiently transfer context, refine content through iteration, and verify the doc works for readers. Trigger when user mentions writing docs, creating proposals, drafting specs, or similar documentation tasks.</description>\n    <location>~/.agents\\skills\\doc-coauthoring\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>docx</name>\n    <description>Use this skill whenever the user wants to create, read, edit, or manipulate Word documents (.docx files). Triggers include: any mention of &apos;Word doc&apos;, &apos;word document&apos;, &apos;.docx&apos;, or requests to produce professional documents with formatting like tables of contents, headings, page numbers, or letterheads. Also use when extracting or reorganizing content from .docx files, inserting or replacing images in documents, performing find-and-replace in Word files, working with tracked changes or comments, or converting content into a polished Word document. If the user asks for a &apos;report&apos;, &apos;memo&apos;, &apos;letter&apos;, &apos;template&apos;, or similar deliverable as a Word or .docx file, use this skill. Do NOT use for PDFs, spreadsheets, Google Docs, or general coding tasks unrelated to document generation.</description>\n    <location>~/.agents\\skills\\docx\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>executing-plans</name>\n    <description>Use when you have a written implementation plan to execute in a separate session with review checkpoints</description>\n    <location>~/.agents\\skills\\executing-plans\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>frontend-design</name>\n    <description>Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.</description>\n    <location>~/.agents\\skills\\frontend-design\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>game-localization-translator</name>\n    <description>游戏本地化翻译全流程工具。从UX截图或原始文本提取UI文本，自动查重、复用翻译记忆、生成18语言翻译， 支持写入暂存区review或直接写入目标页签。触发场景：游戏多语言配置、本地化翻译表、i18n配置、UI文本提取、 多语言扩散翻译、LC_Key生成、翻译存入表格、UX截图翻译、翻译LC、直出i18n。</description>\n    <location>~/.agents\\skills\\game-localization-translator\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>google-docs</name>\n    <description>Create and modify Google Docs documents. Read document content and structure, manage formatting, paragraphs, and styles. Use when working with Google Docs document management.</description>\n    <location>~/.agents\\skills\\google-docs\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>html-deployer</name>\n    <description>将 HTML/MD 文件或项目文件夹发布到内网 demo（https://demo.tap4fun.com/...）。触发词：发布到 demo、部署到 demo、上传到 demo、生成预览地址、生成访问地址、生成地址、生成链接、生成 URL。另支持「查看 demo 列表」「我的 demo」「已发布的 demo」，查看本机历史部署地址。执行时必须严格按序：1)展示流程并询问是否接入登录（等待用户明确回复） 2)准备源文件 3)安全检查 4a)不接登录→直接部署 4b)接登录→注入登录验证闸门→二次安检→部署，无需调 automation/add。禁止跳步。禁止代答。</description>\n    <location>~/.agents\\skills\\html-deployer\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>igame-skill</name>\n    <description>操作 iGame 游戏运营支撑平台，覆盖 32 个模块、1090 个接口。支持服务器导量管理、玩家查询/封号、邮件发送、活动管理、合服、热更、维护挂起、GM 操作等全部运营功能。支持 P2/BA/KOW/X1/X2/X9 全游戏。触发条件：(1) 提到&quot;服务器&quot;、&quot;导量&quot;、&quot;开服&quot;、&quot;停服&quot;、&quot;补量&quot;、&quot;备服&quot;、&quot;合服&quot;、&quot;热更&quot;、&quot;维护&quot;、&quot;审核服&quot;，(2) 提到&quot;玩家&quot;+&quot;封号/解封/查询/订单&quot;，(3) 提到&quot;发邮件&quot;、&quot;GM 操作&quot;、&quot;工具箱&quot;，(4) 提到 P2/X2/X9/KOW/BA + 任意运营操作，(5) 需要查询或操作 iGame 平台任何功能。</description>\n    <location>~/.agents\\skills\\igame-skill\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>mcp-builder</name>\n    <description>Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).</description>\n    <location>~/.agents\\skills\\mcp-builder\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>p2-festival-art-brief</name>\n    <description>P2 节日美需包装生成工具。基于 2021-2026 年 60 份节日配置表沉淀，为 12 个主节日（春节/情人节/科技节/复活节/拓荒节/深海节/登月节/周年庆/音乐节/万圣节/感恩节/圣诞节）+ 3 备用节日维护知识库。 用途：用户给题材关键词或新方向，skill 结合历年样本 + 互联网创意池 + 命名范式，产出符合 P2 风格的新美需（模块/命名/视觉/美需描述），并**自动在节日文案主表建新页签、附参考搜索链接**，美术点链接就能看到候选图。 触发：出新节日美需、包装{节日}、写美需描述、节日题材脑洞、新节日包装方向、LV1-6 套装命名、机甲染色命名、行军特效命名、主城皮肤命名、节日装饰美需、节日题材发散、换主题包装。</description>\n    <location>~/.agents\\skills\\p2-festival-art-brief\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>pdf</name>\n    <description>Use this skill whenever the user wants to do anything with PDF files. This includes reading or extracting text/tables from PDFs, combining or merging multiple PDFs into one, splitting PDFs apart, rotating pages, adding watermarks, creating new PDFs, filling PDF forms, encrypting/decrypting PDFs, extracting images, and OCR on scanned PDFs to make them searchable. If the user mentions a .pdf file or asks to produce one, use this skill.</description>\n    <location>~/.agents\\skills\\pdf\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>planning-with-files</name>\n    <description>Implements Manus-style file-based planning to organize and track progress on complex tasks. Creates task_plan.md, findings.md, and progress.md. Use when asked to plan out, break down, or organize a multi-step project, research task, or any work requiring &gt;5 tool calls. Supports automatic session recovery after /clear.</description>\n    <location>~/.agents\\skills\\planning-with-files\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>pptx</name>\n    <description>Use this skill any time a .pptx file is involved in any way — as input, output, or both. This includes: creating slide decks, pitch decks, or presentations; reading, parsing, or extracting text from any .pptx file (even if the extracted content will be used elsewhere, like in an email or summary); editing, modifying, or updating existing presentations; combining or splitting slide files; working with templates, layouts, speaker notes, or comments. Trigger whenever the user mentions &quot;deck,&quot; &quot;slides,&quot; &quot;presentation,&quot; or references a .pptx filename, regardless of what they plan to do with the content afterward. If a .pptx file needs to be opened, created, or touched, use this skill.</description>\n    <location>~/.agents\\skills\\pptx\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>subagent-driven-development</name>\n    <description>Use when executing implementation plans with independent tasks in the current session</description>\n    <location>~/.agents\\skills\\subagent-driven-development\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>systematic-debugging</name>\n    <description>Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes</description>\n    <location>~/.agents\\skills\\systematic-debugging\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>using-git-worktrees</name>\n    <description>Use when starting feature work that needs isolation from current workspace or before executing implementation plans - creates isolated git worktrees with smart directory selection and safety verification</description>\n    <location>~/.agents\\skills\\using-git-worktrees\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>using-superpowers</name>\n    <description>Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions</description>\n    <location>~/.agents\\skills\\using-superpowers\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>verification-before-completion</name>\n    <description>Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always</description>\n    <location>~/.agents\\skills\\verification-before-completion\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>writing-plans</name>\n    <description>Use when you have a spec or requirements for a multi-step task, before touching code</description>\n    <location>~/.agents\\skills\\writing-plans\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>writing-skills</name>\n    <description>Use when creating new skills, editing existing skills, or verifying skills work before deployment</description>\n    <location>~/.agents\\skills\\writing-skills\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>xlsx</name>\n    <description>Use this skill any time a spreadsheet file is the primary input or output. This means any task where the user wants to: open, read, edit, or fix an existing .xlsx, .xlsm, .csv, or .tsv file (e.g., adding columns, computing formulas, formatting, charting, cleaning messy data); create a new spreadsheet from scratch or from other data sources; or convert between tabular file formats. Trigger especially when the user references a spreadsheet file by name or path — even casually (like &quot;the xlsx in my downloads&quot;) — and wants something done to it or produced from it. Also trigger for cleaning or restructuring messy tabular data files (malformed rows, misplaced headers, junk data) into proper spreadsheets. The deliverable must be a spreadsheet file. Do NOT trigger when the primary deliverable is a Word document, HTML report, standalone Python script, database pipeline, or Google Sheets API integration, even if tabular data is involved.</description>\n    <location>~/.agents\\skills\\xlsx\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>youtube-analyzer</name>\n    <description>Analyze YouTube video content using Gemini&apos;s native video understanding.\nUse when: (1) Understanding what a YouTube video is about,\n(2) Extracting key information from video content,\n(3) Summarizing or describing video scenes,\n(4) Analyzing gameplay, tutorials, presentations, or any visual content.\nTriggers: &quot;analyze this youtube&quot;, &quot;what&apos;s in this video&quot;, &quot;summarize this video&quot;,\n&quot;describe this youtube&quot;, &quot;分析这个视频&quot;, &quot;这个视频讲了什么&quot;, &quot;youtube视频内容&quot;\nLimitations: Only works with YouTube URLs, max ~1 hour video, requires public/unlisted videos.\n</description>\n    <location>~/.agents\\skills\\youtube-analyzer\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>ctrip-flight-ocr</name>\n    <description>携程机票截图OCR识别。当用户发送携程机票列表截图时使用。\n识别图中航班信息：出发地/目的地、日期、航班号、航空公司、起飞/到达时间、价格。\n输出格式化表格或简洁的机票推荐。\n</description>\n    <location>~/.openclaw\\workspace\\skills\\ctrip-flight-ocr\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>minimax-image-gen</name>\n    <description>使用 Minimax Image API 生成图片。支持文生图、13+ 种风格预设、跨平台。 neuroXY 专属画图技能！ Use when: 用户想生成图片、AI 画图、创建图像。 NOT for: 视频生成、动画制作。</description>\n    <location>~/.openclaw\\workspace\\skills\\minimax-image-gen\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>minimax-tts</name>\n    <description>Manage MiniMax Speech 2.8 T2A (text-to-audio) and voice catalog lookups. Trigger when you need a precise MiniMax voice_id, a Speech 2.8 TTS request, or to list the available MiniMax system/cloned/generated voices.</description>\n    <location>~/.openclaw\\workspace\\skills\\minimax-speech\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>Music Generation</name>\n    <description>Generate AI music with optimized prompts, style control, and production-ready audio output.</description>\n    <location>~/.openclaw\\workspace\\skills\\music-generation\\SKILL.md</location>\n  </skill>\n  <skill>\n    <name>ops-troubleshoot</name>\n    <description>OpenClaw 运维故障排查与修复。当遇到以下问题时自动触发：\nGateway 启动失败、记事本弹出、Cron 推送失败、Agent 超时、\nSession 膨胀、飞书发送失败、配置文件损坏、PowerShell 编码错误。\n覆盖 Windows 环境踩坑、进程管理、反爬应对、Agent 行为矫正。\n当用户提到&quot;挂了&quot;、&quot;报错&quot;、&quot;超时&quot;、&quot;弹窗&quot;、&quot;推送失败&quot;、&quot;启动失败&quot;、\n&quot;连不上&quot;、&quot;gateway&quot;、&quot;watchdog&quot;、&quot;cron 失败&quot;时使用。\n</description>\n    <location>~/.openclaw\\workspace\\skills\\ops-troubleshoot\\SKILL.md</location>\n  </skill>\n</available_skills>",
       "skills": [
         {
           "name": "feishu-doc"
@@ -85,10 +85,16 @@
           "name": "google-docs"
         },
         {
+          "name": "html-deployer"
+        },
+        {
           "name": "igame-skill"
         },
         {
           "name": "mcp-builder"
+        },
+        {
+          "name": "p2-festival-art-brief"
         },
         {
           "name": "pdf"
@@ -122,6 +128,9 @@
         },
         {
           "name": "xlsx"
+        },
+        {
+          "name": "youtube-analyzer"
         },
         {
           "name": "ctrip-flight-ocr"
@@ -337,6 +346,14 @@
           "disableModelInvocation": false
         },
         {
+          "name": "html-deployer",
+          "description": "将 HTML/MD 文件或项目文件夹发布到内网 demo（https://demo.tap4fun.com/...）。触发词：发布到 demo、部署到 demo、上传到 demo、生成预览地址、生成访问地址、生成地址、生成链接、生成 URL。另支持「查看 demo 列表」「我的 demo」「已发布的 demo」，查看本机历史部署地址。执行时必须严格按序：1)展示流程并询问是否接入登录（等待用户明确回复） 2)准备源文件 3)安全检查 4a)不接登录→直接部署 4b)接登录→注入登录验证闸门→二次安检→部署，无需调 automation/add。禁止跳步。禁止代答。",
+          "filePath": "C:\\Users\\linkang\\.agents\\skills\\html-deployer\\SKILL.md",
+          "baseDir": "C:\\Users\\linkang\\.agents\\skills\\html-deployer",
+          "source": "agents-skills-personal",
+          "disableModelInvocation": false
+        },
+        {
           "name": "igame-skill",
           "description": "操作 iGame 游戏运营支撑平台，覆盖 32 个模块、1090 个接口。支持服务器导量管理、玩家查询/封号、邮件发送、活动管理、合服、热更、维护挂起、GM 操作等全部运营功能。支持 P2/BA/KOW/X1/X2/X9 全游戏。触发条件：(1) 提到\"服务器\"、\"导量\"、\"开服\"、\"停服\"、\"补量\"、\"备服\"、\"合服\"、\"热更\"、\"维护\"、\"审核服\"，(2) 提到\"玩家\"+\"封号/解封/查询/订单\"，(3) 提到\"发邮件\"、\"GM 操作\"、\"工具箱\"，(4) 提到 P2/X2/X9/KOW/BA + 任意运营操作，(5) 需要查询或操作 iGame 平台任何功能。",
           "filePath": "C:\\Users\\linkang\\.agents\\skills\\igame-skill\\SKILL.md",
@@ -349,6 +366,14 @@
           "description": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).",
           "filePath": "C:\\Users\\linkang\\.agents\\skills\\mcp-builder\\SKILL.md",
           "baseDir": "C:\\Users\\linkang\\.agents\\skills\\mcp-builder",
+          "source": "agents-skills-personal",
+          "disableModelInvocation": false
+        },
+        {
+          "name": "p2-festival-art-brief",
+          "description": "P2 节日美需包装生成工具。基于 2021-2026 年 60 份节日配置表沉淀，为 12 个主节日（春节/情人节/科技节/复活节/拓荒节/深海节/登月节/周年庆/音乐节/万圣节/感恩节/圣诞节）+ 3 备用节日维护知识库。 用途：用户给题材关键词或新方向，skill 结合历年样本 + 互联网创意池 + 命名范式，产出符合 P2 风格的新美需（模块/命名/视觉/美需描述），并**自动在节日文案主表建新页签、附参考搜索链接**，美术点链接就能看到候选图。 触发：出新节日美需、包装{节日}、写美需描述、节日题材脑洞、新节日包装方向、LV1-6 套装命名、机甲染色命名、行军特效命名、主城皮肤命名、节日装饰美需、节日题材发散、换主题包装。",
+          "filePath": "C:\\Users\\linkang\\.agents\\skills\\p2-festival-art-brief\\SKILL.md",
+          "baseDir": "C:\\Users\\linkang\\.agents\\skills\\p2-festival-art-brief",
           "source": "agents-skills-personal",
           "disableModelInvocation": false
         },
@@ -441,6 +466,14 @@
           "disableModelInvocation": false
         },
         {
+          "name": "youtube-analyzer",
+          "description": "Analyze YouTube video content using Gemini's native video understanding.\nUse when: (1) Understanding what a YouTube video is about,\n(2) Extracting key information from video content,\n(3) Summarizing or describing video scenes,\n(4) Analyzing gameplay, tutorials, presentations, or any visual content.\nTriggers: \"analyze this youtube\", \"what's in this video\", \"summarize this video\",\n\"describe this youtube\", \"分析这个视频\", \"这个视频讲了什么\", \"youtube视频内容\"\nLimitations: Only works with YouTube URLs, max ~1 hour video, requires public/unlisted videos.\n",
+          "filePath": "C:\\Users\\linkang\\.agents\\skills\\youtube-analyzer\\SKILL.md",
+          "baseDir": "C:\\Users\\linkang\\.agents\\skills\\youtube-analyzer",
+          "source": "agents-skills-personal",
+          "disableModelInvocation": false
+        },
+        {
           "name": "ctrip-flight-ocr",
           "description": "携程机票截图OCR识别。当用户发送携程机票列表截图时使用。\n识别图中航班信息：出发地/目的地、日期、航班号、航空公司、起飞/到达时间、价格。\n输出格式化表格或简洁的机票推荐。\n",
           "filePath": "C:\\Users\\linkang\\.openclaw\\workspace\\skills\\ctrip-flight-ocr\\SKILL.md",
@@ -483,14 +516,14 @@
       ],
       "version": 0
     },
-    "sessionFile": "C:\\ADHD_agent\\openclaw\\agents\\main\\sessions\\02b221c0-df57-40ad-9fad-ce4e6704fb23.jsonl",
+    "sessionFile": "C:\\ADHD_agent\\openclaw\\agents\\main\\sessions\\3e7c85d2-3624-46b1-b113-de052c992ff8.jsonl",
     "modelProvider": "minimax",
     "model": "MiniMax-M2.7",
     "abortedLastRun": false,
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1776062310305,
-      "sessionId": "02b221c0-df57-40ad-9fad-ce4e6704fb23",
+      "generatedAt": 1778486803050,
+      "sessionId": "3e7c85d2-3624-46b1-b113-de052c992ff8",
       "sessionKey": "agent:main:main",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -509,9 +542,9 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 47675,
+        "chars": 49366,
         "projectContextChars": 16826,
-        "nonProjectContextChars": 30849
+        "nonProjectContextChars": 32540
       },
       "injectedWorkspaceFiles": [
         {
@@ -580,7 +613,7 @@
         }
       ],
       "skills": {
-        "promptChars": 18283,
+        "promptChars": 19974,
         "entries": [
           {
             "name": "feishu-doc",
@@ -679,12 +712,20 @@
             "blockChars": 317
           },
           {
+            "name": "html-deployer",
+            "blockChars": 431
+          },
+          {
             "name": "igame-skill",
             "blockChars": 578
           },
           {
             "name": "mcp-builder",
             "blockChars": 419
+          },
+          {
+            "name": "p2-festival-art-brief",
+            "blockChars": 481
           },
           {
             "name": "pdf",
@@ -729,6 +770,10 @@
           {
             "name": "xlsx",
             "blockChars": 1079
+          },
+          {
+            "name": "youtube-analyzer",
+            "blockChars": 770
           },
           {
             "name": "ctrip-flight-ocr",
@@ -976,10 +1021,7 @@
       "label": "user:ou_e48f6c4c0395f45b74b51525f348678b",
       "provider": "heartbeat",
       "from": "user:ou_e48f6c4c0395f45b74b51525f348678b",
-      "to": "user:ou_e48f6c4c0395f45b74b51525f348678b",
-      "surface": "feishu",
-      "chatType": "direct",
-      "accountId": "main"
+      "to": "user:ou_e48f6c4c0395f45b74b51525f348678b"
     },
     "totalTokensFresh": false,
     "compactionCount": 0,
@@ -7763,8 +7805,8 @@
     "contextTokens": 131072
   },
   "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810": {
-    "sessionId": "f60962f2-6c9e-4893-a6fb-f4a2b2ed54fe",
-    "updatedAt": 1776049200026,
+    "sessionId": "c31a8c9d-6165-4b73-85a3-4885299afd2d",
+    "updatedAt": 1778468400021,
     "systemSent": true,
     "label": "Cron: 旅游攻略汇总推送",
     "skillsSnapshot": {
@@ -8171,8 +8213,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1776049200105,
-      "sessionId": "f60962f2-6c9e-4893-a6fb-f4a2b2ed54fe",
+      "generatedAt": 1778468400130,
+      "sessionId": "c31a8c9d-6165-4b73-85a3-4885299afd2d",
       "sessionKey": "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -8626,11 +8668,12 @@
       "from": "heartbeat",
       "to": "heartbeat"
     },
-    "sessionFile": "C:\\ADHD_agent\\openclaw\\agents\\main\\sessions\\fe0fab60-7514-47d0-b1be-58bde1d23370.jsonl"
+    "sessionFile": "C:\\ADHD_agent\\openclaw\\agents\\main\\sessions\\fe0fab60-7514-47d0-b1be-58bde1d23370.jsonl",
+    "totalTokensFresh": false
   },
   "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc": {
-    "sessionId": "372ff86c-f5e2-4e1d-ba09-12c9d3fa6fd6",
-    "updatedAt": 1776049426881,
+    "sessionId": "e2885c88-d078-4165-b863-911acd9d8360",
+    "updatedAt": 1778468976441,
     "systemSent": true,
     "label": "Cron: 国际机票推送",
     "skillsSnapshot": {
@@ -9048,8 +9091,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1776049426936,
-      "sessionId": "372ff86c-f5e2-4e1d-ba09-12c9d3fa6fd6",
+      "generatedAt": 1778468976508,
+      "sessionId": "e2885c88-d078-4165-b863-911acd9d8360",
       "sessionKey": "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -9511,8 +9554,8 @@
     "totalTokensFresh": false
   },
   "agent:main:cron:rules-refresh-daily": {
-    "sessionId": "c1ece8b0-13eb-4164-be76-7c10ca063ca4",
-    "updatedAt": 1776042000009,
+    "sessionId": "62ff26be-4df7-4790-9384-e5bcbec4776c",
+    "updatedAt": 1778461200022,
     "systemSent": true,
     "label": "Cron: Cursor协作规则刷新",
     "skillsSnapshot": {
@@ -9974,8 +10017,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1776042000068,
-      "sessionId": "c1ece8b0-13eb-4164-be76-7c10ca063ca4",
+      "generatedAt": 1778461200121,
+      "sessionId": "62ff26be-4df7-4790-9384-e5bcbec4776c",
       "sessionKey": "agent:main:cron:rules-refresh-daily",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -10442,9 +10485,9 @@
     },
     "contextTokens": 204800
   },
-  "agent:main:cron:rules-refresh-daily:run:c1ece8b0-13eb-4164-be76-7c10ca063ca4": {
-    "sessionId": "c1ece8b0-13eb-4164-be76-7c10ca063ca4",
-    "updatedAt": 1776042000009,
+  "agent:main:cron:rules-refresh-daily:run:62ff26be-4df7-4790-9384-e5bcbec4776c": {
+    "sessionId": "62ff26be-4df7-4790-9384-e5bcbec4776c",
+    "updatedAt": 1778461200022,
     "systemSent": true,
     "label": "Cron: Cursor协作规则刷新",
     "skillsSnapshot": {
@@ -10906,8 +10949,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1776042000068,
-      "sessionId": "c1ece8b0-13eb-4164-be76-7c10ca063ca4",
+      "generatedAt": 1778461200121,
+      "sessionId": "62ff26be-4df7-4790-9384-e5bcbec4776c",
       "sessionKey": "agent:main:cron:rules-refresh-daily",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -11374,9 +11417,9 @@
     },
     "contextTokens": 204800
   },
-  "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810:run:f60962f2-6c9e-4893-a6fb-f4a2b2ed54fe": {
-    "sessionId": "f60962f2-6c9e-4893-a6fb-f4a2b2ed54fe",
-    "updatedAt": 1776049200026,
+  "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810:run:c31a8c9d-6165-4b73-85a3-4885299afd2d": {
+    "sessionId": "c31a8c9d-6165-4b73-85a3-4885299afd2d",
+    "updatedAt": 1778468400021,
     "systemSent": true,
     "label": "Cron: 旅游攻略汇总推送",
     "skillsSnapshot": {
@@ -11783,8 +11826,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1776049200105,
-      "sessionId": "f60962f2-6c9e-4893-a6fb-f4a2b2ed54fe",
+      "generatedAt": 1778468400130,
+      "sessionId": "c31a8c9d-6165-4b73-85a3-4885299afd2d",
       "sessionKey": "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -12238,11 +12281,12 @@
       "from": "heartbeat",
       "to": "heartbeat"
     },
-    "sessionFile": "C:\\ADHD_agent\\openclaw\\agents\\main\\sessions\\fe0fab60-7514-47d0-b1be-58bde1d23370.jsonl"
+    "sessionFile": "C:\\ADHD_agent\\openclaw\\agents\\main\\sessions\\fe0fab60-7514-47d0-b1be-58bde1d23370.jsonl",
+    "totalTokensFresh": false
   },
-  "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc:run:372ff86c-f5e2-4e1d-ba09-12c9d3fa6fd6": {
-    "sessionId": "372ff86c-f5e2-4e1d-ba09-12c9d3fa6fd6",
-    "updatedAt": 1776049426881,
+  "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc:run:e2885c88-d078-4165-b863-911acd9d8360": {
+    "sessionId": "e2885c88-d078-4165-b863-911acd9d8360",
+    "updatedAt": 1778468976441,
     "systemSent": true,
     "label": "Cron: 国际机票推送",
     "skillsSnapshot": {
@@ -12660,8 +12704,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1776049426936,
-      "sessionId": "372ff86c-f5e2-4e1d-ba09-12c9d3fa6fd6",
+      "generatedAt": 1778468976508,
+      "sessionId": "e2885c88-d078-4165-b863-911acd9d8360",
       "sessionKey": "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc",
       "provider": "minimax",
       "model": "MiniMax-M2.7",

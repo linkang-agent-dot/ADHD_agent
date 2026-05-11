@@ -1,0 +1,230 @@
+
+============================================================
+【3、数值设定】
+============================================================
+	数值详见													
+	https://docs.google.com/spreadsheets/d/10Ab-OGOZROVYINngNBWvJIPrt0zLIAi8zqEY4wRBdGg/edit?gid=1774746586#gid=1774746586													
+1、	解锁&排期													
+		p2：14天+主城8级，每周循环持续7天												
+		x2：5天+店铺25级，每周循环周2-4开启 												
+			由于我们机制反馈多、参考p2每周常驻可能负担重，因此减少持续时间；再加上有导量考虑，所以第一次解锁提前											
+2、	免费次数													
+		单期活动最大免费次数												
+		店铺等级	刷新轮次	每轮免费次数	刷新间隔(s)	活跃时间要求								
+		2025-01-30 00:00:00	2.0	5.0	8h	16.0								
+		31-50	3.0	5.0	5h	15.0								
+		51-100	4.0	5.0	3h	12.0								
+		101以上	5.0	5.0	2h	10.0								
+		配置链接	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=K6											
+3、	道具投放													
+		硬币（子弹）		定价		活跃投放，比p2再多点反馈								
+		点金道具（定位仪）		定价		极少量投放，两周一个？								
+4、	投币													
+		普通模式												
+		每次投币消耗一枚硬币，落下1枚银币，每10次投币改为落下1枚金币（也就是没有这次没有银币）												
+		投币消耗	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=R6											
+		落金币机制	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=V6											
+		点金模式（集火模式）												
+		用一个点金道具开启点金模式，此时每次投币消耗10枚硬币，落下10枚金币												
+		开启消耗	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=T6											
+		投币消耗	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=S6											
+		持续时间	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=U6											
+5、	特殊物品													
+		问号宝箱												
+		每有X枚银币造成伤害（配置），怪物会在推币机的物品掉落区域，掉落1个问号宝箱												
+		可开出随机道具奖励，还有机会开出限时x秒的buff，接下来y次射击对怪物造成z%额外伤害												
+		币堆道具												
+		每有X枚金币造成伤害（配置），怪物会在推币机的物品掉落区域，掉落1个币堆道具												
+		币堆里的币数量需要定一下，美观的话40枚起步，但也不要超过80枚												
+		掉宝配置	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=W6											
+		问号宝箱drop	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=P6											
+		特殊buff效果	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=Q6											
+		币堆硬币数量	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=AD6											
+6、	怪物													
+		刷新&存活												
+		活动期间，从UTC0点开始，每隔X小时（配置），整点刷新一只怪物												
+		怪物默认存活Y小时												
+		配置链接	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=F6											
+		血量												
+		每期活动首只怪物的初始生命 = 活跃玩家数量（有个通用的取法，参考天下大势） * 初始生命系数1（配置）												
+		之后根据上一只怪物的状态动态变化生命：												
+		◆	被击杀：上一只怪物最大生命 * 生命提升系数2											
+		◆	逃跑：上一只怪物最大生命 * 生命降低系数3											
+		配置链接	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=H6											
+		回血												
+		怪物血量≤x%时，有y%的概率回复至z%（配置）												
+		配置链接	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=I6											
+		虚弱												
+		怪物血量≤m%时，攻击可造成n%额外伤害												
+		配置链接	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=J6											
+7、	攻击													
+		蓄力												
+		硬币掉落到奖励区域后，炮台开始x秒（配置）蓄力												
+		配置链接	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=AE6											
+		评分&评级												
+		蓄力期间积攒的硬币数量和币种，会影响最终的伤害评级，不同评级有不同的伤害加成												
+		硬币币种	评分		评分区间上限	评级	伤害加成							
+		金币	2.0		10.0	C	0.0							
+		银币	1.0		20.0	B	0.1							
+					30.0	A	0.2							
+					...	...	...							
+		硬币评分	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=AA6											
+		评级	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=AC6											
+		攻击												
+		伤害 = 银币数量 *银币基础伤害 * （100% + 评级加成 + 怪物虚弱加成 + buff加成） + 金币数量 * 金币基础伤害 * （100% + 评级加成 + 怪物虚弱加成 + buff加成 ）												
+		基础伤害	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=Z6											
+8、	奖励													
+		攻击奖励												
+		1）	普通模式											
+			每有X枚硬币（余数部分向上取）造成伤害，从奖池A中随机一份奖励											
+			drop	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=M6										
+		2）	点金模式											
+			每有X枚硬币（余数部分向上取）造成伤害，从奖池B中随机一份奖励											
+			drop	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=N6										
+		击杀奖励												
+		对怪物造成最后一击的玩家可从奖池C中随机一份奖励												
+		drop	https://docs.google.com/spreadsheets/d/1zXIcGYzBNwpLJpG9WSDFsUAkSOql_mOoIV4kdbgPLt4/edit?gid=2127511757#gid=2127511757&range=O6											
+		积分奖励												
+		1）	伤害积分											
+
+============================================================
+【2、规则说明】
+============================================================
+	一、设计目的													
+	1.1	提供单服玩家集体参与的玩法，有一定的小游戏趣味												
+	1.2	促进魔石消耗和付费												
+	二、玩法概述													
+	2.1	投掷硬币到推币机，推落的硬币会被收集到炮台，发射出去对怪物造成伤害，然后根据伤害获得积分和积分奖励												
+	2.2	每发射出X枚硬币对怪物造成伤害，怪物会吐出一个稀有物品到推币机，推落后可以 获得惊喜奖励 / 激活限时buff / 触发特殊机制												
+	三、规则说明													
+	3.1	基础设定												
+		3.1.1	功能解锁											
+			走1768_x2_chapter_quest_function_unlock配置控制											
+		3.1.2	活动开启											
+			走通用活动配置，控制排期（具体待运营规划）											
+		3.1.3	功能入口											
+			喷泉附近增加一个建筑入口，功能解锁&活动开启时可见											
+	3.2	玩法说明												
+		3.2.1	投币											
+			1、	免费次数										
+				1）	活动期间，每日UTC0点获得X轮免费轮次，每轮获得Y次免费次数，单轮免费次数用完后，间隔Z秒后回复									
+					主城等级不同，XYZ可能不同（配置）									
+					主城等级	轮次	每轮免费次数	回复间隔						
+					区间1	1.0	5.0	0.0						
+					区间2	2.0	10.0	3600.0						
+					区间3	3.0	15.0	7200.0						
+					...	...	...	...						
+				2）	当日未用完的免费次数在次日UTC0点清零									
+				3）	有免费次数时，优先消耗免费次数，开启点金模式时，无法消耗免费次数									
+			2、	道具										
+				1）	免费次数用完后，可消耗道具进行投币									
+				2）	道具可通过活跃行为、魔石购买（不限购）、礼包购买等途径获得									
+		3.2.2	落币											
+			1、	普通模式										
+				1）	每次投币后，在推币机的落币区域落下一枚银币									
+				2）	每X次投币（配置），改为落下一枚金币									
+				3）	点金模式下的投币不会影响普通模式的投币进度									
+				4）	每期活动结束后，重置投币进度									
+			2、	点金模式										
+				消耗特定道具可限时开启点金模式：										
+				1）	持续x秒（配置）									
+				2）	每次投币消耗x10，落下的币也x10（具体倍率走配置）									
+				3）	每次投币落下的必是金币，在落币区域随机位置掉落									
+		3.2.3	怪物											
+			1、	基础机制										
+				1）	刷新									
+					活动期间，从UTC0点开始，每隔X小时（配置），整点刷新一只怪物									
+				2）	逃跑									
+					●	怪物默认存活X小时（配置）								
+						◆	存活期间被击杀，等到下一个刷新时间点刷新							
+						◆	存活期间未被击杀，怪物会逃跑，等到下一个刷新时间点刷新							
+					●	怪物逃跑后，不会产生最后一击奖励								
+				3）	血量									
+					●	每期活动首只怪物的初始生命 = 活跃玩家数量（有个通用的取法，参考天下大势） * 初始生命系数1（配置）								
+					●	之后根据上一只怪物的状态动态变化生命：								
+						◆	被击杀：上一只怪物最大生命 * 生命提升系数2							
+						◆	逃跑：上一只怪物最大生命 * 生命降低系数3							
+					●	本服玩家的推币进程相互独立，但攻击的是同一只怪物，怪物的血量要实时刷新								
+				4）	回血									
+					●	怪物血量≤x%时，有y%的概率回复至z%（配置）								
+					●	每只怪最多触发一次								
+				5）	虚弱									
+					怪物血量≤x%时，攻击可造成y%额外伤害（配置）									
+			2、	掉宝机制										
+				1）	掉落规则									
+					●	问号宝箱								
+						每有X枚银币造成伤害（配置），怪物会在推币机的物品掉落区域，掉落1个问号宝箱								
+					●	币堆道具								
+						每有X枚金币造成伤害（配置），怪物会在推币机的物品掉落区域，掉落1个币堆道具								
+						◆	平台上存在币堆道具还未转化成币堆时，改为掉落其他道具（配置）							
+						◆	币堆道具被推落后，且当替换道具的进度攒满触发掉落后，再次换回币堆道具的掉落进度							
+				2）	物品类型&效果									
+					将特殊物品推入奖励区域后，可获得对应的奖励/效果：									
+					●	问号宝箱								
+						随机获得道具奖励/buff（配置drop）								
+						◆	随机从奖池中获得1种道具							
+						◆	获得buff							
+							◇	获得限时x秒的buff，接下来y次射击对怪物造成z%额外伤害						
+							◇	buff限时结束/生效次数耗尽后，buff失效						
+							◇	buff生效期间，不会再激活相同buff（即推落问号宝箱不会再随出buff奖励）						
+							◇	怪物不存在时，不会再随出buff奖励						
+					●	币堆道具								
+						◆	用空气墙将所有平台上的物品推入奖励区域，然后平台中心洞口打开，升起币堆							
+						◆	币堆里币的数量固定，且都是银币（配置）							
+			3、	受伤机制										
+				硬币掉落到奖励区域后：										
+				1）	被收集到炮台									
+				2）	炮台开始x秒（配置）蓄力：									
+					●	蓄力期间，掉落的硬币都会被积攒到到本次攻击中								
+					●	蓄力期间积攒的硬币数量和币种，会影响最终的伤害评级，不同评级有不同的伤害加成（配置）：								
+						硬币币种	评分							
+						金币	2.0							
+						银币	1.0							
+						评分区间上限	评级	伤害加成						
+						10.0	C	0.0						
+						20.0	B	0.1						
+						30.0	A	0.2						
+						...	...	...						
+				3）	蓄力结束后：									
+					●	将硬币发射出去，根据硬币数量、种类和伤害加成，对怪物造成一次伤害：								
+						◆	伤害 = 银币数量 *银币基础伤害 * （100% + 评级加成 + 怪物虚弱加成 + buff加成） + 金币数量 * 金币基础伤害 * （100% + 评级加成 + 怪物虚弱加成 + buff加成 ）							
+							◇	基础伤害（配置）						
+							◇	评级加成	https://docs.google.com/spreadsheets/d/1l1F6ZzE2TulvYy91RgokLrSKe0eI7zuMNIfLQS5xlcg/edit?gid=330762741#gid=330762741&range=G98					
+							◇	怪物虚弱加成	https://docs.google.com/spreadsheets/d/1l1F6ZzE2TulvYy91RgokLrSKe0eI7zuMNIfLQS5xlcg/edit?gid=330762741#gid=330762741&range=F73					
+							◇	buff加成	https://docs.google.com/spreadsheets/d/1l1F6ZzE2TulvYy91RgokLrSKe0eI7zuMNIfLQS5xlcg/edit?gid=330762741#gid=330762741&range=H86					
+
+============================================================
+【9、相关配置】
+============================================================
+		基础配置												
+		2182.0	推币机主表	https://docs.google.com/spreadsheets/d/17fo14HLBiOCfkHhDooyIMudTrGCoDg15BvRdBcgIE2M/edit?gid=0#gid=0										
+以下为X2														
+		1013.0	GlobalConfig	https://docs.google.com/spreadsheets/d/19yV76EWgumywLwgkFIaB7EmaUOteQro_xfmNhLgwZrM/edit?gid=1834516373#gid=1834516373										
+			PlayerInitBuilding		城建 - 用户初始拥有建筑									
+		活动相关												
+		2138.0	活动模块	https://docs.google.com/spreadsheets/d/1FezV6wri9bBWhP7ELdoJE1rDxIWsrwdUG_GzqUM48KM/edit?gid=850892687#gid=850892687										
+		2119.0		https://docs.google.com/spreadsheets/d/1sjNrWq4DLGRQKvlWWgMxdJlGKd948jLPool_IjeRQBI/edit?gid=1818734494#gid=1818734494										
+		2120.0		https://docs.google.com/spreadsheets/d/12XcfGDUEFks8FPIymhJQovpzaXoy5mivb3DQKZH2PSA/edit?gid=712798490#gid=712798490										
+		2112.0	活动主表	https://docs.google.com/spreadsheets/d/1Z37Db-2Cy1h6Far_LBPSpKHOtNNki9rzXgLUsvBSJwo/edit?gid=1922183355#gid=1922183355										
+		2111.0	活动排期	https://docs.google.com/spreadsheets/d/1x-kAjIEox-JX_CQffEVw1shKZZlUpxR_fe0flTz2Iuk/edit?gid=668853020#gid=668853020										
+		2115.0	活动任务	https://docs.google.com/spreadsheets/d/1rXVuN_j2C_4D1e29KhbpRt0AJOy2w681MPv_gMu3TgM/edit										
+			https://docs.google.com/spreadsheets/d/1rXVuN_j2C_4D1e29KhbpRt0AJOy2w681MPv_gMu3TgM/edit?gid=1263493269#gid=1263493269&range=8755:8799											
+		1014.0	计数器	https://docs.google.com/spreadsheets/d/1GkIfqVbhmWmKiLp7vKq0NlXovUVbnlj3j9clnhvoAug/edit?gid=0#gid=0										
+		推送相关												
+		2231.0	跑马灯	https://docs.google.com/spreadsheets/d/1-DqQQtUJcKYRnpPAMOXMM_J9LXK0Az4gee2fSBd3Beo/edit?gid=0#gid=0										
+		2212.0	聊天推送	https://docs.google.com/spreadsheets/d/1hgN2LzoVZnLj7IGrLMOA2R2cuL0iq9z4sazY4CQK7K8/edit?gid=0#gid=0										
+		2232.0	跑马灯跳转	https://docs.google.com/spreadsheets/d/1kxpf_MER8wT-ekDZlKbMswCg5IsBeCNqA5RkUolLDCM/edit?gid=0#gid=0										
+		建筑相关												
+		1102.0		https://docs.google.com/spreadsheets/d/1pQPP3aygzKCiXhR8UBGJY5CPMukz1P6y1uA3fllV8Sc/edit?gid=99863865#gid=99863865										
+		1118.0		https://docs.google.com/spreadsheets/d/17V2X7y5j_TSzxaEuTpa5M_ZrL40eh7VmEoSLmnwZ-rw/edit?gid=1594884410#gid=1594884410										
+		1125.0		https://docs.google.com/spreadsheets/d/13uJBvfC6xBYWwZHOdyBCX9YyhKPsZrxrJJanGMqtY8s/edit?gid=1959146647#gid=1959146647										
+		商店相关												
+		1113.0	普通商店	https://docs.google.com/spreadsheets/d/1dg180wHwPv5Ixib_a2omR4a3tgxHEDfyH1dcT95G6n0/edit?gid=733309571#gid=733309571										
+		1733.0	荣誉币商店	https://docs.google.com/spreadsheets/d/18lqZqcBZHJHyaT6dSv93T2QoDJz4mkbVYGSL29qVuK0/edit?gid=1625246794#gid=1625246794										
+		1764.0	军功商店	https://docs.google.com/spreadsheets/d/1c7eYSeLMGKHrK2NiThLCYnt9fYcodIcohrkTwUP1068/edit?gid=720395824#gid=720395824										
+
+============================================================
+【1、修改记录】
+============================================================
+时间	修改人	修改内容	备注											
+2025.08.13	何昊霏	创建文档	创建初始版本											

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>拓荒节集卡册 — 最终配置确认</title>
+<style>
+body{font-family:Arial,sans-serif;margin:20px;background:#f5f5f5}
+h2{color:#1a73e8;border-bottom:2px solid #1a73e8;padding-bottom:5px}
+h3{color:#333;margin-top:16px}
+table{border-collapse:collapse;width:100%;margin-bottom:16px;background:#fff}
+th{background:#1a73e8;color:#fff;padding:7px;text-align:left;font-size:12px}
+td{border:1px solid #ddd;padding:5px;font-size:11px}
+tr:nth-child(even){background:#f9f9f9}
+.tab-btn{padding:8px 14px;margin-right:4px;cursor:pointer;background:#ddd;border:none;border-radius:4px 4px 0 0;font-size:12px}
+.tab-btn.active{background:#1a73e8;color:#fff}
+.tab-content{display:none;background:#fff;padding:16px;border:1px solid #ddd}
+.tab-content.active{display:block}
+pre{background:#1e1e2e;color:#cdd6f4;padding:10px;border-radius:6px;font-size:11px;overflow-x:auto;white-space:pre}
+.ok{color:#34a853;font-weight:bold}
+.warn{color:#f9a825;font-weight:bold}
+.dk{color:#2196f3;font-weight:bold}
+.lc{color:#9c27b0;font-size:10px}
+.note{background:#fffde7;border-left:4px solid #f9a825;padding:8px;margin:8px 0;font-size:12px}
+.done{background:#e8f5e9;border-left:4px solid #34a853;padding:8px;margin:8px 0;font-size:12px}
+</style>
+</head>
+<body>
+<h1>🎯 拓荒节集卡册 — 最终配置确认</h1>
+<div class="done">✅ i18n 已写入：EVENT 9644-9723行（80条），ITEM 4302-4323行（22条）</div>
+<div class="note">⚠️ 1511 ID 已按你给的确认清单更新。下方为完整配置，请逐项确认。</div>
+
+<button class="tab-btn active" onclick="showTab(0)">① 1511 ID总表</button>
+<button class="tab-btn" onclick="showTab(1)">② 6001 Book</button>
+<button class="tab-btn" onclick="showTab(2)">③ 6002 Groups TSV</button>
+<button class="tab-btn" onclick="showTab(3)">④ 6003 Cards TSV</button>
+<button class="tab-btn" onclick="showTab(4)">⑤ LC key总表</button>
+<button class="tab-btn" onclick="showTab(5)">⑥ 待确认项</button>
+
+<!-- TAB 0: 1511 -->
+<div class="tab-content active" id="tab0">
+<h2>1511 display_key 最终分配</h2>
+<h3>组封面（8条）</h3>
+<table>
+<tr><th>1511 ID</th><th>名称</th><th>用于组</th><th>组ID</th><th>对应cover图</th></tr>
+<tr><td class="dk">151105292</td><td>拓荒节卡册-G1工地日常</td><td>G1</td><td>60021317</td><td>cover_01_v3_final.png</td></tr>
+<tr><td class="dk">151105293</td><td>拓荒节卡册-G2冒险旅途</td><td>G2</td><td>60021318</td><td>cover_02_final.png</td></tr>
+<tr><td class="dk">151105294</td><td>拓荒节卡册-G3牛仔生活</td><td>G3</td><td>60021319</td><td>cover_03_final.png</td></tr>
+<tr><td class="dk">151105295</td><td>拓荒节卡册-G4拓荒大富翁</td><td>G4</td><td>60021320</td><td>cover_04_final.png</td></tr>
+<tr><td class="dk">151105296</td><td>拓荒节卡册-G5荒野掘金</td><td>G5</td><td>60021321</td><td>cover_05_final.png</td></tr>
+<tr><td class="dk">151105297</td><td>拓荒节卡册-G6弹珠小游戏</td><td>G6</td><td>60021322</td><td>cover_06_final.png</td></tr>
+<tr><td class="dk">151105298</td><td>拓荒节卡册-G7推币机</td><td>G7</td><td>60021323</td><td>cover_07_final.png</td></tr>
+<tr><td class="dk">151105299</td><td>拓荒节卡册-G8挖孔探索</td><td>G8</td><td>60021324</td><td>cover_08_final.png</td></tr>
+</table>
+
+<h3>卡面（72条）</h3>
+<table>
+<tr><th>1511 ID</th><th>名称</th><th>卡ID(6003)</th></tr>
+<tr><td class="dk">151105300</td><td>拓荒节卡册-修筑铁路</td><td>60033314</td></tr>
+<tr><td class="dk">151105301</td><td>拓荒节卡册-工地铲沙</td><td>60033315</td></tr>
+<tr><td class="dk">151105302</td><td>拓荒节卡册-修理车轮</td><td>60033316</td></tr>
+<tr><td class="dk">151105303</td><td>拓荒节卡册-整修粮仓</td><td>60033317</td></tr>
+<tr><td class="dk">151105304</td><td>拓荒节卡册-查看发动机</td><td>60033318</td></tr>
+<tr><td class="dk">151105305</td><td>拓荒节卡册-沙地飞行</td><td>60033319</td></tr>
+<tr><td class="dk">151105306</td><td>拓荒节卡册-夜晚巡逻</td><td>60033320</td></tr>
+<tr><td class="dk">151105307</td><td>拓荒节卡册-荒野讨论</td><td>60033321</td></tr>
+<tr><td class="dk">151105308</td><td>拓荒节卡册-钻地行动</td><td>60033322</td></tr>
+<tr><td class="dk">151105309</td><td>拓荒节卡册-分析路线</td><td>60033323</td></tr>
+<tr><td class="dk">151105310</td><td>拓荒节卡册-整装待发</td><td>60033324</td></tr>
+<tr><td class="dk">151105311</td><td>拓荒节卡册-分享饮水</td><td>60033325</td></tr>
+<tr><td class="dk">151105312</td><td>拓荒节卡册-发现帐篷</td><td>60033326</td></tr>
+<tr><td class="dk">151105313</td><td>拓荒节卡册-烤火取暖</td><td>60033327</td></tr>
+<tr><td class="dk">151105314</td><td>拓荒节卡册-寻找方向</td><td>60033328</td></tr>
+<tr><td class="dk">151105315</td><td>拓荒节卡册-科林探路</td><td>60033329</td></tr>
+<tr><td class="dk">151105316</td><td>拓荒节卡册-眺望前方</td><td>60033330</td></tr>
+<tr><td class="dk">151105317</td><td>拓荒节卡册-欣赏夕阳</td><td>60033331</td></tr>
+<tr><td class="dk">151105318</td><td>拓荒节卡册-荒野警长</td><td>60033332</td></tr>
+<tr><td class="dk">151105319</td><td>拓荒节卡册-保养火车</td><td>60033333</td></tr>
+<tr><td class="dk">151105320</td><td>拓荒节卡册-自由滑沙</td><td>60033334</td></tr>
+<tr><td class="dk">151105321</td><td>拓荒节卡册-补充饮水</td><td>60033335</td></tr>
+<tr><td class="dk">151105322</td><td>拓荒节卡册-眺望列车</td><td>60033336</td></tr>
+<tr><td class="dk">151105323</td><td>拓荒节卡册-西部牛仔</td><td>60033337</td></tr>
+<tr><td class="dk">151105324</td><td>拓荒节卡册-篝火之夜</td><td>60033338</td></tr>
+<tr><td class="dk">151105325</td><td>拓荒节卡册-准备起飞</td><td>60033339</td></tr>
+<tr><td class="dk">151105326</td><td>拓荒节卡册-沙地狂飙</td><td>60033340</td></tr>
+<tr><td class="dk">151105327</td><td>拓荒节卡册-解锁雷达</td><td>60033341</td></tr>
+<tr><td class="dk">151105328</td><td>拓荒节卡册-收获丰盛</td><td>60033342</td></tr>
+<tr><td class="dk">151105329</td><td>拓荒节卡册-神秘卡片</td><td>60033343</td></tr>
+<tr><td class="dk">151105330</td><td>拓荒节卡册-打开奖赏</td><td>60033344</td></tr>
+<tr><td class="dk">151105331</td><td>拓荒节卡册-期待好运</td><td>60033345</td></tr>
+<tr><td class="dk">151105332</td><td>拓荒节卡册-大步向前</td><td>60033346</td></tr>
+<tr><td class="dk">151105333</td><td>拓荒节卡册-思考战术</td><td>60033347</td></tr>
+<tr><td class="dk">151105334</td><td>拓荒节卡册-愁眉苦脸</td><td>60033348</td></tr>
+<tr><td class="dk">151105335</td><td>拓荒节卡册-夺得宝石</td><td>60033349</td></tr>
+<tr><td class="dk">151105336</td><td>拓荒节卡册-施工现场</td><td>60033350</td></tr>
+<tr><td class="dk">151105337</td><td>拓荒节卡册-宝矿出土</td><td>60033351</td></tr>
+<tr><td class="dk">151105338</td><td>拓荒节卡册-埋头苦干</td><td>60033352</td></tr>
+<tr><td class="dk">151105339</td><td>拓荒节卡册-发现金块</td><td>60033353</td></tr>
+<tr><td class="dk">151105340</td><td>拓荒节卡册-齐头并进</td><td>60033354</td></tr>
+<tr><td class="dk">151105341</td><td>拓荒节卡册-电光火石</td><td>60033355</td></tr>
+<tr><td class="dk">151105342</td><td>拓荒节卡册-力大无穷</td><td>60033356</td></tr>
+<tr><td class="dk">151105343</td><td>拓荒节卡册-盆满钵满</td><td>60033357</td></tr>
+<tr><td class="dk">151105344</td><td>拓荒节卡册-淘洗金块</td><td>60033358</td></tr>
+<tr><td class="dk">151105345</td><td>拓荒节卡册-荒野弹珠台</td><td>60033359</td></tr>
+<tr><td class="dk">151105346</td><td>拓荒节卡册-弹射出发</td><td>60033360</td></tr>
+<tr><td class="dk">151105347</td><td>拓荒节卡册-连珠妙弹</td><td>60033361</td></tr>
+<tr><td class="dk">151105348</td><td>拓荒节卡册-完美入洞</td><td>60033362</td></tr>
+<tr><td class="dk">151105349</td><td>拓荒节卡册-翻板救球</td><td>60033363</td></tr>
+<tr><td class="dk">151105350</td><td>拓荒节卡册-加注下赌</td><td>60033364</td></tr>
+<tr><td class="dk">151105351</td><td>拓荒节卡册-修台调试</td><td>60033365</td></tr>
+<tr><td class="dk">151105352</td><td>拓荒节卡册-酒馆对决</td><td>60033366</td></tr>
+<tr><td class="dk">151105353</td><td>拓荒节卡册-满载金矿</td><td>60033367</td></tr>
+<tr><td class="dk">151105354</td><td>拓荒节卡册-投币开局</td><td>60033368</td></tr>
+<tr><td class="dk">151105355</td><td>拓荒节卡册-矿洞怪兽</td><td>60033369</td></tr>
+<tr><td class="dk">151105356</td><td>拓荒节卡册-金币如雨</td><td>60033370</td></tr>
+<tr><td class="dk">151105357</td><td>拓荒节卡册-硬币叠塔</td><td>60033371</td></tr>
+<tr><td class="dk">151105358</td><td>拓荒节卡册-精准铲币</td><td>60033372</td></tr>
+<tr><td class="dk">151105359</td><td>拓荒节卡册-悬崖时刻</td><td>60033373</td></tr>
+<tr><td class="dk">151105360</td><td>拓荒节卡册-驯服怪兽</td><td>60033374</td></tr>
+<tr><td class="dk">151105361</td><td>拓荒节卡册-连锁推落</td><td>60033375</td></tr>
+<tr><td class="dk">151105362</td><td>拓荒节卡册-金矿大逃亡</td><td>60033376</td></tr>
+<tr><td class="dk">151105363</td><td>拓荒节卡册-能量钻头</td><td>60033377</td></tr>
+<tr><td class="dk">151105364</td><td>拓荒节卡册-启动探测</td><td>60033378</td></tr>
+<tr><td class="dk">151105365</td><td>拓荒节卡册-电磁宝箱</td><td>60033379</td></tr>
+<tr><td class="dk">151105366</td><td>拓荒节卡册-补给运输</td><td>60033380</td></tr>
+<tr><td class="dk">151105367</td><td>拓荒节卡册-矿石鉴定</td><td>60033381</td></tr>
+<tr><td class="dk">151105368</td><td>拓荒节卡册-信号灯</td><td>60033382</td></tr>
+<tr><td class="dk">151105369</td><td>拓荒节卡册-工具清点</td><td>60033383</td></tr>
+<tr><td class="dk">151105370</td><td>拓荒节卡册-弹簧拉锯</td><td>60033384</td></tr>
+<tr><td class="dk">151105371</td><td>拓荒节卡册-终极发现</td><td>60033385</td></tr>
+</table>
+
+<h3>Book（2条）</h3>
+<table>
+<tr><th>1511 ID</th><th>名称</th><th>用于字段</th></tr>
+<tr><td class="dk">151105372</td><td>拓荒节卡册-集卡Book主封面</td><td>6001.C_INT_display_key</td></tr>
+<tr><td class="dk">151105373</td><td>拓荒节卡册-集卡Book卡片区</td><td>6001.C_INT_display_key_card</td></tr>
+</table>
+<div class="note">原 C_INT_display_key_sub_menu（6001的第3个display_key）已取消，暂不分配。</div>
+<div class="note">卡背景（display_bg_key）：原 151105372-376 方案已取消。6003 的 C_INT_display_bg_key 请确认是否填 0 或复用某个已有背景ID。</div>
+</div>
+
+<!-- TAB 1: 6001 -->
+<div class="tab-content" id="tab1">
+<h2>6001 Book（60011006）</h2>
+<table>
+<tr><th>字段</th><th>值</th></tr>
+<tr><td>A_INT_id</td><td>60011006</td></tr>
+<tr><td>S_STR_comment</td><td>节日卡册-拓荒节</td></tr>
+<tr><td>A_ARR_group_id</td><td>[60021317,60021318,60021319,60021320,60021321,60021322,60021323,60021324]</td></tr>
+<tr><td>C_INT_display_key</td><td class="dk">151105372</td></tr>
+<tr><td>C_INT_display_order</td><td>100</td></tr>
+<tr><td>A_MAP_lc_name</td><td>{"typ":"lc","txt":"LC_EVENT_pioneer_actv_name"}</td></tr>
+<tr><td>A_ARR_rewards</td><td>[{"typ":"item","id":11114465,"val":1},{"typ":"item","id":111111024,"val":1},{"typ":"item","id":111110325,"val":30}]</td></tr>
+<tr><td>A_INT_fes_card_gallary_book</td><td>1</td></tr>
+<tr><td>C_INT_display_key_sub_menu</td><td class="warn">0（已取消）</td></tr>
+<tr><td>C_INT_display_key_card</td><td class="dk">151105373</td></tr>
+</table>
+<pre>60011006	节日卡册-拓荒节	[60021317,60021318,60021319,60021320,60021321,60021322,60021323,60021324]	151105372	100	{"typ":"lc","txt":"LC_EVENT_pioneer_actv_name"}	[{"typ":"item","id":11114465,"val":1},{"typ":"item","id":111111024,"val":1},{"typ":"item","id":111110325,"val":30}]	0	0	[]	{}	1	151105373	0</pre>
+<div class="note">字段顺序：...C_INT_display_key_sub_menu=151105373，C_INT_display_key_card=0（不用填）</div>
+</div>
+
+<!-- TAB 2: 6002 -->
+<div class="tab-content" id="tab2">
+<h2>6002 Groups（8行）— 完整 TSV</h2>
+<div class="note">LC key 已更新为独立8个（每组独立命名），不再共用 dig_hole/mining/marble。</div>
+<pre>60021317	工地日常	[60033314,60033315,60033316,60033317,60033318,60033319,60033320,60033321,60033322]	151105292	1201	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_set_site_name"}	[{"typ":"item","id":111110325,"val":1},{"typ":"item","id":11111156,"val":3},{"typ":"item","id":11114330,"val":1}]	{"stars":[2],"need_num":0}
+60021318	冒险旅途	[60033323,60033324,60033325,60033326,60033327,60033328,60033329,60033330,60033331]	151105293	1202	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_set_journey_name"}	[{"typ":"item","id":111110325,"val":2},{"typ":"item","id":11111156,"val":3},{"typ":"item","id":11114330,"val":1}]	{"stars":[3],"need_num":0}
+60021319	牛仔生活	[60033332,60033333,60033334,60033335,60033336,60033337,60033338,60033339,60033340]	151105294	1203	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_set_cowboy_name"}	[{"typ":"item","id":111110325,"val":3},{"typ":"item","id":11111156,"val":5},{"typ":"item","id":11114330,"val":3}]	{"stars":[3],"need_num":0}
+60021320	拓荒大富翁	[60033341,60033342,60033343,60033344,60033345,60033346,60033347,60033348,60033349]	151105295	1204	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_set_monopoly_name"}	[{"typ":"item","id":111110325,"val":3},{"typ":"item","id":11111156,"val":5},{"typ":"item","id":11114330,"val":5}]	{"stars":[4],"need_num":0}
+60021321	荒野掘金	[60033350,60033351,60033352,60033353,60033354,60033355,60033356,60033357,60033358]	151105296	1205	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_set_mining_name"}	[{"typ":"item","id":111110325,"val":3},{"typ":"item","id":11111156,"val":8},{"typ":"item","id":11114330,"val":5}]	{"stars":[4],"need_num":0}
+60021322	弹珠小游戏	[60033359,60033360,60033361,60033362,60033363,60033364,60033365,60033366,60033367]	151105297	1206	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_set_marble_name"}	[{"typ":"item","id":111110325,"val":5},{"typ":"item","id":11111156,"val":8},{"typ":"item","id":11114330,"val":5}]	{"stars":[5],"need_num":0}
+60021323	推币机	[60033368,60033369,60033370,60033371,60033372,60033373,60033374,60033375,60033376]	151105298	1208	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_set_pusher_name"}	[{"typ":"item","id":111110325,"val":15},{"typ":"item","id":11111156,"val":10}]	{"stars":[5],"need_num":0}
+60021324	挖孔探索	[60033377,60033378,60033379,60033380,60033381,60033382,60033383,60033384,60033385]	151105299	1209	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_set_hole_name"}	[{"typ":"item","id":111110325,"val":10},{"typ":"item","id":11111156,"val":10},{"typ":"item","id":11114330,"val":8}]	{"stars":[5],"need_num":0}</pre>
+</div>
+
+<!-- TAB 3: 6003 -->
+<div class="tab-content" id="tab3">
+<h2>6003 Cards（72行）— 完整 TSV</h2>
+<div class="note">C_INT_display_bg_key：卡背景 1511 方案已取消，此处填 <strong>0</strong>（待确认是否需另行处理）。honor_coin / recycle 填 ? 处参照复活节同星级卡。</div>
+<pre>60033314	修筑铁路	1	0	151105300	0	4011	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_site_card_1"}	{}	?	?	0	0
+60033315	工地铲沙	1	0	151105301	0	4012	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_site_card_2"}	{}	?	?	0	0
+60033316	修理车轮	1	0	151105302	0	4013	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_site_card_3"}	{}	?	?	0	0
+60033317	整修粮仓	1	0	151105303	0	4014	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_site_card_4"}	{}	?	?	0	0
+60033318	查看发动机	1	0	151105304	0	4015	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_site_card_5"}	{}	?	?	0	0
+60033319	沙地飞行	1	0	151105305	0	4016	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_site_card_6"}	{}	?	?	0	0
+60033320	夜晚巡逻	2	0	151105306	0	4017	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_site_card_7"}	{}	?	?	0	0
+60033321	荒野讨论	2	0	151105307	0	4018	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_site_card_8"}	{}	?	?	0	0
+60033322	钻地行动	2	0	151105308	0	4019	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_site_card_9"}	{}	?	?	0	0
+60033323	分析路线	1	0	151105309	0	4021	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_journey_card_1"}	{}	?	?	0	0
+60033324	整装待发	1	0	151105310	0	4022	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_journey_card_2"}	{}	?	?	0	0
+60033325	分享饮水	1	0	151105311	0	4023	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_journey_card_3"}	{}	?	?	0	0
+60033326	发现帐篷	1	0	151105312	0	4024	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_journey_card_4"}	{}	?	?	0	0
+60033327	烤火取暖	1	0	151105313	0	4025	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_journey_card_5"}	{}	?	?	0	0
+60033328	寻找方向	2	0	151105314	0	4026	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_journey_card_6"}	{}	?	?	0	0
+60033329	科林探路	2	0	151105315	0	4027	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_journey_card_7"}	{}	?	?	0	0
+60033330	眺望前方	2	0	151105316	0	4028	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_journey_card_8"}	{}	?	?	0	0
+60033331	欣赏夕阳	3	0	151105317	0	4029	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_journey_card_9"}	{}	?	?	0	0
+60033332	荒野警长	1	0	151105318	0	4031	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_cowboy_card_1"}	{}	?	?	0	0
+60033333	保养火车	1	0	151105319	0	4032	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_cowboy_card_2"}	{}	?	?	0	0
+60033334	自由滑沙	1	0	151105320	0	4033	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_cowboy_card_3"}	{}	?	?	0	0
+60033335	补充饮水	1	0	151105321	0	4034	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_cowboy_card_4"}	{}	?	?	0	0
+60033336	眺望列车	2	0	151105322	0	4035	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_cowboy_card_5"}	{}	?	?	0	0
+60033337	西部牛仔	2	0	151105323	0	4036	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_cowboy_card_6"}	{}	?	?	0	0
+60033338	篝火之夜	2	0	151105324	0	4037	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_cowboy_card_7"}	{}	?	?	0	0
+60033339	准备起飞	3	0	151105325	0	4038	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_cowboy_card_8"}	{}	?	?	0	0
+60033340	沙地狂飙	3	0	151105326	0	4039	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_cowboy_card_9"}	{}	?	?	0	0
+60033341	解锁雷达	1	0	151105327	0	4041	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_monopoly_card_1"}	{}	?	?	0	0
+60033342	收获丰盛	1	0	151105328	0	4042	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_monopoly_card_2"}	{}	?	?	0	0
+60033343	神秘卡片	1	0	151105329	0	4043	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_monopoly_card_3"}	{}	?	?	0	0
+60033344	打开奖赏	2	0	151105330	0	4044	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_monopoly_card_4"}	{}	?	?	0	0
+60033345	期待好运	2	0	151105331	0	4045	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_monopoly_card_5"}	{}	?	?	0	0
+60033346	大步向前	2	0	151105332	0	4046	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_monopoly_card_6"}	{}	?	?	0	0
+60033347	思考战术	3	0	151105333	0	4047	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_monopoly_card_7"}	{}	?	?	0	0
+60033348	愁眉苦脸	3	0	151105334	0	4048	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_monopoly_card_8"}	{}	?	?	0	0
+60033349	夺得宝石	4	0	151105335	0	4049	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_monopoly_card_9"}	{}	?	?	0	0
+60033350	施工现场	1	0	151105336	0	4051	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_mining_card_1"}	{}	?	?	0	0
+60033351	宝矿出土	1	0	151105337	0	4052	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_mining_card_2"}	{}	?	?	0	0
+60033352	埋头苦干	2	0	151105338	0	4053	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_mining_card_3"}	{}	?	?	0	0
+60033353	发现金块	2	0	151105339	0	4054	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_mining_card_4"}	{}	?	?	0	0
+60033354	齐头并进	2	0	151105340	0	4055	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_mining_card_5"}	{}	?	?	0	0
+60033355	电光火石	3	0	151105341	0	4056	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_mining_card_6"}	{}	?	?	0	0
+60033356	力大无穷	3	0	151105342	0	4057	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_mining_card_7"}	{}	?	?	0	0
+60033357	盆满钵满	4	0	151105343	0	4058	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_mining_card_8"}	{}	?	?	0	0
+60033358	淘洗金块	4	0	151105344	0	4059	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_mining_card_9"}	{}	?	?	0	0
+60033359	荒野弹珠台	2	0	151105345	0	4061	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_marble_card_1"}	{}	?	?	0	0
+60033360	弹射出发	2	0	151105346	0	4062	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_marble_card_2"}	{}	?	?	0	0
+60033361	连珠妙弹	2	0	151105347	0	4063	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_marble_card_3"}	{}	?	?	0	0
+60033362	完美入洞	3	0	151105348	0	4064	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_marble_card_4"}	{}	?	?	0	0
+60033363	翻板救球	3	0	151105349	0	4065	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_marble_card_5"}	{}	?	?	0	0
+60033364	加注下赌	3	0	151105350	0	4066	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_marble_card_6"}	{}	?	?	0	0
+60033365	修台调试	4	0	151105351	0	4067	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_marble_card_7"}	{}	?	?	0	0
+60033366	酒馆对决	4	0	151105352	0	4068	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_marble_card_8"}	{}	?	?	0	0
+60033367	满载金矿	5	0	151105353	0	4069	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_marble_card_9"}	{}	?	?	0	11143009
+60033368	投币开局	2	0	151105354	0	4081	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_pusher_card_1"}	{}	?	?	0	0
+60033369	矿洞怪兽	2	0	151105355	0	4082	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_pusher_card_2"}	{}	?	?	0	0
+60033370	金币如雨	3	0	151105356	0	4083	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_pusher_card_3"}	{}	?	?	0	0
+60033371	硬币叠塔	3	0	151105357	0	4084	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_pusher_card_4"}	{}	?	?	0	0
+60033372	精准铲币	4	0	151105358	0	4085	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_pusher_card_5"}	{}	?	?	0	0
+60033373	悬崖时刻	4	0	151105359	0	4086	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_pusher_card_6"}	{}	?	?	0	0
+60033374	驯服怪兽	4	0	151105360	0	4087	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_pusher_card_7"}	{}	?	?	0	0
+60033375	连锁推落	5	0	151105361	0	4088	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_pusher_card_8"}	{}	?	?	1	11143009
+60033376	金矿大逃亡	5	0	151105362	0	4089	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_pusher_card_9"}	{}	?	?	1	11143009
+60033377	能量钻头	3	0	151105363	0	4091	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_hole_card_1"}	{}	?	?	0	0
+60033378	启动探测	3	0	151105364	0	4092	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_hole_card_2"}	{}	?	?	0	0
+60033379	电磁宝箱	4	0	151105365	0	4093	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_hole_card_3"}	{}	?	?	0	0
+60033380	补给运输	4	0	151105366	0	4094	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_hole_card_4"}	{}	?	?	0	0
+60033381	矿石鉴定	4	0	151105367	0	4095	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_hole_card_5"}	{}	?	?	0	0
+60033382	信号灯	5	0	151105368	0	4096	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_hole_card_6"}	{}	?	?	1	11143009
+60033383	工具清点	5	0	151105369	0	4097	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_hole_card_7"}	{}	?	?	1	11143009
+60033384	弹簧拉锯	5	0	151105370	0	4098	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_hole_card_8"}	{}	?	?	1	11143009
+60033385	终极发现	5	0	151105371	0	4099	{"typ":"lc","txt":"LC_EVENT_pioneer_fest_card_hole_card_9"}	{}	?	?	1	11143009</pre>
+</div>
+
+<!-- TAB 4: LC keys -->
+<div class="tab-content" id="tab4">
+<h2>LC key 总览（已写入 i18n）</h2>
+<h3>EVENT tab — 组名（8条）</h3>
+<table>
+<tr><th>LC key</th><th>CN</th><th>EN</th></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_set_site_name</td><td>工地日常</td><td>DAILY CONSTRUCTION</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_set_journey_name</td><td>冒险旅途</td><td>ADVENTURE JOURNEY</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_set_cowboy_name</td><td>牛仔生活</td><td>COWBOY LIFE</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_set_monopoly_name</td><td>拓荒大富翁</td><td>PIONEER MONOPOLY</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_set_mining_name</td><td>荒野掘金</td><td>WILDERNESS GOLD RUSH</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_set_marble_name</td><td>弹珠小游戏</td><td>MARBLE MINI-GAME</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_set_pusher_name</td><td>推币机</td><td>COIN PUSHER</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_set_hole_name</td><td>挖孔探索</td><td>HOLE EXPLORATION</td></tr>
+</table>
+<h3>EVENT tab — 卡名（72条）</h3>
+<table>
+<tr><th>LC key</th><th>CN</th><th>EN</th></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_site_card_1</td><td>修筑铁路</td><td>BUILDING THE RAILWAY</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_site_card_2</td><td>工地铲沙</td><td>SHOVELING SAND</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_site_card_3</td><td>修理车轮</td><td>REPAIRING WHEELS</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_site_card_4</td><td>整修粮仓</td><td>FIXING THE GRANARY</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_site_card_5</td><td>查看发动机</td><td>CHECKING THE ENGINE</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_site_card_6</td><td>沙地飞行</td><td>DESERT FLIGHT</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_site_card_7</td><td>夜晚巡逻</td><td>NIGHT PATROL</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_site_card_8</td><td>荒野讨论</td><td>WILDERNESS DISCUSSION</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_site_card_9</td><td>钻地行动</td><td>DRILLING OPERATION</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_journey_card_1</td><td>分析路线</td><td>ROUTE ANALYSIS</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_journey_card_2</td><td>整装待发</td><td>GEARED UP AND READY</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_journey_card_3</td><td>分享饮水</td><td>SHARING WATER</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_journey_card_4</td><td>发现帐篷</td><td>FINDING THE TENT</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_journey_card_5</td><td>烤火取暖</td><td>WARMING BY THE FIRE</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_journey_card_6</td><td>寻找方向</td><td>FINDING DIRECTION</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_journey_card_7</td><td>科林探路</td><td>COLIN'S PATHFINDING</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_journey_card_8</td><td>眺望前方</td><td>GAZING AHEAD</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_journey_card_9</td><td>欣赏夕阳</td><td>WATCHING THE SUNSET</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_cowboy_card_1</td><td>荒野警长</td><td>WILDERNESS SHERIFF</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_cowboy_card_2</td><td>保养火车</td><td>MAINTAINING THE TRAIN</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_cowboy_card_3</td><td>自由滑沙</td><td>FREE SAND SLIDING</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_cowboy_card_4</td><td>补充饮水</td><td>REPLENISHING WATER</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_cowboy_card_5</td><td>眺望列车</td><td>WATCHING THE TRAIN</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_cowboy_card_6</td><td>西部牛仔</td><td>WESTERN COWBOY</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_cowboy_card_7</td><td>篝火之夜</td><td>BONFIRE NIGHT</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_cowboy_card_8</td><td>准备起飞</td><td>READY FOR TAKEOFF</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_cowboy_card_9</td><td>沙地狂飙</td><td>DESERT SPRINT</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_monopoly_card_1</td><td>解锁雷达</td><td>UNLOCKING THE RADAR</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_monopoly_card_2</td><td>收获丰盛</td><td>BOUNTIFUL HARVEST</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_monopoly_card_3</td><td>神秘卡片</td><td>MYSTERY CARD</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_monopoly_card_4</td><td>打开奖赏</td><td>OPENING THE REWARD</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_monopoly_card_5</td><td>期待好运</td><td>HOPING FOR LUCK</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_monopoly_card_6</td><td>大步向前</td><td>STRIDING FORWARD</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_monopoly_card_7</td><td>思考战术</td><td>TACTICAL THINKING</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_monopoly_card_8</td><td>愁眉苦脸</td><td>DOWNCAST FACE</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_monopoly_card_9</td><td>夺得宝石</td><td>CLAIMING THE GEM</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_mining_card_1</td><td>施工现场</td><td>CONSTRUCTION SITE</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_mining_card_2</td><td>宝矿出土</td><td>TREASURE UNEARTHED</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_mining_card_3</td><td>埋头苦干</td><td>WORKING HARD</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_mining_card_4</td><td>发现金块</td><td>GOLD NUGGET FOUND</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_mining_card_5</td><td>齐头并进</td><td>ADVANCING TOGETHER</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_mining_card_6</td><td>电光火石</td><td>ELECTRIC SPARK</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_mining_card_7</td><td>力大无穷</td><td>MIGHTY STRENGTH</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_mining_card_8</td><td>盆满钵满</td><td>BASKETS OVERFLOWING</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_mining_card_9</td><td>淘洗金块</td><td>PANNING FOR GOLD</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_marble_card_1</td><td>荒野弹珠台</td><td>WILDERNESS PINBALL TABLE</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_marble_card_2</td><td>弹射出发</td><td>LAUNCHING OFF</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_marble_card_3</td><td>连珠妙弹</td><td>CHAIN TRICK SHOT</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_marble_card_4</td><td>完美入洞</td><td>PERFECT HOLE-IN-ONE</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_marble_card_5</td><td>翻板救球</td><td>FLIPPER SAVE</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_marble_card_6</td><td>加注下赌</td><td>RAISING THE STAKES</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_marble_card_7</td><td>修台调试</td><td>TABLE TUNING</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_marble_card_8</td><td>酒馆对决</td><td>TAVERN SHOWDOWN</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_marble_card_9</td><td>满载金矿</td><td>LOADED WITH GOLD</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_pusher_card_1</td><td>投币开局</td><td>INSERT COIN TO START</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_pusher_card_2</td><td>矿洞怪兽</td><td>MINE MONSTER</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_pusher_card_3</td><td>金币如雨</td><td>RAIN OF GOLD COINS</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_pusher_card_4</td><td>硬币叠塔</td><td>COIN TOWER</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_pusher_card_5</td><td>精准铲币</td><td>PRECISE COIN SWEEP</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_pusher_card_6</td><td>悬崖时刻</td><td>CLIFF'S EDGE MOMENT</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_pusher_card_7</td><td>驯服怪兽</td><td>TAMING THE MONSTER</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_pusher_card_8</td><td>连锁推落</td><td>CHAIN PUSH-OFF</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_pusher_card_9</td><td>金矿大逃亡</td><td>GOLD MINE ESCAPE</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_hole_card_1</td><td>能量钻头</td><td>POWER DRILL</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_hole_card_2</td><td>启动探测</td><td>ACTIVATING DETECTION</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_hole_card_3</td><td>电磁宝箱</td><td>ELECTROMAGNETIC CHEST</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_hole_card_4</td><td>补给运输</td><td>SUPPLY TRANSPORT</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_hole_card_5</td><td>矿石鉴定</td><td>ORE IDENTIFICATION</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_hole_card_6</td><td>信号灯</td><td>SIGNAL LIGHT</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_hole_card_7</td><td>工具清点</td><td>TOOL INVENTORY</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_hole_card_8</td><td>弹簧拉锯</td><td>SPRING SAW</td></tr>
+<tr><td class="lc">LC_EVENT_pioneer_fest_card_hole_card_9</td><td>终极发现</td><td>ULTIMATE DISCOVERY</td></tr>
+</table>
+<h3>ITEM tab — 道具包（22条）</h3>
+<table>
+<tr><th>LC key</th><th>CN</th></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_dig_hole_name</td><td>拓荒节-挖孔主题卡包</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_dig_hole_desc</td><td>打开即可获得2张3星及以上的「挖孔探索」游戏卡片。</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_mining_name</td><td>拓荒节-挖矿主题卡包</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_mining_desc</td><td>打开即可获得2张3星及以上的「荒野掘金」游戏卡片。</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_marble_name</td><td>拓荒节-弹珠主题卡包</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_marble_desc</td><td>打开即可获得2张3星及以上的「弹珠小游戏」游戏卡片。</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_coin_pusher_name</td><td>拓荒节-推币机主题卡包</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_coin_pusher_desc</td><td>打开即可获得2张3星及以上的「推币机」游戏卡片。</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_monopoly_name</td><td>拓荒节-拓荒大富翁主题卡包</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_monopoly_desc</td><td>打开即可获得2张3星及以上的「拓荒大富翁」游戏卡片。</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_common_name</td><td>拓荒节-白色保底卡包</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_common_desc</td><td>拓荒节卡包，至少含有1张普通品质或以上的卡片。</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_excellent_name</td><td>拓荒节-绿色保底卡包</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_excellent_desc</td><td>拓荒节卡包，至少含有1张优质品质或以上的卡片。</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_rare_name</td><td>拓荒节-蓝色保底卡包</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_rare_desc</td><td>拓荒节卡包，至少含有1张稀有品质或以上的卡片。</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_epic_name</td><td>拓荒节-紫色保底卡包</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_epic_desc</td><td>拓荒节卡包，至少含有1张史诗品质或以上的卡片。</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_legendary_name</td><td>拓荒节-橙色保底卡包</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_legendary_desc</td><td>拓荒节卡包，至少含有1张传说品质或以上的卡片。</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_selection_name</td><td>拓荒节-自选卡包</td></tr>
+<tr><td class="lc">LC_ITEM_pioneer_fest_pack_selection_desc</td><td>工艺上乘的拓荒节自选卡包，可自选指定卡册中的传说、史诗品质卡片。</td></tr>
+</table>
+</div>
+
+<!-- TAB 5: 待确认 -->
+<div class="tab-content" id="tab5">
+<h2>✅ 已确认项汇总</h2>
+<table>
+<tr><th>#</th><th>项目</th><th>确认值</th></tr>
+<tr><td>1</td><td>6003 C_INT_display_bg_key（卡背景）</td><td class="ok">0（不填）</td></tr>
+<tr><td>2</td><td>6001 C_INT_display_key_sub_menu</td><td class="ok">151105373</td></tr>
+<tr><td>3</td><td>6001 C_INT_display_key_card</td><td class="ok">0（不用填）</td></tr>
+<tr><td>4</td><td>G4 特殊道具</td><td class="ok">先填空（rewards 里无特殊道具）</td></tr>
+<tr><td>5</td><td>fes_recycle_id</td><td class="ok">11143009（不变）</td></tr>
+<tr><td>6</td><td>6002 组 rewards 主题包</td><td class="ok">G4-G8各加对应主题包×1</td></tr>
+</table>
+
+<h2>⚠️ 剩余待填项</h2>
+<table>
+<tr><th>#</th><th>项目</th><th>说明</th></tr>
+<tr><td>1</td><td>honor_coin / recycle（6003全72张卡）</td><td>参照复活节同星级卡，直接从复活节 6003 表格复制即可。<br>复活节卡 ID 范围参考：60033260-60033313</td></tr>
+</table>
+</div>
+
+<script>
+function showTab(idx){
+  document.querySelectorAll('.tab-content').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+}
+</script>
+</body>
+</html>

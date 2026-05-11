@@ -1,0 +1,44 @@
+﻿[
+  {
+    "table": "v1041.dl_user_portrait",
+    "columns": [
+      {
+        "name": "user_id",
+        "type": "varchar"
+      },
+      {
+        "name": "map_type",
+        "type": "varchar"
+      },
+      {
+        "name": "double_val",
+        "type": "double"
+      },
+      {
+        "name": "varchar_val",
+        "type": "varchar"
+      },
+      {
+        "name": "arr_varchar_val",
+        "type": "array(varchar)"
+      },
+      {
+        "name": "update_time",
+        "type": "timestamp(3)"
+      },
+      {
+        "name": "game_cd",
+        "type": "integer"
+      },
+      {
+        "name": "map_key",
+        "type": "varchar"
+      },
+      {
+        "name": "partition_date",
+        "type": "varchar"
+      }
+    ],
+    "partitions": []
+  }
+]

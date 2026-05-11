@@ -127,6 +127,8 @@ python gsheet_query.py row 1111_x2_item {item_id}
  ├── components.package → 2135 → col3 指向 2011 ID
  │                                 └── 2011.time_info.actv_id → 反向引用 2112
  │                                 └── 2011 ← 2013.config_id
+ ├── components.weekly_pay_ratio / jump_link / task_group → 2121
+ │                                 └── 2121.reward → 1111（若是自选箱，还要继续追 1111.category_param.select_box）
  └── show_hud → 换新 ID
 ```
 
@@ -136,7 +138,10 @@ python gsheet_query.py row 1111_x2_item {item_id}
 |------|------------|
 | 2011 ID 变了 | 2013 的 `config_id` + 2135 的 `iap` 字段都要改 |
 | 2112 ID 变了（或复用旧 ID） | 2011 的 `actv_id` + 2135 chain row 的 `condition.actvstart.id` 都要改 |
+| 2011 复用/新建后 | 检查 `A_ARR_iap_status.recharge_actv.id` 是否指向当前节日累充，避免沿用模板节日活动 ID |
 | 道具 ID 变了 | 所有引用该道具的表（2115 reward、2013 items、1127 unlock_cost 等）都要改 |
+| X2 每日礼包 | 不要复用旧 2135/2011；按 `2112 → 2135 → 2011 ← 2013` 新建完整链路，并检查 2135 的 `activity_time.id`、2011 的 `time_info`、2013 的节日道具 |
+| X2 `weekly_pay_ratio` | 不要只看 2121 行；必须追 `2121.reward` 到 1111，若奖励是 `item_select_box`，继续检查 `category_param.select_box` 里的真实节日道具 |
 | **集卡册换皮** | 见下方集卡册追踪链 |
 
 **集卡册依赖追踪链**：
@@ -159,6 +164,98 @@ python gsheet_query.py row 1111_x2_item {item_id}
 
 > 进入 **第二节：输出规范** 执行输出。
 
+### S5 写入 GSheet
+
+S4 输出完成后，**先跑检查项、呈现 checklist 给用户确认，用户说「写入」后再执行写入**。
+
+#### S5.1 写入前检查（自动跑，结果呈现给用户）
+
+对每张涉及的表依次执行，把结果填入 checklist 表格输出：
+
+```
+1. 读 tab 列表，确认 QA tab 名
+   gws sheets spreadsheets get --params '{"spreadsheetId":"<ID>","fields":"sheets.properties"}'
+
+2. 读表头行，确认列数
+   gws sheets spreadsheets values get --params '{"spreadsheetId":"<ID>","range":"<QA_TAB>!A1:AZ1"}'
+
+3. 读参考行（同 ID 段最后 1 行）
+   — 对照 S4 生成的配置行，逐列比对格式
+   — 重点检查：JSON 格式是否一致、末尾列是否有占位
+
+4. 确认写入位置
+   — 读同 ID 前缀的末尾行号（不是表格末尾）
+   — 2135 等有空行的表：扫描 B 列找到最后一个非空 ID
+```
+
+**输出 checklist（每张表一块，等用户确认）：**
+
+```
+─────────────────────────────────────
+📋 写入前 Checklist — <表编号>(<表名>)
+─────────────────────────────────────
+目标 tab：<QA_TAB>               ← 请确认是 QA 而非线上
+表头列数：<N> 列                  ✓
+参考行 ID：<行ID>（第 <M> 行）
+写入位置：第 <K> 行之后（共插 <N行> 行）
+
+逐列比对结果：
+  col[0] <字段名>  参考=<值>  生成=<值>  ✓/⚠️
+  col[1] <字段名>  参考=<值>  生成=<值>  ✓/⚠️
+  ...（有差异的列单独标 ⚠️ 并说明原因）
+
+待写入行 ID 范围：<起始ID> – <结束ID>
+─────────────────────────────────────
+⚠️ 有异常项需说明 / ✅ 全部通过
+
+确认写入请回复「写入」，如有问题请说明。
+```
+
+⛔ **checklist 输出后停止，等用户回复「写入」才继续 S5.2。**
+
+#### S5.2 执行写入（用户确认后）
+
+```bash
+# Step 1：插入空行
+gws sheets spreadsheets batchUpdate --params '{"spreadsheetId":"<ID>"}' --json '{
+  "requests": [{
+    "insertDimension": {
+      "range": {"sheetId":<GID>,"dimension":"ROWS",
+                "startIndex":<行号>,"endIndex":<行号+N>},
+      "inheritFromBefore": false
+    }
+  }]
+}'
+
+# Step 2：写入数据（RAW mode）
+gws sheets spreadsheets values batchUpdate \
+  --params '{"spreadsheetId":"<ID>","valueInputOption":"RAW"}' \
+  --json '{"data":[{"range":"<QA_TAB>!A<行号>:<末列>","values":[...]}]}'
+```
+
+**工程注意：**
+- JSON body 超 ~5KB 时分批，单批 ≤ 5 复杂行
+- 双引号字段直接传 `"\""` （不是 `'""` ，那是 TSV 粘贴专用）
+- A 列空的表用明确 range，不用 append（防列偏移）
+- TLS 偶发失败加指数重试（1→2→4→8s），不因 stderr 有报错就放弃
+
+#### S5.3 写入后验证（必做）
+
+```
+1. 行数：读回写入区域，确认 N 行都在
+2. 行顺序：读前后各 3 行 ID，确认递增连续
+3. 列完整性：列数 = 表头列数，末尾空列有占位
+4. 抽查 JSON：至少 1 行核对关键字段内容
+5. 换皮场景：全表搜索旧 ID 残留（如旧 recharge_actv）
+```
+
+**输出格式：**
+```
+✅ <表编号>(<QA_TAB>) 写入完成
+新增 N 行：ID <起始>–<结束>
+验证：行数 ✓ / 行顺序 ✓ / 列完整性 ✓ / JSON ✓
+```
+
 ---
 
 ## 已知组装模式速查（常见类型的模块组合）
@@ -170,7 +267,9 @@ python gsheet_query.py row 1111_x2_item {item_id}
 | **普通活动礼包** | 2112 + 2115 + 2135 + 2013 + 2011 + 1011 + 1511 | [2026异族大富翁每日礼包](../config-library/cases/2026_alien_monopoly_daily_pack/overview.md) | — |
 | **预购连锁礼包** | 2112 + 2135 + 2011 + 1011 + 1511（跳过 2013） | [2026复活节预购连锁](../config-library/cases/2026_easter_pre_chain/overview.md) | [reskin-rules.md §三](../config-library/reskin-rules.md) |
 | **装饰物** | 1111 + 1118 + 1127 + 2148 + 2171 + 1168 + 1011 + 1511 | 2026复活节装饰 | [reskin-rules.md §七](../config-library/reskin-rules.md) |
-| **集卡册** | 1111(卡包道具) + 6001(book) + 6002(group rewards) + 6003(card星级) + 6004(集卡商店) + 1011 | [2026复活节集卡册](../config-library/cases/2026_easter_card_collection/localization.md) | `card-collection-config` 技能；**rewards 里外键 id 必须逐一验证（见 S2.5）**；6004 每次换节日必改 |
+| **集卡册** | 1111(卡包道具) + 6001(book) + 6002(group rewards) + 6003(card星级) + 6004(集卡商店) + 1011 + 2112 | 21127803(BP版)+21127804(三合一版)已固定复用 | `card-collection-config` 技能；2112 复用无需新建；**拓荒节 2026-04-24 确认** |
+| **机甲累充** | 2112 + 2115(11档任务) + 2121(jump_link) + 1111(奖励道具) | [2026复活节机甲累充](../config-library/cases/2026_easter_mecha_accum/progress.md) | 2112 含 `iap_show` + `mecha_skin_select` 组件；主奖是**节日玩法货币**（不是喷漆）；每节日换货币道具 ID + group_label LC；**11 档结构跨节日一致** |
+| **多条件连锁礼包** | 2115(仅改 reward) — 2112 **整行复用不改** | [2026复活节连锁任务](../config-library/cases/2026_easter_chain_task/overview.md) | 只替换 2115 reward 中的节日绑定道具（BP 箱/卡包），保留通用道具（进度道具/加速）；94 行级可用 Python 批量 str replace；**2115 ID 在 col[1]，查询须加 `--id-col 1`** |
 | **机甲累充** | 2112 + 2115(11档任务) + 2121(jump_link) + 1111(奖励道具) | [2026复活节机甲累充](../config-library/cases/2026_easter_mecha_accum/progress.md) | 2112 含 `iap_show` + `mecha_skin_select` 组件；主奖是**节日玩法货币**（不是喷漆）；每节日换货币道具 ID + group_label LC；**11 档结构跨节日一致** |
 | **多条件连锁礼包** | 2115(仅改 reward) — 2112 **整行复用不改** | [2026复活节连锁任务](../config-library/cases/2026_easter_chain_task/overview.md) | 只替换 2115 reward 中的节日绑定道具（BP 箱/卡包），保留通用道具（进度道具/加速）；94 行级可用 Python 批量 str replace；**2115 ID 在 col[1]，查询须加 `--id-col 1`** |
 

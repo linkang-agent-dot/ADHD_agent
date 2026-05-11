@@ -1,0 +1,350 @@
+{
+  "meta": {
+    "event": "2026科技节",
+    "module": "集卡册",
+    "period": "2026-03-13 ~ 2026-04-03",
+    "benchmark": "2026情人节",
+    "data_source": "Datain 数仓 Trino SQL",
+    "compiled_at": "2026-04-23"
+  },
+  "design": {
+    "card_structure": {
+      "total_albums": 8,
+      "total_cards": 72,
+      "star_counts": { "star1": 20, "star2": 20, "star3": 13, "star4": 13, "star5": 6 },
+      "star_pricing_usd": { "star1": 0.05, "star2": 0.1, "star3": 0.5, "star4": 2.0, "star5": 8.0 }
+    },
+    "saturation_targets": {
+      "小非R": {
+        "positioning": "白绿卡包拿完（活跃）",
+        "star1": 99.61, "star2": 98.86, "star3": 92.39, "star4": 45.53, "star5": 7.94,
+        "gap_note": "差4个卡册不能收集完全"
+      },
+      "中R": {
+        "positioning": "白绿卡包拿完（活跃）",
+        "star1": 99.93, "star2": 98.17, "star3": 94.58, "star4": 60.71, "star5": 39.49,
+        "gap_note": "差3个卡册不能收集完全"
+      },
+      "大R": {
+        "positioning": "白绿拿完+蓝紫部分",
+        "star1": 99.99, "star2": 99.56, "star3": 97.13, "star4": 82.87, "star5": 84.98,
+        "gap_note": "接近全收集，要看运气"
+      },
+      "超R": {
+        "positioning": "全收集（需买礼包补缺）",
+        "star1": 99.99, "star2": 99.56, "star3": 99.26, "star4": 87.37, "star5": 91.53,
+        "gap_note": "100%收集"
+      }
+    },
+    "channel_allocation": {
+      "口径": "小非R",
+      "channels": [
+        { "name": "卡包BP免费档", "positioning": "覆盖全部", "star1": 5.4, "star2": 4.71, "star3": 1.64, "star4": 0.25, "star5": 0, "value_usd": 2.09, "note": "全部获取" },
+        { "name": "BINGO", "positioning": "活跃产出", "star1": 13.5, "star2": 5.48, "star3": 0.85, "star4": 0.17, "star5": 0, "value_usd": 2.01, "note": "蓝色无法获取" },
+        { "name": "7日", "positioning": "活跃产出", "star1": 15.3, "star2": 5.65, "star3": 2.62, "star4": 0.43, "star5": 0.01, "value_usd": 3.56, "note": "全部获取" },
+        { "name": "掉落转付费", "positioning": "活跃产出", "star1": 15.3, "star2": 5.65, "star3": 2.62, "star4": 0.43, "star5": 0.01, "value_usd": 3.56, "note": "紫色无法获取" },
+        { "name": "普通大富翁", "positioning": "活跃产出", "star1": 24.3, "star2": 9.02, "star3": 5.62, "star4": 2.77, "star5": 0.3, "value_usd": 12.87, "note": "金无法获取、彩获取1" },
+        { "name": "挖矿小游戏", "positioning": "活跃产出", "star1": 31.5, "star2": 33.22, "star3": 10.64, "star4": 2.49, "star5": 0.15, "value_usd": 16.41, "note": "彩无法获取、紫获取1" },
+        { "name": "弹珠", "positioning": "付费产出", "star1": 1.8, "star2": 8.57, "star3": 3.17, "star4": 0.45, "star5": 0.01, "value_usd": 3.50, "note": "紫金彩无法获取" },
+        { "name": "推币机", "positioning": "付费产出", "star1": 1.8, "star2": 8.57, "star3": 3.17, "star4": 0.45, "star5": 0.01, "value_usd": 3.50, "note": "紫金彩无法获取" },
+        { "name": "多条件连锁", "positioning": "付费产出", "star1": 0, "star2": 0, "star3": 0, "star4": 0, "star5": 0, "value_usd": 0, "note": "不购买" }
+      ],
+      "total": { "star1": 110.7, "star2": 89.42, "star3": 33.49, "star4": 7.90, "star5": 0.50, "value_usd": 50.99 }
+    }
+  },
+  "actual": {
+    "kpi_strip": {
+      "total_revenue_usd": 28909,
+      "total_revenue_label": "4品类合计",
+      "total_buyers_uv": 1794,
+      "high_task_pass_rate_uplift": "×2 (2.3%→4.3%)",
+      "exchange_shop_per_capita": 1104,
+      "exchange_shop_trend": "383→713→1104 连续翻倍"
+    },
+    "product_mix": {
+      "categories": [
+        { "name": "小连锁随机礼包", "purchases": 3432, "buyers": 1446, "revenue_usd": 16011, "share_pct": 55 },
+        { "name": "节日集卡册BP", "purchases": 819, "buyers": 819, "revenue_usd": 8182, "share_pct": 28 },
+        { "name": "节日卡册cycle", "purchases": 95, "buyers": 95, "revenue_usd": 2720, "share_pct": 9 },
+        { "name": "挖矿卡包", "purchases": 400, "buyers": 161, "revenue_usd": 1996, "share_pct": 7 }
+      ],
+      "total": { "purchases": 4746, "buyers": 1794, "revenue_usd": 28909 }
+    },
+    "halo_effect": {
+      "limited_gift_comparison": {
+        "description": "限时礼包加卡包前后收入对比",
+        "items": [
+          { "product": "限时礼包 (2013500355)", "price": "$9.99", "valentine_revenue": 4738, "tech_fest_revenue": 7076, "change_pct": 49 },
+          { "product": "限时礼包 (2013500359)", "price": "$99.99", "valentine_revenue": 8899, "tech_fest_revenue": 15798, "change_pct": 77 }
+        ],
+        "total": { "valentine_revenue": 13637, "tech_fest_revenue": 22874, "change_pct": 68 }
+      },
+      "new_products_with_card_packs": [
+        { "product": "挖矿小游戏包 $99.99×2", "price": "$99.99", "buyers": 389, "revenue_usd": 38896 },
+        { "product": "挖矿小游戏包 $49.99×2", "price": "$49.99", "buyers": 454, "revenue_usd": 22695 },
+        { "product": "挖矿小游戏包 $19.99", "price": "$19.99", "buyers": 395, "revenue_usd": 7896 },
+        { "product": "挖矿小游戏包 $9.99", "price": "$9.99", "buyers": 494, "revenue_usd": 4935 },
+        { "product": "其他挖矿包 (×3档)", "price": "$99.99", "buyers": 293, "revenue_usd": 9399 },
+        { "product": "2026科技节-科技合包", "price": "$4.99", "buyers": 2186, "revenue_usd": 10913 },
+        { "product": "2026复活节-科技效果", "price": "$19.99", "buyers": 643, "revenue_usd": 12854 },
+        { "product": "科技节wonder商/美术授权等", "price": "$9.99", "buyers": 282, "revenue_usd": 2817 }
+      ],
+      "new_products_total_revenue": 110405,
+      "full_panorama": {
+        "core_4_categories": 28909,
+        "overflow_with_card_packs": 133279,
+        "grand_total": 162188
+      }
+    },
+    "daily_trend": {
+      "phases": [
+        { "name": "阶段1: 小连锁主力期", "dates": "3/13-3/21", "revenue_usd": 23742, "share_pct": 82 },
+        { "name": "阶段2: 间歇期", "dates": "3/22-3/27", "revenue_usd": 1968, "share_pct": 7 },
+        { "name": "阶段3: 最后一周cycle", "dates": "3/28-4/03", "revenue_usd": 3199, "share_pct": 11 }
+      ],
+      "daily_by_category": {
+        "dates": ["3/13","3/14","3/15","3/16","3/17","3/18","3/19","3/20","3/21","3/22","3/23","3/24","3/25","3/26","3/27","3/28","3/29","3/30","3/31","4/01","4/02","4/03"],
+        "BP": [1269,1059,679,579,509,549,579,480,450,400,260,200,190,150,90,190,120,80,60,110,150,30],
+        "小连锁": [292,3762,3362,2149,1566,1725,1271,1278,606,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        "Cycle": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,1350,295,330,305,230,150],
+        "挖矿卡包": [25,160,120,110,120,110,20,155,160,120,140,80,50,145,145,90,95,100,40,0,10,5]
+      }
+    },
+    "r_tier_revenue": {
+      "tiers": [
+        { "tier": "超R", "小连锁": 12489, "BP": 6434, "Cycle": 2419, "挖矿卡包": 1747, "total": 23088, "arppu": 20.91 },
+        { "tier": "大R", "小连锁": 2392, "BP": 1349, "Cycle": 270, "挖矿卡包": 205, "total": 4215, "arppu": 9.65 },
+        { "tier": "中R", "小连锁": 881, "BP": 350, "Cycle": 0, "挖矿卡包": 40, "total": 1271, "arppu": 6.76 },
+        { "tier": "小R", "小连锁": 248, "BP": 50, "Cycle": 30, "挖矿卡包": 5, "total": 333, "arppu": 5.12 }
+      ]
+    },
+    "saturation_actual": {
+      "overall": {
+        "star1": { "total_types": 20, "participants": 13402, "saturation_pct": 67.3, "avg_collected": 13.5, "full_collect_count": 1849, "full_collect_pct": 13.8 },
+        "star2": { "total_types": 20, "participants": 12621, "saturation_pct": 55.0, "avg_collected": 11.0, "full_collect_count": 298, "full_collect_pct": 2.4 },
+        "star3": { "total_types": 13, "participants": 12382, "saturation_pct": 52.2, "avg_collected": 6.8, "full_collect_count": 1257, "full_collect_pct": 10.2 },
+        "star4": { "total_types": 13, "participants": 8408, "saturation_pct": 19.4, "avg_collected": 2.5, "full_collect_count": 23, "full_collect_pct": 0.3 },
+        "star5": { "total_types": 6, "participants": 1260, "saturation_pct": 27.0, "avg_collected": 1.6, "full_collect_count": 6, "full_collect_pct": 0.5 }
+      },
+      "by_r_tier": {
+        "小非R": { "participants": 8545, "star1": 59.8, "star2": 46.8, "star3": 43.4, "star4": 14.6, "star5": 20.5 },
+        "中R":   { "participants": 2867, "star1": 78.5, "star2": 65.5, "star3": 61.4, "star4": 20.6, "star5": 23.0 },
+        "大R":   { "participants": 1053, "star1": 81.7, "star2": 70.6, "star3": 69.9, "star4": 26.8, "star5": 25.8 },
+        "超R":   { "participants": 937,  "star1": 84.9, "star2": 75.6, "star3": 77.6, "star4": 36.0, "star5": 33.6 }
+      }
+    },
+    "production_channels": {
+      "base_population": {
+        "小非R": 27201, "中R": 3050, "大R": 1097, "超R": 964
+      },
+      "paid_population_for_sub_activities": {
+        "小非R": 6751, "中R": 3685, "大R": 1237, "超R": 1060
+      },
+      "effective_channels": [
+        {
+          "name": "活动任务（合计）",
+          "event_key": "event_task",
+          "小非R": { "participation_pct": 37.7, "avg_all": 6.3, "avg_participants": 16.8 },
+          "中R":   { "participation_pct": 101.5, "avg_all": 30.2, "avg_participants": 29.8 },
+          "大R":   { "participation_pct": 102.6, "avg_all": 34.9, "avg_participants": 34.0 },
+          "超R":   { "participation_pct": 103.5, "avg_all": 39.4, "avg_participants": 38.1 }
+        },
+        {
+          "name": "每日补给",
+          "event_key": "event_daily_supply",
+          "is_sub_activity": true,
+          "小非R": { "participation_pct": 57.3, "avg_all": 6.5, "avg_participants": 11.4 },
+          "中R":   { "participation_pct": 77.2, "avg_all": 10.1, "avg_participants": 13.1 },
+          "大R":   { "participation_pct": 84.2, "avg_all": 11.7, "avg_participants": 13.9 },
+          "超R":   { "participation_pct": 88.8, "avg_all": 12.7, "avg_participants": 14.2 }
+        },
+        {
+          "name": "BINGO 宾果",
+          "event_key": "event_valentine_bingo_2024",
+          "is_sub_activity": true,
+          "小非R": { "participation_pct": 60.5, "avg_all": 4.1, "avg_participants": 6.8 },
+          "中R":   { "participation_pct": 80.4, "avg_all": 7.5, "avg_participants": 9.3 },
+          "大R":   { "participation_pct": 88.1, "avg_all": 9.1, "avg_participants": 10.3 },
+          "超R":   { "participation_pct": 92.1, "avg_all": 10.2, "avg_participants": 11.1 }
+        },
+        {
+          "name": "挖孔小游戏",
+          "event_key": "event_tech_festival_hole_digging",
+          "is_sub_activity": true,
+          "小非R": { "participation_pct": 54.1, "avg_all": 2.0, "avg_participants": 3.8 },
+          "中R":   { "participation_pct": 74.1, "avg_all": 3.6, "avg_participants": 4.9 },
+          "大R":   { "participation_pct": 80.8, "avg_all": 4.4, "avg_participants": 5.4 },
+          "超R":   { "participation_pct": 85.4, "avg_all": 5.1, "avg_participants": 6.0 }
+        },
+        {
+          "name": "多条件连锁礼包",
+          "event_key": "event_chain_task_universal",
+          "is_sub_activity": true,
+          "小非R": { "participation_pct": 46.7, "avg_all": 1.2, "avg_participants": 2.5 },
+          "中R":   { "participation_pct": 67.7, "avg_all": 2.4, "avg_participants": 3.5 },
+          "大R":   { "participation_pct": 76.0, "avg_all": 3.5, "avg_participants": 4.6 },
+          "超R":   { "participation_pct": 81.2, "avg_all": 4.6, "avg_participants": 5.7 }
+        },
+        {
+          "name": "弹珠 GACHA",
+          "event_key": "event_sci_reward_gacha_2026",
+          "is_sub_activity": true,
+          "小非R": { "participation_pct": 48.7, "avg_all": 0.6, "avg_participants": 1.2 },
+          "中R":   { "participation_pct": 70.0, "avg_all": 1.4, "avg_participants": 1.9 },
+          "大R":   { "participation_pct": 79.3, "avg_all": 2.2, "avg_participants": 2.8 },
+          "超R":   { "participation_pct": 84.0, "avg_all": 3.2, "avg_participants": 3.9 }
+        },
+        {
+          "name": "大富翁组队",
+          "event_key": "event_fes_monopoly_team_game",
+          "is_sub_activity": true,
+          "小非R": { "participation_pct": 1.2, "avg_all": 0.0, "avg_participants": 1.0 },
+          "中R":   { "participation_pct": 8.1, "avg_all": 0.1, "avg_participants": 1.0 },
+          "大R":   { "participation_pct": 20.4, "avg_all": 0.2, "avg_participants": 1.0 },
+          "超R":   { "participation_pct": 40.5, "avg_all": 0.4, "avg_participants": 1.0 }
+        },
+        {
+          "name": "BP 通行证",
+          "event_key": "bp_pass",
+          "小非R": { "participation_pct": 39.7, "avg_all": 2.6, "avg_participants": 6.5 },
+          "中R":   { "participation_pct": 103.3, "avg_all": 8.2, "avg_participants": 8.0 },
+          "大R":   { "participation_pct": 103.7, "avg_all": 9.3, "avg_participants": 8.9 },
+          "超R":   { "participation_pct": 104.5, "avg_all": 10.5, "avg_participants": 10.1 }
+        },
+        {
+          "name": "积分兑换",
+          "event_key": "chain_purchase_exchange",
+          "小非R": { "participation_pct": 17.8, "avg_all": 1.9, "avg_participants": 10.8 },
+          "中R":   { "participation_pct": 67.5, "avg_all": 9.2, "avg_participants": 13.6 },
+          "大R":   { "participation_pct": 72.5, "avg_all": 10.6, "avg_participants": 14.7 },
+          "超R":   { "participation_pct": 79.4, "avg_all": 11.7, "avg_participants": 14.8 }
+        },
+        {
+          "name": "挖矿打石头",
+          "event_key": "monster_rock",
+          "小非R": { "participation_pct": 11.0, "avg_all": 1.2, "avg_participants": 10.9 },
+          "中R":   { "participation_pct": 38.8, "avg_all": 5.7, "avg_participants": 14.6 },
+          "大R":   { "participation_pct": 40.2, "avg_all": 6.3, "avg_participants": 15.6 },
+          "超R":   { "participation_pct": 43.9, "avg_all": 7.6, "avg_participants": 17.4 }
+        },
+        {
+          "name": "IAP 购买",
+          "event_key": "iap",
+          "小非R": { "participation_pct": 0.2, "avg_all": 0.0, "avg_participants": 1.9 },
+          "中R":   { "participation_pct": 5.6, "avg_all": 0.1, "avg_participants": 1.5 },
+          "大R":   { "participation_pct": 19.2, "avg_all": 0.3, "avg_participants": 1.6 },
+          "超R":   { "participation_pct": 40.6, "avg_all": 1.2, "avg_participants": 2.8 }
+        },
+        {
+          "name": "排行榜奖励",
+          "event_key": "leaderboard_reward",
+          "小非R": { "participation_pct": 3.8, "avg_all": 0.0, "avg_participants": 1.1 },
+          "中R":   { "participation_pct": 16.5, "avg_all": 0.2, "avg_participants": 1.2 },
+          "大R":   { "participation_pct": 21.2, "avg_all": 0.3, "avg_participants": 1.2 },
+          "超R":   { "participation_pct": 27.3, "avg_all": 0.4, "avg_participants": 1.3 }
+        },
+        {
+          "name": "商店购买",
+          "event_key": "shop_purchase",
+          "小非R": { "participation_pct": 2.2, "avg_all": 0.0, "avg_participants": 1.9 },
+          "中R":   { "participation_pct": 14.3, "avg_all": 0.3, "avg_participants": 2.2 },
+          "大R":   { "participation_pct": 20.3, "avg_all": 0.5, "avg_participants": 2.6 },
+          "超R":   { "participation_pct": 26.8, "avg_all": 0.8, "avg_participants": 3.1 }
+        }
+      ],
+      "invalid_channels": [
+        {
+          "name": "掉落类活动",
+          "reason": "11119362 无效包，不产出科技节卡片",
+          "小非R_participation_pct": 55.8, "小非R_avg_all": 5.8,
+          "中R_avg_all": 18.0, "大R_avg_all": 18.8, "超R_avg_all": 18.9
+        },
+        {
+          "name": "每日任务",
+          "reason": "11119362 无效包",
+          "小非R_participation_pct": 37.6, "小非R_avg_all": 4.2,
+          "中R_avg_all": 16.9, "大R_avg_all": 18.2, "超R_avg_all": 18.7
+        },
+        {
+          "name": "雷达任务",
+          "reason": "11119362 无效包",
+          "小非R_avg_all": 5.4, "中R_avg_all": 5.9, "大R_avg_all": 5.5, "超R_avg_all": 5.2
+        },
+        {
+          "name": "联盟运输/每日宝箱",
+          "reason": "11119362 无效包",
+          "小非R_avg_all": 1.5, "中R_avg_all": 0.1, "大R_avg_all": 0.0, "超R_avg_all": 0.0
+        }
+      ],
+      "effective_total_packs_per_r": {
+        "小非R": 12, "中R": 54, "大R": 62, "超R": 71
+      },
+      "key_finding": "11119362 基础包（占总发包量~49%）不产出科技节卡片，小非R实际有效包仅~12包"
+    },
+    "card_pack_distribution": {
+      "packs": [
+        { "name": "基础包（无效）", "item_id": "11119362", "total_opens": 295579, "note": "不产出科技节卡片" },
+        { "name": "白色卡包", "item_id": "111110002", "total_opens": 177678, "star1_pct": 90.5, "star2_pct": 8.0, "star3_pct": 1.0, "star4_pct": 0.5, "star5_pct": 0.0, "design_match": true },
+        { "name": "绿色卡包", "item_id": "111110003", "total_opens": 110276, "star1_pct": 0, "star2_pct": 84.0, "star3_pct": 14.1, "star4_pct": 1.9, "star5_pct": 0.0, "design_match": true },
+        { "name": "蓝色卡包", "item_id": "111110004", "total_opens": 52293, "star1_pct": 0, "star2_pct": 0, "star3_pct": 87.3, "star4_pct": 12.6, "star5_pct": 0.1, "design_match": true },
+        { "name": "紫色卡包", "item_id": "111110005", "total_opens": 3378, "star1_pct": 0, "star2_pct": 0, "star3_pct": 0, "star4_pct": 87.1, "star5_pct": 12.9, "design_match": true },
+        { "name": "白金卡包", "item_id": "111110006", "total_opens": 1768, "star1_pct": 0, "star2_pct": 0, "star3_pct": 0, "star4_pct": 0, "star5_pct": 100, "design_match": true },
+        { "name": "大富翁专属", "item_id": "111110000", "total_opens": 1385, "star1_pct": 0, "star2_pct": 0, "star3_pct": 78.0, "star4_pct": 22.0, "star5_pct": 0, "design_match": true }
+      ],
+      "conclusion": "所有卡包实测出卡概率与设计高度一致，概率侧无异常"
+    },
+    "price_tier": {
+      "tiers": [
+        { "range": "$0.01-$2.99", "transactions": 2306, "buyers": 1441, "revenue_usd": 6899, "share_pct": 24 },
+        { "range": "$3.00-$9.99", "transactions": 2275, "buyers": 1012, "revenue_usd": 16600, "share_pct": 57 },
+        { "range": "$10.00-$29.99", "transactions": 158, "buyers": 105, "revenue_usd": 4708, "share_pct": 16 },
+        { "range": "$50+", "transactions": 7, "buyers": 7, "revenue_usd": 700, "share_pct": 2 }
+      ]
+    },
+    "activity_engagement": {
+      "task_2115_comparison": [
+        { "group": "大富翁/弹珠/挖孔 (211584-86)", "valentine_count": 33098, "tech_fest_count": 57021, "change_pct": 72.3, "verdict": "参与大幅提升" },
+        { "group": "每日补给 (211574)", "valentine_count": 25518, "tech_fest_count": 30449, "change_pct": 19.3, "verdict": "参与显著提升" },
+        { "group": "挖孔VIP (211587)", "valentine_count": 48, "tech_fest_count": 11872, "change_pct": 24633, "verdict": "从无到有" },
+        { "group": "Bingo 累计 (211550)", "valentine_count": 45907, "tech_fest_count": 38950, "change_pct": -15.2, "verdict": "随DAU回落" }
+      ],
+      "daily_supply_task1_pass_rate": {
+        "task1_base": { "valentine": 22200, "tech_fest": 23448 },
+        "tiers": [
+          { "difficulty": "中等", "task_ids": "211574103~106", "valentine_pct": 73.7, "tech_fest_pct": 53.2, "change_pp": -20.5 },
+          { "difficulty": "较高(含卡包)", "task_ids": "211574061", "valentine_pct": 11.0, "tech_fest_pct": 15.6, "change_pp": 4.6 },
+          { "difficulty": "高难(含卡包)", "task_ids": "211574062~066", "valentine_range": "1.7~2.7%", "tech_fest_range": "3.6~5.0%", "change_pp_range": "+1.8~2.3" },
+          { "difficulty": "高难(无卡包)", "task_ids": "211574067~071", "valentine_range": "1.2~1.4%", "tech_fest_range": "0.6~0.7%", "change_pp_range": "-0.5~0.8" }
+        ],
+        "new_card_pack_tasks": [
+          { "task_id": "211574233", "name": "蓝色卡包-CD1000", "pass_rate_pct": 55.9 },
+          { "task_id": "211574191", "name": "白色卡包-帮助", "pass_rate_pct": 55.3 }
+        ],
+        "core_conclusion": "含卡包高难任务通过率翻倍(~2.3%→~4.3%)，同难度无卡包任务通过率腰斩(~1.3%→~0.7%)"
+      },
+      "leaderboard_2118": {
+        "festivals": [
+          { "name": "圣诞节", "participants": 32534, "settlements": 746948, "avg_per_person": 23.0, "avg_score": "56.1M" },
+          { "name": "情人节", "participants": 33350, "settlements": 723391, "avg_per_person": 21.7, "avg_score": "54.0M" },
+          { "name": "科技节", "participants": 30662, "settlements": 638453, "avg_per_person": 20.8, "avg_score": "36.4M" }
+        ],
+        "mail_coverage": { "recipients": 2178, "packs_distributed": 4394 },
+        "conclusion": "排行榜参与随DAU自然回落(-8%)，竞争驱动型活动对卡包奖励不敏感"
+      },
+      "exchange_shop_2116": {
+        "festivals": [
+          { "name": "圣诞节", "users": 18200, "transactions": 950214, "total_consumption": 6961751, "per_capita": 382.5 },
+          { "name": "情人节", "users": 18079, "transactions": 1731028, "total_consumption": 12880603, "per_capita": 712.5 },
+          { "name": "科技节", "users": 17146, "transactions": 2102987, "total_consumption": 18922475, "per_capita": 1103.6 }
+        ],
+        "trend": "人数持平(~17-18k)，人均消耗连续3个节日翻倍: 383→713→1104"
+      }
+    },
+    "summary_verdicts": [
+      { "dimension": "付费总量", "verdict": "表现优秀", "detail": "核心4品类$28,909；全景约$162K；限时礼包收入+68%" },
+      { "dimension": "活动参与拉升", "verdict": "效果显著", "detail": "含卡包高难任务通过率翻倍，兑换商店人均消耗连续翻倍" },
+      { "dimension": "R级集中度", "verdict": "需关注", "detail": "超R贡献80%收入，中小R渗透不足" },
+      { "dimension": "投放节奏", "verdict": "有断层", "detail": "阶段2(3/22-3/27)日均仅$328，小连锁结束→cycle开放间空6天" }
+    ]
+  }
+}

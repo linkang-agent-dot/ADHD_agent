@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>节日活动知识图谱编辑器</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            background: #16213e;
+            border-radius: 10px;
+        }
+        .header h1 { font-size: 1.5em; color: #00d9ff; }
+        .header-actions { display: flex; gap: 10px; }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-primary { background: #00d9ff; color: #1a1a2e; }
+        .btn-primary:hover { background: #00b8d9; }
+        .btn-success { background: #00c853; color: #fff; }
+        .btn-success:hover { background: #00a844; }
+        .btn-warning { background: #ff9800; color: #fff; }
+        .btn-warning:hover { background: #e68900; }
+        .btn-danger { background: #f44336; color: #fff; }
+        .btn-danger:hover { background: #d32f2f; }
+
+        .nav-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-tab {
+            padding: 10px 16px;
+            background: #16213e;
+            border: none;
+            border-radius: 6px 6px 0 0;
+            color: #888;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        .nav-tab:hover { color: #fff; background: #1f3460; }
+        .nav-tab.active { background: #0f3460; color: #00d9ff; }
+
+        .content { background: #16213e; border-radius: 10px; padding: 20px; }
+        .section { display: none; }
+        .section.active { display: block; }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #0f3460;
+        }
+        .section-title { font-size: 1.3em; color: #00d9ff; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00d9ff;
+            font-weight: 500;
+        }
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            background: #0f3460;
+            border: 1px solid #1f4068;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+        }
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #00d9ff;
+        }
+        .form-textarea { min-height: 120px; resize: vertical; font-family: inherit; }
+        .form-textarea.large { min-height: 200px; }
+
+        .activity-card {
+            background: #0f3460;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .activity-name { font-size: 1.1em; color: #fff; font-weight: 600; }
+        .activity-meta { color: #888; font-size: 12px; }
+
+        .links-list { margin-top: 15px; }
+        .link-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #1a1a2e;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+        .link-item a { color: #00d9ff; text-decoration: none; }
+        .link-item a:hover { text-decoration: underline; }
+        .link-festival { color: #ff9800; min-width: 80px; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-value { font-size: 1.8em; color: #00d9ff; font-weight: bold; }
+        .stat-label { color: #888; font-size: 12px; margin-top: 5px; }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .summary-table th, .summary-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #1f4068;
+        }
+        .summary-table th { background: #0f3460; color: #00d9ff; }
+        .summary-table tr:hover { background: #1f3460; }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px 25px;
+            background: #00c853;
+            color: #fff;
+            border-radius: 8px;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+
+        .collapse-btn {
+            background: none;
+            border: none;
+            color: #00d9ff;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .collapsible { max-height: 0; overflow: hidden; transition: max-height 0.3s; }
+        .collapsible.open { max-height: 2000px; }
+
+        .status-saved { color: #00c853; }
+        .status-unsaved { color: #ff9800; }
+
+        #lastSaved { font-size: 12px; color: #888; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>节日活动知识图谱编辑器</h1>
+        <div class="header-actions">
+            <span id="lastSaved"></span>
+            <span id="saveStatus" class="status-saved">已保存</span>
+            <button class="btn btn-success" onclick="saveAll()">💾 保存</button>
+            <button class="btn btn-primary" onclick="exportMarkdown()">📄 导出MD</button>
+            <button class="btn btn-warning" onclick="exportJSON()">📦 导出JSON</button>
+        </div>
+    </div>
+
+    <div class="nav-tabs" id="navTabs"></div>
+
+    <div class="content" id="content"></div>
+
+    <div class="toast" id="toast">保存成功！</div>
+
+    <script>
+const STORAGE_KEY = 'festival_knowledge_graph_v2';
+
+// 初始数据结构
+const defaultData = {
+    activities: {
+        "节日BP": {
+            conclusion: `- 付费率趋势：登月节4.84% → 万圣节4.66% → 感恩节5.87% → 圣诞节6.80% → 春节8.28%，持续上升
+- 付费深度：春节人均$29.55，较登月节$18.35提升61%
+- 付费玩家占比：春节18.21%（占活跃付费玩家），为历史最高
+- 关键发现：累充+排行榜分组对付费深度有提升；免产增加对付费率有正向效果
+- 付费节点：76%玩家在满级后购买解锁礼包；付费集中在活动首日，次日下跌53%
+- 瓶颈：界面触达率仅45%，需优化HUD/气泡提醒`,
+            comment: "稳定的小额付费收割器，付费率和深度持续优化中，但超R付费深度有限",
+            links: [
+                {festival: "2024春节", title: "春节BP活动数据回归", pageId: "168354940"},
+                {festival: "2024情人节", title: "春节&情人节BP数据回归", pageId: "170408943"},
+                {festival: "2024复活节", title: "复活节BP活动数据回归", pageId: "172416184"}
+            ]
+        },
+        "皮肤Gacha": {
+            conclusion: `- 收入趋势：2023科技节$9.2w → 2024春节$57.4w，增长6倍
+- 付费率：登陆付费玩家付费率从15.53%提升至24.94%（春节）
+- ARPU：登陆付费玩家ARPU从$6.37提升至$16.08
+- R级分层：超R付费率49.74%、人均$360；大R付费率29.29%、人均$119；中R付费率8.79%、人均$45
+- 付费占比：春节gacha占节日总付费33.14%，为核心收入模块
+- 关键发现：付费提升主要来自付费率+付费深度双维度，而非DAC变化`,
+            comment: "节日核心付费模块，超R依赖度高但分层清晰，持续迭代中",
+            links: [
+                {festival: "2024春节", title: "春节、情人节gacha回归", pageId: "170413613"}
+            ]
+        },
+        "七日活动": {
+            conclusion: `- 付费率下滑：登月节7.58% → 圣诞节4.64% → 情人节4.76%，整体呈下降趋势
+- 任务完成率：完成所有任务仅6-11%，投放gacha券可提升至19%
+- R级付费率：超R 42-63%、大R 31-47%、中R 11-21%、小R 0.5-1.5%
+- 关键发现：付费情况与完成率关联不大，问题在付费体验而非活跃度
+- 优化方向：开箱ROI分配调整，增加保底+小额抽奖形式，排除垃圾奖品`,
+            comment: "活跃拉动效果好，但付费转化持续走低，需从付费体验角度优化",
+            links: []
+        },
+        "挖矿活动": {
+            conclusion: `- 付费率稳定：各节日触达付费玩家付费率维持在9.5-11.5%区间
+- ARPU：人均付费$0.42-$0.77，属于小额付费模块
+- 分礼包表现：产量飙升付费率最高(3-7%)，挖矿连锁次之(3-6%)，锚点礼包最低(0.1-0.3%)
+- 付费深度：付费玩家人均$8-13，情人节因双期活动总付费提升但单期下降
+- 关键发现：上连锁礼包可提升整体付费率约0.5-1个百分点`,
+            comment: "稳定的小额付费+活跃模块，数据波动小，适合作为节日基础配置",
+            links: []
+        },
+        "巨猿活动": {
+            conclusion: `- 数据稳定：活动触达与参与率正常，无明显波动
+- 定位：纯活跃活动，无直接付费内容
+- ROI：奖励ROI 294%-1256%，随档位递增，属于高福利活动
+- 核心投放：BP道具、加速、资源、高抽、英雄升星`,
+            comment: "稳定的活跃拉动模块，数据无异常，作为节日标配活动持续复用",
+            links: []
+        },
+        "掉落活动": {
+            conclusion: `- 数据稳定：PVE人均掉落道具20-38个，采集人均8-10个，符合预期
+- 定位：纯活跃活动，通过行为产出节日道具
+- 掉落ROI：PVE 615-678%，GVE高达18416%，属于高福利投放
+- 核心投放：BP道具、资源、加速`,
+            comment: "符合预期的活跃拉动模块，数据稳定无需调整",
+            links: []
+        },
+        "连锁礼包": {
+            conclusion: `- 付费率大幅提升：黑五折扣1.20% → 圣诞赠礼2.42% → 春节连锁11.54%，提升近10倍
+- 收入占比：春节连锁占节日付费24.71%，为核心付费模块
+- R级付费率：超R 57.96%、大R 48.29%、中R 26.72%、小R 3.58%，全R级提升明显
+- 转化率对比：相比军备连锁，付费档位转化率提升375%-1150%
+- 关键发现：增加终极大奖预览后，免费→付费转化提升明显；CD档位流失较多需优化`,
+            comment: "形式创新带来显著付费提升，终极奖励预览是关键设计，CD档位价格需优化",
+            links: []
+        },
+        "GPT讲价": {
+            conclusion: `- 参与深度提升：话题修改后玩家聊天深度明显提升，与主题趣味性相关
+- 购买率提升：玩家购买率与聊天深度正相关，深度参与带动购买
+- CD消耗：人均CD消耗除超R外有所下降，但购买人数增加
+- 成本可控：GPT成本人均$0.01-0.02，可接受范围
+- 关键发现：默认道具购买率反而下降，提升来自其他道具的深度参与`,
+            comment: "创新玩法，话题趣味性是核心驱动力，成本可控可扩大覆盖范围",
+            links: []
+        },
+        "大富翁": {
+            conclusion: `- 触达率：69.72%，人均进入活动界面50次，符合高频活跃参与设计
+- 骰子获取：人均370个（排除付费），投放饱和度41%，达到设计预期值343个
+- 阶段奖励：42%玩家拿到装饰组件3，符合设计预期
+- 新增付费：额外增加$7w新形式付费
+- R级分层：小R人均消耗可拿满限定装饰，超R人均消耗超过阶段奖励设计
+- 关键发现：拿满装饰后参与度明显衰减，缺少深度吸引内容`,
+            comment: "2025新形式，满足全R级高频活跃拿奖目的，后续持续沿用并迭代",
+            links: []
+        },
+        "礼包团购": {
+            conclusion: `- 对比幸运星：付费率、收入均优于庆典抽奖（幸运星）
+- 购买节奏：每日购买人数稳定，购买总额越到后面越多（与活动规则、价位变化有关）
+- 免费→付费转化：免费礼包活跃领取率正常，英雄升星/超凡升星石购买率相对较差
+- 购买时间：除day5外，其他礼包首日购买人数最多，但后续累计购买也很多
+- 机器人填充：实际购买人数未达预设，靠机器人刷上去，但不影响体验
+- 优化方向：拉长购买时间、提前机器人检测时间点、替换低购买率养成线`,
+            comment: "2025新形式，优于幸运星，购买节奏设计合理，后续可持续优化",
+            links: []
+        },
+        "机甲Gacha": { conclusion: "", comment: "", links: [] },
+        "单笔充值": { conclusion: "", comment: "", links: [] },
+        "消耗活动": { conclusion: "", comment: "", links: [] },
+        "签到BP": { conclusion: "", comment: "", links: [] },
+        "装饰券投放": { conclusion: "", comment: "", links: [] },
+        "行军表情": { conclusion: "", comment: "", links: [] },
+        "周卡": { conclusion: "", comment: "", links: [] },
+        "手札相册": { conclusion: "", comment: "", links: [] },
+        "折扣活动": { conclusion: "", comment: "", links: [] },
+        "兑换活动": { conclusion: "", comment: "", links: [] },
+        "签到活动": { conclusion: "", comment: "", links: [] },
+        "Bingo活动": { conclusion: "", comment: "", links: [] },
+        "转盘抽奖": { conclusion: "", comment: "", links: [] },
+        "拜访活动": { conclusion: "", comment: "", links: [] },
+        "红包": { conclusion: "", comment: "", links: [] },
+        "聚宝盆": { conclusion: "", comment: "", links: [] }
+    },
+    summary: {
+        conclusions: `1. **付费核心**：Gacha弹珠+连锁礼包+累充构成节日付费三大支柱，占比超60%
+2. **活跃基础**：BP+七日+掉落+巨猿+挖矿构成活跃拉动矩阵，覆盖全R级
+3. **形式创新**：2025年大富翁、礼包团购等新形式数据表现良好，值得持续迭代
+4. **优化重点**：七日活动付费转化持续走低，需从付费体验角度重新设计`,
+        comments: `- 节日活动形式已形成成熟的"付费+活跃"双轨体系
+- 高频复用形式（BP/Gacha/挖矿）数据稳定，是节日收入基本盘
+- 新形式（大富翁/团购）带来增量，但需要更多节日验证
+- 部分老形式（七日/消耗）出现疲态，需要机制创新而非数值调整`
+    },
+    lastSaved: null
+};
+
+let data = loadData();
+let hasUnsavedChanges = false;
+
+function loadData() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+        try {
+            const parsed = JSON.parse(saved);
+            // 合并默认数据，确保新增的活动类型也存在
+            for (const key in defaultData.activities) {
+                if (!parsed.activities[key]) {
+                    parsed.activities[key] = defaultData.activities[key];
+                }
+            }
+            return parsed;
+        } catch (e) {
+            return JSON.parse(JSON.stringify(defaultData));
+        }
+    }
+    return JSON.parse(JSON.stringify(defaultData));
+}
+
+function saveAll() {
+    data.lastSaved = new Date().toISOString();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    hasUnsavedChanges = false;
+    updateSaveStatus();
+    showToast('保存成功！');
+}
+
+function markUnsaved() {
+    hasUnsavedChanges = true;
+    updateSaveStatus();
+}
+
+function updateSaveStatus() {
+    const statusEl = document.getElementById('saveStatus');
+    const lastSavedEl = document.getElementById('lastSaved');
+
+    if (hasUnsavedChanges) {
+        statusEl.textContent = '未保存';
+        statusEl.className = 'status-unsaved';
+    } else {
+        statusEl.textContent = '已保存';
+        statusEl.className = 'status-saved';
+    }
+
+    if (data.lastSaved) {
+        const d = new Date(data.lastSaved);
+        lastSavedEl.textContent = `上次保存: ${d.toLocaleString('zh-CN')}`;
+    }
+}
+
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+function renderTabs() {
+    const tabs = document.getElementById('navTabs');
+    const activities = Object.keys(data.activities);
+
+    let html = '<button class="nav-tab active" data-tab="summary">📊 总结</button>';
+    activities.forEach((name, i) => {
+        html += `<button class="nav-tab" data-tab="activity-${i}">${name}</button>`;
+    });
+    tabs.innerHTML = html;
+
+    tabs.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            showSection(tab.dataset.tab);
+        });
+    });
+}
+
+function showSection(tabId) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(tabId)?.classList.add('active');
+}
+
+function renderContent() {
+    const content = document.getElementById('content');
+    const activities = Object.keys(data.activities);
+
+    let html = renderSummarySection();
+    activities.forEach((name, i) => {
+        html += renderActivitySection(name, i);
+    });
+
+    content.innerHTML = html;
+    bindEvents();
+    showSection('summary');
+}
+
+function renderSummarySection() {
+    return `
+    <div class="section active" id="summary">
+        <div class="section-header">
+            <h2 class="section-title">📊 数据回归总结</h2>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">${Object.keys(data.activities).length}</div>
+                <div class="stat-label">活动形式</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">237</div>
+                <div class="stat-label">回归记录</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">2024-2026</div>
+                <div class="stat-label">数据范围</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">核心结论</label>
+            <textarea class="form-textarea large" id="summary-conclusions"
+                placeholder="输入核心结论...">${data.summary.conclusions}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">整体评语</label>
+            <textarea class="form-textarea large" id="summary-comments"
+                placeholder="输入整体评语...">${data.summary.comments}</textarea>
+        </div>
+    </div>`;
+}
+
+function renderActivitySection(name, index) {
+    const activity = data.activities[name];
+    const hasData = activity.conclusion || activity.comment;
+
+    return `
+    <div class="section" id="activity-${index}">
+        <div class="section-header">
+            <h2 class="section-title">${name}</h2>
+            <span class="activity-meta">${hasData ? '✅ 已填写' : '⏳ 待填写'}</span>
+        </div>
+
+        <div class="activity-card">
+            <div class="form-group">
+                <label class="form-label">数据结论</label>
+                <textarea class="form-textarea large" id="conclusion-${index}"
+                    placeholder="输入数据结论，每行一条，以 - 开头...">${activity.conclusion}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">评语</label>
+                <textarea class="form-textarea" id="comment-${index}"
+                    placeholder="输入评语...">${activity.comment}</textarea>
+            </div>
+        </div>
+    </div>`;
+}
+
+function bindEvents() {
+    // 总结部分
+    document.getElementById('summary-conclusions')?.addEventListener('input', (e) => {
+        data.summary.conclusions = e.target.value;
+        markUnsaved();
+    });
+    document.getElementById('summary-comments')?.addEventListener('input', (e) => {
+        data.summary.comments = e.target.value;
+        markUnsaved();
+    });
+
+    // 各活动
+    Object.keys(data.activities).forEach((name, i) => {
+        document.getElementById(`conclusion-${i}`)?.addEventListener('input', (e) => {
+            data.activities[name].conclusion = e.target.value;
+            markUnsaved();
+        });
+        document.getElementById(`comment-${i}`)?.addEventListener('input', (e) => {
+            data.activities[name].comment = e.target.value;
+            markUnsaved();
+        });
+    });
+
+    // Ctrl+S 保存
+    document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            saveAll();
+        }
+    });
+}
+
+function exportMarkdown() {
+    let md = `## 七、数据回归索引\n\n> 按活动形式分类的历史数据回归链接（2024-2026）\n\n`;
+
+    Object.entries(data.activities).forEach(([name, activity], i) => {
+        md += `### 7.${i + 1} ${name}\n\n`;
+        if (activity.conclusion) {
+            md += `**数据结论**：\n${activity.conclusion}\n\n`;
+        }
+        if (activity.comment) {
+            md += `**评语**：${activity.comment}\n\n`;
+        }
+        md += `\n`;
+    });
+
+    md += `### 7.${Object.keys(data.activities).length + 1} 数据回归总结\n\n`;
+    md += `**核心结论**：\n${data.summary.conclusions}\n\n`;
+    md += `**评语**：\n${data.summary.comments}\n`;
+
+    downloadFile('节日活动知识图谱_数据回归.md', md);
+    showToast('Markdown 导出成功！');
+}
+
+function exportJSON() {
+    downloadFile('节日活动知识图谱_数据.json', JSON.stringify(data, null, 2));
+    showToast('JSON 导出成功！');
+}
+
+function downloadFile(filename, content) {
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+// 初始化
+renderTabs();
+renderContent();
+updateSaveStatus();
+
+// 离开页面提醒
+window.addEventListener('beforeunload', (e) => {
+    if (hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = '';
+    }
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,568 @@
+{
+  "meta": {
+    "activity_id": "21127806",
+    "activity_name": "2026拓荒节弹珠GACHA",
+    "created_at": "2026-04-10T08:04:37.637Z",
+    "status": "pending"
+  },
+  "inputs": {
+    "cat_id": "",
+    "milestone_reward": "11112649",
+    "exchange_start": 21165100,
+    "task_start": 211590100,
+    "new_activity_id": "21127807"
+  },
+  "shop_items": [
+    {
+      "name": "S级皮肤",
+      "id": "11119472",
+      "price": 15000,
+      "limit": 1
+    },
+    {
+      "name": "A级特效",
+      "id": "11119469",
+      "price": 5000,
+      "limit": 1
+    },
+    {
+      "name": "A级组件1",
+      "id": "11119467",
+      "price": 5000,
+      "limit": 1
+    },
+    {
+      "name": "A级组件2",
+      "id": "11119468",
+      "price": 5000,
+      "limit": 1
+    },
+    {
+      "name": "B级皮肤2",
+      "id": "11119473",
+      "price": 2000,
+      "limit": 1
+    },
+    {
+      "name": "碎片-艾里奥特",
+      "id": "11116272",
+      "price": 56,
+      "limit": 200
+    },
+    {
+      "name": "红色英雄材料",
+      "id": "11116390",
+      "price": 278,
+      "limit": 25
+    },
+    {
+      "name": "阶段自选箱",
+      "id": "111111030",
+      "price": 1000,
+      "limit": 5
+    },
+    {
+      "name": "普通弹珠x10",
+      "id": "11112649",
+      "price": 100,
+      "limit": 0,
+      "qty": 10
+    },
+    {
+      "name": "1高级→5普通",
+      "id": "11112616",
+      "price": 1,
+      "limit": 0,
+      "qty": 5
+    }
+  ],
+  "changes": {
+    "2116_new_rows": [
+      {
+        "A_INT_group": 34,
+        "A_INT_id": 21165100,
+        "N_STR_comment": "拓荒节弹珠-S级皮肤",
+        "A_ARR_item_give": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 111111018,
+              "val": 15000
+            },
+            "setting": {
+              "serial_number": 1,
+              "ishighlight": false
+            }
+          }
+        ],
+        "A_ARR_item_get": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 11119472,
+              "val": 1
+            },
+            "setting": {
+              "serial_number": 1
+            }
+          }
+        ],
+        "A_INT_display_order": 99990,
+        "A_INT_limit_num": 1,
+        "A_INT_if_remind": 0,
+        "A_INT_display": 0,
+        "A_MAP_requirement": {},
+        "S_MAP_show_requirement": {},
+        "S_ARR_bargain_count": [],
+        "S_MAP_bargain_limit": {},
+        "C_INT_discount": 0,
+        "A_STR_pkg_title": {},
+        "C_MAP_type_title": {}
+      },
+      {
+        "A_INT_group": 34,
+        "A_INT_id": 21165101,
+        "N_STR_comment": "拓荒节弹珠-A级特效",
+        "A_ARR_item_give": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 111111018,
+              "val": 5000
+            },
+            "setting": {
+              "serial_number": 1,
+              "ishighlight": false
+            }
+          }
+        ],
+        "A_ARR_item_get": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 11119469,
+              "val": 1
+            },
+            "setting": {
+              "serial_number": 1
+            }
+          }
+        ],
+        "A_INT_display_order": 99989,
+        "A_INT_limit_num": 1,
+        "A_INT_if_remind": 0,
+        "A_INT_display": 0,
+        "A_MAP_requirement": {},
+        "S_MAP_show_requirement": {},
+        "S_ARR_bargain_count": [],
+        "S_MAP_bargain_limit": {},
+        "C_INT_discount": 0,
+        "A_STR_pkg_title": {},
+        "C_MAP_type_title": {}
+      },
+      {
+        "A_INT_group": 34,
+        "A_INT_id": 21165102,
+        "N_STR_comment": "拓荒节弹珠-A级组件1",
+        "A_ARR_item_give": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 111111018,
+              "val": 5000
+            },
+            "setting": {
+              "serial_number": 1,
+              "ishighlight": false
+            }
+          }
+        ],
+        "A_ARR_item_get": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 11119467,
+              "val": 1
+            },
+            "setting": {
+              "serial_number": 1
+            }
+          }
+        ],
+        "A_INT_display_order": 99988,
+        "A_INT_limit_num": 1,
+        "A_INT_if_remind": 0,
+        "A_INT_display": 0,
+        "A_MAP_requirement": {},
+        "S_MAP_show_requirement": {},
+        "S_ARR_bargain_count": [],
+        "S_MAP_bargain_limit": {},
+        "C_INT_discount": 0,
+        "A_STR_pkg_title": {},
+        "C_MAP_type_title": {}
+      },
+      {
+        "A_INT_group": 34,
+        "A_INT_id": 21165103,
+        "N_STR_comment": "拓荒节弹珠-A级组件2",
+        "A_ARR_item_give": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 111111018,
+              "val": 5000
+            },
+            "setting": {
+              "serial_number": 1,
+              "ishighlight": false
+            }
+          }
+        ],
+        "A_ARR_item_get": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 11119468,
+              "val": 1
+            },
+            "setting": {
+              "serial_number": 1
+            }
+          }
+        ],
+        "A_INT_display_order": 99987,
+        "A_INT_limit_num": 1,
+        "A_INT_if_remind": 0,
+        "A_INT_display": 0,
+        "A_MAP_requirement": {},
+        "S_MAP_show_requirement": {},
+        "S_ARR_bargain_count": [],
+        "S_MAP_bargain_limit": {},
+        "C_INT_discount": 0,
+        "A_STR_pkg_title": {},
+        "C_MAP_type_title": {}
+      },
+      {
+        "A_INT_group": 34,
+        "A_INT_id": 21165104,
+        "N_STR_comment": "拓荒节弹珠-B级皮肤2",
+        "A_ARR_item_give": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 111111018,
+              "val": 2000
+            },
+            "setting": {
+              "serial_number": 1,
+              "ishighlight": false
+            }
+          }
+        ],
+        "A_ARR_item_get": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 11119473,
+              "val": 1
+            },
+            "setting": {
+              "serial_number": 1
+            }
+          }
+        ],
+        "A_INT_display_order": 99986,
+        "A_INT_limit_num": 1,
+        "A_INT_if_remind": 0,
+        "A_INT_display": 0,
+        "A_MAP_requirement": {},
+        "S_MAP_show_requirement": {},
+        "S_ARR_bargain_count": [],
+        "S_MAP_bargain_limit": {},
+        "C_INT_discount": 0,
+        "A_STR_pkg_title": {},
+        "C_MAP_type_title": {}
+      },
+      {
+        "A_INT_group": 34,
+        "A_INT_id": 21165105,
+        "N_STR_comment": "拓荒节弹珠-碎片-艾里奥特",
+        "A_ARR_item_give": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 111111018,
+              "val": 56
+            },
+            "setting": {
+              "serial_number": 1,
+              "ishighlight": false
+            }
+          }
+        ],
+        "A_ARR_item_get": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 11116272,
+              "val": 1
+            },
+            "setting": {
+              "serial_number": 1
+            }
+          }
+        ],
+        "A_INT_display_order": 99985,
+        "A_INT_limit_num": 200,
+        "A_INT_if_remind": 0,
+        "A_INT_display": 0,
+        "A_MAP_requirement": {},
+        "S_MAP_show_requirement": {},
+        "S_ARR_bargain_count": [],
+        "S_MAP_bargain_limit": {},
+        "C_INT_discount": 0,
+        "A_STR_pkg_title": {},
+        "C_MAP_type_title": {}
+      },
+      {
+        "A_INT_group": 34,
+        "A_INT_id": 21165106,
+        "N_STR_comment": "拓荒节弹珠-红色英雄材料",
+        "A_ARR_item_give": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 111111018,
+              "val": 278
+            },
+            "setting": {
+              "serial_number": 1,
+              "ishighlight": false
+            }
+          }
+        ],
+        "A_ARR_item_get": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 11116390,
+              "val": 1
+            },
+            "setting": {
+              "serial_number": 1
+            }
+          }
+        ],
+        "A_INT_display_order": 99984,
+        "A_INT_limit_num": 25,
+        "A_INT_if_remind": 0,
+        "A_INT_display": 0,
+        "A_MAP_requirement": {},
+        "S_MAP_show_requirement": {},
+        "S_ARR_bargain_count": [],
+        "S_MAP_bargain_limit": {},
+        "C_INT_discount": 0,
+        "A_STR_pkg_title": {},
+        "C_MAP_type_title": {}
+      },
+      {
+        "A_INT_group": 34,
+        "A_INT_id": 21165107,
+        "N_STR_comment": "拓荒节弹珠-阶段自选箱",
+        "A_ARR_item_give": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 111111018,
+              "val": 1000
+            },
+            "setting": {
+              "serial_number": 1,
+              "ishighlight": false
+            }
+          }
+        ],
+        "A_ARR_item_get": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 111111030,
+              "val": 1
+            },
+            "setting": {
+              "serial_number": 1
+            }
+          }
+        ],
+        "A_INT_display_order": 99983,
+        "A_INT_limit_num": 5,
+        "A_INT_if_remind": 0,
+        "A_INT_display": 0,
+        "A_MAP_requirement": {},
+        "S_MAP_show_requirement": {},
+        "S_ARR_bargain_count": [],
+        "S_MAP_bargain_limit": {},
+        "C_INT_discount": 0,
+        "A_STR_pkg_title": {},
+        "C_MAP_type_title": {}
+      },
+      {
+        "A_INT_group": 34,
+        "A_INT_id": 21165108,
+        "N_STR_comment": "拓荒节弹珠-普通弹珠x10",
+        "A_ARR_item_give": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 111111018,
+              "val": 100
+            },
+            "setting": {
+              "serial_number": 1,
+              "ishighlight": false
+            }
+          }
+        ],
+        "A_ARR_item_get": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 11112649,
+              "val": 10
+            },
+            "setting": {
+              "serial_number": 1
+            }
+          }
+        ],
+        "A_INT_display_order": 99982,
+        "A_INT_limit_num": 0,
+        "A_INT_if_remind": 0,
+        "A_INT_display": 0,
+        "A_MAP_requirement": {},
+        "S_MAP_show_requirement": {},
+        "S_ARR_bargain_count": [],
+        "S_MAP_bargain_limit": {},
+        "C_INT_discount": 0,
+        "A_STR_pkg_title": {},
+        "C_MAP_type_title": {}
+      },
+      {
+        "A_INT_group": 34,
+        "A_INT_id": 21165109,
+        "N_STR_comment": "拓荒节弹珠-1高级→5普通",
+        "A_ARR_item_give": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 111111018,
+              "val": 1
+            },
+            "setting": {
+              "serial_number": 1,
+              "ishighlight": false
+            }
+          }
+        ],
+        "A_ARR_item_get": [
+          {
+            "asset": {
+              "typ": "item",
+              "id": 11112616,
+              "val": 5
+            },
+            "setting": {
+              "serial_number": 1
+            }
+          }
+        ],
+        "A_INT_display_order": 99981,
+        "A_INT_limit_num": 0,
+        "A_INT_if_remind": 0,
+        "A_INT_display": 0,
+        "A_MAP_requirement": {},
+        "S_MAP_show_requirement": {},
+        "S_ARR_bargain_count": [],
+        "S_MAP_bargain_limit": {},
+        "C_INT_discount": 0,
+        "A_STR_pkg_title": {},
+        "C_MAP_type_title": {}
+      }
+    ],
+    "2121_update": {
+      "id": 21219536,
+      "field": "A_ARR_array",
+      "old_value": [
+        21163279,
+        21163280
+      ],
+      "new_value": [
+        21163279,
+        21163280,
+        21165100,
+        21165101,
+        21165102,
+        21165103,
+        21165104,
+        21165105,
+        21165106,
+        21165107,
+        21165108,
+        21165109,
+        21165110
+      ]
+    },
+    "2112_main_update": {
+      "id": 21127806,
+      "field": "A_ARR_activity_components",
+      "append_exchanges": [
+        {
+          "typ": "exchange",
+          "id": 21165100
+        },
+        {
+          "typ": "exchange",
+          "id": 21165101
+        },
+        {
+          "typ": "exchange",
+          "id": 21165102
+        },
+        {
+          "typ": "exchange",
+          "id": 21165103
+        },
+        {
+          "typ": "exchange",
+          "id": 21165104
+        },
+        {
+          "typ": "exchange",
+          "id": 21165105
+        },
+        {
+          "typ": "exchange",
+          "id": 21165106
+        },
+        {
+          "typ": "exchange",
+          "id": 21165107
+        },
+        {
+          "typ": "exchange",
+          "id": 21165108
+        },
+        {
+          "typ": "exchange",
+          "id": 21165109
+        },
+        {
+          "typ": "exchange",
+          "id": 21165110
+        }
+      ]
+    },
+    "2115_new_rows": [],
+    "2112_new_row": null
+  }
+}

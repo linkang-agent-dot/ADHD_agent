@@ -1,0 +1,60 @@
+{
+  "festival": "占星节",
+  "activity_type": "巨猿金蛋",
+  "bp_item_id": 11119497,
+  "bp_item_name": "观星球",
+  "package_price": 9.99,
+  "total_value": 83.46,
+  "roi": 8.35,
+  "eggs": [
+    {
+      "level": 1,
+      "total_value": 2.38,
+      "expected_value": 0.184,
+      "weight_sum": 320,
+      "config": "{\"typ\":\"single_random\",\"num\":1,\"args\":[{\"typ\":\"item\",\"id\":11111102,\"num\":2,\"wgt\":80},{\"typ\":\"item\",\"id\":11119497,\"num\":2,\"wgt\":35},{\"typ\":\"item\",\"id\":11116005,\"num\":1,\"wgt\":30},{\"typ\":\"item\",\"id\":11114328,\"num\":5,\"wgt\":60},{\"typ\":\"item\",\"id\":11117068,\"num\":2,\"wgt\":50},{\"typ\":\"item\",\"id\":11118002,\"num\":1,\"wgt\":30},{\"typ\":\"item\",\"id\":11111082,\"num\":1,\"wgt\":15},{\"typ\":\"item\",\"id\":11117024,\"num\":1,\"wgt\":20}]}"
+    },
+    {
+      "level": 2,
+      "total_value": 3.25,
+      "expected_value": 0.285,
+      "weight_sum": 320,
+      "config": "{\"typ\":\"single_random\",\"num\":1,\"args\":[{\"typ\":\"item\",\"id\":11111102,\"num\":3,\"wgt\":80},{\"typ\":\"item\",\"id\":11119497,\"num\":4,\"wgt\":35},{\"typ\":\"item\",\"id\":11116005,\"num\":2,\"wgt\":30},{\"typ\":\"item\",\"id\":11114328,\"num\":10,\"wgt\":60},{\"typ\":\"item\",\"id\":11117068,\"num\":5,\"wgt\":50},{\"typ\":\"item\",\"id\":11118002,\"num\":2,\"wgt\":30},{\"typ\":\"item\",\"id\":11111082,\"num\":1,\"wgt\":15},{\"typ\":\"item\",\"id\":11117024,\"num\":1,\"wgt\":20}]}"
+    },
+    {
+      "level": 3,
+      "total_value": 6.49,
+      "expected_value": 0.567,
+      "weight_sum": 320,
+      "config": "{\"typ\":\"single_random\",\"num\":1,\"args\":[{\"typ\":\"item\",\"id\":11111102,\"num\":5,\"wgt\":80},{\"typ\":\"item\",\"id\":11119497,\"num\":6,\"wgt\":35},{\"typ\":\"item\",\"id\":11116005,\"num\":5,\"wgt\":30},{\"typ\":\"item\",\"id\":11114329,\"num\":15,\"wgt\":60},{\"typ\":\"item\",\"id\":11117068,\"num\":8,\"wgt\":50},{\"typ\":\"item\",\"id\":11118002,\"num\":5,\"wgt\":30},{\"typ\":\"item\",\"id\":11111082,\"num\":2,\"wgt\":15},{\"typ\":\"item\",\"id\":11117024,\"num\":2,\"wgt\":20}]}"
+    },
+    {
+      "level": 4,
+      "total_value": 8.81,
+      "expected_value": 0.825,
+      "weight_sum": 320,
+      "config": "{\"typ\":\"single_random\",\"num\":1,\"args\":[{\"typ\":\"item\",\"id\":11111102,\"num\":10,\"wgt\":80},{\"typ\":\"item\",\"id\":11119497,\"num\":8,\"wgt\":35},{\"typ\":\"item\",\"id\":11116007,\"num\":2,\"wgt\":30},{\"typ\":\"item\",\"id\":11114329,\"num\":10,\"wgt\":60},{\"typ\":\"item\",\"id\":11117068,\"num\":12,\"wgt\":50},{\"typ\":\"item\",\"id\":11118004,\"num\":2,\"wgt\":30},{\"typ\":\"item\",\"id\":11111082,\"num\":2,\"wgt\":15},{\"typ\":\"item\",\"id\":11117024,\"num\":2,\"wgt\":20}]}"
+    },
+    {
+      "level": 5,
+      "total_value": 16.02,
+      "expected_value": 1.49,
+      "weight_sum": 320,
+      "config": "{\"typ\":\"single_random\",\"num\":1,\"args\":[{\"typ\":\"item\",\"id\":11111102,\"num\":15,\"wgt\":80},{\"typ\":\"item\",\"id\":11119497,\"num\":10,\"wgt\":35},{\"typ\":\"item\",\"id\":11116007,\"num\":5,\"wgt\":30},{\"typ\":\"item\",\"id\":11114329,\"num\":15,\"wgt\":60},{\"typ\":\"item\",\"id\":11117068,\"num\":15,\"wgt\":50},{\"typ\":\"item\",\"id\":11118004,\"num\":5,\"wgt\":30},{\"typ\":\"item\",\"id\":11111082,\"num\":3,\"wgt\":15},{\"typ\":\"item\",\"id\":11117024,\"num\":3,\"wgt\":20}]}"
+    },
+    {
+      "level": 6,
+      "total_value": 16.65,
+      "expected_value": 1.831,
+      "weight_sum": 255,
+      "config": "{\"typ\":\"single_random\",\"num\":1,\"args\":[{\"typ\":\"item\",\"id\":11111105,\"num\":2,\"wgt\":80},{\"typ\":\"item\",\"id\":11114330,\"num\":10,\"wgt\":60},{\"typ\":\"item\",\"id\":11112498,\"num\":4,\"wgt\":30},{\"typ\":\"item\",\"id\":11116304,\"num\":2,\"wgt\":20},{\"typ\":\"item\",\"id\":11119497,\"num\":12,\"wgt\":30},{\"typ\":\"item\",\"id\":11111082,\"num\":4,\"wgt\":15},{\"typ\":\"item\",\"id\":11117024,\"num\":4,\"wgt\":20}]}"
+    },
+    {
+      "level": 7,
+      "total_value": 29.875,
+      "expected_value": 3.689,
+      "weight_sum": 265,
+      "config": "{\"typ\":\"single_random\",\"num\":1,\"args\":[{\"typ\":\"item\",\"id\":11111105,\"num\":5,\"wgt\":80},{\"typ\":\"item\",\"id\":11114330,\"num\":15,\"wgt\":60},{\"typ\":\"item\",\"id\":11112498,\"num\":10,\"wgt\":30},{\"typ\":\"item\",\"id\":11116304,\"num\":5,\"wgt\":30},{\"typ\":\"item\",\"id\":11119497,\"num\":15,\"wgt\":30},{\"typ\":\"item\",\"id\":11111082,\"num\":5,\"wgt\":15},{\"typ\":\"item\",\"id\":11117024,\"num\":5,\"wgt\":20}]}"
+    }
+  ]
+}

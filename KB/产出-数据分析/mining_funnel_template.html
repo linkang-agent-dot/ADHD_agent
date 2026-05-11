@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>挖矿回归 · 关卡漏斗模板</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ================================================================
+     挖矿回归漏斗表格模板 v1.0
+     用法：替换 DATA 对象中的数据即可复用
+     - rows[].id       关卡名（显示用）
+     - rows[].reward   奖励描述（任意文本，如 "+白包" / "+积分×50" / "+骰子×2"）
+     - rows[].rewardType  奖励类型：'white'白包/'green'绿包/'item'其他道具/'none'无奖励
+     - rows[].d        各R级人数 {1:非R, 2:小R, 3:中R, 4:大R, 5:超R}
+     - entry           每期各R级入口人数
+  ================================================================ */
+
+  :root {
+    --bg:#090c12; --bg2:#0e1420; --bg3:#131a27;
+    --border:#1e2d45; --accent:#00d4ff;
+    --text:#c8d8f0; --text2:#7a8fa8;
+    --nr:#8899aa; --xr:#ff6b35; --sr:#ffcc00; --dr:#00d4ff; --cr:#39ff8a;
+    --mono:'JetBrains Mono',monospace; --sans:'Noto Sans SC',sans-serif;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:var(--sans); padding:32px 24px; }
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:linear-gradient(rgba(0,212,255,.03) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(0,212,255,.03) 1px,transparent 1px);
+    background-size:40px 40px;
+  }
+  .wrap { max-width:1440px; margin:0 auto; position:relative; z-index:1; }
+
+  h1 { font-size:22px; font-weight:700; color:#fff; margin-bottom:4px; }
+  .subtitle { font-family:var(--mono); font-size:11px; color:var(--text2); margin-bottom:24px; }
+  .subtitle span { color:var(--accent); margin:0 6px; }
+
+  .meta-bar { display:flex; align-items:center; gap:24px; margin-bottom:20px; flex-wrap:wrap; }
+
+  /* period tabs */
+  .tabs { display:flex; gap:8px; }
+  .tab {
+    font-family:var(--mono); font-size:11px; padding:6px 16px; border-radius:4px;
+    border:1px solid var(--border); color:var(--text2); cursor:pointer; transition:.15s;
+    user-select:none;
+  }
+  .tab.active { background:rgba(0,212,255,.1); border-color:var(--accent); color:var(--accent); }
+  .tab:hover:not(.active) { border-color:rgba(0,212,255,.4); color:var(--text); }
+
+  /* legend */
+  .legend { display:flex; gap:16px; flex-wrap:wrap; }
+  .lg { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--text2); font-family:var(--mono); }
+  .lg-dot { width:8px; height:8px; border-radius:50%; }
+
+  /* table wrapper */
+  .tbl-wrap { background:var(--bg2); border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-bottom:24px; }
+  table { width:100%; border-collapse:collapse; }
+
+  /* header rows */
+  .thead-top th {
+    background:var(--bg3); padding:10px 12px; font-size:11px; font-family:var(--mono);
+    letter-spacing:1px; border-bottom:1px solid var(--border); border-right:1px solid var(--border);
+    text-align:center; white-space:nowrap;
+  }
+  .thead-top th:last-child { border-right:none; }
+  .th-label { text-align:left !important; color:var(--text2); min-width:90px; }
+  .th-reward { text-align:left !important; color:var(--text2); min-width:90px; }
+
+  .thead-sub th {
+    background:#080b12; padding:5px 8px; font-size:10px; font-family:var(--mono);
+    color:var(--text2); border-bottom:2px solid var(--border); border-right:1px solid rgba(30,45,69,.4);
+    text-align:center; letter-spacing:.5px;
+  }
+  .thead-sub th.th-label { text-align:left; border-right:1px solid var(--border); }
+  .cg-right { border-right:1px solid var(--border) !important; }
+
+  /* body */
+  tbody tr { border-bottom:1px solid rgba(30,45,69,.45); transition:.1s; }
+  tbody tr:last-child { border-bottom:none; }
+  tbody tr:hover td { background:rgba(0,212,255,.025); }
+  tbody tr.has-reward td { background:rgba(0,212,255,.02); }
+  tbody tr.section-start td { border-top:2px solid rgba(30,45,69,.8); }
+
+  td { padding:9px 10px; font-size:12px; border-right:1px solid rgba(30,45,69,.3); vertical-align:middle; }
+  td:last-child { border-right:none; }
+
+  .td-level { font-family:var(--mono); font-size:12px; color:#fff; white-space:nowrap; min-width:70px; }
+  .td-reward-wrap { min-width:80px; }
+
+  /* reward tags — extend as needed */
+  .rtag { font-family:var(--mono); font-size:10px; padding:2px 7px; border-radius:3px; display:inline-block; white-space:nowrap; }
+  .rtag-white { background:rgba(96,200,255,.1);  color:#60c8ff; border:1px solid rgba(96,200,255,.25); }
+  .rtag-green { background:rgba(57,255,138,.1);  color:#39ff8a; border:1px solid rgba(57,255,138,.25); }
+  .rtag-item  { background:rgba(255,204,0,.1);   color:#ffcc00; border:1px solid rgba(255,204,0,.25); }
+  .rtag-none  { color:var(--text2); }
+
+  .td-n    { font-family:var(--mono); font-size:12px; text-align:right; color:var(--text); }
+  .td-step { font-family:var(--mono); font-size:12px; text-align:right; }
+  .td-cum  { font-family:var(--mono); font-size:12px; text-align:right; }
+
+  /* step color scale */
+  .s-great { color:#39ff8a; }
+  .s-good  { color:#80e0a0; }
+  .s-mid   { color:#ffcc00; }
+  .s-low   { color:#ff6b35; }
+  .s-bad   { color:#ff3b5c; }
+  .s-dash  { color:var(--text2); }
+
+  /* tfoot */
+  tfoot tr td {
+    background:var(--bg3); font-weight:700; border-top:2px solid var(--border);
+    font-family:var(--mono); font-size:12px;
+  }
+
+  /* R-level star icon in header */
+  .r-entry { font-size:9px; opacity:.65; display:block; margin-top:2px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ① 修改这里的标题和描述 -->
+<h1 id="report-title">挖矿循环关卡 · 分R级通关漏斗</h1>
+<div class="subtitle" id="report-subtitle">
+  节日内容：循环关卡 78_1 → 81_3
+  <span>·</span>R级依据：活动前累计付费额（$USD）
+  <span>·</span>三期：3.14-19 / 3.21-26 / 3.27-31
+</div>
+
+<div class="meta-bar">
+  <div class="tabs" id="period-tabs"></div>
+  <div class="legend">
+    <div class="lg"><div class="lg-dot" style="background:var(--nr)"></div>非R (LTV=0)</div>
+    <div class="lg"><div class="lg-dot" style="background:var(--xr)"></div>小R (≤$30)</div>
+    <div class="lg"><div class="lg-dot" style="background:var(--sr)"></div>中R ($31-200)</div>
+    <div class="lg"><div class="lg-dot" style="background:var(--dr)"></div>大R ($201-1000)</div>
+    <div class="lg"><div class="lg-dot" style="background:var(--cr)"></div>超R (>$1000)</div>
+    <div class="lg" style="margin-left:8px;padding-left:8px;border-left:1px solid var(--border)">
+      <span class="rtag rtag-white" style="font-size:9px">白包</span>
+      <span class="rtag rtag-green" style="font-size:9px;margin-left:4px">绿包</span>
+      <span class="rtag rtag-item" style="font-size:9px;margin-left:4px">道具</span>
+    </div>
+  </div>
+</div>
+
+<div class="tbl-wrap" id="table-container"></div>
+
+</div>
+
+<script>
+/* ================================================================
+   ② DATA — 修改这里填入你的数据
+   periods: 每期的名称（Tab标签文字）
+   entry:   每期每R级的入口人数 {r级(1-5): 人数}
+   rows:    每行关卡数据
+     id:         关卡名称（显示）
+     reward:     奖励文字（自定义，如 '+白包' '+积分×50' '+骰子' '—'）
+     rewardType: 'white' | 'green' | 'item' | 'none'
+     sectionStart: true 表示该行上方加粗分割线（大关分组用）
+     d:          {1:非R人数, 2:小R, 3:中R, 4:大R, 5:超R}
+================================================================ */
+const CONFIG = {
+  periods: [
+    { label: '第一期  3.14-3.19' },
+    { label: '第二期  3.21-3.26' },
+    { label: '第三期  3.27-3.31' },
+  ],
+  data: [
+    // ── 第一期 ──
+    {
+      entry: { 1:2880, 2:910, 3:1032, 4:1146, 5:2578 },
+      rows: [
+        { id:'78_1', reward:'—',      rewardType:'none',  d:{1:2880,2:910, 3:1032,4:1146,5:2578} },
+        { id:'78_2', reward:'+白包',  rewardType:'white', d:{1:1728,2:581, 3:724, 4:846, 5:1982} },
+        { id:'79_1', reward:'—',      rewardType:'none',  sectionStart:true, d:{1:1095,2:376,3:506,4:610,5:1502} },
+        { id:'79_2', reward:'+白包',  rewardType:'white', d:{1:789, 2:271, 3:373, 4:501, 5:1231} },
+        { id:'79_3', reward:'+白包×2',rewardType:'white', d:{1:646, 2:224, 3:297, 4:419, 5:1072} },
+        { id:'80_1', reward:'+白包',  rewardType:'white', sectionStart:true, d:{1:462,2:176,3:232,4:321,5:908} },
+        { id:'80_2', reward:'+白包',  rewardType:'white', d:{1:342, 2:133, 3:188, 4:256, 5:775} },
+        { id:'80_3', reward:'+白包×2',rewardType:'white', d:{1:306, 2:116, 3:163, 4:223, 5:719} },
+        { id:'81_1', reward:'+绿包',  rewardType:'green', sectionStart:true, d:{1:274,2:105,3:145,4:207,5:663} },
+        { id:'81_2', reward:'+白+绿', rewardType:'green', d:{1:225, 2:87,  3:121, 4:187, 5:614} },
+        { id:'81_3', reward:'+白+绿', rewardType:'green', d:{1:193, 2:77,  3:106, 4:173, 5:565} },
+      ]
+    },
+    // ── 第二期 ──
+    {
+      entry: { 1:2761, 2:870, 3:1011, 4:1125, 5:2518 },
+      rows: [
+        { id:'78_1', reward:'—',      rewardType:'none',  d:{1:2761,2:870, 3:1011,4:1125,5:2518} },
+        { id:'78_2', reward:'+白包',  rewardType:'white', d:{1:1674,2:545, 3:716, 4:829, 5:1960} },
+        { id:'79_1', reward:'—',      rewardType:'none',  sectionStart:true, d:{1:1053,2:358,3:483,4:607,5:1531} },
+        { id:'79_2', reward:'+白包',  rewardType:'white', d:{1:795, 2:276, 3:355, 4:486, 5:1328} },
+        { id:'79_3', reward:'+白包×2',rewardType:'white', d:{1:641, 2:232, 3:312, 4:427, 5:1212} },
+        { id:'80_1', reward:'+白包',  rewardType:'white', sectionStart:true, d:{1:477,2:172,3:246,4:358,5:1093} },
+        { id:'80_2', reward:'+白包',  rewardType:'white', d:{1:379, 2:142, 3:198, 4:300, 5:972} },
+        { id:'80_3', reward:'+白包×2',rewardType:'white', d:{1:344, 2:125, 3:182, 4:282, 5:926} },
+        { id:'81_1', reward:'+绿包',  rewardType:'green', sectionStart:true, d:{1:312,2:119,3:172,4:268,5:894} },
+        { id:'81_2', reward:'+白+绿', rewardType:'green', d:{1:264, 2:103, 3:159, 4:250, 5:848} },
+        { id:'81_3', reward:'+白+绿', rewardType:'green', d:{1:227, 2:94,  3:151, 4:236, 5:828} },
+      ]
+    },
+    // ── 第三期 ──
+    {
+      entry: { 1:2075, 2:679, 3:722, 4:710, 5:1548 },
+      rows: [
+        { id:'78_1', reward:'—',      rewardType:'none',  d:{1:2075,2:679, 3:722, 4:710, 5:1548} },
+        { id:'78_2', reward:'+白包',  rewardType:'white', d:{1:1463,2:499, 3:590, 4:689, 5:1531} },
+        { id:'79_1', reward:'—',      rewardType:'none',  sectionStart:true, d:{1:1000,2:348,3:457,4:551,5:1347} },
+        { id:'79_2', reward:'+白包',  rewardType:'white', d:{1:763, 2:269, 3:369, 4:476, 5:1230} },
+        { id:'79_3', reward:'+白包×2',rewardType:'white', d:{1:642, 2:232, 3:326, 4:426, 5:1191} },
+        { id:'80_1', reward:'+白包',  rewardType:'white', sectionStart:true, d:{1:480,2:176,3:277,4:360,5:1077} },
+        { id:'80_2', reward:'+白包',  rewardType:'white', d:{1:372, 2:136, 3:228, 4:316, 5:976} },
+        { id:'80_3', reward:'+白包×2',rewardType:'white', d:{1:339, 2:126, 3:209, 4:301, 5:928} },
+        { id:'81_1', reward:'+绿包',  rewardType:'green', sectionStart:true, d:{1:313,2:114,3:194,4:280,5:900} },
+        { id:'81_2', reward:'+白+绿', rewardType:'green', d:{1:272, 2:101, 3:183, 4:255, 5:874} },
+        { id:'81_3', reward:'+白+绿', rewardType:'green', d:{1:247, 2:97,  3:175, 4:241, 5:857} },
+      ]
+    },
+  ]
+};
+
+/* ================================================================
+   渲染引擎 — 不需要修改
+================================================================ */
+const rColors = {1:'var(--nr)',2:'var(--xr)',3:'var(--sr)',4:'var(--dr)',5:'var(--cr)'};
+const rNames  = {1:'非R',2:'小R',3:'中R',4:'大R',5:'超R'};
+const rs = [1,2,3,4,5];
+
+function stepClass(v) {
+  if (v === null) return 's-dash';
+  if (v >= 90) return 's-great';
+  if (v >= 80) return 's-good';
+  if (v >= 70) return 's-mid';
+  if (v >= 60) return 's-low';
+  return 's-bad';
+}
+
+function rewardHTML(reward, type) {
+  if (type === 'none' || reward === '—') return '<span class="rtag rtag-none">—</span>';
+  const cls = type === 'white' ? 'rtag-white' : type === 'green' ? 'rtag-green' : 'rtag-item';
+  return `<span class="rtag ${cls}">${reward}</span>`;
+}
+
+function buildTable(pIdx) {
+  const pd = CONFIG.data[pIdx];
+  const rows = pd.rows;
+  const totalEntry = rs.reduce((s,r) => s + pd.entry[r], 0);
+
+  let html = '<table>';
+
+  // thead: R-level group headers
+  html += '<thead><tr class="thead-top">';
+  html += '<th class="th-label" rowspan="2">关卡</th>';
+  html += '<th class="th-reward" rowspan="2">奖励</th>';
+  for (const r of rs) {
+    const n = pd.entry[r].toLocaleString();
+    html += `<th colspan="3" style="color:${rColors[r]}" class="cg-right">${rNames[r]}<span class="r-entry">入口 ${n}人</span></th>`;
+  }
+  html += '</tr>';
+
+  html += '<tr class="thead-sub">';
+  html += '<th class="th-label" style="display:none"></th>';
+  for (const r of rs) {
+    html += '<th>人数</th><th>步转</th><th class="cg-right">留存</th>';
+  }
+  html += '</tr></thead>';
+
+  // tbody
+  html += '<tbody>';
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const hasReward = row.rewardType !== 'none';
+    const classes = [
+      hasReward ? 'has-reward' : '',
+      row.sectionStart && i > 0 ? 'section-start' : ''
+    ].filter(Boolean).join(' ');
+
+    html += `<tr class="${classes}">`;
+    html += `<td class="td-level">${row.id}</td>`;
+    html += `<td class="td-reward-wrap">${rewardHTML(row.reward, row.rewardType)}</td>`;
+
+    for (const r of rs) {
+      const u = row.d[r] || 0;
+      const entry = pd.entry[r];
+      const cum = Math.round(u / entry * 100);
+      let stepStr = '—', stepCls = 's-dash';
+      if (i > 0) {
+        const pv = rows[i-1].d[r] || 1;
+        const sv = Math.round(u / pv * 100);
+        stepStr = sv + '%';
+        stepCls = stepClass(sv);
+      }
+      const cumColor = cum >= 60 ? 'var(--cr)' : cum >= 35 ? '#80e0a0' : cum >= 20 ? 'var(--sr)' : cum >= 10 ? 'var(--xr)' : '#ff3b5c';
+      html += `<td class="td-n">${u.toLocaleString()}</td>`;
+      html += `<td class="td-step ${stepCls}">${stepStr}</td>`;
+      html += `<td class="td-cum cg-right" style="color:${cumColor}">${cum}%</td>`;
+    }
+    html += '</tr>';
+  }
+  html += '</tbody>';
+
+  // tfoot: completion summary
+  const lastRow = rows[rows.length - 1];
+  html += '<tfoot><tr>';
+  html += '<td colspan="2" style="color:var(--text2);font-size:11px;letter-spacing:1px">末关完成率</td>';
+  for (const r of rs) {
+    const entry = pd.entry[r];
+    const fin = lastRow.d[r] || 0;
+    const pct = Math.round(fin / entry * 100);
+    const c = pct>=40?'var(--cr)':pct>=20?'var(--sr)':pct>=10?'var(--xr)':'#ff3b5c';
+    html += `<td class="td-n">${fin.toLocaleString()}</td>`;
+    html += '<td></td>';
+    html += `<td class="cg-right" style="color:${c};font-size:14px">${pct}%</td>`;
+  }
+  html += '</tr></tfoot>';
+  html += '</table>';
+  return html;
+}
+
+let activePeriod = 0;
+
+function showPeriod(idx, el) {
+  activePeriod = idx;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('table-container').innerHTML = buildTable(idx);
+}
+
+// Init tabs
+const tabsEl = document.getElementById('period-tabs');
+CONFIG.periods.forEach((p, i) => {
+  const btn = document.createElement('div');
+  btn.className = 'tab' + (i === 0 ? ' active' : '');
+  btn.textContent = p.label;
+  btn.onclick = () => showPeriod(i, btn);
+  tabsEl.appendChild(btn);
+});
+showPeriod(0, tabsEl.querySelector('.tab'));
+</script>
+</body>
+</html>

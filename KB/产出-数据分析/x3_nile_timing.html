@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 尼罗河活动 — 投放节点方案对比</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#0f1923;color:#e0e0e0;padding:24px 40px;max-width:1100px;margin:0 auto}
+h1{font-size:1.6rem;background:linear-gradient(90deg,#f5af19,#f12711);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.subtitle{color:#888;margin-bottom:24px;font-size:0.85rem}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px;margin-bottom:16px}
+.card-title{font-size:0.9rem;color:#ccc;margin-bottom:10px;font-weight:500}
+canvas{max-height:300px}
+.comment{background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.12);border-radius:8px;padding:10px 16px;margin:8px 0 16px;font-size:0.85rem;color:#bbb;line-height:1.7;font-style:italic;min-height:40px}
+.comment::before{content:'💬 ';font-style:normal}
+.plan{border-radius:12px;padding:20px;margin-bottom:20px;position:relative}
+.plan-s{background:rgba(243,156,18,0.10);border:2px solid #f39c12}
+.plan-a{background:rgba(52,152,219,0.10);border:2px solid #3498db}
+.plan-b{background:rgba(155,89,182,0.10);border:2px solid #9b59b6}
+.plan-c{background:rgba(149,165,166,0.10);border:2px solid #95a5a6}
+.plan-badge{position:absolute;top:-12px;left:20px;padding:2px 14px;border-radius:10px;font-weight:800;font-size:0.85rem;color:#0f1923}
+.plan-s .plan-badge{background:#f39c12}
+.plan-a .plan-badge{background:#3498db}
+.plan-b .plan-badge{background:#9b59b6}
+.plan-c .plan-badge{background:#95a5a6}
+.plan h3{margin:8px 0 10px;font-size:1.05rem}
+.plan-s h3{color:#f1c40f}
+.plan-a h3{color:#3498db}
+.plan-b h3{color:#9b59b6}
+.plan-c h3{color:#95a5a6}
+.plan p{font-size:0.85rem;line-height:1.7;color:#bbb}
+.plan strong{color:#e0e0e0}
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.plan-kv{font-size:0.8rem;color:#aaa}
+.plan-kv span{color:#e0e0e0;font-weight:600}
+.plan-note{background:rgba(255,255,255,0.03);border:1px dashed rgba(255,255,255,0.15);border-radius:8px;padding:10px 14px;margin-top:12px;font-size:0.85rem;color:#bbb;line-height:1.7;min-height:40px}
+.plan-note::before{content:'📝 备注：';font-style:normal;color:#888}
+table{width:100%;border-collapse:collapse;font-size:0.78rem;margin:12px 0}
+th,td{padding:5px 8px;text-align:right;border-bottom:1px solid rgba(255,255,255,0.06)}
+th{background:rgba(255,255,255,0.05);color:#aaa;font-size:0.7rem}
+td:first-child,th:first-child{text-align:left}
+.section-title{font-size:1.1rem;color:#feca57;margin:28px 0 14px;padding-left:8px;border-left:3px solid #f39c12}
+</style>
+</head>
+<body>
+
+<h1>X3 尼罗河活动 — D16-D30 投放节点方案对比</h1>
+<p class="subtitle">约束条件：D14 前不可开启 | 活动持续 14 天 | 基于需求侧 LTV 衰减 + 供给侧活动效果数据</p>
+
+<!-- 总览图 -->
+<div class="section-title">数据总览：中R 日增量 + 4个候选窗口</div>
+<div class="card">
+<div class="card-title">中R 日 LTV 增量（D5-D30）— 标注 4 个候选开启节点及其 14 天覆盖范围</div>
+<canvas id="chartOverview"></canvas>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<div class="card">
+<div class="card-title">大R+超R 占当日付费比例（D5-D30）— 高R玩家活跃度参考</div>
+<canvas id="chartHighR"></canvas>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<!-- 供给侧参考 -->
+<div class="section-title">供给侧参考：各生命周期活动效果</div>
+<table>
+<tr><th>生命周期</th><th>总收入</th><th>中R渗透率</th><th>中R ARPU</th><th>大R渗透率</th><th>大R ARPU</th><th>中R收入占比</th></tr>
+<tr><td>8-14天</td><td>$23,924</td><td>54.2%</td><td>$17.58</td><td>86.8%</td><td>$64.77</td><td>52.9%</td></tr>
+<tr style="background:rgba(243,156,18,0.06)"><td><strong>15-30天</strong></td><td><strong>$35,453</strong></td><td><strong>59.4%</strong></td><td><strong>$24.82</strong></td><td><strong>87.2%</strong></td><td><strong>$106.20</strong></td><td><strong>50.1%</strong></td></tr>
+<tr><td>31-60天</td><td>$31,361</td><td>56.3%</td><td>$26.94</td><td>86.6%</td><td>$87.29</td><td>54.5%</td></tr>
+</table>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<!-- 4个方案 -->
+<div class="section-title">4 个候选方案</div>
+
+<!-- S -->
+<div class="plan plan-s">
+<div class="plan-badge">S</div>
+<h3>D16 开启 — 中R二次断崖前最后窗口</h3>
+<div class="plan-grid">
+<div class="plan-kv">中R 当日增量：<span>0.075‰</span>（D17 将跌至 0.048‰）</div>
+<div class="plan-kv">大R+超R 占比：<span>28.8%</span>（快速攀升中）</div>
+<div class="plan-kv">覆盖范围：<span>D16→D29（14天）</span></div>
+<div class="plan-kv">供给侧窗口：<span>15-30天（最优）</span></div>
+</div>
+<p>
+<strong>需求侧：</strong>D16 时中R 还在 0.075‰——比 D17 的 0.048‰ 高 56%。这是中R 第二次断崖前的最后一天，活动介入可以防止 D17 的 -36% 跌幅。<br>
+<strong>供给侧：</strong>15-30天窗口全面领先——中R渗透 59%（vs 8-14天的 54%）、ARPU $24.82（+41%）、大R ARPU $106（+64%）。<br>
+<strong>覆盖优势：</strong>14天完美横跨 D17 断崖 + D21 大R峰值（34.3%），前半段接中R、后半段吃大R。
+</p>
+<div class="plan-note" contenteditable="true">点击此处输入备注...</div>
+</div>
+
+<!-- A -->
+<div class="plan plan-a">
+<div class="plan-badge">A</div>
+<h3>D18 开启 — 中R触底反弹日，顺势启动</h3>
+<div class="plan-grid">
+<div class="plan-kv">中R 当日增量：<span>0.078‰</span>（从 D17 底部反弹 +63%）</div>
+<div class="plan-kv">大R+超R 占比：<span>25.1%</span>（短暂回落，D19 回到 30%）</div>
+<div class="plan-kv">覆盖范围：<span>D18→D31（14天）</span></div>
+<div class="plan-kv">供给侧窗口：<span>15-30天（最优）</span></div>
+</div>
+<p>
+<strong>需求侧：</strong>D18 是中R 从 0.048‰ 底部自然反弹的第一天（+63%到 0.078‰）。在反弹势头上叠加活动，有"顺势放大"的效果——玩家自己已经有回来花钱的意愿。<br>
+<strong>供给侧：</strong>同属 15-30天最优窗口，数据相同。<br>
+<strong>vs D16：</strong>放弃了 D16-D17 两天的中R 残余空间（0.075→0.048），但活动尾段延伸到 D31，多覆盖了大R 平台期一天。
+</p>
+<div class="plan-note" contenteditable="true">点击此处输入备注...</div>
+</div>
+
+<!-- B -->
+<div class="plan plan-b">
+<div class="plan-badge">B</div>
+<h3>D21 开启 — 全押大R峰值收割</h3>
+<div class="plan-grid">
+<div class="plan-kv">中R 当日增量：<span>0.078‰</span>（底部区间反弹日）</div>
+<div class="plan-kv">大R+超R 占比：<span>34.3%（全周期最高）</span></div>
+<div class="plan-kv">覆盖范围：<span>D21→D30（仅10天）</span></div>
+<div class="plan-kv">供给侧窗口：<span>15-30天（尾段）</span></div>
+</div>
+<p>
+<strong>需求侧：</strong>大R 在 D21 达到 25.8% 单日占比峰值，大R+超R 合计 34.3%。如果活动重排行榜/累充/大转盘（高R向设计），D21 是高R 消费意愿最强的启动日。<br>
+<strong>代价：</strong>中R 已在底部震荡（0.05-0.08‰），活动对中R 增量极小，等于放弃了 47% 的基本盘。活动只有 10 天（D30 前结束），时间偏短。<br>
+<strong>适用场景：</strong>活动设计本身就是高R向（重竞争、重限定），中R 只是顺带参与。
+</p>
+<div class="plan-note" contenteditable="true">点击此处输入备注...</div>
+</div>
+
+<!-- C -->
+<div class="plan plan-c">
+<div class="plan-badge">C</div>
+<h3>D24 开启 — 保守兜底方案</h3>
+<div class="plan-grid">
+<div class="plan-kv">中R 当日增量：<span>0.051‰</span>（完全稳定在底部）</div>
+<div class="plan-kv">大R+超R 占比：<span>29.2%</span>（从 D21 峰值回落企稳）</div>
+<div class="plan-kv">覆盖范围：<span>D24→D37（溢出到 31-60天窗口）</span></div>
+<div class="plan-kv">供给侧窗口：<span>跨 15-30天 / 31-60天</span></div>
+</div>
+<p>
+<strong>需求侧：</strong>所有 R 级都已进入平台期，没有断崖可接、没有爆发可追。活动的作用是在平稳水面上制造波澜。<br>
+<strong>供给侧亮点：</strong>活动尾段进入 31-60天窗口，中R ARPU 略升到 $26.94（vs 15-30天的 $24.82），说明中R 的人均付费能力还在缓慢上升。<br>
+<strong>定位：</strong>前面节点全排满时的兜底选择。"有总比没有好"。
+</p>
+<div class="plan-note" contenteditable="true">点击此处输入备注...</div>
+</div>
+
+<!-- 对比表 -->
+<div class="section-title">方案对比汇总</div>
+<table>
+<tr><th>方案</th><th>节点</th><th>核心受众</th><th>中R日增量</th><th>大R+超R占比</th><th>供给侧ARPU</th><th>覆盖天数</th><th>策略定位</th></tr>
+<tr style="background:rgba(243,156,18,0.06)"><td style="color:#f39c12;font-weight:bold">S</td><td><strong>D16</strong></td><td>中R为主+大R递增</td><td>0.075‰</td><td>28.8%→34%</td><td>中R$25 大R$106</td><td>14天</td><td>断崖防守</td></tr>
+<tr style="background:rgba(52,152,219,0.06)"><td style="color:#3498db;font-weight:bold">A</td><td><strong>D18</strong></td><td>中R反弹+大R上升</td><td>0.078‰↑</td><td>25%→34%</td><td>中R$25 大R$106</td><td>14天</td><td>顺势放大</td></tr>
+<tr><td style="color:#9b59b6;font-weight:bold">B</td><td><strong>D21</strong></td><td>大R为主</td><td>0.078‰</td><td>34.3%峰值</td><td>大R$106 超R$166</td><td>10天</td><td>高R收割</td></tr>
+<tr><td style="color:#95a5a6">C</td><td><strong>D24</strong></td><td>中R基本盘</td><td>0.051‰</td><td>29.2%</td><td>中R$27</td><td>14天</td><td>保守兜底</td></tr>
+</table>
+<div class="comment" contenteditable="true">点击此处输入总结点评...</div>
+
+<script>
+const days = Array.from({length:26}, (_,i)=>i+5);
+const dayLabels = days.map(d=>'D'+d);
+
+// 中R 日增量
+const midR = [0.308,0.310,0.284,0.192,0.151,0.138,0.151,0.133,0.159,0.097,0.102,0.075,0.048,0.078,0.049,0.061,0.078,0.054,0.057,0.051,0.051,0.051,0.051,0.051,0.051,0.051];
+
+// 大R+超R 占比
+const highR = [17.99,19.74,23.83,20.61,22.03,23.12,22.74,26.07,25.05,20.77,27.94,28.78,30.41,25.07,29.95,30.14,34.31,27.88,34.60,29.17,28.79,23.55,27.84,32.94,27.39,29.61];
+
+// 方案颜色
+const plans = [
+    {d:16, color:'#f39c12', label:'S:D16', len:14},
+    {d:18, color:'#3498db', label:'A:D18', len:14},
+    {d:21, color:'#9b59b6', label:'B:D21', len:10},
+    {d:24, color:'#95a5a6', label:'C:D24', len:14},
+];
+
+// 中R 日增量 + 方案覆盖
+const annotations1 = {};
+plans.forEach((p,i) => {
+    const xi = p.d - 5;
+    const xe = Math.min(xi + p.len - 1, 25);
+    annotations1['box'+i] = {
+        type:'box', xMin:xi-0.4, xMax:xe+0.4,
+        backgroundColor: p.color+'15', borderColor: p.color+'60', borderWidth:1.5,
+        label:{display:true, content:p.label+' ('+p.len+'天)', color:p.color, position:'start', font:{size:9}}
+    };
+});
+annotations1['cliff1'] = {type:'line',xMin:9,xMax:9,borderColor:'rgba(231,76,60,0.5)',borderWidth:1.5,borderDash:[4,4],
+    label:{display:true,content:'D14 -39%',color:'#e74c3c',position:'start',font:{size:8}}};
+annotations1['cliff2'] = {type:'line',xMin:12,xMax:12,borderColor:'rgba(231,76,60,0.5)',borderWidth:1.5,borderDash:[4,4],
+    label:{display:true,content:'D17 -36%',color:'#e74c3c',position:'end',font:{size:8}}};
+
+new Chart(document.getElementById('chartOverview'), {
+    type:'line',
+    data:{labels:dayLabels, datasets:[{
+        label:'中R 日增量 (‰)', data:midR,
+        borderColor:'#3498db', backgroundColor:'rgba(52,152,219,0.08)',
+        fill:true, tension:0.3, pointRadius:3,
+        pointBackgroundColor:midR.map((v,i)=>{
+            const d=i+5;
+            if(d===14||d===17) return '#e74c3c';
+            if(d===16) return '#f39c12';
+            if(d===18) return '#3498db';
+            if(d===21) return '#9b59b6';
+            if(d===24) return '#95a5a6';
+            return '#3498db';
+        }),
+        pointRadius:midR.map((v,i)=>{const d=i+5;return [14,16,17,18,21,24].includes(d)?6:2})
+    }]},
+    options:{responsive:true,plugins:{legend:{display:false},annotation:{annotations:annotations1}},
+    scales:{
+        y:{beginAtZero:true,max:0.35,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888',callback:v=>v.toFixed(2)+'‰'}},
+        x:{grid:{display:false},ticks:{color:'#888',font:{size:9}}}
+    }}
+});
+
+// 大R+超R
+const annotations2 = {};
+plans.forEach((p,i) => {
+    const xi = p.d - 5;
+    const xe = Math.min(xi + p.len - 1, 25);
+    annotations2['box'+i] = {
+        type:'box', xMin:xi-0.4, xMax:xe+0.4,
+        backgroundColor: p.color+'10', borderColor: p.color+'40', borderWidth:1,
+    };
+});
+annotations2['line30'] = {type:'line',yMin:30,yMax:30,borderColor:'rgba(231,76,60,0.3)',borderDash:[5,5],borderWidth:1,
+    label:{display:true,content:'30%线',color:'#e74c3c',position:'end',font:{size:9}}};
+annotations2['d21'] = {type:'point',xValue:16,yValue:34.31,radius:6,backgroundColor:'#9b59b6',borderColor:'#fff',borderWidth:2};
+
+new Chart(document.getElementById('chartHighR'), {
+    type:'line',
+    data:{labels:dayLabels, datasets:[{
+        label:'大R+超R 占比', data:highR,
+        borderColor:'#e74c3c', backgroundColor:'rgba(231,76,60,0.08)',
+        fill:true, tension:0.3, pointRadius:2
+    }]},
+    options:{responsive:true,plugins:{legend:{display:false},annotation:{annotations:annotations2}},
+    scales:{
+        y:{min:15,max:40,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888',callback:v=>v+'%'}},
+        x:{grid:{display:false},ticks:{color:'#888',font:{size:9}}}
+    }}
+});
+</script>
+</body>
+</html>

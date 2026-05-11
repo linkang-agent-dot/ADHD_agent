@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 尼罗河活动系列 — 需求侧+供给侧分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#0f1923;color:#e0e0e0;padding:24px 40px;max-width:1100px;margin:0 auto}
+h1{font-size:1.6rem;background:linear-gradient(90deg,#f5af19,#f12711);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.subtitle{color:#888;margin-bottom:30px;font-size:0.85rem}
+.step{margin-bottom:40px}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.step-num{background:#f39c12;color:#0f1923;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.95rem;flex-shrink:0}
+.step-title{font-size:1.15rem;color:#feca57;font-weight:600}
+.step-desc{color:#aaa;font-size:0.85rem;margin-bottom:14px;line-height:1.7;padding-left:44px}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px;margin-bottom:16px}
+.card-title{font-size:0.9rem;color:#ccc;margin-bottom:10px;font-weight:500}
+canvas{max-height:300px}
+.insight{background:rgba(243,156,18,0.08);border-left:3px solid #f39c12;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size:0.85rem;line-height:1.7}
+.insight strong{color:#f1c40f}
+.comment{background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.12);border-radius:8px;padding:10px 16px;margin:8px 0 16px;font-size:0.85rem;color:#bbb;line-height:1.7;font-style:italic}
+.comment::before{content:'💬 ';font-style:normal}
+.conclusion{background:linear-gradient(135deg,rgba(46,204,113,0.12),rgba(39,174,96,0.06));border:2px solid #2ecc71;border-radius:12px;padding:20px;margin:30px 0}
+.conclusion h3{color:#2ecc71;margin-bottom:10px;font-size:1.1rem}
+.conclusion p{line-height:1.8;font-size:0.9rem}
+.flow{display:flex;align-items:center;gap:8px;margin:20px 0;flex-wrap:wrap}
+.flow-box{background:rgba(52,152,219,0.15);border:1px solid rgba(52,152,219,0.4);padding:8px 14px;border-radius:8px;font-size:0.8rem;color:#3498db}
+.flow-box.active{background:rgba(243,156,18,0.15);border-color:#f39c12;color:#f1c40f}
+.flow-arrow{color:#555;font-size:1.2rem}
+table{width:100%;border-collapse:collapse;font-size:0.8rem;margin:8px 0}
+th,td{padding:6px 10px;text-align:right;border-bottom:1px solid rgba(255,255,255,0.06)}
+th{background:rgba(255,255,255,0.05);color:#aaa;font-size:0.72rem}
+td:first-child,th:first-child{text-align:left}
+</style>
+</head>
+<body>
+
+<h1>X3 尼罗河活动系列 — 投放时间节点分析</h1>
+<p class="subtitle">分析目标：找到付费系列活动的最佳投放时间点 | 数据范围：2026-01 ~ 2026-03 注册 Cohort + 近3个月节日礼包效果</p>
+
+<!-- 结论先行 -->
+<div class="conclusion">
+<h3>结论：推荐 D13-D14 开启尼罗河活动系列（持续14天至D28）</h3>
+<p>
+<strong>需求侧：</strong>整体 LTV 增速在 D14 出现拐点，主因是中R 玩家付费断崖（日增量 -39%）。中R 是 D7 后最大付费群体（占日增量 47%），他们的衰减直接拉低整体 LTV。<br>
+<strong>供给侧：</strong>历史数据显示中R 在 8-14 天生命周期对节日活动渗透率 54%、ARPU $17.58，贡献活动收入 53%。活动在此窗口介入能精准承接中R 的付费需求。<br>
+<strong>一句话：D14 = 中R 自然付费断崖 × 中R 对活动最买账 的交叉点。</strong>
+</p>
+</div>
+
+<!-- 分析框架 -->
+<div class="flow">
+<div class="flow-box active">1. 观察整体 LTV 增速衰减</div>
+<div class="flow-arrow">→</div>
+<div class="flow-box active">2. 定位衰减拐点</div>
+<div class="flow-arrow">→</div>
+<div class="flow-box active">3. 拆解各R级在拐点的行为</div>
+<div class="flow-arrow">→</div>
+<div class="flow-box active">4. 锁定关键玩家群体</div>
+<div class="flow-arrow">→</div>
+<div class="flow-box" style="background:rgba(46,204,113,0.15);border-color:#2ecc71;color:#2ecc71">5. 用活动历史数据验证</div>
+<div class="flow-arrow">→</div>
+<div class="flow-box" style="background:rgba(46,204,113,0.15);border-color:#2ecc71;color:#2ecc71">6. 结论</div>
+</div>
+
+<!-- Step 1 -->
+<div class="step">
+<div class="step-header">
+<div class="step-num">1</div>
+<div class="step-title">整体 LTV 增长率在哪里开始衰减？</div>
+</div>
+<div class="step-desc">
+付费活动的价值 = 在玩家自然付费减速时提供新的付费理由。<br>
+所以第一步：找到 LTV 日增量（每天新增的人均付费额）从什么时候开始明显变少。
+</div>
+<div class="card">
+<div class="card-title">LTV 日增量曲线（每天新增多少人均付费）</div>
+<canvas id="chart1_ltv_delta"></canvas>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+<div class="card">
+<div class="card-title">LTV 累计曲线 + 增速分区</div>
+<canvas id="chart1_ltv_cum"></canvas>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+<div class="insight">
+<strong>发现：</strong>LTV 日增量呈三级台阶下降——<br>
+• D0-D4：爆发期，日增 $0.05-0.21，新手冲动消费<br>
+• D5-D13：稳定期，日增 $0.028-0.042，自然付费维持<br>
+• <strong>D14 起断崖式下降至 $0.025 并趋平</strong>——自然付费动力耗尽<br>
+→ <strong>D14 是整体 LTV 增速的拐点</strong>，活动应在此处介入
+</div>
+</div>
+
+<!-- Step 2 -->
+<div class="step">
+<div class="step-header">
+<div class="step-num">2</div>
+<div class="step-title">拐点处各 R 级的表现如何？</div>
+</div>
+<div class="step-desc">
+整体衰减是所有R级一起降的，还是某个R级率先"断崖"拖累了整体？<br>
+拆解各R级在D14前后的日增量变化，找出谁是衰减的主因。
+</div>
+<div class="card">
+<div class="card-title">各 R 级日 LTV 增量（D0-D25）— 注意中R在D14的断崖</div>
+<canvas id="chart2_rlevel"></canvas>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+<div class="card">
+<div class="card-title">中R 日增量放大图（D5-D25）— 聚焦衰减细节</div>
+<canvas id="chart2_midr_zoom"></canvas>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+<div class="insight">
+<strong>发现：各R级的衰减节奏完全不同——</strong><br>
+• <strong>小R</strong>：D0-D3 快速衰减，D5 后基本归零（已退出付费）<br>
+• <strong>中R</strong>：D5-D13 维持 0.13-0.31‰ 的稳定付费，<strong>D14 突然从 0.16‰ 断崖跌至 0.10‰（-39%）</strong>，D17 进一步跌至 0.05‰<br>
+• <strong>大R</strong>：缓慢下降但始终在花钱，D14 无明显断崖<br>
+• <strong>超R</strong>：波动大但绝对值稳定，D14 前后无显著变化<br>
+→ <strong>D14 整体 LTV 拐点的主因 = 中R 的断崖式衰减</strong>
+</div>
+</div>
+
+<!-- Step 3 -->
+<div class="step">
+<div class="step-header">
+<div class="step-num">3</div>
+<div class="step-title">中R 是关键玩家群体吗？</div>
+</div>
+<div class="step-desc">
+中R 在 D14 衰减最剧烈，但他们对整体收入的贡献够大吗？<br>
+如果中R 只占 5% 的收入，即使衰减也不值得为他们设计活动。
+</div>
+<div class="card">
+<div class="card-title">各 R 级对整体 LTV 的绝对贡献占比（按阶段）</div>
+<canvas id="chart3_share"></canvas>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<table>
+<tr><th>阶段</th><th>日均 LTV 增量</th><th>小R 占比</th><th>中R 占比</th><th>大R 占比</th><th>超R 占比</th></tr>
+<tr><td>D0-D6 新手期</td><td>65.6‰</td><td>49.8%</td><td style="color:#3498db;font-weight:bold">37.0%</td><td>8.8%</td><td>4.5%</td></tr>
+<tr><td>D7-D13 成长期</td><td>31.9‰</td><td>32.1%</td><td style="color:#3498db;font-weight:bold">44.7%</td><td>16.3%</td><td>7.0%</td></tr>
+<tr><td style="background:rgba(243,156,18,0.1)">D14-D20 拐点期</td><td>25.4‰</td><td>25.2%</td><td style="color:#f39c12;font-weight:bold">47.3%</td><td>18.1%</td><td>9.4%</td></tr>
+<tr><td>D21-D30 平台期</td><td>23.9‰</td><td>24.9%</td><td style="color:#3498db;font-weight:bold">45.2%</td><td>20.2%</td><td>9.7%</td></tr>
+</table>
+
+<div class="insight">
+<strong>确认：中R 是 D7 之后最大的付费群体，D14-D20 贡献了 47.3% 的日增量。</strong><br>
+• D14 处中R 断崖式衰减 → 直接拉低整体 LTV 增速<br>
+• 大R+超R 合计只占 27.5%，且他们的衰减是缓慢平滑的<br>
+→ <strong>活动的核心目标 = 在 D14 接住中R 的付费断崖</strong><br>
+→ 大R/超R 是锦上添花（排行榜/累充），但不是活动时间点的决定因素
+</div>
+</div>
+
+<!-- Step 5: Supply Side -->
+<div class="step">
+<div class="step-header">
+<div class="step-num">5</div>
+<div class="step-title">供给侧验证：节日活动在 D8-D14 阶段对中R 有效吗？</div>
+</div>
+<div class="step-desc">
+需求侧告诉我们"D14 是中R 的断崖"，但活动能不能接住这个断崖？<br>
+用近3个月 X3 节日礼包的实际效果数据来验证：中R 在这个生命周期阶段愿不愿意为活动付费。
+</div>
+<div class="card">
+<div class="card-title">各 R 级 × 生命周期 — 节日礼包渗透率</div>
+<canvas id="chart5_penetration"></canvas>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+<div class="card">
+<div class="card-title">各 R 级 × 生命周期 — 节日礼包 ARPU</div>
+<canvas id="chart5_arpu"></canvas>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+<div class="card">
+<div class="card-title">各 R 级 × 生命周期 — 节日礼包收入结构</div>
+<canvas id="chart5_revenue"></canvas>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<table>
+<tr><th>生命周期</th><th>总收入</th><th>小R</th><th>中R</th><th>大R</th><th>超R</th></tr>
+<tr><td>0-7天</td><td>$30,930</td><td>$9,572 (30.9%)</td><td style="color:#3498db;font-weight:bold">$14,792 (47.8%)</td><td>$4,336 (14.0%)</td><td>$2,221 (7.2%)</td></tr>
+<tr style="background:rgba(243,156,18,0.08)"><td style="font-weight:bold">8-14天</td><td style="font-weight:bold">$23,924</td><td>$4,018 (16.8%)</td><td style="color:#f39c12;font-weight:bold">$12,672 (52.9%)</td><td style="font-weight:bold">$5,376 (22.5%)</td><td>$1,859 (7.8%)</td></tr>
+<tr style="background:rgba(46,204,113,0.06)"><td style="font-weight:bold">15-30天</td><td style="font-weight:bold">$35,453</td><td>$5,554 (15.7%)</td><td style="color:#2ecc71;font-weight:bold">$17,773 (50.1%)</td><td style="font-weight:bold">$9,133 (25.8%)</td><td>$2,993 (8.4%)</td></tr>
+<tr><td>31-60天</td><td>$31,361</td><td>$4,338 (13.8%)</td><td style="color:#3498db">$17,083 (54.5%)</td><td>$7,158 (22.8%)</td><td>$2,781 (8.9%)</td></tr>
+<tr><td>61-90天</td><td>$14,278</td><td>$1,469 (10.3%)</td><td>$8,463 (59.2%)</td><td>$2,733 (19.1%)</td><td>$1,614 (11.3%)</td></tr>
+<tr><td>90天+</td><td>$36,219</td><td>$2,987 (8.3%)</td><td>$16,272 (44.9%)</td><td>$9,328 (25.8%)</td><td>$7,631 (21.1%)</td></tr>
+</table>
+
+<div class="insight">
+<strong>供给侧验证通过——节日活动在 D8-D14 阶段对中R 高度有效：</strong><br>
+• <strong>中R 渗透率 54.2%</strong>（超过一半的中R 会为节日活动付费）<br>
+• <strong>中R ARPU $17.58</strong>（人均花 $17.58，是活动收入的绝对主力）<br>
+• <strong>中R 贡献 52.9% 的活动收入</strong>（在 8-14 天阶段占一半以上）<br>
+• 大R 渗透率 86.8%、ARPU $64.77，贡献 22.5%——是活动的第二收入来源<br>
+• 小R 渗透率仅 6.7%、ARPU $0.86——节日活动对小R 几乎无效<br><br>
+→ <strong>需求侧说"D14 中R 断崖"，供给侧说"中R 在 8-14 天对活动付费意愿最稳"</strong><br>
+→ 两侧数据互相印证：<strong>D14 开活动 = 在中R 最愿意付费的窗口提供新的付费场景</strong>
+</div>
+</div>
+
+<!-- Step 6: Conclusion -->
+<div class="step">
+<div class="step-header">
+<div class="step-num">6</div>
+<div class="step-title">结论：活动最佳投放时间窗口</div>
+</div>
+
+<div class="conclusion">
+<h3>推荐 D13-D14 开启尼罗河活动系列</h3>
+<p>
+<strong>需求侧证据：</strong><br>
+① 整体 LTV 日增量在 D14 出现拐点（从 $0.028 降至 $0.025 并趋平）<br>
+② 拐点主因 = 中R 在 D14 断崖式衰减（日增量 -39%，从 0.16‰ 跌到 0.10‰）<br>
+③ 中R 是 D7 后最大付费群体（占比 45-47%），他们的衰减直接决定整体 LTV 走向<br><br>
+<strong>供给侧证据：</strong><br>
+④ 中R 在 8-14 天生命周期对节日活动渗透率 54.2%、ARPU $17.58，贡献 52.9% 收入<br>
+⑤ 15-30 天阶段中R ARPU 进一步上升到 $24.82，说明活动持续 14 天后中R 仍在加码<br>
+⑥ 大R 在 8-14 天渗透率 86.8%、ARPU $64.77，是活动的第二增长极<br><br>
+<strong>综合结论：</strong><br>
+D14 开活动 = 在中R 自然付费断崖前（需求侧）× 中R 对活动最买账的时段（供给侧）<br>
+活动持续 14 天（D14→D28）：前半段接住中R、后半段承接大R 占比上升
+</p>
+</div>
+</div>
+
+<script>
+// ====== 数据 ======
+const ltvDays = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+const ltvCum = [0,0.207,0.267,0.320,0.369,0.418,0.460,0.501,0.534,0.567,0.599,0.627,0.655,0.683,0.711,0.730,0.749,0.786,0.811,0.836,0.861];
+const ltvDelta = ltvCum.map((v,i)=> i===0?0: +(v-ltvCum[i-1]).toFixed(4));
+
+// 中R 日增量 (from SQL, ‰)
+const midR = [4.650,1.601,0.759,0.473,0.521,0.308,0.310,0.284,0.192,0.151,0.138,0.151,0.133,0.159,0.097,0.102,0.075,0.048,0.078,0.049,0.061];
+const smallR = [2.170,0.418,0.130,0.088,0.068,0.043,0.057,0.035,0.033,0.026,0.022,0.013,0.019,0.014,0.019,0.008,0.007,0.012,0.006,0.006,0.010];
+const bigR = [9.263,6.252,3.854,2.780,2.422,2.205,1.905,1.646,1.256,1.239,1.167,0.864,0.916,1.024,0.795,0.650,0.637,0.509,0.568,0.514,0.785];
+const superR = [37.58,32.50,25.99,25.42,25.19,21.54,21.42,20.82,15.91,17.26,16.23,14.19,12.43,16.01,14.09,12.98,13.92,12.71,11.04,12.95,11.94];
+
+const dayLabels = ltvDays.map(d=>'D'+d);
+
+// ====== Chart 1a: LTV 日增量 ======
+new Chart(document.getElementById('chart1_ltv_delta'), {
+    type:'bar',
+    data:{labels:dayLabels, datasets:[{
+        label:'日LTV增量 ($)',data:ltvDelta,
+        backgroundColor:ltvDelta.map((v,i)=>i<=4?'rgba(46,204,113,0.6)':i<=13?'rgba(52,152,219,0.6)':'rgba(243,156,18,0.6)')
+    }]},
+    options:{responsive:true,plugins:{
+        legend:{display:false},
+        annotation:{annotations:{
+            line14:{type:'line',xMin:14,xMax:14,borderColor:'rgba(231,76,60,0.6)',borderWidth:2,borderDash:[5,5],
+                label:{display:true,content:'D14 拐点',color:'#e74c3c',position:'start',font:{size:11,weight:'bold'}}}
+        }}
+    },scales:{
+        y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888',callback:v=>'$'+v.toFixed(3)}},
+        x:{grid:{display:false},ticks:{color:'#888',font:{size:9}}}
+    }}
+});
+
+// ====== Chart 1b: LTV 累计 ======
+new Chart(document.getElementById('chart1_ltv_cum'), {
+    type:'line',
+    data:{labels:dayLabels, datasets:[{
+        label:'累计 LTV ($)',data:ltvCum,borderColor:'#3498db',backgroundColor:'rgba(52,152,219,0.08)',
+        fill:true,tension:0.3,pointRadius:3,
+        pointBackgroundColor:ltvCum.map((v,i)=>i===14?'#e74c3c':'#3498db')
+    }]},
+    options:{responsive:true,plugins:{
+        legend:{display:false},
+        annotation:{annotations:{
+            box1:{type:'box',xMin:0,xMax:4,backgroundColor:'rgba(46,204,113,0.05)',label:{display:true,content:'爆发期',color:'#2ecc71',position:'start',font:{size:9}}},
+            box2:{type:'box',xMin:5,xMax:13,backgroundColor:'rgba(52,152,219,0.05)',label:{display:true,content:'稳定期',color:'#3498db',position:'start',font:{size:9}}},
+            box3:{type:'box',xMin:14,xMax:20,backgroundColor:'rgba(243,156,18,0.05)',label:{display:true,content:'衰减期',color:'#f39c12',position:'start',font:{size:9}}},
+            pt14:{type:'point',xValue:14,yValue:0.711,radius:6,backgroundColor:'#e74c3c',borderColor:'#fff',borderWidth:2}
+        }}
+    },scales:{
+        y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888',callback:v=>'$'+v.toFixed(2)}},
+        x:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{color:'#888',font:{size:9}}}
+    }}
+});
+
+// ====== Chart 2a: 各R级日增量 (用对数刻度区分量级) ======
+new Chart(document.getElementById('chart2_rlevel'), {
+    type:'line',
+    data:{labels:dayLabels, datasets:[
+        {label:'小R',data:smallR,borderColor:'#95a5a6',tension:0.3,pointRadius:0,borderWidth:1.5},
+        {label:'中R',data:midR,borderColor:'#3498db',tension:0.3,pointRadius:2,borderWidth:2.5,
+         pointBackgroundColor:midR.map((v,i)=>i===14?'#e74c3c':'#3498db')},
+        {label:'大R',data:bigR,borderColor:'#f39c12',tension:0.3,pointRadius:0,borderWidth:1.5},
+        {label:'超R',data:superR,borderColor:'#e74c3c',tension:0.3,pointRadius:0,borderWidth:1.5,borderDash:[4,4]}
+    ]},
+    options:{responsive:true,plugins:{
+        legend:{position:'bottom',labels:{color:'#aaa',font:{size:10}}},
+        annotation:{annotations:{
+            line14:{type:'line',xMin:14,xMax:14,borderColor:'rgba(231,76,60,0.4)',borderWidth:1.5,borderDash:[4,4],
+                label:{display:true,content:'D14',color:'#e74c3c',position:'start',font:{size:9}}}
+        }}
+    },scales:{
+        y:{type:'logarithmic',grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888',callback:v=>v>=1?v.toFixed(0)+'‰':v.toFixed(2)+'‰'}},
+        x:{grid:{display:false},ticks:{color:'#888',font:{size:9}}}
+    }}
+});
+
+// ====== Chart 2b: 中R 放大图 ======
+const midR_d5 = midR.slice(5);
+const midR_labels = dayLabels.slice(5);
+new Chart(document.getElementById('chart2_midr_zoom'), {
+    type:'line',
+    data:{labels:midR_labels, datasets:[{
+        label:'中R 日增量 (‰)',data:midR_d5,
+        borderColor:'#3498db',backgroundColor:'rgba(52,152,219,0.1)',fill:true,tension:0.3,pointRadius:4,
+        pointBackgroundColor:midR_d5.map((v,i)=>{const d=i+5;return d===14?'#e74c3c':(d===17?'#f39c12':'#3498db')})
+    }]},
+    options:{responsive:true,plugins:{
+        legend:{display:false},
+        annotation:{annotations:{
+            d14:{type:'line',xMin:9,xMax:9,borderColor:'rgba(231,76,60,0.6)',borderWidth:2,borderDash:[5,5],
+                label:{display:true,content:'D14 断崖 -39%',color:'#e74c3c',position:'start',font:{size:10,weight:'bold'}}},
+            d17:{type:'line',xMin:12,xMax:12,borderColor:'rgba(243,156,18,0.4)',borderWidth:1.5,borderDash:[4,4],
+                label:{display:true,content:'D17 二次跌 -36%',color:'#f39c12',position:'start',font:{size:9}}},
+            zone1:{type:'box',xMin:0,xMax:8,backgroundColor:'rgba(52,152,219,0.05)',
+                label:{display:true,content:'中R 稳定花钱区',color:'#3498db',position:'end',font:{size:9}}},
+            zone2:{type:'box',xMin:10,xMax:15,backgroundColor:'rgba(231,76,60,0.05)',
+                label:{display:true,content:'中R 断崖+探底',color:'#e74c3c',position:'end',font:{size:9}}}
+        }}
+    },scales:{
+        y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888',callback:v=>v.toFixed(2)+'‰'}},
+        x:{grid:{display:false},ticks:{color:'#888',font:{size:9}}}
+    }}
+});
+
+// ====== Chart 5a: 渗透率 ======
+const lcLabels = ['0-7天','8-14天','15-30天','31-60天','61-90天','90天+'];
+const pen_s = [7.76,6.65,7.72,8.48,4.50,7.12];
+const pen_m = [56.47,54.23,59.36,56.31,41.16,50.32];
+const pen_l = [85.06,86.75,87.21,86.59,66.04,83.87];
+const pen_x = [95.65,100,88.89,100,88.89,83.33];
+new Chart(document.getElementById('chart5_penetration'), {
+    type:'line',
+    data:{labels:lcLabels, datasets:[
+        {label:'小R',data:pen_s,borderColor:'#95a5a6',tension:0.3,pointRadius:3,borderWidth:1.5},
+        {label:'中R',data:pen_m,borderColor:'#3498db',tension:0.3,pointRadius:4,borderWidth:2.5},
+        {label:'大R',data:pen_l,borderColor:'#f39c12',tension:0.3,pointRadius:3,borderWidth:1.5},
+        {label:'超R',data:pen_x,borderColor:'#e74c3c',tension:0.3,pointRadius:3,borderWidth:1.5,borderDash:[4,4]}
+    ]},
+    options:{responsive:true,plugins:{
+        legend:{position:'bottom',labels:{color:'#aaa',font:{size:10}}},
+        annotation:{annotations:{
+            d814:{type:'box',xMin:1,xMax:1,backgroundColor:'rgba(243,156,18,0.08)',borderColor:'rgba(243,156,18,0.3)',borderWidth:2,
+                label:{display:true,content:'活动目标窗口',color:'#f39c12',position:'start',font:{size:9}}}
+        }}
+    },scales:{
+        y:{beginAtZero:true,max:110,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888',callback:v=>v+'%'}},
+        x:{grid:{display:false},ticks:{color:'#888'}}
+    }}
+});
+
+// ====== Chart 5b: ARPU ======
+const arpu_s = [0.92,0.86,1.32,1.32,0.74,1.43];
+const arpu_m = [18.77,17.58,24.82,26.94,19.68,52.83];
+const arpu_l = [49.83,64.77,106.20,87.29,51.56,300.91];
+const arpu_x = [96.55,97.82,166.28,231.79,179.29,1271.89];
+new Chart(document.getElementById('chart5_arpu'), {
+    type:'bar',
+    data:{labels:lcLabels, datasets:[
+        {label:'小R',data:arpu_s,backgroundColor:'rgba(149,165,166,0.6)'},
+        {label:'中R',data:arpu_m,backgroundColor:'rgba(52,152,219,0.6)'},
+        {label:'大R',data:arpu_l,backgroundColor:'rgba(243,156,18,0.6)'},
+    ]},
+    options:{responsive:true,plugins:{
+        legend:{position:'bottom',labels:{color:'#aaa',font:{size:10}}},
+    },scales:{
+        y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888',callback:v=>'$'+v}},
+        x:{grid:{display:false},ticks:{color:'#888'}}
+    }}
+});
+
+// ====== Chart 5c: 收入结构 ======
+const rev_s = [9572,4018,5554,4338,1469,2987];
+const rev_m = [14792,12672,17773,17083,8463,16272];
+const rev_l = [4336,5376,9133,7158,2733,9328];
+const rev_x = [2221,1859,2993,2781,1614,7631];
+new Chart(document.getElementById('chart5_revenue'), {
+    type:'bar',
+    data:{labels:lcLabels, datasets:[
+        {label:'小R',data:rev_s,backgroundColor:'rgba(149,165,166,0.6)'},
+        {label:'中R',data:rev_m,backgroundColor:'rgba(52,152,219,0.6)'},
+        {label:'大R',data:rev_l,backgroundColor:'rgba(243,156,18,0.6)'},
+        {label:'超R',data:rev_x,backgroundColor:'rgba(231,76,60,0.6)'}
+    ]},
+    options:{responsive:true,plugins:{
+        legend:{position:'bottom',labels:{color:'#aaa',font:{size:10}}},
+        annotation:{annotations:{
+            d814:{type:'box',xMin:0.6,xMax:1.4,backgroundColor:'rgba(243,156,18,0.06)',borderColor:'rgba(243,156,18,0.3)',borderWidth:2}
+        }}
+    },scales:{
+        y:{stacked:true,beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888',callback:v=>'$'+v.toLocaleString()}},
+        x:{stacked:true,grid:{display:false},ticks:{color:'#888'}}
+    }}
+});
+
+// ====== Chart 3: R级贡献占比堆叠 ======
+const shareData = {
+    labels:['D0-D6','D7-D13','D14-D20','D21-D30'],
+    datasets:[
+        {label:'小R',data:[49.8,32.1,25.2,24.9],backgroundColor:'rgba(149,165,166,0.6)'},
+        {label:'中R',data:[37.0,44.7,47.3,45.2],backgroundColor:'rgba(52,152,219,0.6)'},
+        {label:'大R',data:[8.8,16.3,18.1,20.2],backgroundColor:'rgba(243,156,18,0.6)'},
+        {label:'超R',data:[4.5,7.0,9.4,9.7],backgroundColor:'rgba(231,76,60,0.6)'}
+    ]
+};
+new Chart(document.getElementById('chart3_share'), {
+    type:'bar',data:shareData,
+    options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#aaa',font:{size:10}}}},
+    scales:{
+        y:{stacked:true,max:100,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888',callback:v=>v+'%'}},
+        x:{stacked:true,grid:{display:false},ticks:{color:'#888'}}
+    }}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,2219 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>科技节集卡渠道 · 饱和度分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  html { font-size: 16px; }
+  :root {
+    --bg:#090c12;--bg2:#0e1420;--bg3:#131a27;--border:#1e2d45;
+    --accent:#00d4ff;--accent2:#ff6b35;--warn:#ffcc00;--danger:#ff3b5c;--ok:#39ff8a;
+    --text:#c8d8f0;--text2:#7a8fa8;
+    --nr:#8899aa;--xr:#ff6b35;--sr:#ffcc00;--dr:#00d4ff;--cr:#39ff8a;
+    --mono:'JetBrains Mono',monospace;--sans:'Noto Sans SC',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:linear-gradient(rgba(0,212,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,212,255,.03) 1px,transparent 1px);background-size:40px 40px;}
+  .container{max-width:1300px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+  header{border-bottom:1px solid var(--border);padding:28px 0 20px;position:relative;overflow:hidden;}
+  header::after{content:'⛏';position:absolute;right:40px;top:50%;transform:translateY(-50%);font-size:100px;opacity:.04;}
+  .header-label{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+  h1{font-size:26px;font-weight:700;color:#fff;margin-bottom:6px;}
+  .header-sub{font-size:13px;color:var(--text2);font-family:var(--mono);}
+  .header-sub span{color:var(--accent);margin:0 6px;}
+  .v-tag{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 8px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--accent);border-radius:3px;margin-left:10px;vertical-align:middle;}
+  section{padding:32px 0;}
+  .sec-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+  .sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  /* KPI */
+  .kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
+  .kpi{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:18px 20px;position:relative;overflow:hidden;}
+  .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+  .kpi.p1::before{background:var(--danger);}
+  .kpi.p2::before{background:var(--accent2);}
+  .kpi.p3::before{background:var(--warn);}
+  .kpi-period{font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:6px;}
+  .kpi-row{font-family:var(--mono);font-size:13px;color:var(--text2);margin-bottom:3px;}
+  .kpi-row em{font-style:normal;color:var(--accent);}
+  .kpi-num{font-family:var(--mono);font-size:28px;font-weight:700;line-height:1;margin:8px 0 4px;}
+  .kpi-foot{font-size:13px;color:var(--text2);}
+  .kpi-foot strong{color:var(--text);}
+
+  /* MINI CARDS */
+  .mini-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:24px;}
+  .mini-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:16px;}
+  .mini-title{font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+  .mini-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+  .mini-label{font-size:13px;color:var(--text2);width:50px;flex-shrink:0;font-family:var(--mono);}
+  .mini-bar{height:22px;border-radius:3px;display:flex;align-items:center;padding:0 8px;font-family:var(--mono);font-size:10px;font-weight:600;color:#fff;min-width:44px;}
+  .mini-extra{font-family:var(--mono);font-size:10px;color:var(--text2);}
+
+  /* CHART */
+  .chart-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:24px;margin-bottom:24px;}
+  .chart-title{font-size:14px;font-weight:500;color:#fff;margin-bottom:4px;}
+  .chart-desc{font-size:13px;color:var(--text2);margin-bottom:16px;font-family:var(--mono);}
+  .legend{display:flex;gap:16px;margin-bottom:14px;flex-wrap:wrap;}
+  .lg-item{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text2);}
+  .lg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  canvas{max-height:320px;}
+
+  /* R-LEVEL TABLE */
+  .tabs{display:flex;gap:8px;margin-bottom:14px;}
+  .tab{font-family:var(--mono);font-size:11px;padding:6px 16px;border-radius:4px;border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:.15s;user-select:none;}
+  .tab.active{background:rgba(0,212,255,.1);border-color:var(--accent);color:var(--accent);}
+  .tab:hover:not(.active){border-color:rgba(0,212,255,.4);color:var(--text);}
+  .tbl-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+  table{width:100%;border-collapse:collapse;}
+  .thead-top th{background:var(--bg3);padding:9px 10px;font-size:11px;font-family:var(--mono);letter-spacing:1px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);text-align:center;white-space:nowrap;}
+  .thead-top th:last-child{border-right:none;}
+  .th-label,.th-reward{text-align:left !important;color:var(--text2);}
+  .thead-sub th{background:#080b12;padding:5px 8px;font-size:10px;font-family:var(--mono);color:var(--text2);border-bottom:2px solid var(--border);border-right:1px solid rgba(30,45,69,.4);text-align:center;}
+  .cg-right{border-right:1px solid var(--border) !important;}
+  tbody tr{border-bottom:1px solid rgba(30,45,69,.45);}
+  tbody tr:last-child{border-bottom:none;}
+  tbody tr:hover td{background:rgba(0,212,255,.02);}
+  tbody tr.has-reward td{background:rgba(0,212,255,.02);}
+  tbody tr.section-start td{border-top:2px solid rgba(30,45,69,.8);}
+  td{padding:8px 10px;font-size:12px;border-right:1px solid rgba(30,45,69,.3);vertical-align:middle;}
+  td:last-child{border-right:none;}
+  .td-level{font-family:var(--mono);font-size:14px;color:#fff;white-space:nowrap;}
+  .rtag{font-family:var(--mono);font-size:10px;padding:2px 6px;border-radius:3px;display:inline-block;white-space:nowrap;}
+  .rtag-white{background:rgba(96,200,255,.1);color:#60c8ff;border:1px solid rgba(96,200,255,.2);}
+  .rtag-green{background:rgba(57,255,138,.1);color:#39ff8a;border:1px solid rgba(57,255,138,.2);}
+  .rtag-none{color:var(--text2);}
+  .td-n{font-family:var(--mono);font-size:14px;text-align:right;color:var(--text);}
+  .td-step{font-family:var(--mono);font-size:14px;text-align:right;}
+  .td-cum{font-family:var(--mono);font-size:14px;text-align:right;}
+  .s-great{color:#39ff8a;}.s-good{color:#80e0a0;}.s-mid{color:#ffcc00;}.s-low{color:#ff6b35;}.s-bad{color:#ff3b5c;}.s-dash{color:var(--text2);}
+  tfoot tr td{background:var(--bg3);font-weight:700;border-top:2px solid var(--border);font-family:var(--mono);font-size:12px;}
+  .r-entry{font-size:9px;opacity:.65;display:block;margin-top:2px;}
+  .tbl-legend{display:flex;gap:14px;margin-bottom:12px;flex-wrap:wrap;}
+  .tbl-lg{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);font-family:var(--mono);}
+  .tbl-dot{width:8px;height:8px;border-radius:50%;}
+
+  /* CONCLUSION */
+  .c-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .c-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px;}
+  .c-card.full{grid-column:1/-1;}
+  .c-label{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+  .c-card h3{font-size:14px;font-weight:700;color:#fff;margin-bottom:8px;}
+  .c-card p{font-size:14px;color:var(--text);line-height:1.7;margin-bottom:6px;}
+  .c-card p:last-child{margin-bottom:0;}
+  .hi{color:var(--accent);font-weight:500;}.dt{color:var(--danger);font-weight:500;}.ot{color:var(--ok);font-weight:500;}.wt{color:var(--warn);font-weight:500;}
+
+  /* OPT */
+  .opt-list{list-style:none;}
+  .opt-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(30,45,69,.5);}
+  .opt-item:last-child{border-bottom:none;}
+  .opt-num{width:24px;height:24px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);font-family:var(--mono);font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+  .opt-title{font-size:15px;font-weight:500;color:#fff;margin-bottom:3px;}
+  .opt-desc{font-size:13px;color:var(--text2);line-height:1.6;}
+  .opt-target{display:inline-block;margin-top:4px;font-family:var(--mono);font-size:10px;color:var(--accent2);background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.3);padding:2px 7px;border-radius:3px;}
+
+  /* DATA NOTES */
+  .dn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .dn{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:12px 14px;}
+  .dn-label{font-family:var(--mono);font-size:9px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;}
+  .dn-val{font-size:14px;color:var(--text);line-height:1.5;}
+  footer{border-top:1px solid var(--border);padding:18px 0;margin-top:16px;font-family:var(--mono);font-size:13px;color:var(--text2);display:flex;justify-content:space-between;}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="header-label">科技节集卡系统 · 渠道饱和度分析报告</div>
+  <h1>科技节 集卡渠道复盘</h1>
+  <div class="header-sub">
+    活动周期<span>2026.03.13 — 2026.04.03</span>挖矿 · 大富翁
+  </div>
+</header>
+
+<!-- MODULE NAV -->
+<div style="display:flex;gap:0;margin:24px 0 0;border-bottom:1px solid var(--border);">
+  <div id="nav-mining" onclick="showModule('mining')" style="font-family:var(--mono);font-size:12px;padding:10px 24px;cursor:pointer;border-bottom:2px solid var(--accent);color:var(--accent);background:rgba(0,212,255,.05);">⛏ 挖矿渠道</div>
+  <div id="nav-monopoly" onclick="showModule('monopoly')" style="font-family:var(--mono);font-size:12px;padding:10px 24px;cursor:pointer;border-bottom:2px solid transparent;color:var(--text2);">🎲 大富翁兑换商店</div>
+  <div id="nav-bingo" onclick="showModule('bingo')" style="font-family:var(--mono);font-size:12px;padding:10px 24px;cursor:pointer;border-bottom:2px solid transparent;color:var(--text2);">🎯 BINGO</div>
+  <div id="nav-marble" onclick="showModule('marble')" style="font-family:var(--mono);font-size:12px;padding:10px 24px;cursor:pointer;border-bottom:2px solid transparent;color:var(--text2);">🎰 弹珠gacha</div>
+  <div id="nav-hole" onclick="showModule('hole')" style="font-family:var(--mono);font-size:12px;padding:10px 24px;cursor:pointer;border-bottom:2px solid transparent;color:var(--text2);">🕳 挖孔小游戏</div>
+  <div id="nav-summary" onclick="showModule('summary')" style="font-family:var(--mono);font-size:12px;padding:10px 24px;cursor:pointer;border-bottom:2px solid transparent;color:var(--text2);background:rgba(255,255,255,.03)">📋 全渠道汇总</div>
+  <div id="nav-opt" onclick="showModule('opt')" style="font-family:var(--mono);font-size:12px;padding:10px 24px;cursor:pointer;border-bottom:2px solid transparent;color:var(--text2);">🔧 优化方向</div>
+</div>
+
+<div id="module-mining">
+<!-- KPI -->
+<section>
+  <div class="sec-title">三期关键指标</div>
+  <div class="kpi-grid">
+    <div class="kpi p1">
+      <div class="kpi-period">第一期 · 3.14-3.19</div>
+      <div class="kpi-row">78_1 入口 <em>8,546人</em></div>
+      <div class="kpi-row">最大卡口 78_2 步转 <em>69%</em></div>
+      <div class="kpi-num" style="color:var(--danger)">13.0%</div>
+      <div class="kpi-foot">末关完成率（81_3 / 78_1）<br><strong>1,114 / 8,546</strong></div>
+    </div>
+    <div class="kpi p2">
+      <div class="kpi-period">第二期 · 3.21-3.26</div>
+      <div class="kpi-row">78_1 入口 <em>8,285人</em></div>
+      <div class="kpi-row">最大卡口 78_2 步转 <em>69%</em></div>
+      <div class="kpi-num" style="color:var(--accent2)">18.5%</div>
+      <div class="kpi-foot">末关完成率（81_3 / 78_1）<br><strong>1,536 / 8,285</strong></div>
+    </div>
+    <div class="kpi p3">
+      <div class="kpi-period">第三期 · 3.27-3.31</div>
+      <div class="kpi-row">78_1 入口 <em>5,734人</em></div>
+      <div class="kpi-row">最大卡口 78_2 步转 <em>83%</em></div>
+      <div class="kpi-num" style="color:var(--warn)">28.2%</div>
+      <div class="kpi-foot">末关完成率（81_3 / 78_1）<br><strong>1,617 / 5,734</strong></div>
+    </div>
+  </div>
+  <div class="mini-grid">
+    <div class="mini-card">
+      <div class="mini-title">78_2 卡口（各期步转）</div>
+      <div class="mini-row"><div class="mini-label">第一期</div><div class="mini-bar" style="width:69%;background:linear-gradient(90deg,var(--danger),#c42040)">69%</div><div class="mini-extra">流失 2,685人</div></div>
+      <div class="mini-row"><div class="mini-label">第二期</div><div class="mini-bar" style="width:69%;background:linear-gradient(90deg,var(--danger),#c42040)">69%</div><div class="mini-extra">流失 2,561人</div></div>
+      <div class="mini-row"><div class="mini-label">第三期</div><div class="mini-bar" style="width:83%;background:linear-gradient(90deg,var(--warn),#cc9900)">83%</div><div class="mini-extra">流失 962人</div></div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">末关完成率（81_3 / 78_1）</div>
+      <div class="mini-row"><div class="mini-label">第一期</div><div class="mini-bar" style="width:13%;background:linear-gradient(90deg,var(--danger),#c42040)">13%</div><div class="mini-extra">1,114人完成</div></div>
+      <div class="mini-row"><div class="mini-label">第二期</div><div class="mini-bar" style="width:18.5%;background:linear-gradient(90deg,var(--accent2),#c44a1a)">18.5%</div><div class="mini-extra">1,536人完成</div></div>
+      <div class="mini-row"><div class="mini-label">第三期</div><div class="mini-bar" style="width:28.2%;background:linear-gradient(90deg,var(--warn),#cc9900)">28.2%</div><div class="mini-extra">1,617人完成</div></div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">超R vs 非R 末关完成率（第一期）</div>
+      <div class="mini-row"><div class="mini-label">超R</div><div class="mini-bar" style="width:21.9%;background:linear-gradient(90deg,var(--ok),#20c060)">22%</div><div class="mini-extra">565/2,578</div></div>
+      <div class="mini-row"><div class="mini-label">大R</div><div class="mini-bar" style="width:15.1%;background:linear-gradient(90deg,var(--dr),#0090cc)">15%</div><div class="mini-extra">173/1,146</div></div>
+      <div class="mini-row"><div class="mini-label">非R</div><div class="mini-bar" style="width:6.7%;background:linear-gradient(90deg,var(--nr),#667788)">7%</div><div class="mini-extra">193/2,880</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FUNNEL CHART -->
+<section>
+  <div class="sec-title">循环关卡通关漏斗</div>
+  <div class="chart-wrap">
+    <div class="chart-title">78_1 → 81_3 累计留存率（% 78_1 入口）</div>
+    <div class="chart-desc">★ = 有卡包奖励节点 · 分母：P1 8,546 / P2 8,285 / P3 5,734（78_1 通关人数）</div>
+    <div class="legend">
+      <div class="lg-item"><div class="lg-dot" style="background:#00d4ff"></div>第一期 3.14-3.19</div>
+      <div class="lg-item"><div class="lg-dot" style="background:#ff6b35"></div>第二期 3.21-3.26</div>
+      <div class="lg-item"><div class="lg-dot" style="background:#39ff8a"></div>第三期 3.27-3.31</div>
+      <div class="lg-item"><div class="lg-dot" style="background:#60c8ff;border-radius:2px"></div>白包节点</div>
+      <div class="lg-item"><div class="lg-dot" style="background:#39ff8a;border-radius:2px"></div>绿包节点</div>
+    </div>
+    <canvas id="funnelChart"></canvas>
+  </div>
+</section>
+
+<!-- R-LEVEL TABLE -->
+<section>
+  <div class="sec-title">分R级通关漏斗</div>
+  <div class="tbl-legend">
+    <div class="tbl-lg"><div class="tbl-dot" style="background:var(--nr)"></div>非R (LTV=0)</div>
+    <div class="tbl-lg"><div class="tbl-dot" style="background:var(--xr)"></div>小R (≤$30)</div>
+    <div class="tbl-lg"><div class="tbl-dot" style="background:var(--sr)"></div>中R ($31-200)</div>
+    <div class="tbl-lg"><div class="tbl-dot" style="background:var(--dr)"></div>大R ($201-1000)</div>
+    <div class="tbl-lg"><div class="tbl-dot" style="background:var(--cr)"></div>超R (>$1000)</div>
+    <div class="tbl-lg" style="margin-left:8px;padding-left:8px;border-left:1px solid var(--border)">步转：<span style="color:#39ff8a">≥90%</span> <span style="color:#ffcc00">≥70%</span> <span style="color:#ff6b35">≥60%</span> <span style="color:#ff3b5c">&lt;60%</span></div>
+  </div>
+  <div class="tabs" id="rtabs"></div>
+  <div class="tbl-wrap"><div id="rtable"></div></div>
+</section>
+
+<!-- CONCLUSION -->
+<section>
+  <div class="sec-title">最终结论</div>
+  <div class="c-grid">
+
+    <div class="c-card full">
+      <div class="c-label">结论一</div>
+      <h3>按 R 级分层的卡包投放标准不适用，需重构为完成百分位</h3>
+      <p>
+        当前数值表按小非R / 中R / 大R / 超R 设计卡包投放量，默认同一 R 级内玩家行为一致。但实际数据显示，<span class="dt">R 级与推进深度的相关性弱</span>——付费玩家的 78_1 触达率（54%）反而低于全量（60%），78_2 步转付费 vs 非付费几乎相同（均为 69%）。完成深度更多取决于玩家活跃度和资源储备，而非付费金额。
+      </p>
+      <p>
+        <span class="hi">应改为以实际完成百分位为设计基准</span>——即"前 X% 的参与玩家应能拿到 Y 档奖励"，从完成行为反推投放节点。
+      </p>
+      <div style="margin-top:14px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:12px;">各关卡完成百分位（三期均值，78_1 入口 = 100%）</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;text-align:center;">
+          <div><div style="font-family:var(--mono);font-size:10px;color:#60c8ff;margin-bottom:4px;">78_2</div><div style="font-family:var(--mono);font-size:20px;font-weight:700;color:#fff">74%</div></div>
+          <div><div style="font-family:var(--mono);font-size:10px;color:#60c8ff;margin-bottom:4px;">79_3</div><div style="font-family:var(--mono);font-size:20px;font-weight:700;color:#fff">38%</div></div>
+          <div><div style="font-family:var(--mono);font-size:10px;color:#60c8ff;margin-bottom:4px;">80_3</div><div style="font-family:var(--mono);font-size:20px;font-weight:700;color:#fff">25%</div></div>
+          <div><div style="font-family:var(--mono);font-size:10px;color:#39ff8a;margin-bottom:4px;">81_1</div><div style="font-family:var(--mono);font-size:20px;font-weight:700;color:#fff">23%</div></div>
+          <div><div style="font-family:var(--mono);font-size:10px;color:#39ff8a;margin-bottom:4px;">81_3</div><div style="font-family:var(--mono);font-size:20px;font-weight:700;color:#fff">20%</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-card full">
+      <div class="c-label">结论二</div>
+      <h3>重构后来看投放节点仍过深，需前置 + 溢出补充刺激收集</h3>
+      <p>
+        按完成百分位重构后，当前奖励节点的覆盖率仍偏低：白包首个奖励（78_2）以签到为基准仅覆盖约 <span class="dt">41%</span> 的节日玩家，绿包（81_1）仅约 <span class="dt">10%</span>。大量进入挖矿的玩家因卡在 78_2 而拿不到任何卡包，对集卡体验贡献极低。
+      </p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+        <div style="background:var(--bg3);border:1px solid rgba(0,212,255,.25);border-radius:6px;padding:16px;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:8px;">前置投放</div>
+          <p style="font-size:14px;color:var(--text);line-height:1.7;margin:0">在 <strong style="color:#fff">78_1 完成即给少量白包</strong>，确保所有进入循环的玩家获得即时反馈，降低 78_2 前的流失动力。当前 78_1 无任何奖励，是进入后第一步流失的重要原因之一。</p>
+        </div>
+        <div style="background:var(--bg3);border:1px solid rgba(57,255,138,.25);border-radius:6px;padding:16px;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px;">溢出投放</div>
+          <p style="font-size:14px;color:var(--text);line-height:1.7;margin:0">对深度玩家（<strong style="color:#fff">80_3 以后</strong>）增加额外卡包奖励，强化核心玩家推进的收益感，同时通过可见的高阶奖励拉动中段玩家（30-40% 区间）向上突破。</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- OPTIMIZATION -->
+<section>
+  <div class="sec-title">优化方向</div>
+  <div class="c-card" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px;">
+    <ul class="opt-list">
+      <li class="opt-item">
+        <div class="opt-num">1</div>
+        <div>
+          <div class="opt-title">卡包奖励重构 — 按完成百分位重新设计投放节点</div>
+          <div class="opt-desc">以实际完成百分位（78_1=100%）为基准，确定各档奖励的覆盖目标，替代当前的 R 级分层设计。建议以三期均值为基准参数，P1 数据作为保守估计下限。</div>
+          <span class="opt-target">方向：定义"前X%玩家能拿到Y档奖励"，由策划重构奖励节点</span>
+        </div>
+      </li>
+      <li class="opt-item">
+        <div class="opt-num">2</div>
+        <div>
+          <div class="opt-title">前置奖励 — 78_1 完成即投放</div>
+          <div class="opt-desc">当前 78_1 无奖励，进入循环后第一步就有 31% 流失（78_2 步转 69%）。在 78_1 完成节点增加少量白包，给予即时反馈，可降低首步流失并提升 78_2 转化率。</div>
+          <span class="opt-target">目标：78_2 步转从 69% → 83%+</span>
+        </div>
+      </li>
+      <li class="opt-item">
+        <div class="opt-num">3</div>
+        <div>
+          <div class="opt-title">关卡难度调整 — 降低 78_2 资源门槛</div>
+          <div class="opt-desc">78_2 步转付费 vs 非付费差距仅 17pp，说明是关卡本身难度问题而非消费能力问题。第三期自然改善至 83%，以此作为目标基准，请策划评估降低矿石消耗或难度系数。</div>
+          <span class="opt-target">参考基准：第三期 78_2 步转 83%</span>
+        </div>
+      </li>
+      <li class="opt-item">
+        <div class="opt-num">4</div>
+        <div>
+          <div class="opt-title">溢出投放 — 80_3 以后增加深度奖励密度</div>
+          <div class="opt-desc">核心玩家群（约 25% 以内）在 80_3~81_3 段每步转化已达 90%+，但奖励密度不够，深度收益感弱。溢出投放分两个维度拆解：</div>
+          <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:14px;">
+              <div style="font-family:var(--mono);font-size:10px;color:var(--accent2);letter-spacing:2px;margin-bottom:8px;">① 加投放需要加多少</div>
+              <p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:8px;">基于三期实际到达人数，估算各节点追加投放的总量：</p>
+              <table style="width:100%;font-family:var(--mono);font-size:11px;border-collapse:collapse;">
+                <tr style="color:var(--text2);">
+                  <td style="padding:3px 6px;">节点</td>
+                  <td style="padding:3px 6px;text-align:right;">P1到达</td>
+                  <td style="padding:3px 6px;text-align:right;">P2到达</td>
+                  <td style="padding:3px 6px;text-align:right;">P3到达</td>
+                  <td style="padding:3px 6px;text-align:right;color:var(--warn)">追加/人</td>
+                </tr>
+                <tr style="color:var(--text);">
+                  <td style="padding:3px 6px;">80_3</td><td style="padding:3px 6px;text-align:right;">1,527</td><td style="padding:3px 6px;text-align:right;">1,859</td><td style="padding:3px 6px;text-align:right;">1,903</td>
+                  <td style="padding:3px 6px;text-align:right;color:var(--warn);font-style:italic;">待填</td>
+                </tr>
+                <tr style="color:var(--text);">
+                  <td style="padding:3px 6px;">81_1</td><td style="padding:3px 6px;text-align:right;">1,394</td><td style="padding:3px 6px;text-align:right;">1,765</td><td style="padding:3px 6px;text-align:right;">1,801</td>
+                  <td style="padding:3px 6px;text-align:right;color:var(--warn);font-style:italic;">待填</td>
+                </tr>
+                <tr style="color:var(--text);">
+                  <td style="padding:3px 6px;">81_3</td><td style="padding:3px 6px;text-align:right;">1,114</td><td style="padding:3px 6px;text-align:right;">1,536</td><td style="padding:3px 6px;text-align:right;">1,617</td>
+                  <td style="padding:3px 6px;text-align:right;color:var(--warn);font-style:italic;">待填</td>
+                </tr>
+              </table>
+              <p style="font-size:13px;color:var(--text2);margin-top:8px;font-family:var(--mono);">追加总量 = Σ 各节点到达人数 × 追加包数<br>（待卡包重构方案确定后补充）</p>
+            </div>
+
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:14px;">
+              <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px;">② 重置后投放比例分布</div>
+              <p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:10px;">按完成百分位将总投放量分配到三个层级：</p>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;margin-bottom:3px;">
+                    <span style="color:var(--text)">广覆盖层 (78_2~79_3, 38-74%)</span>
+                    <span style="color:var(--warn);font-style:italic">待填%</span>
+                  </div>
+                  <div style="height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;">
+                    <div id="bar1" style="height:100%;background:linear-gradient(90deg,#00d4ff,#0090aa);width:0%;border-radius:3px;transition:width 1s"></div>
+                  </div>
+                  <div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-top:2px;">触达多、每人少 → 保量</div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;margin-bottom:3px;">
+                    <span style="color:var(--text)">中深层 (80_1~80_3, 24-31%)</span>
+                    <span style="color:var(--warn);font-style:italic">待填%</span>
+                  </div>
+                  <div style="height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;">
+                    <div id="bar2" style="height:100%;background:linear-gradient(90deg,#ff6b35,#cc4a1a);width:0%;border-radius:3px;transition:width 1s"></div>
+                  </div>
+                  <div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-top:2px;">过渡层 → 拉动向上突破</div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;margin-bottom:3px;">
+                    <span style="color:var(--text)">深度溢出层 (81_1~81_3, ≤23%)</span>
+                    <span style="color:var(--warn);font-style:italic">待填%</span>
+                  </div>
+                  <div style="height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;">
+                    <div id="bar3" style="height:100%;background:linear-gradient(90deg,#39ff8a,#20c060);width:0%;border-radius:3px;transition:width 1s"></div>
+                  </div>
+                  <div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-top:2px;">触达少、每人多 → 强化收益感</div>
+                </div>
+              </div>
+              <p style="font-size:13px;color:var(--text2);margin-top:10px;font-family:var(--mono);">待卡包重构方案确定后填入各层比例</p>
+            </div>
+          </div>
+          <span class="opt-target">目标：80_3 以后各步转化率 ≥95%，深度完成率（81_3）从 20% → 30%+</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- DATA NOTES -->
+<section style="padding-bottom:20px;">
+  <div class="sec-title">数据说明</div>
+  <div class="dn-grid">
+    <div class="dn"><div class="dn-label">节日内容</div><div class="dn-val">循环关卡 78-81（351610781-351610813）<br>长期 metro 关卡 35160XXX 为常驻内容</div></div>
+    <div class="dn"><div class="dn-label">分母口径</div><div class="dn-val">78_1 通关人数（ods_user_event）<br>P1: 8,546 / P2: 8,285 / P3: 5,734</div></div>
+    <div class="dn"><div class="dn-label">R级划分</div><div class="dn-val">ods_user_order 活动前累计付费额<br>非R=$0 / 小R≤$30 / 中R≤$200 / 大R≤$1000 / 超R>$1000</div></div>
+    <div class="dn"><div class="dn-label">事件数据源</div><div class="dn-val">ods_user_event, event_name='55'<br>level_id LIKE '351610%'（不限 rock_id）</div></div>
+    <div class="dn"><div class="dn-label">任务数据源</div><div class="dn-val">ods_user_task, actv=21127656<br>task_id 211584665-674<br>覆盖率约70%（部分服务器未配置任务）</div></div>
+    <div class="dn"><div class="dn-label">活动周期</div><div class="dn-val">P1: 3.14-3.19 / P2: 3.21-3.26<br>P3: 3.27-3.31</div></div>
+  </div>
+</section>
+
+</div><!-- /module-mining -->
+
+<!-- ===================== 大富翁模块 ===================== -->
+<div id="module-monopoly" style="display:none">
+
+<section>
+  <div class="sec-title">兑换商店总览</div>
+  <div class="kpi-grid">
+    <div class="kpi p1">
+      <div class="kpi-period">大富翁总参与（2115任务口径）</div>
+      <div class="kpi-row">actv=21127362 · 通用节日大富翁</div>
+      <div class="kpi-num" style="color:var(--accent);font-size:36px">45,903</div>
+      <div class="kpi-foot">活动期间触达任务的玩家数</div>
+    </div>
+    <div class="kpi p2">
+      <div class="kpi-period">卡包兑换渗透率</div>
+      <div class="kpi-row">兑换过任意卡包的玩家占比</div>
+      <div class="kpi-num" style="color:var(--danger)">~8%</div>
+      <div class="kpi-foot"><strong>3,601-3,750人</strong>兑换 · 92% 未触达兑换商店</div>
+    </div>
+    <div class="kpi p3">
+      <div class="kpi-period">满额率（兑换者中）</div>
+      <div class="kpi-row">打到兑换上限的比例</div>
+      <div class="kpi-num" style="color:var(--ok)">81-89%</div>
+      <div class="kpi-foot">兑换意愿充足，上限设置合理</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-title">卡包兑换饱和度明细</div>
+  <div class="chart-wrap">
+    <div class="chart-title">各卡包 · 兑换量 / 渗透率 / 满额率</div>
+    <div class="chart-desc">理论上限 = 大富翁参与人数 45,903 × 兑换上限/人 · 实际饱和度约 7%</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+      <thead>
+        <tr style="background:var(--bg3);">
+          <th style="padding:10px 12px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">卡包</th>
+          <th style="padding:10px 12px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">上限/人</th>
+          <th style="padding:10px 12px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">兑换人数</th>
+          <th style="padding:10px 12px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">渗透率</th>
+          <th style="padding:10px 12px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">满额人数</th>
+          <th style="padding:10px 12px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">满额率(兑换者)</th>
+          <th style="padding:10px 12px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">实际总量</th>
+          <th style="padding:10px 12px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">理论上限</th>
+          <th style="padding:10px 12px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">饱和度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)">
+          <td style="padding:10px 12px"><span style="font-family:var(--mono);font-size:10px;background:rgba(96,200,255,.1);color:#60c8ff;border:1px solid rgba(96,200,255,.2);padding:2px 7px;border-radius:3px">白色保底卡包</span></td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--text)">2次×10个=20</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right">3,601</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--danger)"><strong>7.8%</strong></td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right">3,204</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--ok)">89%</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right">68,050</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--text2)">918,060</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--danger)">7.4%</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)">
+          <td style="padding:10px 12px"><span style="font-family:var(--mono);font-size:10px;background:rgba(57,255,138,.1);color:#39ff8a;border:1px solid rgba(57,255,138,.2);padding:2px 7px;border-radius:3px">绿色保底卡包</span></td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--text)">4次×1个=4</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right">3,642</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--danger)"><strong>7.9%</strong></td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right">2,965</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--ok)">81%</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right">12,999</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--text2)">183,612</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--danger)">7.1%</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px"><span style="font-family:var(--mono);font-size:10px;background:rgba(0,212,255,.1);color:#00d4ff;border:1px solid rgba(0,212,255,.2);padding:2px 7px;border-radius:3px">蓝色保底卡包</span></td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--text)">3次×1个=3</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right">3,750</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--danger)"><strong>8.2%</strong></td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right">3,157</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--ok)">84%</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right">10,330</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--text2)">137,709</td>
+          <td style="padding:10px 12px;font-family:var(--mono);text-align:right;color:var(--danger)">7.5%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="sec-title">结论</div>
+  <div class="c-grid">
+    <div class="c-card full">
+      <div class="c-label">核心结论</div>
+      <h3>饱和度问题根因是触达和引导缺失，而非数值设计问题</h3>
+      <p>
+        <span class="hi">兑换意愿验证充分</span>：进入兑换商店的玩家中 81-89% 直接打满上限，说明上限设置合理，愿意兑换的玩家完全认可收益，不缺意愿和数值驱动力。
+      </p>
+      <p>
+        全量渗透率仅 7-8%，92% 的大富翁参与者<span class="dt">完全未触达兑换商店</span>。根因是玩家不理解「打大富翁 → 积累货币 → 兑换商店换卡包 → 集满卡册获奖励」这条完整链路，三个环节相互独立，没有被引导串联。
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-title">优化方向</div>
+  <div class="c-card" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px;">
+    <ul class="opt-list">
+      <li class="opt-item">
+        <div class="opt-num">1</div>
+        <div>
+          <div class="opt-title">做串联引导型活动说明 — 把三个环节显式连接</div>
+          <div class="opt-desc">
+            <div style="display:flex;align-items:center;gap:8px;margin:8px 0;font-family:var(--mono);font-size:12px;">
+              <span style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--accent);padding:4px 10px;border-radius:4px">触达大富翁</span>
+              <span style="color:var(--text2)">→</span>
+              <span style="background:rgba(255,204,0,.1);border:1px solid rgba(255,204,0,.3);color:var(--warn);padding:4px 10px;border-radius:4px">积累货币</span>
+              <span style="color:var(--text2)">→</span>
+              <span style="background:rgba(96,200,255,.1);border:1px solid rgba(96,200,255,.3);color:#60c8ff;padding:4px 10px;border-radius:4px">兑换商店换卡包</span>
+              <span style="color:var(--text2)">→</span>
+              <span style="background:rgba(57,255,138,.1);border:1px solid rgba(57,255,138,.3);color:var(--ok);padding:4px 10px;border-radius:4px">集卡册获奖励</span>
+            </div>
+            在大富翁界面增加「去兑换」直达入口；首次完成大富翁阶段奖励后弹出引导提示；在集卡册界面增加来源说明，让玩家知道大富翁是获取该卡包的渠道之一。
+          </div>
+          <span class="opt-target">目标：兑换渗透率从 8% → 30%+</span>
+        </div>
+      </li>
+      <li class="opt-item">
+        <div class="opt-num">2</div>
+        <div>
+          <div class="opt-title">数值 Review — 待卡包投放比例重构后补充</div>
+          <div class="opt-desc">当前上限设置（白包×20 / 绿包×4 / 蓝包×3）与完成百分位的匹配关系，等卡包奖励按百分位重构完成后，对照新的投放比例 review，确认各档上限是否需要调整。</div>
+          <span class="opt-target">待百分位数据确认后补充具体调整方案</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section style="padding-bottom:20px">
+  <div class="sec-title">数据说明</div>
+  <div class="dn-grid">
+    <div class="dn"><div class="dn-label">活动</div><div class="dn-val">通用节日大富翁<br>actv=21127362</div></div>
+    <div class="dn"><div class="dn-label">分母口径</div><div class="dn-val">2115任务触达人数<br>45,903人（任意status 1/5/6）</div></div>
+    <div class="dn"><div class="dn-label">兑换数据源</div><div class="dn-val">ods_user_asset<br>reason_id='activity_exchange'<br>reason_sub_id='21127362'</div></div>
+    <div class="dn"><div class="dn-label">活动周期</div><div class="dn-val">2026-03-13 ~ 2026-04-03</div></div>
+    <div class="dn"><div class="dn-label">兑换上限</div><div class="dn-val">白包 2次×10=20个/人<br>绿包 4次×1=4个/人<br>蓝包 3次×1=3个/人</div></div>
+    <div class="dn"><div class="dn-label">满额判断</div><div class="dn-val">兑换次数达上限的玩家<br>白89% / 绿81% / 蓝84%</div></div>
+  </div>
+</section>
+
+</div><!-- /module-monopoly -->
+
+<!-- ===================== BINGO 模块 ===================== -->
+<div id="module-bingo" style="display:none">
+<section>
+  <div class="sec-title">BINGO 总览</div>
+  <div class="kpi-grid">
+    <div class="kpi p1"><div class="kpi-period">活动参与（签到口径）</div><div class="kpi-row">科技节签到 3.13-3.21</div><div class="kpi-num" style="color:var(--accent);font-size:36px">14,910</div><div class="kpi-foot">分母：科技节签到人数</div></div>
+    <div class="kpi p2"><div class="kpi-period">白包达成率</div><div class="kpi-row">设计15个/人 · 实际8.09个/人</div><div class="kpi-num" style="color:var(--warn)">53.9%</div><div class="kpi-foot">总发 <strong>120,607</strong> 个 · 表现可接受</div></div>
+    <div class="kpi p3"><div class="kpi-period">绿包达成率</div><div class="kpi-row">设计5个/人 · 实际0.67个/人</div><div class="kpi-num" style="color:var(--danger)">13.3%</div><div class="kpi-foot">总发 <strong>9,925</strong> 个 · 严重不足</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-title">数值表原始设计 vs 实际</div>
+  <div class="chart-wrap">
+    <div class="chart-title">各R级投放规划（复用活动填充数值 · 活跃产出定位）</div>
+    <div class="chart-desc">设计假设「全参与全完成」→ 实际白包53.9%，绿包13.3%，与挖矿问题同源</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <thead><tr style="background:var(--bg3)">
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:10px;letter-spacing:1px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">R级</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">设计白包</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">设计绿包</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">设计蓝包</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">期望★1</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">期望★2</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">期望★3</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">备注</th>
+      </tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:9px 12px">小非R</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right;color:#60c8ff">15</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right;color:#39ff8a">5</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right;color:var(--text2)">0</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right">13.50</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right">5.48</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right">0.85</td><td style="padding:9px 12px;font-size:11px;color:var(--danger)">蓝色无法获取</td></tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:9px 12px">中R</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right;color:#60c8ff">15</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right;color:#39ff8a">5</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right;color:var(--dr)">2</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right">15.30</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right">5.65</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right">2.62</td><td style="padding:9px 12px;font-size:11px;color:var(--ok)">全部获取</td></tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:9px 12px">大R</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right;color:#60c8ff">15</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right;color:#39ff8a">5</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right;color:var(--dr)">2</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right">15.30</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right">5.65</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right">2.62</td><td style="padding:9px 12px;font-size:11px;color:var(--ok)">全部获取</td></tr>
+        <tr><td style="padding:9px 12px">超R</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right;color:#60c8ff">15</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right;color:#39ff8a">5</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right;color:var(--dr)">2</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right">15.30</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right">5.65</td><td style="padding:9px 12px;font-family:var(--mono);text-align:right">2.62</td><td style="padding:9px 12px;font-size:11px;color:var(--ok)">全部获取</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="sec-title">单格任务通过率 & 格子漏斗</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div class="chart-wrap" style="margin-bottom:0">
+      <div class="chart-title">单格任务通过率（分母=14,910）</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead><tr style="background:var(--bg3)"><th style="padding:7px 10px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">格号/任务</th><th style="padding:7px 10px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">完成</th><th style="padding:7px 10px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">通过率</th></tr></thead>
+        <tbody id="bingo-cells"></tbody>
+      </table>
+    </div>
+    <div class="chart-wrap" style="margin-bottom:0">
+      <div class="chart-title">格子数量漏斗（完成≥N格）</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead><tr style="background:var(--bg3)"><th style="padding:7px 10px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">完成格数</th><th style="padding:7px 10px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">人数</th><th style="padding:7px 10px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">渗透率</th></tr></thead>
+        <tbody id="bingo-funnel"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-title">连线任务通过率 & 卡包发放</div>
+  <div class="chart-wrap">
+    <div class="chart-title">9条连线 · 分母=签到14,910人</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <thead><tr style="background:var(--bg3)">
+        <th style="padding:8px 10px;font-family:var(--mono);font-size:10px;color:var(--text2);border-bottom:1px solid var(--border)">连线</th>
+        <th style="padding:8px 10px;font-family:var(--mono);font-size:10px;color:var(--text2);border-bottom:1px solid var(--border)">格位说明</th>
+        <th style="padding:8px 10px;font-family:var(--mono);font-size:10px;color:var(--text2);border-bottom:1px solid var(--border)">奖励</th>
+        <th style="padding:8px 10px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">完成人数</th>
+        <th style="padding:8px 10px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">通过率</th>
+        <th style="padding:8px 10px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">白包</th>
+        <th style="padding:8px 10px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">绿包</th>
+      </tr></thead>
+      <tbody id="bingo-lines"></tbody>
+      <tfoot><tr style="background:var(--bg3)"><td colspan="5" style="padding:8px 10px;font-family:var(--mono);font-size:13px;color:var(--text2);border-top:2px solid var(--border)">合计</td><td style="padding:8px 10px;font-family:var(--mono);font-size:13px;font-weight:700;text-align:right;color:#60c8ff;border-top:2px solid var(--border)">120,607</td><td style="padding:8px 10px;font-family:var(--mono);font-size:13px;font-weight:700;text-align:right;color:#39ff8a;border-top:2px solid var(--border)">9,925</td></tr></tfoot>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="sec-title">结论</div>
+  <div class="c-grid">
+    <div class="c-card"><div class="c-label">白包 ✅ 可接受</div><h3>达成53.9%，暂不调整</h3><p>连线白包通过率49-64%，覆盖前50-65%活跃玩家，符合宽覆盖逻辑。差距来自16号付费格拖累部分连线，属正常损耗。</p></div>
+    <div class="c-card"><div class="c-label">绿包 ⚠️ 严重不足</div><h3>达成13.3%，需等数值规划后调整</h3><p>绿包只挂在右4/下4（含16号充值格，通过率21-23%），与「活跃产出全覆盖」定位偏离。<span class="wt">待卡包按百分位重构后</span>，将绿包节点前移到通过率30%+的连线（斜线/下1/下2，49-52%）。</p></div>
+  </div>
+</section>
+
+<section style="padding-bottom:20px">
+  <div class="sec-title">数据说明</div>
+  <div class="dn-grid">
+    <div class="dn"><div class="dn-label">活动</div><div class="dn-val">actv=21127035（科技节BINGO）<br>复用春节2025任务</div></div>
+    <div class="dn"><div class="dn-label">分母</div><div class="dn-val">科技节签到 21127574<br>14,910人（3.13-3.21）</div></div>
+    <div class="dn"><div class="dn-label">卡包查询方式</div><div class="dn-val">reason_id='event_task'<br>reason_sub_id=<b>任务ID</b>（非活动ID）<br>详见运维知识库</div></div>
+  </div>
+</section>
+</div><!-- /module-bingo -->
+
+<!-- ===================== 弹珠gacha 模块 ===================== -->
+<div id="module-marble" style="display:none">
+<section>
+  <div class="sec-title">弹珠gacha 总览</div>
+  <div class="kpi-grid">
+    <div class="kpi p1">
+      <div class="kpi-period">里程碑1 触达</div>
+      <div class="kpi-row">签到玩家（14,910）中触达率</div>
+      <div class="kpi-num" style="color:var(--ok);font-size:32px">72.6%</div>
+      <div class="kpi-foot">10,832人触达里程碑1（首个绿包）</div>
+    </div>
+    <div class="kpi p2">
+      <div class="kpi-period">M1→M2 最大卡口</div>
+      <div class="kpi-row">里程碑1到里程碑2步转</div>
+      <div class="kpi-num" style="color:var(--danger)">32.0%</div>
+      <div class="kpi-foot">68% 玩家只拿了第一个绿包就停止</div>
+    </div>
+    <div class="kpi p3">
+      <div class="kpi-period">绿包达成率</div>
+      <div class="kpi-row">里程碑+兑换合计 vs 设计</div>
+      <div class="kpi-num" style="color:var(--danger)">15.3%</div>
+      <div class="kpi-foot">实际22,805绿 / 设计149,100绿</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-title">里程碑漏斗（分母=里程碑1触达10,832人）</div>
+  <div class="chart-wrap">
+    <div class="chart-title">弹珠gacha 里程碑卡包投放漏斗</div>
+    <div class="chart-desc">分母=里程碑1触达(10,832人) · 步转=vs上一里程碑 · 签到渗透=vs签到14,910人</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr style="background:var(--bg3)">
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">里程碑</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">卡包奖励</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">人数</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">步转率</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">累计留存</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">签到渗透率</th>
+      </tr></thead>
+      <tbody id="marble-rows"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="sec-title">结论 & 优化</div>
+  <div class="c-grid">
+    <div class="c-card full">
+      <div class="c-label">是否符合预期</div>
+      <h3>不符合——绿包达成率仅15.3%，M1→M2 是核心卡口</h3>
+      <p>数值表设计「中R口径10绿/人」，实际全量达成率15.3%。活动本身入口良好（72.6%触达M1），核心问题是 <span class="dt">M1→M2 步转仅32%</span>，68% 的玩家停在第一个绿包后退出，M1 和 M2 之间的兑换券门槛落差过大。</p>
+    </div>
+    <div class="c-card">
+      <div class="c-label">完成百分位（重构参考）</div>
+      <h3>当前分布</h3>
+      <p>前 <span class="hi">73%</span> → 里程碑1（绿包×1）</p>
+      <p>前 <span class="wt">23%</span> → 里程碑2（绿包×1）<span class="dt"> ← 设计目标30%+</span></p>
+      <p>前 <span class="ok-t">11%</span> → 里程碑3（蓝包×1）</p>
+      <p>前 <span class="ok-t">5%</span> → 里程碑5（蓝包×1）</p>
+      <p>前 <span class="ok-t">1%</span> → 里程碑9（深度奖励）</p>
+    </div>
+    <div class="c-card">
+      <div class="c-label">优化方向</div>
+      <h3>增加 M1-M2 中间档 + 百分位重构</h3>
+      <p><strong>治卡口</strong>：在里程碑1和2之间增加中间档，把 M2 到达率从 32% 提升至 50%+（签到口径 23%→36%+）。</p>
+      <p><strong>百分位重构</strong>：按「前70% / 前30% / 前10% / 前5%」重设各档奖励，将绿包第二档覆盖面扩大到30%以上。</p>
+      <p><span class="wt">待卡包奖励按百分位重构后确认具体档位设置。</span></p>
+    </div>
+  </div>
+</section>
+
+<section style="padding-bottom:20px">
+  <div class="sec-title">数据说明</div>
+  <div class="dn-grid">
+    <div class="dn"><div class="dn-label">活动</div><div class="dn-val">科技节弹珠gacha<br>兑换商店 actv=21127653</div></div>
+    <div class="dn"><div class="dn-label">分母</div><div class="dn-val">里程碑1触达 10,832人<br>签到14,910人的72.6%</div></div>
+    <div class="dn"><div class="dn-label">卡包来源</div><div class="dn-val">里程碑任务：绿包16,287+蓝包2,531<br>兑换商店：绿包6,518</div></div>
+  </div>
+</section>
+</div><!-- /module-marble -->
+
+<!-- ===================== 挖孔小游戏 模块 ===================== -->
+<div id="module-hole" style="display:none">
+<section>
+  <div class="sec-title">挖孔小游戏 总览</div>
+  <div class="kpi-grid">
+    <div class="kpi p1"><div class="kpi-period">免费关卡-1 触达</div><div class="kpi-row">签到14,910人中</div><div class="kpi-num" style="color:var(--ok);font-size:32px">82.3%</div><div class="kpi-foot">12,277人完成第1个免费关卡</div></div>
+    <div class="kpi p2"><div class="kpi-period">绿包达成率</div><div class="kpi-row">设计8绿/人 全量口径</div><div class="kpi-num" style="color:var(--warn)">65.2%</div><div class="kpi-foot">实发77,824 / 设计119,280</div></div>
+    <div class="kpi p3"><div class="kpi-period">蓝包达成率</div><div class="kpi-row">设计2蓝/人 全量口径</div><div class="kpi-num" style="color:var(--danger)">34.1%</div><div class="kpi-foot">实发10,158 / 设计29,820</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-title">免费关卡漏斗（分母=签到14,910人）</div>
+  <div class="chart-wrap">
+    <div class="chart-title">免费奖励关卡逐关通过率</div>
+    <div class="chart-desc">★=有集卡包奖励 · 关卡3→4出现倒挂（关卡3异常难或有特殊门槛）</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr style="background:var(--bg3)">
+        <th style="padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">关卡</th>
+        <th style="padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">奖励</th>
+        <th style="padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">完成人数</th>
+        <th style="padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">步转</th>
+        <th style="padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">渗透率</th>
+      </tr></thead>
+      <tbody id="hole-rows"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="sec-title">结论 & 优化</div>
+  <div class="c-grid">
+    <div class="c-card full">
+      <div class="c-label">整体评估</div>
+      <h3>符合原始投放预期，需随数值重构调整</h3>
+      <p>挖孔小游戏的关卡漏斗整体在预期范围内——关卡1触达82.3%覆盖大多数活跃玩家，绿包主要集中在前5关（通过率42-82%），蓝包在第6-7关（通过率28-40%），与设计定位一致，绿包达成65%/蓝包34%属正常漏斗衰减范围。</p>
+      <p><span class="wt">注：关卡3→4出现倒挂（关卡3完成人数低于关卡4），需核查关卡3是否有特殊门槛或配置异常。</span></p>
+    </div>
+    <div class="c-card full">
+      <div class="c-label">优化方向</div>
+      <h3>随卡包奖励百分位重构同步调整</h3>
+      <p><strong>①关卡3倒挂核查</strong>：排查关卡3是否存在付费门槛、特殊条件或难度设置异常</p>
+      <p><strong>②数值重构跟进</strong>：卡包奖励按完成百分位重构后，对照新分层确认各关卡绿/蓝包数量——当前关卡6（39.7%）配蓝包对应「前40%」定位，重构后可能需要微调</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding-bottom:20px">
+  <div class="sec-title">数据说明</div>
+  <div class="dn-grid">
+    <div class="dn"><div class="dn-label">活动</div><div class="dn-val">科技节节日挖孔小游戏<br>奖励关卡免费 211584816-835</div></div>
+    <div class="dn"><div class="dn-label">分母</div><div class="dn-val">科技节签到 14,910人</div></div>
+    <div class="dn"><div class="dn-label">卡包</div><div class="dn-val">绿包(111110306→003)：77,824个<br>蓝包(111110307→004)：10,158个</div></div>
+  </div>
+</section>
+</div><!-- /module-hole -->
+
+<!-- ===================== 全渠道汇总 ===================== -->
+<div id="module-summary" style="display:none">
+
+<section>
+  <div class="sec-title">全渠道结论与优化汇总</div>
+  <div class="chart-wrap" style="margin-bottom:20px">
+    <div class="chart-title">各渠道卡包饱和度一览（分母=科技节签到14,910人）</div>
+    <div class="chart-desc">按问题类型分组 · 达成率=实际发放/设计上限（全量口径）</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead>
+        <tr style="background:var(--bg3)">
+          <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">渠道</th>
+          <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">触达率</th>
+          <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">完成率</th>
+          <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">白包达成</th>
+          <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">绿包达成</th>
+          <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">问题类型</th>
+        </tr>
+      </thead>
+      <tbody id="summary-table-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="sec-title">各渠道结论 & 优化方向</div>
+  <div id="channel-conclusions" style="display:flex;flex-direction:column;gap:14px"></div>
+</section>
+
+</div><!-- /module-summary -->
+
+<div id="module-opt" style="display:none">
+<section class="container">
+  <div class="sec-title">重构投放总框架</div>
+
+  <!-- Before vs After -->
+  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;margin-bottom:24px">
+    <div style="background:var(--bg2);border:1px solid rgba(255,59,92,.3);border-radius:8px;padding:18px">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--danger);letter-spacing:2px;margin-bottom:12px">CURRENT · 现状</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.9">
+        <div style="color:var(--danger)">● R级分层投放</div>
+        <div style="margin-left:12px;color:var(--text2);font-size:12px">非R/小R/中R/大R/超R各拿不同量<br>中位数玩家（11-15天）实际拿到 ~17包<br>全体均值65包，分配比 4:1</div>
+        <div style="color:var(--danger);margin-top:8px">● 结果</div>
+        <div style="margin-left:12px;color:var(--text2);font-size:12px">11-15天 P50 = 20.8%（15/72张）<br>集卡系统对大多数玩家无意义<br>全册集满率最高3.7%，兑换闭环难触发</div>
+      </div>
+    </div>
+    <div style="font-size:28px;color:var(--accent);text-align:center">→</div>
+    <div style="background:var(--bg2);border:1px solid rgba(57,255,138,.3);border-radius:8px;padding:18px">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:12px">TARGET · 重构目标</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.9">
+        <div style="color:var(--ok)">● 活跃百分位投放</div>
+        <div style="margin-left:12px;color:var(--text2);font-size:12px">签到天数0-5 / 6-10 / 11-15 / 16-21天分组<br>11-15天P50 目标 65.5%（81包保底）<br>总量基本不变，重新分配渠道权重</div>
+        <div style="color:var(--ok);margin-top:8px">● 付费钩子</div>
+        <div style="margin-left:12px;color:var(--text2);font-size:12px">自由渠道上限94.4%（4★缺2+5★缺2）<br>最活跃玩家P80碰到上限，精准激活付费<br>1★/2★自由丰富，4★/5★绑定付费</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 三步路线图 -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">
+    <div style="background:var(--bg3);border-radius:8px;padding:16px;border-top:2px solid var(--accent)">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:8px">STEP 1 · 渠道触达优化</div>
+      <div style="font-size:13px;color:#fff;font-weight:600;margin-bottom:8px">提升各渠道入口触达率</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.8">
+        挖矿固定关降门槛 → 循环关触达 17%→40%+<br>
+        每日补给绿包前移至 Day 1<br>
+        优化挖矿78_2卡口（首期转化仅69%）
+      </div>
+    </div>
+    <div style="background:var(--bg3);border-radius:8px;padding:16px;border-top:2px solid var(--warn)">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--warn);letter-spacing:2px;margin-bottom:8px">STEP 2 · 包量重新分配</div>
+      <div style="font-size:13px;color:#fff;font-weight:600;margin-bottom:8px">按活跃度保底分配各品质包</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.8">
+        11-15天P50保底：白40+绿29+蓝8+紫3+橙1<br>
+        白包/绿包主要从免费渠道（BINGO/挖矿/日常）<br>
+        紫包/橙包集中在付费渠道
+      </div>
+    </div>
+    <div style="background:var(--bg3);border-radius:8px;padding:16px;border-top:2px solid var(--ok)">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">STEP 3 · 付费闭环设计</div>
+      <div style="font-size:13px;color:#fff;font-weight:600;margin-bottom:8px">4★/5★缺口引导付费完成</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.8">
+        自由渠道上限94.4%，差2张4★+2张5★<br>
+        紫包/橙包付费产品精准对应缺口<br>
+        集卡积分兑换 + 自选卡包作为最终保底
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title" style="margin-top:8px">具体配置改动清单</div>
+  <div style="font-size:12px;color:var(--text2);margin-bottom:16px">以下为有实质变化的配置项，标注道具ID + 位置 + 改动量 + 加法理由；维持不动的渠道不列出</div>
+
+  <!-- 改动1 -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden">
+    <div style="padding:12px 16px;background:rgba(57,255,138,.06);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+      <span style="font-family:var(--mono);font-size:11px;background:rgba(57,255,138,.15);color:var(--ok);padding:3px 10px;border-radius:3px">改动 #1</span>
+      <span style="font-size:14px;font-weight:700;color:#fff">每日/7日签到奖励 · 绿包前移</span>
+      <span style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ok)">活动 21127574 · 道具 <strong>111110003</strong> · +7个</span>
+    </div>
+    <div style="padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:8px">当前配置（问题）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          Day 1-9：每日奖励只有 <span style="color:#60c8ff">白包(111110002)</span>x1 + 其他道具<br>
+          Day 10+：才开始出现 <span style="color:#39ff8a">绿包(111110003)</span><br>
+          签到 1-9 天的玩家（含0-5天组 3,383人）<strong style="color:var(--danger)">整个节日零绿包</strong>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">目标配置（改动）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          Day 1：白x1 + <span style="color:var(--ok)">绿(111110003)x1（新增）</span><br>
+          Day 3：白x1 + <span style="color:var(--ok)">绿x1（新增）</span><br>
+          Day 5：白x1 + <span style="color:var(--ok)">绿x1（新增）</span><br>
+          Day 7：白x1 → <span style="color:var(--ok)">绿x1（替换）</span><br>
+          Day 9：白x1 → <span style="color:var(--ok)">绿x1（替换）</span><br>
+          Day 10+：维持现有 3-5 绿包（不变）
+        </div>
+      </div>
+      <div style="grid-column:1/-1;background:var(--bg3);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--text2)">
+        <strong style="color:var(--warn)">理由：</strong>绿包(111110003)是2★池卡片的主要来源（84%概率），中等活跃玩家2★池严重偏低的根本原因是绿包前9天完全空缺。每日签到触达14,910人，前移绿包成本最低、覆盖最广，单次改动收益最大。
+      </div>
+    </div>
+  </div>
+
+  <!-- 改动2 -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden">
+    <div style="padding:12px 16px;background:rgba(57,255,138,.06);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+      <span style="font-family:var(--mono);font-size:11px;background:rgba(57,255,138,.15);color:var(--ok);padding:3px 10px;border-radius:3px">改动 #2</span>
+      <span style="font-size:14px;font-weight:700;color:#fff">BINGO连线奖励 · 新增绿包连线</span>
+      <span style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ok)">活动 21127035 · 111110003 +7 | 111110002 +3</span>
+    </div>
+    <div style="padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:8px">当前配置（问题）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          右1/右2/右3/下1/下2/下3 = <span style="color:#60c8ff">白x2</span>（无绿包）<br>
+          右4/下4 = 含16号充值格，绿包集中在此<br>
+          不充值的玩家，9条连线中 <strong style="color:var(--danger)">7条完全没有绿包</strong><br>
+          BINGO实际绿包产出：人均仅 0.9 个（设计5个）
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">目标配置（改动）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          右1：白x2 → <span style="color:var(--ok)">白x3+绿x1</span>（+1白+1绿）<br>
+          右2：白x2 → <span style="color:var(--ok)">白x2+绿x1</span>（+1绿）<br>
+          右3：白x2 → <span style="color:var(--ok)">白x2+绿x1</span>（+1绿）<br>
+          下1：白x2 → <span style="color:var(--ok)">白x3+绿x1</span>（+1白+1绿）<br>
+          下2：白x2 → <span style="color:var(--ok)">白x2+绿x1</span>（+1绿）<br>
+          下3：白x2 → <span style="color:var(--ok)">白x2+绿x1</span>（+1绿）<br>
+          斜线：白x2 → <span style="color:var(--ok)">白x2+绿x1</span>（+1绿）<br>
+          右4/下4：维持（含充值格，绿包已合理）
+        </div>
+      </div>
+      <div style="grid-column:1/-1;background:var(--bg3);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--text2)">
+        <strong style="color:var(--warn)">理由：</strong>BINGO连线触达7,334-9,528人，是最高覆盖的自由渠道。当前不含充值格的7条连线全为纯白包，非付费玩家几乎拿不到绿包。7条连线各+1绿（+斜线），每个完成BINGO的玩家多获7绿包，受益人数~7,000-9,000人。右1/下1各+1白维持奖励密度。
+      </div>
+    </div>
+  </div>
+
+  <!-- 改动3 -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden">
+    <div style="padding:12px 16px;background:rgba(57,255,138,.06);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+      <span style="font-family:var(--mono);font-size:11px;background:rgba(57,255,138,.15);color:var(--ok);padding:3px 10px;border-radius:3px">改动 #3 · P0</span>
+      <span style="font-size:14px;font-weight:700;color:#fff">卡包BP免费段 · 绿包前移至前10级</span>
+      <span style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ok)">活动 21127547 · 道具 <strong>111110003</strong> · 零新增成本替换</span>
+    </div>
+    <div style="padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:8px">当前配置（问题）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          L1-10 免费：全部为 <span style="color:#60c8ff">白包(111110002)</span>x1 或加速道具<br>
+          L11-17 免费：<span style="color:#39ff8a">绿包(111110003)</span>x1 出现（共4个）<br>
+          需积累 1000 BP（约Day 4）才能拿到第一个绿包<br>
+          低活跃玩家（0-5天）几乎拿不到任何绿包
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">目标配置（改动）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          L5 免费：白x1 → <span style="color:var(--ok)">绿(111110003)x1</span>（替换）<br>
+          L7 免费：白x1 → <span style="color:var(--ok)">绿(111110003)x1</span>（替换）<br>
+          L9 免费：白x1 → <span style="color:var(--ok)">绿(111110003)x1</span>（替换）<br>
+          L11-17：维持原4个绿包 → 共7个免费绿包<br>
+          L5 仅需500 BP（约Day 2）即可拿到第一绿包
+        </div>
+      </div>
+      <div style="grid-column:1/-1;background:var(--bg3);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--text2)">
+        <strong style="color:var(--warn)">理由：</strong>L5/7/9白包在2-3天内玩家已轻松拿到，改为绿包白包总量减少3个（不影响白包饱和度），换来绿包时间前移2-3天。总包量不变，仅调整品质分布，是零成本的结构优化，P0优先级最高。
+      </div>
+    </div>
+  </div>
+
+  <!-- 改动4 -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden">
+    <div style="padding:12px 16px;background:rgba(0,212,255,.06);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+      <span style="font-family:var(--mono);font-size:11px;background:rgba(0,212,255,.15);color:var(--accent);padding:3px 10px;border-radius:3px">改动 #4</span>
+      <span style="font-size:14px;font-weight:700;color:#fff">挖矿固定关 · 前置白包降低推进门槛</span>
+      <span style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent)">活动 21127656 · 道具 <strong>111110002</strong> · +10个</span>
+    </div>
+    <div style="padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:8px">当前配置（问题）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          固定关 1-1→4-2 白包奖励稀少，集中在深层关卡<br>
+          1-1触达55.9% → 2-1触达32.3%（掉落23pp）<br>
+          2-2触达20% → 进入循环关只有 <strong style="color:var(--danger)">17%</strong><br>
+          固定关段缺乏推进动力，卡在1-2到2-1之间
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">目标配置（改动）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          1-1节点完成：+<span style="color:var(--accent)">白(111110002)x3</span><br>
+          2-1节点完成：+<span style="color:var(--accent)">白(111110002)x3</span><br>
+          2-2节点完成：+<span style="color:var(--accent)">白(111110002)x4</span><br>
+          循环关入口（78_1）触达率目标：17% → 40%+<br>
+          （需同时降低1-2到2-1的矿石门槛）
+        </div>
+      </div>
+      <div style="grid-column:1/-1;background:var(--bg3);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--text2)">
+        <strong style="color:var(--warn)">理由：</strong>挖矿是白包最大自由渠道，但循环关才是核心产出，触达率只有17%。在1-1/2-1/2-2三个漏斗节点加白包，给玩家推进动力；+10白包配合78_2难度优化，目标循环关触达率17%→40%，届时白包产量随触达率大幅提升。
+      </div>
+    </div>
+  </div>
+
+  <!-- 改动5 -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden">
+    <div style="padding:12px 16px;background:rgba(57,255,138,.06);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+      <span style="font-family:var(--mono);font-size:11px;background:rgba(57,255,138,.15);color:var(--ok);padding:3px 10px;border-radius:3px">改动 #5 · P0</span>
+      <span style="font-size:14px;font-weight:700;color:#fff">挖矿循环关 · 绿包从排行榜改为关卡完成奖励</span>
+      <span style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ok)">活动 21127656 · 道具 <strong>111110003</strong> · 排行榜→免费（总量不变）</span>
+    </div>
+    <div style="padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:8px">当前配置（问题）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          循环关绿包(111110003) 36个：全部为<strong style="color:var(--danger)">排行榜奖励</strong><br>
+          只有排行榜前N名（高活跃/付费）能获得<br>
+          普通玩家即使完成循环关 <strong style="color:var(--danger)">也拿不到任何绿包</strong><br>
+          挖矿对中等活跃玩家的绿包贡献 = 0
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">目标配置（改动）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          79_2 完成奖励：+<span style="color:var(--ok)">绿(111110003)x1</span>（从排行榜移出）<br>
+          80_1 完成奖励：+<span style="color:var(--ok)">绿x1</span><br>
+          80_2 完成奖励：+<span style="color:var(--ok)">绿x1</span><br>
+          80_3 完成奖励：+<span style="color:var(--ok)">绿x1</span><br>
+          81_1 完成奖励：+<span style="color:var(--ok)">绿x1</span><br>
+          81_2 完成奖励：+<span style="color:var(--ok)">绿x1</span><br>
+          排行榜：减少对应绿包，用其他道具补位
+        </div>
+      </div>
+      <div style="grid-column:1/-1;background:var(--bg3);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--text2)">
+        <strong style="color:var(--warn)">理由：</strong>5条改动中性价比最高——<strong style="color:var(--ok)">总绿包量不变，只改分发方式</strong>。当前触达循环关的17%玩家（约6,000-8,500人/期）拼完关卡却全无绿包，体验极差。改为关卡完成奖励后，这批玩家每刷一轮获得6绿包，形成"越打越有"正向循环，同时激励玩家推进更深节点。
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--bg3);border-radius:6px;padding:14px 16px;font-size:12px;color:var(--text2);line-height:1.9;margin-bottom:24px">
+    <strong style="color:var(--accent);font-family:var(--mono);font-size:10px;letter-spacing:2px">改动优先级</strong><br>
+    <span style="color:var(--ok)">P0（零新增成本，立即可做）：</span>#3 BP绿包前移（品质替换）、#5 挖矿循环绿包排行榜→免费（总量不变）<br>
+    <span style="color:var(--warn)">P1（需调整配置数值）：</span>#1 每日签到绿包前移+7、#2 BINGO连线增绿包+白包<br>
+    <span style="color:var(--accent2)">P2（需结合关卡难度调整）：</span>#4 挖矿固定关+白包+降门槛，需策划同步评估78_2难度
+  </div>
+
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:8px">
+    <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:14px">5条改动执行后 · 总投放量变化（对比当前设计投放）</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px">
+      <div style="background:var(--bg3);border-radius:6px;padding:12px 14px;border-top:2px solid #60c8ff">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-bottom:4px">白包 111110002</div>
+        <div style="font-family:var(--mono);font-size:22px;font-weight:700;color:#60c8ff">+6.0%</div>
+        <div style="font-family:var(--mono);font-size:12px;color:var(--text2);margin-top:4px">117 → 124 <span style="color:var(--ok)">+7</span></div>
+      </div>
+      <div style="background:var(--bg3);border-radius:6px;padding:12px 14px;border-top:2px solid #39ff8a">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-bottom:4px">绿包 111110003</div>
+        <div style="font-family:var(--mono);font-size:22px;font-weight:700;color:#39ff8a">+20.0%</div>
+        <div style="font-family:var(--mono);font-size:12px;color:var(--text2);margin-top:4px">75 → 90 <span style="color:var(--ok)">+15</span></div>
+      </div>
+      <div style="background:var(--bg3);border-radius:6px;padding:12px 14px;border-top:2px solid rgba(255,255,255,.15)">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-bottom:4px">蓝包 111110004</div>
+        <div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--text2)">不变</div>
+        <div style="font-family:var(--mono);font-size:12px;color:var(--text2);margin-top:4px">27 → 27</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:6px;padding:12px 14px;border-top:2px solid rgba(255,255,255,.15)">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-bottom:4px">紫包 111110005</div>
+        <div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--text2)">不变</div>
+        <div style="font-family:var(--mono);font-size:12px;color:var(--text2);margin-top:4px">9 → 9</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:6px;padding:12px 14px;border-top:2px solid rgba(255,255,255,.15)">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-bottom:4px">橙包 111110006</div>
+        <div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--text2)">不变</div>
+        <div style="font-family:var(--mono);font-size:12px;color:var(--text2);margin-top:4px">6 → 6</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="background:var(--bg3);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--text2)">
+        <strong style="color:var(--text)">总包量：</strong>234 → 256，<strong style="color:var(--ok)">+9.4%</strong>（+22包/人）<br>
+        仅增加不到10%的总量，主要杠杆在绿包结构性补入
+      </div>
+      <div style="background:var(--bg3);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--text2)">
+        <strong style="color:var(--text)">白:绿 比例：</strong>1.56:1 → <strong style="color:var(--ok)">1.38:1</strong>（目标 1.38:1 ✅）<br>
+        5条改动后恰好对齐生日问题反推的目标比例
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title" style="margin-top:8px">各渠道优化方向</div>
+
+  <!-- 挖矿 -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:16px;overflow:hidden">
+    <div style="background:linear-gradient(90deg,rgba(0,212,255,.15),transparent);padding:14px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)">
+      <span style="font-size:20px">⛏</span>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#fff">挖矿小游戏</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text2)">最大卡包渠道 · 三期合计 actv=21127656</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px">
+        <span style="font-family:var(--mono);font-size:10px;padding:3px 8px;background:rgba(255,59,92,.15);border:1px solid rgba(255,59,92,.3);color:var(--danger);border-radius:3px">触达率低 🔴</span>
+        <span style="font-family:var(--mono);font-size:10px;padding:3px 8px;background:rgba(255,59,92,.15);border:1px solid rgba(255,59,92,.3);color:var(--danger);border-radius:3px">双重漏斗 🔴</span>
+      </div>
+    </div>
+    <div style="padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--danger);letter-spacing:2px;margin-bottom:8px">核心问题</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          · 循环关触达率仅 <strong style="color:var(--danger)">13-17%</strong>（83%参与者从未进入循环关）<br>
+          · 双重漏斗：触达17% × 完成率18-47% = 综合达成仅 <strong style="color:var(--danger)">3-6%</strong><br>
+          · 78_2 首期最大卡口，转化率仅 69%（正常应≥85%）<br>
+          · 固定关 1-2-3-4 矿石门槛过高，大量玩家卡在过渡段
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">优化方向</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          · <strong style="color:var(--warn)">降低固定关矿石门槛</strong>，目标循环关触达率 17%→40%+<br>
+          · <strong style="color:var(--warn)">优化78_2难度</strong>，目标循环完成率 18%→50%+（需策划评估）<br>
+          · 固定关卡前置更多白包奖励，降低门槛同时保留体验正反馈<br>
+          · 绿包前移至循环关较早节点（目前集中在81_1深处）
+        </div>
+      </div>
+      <div style="grid-column:1/-1">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:8px">投放调整</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+          <div style="background:var(--bg3);border-radius:5px;padding:10px 12px;font-size:11px">
+            <div style="color:#fff;font-weight:600;margin-bottom:4px">固定关（1-1→4-2）</div>
+            <div style="color:var(--text2);line-height:1.6">当前：白包主，门槛高<br><span style="color:var(--warn)">调整：降门槛，前置白包×2</span><br><span style="color:var(--ok)">目标：到4-2人数从4%→15%</span></div>
+          </div>
+          <div style="background:var(--bg3);border-radius:5px;padding:10px 12px;font-size:11px">
+            <div style="color:#fff;font-weight:600;margin-bottom:4px">循环关入口78_1</div>
+            <div style="color:var(--text2);line-height:1.6">当前：触达17%<br><span style="color:var(--warn)">调整：优化过渡段门槛</span><br><span style="color:var(--ok)">目标：触达40%+</span></div>
+          </div>
+          <div style="background:var(--bg3);border-radius:5px;padding:10px 12px;font-size:11px">
+            <div style="color:#fff;font-weight:600;margin-bottom:4px">循环关78→81</div>
+            <div style="color:var(--text2);line-height:1.6">当前：白包+绿包，三期递增<br><span style="color:var(--warn)">调整：维持节奏，优化78_2</span><br><span style="color:var(--ok)">目标：完成率≥50%</span></div>
+          </div>
+          <div style="background:var(--bg3);border-radius:5px;padding:10px 12px;font-size:11px">
+            <div style="color:#fff;font-weight:600;margin-bottom:4px">绿包节点</div>
+            <div style="color:var(--text2);line-height:1.6">当前：仅81_1/81_2（最深处）<br><span style="color:var(--warn)">调整：前移至79或80节点</span><br><span style="color:var(--ok)">目标：绿包覆盖更多玩家</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BINGO -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:16px;overflow:hidden">
+    <div style="background:linear-gradient(90deg,rgba(57,255,138,.12),transparent);padding:14px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)">
+      <span style="font-size:20px">🎯</span>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#fff">BINGO 连线任务</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text2)">覆盖好 · actv=21127035</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px">
+        <span style="font-family:var(--mono);font-size:10px;padding:3px 8px;background:rgba(255,204,0,.15);border:1px solid rgba(255,204,0,.3);color:var(--warn);border-radius:3px">绿包偏少 ⚠️</span>
+        <span style="font-family:var(--mono);font-size:10px;padding:3px 8px;background:rgba(57,255,138,.12);border:1px solid rgba(57,255,138,.3);color:var(--ok);border-radius:3px">白包覆盖 ✅</span>
+      </div>
+    </div>
+    <div style="padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--danger);letter-spacing:2px;margin-bottom:8px">核心问题</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          · 白包整体饱和度合理（55.5%），符合设计预期<br>
+          · 绿包偏少（实际人均0.9，设计5个/人），差距 <strong style="color:var(--danger)">-82%</strong><br>
+          · 9条连线中仅右4/下4/斜线含绿包，覆盖局限<br>
+          · 充值16号格限制了绿包连线触达（仅3,803人充值）
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">优化方向</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          · <strong style="color:var(--warn)">增加绿包连线数量</strong>：将更多连线的奖励从纯白包改为白+绿<br>
+          · <strong style="color:var(--warn)">降低绿包连线依赖充值格</strong>：不含16号格的连线也应有绿包<br>
+          · 白包数量基本合理，按重构框架微调即可<br>
+          · 考虑将右4/下4绿包倍率从×2调高，补偿低触达
+        </div>
+      </div>
+      <div style="grid-column:1/-1">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:8px">投放调整建议</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          <div style="background:var(--bg3);border-radius:5px;padding:10px 12px;font-size:11px">
+            <div style="color:#fff;font-weight:600;margin-bottom:4px">白包连线（右1-3/下1-3/斜）</div>
+            <div style="color:var(--text2);line-height:1.6">当前：各条线白包×2<br><span style="color:var(--warn)">调整：维持，可小幅+1/条线</span><br><span style="color:var(--ok)">目标：白包总量+20%</span></div>
+          </div>
+          <div style="background:var(--bg3);border-radius:5px;padding:10px 12px;font-size:11px">
+            <div style="color:#fff;font-weight:600;margin-bottom:4px">绿包连线（右4/下4/斜）</div>
+            <div style="color:var(--text2);line-height:1.6">当前：绿包×2/×1+白×1/白×2<br><span style="color:var(--warn)">调整：增加不含16号格的连线绿包</span><br><span style="color:var(--ok)">目标：绿包覆盖人数×2</span></div>
+          </div>
+          <div style="background:var(--bg3);border-radius:5px;padding:10px 12px;font-size:11px">
+            <div style="color:#fff;font-weight:600;margin-bottom:4px">格子难度调整</div>
+            <div style="color:var(--text2);line-height:1.6">当前：16号格充值门槛高<br><span style="color:var(--warn)">调整：评估降低充值门槛（或降为任务完成）</span><br><span style="color:var(--ok)">目标：绿包连线触达率提升</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 大富翁 -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:16px;overflow:hidden">
+    <div style="background:linear-gradient(90deg,rgba(255,107,53,.12),transparent);padding:14px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)">
+      <span style="font-size:20px">🎲</span>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#fff">大富翁兑换商店</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text2)">兑换意愿强 · actv=21127362</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px">
+        <span style="font-family:var(--mono);font-size:10px;padding:3px 8px;background:rgba(57,255,138,.12);border:1px solid rgba(57,255,138,.3);color:var(--ok);border-radius:3px">兑换饱和 ✅</span>
+        <span style="font-family:var(--mono);font-size:10px;padding:3px 8px;background:rgba(255,204,0,.15);border:1px solid rgba(255,204,0,.3);color:var(--warn);border-radius:3px">触达偏低 ⚠️</span>
+      </div>
+    </div>
+    <div style="padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--danger);letter-spacing:2px;margin-bottom:8px">核心问题</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          · 兑换积分获取意愿强，兑换饱和度符合预期<br>
+          · 实际触达率受大富翁参与度限制<br>
+          · 推币机兑换商店几乎无卡包产出（触达极低）<br>
+          · 兑换逻辑不够直观，部分玩家有积分但未兑换
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">优化方向</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          · 当前大富翁渠道运作合理，<strong style="color:var(--ok)">以维持为主</strong><br>
+          · 增加兑换商店引导提示，减少积分沉淀浪费<br>
+          · 推币机兑换商店建议增加卡包品类（目前几乎空白）<br>
+          · 按重构框架调整绿包/蓝包比例（维持现有总量）
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 每日补给 + 签到 -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:16px;overflow:hidden">
+    <div style="background:linear-gradient(90deg,rgba(160,128,255,.12),transparent);padding:14px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)">
+      <span style="font-size:20px">📅</span>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#fff">每日补给 / 签到连锁</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text2)">基础自由渠道 · actv=21127574</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px">
+        <span style="font-family:var(--mono);font-size:10px;padding:3px 8px;background:rgba(255,59,92,.15);border:1px solid rgba(255,59,92,.3);color:var(--danger);border-radius:3px">绿包配置缺失 🔴</span>
+      </div>
+    </div>
+    <div style="padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--danger);letter-spacing:2px;margin-bottom:8px">核心问题</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          · <strong style="color:var(--danger)">绿包从 Day 10 才开始配置</strong>，前9天完全没有绿包<br>
+          · 即使签到满21天，绿包获取周期只有12天<br>
+          · 白包配置合理，但绿包配比严重偏低<br>
+          · 节日总绿包严重依赖其他渠道，日常渠道贡献几乎为零
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">优化方向</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          · <strong style="color:var(--warn)">从 Day 1 开始配置绿包</strong>（可从小量递增）<br>
+          · 参考节奏：Day 1-5 每天0.5→1个绿包，Day 6-15 每天1-2个，Day 16+ 每天2-3个<br>
+          · 总量建议从当前约12个绿包（Day 10-21）提升至 20-25个（全期分散）<br>
+          · 白包维持当前配置，绿包增量作为重构的主要来源
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 弹珠 + 挖孔 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+      <div style="background:linear-gradient(90deg,rgba(255,204,0,.1),transparent);padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)">
+        <span style="font-size:18px">🎰</span>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff">弹珠 gacha</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text2)">付费渠道主力</div>
+        </div>
+        <span style="margin-left:auto;font-family:var(--mono);font-size:10px;padding:2px 7px;background:rgba(255,204,0,.15);border:1px solid rgba(255,204,0,.3);color:var(--warn);border-radius:3px">付费深度 💰</span>
+      </div>
+      <div style="padding:14px 16px;font-size:12px;color:var(--text2);line-height:1.8">
+        <strong style="color:var(--text)">现状：</strong>里程碑触达符合预期，主要服务付费玩家<br>
+        <strong style="color:var(--warn)">优化：</strong>保留付费深度（绿+蓝+紫包集中区），作为 4★ 卡的主要来源渠道之一<br>
+        <strong style="color:var(--ok)">调整：</strong>评估是否增加1次免费体验或降低入场门槛，提升触达率；付费档位维持不变
+      </div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+      <div style="background:linear-gradient(90deg,rgba(160,128,255,.1),transparent);padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)">
+        <span style="font-size:18px">🕳</span>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff">挖孔小游戏</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text2)">整体符合预期</div>
+        </div>
+        <span style="margin-left:auto;font-family:var(--mono);font-size:10px;padding:2px 7px;background:rgba(57,255,138,.12);border:1px solid rgba(57,255,138,.3);color:var(--ok);border-radius:3px">维持 ✅</span>
+      </div>
+      <div style="padding:14px 16px;font-size:12px;color:var(--text2);line-height:1.8">
+        <strong style="color:var(--text)">现状：</strong>整体触达和投放符合初始设计预期<br>
+        <strong style="color:var(--warn)">优化：</strong>按重构框架调整包量基数，不需要结构性改变<br>
+        <strong style="color:var(--ok)">调整：</strong>彩色专属卡包保留稀缺性定位（大/超R渠道），数量维持
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title" style="margin-top:8px">具体投放调整方案</div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">渠道投放调整总表</div>
+    <div class="chart-desc">基于重构目标：11-15天P50 = 65.5%（81包）· 4★/5★自由渠道硬上限</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="background:var(--bg3)">
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">渠道</th>
+        <th style="padding:9px 10px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:center">属性</th>
+        <th style="padding:9px 10px;font-family:var(--mono);font-size:11px;color:#60c8ff;border-bottom:1px solid var(--border);text-align:center">白包调整</th>
+        <th style="padding:9px 10px;font-family:var(--mono);font-size:11px;color:#39ff8a;border-bottom:1px solid var(--border);text-align:center">绿包调整</th>
+        <th style="padding:9px 10px;font-family:var(--mono);font-size:11px;color:#00d4ff;border-bottom:1px solid var(--border);text-align:center">蓝包调整</th>
+        <th style="padding:9px 10px;font-family:var(--mono);font-size:11px;color:#c080ff;border-bottom:1px solid var(--border);text-align:center">紫/橙调整</th>
+        <th style="padding:9px 10px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">核心动作</th>
+      </tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.4)">
+          <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;color:#fff">⛏ 挖矿固定关</td>
+          <td style="padding:8px 10px;text-align:center"><span style="font-family:var(--mono);font-size:10px;padding:2px 7px;background:rgba(255,255,255,.05);border-radius:3px;color:var(--ok)">自由</span></td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--ok)">↑+10</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--text2)">维持</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--text2)">维持</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:rgba(255,255,255,.15)">—</td>
+          <td style="padding:8px 12px;font-size:12px;color:var(--text2)">降门槛+前置白包，扩大触达入口</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.4)">
+          <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;color:#fff">⛏ 挖矿循环关</td>
+          <td style="padding:8px 10px;text-align:center"><span style="font-family:var(--mono);font-size:10px;padding:2px 7px;background:rgba(255,255,255,.05);border-radius:3px;color:var(--ok)">自由</span></td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--text2)">维持</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--ok)">↑前移</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--text2)">维持</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:rgba(255,255,255,.15)">—</td>
+          <td style="padding:8px 12px;font-size:12px;color:var(--text2)">绿包前移至79/80节点，减少深处集中</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.4)">
+          <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;color:#fff">🎯 BINGO连线</td>
+          <td style="padding:8px 10px;text-align:center"><span style="font-family:var(--mono);font-size:10px;padding:2px 7px;background:rgba(255,255,255,.05);border-radius:3px;color:var(--ok)">自由</span></td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--ok)">维持+小幅↑</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--ok)">↑大幅增加</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--text2)">维持</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:rgba(255,255,255,.15)">—</td>
+          <td style="padding:8px 12px;font-size:12px;color:var(--text2)">增加非充值格绿包连线，扩大绿包覆盖</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.4)">
+          <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;color:#fff">📅 每日补给/签到</td>
+          <td style="padding:8px 10px;text-align:center"><span style="font-family:var(--mono);font-size:10px;padding:2px 7px;background:rgba(255,255,255,.05);border-radius:3px;color:var(--ok)">自由</span></td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--text2)">维持</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--ok)">↑↑ Day1起配</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:rgba(255,255,255,.15)">—</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:rgba(255,255,255,.15)">—</td>
+          <td style="padding:8px 12px;font-size:12px;color:var(--text2)">绿包从Day1开始发放，梯度递增至Day21</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.4)">
+          <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;color:#fff">🎲 大富翁兑换</td>
+          <td style="padding:8px 10px;text-align:center"><span style="font-family:var(--mono);font-size:10px;padding:2px 7px;background:rgba(255,255,255,.05);border-radius:3px;color:var(--ok)">自由</span></td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--text2)">维持</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--text2)">维持</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--text2)">维持</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:rgba(255,255,255,.15)">—</td>
+          <td style="padding:8px 12px;font-size:12px;color:var(--text2)">保持现有节奏，增加兑换引导提示</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.4)">
+          <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;color:#fff">🎰 弹珠里程碑</td>
+          <td style="padding:8px 10px;text-align:center"><span style="font-family:var(--mono);font-size:10px;padding:2px 7px;background:rgba(255,255,255,.05);border-radius:3px;color:var(--accent2)">付费</span></td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:rgba(255,255,255,.15)">—</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--text2)">维持</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--text2)">维持</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--text2)">维持</td>
+          <td style="padding:8px 12px;font-size:12px;color:var(--text2)">保留付费深度，评估免费入场次数</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.4)">
+          <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;color:#fff">🕳 挖孔里程碑</td>
+          <td style="padding:8px 10px;text-align:center"><span style="font-family:var(--mono);font-size:10px;padding:2px 7px;background:rgba(255,255,255,.05);border-radius:3px;color:var(--ok)">自由</span></td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--ok)">按重构调</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--ok)">按重构调</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:rgba(255,255,255,.15)">—</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:rgba(255,255,255,.15)">—</td>
+          <td style="padding:8px 12px;font-size:12px;color:var(--text2)">按重构目标比例微调，结构不变</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;color:#fff">💳 付费礼包</td>
+          <td style="padding:8px 10px;text-align:center"><span style="font-family:var(--mono);font-size:10px;padding:2px 7px;background:rgba(255,255,255,.05);border-radius:3px;color:var(--accent2)">付费</span></td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:rgba(255,255,255,.15)">—</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:rgba(255,255,255,.15)">—</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--ok)">↑考虑增加</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-size:12px;text-align:center;color:var(--warn)">↑主力来源</td>
+          <td style="padding:8px 12px;font-size:12px;color:var(--text2)">4★/5★集中在付费，对应自由渠道缺口</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--text2);line-height:1.8">
+      ※ 总包量以维持现有量级为基础，主要通过渠道内部结构调整（不需要大幅增加总量）<br>
+      ※ 绿包是最大缺口——每日补给+BINGO是补充绿包的两个最高优先级渠道
+    </div>
+  </div>
+
+
+
+  <!-- 改动1：每日/7日签到 绿包前移 -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden">
+    <div style="padding:12px 16px;background:rgba(57,255,138,.06);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+      <span style="font-family:var(--mono);font-size:11px;background:rgba(57,255,138,.15);color:var(--ok);padding:3px 10px;border-radius:3px">改动 #1</span>
+      <span style="font-size:14px;font-weight:700;color:#fff">每日/7日签到奖励 · 绿包前移</span>
+      <span style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ok)">活动 21127574 · 道具 <strong>111110003</strong> · +7个</span>
+    </div>
+    <div style="padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:8px">当前配置（问题）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          Day 1–9：每日奖励只有 <span style="color:#60c8ff">白包(111110002)</span>×1 + 其他道具<br>
+          Day 10+：才开始出现 <span style="color:#39ff8a">绿包(111110003)</span><br>
+          → 签到 1–9 天的玩家（含0-5天组 3,383人）<strong style="color:var(--danger)">整个节日零绿包</strong>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">目标配置（改动）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          Day 1：白×1 + <span style="color:var(--ok)">绿(111110003)×1（新增）</span><br>
+          Day 3：白×1 + <span style="color:var(--ok)">绿×1（新增）</span><br>
+          Day 5：白×1 + <span style="color:var(--ok)">绿×1（新增）</span><br>
+          Day 7：白×1 → <span style="color:var(--ok)">绿×1（替换）</span><br>
+          Day 9：白×1 → <span style="color:var(--ok)">绿×1（替换）</span><br>
+          Day 10+：维持现有 3–5 绿包（不变）
+        </div>
+      </div>
+      <div style="grid-column:1/-1;background:var(--bg3);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--text2)">
+        <strong style="color:var(--warn)">理由：</strong>绿包(111110003)是2★池卡片的主要来源（占2★的84%概率），中等活跃玩家2★池覆盖度严重偏低（P50=17/20，设计应达85%+）的根本原因就是绿包前9天完全空缺。每日签到是触达最广的自由渠道（签到14,910人），在此前移绿包成本最低、覆盖最广，是单次改动收益最大的配置项。
+      </div>
+    </div>
+  </div>
+
+  <!-- 改动2：BINGO 绿包增加 -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden">
+    <div style="padding:12px 16px;background:rgba(57,255,138,.06);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+      <span style="font-family:var(--mono);font-size:11px;background:rgba(57,255,138,.15);color:var(--ok);padding:3px 10px;border-radius:3px">改动 #2</span>
+      <span style="font-size:14px;font-weight:700;color:#fff">BINGO连线奖励 · 新增绿包连线</span>
+      <span style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ok)">活动 21127035 · 道具 <strong>111110003</strong> · +7个 &nbsp;|&nbsp; 道具 <strong>111110002</strong> · +3个</span>
+    </div>
+    <div style="padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:8px">当前配置（问题）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          右1/右2/右3/下1/下2/下3/斜线 = <span style="color:#60c8ff">白×2</span>（无绿包）<br>
+          右4/下4/斜线 = 含16号充值格，绿包集中在此<br>
+          → 不充值的玩家，9条连线中 <strong style="color:var(--danger)">6条完全没有绿包</strong><br>
+          → BINGO实际绿包产出：人均仅 0.9 个（设计5个）
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">目标配置（改动）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          右1 连线：白×2 → <span style="color:var(--ok)">白×3+绿×1</span>（+1白+1绿）<br>
+          右2 连线：白×2 → <span style="color:var(--ok)">白×2+绿×1</span>（+1绿）<br>
+          右3 连线：白×2 → <span style="color:var(--ok)">白×2+绿×1</span>（+1绿）<br>
+          下1 连线：白×2 → <span style="color:var(--ok)">白×3+绿×1</span>（+1白+1绿）<br>
+          下2 连线：白×2 → <span style="color:var(--ok)">白×2+绿×1</span>（+1绿）<br>
+          下3 连线：白×2 → <span style="color:var(--ok)">白×2+绿×1</span>（+1绿）<br>
+          斜线连线：白×2 → <span style="color:var(--ok)">白×2+绿×1</span>（+1绿）<br>
+          右4/下4：维持（含充值格，绿包数量已合理）
+        </div>
+      </div>
+      <div style="grid-column:1/-1;background:var(--bg3);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--text2)">
+        <strong style="color:var(--warn)">理由：</strong>BINGO完成9条连线的触达人数（7,334–9,528人）是最高的自由渠道之一，且不依赖充值就能完成。但当前不含16号充值格的6条连线全为纯白包，导致非付费玩家从BINGO几乎拿不到绿包。将这6条连线（+斜线）各增加1绿包（111110003），每个完成BINGO的玩家多获得6–7个绿包，改动小但受益人数多（~7,000-9,000人）。白包在右1/下1也各+1，维持"通关有感"的奖励密度。
+      </div>
+    </div>
+  </div>
+
+  <!-- 改动3：卡包BP免费段 绿包前移 -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden">
+    <div style="padding:12px 16px;background:rgba(57,255,138,.06);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+      <span style="font-family:var(--mono);font-size:11px;background:rgba(57,255,138,.15);color:var(--ok);padding:3px 10px;border-radius:3px">改动 #3</span>
+      <span style="font-size:14px;font-weight:700;color:#fff">卡包BP免费段 · 绿包前移至前10级</span>
+      <span style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ok)">活动 21127547 · 道具 <strong>111110003</strong> · +3个</span>
+    </div>
+    <div style="padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:8px">当前配置（问题）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          Level 1–10 免费奖励：全部为 <span style="color:#60c8ff">白包(111110002)</span>×1 或加速道具<br>
+          Level 11–17 免费奖励：<span style="color:#39ff8a">绿包(111110003)</span>×1 出现（4个）<br>
+          Level 19 免费：蓝包×1<br>
+          → 需积累 1000 BP（约Day 4）才能拿到第一个绿包<br>
+          → 低活跃玩家（0-5天，约Day 1–2）拿不到任何绿包
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">目标配置（改动）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          Level 5 免费：白×1 → <span style="color:var(--ok)">绿(111110003)×1</span>（替换）<br>
+          Level 7 免费：白×1 → <span style="color:var(--ok)">绿(111110003)×1</span>（替换）<br>
+          Level 9 免费：白×1 → <span style="color:var(--ok)">绿(111110003)×1</span>（替换）<br>
+          Level 11–17：维持原4个绿包<br>
+          → 共7个免费绿包（前移3个至L5/7/9）<br>
+          → Level 5 仅需 500 BP（约Day 2）即可拿到第一绿包
+        </div>
+      </div>
+      <div style="grid-column:1/-1;background:var(--bg3);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--text2)">
+        <strong style="color:var(--warn)">理由：</strong>卡包BP是面向全体签到玩家的连锁任务系统（21127547），绑定每日活跃行为（登录/PVE/消耗加速）。当前L5/7/9给的是白包，玩家在2-3天内已经可以轻松拿到。将这3个白包改为绿包，白包总量减少3个（不影响整体白包饱和度），换来绿包时间前移2-3天，低活跃玩家Day 2就能感知到绿包存在。这是零成本的结构优化：总包量不变，仅调整品质分布。
+      </div>
+    </div>
+  </div>
+
+  <!-- 改动4：挖矿固定关 白包前置 -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden">
+    <div style="padding:12px 16px;background:rgba(0,212,255,.06);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+      <span style="font-family:var(--mono);font-size:11px;background:rgba(0,212,255,.15);color:var(--accent);padding:3px 10px;border-radius:3px">改动 #4</span>
+      <span style="font-size:14px;font-weight:700;color:#fff">挖矿固定关 · 前置白包降低推进门槛</span>
+      <span style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent)">活动 21127656 · 道具 <strong>111110002</strong> · +10个</span>
+    </div>
+    <div style="padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:8px">当前配置（问题）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          固定关 1-1→4-2 白包奖励稀少，主要集中在深层关卡<br>
+          1-1 触达 55.9% → 2-1 触达 32.3%（掉落23pp）<br>
+          2-2 触达 20% → 进入循环关只有 <strong style="color:var(--danger)">17%</strong><br>
+          → 玩家在固定关段缺乏推进动力，卡在 1-2 到 2-1 之间
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">目标配置（改动）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          1-1 节点完成奖励：+<span style="color:var(--accent)">白(111110002)×3</span><br>
+          2-1 节点完成奖励：+<span style="color:var(--accent)">白(111110002)×3</span><br>
+          2-2 节点完成奖励：+<span style="color:var(--accent)">白(111110002)×4</span><br>
+          循环关入口（78_1）触达率目标：17% → 40%+<br>
+          <span style="color:var(--text2);font-size:11px">（需同时降低1-2到2-1的矿石门槛，单独配置调整）</span>
+        </div>
+      </div>
+      <div style="grid-column:1/-1;background:var(--bg3);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--text2)">
+        <strong style="color:var(--warn)">理由：</strong>挖矿是白包(111110002)最大的自由来源渠道，但循环关才是白包的核心产出段，而循环关触达率只有17%。提升触达率的方式有两个：降门槛（关卡难度/矿石消耗）+ 增加过渡段正向激励（加白包奖励）。在1-1/2-1/2-2三个关键漏斗节点增加白包，一方面给玩家推进感，另一方面让这批玩家更快拿到白包而不必等到进入循环关。+10白包配合78_2难度优化，目标是将循环关触达率从17%提升到40%+，届时白包产量会随触达率大幅提升。
+      </div>
+    </div>
+  </div>
+
+  <!-- 改动5：挖矿循环关 绿包改免费 -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden">
+    <div style="padding:12px 16px;background:rgba(57,255,138,.06);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+      <span style="font-family:var(--mono);font-size:11px;background:rgba(57,255,138,.15);color:var(--ok);padding:3px 10px;border-radius:3px">改动 #5</span>
+      <span style="font-size:14px;font-weight:700;color:#fff">挖矿循环关 · 绿包从排行榜改为关卡完成奖励</span>
+      <span style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ok)">活动 21127656 · 道具 <strong>111110003</strong> · 排行榜→免费（6个）</span>
+    </div>
+    <div style="padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:8px">当前配置（问题）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          循环关绿包(111110003) 36个：全部为<strong style="color:var(--danger)">排行榜奖励</strong><br>
+          → 只有排行榜前N名（高活跃/付费玩家）能获得<br>
+          → 普通玩家即使完成循环关 <strong style="color:var(--danger)">也拿不到任何绿包</strong><br>
+          → 挖矿对中等活跃玩家的绿包贡献=0
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">目标配置（改动）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9">
+          79_2 关卡完成奖励：+<span style="color:var(--ok)">绿(111110003)×1</span>（从排行榜移出）<br>
+          80_1 关卡完成奖励：+<span style="color:var(--ok)">绿(111110003)×1</span><br>
+          80_2 关卡完成奖励：+<span style="color:var(--ok)">绿(111110003)×1</span><br>
+          80_3 关卡完成奖励：+<span style="color:var(--ok)">绿(111110003)×1</span><br>
+          81_1 关卡完成奖励：+<span style="color:var(--ok)">绿(111110003)×1</span><br>
+          81_2 关卡完成奖励：+<span style="color:var(--ok)">绿(111110003)×1</span><br>
+          排行榜奖励：减少对应绿包，用其他道具补位（总包量不变）
+        </div>
+      </div>
+      <div style="grid-column:1/-1;background:var(--bg3);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--text2)">
+        <strong style="color:var(--warn)">理由：</strong>这是5条改动中性价比最高的一条——<strong style="color:var(--ok)">总绿包数量不变，只改分发方式</strong>，从"排行榜前N名独享"改为"任何进入循环关完成的玩家可获得"。当前触达循环关的17%玩家（约6,000-8,500人/期）拼完关卡却全无绿包回报，体验极差。改为关卡完成奖励后，这批玩家每刷一轮获得6绿包，结合单轮9白包，每轮产出大幅提升，形成"越打越有"的正向循环，同时也激励更多玩家推进到更深节点。
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--bg3);border-radius:6px;padding:14px 16px;font-size:12px;color:var(--text2);line-height:1.9;margin-top:4px">
+    <strong style="color:var(--accent);font-family:var(--mono);font-size:10px;letter-spacing:2px">改动优先级 &amp; 预期收益</strong><br>
+    <span style="color:var(--ok)">P0（立即可做，零新增成本）：</span>改动#3（BP绿包前移，品质替换）、改动#5（挖矿循环绿包排行榜→免费，总量不变）<br>
+    <span style="color:var(--warn)">P1（需调整配置数值）：</span>改动#1（每日签到绿包前移+7）、改动#2（BINGO连线增绿包+白包）<br>
+    <span style="color:var(--accent2)">P2（需结合关卡难度调整）：</span>改动#4（挖矿固定关+白包+降门槛，需策划同步评估78_2难度）
+  </div>
+</section>
+</div><!-- /module-opt -->
+
+<footer>
+  <span>科技节集卡系统 · 渠道饱和度分析报告</span>
+  <span>2026.04 · Age of Apes P2</span>
+</footer>
+</div>
+
+<script>
+/* ===== FUNNEL CHART ===== */
+const labels = ['78_1','78_2★','79_1','79_2★','79_3★','80_1★','80_2★','80_3★','81_1★','81_2★','81_3★'];
+const cyc = {
+  1:[8546,5861,4089,3165,2658,2099,1694,1527,1394,1234,1114],
+  2:[8285,5724,4032,3240,2824,2346,1991,1859,1765,1624,1536],
+  3:[5734,4772,3703,3107,2817,2370,2028,1903,1801,1685,1617],
+};
+// cumulative retention vs 78_1
+const p1r = cyc[1].map(v=>(v/cyc[1][0]*100).toFixed(1)*1);
+const p2r = cyc[2].map(v=>(v/cyc[2][0]*100).toFixed(1)*1);
+const p3r = cyc[3].map(v=>(v/cyc[3][0]*100).toFixed(1)*1);
+const isWhite=[false,true,false,true,true,true,true,true,false,true,true];
+const isGreen=[false,false,false,false,false,false,false,false,true,true,true];
+const ptStyle=labels.map((_,i)=>isGreen[i]?'rectRot':isWhite[i]?'rect':'circle');
+const ptSize=labels.map((_,i)=>(isWhite[i]||isGreen[i])?7:3.5);
+const mkPt=(c1,c2,c3)=>labels.map((_,i)=>isGreen[i]?c3:isWhite[i]?c2:c1);
+new Chart(document.getElementById('funnelChart').getContext('2d'),{
+  type:'line',
+  data:{labels,datasets:[
+    {label:'第一期',data:p1r,borderColor:'#00d4ff',borderWidth:2.5,pointStyle:ptStyle,pointRadius:ptSize,pointBackgroundColor:mkPt('#00d4ff','#60c8ff','#39ff8a'),pointBorderColor:'#090c12',pointBorderWidth:1.5,tension:.25,fill:false},
+    {label:'第二期',data:p2r,borderColor:'#ff6b35',borderWidth:2.5,pointStyle:ptStyle,pointRadius:ptSize,pointBackgroundColor:mkPt('#ff6b35','#ffaa80','#39ff8a'),pointBorderColor:'#090c12',pointBorderWidth:1.5,tension:.25,fill:false},
+    {label:'第三期',data:p3r,borderColor:'#39ff8a',borderWidth:2.5,pointStyle:ptStyle,pointRadius:ptSize,pointBackgroundColor:mkPt('#39ff8a','#80ffb0','#39ff8a'),pointBorderColor:'#090c12',pointBorderWidth:1.5,tension:.25,fill:false},
+  ]},
+  options:{responsive:true,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:false},tooltip:{backgroundColor:'#0e1420',borderColor:'#1e2d45',borderWidth:1,titleColor:'#00d4ff',bodyColor:'#c8d8f0',titleFont:{family:'JetBrains Mono',size:11},bodyFont:{family:'JetBrains Mono',size:11},callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toFixed(1)}%`}}},
+    scales:{
+      x:{grid:{color:'rgba(30,45,69,.6)'},ticks:{color:'#7a8fa8',font:{family:'JetBrains Mono',size:10},maxRotation:45},border:{color:'#1e2d45'}},
+      y:{min:0,max:105,grid:{color:'rgba(30,45,69,.6)'},ticks:{color:'#7a8fa8',font:{family:'JetBrains Mono',size:10},callback:v=>v+'%'},border:{color:'#1e2d45'}}
+    }}
+});
+
+/* ===== R-LEVEL TABLE ===== */
+const TD={
+  1:{entry:{1:2880,2:910,3:1032,4:1146,5:2578},rows:[
+    {id:'78_1',r:'—',rc:'none',d:{1:2880,2:910,3:1032,4:1146,5:2578}},
+    {id:'78_2',r:'+白包',rc:'white',d:{1:1728,2:581,3:724,4:846,5:1982}},
+    {id:'79_1',r:'—',rc:'none',ss:1,d:{1:1095,2:376,3:506,4:610,5:1502}},
+    {id:'79_2',r:'+白包',rc:'white',d:{1:789,2:271,3:373,4:501,5:1231}},
+    {id:'79_3',r:'+白包×2',rc:'white',d:{1:646,2:224,3:297,4:419,5:1072}},
+    {id:'80_1',r:'+白包',rc:'white',ss:1,d:{1:462,2:176,3:232,4:321,5:908}},
+    {id:'80_2',r:'+白包',rc:'white',d:{1:342,2:133,3:188,4:256,5:775}},
+    {id:'80_3',r:'+白包×2',rc:'white',d:{1:306,2:116,3:163,4:223,5:719}},
+    {id:'81_1',r:'+绿包',rc:'green',ss:1,d:{1:274,2:105,3:145,4:207,5:663}},
+    {id:'81_2',r:'+白+绿',rc:'green',d:{1:225,2:87,3:121,4:187,5:614}},
+    {id:'81_3',r:'+白+绿',rc:'green',d:{1:193,2:77,3:106,4:173,5:565}},
+  ]},
+  2:{entry:{1:2761,2:870,3:1011,4:1125,5:2518},rows:[
+    {id:'78_1',r:'—',rc:'none',d:{1:2761,2:870,3:1011,4:1125,5:2518}},
+    {id:'78_2',r:'+白包',rc:'white',d:{1:1674,2:545,3:716,4:829,5:1960}},
+    {id:'79_1',r:'—',rc:'none',ss:1,d:{1:1053,2:358,3:483,4:607,5:1531}},
+    {id:'79_2',r:'+白包',rc:'white',d:{1:795,2:276,3:355,4:486,5:1328}},
+    {id:'79_3',r:'+白包×2',rc:'white',d:{1:641,2:232,3:312,4:427,5:1212}},
+    {id:'80_1',r:'+白包',rc:'white',ss:1,d:{1:477,2:172,3:246,4:358,5:1093}},
+    {id:'80_2',r:'+白包',rc:'white',d:{1:379,2:142,3:198,4:300,5:972}},
+    {id:'80_3',r:'+白包×2',rc:'white',d:{1:344,2:125,3:182,4:282,5:926}},
+    {id:'81_1',r:'+绿包',rc:'green',ss:1,d:{1:312,2:119,3:172,4:268,5:894}},
+    {id:'81_2',r:'+白+绿',rc:'green',d:{1:264,2:103,3:159,4:250,5:848}},
+    {id:'81_3',r:'+白+绿',rc:'green',d:{1:227,2:94,3:151,4:236,5:828}},
+  ]},
+  3:{entry:{1:2075,2:679,3:722,4:710,5:1548},rows:[
+    {id:'78_1',r:'—',rc:'none',d:{1:2075,2:679,3:722,4:710,5:1548}},
+    {id:'78_2',r:'+白包',rc:'white',d:{1:1463,2:499,3:590,4:689,5:1531}},
+    {id:'79_1',r:'—',rc:'none',ss:1,d:{1:1000,2:348,3:457,4:551,5:1347}},
+    {id:'79_2',r:'+白包',rc:'white',d:{1:763,2:269,3:369,4:476,5:1230}},
+    {id:'79_3',r:'+白包×2',rc:'white',d:{1:642,2:232,3:326,4:426,5:1191}},
+    {id:'80_1',r:'+白包',rc:'white',ss:1,d:{1:480,2:176,3:277,4:360,5:1077}},
+    {id:'80_2',r:'+白包',rc:'white',d:{1:372,2:136,3:228,4:316,5:976}},
+    {id:'80_3',r:'+白包×2',rc:'white',d:{1:339,2:126,3:209,4:301,5:928}},
+    {id:'81_1',r:'+绿包',rc:'green',ss:1,d:{1:313,2:114,3:194,4:280,5:900}},
+    {id:'81_2',r:'+白+绿',rc:'green',d:{1:272,2:101,3:183,4:255,5:874}},
+    {id:'81_3',r:'+白+绿',rc:'green',d:{1:247,2:97,3:175,4:241,5:857}},
+  ]}
+};
+const rC={1:'var(--nr)',2:'var(--xr)',3:'var(--sr)',4:'var(--dr)',5:'var(--cr)'};
+const rN={1:'非R',2:'小R',3:'中R',4:'大R',5:'超R'};
+const rs=[1,2,3,4,5];
+function sc(v){if(v===null)return 's-dash';if(v>=90)return 's-great';if(v>=80)return 's-good';if(v>=70)return 's-mid';if(v>=60)return 's-low';return 's-bad';}
+function rTag(r,rc){if(rc==='none'||r==='—')return '<span class="rtag rtag-none">—</span>';const c=rc==='white'?'rtag-white':'rtag-green';return `<span class="rtag ${c}">${r}</span>`;}
+function buildT(p){
+  const pd=TD[p],rows=pd.rows;
+  let h='<table>';
+  h+='<thead><tr class="thead-top"><th class="th-label" rowspan="2">关卡</th><th class="th-reward" rowspan="2">奖励</th>';
+  rs.forEach(r=>{h+=`<th colspan="3" style="color:${rC[r]}" class="cg-right">${rN[r]}<span class="r-entry">入口 ${pd.entry[r].toLocaleString()}人</span></th>`;});
+  h+='</tr><tr class="thead-sub">';
+  rs.forEach(()=>{h+='<th>人数</th><th>步转</th><th class="cg-right">留存</th>';});
+  h+='</tr></thead><tbody>';
+  rows.forEach((row,i)=>{
+    const cls=[(row.rc!=='none'?'has-reward':''),row.ss&&i>0?'section-start':''].filter(Boolean).join(' ');
+    h+=`<tr class="${cls}"><td class="td-level">${row.id}</td><td>${rTag(row.r,row.rc)}</td>`;
+    rs.forEach(r=>{
+      const u=row.d[r]||0,entry=pd.entry[r],cum=Math.round(u/entry*100);
+      let ss='—',scls='s-dash';
+      if(i>0){const pv=rows[i-1].d[r]||1,sv=Math.round(u/pv*100);ss=sv+'%';scls=sc(sv);}
+      const cc=cum>=60?'var(--cr)':cum>=35?'#80e0a0':cum>=20?'var(--sr)':cum>=10?'var(--xr)':'#ff3b5c';
+      h+=`<td class="td-n">${u.toLocaleString()}</td><td class="td-step ${scls}">${ss}</td><td class="td-cum cg-right" style="color:${cc}">${cum}%</td>`;
+    });
+    h+='</tr>';
+  });
+  h+='</tbody><tfoot><tr><td colspan="2" style="color:var(--text2);font-size:11px;letter-spacing:1px">末关完成率</td>';
+  const last=rows[rows.length-1];
+  rs.forEach(r=>{const e=pd.entry[r],f=last.d[r]||0,pct=Math.round(f/e*100);const c=pct>=40?'var(--cr)':pct>=20?'var(--sr)':pct>=10?'var(--xr)':'#ff3b5c';h+=`<td class="td-n">${f.toLocaleString()}</td><td></td><td class="cg-right" style="color:${c};font-size:14px">${pct}%</td>`;});
+  h+='</tr></tfoot></table>';
+  return h;
+}
+const tabsEl=document.getElementById('rtabs');
+[{p:1,l:'第一期 3.14-3.19'},{p:2,l:'第二期 3.21-3.26'},{p:3,l:'第三期 3.27-3.31'}].forEach((x,i)=>{
+  const btn=document.createElement('div');btn.className='tab'+(i===0?' active':'');btn.textContent=x.l;
+  btn.onclick=()=>{document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');document.getElementById('rtable').innerHTML=buildT(x.p);};
+  tabsEl.appendChild(btn);
+});
+document.getElementById('rtable').innerHTML=buildT(1);
+
+/* ===== MARBLE DATA ===== */
+const MARBLE_BASE = 10832;
+const MARBLE_DENOM = 14910;
+const MARBLE_MS = [
+  [1,'绿包×1',10832,null],
+  [2,'绿包×1',3464,null],
+  [3,'蓝包×1',1691,null],
+  [4,'绿包×1',1103,null],
+  [5,'蓝包×1',840,null],
+  [6,'绿包×2',444,null],
+  [7,'绿包3',259,null],
+  [8,'—',0,null],
+  [9,'绿包4',108,null],
+];
+function initMarble() {
+  const tb = document.getElementById('marble-rows');
+  if (tb.innerHTML) return;
+  let prev = MARBLE_BASE;
+  MARBLE_MS.forEach(([n,pack,users],i)=>{
+    if (users===0){
+      tb.innerHTML+=`<tr style="border-bottom:1px solid rgba(30,45,69,.4)"><td style="padding:7px 12px;font-family:var(--mono);font-size:14px;color:#fff">里程碑${n}</td><td style="padding:7px 12px"><span style="font-family:var(--mono);font-size:10px;color:var(--text2)">无卡包</span></td><td colspan="4" style="padding:7px 12px;font-family:var(--mono);font-size:13px;color:var(--text2);text-align:center">—</td></tr>`;
+      return;
+    }
+    const step = i===0?null:users/prev*100;
+    const cum = users/MARBLE_BASE*100;
+    const reach = users/MARBLE_DENOM*100;
+    const stepC = step===null?'var(--text2)':step>=60?'var(--ok)':step>=40?'var(--warn)':'var(--danger)';
+    const packTag = pack.includes('蓝')?`<span class="rtag" style="background:rgba(0,212,255,.1);color:#00d4ff;border:1px solid rgba(0,212,255,.2);font-size:10px">${pack}</span>`:`<span class="rtag rtag-green" style="font-size:10px">${pack}</span>`;
+    tb.innerHTML+=`<tr style="border-bottom:1px solid rgba(30,45,69,.4)"><td style="padding:7px 12px;font-family:var(--mono);font-size:14px;color:#fff">里程碑${n}</td><td style="padding:7px 12px">${packTag}</td><td style="padding:7px 12px;font-family:var(--mono);font-size:14px;text-align:right">${users.toLocaleString()}</td><td style="padding:7px 12px;font-family:var(--mono);font-size:14px;text-align:right;color:${stepC}">${step===null?'—（入口）':step.toFixed(1)+'%'}</td><td style="padding:7px 12px;font-family:var(--mono);font-size:14px;text-align:right;color:${cum>50?'var(--ok)':cum>15?'var(--warn)':'var(--danger)'}">${cum.toFixed(1)}%</td><td style="padding:7px 12px;font-family:var(--mono);font-size:14px;text-align:right;color:${reach>30?'var(--ok)':reach>10?'var(--warn)':'var(--danger)'}">${reach.toFixed(1)}%</td></tr>`;
+    prev = users;
+  });
+}
+
+/* ===== HOLE GAME DATA ===== */
+const HOLE_ROWS = [
+  [1,'绿包×2',12277,null],[2,'绿包×2',7639,null],[3,'绿包×2',5902,null],
+  [4,'绿包×2',6728,'⚠️倒挂'],[5,'绿包×2',6366,null],[6,'蓝包×1',5919,null],
+  [7,'蓝包×1',4239,null],[8,'道具',2908,null],[9,'道具',1814,null],
+  [10,'道具',1021,null],[11,'道具',692,null],[12,'道具',614,null],
+  [13,'道具',372,null],[14,'道具',237,null],[15,'道具',209,null],
+];
+function initHole(){
+  const tb=document.getElementById('hole-rows');
+  if(tb.innerHTML)return;
+  const base=HOLE_ROWS[0][2],denom=14910;
+  let prev=base;
+  HOLE_ROWS.forEach(([n,pack,users,note],i)=>{
+    const step=i===0?null:users/prev*100;
+    const cum=users/base*100,reach=users/denom*100;
+    const hasPack=pack.includes('绿')||pack.includes('蓝');
+    const packTag=pack.includes('绿')?`<span class="rtag rtag-green" style="font-size:10px">${pack}</span>`:pack.includes('蓝')?`<span class="rtag" style="background:rgba(0,212,255,.1);color:#00d4ff;border:1px solid rgba(0,212,255,.2);font-size:10px">${pack}</span>`:`<span style="font-family:var(--mono);font-size:10px;color:var(--text2)">${pack}</span>`;
+    const sc=step===null?'var(--text2)':step>=75?'var(--ok)':step>=60?'var(--warn)':'var(--danger)';
+    const warn=note?`<span style="font-family:var(--mono);font-size:10px;color:var(--danger);margin-left:6px">${note}</span>`:'';
+    tb.innerHTML+=`<tr style="border-bottom:1px solid rgba(30,45,69,.4)${hasPack?';background:rgba(0,212,255,.01)':''}"><td style="padding:7px 12px;font-family:var(--mono);font-size:14px;color:#fff">关卡${n}${warn}</td><td style="padding:7px 12px">${packTag}</td><td style="padding:7px 12px;font-family:var(--mono);font-size:14px;text-align:right">${users.toLocaleString()}</td><td style="padding:7px 12px;font-family:var(--mono);font-size:14px;text-align:right;color:${sc}">${step===null?'—（入口）':step.toFixed(1)+'%'}</td><td style="padding:7px 12px;font-family:var(--mono);font-size:14px;text-align:right;color:${reach>50?'var(--ok)':reach>25?'var(--warn)':'var(--danger)'}">${reach.toFixed(1)}%</td></tr>`;
+    prev=users;
+  });
+}
+
+/* ===== SUMMARY DATA ===== */
+const CHANNELS = [
+  {name:'挖矿',reach:'60%',comp:'13-28%(三期)',white:'54%',green:'13%',prob:'触达+完成双低；绿包节点含付费格',tag:'触达+完成'},
+  {name:'大富翁兑换',reach:'8%(兑换渗透)',comp:'89%(进来即满额)',white:'—',green:'—',prob:'入口触达极低；进来几乎全打满',tag:'入口触达'},
+  {name:'BINGO',reach:'98%',comp:'21%(≥16格)',white:'54%',green:'13%',prob:'16号付费格拖累绿包；满格率低',tag:'完成深度'},
+  {name:'掉落转付费',reach:'47%(兑换渗透)',comp:'72-96%(进来即满额)',white:'37%',green:'38%',prob:'入口触达40%；进来几乎全打满',tag:'入口触达'},
+  {name:'每日补给',reach:'85%',comp:'12%(13任务全满)',white:'42%',green:'43%',prob:'入口好；困难任务低20pp；绿包仅后10天',tag:'完成深度'},
+  {name:'7日集卡BP',reach:'~100%',comp:'49%(10任务全满)',white:'—',green:'—',prob:'积分消耗率仅39%；链路长',tag:'兑换链路'},
+  {name:'卡包BP免费',reach:'102%',comp:'75%(全10档)',white:'95%',green:'67%',prob:'表现最好；绿包少配1档(4档非5档)',tag:'配置偏差'},
+  {name:'弹珠gacha',reach:'73%(里程碑1)',comp:'32%(M1→M2)',white:'—',green:'15%',prob:'M1→M2最大卡口(32%)；兑换率高',tag:'里程碑卡口'},
+  {name:'推币机',reach:'39%(阈值1000)',comp:'43%(阈值5000)',white:'—',green:'≈0',prob:'兑换商店无集卡包；付费道具为主',tag:'无集卡包'},
+];
+
+const CONCLUSIONS = [
+  {name:'挖矿',icon:'⛏',color:'var(--accent)',
+   conc:'双重漏斗：触达率20%×完成率13-28%=综合3-6%。白包54%，绿包仅13%。',
+   opt:'①降低关卡矿石门槛，触达率从17%→40%+ ②优化78_2难度(69%→83%) ③绿包节点前移脱离付费格依赖'},
+  {name:'大富翁 / 掉落转付费',icon:'🎲',color:'var(--accent2)',
+   conc:'兑换意愿没问题(满额71-89%)，问题是92%玩家没找到入口。三环节（游戏→积分→兑换→集卡）没有串联引导。',
+   opt:'①在活动界面增加直达兑换入口 ②积分达到兑换量时推送提示 ③集卡界面标注大富翁为来源渠道'},
+  {name:'BINGO',icon:'🎯',color:'var(--ok)',
+   conc:'白包54%达成可接受，绿包13.3%严重不足。16号格(充值≥1250CD,通过率25.5%)是绿包连线必经格，结构性问题。',
+   opt:'①白包暂不调整 ②绿包节点前移至斜线/下1/下2(通过率49-52%)，脱离16号格依赖 ③待百分位重构后确认具体节点'},
+  {name:'每日补给',icon:'📦',color:'var(--warn)',
+   conc:'入口好(85%)，困难任务(采集/练兵)完成率比简单任务低20pp，绿包仅后10天配置(活动全程漏了前12天)。',
+   opt:'①降低困难任务门槛(采集5万→3万，练兵1000→500) ②绿包任务从Day1开始配置 ③连续完成激励机制'},
+  {name:'卡包BP-免费档',icon:'🎫',color:'#c0c8d8',
+   conc:'表现最好：白包95%，全档完成74.9%。发现绿包少配1档(实配4档非设计5档)，需核实是否配置遗漏。',
+   opt:'①核实绿包档位是否漏配1档 ②无其他重大优化需求'},
+  {name:'弹珠gacha',icon:'🎰',color:'var(--warn)',
+   conc:'里程碑1触达72.6%，但M1→M2仅32%。兑换商店满额率高(进来就打满)，问题是里程碑门槛落差过大。',
+   opt:'①M1-M2之间增加中间里程碑，M2到达率从32%→50%+ ②待百分位重构后按前73%/30%/10%/5%重设奖励节点'},
+  {name:'推币机',icon:'🪙',color:'var(--text2)',
+   conc:'同弹珠：触达率39%，满额率高，兑换商店基本无集卡包（仅72个边缘包）。付费奖励以游戏道具为主。',
+   opt:'①触达率提升方向同弹珠 ②如需增加集卡包产出，需在兑换商店里配置白/绿包档位'},
+];
+
+function initSummary() {
+  const tb = document.getElementById('summary-table-body');
+  const cc = document.getElementById('channel-conclusions');
+  if (tb.innerHTML) return;
+
+  // Pack averages table
+  const PACK_AVG_HTML = `
+  <div class="chart-wrap" style="margin-top:20px">
+    <div class="chart-title">各品质卡包 全量发放量（分母=签到14,910人）</div>
+    <div class="chart-desc">科技节全周期 3.13-4.03 · 含所有渠道合计 · 渗透率=获得该卡包的玩家/14,910</div>
+    <table style="width:100%;border-collapse:collapse;font-size:14px">
+      <thead><tr style="background:var(--bg3)">
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">卡包类型</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">总发放量</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">获得人数</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">全量人均</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">渗透率</th>
+      </tr></thead>
+      <tbody>
+
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:8px 12px;color:#60c8ff">白色保底卡包（111110002）</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">572,090</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">17,381</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--ok)">38.4</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--warn)">116%+</td></tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:8px 12px;color:#39ff8a">绿色保底卡包（111110003）</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">297,093</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">16,027</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--ok)">19.9</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--warn)">107%+</td></tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:8px 12px;color:#00d4ff">蓝色保底卡包（111110004）</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">94,663</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">14,886</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--warn)">6.3</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--ok)">99.8%</td></tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:8px 12px;color:var(--danger)">紫色保底卡包（111110005）</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">4,745</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">1,996</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--danger)">0.3</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--danger)">13.4%</td></tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:8px 12px;color:#ff9944">橙色保底卡包（111110006）</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">2,489</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">1,042</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--danger)">0.2</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--danger)">7.0%</td></tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:8px 12px;color:var(--text2)">大富翁主题卡包（111110000）</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">2,180</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">1,090</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--danger)">0.1</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--danger)">7.3%</td></tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:8px 12px;color:var(--text2)">挖孔主题卡包（11119996）</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">943</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">632</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--danger)">0.1</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--danger)">4.2%</td></tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:8px 12px;color:var(--text2)">自选卡包四星以上（111110007）</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">90</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right">90</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--danger)">0.0</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:var(--danger)">0.6%</td></tr>
+      </tbody>
+      <tfoot><tr style="background:var(--bg3)">
+        <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;font-weight:700;border-top:2px solid var(--border)">全品类合计（含自选箱）</td>
+        <td style="padding:8px 12px;font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;color:var(--ok);border-top:2px solid var(--border)">977,038</td>
+        <td style="padding:8px 12px;border-top:2px solid var(--border)"></td>
+        <td style="padding:8px 12px;font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;color:var(--ok);border-top:2px solid var(--border)">65.5</td>
+        <td style="padding:8px 12px;border-top:2px solid var(--border)"></td>
+      </tr></tfoot>
+    </table>
+    <div style="margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--text2)">
+      ※ 白/绿包渗透率>100%因包含非签到玩家
+    </div>
+  </div>
+  <div class="chart-wrap" style="margin-top:16px">
+    <div class="chart-title">各分位数玩家卡包获取量（有获得任意卡包的玩家 14,652人）</div>
+    <div class="chart-desc">分母=科技节签到中获得过任意卡包的玩家 · P50=中位数，P5=前5%深度玩家</div>
+    <table style="width:100%;border-collapse:collapse;font-size:14px">
+      <thead><tr style="background:var(--bg3)">
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">分位数</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">含义</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:#60c8ff;border-bottom:1px solid var(--border);text-align:right">白包≥</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:#39ff8a;border-bottom:1px solid var(--border);text-align:right">绿包≥</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:12px;color:#00d4ff;border-bottom:1px solid var(--border);text-align:right">蓝包≥</th>
+      </tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:8px 12px;font-family:var(--mono);color:var(--ok)">P50（中位数）</td><td style="padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);text-align:right">50%玩家达到这个数</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#60c8ff">33</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#39ff8a">17</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#00d4ff">5</td></tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:8px 12px;font-family:var(--mono);color:var(--warn)">P70（前30%）</td><td style="padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);text-align:right">70%玩家达到这个数</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#60c8ff">49</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#39ff8a">25</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#00d4ff">8</td></tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:8px 12px;font-family:var(--mono);color:var(--warn)">P80（前20%）</td><td style="padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);text-align:right">80%玩家达到这个数</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#60c8ff">62</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#39ff8a">31</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#00d4ff">9</td></tr>
+        <tr style="border-bottom:1px solid rgba(30,45,69,.5)"><td style="padding:8px 12px;font-family:var(--mono);color:var(--accent2)">P90（前10%）</td><td style="padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);text-align:right">90%玩家达到这个数</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#60c8ff">76</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#39ff8a">39</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#00d4ff">12</td></tr>
+        <tr><td style="padding:8px 12px;font-family:var(--mono);color:var(--danger)">P95（前5%）</td><td style="padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);text-align:right">95%玩家达到这个数</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#60c8ff">87</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#39ff8a">49</td><td style="padding:8px 12px;font-family:var(--mono);text-align:right;color:#00d4ff">16</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--text2)">
+      P50=中位数 · P70=前30%玩家能达到的下限 · 可用于数值重构时的分层参考基准
+    </div>
+  </div>
+
+  <div class="chart-wrap" style="margin-top:16px">
+    <div class="chart-title">卡册收集度分析（32,187名有卡玩家）</div>
+    <div class="chart-desc">分母=科技节期间获得过任意卡片的玩家 · 每册9张 · 全册=集满该册全部9张 · 整体收集度=人均14.75/72张=20.5%</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:14px 18px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:6px">OVERALL SATURATION</div>
+        <div style="font-family:var(--mono);font-size:32px;font-weight:700;color:var(--accent)">20.5%</div>
+        <div style="font-family:var(--mono);font-size:12px;color:var(--text2);margin-top:4px">人均收集 14.75 / 72 张不重复卡片</div>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:14px 18px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:6px">PLAYERS WITH CARDS</div>
+        <div style="font-family:var(--mono);font-size:32px;font-weight:700;color:var(--warn)">32,187</div>
+        <div style="font-family:var(--mono);font-size:12px;color:var(--text2);margin-top:4px">获得过任意卡片的玩家（含非科技节签到玩家）</div>
+      </div>
+    </div>
+
+    <table style="width:100%;border-collapse:collapse;font-size:14px">
+      <thead><tr style="background:var(--bg3)">
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">册</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">主题</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">收集进度条</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">人均收集</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">收集度</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">全册率</th>
+      </tr></thead>
+      <tbody>
+        ${[
+          ['册1','科技通用',3.04,33.8,3.7,'var(--ok)'],
+          ['册2','科技通用',2.91,32.3,2.0,'var(--ok)'],
+          ['册3','科技通用',2.09,23.2,1.4,'var(--warn)'],
+          ['册4','大富翁专属',1.82,20.2,0.9,'var(--warn)'],
+          ['册5','挖矿专属',1.59,17.7,0.6,'var(--accent2)'],
+          ['册6','打孔专属',1.33,14.8,0.2,'var(--accent2)'],
+          ['册7','弹珠专属',1.09,12.1,0.05,'var(--danger)'],
+          ['册8','推币机专属',0.88,9.8,0.009,'var(--danger)'],
+        ].map(([name,theme,avg,rate,full,col])=>`
+          <tr style="border-bottom:1px solid rgba(30,45,69,.5)">
+            <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;color:#fff;font-weight:600">${name}</td>
+            <td style="padding:8px 12px;font-size:13px;color:var(--text2)">${theme}</td>
+            <td style="padding:8px 12px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="flex:1;height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden">
+                  <div style="width:${rate}%;height:100%;background:${col};border-radius:4px;transition:width .3s"></div>
+                </div>
+              </div>
+            </td>
+            <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;text-align:right;color:var(--text)">${avg}/9</td>
+            <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;text-align:right;color:${col};font-weight:600">${rate}%</td>
+            <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;text-align:right;color:var(--text2)">${full}%</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+    <div style="margin-top:12px;font-family:var(--mono);font-size:12px;color:var(--text2);line-height:1.8">
+      ※ 前3册为科技通用卡（所有渠道均可获得），收集度明显高于后5册小游戏专属卡<br>
+      ※ 全册率极低（最高3.7%）→ 集卡兑换闭环难以触发，需配合卡包增量优化
+    </div>
+  </div>
+
+  <div class="chart-wrap" style="margin-top:16px">
+    <div class="chart-title">收集度 × 签到天数分层（科技节期间 3.13–3.31，festival-only）</div>
+    <div class="chart-desc">签到活动 actv=21127574 · 仅统计节日期间新开出的卡 · 分母=各组签到参与者</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="background:var(--bg3)">
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">签到天数</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">签到人</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">有卡率</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">P50总计</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">P80总计</th>
+        <th style="padding:9px 12px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:center" colspan="8">各册P50（/9张）</th>
+      </tr>
+      <tr style="background:rgba(0,0,0,.2)">
+        <th colspan="5" style="padding:4px 12px;font-family:var(--mono);font-size:10px;color:var(--text2);text-align:left">分层特征</th>
+        <th style="padding:4px 6px;font-family:var(--mono);font-size:10px;color:var(--text2);text-align:center">册1<br>通用</th>
+        <th style="padding:4px 6px;font-family:var(--mono);font-size:10px;color:var(--text2);text-align:center">册2<br>通用</th>
+        <th style="padding:4px 6px;font-family:var(--mono);font-size:10px;color:var(--text2);text-align:center">册3<br>通用</th>
+        <th style="padding:4px 6px;font-family:var(--mono);font-size:10px;color:var(--text2);text-align:center">册4<br>大富翁</th>
+        <th style="padding:4px 6px;font-family:var(--mono);font-size:10px;color:var(--text2);text-align:center">册5<br>挖矿</th>
+        <th style="padding:4px 6px;font-family:var(--mono);font-size:10px;color:var(--text2);text-align:center">册6<br>打孔</th>
+        <th style="padding:4px 6px;font-family:var(--mono);font-size:10px;color:var(--text2);text-align:center">册7<br>弹珠</th>
+        <th style="padding:4px 6px;font-family:var(--mono);font-size:10px;color:var(--text2);text-align:center">册8<br>推币机</th>
+      </tr></thead>
+      <tbody>
+        ${[
+          ['0-5天','轻度参与',3383,'34.4%','7/72 (9.7%)','17/72',2,2,1,1,0,0,0,0,'var(--text2)'],
+          ['6-10天','中低活跃',1490,'55.1%','12/72 (16.7%)','23/72',2,2,2,1,1,1,0,0,'var(--accent2)'],
+          ['11-15天','中等活跃',1523,'61.2%','15/72 (20.8%)','27/72',3,3,2,2,1,1,1,1,'var(--warn)'],
+          ['16-21天','高度活跃',12643,'86.7%','28/72 (38.9%)','37/72',5,4,4,4,3,3,2,2,'var(--ok)'],
+        ].map(([days,label,sign,cardRate,p50,p80,b1,b2,b3,b4,b5,b6,b7,b8,col])=>`
+          <tr style="border-bottom:1px solid rgba(30,45,69,.5)">
+            <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;color:#fff;font-weight:600">${days}</td>
+            <td style="padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text2);text-align:right">${sign.toLocaleString()}</td>
+            <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;text-align:right;color:${col};font-weight:600">${cardRate}</td>
+            <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;text-align:right;color:${col}">${p50}</td>
+            <td style="padding:8px 12px;font-family:var(--mono);font-size:13px;text-align:right;color:var(--text2)">${p80}</td>
+            ${[b1,b2,b3,b4,b5,b6,b7,b8].map((v,i)=>{
+              const c=v>=7?'var(--ok)':v>=4?'var(--warn)':v>=2?'var(--accent2)':v>0?'var(--text2)':'rgba(255,255,255,.15)';
+              return `<td style="padding:8px 6px;font-family:var(--mono);font-size:13px;text-align:center;color:${c};font-weight:${v>=7?'700':'400'}">${v||'—'}</td>`;
+            }).join('')}
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+    <div style="margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--text2);line-height:1.8">
+      ※ 签到天数是参与集卡的强预测因子：有卡率 34%→87%，高度相关<br>
+      ※ 即使最活跃的16-21天玩家，P50也只有28/72（38.9%）——集卡对所有层级都很难完成<br>
+      ※ 册7/8（弹珠/推币机）P50=0-2，四个层级都几乎是空白体验
+    </div>
+  </div>
+
+  <div class="chart-wrap" style="margin-top:16px">
+    <div class="chart-title">数值重构框架 · 设计原则</div>
+    <div class="chart-desc">现有投放按R级分层 → 中位数玩家只拿到约17包（全体均值65包） · 重构方向：按活跃百分位分配</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+      <div style="background:var(--bg3);border:1px solid rgba(0,212,255,.3);border-radius:6px;padding:14px 16px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:8px">PRINCIPLE 1</div>
+        <div style="font-size:13px;color:#fff;font-weight:600;margin-bottom:6px">按活跃度重新分配</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7">R级分层方式与集卡体验不对应。中位数玩家（11-15天）人均17包 vs 均值65包，4:1不均。重构后按签到天数保底分配。</div>
+      </div>
+      <div style="background:var(--bg3);border:1px solid rgba(57,255,138,.3);border-radius:6px;padding:14px 16px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">PRINCIPLE 2</div>
+        <div style="font-size:13px;color:#fff;font-weight:600;margin-bottom:6px">1★/2★自由渠道主力</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7">白包/绿包通过日常活动大量发放，保障1★/2★高饱和。回收积分溢出后可补3★缺口，形成正向循环。</div>
+      </div>
+      <div style="background:var(--bg3);border:1px solid rgba(255,107,53,.3);border-radius:6px;padding:14px 16px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--accent2);letter-spacing:2px;margin-bottom:8px">PRINCIPLE 3</div>
+        <div style="font-size:13px;color:#fff;font-weight:600;margin-bottom:6px">4★/5★各缺2张卡付费点</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7">自由渠道硬上限：4★最多11/13，5★最多4/6。最活跃玩家(16-21天P80)达94.4%后，补全剩余2+2张须通过付费。</div>
+      </div>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:var(--text2);line-height:1.8">
+      <strong style="color:var(--accent);font-family:var(--mono);font-size:10px;letter-spacing:2px">卡池结构</strong><br>
+      1★(20张)←白包主 · 2★(20张)←绿包主 · 3★(13张)←蓝包主 · 4★(13张)←紫包/付费 · 5★(6张)←橙包/付费<br>
+      回收规则：重复卡→积分（1★=1pt / 2★=2pt / 3★=10pt / 4★=20pt / 5★=240pt）→ 购卡（1★=15pt / 2★=30pt / 3★=150pt / 4★=600pt）
+    </div>
+  </div>
+
+  <div class="chart-wrap" style="margin-top:16px">
+    <div class="chart-title">重构目标包量 · 各活跃层 × 体验分位数（含4★/5★付费硬上限）</div>
+    <div class="chart-desc">基于生日问题期望值 + 回收积分补3★ · 4★上限11/13 · 5★上限4/6 · 自由渠道最高94.4%饱和度</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="background:var(--bg3)">
+        <th style="padding:9px 10px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:left">活跃层</th>
+        <th style="padding:9px 8px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:center">分位</th>
+        <th style="padding:9px 8px;font-family:var(--mono);font-size:11px;color:#60c8ff;border-bottom:1px solid var(--border);text-align:right">白包</th>
+        <th style="padding:9px 8px;font-family:var(--mono);font-size:11px;color:#39ff8a;border-bottom:1px solid var(--border);text-align:right">绿包</th>
+        <th style="padding:9px 8px;font-family:var(--mono);font-size:11px;color:#00d4ff;border-bottom:1px solid var(--border);text-align:right">蓝包</th>
+        <th style="padding:9px 8px;font-family:var(--mono);font-size:11px;color:#c080ff;border-bottom:1px solid var(--border);text-align:right">紫包</th>
+        <th style="padding:9px 8px;font-family:var(--mono);font-size:11px;color:#ffaa00;border-bottom:1px solid var(--border);text-align:right">橙包</th>
+        <th style="padding:9px 8px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:right">总包</th>
+        <th style="padding:9px 8px;font-family:var(--mono);font-size:11px;color:var(--danger);border-bottom:1px solid var(--border);text-align:center">4★缺</th>
+        <th style="padding:9px 8px;font-family:var(--mono);font-size:11px;color:var(--danger);border-bottom:1px solid var(--border);text-align:center">5★缺</th>
+        <th style="padding:9px 8px;font-family:var(--mono);font-size:11px;color:var(--accent);border-bottom:1px solid var(--border);text-align:right">目标sat</th>
+      </tr></thead>
+      <tbody>
+        ${[
+          ['0-5天',  'P50', 6,  4,  1,  0,  0,  11,  12.8,6.0, 15.2, false],
+          ['0-5天',  'P70',11,  8,  2,  1,  0,  22,  11.7,5.9, 29.2, false],
+          ['0-5天',  'P80',20, 15,  4,  2,  0,  41,  10.5,5.7, 45.7, false],
+          ['0-5天',  'P90',34, 24,  6,  3,  1,  68,   9.4,4.6, 60.7, false],
+          ['6-10天', 'P50',15, 11,  3,  1,  0,  30,  11.5,5.9, 36.3, false],
+          ['6-10天', 'P70',28, 21,  5,  2,  1,  57,  10.3,4.8, 55.3, false],
+          ['6-10天', 'P80',45, 33,  9,  3,  1,  91,   8.9,4.6, 68.1, false],
+          ['6-10天', 'P90',66, 48, 13,  5,  1, 133,   7.2,4.4, 79.6, false],
+          ['11-15天','P50',40, 29,  8,  3,  1,  81,   9.1,4.6, 65.5, true],
+          ['11-15天','P70',66, 48, 13,  5,  1, 133,   7.2,4.4, 79.6, true],
+          ['11-15天','P80',100,73, 19,  8,  2, 202,   5.2,3.4, 87.3, true],
+          ['11-15天','P90',159,116,30, 12,  3, 320,   3.2,2.6, 91.9, true],
+          ['16-21天','P50',104,76, 20,  8,  2, 210,   5.1,3.4, 87.5, false],
+          ['16-21天','P70',176,129,34, 14,  3, 356,   2.6,2.5, 92.9, false],
+          ['16-21天','P80',208,152,39, 16,  4, 419,   2.0,2.0, 94.4, false],
+          ['16-21天','P90',208,152,39, 16,  4, 419,   2.0,2.0, 94.4, false],
+        ].map(([grp,pct,w,g,b,pu,o,tot,m4,m5,sat,anchor])=>{
+          const satC=sat>=90?'var(--ok)':sat>=75?'var(--warn)':sat>=55?'var(--accent2)':'var(--danger)';
+          const paidHit=m4<=2.1&&m5<=2.1;
+          const rowBg=anchor?'background:rgba(0,212,255,.04)':'';
+          const pctC=pct==='P50'?'var(--ok)':pct==='P70'?'var(--warn)':pct==='P80'?'var(--accent2)':'var(--danger)';
+          return `<tr style="border-bottom:1px solid rgba(30,45,69,.4);${rowBg}">
+            <td style="padding:7px 10px;font-family:var(--mono);font-size:13px;color:#fff">${anchor?'<strong>'+grp+'</strong>':grp}</td>
+            <td style="padding:7px 8px;font-family:var(--mono);font-size:12px;text-align:center;color:${pctC}">${pct}</td>
+            <td style="padding:7px 8px;font-family:var(--mono);font-size:13px;text-align:right;color:#60c8ff">${w}</td>
+            <td style="padding:7px 8px;font-family:var(--mono);font-size:13px;text-align:right;color:#39ff8a">${g}</td>
+            <td style="padding:7px 8px;font-family:var(--mono);font-size:13px;text-align:right;color:#00d4ff">${b}</td>
+            <td style="padding:7px 8px;font-family:var(--mono);font-size:13px;text-align:right;color:#c080ff">${pu}</td>
+            <td style="padding:7px 8px;font-family:var(--mono);font-size:13px;text-align:right;color:#ffaa00">${o}</td>
+            <td style="padding:7px 8px;font-family:var(--mono);font-size:13px;text-align:right;color:var(--text);font-weight:600">${tot}</td>
+            <td style="padding:7px 8px;font-family:var(--mono);font-size:12px;text-align:center;color:${paidHit?'var(--danger)':'var(--text2)'}">${m4.toFixed(1)}</td>
+            <td style="padding:7px 8px;font-family:var(--mono);font-size:12px;text-align:center;color:${paidHit?'var(--danger)':'var(--text2)'}">${m5.toFixed(1)}</td>
+            <td style="padding:7px 8px;font-family:var(--mono);font-size:13px;text-align:right;color:${satC};font-weight:600">${sat}%</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+    <div style="margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--text2);line-height:1.8">
+      ※ 蓝色行 = 11-15天（中等活跃）锚点组，P50目标 65.5% 为重构核心设计目标<br>
+      ※ 16-21天 P80/P90 撞上自由渠道硬上限（94.4%），4★缺2 / 5★缺2 → 付费钩子精确触发<br>
+      ※ 包型比例固定：白:绿:蓝:紫:橙 ≈ 1:0.73:0.19:0.077:0.019（可按渠道特性调整）
+    </div>
+  </div>
+
+  <div class="chart-wrap" style="margin-top:16px">
+    <div class="chart-title">重构核心结论</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div style="background:var(--bg3);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:14px 16px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--danger);letter-spacing:2px;margin-bottom:8px">PROBLEM · 根因</div>
+        <div style="font-size:13px;color:#fff;font-weight:600;margin-bottom:6px">R级投放 ≠ 集卡体验分层</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          · 全体均值 65包/人，但中位数（11-15天）玩家实际只拿到 <strong style="color:var(--danger)">~17包</strong><br>
+          · 高R玩家拿走大头，分配比高达 4:1<br>
+          · 按R级设计的投放量对中等活跃玩家而言约为目标量的 1/5
+        </div>
+      </div>
+      <div style="background:var(--bg3);border-left:3px solid var(--ok);border-radius:0 6px 6px 0;padding:14px 16px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:8px">SOLUTION · 重构方向</div>
+        <div style="font-size:13px;color:#fff;font-weight:600;margin-bottom:6px">按活跃百分位保底投放</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          · 11-15天 P50 → 目标 81包（白40+绿29+蓝8+紫3+橙1）<br>
+          · 总包量不需要翻6倍，主要靠 <strong style="color:var(--ok)">重新分配</strong>（当前均值65已接近目标）<br>
+          · 回收积分溢出补3★缺口，形成自动平衡机制
+        </div>
+      </div>
+      <div style="background:var(--bg3);border-left:3px solid var(--warn);border-radius:0 6px 6px 0;padding:14px 16px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--warn);letter-spacing:2px;margin-bottom:8px">PAID DESIGN · 付费设计</div>
+        <div style="font-size:13px;color:#fff;font-weight:600;margin-bottom:6px">4★/5★各缺2张作精准付费点</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          · 自由渠道上限 94.4%（20+20+13+11+4）/72<br>
+          · 16-21天最活跃玩家在 P80 达到上限，最后 2×4★+2×5★ 需付费完成<br>
+          · 紫包/橙包集中在付费渠道，付费价值清晰
+        </div>
+      </div>
+      <div style="background:var(--bg3);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:14px 16px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:8px">NEXT STEP · 下一步</div>
+        <div style="font-size:13px;color:#fff;font-weight:600;margin-bottom:6px">渠道分配方案设计</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          · 将目标包量拆解到具体渠道（BINGO/挖矿/大富翁/每日/付费）<br>
+          · 按活跃天数设计渠道准入门槛，保障中位数玩家可达到保底包量<br>
+          · 评估现有渠道能否承接新包量，哪些需要改造
+        </div>
+      </div>
+    </div>
+  </div>
+  `;
+  document.getElementById('summary-table-body').closest('.chart-wrap').insertAdjacentHTML('afterend', PACK_AVG_HTML);
+
+  // Table
+  CHANNELS.forEach(ch=>{
+    const tagColor = ch.tag.includes('触达')?'var(--danger)':ch.tag.includes('完成')?'var(--accent2)':ch.tag.includes('链路')?'var(--warn)':ch.tag.includes('配置')?'var(--ok)':'var(--text2)';
+    const wc = ch.white==='—'?'var(--text2)':parseFloat(ch.white)>80?'var(--ok)':parseFloat(ch.white)>50?'var(--warn)':'var(--danger)';
+    const gc = ch.green==='—'||ch.green==='≈0'?'var(--text2)':parseFloat(ch.green)>80?'var(--ok)':parseFloat(ch.green)>40?'var(--warn)':'var(--danger)';
+    tb.innerHTML+=`<tr style="border-bottom:1px solid rgba(30,45,69,.4)">
+      <td style="padding:8px 12px;font-family:var(--mono);font-size:14px;color:#fff;font-weight:600">${ch.name}</td>
+      <td style="padding:8px 12px;font-family:var(--mono);font-size:14px;text-align:right">${ch.reach}</td>
+      <td style="padding:8px 12px;font-family:var(--mono);font-size:14px;text-align:right">${ch.comp}</td>
+      <td style="padding:8px 12px;font-family:var(--mono);font-size:14px;text-align:right;color:${wc}">${ch.white}</td>
+      <td style="padding:8px 12px;font-family:var(--mono);font-size:14px;text-align:right;color:${gc}">${ch.green}</td>
+      <td style="padding:8px 12px"><span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:3px;background:rgba(255,255,255,.05);color:${tagColor};border:1px solid ${tagColor}40">${ch.tag}</span></td>
+    </tr>`;
+  });
+
+  // Conclusions
+  CONCLUSIONS.forEach(ch=>{
+    cc.innerHTML+=`<div class="c-card" style="border-left:3px solid ${ch.color}">
+      <div class="c-label" style="color:${ch.color}">${ch.icon} ${ch.name}</div>
+      <p style="color:var(--text);margin-bottom:10px">${ch.conc}</p>
+      <div style="background:var(--bg3);border-radius:5px;padding:12px 14px;font-size:13px;color:var(--text2);line-height:1.7"><strong style="color:var(--accent2);font-family:var(--mono);font-size:10px;letter-spacing:2px">优化方向</strong><br>${ch.opt}</div>
+    </div>`;
+  });
+}
+
+/* ===== MODULE NAV ===== */
+/* ===== BINGO DATA ===== */
+const BINGO_DENOM = 14910;
+const BINGO_CELLS = [
+  ['1号','登录1天',14559],['2号','帮派捐献80次',12461],['3号','登录5天',12297],
+  ['4号','训练15000',10959],['5号','帮派帮助50次',10401],['6号','GVE 25次',10200],
+  ['7号','帮派捐献150次',11660],['8号','战力+100000',12625],['9号','PVE 20天',10200],
+  ['10号','采集1000000',11561],['11号','消耗体力2000',11783],['12号','押镖A评5次',10673],
+  ['13号','训练25000',9126],['14号','消耗2500CD',9189],['15号','高级招募15个',10730],
+  ['16号','充值≥1250CD',3803],
+];
+const BINGO_DIST = {1:603,2:316,3:468,4:378,5:355,6:379,7:426,8:436,9:462,10:546,11:612,12:755,13:1026,14:1366,15:3371,16:3070};
+const BINGO_LINES = [
+  ['右1','行1（格1-2-3-4）','白包×2',9528,18910,0],
+  ['右2','行2（格5-6-7-8）','白包×2',9065,18082,0],
+  ['右3','行3（格9-10-11-12）','白包×2',8735,17400,0],
+  ['右4','行4（含16号）','绿包×2',3251,0,6498],
+  ['下1','列1（格1-5-9-13）','白包×2',7334,14632,0],
+  ['下2','列2（格2-6-10-14）','白包×2',7668,15292,0],
+  ['下3','列3（格3-7-11-15）','白包×2',8723,17362,0],
+  ['下4','列4（含16号）','白包×1+绿包×1',3432,3427,3427],
+  ['斜线','对角（含16号）','白包×2',7782,15502,0],
+];
+
+function initBingo() {
+  // cells
+  const cb = document.getElementById('bingo-cells');
+  if (!cb.innerHTML) {
+    BINGO_CELLS.forEach(([num,desc,done])=>{
+      const rate=(done/BINGO_DENOM*100).toFixed(1);
+      const c=done<5000?'var(--danger)':done>12000?'var(--ok)':'var(--text)';
+      cb.innerHTML+=`<tr style="border-bottom:1px solid rgba(30,45,69,.4)"><td style="padding:6px 10px;font-family:var(--mono);font-size:11px">${num} ${desc}</td><td style="padding:6px 10px;font-family:var(--mono);font-size:13px;text-align:right">${done.toLocaleString()}</td><td style="padding:6px 10px;font-family:var(--mono);font-size:13px;text-align:right;color:${c}">${rate}%</td></tr>`;
+    });
+  }
+  // funnel
+  const bf = document.getElementById('bingo-funnel');
+  if (!bf.innerHTML) {
+    for(let n=1;n<=16;n++){
+      const u=Object.entries(BINGO_DIST).filter(([k])=>+k>=n).reduce((s,[,v])=>s+v,0);
+      const rate=(u/BINGO_DENOM*100).toFixed(1);
+      const c=u/BINGO_DENOM>=0.7?'var(--ok)':u/BINGO_DENOM>=0.4?'var(--warn)':'var(--danger)';
+      bf.innerHTML+=`<tr style="border-bottom:1px solid rgba(30,45,69,.4)"><td style="padding:6px 10px;font-family:var(--mono);font-size:11px">≥${n}个格子</td><td style="padding:6px 10px;font-family:var(--mono);font-size:13px;text-align:right">${u.toLocaleString()}</td><td style="padding:6px 10px;font-family:var(--mono);font-size:13px;text-align:right;color:${c}">${rate}%</td></tr>`;
+    }
+  }
+  // lines
+  const bl = document.getElementById('bingo-lines');
+  if (!bl.innerHTML) {
+    BINGO_LINES.forEach(([name,grids,reward,s1,white,green])=>{
+      const rate=(s1/BINGO_DENOM*100).toFixed(1);
+      const rc=s1<4000?'var(--danger)':s1>8000?'var(--ok)':'var(--warn)';
+      const rtag=reward.includes('绿')&&reward.includes('白')?`<span class="rtag rtag-white" style="font-size:9px">+白</span> <span class="rtag rtag-green" style="font-size:9px">+绿</span>`:reward.includes('绿')?`<span class="rtag rtag-green" style="font-size:9px">${reward}</span>`:`<span class="rtag rtag-white" style="font-size:9px">${reward}</span>`;
+      bl.innerHTML+=`<tr style="border-bottom:1px solid rgba(30,45,69,.4)"><td style="padding:7px 10px;font-family:var(--mono);font-size:11px;color:#fff">${name}</td><td style="padding:7px 10px;font-size:13px;color:var(--text2)">${grids}</td><td style="padding:7px 10px">${rtag}</td><td style="padding:7px 10px;font-family:var(--mono);font-size:13px;text-align:right">${s1.toLocaleString()}</td><td style="padding:7px 10px;font-family:var(--mono);font-size:13px;text-align:right;color:${rc}">${rate}%</td><td style="padding:7px 10px;font-family:var(--mono);font-size:13px;text-align:right;color:#60c8ff">${white?white.toLocaleString():'—'}</td><td style="padding:7px 10px;font-family:var(--mono);font-size:13px;text-align:right;color:#39ff8a">${green?green.toLocaleString():'—'}</td></tr>`;
+    });
+  }
+}
+
+function showModule(mod) {
+  document.getElementById('module-mining').style.display = mod==='mining' ? '' : 'none';
+  document.getElementById('module-monopoly').style.display = mod==='monopoly' ? '' : 'none';
+  document.getElementById('module-bingo').style.display = mod==='bingo' ? '' : 'none';
+  document.getElementById('module-marble').style.display = mod==='marble' ? '' : 'none';
+  document.getElementById('module-hole').style.display = mod==='hole' ? '' : 'none';
+  document.getElementById('module-summary').style.display = mod==='summary' ? '' : 'none';
+  document.getElementById('module-opt').style.display = mod==='opt' ? '' : 'none';
+  if (mod==='bingo') initBingo();
+  if (mod==='marble') initMarble();
+  if (mod==='hole') initHole();
+  if (mod==='summary') initSummary();
+  const navMining = document.getElementById('nav-mining');
+  const navMonopoly = document.getElementById('nav-monopoly');
+  const navBingo = document.getElementById('nav-bingo');
+  const navMarble = document.getElementById('nav-marble');
+  const navHole = document.getElementById('nav-hole');
+  const navSummary = document.getElementById('nav-summary');
+  const navOpt = document.getElementById('nav-opt');
+  const navs = [{el:navMining,mod:'mining',c:'var(--accent)'},{el:navMonopoly,mod:'monopoly',c:'var(--accent2)'},{el:navBingo,mod:'bingo',c:'var(--ok)'},{el:navMarble,mod:'marble',c:'var(--warn)'},{el:navHole,mod:'hole',c:'#a080ff'},{el:navSummary,mod:'summary',c:'#c0c8d8'},{el:navOpt,mod:'opt',c:'#ff9040'}];
+  navs.forEach(n=>{
+    if(n.mod===mod){n.el.style.borderBottom=`2px solid ${n.c}`;n.el.style.color=n.c;n.el.style.background=`rgba(0,0,0,.05)`;}
+    else{n.el.style.borderBottom='2px solid transparent';n.el.style.color='var(--text2)';n.el.style.background='transparent';}
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 自动修 BUG</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+:root {
+  --bg: #0b1120; --card: #131c31; --border: #1e2d4a;
+  --text: #e8edf5; --dim: #7a8ba8;
+  --cyan: #22d3ee; --green: #34d399; --yellow: #fbbf24;
+  --red: #f87171; --purple: #a78bfa; --blue: #60a5fa;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-serif;overflow-x:hidden;}
+section{max-width:1000px;margin:0 auto;padding:80px 24px;}
+
+/* HERO */
+.hero{text-align:center;padding:100px 24px 80px;position:relative;}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 40%,rgba(34,211,238,0.12),transparent 60%);pointer-events:none;}
+.hero-icon{font-size:80px;margin-bottom:24px;display:block;}
+.hero h1{font-size:48px;font-weight:900;letter-spacing:-1px;
+  background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero p{font-size:20px;color:var(--dim);margin-top:16px;font-weight:300;max-width:500px;margin-left:auto;margin-right:auto;}
+
+/* 大数字卡片 */
+.num-row{display:flex;justify-content:center;gap:32px;margin-top:56px;flex-wrap:wrap;}
+.num-card{width:180px;padding:32px 16px;border-radius:16px;background:var(--card);border:1px solid var(--border);text-align:center;}
+.num-card .icon{font-size:36px;margin-bottom:12px;}
+.num-card .val{font-size:48px;font-weight:900;line-height:1;}
+.num-card .label{font-size:14px;color:var(--dim);margin-top:8px;}
+
+/* FLOW VISUAL */
+.flow-visual{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;}
+.fv-step{width:140px;text-align:center;padding:24px 8px;border-radius:16px;background:var(--card);border:1px solid var(--border);transition:all .3s;}
+.fv-step:hover{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 8px 32px rgba(34,211,238,0.15);}
+.fv-icon{font-size:40px;margin-bottom:10px;}
+.fv-title{font-size:15px;font-weight:700;margin-bottom:6px;}
+.fv-desc{font-size:12px;color:var(--dim);line-height:1.5;}
+.fv-line{width:40px;height:2px;background:linear-gradient(90deg,var(--border),var(--cyan),var(--border));flex-shrink:0;}
+.fv-confirm{border-color:var(--yellow);background:rgba(251,191,36,0.06);}
+.fv-confirm .fv-title{color:var(--yellow);}
+
+/* CAPABILITY */
+.cap-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+.cap-col{border-radius:16px;overflow:hidden;background:var(--card);border:1px solid var(--border);}
+.cap-header{padding:20px;font-size:18px;font-weight:700;text-align:center;}
+.cap-yes{background:rgba(52,211,153,0.1);border-bottom:2px solid var(--green);}
+.cap-no{background:rgba(248,113,113,0.1);border-bottom:2px solid var(--red);}
+.cap-item{display:flex;align-items:flex-start;gap:14px;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.cap-item:last-child{border:none;}
+.cap-icon{font-size:24px;flex-shrink:0;margin-top:2px;}
+.cap-item b{font-size:15px;}
+.cap-sub{font-size:12px;color:var(--dim);}
+
+/* CASES */
+.case-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.case-card{padding:28px;border-radius:16px;background:var(--card);border:1px solid var(--border);position:relative;overflow:hidden;transition:all .3s;}
+.case-card:hover{border-color:rgba(34,211,238,0.3);transform:translateY(-2px);}
+.case-badge{position:absolute;top:16px;right:16px;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;}
+.badge-done{background:rgba(52,211,153,0.15);color:var(--green);}
+.badge-review{background:rgba(251,191,36,0.15);color:var(--yellow);}
+.case-emoji{font-size:36px;margin-bottom:8px;}
+.case-type{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.case-card h3{font-size:17px;font-weight:700;margin-bottom:20px;line-height:1.4;}
+.case-ba{display:flex;align-items:stretch;gap:12px;margin-bottom:16px;}
+.ba-col{flex:1;padding:14px;border-radius:10px;font-size:13px;line-height:1.6;}
+.ba-before{background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.15);}
+.ba-after{background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.15);}
+.ba-label{font-size:11px;font-weight:700;margin-bottom:8px;}
+.ba-arrow{display:flex;align-items:center;font-size:20px;color:var(--dim);flex-shrink:0;}
+.case-how{font-size:12px;color:var(--dim);padding-top:12px;border-top:1px solid rgba(255,255,255,0.05);line-height:1.5;}
+
+/* LESSONS */
+.lesson-cards{display:flex;gap:24px;}
+.lesson-card{flex:1;padding:28px;border-radius:16px;background:var(--card);border:1px solid var(--border);border-left:4px solid;}
+.lesson-icon{font-size:32px;margin-bottom:12px;}
+.lesson-card h4{font-size:16px;font-weight:700;margin-bottom:10px;}
+.lesson-card p{font-size:13px;color:var(--dim);line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="hero-icon">🤖</span>
+  <h1>AI 自动修 BUG</h1>
+  <p>机器人每小时巡检，发现问题自动定位修复</p>
+  <div class="num-row">
+    <div class="num-card">
+      <div class="icon">🔍</div>
+      <div class="val" style="color:var(--cyan)">18</div>
+      <div class="label">发现 BUG</div>
+    </div>
+    <div class="num-card">
+      <div class="icon">✅</div>
+      <div class="val" style="color:var(--green)">6</div>
+      <div class="label">已修复</div>
+    </div>
+    <div class="num-card">
+      <div class="icon">⏱</div>
+      <div class="val" style="color:var(--yellow)">5<span style="font-size:24px">min</span></div>
+      <div class="label">平均修复时间</div>
+    </div>
+    <div class="num-card">
+      <div class="icon">🌍</div>
+      <div class="val" style="color:var(--purple)">18</div>
+      <div class="label">语言同步</div>
+    </div>
+  </div>
+</div>
+
+<!-- FLOW -->
+<section>
+  <h2 style="text-align:center;font-size:36px;font-weight:900;margin-bottom:12px;">它是怎么工作的？</h2>
+  <p style="text-align:center;color:var(--dim);font-size:16px;margin-bottom:56px;">从发现问题到修好，全程自动，关键节点人工确认</p>
+  <div class="flow-visual">
+    <div class="fv-step">
+      <div class="fv-icon">⏰</div>
+      <div class="fv-title">定时巡检</div>
+      <div class="fv-desc">每小时自动扫描<br>Jira 上的 BUG</div>
+    </div>
+    <div class="fv-line"></div>
+    <div class="fv-step">
+      <div class="fv-icon">📸</div>
+      <div class="fv-title">看截图</div>
+      <div class="fv-desc">下载 BUG 截图<br>AI 识别问题所在</div>
+    </div>
+    <div class="fv-line"></div>
+    <div class="fv-step">
+      <div class="fv-icon">🗂️</div>
+      <div class="fv-title">查配置表</div>
+      <div class="fv-desc">自动定位到<br>具体哪张表哪一行</div>
+    </div>
+    <div class="fv-line"></div>
+    <div class="fv-step fv-confirm">
+      <div class="fv-icon">👤</div>
+      <div class="fv-title">人工确认</div>
+      <div class="fv-desc">展示修复方案<br>等你说「改」</div>
+    </div>
+    <div class="fv-line"></div>
+    <div class="fv-step">
+      <div class="fv-icon">🔧</div>
+      <div class="fv-title">自动修复</div>
+      <div class="fv-desc">改配置 → 翻译18语言<br>→ 导表 → 推送</div>
+    </div>
+    <div class="fv-line"></div>
+    <div class="fv-step">
+      <div class="fv-icon">🎉</div>
+      <div class="fv-title">搞定</div>
+      <div class="fv-desc">Jira 自动评论<br>记录改了什么</div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITY -->
+<section>
+  <h2 style="text-align:center;font-size:36px;font-weight:900;margin-bottom:12px;">哪些能修，哪些不能？</h2>
+  <p style="text-align:center;color:var(--dim);font-size:16px;margin-bottom:56px;">配置类问题基本全覆盖，代码和美术类需要人工</p>
+  <div class="cap-grid">
+    <div class="cap-col">
+      <div class="cap-header cap-yes">🟢 AI 能修</div>
+      <div class="cap-item"><span class="cap-icon">🌐</span><b>翻译缺失</b><br><span class="cap-sub">文字显示为 LC_KEY 原始值</span></div>
+      <div class="cap-item"><span class="cap-icon">🔗</span><b>ID 引用错误</b><br><span class="cap-sub">活动/礼包指向了错误的配置</span></div>
+      <div class="cap-item"><span class="cap-icon">⚙️</span><b>字段值错误</b><br><span class="cap-sub">如道具误入背包、开关配错</span></div>
+      <div class="cap-item"><span class="cap-icon">➕</span><b>缺配置行</b><br><span class="cap-sub">新活动缺日历配置无法开启</span></div>
+      <div class="cap-item"><span class="cap-icon">🖼️</span><b>图标引用错误</b><br><span class="cap-sub">显示了错误的道具图标</span></div>
+      <div class="cap-item"><span class="cap-icon">📝</span><b>规则文案更新</b><br><span class="cap-sub">活动改版后规则说明需重写</span></div>
+    </div>
+    <div class="cap-col">
+      <div class="cap-header cap-no">🔴 需要人工</div>
+      <div class="cap-item"><span class="cap-icon">💻</span><b>代码逻辑 BUG</b><br><span class="cap-sub">进度计算错误、领取判断异常</span></div>
+      <div class="cap-item"><span class="cap-icon">🎨</span><b>美术资源</b><br><span class="cap-sub">需要设计师出新图</span></div>
+      <div class="cap-item"><span class="cap-icon">🤝</span><b>交互/UX 问题</b><br><span class="cap-sub">需要策划确认方案</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section>
+  <h2 style="text-align:center;font-size:36px;font-weight:900;margin-bottom:12px;">今天修了什么？</h2>
+  <p style="text-align:center;color:var(--dim);font-size:16px;margin-bottom:56px;">2026-04-10 实际处理的 6 个 BUG，全部在一次对话中完成</p>
+
+  <div class="case-grid">
+    <!-- Case 1 -->
+    <div class="case-card">
+      <div class="case-badge badge-review">待 Review</div>
+      <div class="case-emoji">🌐</div>
+      <div class="case-type">翻译缺失</div>
+      <h3>游戏里显示乱码般的英文 Key</h3>
+      <div class="case-ba">
+        <div class="ba-col ba-before">
+          <div class="ba-label">❌ 修复前</div>
+          <div class="ba-content">玩家看到的道具名：<br><b style="color:var(--red);word-break:break-all;">LC_EVENT_2026pioneer_marble_gacha_item_name_1</b></div>
+        </div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-col ba-after">
+          <div class="ba-label">✅ 修复后</div>
+          <div class="ba-content">玩家看到的道具名：<br><b style="color:var(--green);">弹珠币 / Marble Coins</b><br><span style="font-size:11px;color:var(--dim);">+ 其他 16 种语言</span></div>
+        </div>
+      </div>
+      <div class="case-how">💡 从翻译记忆库找到上期相同道具的翻译，一键复用 18 语言</div>
+    </div>
+
+    <!-- Case 2 -->
+    <div class="case-card">
+      <div class="case-badge badge-done">已修复上线</div>
+      <div class="case-emoji">🎒</div>
+      <div class="case-type">配置错误</div>
+      <h3>免费弹珠跑进了背包，不该出现</h3>
+      <div class="case-ba">
+        <div class="ba-col ba-before">
+          <div class="ba-label">❌ 修复前</div>
+          <div class="ba-content">福利关卡送的免费弹珠<br>出现在背包「其他」分类<br><b style="color:var(--red);">玩家困惑</b></div>
+        </div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-col ba-after">
+          <div class="ba-label">✅ 修复后</div>
+          <div class="ba-content">去掉背包显示标签<br>免费弹珠不再出现在背包<br><b style="color:var(--green);">获得后直接使用</b></div>
+        </div>
+      </div>
+      <div class="case-how">💡 道具表里两个字段同时控制背包显示，都要清除才能生效</div>
+    </div>
+
+    <!-- Case 3 -->
+    <div class="case-card">
+      <div class="case-badge badge-done">已修复</div>
+      <div class="case-emoji">📛</div>
+      <div class="case-type">占位符未更新</div>
+      <h3>活动名称显示「拓荒节弹珠GACHA」</h3>
+      <div class="case-ba">
+        <div class="ba-col ba-before">
+          <div class="ba-label">❌ 修复前</div>
+          <div class="ba-content">活动标题：<br><b style="color:var(--red);">拓荒节弹珠GACHA</b><br><span style="font-size:11px;color:var(--dim);">开发阶段的临时名</span></div>
+        </div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-col ba-after">
+          <div class="ba-label">✅ 修复后</div>
+          <div class="ba-content">活动标题：<br><b style="color:var(--green);">庆典弹弹乐</b><br><span style="font-size:11px;color:var(--dim);">FESTIVAL PINBALL + 16语言</span></div>
+        </div>
+      </div>
+      <div class="case-how">💡 翻译记忆库精确匹配到上期同名活动，直接复用全部翻译</div>
+    </div>
+
+    <!-- Case 4 -->
+    <div class="case-card">
+      <div class="case-badge badge-done">已修复</div>
+      <div class="case-emoji">📜</div>
+      <div class="case-type">规则文案重写</div>
+      <h3>弹珠活动新增福利关卡，规则没更新</h3>
+      <div class="case-ba">
+        <div class="ba-col ba-before">
+          <div class="ba-label">❌ 修复前</div>
+          <div class="ba-content">规则只有 6 条<br>完全没提到：<br><b style="color:var(--red);">福利关卡、高级商店、里程碑宝箱</b></div>
+        </div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-col ba-after">
+          <div class="ba-label">✅ 修复后</div>
+          <div class="ba-content">规则扩充到 8 条<br>新增 3 条新玩法说明<br><b style="color:var(--green);">+ 宝箱道具名「弹珠大师宝箱」</b></div>
+        </div>
+      </div>
+      <div class="case-how">💡 读取策划案 → 用户确认措辞 → 翻译 Skill 生成 18 语言</div>
+    </div>
+
+    <!-- Case 5 -->
+    <div class="case-card">
+      <div class="case-badge badge-done">已修复</div>
+      <div class="case-emoji">🏛️</div>
+      <div class="case-type">规则文案重写</div>
+      <h3>机甲抽奖改版为金字塔爬塔，规则全过时</h3>
+      <div class="case-ba">
+        <div class="ba-col ba-before">
+          <div class="ba-label">❌ 修复前</div>
+          <div class="ba-content">旧规则描述简单抽奖<br><b style="color:var(--red);">「打开箱子随机获得奖励」</b><br><span style="font-size:11px;color:var(--dim);">和新玩法完全不符</span></div>
+        </div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-col ba-after">
+          <div class="ba-label">✅ 修复后</div>
+          <div class="ba-content">全新 7 条规则<br><b style="color:var(--green);">金字塔分层、升降层、阶段奖励</b><br><span style="font-size:11px;color:var(--dim);">准确描述新玩法机制</span></div>
+        </div>
+      </div>
+      <div class="case-how">💡 读策划案提取规则 → 用户修正「消耗随层数递增」→ 18语言翻译</div>
+    </div>
+
+    <!-- Case 6 -->
+    <div class="case-card">
+      <div class="case-badge badge-done">已修复上线</div>
+      <div class="case-emoji">🚫</div>
+      <div class="case-type">缺配置行</div>
+      <h3>新机甲活动后台打不开，缺了一行配置</h3>
+      <div class="case-ba">
+        <div class="ba-col ba-before">
+          <div class="ba-label">❌ 修复前</div>
+          <div class="ba-content">运营后台找不到<br>新版机甲抽奖活动<br><b style="color:var(--red);">无法开启活动</b></div>
+        </div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-col ba-after">
+          <div class="ba-label">✅ 修复后</div>
+          <div class="ba-content">自动追踪到新活动 ID<br>参照模板补了一行配置<br><b style="color:var(--green);">后台可正常开启</b></div>
+        </div>
+      </div>
+      <div class="case-how">💡 在活动配置表模糊搜索 → 确认日历表缺行 → 参照老版格式追加</div>
+    </div>
+  </div>
+</section>
+
+<!-- LESSONS -->
+<section>
+  <h2 style="text-align:center;font-size:36px;font-weight:900;margin-bottom:12px;">踩过的坑</h2>
+  <p style="text-align:center;color:var(--dim);font-size:16px;margin-bottom:56px;">第一天运行就踩了 3 个坑，已经修正到流程里</p>
+
+  <div class="lesson-cards">
+    <div class="lesson-card" style="border-left-color:var(--red);">
+      <div class="lesson-icon">🚨</div>
+      <h4>别手写翻译，用专门的工具</h4>
+      <p>一开始试着在代码里手写 18 种语言的翻译，结果格式出错卡住了。现在统一用翻译工具：自动查重 → 复用历史翻译 → 一键生成 18 语言。</p>
+    </div>
+    <div class="lesson-card" style="border-left-color:var(--yellow);">
+      <div class="lesson-icon">⚠️</div>
+      <h4>改配置前必须让人确认</h4>
+      <p>有一次查到问题后直接就改了表、传了代码。配置改错会影响线上玩家，不可逆。现在加了两道关卡：先确认「查对了吗」，再确认「这么改对吗」。</p>
+    </div>
+    <div class="lesson-card" style="border-left-color:var(--purple);">
+      <div class="lesson-icon">📋</div>
+      <h4>改规则文案得看策划案</h4>
+      <p>活动规则不能靠猜。必须拿到策划案原文，按新玩法写规则，再让策划确认措辞。流程：读老规则 → 看策划案 → 写新规则 → 确认 → 翻译。</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="text-align:center;padding:48px 24px;border-top:1px solid var(--border);">
+  <div style="font-size:40px;margin-bottom:16px;">🤖</div>
+  <p style="font-size:14px;color:var(--dim);">AI 配置 BUG 自动修复系统 · P2 项目 · 2026-04-10 首次运行</p>
+  <p style="font-size:12px;color:var(--border);margin-top:8px;">Claude Code + Jira API + Google Sheets + 翻译记忆库 + Git</p>
+</footer>
+
+</body>
+</html>

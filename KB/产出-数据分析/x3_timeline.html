@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 新服时间轴 — 收入×活动排期全景</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#0f1923;color:#e0e0e0;padding:24px 40px;max-width:1200px;margin:0 auto}
+h1{font-size:1.6rem;background:linear-gradient(90deg,#f5af19,#f12711);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.subtitle{color:#888;margin-bottom:24px;font-size:0.85rem}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px;margin-bottom:16px}
+.card-title{font-size:0.9rem;color:#ccc;margin-bottom:10px;font-weight:500}
+canvas{max-height:320px}
+.comment{background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.12);border-radius:8px;padding:10px 16px;margin:8px 0 16px;font-size:0.85rem;color:#bbb;line-height:1.7;font-style:italic;min-height:40px}
+.comment::before{content:'💬 ';font-style:normal}
+.section-title{font-size:1.1rem;color:#feca57;margin:28px 0 14px;padding-left:8px;border-left:3px solid #f39c12}
+.gantt{margin:16px 0;font-size:0.75rem}
+.gantt-row{display:flex;align-items:center;margin-bottom:3px;height:22px}
+.gantt-label{width:120px;flex-shrink:0;text-align:right;padding-right:8px;color:#aaa}
+.gantt-track{flex:1;position:relative;height:18px;background:rgba(255,255,255,0.02);border-radius:3px}
+.gantt-bar{position:absolute;height:100%;border-radius:3px;display:flex;align-items:center;padding-left:4px;font-size:0.65rem;color:#fff;white-space:nowrap;overflow:hidden}
+.gantt-scale{display:flex;margin-left:120px;margin-bottom:4px;font-size:0.65rem;color:#666}
+.gantt-scale span{flex:1;text-align:center}
+table{width:100%;border-collapse:collapse;font-size:0.78rem;margin:8px 0}
+th,td{padding:5px 8px;text-align:right;border-bottom:1px solid rgba(255,255,255,0.06)}
+th{background:rgba(255,255,255,0.05);color:#aaa;font-size:0.7rem}
+td:first-child,th:first-child{text-align:left}
+.insight{background:rgba(243,156,18,0.08);border-left:3px solid #f39c12;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size:0.85rem;line-height:1.7}
+.insight strong{color:#f1c40f}
+.kpi-row{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.kpi{flex:1;min-width:130px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center}
+.kpi .label{font-size:0.7rem;color:#888}
+.kpi .value{font-size:1.3rem;font-weight:700;margin-top:3px}
+.kpi .sub{font-size:0.65rem;color:#666;margin-top:2px}
+</style>
+</head>
+<body>
+<h1>X3 新服时间轴 — 收入 × 活动排期 × 付费分解</h1>
+<p class="subtitle">数据源：近1个月新服（3/10~3/22开服，8个服）| 按开服天数聚合</p>
+
+<div class="kpi-row">
+<div class="kpi"><div class="label">D0-D7 日均</div><div class="value" style="color:#2ecc71">$4,089</div><div class="sub">新手高峰</div></div>
+<div class="kpi"><div class="label">D8-D15 日均</div><div class="value" style="color:#3498db">$3,277</div><div class="sub">猎杀BP期</div></div>
+<div class="kpi"><div class="label">D17 峰值</div><div class="value" style="color:#f1c40f">$5,024</div><div class="sub">永恒之岛首日</div></div>
+<div class="kpi"><div class="label">D18-D19</div><div class="value" style="color:#e67e22">$3,089</div><div class="sub">付费真空</div></div>
+<div class="kpi"><div class="label">D20-D23 尼罗前段</div><div class="value" style="color:#3498db">$3,352</div><div class="sub">有托底</div></div>
+<div class="kpi"><div class="label">D24-D28</div><div class="value" style="color:#e74c3c">$1,417</div><div class="sub">断崖!</div></div>
+</div>
+
+<!-- 甘特图 -->
+<div class="section-title">活动排期甘特图（D0-D35）</div>
+<div class="card">
+<div class="gantt">
+<div class="gantt-scale"><span>D0</span><span>D5</span><span>D10</span><span>D15</span><span>D20</span><span>D25</span><span>D30</span><span>D35</span></div>
+<div id="ganttContainer"></div>
+</div>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<!-- 收入曲线 -->
+<div class="section-title">每日收入曲线 + 活动区间标注</div>
+<div class="card">
+<div class="card-title">新服日收入（$）— 标注活动开始/结束节点</div>
+<canvas id="chartRevenue"></canvas>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<!-- 付费分解 -->
+<div class="section-title">付费活动收入分解</div>
+<div class="card">
+<div class="card-title">各活动类型日收入堆叠</div>
+<canvas id="chartStack"></canvas>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<div class="card">
+<div class="card-title">冲突活动 vs 常驻 收入占比</div>
+<canvas id="chartConflict"></canvas>
+</div>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<!-- 分段汇总表 -->
+<div class="section-title">分阶段收入明细</div>
+<table>
+<tr><th>阶段</th><th>日均总收入</th><th>BP</th><th>海妖</th><th>英雄抽卡</th><th>常驻礼包</th><th>每日特惠</th><th>50+$大额</th><th>当期活动</th></tr>
+<tr><td>D0-D5 新手期</td><td>$4,289</td><td>$239</td><td>$153</td><td>$142</td><td>$655</td><td>$152</td><td>$543</td><td>（无限时活动）</td></tr>
+<tr><td>D6-D10 猎杀BP期</td><td>$3,546</td><td>$293</td><td>$314</td><td>$202</td><td>$624</td><td>$120</td><td>$580</td><td>猎杀BP</td></tr>
+<tr><td>D11-D13 幸运转盘</td><td>$3,283</td><td>$312</td><td>$348</td><td>$93</td><td>$406</td><td>$110</td><td>$800</td><td>猎杀BP+幸运转盘+海妖开</td></tr>
+<tr style="background:rgba(52,152,219,0.06)"><td>D14-D15 异域盛典</td><td>$3,234</td><td>$385</td><td>$145</td><td>$120</td><td>$388</td><td>$45</td><td>$750</td><td>猎杀BP末+异域盛典+海妖转盘</td></tr>
+<tr style="background:rgba(243,156,18,0.06)"><td>D16-D17 永恒之岛启</td><td><strong>$3,968</strong></td><td>$240</td><td>$208</td><td>$110</td><td>$428</td><td>$105</td><td><strong>$920</strong></td><td>海妖末+永恒之岛+净化试炼</td></tr>
+<tr style="background:rgba(231,76,60,0.06)"><td><strong>D18-D19 付费真空</strong></td><td><strong>$3,089</strong></td><td>$155</td><td>$225</td><td>$105</td><td><strong>$271</strong></td><td>$22</td><td>$330</td><td>仅船只改装(链式)</td></tr>
+<tr style="background:rgba(46,204,113,0.06)"><td>D20 尼罗河启动</td><td>$3,063</td><td>$110</td><td>$170</td><td>$0</td><td>$346</td><td>$20</td><td>$500</td><td>尼罗河7子活动</td></tr>
+<tr><td>D21-D23 尼罗+武道</td><td>$3,449</td><td>$123</td><td>$230</td><td>$80</td><td>$368</td><td>$127</td><td>$913</td><td>尼罗+武道(链式)+永恒之岛末</td></tr>
+<tr style="background:rgba(231,76,60,0.08)"><td><strong>D24-D28 断崖</strong></td><td><strong>$1,417</strong></td><td>$74</td><td>$175</td><td>$68</td><td>$138</td><td>$66</td><td>$132</td><td>尼罗中后期（活动疲劳）</td></tr>
+<tr><td>D29-D33 尼罗尾声</td><td>$1,000</td><td>$70</td><td>$79</td><td>$68</td><td>$72</td><td>$14</td><td>$312</td><td>尼罗+30留转盘</td></tr>
+</table>
+<div class="comment" contenteditable="true">点击此处输入点评...</div>
+
+<!-- 核心问题 -->
+<div class="insight">
+<strong>时间轴揭示的核心问题：不是"什么时候开"，而是"D24 后为什么空转"</strong><br><br>
+• D20 开尼罗后前 3 天 ($3,000+) 有托底效果 → <strong>但 D24 开始断崖到 $1,400</strong><br>
+• 尼罗河 14 天活动，只有前 4 天有效付费，后 10 天等于空转<br>
+• 即使提前到 D18 开，活动第 4 天效应（D22）之后同样会断崖<br>
+• <strong>时间节点提前能多吃 2-3 天高位收入，但解决不了后半段空转</strong><br><br>
+下一步应该回到活动内容设计：为什么尼罗河后半段留不住付费？是奖励吸引力不足？还是道具循环断了？
+</div>
+
+<script>
+const days = Array.from({length:36}, (_,i)=>i);
+const labels = days.map(d=>'D'+d);
+
+// 收入数据
+const revenue = [1905,4503,4700,4959,5322,4342,3650,3330,3073,4836,2843,3168,3657,3025,3200,3268,2911,5024,3426,2752,3063,2964,3693,3689,1668,1683,1112,1402,1221,1485,1474,1334,487,219,718,181];
+const bp = [185,280,225,215,270,290,330,285,215,380,210,155,315,465,350,420,285,195,160,150,110,100,80,190,90,110,20,60,100,100,150,70,10,20,60,10];
+const siren = [100,115,130,140,220,295,350,315,330,340,335,340,340,365,90,200,170,245,280,170,170,200,215,275,125,195,185,255,155,180,85,65,35,30,35,5];
+const hero = [60,60,180,240,190,120,180,340,120,120,60,90,160,30,90,150,60,160,150,60,0,120,30,90,30,90,60,90,60,160,60,0,90,30,0,0];
+const perm = [130,442,769,819,945,1126,549,654,506,840,567,638,248,332,454,322,300,556,364,178,346,381,392,332,182,194,102,190,44,150,120,90,0,0,40,20];
+
+// 甘特图
+const ganttData = [
+    {name:'猎杀时刻(BP)',start:6,end:15,color:'#2ecc71',pay:'🔴'},
+    {name:'海瑟技能售卖',start:8,end:10,color:'#27ae60',pay:'🟢'},
+    {name:'幸运大转盘',start:11,end:13,color:'#e74c3c',pay:'🔴'},
+    {name:'海妖登录',start:13,end:20,color:'#1abc9c',pay:'🟢'},
+    {name:'海妖排行榜',start:13,end:20,color:'#16a085',pay:'🟡'},
+    {name:'异域盛典(英雄抽卡)',start:14,end:16,color:'#9b59b6',pay:'🔴'},
+    {name:'海妖转盘',start:15,end:17,color:'#3498db',pay:'🔴'},
+    {name:'船只改装(链式)',start:17,end:19,color:'#2980b9',pay:'🔴'},
+    {name:'净化试炼(修女)',start:17,end:20,color:'#e67e22',pay:'🟡'},
+    {name:'永恒之岛S1',start:17,end:22,color:'#d35400',pay:'🟡'},
+    {name:'▓▓ 尼罗河系列 ▓▓',start:20,end:33,color:'#f39c12',pay:'🔴'},
+    {name:'武道冠军(链式)',start:21,end:27,color:'#c0392b',pay:'🔴'},
+    {name:'永恒之主(KE)',start:22,end:22,color:'#e74c3c',pay:'🟡'},
+    {name:'生意兴隆(链式)',start:25,end:27,color:'#8e44ad',pay:'🔴'},
+    {name:'30留大转盘',start:29,end:33,color:'#e74c3c',pay:'🔴'},
+    {name:'永恒之岛S2',start:32,end:37,color:'#d35400',pay:'🟡'},
+];
+const gc=document.getElementById('ganttContainer');
+const totalDays=36;
+ganttData.forEach(g=>{
+    const row=document.createElement('div');row.className='gantt-row';
+    const lbl=document.createElement('div');lbl.className='gantt-label';lbl.textContent=g.pay+' '+g.name;
+    const track=document.createElement('div');track.className='gantt-track';
+    const bar=document.createElement('div');bar.className='gantt-bar';
+    bar.style.left=(g.start/totalDays*100)+'%';bar.style.width=(Math.min(g.end,35)-g.start+1)/totalDays*100+'%';
+    bar.style.background=g.color;bar.textContent='D'+g.start+'-D'+Math.min(g.end,35);
+    track.appendChild(bar);row.appendChild(lbl);row.appendChild(track);gc.appendChild(row);
+});
+
+// 收入曲线
+const annots = {
+    d15:{type:'line',xMin:15,xMax:15,borderColor:'rgba(46,204,113,0.5)',borderDash:[3,3],borderWidth:1,label:{display:true,content:'BP止',color:'#2ecc71',position:'start',font:{size:8}}},
+    d17:{type:'line',xMin:17,xMax:17,borderColor:'rgba(241,196,15,0.5)',borderDash:[3,3],borderWidth:1,label:{display:true,content:'永恒之岛开',color:'#f1c40f',position:'start',font:{size:8}}},
+    d18:{type:'box',xMin:17.5,xMax:19.5,backgroundColor:'rgba(231,76,60,0.06)',borderColor:'rgba(231,76,60,0.3)',borderWidth:1.5,label:{display:true,content:'付费真空',color:'#e74c3c',position:'center',font:{size:9}}},
+    d20:{type:'line',xMin:20,xMax:20,borderColor:'rgba(243,156,18,0.6)',borderWidth:2,label:{display:true,content:'尼罗河开',color:'#f39c12',position:'start',font:{size:9,weight:'bold'}}},
+    d21:{type:'line',xMin:21,xMax:21,borderColor:'rgba(192,57,43,0.4)',borderDash:[3,3],borderWidth:1,label:{display:true,content:'武道开',color:'#c0392b',position:'end',font:{size:8}}},
+    d24:{type:'box',xMin:23.5,xMax:33.5,backgroundColor:'rgba(231,76,60,0.04)',borderColor:'rgba(231,76,60,0.2)',borderWidth:1,label:{display:true,content:'D24断崖→活动空转',color:'#e74c3c',position:'start',font:{size:9,weight:'bold'}}},
+};
+new Chart(document.getElementById('chartRevenue'),{
+    type:'bar',data:{labels,datasets:[{
+        label:'日收入($)',data:revenue,
+        backgroundColor:revenue.map((v,i)=>i>=18&&i<=19?'rgba(231,76,60,0.6)':i>=20&&i<=23?'rgba(243,156,18,0.6)':i>=24?'rgba(231,76,60,0.3)':'rgba(52,152,219,0.5)')
+    }]},options:{responsive:true,plugins:{legend:{display:false},annotation:{annotations:annots}},
+    scales:{y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888',callback:v=>'$'+v.toLocaleString()}},x:{grid:{display:false},ticks:{color:'#888',font:{size:8}}}}}
+});
+
+// 堆叠分解
+new Chart(document.getElementById('chartStack'),{
+    type:'bar',data:{labels,datasets:[
+        {label:'BP通行证',data:bp,backgroundColor:'rgba(46,204,113,0.6)'},
+        {label:'海妖系列',data:siren,backgroundColor:'rgba(52,152,219,0.6)'},
+        {label:'英雄抽卡',data:hero,backgroundColor:'rgba(155,89,182,0.6)'},
+        {label:'常驻礼包',data:perm,backgroundColor:'rgba(243,156,18,0.5)'},
+        {label:'其他',data:revenue.map((v,i)=>Math.max(0,v-bp[i]-siren[i]-hero[i]-perm[i])),backgroundColor:'rgba(149,165,166,0.3)'}
+    ]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#aaa',font:{size:10}}}},
+    scales:{y:{stacked:true,beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888',callback:v=>'$'+v}},x:{stacked:true,grid:{display:false},ticks:{color:'#888',font:{size:8}}}}}
+});
+
+// 冲突占比
+const conflict = revenue.map((v,i)=>v>0?((bp[i]+siren[i]+hero[i])/v*100):0);
+const permanent = revenue.map((v,i)=>v>0?(perm[i]/v*100):0);
+new Chart(document.getElementById('chartConflict'),{
+    type:'line',data:{labels,datasets:[
+        {label:'冲突活动(BP+海妖+英雄)占比',data:conflict,borderColor:'#e74c3c',tension:0.3,pointRadius:2,borderWidth:2,fill:false},
+        {label:'常驻礼包占比',data:permanent,borderColor:'#f39c12',tension:0.3,pointRadius:2,borderWidth:1.5,fill:false}
+    ]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#aaa',font:{size:10}}}},
+    scales:{y:{beginAtZero:true,max:30,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#888',callback:v=>v+'%'}},x:{grid:{display:false},ticks:{color:'#888',font:{size:8}}}}}
+});
+</script>
+</body>
+</html>

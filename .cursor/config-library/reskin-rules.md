@@ -1,5 +1,8 @@
 # 换皮操作规则
 
+> **本文件**：换皮操作层——哪些字段换/不换、追踪链、格式规范、BUG 案例（HOW to do）
+> **配套文件**：[reskin-numerical-framework.md](./reskin-numerical-framework.md)——P2→X2 数值决策层（WHEN to adjust）
+
 ## 一、列类型处理规则
 
 | 列类型 | 换皮处理 |

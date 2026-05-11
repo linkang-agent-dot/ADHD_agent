@@ -1,0 +1,23 @@
+{
+  "id": "afb7dbdc-7e15-405d-ac9f-2baa5f221a11",
+  "enqueuedAt": 1776157722052,
+  "channel": "feishu",
+  "to": "ou_e48f6c4c0395f45b74b51525f348678b",
+  "payloads": [
+    {
+      "text": "16点了，补点水分 💧",
+      "replyToTag": false,
+      "replyToCurrent": false,
+      "audioAsVoice": false
+    }
+  ],
+  "gifPlayback": false,
+  "mirror": {
+    "sessionKey": "agent:main:main",
+    "agentId": "main",
+    "text": "16点了，补点水分 💧"
+  },
+  "retryCount": 1,
+  "lastAttemptAt": 1776157722064,
+  "lastError": "Feishu account \"default\" not configured"
+}

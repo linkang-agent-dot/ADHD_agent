@@ -188,14 +188,14 @@ def inject_files(params, file_args):
 
 
 def call_api(base_url, tool_name, params, timeout, insecure=False):
-    """Make HTTP POST to GRFal /api/mcp/call endpoint with retry."""
-    url = f"{base_url}/api/mcp/call"
+    """Make HTTP POST to GRFal /api/call endpoint with retry."""
+    url = f"{base_url}/api/call"
     payload = json.dumps({"tool": tool_name, "params": params}).encode("utf-8")
 
     req = urllib.request.Request(
         url,
         data=payload,
-        headers={"Content-Type": "application/json"},
+        headers=_get_auth_headers(),
         method="POST",
     )
 
@@ -265,6 +265,27 @@ def _get_ssl_context(base_url, insecure=False):
     return ssl_context
 
 
+def _get_auth_headers():
+    """读取 Bearer Token 或 Cookie 作为鉴权 Header。
+    优先级：GRFAL_COOKIE env > token_store.json > 无鉴权"""
+    headers = {"Content-Type": "application/json"}
+    cookie = os.environ.get("GRFAL_COOKIE")
+    if cookie:
+        headers["Cookie"] = cookie
+        return headers
+    token_path = os.path.expanduser("~/.config/grfal-api/token_store.json")
+    if os.path.exists(token_path):
+        try:
+            with open(token_path) as f:
+                d = json.load(f)
+            token = d.get("access_token")
+            if token:
+                headers["Authorization"] = f"Bearer {token}"
+        except Exception:
+            pass
+    return headers
+
+
 def submit_async_task(base_url, tool_name, params, insecure=False):
     """提交异步任务，返回 task_id"""
     url = f"{base_url}/api/async/submit"
@@ -272,7 +293,7 @@ def submit_async_task(base_url, tool_name, params, insecure=False):
 
     req = urllib.request.Request(
         url, data=payload,
-        headers={"Content-Type": "application/json"},
+        headers=_get_auth_headers(),
         method="POST",
     )
 
@@ -288,7 +309,7 @@ def submit_async_task(base_url, tool_name, params, insecure=False):
 def poll_task_status(base_url, task_id, insecure=False):
     """查询任务状态"""
     url = f"{base_url}/api/async/status/{task_id}"
-    req = urllib.request.Request(url, method="GET")
+    req = urllib.request.Request(url, headers=_get_auth_headers(), method="GET")
 
     ssl_context = _get_ssl_context(base_url, insecure)
 
@@ -302,7 +323,7 @@ def poll_task_status(base_url, task_id, insecure=False):
 def get_task_result(base_url, task_id, insecure=False):
     """获取任务结果"""
     url = f"{base_url}/api/async/result/{task_id}?delete=true"
-    req = urllib.request.Request(url, method="GET")
+    req = urllib.request.Request(url, headers=_get_auth_headers(), method="GET")
 
     ssl_context = _get_ssl_context(base_url, insecure)
 

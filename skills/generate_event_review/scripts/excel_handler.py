@@ -244,7 +244,7 @@ def generate_template(output_path: str) -> str:
       - 第 3 行起：示例数据（浅黄色背景灰色字体），用户可覆盖或删除
 
     Args:
-        output_path: 输出文件路径，如 "report_images/template.xlsx"
+        output_path: 输出文件路径，如 "KB/产出-数据分析/template.xlsx"
 
     Returns:
         str: 生成的文件绝对路径

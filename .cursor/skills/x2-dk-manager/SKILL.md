@@ -387,153 +387,16 @@ Unity 导入图片时默认生成 `textureType: 0`（Default），**DK 图片必
 #### 步骤2.5: 修正 .meta 为 Sprite 类型
 
 ```powershell
-# 等 .meta 生成后，用标准 Sprite 模板覆盖（保留 guid 不变）
-$metaPath = "D:\UGit\x2client\client\Assets\x2\Res\UI\DKUpload\{Type}\DK_{key}.png.meta"
+# 1. 读取 guid
+$metaPath = "{图片完整路径}.meta"
 $guid = (Get-Content $metaPath -TotalCount 2 | Select-Object -Last 1) -replace 'guid: ', ''
 
-$template = @"
-fileFormatVersion: 2
-guid: $guid
-TextureImporter:
-  internalIDToNameTable: []
-  externalObjects: {}
-  serializedVersion: 13
-  mipmaps:
-    mipMapMode: 0
-    enableMipMap: 0
-    sRGBTexture: 1
-    linearTexture: 0
-    fadeOut: 0
-    borderMipMap: 0
-    mipMapsPreserveCoverage: 0
-    alphaTestReferenceValue: 0.5
-    mipMapFadeDistanceStart: 1
-    mipMapFadeDistanceEnd: 3
-  bumpmap:
-    convertToNormalMap: 0
-    externalNormalMap: 0
-    heightScale: 0.25
-    normalMapFilter: 0
-    flipGreenChannel: 0
-  isReadable: 0
-  streamingMipmaps: 0
-  streamingMipmapsPriority: 0
-  vTOnly: 0
-  ignoreMipmapLimit: 0
-  grayScaleToAlpha: 0
-  generateCubemap: 6
-  cubemapConvolution: 0
-  seamlessCubemap: 0
-  textureFormat: 1
-  maxTextureSize: 2048
-  textureSettings:
-    serializedVersion: 2
-    filterMode: 1
-    aniso: 1
-    mipBias: 0
-    wrapU: 1
-    wrapV: 1
-    wrapW: 0
-  nPOTScale: 0
-  lightmap: 0
-  compressionQuality: 50
-  spriteMode: 1
-  spriteExtrude: 1
-  spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
-  alphaUsage: 1
-  alphaIsTransparency: 1
-  spriteTessellationDetail: -1
-  textureType: 8
-  textureShape: 1
-  singleChannelComponent: 0
-  flipbookRows: 1
-  flipbookColumns: 1
-  maxTextureSizeSet: 0
-  compressionQualitySet: 0
-  textureFormatSet: 0
-  ignorePngGamma: 0
-  applyGammaDecoding: 0
-  swizzle: 50462976
-  cookieLightType: 0
-  platformSettings:
-  - serializedVersion: 3
-    buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Standalone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: iPhone
-    maxTextureSize: 128
-    resizeAlgorithm: 0
-    textureFormat: 49
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 1
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 128
-    resizeAlgorithm: 0
-    textureFormat: 49
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 1
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  spriteSheet:
-    serializedVersion: 2
-    sprites: []
-    outline: []
-    physicsShape: []
-    bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
-    vertices: []
-    indices: 
-    edges: []
-    weights: []
-    secondaryTextures: []
-    nameFileIdTable: {}
-  mipmapLimitGroupName: 
-  pSDRemoveMatte: 0
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-"@
-[System.IO.File]::WriteAllText($metaPath, $template, [System.Text.Encoding]::UTF8)
+# 2. 读取模板，替换占位符（GUID、maxTextureSize、textureFormat 按子分类表填入）
+$tpl = Get-Content "c:\ADHD_agent\.cursor\skills\x2-dk-manager\scripts\sprite_meta_template.yaml" -Raw
+$tpl = $tpl -replace 'GUID_PLACEHOLDER', $guid `
+            -replace 'MAX_TEXTURE_SIZE_PLACEHOLDER', '{maxTextureSize}' `
+            -replace 'TEXTURE_FORMAT_PLACEHOLDER', '{textureFormat}'
+[System.IO.File]::WriteAllText($metaPath, $tpl, [System.Text.Encoding]::UTF8)
 Write-Host "Meta 已修正为 Sprite 类型，guid=$guid"
 ```
 
@@ -583,34 +446,11 @@ Get-Content "D:\UGit\x2client\client\Assets\P2\Editor\DisplayKey\Display_{type}.
 1. **假透明** — Cursor 截图保存时把棋盘格直接存为灰色像素，不是真正的 RGBA alpha 通道
 2. **尺寸不对** — 聊天图片可能是任意尺寸，Icon 规格要求 256×256
 
-**检查并修复（Python）**：
+**检查并修复**：
 
-```python
-from PIL import Image
-import sys
-
-def check_and_fix(src_path, out_path, target_size=(256, 256)):
-    img = Image.open(src_path)
-    issues = []
-
-    # 检查1: 透明通道
-    if img.mode != 'RGBA':
-        issues.append(f"mode={img.mode}，无 alpha 通道")
-    else:
-        # 检查边角像素是否全不透明（假透明特征：四角 alpha 均为 255 但视觉像棋盘格）
-        corners = [img.getpixel(p) for p in [(0,0),(img.width-1,0),(0,img.height-1),(img.width-1,img.height-1)]]
-        if all(c[3] == 255 for c in corners):
-            issues.append("边角像素 alpha=255，可能是假透明（棋盘格截图）")
-
-    # 检查2: 尺寸
-    if img.size != target_size:
-        issues.append(f"尺寸 {img.size} 不符合要求 {target_size}")
-
-    return issues
-
-# 使用示例
-issues = check_and_fix("{src_path}", "{out_path}")
-print("issues:", issues)
+```powershell
+# 检查图片（尺寸、透明通道）
+python "c:\ADHD_agent\.cursor\skills\x2-dk-manager\scripts\image_utils.py" check "{src_path}" 256 256
 ```
 
 **处理规则**：
@@ -648,62 +488,14 @@ remove_bg_and_resize(src, dst, size=(256, 256), padding_ratio=0.08)
 remove_bg_and_resize(src, dst, size=(256, 256), padding_ratio=0.02)
 ```
 
-**GRFal 抠图 + resize 一体化（直接调用，注入 Cookie）**：
+**GRFal 抠图 + resize 一体化**：
 
-```python
-import base64, json, urllib.request, ssl, os
-from PIL import Image
-import io
+```powershell
+# 有假透明或尺寸不对时，调用抠图+resize 脚本（padding_ratio 按类型参考值）
+python "c:\ADHD_agent\.cursor\skills\x2-dk-manager\scripts\image_utils.py" remove_bg "{src_path}" "{dst_path}" 256 0.05
 
-# 读取 Cookie（从 x2-media config.json）
-config = json.load(open(r'c:\ADHD_agent\.cursor\skills\x2-media\config.json'))
-cookie = config['grfal_cookie']  # 必须是 grfal.tap4fun.com 的 grfal_session
-
-def remove_bg_and_resize(src_path, dst_path, size=(256, 256), padding_ratio=0.06):
-    with open(src_path, 'rb') as f:
-        b64 = base64.b64encode(f.read()).decode()
-    ext = os.path.splitext(src_path)[1].lower().lstrip('.')
-    data_uri = f"data:image/{ext};base64,{b64}"
-
-    payload = json.dumps({"tool": "remove_background", "params": {"image_paths": [data_uri]}}).encode()
-    req = urllib.request.Request(
-        "https://grfal.tap4fun.com/api/mcp/call",
-        data=payload,
-        headers={"Content-Type": "application/json", "Cookie": cookie},
-        method="POST"
-    )
-    with urllib.request.urlopen(req, timeout=60, context=ssl.create_default_context()) as resp:
-        result = json.loads(resp.read())
-
-    raw = result['result']
-    url = raw[0][0] if isinstance(raw[0], list) else raw[0]
-    # trycloudflare URL → 内网 IP 下载
-    dl_url = url.replace(url.split('/app/')[0], "http://172.20.90.45:6018") if '/app/' in url else url
-    dl_req = urllib.request.Request(dl_url, headers={"Cookie": cookie})
-    with urllib.request.urlopen(dl_req, timeout=30) as r:
-        img_data = r.read()
-
-    # 裁切内容边界 → 加 padding → 居中缩放到目标尺寸
-    img = Image.open(io.BytesIO(img_data)).convert('RGBA')
-    bbox = img.getbbox()
-    if bbox:
-        img = img.crop(bbox)
-    canvas_w, canvas_h = size
-    pad = int(min(canvas_w, canvas_h) * padding_ratio)
-    max_content_w = canvas_w - pad * 2
-    max_content_h = canvas_h - pad * 2
-    scale = min(max_content_w / img.width, max_content_h / img.height)
-    new_w, new_h = int(img.width * scale), int(img.height * scale)
-    resized = img.resize((new_w, new_h), Image.LANCZOS)
-    result_img = Image.new('RGBA', size, (0, 0, 0, 0))
-    x = (canvas_w - new_w) // 2
-    y = (canvas_h - new_h) // 2
-    result_img.paste(resized, (x, y), resized)
-    result_img.save(dst_path, 'PNG')
-    print(f"✅ 抠图+resize 完成: {dst_path}  size={result_img.size}")
-
-# 注意：grfal_session cookie 需通过 x2-media skill 的 get_grfal_cookie.py 获取
-# call_grfal.py 脚本本身【不读取 GRFAL_COOKIE 环境变量】，需直接传 Cookie header
+# 仅 resize（图片已有正确透明通道）
+python "c:\ADHD_agent\.cursor\skills\x2-dk-manager\scripts\image_utils.py" resize "{src_path}" "{dst_path}" 256 0.05
 ```
 
 > **注意**：方式A（图片已在 Unity 工程内）跳过此步骤，由美术确保图片质量。
@@ -872,6 +664,36 @@ git show origin/dev:client/Assets/P2/Editor/DisplayKey/Display_{type}.asset 2>$n
 | 1511030001 | Icon | ✅ | ✅ | ✅ | f745...f8 |
 | 1511030002 | Icon | ✅ | ❌ | ❌ | abc1...2d |
 ```
+
+---
+
+## 4) 图片导入参数
+
+对本次导入图片应用：
+
+- `Texture Type = Sprite`
+- `Generate Physics Shape = false`
+- `Mipmap = false`
+- Android / iOS：
+  - `overridden = true`
+  - `Texture Compression = Compressed`
+  - 默认 `Format = ASTC 5x5`
+  - 当图片文件体积超过 `800kb` 时，改为 `ASTC 8x8`
+  - `MaxSize` 按图片实际尺寸映射到 Unity 档位（32/64/128/256/512/1024/2048/4096/8192），取大于等于原尺寸的最小值
+
+### 4.1 代码与 `.meta` 的格式规则
+
+- 如果通过 Unity 代码设置格式，优先使用枚举名，例如 `TextureImporterFormat.ASTC_5x5`
+- 如果必须直接修改 `.meta` 文本中的 `textureFormat` 数值，使用本项目约定值：
+  - `ASTC_5x5 = 49`
+  - `ASTC_8x8 = 51`
+- 不要把 `ASTC_5x5` 写成 `50`
+- 以后如果用户要求改压缩格式，默认只改平台段落里的 `textureFormat` 这一个字段，除非用户明确要求修改其他字段
+- `textureFormat: 49` 就是 `ASTC 5x5`
+- `textureFormat: 51` 就是 `ASTC 8x8`
+- 不要修改 `.meta` 中的 `userData`
+- 如果只是修正已有资源的压缩格式，不要重新导入资源，也不要顺手改 DisplayKey
+- 直接改 `.meta` 时优先做最小变更，不要整文件重写，避免意外改动 `userData`、时间戳、BOM、换行风格等无关内容
 
 ---
 

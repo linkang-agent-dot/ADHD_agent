@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>挖矿循环关卡 · 分R级漏斗</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#090c12; --bg2:#0e1420; --bg3:#131a27;
+    --border:#1e2d45; --accent:#00d4ff;
+    --text:#c8d8f0; --text2:#7a8fa8;
+    --nr:#8899aa; --xr:#ff6b35; --sr:#ffcc00; --dr:#00d4ff; --cr:#39ff8a;
+    --mono:'JetBrains Mono',monospace; --sans:'Noto Sans SC',sans-serif;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:var(--sans); padding:32px 24px; }
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:linear-gradient(rgba(0,212,255,.03) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(0,212,255,.03) 1px,transparent 1px);
+    background-size:40px 40px;
+  }
+  .wrap { max-width:1400px; margin:0 auto; position:relative; z-index:1; }
+
+  h1 { font-size:22px; font-weight:700; color:#fff; margin-bottom:6px; }
+  .subtitle { font-family:var(--mono); font-size:11px; color:var(--text2); margin-bottom:32px; }
+  .subtitle span { color:var(--accent); margin:0 6px; }
+
+  /* period tabs */
+  .tabs { display:flex; gap:8px; margin-bottom:20px; }
+  .tab { font-family:var(--mono); font-size:11px; padding:6px 16px; border-radius:4px;
+    border:1px solid var(--border); color:var(--text2); cursor:pointer; transition:.15s; }
+  .tab.active { background:rgba(0,212,255,.1); border-color:var(--accent); color:var(--accent); }
+
+  /* table */
+  .tbl-wrap { background:var(--bg2); border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-bottom:32px; }
+  table { width:100%; border-collapse:collapse; }
+
+  /* header rows */
+  .thead-top th {
+    background:var(--bg3); padding:10px 12px; font-size:11px; font-family:var(--mono);
+    letter-spacing:1px; border-bottom:1px solid var(--border); border-right:1px solid var(--border);
+    text-align:center; white-space:nowrap;
+  }
+  .thead-top th:last-child { border-right:none; }
+  .thead-top .th-level { text-align:left; color:var(--text2); width:110px; }
+  .thead-top .th-pack { color:var(--text2); width:80px; }
+  .thead-top .th-nr { color:var(--nr); }
+  .thead-top .th-xr { color:var(--xr); }
+  .thead-top .th-sr { color:var(--sr); }
+  .thead-top .th-dr { color:var(--dr); }
+  .thead-top .th-cr { color:var(--cr); }
+
+  .thead-sub th {
+    background:#0a0e18; padding:6px 8px; font-size:10px; font-family:var(--mono);
+    color:var(--text2); border-bottom:2px solid var(--border); border-right:1px solid rgba(30,45,69,.4);
+    text-align:center;
+  }
+  .thead-sub th.th-label { text-align:left; border-right:1px solid var(--border); }
+  .thead-sub th:last-child { border-right:none; }
+  .col-group-right { border-right:1px solid var(--border) !important; }
+
+  /* body rows */
+  tbody tr { border-bottom:1px solid rgba(30,45,69,.5); }
+  tbody tr:last-child { border-bottom:none; }
+  tbody tr:hover td { background:rgba(0,212,255,.02); }
+  tbody tr.pack-row td { background:rgba(0,212,255,.03); }
+  tbody tr.section-start td { border-top:2px solid var(--border); }
+
+  td { padding:9px 10px; font-size:12px; border-right:1px solid rgba(30,45,69,.3); vertical-align:middle; }
+  td:last-child { border-right:none; }
+  .col-group-right { border-right:1px solid var(--border) !important; }
+
+  .td-level { font-family:var(--mono); font-size:12px; color:#fff; white-space:nowrap; }
+  .td-pack { font-family:var(--mono); font-size:10px; padding:2px 6px; border-radius:3px; white-space:nowrap; }
+  .td-pack.wp { background:rgba(96,200,255,.1); color:#60c8ff; border:1px solid rgba(96,200,255,.2); }
+  .td-pack.gp { background:rgba(57,255,138,.1); color:#39ff8a; border:1px solid rgba(57,255,138,.2); }
+  .td-pack.none { color:var(--text2); }
+
+  .td-n { font-family:var(--mono); font-size:12px; text-align:right; color:var(--text); }
+  .td-step { font-family:var(--mono); font-size:12px; text-align:right; }
+  .td-cum { font-family:var(--mono); font-size:12px; text-align:right; }
+
+  /* step color coding */
+  .s-high { color:#39ff8a; }
+  .s-mid  { color:#ffcc00; }
+  .s-low  { color:#ff6b35; }
+  .s-bad  { color:#ff3b5c; }
+  .s-dash { color:var(--text2); }
+
+  /* footer row */
+  .tfoot tr td { background:var(--bg3); font-weight:700; border-top:2px solid var(--border); font-family:var(--mono); font-size:12px; }
+
+  /* legend */
+  .legend { display:flex; gap:20px; margin-bottom:16px; flex-wrap:wrap; }
+  .lg { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--text2); }
+  .lg-dot { width:10px; height:10px; border-radius:50%; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>挖矿循环关卡 · 分R级通关漏斗</h1>
+<div class="subtitle">
+  节日内容：循环关卡 78_1 → 81_3
+  <span>·</span>R级依据：活动前累计付费额
+  <span>·</span>三期：3.14-19 / 3.21-26 / 3.27-31
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showPeriod(1,this)">第一期 3.14-3.19</div>
+  <div class="tab" onclick="showPeriod(2,this)">第二期 3.21-3.26</div>
+  <div class="tab" onclick="showPeriod(3,this)">第三期 3.27-3.31</div>
+</div>
+
+<div class="legend">
+  <div class="lg"><div class="lg-dot" style="background:var(--nr)"></div>非R (LTV=0)</div>
+  <div class="lg"><div class="lg-dot" style="background:var(--xr)"></div>小R (≤$30)</div>
+  <div class="lg"><div class="lg-dot" style="background:var(--sr)"></div>中R ($31-200)</div>
+  <div class="lg"><div class="lg-dot" style="background:var(--dr)"></div>大R ($201-1000)</div>
+  <div class="lg"><div class="lg-dot" style="background:var(--cr)"></div>超R (>$1000)</div>
+  <div class="lg" style="margin-left:16px"><span style="color:#60c8ff">★</span> 白包奖励关卡</div>
+  <div class="lg"><span style="color:#39ff8a">★</span> 绿包奖励关卡</div>
+</div>
+
+<div class="tbl-wrap" id="table-container"></div>
+
+</div>
+
+<script>
+const D = {
+  1: {
+    entry: {1:2880, 2:910, 3:1032, 4:1146, 5:2578},
+    rows: [
+      {id:'78_1', pack:'—',     d:{1:2880,2:910, 3:1032,4:1146,5:2578}},
+      {id:'78_2', pack:'+白',   d:{1:1728,2:581, 3:724, 4:846, 5:1982}},
+      {id:'79_1', pack:'—',     d:{1:1095,2:376, 3:506, 4:610, 5:1502}},
+      {id:'79_2', pack:'+白',   d:{1:789, 2:271, 3:373, 4:501, 5:1231}},
+      {id:'79_3', pack:'+白×2', d:{1:646, 2:224, 3:297, 4:419, 5:1072}},
+      {id:'80_1', pack:'+白',   d:{1:462, 2:176, 3:232, 4:321, 5:908}},
+      {id:'80_2', pack:'+白',   d:{1:342, 2:133, 3:188, 4:256, 5:775}},
+      {id:'80_3', pack:'+白×2', d:{1:306, 2:116, 3:163, 4:223, 5:719}},
+      {id:'81_1', pack:'+绿',   d:{1:274, 2:105, 3:145, 4:207, 5:663}},
+      {id:'81_2', pack:'+白+绿',d:{1:225, 2:87,  3:121, 4:187, 5:614}},
+      {id:'81_3', pack:'+白+绿',d:{1:193, 2:77,  3:106, 4:173, 5:565}},
+    ]
+  },
+  2: {
+    entry: {1:2761, 2:870, 3:1011, 4:1125, 5:2518},
+    rows: [
+      {id:'78_1', pack:'—',     d:{1:2761,2:870, 3:1011,4:1125,5:2518}},
+      {id:'78_2', pack:'+白',   d:{1:1674,2:545, 3:716, 4:829, 5:1960}},
+      {id:'79_1', pack:'—',     d:{1:1053,2:358, 3:483, 4:607, 5:1531}},
+      {id:'79_2', pack:'+白',   d:{1:795, 2:276, 3:355, 4:486, 5:1328}},
+      {id:'79_3', pack:'+白×2', d:{1:641, 2:232, 3:312, 4:427, 5:1212}},
+      {id:'80_1', pack:'+白',   d:{1:477, 2:172, 3:246, 4:358, 5:1093}},
+      {id:'80_2', pack:'+白',   d:{1:379, 2:142, 3:198, 4:300, 5:972}},
+      {id:'80_3', pack:'+白×2', d:{1:344, 2:125, 3:182, 4:282, 5:926}},
+      {id:'81_1', pack:'+绿',   d:{1:312, 2:119, 3:172, 4:268, 5:894}},
+      {id:'81_2', pack:'+白+绿',d:{1:264, 2:103, 3:159, 4:250, 5:848}},
+      {id:'81_3', pack:'+白+绿',d:{1:227, 2:94,  3:151, 4:236, 5:828}},
+    ]
+  },
+  3: {
+    entry: {1:2075, 2:679, 3:722, 4:710, 5:1548},
+    rows: [
+      {id:'78_1', pack:'—',     d:{1:2075,2:679, 3:722, 4:710, 5:1548}},
+      {id:'78_2', pack:'+白',   d:{1:1463,2:499, 3:590, 4:689, 5:1531}},
+      {id:'79_1', pack:'—',     d:{1:1000,2:348, 3:457, 4:551, 5:1347}},
+      {id:'79_2', pack:'+白',   d:{1:763, 2:269, 3:369, 4:476, 5:1230}},
+      {id:'79_3', pack:'+白×2', d:{1:642, 2:232, 3:326, 4:426, 5:1191}},
+      {id:'80_1', pack:'+白',   d:{1:480, 2:176, 3:277, 4:360, 5:1077}},
+      {id:'80_2', pack:'+白',   d:{1:372, 2:136, 3:228, 4:316, 5:976}},
+      {id:'80_3', pack:'+白×2', d:{1:339, 2:126, 3:209, 4:301, 5:928}},
+      {id:'81_1', pack:'+绿',   d:{1:313, 2:114, 3:194, 4:280, 5:900}},
+      {id:'81_2', pack:'+白+绿',d:{1:272, 2:101, 3:183, 4:255, 5:874}},
+      {id:'81_3', pack:'+白+绿',d:{1:247, 2:97,  3:175, 4:241, 5:857}},
+    ]
+  }
+};
+
+const rColors = {1:'var(--nr)',2:'var(--xr)',3:'var(--sr)',4:'var(--dr)',5:'var(--cr)'};
+const rNames  = {1:'非R',2:'小R',3:'中R',4:'大R',5:'超R'};
+
+function stepClass(v) {
+  if (v === null) return 's-dash';
+  if (v >= 90) return 's-high';
+  if (v >= 75) return 's-mid';
+  if (v >= 60) return 's-low';
+  return 's-bad';
+}
+
+function packHTML(pack) {
+  if (pack === '—') return '<span class="td-pack none">—</span>';
+  const cls = pack.includes('绿') ? (pack.includes('白') ? 'gp' : 'gp') : 'wp';
+  return `<span class="td-pack ${cls}">${pack}</span>`;
+}
+
+function buildTable(p) {
+  const pd = D[p];
+  const rs = [1,2,3,4,5];
+  const totalEntry = rs.reduce((s,r) => s + pd.entry[r], 0);
+
+  let html = '<table>';
+
+  // thead top: R level groups (each spans 3 cols)
+  html += '<thead><tr class="thead-top">';
+  html += `<th class="th-level" rowspan="2">关卡</th>`;
+  html += `<th class="th-pack" rowspan="2">卡包</th>`;
+  for (const r of rs) {
+    const n = pd.entry[r];
+    html += `<th colspan="3" style="color:${rColors[r]}" class="col-group-right">${rNames[r]}<br><span style="font-size:9px;opacity:.7">入口 ${n.toLocaleString()}人</span></th>`;
+  }
+  html += '</tr>';
+
+  // thead sub: 人数/步转/留存 per R
+  html += '<tr class="thead-sub">';
+  html += '<th class="th-label" colspan="0" style="display:none"></th>';
+  for (const r of rs) {
+    html += `<th>人数</th><th>步转</th><th class="col-group-right">留存</th>`;
+  }
+  html += '</tr></thead>';
+
+  // tbody
+  html += '<tbody>';
+  for (let i = 0; i < pd.rows.length; i++) {
+    const row = pd.rows[i];
+    const hasPack = row.pack !== '—';
+    const isSection = ['78_1','79_1','80_1','81_1'].includes(row.id);
+    const cls = [hasPack ? 'pack-row' : '', isSection && i>0 ? 'section-start' : ''].filter(Boolean).join(' ');
+    const star = hasPack ? (row.pack.includes('绿') ? '<span style="color:#39ff8a">★</span>' : '<span style="color:#60c8ff">★</span>') : '';
+
+    html += `<tr class="${cls}">`;
+    html += `<td class="td-level">${star}${row.id}</td>`;
+    html += `<td style="padding:6px 8px">${packHTML(row.pack)}</td>`;
+
+    for (const r of rs) {
+      const u = row.d[r];
+      const entry = pd.entry[r];
+      const cum = Math.round(u / entry * 100);
+      let stepStr = '—', stepCls = 's-dash';
+      if (i > 0) {
+        const prev = pd.rows[i-1].d[r];
+        const sv = Math.round(u / prev * 100);
+        stepStr = sv + '%';
+        stepCls = stepClass(sv);
+      }
+      const cumColor = cum >= 50 ? '#39ff8a' : cum >= 25 ? '#ffcc00' : cum >= 10 ? '#ff6b35' : '#ff3b5c';
+      html += `<td class="td-n">${u.toLocaleString()}</td>`;
+      html += `<td class="td-step ${stepCls}">${stepStr}</td>`;
+      html += `<td class="td-cum col-group-right" style="color:${cumColor}">${cum}%</td>`;
+    }
+    html += '</tr>';
+  }
+  html += '</tbody>';
+
+  // tfoot
+  html += '<tfoot><tr>';
+  html += `<td colspan="2" style="color:var(--text2);font-size:11px">末关完成率</td>`;
+  for (const r of rs) {
+    const entry = pd.entry[r];
+    const fin = pd.rows[pd.rows.length-1].d[r];
+    const pct = Math.round(fin/entry*100);
+    const c = pct>=40?'var(--cr)':pct>=20?'var(--sr)':pct>=10?'var(--xr)':'var(--nr)';
+    html += `<td class="td-n">${fin.toLocaleString()}</td>`;
+    html += `<td></td>`;
+    html += `<td class="col-group-right" style="color:${c};font-size:14px">${pct}%</td>`;
+  }
+  html += '</tr></tfoot>';
+  html += '</table>';
+  return html;
+}
+
+function showPeriod(p, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('table-container').innerHTML = buildTable(p);
+}
+
+// init
+showPeriod(1, document.querySelector('.tab'));
+</script>
+</body>
+</html>

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>26尼罗之辉 - 道具循环</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a0a00, #2d1a00, #1a1a2e);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #e8e0d0;
+        }
+        .container { max-width: 1440px; margin: 0 auto; }
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #f5d060, #c8960c, #f5d060);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle { text-align: center; color: #a08060; margin-bottom: 40px; font-size: 0.9rem; }
+
+        /* 核心道具卡片 */
+        .core-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin-bottom: 36px;
+        }
+        .core-item {
+            background: rgba(200,150,12,0.08);
+            border-radius: 12px;
+            padding: 16px 12px;
+            text-align: center;
+            border: 1px solid rgba(200,150,12,0.25);
+        }
+        .core-item .icon { font-size: 2rem; margin-bottom: 8px; }
+        .core-item .name { font-size: 0.95rem; font-weight: 600; color: #f5d060; }
+        .core-item .id { font-size: 0.75rem; color: #7a6040; font-family: monospace; margin-top: 4px; }
+        .core-item .usage { font-size: 0.8rem; color: #a0c4a0; margin-top: 8px; line-height: 1.4; }
+
+        /* 区块 */
+        .flow-section {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 26px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(200,150,12,0.12);
+        }
+        .flow-title {
+            font-size: 1.2rem;
+            color: #f5d060;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .badge { padding: 3px 11px; border-radius: 20px; font-size: 0.76rem; font-weight: 600; }
+        .badge-gold { background: linear-gradient(135deg, #c8960c, #8b6400); color: #fff0c0; }
+        .badge-blue { background: linear-gradient(135deg, #1a5276, #0d3349); color: #a8d4f0; }
+        .badge-red  { background: linear-gradient(135deg, #7b241c, #4a1010); color: #f5c6c0; }
+        .badge-teal { background: linear-gradient(135deg, #0e6655, #084c3e); color: #a8f0e0; }
+        .badge-purple { background: linear-gradient(135deg, #6c3483, #4a1f60); color: #e0b0ff; }
+        .badge-gray { background: rgba(255,255,255,0.1); color: #c0b090; }
+
+        /* 流程节点 */
+        .cycle-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        .flow-node { border-radius: 12px; padding: 12px 16px; text-align: center; min-width: 120px; }
+        .flow-node.pay    { border: 2px solid #c0392b; background: rgba(192,57,43,0.15); }
+        .flow-node.item   { border: 2px solid #c8960c; background: rgba(200,150,12,0.15); }
+        .flow-node.actv   { border: 2px solid #2980b9; background: rgba(41,128,185,0.15); }
+        .flow-node.final  { border: 2px solid #27ae60; background: rgba(39,174,96,0.15); }
+        .flow-node.free   { border: 2px solid #8e44ad; background: rgba(142,68,173,0.15); }
+        .flow-node .label { font-size: 0.7rem; color: #a08060; margin-bottom: 3px; }
+        .flow-node .value { font-size: 0.9rem; font-weight: 600; }
+        .flow-arrow { font-size: 1.3rem; color: #7a6040; }
+
+        /* 表格 */
+        .detail-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.88rem; }
+        .detail-table th, .detail-table td { padding: 9px 13px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .detail-table th { background: rgba(200,150,12,0.08); color: #9a8060; font-size: 0.76rem; text-transform: uppercase; }
+        .detail-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+        /* 颜色 */
+        .gold { color: #f5d060; font-weight: 600; }
+        .red  { color: #e74c3c; }
+        .green { color: #58d68d; }
+        .blue { color: #5dade2; }
+        .purple { color: #c880f0; }
+        .muted { color: #7a6040; }
+        .highlight { color: #ff6b6b; font-weight: bold; }
+
+        /* 链式礼包 */
+        .chain-row {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            margin: 10px 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .chain-free {
+            background: rgba(142,68,173,0.2);
+            border: 1px solid rgba(142,68,173,0.5);
+            padding: 10px 12px;
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 105px;
+        }
+        .chain-paid {
+            background: rgba(192,57,43,0.12);
+            border: 1px solid rgba(192,57,43,0.35);
+            padding: 10px 16px;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .chain-arrow { padding: 0 5px; display: flex; align-items: center; color: #7a6040; font-size: 1.1rem; }
+        .chain-free .label { font-size: 0.7rem; color: #a080c0; margin-bottom: 3px; }
+        .chain-free .val   { font-size: 0.85rem; font-weight: 600; color: #c880f0; }
+        .chain-paid .price { font-size: 1rem; font-weight: 700; color: #e74c3c; white-space: nowrap; }
+        .chain-paid .items { font-size: 0.82rem; color: #c8c0b0; }
+        .chain-paid .items span { margin-right: 12px; }
+        .chain-paid .items .gem  { color: #5dade2; }
+        .chain-paid .items .draw { color: #f5d060; }
+        .chain-paid .items .mat  { color: #a0c4a0; }
+        .chain-paid .items .frag { color: #c880f0; }
+
+        .section-note {
+            font-size: 0.82rem;
+            color: #7a6040;
+            margin-top: 12px;
+            padding: 9px 13px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            border-left: 3px solid rgba(200,150,12,0.4);
+            line-height: 1.6;
+        }
+
+        /* 纪念卡升级表 */
+        .card-levels {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 6px;
+            margin-top: 14px;
+        }
+        .card-level {
+            background: rgba(255,255,255,0.04);
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+        .card-level.milestone { border-color: rgba(200,150,12,0.4); background: rgba(200,150,12,0.08); }
+        .card-level .lv { color: #f5d060; font-weight: 700; font-size: 0.85rem; }
+        .card-level .buff { color: #58d68d; }
+        .card-level .cost { color: #a08060; font-size: 0.75rem; }
+
+        /* 投放总览 */
+        .reward-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+        .reward-card {
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .reward-card.exclusive { background: linear-gradient(135deg, rgba(142,68,173,0.2), rgba(100,40,140,0.15)); border-color: rgba(142,68,173,0.4); }
+        .reward-card.direct    { background: linear-gradient(135deg, rgba(192,57,43,0.2), rgba(140,30,20,0.15)); border-color: rgba(192,57,43,0.4); }
+        .reward-card.exchange  { background: linear-gradient(135deg, rgba(41,128,185,0.2), rgba(20,80,140,0.15)); border-color: rgba(41,128,185,0.4); }
+        .reward-card.byproduct { background: linear-gradient(135deg, rgba(39,174,96,0.15), rgba(20,120,60,0.1)); border-color: rgba(39,174,96,0.3); }
+        .reward-card .rc-title { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+        .reward-card .rc-path  { font-size: 0.82rem; color: #a08060; margin-bottom: 6px; }
+        .reward-card .rc-note  { font-size: 0.78rem; color: #7a6040; line-height: 1.5; }
+
+        /* 总览图 */
+        .summary-diagram { background: rgba(0,0,0,0.35); border-radius: 16px; padding: 28px; margin-top: 32px; border: 1px solid rgba(200,150,12,0.15); }
+        .diagram-title { text-align: center; font-size: 1.3rem; color: #f5d060; margin-bottom: 28px; }
+        .diagram-content { display: flex; flex-direction: column; gap: 16px; }
+        .diagram-row { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .diagram-box { border-radius: 10px; padding: 11px 16px; text-align: center; min-width: 105px; }
+        .db-pay   { background: rgba(192,57,43,0.25);  border: 1px solid #c0392b; }
+        .db-item  { background: rgba(200,150,12,0.25); border: 1px solid #c8960c; }
+        .db-actv  { background: rgba(41,128,185,0.25); border: 1px solid #2980b9; }
+        .db-final { background: rgba(39,174,96,0.25);  border: 1px solid #27ae60; }
+        .db-free  { background: rgba(142,68,173,0.25); border: 1px solid #8e44ad; }
+        .db-rank  { background: rgba(243,156,18,0.2);  border: 1px solid #f39c12; }
+        .diagram-box .box-label { font-size: 0.68rem; color: #9a8060; }
+        .diagram-box .box-value { font-size: 0.88rem; font-weight: 600; margin-top: 3px; }
+        .d-arrow { font-size: 1.2rem; color: #7a6040; }
+
+        /* 两列布局 */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>26尼罗之辉 — 道具循环分析</h1>
+    <p class="subtitle">核心道具产出与消耗 · 两条付费链 · 纪念卡升级体系 · 投放奖励架构</p>
+
+    <!-- ===== 核心道具 ===== -->
+    <div class="core-items">
+        <div class="core-item">
+            <div class="icon">🏺</div>
+            <div class="name">转盘券</div>
+            <div class="id">ID: 1128 · Egypt01</div>
+            <div class="usage">黄金神殿大转盘的投入资源<br>→ 产出兑换积分</div>
+        </div>
+        <div class="core-item">
+            <div class="icon">⚱️</div>
+            <div class="name">兑换积分</div>
+            <div class="id">ID: 1131 · Egypt04</div>
+            <div class="usage">消耗于黄金神殿兑换商店<br>→ 皮肤 / 纪念卡 / 养成</div>
+        </div>
+        <div class="core-item">
+            <div class="icon">🪲</div>
+            <div class="name">返场积分</div>
+            <div class="id">返场商店道具</div>
+            <div class="usage">返场礼包 / 累充奖励获得<br>用于返场试炼兑换</div>
+        </div>
+        <div class="core-item">
+            <div class="icon">🃏</div>
+            <div class="name">纪念卡</div>
+            <div class="id">PropertyGroup: 1011</div>
+            <div class="usage">兑换商店获得<br>升级给永久射手防御BUFF</div>
+        </div>
+        <div class="core-item">
+            <div class="icon">💎</div>
+            <div class="name">通用抽卡</div>
+            <div class="id">ID: 11004</div>
+            <div class="usage">循环礼包付费档附赠<br>1小时通用抽卡</div>
+        </div>
+        <div class="core-item">
+            <div class="icon">💠</div>
+            <div class="name">宝石</div>
+            <div class="id">ID: 1002</div>
+            <div class="usage">硬通货<br>循环礼包主产出</div>
+        </div>
+    </div>
+
+    <!-- ===== 投放奖励架构 ===== -->
+    <div class="flow-section">
+        <div class="flow-title">
+            <span class="badge badge-gold">投放架构</span>
+            核心奖励与获取路径
+        </div>
+        <div class="reward-grid">
+            <div class="reward-card exclusive">
+                <div class="rc-title" style="color:#c880f0;">👑 英雄皮肤</div>
+                <div class="rc-path">排行榜独占</div>
+                <div class="rc-note">兑换积分无法兑换，只有冲榜可得。<br>竞争驱动付费，不直接变现。</div>
+            </div>
+            <div class="reward-card direct">
+                <div class="rc-title" style="color:#e74c3c;">🏛️ 主城皮肤</div>
+                <div class="rc-path">直购 · 210617精选礼包 $99.99</div>
+                <div class="rc-note">沙漠之星 + 转盘券×100 + 宝石×50000 + VIP经验×500</div>
+            </div>
+            <div class="reward-card direct">
+                <div class="rc-title" style="color:#e74c3c;">🪆 装饰</div>
+                <div class="rc-path">直购 · 210616家居礼包 $19.99</div>
+                <div class="rc-note">猫咪陶瓷家居×1 + 转盘券×50 + 贵族装扮碎片×50 + 宝石×10000</div>
+            </div>
+            <div class="reward-card exchange">
+                <div class="rc-title" style="color:#5dade2;">🃏 纪念卡</div>
+                <div class="rc-path">兑换商店（消耗兑换积分）</div>
+                <div class="rc-note">可无限升至Lv30，射手防御+2%/级，最高+60%。<br>是消耗兑换积分的核心长期消耗端。</div>
+            </div>
+            <div class="reward-card byproduct">
+                <div class="rc-title" style="color:#58d68d;">⚗️ 养成线道具</div>
+                <div class="rc-path">兑换商店 + 黄金卷轴转盘副产出</div>
+                <div class="rc-note">英雄装扮碎片、贵族装扮碎片等<br>通过兑换和转盘双渠道获取。</div>
+            </div>
+            <div class="reward-card byproduct">
+                <div class="rc-title" style="color:#58d68d;">🐞 返场积分</div>
+                <div class="rc-path">返场礼包 + 累充奖励</div>
+                <div class="rc-note">返场商店专属道具，非活跃任务产出。<br>通过返场礼包购买或累充达标获得，用于返场试炼模块兑换。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 付费线A：尼罗之辉循环礼包 ===== -->
+    <div class="flow-section">
+        <div class="flow-title">
+            <span class="badge badge-red">付费线A</span>
+            尼罗之辉循环礼包 · ChainPack 482 · pack_type=11
+            <span style="font-size:0.78rem;color:#7a6040;">产出：转盘券 → 大转盘 → 兑换积分</span>
+        </div>
+        <p style="color:#9a8060;font-size:0.85rem;margin-bottom:14px;">免费档→付费档交替解锁。<b style="color:#f5d060;">付费档核心产出是转盘券</b>，附赠宝石+100VIP经验；免费档仅附赠少量转盘券。</p>
+
+        <div class="chain-row">
+            <div class="chain-free"><div class="label">免费1</div><div class="val">转盘券×1</div></div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-paid"><div class="price">$4.99</div><div class="items"><span class="frag">转盘券×20</span><span class="gem">宝石×2500</span><span class="mat">100VIP经验×25</span></div></div>
+        </div>
+        <div class="chain-row">
+            <div class="chain-free"><div class="label">免费2</div><div class="val">转盘券×5</div></div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-paid"><div class="price">$9.99</div><div class="items"><span class="frag">转盘券×40</span><span class="gem">宝石×5000</span><span class="mat">100VIP经验×50</span></div></div>
+        </div>
+        <div class="chain-row">
+            <div class="chain-free"><div class="label">免费3</div><div class="val">转盘券×10</div></div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-paid"><div class="price">$19.99</div><div class="items"><span class="frag">转盘券×80</span><span class="gem">宝石×10000</span><span class="mat">100VIP经验×100</span></div></div>
+        </div>
+        <div class="chain-row">
+            <div class="chain-free"><div class="label">免费4</div><div class="val">转盘券×20</div></div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-paid"><div class="price">$49.99</div><div class="items"><span class="frag">转盘券×200</span><span class="gem">宝石×25000</span><span class="mat">100VIP经验×250</span></div></div>
+        </div>
+        <div class="chain-row">
+            <div class="chain-free"><div class="label">免费5</div><div class="val">转盘券×50</div></div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-paid"><div class="price">$99.99</div><div class="items"><span class="frag">转盘券×400</span><span class="gem">宝石×50000</span><span class="mat">100VIP经验×500</span></div></div>
+        </div>
+        <div class="chain-row">
+            <div class="chain-free" style="background:rgba(142,68,173,0.35);border-color:rgba(142,68,173,0.8);">
+                <div class="label">免费6（终点）</div><div class="val" style="font-size:1rem;">转盘券×100</div>
+            </div>
+            <div class="chain-arrow" style="color:#8e44ad;">✓</div>
+            <div style="padding:10px 16px;color:#7a6040;font-size:0.82rem;">全通结束</div>
+        </div>
+        <div class="section-note">
+            全通花费 <b style="color:#e74c3c;">$184.95</b>，共得：转盘券×<b class="gold">926</b>（付费档740 + 免费档186）· 宝石×92500 · 100VIP经验×925份
+        </div>
+    </div>
+
+    <!-- ===== 付费线B：转盘券 ===== -->
+    <div class="flow-section">
+        <div class="flow-title">
+            <span class="badge badge-blue">付费线B</span>
+            转盘券（锚点礼包）· pack_type=15 · 纯转盘券
+        </div>
+        <table class="detail-table">
+            <tr><th>PackID</th><th>价格</th><th>转盘券</th><th>vs A线同价付费档</th></tr>
+            <tr><td class="muted">210612</td><td class="highlight">$4.99</td><td class="gold">×20</td><td style="color:#e74c3c;">少宝石×2500</td></tr>
+            <tr><td class="muted">210613</td><td class="highlight">$19.99</td><td class="gold">×80</td><td style="color:#e74c3c;">少宝石×10000</td></tr>
+            <tr><td class="muted">210614</td><td class="highlight">$49.99</td><td class="gold">×200</td><td style="color:#e74c3c;">少宝石×25000</td></tr>
+            <tr><td class="muted">210615</td><td class="highlight">$99.99</td><td class="gold">×400</td><td style="color:#e74c3c;">少宝石×50000</td></tr>
+        </table>
+        <div class="section-note">
+            定位：<b>A线完成后的追加转盘券</b>。转盘券数量与A线同价档相同，核心差异是<b style="color:#e74c3c;">无宝石产出</b>。全买 $174.96 额外得转盘券×700。
+        </div>
+    </div>
+
+    <!-- ===== 返场线：返场通用礼包 ===== -->
+    <div class="flow-section">
+        <div class="flow-title">
+            <span class="badge badge-purple">返场线</span>
+            返场通用礼包 · pack_type=11/15
+            <span style="font-size:0.78rem;color:#7a6040;">直接产出兑换积分</span>
+        </div>
+        <p style="color:#9a8060;font-size:0.85rem;margin-bottom:14px;">返场模块通用礼包，直接产出兑换积分，不经过大转盘。</p>
+
+        <div class="chain-row">
+            <div class="chain-free"><div class="label">免费1</div><div class="val" style="color:#5dade2;">兑换积分×1</div></div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-paid"><div class="price">$9.99</div><div class="items"><span class="frag">兑换积分×20</span><span class="gem">宝石×5000</span><span class="mat">VIP经验×50</span></div></div>
+        </div>
+        <div class="chain-row">
+            <div class="chain-free"><div class="label">免费2</div><div class="val" style="color:#5dade2;">兑换积分×5</div></div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-paid"><div class="price">$49.99</div><div class="items"><span class="frag">兑换积分×100</span><span class="gem">宝石×25000</span><span class="mat">VIP经验×250</span></div></div>
+        </div>
+        <div class="chain-row">
+            <div class="chain-free"><div class="label">免费3</div><div class="val" style="color:#5dade2;">兑换积分×25</div></div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-paid"><div class="price">$99.99</div><div class="items"><span class="frag">兑换积分×200</span><span class="gem">宝石×50000</span><span class="mat">VIP经验×500</span></div></div>
+        </div>
+        <div class="chain-row">
+            <div class="chain-free" style="background:rgba(41,128,185,0.3);border-color:rgba(41,128,185,0.7);">
+                <div class="label">免费4（终点）</div><div class="val" style="color:#5dade2;">兑换积分×50</div>
+            </div>
+            <div class="chain-arrow" style="color:#2980b9;">✓</div>
+            <div style="padding:10px 16px;color:#7a6040;font-size:0.82rem;">全通结束</div>
+        </div>
+
+        <div class="section-note">
+            全通 $159.97，直接获得：兑换积分×<b class="blue">401</b>（付费档325 + 免费档81）· 宝石×80000 · VIP经验×800<br>
+            同时还有黄金神殿转盘券（pack_type=15）：$4.99→×5 / $19.99→×20 / $49.99→×50 / $99.99→×100 兑换积分
+        </div>
+    </div>
+
+    <!-- ===== 核心循环 ===== -->
+    <div class="flow-section">
+        <div class="flow-title">
+            <span class="badge badge-teal">核心循环</span>
+            转盘券 → 大转盘 → 兑换积分 → 兑换商店
+        </div>
+
+        <div class="cycle-flow">
+            <div class="flow-node pay"><div class="label">付费线A/B</div><div class="value">转盘券来源</div></div>
+            <div class="flow-node free"><div class="label">免费来源</div><div class="value">活跃积分/任务</div></div>
+        </div>
+        <div style="text-align:center;color:#7a6040;font-size:1.2rem;margin:4px 0;">↓</div>
+        <div class="cycle-flow">
+            <div class="flow-node item"><div class="label">核心货币1</div><div class="value">🏺 转盘券</div></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node actv"><div class="label">消耗于</div><div class="value">黄金神殿大转盘<br><span style="font-size:0.75rem;color:#7a6040;">ActvID: 101023</span></div></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node item"><div class="label">核心货币2</div><div class="value">⚱️ 兑换积分</div></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node actv"><div class="label">消耗于</div><div class="value">黄金神殿兑换<br><span style="font-size:0.75rem;color:#7a6040;">ActvID: 101335</span></div></div>
+        </div>
+        <div style="text-align:center;color:#7a6040;font-size:1.2rem;margin:4px 0;">↓</div>
+        <div class="cycle-flow">
+            <div class="flow-node final"><div class="label">消耗端</div><div class="value">纪念卡升级 / 皮肤 / 养成道具</div></div>
+        </div>
+
+        <h4 style="color:#5dade2;margin:20px 0 10px;font-size:0.92rem;">黄金神殿兑换商店（消耗兑换积分）</h4>
+        <table class="detail-table">
+            <tr><th>内容</th><th>消耗兑换积分</th><th>类型</th></tr>
+            <tr><td>盛世猫女 / 战场女王克里奥帕特拉 / 阴影刺客斯达哥（英雄皮肤）</td><td class="highlight">1500</td><td>高价值（非本期排行榜独占皮肤）</td></tr>
+            <tr><td>纪念卡</td><td class="gold">1200</td><td>养成BUFF，可反复购买升级</td></tr>
+            <tr><td>贵族英雄装扮碎片（多款）</td><td class="gold">1500</td><td>养成线</td></tr>
+            <tr><td>沙漠之星 / 埃及之谷 / 猫咪陶瓷（装饰/家居）</td><td class="gold">1200</td><td>中价值</td></tr>
+            <tr><td>贵族英雄装扮碎片（辅助类）/ 表情等</td><td class="green">200</td><td>基础消耗</td></tr>
+        </table>
+        <div class="section-note">
+            <b>注：</b>本期排行榜英雄皮肤（独占）不在兑换商店，只有历史皮肤和装扮碎片可兑换。纪念卡是唯一可以无限重复消耗兑换积分的出口。
+        </div>
+    </div>
+
+    <!-- ===== 纪念卡升级体系 ===== -->
+    <div class="flow-section">
+        <div class="flow-title">
+            <span class="badge badge-purple">养成消耗端</span>
+            纪念卡 · 纪念卡升级体系 · 射手防御 BUFF
+        </div>
+        <p style="color:#9a8060;font-size:0.85rem;margin-bottom:16px;">
+            每级 +2% 射手防御，满级 Lv30 达 +60%。升级消耗：卡片本身（兑换商店获得）。全通累计需 <b style="color:#c880f0;">约378张</b>。
+        </p>
+
+        <div class="card-levels">
+            <div class="card-level"><span class="lv">Lv1</span> <span class="buff">+2%</span> <span class="cost">·消耗×1</span></div>
+            <div class="card-level"><span class="lv">Lv2</span> <span class="buff">+4%</span> <span class="cost">·消耗×1</span></div>
+            <div class="card-level"><span class="lv">Lv3</span> <span class="buff">+6%</span> <span class="cost">·消耗×1</span></div>
+            <div class="card-level"><span class="lv">Lv4</span> <span class="buff">+8%</span> <span class="cost">·消耗×2</span></div>
+            <div class="card-level"><span class="lv">Lv5</span> <span class="buff">+10%</span> <span class="cost">·消耗×2</span></div>
+            <div class="card-level"><span class="lv">Lv6</span> <span class="buff">+12%</span> <span class="cost">·消耗×2</span></div>
+            <div class="card-level"><span class="lv">Lv7</span> <span class="buff">+14%</span> <span class="cost">·消耗×3</span></div>
+            <div class="card-level"><span class="lv">Lv8</span> <span class="buff">+16%</span> <span class="cost">·消耗×3</span></div>
+            <div class="card-level"><span class="lv">Lv9</span> <span class="buff">+18%</span> <span class="cost">·消耗×3</span></div>
+            <div class="card-level milestone"><span class="lv">Lv10</span> <span class="buff">+20%</span> <span class="cost">·消耗×5</span></div>
+            <div class="card-level"><span class="lv">Lv11</span> <span class="buff">+22%</span> <span class="cost">·消耗×5</span></div>
+            <div class="card-level"><span class="lv">Lv12</span> <span class="buff">+24%</span> <span class="cost">·消耗×5</span></div>
+            <div class="card-level"><span class="lv">Lv13</span> <span class="buff">+26%</span> <span class="cost">·消耗×7</span></div>
+            <div class="card-level"><span class="lv">Lv14</span> <span class="buff">+28%</span> <span class="cost">·消耗×7</span></div>
+            <div class="card-level"><span class="lv">Lv15</span> <span class="buff">+30%</span> <span class="cost">·消耗×7</span></div>
+            <div class="card-level milestone"><span class="lv">Lv16</span> <span class="buff">+32%</span> <span class="cost">·消耗×10</span></div>
+            <div class="card-level"><span class="lv">Lv17</span> <span class="buff">+34%</span> <span class="cost">·消耗×10</span></div>
+            <div class="card-level"><span class="lv">Lv18</span> <span class="buff">+36%</span> <span class="cost">·消耗×10</span></div>
+            <div class="card-level"><span class="lv">Lv19</span> <span class="buff">+38%</span> <span class="cost">·消耗×15</span></div>
+            <div class="card-level"><span class="lv">Lv20</span> <span class="buff">+40%</span> <span class="cost">·消耗×15</span></div>
+            <div class="card-level"><span class="lv">Lv21</span> <span class="buff">+42%</span> <span class="cost">·消耗×15</span></div>
+            <div class="card-level milestone"><span class="lv">Lv22</span> <span class="buff">+44%</span> <span class="cost">·消耗×20</span></div>
+            <div class="card-level"><span class="lv">Lv23</span> <span class="buff">+46%</span> <span class="cost">·消耗×20</span></div>
+            <div class="card-level"><span class="lv">Lv24</span> <span class="buff">+48%</span> <span class="cost">·消耗×20</span></div>
+            <div class="card-level"><span class="lv">Lv25</span> <span class="buff">+50%</span> <span class="cost">·消耗×30</span></div>
+            <div class="card-level"><span class="lv">Lv26</span> <span class="buff">+52%</span> <span class="cost">·消耗×30</span></div>
+            <div class="card-level"><span class="lv">Lv27</span> <span class="buff">+54%</span> <span class="cost">·消耗×30</span></div>
+            <div class="card-level milestone"><span class="lv">Lv28</span> <span class="buff">+56%</span> <span class="cost">·消耗×40</span></div>
+            <div class="card-level"><span class="lv">Lv29</span> <span class="buff">+58%</span> <span class="cost">·消耗×40</span></div>
+            <div class="card-level milestone" style="border-color:#f5d060;background:rgba(200,150,12,0.15);">
+                <span class="lv" style="font-size:1rem;">Lv30 MAX</span> <span class="buff" style="font-size:1rem;">+60%</span> <span class="cost">·消耗×40</span>
+            </div>
+        </div>
+        <div class="section-note" style="margin-top:14px;">
+            <b>设计价值：</b>前期1张/级门槛极低，快速让玩家感受BUFF吸引力 → 中期3~7张开始拉高消耗 → 后期每级需40张，成为重度玩家的长期消耗池。纪念卡是让兑换积分持续有出口的核心机制。
+        </div>
+    </div>
+
+    <!-- ===== 总览图 ===== -->
+    <div class="summary-diagram">
+        <div class="diagram-title">⚙ 道具循环总览</div>
+        <div class="diagram-content">
+
+            <div class="diagram-row">
+                <div class="diagram-box db-pay">
+                    <div class="box-label">付费线A · 循环礼包</div>
+                    <div class="box-value">$4.99~$99.99<br>主产宝石+抽卡</div>
+                </div>
+                <div class="d-arrow">+</div>
+                <div class="diagram-box db-pay">
+                    <div class="box-label">付费线B · 转盘券</div>
+                    <div class="box-value">$4.99~$99.99<br>纯转盘券</div>
+                </div>
+                <div class="d-arrow">+</div>
+                <div class="diagram-box db-free">
+                    <div class="box-label">返场渠道</div>
+                    <div class="box-value">返场礼包 / 累充<br>🪲 返场积分</div>
+                </div>
+            </div>
+
+            <div class="diagram-row"><div class="d-arrow">↓</div></div>
+
+            <div class="diagram-row">
+                <div class="diagram-box db-item">
+                    <div class="box-label">核心货币1</div>
+                    <div class="box-value">🏺 转盘券</div>
+                </div>
+                <div class="d-arrow">→ 抽转盘 →</div>
+                <div class="diagram-box db-item">
+                    <div class="box-label">核心货币2</div>
+                    <div class="box-value">⚱️ 兑换积分</div>
+                </div>
+            </div>
+
+            <div style="text-align:center;color:#7a6040;font-size:0.8rem;">（返场线直接产出兑换积分，跳过转盘券环节）</div>
+
+            <div class="diagram-row"><div class="d-arrow">↓ 兑换商店</div></div>
+
+            <div class="diagram-row">
+                <div class="diagram-box db-rank">
+                    <div class="box-label">排行榜独占</div>
+                    <div class="box-value">👑 本期英雄皮肤<br>竞争型，不直售</div>
+                </div>
+                <div class="diagram-box db-pay">
+                    <div class="box-label">直购</div>
+                    <div class="box-value">🏛️ 主城皮肤 $99.99<br>🪆 装饰 $19.99</div>
+                </div>
+                <div class="diagram-box db-final">
+                    <div class="box-label">兑换 · 长期消耗</div>
+                    <div class="box-value">🃏 纪念卡升级<br>⚗️ 养成线道具</div>
+                </div>
+                <div class="diagram-box db-actv">
+                    <div class="box-label">兑换 · 历史皮肤</div>
+                    <div class="box-value">贵族英雄装扮<br>装饰/家居</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== 设计总结 ===== -->
+    <div class="flow-section" style="margin-top:24px;">
+        <div class="flow-title">
+            <span class="badge badge-gold">设计总结</span>
+            付费分层与设计亮点/问题点
+        </div>
+        <table class="detail-table">
+            <tr><th>用户层</th><th>付费路径</th><th>核心诉求</th><th>问题/优化点</th></tr>
+            <tr>
+                <td class="green">轻度付费</td>
+                <td>付费线A · $4.99 重复购买</td>
+                <td>宝石 + 通用抽卡体验</td>
+                <td class="muted">转盘券只是附赠，感知弱</td>
+            </tr>
+            <tr>
+                <td class="gold">中度付费</td>
+                <td>付费线A全通 + 直购装饰 $19.99</td>
+                <td>资源 + 装饰</td>
+                <td class="red">A线高档内容无差异，缺乏进阶动力</td>
+            </tr>
+            <tr>
+                <td class="red">重度付费</td>
+                <td>付费线B + 返场线 + 直购主城 $99.99</td>
+                <td>高效积攒兑换积分冲榜/纪念卡</td>
+                <td class="muted">路径清晰，效率明确</td>
+            </tr>
+            <tr>
+                <td class="purple">竞技型</td>
+                <td>排行榜冲榜（付费驱动活跃）</td>
+                <td>英雄皮肤独占</td>
+                <td class="muted">不直售，最强拉高付费天花板机制</td>
+            </tr>
+            <tr>
+                <td class="blue">长期挂机</td>
+                <td>纪念卡持续升级</td>
+                <td>射手防御永久BUFF积累</td>
+                <td class="muted">前期1张/级吸引力强，后期40张/级持续吸金</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ===== 跨节日 PackID 索引 ===== -->
+    <div class="flow-section">
+        <div class="flow-title">
+            <span class="badge badge-gold">PackID 索引</span>
+            26赛季各节日礼包汇总
+        </div>
+        <table class="detail-table">
+            <tr>
+                <th>节日</th>
+                <th>付费线A · 循环礼包<br><span style="font-weight:normal;color:#7a6040;">pack_type=11</span></th>
+                <th>付费线B · 转盘券<br><span style="font-weight:normal;color:#7a6040;">pack_type=15</span></th>
+                <th>直购礼包<br><span style="font-weight:normal;color:#7a6040;">pack_type=1/16</span></th>
+                <th>其他</th>
+            </tr>
+            <tr>
+                <td class="highlight">圣诞庆典<br><span style="color:#7a6040;font-size:0.8rem;">ChainID=480</span></td>
+                <td class="muted">210401–210411</td>
+                <td class="muted">—</td>
+                <td class="muted">—</td>
+                <td class="muted">—</td>
+            </tr>
+            <tr>
+                <td class="highlight">26元旦<br><span style="color:#7a6040;font-size:0.8rem;">ChainID=481</span></td>
+                <td class="muted">210501–210511</td>
+                <td class="muted">210512–210515</td>
+                <td class="muted">210516 $49.99<br>210517 $9.99</td>
+                <td class="muted">210518–210519</td>
+            </tr>
+            <tr style="background:rgba(245,208,96,0.08);">
+                <td class="highlight">26尼罗之辉<br><span style="color:#7a6040;font-size:0.8rem;">ChainID=482/483</span></td>
+                <td class="muted">210601–210611</td>
+                <td class="muted">210612–210615</td>
+                <td class="muted">210616 $19.99<br>210617 $99.99</td>
+                <td class="muted" style="color:#c880f0;">返场线循环：210623–210629<br>返场线直购：210619–210622</td>
+            </tr>
+            <tr>
+                <td class="highlight">26情人节<br><span style="color:#7a6040;font-size:0.8rem;">ChainID=484</span></td>
+                <td class="muted">210701–210711</td>
+                <td class="muted">210712–210715</td>
+                <td class="muted">210716 $49.99<br>210717 $99.99</td>
+                <td class="muted">210718</td>
+            </tr>
+            <tr>
+                <td class="highlight">26春节<br><span style="color:#7a6040;font-size:0.8rem;">ChainID=485</span></td>
+                <td class="muted">210801–210811</td>
+                <td class="muted">210812–210815</td>
+                <td class="muted">210816 $99.99</td>
+                <td class="muted">—</td>
+            </tr>
+        </table>
+        <p style="color:#7a6040;font-size:0.8rem;margin-top:10px;">
+            规律：各节日 A线固定11个Pack（5免费档+5付费档+1终点），B线固定4档（$4.99/$19.99/$49.99/$99.99）。尼罗之辉因黄金神殿模块多出 返场线 (210619–210629)。
+        </p>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<script>
+(function () {
+  var VERIFY = "https://demo.tap4fun.com/demo-auth/verify";
+  var LOGIN  = "https://demo.tap4fun.com/demo-auth/login";
+  fetch(VERIFY, { credentials: "include" })
+    .then(function (r) { return r.json(); })
+    .then(function (info) {
+      if (!info.loggedIn) {
+        window.location.href = LOGIN + "?returnUrl=" + encodeURIComponent(window.location.href);
+      }
+    })
+    .catch(function () {
+      window.location.href = LOGIN + "?returnUrl=" + encodeURIComponent(window.location.href);
+    });
+})();
+</script>
+<meta charset="UTF-8">
+<title>X2 占星节巨猿 — 金蛋配置</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#0f1117;color:#e0e0e0;padding:20px;line-height:1.5}
+h1{color:#ffd700;font-size:22px;margin-bottom:6px}
+.subtitle{color:#888;font-size:13px;margin-bottom:20px}
+.section{background:#1a1d27;border-radius:8px;padding:16px;margin-bottom:16px;border:1px solid #2a2d37}
+.section h2{color:#82aaff;font-size:16px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.egg-tag{background:#ffd700;color:#000;font-weight:700;padding:2px 10px;border-radius:12px;font-size:13px}
+.egg-tag.high{background:#ff6b6b}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:10px}
+th{background:#252836;color:#82aaff;text-align:left;padding:6px 8px;border-bottom:2px solid #3a3d4a;white-space:nowrap}
+td{padding:5px 8px;border-bottom:1px solid #2a2d37}
+tr:hover td{background:#1e2130}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.changed{color:#ffd700;font-weight:600}
+.json-box{position:relative;background:#0d1117;border:1px solid #333;border-radius:6px;padding:10px 50px 10px 12px;font-family:"Cascadia Code",Consolas,monospace;font-size:12px;word-break:break-all;line-height:1.6;max-height:120px;overflow-y:auto;white-space:pre-wrap}
+.copy-btn{position:absolute;top:6px;right:6px;background:#333;color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:12px}
+.copy-btn:hover{background:#555}
+.copy-btn.copied{background:#2ea043;color:#fff}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stat{background:#252836;border-radius:6px;padding:12px;text-align:center}
+.stat .val{font-size:22px;font-weight:700;color:#ffd700}
+.stat .label{font-size:12px;color:#888;margin-top:2px}
+.change-log{font-size:12px;color:#aaa}
+.change-log span{color:#ffd700}
+.roi-row td{font-weight:700;color:#ffd700}
+</style>
+</head>
+<body>
+
+<h1>X2 占星节 — 巨猿金蛋配置</h1>
+<p class="subtitle">基于 P2 巨猿数值换皮 | BP道具: 观星球(11119497) | 礼包 $9.99</p>
+
+<div class="summary">
+  <div class="stat"><div class="val">$83.46</div><div class="label">金蛋总价值</div></div>
+  <div class="stat"><div class="val">8.35x</div><div class="label">付费 ROI</div></div>
+  <div class="stat"><div class="val">7 级</div><div class="label">金蛋等级</div></div>
+  <div class="stat"><div class="val">3 项</div><div class="label">道具变更</div></div>
+</div>
+
+<div class="section">
+  <h2>P2 → X2 变更项</h2>
+  <table>
+    <tr><th>位置</th><th>P2 道具</th><th>P2 ID</th><th>→</th><th>X2 道具</th><th>X2 ID</th><th>说明</th></tr>
+    <tr><td>BP</td><td>聚能环(科技节)</td><td>11112127</td><td>→</td><td class="changed">观星球(占星节)</td><td class="changed">11119497</td><td>节日专属 BP</td></tr>
+    <tr><td>蛋1-7</td><td>英雄升星-橙小</td><td>11116110</td><td>→</td><td class="changed">特殊天赋道具</td><td class="changed">11111082</td><td>$1.00 价位一致</td></tr>
+    <tr><td>蛋6-7</td><td>节日道具自选箱</td><td>111110105</td><td>→</td><td class="changed">漫游骰子</td><td class="changed">11112498</td><td>$0.50, 数量×2 补价</td></tr>
+    <tr><td>蛋6-7</td><td>成长线自选宝箱</td><td>11118663</td><td>→</td><td class="changed">万能英雄碎片-橙</td><td class="changed">11116304</td><td>$2.00 价位一致</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>P2 → X2 价值变动明细</h2>
+  <p style="color:#aaa;font-size:12px;margin-bottom:10px">逐项对比每个替换道具在各蛋级的数量调整与价值影响</p>
+
+  <table>
+    <tr>
+      <th rowspan="2">变更项</th><th rowspan="2">蛋级</th>
+      <th colspan="3" style="text-align:center;border-bottom:1px solid #3a3d4a">P2 原版</th>
+      <th rowspan="2" style="text-align:center">→</th>
+      <th colspan="3" style="text-align:center;border-bottom:1px solid #3a3d4a">X2 占星节</th>
+      <th rowspan="2" class="num">差额$</th>
+    </tr>
+    <tr>
+      <th>道具</th><th class="num">数量</th><th class="num">总价$</th>
+      <th>道具</th><th class="num">数量</th><th class="num">总价$</th>
+    </tr>
+    <!-- BP (价位不变, 仅换ID) -->
+    <tr style="background:#1e2130"><td rowspan="5" style="vertical-align:top;color:#ffd700">BP道具<br><span style="font-size:11px;color:#888">仅换节日ID<br>单价不变</span></td>
+      <td>蛋1</td><td>聚能环</td><td class="num">2</td><td class="num">0.40</td><td style="text-align:center;color:#555">→</td><td>观星球</td><td class="num">2</td><td class="num">0.40</td><td class="num" style="color:#4ec9b0">0</td></tr>
+    <tr style="background:#1e2130"><td>蛋2</td><td>聚能环</td><td class="num">4</td><td class="num">0.80</td><td style="text-align:center;color:#555">→</td><td>观星球</td><td class="num">4</td><td class="num">0.80</td><td class="num" style="color:#4ec9b0">0</td></tr>
+    <tr style="background:#1e2130"><td>蛋3</td><td>聚能环</td><td class="num">6</td><td class="num">1.20</td><td style="text-align:center;color:#555">→</td><td>观星球</td><td class="num">6</td><td class="num">1.20</td><td class="num" style="color:#4ec9b0">0</td></tr>
+    <tr style="background:#1e2130"><td>蛋4</td><td>聚能环</td><td class="num">8</td><td class="num">1.60</td><td style="text-align:center;color:#555">→</td><td>观星球</td><td class="num">8</td><td class="num">1.60</td><td class="num" style="color:#4ec9b0">0</td></tr>
+    <tr style="background:#1e2130"><td>蛋5</td><td>聚能环</td><td class="num">10</td><td class="num">2.00</td><td style="text-align:center;color:#555">→</td><td>观星球</td><td class="num">10</td><td class="num">2.00</td><td class="num" style="color:#4ec9b0">0</td></tr>
+
+    <!-- 英雄升星 → 特殊天赋 ($1→$1, 数量不变) -->
+    <tr><td rowspan="7" style="vertical-align:top;color:#ffd700">英雄升星<br>→ 特殊天赋<br><span style="font-size:11px;color:#888">$1.00→$1.00<br>数量不变</span></td>
+      <td>蛋1</td><td>英雄升星-橙小</td><td class="num">1</td><td class="num">1.00</td><td style="text-align:center;color:#555">→</td><td>特殊天赋道具</td><td class="num">1</td><td class="num">1.00</td><td class="num" style="color:#4ec9b0">0</td></tr>
+    <tr><td>蛋2</td><td>英雄升星-橙小</td><td class="num">1</td><td class="num">1.00</td><td style="text-align:center;color:#555">→</td><td>特殊天赋道具</td><td class="num">1</td><td class="num">1.00</td><td class="num" style="color:#4ec9b0">0</td></tr>
+    <tr><td>蛋3</td><td>英雄升星-橙小</td><td class="num">2</td><td class="num">2.00</td><td style="text-align:center;color:#555">→</td><td>特殊天赋道具</td><td class="num">2</td><td class="num">2.00</td><td class="num" style="color:#4ec9b0">0</td></tr>
+    <tr><td>蛋4</td><td>英雄升星-橙小</td><td class="num">2</td><td class="num">2.00</td><td style="text-align:center;color:#555">→</td><td>特殊天赋道具</td><td class="num">2</td><td class="num">2.00</td><td class="num" style="color:#4ec9b0">0</td></tr>
+    <tr><td>蛋5</td><td>英雄升星-橙小</td><td class="num">3</td><td class="num">3.00</td><td style="text-align:center;color:#555">→</td><td>特殊天赋道具</td><td class="num">3</td><td class="num">3.00</td><td class="num" style="color:#4ec9b0">0</td></tr>
+    <tr><td>蛋6</td><td>英雄升星-橙小</td><td class="num">4</td><td class="num">4.00</td><td style="text-align:center;color:#555">→</td><td>特殊天赋道具</td><td class="num">4</td><td class="num">4.00</td><td class="num" style="color:#4ec9b0">0</td></tr>
+    <tr><td>蛋7</td><td>英雄升星-橙小</td><td class="num">5</td><td class="num">5.00</td><td style="text-align:center;color:#555">→</td><td>特殊天赋道具</td><td class="num">5</td><td class="num">5.00</td><td class="num" style="color:#4ec9b0">0</td></tr>
+
+    <!-- 节日自选箱 → 漫游骰子 ($1→$0.5, 数量×2) -->
+    <tr style="background:#1e2130"><td rowspan="2" style="vertical-align:top;color:#ffd700">节日自选箱<br>→ 漫游骰子<br><span style="font-size:11px;color:#ff6b6b">$1.00→$0.50<br>数量×2补价</span></td>
+      <td>蛋6</td><td>节日道具自选箱</td><td class="num">2</td><td class="num">2.00</td><td style="text-align:center;color:#555">→</td><td>漫游骰子</td><td class="num changed">4</td><td class="num">2.00</td><td class="num" style="color:#4ec9b0">0</td></tr>
+    <tr style="background:#1e2130"><td>蛋7</td><td>节日道具自选箱</td><td class="num">5</td><td class="num">5.00</td><td style="text-align:center;color:#555">→</td><td>漫游骰子</td><td class="num changed">10</td><td class="num">5.00</td><td class="num" style="color:#4ec9b0">0</td></tr>
+
+    <!-- 成长线宝箱 → 万能英雄碎片 ($2→$2, 数量不变) -->
+    <tr><td rowspan="2" style="vertical-align:top;color:#ffd700">成长线宝箱<br>→ 万能橙碎<br><span style="font-size:11px;color:#888">$2.00→$2.00<br>数量不变</span></td>
+      <td>蛋6</td><td>成长线自选宝箱</td><td class="num">2</td><td class="num">4.00</td><td style="text-align:center;color:#555">→</td><td>万能英雄碎片-橙</td><td class="num">2</td><td class="num">4.00</td><td class="num" style="color:#4ec9b0">0</td></tr>
+    <tr><td>蛋7</td><td>成长线自选宝箱</td><td class="num">5</td><td class="num">10.00</td><td style="text-align:center;color:#555">→</td><td>万能英雄碎片-橙</td><td class="num">5</td><td class="num">10.00</td><td class="num" style="color:#4ec9b0">0</td></tr>
+  </table>
+
+  <div style="background:#252836;border-radius:6px;padding:12px;margin-top:8px">
+    <div style="font-size:13px;font-weight:600;color:#4ec9b0;margin-bottom:6px">净价值影响：$0.00（全部蛋级总价与 P2 完全一致）</div>
+    <div style="font-size:12px;color:#888;line-height:1.6">
+      <div>BP 观星球：仅换节日 ID，单价 $0.20 不变，各蛋数量不变 → 零影响</div>
+      <div>特殊天赋道具：单价 $1.00 = P2 英雄升星 $1.00，各蛋数量不变 → 零影响</div>
+      <div>漫游骰子：单价 $0.50 为 P2 节日自选箱 $1.00 的一半，<span style="color:#ffd700">蛋6 数量 2→4、蛋7 数量 5→10</span>，翻倍补齐 → 零影响</div>
+      <div>万能英雄碎片-橙：单价 $2.00 = P2 成长线宝箱 $2.00，数量不变 → 零影响</div>
+    </div>
+  </div>
+</div>
+
+<!-- 蛋1 -->
+<div class="section">
+  <h2><span class="egg-tag">蛋 1</span> 总价 $2.38 | 期望 $0.184</h2>
+  <table>
+    <tr><th>道具</th><th>ID</th><th class="num">数量</th><th class="num">单价$</th><th class="num">总价$</th><th class="num">权重</th><th class="num">概率</th></tr>
+    <tr><td>通用加速5min</td><td>11111102</td><td class="num">2</td><td class="num">0.042</td><td class="num">0.084</td><td class="num">80</td><td class="num">25.00%</td></tr>
+    <tr><td class="changed">观星球(BP)</td><td class="changed">11119497</td><td class="num">2</td><td class="num">0.200</td><td class="num">0.400</td><td class="num">35</td><td class="num">10.94%</td></tr>
+    <tr><td>英雄经验-10000</td><td>11116005</td><td class="num">1</td><td class="num">0.165</td><td class="num">0.165</td><td class="num">30</td><td class="num">9.38%</td></tr>
+    <tr><td>初级资源自选箱</td><td>11114328</td><td class="num">5</td><td class="num">0.00125</td><td class="num">0.006</td><td class="num">60</td><td class="num">18.75%</td></tr>
+    <tr><td>军备零件箱</td><td>11117068</td><td class="num">2</td><td class="num">0.030</td><td class="num">0.060</td><td class="num">50</td><td class="num">15.63%</td></tr>
+    <tr><td>机甲经验-10000</td><td>11118002</td><td class="num">1</td><td class="num">0.165</td><td class="num">0.165</td><td class="num">30</td><td class="num">9.38%</td></tr>
+    <tr><td class="changed">特殊天赋道具</td><td class="changed">11111082</td><td class="num">1</td><td class="num">1.000</td><td class="num">1.000</td><td class="num">15</td><td class="num">4.69%</td></tr>
+    <tr><td>高级探测抽奖券</td><td>11117024</td><td class="num">1</td><td class="num">0.500</td><td class="num">0.500</td><td class="num">20</td><td class="num">6.25%</td></tr>
+  </table>
+  <div style="position:relative">
+    <div class="json-box" id="json1">{"typ":"single_random","num":1,"args":[{"typ":"item","id":11111102,"num":2,"wgt":80},{"typ":"item","id":11119497,"num":2,"wgt":35},{"typ":"item","id":11116005,"num":1,"wgt":30},{"typ":"item","id":11114328,"num":5,"wgt":60},{"typ":"item","id":11117068,"num":2,"wgt":50},{"typ":"item","id":11118002,"num":1,"wgt":30},{"typ":"item","id":11111082,"num":1,"wgt":15},{"typ":"item","id":11117024,"num":1,"wgt":20}]}</div>
+    <button class="copy-btn" onclick="copyJson('json1',this)">复制</button>
+  </div>
+</div>
+
+<!-- 蛋2 -->
+<div class="section">
+  <h2><span class="egg-tag">蛋 2</span> 总价 $3.25 | 期望 $0.285</h2>
+  <table>
+    <tr><th>道具</th><th>ID</th><th class="num">数量</th><th class="num">单价$</th><th class="num">总价$</th><th class="num">权重</th><th class="num">概率</th></tr>
+    <tr><td>通用加速5min</td><td>11111102</td><td class="num">3</td><td class="num">0.042</td><td class="num">0.126</td><td class="num">80</td><td class="num">25.00%</td></tr>
+    <tr><td class="changed">观星球(BP)</td><td class="changed">11119497</td><td class="num">4</td><td class="num">0.200</td><td class="num">0.800</td><td class="num">35</td><td class="num">10.94%</td></tr>
+    <tr><td>英雄经验-10000</td><td>11116005</td><td class="num">2</td><td class="num">0.165</td><td class="num">0.330</td><td class="num">30</td><td class="num">9.38%</td></tr>
+    <tr><td>初级资源自选箱</td><td>11114328</td><td class="num">10</td><td class="num">0.00125</td><td class="num">0.013</td><td class="num">60</td><td class="num">18.75%</td></tr>
+    <tr><td>军备零件箱</td><td>11117068</td><td class="num">5</td><td class="num">0.030</td><td class="num">0.150</td><td class="num">50</td><td class="num">15.63%</td></tr>
+    <tr><td>机甲经验-10000</td><td>11118002</td><td class="num">2</td><td class="num">0.165</td><td class="num">0.330</td><td class="num">30</td><td class="num">9.38%</td></tr>
+    <tr><td class="changed">特殊天赋道具</td><td class="changed">11111082</td><td class="num">1</td><td class="num">1.000</td><td class="num">1.000</td><td class="num">15</td><td class="num">4.69%</td></tr>
+    <tr><td>高级探测抽奖券</td><td>11117024</td><td class="num">1</td><td class="num">0.500</td><td class="num">0.500</td><td class="num">20</td><td class="num">6.25%</td></tr>
+  </table>
+  <div style="position:relative">
+    <div class="json-box" id="json2">{"typ":"single_random","num":1,"args":[{"typ":"item","id":11111102,"num":3,"wgt":80},{"typ":"item","id":11119497,"num":4,"wgt":35},{"typ":"item","id":11116005,"num":2,"wgt":30},{"typ":"item","id":11114328,"num":10,"wgt":60},{"typ":"item","id":11117068,"num":5,"wgt":50},{"typ":"item","id":11118002,"num":2,"wgt":30},{"typ":"item","id":11111082,"num":1,"wgt":15},{"typ":"item","id":11117024,"num":1,"wgt":20}]}</div>
+    <button class="copy-btn" onclick="copyJson('json2',this)">复制</button>
+  </div>
+</div>
+
+<!-- 蛋3 -->
+<div class="section">
+  <h2><span class="egg-tag">蛋 3</span> 总价 $6.49 | 期望 $0.567</h2>
+  <table>
+    <tr><th>道具</th><th>ID</th><th class="num">数量</th><th class="num">单价$</th><th class="num">总价$</th><th class="num">权重</th><th class="num">概率</th></tr>
+    <tr><td>通用加速5min</td><td>11111102</td><td class="num">5</td><td class="num">0.042</td><td class="num">0.210</td><td class="num">80</td><td class="num">25.00%</td></tr>
+    <tr><td class="changed">观星球(BP)</td><td class="changed">11119497</td><td class="num">6</td><td class="num">0.200</td><td class="num">1.200</td><td class="num">35</td><td class="num">10.94%</td></tr>
+    <tr><td>英雄经验-10000</td><td>11116005</td><td class="num">5</td><td class="num">0.165</td><td class="num">0.825</td><td class="num">30</td><td class="num">9.38%</td></tr>
+    <tr><td>中级资源自选箱</td><td>11114329</td><td class="num">15</td><td class="num">0.0125</td><td class="num">0.188</td><td class="num">60</td><td class="num">18.75%</td></tr>
+    <tr><td>军备零件箱</td><td>11117068</td><td class="num">8</td><td class="num">0.030</td><td class="num">0.240</td><td class="num">50</td><td class="num">15.63%</td></tr>
+    <tr><td>机甲经验-10000</td><td>11118002</td><td class="num">5</td><td class="num">0.165</td><td class="num">0.825</td><td class="num">30</td><td class="num">9.38%</td></tr>
+    <tr><td class="changed">特殊天赋道具</td><td class="changed">11111082</td><td class="num">2</td><td class="num">1.000</td><td class="num">2.000</td><td class="num">15</td><td class="num">4.69%</td></tr>
+    <tr><td>高级探测抽奖券</td><td>11117024</td><td class="num">2</td><td class="num">0.500</td><td class="num">1.000</td><td class="num">20</td><td class="num">6.25%</td></tr>
+  </table>
+  <div style="position:relative">
+    <div class="json-box" id="json3">{"typ":"single_random","num":1,"args":[{"typ":"item","id":11111102,"num":5,"wgt":80},{"typ":"item","id":11119497,"num":6,"wgt":35},{"typ":"item","id":11116005,"num":5,"wgt":30},{"typ":"item","id":11114329,"num":15,"wgt":60},{"typ":"item","id":11117068,"num":8,"wgt":50},{"typ":"item","id":11118002,"num":5,"wgt":30},{"typ":"item","id":11111082,"num":2,"wgt":15},{"typ":"item","id":11117024,"num":2,"wgt":20}]}</div>
+    <button class="copy-btn" onclick="copyJson('json3',this)">复制</button>
+  </div>
+</div>
+
+<!-- 蛋4 -->
+<div class="section">
+  <h2><span class="egg-tag">蛋 4</span> 总价 $8.81 | 期望 $0.825</h2>
+  <table>
+    <tr><th>道具</th><th>ID</th><th class="num">数量</th><th class="num">单价$</th><th class="num">总价$</th><th class="num">权重</th><th class="num">概率</th></tr>
+    <tr><td>通用加速5min</td><td>11111102</td><td class="num">10</td><td class="num">0.042</td><td class="num">0.420</td><td class="num">80</td><td class="num">25.00%</td></tr>
+    <tr><td class="changed">观星球(BP)</td><td class="changed">11119497</td><td class="num">8</td><td class="num">0.200</td><td class="num">1.600</td><td class="num">35</td><td class="num">10.94%</td></tr>
+    <tr><td>英雄经验-50000</td><td>11116007</td><td class="num">2</td><td class="num">0.825</td><td class="num">1.650</td><td class="num">30</td><td class="num">9.38%</td></tr>
+    <tr><td>中级资源自选箱</td><td>11114329</td><td class="num">10</td><td class="num">0.0125</td><td class="num">0.125</td><td class="num">60</td><td class="num">18.75%</td></tr>
+    <tr><td>军备零件箱</td><td>11117068</td><td class="num">12</td><td class="num">0.030</td><td class="num">0.360</td><td class="num">50</td><td class="num">15.63%</td></tr>
+    <tr><td>机甲经验-50000</td><td>11118004</td><td class="num">2</td><td class="num">0.825</td><td class="num">1.650</td><td class="num">30</td><td class="num">9.38%</td></tr>
+    <tr><td class="changed">特殊天赋道具</td><td class="changed">11111082</td><td class="num">2</td><td class="num">1.000</td><td class="num">2.000</td><td class="num">15</td><td class="num">4.69%</td></tr>
+    <tr><td>高级探测抽奖券</td><td>11117024</td><td class="num">2</td><td class="num">0.500</td><td class="num">1.000</td><td class="num">20</td><td class="num">6.25%</td></tr>
+  </table>
+  <div style="position:relative">
+    <div class="json-box" id="json4">{"typ":"single_random","num":1,"args":[{"typ":"item","id":11111102,"num":10,"wgt":80},{"typ":"item","id":11119497,"num":8,"wgt":35},{"typ":"item","id":11116007,"num":2,"wgt":30},{"typ":"item","id":11114329,"num":10,"wgt":60},{"typ":"item","id":11117068,"num":12,"wgt":50},{"typ":"item","id":11118004,"num":2,"wgt":30},{"typ":"item","id":11111082,"num":2,"wgt":15},{"typ":"item","id":11117024,"num":2,"wgt":20}]}</div>
+    <button class="copy-btn" onclick="copyJson('json4',this)">复制</button>
+  </div>
+</div>
+
+<!-- 蛋5 -->
+<div class="section">
+  <h2><span class="egg-tag">蛋 5</span> 总价 $16.02 | 期望 $1.490</h2>
+  <table>
+    <tr><th>道具</th><th>ID</th><th class="num">数量</th><th class="num">单价$</th><th class="num">总价$</th><th class="num">权重</th><th class="num">概率</th></tr>
+    <tr><td>通用加速5min</td><td>11111102</td><td class="num">15</td><td class="num">0.042</td><td class="num">0.630</td><td class="num">80</td><td class="num">25.00%</td></tr>
+    <tr><td class="changed">观星球(BP)</td><td class="changed">11119497</td><td class="num">10</td><td class="num">0.200</td><td class="num">2.000</td><td class="num">35</td><td class="num">10.94%</td></tr>
+    <tr><td>英雄经验-50000</td><td>11116007</td><td class="num">5</td><td class="num">0.825</td><td class="num">4.125</td><td class="num">30</td><td class="num">9.38%</td></tr>
+    <tr><td>中级资源自选箱</td><td>11114329</td><td class="num">15</td><td class="num">0.0125</td><td class="num">0.188</td><td class="num">60</td><td class="num">18.75%</td></tr>
+    <tr><td>军备零件箱</td><td>11117068</td><td class="num">15</td><td class="num">0.030</td><td class="num">0.450</td><td class="num">50</td><td class="num">15.63%</td></tr>
+    <tr><td>机甲经验-50000</td><td>11118004</td><td class="num">5</td><td class="num">0.825</td><td class="num">4.125</td><td class="num">30</td><td class="num">9.38%</td></tr>
+    <tr><td class="changed">特殊天赋道具</td><td class="changed">11111082</td><td class="num">3</td><td class="num">1.000</td><td class="num">3.000</td><td class="num">15</td><td class="num">4.69%</td></tr>
+    <tr><td>高级探测抽奖券</td><td>11117024</td><td class="num">3</td><td class="num">0.500</td><td class="num">1.500</td><td class="num">20</td><td class="num">6.25%</td></tr>
+  </table>
+  <div style="position:relative">
+    <div class="json-box" id="json5">{"typ":"single_random","num":1,"args":[{"typ":"item","id":11111102,"num":15,"wgt":80},{"typ":"item","id":11119497,"num":10,"wgt":35},{"typ":"item","id":11116007,"num":5,"wgt":30},{"typ":"item","id":11114329,"num":15,"wgt":60},{"typ":"item","id":11117068,"num":15,"wgt":50},{"typ":"item","id":11118004,"num":5,"wgt":30},{"typ":"item","id":11111082,"num":3,"wgt":15},{"typ":"item","id":11117024,"num":3,"wgt":20}]}</div>
+    <button class="copy-btn" onclick="copyJson('json5',this)">复制</button>
+  </div>
+</div>
+
+<!-- 蛋6 -->
+<div class="section">
+  <h2><span class="egg-tag high">蛋 6</span> 总价 $16.65 | 期望 $1.831 | 权重255</h2>
+  <table>
+    <tr><th>道具</th><th>ID</th><th class="num">数量</th><th class="num">单价$</th><th class="num">总价$</th><th class="num">权重</th><th class="num">概率</th></tr>
+    <tr><td>通用加速1h</td><td>11111105</td><td class="num">2</td><td class="num">0.500</td><td class="num">1.000</td><td class="num">80</td><td class="num">31.37%</td></tr>
+    <tr><td>高级资源自选箱</td><td>11114330</td><td class="num">10</td><td class="num">0.125</td><td class="num">1.250</td><td class="num">60</td><td class="num">23.53%</td></tr>
+    <tr><td class="changed">漫游骰子 (×2补价)</td><td class="changed">11112498</td><td class="num">4</td><td class="num">0.500</td><td class="num">2.000</td><td class="num">30</td><td class="num">11.76%</td></tr>
+    <tr><td class="changed">万能英雄碎片-橙</td><td class="changed">11116304</td><td class="num">2</td><td class="num">2.000</td><td class="num">4.000</td><td class="num">20</td><td class="num">7.84%</td></tr>
+    <tr><td class="changed">观星球(BP)</td><td class="changed">11119497</td><td class="num">12</td><td class="num">0.200</td><td class="num">2.400</td><td class="num">30</td><td class="num">11.76%</td></tr>
+    <tr><td class="changed">特殊天赋道具</td><td class="changed">11111082</td><td class="num">4</td><td class="num">1.000</td><td class="num">4.000</td><td class="num">15</td><td class="num">5.88%</td></tr>
+    <tr><td>高级探测抽奖券</td><td>11117024</td><td class="num">4</td><td class="num">0.500</td><td class="num">2.000</td><td class="num">20</td><td class="num">7.84%</td></tr>
+  </table>
+  <div style="position:relative">
+    <div class="json-box" id="json6">{"typ":"single_random","num":1,"args":[{"typ":"item","id":11111105,"num":2,"wgt":80},{"typ":"item","id":11114330,"num":10,"wgt":60},{"typ":"item","id":11112498,"num":4,"wgt":30},{"typ":"item","id":11116304,"num":2,"wgt":20},{"typ":"item","id":11119497,"num":12,"wgt":30},{"typ":"item","id":11111082,"num":4,"wgt":15},{"typ":"item","id":11117024,"num":4,"wgt":20}]}</div>
+    <button class="copy-btn" onclick="copyJson('json6',this)">复制</button>
+  </div>
+</div>
+
+<!-- 蛋7 -->
+<div class="section">
+  <h2><span class="egg-tag high">蛋 7</span> 总价 $29.88 | 期望 $3.689 | 权重265</h2>
+  <table>
+    <tr><th>道具</th><th>ID</th><th class="num">数量</th><th class="num">单价$</th><th class="num">总价$</th><th class="num">权重</th><th class="num">概率</th></tr>
+    <tr><td>通用加速1h</td><td>11111105</td><td class="num">5</td><td class="num">0.500</td><td class="num">2.500</td><td class="num">80</td><td class="num">30.19%</td></tr>
+    <tr><td>高级资源自选箱</td><td>11114330</td><td class="num">15</td><td class="num">0.125</td><td class="num">1.875</td><td class="num">60</td><td class="num">22.64%</td></tr>
+    <tr><td class="changed">漫游骰子 (×2补价)</td><td class="changed">11112498</td><td class="num">10</td><td class="num">0.500</td><td class="num">5.000</td><td class="num">30</td><td class="num">11.32%</td></tr>
+    <tr><td class="changed">万能英雄碎片-橙</td><td class="changed">11116304</td><td class="num">5</td><td class="num">2.000</td><td class="num">10.000</td><td class="num">30</td><td class="num">11.32%</td></tr>
+    <tr><td class="changed">观星球(BP)</td><td class="changed">11119497</td><td class="num">15</td><td class="num">0.200</td><td class="num">3.000</td><td class="num">30</td><td class="num">11.32%</td></tr>
+    <tr><td class="changed">特殊天赋道具</td><td class="changed">11111082</td><td class="num">5</td><td class="num">1.000</td><td class="num">5.000</td><td class="num">15</td><td class="num">5.66%</td></tr>
+    <tr><td>高级探测抽奖券</td><td>11117024</td><td class="num">5</td><td class="num">0.500</td><td class="num">2.500</td><td class="num">20</td><td class="num">7.55%</td></tr>
+  </table>
+  <div style="position:relative">
+    <div class="json-box" id="json7">{"typ":"single_random","num":1,"args":[{"typ":"item","id":11111105,"num":5,"wgt":80},{"typ":"item","id":11114330,"num":15,"wgt":60},{"typ":"item","id":11112498,"num":10,"wgt":30},{"typ":"item","id":11116304,"num":5,"wgt":30},{"typ":"item","id":11119497,"num":15,"wgt":30},{"typ":"item","id":11111082,"num":5,"wgt":15},{"typ":"item","id":11117024,"num":5,"wgt":20}]}</div>
+    <button class="copy-btn" onclick="copyJson('json7',this)">复制</button>
+  </div>
+</div>
+
+<!-- ROI 汇总 -->
+<div class="section">
+  <h2>ROI 汇总</h2>
+  <table>
+    <tr><th></th><th class="num">蛋1</th><th class="num">蛋2</th><th class="num">蛋3</th><th class="num">蛋4</th><th class="num">蛋5</th><th class="num">蛋6</th><th class="num">蛋7</th><th class="num">合计</th></tr>
+    <tr><td>道具总价$</td><td class="num">2.38</td><td class="num">3.25</td><td class="num">6.49</td><td class="num">8.81</td><td class="num">16.02</td><td class="num">16.65</td><td class="num">29.88</td><td class="num" style="color:#ffd700;font-weight:700">83.46</td></tr>
+    <tr><td>期望值$</td><td class="num">0.184</td><td class="num">0.285</td><td class="num">0.567</td><td class="num">0.825</td><td class="num">1.490</td><td class="num">1.831</td><td class="num">3.689</td><td class="num">—</td></tr>
+    <tr class="roi-row"><td colspan="7"></td><td>礼包 $9.99</td><td>ROI 8.35x</td></tr>
+  </table>
+</div>
+
+<script>
+function copyJson(id, btn) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '已复制';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '复制'; btn.classList.remove('copied'); }, 1500);
+  });
+}
+</script>
+
+</body>
+</html>

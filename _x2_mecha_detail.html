@@ -1,0 +1,572 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><title>机甲活动投放明细</title><style>*,*::before,*::after{box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.7;color:#24292e;background:#fff;margin:0;padding:0}#content{max-width:900px;margin:0 auto;padding:48px 32px 80px}h1,h2,h3,h4,h5,h6{font-weight:600;line-height:1.3;margin-top:1.5em;margin-bottom:.5em}h1{font-size:2em;border-bottom:1px solid #eaecef;padding-bottom:.3em}h2{font-size:1.5em;border-bottom:1px solid #eaecef;padding-bottom:.3em;background:#f6f8fa;padding:.3em .5em;border-radius:4px}h3{font-size:1.25em;color:#0366d6}a{color:#0366d6;text-decoration:none}a:hover{text-decoration:underline}code{background:#f6f8fa;padding:.2em .4em;border-radius:3px;font-size:.9em}blockquote{margin:0;padding:0 1em;color:#6a737d;border-left:4px solid #dfe2e5}table{border-collapse:collapse;width:100%;margin:1em 0}th,td{border:1px solid #dfe2e5;padding:8px 12px}th{background:#f6f8fa;font-weight:600}tr:nth-child(even) td{background:#fafbfc}strong{color:#d73a49}</style></head><body><a id="dl-md" href="#" style="position:fixed;top:12px;right:12px;padding:6px 12px;background:#0366d6;color:#fff;border-radius:4px;text-decoration:none;font-size:14px">下载 MD</a><div id="content"><h1>机甲活动投放明细</h1>
+<blockquote>
+<p><strong>定位</strong>：存放机甲养成线的详细清单（11 只机甲、1111 道具 ID、2013 礼包 397 条、投放思路等）。
+价值汇总见 <a href="养成线深度手册.md">养成线深度手册.md</a> §三 机甲。
+整理时间：2026-04-15</p>
+</blockquote>
+<hr />
+<h2>三、机甲</h2>
+<p><strong>基本单位 = 单只机甲</strong>（独立战斗单位，不挂英雄上）。</p>
+<p><strong>当前已配置机甲</strong>（按 2013 礼包模板统计，共 11 只）：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>机甲</th>
+<th style="text-align: center;">对标 P2</th>
+<th style="text-align: center;">1111 芯片 ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首批上线</td>
+<td>蒸汽蜘蛛（免费）</td>
+<td style="text-align: center;">犀牛</td>
+<td style="text-align: center;">11118101</td>
+</tr>
+<tr>
+<td>首批上线</td>
+<td>人马骑士（付费 1）</td>
+<td style="text-align: center;">金刚</td>
+<td style="text-align: center;">11118102</td>
+</tr>
+<tr>
+<td>首批上线</td>
+<td><strong>芬里尔狼</strong>（付费 2）</td>
+<td style="text-align: center;">猎豹</td>
+<td style="text-align: center;">11118103</td>
+</tr>
+<tr>
+<td>后续投放</td>
+<td>蝎尾狮</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">11118104</td>
+</tr>
+<tr>
+<td>后续投放</td>
+<td>雷鸟</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">11118105</td>
+</tr>
+<tr>
+<td>后续投放</td>
+<td>贝希摩斯（巨象）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">11118106</td>
+</tr>
+<tr>
+<td>后续投放</td>
+<td>雄狮</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">11118107</td>
+</tr>
+<tr>
+<td>后续投放</td>
+<td>螳螂</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">11118108</td>
+</tr>
+<tr>
+<td>特殊</td>
+<td>毒蝎 / 天鹰 / 紫机甲（通用紫色）</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">在 2013 礼包中独立成套</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>1.0框架 r174-178 的工作名是"双头狼"，1111 道具表实际命名为"<strong>芬里尔狼</strong>"。以 1111 命名为准。</p>
+</blockquote>
+<h3>3.1 养成路径</h3>
+<table>
+<thead>
+<tr>
+<th>养成维度</th>
+<th>核心消耗</th>
+<th>路径</th>
+<th>深度特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>等级</strong></td>
+<td>机甲经验</td>
+<td>1→100 主路线，100→135 突破上限</td>
+<td>通用投放，肝度玩家 3 个月、高战玩家 1 个月内可升满</td>
+</tr>
+<tr>
+<td><strong>技能</strong></td>
+<td>紫色芯片 / 金色芯片 / 机能核心</td>
+<td>1 终极 + 5 被动；解锁 → 升级 → 突破 → 重置</td>
+<td><strong>主付费坑</strong>（占橙色机甲 55%）</td>
+</tr>
+<tr>
+<td><strong>自由属性</strong></td>
+<td>属性点转化资产</td>
+<td>升级获得属性点，可加到攻击/防御/生命</td>
+<td>辅助线</td>
+</tr>
+<tr>
+<td><strong>进化</strong></td>
+<td>耐久强化道具</td>
+<td>分阶段开放，提升耐久上限</td>
+<td>橙色机甲不消耗耐久强化占比</td>
+</tr>
+</tbody>
+</table>
+<p><strong>功能解锁节奏</strong>：机甲功能 D22 开放，技能突破 D65 开放。</p>
+<blockquote>
+<p>数据来源：汇总表 <code>1vsQ0GV-...</code> / <code>机甲</code> 页签（gid=1708545807，只有礼包 ROI）
+细化数值：<code>127u1z5J27UkSFxN1Ig9gEnDZVKIoFvYKjW8KOJ5b5OQ</code> / <code>1.0框架</code> + <code>2.1等级</code> + <code>2.2技能消耗</code> + <code>4.0投放</code> 等 16 个页签</p>
+</blockquote>
+<h3>3.2 材料单价</h3>
+<table>
+<thead>
+<tr>
+<th>材料</th>
+<th style="text-align: center;">1111 ID</th>
+<th style="text-align: right;">美金单价</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>机甲经验</td>
+<td style="text-align: center;">11118001~07（7 档）</td>
+<td style="text-align: right;"><strong>$100 = 12,000,000 经验</strong></td>
+<td>跟 P2 经验口径一致</td>
+</tr>
+<tr>
+<td>机甲专属芯片（各机甲独立）</td>
+<td style="text-align: center;">11118101~108</td>
+<td style="text-align: right;"><strong>$1.00/个</strong></td>
+<td>技能升级主材料；按机甲分配独立品</td>
+</tr>
+<tr>
+<td>通用机甲芯片</td>
+<td style="text-align: center;">11118201</td>
+<td style="text-align: right;"><strong>$1.00/个</strong></td>
+<td>技能升级通用品</td>
+</tr>
+<tr>
+<td>史诗机能核心</td>
+<td style="text-align: center;">11118401</td>
+<td style="text-align: right;">TODO</td>
+<td><strong>紫色</strong>机甲技能突破</td>
+</tr>
+<tr>
+<td>传说机能核心</td>
+<td style="text-align: center;">11118501</td>
+<td style="text-align: right;"><strong>$0.50/个</strong></td>
+<td><strong>橙色</strong>机甲技能突破</td>
+</tr>
+<tr>
+<td>机甲重置器</td>
+<td style="text-align: center;">11118301</td>
+<td style="text-align: right;">TODO</td>
+<td>技能重置</td>
+</tr>
+<tr>
+<td>耐久强化道具</td>
+<td style="text-align: center;">11118202</td>
+<td style="text-align: right;">TODO</td>
+<td>机甲进化</td>
+</tr>
+<tr>
+<td>机甲破冰打折卡</td>
+<td style="text-align: center;">11118009~11</td>
+<td style="text-align: right;">—</td>
+<td>金刚/猎豹/毒蝎 各一款</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>单价以「机甲礼包 ROI 数据」反推为准（最可靠来源）；1.0框架 r183 标的"单价"疑似按不同单位口径，待对齐。</p>
+</blockquote>
+<h3>3.3 单机甲总坑深</h3>
+<table>
+<thead>
+<tr>
+<th>品质</th>
+<th style="text-align: right;">钻石</th>
+<th style="text-align: right;">美金</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>橙色机甲</strong></td>
+<td style="text-align: right;">12,503,191</td>
+<td style="text-align: right;"><strong>$50,013</strong></td>
+</tr>
+<tr>
+<td><strong>紫色机甲</strong></td>
+<td style="text-align: right;">4,167,730</td>
+<td style="text-align: right;"><strong>$16,671</strong>（橙色的 1/3）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>橙色机甲坑深分配</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th style="text-align: center;">占比</th>
+<th style="text-align: right;">对应钻石</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>等级 (1→100)</td>
+<td style="text-align: center;">15%</td>
+<td style="text-align: right;">1,875,479</td>
+</tr>
+<tr>
+<td>等级 (100→135)</td>
+<td style="text-align: center;">0%*</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>技能普通</td>
+<td style="text-align: center;">30%</td>
+<td style="text-align: right;">3,750,957</td>
+</tr>
+<tr>
+<td><strong>突破技能</strong></td>
+<td style="text-align: center;"><strong>55%</strong></td>
+<td style="text-align: right;"><strong>6,876,755</strong></td>
+</tr>
+<tr>
+<td>耐久强化</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>*突破等级和耐久强化在首批不计入主坑深（运营后期追加）。实际设计 vs 运营目标坑深存在偏差（源表 r114 标注"和设定坑深根本对不上"），本手册采用设计目标值。</p>
+</blockquote>
+<h3>3.4 礼包形态与 ROI</h3>
+<p><strong>实际规模</strong>：2013 iap_template 表里机甲相关礼包 <strong>397 条，12 类 temp_type</strong>。养成线汇总表的「机甲」页签只抽了其中一只机甲（<strong>天鹰</strong>）的 32 行作为样本。</p>
+<p><strong>12 类礼包概览</strong>（按 2013 temp_type 统计）：</p>
+<table>
+<thead>
+<tr>
+<th>temp_type</th>
+<th style="text-align: right;">数量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>mecha_achievement</strong></td>
+<td style="text-align: right;"><strong>145</strong></td>
+<td>成就礼包：按等级/技能进度解锁，每只机甲独立一套</td>
+</tr>
+<tr>
+<td><strong>scene</strong></td>
+<td style="text-align: right;">103</td>
+<td>场景触发：升级触发 / 经验耗尽 / BI 推荐</td>
+</tr>
+<tr>
+<td>normal</td>
+<td style="text-align: right;">55</td>
+<td>常规礼包（含机甲转盘 4.99~99.99 5 档 × 多主题）</td>
+</tr>
+<tr>
+<td><strong>cycle</strong></td>
+<td style="text-align: right;">23</td>
+<td>循环礼包：机甲芯片+能源锚点 5 档组合</td>
+</tr>
+<tr>
+<td>fes_discount_pack</td>
+<td style="text-align: right;">18</td>
+<td>节日折扣包</td>
+</tr>
+<tr>
+<td>random</td>
+<td style="text-align: right;">15</td>
+<td>盲盒</td>
+</tr>
+<tr>
+<td>deepbuy</td>
+<td style="text-align: right;">14</td>
+<td>深度购买</td>
+</tr>
+<tr>
+<td>small_account_pkg</td>
+<td style="text-align: right;">10</td>
+<td>小号包</td>
+</tr>
+<tr>
+<td>newbieshop</td>
+<td style="text-align: right;">8</td>
+<td>新手商店</td>
+</tr>
+<tr>
+<td>mecha_heal_queue_pkg</td>
+<td style="text-align: right;">3</td>
+<td>治疗队列</td>
+</tr>
+<tr>
+<td>battle_pass</td>
+<td style="text-align: right;">2</td>
+<td>BP</td>
+</tr>
+<tr>
+<td>mecha_first_purchase</td>
+<td style="text-align: right;">1</td>
+<td>机甲首充</td>
+</tr>
+</tbody>
+</table>
+<p><strong>成就礼包（mecha_achievement）结构</strong>：每只机甲一套完整 20 档——</p>
+<table>
+<thead>
+<tr>
+<th>段</th>
+<th>档位</th>
+<th>主要内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基础段</td>
+<td>15/25/30/40/50/60/70/80/90/100 级（10 档）</td>
+<td>机甲经验 + 机甲碎片 + 机能核心</td>
+</tr>
+<tr>
+<td>技能段</td>
+<td>技能全 5 / 10 / 15（3 档）</td>
+<td>机甲碎片 + 机能核心</td>
+</tr>
+<tr>
+<td>突破段</td>
+<td>105/110/115/120/125/130/135 级（7 档，仅首批机甲）</td>
+<td>机甲经验 + 机甲碎片 + 机能核心</td>
+</tr>
+</tbody>
+</table>
+<p><strong>天鹰机甲示例</strong>（源表「机甲」页签 32 行，ROI 普遍 <strong>185%-225%</strong>）：</p>
+<p><strong>等级升级成就礼包</strong>（随机甲等级提升解锁，共 10 档）</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">价位</th>
+<th style="text-align: right;">机甲经验</th>
+<th style="text-align: right;">机甲碎片</th>
+<th style="text-align: right;">机能核心</th>
+<th style="text-align: right;">礼包总价值</th>
+<th style="text-align: right;">ROI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">$4.99</td>
+<td style="text-align: right;">1.35M</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">$11.25</td>
+<td style="text-align: right;">225%</td>
+</tr>
+<tr>
+<td style="text-align: right;">$9.99</td>
+<td style="text-align: right;">2.70M</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">$22.50</td>
+<td style="text-align: right;">225%</td>
+</tr>
+<tr>
+<td style="text-align: right;">$19.99</td>
+<td style="text-align: right;">3.00M</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">$45.00</td>
+<td style="text-align: right;">225%</td>
+</tr>
+<tr>
+<td style="text-align: right;">$49.99</td>
+<td style="text-align: right;">6.00M</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">$113.00</td>
+<td style="text-align: right;">226%</td>
+</tr>
+<tr>
+<td style="text-align: right;">$99.99</td>
+<td style="text-align: right;">12.00M</td>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">$225.00</td>
+<td style="text-align: right;">225%</td>
+</tr>
+<tr>
+<td style="text-align: right;">$99.99</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">225</td>
+<td style="text-align: right;">$187.50</td>
+<td style="text-align: right;">188%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>技能升级成就礼包</strong>（技能等级 5/10/15/全 解锁，3 档）</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">价位</th>
+<th style="text-align: right;">机甲碎片</th>
+<th style="text-align: right;">机能核心</th>
+<th style="text-align: right;">总价值</th>
+<th style="text-align: right;">ROI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">$19.99</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">$40.00</td>
+<td style="text-align: right;">200%</td>
+</tr>
+<tr>
+<td style="text-align: right;">$49.99</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">113</td>
+<td style="text-align: right;">$94.50</td>
+<td style="text-align: right;">189%</td>
+</tr>
+<tr>
+<td style="text-align: right;">$99.99</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">225</td>
+<td style="text-align: right;">$187.50</td>
+<td style="text-align: right;">188%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>触发-技能升级</strong>（机甲达到指定技能等级时触发，以天鹰为例）</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">价位</th>
+<th style="text-align: right;">机甲经验</th>
+<th style="text-align: right;">机甲碎片</th>
+<th style="text-align: right;">机能核心</th>
+<th style="text-align: right;">总价值</th>
+<th style="text-align: right;">ROI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">$4.99</td>
+<td style="text-align: right;">0.60M</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">$10.00</td>
+<td style="text-align: right;">200%</td>
+</tr>
+<tr>
+<td style="text-align: right;">$9.99</td>
+<td style="text-align: right;">0.60M</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">$18.50</td>
+<td style="text-align: right;">185%</td>
+</tr>
+<tr>
+<td style="text-align: right;">$19.99</td>
+<td style="text-align: right;">1.20M</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">$37.00</td>
+<td style="text-align: right;">185%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>触发-经验耗尽 + BI 推荐</strong>（共享同一套经验礼包，6 档 4.99~99.99）</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">价位</th>
+<th style="text-align: right;">机甲经验</th>
+<th style="text-align: right;">美金价值</th>
+<th style="text-align: right;">ROI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">$4.99</td>
+<td style="text-align: right;">1.11M</td>
+<td style="text-align: right;">$9.25</td>
+<td style="text-align: right;">185%</td>
+</tr>
+<tr>
+<td style="text-align: right;">$9.99</td>
+<td style="text-align: right;">2.22M</td>
+<td style="text-align: right;">$18.50</td>
+<td style="text-align: right;">185%</td>
+</tr>
+<tr>
+<td style="text-align: right;">$19.99</td>
+<td style="text-align: right;">4.44M</td>
+<td style="text-align: right;">$37.00</td>
+<td style="text-align: right;">185%</td>
+</tr>
+<tr>
+<td style="text-align: right;">$49.99</td>
+<td style="text-align: right;">11.10M</td>
+<td style="text-align: right;">$92.50</td>
+<td style="text-align: right;">185%</td>
+</tr>
+<tr>
+<td style="text-align: right;">$99.99</td>
+<td style="text-align: right;">22.20M</td>
+<td style="text-align: right;">$185.00</td>
+<td style="text-align: right;">185%</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>未展开的 7 类（normal / cycle / fes_discount_pack / random / deepbuy / small_account_pkg / newbieshop / mecha_heal_queue_pkg / battle_pass / mecha_first_purchase）TODO：需要就去 2013 表拉对应 ID 段的数据。</p>
+</blockquote>
+<h3>3.5 道具投放思路（源表 4.0投放 的定性描述）</h3>
+<table>
+<thead>
+<tr>
+<th>材料</th>
+<th>投放思路</th>
+<th>投放节奏</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>机甲经验</td>
+<td>通用投</td>
+<td>普通肝玩家 3 个月升满，高战玩家 1 个月内</td>
+</tr>
+<tr>
+<td>紫色芯片</td>
+<td>指定玩法/活动投放</td>
+<td>普通玩家养满单只巨兽的普通技能 <strong>需 1 年以上</strong>（不含运营投放）</td>
+</tr>
+<tr>
+<td>金色芯片 / 通用金芯</td>
+<td><strong>运营付费投放</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>史诗机能核心</td>
+<td>类比英雄金头，部分玩法少量投放</td>
+<td>—</td>
+</tr>
+<tr>
+<td>传说机能核心</td>
+<td><strong>运营付费投放</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>更细的周产出（对标宝石 §1.7 的 140/周）需要读 <code>4.0投放</code> 页签展开，当前留 TODO。</p>
+</blockquote></div><script>var m="# \u673a\u7532\u6d3b\u52a8\u6295\u653e\u660e\u7ec6\n\n> **\u5b9a\u4f4d**\uff1a\u5b58\u653e\u673a\u7532\u517b\u6210\u7ebf\u7684\u8be6\u7ec6\u6e05\u5355\uff0811 \u53ea\u673a\u7532\u30011111 \u9053\u5177 ID\u30012013 \u793c\u5305 397 \u6761\u3001\u6295\u653e\u601d\u8def\u7b49\uff09\u3002\n> \u4ef7\u503c\u6c47\u603b\u89c1 [\u517b\u6210\u7ebf\u6df1\u5ea6\u624b\u518c.md](\u517b\u6210\u7ebf\u6df1\u5ea6\u624b\u518c.md) \u00a7\u4e09 \u673a\u7532\u3002\n> \u6574\u7406\u65f6\u95f4\uff1a2026-04-15\n\n---\n\n## \u4e09\u3001\u673a\u7532\n\n**\u57fa\u672c\u5355\u4f4d = \u5355\u53ea\u673a\u7532**\uff08\u72ec\u7acb\u6218\u6597\u5355\u4f4d\uff0c\u4e0d\u6302\u82f1\u96c4\u4e0a\uff09\u3002\n\n**\u5f53\u524d\u5df2\u914d\u7f6e\u673a\u7532**\uff08\u6309 2013 \u793c\u5305\u6a21\u677f\u7edf\u8ba1\uff0c\u5171 11 \u53ea\uff09\uff1a\n\n| \u7c7b\u522b | \u673a\u7532 | \u5bf9\u6807 P2 | 1111 \u82af\u7247 ID |\n|------|------|:---:|:---:|\n| \u9996\u6279\u4e0a\u7ebf | \u84b8\u6c7d\u8718\u86db\uff08\u514d\u8d39\uff09| \u7280\u725b | 11118101 |\n| \u9996\u6279\u4e0a\u7ebf | \u4eba\u9a6c\u9a91\u58eb\uff08\u4ed8\u8d39 1\uff09| \u91d1\u521a | 11118102 |\n| \u9996\u6279\u4e0a\u7ebf | **\u82ac\u91cc\u5c14\u72fc**\uff08\u4ed8\u8d39 2\uff09| \u730e\u8c79 | 11118103 |\n| \u540e\u7eed\u6295\u653e | \u874e\u5c3e\u72ee | \u2014 | 11118104 |\n| \u540e\u7eed\u6295\u653e | \u96f7\u9e1f | \u2014 | 11118105 |\n| \u540e\u7eed\u6295\u653e | \u8d1d\u5e0c\u6469\u65af\uff08\u5de8\u8c61\uff09| \u2014 | 11118106 |\n| \u540e\u7eed\u6295\u653e | \u96c4\u72ee | \u2014 | 11118107 |\n| \u540e\u7eed\u6295\u653e | \u87b3\u8782 | \u2014 | 11118108 |\n| \u7279\u6b8a | \u6bd2\u874e / \u5929\u9e70 / \u7d2b\u673a\u7532\uff08\u901a\u7528\u7d2b\u8272\uff09| \u2014 | \u5728 2013 \u793c\u5305\u4e2d\u72ec\u7acb\u6210\u5957 |\n\n> 1.0\u6846\u67b6 r174-178 \u7684\u5de5\u4f5c\u540d\u662f\"\u53cc\u5934\u72fc\"\uff0c1111 \u9053\u5177\u8868\u5b9e\u9645\u547d\u540d\u4e3a\"**\u82ac\u91cc\u5c14\u72fc**\"\u3002\u4ee5 1111 \u547d\u540d\u4e3a\u51c6\u3002\n\n### 3.1 \u517b\u6210\u8def\u5f84\n\n| \u517b\u6210\u7ef4\u5ea6 | \u6838\u5fc3\u6d88\u8017 | \u8def\u5f84 | \u6df1\u5ea6\u7279\u5f81 |\n|---------|---------|------|---------|\n| **\u7b49\u7ea7** | \u673a\u7532\u7ecf\u9a8c | 1\u2192100 \u4e3b\u8def\u7ebf\uff0c100\u2192135 \u7a81\u7834\u4e0a\u9650 | \u901a\u7528\u6295\u653e\uff0c\u809d\u5ea6\u73a9\u5bb6 3 \u4e2a\u6708\u3001\u9ad8\u6218\u73a9\u5bb6 1 \u4e2a\u6708\u5185\u53ef\u5347\u6ee1 |\n| **\u6280\u80fd** | \u7d2b\u8272\u82af\u7247 / \u91d1\u8272\u82af\u7247 / \u673a\u80fd\u6838\u5fc3 | 1 \u7ec8\u6781 + 5 \u88ab\u52a8\uff1b\u89e3\u9501 \u2192 \u5347\u7ea7 \u2192 \u7a81\u7834 \u2192 \u91cd\u7f6e | **\u4e3b\u4ed8\u8d39\u5751**\uff08\u5360\u6a59\u8272\u673a\u7532 55%\uff09 |\n| **\u81ea\u7531\u5c5e\u6027** | \u5c5e\u6027\u70b9\u8f6c\u5316\u8d44\u4ea7 | \u5347\u7ea7\u83b7\u5f97\u5c5e\u6027\u70b9\uff0c\u53ef\u52a0\u5230\u653b\u51fb/\u9632\u5fa1/\u751f\u547d | \u8f85\u52a9\u7ebf |\n| **\u8fdb\u5316** | \u8010\u4e45\u5f3a\u5316\u9053\u5177 | \u5206\u9636\u6bb5\u5f00\u653e\uff0c\u63d0\u5347\u8010\u4e45\u4e0a\u9650 | \u6a59\u8272\u673a\u7532\u4e0d\u6d88\u8017\u8010\u4e45\u5f3a\u5316\u5360\u6bd4 |\n\n**\u529f\u80fd\u89e3\u9501\u8282\u594f**\uff1a\u673a\u7532\u529f\u80fd D22 \u5f00\u653e\uff0c\u6280\u80fd\u7a81\u7834 D65 \u5f00\u653e\u3002\n\n> \u6570\u636e\u6765\u6e90\uff1a\u6c47\u603b\u8868 `1vsQ0GV-...` / `\u673a\u7532` \u9875\u7b7e\uff08gid=1708545807\uff0c\u53ea\u6709\u793c\u5305 ROI\uff09\n> \u7ec6\u5316\u6570\u503c\uff1a`127u1z5J27UkSFxN1Ig9gEnDZVKIoFvYKjW8KOJ5b5OQ` / `1.0\u6846\u67b6` + `2.1\u7b49\u7ea7` + `2.2\u6280\u80fd\u6d88\u8017` + `4.0\u6295\u653e` \u7b49 16 \u4e2a\u9875\u7b7e\n\n### 3.2 \u6750\u6599\u5355\u4ef7\n\n| \u6750\u6599 | 1111 ID | \u7f8e\u91d1\u5355\u4ef7 | \u5907\u6ce8 |\n|------|:---:|--------:|------|\n| \u673a\u7532\u7ecf\u9a8c | 11118001~07\uff087 \u6863\uff09| **$100 = 12,000,000 \u7ecf\u9a8c** | \u8ddf P2 \u7ecf\u9a8c\u53e3\u5f84\u4e00\u81f4 |\n| \u673a\u7532\u4e13\u5c5e\u82af\u7247\uff08\u5404\u673a\u7532\u72ec\u7acb\uff09| 11118101~108 | **$1.00/\u4e2a** | \u6280\u80fd\u5347\u7ea7\u4e3b\u6750\u6599\uff1b\u6309\u673a\u7532\u5206\u914d\u72ec\u7acb\u54c1 |\n| \u901a\u7528\u673a\u7532\u82af\u7247 | 11118201 | **$1.00/\u4e2a** | \u6280\u80fd\u5347\u7ea7\u901a\u7528\u54c1 |\n| \u53f2\u8bd7\u673a\u80fd\u6838\u5fc3 | 11118401 | TODO | **\u7d2b\u8272**\u673a\u7532\u6280\u80fd\u7a81\u7834 |\n| \u4f20\u8bf4\u673a\u80fd\u6838\u5fc3 | 11118501 | **$0.50/\u4e2a** | **\u6a59\u8272**\u673a\u7532\u6280\u80fd\u7a81\u7834 |\n| \u673a\u7532\u91cd\u7f6e\u5668 | 11118301 | TODO | \u6280\u80fd\u91cd\u7f6e |\n| \u8010\u4e45\u5f3a\u5316\u9053\u5177 | 11118202 | TODO | \u673a\u7532\u8fdb\u5316 |\n| \u673a\u7532\u7834\u51b0\u6253\u6298\u5361 | 11118009~11 | \u2014 | \u91d1\u521a/\u730e\u8c79/\u6bd2\u874e \u5404\u4e00\u6b3e |\n\n> \u5355\u4ef7\u4ee5\u300c\u673a\u7532\u793c\u5305 ROI \u6570\u636e\u300d\u53cd\u63a8\u4e3a\u51c6\uff08\u6700\u53ef\u9760\u6765\u6e90\uff09\uff1b1.0\u6846\u67b6 r183 \u6807\u7684\"\u5355\u4ef7\"\u7591\u4f3c\u6309\u4e0d\u540c\u5355\u4f4d\u53e3\u5f84\uff0c\u5f85\u5bf9\u9f50\u3002\n\n### 3.3 \u5355\u673a\u7532\u603b\u5751\u6df1\n\n| \u54c1\u8d28 | \u94bb\u77f3 | \u7f8e\u91d1 |\n|------|------:|------:|\n| **\u6a59\u8272\u673a\u7532** | 12,503,191 | **$50,013** |\n| **\u7d2b\u8272\u673a\u7532** | 4,167,730 | **$16,671**\uff08\u6a59\u8272\u7684 1/3\uff09 |\n\n**\u6a59\u8272\u673a\u7532\u5751\u6df1\u5206\u914d**\uff1a\n\n| \u7ef4\u5ea6 | \u5360\u6bd4 | \u5bf9\u5e94\u94bb\u77f3 |\n|------|:---:|------:|\n| \u7b49\u7ea7 (1\u2192100) | 15% | 1,875,479 |\n| \u7b49\u7ea7 (100\u2192135) | 0%* | \u2014 |\n| \u6280\u80fd\u666e\u901a | 30% | 3,750,957 |\n| **\u7a81\u7834\u6280\u80fd** | **55%** | **6,876,755** |\n| \u8010\u4e45\u5f3a\u5316 | 0% | \u2014 |\n\n> *\u7a81\u7834\u7b49\u7ea7\u548c\u8010\u4e45\u5f3a\u5316\u5728\u9996\u6279\u4e0d\u8ba1\u5165\u4e3b\u5751\u6df1\uff08\u8fd0\u8425\u540e\u671f\u8ffd\u52a0\uff09\u3002\u5b9e\u9645\u8bbe\u8ba1 vs \u8fd0\u8425\u76ee\u6807\u5751\u6df1\u5b58\u5728\u504f\u5dee\uff08\u6e90\u8868 r114 \u6807\u6ce8\"\u548c\u8bbe\u5b9a\u5751\u6df1\u6839\u672c\u5bf9\u4e0d\u4e0a\"\uff09\uff0c\u672c\u624b\u518c\u91c7\u7528\u8bbe\u8ba1\u76ee\u6807\u503c\u3002\n\n### 3.4 \u793c\u5305\u5f62\u6001\u4e0e ROI\n\n**\u5b9e\u9645\u89c4\u6a21**\uff1a2013 iap_template \u8868\u91cc\u673a\u7532\u76f8\u5173\u793c\u5305 **397 \u6761\uff0c12 \u7c7b temp_type**\u3002\u517b\u6210\u7ebf\u6c47\u603b\u8868\u7684\u300c\u673a\u7532\u300d\u9875\u7b7e\u53ea\u62bd\u4e86\u5176\u4e2d\u4e00\u53ea\u673a\u7532\uff08**\u5929\u9e70**\uff09\u7684 32 \u884c\u4f5c\u4e3a\u6837\u672c\u3002\n\n**12 \u7c7b\u793c\u5305\u6982\u89c8**\uff08\u6309 2013 temp_type \u7edf\u8ba1\uff09\uff1a\n\n| temp_type | \u6570\u91cf | \u542b\u4e49 |\n|---|---:|---|\n| **mecha_achievement** | **145** | \u6210\u5c31\u793c\u5305\uff1a\u6309\u7b49\u7ea7/\u6280\u80fd\u8fdb\u5ea6\u89e3\u9501\uff0c\u6bcf\u53ea\u673a\u7532\u72ec\u7acb\u4e00\u5957 |\n| **scene** | 103 | \u573a\u666f\u89e6\u53d1\uff1a\u5347\u7ea7\u89e6\u53d1 / \u7ecf\u9a8c\u8017\u5c3d / BI \u63a8\u8350 |\n| normal | 55 | \u5e38\u89c4\u793c\u5305\uff08\u542b\u673a\u7532\u8f6c\u76d8 4.99~99.99 5 \u6863 \u00d7 \u591a\u4e3b\u9898\uff09|\n| **cycle** | 23 | \u5faa\u73af\u793c\u5305\uff1a\u673a\u7532\u82af\u7247+\u80fd\u6e90\u951a\u70b9 5 \u6863\u7ec4\u5408 |\n| fes_discount_pack | 18 | \u8282\u65e5\u6298\u6263\u5305 |\n| random | 15 | \u76f2\u76d2 |\n| deepbuy | 14 | \u6df1\u5ea6\u8d2d\u4e70 |\n| small_account_pkg | 10 | \u5c0f\u53f7\u5305 |\n| newbieshop | 8 | \u65b0\u624b\u5546\u5e97 |\n| mecha_heal_queue_pkg | 3 | \u6cbb\u7597\u961f\u5217 |\n| battle_pass | 2 | BP |\n| mecha_first_purchase | 1 | \u673a\u7532\u9996\u5145 |\n\n**\u6210\u5c31\u793c\u5305\uff08mecha_achievement\uff09\u7ed3\u6784**\uff1a\u6bcf\u53ea\u673a\u7532\u4e00\u5957\u5b8c\u6574 20 \u6863\u2014\u2014\n\n| \u6bb5 | \u6863\u4f4d | \u4e3b\u8981\u5185\u5bb9 |\n|---|---|---|\n| \u57fa\u7840\u6bb5 | 15/25/30/40/50/60/70/80/90/100 \u7ea7\uff0810 \u6863\uff09| \u673a\u7532\u7ecf\u9a8c + \u673a\u7532\u788e\u7247 + \u673a\u80fd\u6838\u5fc3 |\n| \u6280\u80fd\u6bb5 | \u6280\u80fd\u5168 5 / 10 / 15\uff083 \u6863\uff09| \u673a\u7532\u788e\u7247 + \u673a\u80fd\u6838\u5fc3 |\n| \u7a81\u7834\u6bb5 | 105/110/115/120/125/130/135 \u7ea7\uff087 \u6863\uff0c\u4ec5\u9996\u6279\u673a\u7532\uff09| \u673a\u7532\u7ecf\u9a8c + \u673a\u7532\u788e\u7247 + \u673a\u80fd\u6838\u5fc3 |\n\n**\u5929\u9e70\u673a\u7532\u793a\u4f8b**\uff08\u6e90\u8868\u300c\u673a\u7532\u300d\u9875\u7b7e 32 \u884c\uff0cROI \u666e\u904d **185%-225%**\uff09\uff1a\n\n**\u7b49\u7ea7\u5347\u7ea7\u6210\u5c31\u793c\u5305**\uff08\u968f\u673a\u7532\u7b49\u7ea7\u63d0\u5347\u89e3\u9501\uff0c\u5171 10 \u6863\uff09\n\n| \u4ef7\u4f4d | \u673a\u7532\u7ecf\u9a8c | \u673a\u7532\u788e\u7247 | \u673a\u80fd\u6838\u5fc3 | \u793c\u5305\u603b\u4ef7\u503c | ROI |\n|----:|------:|----:|----:|------:|----:|\n| $4.99 | 1.35M | \u2014 | \u2014 | $11.25 | 225% |\n| $9.99 | 2.70M | \u2014 | \u2014 | $22.50 | 225% |\n| $19.99 | 3.00M | 20 | \u2014 | $45.00 | 225% |\n| $49.99 | 6.00M | 63 | \u2014 | $113.00 | 226% |\n| $99.99 | 12.00M | 125 | \u2014 | $225.00 | 225% |\n| $99.99 | \u2014 | 75 | 225 | $187.50 | 188% |\n\n**\u6280\u80fd\u5347\u7ea7\u6210\u5c31\u793c\u5305**\uff08\u6280\u80fd\u7b49\u7ea7 5/10/15/\u5168 \u89e3\u9501\uff0c3 \u6863\uff09\n\n| \u4ef7\u4f4d | \u673a\u7532\u788e\u7247 | \u673a\u80fd\u6838\u5fc3 | \u603b\u4ef7\u503c | ROI |\n|----:|----:|----:|------:|----:|\n| $19.99 | 25 | 30 | $40.00 | 200% |\n| $49.99 | 38 | 113 | $94.50 | 189% |\n| $99.99 | 75 | 225 | $187.50 | 188% |\n\n**\u89e6\u53d1-\u6280\u80fd\u5347\u7ea7**\uff08\u673a\u7532\u8fbe\u5230\u6307\u5b9a\u6280\u80fd\u7b49\u7ea7\u65f6\u89e6\u53d1\uff0c\u4ee5\u5929\u9e70\u4e3a\u4f8b\uff09\n\n| \u4ef7\u4f4d | \u673a\u7532\u7ecf\u9a8c | \u673a\u7532\u788e\u7247 | \u673a\u80fd\u6838\u5fc3 | \u603b\u4ef7\u503c | ROI |\n|----:|------:|----:|----:|------:|----:|\n| $4.99 | 0.60M | 5 | \u2014 | $10.00 | 200% |\n| $9.99 | 0.60M | 9 | 9 | $18.50 | 185% |\n| $19.99 | 1.20M | 18 | 18 | $37.00 | 185% |\n\n**\u89e6\u53d1-\u7ecf\u9a8c\u8017\u5c3d + BI \u63a8\u8350**\uff08\u5171\u4eab\u540c\u4e00\u5957\u7ecf\u9a8c\u793c\u5305\uff0c6 \u6863 4.99~99.99\uff09\n\n| \u4ef7\u4f4d | \u673a\u7532\u7ecf\u9a8c | \u7f8e\u91d1\u4ef7\u503c | ROI |\n|----:|------:|------:|----:|\n| $4.99 | 1.11M | $9.25 | 185% |\n| $9.99 | 2.22M | $18.50 | 185% |\n| $19.99 | 4.44M | $37.00 | 185% |\n| $49.99 | 11.10M | $92.50 | 185% |\n| $99.99 | 22.20M | $185.00 | 185% |\n\n> \u672a\u5c55\u5f00\u7684 7 \u7c7b\uff08normal / cycle / fes_discount_pack / random / deepbuy / small_account_pkg / newbieshop / mecha_heal_queue_pkg / battle_pass / mecha_first_purchase\uff09TODO\uff1a\u9700\u8981\u5c31\u53bb 2013 \u8868\u62c9\u5bf9\u5e94 ID \u6bb5\u7684\u6570\u636e\u3002\n\n### 3.5 \u9053\u5177\u6295\u653e\u601d\u8def\uff08\u6e90\u8868 4.0\u6295\u653e \u7684\u5b9a\u6027\u63cf\u8ff0\uff09\n\n| \u6750\u6599 | \u6295\u653e\u601d\u8def | \u6295\u653e\u8282\u594f |\n|------|---------|---------|\n| \u673a\u7532\u7ecf\u9a8c | \u901a\u7528\u6295 | \u666e\u901a\u809d\u73a9\u5bb6 3 \u4e2a\u6708\u5347\u6ee1\uff0c\u9ad8\u6218\u73a9\u5bb6 1 \u4e2a\u6708\u5185 |\n| \u7d2b\u8272\u82af\u7247 | \u6307\u5b9a\u73a9\u6cd5/\u6d3b\u52a8\u6295\u653e | \u666e\u901a\u73a9\u5bb6\u517b\u6ee1\u5355\u53ea\u5de8\u517d\u7684\u666e\u901a\u6280\u80fd **\u9700 1 \u5e74\u4ee5\u4e0a**\uff08\u4e0d\u542b\u8fd0\u8425\u6295\u653e\uff09 |\n| \u91d1\u8272\u82af\u7247 / \u901a\u7528\u91d1\u82af | **\u8fd0\u8425\u4ed8\u8d39\u6295\u653e** | \u2014 |\n| \u53f2\u8bd7\u673a\u80fd\u6838\u5fc3 | \u7c7b\u6bd4\u82f1\u96c4\u91d1\u5934\uff0c\u90e8\u5206\u73a9\u6cd5\u5c11\u91cf\u6295\u653e | \u2014 |\n| \u4f20\u8bf4\u673a\u80fd\u6838\u5fc3 | **\u8fd0\u8425\u4ed8\u8d39\u6295\u653e** | \u2014 |\n\n> \u66f4\u7ec6\u7684\u5468\u4ea7\u51fa\uff08\u5bf9\u6807\u5b9d\u77f3 \u00a71.7 \u7684 140/\u5468\uff09\u9700\u8981\u8bfb `4.0\u6295\u653e` \u9875\u7b7e\u5c55\u5f00\uff0c\u5f53\u524d\u7559 TODO\u3002\n\n\n";document.getElementById("dl-md").onclick=function(e){e.preventDefault();var b=new Blob([m],{type:"text/markdown"});var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="机甲_活动明细.md";a.click()}</script></body></html>

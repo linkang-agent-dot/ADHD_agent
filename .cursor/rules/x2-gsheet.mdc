@@ -45,6 +45,24 @@ alwaysApply: false
    - 参考信息 → `D:\UGit\x2gdconf\scripts\gsheet_skill_reference.md`
 4. **按 Skill 规则执行操作**
 
+### QA GSheet 写回强规则
+
+当用户要求修改 X2 配置，且出现以下任一场景时，**不能只改本地 TSV / git 分支**，必须同步写回对应 QA Google Sheet：
+
+- 用户提到 `QA`、`qa页签`、`QA表`、`测试服`、`审核服`、`master_bugfix`、`hotfix`
+- 用户给出表号（如 `2011`、`2013`、`2135`）并要求“改配置”“修配置”“传一下”“同步一下”
+- 配置用于 QA 验证、上线前验证、bugfix 验证
+- 已经修改了 `D:\UGit\x2gdconf\fo\config\*.tsv` 中的配置行，且这些行来自 X2 GSheet 配置表
+
+必须执行的检查/写入流程：
+
+1. 用 `c:\ADHD_agent\.cursor\skills\google-workspace-cli\gsheet_query.py resolve <表号>` 确认该表独立 QA spreadsheetId 和页签名。不要误用总索引表 `1z2-AK4d...` 当作业务表。
+2. 写入前用 `gsheet_query.py idrange <表号> <起始ID> <结束ID>` 或 `gsheet_query.py row <表号> <ID>` 确认 QA 页签现值和行号。
+3. 用 Google Sheets API / `gws sheets spreadsheets values update|batchUpdate` 写回 QA 页签的目标单元格。对 A 列为空的表，必须显式指定范围（例如 `I4940:J4940`、`M4940:M4940`、`S4940:S4940`），避免 append 导致列右移。
+4. 写入后必须再次运行 `gsheet_query.py idrange` / `row` 复查目标 ID 的实际值，并在回复里说明“已写 QA GSheet 并复查”。只说“已提交/已 push”不算完成。
+
+典型例子：修改 `2011(iap_config)` 和 `2013(iap_template)` 的礼包配置时，除了提交 `fo/config/iap_config.tsv` / `fo/config/iap_template.tsv`，还必须写入 `iap_config_x2qa` / `iap_template_x2（qa）`，并复查目标 ID 范围。
+
 ### 分支差异汇总到 Google Sheet
 
 1. **读取 Skill 文件**：`c:\ADHD_agent\.cursor\skills\branch-diff-gsheet\SKILL.md`

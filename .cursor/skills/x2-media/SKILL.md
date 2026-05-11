@@ -18,6 +18,7 @@ description: |
   march emoji, achievement badge, game video, remove background,
   upscale, grfal, art-skills, media processing, LoRA,
   UI extract, extract UI elements, UI teardown.
+  不含 P2 拓荒节集卡册 240×320 与 304 卡册主题图，请用 p2-card-album-media。
 alwaysApply: false
 ---
 
@@ -29,6 +30,12 @@ alwaysApply: false
 
 - **grfal-api** — 提供 `call_grfal.py` 脚本（主后端）
 - **art-skills** — 提供 `generate_2d.py` / `generate_video.py` / `generate_3d.py`（fallback 后端）
+
+### 与 P2 拓荒节集卡册的边界
+
+- **X2 的「集卡/图鉴」** 指本表下方 **card_gallery（如 640×900）** 等类型。  
+- **P2 的集卡册**（240×320 套内卡、304×328 卡册主题图、拓荒大富翁/弹珠/推币等册）是**另一条**生产线，**不要**走本 skill 的 `type-card-gallery` 流程。  
+- 请改用 **`p2-card-album-media`**（`.cursor/skills/p2-card-album-media/SKILL.md`），与 X2 解耦，仅共用底座的 **grfal-api**。
 
 ## 目录约定
 
@@ -81,7 +88,7 @@ python "<x2-media_skill绝对路径>/scripts/install_cursor_rule.py" --project "
 | 用户意图 | 类型 key | 读取文件 | 说明 |
 |---------|---------|---------|------|
 | 技能图标 | skill_icon | `references/type-skill-icon.md` | 需图2 + 技能表查询 + 后处理贴边 |
-| 集卡册/图鉴 | card_gallery | `references/type-card-gallery.md` | 确认人物 + 模型 + 640×900 |
+| 集卡册/图鉴 | card_gallery | `references/type-card-gallery.md` | 确认人物 + 模型 + **640×900（X2 图鉴）**；P2 拓荒节 240 卡见 **p2-card-album-media** |
 | 行军表情 | march_emoji | `references/type-march-emoji.md` | 需人物参考图 + 256×256 |
 | 成就徽章 | achievement_badge | `references/type-achievement-badge.md` | 1中央+5底板 + 128×128 |
 | 游戏视频制作 | game_video | `references/type-game-video.md` | 视频生成+处理+Unity保存+C#代码 |
@@ -146,10 +153,34 @@ python "<x2-media_skill绝对路径>/scripts/install_cursor_rule.py" --project "
 
 ### 下载与保存
 
-- 默认保存到「下载」目录（Windows: `$env:USERPROFILE\Downloads`）
-- **必须**在调用 `call_grfal.py` 时加 `--download-dir <目录>`，由脚本在返回成功后立即用同一 Cookie 下载结果 URL（勿只把 trycloudflare/内网 URL 丢给用户）
-- 按类型命名（各 type reference 中有具体规则；`call_grfal` 按 URL 路径命名，可在下载后按需重命名）
-- 每次生成成功后追加一行到 `state/history.jsonl`（时间、类型、模型、结果路径、后端）
+**保存路径（按项目分文件夹，优先于 Downloads）：**
+
+| 项目 | 根路径 |
+|------|--------|
+| X2 | `C:\ADHD_agent\KB\产出-本地化与美术\X2\` |
+| P2 | `C:\ADHD_agent\KB\产出-本地化与美术\P2\` |
+| 通用 / 未指定 | `C:\ADHD_agent\KB\产出-本地化与美术\通用\` |
+
+**子文件夹按类型细分：**
+
+| 类型 key | 子文件夹 |
+|----------|---------|
+| march_emoji | `行军表情\` |
+| skill_icon | `技能图标\` |
+| card_gallery | `集卡册\` |
+| achievement_badge | `成就徽章\` |
+| activity_icon | `活动图标\` |
+| game_video | `游戏视频\` |
+| ui_extract | `UI素材\` |
+| general | `生图\` |
+
+**命名规则：** `{类型}_{模型}_{YYYYMMDD_HHMMSS}.png`  
+例：`march_emoji_gpt_20260506_142030.png`
+
+**操作规则：**
+- 保存前自动创建目录（`os.makedirs(path, exist_ok=True)`）
+- 结果 URL 为相对路径时补全为 `https://grfal.tap4fun.com{rel_url}`
+- 每次生成成功后追加一行到 `state/history.jsonl`（时间、类型、模型、结果路径）
 - 下载完成后告知用户「已保存到：<完整路径>」
 
 ---

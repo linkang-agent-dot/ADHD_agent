@@ -1,11 +1,17 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.13",
-    "lastTouchedAt": "2026-03-21T14:40:11.237Z"
+    "lastTouchedAt": "2026-04-04T08:16:53.833Z"
   },
   "env": {
     "MINIMAX_API_KEY": "sk-cp-UZlYE7WEtHwVEgCKEZOpgSNezyVxA3mTGdUy8k0nkNJindUuOv_bUj2GlxO1VI6eTizdHvoR8tEHzaDBhTf4WEBuF2OZTuQ-kYHxi-amwfRtV8VG2CRKlaE",
     "FEISHU_APP_SECRET": "rrIWGubFOkGdmLSeNRSqbeSwYCJ1LP8m"
+  },
+  "wizard": {
+    "lastRunAt": "2026-04-04T08:16:53.676Z",
+    "lastRunVersion": "2026.3.13",
+    "lastRunCommand": "doctor",
+    "lastRunMode": "local"
   },
   "models": {
     "mode": "merge",
@@ -16,10 +22,10 @@
         "api": "openai-completions",
         "models": [
           {
-            "id": "MiniMax-M2.5",
-            "name": "MiniMax M2.5",
-            "contextWindow": 131072,
-            "maxTokens": 4096
+            "id": "MiniMax-M2.7",
+            "name": "MiniMax M2.7",
+            "contextWindow": 204800,
+            "maxTokens": 8192
           }
         ]
       }
@@ -28,13 +34,13 @@
   "agents": {
     "defaults": {
       "model": {
-        "primary": "minimax/MiniMax-M2.5"
+        "primary": "minimax/MiniMax-M2.7"
       },
       "memorySearch": {
         "enabled": true
       },
       "compaction": {
-        "mode": "safeguard"
+        "mode": "default"
       }
     },
     "list": [
@@ -62,8 +68,6 @@
     },
     "feishu": {
       "enabled": true,
-      "dmPolicy": "open",
-      "groupPolicy": "open",
       "requireMention": true,
       "streaming": true,
       "accounts": {
@@ -71,6 +75,13 @@
           "appId": "cli_a934245330789ccf",
           "appSecret": "${FEISHU_APP_SECRET}",
           "botName": "OpenClaw Assistant"
+        },
+        "default": {
+          "dmPolicy": "open",
+          "groupPolicy": "open",
+          "allowFrom": [
+            "*"
+          ]
         }
       }
     }

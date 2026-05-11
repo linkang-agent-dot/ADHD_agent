@@ -10,7 +10,7 @@ chart_generator.py - 节日总结 Wiki 图表自动生成器
   3. 计算关键指标变化率（同比/环比）
 
 用法：
-  python chart_generator.py --input data.json [--output_dir report_images/event_name]
+  python chart_generator.py --input data.json [--output_dir KB/产出-数据分析/event_name]
   或作为模块导入：
     from chart_generator import generate_all_charts
 """
@@ -506,7 +506,7 @@ def generate_all_charts(data: dict, output_dir: str | None = None) -> dict:
 
     Args:
         data: 符合 input_template.json 规范的数据字典
-        output_dir: 图片输出目录。默认为 report_images/{event_name}/
+        output_dir: 图片输出目录。默认为 KB/产出-数据分析/{event_name}/
 
     Returns:
         dict: {
@@ -525,7 +525,7 @@ def generate_all_charts(data: dict, output_dir: str | None = None) -> dict:
     # 确定输出目录
     if output_dir is None:
         event_name_safe = data['meta']['event_name'].replace(' ', '_').replace('/', '_')
-        output_dir = os.path.join('report_images', event_name_safe)
+        output_dir = os.path.join('KB', '产出-数据分析', event_name_safe)
 
     os.makedirs(output_dir, exist_ok=True)
 
@@ -553,7 +553,7 @@ def main():
     """命令行入口"""
     parser = argparse.ArgumentParser(description='节日总结图表自动生成器')
     parser.add_argument('--input', '-i', required=True, help='输入 JSON 数据文件路径')
-    parser.add_argument('--output_dir', '-o', default=None, help='图片输出目录（默认: report_images/{event_name}/）')
+    parser.add_argument('--output_dir', '-o', default=None, help='图片输出目录（默认: KB/产出-数据分析/{event_name}/）')
     args = parser.parse_args()
 
     # 读取输入数据

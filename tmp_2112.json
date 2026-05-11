@@ -1,0 +1,7 @@
+﻿{
+  "error": {
+    "code": 500,
+    "message": "HTTP request failed: error sending request for url (https://sheets.googleapis.com/v4/spreadsheets/1Z37Db%2D2Cy1h6Far%5FLBPSpKHOtNNki9rzXgLUsvBSJwo/values/activity%5Fconfig%5FQA%21A%3AD): client error (Connect): tls handshake eof",
+    "reason": "internalError"
+  }
+}

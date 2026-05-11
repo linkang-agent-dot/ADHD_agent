@@ -85,14 +85,14 @@ allowed-tools: [Read, Grep, Glob, Bash, Write, Edit]
 1. 生成模板：
 
 ```bash
-python skills/generate_event_review_v2/scripts/main.py --generate-template --output_dir report_images/<event_name_safe>/
+python skills/generate_event_review_v2/scripts/main.py --generate-template --output_dir KB/产出-数据分析/<event_name_safe>/
 ```
 
 2. 等待用户填写（8 个 Sheet: Meta/触达转化/行为数据/付费整体/R级付费/付费转化/核心奖励/商业化礼包）
 3. 解析 + 分析一步完成（无需临时脚本）：
 
 ```bash
-python skills/generate_event_review_v2/scripts/main.py --excel <Excel文件路径> --output_dir report_images/<event_name_safe>/
+python skills/generate_event_review_v2/scripts/main.py --excel <Excel文件路径> --output_dir KB/产出-数据分析/<event_name_safe>/
 ```
 
 > **注意**：`--excel` 模式内置以下自动处理，无需额外脚本：
@@ -160,7 +160,7 @@ for w in result.get("warnings", []):
 
 ```bash
 # 命令行（从 JSON 输入）
-python skills/generate_event_review_v2/scripts/main.py --input <数据JSON路径> --output_dir report_images/<event_name_safe>/
+python skills/generate_event_review_v2/scripts/main.py --input <数据JSON路径> --output_dir KB/产出-数据分析/<event_name_safe>/
 ```
 
 ```python
@@ -169,7 +169,7 @@ import sys
 sys.path.insert(0, 'skills/generate_event_review_v2/scripts')
 from main import run_analysis
 
-result = run_analysis(input_data, 'report_images/<event_name_safe>/')
+result = run_analysis(input_data, 'KB/产出-数据分析/<event_name_safe>/')
 ```
 
 #### 2.1 七大分析模块
@@ -280,7 +280,7 @@ wiki_content = generator.generate_wiki_content()
 
 #### 交付物清单
 
-1. **7 张图表** - 保存在 `report_images/{event_name}/` 目录
+1. **7 张图表** - 保存在 `KB/产出-数据分析/{event_name}/` 目录
 2. **Notion 页面** - 已发布，返回页面 URL
 3. **Wiki 报告** - 聊天框直接输出
 4. **Excel 模板**（仅途径 C）- 告知文件路径

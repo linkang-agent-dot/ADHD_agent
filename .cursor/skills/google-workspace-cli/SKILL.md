@@ -431,6 +431,16 @@ cd D:\UGit\x2gdconf
 .\tools\fwcli.exe googlexlsx -a . -d tmp_xlsx -r xxx -f 1111
 ```
 
+### 8.3 X2 GSheet 写入踩坑
+
+X2 多数配置表的 A 列是 `p2_title` 元数据列，新增配置时常为空。对这类表直接使用 `values.append` 时，Google Sheets 可能自动把“表格”起点识别为 B 列，导致整行写入到 `B:...`，所有字段右移一列。
+
+典型案例：2026 占星节写 2135 `activity_event_pkg（qa）` 时，append 返回 `B:S`，`idrange 2135 21353117 21353121` 查不到。正确处理：
+
+1. 写后必须用 `gsheet_query.py idrange <table> <min> <max>` 复查 ID 是否在 col[1]。
+2. 对 A 列为空的 X2 表，优先用 `values.update` 写入显式范围，例如 `A2836:S2840`，最后一列可留空用于清掉误写出的多余列。
+3. PowerShell 管道可能把中文页签里的全角括号传成 `?qa?`；脚本里用 Unicode 转义构造页签名，如 `activity_event_pkg\uff08qa\uff09`、`iap_template_x2\uff08qa\uff09`。
+
 ---
 
 ## 九、参考链接

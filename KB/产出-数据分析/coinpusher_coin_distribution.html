@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P2 推币机 - 银币/金币投掷数量分布</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+      background: #0f1117;
+      color: #e0e0e0;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .page-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .page-header h1 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #f0f0f0;
+      margin-bottom: 6px;
+    }
+    .page-header .subtitle {
+      font-size: 13px;
+      color: #7a8599;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: #1a1f2e;
+      border: 1px solid #2a3248;
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .stat-card .label {
+      font-size: 11px;
+      color: #7a8599;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .stat-card .value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #f0f0f0;
+    }
+    .stat-card .sub {
+      font-size: 11px;
+      color: #7a8599;
+      margin-top: 4px;
+    }
+    .stat-card.silver .value { color: #a8b8d8; }
+    .stat-card.gold .value { color: #f5c842; }
+    .chart-section {
+      background: #1a1f2e;
+      border: 1px solid #2a3248;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .chart-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #c0cfe0;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #2a3248;
+    }
+    .chart-title span.note {
+      font-size: 11px;
+      font-weight: 400;
+      color: #556080;
+      margin-left: 10px;
+    }
+    #chart-main { width: 100%; height: 420px; }
+    #chart-gold { width: 100%; height: 340px; }
+    #chart-cumulative { width: 100%; height: 380px; }
+    .threshold-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid #222a3d;
+    }
+    .threshold-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #8898aa;
+    }
+    .threshold-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .data-note {
+      background: #151b28;
+      border: 1px solid #1e2a40;
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 12px;
+      color: #6a7a94;
+      line-height: 1.6;
+      margin-top: 20px;
+    }
+    .data-note strong { color: #90a0b8; }
+  </style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>P2 推币机活动 — 银币 / 金币投掷数量分布</h1>
+  <div class="subtitle">活动周期: 2026-03-23 ~ 2026-04-03 &nbsp;|&nbsp; 数据来源: TRINO_AWS / v1041.ods_user_asset</div>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card silver">
+    <div class="label">银币参与玩家</div>
+    <div class="value">12,063</div>
+    <div class="sub">投入银币（11112725）</div>
+  </div>
+  <div class="stat-card silver">
+    <div class="label">银币累计投入</div>
+    <div class="value">458.5万</div>
+    <div class="sub">4,584,619 枚</div>
+  </div>
+  <div class="stat-card gold">
+    <div class="label">金币参与玩家</div>
+    <div class="value">1,212</div>
+    <div class="sub">解锁金币模式（11112726）</div>
+  </div>
+  <div class="stat-card gold">
+    <div class="label">金币累计投入</div>
+    <div class="value">13,645</div>
+    <div class="sub">平均 11.3 枚/人</div>
+  </div>
+</div>
+
+<!-- Main Distribution Chart -->
+<div class="chart-section">
+  <div class="chart-title">
+    银币投掷量分布（全量玩家）
+    <span class="note">每格 = 10枚区间；bucket=21 代表 200+ 枚</span>
+  </div>
+  <div id="chart-main"></div>
+  <div class="threshold-legend">
+    <div class="threshold-item">
+      <div class="threshold-dot" style="background:#ff7777"></div>
+      <span>首次宝箱触发 ≈ 30枚</span>
+    </div>
+    <div class="threshold-item">
+      <div class="threshold-dot" style="background:#ffaa44"></div>
+      <span>首次银币堆触发 ≈ 50枚</span>
+    </div>
+    <div class="threshold-item">
+      <div class="threshold-dot" style="background:#44ddaa"></div>
+      <span>重度玩家（>200枚）: 3,538 人 占比 29.3%</span>
+    </div>
+  </div>
+</div>
+
+<!-- Gold Coin Chart -->
+<div class="chart-section">
+  <div class="chart-title">
+    金币投掷量分布（开启金币模式玩家）
+    <span class="note">1,212 人 / 占银币玩家的 10.0%</span>
+  </div>
+  <div id="chart-gold"></div>
+  <div class="threshold-legend">
+    <div class="threshold-item">
+      <div class="threshold-dot" style="background:#ff7777"></div>
+      <span>金币宝箱触发阈值 ≈ 30枚</span>
+    </div>
+    <div class="threshold-item">
+      <div class="threshold-dot" style="background:#ffaa44"></div>
+      <span>金币堆阈值 ≈ 50枚</span>
+    </div>
+  </div>
+</div>
+
+<!-- Cumulative Chart -->
+<div class="chart-section">
+  <div class="chart-title">
+    银币 & 金币累计触达率（到达各阈值的玩家比例）
+    <span class="note">分母 = 各自参与总人数</span>
+  </div>
+  <div id="chart-cumulative"></div>
+</div>
+
+<div class="data-note">
+  <strong>数据说明：</strong>
+  银币（asset_id=11112725，reason=coin_pusher，change_type=2）为普通/高级推进消耗，单次 1 枚或 5 枚；
+  金币（asset_id=11112726，reason=coin_pusher_open_gold_model，change_type=2）为开启金币模式的消耗。
+  分布使用活动全期每玩家累计消耗量，同一 user_id 跨分区数据已合并。
+  bucket=0 ~ 20 分别对应 0–9、10–19、...、190–199 枚；bucket=21 代表 ≥200 枚（3,538 人，占银币玩家 29.3%）。
+</div>
+
+<script>
+// ============================================================
+// 原始数据
+// ============================================================
+const silverRaw = [
+  {bucket:0,  count:5198},
+  {bucket:1,  count:327},
+  {bucket:2,  count:345},
+  {bucket:3,  count:181},
+  {bucket:4,  count:149},
+  {bucket:5,  count:310},
+  {bucket:6,  count:156},
+  {bucket:7,  count:139},
+  {bucket:8,  count:207},
+  {bucket:9,  count:125},
+  {bucket:10, count:160},
+  {bucket:11, count:117},
+  {bucket:12, count:123},
+  {bucket:13, count:129},
+  {bucket:14, count:84},
+  {bucket:15, count:355},
+  {bucket:16, count:119},
+  {bucket:17, count:107},
+  {bucket:18, count:113},
+  {bucket:19, count:76},
+  {bucket:20, count:5},
+  {bucket:21, count:3538}
+];
+
+const goldRaw = [
+  {bucket:0,  count:916},
+  {bucket:1,  count:164},
+  {bucket:2,  count:51},
+  {bucket:3,  count:16},
+  {bucket:4,  count:14},
+  {bucket:5,  count:7},
+  {bucket:6,  count:11},
+  {bucket:7,  count:5},
+  {bucket:8,  count:2},
+  {bucket:9,  count:2},
+  {bucket:10, count:5},
+  {bucket:11, count:1},
+  {bucket:12, count:1},
+  {bucket:13, count:3},
+  {bucket:14, count:0},
+  {bucket:15, count:2},
+  {bucket:16, count:4},
+  {bucket:17, count:1},
+  {bucket:18, count:0},
+  {bucket:19, count:1},
+  {bucket:20, count:0},
+  {bucket:21, count:6}
+];
+
+// Fill missing buckets
+function fillBuckets(raw) {
+  const map = {};
+  raw.forEach(d => { map[d.bucket] = d.count; });
+  const arr = [];
+  for (let i = 0; i <= 21; i++) arr.push(map[i] || 0);
+  return arr;
+}
+
+const silverData = fillBuckets(silverRaw);
+const goldData = fillBuckets(goldRaw);
+
+const xLabels = [
+  '0-9','10-19','20-29','30-39','40-49',
+  '50-59','60-69','70-79','80-89','90-99',
+  '100-109','110-119','120-129','130-139','140-149',
+  '150-159','160-169','170-179','180-189','190-199',
+  '200-209','200+'
+];
+
+// Threshold mark lines (bucket index)
+// 30枚 = bucket 3; 50枚 = bucket 5
+const thresholds = [
+  {idx:3, label:'首次宝箱(~30)', color:'#ff7777'},
+  {idx:5, label:'首次币堆(~50)', color:'#ffaa44'},
+];
+
+// ============================================================
+// Chart 1: Silver distribution (bar)
+// ============================================================
+const chartMain = echarts.init(document.getElementById('chart-main'));
+const silverTotal = silverData.reduce((a,b)=>a+b, 0);
+
+chartMain.setOption({
+  backgroundColor: 'transparent',
+  tooltip: {
+    trigger: 'axis',
+    backgroundColor: '#1e2840',
+    borderColor: '#334',
+    textStyle: { color: '#dde', fontSize: 12 },
+    formatter: function(params) {
+      const p = params[0];
+      const pct = (p.value / silverTotal * 100).toFixed(1);
+      return `<b>${xLabels[p.dataIndex]}</b><br/>玩家人数: <b>${p.value.toLocaleString()}</b><br/>占比: ${pct}%`;
+    }
+  },
+  grid: { left:60, right:30, top:30, bottom:60, containLabel:false },
+  xAxis: {
+    type: 'category',
+    data: xLabels,
+    axisLine: { lineStyle: {color:'#334'} },
+    axisTick: { show: false },
+    axisLabel: { color:'#6a7a94', fontSize:10, rotate:40 }
+  },
+  yAxis: {
+    type: 'value',
+    axisLine: { show: false },
+    axisTick: { show: false },
+    splitLine: { lineStyle: {color:'#1e2840'} },
+    axisLabel: { color:'#6a7a94', fontSize:11,
+      formatter: v => v >= 1000 ? (v/1000).toFixed(1)+'k' : v }
+  },
+  series: [{
+    type: 'bar',
+    data: silverData.map((v,i) => ({
+      value: v,
+      itemStyle: {
+        color: i === 21 ? '#44ddaa' :
+               i === 3  ? '#ff7777' :
+               i === 5  ? '#ffaa44' :
+               new echarts.graphic.LinearGradient(0,0,0,1,[
+                 {offset:0, color:'#4d7cfe'},
+                 {offset:1, color:'#3a5bd0'}
+               ])
+      }
+    })),
+    barMaxWidth: 32,
+    label: {
+      show: false
+    },
+    markLine: {
+      silent: true,
+      symbol: ['none','none'],
+      data: [
+        {xAxis: 3, lineStyle:{color:'#ff7777', width:2, type:'dashed'}, label:{show:true, position:'insideEndTop', color:'#ff7777', fontSize:11, formatter:'首次宝箱\n≈30枚'}},
+        {xAxis: 5, lineStyle:{color:'#ffaa44', width:2, type:'dashed'}, label:{show:true, position:'insideEndTop', color:'#ffaa44', fontSize:11, formatter:'首次币堆\n≈50枚'}}
+      ]
+    }
+  }]
+});
+
+// ============================================================
+// Chart 2: Gold distribution
+// ============================================================
+const chartGold = echarts.init(document.getElementById('chart-gold'));
+const goldTotal = goldData.reduce((a,b)=>a+b, 0);
+
+chartGold.setOption({
+  backgroundColor: 'transparent',
+  tooltip: {
+    trigger: 'axis',
+    backgroundColor: '#1e2840',
+    borderColor: '#334',
+    textStyle: { color: '#dde', fontSize: 12 },
+    formatter: function(params) {
+      const p = params[0];
+      const pct = (p.value / goldTotal * 100).toFixed(1);
+      return `<b>${xLabels[p.dataIndex]}</b><br/>玩家人数: <b>${p.value.toLocaleString()}</b><br/>占比: ${pct}%`;
+    }
+  },
+  grid: { left:60, right:30, top:30, bottom:60, containLabel:false },
+  xAxis: {
+    type: 'category',
+    data: xLabels,
+    axisLine: { lineStyle: {color:'#334'} },
+    axisTick: { show: false },
+    axisLabel: { color:'#6a7a94', fontSize:10, rotate:40 }
+  },
+  yAxis: {
+    type: 'value',
+    axisLine: { show: false },
+    axisTick: { show: false },
+    splitLine: { lineStyle: {color:'#1e2840'} },
+    axisLabel: { color:'#6a7a94', fontSize:11 }
+  },
+  series: [{
+    type: 'bar',
+    data: goldData.map((v,i) => ({
+      value: v,
+      itemStyle: {
+        color: i === 21 ? '#44ddaa' :
+               i === 3  ? '#ff7777' :
+               i === 5  ? '#ffaa44' :
+               new echarts.graphic.LinearGradient(0,0,0,1,[
+                 {offset:0, color:'#f5c842'},
+                 {offset:1, color:'#c9960f'}
+               ])
+      }
+    })),
+    barMaxWidth: 32,
+    markLine: {
+      silent: true,
+      symbol: ['none','none'],
+      data: [
+        {xAxis: 3, lineStyle:{color:'#ff7777', width:2, type:'dashed'}, label:{show:true, position:'insideEndTop', color:'#ff7777', fontSize:11, formatter:'金币宝箱\n≈30枚'}},
+        {xAxis: 5, lineStyle:{color:'#ffaa44', width:2, type:'dashed'}, label:{show:true, position:'insideEndTop', color:'#ffaa44', fontSize:11, formatter:'金币堆\n≈50枚'}}
+      ]
+    }
+  }]
+});
+
+// ============================================================
+// Chart 3: Cumulative reach rate
+// ============================================================
+const chartCumul = echarts.init(document.getElementById('chart-cumulative'));
+
+function cumulativeReach(data) {
+  const total = data.reduce((a,b)=>a+b, 0);
+  // reach[i] = users who threw >= i*10 coins
+  const reach = [];
+  let cumFromEnd = 0;
+  for (let i = data.length - 1; i >= 0; i--) {
+    cumFromEnd += data[i];
+    reach[i] = (cumFromEnd / total * 100);
+  }
+  return reach;
+}
+
+const silverReach = cumulativeReach(silverData);
+const goldReach   = cumulativeReach(goldData);
+
+const cumulXLabels = xLabels.map((l,i) => i <= 20 ? '≥'+l.split('-')[0] : '≥200');
+
+chartCumul.setOption({
+  backgroundColor: 'transparent',
+  tooltip: {
+    trigger: 'axis',
+    backgroundColor: '#1e2840',
+    borderColor: '#334',
+    textStyle: { color: '#dde', fontSize: 12 },
+    formatter: function(params) {
+      let s = `<b>${cumulXLabels[params[0].dataIndex]}</b><br/>`;
+      params.forEach(p => {
+        s += `${p.seriesName}: <b>${p.value.toFixed(1)}%</b><br/>`;
+      });
+      return s;
+    }
+  },
+  legend: {
+    data: ['银币触达率','金币触达率'],
+    textStyle: { color: '#8898aa', fontSize: 12 },
+    top: 4
+  },
+  grid: { left:60, right:30, top:40, bottom:60, containLabel:false },
+  xAxis: {
+    type: 'category',
+    data: cumulXLabels,
+    axisLine: { lineStyle: {color:'#334'} },
+    axisTick: { show: false },
+    axisLabel: { color:'#6a7a94', fontSize:10, rotate:40 }
+  },
+  yAxis: {
+    type: 'value',
+    min: 0, max: 100,
+    axisLine: { show: false },
+    axisTick: { show: false },
+    splitLine: { lineStyle: {color:'#1e2840'} },
+    axisLabel: { color:'#6a7a94', fontSize:11, formatter: v => v+'%' }
+  },
+  series: [
+    {
+      name: '银币触达率',
+      type: 'line',
+      data: silverReach.map(v => +v.toFixed(2)),
+      smooth: true,
+      symbol: 'none',
+      lineStyle: { color:'#4d7cfe', width:2.5 },
+      areaStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1,[
+        {offset:0, color:'rgba(77,124,254,0.25)'},
+        {offset:1, color:'rgba(77,124,254,0.02)'}
+      ])},
+      markLine: {
+        silent: true,
+        symbol: ['none','none'],
+        data: [
+          {xAxis: 3,  lineStyle:{color:'#ff7777', width:1.5, type:'dashed'}, label:{show:true, color:'#ff7777', fontSize:10, formatter:'30枚\n{c}%'}},
+          {xAxis: 5,  lineStyle:{color:'#ffaa44', width:1.5, type:'dashed'}, label:{show:true, color:'#ffaa44', fontSize:10, formatter:'50枚\n{c}%'}},
+          {xAxis: 10, lineStyle:{color:'#556688', width:1, type:'dotted'},   label:{show:true, color:'#556688', fontSize:10, formatter:'100枚'}}
+        ]
+      }
+    },
+    {
+      name: '金币触达率',
+      type: 'line',
+      data: goldReach.map(v => +v.toFixed(2)),
+      smooth: true,
+      symbol: 'none',
+      lineStyle: { color:'#f5c842', width:2.5 },
+      areaStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1,[
+        {offset:0, color:'rgba(245,200,66,0.2)'},
+        {offset:1, color:'rgba(245,200,66,0.02)'}
+      ])}
+    }
+  ]
+});
+
+window.addEventListener('resize', () => {
+  chartMain.resize();
+  chartGold.resize();
+  chartCumul.resize();
+});
+</script>
+</body>
+</html>

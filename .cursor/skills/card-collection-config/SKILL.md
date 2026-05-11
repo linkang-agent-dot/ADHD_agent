@@ -69,10 +69,63 @@ python gsheet_query.py tail card_6004 10
 
 ## 节日对照速查
 
-| 节日 | Book ID | 主题卡包起始 ID | 保底卡包段 | 自选卡包 |
-|------|---------|--------------|----------|---------|
-| 科技节 | 60011004 | 11119996–111110000 | 111110002–006 | 111110007 |
-| 复活节 | 60011005 | 111110301–111110304 | 111110305–309 | 111111023 |
+| 节日 | Book ID | Groups | 主题卡包起始 ID | 保底卡包段 | 自选卡包 | 2112 BP版 | 2112 三合一版 | fes_card_gallary ID | 备注 |
+|------|---------|--------|--------------|----------|---------|-----------|-------------|-------------------|------|
+| 科技节 | 60011004 | 60021301–60021308 | 11119996–111110000 | 111110002–006 | 111110007 | — | — | — | — |
+| 复活节 | 60011005 | 60021309–60021316 | 111110301–304 | 111110305–309 | 111111023 | — | — | — | — |
+| **拓荒节** | **60011006** | **60021317–60021324** | **待分配（新段）** | **待分配（新段）** | **待分配** | **21127803** | **21127804** | **60011006** | 2026-04-24；6001/6002/6003/6004 ID 已确认空缺；1111需新段 |
+
+---
+
+### 拓荒节 2112 固定配置（2026-04-24 确认）
+
+> **重要**：拓荒节集卡册直接复用 `21127803`（BP版）和 `21127804`（三合一版），无需新建 2112 行。
+
+#### 21127803 — 节日卡包BP-通用版
+```
+A_INT_id:         21127803
+S_STR_comment:    节日卡包BP-通用版
+A_STR_constant:   event_fes_card_bp
+A_MAP_filter:     {"op":"ge","typ":"building","id":111811,"val":8}
+A_MAP_text:       {"label":"LC_EVENT_fes_card_bp_title","title":"LC_EVENT_fes_card_bp_title"}
+A_MAP_description:{"rule":"LC_EVENT_sever_gacha_bp_rule"}
+A_INT_ui_template:21191537
+S_STR_banner_url: assets/operation/P2dlcimg/activityImg/EventBanner_BG_521.png
+A_INT_show_hud:   21680031
+```
+
+**components（需替换的内容）**：
+```json
+[{"typ":"battle_pass","id":21301541},
+ {"typ":"task","id":211586451},...{"typ":"task","id":211586460},
+ {"typ":"retake","id":21371372},
+ {"typ":"fes_card_gallary","id":21217584}]
+```
+- `battle_pass id=21301541` → 需换成拓荒节 BP 表 ID
+- `task id=211586451-460` → 需换成拓荒节 10 档任务 ID
+- `retake id=21371372` → 需换成拓荒节补购档 ID
+- `fes_card_gallary id=21217584` → 需换成拓荒节卡册 gallery 配置行 ID（6001 book ID）
+
+#### 21127804 — 节日卡包通用-三合一礼包
+```
+A_INT_id:         21127804
+S_STR_comment:    节日卡包通用-三合一礼包
+A_STR_constant:   event_fes_card_packgae
+A_MAP_text:       {"label":"LC_IAP_cardselect_pkg_name","title":"LC_IAP_cardselect_pkg_name"}
+A_MAP_description:{"rule":"LC_EVENT_fes_card_package_rule"}
+A_INT_ui_template:21191536
+S_STR_banner_url: assets/operation/P2dlcimg/activityImg/EventBanner_BG_503.png
+A_INT_show_hud:   21680031
+```
+
+**components（需替换的内容）**：
+```json
+[{"typ":"package","id":21359427},
+ {"typ":"package","id":21359428},
+ {"typ":"package","id":21359429},
+ {"typ":"package","id":21359430}]
+```
+- 4 个 package id (21359427-21359430) → 需换成拓荒节 4 档礼包 ID（主题卡包/保底卡包等 → 对应 2135 表行）
 
 ---
 
@@ -80,3 +133,4 @@ python gsheet_query.py tail card_6004 10
 - `references/cases/easter_fest_card_pack.md` — 复活节卡册道具配置（2026），含完整 ID 映射、8组结构、drop 模板、坑点
 - `references/cases/easter_fest_localization.md` — 复活节卡册本地化配置（2026），含 Google Sheet 结构、Key 命名规则、整理版格式
 - `references/gotchas.md` — 通用坑点汇总，持续追加
+- **拓荒节进行中**：`../../../config-library/cases/2026_pioneer_card_collection/progress.md`
