@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X3 26情人节 各模块付费效果</title>
+<style>
+  :root {
+    --bg:#0f1117;--card:#1a1d27;--border:#2a2d3a;--text:#e0e0e6;--muted:#8b8fa3;
+    --accent:#6c8cff;--accent2:#ff6c8c;--accent3:#4ecdc4;--accent4:#ffe66d;--accent5:#a06cd5;
+    --orange:#ffa94d;--green:#4ecdc4;--red:#ff6b6b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:24px;max-width:1400px;margin:0 auto}
+  h1{font-size:26px;font-weight:700;background:linear-gradient(135deg,var(--accent2),var(--accent4));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .subtitle{color:var(--muted);font-size:13px;margin-bottom:28px}
+  h2{font-size:18px;font-weight:600;color:var(--accent);margin:36px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  h3{font-size:15px;font-weight:600;color:var(--text);margin:20px 0 10px}
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
+  .kpi-value{font-size:28px;font-weight:700;margin-bottom:2px}
+  .kpi-label{font-size:12px;color:var(--muted)}
+  .kpi-sub{font-size:11px;color:var(--muted);margin-top:3px}
+  table{width:100%;border-collapse:collapse;margin:10px 0 20px;font-size:13px}
+  th{background:var(--card);color:var(--accent);font-weight:600;text-align:left;padding:9px 10px;border-bottom:2px solid var(--border);white-space:nowrap}
+  td{padding:7px 10px;border-bottom:1px solid var(--border)}
+  tr:hover td{background:rgba(108,140,255,0.04)}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  .hl{color:var(--accent);font-weight:600}
+  .warn{color:var(--orange);font-weight:600}
+  .bad{color:var(--red);font-weight:600}
+  .good{color:var(--green);font-weight:600}
+  .bar-row{display:flex;align-items:center;margin-bottom:6px}
+  .bar-label{width:140px;font-size:12px;color:var(--muted);text-align:right;padding-right:10px;flex-shrink:0}
+  .bar-track{flex:1;height:26px;background:var(--card);border-radius:4px;overflow:hidden;position:relative}
+  .bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:600;color:#fff;min-width:30px}
+  .bar-value{width:90px;text-align:right;font-size:12px;padding-left:8px;flex-shrink:0;font-variant-numeric:tabular-nums}
+  .stacked-row{display:flex;align-items:center;margin-bottom:5px}
+  .stacked-label{width:90px;font-size:12px;color:var(--muted);text-align:right;padding-right:10px;flex-shrink:0}
+  .stacked-track{flex:1;height:28px;display:flex;border-radius:4px;overflow:hidden}
+  .stacked-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 14px;font-size:12px}
+  .legend-item{display:flex;align-items:center;gap:5px}
+  .legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+  .callout{background:rgba(108,140,255,0.08);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 18px;margin:14px 0;font-size:13px}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:900px){.grid-2{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .card h3{margin-top:0}
+  .tag{display:inline-block;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:600}
+  .tag-a{background:rgba(108,140,255,0.15);color:var(--accent)}
+  .tag-b{background:rgba(160,108,213,0.15);color:var(--accent5)}
+  .tag-skin{background:rgba(255,108,140,0.15);color:var(--accent2)}
+  .tag-deco{background:rgba(255,230,109,0.15);color:var(--accent4)}
+  .tag-anchor{background:rgba(78,205,196,0.15);color:var(--green)}
+  .funnel{display:flex;flex-direction:column;align-items:center;gap:4px;margin:16px 0 24px}
+  .funnel-step{display:flex;align-items:center;width:100%;gap:8px}
+  .funnel-bar{height:32px;border-radius:4px;display:flex;align-items:center;padding:0 12px;font-size:12px;font-weight:600;color:#fff;transition:width 0.6s}
+  .funnel-info{font-size:11px;color:var(--muted);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<h1>X3 26情人节 — 各模块付费效果</h1>
+<div class="subtitle">Pack ID: 210701~210718 | ChainID: 484 | 活动组: 133 | 时间: 2026-01-29 ~ 02-15</div>
+
+<!-- KPI -->
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-value" style="color:var(--accent2)">$17,930</div>
+    <div class="kpi-label">节日礼包总收入</div>
+    <div class="kpi-sub">18 个 Pack</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-value" style="color:var(--accent)">314</div>
+    <div class="kpi-label">节日付费人数</div>
+    <div class="kpi-sub">人均 $57.1</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-value" style="color:var(--accent3)">954</div>
+    <div class="kpi-label">总订单数</div>
+    <div class="kpi-sub">人均 3.0 单</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-value" style="color:var(--accent4)">8</div>
+    <div class="kpi-label">子活动模块</div>
+    <div class="kpi-sub">积分/BP/拼图/许愿池/酒馆/兑换/装扮/观赏</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-value" style="color:var(--orange)">27.5%</div>
+    <div class="kpi-label">节日包占同期总收入</div>
+    <div class="kpi-sub">同期非节日包 $47K+</div>
+  </div>
+</div>
+
+<!-- 子活动模块 -->
+<h2>一、子活动模块清单</h2>
+<table>
+  <tr><th>ID</th><th>模块</th><th>ActvType</th><th>说明</th></tr>
+  <tr><td>101514</td><td><strong>积分购（齐趣阁）</strong></td><td>15</td><td>主付费入口，绑定连锁礼包 ChainID=484</td></tr>
+  <tr><td>102236</td><td><strong>Battle Pass</strong></td><td>22</td><td>付费通行证，免费/高级/超级三层</td></tr>
+  <tr><td>101826</td><td>拼图</td><td>18</td><td>5x5 拼图，最终奖励纪念卡</td></tr>
+  <tr><td>105011</td><td>许愿池</td><td>50</td><td>抽奖/许愿玩法</td></tr>
+  <tr><td>101337</td><td>兑换商店</td><td>13</td><td>活动币兑换道具/纪念卡</td></tr>
+  <tr><td>105603</td><td>酒馆装扮</td><td>56</td><td>家具/装扮玩法</td></tr>
+  <tr><td>10071702</td><td>最佳酒馆</td><td>7</td><td>跨服排名</td></tr>
+  <tr><td>100595</td><td>观赏（成长故事）</td><td>5</td><td>充值回馈/剧情观赏</td></tr>
+</table>
+
+<!-- 模块收入对比 -->
+<h2>二、模块收入对比</h2>
+
+<div style="margin-bottom:20px">
+  <div class="bar-row">
+    <div class="bar-label"><span class="tag tag-a">A线连锁</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,var(--accent),#5070dd)">$7,253 — 40.5%</div></div>
+    <div class="bar-value">693 单</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label"><span class="tag tag-skin">晋升皮肤</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:62%;background:var(--accent2)">$4,499 — 25.1%</div></div>
+    <div class="bar-value">90 单</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label"><span class="tag tag-b">B线锚点</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:41%;background:var(--accent5)">$2,979 — 16.6%</div></div>
+    <div class="bar-value">131 单</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label"><span class="tag tag-deco">家具礼包</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:33%;background:var(--accent4);color:#333">$2,400 — 13.4%</div></div>
+    <div class="bar-value">24 单</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label"><span class="tag tag-anchor">皮肤常驻锚</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:11%;background:var(--accent3)">$800 — 4.5%</div></div>
+    <div class="bar-value">16 单</div>
+  </div>
+</div>
+
+<!-- 逐包明细 -->
+<h2>三、逐包收入明细</h2>
+
+<table>
+  <tr><th>PackID</th><th>模块</th><th>PackType</th><th class="num">定价</th><th class="num">订单</th><th class="num">付费人数</th><th class="num">收入(USD)</th><th class="num">占比</th></tr>
+  <tr style="background:rgba(255,108,140,0.06)"><td>210716</td><td><span class="tag tag-skin">晋升皮肤</span></td><td>1 普通</td><td class="num">$49.99</td><td class="num">90</td><td class="num">90</td><td class="num hl">$4,499</td><td class="num hl">25.1%</td></tr>
+  <tr style="background:rgba(255,230,109,0.04)"><td>210717</td><td><span class="tag tag-deco">家具礼包</span></td><td>16 家具</td><td class="num">$99.99</td><td class="num">24</td><td class="num">24</td><td class="num">$2,400</td><td class="num">13.4%</td></tr>
+  <tr><td>210702</td><td><span class="tag tag-a">A线 $4.99</span></td><td>11 连锁</td><td class="num">$4.99</td><td class="num">430</td><td class="num">213</td><td class="num">$2,146</td><td class="num">12.0%</td></tr>
+  <tr><td>210715</td><td><span class="tag tag-b">B线 $99.99</span></td><td>15 锚点</td><td class="num">$99.99</td><td class="num">18</td><td class="num">5</td><td class="num">$1,800</td><td class="num">10.0%</td></tr>
+  <tr><td>210706</td><td><span class="tag tag-a">A线 $19.99</span></td><td>11 连锁</td><td class="num">$19.99</td><td class="num">80</td><td class="num">31</td><td class="num">$1,599</td><td class="num">8.9%</td></tr>
+  <tr><td>210704</td><td><span class="tag tag-a">A线 $9.99</span></td><td>11 连锁</td><td class="num">$9.99</td><td class="num">151</td><td class="num">59</td><td class="num">$1,508</td><td class="num">8.4%</td></tr>
+  <tr><td>210708</td><td><span class="tag tag-a">A线 $49.99</span></td><td>11 连锁</td><td class="num">$49.99</td><td class="num">24</td><td class="num">14</td><td class="num">$1,200</td><td class="num">6.7%</td></tr>
+  <tr><td>210710</td><td><span class="tag tag-a">A线 $99.99</span></td><td>11 连锁</td><td class="num">$99.99</td><td class="num">8</td><td class="num">5</td><td class="num">$800</td><td class="num">4.5%</td></tr>
+  <tr><td>210718</td><td><span class="tag tag-anchor">皮肤常驻锚</span></td><td>15 锚点</td><td class="num">$49.99</td><td class="num">16</td><td class="num">16</td><td class="num">$800</td><td class="num">4.5%</td></tr>
+  <tr><td>210712</td><td><span class="tag tag-b">B线 $4.99</span></td><td>15 锚点</td><td class="num">$4.99</td><td class="num">88</td><td class="num">42</td><td class="num">$439</td><td class="num">2.4%</td></tr>
+  <tr><td>210714</td><td><span class="tag tag-b">B线 $49.99</span></td><td>15 锚点</td><td class="num">$49.99</td><td class="num">8</td><td class="num">5</td><td class="num">$400</td><td class="num">2.2%</td></tr>
+  <tr><td>210713</td><td><span class="tag tag-b">B线 $19.99</span></td><td>15 锚点</td><td class="num">$19.99</td><td class="num">17</td><td class="num">7</td><td class="num">$340</td><td class="num">1.9%</td></tr>
+  <tr style="font-weight:700;border-top:2px solid var(--border)"><td colspan="4">合计</td><td class="num">954</td><td class="num">314</td><td class="num" style="color:var(--accent2)">$17,930</td><td class="num">100%</td></tr>
+</table>
+
+<!-- A线连锁漏斗 -->
+<h2>四、A 线连锁漏斗</h2>
+
+<div style="margin:16px 0 24px">
+  <div class="funnel-step">
+    <div class="funnel-bar" style="width:100%;background:var(--accent)">$4.99 — 213 人</div>
+    <div class="funnel-info">$2,146 | 入口</div>
+  </div>
+  <div style="text-align:center;color:var(--muted);font-size:11px;margin:2px 0">▼ 27.7% 留存</div>
+  <div class="funnel-step">
+    <div class="funnel-bar" style="width:27.7%;background:#5878dd">$9.99 — 59 人</div>
+    <div class="funnel-info">$1,508</div>
+  </div>
+  <div style="text-align:center;color:var(--muted);font-size:11px;margin:2px 0">▼ 52.5%</div>
+  <div class="funnel-step">
+    <div class="funnel-bar" style="width:14.6%;background:#4e6acc">$19.99 — 31 人</div>
+    <div class="funnel-info">$1,599</div>
+  </div>
+  <div style="text-align:center;color:var(--muted);font-size:11px;margin:2px 0">▼ 45.2%</div>
+  <div class="funnel-step">
+    <div class="funnel-bar" style="width:6.6%;background:#445cbb">$49.99 — 14 人</div>
+    <div class="funnel-info">$1,200</div>
+  </div>
+  <div style="text-align:center;color:var(--muted);font-size:11px;margin:2px 0">▼ 35.7%</div>
+  <div class="funnel-step">
+    <div class="funnel-bar" style="width:2.3%;background:#3a4eaa">$99.99 — 5 人</div>
+    <div class="funnel-info">$800</div>
+  </div>
+</div>
+
+<div class="callout">
+  <strong>漏斗转化：</strong>213 人入口 → 5 人走完全程（2.3% 全通率）。$4.99→$9.99 留存 27.7% 是最大断崖，后续各级维持 35~52% 的转化率。
+</div>
+
+<!-- R级分布 -->
+<h2>五、R 级付费分布</h2>
+
+<div class="grid-2">
+  <div class="card">
+    <h3>收入构成</h3>
+    <div class="stacked-row">
+      <div class="stacked-label"></div>
+      <div class="stacked-track" style="height:36px">
+        <div class="stacked-seg" style="width:5.7%;background:var(--accent)">小R</div>
+        <div class="stacked-seg" style="width:31.8%;background:var(--accent3)">中R 31.8%</div>
+        <div class="stacked-seg" style="width:24.2%;background:var(--orange)">大R 24.2%</div>
+        <div class="stacked-seg" style="width:15.6%;background:var(--accent2)">超R 15.6%</div>
+        <div class="stacked-seg" style="width:22.7%;background:var(--muted)">R0* 22.7%</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:6px">*R0 的 15 人人均 $271，可能是未被R级快照覆盖的高付费新用户</div>
+  </div>
+  <div class="card">
+    <h3>明细数据</h3>
+    <table>
+      <tr><th>R级</th><th class="num">人数</th><th class="num">收入</th><th class="num">人均</th></tr>
+      <tr><td>xiaoR</td><td class="num">96</td><td class="num">$1,029</td><td class="num">$10.72</td></tr>
+      <tr><td>zhongR</td><td class="num hl">147</td><td class="num hl">$5,701</td><td class="num">$38.78</td></tr>
+      <tr><td>daR</td><td class="num">44</td><td class="num warn">$4,347</td><td class="num warn">$98.81</td></tr>
+      <tr><td>chaoR</td><td class="num">12</td><td class="num">$2,789</td><td class="num bad">$232.41</td></tr>
+      <tr><td style="color:var(--muted)">R0*</td><td class="num">15</td><td class="num">$4,064</td><td class="num" style="color:var(--muted)">$270.94</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 各模块 R级亮点 -->
+<h2>六、各模块 R 级亮点</h2>
+
+<div class="grid-2">
+  <div class="card">
+    <h3><span class="tag tag-skin">210716 晋升皮肤</span> $49.99 × 限购1</h3>
+    <table>
+      <tr><th>R级</th><th class="num">人数</th><th class="num">收入</th><th class="num">占比</th></tr>
+      <tr><td>xiaoR</td><td class="num">10</td><td class="num">$500</td><td class="num">11.1%</td></tr>
+      <tr><td style="color:var(--accent3)"><strong>zhongR</strong></td><td class="num hl">41</td><td class="num hl">$2,050</td><td class="num hl">45.6%</td></tr>
+      <tr><td>daR</td><td class="num">20</td><td class="num">$1,000</td><td class="num">22.2%</td></tr>
+      <tr><td>chaoR</td><td class="num">7</td><td class="num">$350</td><td class="num">7.8%</td></tr>
+      <tr><td style="color:var(--muted)">R0*</td><td class="num">12</td><td class="num">$600</td><td class="num">13.3%</td></tr>
+    </table>
+    <div style="font-size:12px;color:var(--accent3);margin-top:8px">中R是主力买家，$49.99 价位对中R有吸引力</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag tag-b">210715 B线锚点</span> $99.99 × 不限购</h3>
+    <table>
+      <tr><th>R级</th><th class="num">人数</th><th class="num">订单</th><th class="num">人均单数</th><th class="num">收入</th></tr>
+      <tr><td>zhongR</td><td class="num">2</td><td class="num">4</td><td class="num">2.0</td><td class="num">$400</td></tr>
+      <tr><td>daR</td><td class="num">1</td><td class="num">3</td><td class="num">3.0</td><td class="num">$300</td></tr>
+      <tr><td style="color:var(--accent2)"><strong>chaoR</strong></td><td class="num bad">1</td><td class="num bad">9</td><td class="num bad">9.0</td><td class="num bad">$900</td></tr>
+      <tr><td style="color:var(--muted)">R0*</td><td class="num">1</td><td class="num">2</td><td class="num">2.0</td><td class="num">$200</td></tr>
+    </table>
+    <div style="font-size:12px;color:var(--accent2);margin-top:8px">1名超R单人 9 单 $900，B线是大R/超R持续消费通道</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag tag-a">210702 A线入口</span> $4.99 × 限购1</h3>
+    <table>
+      <tr><th>R级</th><th class="num">人数</th><th class="num">订单</th><th class="num">收入</th></tr>
+      <tr><td>xiaoR</td><td class="num good">73</td><td class="num">145</td><td class="num">$723</td></tr>
+      <tr><td>zhongR</td><td class="num hl">98</td><td class="num">199</td><td class="num">$993</td></tr>
+      <tr><td>daR</td><td class="num">26</td><td class="num">54</td><td class="num">$269</td></tr>
+      <tr><td>chaoR</td><td class="num">8</td><td class="num">17</td><td class="num">$85</td></tr>
+    </table>
+    <div style="font-size:12px;color:var(--green);margin-top:8px">小R 73人入场，最大渗透入口</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag tag-deco">210717 家具礼包</span> $99.99 × 限购1</h3>
+    <table>
+      <tr><th>R级</th><th class="num">人数</th><th class="num">收入</th></tr>
+      <tr><td>xiaoR</td><td class="num">1</td><td class="num">$100</td></tr>
+      <tr><td style="color:var(--accent3)"><strong>zhongR</strong></td><td class="num hl">13</td><td class="num hl">$1,300</td></tr>
+      <tr><td>daR</td><td class="num">5</td><td class="num">$500</td></tr>
+      <tr><td>chaoR</td><td class="num">2</td><td class="num">$200</td></tr>
+      <tr><td style="color:var(--muted)">R0*</td><td class="num">3</td><td class="num">$300</td></tr>
+    </table>
+    <div style="font-size:12px;color:var(--accent4);margin-top:8px">$99.99 高价位仍有 24 人购买，装饰需求真实</div>
+  </div>
+</div>
+
+<!-- 同期非节日礼包 -->
+<h2>七、同期非节日礼包 TOP 5</h2>
+
+<div class="callout">
+  情人节期间(1/29~2/15)，节日礼包 $17,930 仅占同期总销售约 27.5%，大部分收入来自常驻模块。
+</div>
+
+<table>
+  <tr><th>iap_id</th><th>推测类型</th><th class="num">订单</th><th class="num">付费人数</th><th class="num">收入(USD)</th></tr>
+  <tr><td>220001</td><td>BP 通行证</td><td class="num">414</td><td class="num">409</td><td class="num warn">$13,826</td></tr>
+  <tr><td>60001</td><td>月卡/周卡</td><td class="num">1,821</td><td class="num">886</td><td class="num">$9,087</td></tr>
+  <tr><td>130021</td><td>常规兑换包</td><td class="num">421</td><td class="num">394</td><td class="num">$8,416</td></tr>
+  <tr><td>10002</td><td>钻石充值</td><td class="num">1,583</td><td class="num">1,583</td><td class="num">$7,899</td></tr>
+  <tr><td>500031</td><td>常驻系统包</td><td class="num">789</td><td class="num">497</td><td class="num">$7,882</td></tr>
+</table>
+
+<!-- 关键发现 -->
+<h2>八、关键发现</h2>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px">
+  <div class="card" style="border-left:3px solid var(--accent2)">
+    <h3 style="color:var(--accent2)">晋升皮肤是最强单品</h3>
+    <div style="font-size:13px;color:var(--muted);margin-top:6px">
+      210716 以 <strong style="color:var(--text)">$4,499</strong> 占全节日 25.1%<br>
+      $49.99 定价 × 90人 = 100% 一次性转化<br>
+      中R 是主力买家（45.6%）
+    </div>
+  </div>
+  <div class="card" style="border-left:3px solid var(--accent)">
+    <h3 style="color:var(--accent)">A线连锁是最大收入池</h3>
+    <div style="font-size:13px;color:var(--muted);margin-top:6px">
+      5档付费合计 <strong style="color:var(--text)">$7,253</strong>（40.5%）<br>
+      $4.99 入口拉 213 人，全通仅 5 人（2.3%）<br>
+      $4.99→$9.99 留存 27.7% 是最大断崖
+    </div>
+  </div>
+  <div class="card" style="border-left:3px solid var(--accent5)">
+    <h3 style="color:var(--accent5)">B线锚点靠头部驱动</h3>
+    <div style="font-size:13px;color:var(--muted);margin-top:6px">
+      $99.99 档仅 5 人 18 单 = <strong style="color:var(--text)">$1,800</strong><br>
+      1 名超R 单人 9 单 $900<br>
+      B线是大R/超R 持续消费通道
+    </div>
+  </div>
+  <div class="card" style="border-left:3px solid var(--accent4)">
+    <h3 style="color:var(--accent4)">家具礼包表现超预期</h3>
+    <div style="font-size:13px;color:var(--muted);margin-top:6px">
+      $99.99 高价位 24 人购买 = <strong style="color:var(--text)">$2,400</strong>（13.4%）<br>
+      中R 13 人占半数<br>
+      装饰品类在 X3 有真实付费需求
+    </div>
+  </div>
+</div>
+
+<div class="callout" style="margin-top:20px;border-left-color:var(--accent2)">
+  <strong>对比纪念卡的启示：</strong>晋升皮肤（$49.99 限购1）能吸引 90 人购买，家具礼包（$99.99 限购1）能吸引 24 人。而纪念卡目前没有独立礼包——如果以 $9.99~$29.99 定价做纪念卡直售包（含 5~15 张），参照皮肤/家具的渗透率，预计 zhongR 可覆盖 30~50 人，单期贡献 $500~$1,500 增量收入。
+</div>
+
+<div style="margin-top:48px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:11px;text-align:center">
+  X3 26情人节模块付费分析 | 数据截至 2026-05-12 | 配置: C:/x3dev/Pack.xlsx | 数仓: TRINO_HF v1090
+</div>
+
+</body>
+</html>

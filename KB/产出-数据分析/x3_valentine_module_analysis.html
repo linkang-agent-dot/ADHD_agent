@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 情人节(2107xx) · 付费模块与需求侧分析</title>
+<style>
+:root{--t4f-dark:#0d1117;--t4f-card:#161b22;--t4f-border:#30363d;--t4f-text:#c9d1d9;--t4f-head:#f0f6fc;--t4f-accent:#58a6ff;--t4f-green:#3fb950;--t4f-red:#f85149;--t4f-yellow:#d29922;--t4f-purple:#bc8cff;--t4f-sidebar:#0d1117;--t4f-sbactive:#21262d;--t4f-pink:#f778ba}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--t4f-dark);color:var(--t4f-text);font-size:13.5px;display:flex;min-height:100vh}
+
+/* ─── Sidebar ─── */
+.sidebar{width:220px;background:var(--t4f-sidebar);border-right:1px solid var(--t4f-border);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:10}
+.sb-logo{padding:20px 18px 12px;border-bottom:1px solid var(--t4f-border)}
+.sb-logo .brand{font-size:18px;font-weight:800;color:var(--t4f-head);letter-spacing:-.5px}
+.sb-logo .brand span{color:var(--t4f-accent)}
+.sb-logo .sub{font-size:10.5px;color:#484f58;margin-top:2px;letter-spacing:.5px}
+.sb-nav{padding:12px 0}
+.sb-item{display:block;padding:9px 18px;font-size:12.5px;color:#8b949e;text-decoration:none;border-left:3px solid transparent;transition:all .15s;cursor:pointer}
+.sb-item:hover{background:var(--t4f-sbactive);color:var(--t4f-head)}
+.sb-item.active{border-left-color:var(--t4f-accent);color:var(--t4f-accent);background:var(--t4f-sbactive);font-weight:600}
+.sb-divider{height:1px;background:var(--t4f-border);margin:8px 18px}
+.sb-label{padding:10px 18px 4px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#484f58;text-transform:uppercase}
+
+/* ─── Main ─── */
+.content{margin-left:220px;flex:1;padding:0}
+
+/* hero */
+.hero-bar{background:linear-gradient(135deg,#0d1117 0%,#161b22 100%);border-bottom:1px solid var(--t4f-border);padding:28px 48px}
+.hero-bar h1{font-size:1.5em;font-weight:800;color:var(--t4f-head);line-height:1.3}
+.hero-bar h1 em{color:var(--t4f-pink);font-style:normal}
+.hero-bar .meta{font-size:11.5px;color:#484f58;margin-top:6px}
+.hero-bar .meta b{color:var(--t4f-accent)}
+
+/* verdict */
+.verdict{margin:20px 48px 0;background:var(--t4f-card);border:1px solid var(--t4f-border);border-left:4px solid var(--t4f-pink);border-radius:6px;padding:16px 22px}
+.verdict .vl{font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--t4f-pink);text-transform:uppercase;margin-bottom:5px}
+.verdict p{font-size:13px;line-height:1.85;color:var(--t4f-text)}
+.verdict b{color:var(--t4f-head)}
+
+.page{padding:24px 48px 48px}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px}
+.kpi{background:var(--t4f-card);border:1px solid var(--t4f-border);border-radius:8px;padding:18px 20px;border-top:3px solid var(--t4f-accent)}
+.kpi.g{border-top-color:var(--t4f-green)}.kpi.y{border-top-color:var(--t4f-yellow)}.kpi.p{border-top-color:var(--t4f-pink)}.kpi.r{border-top-color:var(--t4f-red)}
+.kpi-val{font-size:2em;font-weight:800;color:var(--t4f-head);line-height:1.1}
+.kpi-val.up{color:var(--t4f-green)}.kpi-val.bl{color:var(--t4f-accent)}.kpi-val.pk{color:var(--t4f-pink)}
+.kpi-lbl{font-size:11.5px;color:#8b949e;margin-top:5px;font-weight:600}
+.kpi-sub{font-size:11px;color:#484f58;margin-top:3px}
+.kpi-badge{display:inline-block;margin-top:7px;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700}
+.kpi-badge.ok{background:#1b3a2a;color:var(--t4f-green)}.kpi-badge.mid{background:#3b2e12;color:var(--t4f-yellow)}.kpi-badge.pk{background:#3b1230;color:var(--t4f-pink)}
+
+/* section */
+.sec{scroll-margin-top:20px}
+.sec-head{display:flex;align-items:center;gap:10px;margin:28px 0 12px}
+.sec-num{width:26px;height:26px;border-radius:50%;background:var(--t4f-accent);color:#0d1117;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-num.pink{background:var(--t4f-pink)}
+.sec-title{font-size:15px;font-weight:700;color:var(--t4f-head)}
+.sec-badge{font-size:10px;padding:2px 8px;border-radius:3px;font-weight:700;margin-left:6px}
+.sec-badge.ok{background:#1b3a2a;color:var(--t4f-green)}.sec-badge.warn{background:#3b2e12;color:var(--t4f-yellow)}.sec-badge.info{background:#0d2137;color:var(--t4f-accent)}.sec-badge.pk{background:#3b1230;color:var(--t4f-pink)}
+
+/* card */
+.card{background:var(--t4f-card);border:1px solid var(--t4f-border);border-radius:8px;padding:18px 22px;margin-bottom:14px}
+.ct{font-size:11px;font-weight:700;color:#8b949e;letter-spacing:.5px;text-transform:uppercase;border-left:3px solid var(--t4f-accent);padding-left:10px;margin-bottom:12px}
+.ct.g{border-left-color:var(--t4f-green)}.ct.y{border-left-color:var(--t4f-yellow)}.ct.r{border-left-color:var(--t4f-red)}.ct.pk{border-left-color:var(--t4f-pink)}.ct.p{border-left-color:var(--t4f-purple)}
+
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#21262d;color:var(--t4f-head);padding:8px 10px;text-align:center;font-weight:600;border-bottom:1px solid var(--t4f-border)}
+th.l{text-align:left}
+td{padding:8px 10px;border-bottom:1px solid #21262d;text-align:center;color:var(--t4f-text)}
+td.l{text-align:left}
+tr:hover td{background:#161b2299}
+tr:nth-child(even) td{background:#1a1f27}
+.g{color:var(--t4f-green);font-weight:700}.r{color:var(--t4f-red);font-weight:700}
+.row-a{background:#21262d!important}.row-a td{color:var(--t4f-head);font-weight:700;background:#21262d!important}
+.row-hl td{background:#1a1035!important}
+
+/* layout */
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* callouts */
+.cb{border-radius:6px;padding:10px 14px;margin:10px 0;font-size:12px;line-height:1.7}
+.cb-info{background:#0d2137;border-left:3px solid var(--t4f-accent);color:var(--t4f-text)}
+.cb-warn{background:#2a1a0e;border-left:3px solid var(--t4f-yellow)}.cb-err{background:#2a0e0e;border-left:3px solid var(--t4f-red)}
+.cb-pink{background:#2a0e1f;border-left:3px solid var(--t4f-pink)}
+.cb b{color:var(--t4f-head)}
+
+/* bar visual */
+.bar-wrap{flex:1;background:#21262d;border-radius:3px;height:20px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding:0 8px;font-size:10px;font-weight:700;color:#fff;white-space:nowrap}
+
+/* dual bar for lifecycle chart */
+.lc-row{display:flex;align-items:center;gap:8px;margin:6px 0}
+.lc-label{width:90px;font-size:11px;color:#8b949e;text-align:right;flex-shrink:0}
+.lc-bars{flex:1;display:flex;flex-direction:column;gap:3px}
+.lc-bar{display:flex;align-items:center;gap:6px}
+.lc-bar-wrap{flex:1;background:#21262d;border-radius:3px;height:16px;overflow:hidden}
+.lc-bar-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding:0 6px;font-size:9px;font-weight:700;color:#fff;white-space:nowrap;min-width:fit-content}
+.lc-bar-tag{font-size:9px;width:28px;flex-shrink:0;font-weight:600}
+.lc-gap{width:60px;font-size:10px;color:#8b949e;text-align:center;flex-shrink:0}
+
+/* waterfall */
+.wf{display:flex;flex-direction:column;gap:5px;min-width:200px}
+.wf-r{display:flex;justify-content:space-between;align-items:center;border-radius:5px;padding:9px 14px}
+.wf-r.base{background:#21262d}.wf-r.pos{background:#0d2d1a}.wf-r.neg{background:#2d0d0d}.wf-r.result{background:var(--t4f-accent);background:linear-gradient(135deg,#1f3d5e,#0d2137)}
+
+/* rec */
+.rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rec{border-radius:6px;padding:14px 16px;border-left:3px solid}
+.rec.keep{background:#0d2d1a;border-left-color:var(--t4f-green)}
+.rec.fix{background:#2a2a0e;border-left-color:var(--t4f-yellow)}
+.rec.drop{background:#2a0e0e;border-left-color:var(--t4f-red)}
+.rec.insight{background:#1a0e2a;border-left-color:var(--t4f-purple)}
+.rec-tag{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+.keep .rec-tag{color:var(--t4f-green)}.fix .rec-tag{color:var(--t4f-yellow)}.drop .rec-tag{color:var(--t4f-red)}.insight .rec-tag{color:var(--t4f-purple)}
+.rec-t{font-size:13px;font-weight:700;color:var(--t4f-head);margin-bottom:3px}
+.rec-b{font-size:11.5px;color:#8b949e;line-height:1.55}
+
+/* compare table highlight */
+.hi-furn td:first-child{border-left:3px solid var(--t4f-purple)}
+.hi-skin td:first-child{border-left:3px solid var(--t4f-pink)}
+
+.footer{text-align:center;font-size:10.5px;color:#484f58;padding:24px 0;border-top:1px solid var(--t4f-border);margin-top:12px}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sb-logo">
+    <div class="brand">tap<span>4</span>fun</div>
+    <div class="sub">MODULE ANALYSIS REPORT</div>
+  </div>
+  <div class="sb-nav">
+    <div class="sb-label">Overview</div>
+    <a class="sb-item active" onclick="go('top')">Executive Summary</a>
+    <a class="sb-item" onclick="go('s1')">1 总览 KPI</a>
+    <div class="sb-divider"></div>
+    <div class="sb-label">Pack Detail</div>
+    <a class="sb-item" onclick="go('s2')">2 逐包明细</a>
+    <div class="sb-divider"></div>
+    <div class="sb-label">Demand Analysis</div>
+    <a class="sb-item" onclick="go('s3')">3 生命周期渗透率</a>
+    <a class="sb-item" onclick="go('s4')">4 PVP x 皮肤购买</a>
+    <a class="sb-item" onclick="go('s5')">5 拜访 x 家具购买</a>
+  </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- HERO -->
+<div class="hero-bar" id="top">
+  <h1>X3 情人节活动 (2107xx)<br><em>付费模块与需求侧分析 · ChainID 484</em></h1>
+  <div class="meta">
+    Pack 结构: 11档A线 + 4档B线 + 皮肤 + 家具 + 皮肤锚点 &nbsp;·&nbsp;
+    18个SKU &nbsp;·&nbsp; <b>2026-05-11</b>
+  </div>
+</div>
+
+<!-- VERDICT -->
+<div class="verdict">
+  <div class="vl">核心发现</div>
+  <p>
+    家具($99.99)与皮肤($49.99)呈现截然不同的需求驱动模型：<b>家具无生命周期门槛</b>（D0就有47%超R购买），依赖"被拜访"普照型曝光，57%超R会买；
+    <b>皮肤强依赖 D-day</b>（D60才达峰57%），且在年轻服中 <b>PVP>=800次是独立驱动因子</b>（渗透率差距6.2倍），老服PVP不再区分。
+    拜访对家具购买几乎无区分度（仅+3%），说明拜访是"普照型"曝光而非转化驱动。
+  </p>
+</div>
+
+<div class="page">
+
+<!-- ═══ Section 1: 总览 KPI ═══ -->
+<div class="sec" id="s1">
+  <div class="sec-head">
+    <div class="sec-num">1</div>
+    <div class="sec-title">总览 KPI</div>
+    <span class="sec-badge pk">情人节 ChainID 484</span>
+  </div>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi p">
+    <div class="kpi-val pk">$17,930</div>
+    <div class="kpi-lbl">总收入</div>
+    <div class="kpi-sub">ChainID 484</div>
+  </div>
+  <div class="kpi g">
+    <div class="kpi-val up">314</div>
+    <div class="kpi-lbl">付费人数</div>
+    <div class="kpi-sub">去重 unique users</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val bl">$57.10</div>
+    <div class="kpi-lbl">ARPU</div>
+    <div class="kpi-sub">$17,930 / 314人</div>
+  </div>
+  <div class="kpi y">
+    <div class="kpi-val" style="color:var(--t4f-yellow)">18</div>
+    <div class="kpi-lbl">Pack 总数</div>
+    <div class="kpi-sub">11档A线 + 4档B线 + 3独立</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="ct pk">Pack 结构拆解</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+    <div style="background:#21262d;border-radius:6px;padding:14px;border-top:3px solid var(--t4f-accent)">
+      <div style="font-size:20px;font-weight:800;color:var(--t4f-accent)">11</div>
+      <div style="font-size:11px;color:#8b949e;margin-top:4px">A线 (Pure White Bride)</div>
+      <div style="font-size:10px;color:#484f58;margin-top:2px">6免费 + 5付费 ($4.99~$99.99)</div>
+    </div>
+    <div style="background:#21262d;border-radius:6px;padding:14px;border-top:3px solid var(--t4f-yellow)">
+      <div style="font-size:20px;font-weight:800;color:var(--t4f-yellow)">4</div>
+      <div style="font-size:11px;color:#8b949e;margin-top:4px">B线 (A Love Letter)</div>
+      <div style="font-size:10px;color:#484f58;margin-top:2px">锚点包 $4.99~$99.99</div>
+    </div>
+    <div style="background:#21262d;border-radius:6px;padding:14px;border-top:3px solid var(--t4f-pink)">
+      <div style="font-size:20px;font-weight:800;color:var(--t4f-pink)">3</div>
+      <div style="font-size:11px;color:#8b949e;margin-top:4px">独立SKU</div>
+      <div style="font-size:10px;color:#484f58;margin-top:2px">皮肤$49.99 + 家具$99.99 + 皮肤锚$49.99</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ Section 2: 逐包明细 ═══ -->
+<div class="sec" id="s2">
+  <div class="sec-head">
+    <div class="sec-num">2</div>
+    <div class="sec-title">逐包明细 (18 Packs)</div>
+    <span class="sec-badge info">dim_iap 数据源</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="ct">A线 · Pure White Bride (连锁解锁)</div>
+  <table>
+    <tr><th>Pack ID</th><th class="l">英文名</th><th>价格</th><th>类型</th><th>付费人数</th><th>收入</th></tr>
+    <tr><td>210701</td><td class="l">Free Pack</td><td>$0</td><td style="color:#8b949e">A线免费</td><td style="color:#484f58">-</td><td style="color:#484f58">-</td></tr>
+    <tr><td>210702</td><td class="l">Pure White Bride Pack 2</td><td>$4.99</td><td style="color:var(--t4f-accent)">A线连锁</td><td style="color:#484f58">待补充</td><td style="color:#484f58">待补充</td></tr>
+    <tr><td>210703</td><td class="l">Free Pack</td><td>$0</td><td style="color:#8b949e">A线免费</td><td style="color:#484f58">-</td><td style="color:#484f58">-</td></tr>
+    <tr><td>210704</td><td class="l">Pure White Bride Pack 3</td><td>$9.99</td><td style="color:var(--t4f-accent)">A线连锁</td><td style="color:#484f58">待补充</td><td style="color:#484f58">待补充</td></tr>
+    <tr><td>210705</td><td class="l">Free Pack</td><td>$0</td><td style="color:#8b949e">A线免费</td><td style="color:#484f58">-</td><td style="color:#484f58">-</td></tr>
+    <tr><td>210706</td><td class="l">Pure White Bride Value Pack 4</td><td>$19.99</td><td style="color:var(--t4f-accent)">A线连锁</td><td style="color:#484f58">待补充</td><td style="color:#484f58">待补充</td></tr>
+    <tr><td>210707</td><td class="l">Free Pack</td><td>$0</td><td style="color:#8b949e">A线免费</td><td style="color:#484f58">-</td><td style="color:#484f58">-</td></tr>
+    <tr><td>210708</td><td class="l">Pure White Bride Pack 5</td><td>$49.99</td><td style="color:var(--t4f-accent)">A线连锁</td><td style="color:#484f58">待补充</td><td style="color:#484f58">待补充</td></tr>
+    <tr><td>210709</td><td class="l">Free Pack</td><td>$0</td><td style="color:#8b949e">A线免费</td><td style="color:#484f58">-</td><td style="color:#484f58">-</td></tr>
+    <tr><td>210710</td><td class="l">Pure White Bride Value Pack 6</td><td>$99.99</td><td style="color:var(--t4f-accent)">A线连锁</td><td style="color:#484f58">待补充</td><td style="color:#484f58">待补充</td></tr>
+    <tr><td>210711</td><td class="l">Free Pack</td><td>$0</td><td style="color:#8b949e">A线免费</td><td style="color:#484f58">-</td><td style="color:#484f58">-</td></tr>
+  </table>
+</div>
+
+<div class="cols2">
+  <div class="card">
+    <div class="ct y">B线 · A Love Letter (锚点包)</div>
+    <table>
+      <tr><th>Pack ID</th><th class="l">英文名</th><th>价格</th><th>付费人数</th><th>收入</th></tr>
+      <tr><td>210712</td><td class="l">A Love Letter</td><td>$4.99</td><td style="color:#484f58">待补充</td><td style="color:#484f58">待补充</td></tr>
+      <tr><td>210713</td><td class="l">A Love Letter</td><td>$19.99</td><td style="color:#484f58">待补充</td><td style="color:#484f58">待补充</td></tr>
+      <tr><td>210714</td><td class="l">A Love Letter</td><td>$49.99</td><td style="color:#484f58">待补充</td><td style="color:#484f58">待补充</td></tr>
+      <tr><td>210715</td><td class="l">A Love Letter</td><td>$99.99</td><td style="color:#484f58">待补充</td><td style="color:#484f58">待补充</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct pk">独立 SKU (皮肤 / 家具)</div>
+    <table>
+      <tr><th>Pack ID</th><th class="l">英文名</th><th>价格</th><th>类型</th><th>收入</th></tr>
+      <tr style="background:#1a0e2a"><td>210716</td><td class="l">Hazel's Sweet Vow</td><td style="color:var(--t4f-pink)">$49.99</td><td>晋升皮肤</td><td style="color:#484f58">待补充</td></tr>
+      <tr style="background:#0d1a2a"><td>210717</td><td class="l">Gate of Oath</td><td style="color:var(--t4f-purple)">$99.99</td><td>家具礼包</td><td style="color:#484f58">待补充</td></tr>
+      <tr><td>210718</td><td class="l">Hazel's Sweet Vow</td><td>$49.99</td><td>皮肤锚点</td><td style="color:#484f58">待补充</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="cb cb-info">
+  <b>Note:</b> 各 Pack 逐包收入与付费人数数据待 Datain 明细查询后补充。当前版本聚焦需求侧分析（Section 3-5）。
+</div>
+
+
+<!-- ═══ Section 3: 超R生命周期渗透率 ═══ -->
+<div class="sec" id="s3">
+  <div class="sec-head">
+    <div class="sec-num pink">3</div>
+    <div class="sec-title">超R生命周期渗透率 — 家具 vs 皮肤</div>
+    <span class="sec-badge pk">KEY SECTION</span>
+  </div>
+</div>
+
+<div class="card" style="border-left:3px solid var(--t4f-pink)">
+  <div style="display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--t4f-pink);text-transform:uppercase;margin-bottom:6px">核心结论</div>
+      <p style="font-size:13px;line-height:1.85">
+        <b style="color:var(--t4f-purple)">家具</b>无生命周期门槛 — D0 就有 <b>47.1%</b> 超R购买，全周期均匀高渗透。<br>
+        <b style="color:var(--t4f-pink)">皮肤</b>强依赖 D-day — D0 仅 <b>23.5%</b>，<b>D60 才达峰 57.1%</b>。<br>
+        D20-D29 家具/皮肤差距最大 (<b style="color:var(--t4f-red)">5倍</b>)，这正是当前重上窗口的关键服龄段。
+      </p>
+    </div>
+    <div class="wf" style="min-width:180px">
+      <div class="wf-r" style="background:#1a0e2a"><span style="font-size:11px;color:var(--t4f-purple)">家具 D0</span><span style="font-size:1.25em;font-weight:800;color:var(--t4f-purple)">47.1%</span></div>
+      <div class="wf-r" style="background:#2a0e1f"><span style="font-size:11px;color:var(--t4f-pink)">皮肤 D0</span><span style="font-size:1.25em;font-weight:800;color:var(--t4f-pink)">23.5%</span></div>
+      <div class="wf-r" style="background:#2a0e1f"><span style="font-size:11px;color:var(--t4f-pink)">皮肤 D60</span><span style="font-size:1.25em;font-weight:800;color:var(--t4f-green)">57.1%</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="ct p">超R 分服龄 家具 vs 皮肤 渗透率对比</div>
+  <table>
+    <tr>
+      <th class="l">服龄</th>
+      <th style="background:#2a1a3a;color:var(--t4f-purple)">超R家具渗透</th>
+      <th style="background:#3a1a2a;color:var(--t4f-pink)">超R皮肤渗透</th>
+      <th>差距</th>
+      <th class="l">备注</th>
+    </tr>
+    <tr>
+      <td class="l" style="font-weight:700">D0-D9</td>
+      <td class="g">47.1%</td>
+      <td>23.5%</td>
+      <td style="color:var(--t4f-yellow);font-weight:700">2x</td>
+      <td class="l" style="color:#8b949e;font-size:11px">新服家具已高</td>
+    </tr>
+    <tr>
+      <td class="l" style="font-weight:700">D10-D19</td>
+      <td>12.5%</td>
+      <td>12.5%</td>
+      <td style="color:#8b949e">持平</td>
+      <td class="l" style="color:#8b949e;font-size:11px"></td>
+    </tr>
+    <tr style="background:#2d1a0a!important">
+      <td class="l" style="font-weight:700;color:var(--t4f-yellow)">D20-D29</td>
+      <td class="g">83.3%</td>
+      <td class="r">16.7%</td>
+      <td style="color:var(--t4f-red);font-weight:800;font-size:14px">5x</td>
+      <td class="l" style="color:var(--t4f-yellow);font-size:11px;font-weight:700">当前重上窗口</td>
+    </tr>
+    <tr>
+      <td class="l" style="font-weight:700">D30-D39</td>
+      <td>20.0%</td>
+      <td class="g">40.0%</td>
+      <td style="color:var(--t4f-pink);font-weight:700">皮肤反超</td>
+      <td class="l" style="color:#8b949e;font-size:11px"></td>
+    </tr>
+    <tr>
+      <td class="l" style="font-weight:700">D50-D59</td>
+      <td class="g">70.0%</td>
+      <td>30.0%</td>
+      <td style="color:var(--t4f-yellow);font-weight:700">2.3x</td>
+      <td class="l" style="color:#8b949e;font-size:11px"></td>
+    </tr>
+    <tr>
+      <td class="l" style="font-weight:700">D60-D69</td>
+      <td>42.9%</td>
+      <td class="g">57.1%</td>
+      <td style="color:var(--t4f-pink);font-weight:700">皮肤反超</td>
+      <td class="l" style="color:var(--t4f-pink);font-size:11px">皮肤达峰</td>
+    </tr>
+    <tr>
+      <td class="l" style="font-weight:700">D80-D89</td>
+      <td class="g">57.1%</td>
+      <td>28.6%</td>
+      <td style="color:var(--t4f-yellow);font-weight:700">2x</td>
+      <td class="l" style="color:#8b949e;font-size:11px"></td>
+    </tr>
+    <tr>
+      <td class="l" style="font-weight:700">D110-D119</td>
+      <td class="g">75.0%</td>
+      <td class="r">0%</td>
+      <td style="color:var(--t4f-red);font-weight:800">家具独大</td>
+      <td class="l" style="color:#8b949e;font-size:11px">皮肤完全消失</td>
+    </tr>
+    <tr>
+      <td class="l" style="font-weight:700">D300+</td>
+      <td class="g">81.8%</td>
+      <td class="g">63.6%</td>
+      <td style="color:#8b949e">都高</td>
+      <td class="l" style="color:#8b949e;font-size:11px">老服全量渗透</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Visual bar chart -->
+<div class="card">
+  <div class="ct p">生命周期渗透率曲线 (CSS Bar Chart)</div>
+
+  <div style="display:flex;gap:16px;margin-bottom:12px;font-size:10px;font-weight:700">
+    <span style="color:var(--t4f-purple)">&#9632; 家具 Gate of Oath ($99.99)</span>
+    <span style="color:var(--t4f-pink)">&#9632; 皮肤 Hazel's Sweet Vow ($49.99)</span>
+  </div>
+
+  <!-- D0-D9 -->
+  <div class="lc-row">
+    <div class="lc-label">D0-D9</div>
+    <div class="lc-bars">
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-purple)">家具</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:47.1%;background:var(--t4f-purple)">47.1%</div></div>
+      </div>
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-pink)">皮肤</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:23.5%;background:var(--t4f-pink)">23.5%</div></div>
+      </div>
+    </div>
+    <div class="lc-gap" style="color:var(--t4f-yellow)">2x</div>
+  </div>
+
+  <!-- D10-D19 -->
+  <div class="lc-row">
+    <div class="lc-label">D10-D19</div>
+    <div class="lc-bars">
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-purple)">家具</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:12.5%;background:var(--t4f-purple)">12.5%</div></div>
+      </div>
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-pink)">皮肤</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:12.5%;background:var(--t4f-pink)">12.5%</div></div>
+      </div>
+    </div>
+    <div class="lc-gap" style="color:#8b949e">持平</div>
+  </div>
+
+  <!-- D20-D29 HIGHLIGHT -->
+  <div class="lc-row" style="background:#2d1a0a;border-radius:6px;padding:6px 0">
+    <div class="lc-label" style="color:var(--t4f-yellow);font-weight:700">D20-D29</div>
+    <div class="lc-bars">
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-purple)">家具</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:83.3%;background:var(--t4f-purple)">83.3%</div></div>
+      </div>
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-pink)">皮肤</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:16.7%;background:var(--t4f-pink)">16.7%</div></div>
+      </div>
+    </div>
+    <div class="lc-gap" style="color:var(--t4f-red);font-weight:800;font-size:12px">5x</div>
+  </div>
+
+  <!-- D30-D39 -->
+  <div class="lc-row">
+    <div class="lc-label">D30-D39</div>
+    <div class="lc-bars">
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-purple)">家具</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:20%;background:var(--t4f-purple)">20.0%</div></div>
+      </div>
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-pink)">皮肤</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:40%;background:var(--t4f-pink)">40.0%</div></div>
+      </div>
+    </div>
+    <div class="lc-gap" style="color:var(--t4f-pink)">皮肤反超</div>
+  </div>
+
+  <!-- D50-D59 -->
+  <div class="lc-row">
+    <div class="lc-label">D50-D59</div>
+    <div class="lc-bars">
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-purple)">家具</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:70%;background:var(--t4f-purple)">70.0%</div></div>
+      </div>
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-pink)">皮肤</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:30%;background:var(--t4f-pink)">30.0%</div></div>
+      </div>
+    </div>
+    <div class="lc-gap" style="color:var(--t4f-yellow)">2.3x</div>
+  </div>
+
+  <!-- D60-D69 -->
+  <div class="lc-row" style="background:#2a0e1f;border-radius:6px;padding:6px 0">
+    <div class="lc-label" style="color:var(--t4f-pink);font-weight:700">D60-D69</div>
+    <div class="lc-bars">
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-purple)">家具</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:42.9%;background:var(--t4f-purple)">42.9%</div></div>
+      </div>
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-pink)">皮肤</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:57.1%;background:var(--t4f-pink)">57.1%</div></div>
+      </div>
+    </div>
+    <div class="lc-gap" style="color:var(--t4f-pink);font-weight:700">皮肤达峰</div>
+  </div>
+
+  <!-- D80-D89 -->
+  <div class="lc-row">
+    <div class="lc-label">D80-D89</div>
+    <div class="lc-bars">
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-purple)">家具</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:57.1%;background:var(--t4f-purple)">57.1%</div></div>
+      </div>
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-pink)">皮肤</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:28.6%;background:var(--t4f-pink)">28.6%</div></div>
+      </div>
+    </div>
+    <div class="lc-gap" style="color:var(--t4f-yellow)">2x</div>
+  </div>
+
+  <!-- D110-D119 -->
+  <div class="lc-row">
+    <div class="lc-label">D110-D119</div>
+    <div class="lc-bars">
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-purple)">家具</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:75%;background:var(--t4f-purple)">75.0%</div></div>
+      </div>
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-pink)">皮肤</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:1%;background:var(--t4f-pink);min-width:30px">0%</div></div>
+      </div>
+    </div>
+    <div class="lc-gap" style="color:var(--t4f-red);font-weight:700">家具独大</div>
+  </div>
+
+  <!-- D300+ -->
+  <div class="lc-row">
+    <div class="lc-label">D300+</div>
+    <div class="lc-bars">
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-purple)">家具</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:81.8%;background:var(--t4f-purple)">81.8%</div></div>
+      </div>
+      <div class="lc-bar">
+        <div class="lc-bar-tag" style="color:var(--t4f-pink)">皮肤</div>
+        <div class="lc-bar-wrap"><div class="lc-bar-fill" style="width:63.6%;background:var(--t4f-pink)">63.6%</div></div>
+      </div>
+    </div>
+    <div class="lc-gap" style="color:#8b949e">都高</div>
+  </div>
+</div>
+
+<div class="cb cb-pink">
+  <b>Key Insight:</b> 家具是"无门槛曝光驱动型"产品 — 依赖拜访机制的普照曝光，D0新服就能卖到47%渗透率。皮肤是"成长驱动型"产品 — 强依赖玩家 D-day 和 PVP 积累，D60才真正达峰。<b>D20-D29窗口（当前重上服龄段）家具渗透是皮肤的5倍</b>，说明重上优先推家具而非皮肤。
+</div>
+
+
+<!-- ═══ Section 4: PVP x 皮肤购买 ═══ -->
+<div class="sec" id="s4">
+  <div class="sec-head">
+    <div class="sec-num pink">4</div>
+    <div class="sec-title">PVP x 皮肤购买（控制服龄）</div>
+    <span class="sec-badge warn">800次PVP是阈值</span>
+  </div>
+</div>
+
+<div class="card" style="border-left:3px solid var(--t4f-yellow)">
+  <div style="display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--t4f-yellow);text-transform:uppercase;margin-bottom:6px">核心结论</div>
+      <p style="font-size:13px;line-height:1.85">
+        年轻服 (D0-D29) 中，<b style="color:var(--t4f-green)">PVP>=800次的超R皮肤渗透率 54.5%</b>，是 PVP&lt;800次(8.8%)的 <b style="color:var(--t4f-red)">6.2倍</b>。<br>
+        老服 (D60+) 中差距消失，<b>31.5% vs 34.4%</b>，PVP 不再区分。<br>
+        <b>800次PVP是皮肤转化的独立阈值</b>，且仅在年轻服有效。
+      </p>
+    </div>
+    <div class="wf" style="min-width:180px">
+      <div class="wf-r" style="background:#0d2d1a"><span style="font-size:11px;color:var(--t4f-green)">年轻+高PVP</span><span style="font-size:1.25em;font-weight:800;color:var(--t4f-green)">54.5%</span></div>
+      <div class="wf-r" style="background:#2d0d0d"><span style="font-size:11px;color:var(--t4f-red)">年轻+低PVP</span><span style="font-size:1.25em;font-weight:800;color:var(--t4f-red)">8.8%</span></div>
+      <div class="wf-r result"><span style="font-size:11px;color:var(--t4f-head)">差距</span><span style="font-size:1.25em;font-weight:800;color:var(--t4f-accent)">6.2x</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="cols2">
+  <div class="card">
+    <div class="ct y">控制服龄后 PVP 对皮肤渗透率的影响</div>
+    <table>
+      <tr>
+        <th class="l">服龄</th>
+        <th style="background:#2d0d0d">PVP&lt;800 渗透率</th>
+        <th style="background:#0d2d1a">PVP>=800 渗透率</th>
+        <th>差距</th>
+      </tr>
+      <tr style="background:#2d1a0a!important">
+        <td class="l" style="font-weight:700;color:var(--t4f-yellow)">D0-D29</td>
+        <td class="r">8.8% <span style="color:#484f58;font-weight:400">(34人)</span></td>
+        <td class="g">54.5% <span style="color:#484f58;font-weight:400">(11人)</span></td>
+        <td style="color:var(--t4f-red);font-weight:800;font-size:14px">6.2x</td>
+      </tr>
+      <tr>
+        <td class="l" style="font-weight:700">D60+</td>
+        <td>31.5% <span style="color:#484f58;font-weight:400">(54人)</span></td>
+        <td>34.4% <span style="color:#484f58;font-weight:400">(32人)</span></td>
+        <td style="color:#8b949e">~持平</td>
+      </tr>
+    </table>
+
+    <div style="margin-top:14px">
+      <div style="font-size:10px;font-weight:700;color:#484f58;letter-spacing:1px;margin-bottom:6px">D0-D29 PVP 效应可视化</div>
+      <div style="display:flex;align-items:center;gap:8px;margin:4px 0">
+        <span style="width:80px;font-size:11px;color:#8b949e;text-align:right">PVP&lt;800</span>
+        <div class="bar-wrap"><div class="bar-fill" style="width:8.8%;background:var(--t4f-red);min-width:40px">8.8%</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin:4px 0">
+        <span style="width:80px;font-size:11px;color:#8b949e;text-align:right">PVP>=800</span>
+        <div class="bar-wrap"><div class="bar-fill" style="width:54.5%;background:var(--t4f-green)">54.5%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">超R 分 PVP 频段皮肤渗透率</div>
+    <table>
+      <tr><th class="l">PVP 频段</th><th>超R人数</th><th>买皮肤</th><th>渗透率</th></tr>
+      <tr>
+        <td class="l">1-199</td>
+        <td>21</td>
+        <td>5</td>
+        <td>23.8%</td>
+      </tr>
+      <tr>
+        <td class="l">200-499</td>
+        <td>36</td>
+        <td>10</td>
+        <td>27.8%</td>
+      </tr>
+      <tr>
+        <td class="l">500-799</td>
+        <td>44</td>
+        <td>9</td>
+        <td>20.5%</td>
+      </tr>
+      <tr style="background:#0d2d1a!important">
+        <td class="l" style="font-weight:700;color:var(--t4f-green)">800-1199</td>
+        <td style="color:var(--t4f-head)">41</td>
+        <td style="color:var(--t4f-green);font-weight:700">15</td>
+        <td class="g">36.6%</td>
+      </tr>
+      <tr style="background:#0d2d1a!important">
+        <td class="l" style="font-weight:700;color:var(--t4f-green)">1200+</td>
+        <td style="color:var(--t4f-head)">8</td>
+        <td style="color:var(--t4f-green);font-weight:700">3</td>
+        <td class="g">37.5%</td>
+      </tr>
+    </table>
+
+    <div style="margin-top:14px">
+      <div style="font-size:10px;font-weight:700;color:#484f58;letter-spacing:1px;margin-bottom:6px">渗透率阶梯</div>
+      <div style="display:flex;align-items:center;gap:8px;margin:3px 0">
+        <span style="width:60px;font-size:10px;color:#8b949e;text-align:right">1-199</span>
+        <div class="bar-wrap"><div class="bar-fill" style="width:23.8%;background:#8b949e;min-width:35px">23.8%</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin:3px 0">
+        <span style="width:60px;font-size:10px;color:#8b949e;text-align:right">200-499</span>
+        <div class="bar-wrap"><div class="bar-fill" style="width:27.8%;background:#8b949e;min-width:35px">27.8%</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin:3px 0">
+        <span style="width:60px;font-size:10px;color:#8b949e;text-align:right">500-799</span>
+        <div class="bar-wrap"><div class="bar-fill" style="width:20.5%;background:#8b949e;min-width:35px">20.5%</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin:3px 0">
+        <span style="width:60px;font-size:10px;color:var(--t4f-green);text-align:right;font-weight:700">800-1199</span>
+        <div class="bar-wrap"><div class="bar-fill" style="width:36.6%;background:var(--t4f-green);min-width:35px">36.6%</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin:3px 0">
+        <span style="width:60px;font-size:10px;color:var(--t4f-green);text-align:right;font-weight:700">1200+</span>
+        <div class="bar-wrap"><div class="bar-fill" style="width:37.5%;background:var(--t4f-green);min-width:35px">37.5%</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cb cb-warn">
+  <b>Insight:</b> PVP 800次是一条清晰的阈值线。800次以下三档（1-199 / 200-499 / 500-799）渗透率在 <b>20-28% 平台期</b>；跨过800次后跳升至 <b>36-37%</b>。且该效应在年轻服(D0-D29)被放大到 <b>6.2倍差距</b>，因为年轻服大部分超R还没积累到800次PVP。
+</div>
+
+
+<!-- ═══ Section 5: 拜访 x 家具购买 ═══ -->
+<div class="sec" id="s5">
+  <div class="sec-head">
+    <div class="sec-num">5</div>
+    <div class="sec-title">拜访 x 家具购买</div>
+    <span class="sec-badge info">普照型曝光 · 无区分度</span>
+  </div>
+</div>
+
+<div class="card" style="border-left:3px solid var(--t4f-accent)">
+  <div style="display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--t4f-accent);text-transform:uppercase;margin-bottom:6px">核心结论</div>
+      <p style="font-size:13px;line-height:1.85">
+        超R买家具(88人)活动前7天平均被拜访 <b>178.8次</b>，不买家具(65人)被拜访 <b>173.2次</b>，差距仅 <b style="color:var(--t4f-yellow)">+3%</b>。<br>
+        拜访是<b>"普照型"曝光</b> — 所有超R都有充分的家具曝光，拜访量不构成购买门槛。<br>
+        购买家具后日均被拜访从 19.4次 升至 22.0次 (<b style="color:var(--t4f-green)">+13.6%</b>)，说明家具有轻微"吸引拜访"效应。
+      </p>
+    </div>
+    <div class="wf" style="min-width:180px">
+      <div class="wf-r base"><span style="font-size:11px;color:#8b949e">买家具(88人)</span><span style="font-size:1.25em;font-weight:800;color:var(--t4f-head)">178.8</span></div>
+      <div class="wf-r base"><span style="font-size:11px;color:#8b949e">不买(65人)</span><span style="font-size:1.25em;font-weight:800;color:var(--t4f-head)">173.2</span></div>
+      <div class="wf-r" style="background:#3b2e12"><span style="font-size:11px;color:var(--t4f-yellow)">差距</span><span style="font-size:1.25em;font-weight:800;color:var(--t4f-yellow)">+3%</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="ct p">家具 vs 皮肤 · 需求侧驱动机制对比</div>
+  <table>
+    <tr>
+      <th class="l">维度</th>
+      <th style="background:#2a1a3a;color:var(--t4f-purple)">家具 Gate of Oath ($99.99)</th>
+      <th style="background:#3a1a2a;color:var(--t4f-pink)">皮肤 Hazel's Sweet Vow ($49.99)</th>
+    </tr>
+    <tr>
+      <td class="l" style="font-weight:700;color:var(--t4f-head)">曝光机制</td>
+      <td>被拜访 (日均25次)</td>
+      <td>PVP</td>
+    </tr>
+    <tr>
+      <td class="l" style="font-weight:700;color:var(--t4f-head)">曝光分布</td>
+      <td class="g">均匀充分，所有超R都够</td>
+      <td class="r">不均匀，D20多数&lt;800次</td>
+    </tr>
+    <tr>
+      <td class="l" style="font-weight:700;color:var(--t4f-head)">购买门槛</td>
+      <td class="g">无阈值，57%超R都买</td>
+      <td class="r">800次PVP是阈值</td>
+    </tr>
+    <tr>
+      <td class="l" style="font-weight:700;color:var(--t4f-head)">生命周期依赖</td>
+      <td class="g">无 (D0就能卖)</td>
+      <td class="r">强 (D60才达峰)</td>
+    </tr>
+  </table>
+</div>
+
+<div class="cols2">
+  <div class="card">
+    <div class="ct g">购买家具后拜访变化</div>
+    <table>
+      <tr><th class="l">时段</th><th>日均被拜访</th><th>变化</th></tr>
+      <tr>
+        <td class="l">活动前 (Pre)</td>
+        <td>19.4 次/天</td>
+        <td style="color:#8b949e">基线</td>
+      </tr>
+      <tr>
+        <td class="l">活动后 (Post)</td>
+        <td style="color:var(--t4f-green);font-weight:700">22.0 次/天</td>
+        <td class="g">+13.6%</td>
+      </tr>
+    </table>
+    <div style="margin-top:12px">
+      <div style="display:flex;align-items:center;gap:8px;margin:4px 0">
+        <span style="width:40px;font-size:10px;color:#8b949e;text-align:right">Pre</span>
+        <div class="bar-wrap"><div class="bar-fill" style="width:88%;background:var(--t4f-accent)">19.4/day</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin:4px 0">
+        <span style="width:40px;font-size:10px;color:#8b949e;text-align:right">Post</span>
+        <div class="bar-wrap"><div class="bar-fill" style="width:100%;background:var(--t4f-green)">22.0/day (+13.6%)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">结论提炼</div>
+    <div class="rec-grid" style="grid-template-columns:1fr">
+      <div class="rec insight">
+        <div class="rec-tag">INSIGHT</div>
+        <div class="rec-t">拜访 = 普照型曝光</div>
+        <div class="rec-b">日均25次拜访保证所有超R都有充分家具曝光。拜访量几乎不区分"买/不买"，说明家具购买决策不受曝光量驱动，而是内在需求决定。</div>
+      </div>
+      <div class="rec keep">
+        <div class="rec-tag">KEEP</div>
+        <div class="rec-t">家具购买后有轻微吸引效应</div>
+        <div class="rec-b">日均被拜访从19.4次升至22.0次(+13.6%)，家具本身成为"拜访吸引点"，形成正反馈循环。</div>
+      </div>
+      <div class="rec fix">
+        <div class="rec-tag">ACTION ITEM</div>
+        <div class="rec-t">D20-D29 重上窗口优先家具</div>
+        <div class="rec-b">该服龄段家具渗透83%但皮肤仅17%（5倍差距）。皮肤依赖的PVP积累和D-day在该窗口均不足，重上节日应以家具为核心SKU。</div>
+      </div>
+      <div class="rec fix">
+        <div class="rec-tag">ACTION ITEM</div>
+        <div class="rec-t">皮肤转化需PVP引导</div>
+        <div class="rec-b">年轻服皮肤渗透率被PVP<800拖累（仅8.8%）。考虑在皮肤销售前增加PVP激励事件，帮助年轻服超R跨过800次阈值。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<div class="footer">
+  X3 情人节活动付费模块分析 &nbsp;·&nbsp; 数据环境：TRINO_HF &nbsp;·&nbsp; v1090 &nbsp;·&nbsp; 2026-05-11
+</div>
+
+</div><!-- /content -->
+
+<script>
+function go(id){
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('.sb-item').forEach(a=>a.classList.remove('active'));
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
