@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P2 vs X3 26情人节 R级对比</title>
+<style>
+  :root{--bg:#0f1117;--card:#1a1d27;--border:#2a2d3a;--text:#e0e0e6;--muted:#8b8fa3;
+  --p2:#6c8cff;--x3:#ff6c8c;--c3:#4ecdc4;--c4:#ffe66d;--c5:#a06cd5;--orange:#ffa94d;--red:#ff6b6b}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:24px;max-width:1440px;margin:0 auto}
+  h1{font-size:24px;font-weight:700;background:linear-gradient(135deg,var(--p2),var(--x3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:24px}
+  h2{font-size:17px;font-weight:600;color:var(--c3);margin:32px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+  h3{font-size:14px;font-weight:600;margin:16px 0 8px}
+  table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:12.5px}
+  th{background:var(--card);color:var(--c3);font-weight:600;text-align:left;padding:8px 10px;border-bottom:2px solid var(--border);white-space:nowrap}
+  td{padding:7px 10px;border-bottom:1px solid var(--border)}
+  .n{text-align:right;font-variant-numeric:tabular-nums}
+  .p2c{color:var(--p2);font-weight:600}.x3c{color:var(--x3);font-weight:600}
+  .w{color:var(--orange);font-weight:600}.b{color:var(--red);font-weight:600}.g{color:var(--c3);font-weight:600}
+  .kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:24px}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .kpi-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .kpi-v{font-size:28px;font-weight:700}.kpi-l{font-size:11px;color:var(--muted)}.kpi-s{font-size:11px;color:var(--muted)}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  @media(max-width:900px){.grid-2,.grid-3{grid-template-columns:1fr}}
+  .bar-pair{display:flex;flex-direction:column;gap:3px;margin-bottom:10px}
+  .bar-pair-label{font-size:11px;color:var(--muted);margin-bottom:2px}
+  .bar-row{display:flex;align-items:center;gap:6px}
+  .bar-tag{width:24px;font-size:10px;font-weight:700;flex-shrink:0}
+  .bar-t{flex:1;height:18px;background:#151821;border-radius:3px;overflow:hidden}
+  .bar-f{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:6px;font-size:10px;font-weight:600;color:#fff;min-width:20px}
+  .bar-v{width:60px;text-align:right;font-size:11px;flex-shrink:0;font-variant-numeric:tabular-nums}
+  .callout{background:rgba(78,205,196,0.06);border-left:3px solid var(--c3);border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0;font-size:13px}
+  .callout-warn{background:rgba(255,107,107,0.06);border-left-color:var(--red)}
+  .tag{display:inline-block;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:600}
+  .t-p2{background:rgba(108,140,255,0.15);color:var(--p2)}
+  .t-x3{background:rgba(255,108,140,0.15);color:var(--x3)}
+  .ratio{display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;background:rgba(255,169,77,0.15);color:var(--orange)}
+</style>
+</head>
+<body>
+
+<h1>P2 vs X3 — 26情人节 R 级付费对比</h1>
+<div class="sub">P2 数据源: 2026情人节活动数据复盘报告 | X3 数据源: TRINO_HF v1090 | 同一活动窗口 2026-01-29 ~ 02-15</div>
+
+<!-- 大盘对比 -->
+<div class="kpi-grid">
+  <div class="kpi" style="border-top:3px solid var(--p2)">
+    <div style="font-size:13px;font-weight:600;color:var(--p2);margin-bottom:10px">P2 (机甲)</div>
+    <div class="kpi-row">
+      <div><div class="kpi-v" style="color:var(--p2)">$839,629</div><div class="kpi-l">节日礼包收入</div></div>
+      <div style="text-align:right"><div class="kpi-v" style="color:var(--p2);font-size:22px">4,496</div><div class="kpi-l">付费人数</div></div>
+    </div>
+    <div class="kpi-row" style="margin-bottom:0">
+      <div><div class="kpi-s">活跃 20,439 | 付费率 <strong style="color:var(--p2)">22.0%</strong></div></div>
+      <div><div class="kpi-s">ARPU <strong style="color:var(--p2)">$41.08</strong> | ARPPU <strong style="color:var(--p2)">$186.75</strong></div></div>
+    </div>
+  </div>
+  <div class="kpi" style="border-top:3px solid var(--x3)">
+    <div style="font-size:13px;font-weight:600;color:var(--x3);margin-bottom:10px">X3 (巨猿)</div>
+    <div class="kpi-row">
+      <div><div class="kpi-v" style="color:var(--x3)">$17,930</div><div class="kpi-l">节日礼包收入</div></div>
+      <div style="text-align:right"><div class="kpi-v" style="color:var(--x3);font-size:22px">314</div><div class="kpi-l">付费人数</div></div>
+    </div>
+    <div class="kpi-row" style="margin-bottom:0">
+      <div><div class="kpi-s">付费活跃 10,460 | 付费率 <strong style="color:var(--x3)">3.0%</strong></div></div>
+      <div><div class="kpi-s">ARPU <strong style="color:var(--x3)">$1.71</strong> | ARPPU <strong style="color:var(--x3)">$57.10</strong></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="callout-warn callout">
+  <strong>P2 节日收入是 X3 的 46.8 倍</strong>，但付费活跃用户基数接近（P2 13,615 vs X3 10,460）。<br>
+  差距主要来自<strong>付费率</strong>（P2 22% vs X3 3%，7.3 倍）和 <strong>ARPPU</strong>（P2 $187 vs X3 $57，3.3 倍）。
+</div>
+
+<!-- 付费率对比 -->
+<h2>一、付费率 — P2 全面碾压（7~9 倍）</h2>
+
+<table>
+  <tr>
+    <th>R级</th>
+    <th class="n"><span class="tag t-p2">P2</span> 活跃</th>
+    <th class="n">购买人数</th>
+    <th class="n">付费率</th>
+    <th class="n"><span class="tag t-x3">X3</span> 活跃</th>
+    <th class="n">购买人数</th>
+    <th class="n">付费率</th>
+    <th class="n">P2/X3</th>
+  </tr>
+  <tr>
+    <td>xiaoR</td>
+    <td class="n">7,122</td><td class="n">795</td><td class="n p2c">11.2%</td>
+    <td class="n">7,643</td><td class="n">96</td><td class="n x3c">1.26%</td>
+    <td class="n"><span class="ratio">8.9x</span></td>
+  </tr>
+  <tr>
+    <td>zhongR</td>
+    <td class="n">3,990</td><td class="n">1,919</td><td class="n p2c">48.1%</td>
+    <td class="n">2,241</td><td class="n">147</td><td class="n x3c">6.56%</td>
+    <td class="n"><span class="ratio">7.3x</span></td>
+  </tr>
+  <tr>
+    <td>daR</td>
+    <td class="n">1,357</td><td class="n">890</td><td class="n p2c">65.6%</td>
+    <td class="n">437</td><td class="n">44</td><td class="n x3c">10.07%</td>
+    <td class="n"><span class="ratio">6.5x</span></td>
+  </tr>
+  <tr>
+    <td>chaoR</td>
+    <td class="n">1,146</td><td class="n">892</td><td class="n p2c">77.8%</td>
+    <td class="n">139</td><td class="n">12</td><td class="n x3c">8.63%</td>
+    <td class="n"><span class="ratio">9.0x</span></td>
+  </tr>
+</table>
+
+<div class="grid-2">
+  <div>
+    <div class="bar-pair">
+      <div class="bar-pair-label">xiaoR 付费率</div>
+      <div class="bar-row"><div class="bar-tag p2c">P2</div><div class="bar-t"><div class="bar-f" style="width:56%;background:var(--p2)">11.2%</div></div></div>
+      <div class="bar-row"><div class="bar-tag x3c">X3</div><div class="bar-t"><div class="bar-f" style="width:6.3%;background:var(--x3)">1.26%</div></div></div>
+    </div>
+    <div class="bar-pair">
+      <div class="bar-pair-label">zhongR 付费率</div>
+      <div class="bar-row"><div class="bar-tag p2c">P2</div><div class="bar-t"><div class="bar-f" style="width:96%;background:var(--p2)">48.1%</div></div></div>
+      <div class="bar-row"><div class="bar-tag x3c">X3</div><div class="bar-t"><div class="bar-f" style="width:13%;background:var(--x3)">6.56%</div></div></div>
+    </div>
+  </div>
+  <div>
+    <div class="bar-pair">
+      <div class="bar-pair-label">daR 付费率</div>
+      <div class="bar-row"><div class="bar-tag p2c">P2</div><div class="bar-t"><div class="bar-f" style="width:100%;background:var(--p2)">65.6%</div></div></div>
+      <div class="bar-row"><div class="bar-tag x3c">X3</div><div class="bar-t"><div class="bar-f" style="width:15%;background:var(--x3)">10.07%</div></div></div>
+    </div>
+    <div class="bar-pair">
+      <div class="bar-pair-label">chaoR 付费率</div>
+      <div class="bar-row"><div class="bar-tag p2c">P2</div><div class="bar-t"><div class="bar-f" style="width:100%;background:var(--p2)">77.8%</div></div></div>
+      <div class="bar-row"><div class="bar-tag x3c">X3</div><div class="bar-t"><div class="bar-f" style="width:11%;background:var(--x3)">8.63%</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="callout">
+  <strong>最大差距在 xiaoR（8.9x）和 chaoR（9.0x）。</strong><br>
+  P2 的 chaoR 付费率 77.8% 几乎全员买单，X3 仅 8.63%——即使是最高付费的用户，X3 也只有不到 1/10 参与节日消费。<br>
+  X3 的 zhongR 差距相对最小（7.3x），说明 zhongR 是 X3 节日付费渗透的"相对优势层"。
+</div>
+
+<!-- ARPPU 对比 -->
+<h2>二、ARPPU — X3 偏低但差距可控（1.4~2.6 倍）</h2>
+
+<table>
+  <tr>
+    <th>R级</th>
+    <th class="n"><span class="tag t-p2">P2</span> ARPPU</th>
+    <th class="n"><span class="tag t-x3">X3</span> ARPPU</th>
+    <th class="n">P2/X3</th>
+    <th>X3 特征</th>
+  </tr>
+  <tr>
+    <td>xiaoR</td>
+    <td class="n p2c">$14.85</td><td class="n x3c">$10.72</td>
+    <td class="n"><span class="ratio">1.4x</span></td>
+    <td style="font-size:11px;color:var(--muted)">X3 小R 多数只买 $4.99 入口包</td>
+  </tr>
+  <tr>
+    <td>zhongR</td>
+    <td class="n p2c">$63.83</td><td class="n x3c">$38.78</td>
+    <td class="n"><span class="ratio">1.6x</span></td>
+    <td style="font-size:11px;color:var(--muted)">X3 中R 走到 A 线中段($9.99~$19.99)</td>
+  </tr>
+  <tr>
+    <td>daR</td>
+    <td class="n p2c">$180.15</td><td class="n x3c">$98.80</td>
+    <td class="n"><span class="ratio">1.8x</span></td>
+    <td style="font-size:11px;color:var(--muted)">X3 大R 通关 A 线 + 皮肤包</td>
+  </tr>
+  <tr>
+    <td>chaoR</td>
+    <td class="n p2c">$611.00</td><td class="n x3c">$232.42</td>
+    <td class="n"><span class="ratio">2.6x</span></td>
+    <td style="font-size:11px;color:var(--muted)">X3 超R 缺乏深度消费出口</td>
+  </tr>
+</table>
+
+<div class="grid-2">
+  <div>
+    <div class="bar-pair">
+      <div class="bar-pair-label">xiaoR ARPPU</div>
+      <div class="bar-row"><div class="bar-tag p2c">P2</div><div class="bar-t"><div class="bar-f" style="width:24%;background:var(--p2)">$14.85</div></div></div>
+      <div class="bar-row"><div class="bar-tag x3c">X3</div><div class="bar-t"><div class="bar-f" style="width:17%;background:var(--x3)">$10.72</div></div></div>
+    </div>
+    <div class="bar-pair">
+      <div class="bar-pair-label">zhongR ARPPU</div>
+      <div class="bar-row"><div class="bar-tag p2c">P2</div><div class="bar-t"><div class="bar-f" style="width:52%;background:var(--p2)">$63.83</div></div></div>
+      <div class="bar-row"><div class="bar-tag x3c">X3</div><div class="bar-t"><div class="bar-f" style="width:32%;background:var(--x3)">$38.78</div></div></div>
+    </div>
+  </div>
+  <div>
+    <div class="bar-pair">
+      <div class="bar-pair-label">daR ARPPU</div>
+      <div class="bar-row"><div class="bar-tag p2c">P2</div><div class="bar-t"><div class="bar-f" style="width:73%;background:var(--p2)">$180.15</div></div></div>
+      <div class="bar-row"><div class="bar-tag x3c">X3</div><div class="bar-t"><div class="bar-f" style="width:40%;background:var(--x3)">$98.80</div></div></div>
+    </div>
+    <div class="bar-pair">
+      <div class="bar-pair-label">chaoR ARPPU</div>
+      <div class="bar-row"><div class="bar-tag p2c">P2</div><div class="bar-t"><div class="bar-f" style="width:100%;background:var(--p2)">$611.00</div></div></div>
+      <div class="bar-row"><div class="bar-tag x3c">X3</div><div class="bar-t"><div class="bar-f" style="width:38%;background:var(--x3)">$232.42</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="callout">
+  ARPPU 差距(1.4~2.6x)远小于付费率差距(7~9x)。<strong>X3 的核心短板不是"买的人花得少"，而是"买的人太少"。</strong><br>
+  chaoR ARPPU 差距最大(2.6x)，P2 超R 人均花 $611 vs X3 仅 $232——X3 缺乏 chaoR 的深度消费出口（P2 有小游戏梯度 + GACHA + 限时促销多出口）。
+</div>
+
+<!-- ARPU 对比 -->
+<h2>三、ARPU — 综合差距 12~24 倍</h2>
+
+<table>
+  <tr>
+    <th>R级</th>
+    <th class="n"><span class="tag t-p2">P2</span> ARPU</th>
+    <th class="n"><span class="tag t-x3">X3</span> ARPU</th>
+    <th class="n">P2/X3</th>
+    <th class="n">差距来源拆分</th>
+  </tr>
+  <tr>
+    <td>xiaoR</td>
+    <td class="n p2c">$1.66</td><td class="n x3c">$0.13</td>
+    <td class="n"><span class="ratio">12.8x</span></td>
+    <td class="n" style="font-size:11px;color:var(--muted)">付费率 8.9x × ARPPU 1.4x</td>
+  </tr>
+  <tr>
+    <td>zhongR</td>
+    <td class="n p2c">$30.70</td><td class="n x3c">$2.54</td>
+    <td class="n"><span class="ratio">12.1x</span></td>
+    <td class="n" style="font-size:11px;color:var(--muted)">付费率 7.3x × ARPPU 1.6x</td>
+  </tr>
+  <tr>
+    <td>daR</td>
+    <td class="n p2c">$118.15</td><td class="n x3c">$9.95</td>
+    <td class="n"><span class="ratio">11.9x</span></td>
+    <td class="n" style="font-size:11px;color:var(--muted)">付费率 6.5x × ARPPU 1.8x</td>
+  </tr>
+  <tr>
+    <td>chaoR</td>
+    <td class="n p2c">$475.58</td><td class="n x3c">$20.07</td>
+    <td class="n"><span class="ratio">23.7x</span></td>
+    <td class="n" style="font-size:11px;color:var(--muted)">付费率 9.0x × ARPPU 2.6x</td>
+  </tr>
+</table>
+
+<div class="callout-warn callout">
+  chaoR ARPU 差距最大（23.7 倍），因为付费率和 ARPPU 的差距在 chaoR 叠加放大。<br>
+  <strong>如果 X3 chaoR 付费率能从 8.6% 提到 P2 水平的一半(39%)，仅 chaoR 一层就能增加 ~$7,000 收入（当前全节日才 $17,930）。</strong>
+</div>
+
+<!-- 模块结构对比 -->
+<h2>四、模块结构对比</h2>
+
+<div class="grid-2">
+  <div class="card">
+    <h3 style="color:var(--p2)">P2 — 26 个子活动，$839,629</h3>
+    <table>
+      <tr><th>模块</th><th class="n">收入</th><th class="n">占比</th><th class="n">人次</th><th class="n">人次ARPPU</th></tr>
+      <tr><td>小游戏</td><td class="n p2c">$339,622</td><td class="n">40.4%</td><td class="n">17,406</td><td class="n">$19.51</td></tr>
+      <tr><td>GACHA/抽卡</td><td class="n">$201,295</td><td class="n">24.0%</td><td class="n">8,390</td><td class="n">$23.99</td></tr>
+      <tr><td>限时促销</td><td class="n">$81,787</td><td class="n">9.7%</td><td class="n">1,643</td><td class="n">$49.78</td></tr>
+      <tr><td>外显/装饰</td><td class="n">$75,737</td><td class="n">9.0%</td><td class="n">3,087</td><td class="n">$24.52</td></tr>
+      <tr><td>BP/通行证</td><td class="n">$72,073</td><td class="n">8.6%</td><td class="n">7,015</td><td class="n">$10.27</td></tr>
+      <tr><td>其他5类</td><td class="n">$69,115</td><td class="n">8.2%</td><td class="n">—</td><td class="n">—</td></tr>
+    </table>
+    <div style="font-size:11px;color:var(--muted)">P2 有挖孔/大富翁/对对碰等小游戏矩阵，单模块人次 ARPPU 低但复购高(3.9次/人)</div>
+  </div>
+  <div class="card">
+    <h3 style="color:var(--x3)">X3 — 4 个模块，$30,093</h3>
+    <table>
+      <tr><th>模块</th><th class="n">收入</th><th class="n">占比</th><th class="n">人数</th><th class="n">ARPPU</th></tr>
+      <tr><td>BP</td><td class="n x3c">$12,162</td><td class="n">40.4%</td><td class="n">~550</td><td class="n">$22.11</td></tr>
+      <tr><td>英雄皮肤AB线</td><td class="n">$10,232</td><td class="n">34.0%</td><td class="n">~230</td><td class="n">$44.49</td></tr>
+      <tr><td>英雄皮肤2</td><td class="n">$5,299</td><td class="n">17.6%</td><td class="n">~100</td><td class="n">$52.99</td></tr>
+      <tr><td>家具</td><td class="n">$2,400</td><td class="n">8.0%</td><td class="n">24</td><td class="n">$100.00</td></tr>
+    </table>
+    <div style="font-size:11px;color:var(--muted)">X3 模块少、SKU 少，缺少小游戏/GACHA 等高频复购品类</div>
+  </div>
+</div>
+
+<!-- 收入结构拆分 -->
+<h2>五、收入 R 级构成对比</h2>
+
+<div class="grid-2">
+  <div class="card">
+    <h3 style="color:var(--p2)">P2 收入构成</h3>
+    <div style="display:flex;height:24px;border-radius:4px;overflow:hidden;margin:8px 0">
+      <div style="width:1.4%;background:#88a8ff" title="xiaoR 1.4%"></div>
+      <div style="width:14.6%;background:var(--p2)" title="zhongR 14.6%"></div>
+      <div style="width:19.1%;background:var(--orange)" title="daR 19.1%"></div>
+      <div style="width:64.9%;background:var(--x3)" title="chaoR 64.9%"></div>
+    </div>
+    <div style="display:flex;gap:10px;font-size:10px;color:var(--muted)">
+      <span>xiaoR 1.4%</span><span style="color:var(--p2)">zhongR 14.6%</span>
+      <span style="color:var(--orange)">daR 19.1%</span><span style="color:var(--x3)"><strong>chaoR 64.9%</strong></span>
+    </div>
+    <table style="margin-top:8px">
+      <tr><th>R级</th><th class="n">收入</th><th class="n">占比</th></tr>
+      <tr><td>xiaoR</td><td class="n">$11,808</td><td class="n">1.4%</td></tr>
+      <tr><td>zhongR</td><td class="n">$122,481</td><td class="n">14.6%</td></tr>
+      <tr><td>daR</td><td class="n">$160,330</td><td class="n">19.1%</td></tr>
+      <tr><td>chaoR</td><td class="n b">$545,010</td><td class="n b">64.9%</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="color:var(--x3)">X3 收入构成</h3>
+    <div style="display:flex;height:24px;border-radius:4px;overflow:hidden;margin:8px 0">
+      <div style="width:5.7%;background:#88a8ff" title="xiaoR 5.7%"></div>
+      <div style="width:31.8%;background:var(--p2)" title="zhongR 31.8%"></div>
+      <div style="width:24.2%;background:var(--orange)" title="daR 24.2%"></div>
+      <div style="width:15.6%;background:var(--x3)" title="chaoR 15.6%"></div>
+      <div style="width:22.7%;background:var(--muted)" title="R0* 22.7%"></div>
+    </div>
+    <div style="display:flex;gap:10px;font-size:10px;color:var(--muted)">
+      <span>xiaoR 5.7%</span><span style="color:var(--p2)"><strong>zhongR 31.8%</strong></span>
+      <span style="color:var(--orange)">daR 24.2%</span><span style="color:var(--x3)">chaoR 15.6%</span>
+      <span>R0* 22.7%</span>
+    </div>
+    <table style="margin-top:8px">
+      <tr><th>R级</th><th class="n">收入</th><th class="n">占比</th></tr>
+      <tr><td>xiaoR</td><td class="n">$1,029</td><td class="n">5.7%</td></tr>
+      <tr><td>zhongR</td><td class="n p2c">$5,701</td><td class="n p2c">31.8%</td></tr>
+      <tr><td>daR</td><td class="n">$4,347</td><td class="n">24.2%</td></tr>
+      <tr><td>chaoR</td><td class="n">$2,789</td><td class="n">15.6%</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="callout">
+  <strong>收入结构完全不同：</strong><br>
+  P2 极度依赖 chaoR（64.9%），X3 更均衡但 zhongR 扛大梁（31.8%）。<br>
+  X3 的 chaoR 只贡献 15.6%——不是因为他们花得少（ARPPU $232），而是<strong>只有 12 个人买了</strong>（139 人中仅 8.6% 参与）。
+</div>
+
+<!-- 核心结论 -->
+<h2>六、核心结论</h2>
+
+<div class="grid-3">
+  <div class="card" style="border-left:3px solid var(--red)">
+    <h3 style="color:var(--red)">付费率是最大缺口</h3>
+    <div style="font-size:12px;color:var(--muted)">
+      X3 各R级付费率仅为 P2 的 <strong style="color:var(--text)">1/7 ~ 1/9</strong><br><br>
+      P2 zhongR 48.1% vs X3 6.56%<br>
+      P2 chaoR 77.8% vs X3 8.63%<br><br>
+      <strong style="color:var(--red)">这是 X3 节日变现效率低的根因</strong>
+    </div>
+  </div>
+  <div class="card" style="border-left:3px solid var(--orange)">
+    <h3 style="color:var(--orange)">模块丰富度是付费率的底层原因</h3>
+    <div style="font-size:12px;color:var(--muted)">
+      P2: <strong style="color:var(--text)">26 个子活动</strong>，6 种品类<br>
+      X3: <strong style="color:var(--text)">4 个模块</strong>，品类单一<br><br>
+      P2 的小游戏矩阵（挖孔+大富翁+对对碰）覆盖 17,406 人次，仅此一类就贡献 40% 收入<br><br>
+      <strong style="color:var(--orange)">X3 缺少"广覆盖+高频复购"品类</strong>
+    </div>
+  </div>
+  <div class="card" style="border-left:3px solid var(--c3)">
+    <h3 style="color:var(--c3)">ARPPU 差距可接受</h3>
+    <div style="font-size:12px;color:var(--muted)">
+      差距仅 1.4~2.6x，且 X3 是更年轻的游戏<br><br>
+      X3 chaoR ARPPU $232 vs P2 $611<br>
+      差距来自 P2 有更多消费出口<br><br>
+      <strong style="color:var(--c3)">优先提付费率，ARPPU 自然跟涨</strong>
+    </div>
+  </div>
+</div>
+
+<div class="callout" style="margin-top:16px;border-left-color:var(--x3)">
+  <strong>对纪念卡的启示：</strong>纪念卡作为新增模块，核心价值不在于直接创收（哪怕做成$29.99礼包也就多$1-2K），<br>
+  而在于<strong>增加一个付费触点，提升整体节日付费率</strong>——如果纪念卡能像 P2 的"行军表情"（$4.99 × 2,033人次）那样做成低价广覆盖品，<br>
+  对 X3 xiaoR 1.26% 的付费率提升可能比收入本身更有战略价值。
+</div>
+
+<div style="margin-top:40px;padding-top:16px;border-top:1px solid var(--border);color:var(--muted);font-size:11px;text-align:center">
+  P2 vs X3 26情人节 R级对比 | P2 数据源: 复盘报告(KB/产出-节日复盘/) | X3 数据源: TRINO_HF v1090
+</div>
+
+</body>
+</html>
