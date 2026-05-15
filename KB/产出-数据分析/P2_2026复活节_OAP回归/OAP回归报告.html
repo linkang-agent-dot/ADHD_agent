@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P2 2026复活节 OAP定存活动回归</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --border: #2a2d3a;
+    --text: #e0e0e8;
+    --muted: #8b8fa3;
+    --accent: #6c5ce7;
+    --green: #00b894;
+    --red: #e74c3c;
+    --orange: #f39c12;
+    --blue: #0984e3;
+    --pink: #fd79a8;
+    --cyan: #00cec9;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif; padding:24px; line-height:1.6; }
+  .container { max-width:1200px; margin:0 auto; }
+  h1 { font-size:28px; font-weight:700; margin-bottom:8px; }
+  .subtitle { color:var(--muted); font-size:14px; margin-bottom:32px; }
+  h2 { font-size:20px; font-weight:600; margin:32px 0 16px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  h3 { font-size:16px; font-weight:600; margin:20px 0 10px; color:var(--cyan); }
+
+  /* KPI cards */
+  .kpi-row { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:16px; margin-bottom:24px; }
+  .kpi { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+  .kpi .label { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+  .kpi .value { font-size:28px; font-weight:700; }
+  .kpi .delta { font-size:13px; margin-top:4px; }
+  .kpi .delta.up { color:var(--green); }
+  .kpi .delta.down { color:var(--red); }
+  .kpi .delta.warn { color:var(--orange); }
+
+  /* Tables */
+  table { width:100%; border-collapse:collapse; margin:12px 0 20px; font-size:13px; }
+  th { background:#22253a; color:var(--muted); font-weight:600; text-align:left; padding:10px 12px; font-size:11px; text-transform:uppercase; letter-spacing:.5px; }
+  td { padding:9px 12px; border-bottom:1px solid var(--border); }
+  tr:hover td { background:rgba(108,92,231,.06); }
+  .num { text-align:right; font-variant-numeric:tabular-nums; }
+  .highlight { background:rgba(108,92,231,.12); font-weight:600; }
+  .red-cell { color:var(--red); }
+  .green-cell { color:var(--green); }
+
+  /* Charts */
+  .chart-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:16px 0; }
+  .chart-box { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; }
+  .chart-box.full { grid-column:1/-1; }
+  .chart-box canvas { max-height:320px; }
+
+  /* Callout */
+  .callout { background:rgba(108,92,231,.1); border-left:4px solid var(--accent); border-radius:0 8px 8px 0; padding:14px 18px; margin:16px 0; font-size:14px; }
+  .callout.warn { background:rgba(243,156,18,.1); border-left-color:var(--orange); }
+  .callout.good { background:rgba(0,184,148,.1); border-left-color:var(--green); }
+
+  /* Badge */
+  .badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; }
+  .badge.chaoR { background:rgba(253,121,168,.2); color:var(--pink); }
+  .badge.daR { background:rgba(108,92,231,.2); color:var(--accent); }
+  .badge.zhongR { background:rgba(0,206,201,.2); color:var(--cyan); }
+  .badge.xiaoR { background:rgba(139,143,163,.2); color:var(--muted); }
+
+  /* Section nav */
+  .nav { position:sticky; top:0; background:var(--bg); z-index:10; padding:12px 0; border-bottom:1px solid var(--border); margin-bottom:20px; display:flex; gap:8px; flex-wrap:wrap; }
+  .nav a { color:var(--muted); text-decoration:none; font-size:13px; padding:6px 14px; border-radius:6px; transition:.2s; }
+  .nav a:hover { background:var(--card); color:var(--text); }
+
+  /* Bottleneck cards */
+  .bottleneck-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+  .bottleneck { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+  .bottleneck .title { font-size:15px; font-weight:600; margin-bottom:6px; }
+  .bottleneck .where { color:var(--orange); font-size:13px; font-weight:600; margin-bottom:6px; }
+  .bottleneck .why { color:var(--muted); font-size:13px; }
+  .bottleneck .evidence { font-size:12px; color:var(--muted); margin-top:8px; padding-top:8px; border-top:1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>P2 2026复活节 OAP定存活动回归</h1>
+<p class="subtitle">活动ID 21127805 &nbsp;|&nbsp; 储值期 2026-04-15 ~ 04-20 &nbsp;|&nbsp; 数据来源 Datain v1041</p>
+
+<nav class="nav">
+  <a href="#conclusion">结论</a>
+  <a href="#overview">整体概览</a>
+  <a href="#revenue">收入规模</a>
+  <a href="#festival">节日对齐对比</a>
+  <a href="#tiers">档位分布</a>
+  <a href="#rlevel">R级分层</a>
+  <a href="#heatmap">R级×档位</a>
+  <a href="#bottleneck">卡点分析</a>
+  <a href="#action">优化落地</a>
+</nav>
+
+<!-- ===== 0. CONCLUSION ===== -->
+<section id="conclusion">
+
+<div style="background:linear-gradient(135deg, rgba(108,92,231,.12), rgba(0,184,148,.08)); border:1px solid var(--border); border-radius:16px; padding:28px 32px; margin-bottom:32px;">
+
+<h2 style="border:none; margin:0 0 20px; padding:0; font-size:22px;">回归结论</h2>
+
+<div style="display:grid; grid-template-columns:1fr; gap:20px;">
+
+<!-- 结论1 -->
+<a href="#festival" style="display:flex; gap:14px; align-items:flex-start; text-decoration:none; color:inherit; padding:10px 14px; border-radius:10px; transition:.2s;" onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background='transparent'">
+  <div style="min-width:32px; height:32px; background:var(--green); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; flex-shrink:0;">1</div>
+  <div>
+    <div style="font-size:16px; font-weight:600; margin-bottom:4px;">整体有效 <span style="font-size:11px; color:var(--muted); font-weight:400;">→ 节日对齐对比</span></div>
+    <div style="color:var(--muted); font-size:14px;">对比上个节日周期（科技节），OAP 参与者<b style="color:var(--green)">内冲收入提高 13%</b>、<b style="color:var(--green)">内冲参与率提高 10%</b>。71% 的收入来自超R玩家，符合"高价值定存理财"的活动定位预期。</div>
+  </div>
+</a>
+
+<!-- 结论2 -->
+<a href="#revenue" style="display:flex; gap:14px; align-items:flex-start; text-decoration:none; color:inherit; padding:10px 14px; border-radius:10px; transition:.2s;" onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background='transparent'">
+  <div style="min-width:32px; height:32px; background:var(--orange); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; flex-shrink:0;">2</div>
+  <div>
+    <div style="font-size:16px; font-weight:600; margin-bottom:4px;">储值期拉升明显，活动后有回落 <span style="font-size:11px; color:var(--muted); font-weight:400;">→ 收入规模</span></div>
+    <div style="color:var(--muted); font-size:14px;">储值期日均消费<b style="color:var(--green)">拉升 152%</b>（vs 储值前基线），但活动期结束后日均消费<b style="color:var(--red)">衰减 22%</b>（低于储值前基线）。整体仍为净正向，透支幅度可控。</div>
+  </div>
+</a>
+
+<!-- 结论3 -->
+<a href="#bottleneck" style="display:flex; gap:14px; align-items:flex-start; text-decoration:none; color:inherit; padding:10px 14px; border-radius:10px; transition:.2s;" onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background='transparent'">
+  <div style="min-width:32px; height:32px; background:var(--accent); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; flex-shrink:0;">3</div>
+  <div>
+    <div style="font-size:16px; font-weight:600; margin-bottom:4px;">各R级卡点清晰 <span style="font-size:11px; color:var(--muted); font-weight:400;">→ 卡点分析</span></div>
+    <div style="color:var(--muted); font-size:14px;">
+      <span class="badge chaoR">超R</span> 无卡点，全档覆盖 &nbsp;|&nbsp;
+      <span class="badge daR">大R</span> 卡在 <b>10K→20K</b>（-70%流失） &nbsp;|&nbsp;
+      <span class="badge zhongR">中R</span> 卡在 <b>5K→10K</b>（-34%流失） &nbsp;|&nbsp;
+      <span class="badge xiaoR">小R</span> 基本不参与（仅10人）
+    </div>
+  </div>
+</a>
+
+<!-- 结论4: 优化 -->
+<a href="#action" style="display:flex; gap:14px; align-items:flex-start; text-decoration:none; color:inherit; padding:10px 14px; border-radius:10px; transition:.2s;" onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background='transparent'">
+  <div style="min-width:32px; height:32px; background:var(--green); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; flex-shrink:0;">→</div>
+  <div>
+    <div style="font-size:16px; font-weight:600; margin-bottom:4px;">第二期优化：新增 7,500 和 15,000 两个档位 <span style="font-size:11px; color:var(--muted); font-weight:400;">→ 优化落地</span></div>
+    <div style="color:var(--muted); font-size:14px;">
+      <b style="color:var(--green)">+7,500档</b>（ROI 116.8%，$71.25）→ 填补中R的 5K→10K 台阶<br>
+      <b style="color:var(--green)">+15,000档</b>（ROI 122.5%，$142.5）→ 填补大R的 10K→20K 台阶<br>
+      其余档位、返利机制不动，等第二期数据观察
+    </div>
+  </div>
+</a>
+
+</div>
+</div>
+</section>
+
+<!-- ===== 1. OVERVIEW KPIs ===== -->
+<section id="overview">
+<h2>一、整体概览</h2>
+<div class="kpi-row">
+  <div class="kpi">
+    <div class="label">储值参与人数</div>
+    <div class="value">414</div>
+    <div class="delta warn">占付费人群 7.5%</div>
+  </div>
+  <div class="kpi">
+    <div class="label">储值总额</div>
+    <div class="value">$72,295</div>
+    <div class="delta">7,610,000 猿猴币</div>
+  </div>
+  <div class="kpi">
+    <div class="label">OAP 净增量（节日对齐）</div>
+    <div class="value" style="color:var(--green)">+$52,934</div>
+    <div class="delta up">+13.0% vs 科技节</div>
+  </div>
+  <div class="kpi">
+    <div class="label">OAP 参与者 ARPPU</div>
+    <div class="value">$1,107</div>
+    <div class="delta up">+10.2% vs 科技节</div>
+  </div>
+  <div class="kpi">
+    <div class="label">鲸鱼依赖度</div>
+    <div class="value" style="color:var(--orange)">71.0%</div>
+    <div class="delta warn">超R收入占比（健康区间50-70%）</div>
+  </div>
+</div>
+</section>
+
+<!-- ===== 2. REVENUE DAILY ===== -->
+<section id="revenue">
+<h2>二、收入规模（按天分拆）</h2>
+
+<div class="chart-box full">
+  <canvas id="dailyRevenueChart"></canvas>
+</div>
+
+<div class="kpi-row" style="margin-top:16px;">
+  <div class="kpi">
+    <div class="label">储值前 日均</div>
+    <div class="value">$18,517</div>
+    <div class="delta">4/10 - 4/14</div>
+  </div>
+  <div class="kpi">
+    <div class="label">储值期 日均</div>
+    <div class="value" style="color:var(--green)">$28,127</div>
+    <div class="delta up">×1.52 vs 储值前</div>
+  </div>
+  <div class="kpi">
+    <div class="label">储值后 日均</div>
+    <div class="value" style="color:var(--red)">$14,360</div>
+    <div class="delta down">×0.78 vs 储值前</div>
+  </div>
+</div>
+
+<div class="callout warn">4/18 储值高峰日 $44,730（占全服 35.5%），储值后回落至基线以下，存在轻微透支效应但整体净正向。</div>
+</section>
+
+<!-- ===== 3. FESTIVAL COMPARISON ===== -->
+<section id="festival">
+<h2>三、节日对齐对比（排除节日因素）</h2>
+<p style="color:var(--muted);font-size:13px;margin-bottom:12px;">同为23天完整节日周期，全服总盘子几乎持平（-0.2%），差异即为 OAP 净效果。</p>
+
+<table>
+  <tr><th></th><th class="num">科技节 3/9-3/31（无OAP）</th><th class="num">复活节 4/9-5/1（含OAP）</th><th class="num">变化</th></tr>
+  <tr><td>OAP参与者消费</td><td class="num">$408,627</td><td class="num highlight">$461,561</td><td class="num green-cell">+$52,934 (+13.0%)</td></tr>
+  <tr><td>全服总收入</td><td class="num">$1,944,373</td><td class="num">$1,941,335</td><td class="num">-$3,038 (-0.2%)</td></tr>
+  <tr><td>OAP参与者份额</td><td class="num">21.0%</td><td class="num highlight">23.8%</td><td class="num green-cell">+2.8pp</td></tr>
+  <tr><td>ARPPU</td><td class="num">$1,004</td><td class="num">$1,107</td><td class="num green-cell">+$103 (+10.2%)</td></tr>
+</table>
+
+<div class="chart-box full">
+  <canvas id="shareChart"></canvas>
+</div>
+</section>
+
+<!-- ===== 4. TIER DISTRIBUTION ===== -->
+<section id="tiers">
+<h2>四、档位分布</h2>
+
+<div class="chart-row">
+  <div class="chart-box">
+    <canvas id="tierUsersChart"></canvas>
+  </div>
+  <div class="chart-box">
+    <canvas id="tierRevenueChart"></canvas>
+  </div>
+</div>
+
+<table>
+  <tr><th>档位</th><th class="num">参与人数</th><th class="num">占比</th><th class="num">储值(币)</th><th class="num">等值($)</th><th class="num">收入贡献</th><th class="num">ROI</th></tr>
+  <tr><td>2,000</td><td class="num">250</td><td class="num">34.4%</td><td class="num">500,000</td><td class="num">$4,750</td><td class="num">6.6%</td><td class="num">110.5%</td></tr>
+  <tr><td>5,000</td><td class="num">170</td><td class="num">23.4%</td><td class="num">850,000</td><td class="num">$8,075</td><td class="num">11.2%</td><td class="num">112.6%</td></tr>
+  <tr class="highlight"><td>10,000</td><td class="num">162</td><td class="num">22.3%</td><td class="num">1,620,000</td><td class="num">$15,390</td><td class="num">21.3%</td><td class="num">121.0%</td></tr>
+  <tr><td>20,000</td><td class="num">63</td><td class="num">8.7%</td><td class="num">1,260,000</td><td class="num">$11,970</td><td class="num">16.6%</td><td class="num">123.1%</td></tr>
+  <tr><td style="color:var(--red)">30,000</td><td class="num red-cell">36</td><td class="num red-cell">5.0%</td><td class="num">1,080,000</td><td class="num">$10,260</td><td class="num">14.2%</td><td class="num">128.0%</td></tr>
+  <tr class="highlight"><td>50,000</td><td class="num">46</td><td class="num">6.3%</td><td class="num">2,300,000</td><td class="num">$21,850</td><td class="num">30.2%</td><td class="num">135.7%</td></tr>
+</table>
+
+<div class="callout">10K档是人数与收入的平衡点（22.3% 人数 ≈ 21.3% 收入）。50K档 6.3% 人数贡献 30.2% 收入。30K档人数最少、定位尴尬。</div>
+</section>
+
+<!-- ===== 5. R-LEVEL ===== -->
+<section id="rlevel">
+<h2>五、R级分层</h2>
+
+<div class="chart-row">
+  <div class="chart-box">
+    <canvas id="rlevelUsersChart"></canvas>
+  </div>
+  <div class="chart-box">
+    <canvas id="rlevelRevenueChart"></canvas>
+  </div>
+</div>
+
+<table>
+  <tr><th>R级</th><th class="num">参与人数</th><th class="num">占比</th><th class="num">储值($)</th><th class="num">收入占比</th><th class="num">人均储值</th><th class="num">人均档位数</th></tr>
+  <tr><td><span class="badge chaoR">超R</span></td><td class="num">189</td><td class="num">45.5%</td><td class="num">$51,319</td><td class="num highlight">71.0%</td><td class="num">$271.5</td><td class="num">2.22</td></tr>
+  <tr><td><span class="badge daR">大R</span></td><td class="num">110</td><td class="num">26.4%</td><td class="num">$13,870</td><td class="num">19.2%</td><td class="num">$126.1</td><td class="num">1.49</td></tr>
+  <tr><td><span class="badge zhongR">中R</span></td><td class="num">107</td><td class="num">25.7%</td><td class="num">$6,840</td><td class="num">9.5%</td><td class="num">$63.9</td><td class="num">1.28</td></tr>
+  <tr><td><span class="badge xiaoR">小R</span></td><td class="num">10</td><td class="num">2.4%</td><td class="num">$247</td><td class="num">0.3%</td><td class="num">$24.7</td><td class="num">1.00</td></tr>
+</table>
+</section>
+
+<!-- ===== 6. HEATMAP ===== -->
+<section id="heatmap">
+<h2>六、R级 × 档位交叉热力图</h2>
+<p style="color:var(--muted);font-size:13px;margin-bottom:12px;">每格 = 该R级中选择该档位的人数占比。颜色越深参与率越高。</p>
+
+<div class="chart-box full">
+  <canvas id="heatmapChart"></canvas>
+</div>
+
+<table>
+  <tr><th>档位</th><th class="num">超R</th><th class="num">大R</th><th class="num">中R</th><th class="num">小R</th><th class="num">合计</th></tr>
+  <tr><td>2,000</td><td class="num">116 (61.4%)</td><td class="num">55 (50.0%)</td><td class="num">70 (65.4%)</td><td class="num">8 (80.0%)</td><td class="num">249</td></tr>
+  <tr><td>5,000</td><td class="num">86 (45.5%)</td><td class="num">44 (40.0%)</td><td class="num">38 (35.5%)</td><td class="num">2 (20.0%)</td><td class="num">170</td></tr>
+  <tr><td>10,000</td><td class="num">100 (52.9%)</td><td class="num">37 (33.6%)</td><td class="num">25 (23.4%)</td><td class="num">—</td><td class="num">162</td></tr>
+  <tr><td>20,000</td><td class="num">50 (26.5%)</td><td class="num">11 (10.0%)</td><td class="num">2 (1.9%)</td><td class="num">—</td><td class="num">63</td></tr>
+  <tr><td style="color:var(--red)">30,000</td><td class="num">33 (17.5%)</td><td class="num red-cell">3 (2.7%)</td><td class="num red-cell">—</td><td class="num">—</td><td class="num red-cell">36</td></tr>
+  <tr><td>50,000</td><td class="num">35 (18.5%)</td><td class="num">9 (8.2%)</td><td class="num">2 (1.9%)</td><td class="num">—</td><td class="num">46</td></tr>
+</table>
+</section>
+
+<!-- ===== 7. BOTTLENECK ===== -->
+<section id="bottleneck">
+<h2>七、各R级卡点分析</h2>
+
+<div class="bottleneck-grid">
+  <div class="bottleneck" style="border-left:4px solid var(--pink);">
+    <div class="title"><span class="badge chaoR">超R</span> 无明显卡点</div>
+    <div class="where">全档覆盖</div>
+    <div class="why">人均 2.22 个档位，策略是"低档全买+高档追加"，完全理解机制并充分利用</div>
+    <div class="evidence">6个档位均有覆盖，50K档有35人（18.5%）参与</div>
+  </div>
+  <div class="bottleneck" style="border-left:4px solid var(--accent);">
+    <div class="title"><span class="badge daR">大R</span> 卡在 10K→20K</div>
+    <div class="where">价格翻倍（$95→$190）但 ROI 仅 +2pp</div>
+    <div class="why">10K→20K 价格翻倍，但回报感知几乎没变（121%→123.1%），不值得冒险加倍投入</div>
+    <div class="evidence">10K 有 37人 → 20K 骤降到 11人（<b style="color:var(--red)">-70%</b>）</div>
+  </div>
+  <div class="bottleneck" style="border-left:4px solid var(--cyan);">
+    <div class="title"><span class="badge zhongR">中R</span> 卡在 5K→10K</div>
+    <div class="where">锁币机会成本 > ROI 收益感知</div>
+    <div class="why">$47→$95 不仅是价格翻倍，更意味着锁定更多猿猴币、承担更大机会成本，ROI 从 112.6%→121% 不够打消顾虑</div>
+    <div class="evidence">5K 有 38人 → 10K 降到 25人（<b style="color:var(--red)">-34%</b>）</div>
+  </div>
+  <div class="bottleneck" style="border-left:4px solid var(--muted);">
+    <div class="title"><span class="badge xiaoR">小R</span> 卡在入门门槛</div>
+    <div class="where">最低档 2K = $19 + 机制复杂</div>
+    <div class="why">OAP 的"储值→锁定→分期返还"机制比直接买礼包复杂得多，小R不愿花认知成本理解，$19的锁定支出也偏高</div>
+    <div class="evidence">仅 <b>10人</b> 参与，全部 ≤ 5K</div>
+  </div>
+</div>
+
+<div class="callout" style="margin-top:20px;">
+  <b>本质是同一个问题：</b>档位间 ROI 梯度太平，价格翻倍时回报感知跟不上。每个R级在各自的"价格翻倍点"上掉队。
+</div>
+</section>
+
+<!-- ===== 8. ACTION: DECISION ===== -->
+<section id="action">
+<h2>八、第二期优化决策</h2>
+
+<table>
+  <tr><th style="width:160px">回归建议</th><th style="width:80px">决策</th><th>理由</th></tr>
+  <tr class="highlight"><td>增加 7.5K 档位</td><td><b style="color:var(--green)">✅ 执行</b></td><td>中R 卡在 5K→10K（-34% 流失），给中R一个 $47→$71 的台阶</td></tr>
+  <tr class="highlight"><td>增加 15K 档位</td><td><b style="color:var(--green)">✅ 执行</b></td><td>大R 卡点在 10K→20K（-70% 流失），给大R一个 $95→$142 的台阶</td></tr>
+  <tr><td>砍/改 30K 档</td><td style="color:var(--muted)">不动</td><td>仍有 33 名超R 停留，有存在价值</td></tr>
+  <tr><td>返利机制调整</td><td style="color:var(--muted)">不动</td><td>等第二期数据再观察</td></tr>
+</table>
+
+<h3 style="margin-top:28px;">新增档位配置</h3>
+
+<div class="kpi-row">
+  <div class="kpi" style="border-color:var(--cyan);">
+    <div class="label">7,500 档 · 储值额</div>
+    <div class="value">7,500</div>
+    <div class="delta">≈ $71.25</div>
+  </div>
+  <div class="kpi" style="border-color:var(--cyan);">
+    <div class="label">7,500 档 · 道具 / ROI</div>
+    <div class="value">12 个</div>
+    <div class="delta up">ROI 116.8% · 每期 3750+6</div>
+  </div>
+  <div class="kpi" style="border-color:var(--green);">
+    <div class="label">15,000 档 · 储值额</div>
+    <div class="value">15,000</div>
+    <div class="delta">≈ $142.5</div>
+  </div>
+  <div class="kpi" style="border-color:var(--green);">
+    <div class="label">15,000 档 · 道具 / ROI</div>
+    <div class="value">32 个</div>
+    <div class="delta up">ROI 122.5% · 每期 7500+16</div>
+  </div>
+</div>
+
+<h3>完整档位表（含新增）</h3>
+
+<table>
+  <tr><th>储值</th><th class="num">价值($)</th><th class="num">返还币</th><th class="num">自选道具</th><th class="num">ROI</th><th class="num">档间增量</th><th>第1期</th><th>第2期</th></tr>
+  <tr><td>2,000</td><td class="num">19.0</td><td class="num">2,000</td><td class="num">2</td><td class="num">110.5%</td><td class="num">—</td><td>1000 + 1</td><td>1000 + 1</td></tr>
+  <tr><td>5,000</td><td class="num">47.6</td><td class="num">5,000</td><td class="num">6</td><td class="num">112.6%</td><td class="num">+2.1pp</td><td>2500 + 3</td><td>2500 + 3</td></tr>
+  <tr style="background:rgba(0,206,201,.12); font-weight:600;"><td style="color:var(--cyan)">7,500 <span class="badge" style="background:var(--cyan);color:#fff;margin-left:4px;">NEW</span></td><td class="num">71.25</td><td class="num">7,500</td><td class="num">12</td><td class="num">116.8%</td><td class="num">+4.2pp</td><td>3750 + 6</td><td>3750 + 6</td></tr>
+  <tr><td>10,000</td><td class="num">95.2</td><td class="num">10,000</td><td class="num">20</td><td class="num">121.0%</td><td class="num">+4.2pp</td><td>5000 + 10</td><td>5000 + 10</td></tr>
+  <tr style="background:rgba(0,184,148,.12); font-weight:600;"><td style="color:var(--green)">15,000 <span class="badge" style="background:var(--green);color:#fff;margin-left:4px;">NEW</span></td><td class="num">142.5</td><td class="num">15,000</td><td class="num">32</td><td class="num">122.5%</td><td class="num">+1.5pp</td><td>7500 + 16</td><td>7500 + 16</td></tr>
+  <tr><td>20,000</td><td class="num">190.5</td><td class="num">20,000</td><td class="num">44</td><td class="num">123.1%</td><td class="num">+0.6pp</td><td>10000 + 22</td><td>10000 + 22</td></tr>
+  <tr><td>30,000</td><td class="num">285.7</td><td class="num">30,000</td><td class="num">80</td><td class="num">128.0%</td><td class="num">+4.9pp</td><td>15000 + 40</td><td>15000 + 40</td></tr>
+  <tr><td>50,000</td><td class="num">476.2</td><td class="num">50,000</td><td class="num">170</td><td class="num">135.7%</td><td class="num">+7.7pp</td><td>25000 + 85</td><td>25000 + 85</td></tr>
+</table>
+
+<div class="chart-box full" style="margin-top:16px;">
+  <canvas id="roiGradientChart"></canvas>
+</div>
+
+<h3>第二期观察指标</h3>
+
+<table>
+  <tr><th style="width:220px">指标</th><th>观察目的</th></tr>
+  <tr><td>15K 档参与人数 & R级分布</td><td>验证是否命中大R</td></tr>
+  <tr><td>10K 档人数是否下降</td><td>判断是升档增量还是存量搬运</td></tr>
+  <tr><td>20K 档人数是否受影响</td><td>15K 不应蚕食 20K</td></tr>
+  <tr><td>储值后消费回落幅度</td><td>观察透支效应是否改善</td></tr>
+  <tr><td>整体 OAP 参与人数</td><td>新档位是否带来净新增参与者</td></tr>
+</table>
+
+</section>
+
+</div>
+
+<script>
+// ===== Chart.js global defaults =====
+Chart.defaults.color = '#8b8fa3';
+Chart.defaults.borderColor = '#2a2d3a';
+Chart.defaults.font.family = "'Segoe UI','PingFang SC',sans-serif";
+
+// ===== 1. Daily Revenue Chart =====
+const dailyLabels = ['4/10','4/11','4/12','4/13','4/14','4/15','4/16','4/17','4/18','4/19','4/20','4/21','4/22','4/23','4/24','4/25','4/26','4/27','4/28','4/29','4/30','5/1','5/2','5/3','5/4','5/5'];
+const oapRevenue = [17846,16146,10795,26375,21422,21776,26290,29045,44730,14913,32006,14913,9998,17938,14611,27916,11867,23525,19877,9964,15603,15866,6792,5505,12651,8368];
+const serverRevenue = [79184,83896,58702,90712,91421,93341,90485,101172,126149,77363,108991,71022,59524,81345,72751,97389,64562,105475,78829,61495,91942,77340,43066,39232,67806,50012];
+const shareData = oapRevenue.map((v,i) => +(v/serverRevenue[i]*100).toFixed(1));
+
+// Phase backgrounds
+const phaseColors = dailyLabels.map((_,i) => {
+  if (i < 5) return 'rgba(139,143,163,0.15)';
+  if (i < 11) return 'rgba(108,92,231,0.2)';
+  return 'rgba(139,143,163,0.08)';
+});
+
+new Chart(document.getElementById('dailyRevenueChart'), {
+  type: 'bar',
+  data: {
+    labels: dailyLabels,
+    datasets: [
+      { label: 'OAP参与者收入', data: oapRevenue, backgroundColor: phaseColors, borderColor: '#6c5ce7', borderWidth:1, yAxisID:'y', order:2 },
+      { label: '占全服比', data: shareData, type:'line', borderColor:'#f39c12', backgroundColor:'transparent', pointRadius:3, pointBackgroundColor:'#f39c12', tension:.3, yAxisID:'y1', order:1 }
+    ]
+  },
+  options: {
+    responsive:true,
+    plugins: {
+      title: { display:true, text:'OAP参与者日收入 & 全服占比', font:{size:14} },
+      legend: { position:'bottom' }
+    },
+    scales: {
+      y: { title:{display:true,text:'收入 ($)'}, ticks:{callback:v=>'$'+v.toLocaleString()} },
+      y1: { position:'right', title:{display:true,text:'占全服 %'}, ticks:{callback:v=>v+'%'}, grid:{display:false}, min:10, max:40 }
+    }
+  }
+});
+
+// ===== 2. Share comparison chart =====
+new Chart(document.getElementById('shareChart'), {
+  type: 'bar',
+  data: {
+    labels: ['储值前 4/10-14', '储值期 4/15-20', '储值后 4/21-5/1', '科技节基线'],
+    datasets: [{
+      label: 'OAP参与者占全服份额',
+      data: [22.9, 28.3, 20.3, 21.0],
+      backgroundColor: ['rgba(139,143,163,.4)', 'rgba(108,92,231,.6)', 'rgba(231,76,60,.4)', 'rgba(0,206,201,.3)'],
+      borderColor: ['#8b8fa3','#6c5ce7','#e74c3c','#00cec9'],
+      borderWidth:2
+    }]
+  },
+  options: {
+    indexAxis:'y',
+    responsive:true,
+    plugins: {
+      title: { display:true, text:'OAP参与者全服份额（vs 科技节基线 21.0%）', font:{size:14} },
+      legend: { display:false },
+      annotation: { annotations: { baseline: { type:'line', xMin:21.0, xMax:21.0, borderColor:'#00cec9', borderDash:[6,3], borderWidth:2, label:{display:true,content:'科技节基线 21.0%',position:'end',font:{size:11}} }}}
+    },
+    scales: {
+      x: { title:{display:true,text:'份额 %'}, min:15, max:32, ticks:{callback:v=>v+'%'} }
+    }
+  }
+});
+
+// ===== 3. Tier charts =====
+const tiers = ['2K','5K','10K','20K','30K','50K'];
+const tierUsers = [250,170,162,63,36,46];
+const tierRevenue = [4750,8075,15390,11970,10260,21850];
+const tierColors = ['#8b8fa3','#00cec9','#6c5ce7','#0984e3','#e74c3c','#fd79a8'];
+
+new Chart(document.getElementById('tierUsersChart'), {
+  type: 'bar',
+  data: { labels:tiers, datasets:[{label:'参与人次',data:tierUsers,backgroundColor:tierColors}] },
+  options: { responsive:true, plugins:{title:{display:true,text:'各档位参与人次'},legend:{display:false}} }
+});
+new Chart(document.getElementById('tierRevenueChart'), {
+  type: 'bar',
+  data: { labels:tiers, datasets:[{label:'收入($)',data:tierRevenue,backgroundColor:tierColors}] },
+  options: { responsive:true, plugins:{title:{display:true,text:'各档位收入贡献($)'},legend:{display:false}}, scales:{y:{ticks:{callback:v=>'$'+v.toLocaleString()}}} }
+});
+
+// ===== 4. R-level charts =====
+const rlevels = ['超R','大R','中R','小R'];
+const rUsers = [189,110,107,10];
+const rRevenue = [51319,13870,6840,247];
+const rColors = ['#fd79a8','#6c5ce7','#00cec9','#8b8fa3'];
+
+new Chart(document.getElementById('rlevelUsersChart'), {
+  type: 'doughnut',
+  data: { labels:rlevels, datasets:[{data:rUsers,backgroundColor:rColors,borderWidth:0}] },
+  options: { responsive:true, plugins:{title:{display:true,text:'参与人数分布'},legend:{position:'bottom'}} }
+});
+new Chart(document.getElementById('rlevelRevenueChart'), {
+  type: 'doughnut',
+  data: { labels:rlevels, datasets:[{data:rRevenue,backgroundColor:rColors,borderWidth:0}] },
+  options: { responsive:true, plugins:{title:{display:true,text:'收入贡献分布'},legend:{position:'bottom'}} }
+});
+
+// ===== 5. Heatmap (stacked bar as proxy) =====
+const heatData = {
+  labels: tiers,
+  datasets: [
+    { label:'超R', data:[61.4,45.5,52.9,26.5,17.5,18.5], backgroundColor:'rgba(253,121,168,.7)' },
+    { label:'大R', data:[50.0,40.0,33.6,10.0,2.7,8.2], backgroundColor:'rgba(108,92,231,.7)' },
+    { label:'中R', data:[65.4,35.5,23.4,1.9,0,1.9], backgroundColor:'rgba(0,206,201,.7)' },
+    { label:'小R', data:[80.0,20.0,0,0,0,0], backgroundColor:'rgba(139,143,163,.7)' }
+  ]
+};
+new Chart(document.getElementById('heatmapChart'), {
+  type: 'bar',
+  data: heatData,
+  options: {
+    responsive:true,
+    plugins: {
+      title: { display:true, text:'各R级在各档位的参与率 (%)', font:{size:14} },
+      legend: { position:'bottom' },
+      tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.raw + '%' } }
+    },
+    scales: { y:{ title:{display:true,text:'参与率 %'}, ticks:{callback:v=>v+'%'} } }
+  }
+});
+
+// ===== 6. ROI Gradient Chart =====
+new Chart(document.getElementById('roiGradientChart'), {
+  type: 'line',
+  data: {
+    labels: ['2K','5K','7.5K (NEW)','10K','15K (NEW)','20K','30K','50K'],
+    datasets: [{
+      label: 'ROI %',
+      data: [110.5, 112.6, 116.8, 121.0, 122.5, 123.1, 128.0, 135.7],
+      borderColor: '#00b894',
+      backgroundColor: 'rgba(0,184,148,.1)',
+      fill: true,
+      tension: .3,
+      pointRadius: [5,5,8,5,8,5,5,5],
+      pointBackgroundColor: ['#8b8fa3','#00cec9','#00cec9','#6c5ce7','#00b894','#0984e3','#e74c3c','#fd79a8'],
+      pointBorderColor: ['#8b8fa3','#00cec9','#fff','#6c5ce7','#fff','#0984e3','#e74c3c','#fd79a8'],
+      pointBorderWidth: [1,1,3,1,3,1,1,1]
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display:true, text:'ROI 梯度（含新增 7.5K + 15K 档）', font:{size:14} },
+      legend: { display:false },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': ROI ' + ctx.raw + '%' } }
+    },
+    scales: {
+      y: { title:{display:true,text:'ROI %'}, min:105, max:140, ticks:{callback:v=>v+'%'} },
+      x: { title:{display:true,text:'储值档位'} }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

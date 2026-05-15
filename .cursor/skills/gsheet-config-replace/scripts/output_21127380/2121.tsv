@@ -1,0 +1,7 @@
+	212101123	2025拓荒节-节日累充跳转	jump_link	[]	{"id":11684540}	0	0	0	[]	NULL	[]	[]	{}	[]	0
+	212101124	科技节累充-大乐透-一等奖	tech_lucky_reward	[{"asset":{"typ":"item","id":11111034,"val":10},"setting":{"serial_number":7,"ishighlight":true}}]	{}	171110006	1	1	[]	LC_EVENT_tech_cityeffect_gacha_reward_1	[1]	[]	{}	[]	0
+	212101125	科技节累充-大乐透-二等奖	tech_lucky_reward	[{"asset":{"typ":"item","id":11111034,"val":5},"setting":{"serial_number":7,"ishighlight":true}}]	{}	171110007	3	2	[]	LC_EVENT_tech_cityeffect_gacha_reward_2	[2]	[]	{}	[]	0
+	212101126	科技节累充-大乐透-三等奖	tech_lucky_reward	[{"asset":{"typ":"item","id":11111034,"val":2},"setting":{"serial_number":7,"ishighlight":true}}]	{}	171110008	5	3	[]	LC_EVENT_tech_cityeffect_gacha_reward_3	[3]	[]	{}	[]	0
+	212101127	科技节累充-大乐透-消耗道具	tech_lucky_cost	[]	{}	111111338	0	0	[]	NULL	[]	[]	{}	[]	0
+	212101128	2026拓荒节累充-个人充值排名	actv_show_rank	[]	{}	21223202	0	0	[]	NULL	[]	[]	{}	[]	0
+	212101129	2026拓荒节累充开奖倒计时	server_recharge_countdown	[]	{}	86400000	0	0	[]	NULL	[]	[]	{}	[]	0

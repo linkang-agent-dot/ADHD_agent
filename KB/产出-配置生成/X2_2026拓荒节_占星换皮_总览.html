@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X2 2026拓荒节 — 占星节全套换皮配置</title>
+<style>
+body{font-family:'Consolas','Courier New',monospace;margin:20px;background:#1a1a2e;color:#e0e0e0;font-size:13px}
+h1{color:#00d4ff;border-bottom:2px solid #00d4ff;padding-bottom:8px}
+h2{color:#ff6b6b;margin-top:30px;border-left:4px solid #ff6b6b;padding-left:10px}
+h3{color:#ffd93d;margin-top:20px}
+table{border-collapse:collapse;width:100%;margin:10px 0}
+th,td{border:1px solid #444;padding:4px 8px;text-align:left;max-width:600px;overflow:hidden;text-overflow:ellipsis}
+th{background:#2d2d44;color:#00d4ff;position:sticky;top:0}
+tr:nth-child(even){background:#1e1e36}
+tr:hover{background:#2a2a4a}
+.new{color:#4ade80;font-weight:bold}
+.old{color:#888}
+.warn{color:#ff6b6b;font-weight:bold}
+.tbd{color:#ffd93d}
+.tsv-block{background:#0d0d1a;border:1px solid #333;padding:10px;margin:10px 0;overflow-x:auto;white-space:pre;font-size:12px;max-height:400px;overflow-y:auto}
+.copy-btn{background:#00d4ff;color:#000;border:none;padding:4px 12px;cursor:pointer;border-radius:3px;margin:5px 0}
+.copy-btn:hover{background:#00b4df}
+.section{background:#1e1e36;border:1px solid #333;border-radius:5px;padding:15px;margin:15px 0}
+.badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;margin:2px}
+.badge-done{background:#065f46;color:#4ade80}
+.badge-tbd{background:#713f12;color:#ffd93d}
+.badge-warn{background:#7f1d1d;color:#ff6b6b}
+input[type=text]{background:#0d0d1a;border:1px solid #444;color:#e0e0e0;padding:4px 8px;width:300px;margin:5px}
+#search-results{color:#4ade80;margin:5px 0}
+</style>
+</head>
+<body>
+
+<h1>X2 2026拓荒节 — 占星节全套换皮配置</h1>
+<p>生成日期：2026-05-15 | 源节日：X2 占星节 2025/2026 | 目标：X2 拓荒节 2026</p>
+<p>
+<span class="badge badge-done">Phase 1: ID映射 ✓</span>
+<span class="badge badge-done">Phase 2: 1111道具 ✓</span>
+<span class="badge badge-tbd">Phase 3: 2112活动行 进行中</span>
+<span class="badge badge-tbd">Phase 4-6: 子表配置 待生成</span>
+</p>
+
+<p><strong>搜索：</strong><input type="text" id="search" placeholder="输入ID或关键词..." oninput="doSearch()"><span id="search-results"></span></p>
+
+<hr>
+
+<!-- ========== SECTION: 2112 ID MAPPING ========== -->
+<h2>一、2112 活动 ID 映射总表（24 行）</h2>
+
+<div class="section">
+<h3>2026 批次（10个活动）</h3>
+<table>
+<tr><th>#</th><th>占星 ID</th><th>占星名称</th><th>→ 拓荒 ID</th><th>拓荒 constant</th><th>show_hud</th><th>base_activity_id</th></tr>
+<tr><td>1</td><td class="old">21127302</td><td>Wonder恶狼-砸金蛋</td><td class="new">21127362</td><td>event_labor_festival_hegemony_2026</td><td class="new">21127379</td><td>21127362(self)</td></tr>
+<tr><td>2</td><td class="old">21127350</td><td>BP集结奖励（基金）</td><td class="new">21127363</td><td>event_labor_bp_buy_number_bp_2026</td><td class="new">21127379</td><td>21127363(self)</td></tr>
+<tr><td>3</td><td class="old">21127351</td><td>大富翁</td><td class="new">21127364</td><td>event_fes_labor_monopoly_gacha_2026</td><td class="new">21127379</td><td>21127225(共用base)</td></tr>
+<tr><td>4</td><td class="old">21127355</td><td>每日gacha礼包</td><td class="new">21127365</td><td>event_fes_labor_gacha_daily_2026</td><td class="new">21127379</td><td>21127224(共用base)</td></tr>
+<tr><td>5</td><td class="old">21127356</td><td>节日自选周卡</td><td class="new">21127366</td><td>event_fes_labor_time_card_2026</td><td class="new">21127379</td><td>211201010(共用base)</td></tr>
+<tr><td>6</td><td class="old">21127357</td><td>限时抢购</td><td class="new">21127367</td><td>event_fes_labor_flash_sale_2026</td><td class="new">21127379</td><td>21127223(共用base)</td></tr>
+<tr><td>7</td><td class="old">21127358</td><td>行军表情礼包</td><td class="new">21127368</td><td>event_labor_emoji_2026</td><td class="new">21127379</td><td>21127183(共用base)</td></tr>
+<tr><td>8</td><td class="old">21127359</td><td>掉落转付费-掉落</td><td class="new">21127369</td><td>event_labor_2026_2_drop</td><td class="new">21127369(self)</td><td>211201001(共用base)</td></tr>
+<tr><td>9</td><td class="old">21127360</td><td>掉落转付费-礼包</td><td class="new">21127370</td><td>event_labor_2026_2_drop_pkg</td><td class="new">21127369</td><td>211201002(共用base)</td></tr>
+<tr><td>10</td><td class="old">21127361</td><td>掉落转付费-主活动</td><td class="new">21127371</td><td>event_labor_2026_shop</td><td class="new">21127369</td><td>211201003(共用base)</td></tr>
+</table>
+
+<h3>2025 批次（11个活动）</h3>
+<table>
+<tr><th>#</th><th>占星 ID</th><th>占星名称</th><th>→ 拓荒 ID</th><th>拓荒 constant</th><th>show_hud</th></tr>
+<tr><td>11</td><td class="old">211200205</td><td>强消耗</td><td class="new">21127372</td><td>labor_2026_strong_consume</td><td class="new">21127379</td></tr>
+<tr><td>12</td><td class="old">211200206</td><td>七日任务活动</td><td class="new">21127373</td><td>labor_2026_event_x2_sevenday</td><td class="new">21127379</td></tr>
+<tr><td>13</td><td class="old">211200207</td><td>自选卡包</td><td class="new">21127374</td><td>labor_2026_pkg</td><td class="new">21127379</td></tr>
+<tr><td>14</td><td class="old">211200208</td><td>BP</td><td class="new">21127375</td><td>labor_2026_labor_festival_bp</td><td class="new">21127379</td></tr>
+<tr><td>15</td><td class="old">211200209</td><td>BP礼包</td><td class="new">21127376</td><td>labor_2026_labor_festival_pkg</td><td class="new">21127379</td></tr>
+<tr><td>16</td><td class="old">211200210</td><td>连锁礼包-schema3-5</td><td class="new">21127377</td><td>labor_chain_pack_2026_schema3_5</td><td class="new">21127379</td></tr>
+<tr><td>17</td><td class="old">211200211</td><td>行军表情礼包(2025)</td><td class="new">21127378</td><td>event_labor_emoji_2026_v2</td><td class="new">21127379</td></tr>
+<tr><td>18</td><td class="old">211200212</td><td>掉落</td><td class="new">21127379</td><td>event_labor_drop_2026</td><td class="new">21127379(self)</td></tr>
+<tr><td>19</td><td class="old">211200213</td><td>累充</td><td class="new">21127380</td><td>event_2026_labor_packge_name</td><td class="new">21127379</td></tr>
+<tr><td>20</td><td class="old">211200214</td><td>Gacha</td><td class="new">21127381</td><td>event_labor_gacha_2026</td><td class="new">21127379</td></tr>
+<tr><td>21</td><td class="old">211200215</td><td>Gacha累计任务</td><td class="new">21127382</td><td>event_labor_2026_reward_gacha</td><td class="new">21127379</td></tr>
+</table>
+
+<h3>最强城主（3个活动）</h3>
+<table>
+<tr><th>#</th><th>占星 ID</th><th>占星名称</th><th>→ 拓荒 ID</th><th>拓荒 constant</th></tr>
+<tr><td>22</td><td class="old">211200036</td><td>最强城主(占星师)</td><td class="new">21127383</td><td>event_x2_strongest_monkey_labor_2026</td></tr>
+<tr><td>23</td><td class="old">211200282</td><td>最强城主-3期</td><td class="new">21127384</td><td>event_x2_strongest_monkey_labor_3_2026</td></tr>
+<tr><td>24</td><td class="old">211200283</td><td>最强城主-4期</td><td class="new">21127385</td><td>event_x2_strongest_monkey_labor_4_2026</td></tr>
+</table>
+</div>
+
+<!-- ========== SECTION: ITEM MAPPING ========== -->
+<h2>二、1111 道具映射（占星 → 拓荒）</h2>
+
+<div class="section">
+<h3>核心道具替换</h3>
+<table>
+<tr><th>占星 ID</th><th>占星名称</th><th>→ 拓荒 ID</th><th>拓荒名称</th><th>class</th><th>状态</th></tr>
+<tr><td class="old">11119497</td><td>观星球(BP)</td><td class="new">111111314</td><td>纪念钻头(BP)</td><td>battle_pass_exp</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11119517</td><td>抽奖道具</td><td class="new">111111315</td><td>拓荒抽奖道具</td><td>event</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11119518</td><td>内圈抽奖</td><td class="new">111111316</td><td>拓荒内圈抽奖</td><td>event</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11119519</td><td>外圈重置</td><td class="new">111111317</td><td>拓荒外圈重置</td><td>event</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11119553</td><td>每日礼包自选</td><td class="new">111111318</td><td>拓荒每日自选</td><td>item_select_box</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11119495</td><td>BP初级通行证</td><td class="new">111111319</td><td>拓荒BP初级</td><td>battle_pass_card</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11119496</td><td>BP高级通行证</td><td class="new">111111320</td><td>拓荒BP高级</td><td>battle_pass_card</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11119503</td><td>BP排名道具(行军)</td><td class="new">111111321</td><td>拓荒BP排名(行军)</td><td>marching_effect</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11119504</td><td>主城皮肤(永久)</td><td class="new">111111322</td><td>主城皮肤-拓荒(永久)</td><td>city_skin</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11119505</td><td>主城皮肤(2天)</td><td class="new">111111323</td><td>主城皮肤-拓荒(2天)</td><td>city_skin</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11119506</td><td>铭牌</td><td class="new">111111324</td><td>铭牌-拓荒</td><td>chat_skin</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11119515</td><td>头像框</td><td class="new">111111325</td><td>拓荒头像框</td><td>avatar_frame</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11119516</td><td>行军表情</td><td class="new">111111326</td><td>拓荒行军表情</td><td>map_emoji</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11119558</td><td>头像框-Wonder</td><td class="new">111111327</td><td>拓荒头像框-Wonder</td><td>avatar_frame</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11119498-503</td><td>行军特效(1天~永久)</td><td class="new">111111345-349+321</td><td>拓荒行军特效系列</td><td>marching_effect</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">111111302</td><td>累充抽奖道具</td><td class="new">111111338</td><td>拓荒累充抽奖</td><td>event</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">111111310-312</td><td>周卡解锁1-3</td><td class="new">111111342-344</td><td>拓荒周卡解锁1-3</td><td>item_subscription</td><td><span class="badge badge-done">已生成</span></td></tr>
+<tr><td class="old">11114017-19</td><td>集卡册卡包</td><td class="new">111111339-341</td><td>拓荒集卡包</td><td>item_asset</td><td><span class="badge badge-done">已生成</span></td></tr>
+</table>
+
+<h3 class="tbd">待确认的外显 ID（需美术/外部表配合）</h3>
+<table>
+<tr><th>道具</th><th>当前占位</th><th>所属外部表</th><th>说明</th></tr>
+<tr><td>主城皮肤 city_skin_id</td><td class="tbd">13121047</td><td>城市外观表</td><td>暂沿用占星节，需新ID</td></tr>
+<tr><td>行军特效 marching_effect_id</td><td class="tbd">13650128</td><td>行军外观表</td><td>暂沿用占星节，需新ID</td></tr>
+<tr><td>头像框 avatar_frame_id</td><td class="tbd">11422002/11422004</td><td>1142头像框表</td><td>暂沿用占星节，需新ID</td></tr>
+<tr><td>铭牌 nameplate_id</td><td class="tbd">11732002</td><td>1173铭牌表</td><td>暂沿用占星节，需新ID</td></tr>
+<tr><td>行军表情 map_emoji_id</td><td class="tbd">11800007</td><td>map_emoji表</td><td>暂沿用占星节，需新ID</td></tr>
+<tr><td>集卡册 book_id</td><td class="tbd">11081004</td><td>1108集卡表</td><td>需确认是否已建</td></tr>
+<tr><td>所有 display_key (DK)</td><td class="tbd">占星节DK</td><td>1511 DK表</td><td>待美术出图后替换</td></tr>
+</table>
+</div>
+
+<!-- ========== SECTION: 1111 TSV ========== -->
+<h2>三、1111 item 完整 TSV（35行）</h2>
+<p><button class="copy-btn" onclick="copyTSV('tsv-1111')">复制全部 TSV</button></p>
+
+<div class="section">
+<p>表头：p2_title | A_INT_id | S_STR_comment | A_STR_class | A_INT_quest_class | C_INT_display_order | C_INT_display_key | C_INT_display_quality | C_MAP_lc_upper_show | A_MAP_lc_name | C_MAP_lc_desc | C_MAP_lc_usetip | A_FLT_value | A_INT_max_own | A_INT_max_get | A_INT_max_use | C_ARR_display_labels | A_ARR_use_labels | A_MAP_category_param | A_INT_fixed_use | S_INT_use_now | C_ARR_drop_display | A_INT_source | A_INT_country_use_type | A_INT_Quality | C_INT_BgQuality | A_INT_ValueGold | A_INT_CraftCostReduceBp | C_INT_RedPoint</p>
+<div class="tsv-block" id="tsv-1111">	111111314	纪念钻头-拓荒节2026活动BP道具	battle_pass_exp	0	405217	1511020776	1511010122	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_bp_EVENT_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_bp_EVENT_title_desc"}	{}	35	999999	99999	99999	["bag_other"]	[]	{}	-1	0	[]	11740000	0	4	1511010004	0	0	0
+	111111315	拓荒节2026-抽奖道具	event	0	0	1511020786	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_gacha_EVENT_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_gacha_EVENT_title_desc"}	{}	500	999999	99999	999999999	["bag_other"]	[]	{}	-1	0	[]	11740000	0	5	1511010005	0	0	0
+	111111316	拓荒节2026-增加内圈抽奖次数	event	0	0	1511020787	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_gacha_item_title_2"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_gacha_item_title_desc_2"}	{}	700	999999999	999999999	999999999	[]	[]	{}	1	0	[]	11740000	0	5	1511010005	0	0	0
+	111111317	拓荒节2026-外圈重置道具	event	0	0	1511018930	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_gacha_EVENT_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_gacha_EVENT_title_desc"}	{}	500	999999	99999	999999999	["bag_other"]	[]	{}	-1	0	[]	11740000	0	5	1511010005	0	0	0
+	111111318	拓荒节2026每日礼包-自选大奖	item_select_box	19	403200	15112492	1511010123	{}	{"typ":"lc","txt":"LC_ITEM_mecha_skin_colour_name_choose"}	{"typ":"lc","txt":"LC_ITEM_mecha_skin_colour_name_choose_desc","args":[{"typ":"int","val":1},{"typ":"int","val":1}]}	{"typ":"lc","txt":"LC_ITEM_chest_from_atk_npc_usedtip"}	1000	999999	99999	99999	["bag_other"]	["bag"]	{"select_box":[{"typ":"item","id":111111315,"val":50}]}	1	1	[]	11740000	0	4	1511010004	0	0	0
+	111111319	拓荒节2026BP-初级通行证	battle_pass_card	0	0	1511020776	1511010122	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_bp_unlock_name_normal"}	{}	{}	10	999999	99999	9999	[]	[]	{}	-1	1	[]	11740000	0	4	1511010004	0	0	0
+	111111320	拓荒节2026BP-高级通行证	battle_pass_card	0	0	1511020776	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_bp_unlock_name_classic"}	{}	{}	10	999999	99999	9999	[]	[]	{}	-1	1	[]	11740000	0	5	1511010005	0	0	0
+	111111321	拓荒节2026BP排名道具-行军特效	marching_effect	0	408195	15119315	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_march_skin_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_march_skin_title_desc"}	{"typ":"lc","txt":"LC_ITEM_labor_2026_march_effect_used"}	5000	999999	99999	1	["bag_other"]	["bag","13650128"]	{"effect":[{"typ":"marching_effect","id":13650128,"val":-1},{"typ":"vm","id":11151001,"val":2500}]}	-1	0	[]	11740000	0	5	1511010005	0	0	1
+	111111322	主城皮肤-拓荒节2026(永久)	city_skin	21	400106	1511020867	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_city_skin_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_city_skin_desc"}	{"typ":"lc","txt":"LC_ITEM_city_skin_rocket_use_tips"}	10000	999	3	1	["bag_other"]	["bag","13121047"]	{"effect":[{"typ":"city_skin","id":13121047,"val":-1},{"typ":"item","id":11111034,"val":10}]}	-1	0	[]	11740000	0	5	1511010005	0	0	1
+	111111323	主城皮肤-拓荒节2026(2天)	city_skin	21	404201	1511020867	1511010122	{"typ":"lc","txt":"LC_ITEM_time_day_upper_show","args":[{"typ":"int","val":2}]}	{"typ":"lc","txt":"LC_EVENT_labor_2026_city_skin_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_city_skin_desc"}	{"typ":"lc","txt":"LC_ITEM_city_skin_rocket_use_tips"}	500	999	1	1	["bag_other"]	["bag","13121047"]	{"effect":[{"typ":"city_skin","id":13121047,"val":172800000},{"typ":"item","id":11111021,"val":1}]}	-1	0	[]	11740000	0	4	1511010004	0	0	1
+	111111324	铭牌-拓荒节2026	chat_skin	30	401107	1511020632	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_name_plate_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_name_plate_title_desc"}	{"typ":"lc","txt":"LC_ITEM_season_extra_reward_usedtip"}	2500	9999999	1	1	["bag_other"]	["11732002","bag"]	{"effect":[{"typ":"nameplate","id":11732002,"val":-1}]}	-1	0	[]	11740000	0	5	1511010005	0	0	1
+	111111325	拓荒节2026-头像框	avatar_frame	20	0	1511020634	1511010122	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_avatar_title"}	{"typ":"lc","txt":"LC_MENU_forever"}	{}	1000	99	1	1	[]	["11422002"]	{"effect":[{"typ":"avatar_frame","id":11422002,"val":-1},{"typ":"item","id":11111031,"val":1000}]}	-1	1	[]	11740000	0	4	1511010004	0	0	1
+	111111326	行军表情-动态-拓荒节2026	map_emoji	20	0	1511020886	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_map_emoji_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_map_emoji_title_desc"}	{}	1000	99	1	1	[]	[]	{"effect":[{"typ":"map_emoji","id":11800007,"val":-1}]}	-1	1	[]	11740000	0	5	1511010005	0	0	1
+	111111327	拓荒节2026-头像框-Wonder	avatar_frame	20	0	1511031115	1511010122	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_avatar_title"}	{"typ":"lc","txt":"LC_MENU_forever"}	{}	1000	99	1	1	[]	["11422004"]	{"effect":[{"typ":"avatar_frame","id":11422004,"val":-1},{"typ":"item","id":11111031,"val":1000}]}	-1	1	[]	11740000	0	4	1511010004	0	0	1
+	111111328	拓荒节2026-装饰道具	event	0	405243	1511020779	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_wall_decoration_1"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_wall_decoration_1_desc"}	{}	1000	999999999	99	999999999	[]	[]	{}	-1	0	[]	11740000	0	5	1511010005	0	0	0
+	111111329	拓荒节2026-地板	event	0	405243	1511020780	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_floor_1_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_floor_1_title_desc"}	{}	500	999999999	1	999999999	[]	[]	{}	-1	0	[]	11740000	0	5	1511010005	0	0	0
+	111111330	拓荒节2026-墙纸	event	0	405243	1511020781	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_wall_1_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_wall_1_title_desc"}	{}	500	999999999	1	999999999	[]	[]	{}	-1	0	[]	11740000	0	5	1511010005	0	0	0
+	111111331	拓荒节2026-墙饰1	event	0	405243	1511020783	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_wall_decoration_3"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_wall_decoration_3_desc"}	{}	200	999999999	1	999999999	[]	[]	{}	-1	0	[]	11740000	0	5	1511010005	0	0	0
+	111111332	拓荒节2026-墙饰2	event	0	405243	1511020784	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_wall_decoration_4"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_wall_decoration_4_desc"}	{}	200	999999999	1	999999999	[]	[]	{}	-1	0	[]	11740000	0	5	1511010005	0	0	0
+	111111333	拓荒节2026-墙饰3	event	0	405243	1511018755	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_wall_decoration_5"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_wall_decoration_5_desc"}	{}	200	999999999	1	999999999	[]	[]	{}	-1	0	[]	11740000	0	5	1511010005	0	0	0
+	111111334	拓荒节2026-墙饰5	event	0	405243	1511018756	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_wall_decoration_5"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_wall_decoration_5_desc"}	{}	200	999999999	1	999999999	[]	[]	{}	-1	0	[]	11740000	0	5	1511010005	0	0	0
+	111111335	拓荒节2026-柜台	event	0	405243	1511020836	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_decoration_1"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_decoration_1_desc"}	{}	1000	999999999	1	999999999	[]	[]	{}	-1	0	[]	11740000	0	5	1511010005	0	0	0
+	111111336	拓荒节2026七日任务道具	event_progress	0	0	1511020788	1511010122	{}	{}	{}	{}	1	999999	99999	9999	[]	[]	{"effect":[{"typ":"event","id":21127373},{"typ":"miss_lost_reward"}]}	-1	1	[]	11740000	0	4	1511010004	0	0	0
+	111111337	自选卡册-拓荒节2026	add_limit_time_select_card	19	40002	1511020777	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_wild_card_name"}	{"typ":"lc","txt":"LC_EVENT_wild_card_name_desc"}	{}	2500	10	10	9999	[]	[]	{"effect":[{"typ":"add_limit_time_select_card","id":22330001,"val":86400000}]}	-1	1	[]	11740000	0	5	1511010005	0	0	0
+	111111338	拓荒节2026-累充抽奖道具	event	0	0	1511027027	1511010123	{}	{"typ":"lc","txt":"LC_ITEM_alien_explore_gacha_ticket"}	{"typ":"lc","txt":"LC_ITEM_alien_explore_gacha_ticket_desc"}	{}	700	999999999	999999999	999999999	["bag_other"]	[]	{"effect":[{"typ":"event","id":21127380}]}	1	0	[]	11740000	0	5	1511010004	0	0	0
+	111111339	拓荒节2026-1-2星卡包	item_asset	0	0	1511031091	1511010121	{}	{"typ":"lc","txt":"LC_EVENT_item_card_pack_name_12"}	{"typ":"lc","txt":"LC_EVENT_item_card_pack_desc_12"}	{}	16	999999	99999	99999	["bag_other","card_pack"]	["bag","card_pack"]	{"drop":{"typ":"single_random","num":1,"args":[{"typ":"cardquality","id":3,"num":1,"random_add":11081004,"wgt":9000},{"typ":"cardquality","id":4,"num":1,"random_add":11081004,"wgt":1000}]}}	-1	0	[]	11740000	0	3	1511010003	0	0	1
+	111111340	拓荒节2026-1-3星卡包	item_asset	0	0	1511031092	1511010121	{}	{"typ":"lc","txt":"LC_EVENT_item_card_pack_name_13"}	{"typ":"lc","txt":"LC_EVENT_item_card_pack_desc_13"}	{}	19	999999	99999	99999	["bag_other","card_pack"]	["bag","card_pack"]	{"drop":{"typ":"single_random","num":1,"args":[{"typ":"cardquality","id":3,"num":1,"random_add":11081004,"wgt":8000},{"typ":"cardquality","id":4,"num":1,"random_add":11081004,"wgt":1300},{"typ":"cardquality","id":5,"num":1,"random_add":11081004,"wgt":200}]}}	-1	0	[]	11740000	0	3	1511010003	0	0	1
+	111111341	拓荒节2026-2-3星卡包	item_asset	0	0	1511031093	1511010122	{}	{"typ":"lc","txt":"LC_EVENT_item_card_pack_name_14"}	{"typ":"lc","txt":"LC_EVENT_item_card_pack_desc_14"}	{}	36	999999	99999	99999	["bag_other","card_pack"]	["bag","card_pack"]	{"drop":{"typ":"single_random","num":1,"args":[{"typ":"cardquality","id":4,"num":1,"random_add":11081004,"wgt":9500},{"typ":"cardquality","id":5,"num":1,"random_add":11081004,"wgt":500}]}}	-1	0	[]	11740000	0	4	1511010004	0	0	1
+	111111342	拓荒节2026自选周卡解锁-1	item_subscription	0	404200	1511026509	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_time_card_title_1"}	{}	{}	1000	999999999	999999999	999999999	["bag_other"]	[]	{"effect":[{"typ":"item_subscription","id":2013930107}]}	-1	1	[]	11740000	0	5	1511010005	0	0	0
+	111111343	拓荒节2026自选周卡解锁-2	item_subscription	0	404200	1511026507	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_time_card_title_2"}	{}	{}	1000	999999999	999999999	999999999	["bag_other"]	[]	{"effect":[{"typ":"item_subscription","id":2013930108}]}	-1	1	[]	11740000	0	5	1511010005	0	0	0
+	111111344	拓荒节2026自选周卡解锁-3	item_subscription	0	404200	1511026508	1511010123	{}	{"typ":"lc","txt":"LC_EVENT_labor_2026_time_card_title_3"}	{}	{}	1000	999999999	999999999	999999999	["bag_other"]	[]	{"effect":[{"typ":"item_subscription","id":2013930109}]}	-1	1	[]	11740000	0	5	1511010005	0	0	0
+	111111345	行军特效-拓荒节2026-1天限时	marching_effect	0	408200	1511020871	1511010119	{"typ":"lc","txt":"LC_ITEM_time_day_upper_show","args":[{"typ":"int_unit","val":1}]}	{"typ":"lc","txt":"LC_EVENT_labor_2026_march_skin_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_march_skin_title_desc"}	{"typ":"lc","txt":"LC_ITEM_labor_2026_march_effect_used_1d"}	50	999999	99999	1	["bag_other"]	["bag","13650128"]	{"effect":[{"typ":"marching_effect","id":13650128,"val":86400000},{"typ":"vm","id":11151001,"val":50}]}	-1	0	[]	11740000	0	1	1511010001	0	0	1
+	111111346	行军特效-拓荒节2026-3天限时	marching_effect	0	408199	1511020871	1511010120	{"typ":"lc","txt":"LC_ITEM_time_day_upper_show","args":[{"typ":"int_unit","val":3}]}	{"typ":"lc","txt":"LC_EVENT_labor_2026_march_skin_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_march_skin_title_desc"}	{"typ":"lc","txt":"LC_ITEM_labor_2026_march_effect_used_3d"}	200	999999	99999	1	["bag_other"]	["bag","13650128"]	{"effect":[{"typ":"marching_effect","id":13650128,"val":259200000},{"typ":"vm","id":11151001,"val":200}]}	-1	0	[]	11740000	0	2	1511010002	0	0	1
+	111111347	行军特效-拓荒节2026-7天限时	marching_effect	0	408198	1511020871	1511010121	{"typ":"lc","txt":"LC_ITEM_time_day_upper_show","args":[{"typ":"int_unit","val":7}]}	{"typ":"lc","txt":"LC_EVENT_labor_2026_march_skin_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_march_skin_title_desc"}	{"typ":"lc","txt":"LC_ITEM_labor_2026_march_effect_used_7d"}	500	999999	99999	1	["bag_other"]	["bag","13650128"]	{"effect":[{"typ":"marching_effect","id":13650128,"val":604800000},{"typ":"vm","id":11151001,"val":500}]}	-1	0	[]	11740000	0	3	1511010003	0	0	1
+	111111348	行军特效-拓荒节2026-14天限时	marching_effect	0	408197	1511020871	1511010122	{"typ":"lc","txt":"LC_ITEM_time_day_upper_show","args":[{"typ":"int_unit","val":14}]}	{"typ":"lc","txt":"LC_EVENT_labor_2026_march_skin_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_march_skin_title_desc"}	{"typ":"lc","txt":"LC_ITEM_labor_2026_march_effect_used_14d"}	1000	999999	99999	1	["bag_other"]	["bag","13650128"]	{"effect":[{"typ":"marching_effect","id":13650128,"val":1209600000},{"typ":"vm","id":11151001,"val":1000}]}	-1	0	[]	11740000	0	4	1511010004	0	0	1
+	111111349	行军特效-拓荒节2026-30天限时	marching_effect	0	408196	1511020871	1511010122	{"typ":"lc","txt":"LC_ITEM_time_day_upper_show","args":[{"typ":"int_unit","val":30}]}	{"typ":"lc","txt":"LC_EVENT_labor_2026_march_skin_title"}	{"typ":"lc","txt":"LC_EVENT_labor_2026_march_skin_title_desc"}	{"typ":"lc","txt":"LC_ITEM_labor_2026_march_effect_used_30d"}	2000	999999	99999	1	["bag_other"]	["bag","13650128"]	{"effect":[{"typ":"marching_effect","id":13650128,"val":2592000000},{"typ":"vm","id":11151001,"val":1000}]}	-1	0	[]	11740000	0	4	1511010004	0	0	1</div>
+</div>
+
+<!-- ========== SECTION: KEY REPLACE MAP ========== -->
+<h2>四、全局道具替换速查表（配子表时用）</h2>
+
+<div class="section">
+<p>在所有子表（2115/2121/2135/2011/2013/2116/2124/2137等）中出现的道具ID，按下表批量替换：</p>
+<table>
+<tr><th>占星 ID</th><th>→ 拓荒 ID</th><th>说明</th></tr>
+<tr><td class="old">11119497</td><td class="new">111111314</td><td>BP道具 观星球→钻头</td></tr>
+<tr><td class="old">11119517</td><td class="new">111111315</td><td>gacha主货币</td></tr>
+<tr><td class="old">11119518</td><td class="new">111111316</td><td>gacha内圈</td></tr>
+<tr><td class="old">11119519</td><td class="new">111111317</td><td>gacha外圈重置</td></tr>
+<tr><td class="old">11119553</td><td class="new">111111318</td><td>每日礼包自选大奖</td></tr>
+<tr><td class="old">11119495</td><td class="new">111111319</td><td>BP初级通行证</td></tr>
+<tr><td class="old">11119496</td><td class="new">111111320</td><td>BP高级通行证</td></tr>
+<tr><td class="old">11119503</td><td class="new">111111321</td><td>BP排名行军</td></tr>
+<tr><td class="old">11119504</td><td class="new">111111322</td><td>主城皮肤永久</td></tr>
+<tr><td class="old">11119505</td><td class="new">111111323</td><td>主城皮肤2天</td></tr>
+<tr><td class="old">11119506</td><td class="new">111111324</td><td>铭牌</td></tr>
+<tr><td class="old">11119515</td><td class="new">111111325</td><td>头像框</td></tr>
+<tr><td class="old">11119516</td><td class="new">111111326</td><td>行军表情</td></tr>
+<tr><td class="old">11119558</td><td class="new">111111327</td><td>头像框-Wonder</td></tr>
+<tr><td class="old">11119498</td><td class="new">111111345</td><td>行军1天</td></tr>
+<tr><td class="old">11119499</td><td class="new">111111346</td><td>行军3天</td></tr>
+<tr><td class="old">11119500</td><td class="new">111111347</td><td>行军7天</td></tr>
+<tr><td class="old">11119501</td><td class="new">111111348</td><td>行军14天</td></tr>
+<tr><td class="old">11119502</td><td class="new">111111349</td><td>行军30天</td></tr>
+<tr><td class="old">11119507</td><td class="new">111111328</td><td>装饰道具</td></tr>
+<tr><td class="old">11119521</td><td class="new">111111336</td><td>七日任务道具</td></tr>
+<tr><td class="old">11119522</td><td class="new">111111337</td><td>自选卡册</td></tr>
+<tr><td class="old">111111302</td><td class="new">111111338</td><td>累充抽奖</td></tr>
+<tr><td class="old">11114017</td><td class="new">111111339</td><td>1-2星卡包</td></tr>
+<tr><td class="old">11114018</td><td class="new">111111340</td><td>1-3星卡包</td></tr>
+<tr><td class="old">11114019</td><td class="new">111111341</td><td>2-3星卡包</td></tr>
+<tr><td class="old">111111310</td><td class="new">111111342</td><td>周卡解锁1</td></tr>
+<tr><td class="old">111111311</td><td class="new">111111343</td><td>周卡解锁2</td></tr>
+<tr><td class="old">111111312</td><td class="new">111111344</td><td>周卡解锁3</td></tr>
+</table>
+
+<h3>活动 ID 替换（2112）</h3>
+<table>
+<tr><th>占星 2112</th><th>→ 拓荒 2112</th><th>用途</th></tr>
+<tr><td class="old">211200212</td><td class="new">21127379</td><td>show_hud 节日掉落活动</td></tr>
+<tr><td class="old">211200213</td><td class="new">21127380</td><td>recharge_actv 累充</td></tr>
+<tr><td class="old">21127355</td><td class="new">21127365</td><td>每日gacha actv_id</td></tr>
+<tr><td class="old">21127359</td><td class="new">21127369</td><td>掉落转付费-掉落</td></tr>
+<tr><td class="old">21127360</td><td class="new">21127370</td><td>掉落转付费-礼包</td></tr>
+<tr><td class="old">211200206</td><td class="new">21127373</td><td>七日任务道具关联</td></tr>
+</table>
+</div>
+
+<!-- ========== SECTION: NEXT STEPS ========== -->
+<h2>五、待生成子表清单</h2>
+
+<div class="section">
+<table>
+<tr><th>表号</th><th>表名</th><th>预估行数</th><th>状态</th><th>说明</th></tr>
+<tr><td>2112</td><td>activity_config</td><td>24</td><td><span class="badge badge-tbd">进行中</span></td><td>2026批10行 + 2025批11行 + 最强城主3行</td></tr>
+<tr><td>2121</td><td>activity_special</td><td>~40</td><td><span class="badge badge-tbd">待生成</span></td><td>buff/jump_link/weekly_pay/flash_sale/drop_topay/gacha等</td></tr>
+<tr><td>2135</td><td>activity_package</td><td>~80</td><td><span class="badge badge-tbd">待生成</span></td><td>大富翁30+每日5+周卡4+限时14+gacha6+强消耗6+连锁52</td></tr>
+<tr><td>2011</td><td>iap_config</td><td>~30</td><td><span class="badge badge-tbd">待生成</span></td><td>每日5+周卡4+限时8+gacha6+连锁等</td></tr>
+<tr><td>2013</td><td>iap_template</td><td>~30</td><td><span class="badge badge-tbd">待生成</span></td><td>与2011一一对应</td></tr>
+<tr><td>2115</td><td>activity_task</td><td>~150</td><td><span class="badge badge-tbd">待生成</span></td><td>Wonder/大富翁/限时抢购/累充/七日/gacha等任务行</td></tr>
+<tr><td>2116</td><td>activity_item_exchange</td><td>~30</td><td><span class="badge badge-tbd">待生成</span></td><td>大富翁兑换+掉落转付费兑换</td></tr>
+<tr><td>2124</td><td>activity_drop</td><td>~20</td><td><span class="badge badge-tbd">待生成</span></td><td>掉落+gacha+强消耗+节日掉落</td></tr>
+<tr><td>2122+2118</td><td>rank_rule+rank_rewards</td><td>~20</td><td><span class="badge badge-tbd">待生成</span></td><td>Wonder/强消耗/累充/gacha排行</td></tr>
+<tr><td>2130+2131</td><td>battle_pass+level</td><td>~50</td><td><span class="badge badge-tbd">待生成</span></td><td>BP通行证+等级奖励</td></tr>
+<tr><td>2137</td><td>activity_asset_retake</td><td>~10</td><td><span class="badge badge-tbd">待生成</span></td><td>限时抢购/gacha/BP道具回收</td></tr>
+<tr><td>2111</td><td>activity_calendar</td><td>24</td><td><span class="badge badge-tbd">待生成</span></td><td>每个活动一条日历</td></tr>
+<tr><td>2024</td><td>iap_custom_chest</td><td>~30</td><td><span class="badge badge-tbd">待生成</span></td><td>周卡自选坑位</td></tr>
+<tr><td>1108+1107+1123+1109</td><td>集卡册</td><td>~70</td><td><span class="badge badge-tbd">待生成</span></td><td>book+group+card+store</td></tr>
+</table>
+<p><strong class="warn">预估总行数：~600+ 行</strong>，需要分批生成。</p>
+</div>
+
+<script>
+function copyTSV(id){
+  const el=document.getElementById(id);
+  navigator.clipboard.writeText(el.textContent).then(()=>{alert('已复制 '+el.textContent.split('\n').length+' 行 TSV!')});
+}
+function doSearch(){
+  const q=document.getElementById('search').value.toLowerCase();
+  if(!q){document.getElementById('search-results').textContent='';return}
+  const tds=document.querySelectorAll('td');
+  let count=0;
+  tds.forEach(td=>{
+    if(td.textContent.toLowerCase().includes(q)){td.style.background='#4a3000';count++}
+    else{td.style.background=''}
+  });
+  document.getElementById('search-results').textContent=count?count+' 个匹配':'无匹配';
+}
+</script>
+
+</body>
+</html>
