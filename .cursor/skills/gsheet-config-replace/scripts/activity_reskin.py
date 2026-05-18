@@ -300,18 +300,22 @@ def main():
     for t in chain:
         chain[t] = sorted(set(chain[t]))
 
-    # 读 2135 → 发现 2011（批量读）
+    # 读 2135 → 发现 2011（批量读，只保留 chain 中的目标行）
     if '2135' in chain:
         alias_2135 = X2_TABLES['2135']['alias']
         args_2135 = get_table_args('2135')
+        id_col_2135 = X2_TABLES['2135'].get('id_col', 1)
+        target_2135 = set(chain['2135'])
         deeper_from_2135 = {}
         int_ids = sorted(int(x) for x in chain['2135'])
         all_2135 = read_raw_rows(alias_2135, str(int_ids[0]), str(int_ids[-1]), args_2135)
         for row in all_2135:
-            for cell in row:
-                cell = cell.strip()
-                if re.match(r'^2011\d+$', cell):
-                    deeper_from_2135.setdefault('2011', []).append(cell)
+            # 只处理目标 ID 的行
+            if len(row) > id_col_2135 and row[id_col_2135].strip() in target_2135:
+                for cell in row:
+                    cell = cell.strip()
+                    if re.match(r'^2011\d+$', cell):
+                        deeper_from_2135.setdefault('2011', []).append(cell)
         for t, ids in deeper_from_2135.items():
             chain.setdefault(t, []).extend(ids)
             chain[t] = sorted(set(chain[t]))
@@ -323,13 +327,16 @@ def main():
         args_2011 = get_table_args('2011')
         deeper_from_2011 = {}
 
-        # 方式1: 正向 — 批量读 2011，在行文本中搜索 2013 ID
+        # 方式1: 正向 — 批量读 2011，只保留 chain 中的目标行
+        id_col_2011 = X2_TABLES['2011'].get('id_col', 1)
+        target_2011 = set(chain['2011'])
         int_2011 = sorted(int(x) for x in chain['2011'])
         all_2011 = read_raw_rows(alias_2011, str(int_2011[0]), str(int_2011[-1]), args_2011)
         for row in all_2011:
-            row_text = '\t'.join(row)
-            for m in re.finditer(r'(?<![0-9])(2013\d{6,})(?![0-9])', row_text):
-                deeper_from_2011.setdefault('2013', []).append(m.group(1))
+            if len(row) > id_col_2011 and row[id_col_2011].strip() in target_2011:
+                row_text = '\t'.join(row)
+                for m in re.finditer(r'(?<![0-9])(2013\d{6,})(?![0-9])', row_text):
+                    deeper_from_2011.setdefault('2013', []).append(m.group(1))
 
         # 方式2: 反向 — 在 2013 表中搜索 config_id = 源 2011 ID
         alias_2013 = X2_TABLES['2013']['alias']
@@ -360,17 +367,23 @@ def main():
     full_mapping.update(activity_mapping)
 
     # 子表 ID：已在 manual_mapping 中的用手动值，否则自动分配
+    # next_id_overrides: 外部传入的各表起始 ID（用于批量跑时避免跨活动撞号）
+    next_id_overrides = cfg.get('next_id_overrides', {})
     auto_assigned = {}
+    next_id_after = {}  # 记录各表分配后的 next_id，传回给调用方
     for table_id, row_ids in chain.items():
         table_info = X2_TABLES.get(table_id, {})
         alias = table_info.get('alias')
         if not alias:
             continue
 
-        # 查 tail 获取当前最大 ID
-        id_col = table_info.get('id_col', 1)
-        max_existing = get_tail_max_id(alias, n=10, id_col=id_col, table_id=table_id)
-        next_id = max_existing + 1
+        # 获取起始 ID：优先用外部传入的 override，否则查 tail
+        if table_id in next_id_overrides:
+            next_id = int(next_id_overrides[table_id])
+        else:
+            id_col = table_info.get('id_col', 1)
+            max_existing = get_tail_max_id(alias, n=10, id_col=id_col, table_id=table_id)
+            next_id = max_existing + 1
 
         for rid in row_ids:
             if rid in full_mapping:
@@ -383,16 +396,24 @@ def main():
             auto_assigned[rid] = f"{new_id} (表{table_id})"
             next_id += 1
 
+        next_id_after[table_id] = next_id
+
     print(f"  ✓ 手动映射: {len(item_mapping) + len(activity_mapping)} 项")
     print(f"  ✓ 自动分配: {len(auto_assigned)} 项")
     for old_id, desc in auto_assigned.items():
         print(f"    {old_id} → {desc}")
 
-    # 保存完整映射
+    # 保存完整映射 + next_id 供下一个活动使用
     mapping_file = output_dir / 'mapping.json'
     with open(mapping_file, 'w', encoding='utf-8') as f:
         json.dump(full_mapping, f, ensure_ascii=False, indent=2)
+
+    next_id_file = output_dir / 'next_ids.json'
+    with open(next_id_file, 'w', encoding='utf-8') as f:
+        json.dump(next_id_after, f, ensure_ascii=False, indent=2)
+
     print(f"\n  ✓ 映射表已保存: {mapping_file}")
+    print(f"  ✓ next_id 已保存: {next_id_file}")
 
     # ── Step 4: 克隆输出 ──
     print("\nStep 4: 克隆并输出...")
@@ -429,10 +450,27 @@ def main():
         if not target_ids:
             continue
 
-        # 批量读：用 idrange min~max 一次拉回，再按 ID 筛选
+        # 批量读：如果 ID 连续（跨度 < 实际数×3），用 idrange 一次拉；否则分段读
         int_ids = sorted(int(x) for x in target_ids)
-        id_min, id_max = str(int_ids[0]), str(int_ids[-1])
-        all_rows_raw = read_raw_rows(alias, id_min, id_max, extra_args)
+        id_span = int_ids[-1] - int_ids[0] + 1
+        all_rows_raw = []
+        if id_span <= len(int_ids) * 3:
+            # 连续：一次 idrange
+            all_rows_raw = read_raw_rows(alias, str(int_ids[0]), str(int_ids[-1]), extra_args)
+        else:
+            # 分散：按连续段分组读取
+            segments = []
+            seg_start = int_ids[0]
+            seg_prev = int_ids[0]
+            for iid in int_ids[1:]:
+                if iid - seg_prev > 100:  # 间隔超过100视为新段
+                    segments.append((seg_start, seg_prev))
+                    seg_start = iid
+                seg_prev = iid
+            segments.append((seg_start, seg_prev))
+            print(f"    ID 分散（跨度{id_span} vs 实际{len(int_ids)}），分{len(segments)}段读取")
+            for s, e in segments:
+                all_rows_raw.extend(read_raw_rows(alias, str(s), str(e), extra_args))
 
         # 按 ID 列建索引
         row_by_id = {}
@@ -446,7 +484,7 @@ def main():
             if rid in row_by_id:
                 rows.append(row_by_id[rid])
             else:
-                print(f"  ⚠️ 表{table_id} row {rid} 在范围 {id_min}~{id_max} 内未找到")
+                print(f"  ⚠️ 表{table_id} row {rid} 未找到（源行可能不存在）")
 
         if rows:
             cloned = clone_rows(rows, full_mapping, text_replacements)

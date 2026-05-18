@@ -1,7 +1,7 @@
 {
   "agent:main:main": {
-    "sessionId": "e73c2ba5-0740-465b-afc6-ed9ec892ff21",
-    "updatedAt": 1779010889026,
+    "sessionId": "e4a80d27-668f-465d-984f-cf0fb1d74fbd",
+    "updatedAt": 1779097218250,
     "deliveryContext": {
       "to": "user:ou_e48f6c4c0395f45b74b51525f348678b"
     },
@@ -516,14 +516,14 @@
       ],
       "version": 0
     },
-    "sessionFile": "C:\\ADHD_agent\\openclaw\\agents\\main\\sessions\\e73c2ba5-0740-465b-afc6-ed9ec892ff21.jsonl",
+    "sessionFile": "C:\\ADHD_agent\\openclaw\\agents\\main\\sessions\\e4a80d27-668f-465d-984f-cf0fb1d74fbd.jsonl",
     "modelProvider": "minimax",
     "model": "MiniMax-M2.7",
     "abortedLastRun": false,
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1779010880379,
-      "sessionId": "e73c2ba5-0740-465b-afc6-ed9ec892ff21",
+      "generatedAt": 1779097208085,
+      "sessionId": "e4a80d27-668f-465d-984f-cf0fb1d74fbd",
       "sessionKey": "agent:main:main",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -542,9 +542,9 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 49366,
+        "chars": 49649,
         "projectContextChars": 16826,
-        "nonProjectContextChars": 32540
+        "nonProjectContextChars": 32823
       },
       "injectedWorkspaceFiles": [
         {
@@ -798,8 +798,8 @@
         ]
       },
       "tools": {
-        "listChars": 3516,
-        "schemaChars": 24610,
+        "listChars": 3799,
+        "schemaChars": 24693,
         "entries": [
           {
             "name": "read",
@@ -905,9 +905,9 @@
           },
           {
             "name": "web_search",
-            "summaryChars": 175,
-            "schemaChars": 1084,
-            "propertiesCount": 9
+            "summaryChars": 123,
+            "schemaChars": 767,
+            "propertiesCount": 7
           },
           {
             "name": "web_fetch",
@@ -919,6 +919,12 @@
             "name": "image",
             "summaryChars": 201,
             "schemaChars": 342,
+            "propertiesCount": 6
+          },
+          {
+            "name": "pdf",
+            "summaryChars": 275,
+            "schemaChars": 400,
             "propertiesCount": 6
           },
           {
@@ -7805,8 +7811,8 @@
     "contextTokens": 131072
   },
   "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810": {
-    "sessionId": "69d09103-0676-45f0-bd3f-311c4dedbe3b",
-    "updatedAt": 1778986800013,
+    "sessionId": "4833a49f-439c-47a8-b19b-c9a79faeab62",
+    "updatedAt": 1779073200014,
     "systemSent": true,
     "label": "Cron: 旅游攻略汇总推送",
     "skillsSnapshot": {
@@ -8213,8 +8219,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1778986800120,
-      "sessionId": "69d09103-0676-45f0-bd3f-311c4dedbe3b",
+      "generatedAt": 1779073200094,
+      "sessionId": "4833a49f-439c-47a8-b19b-c9a79faeab62",
       "sessionKey": "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -8233,9 +8239,9 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 37356,
+        "chars": 37639,
         "projectContextChars": 12944,
-        "nonProjectContextChars": 24412
+        "nonProjectContextChars": 24695
       },
       "injectedWorkspaceFiles": [
         {
@@ -8425,8 +8431,8 @@
         ]
       },
       "tools": {
-        "listChars": 3976,
-        "schemaChars": 27585,
+        "listChars": 4259,
+        "schemaChars": 27668,
         "entries": [
           {
             "name": "read",
@@ -8550,9 +8556,9 @@
           },
           {
             "name": "web_search",
-            "summaryChars": 175,
-            "schemaChars": 1084,
-            "propertiesCount": 9
+            "summaryChars": 123,
+            "schemaChars": 767,
+            "propertiesCount": 7
           },
           {
             "name": "web_fetch",
@@ -8564,6 +8570,12 @@
             "name": "image",
             "summaryChars": 201,
             "schemaChars": 342,
+            "propertiesCount": 6
+          },
+          {
+            "name": "pdf",
+            "summaryChars": 275,
+            "schemaChars": 400,
             "propertiesCount": 6
           },
           {
@@ -8672,8 +8684,8 @@
     "totalTokensFresh": false
   },
   "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc": {
-    "sessionId": "f2198c80-0687-49ff-8986-fde25a593846",
-    "updatedAt": 1778986989868,
+    "sessionId": "d418778b-e19f-4127-a28f-ace954aa8c01",
+    "updatedAt": 1779073354281,
     "systemSent": true,
     "label": "Cron: 国际机票推送",
     "skillsSnapshot": {
@@ -9091,8 +9103,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1778986989954,
-      "sessionId": "f2198c80-0687-49ff-8986-fde25a593846",
+      "generatedAt": 1779073354337,
+      "sessionId": "d418778b-e19f-4127-a28f-ace954aa8c01",
       "sessionKey": "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -9111,9 +9123,9 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 37611,
+        "chars": 37894,
         "projectContextChars": 12944,
-        "nonProjectContextChars": 24667
+        "nonProjectContextChars": 24950
       },
       "injectedWorkspaceFiles": [
         {
@@ -9307,8 +9319,8 @@
         ]
       },
       "tools": {
-        "listChars": 3976,
-        "schemaChars": 27585,
+        "listChars": 4259,
+        "schemaChars": 27668,
         "entries": [
           {
             "name": "read",
@@ -9432,9 +9444,9 @@
           },
           {
             "name": "web_search",
-            "summaryChars": 175,
-            "schemaChars": 1084,
-            "propertiesCount": 9
+            "summaryChars": 123,
+            "schemaChars": 767,
+            "propertiesCount": 7
           },
           {
             "name": "web_fetch",
@@ -9446,6 +9458,12 @@
             "name": "image",
             "summaryChars": 201,
             "schemaChars": 342,
+            "propertiesCount": 6
+          },
+          {
+            "name": "pdf",
+            "summaryChars": 275,
+            "schemaChars": 400,
             "propertiesCount": 6
           },
           {
@@ -9554,8 +9572,8 @@
     "totalTokensFresh": false
   },
   "agent:main:cron:rules-refresh-daily": {
-    "sessionId": "d4bbf418-daf2-4fb4-903b-4d4697a86c8c",
-    "updatedAt": 1778979600017,
+    "sessionId": "c1bd225b-7061-4c0b-9adb-9af3e43d42dc",
+    "updatedAt": 1779066000014,
     "systemSent": true,
     "label": "Cron: Cursor协作规则刷新",
     "skillsSnapshot": {
@@ -10017,8 +10035,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1778979600112,
-      "sessionId": "d4bbf418-daf2-4fb4-903b-4d4697a86c8c",
+      "generatedAt": 1779066000094,
+      "sessionId": "c1bd225b-7061-4c0b-9adb-9af3e43d42dc",
       "sessionKey": "agent:main:cron:rules-refresh-daily",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -10485,9 +10503,9 @@
     },
     "contextTokens": 204800
   },
-  "agent:main:cron:rules-refresh-daily:run:d4bbf418-daf2-4fb4-903b-4d4697a86c8c": {
-    "sessionId": "d4bbf418-daf2-4fb4-903b-4d4697a86c8c",
-    "updatedAt": 1778979600017,
+  "agent:main:cron:rules-refresh-daily:run:c1bd225b-7061-4c0b-9adb-9af3e43d42dc": {
+    "sessionId": "c1bd225b-7061-4c0b-9adb-9af3e43d42dc",
+    "updatedAt": 1779066000014,
     "systemSent": true,
     "label": "Cron: Cursor协作规则刷新",
     "skillsSnapshot": {
@@ -10949,8 +10967,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1778979600112,
-      "sessionId": "d4bbf418-daf2-4fb4-903b-4d4697a86c8c",
+      "generatedAt": 1779066000094,
+      "sessionId": "c1bd225b-7061-4c0b-9adb-9af3e43d42dc",
       "sessionKey": "agent:main:cron:rules-refresh-daily",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -11417,9 +11435,9 @@
     },
     "contextTokens": 204800
   },
-  "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810:run:69d09103-0676-45f0-bd3f-311c4dedbe3b": {
-    "sessionId": "69d09103-0676-45f0-bd3f-311c4dedbe3b",
-    "updatedAt": 1778986800013,
+  "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810:run:4833a49f-439c-47a8-b19b-c9a79faeab62": {
+    "sessionId": "4833a49f-439c-47a8-b19b-c9a79faeab62",
+    "updatedAt": 1779073200014,
     "systemSent": true,
     "label": "Cron: 旅游攻略汇总推送",
     "skillsSnapshot": {
@@ -11826,8 +11844,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1778986800120,
-      "sessionId": "69d09103-0676-45f0-bd3f-311c4dedbe3b",
+      "generatedAt": 1779073200094,
+      "sessionId": "4833a49f-439c-47a8-b19b-c9a79faeab62",
       "sessionKey": "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -11846,9 +11864,9 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 37356,
+        "chars": 37639,
         "projectContextChars": 12944,
-        "nonProjectContextChars": 24412
+        "nonProjectContextChars": 24695
       },
       "injectedWorkspaceFiles": [
         {
@@ -12038,8 +12056,8 @@
         ]
       },
       "tools": {
-        "listChars": 3976,
-        "schemaChars": 27585,
+        "listChars": 4259,
+        "schemaChars": 27668,
         "entries": [
           {
             "name": "read",
@@ -12163,9 +12181,9 @@
           },
           {
             "name": "web_search",
-            "summaryChars": 175,
-            "schemaChars": 1084,
-            "propertiesCount": 9
+            "summaryChars": 123,
+            "schemaChars": 767,
+            "propertiesCount": 7
           },
           {
             "name": "web_fetch",
@@ -12177,6 +12195,12 @@
             "name": "image",
             "summaryChars": 201,
             "schemaChars": 342,
+            "propertiesCount": 6
+          },
+          {
+            "name": "pdf",
+            "summaryChars": 275,
+            "schemaChars": 400,
             "propertiesCount": 6
           },
           {
@@ -12284,9 +12308,9 @@
     "sessionFile": "C:\\ADHD_agent\\openclaw\\agents\\main\\sessions\\fe0fab60-7514-47d0-b1be-58bde1d23370.jsonl",
     "totalTokensFresh": false
   },
-  "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc:run:f2198c80-0687-49ff-8986-fde25a593846": {
-    "sessionId": "f2198c80-0687-49ff-8986-fde25a593846",
-    "updatedAt": 1778986989868,
+  "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc:run:d418778b-e19f-4127-a28f-ace954aa8c01": {
+    "sessionId": "d418778b-e19f-4127-a28f-ace954aa8c01",
+    "updatedAt": 1779073354281,
     "systemSent": true,
     "label": "Cron: 国际机票推送",
     "skillsSnapshot": {
@@ -12704,8 +12728,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1778986989954,
-      "sessionId": "f2198c80-0687-49ff-8986-fde25a593846",
+      "generatedAt": 1779073354337,
+      "sessionId": "d418778b-e19f-4127-a28f-ace954aa8c01",
       "sessionKey": "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -12724,9 +12748,9 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 37611,
+        "chars": 37894,
         "projectContextChars": 12944,
-        "nonProjectContextChars": 24667
+        "nonProjectContextChars": 24950
       },
       "injectedWorkspaceFiles": [
         {
@@ -12920,8 +12944,8 @@
         ]
       },
       "tools": {
-        "listChars": 3976,
-        "schemaChars": 27585,
+        "listChars": 4259,
+        "schemaChars": 27668,
         "entries": [
           {
             "name": "read",
@@ -13045,9 +13069,9 @@
           },
           {
             "name": "web_search",
-            "summaryChars": 175,
-            "schemaChars": 1084,
-            "propertiesCount": 9
+            "summaryChars": 123,
+            "schemaChars": 767,
+            "propertiesCount": 7
           },
           {
             "name": "web_fetch",
@@ -13059,6 +13083,12 @@
             "name": "image",
             "summaryChars": 201,
             "schemaChars": 342,
+            "propertiesCount": 6
+          },
+          {
+            "name": "pdf",
+            "summaryChars": 275,
+            "schemaChars": 400,
             "propertiesCount": 6
           },
           {

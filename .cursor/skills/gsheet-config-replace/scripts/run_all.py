@@ -44,8 +44,8 @@ SHARED = {
 ACTIVITIES = [
     ("21127302","21127362","拓荒节-2026-wonder恶狼-砸金蛋","event_labor_festival_hegemony_2026"),
     ("21127350","21127363","拓荒节-2026-BP集结奖励（基金）","event_labor_bp_buy_number_bp_2026"),
-    # 21127351/21127364 大富翁 已跑过，跳过
-    # 21127355/21127365 每日gacha 已跑过，跳过
+    ("21127351","21127364","拓荒节-2026-大富翁","event_fes_labor_monopoly_gacha_2026"),
+    ("21127355","21127365","拓荒节-2026-每日gacha礼包","event_fes_labor_gacha_daily_2026"),
     ("21127356","21127366","拓荒节-2026-节日自选周卡","event_fes_labor_time_card_2026"),
     ("21127357","21127367","拓荒节-2026-限时抢购","event_fes_labor_flash_sale_2026"),
     ("21127358","21127368","拓荒节-2026-行军表情礼包","event_labor_emoji_2026"),
@@ -71,6 +71,8 @@ ACTIVITIES = [
 def main():
     total_rows = 0
     results = []
+    # 跨活动累积的各表 next_id，避免撞号
+    global_next_ids = {}
 
     for i, (src, tgt, comment, constant) in enumerate(ACTIVITIES):
         print(f"\n{'='*60}")
@@ -81,6 +83,13 @@ def main():
         out_dir = SCRIPT_DIR / f'output_{tgt}'
         if out_dir.exists() and (out_dir / 'summary.txt').exists():
             print(f"  ⏭️ 已有输出，跳过")
+            # 读取 next_ids 累积
+            nf = out_dir / 'next_ids.json'
+            if nf.exists():
+                with open(nf, 'r', encoding='utf-8') as f:
+                    act_next = json.load(f)
+                for t, v in act_next.items():
+                    global_next_ids[t] = max(global_next_ids.get(t, 0), int(v))
             results.append((tgt, comment, "跳过"))
             continue
 
@@ -90,6 +99,7 @@ def main():
             "target_activity_id": tgt,
             "target_comment": comment,
             "target_constant": constant,
+            "next_id_overrides": {k: str(v) for k, v in global_next_ids.items()},
             **SHARED
         }
 
@@ -122,6 +132,14 @@ def main():
         else:
             total_rows += rows
             results.append((tgt, comment, f"✅ {rows}行"))
+
+            # 读取 next_ids 累积到全局
+            nf = out_dir / 'next_ids.json'
+            if nf.exists():
+                with open(nf, 'r', encoding='utf-8') as f:
+                    act_next = json.load(f)
+                for t, v in act_next.items():
+                    global_next_ids[t] = max(global_next_ids.get(t, 0), int(v))
 
     print(f"\n\n{'='*60}")
     print(f"  汇总")

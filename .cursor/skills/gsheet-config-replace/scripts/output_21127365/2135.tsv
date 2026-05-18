@@ -1,5 +1,5 @@
-	213521205	拓荒节每日礼包-day_1	2011920120	0	{}	[]	0	15111111	NULL	NULL	{}	999	0	NULL	NULL	0	1
-	213521206	拓荒节每日礼包-day_2	2011920121	86400000	{}	[]	0	15111111	NULL	NULL	{"op":"and", "args": [{"op":"ge","typ":"activity_time","id":21127365,"val":86400000}]}	999	0	NULL	NULL	0	1
-	213521207	拓荒节每日礼包-day_3	2011920122	172800000	{}	[]	0	15111111	NULL	NULL	{"op":"and", "args": [{"op":"ge","typ":"activity_time","id":21127365,"val":172800000}]}	999	0	NULL	NULL	0	1
-	213521208	拓荒节每日礼包-day_4	2011920123	259200000	{}	[]	0	15111111	NULL	NULL	{"op":"and", "args": [{"op":"ge","typ":"activity_time","id":21127365,"val":259200000}]}	999	0	NULL	NULL	0	1
-	213521209	拓荒节每日礼包-day_5	2011920124	345600000	{}	[]	0	15111111	NULL	NULL	{"op":"and", "args": [{"op":"ge","typ":"activity_time","id":21127365,"val":345600000}]}	999	0	NULL	NULL	0	1
+	213521223	拓荒节每日礼包-day_1	2011920138	0	{}	[]	0	15111111	NULL	NULL	{}	999	0	NULL	NULL	0	1
+	213521224	拓荒节每日礼包-day_2	2011920139	86400000	{}	[]	0	15111111	NULL	NULL	{"op":"and", "args": [{"op":"ge","typ":"activity_time","id":21127365,"val":86400000}]}	999	0	NULL	NULL	0	1
+	213521225	拓荒节每日礼包-day_3	2011920140	172800000	{}	[]	0	15111111	NULL	NULL	{"op":"and", "args": [{"op":"ge","typ":"activity_time","id":21127365,"val":172800000}]}	999	0	NULL	NULL	0	1
+	213521226	拓荒节每日礼包-day_4	2011920141	259200000	{}	[]	0	15111111	NULL	NULL	{"op":"and", "args": [{"op":"ge","typ":"activity_time","id":21127365,"val":259200000}]}	999	0	NULL	NULL	0	1
+	213521227	拓荒节每日礼包-day_5	2011920142	345600000	{}	[]	0	15111111	NULL	NULL	{"op":"and", "args": [{"op":"ge","typ":"activity_time","id":21127365,"val":345600000}]}	999	0	NULL	NULL	0	1
