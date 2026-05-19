@@ -62,6 +62,32 @@
 
 ---
 
+## 1.5、X2 表 id_col + QA 页签速查（换皮脚本用）
+
+> 2026拓荒节换皮踩坑后整理。脚本读行/分配 ID 时必须用正确的 id_col。
+
+| 编号 | id_col | X2 QA/写入页签 | 备注 |
+|------|--------|---------------|------|
+| 1111 | 1 | item | |
+| 2011 | 1 | iap_config_x2qa | |
+| 2013 | 1 | iap_template_x2（qa）| |
+| 2112 | 1 | activity_config_QA | |
+| 2115 | **2** | activity_task_master（线上）| col[0]=p2_title, col[1]=group, **col[2]=id** |
+| 2116 | **2** | activity_item_exchange（线上版本）| 同2115，col[2]=id |
+| 2118 | **3** | activity_rank_rewards | col[1]=group, col[2]=comment, **col[3]=id** |
+| 2121 | 1 | activity_special | |
+| 2122 | **2** | activity_rank_rule（QA）| 同2115，col[2]=id |
+| 2124 | 1 | activity_drop | |
+| 2130 | 1 | activity_battle_pass（24新格式-dev）| |
+| 2131 | 1 | ActivityBattlePassLevel（master）| |
+| 2135 | 1 | activity_event_pkg（qa）| |
+| 2137 | 1 | activity_asset_retake | |
+| 1365 | 1 | march_effect | 行军特效外观表 `1euWfOkXNsn4sQwyRNaoCZ6-0_EGed9aToBUbDCOzi8w` |
+| 1187 | 1 | FurnitureBuild | 家具/装饰放置表 `1lXRldN7kN_HsEYQ5FfNdawep23TD9J81Vj66yKRdjEk` |
+| 2151 | 1 | activity_monopoly_gacha_map_QA | 大富翁地图 `1X9fu7V3JFd1ZKoisbLjDpR8SAfngKso6lWjZ0-eTudg` |
+
+---
+
 ## 二、X2 SheetID 对照
 
 > ⚠️ X2 gws CLI 无法直接访问含中文的 tab 名，需通过 gid 或 Python API
@@ -243,6 +269,51 @@
  ⚠️ 2013 实际到 AE 列（A_INT_country_use_type），不能只写/查到 AD
  ⚠️ 2135 中间有空行时不能用 len(values)+1 定位，必须保证 B 列 ID 连续，否则 fwcli 解析失败
  案例来源：X2 2026占星节 限时抢购模块
+
+Wonder 砸金蛋追踪链（C2 补充）
+ 2112 → components:
+   ├── wonder_egg_drop (2121) → expr.args 内含 7 个 2124 drop ID
+   │    └── 2124 掉落配置：每级金蛋的随机/全量奖池（含节日 BP 道具）
+   ├── festival_wonder (2121) → reward 含节日 BP 道具
+   ├── task (2115) → 7 个金蛋任务，reward 含金蛋道具
+   ├── buff (2121) × 3 → 积分翻倍
+   ├── task_group (2121) → 引用 2115 任务 ID 列表
+   ├── create_entity × 80+ → 怪物实体（通用，不换）
+   ├── rank (2122) → 排名规则
+   ├── package (2135) → 砸蛋锤礼包 → 2011 → 2013
+   └── jump_link (2121) → 跳转
+
+BP 通行证追踪链（C2 补充）
+ 2112 → components:
+   ├── battle_pass (2130) → BP 通行证主配置
+   │    ├── QualityUpItem → 1111 通行证道具（初级/高级）
+   │    ├── LevelUpItem → 1111 BP 经验道具
+   │    └── 2131 BP 等级奖励（25行，通过 BpID 关联）
+   │         └── FreeRewards/PayRewards 含节日道具
+   ├── rank (2122) → 排名规则
+   │    ├── score_rule.ids → 当前节日全部 2011 ID 列表
+   │    └── rank_components → 2118 排名奖励 group
+   │         └── 2118 7 档排名奖励（含行军特效道具）
+   ├── retake (2137) → BP 道具回收
+   ├── jump_link (2121) → 跳转
+   ├── bp_rank_item → 1111 行军特效道具（直接引用，不走子表）
+   └── fes_module → 节日模块（通用，不换）
+
+行军特效外观表（C3 补充）
+ 1365 march_effect — `1euWfOkXNsn4sQwyRNaoCZ6-0_EGed9aToBUbDCOzi8w`
+   ├── 18 列：id/comment/class/DK/effect_key/order/lc/status_active/innate_effect/awards/items/npc_troop_id/show_afterimage/show_type/preview/country_use_type
+   ├── items 列含行军特效道具 ID 列表（1天~永久 6 个）
+   └── ⚠️ 克隆时必须全列复制，INT 列为空会导致 fwcli 报错
+
+FurnitureBuild 家具表（C3 补充）
+ 1187 FurnitureBuild — `1lXRldN7kN_HsEYQ5FfNdawep23TD9J81Vj66yKRdjEk`
+   ├── FurnitureIds 列含家具模型 ID（需美术提供）
+   └── 拓荒节需 7 行：装饰物/地板/墙纸/墙饰×3/柜台
+
+大富翁地图表（C3 补充）
+ 2151 activity_monopoly_gacha_map — `1X9fu7V3JFd1ZKoisbLjDpR8SAfngKso6lWjZ0-eTudg`
+   ├── use_item 列含骰子道具
+   └── dice 列含骰子配置 ID
 
 弹珠 Gacha（noumenon_gacha，2121 special 系）
  2112 → components:

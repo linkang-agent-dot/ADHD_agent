@@ -67,6 +67,16 @@ COMPONENT_TABLE_MAP = {
     'create_entity': None, 'monopoly_gacha_map': None,
     'monopoly_gacha_dice': None, 'login_complement': '2121',
     'search_nun': None, 'union_ipo': None,
+    # A3: 补全追踪链
+    'wonder_egg_drop_target': '2124',  # wonder_egg_drop 的 expr 内含 2124 drop ID
+    'fes_card_gallary': '2121',
+}
+
+# A3: 深层追踪链（从子表发现更深的引用）
+# battle_pass → 2130 → 2131, rank → 2122 → 2118
+DEEP_CHAIN = {
+    '2130': '2131',   # BP通行证 → BP等级奖励（通过 BpID 关联）
+    '2122': '2118',   # 排名规则 → 排名奖励（通过 rank_components 关联）
 }
 
 
@@ -157,13 +167,24 @@ def get_tail_max_id(alias: str, n: int = 5, id_col: int = 1, table_id: str = Non
 
 
 def do_replace(cell: str, replacements: Dict[str, str]) -> Tuple[str, bool]:
-    """精确边界替换（数字 ID 不会部分匹配）"""
+    """精确边界替换（数字 ID 不会部分匹配）
+    防链式替换：先用占位符替换所有匹配，再统一还原为目标值。
+    """
     if not cell:
         return cell, False
+    # 按 key 长度降序排列，优先匹配更长的 ID（防止短 ID 误匹配长 ID 的子串）
+    sorted_items = sorted(replacements.items(), key=lambda x: len(x[0]), reverse=True)
+    # Phase 1: 所有匹配替换为占位符 __PLACEHOLDER_N__
+    placeholders = {}
     new_cell = cell
-    for old_val, new_val in replacements.items():
+    for i, (old_val, new_val) in enumerate(sorted_items):
+        ph = f'__PH{i}__'
+        placeholders[ph] = new_val
         pattern = r'(?<![0-9])' + re.escape(old_val) + r'(?![0-9])'
-        new_cell = re.sub(pattern, new_val, new_cell)
+        new_cell = re.sub(pattern, ph, new_cell)
+    # Phase 2: 占位符还原为目标值
+    for ph, new_val in placeholders.items():
+        new_cell = new_cell.replace(ph, new_val)
     return new_cell, new_cell != cell
 
 
@@ -260,6 +281,8 @@ def main():
     activity_mapping = {str(k): str(v) for k, v in cfg.get('activity_mapping', {}).items()}
     text_replacements = cfg.get('text_replacements', {})
     preserve_ids = set(str(x) for x in cfg.get('preserve_ids', []))
+    # A2: 复用旧组件的类型列表 — 这些 typ 的子表不新建，2112 components 保留源 ID
+    reuse_types = set(cfg.get('reuse_types', []))
 
     # 输出目录
     output_dir = Path(f'output_{target_id}')
@@ -291,7 +314,13 @@ def main():
     print("\nStep 2: 追踪子表链路...")
     chain = {}  # {table_id: [row_ids]}
 
+    # 记录复用组件的旧 ID（用于 2112 components 恢复）
+    reuse_old_ids = {}  # {typ: [old_ids]}
     for typ, ids in components.items():
+        if typ in reuse_types:
+            reuse_old_ids[typ] = ids
+            print(f"    {typ}: 复用旧 ID {ids}")
+            continue
         table = COMPONENT_TABLE_MAP.get(typ)
         if table and table in X2_TABLES:
             chain.setdefault(table, []).extend(ids)
@@ -367,8 +396,14 @@ def main():
     full_mapping.update(activity_mapping)
 
     # 子表 ID：已在 manual_mapping 中的用手动值，否则自动分配
-    # next_id_overrides: 外部传入的各表起始 ID（用于批量跑时避免跨活动撞号）
-    next_id_overrides = cfg.get('next_id_overrides', {})
+    # next_id_overrides: 外先从全局文件读，再用配置覆盖
+    global_next_file = Path('_global_next_ids.json')
+    next_id_overrides = {}
+    if global_next_file.exists():
+        with open(global_next_file, 'r', encoding='utf-8') as f:
+            next_id_overrides = {k: str(v) for k, v in json.load(f).items()}
+    # 配置文件的 overrides 优先级更高
+    next_id_overrides.update(cfg.get('next_id_overrides', {}))
     auto_assigned = {}
     next_id_after = {}  # 记录各表分配后的 next_id，传回给调用方
     for table_id, row_ids in chain.items():
@@ -412,7 +447,19 @@ def main():
     with open(next_id_file, 'w', encoding='utf-8') as f:
         json.dump(next_id_after, f, ensure_ascii=False, indent=2)
 
+    # A4: 更新全局 next_ids 文件（手动补配后也要更新这个文件）
+    global_next_file = Path(SCRIPT_DIR) / '_global_next_ids.json' if 'SCRIPT_DIR' in dir() else Path('_global_next_ids.json')
+    global_next = {}
+    if global_next_file.exists():
+        with open(global_next_file, 'r', encoding='utf-8') as f:
+            global_next = json.load(f)
+    for t, v in next_id_after.items():
+        global_next[t] = max(int(global_next.get(t, 0)), v)
+    with open(global_next_file, 'w', encoding='utf-8') as f:
+        json.dump(global_next, f, ensure_ascii=False, indent=2)
+
     print(f"\n  ✓ 映射表已保存: {mapping_file}")
+    print(f"  ✓ 全局 next_ids 已更新: {global_next_file}")
     print(f"  ✓ next_id 已保存: {next_id_file}")
 
     # ── Step 4: 克隆输出 ──
@@ -431,6 +478,26 @@ def main():
         is_primary=True,
         preserve_cols=[6]
     )
+    # A2: 恢复 reuse_types 的旧 ID — 在 2112 components 中把被替换的 ID 改回源值
+    if reuse_types and cloned_2112:
+        import json as _json
+        comp_col = 9  # components 列
+        if len(cloned_2112[0]) > comp_col:
+            try:
+                comps = _json.loads(cloned_2112[0][comp_col])
+                type_counters = {}
+                for c in comps:
+                    typ = c.get('typ', '')
+                    if typ in reuse_old_ids and 'id' in c:
+                        idx = type_counters.get(typ, 0)
+                        old_ids = reuse_old_ids[typ]
+                        if idx < len(old_ids):
+                            c['id'] = old_ids[idx]
+                            type_counters[typ] = idx + 1
+                cloned_2112[0][comp_col] = _json.dumps(comps, ensure_ascii=False, separators=(',', ':'))
+            except (_json.JSONDecodeError, IndexError):
+                pass
+
     all_outputs['2112'] = cloned_2112
     print(f"  ✓ 2112: {len(cloned_2112)} 行")
 

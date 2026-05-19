@@ -1,0 +1,3 @@
+Found 1 rows matching '21300132'
+HEADER: [0]fwcli_name	[1]Id	[2]Comment	[3]Exp	[4]StartLevel	[5]DailyTaskIDs	[6]AchivementTaskIDs	[7]WeeklyTaskIDs	[8]LimitTaskIDs	[9]Pkg	[10]MaxLevelupRewards	[11]BannerReward	[12]BannerTitleTextFill	[13]QualityUpItem	[14]LevelUpItem	[15]Crit	[16]MaxLevelupCanUse	[17]RewardBuff
+row 67: 	21300132	2025-占星节-schema3	30	0	[]	[]	[]	[]	{"op":"and","args":[{"typ":"iap","id":2013910062},{"typ":"iap","id":2013910063}]}	[]	[]	0	[{"typ":"item","id":11119495,"val":1},{"typ":"item","id":11119496,"val":1}]	[{"typ":"item","id":11119497,"val":1}]	[{"num":1,"weight":60},{"num":2,"weight":40},{"num":3,"weight":15},{"num":5,"weight":5}]	1	[]

@@ -1,0 +1,4 @@
+Found 2 rows with col[1] in [212100153, 212100154]
+HEADER: [0]p2_title	[1]A_INT_id	[2]C_STR_comment	[3]A_STR_type	[4]A_ARR_reward	[5]A_MAP_expr	[6]A_INT_arg1	[7]A_INT_arg2	[8]A_INT_arg3	[9]A_ARR_reward_expr	[10]A_STR_desc	[11]A_ARR_array	[12]A_ARR_status	[13]S_MAP_condition	[14]S_ARR_score_rule	[15]A_INT_country_use_type
+row 1945: 	212100153	2025占星节-行军表情礼包-表情展示	emoji_show	[]	{"arg2": "assets/operation/P2dlcimg/activityImg/EventBanner_Emoji_Iap_4.png"}	11800010	0	0	[]	NULL	[]	[]	{}	[]	0
+row 1946: 	212100154	2025占星节-行军表情礼包	discount	[]	{}	0	0	0	[]	NULL	[]	[{"typ":"iap","id":2011910032}]	{}	[]	0
