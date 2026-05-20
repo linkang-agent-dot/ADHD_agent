@@ -137,6 +137,24 @@
 | rank | 2122 | activity_rank_rule → 2118 |
 | drop | 2124 | activity_drop |
 | special / discount / jump_link / cost / buff 等 | 2121 | activity_special |
+| battle_pass | 2130 | activity_battle_pass → 2131(等级奖励) |
+| cross_progress | 直接 2011 ID | iap_config |
+| bp_rank_item | 直接 1111 ID | item |
+
+### 间接引用表（不在 components 里，但换皮必须检查）
+
+| 表 | 关联方式 | 何时需要新建 |
+|---|---------|------------|
+| **2141** without_gacha_pool | `activity` 字段绑 2112 活动 ID | 有 Gacha 抽奖（主城皮肤gacha等）|
+| **2142** without_gacha_reward | `group` 字段被 2141.drop 引用 | 同上，注意页签可能带后缀（天赋投放活动）|
+| **2024** iap_custom_chest | `template_id` 字段绑 2013 ID | 有周卡/自选礼包 |
+| **2151** monopoly_gacha_map | `monopoly_gacha_map` 组件直接引用 | 有大富翁活动（可复用旧地图）|
+| **1365** march_effect | 1111 行军道具的外显 ID 引用 | 有新行军特效 |
+| **1187** FurnitureBuild | 1111 装饰道具的 holiday_statue 引用 | 有装饰品 |
+| **2011.iap_status.drop** | 2011 行内 JSON 引用 2124 drop ID | 有随机礼包（Gacha 礼包等）|
+| **1111.category_param** | 道具行内 JSON 引用 2124/2013 ID | 金蛋道具(→2124)、周卡解锁(→2013) |
+| **2121.expr/status** | 组件行内 JSON 引用 2115/2124/2011 ID | wonder_egg_drop(→2124)、discount(→2011)、task_group(→2115) |
+| **2122.score_rule.ids** | 排名规则引用所有节日 2011 ID | 累充排名：每新增 2011 必须加入 |
 | floor_gacha | 2154 | activity_without_gacha_floor |
 | battle_pass | 2130 | activity_battle_pass → 2131 |
 | accumulate | 2123 | activity_accumulate |
