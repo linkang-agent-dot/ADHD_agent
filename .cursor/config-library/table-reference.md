@@ -123,6 +123,17 @@
 | 2154 without_gacha_floor | `1XfENodZsKFH-hit2TWrxt8mmJSPqnn8qM2Cv2iIl2vo` | `11dwwCqEFFZ3FzG8DMoVU0oL7TXEpDzpKhE9wW9_krwY` |
 | 2171 P2=event_decoration_skill | `1YJW39MBGg7aya62_hkhI1uRmyMknjZQV226Dqsksis4` | ⚠️ X2 尚未建装饰技能表，现有 2171 是 ActivityCollaborateTask（协作任务），用途完全不同，待 X2 建表后单独补充 |
 
+**X2 集卡册专属（1108/1107/1123/1109）**
+
+| 编号 | 名称 | X2 SheetID | 写入 Tab | GID |
+|------|------|-----------|----------|-----|
+| 1108 | CardGallaryBook | `1yeFJwufv9QZBOHAIifHTfzyYhG0Fy9SQcfDoGLrzir0` | CardGallaryGroup（注：tab名有误，内容是Book）| 65753380 |
+| 1107 | CardGallaryGroup | `1w-hmQGDu86TxrHGirvhQoaoniUjJA11t1XxCPDE5ylA` | CardGallaryGroup | 887412445 |
+| 1123 | CardGallary | `1Dlg3r30Q7q19NKWcTHP-orYs7UYXs2TmV_V0xHGexMc` | CardGallary | 593941196 |
+| 1109 | CardGallaryStore | `1zL0xNJwVQK95r71SDkIWEvZHp8ERFghkIsyyQ92HdZY` | CardGallaryStore | 0 |
+
+> ⚠️ 追加到1123表末尾时用 appendDimension（不用 insertDimension），避免 "startIndex must be less than grid size" 错误
+
 ---
 
 ## 三、组件路由规则（核心）

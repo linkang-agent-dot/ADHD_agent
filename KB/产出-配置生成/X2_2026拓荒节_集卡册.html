@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X2_2026拓荒节_集卡册 配置预览</title>
+<style>
+body { font-family: 'Segoe UI', Arial, sans-serif; background:#1a1a2e; color:#e0e0e0; margin:0; padding:20px; }
+h1 { color:#ffd700; border-bottom:2px solid #ffd700; padding-bottom:8px; }
+h2 { color:#87ceeb; margin-top:30px; border-left:4px solid #87ceeb; padding-left:10px; }
+h3 { color:#98fb98; margin-top:20px; }
+table { border-collapse:collapse; width:100%; margin:10px 0 20px 0; font-size:13px; }
+th { background:#2d2d5e; color:#ffd700; padding:8px 10px; text-align:left; border:1px solid #444; }
+td { padding:6px 10px; border:1px solid #333; vertical-align:top; }
+tr:nth-child(even) { background:#1e1e3a; }
+tr:hover { background:#2a2a4a; }
+.star3 { color:#aaaaaa; }
+.star4 { color:#6699ff; }
+.star5 { color:#ffd700; font-weight:bold; }
+.id { font-family:monospace; color:#98fb98; font-size:12px; }
+.lc { font-family:monospace; color:#dda0dd; font-size:11px; }
+.dk { font-family:monospace; color:#87ceeb; font-size:11px; }
+.json-cell { font-size:11px; font-family:monospace; word-break:break-all; }
+.tag { display:inline-block; padding:2px 8px; border-radius:3px; font-size:11px; margin:1px; }
+.tag-reward { background:#1a4a2a; border:1px solid #2a7a3a; }
+.tag-item { background:#1a2a4a; border:1px solid #2a4a7a; }
+.section { background:#16213e; border:1px solid #2d2d5e; border-radius:6px; padding:15px; margin:15px 0; }
+.group-card { background:#0f3460; border-radius:8px; padding:12px; margin:8px 0; }
+.group-title { font-size:16px; font-weight:bold; color:#ffd700; margin-bottom:8px; }
+.stat-box { display:inline-block; background:#2d2d5e; border-radius:4px; padding:3px 10px; margin:2px; font-size:12px; }
+.toc a { color:#87ceeb; text-decoration:none; display:block; padding:3px 0; }
+.toc a:hover { color:#ffd700; }
+</style>
+</head>
+<body>
+<h1>X2 2026拓荒节 集卡册 — 配置预览</h1>
+<p style="color:#aaa">生成日期: 2026-05-21 | 总行数: 70行 (1111×3 + 1108×1 + 1107×9 + 1123×54 + 1109×3)</p>
+
+<div class="toc section">
+<b>目录</b>
+<a href="#sec1111">1111 卡包道具覆盖行（3行）</a>
+<a href="#sec1108">1108 CardGallaryBook 新增行（1行）</a>
+<a href="#sec1107">1107 CardGallaryGroup 新增行（9组）</a>
+<a href="#sec1123">1123 CardGallary 卡片配置（54张）</a>
+<a href="#sec1109">1109 CardGallaryStore 商店行（3行）</a>
+<a href="#seclc">LC Key 汇总</a>
+<a href="#secstat">星级分布统计</a>
+</div>
+
+<!-- ====== 1111 ====== -->
+<h2 id="sec1111">1111 卡包道具 — 覆盖行（3行）</h2>
+<div class="section">
+<table>
+<tr>
+  <th>ID</th><th>名称</th><th>DK</th><th>LC名/描述</th><th>概率分布</th><th>random_add(book)</th>
+</tr>
+<tr>
+  <td class="id">111111339</td>
+  <td>拓荒节2026<br>1-2星卡包</td>
+  <td class="dk">1511094006</td>
+  <td class="lc">LC_EVENT_item_card_pack_name_15<br>LC_EVENT_item_card_pack_desc_15</td>
+  <td><span class="star3">★3: 9000</span> / <span class="star4">★4: 1000</span></td>
+  <td class="id">11081004</td>
+</tr>
+<tr>
+  <td class="id">111111340</td>
+  <td>拓荒节2026<br>1-3星卡包</td>
+  <td class="dk">1511094007</td>
+  <td class="lc">LC_EVENT_item_card_pack_name_16<br>LC_EVENT_item_card_pack_desc_16</td>
+  <td><span class="star3">★3: 8000</span> / <span class="star4">★4: 1300</span> / <span class="star5">★5: 200</span></td>
+  <td class="id">11081004</td>
+</tr>
+<tr>
+  <td class="id">111111341</td>
+  <td>拓荒节2026<br>2-3星卡包</td>
+  <td class="dk">1511094008</td>
+  <td class="lc">LC_EVENT_item_card_pack_name_17<br>LC_EVENT_item_card_pack_desc_17</td>
+  <td><span class="star4">★4: 9500</span> / <span class="star5">★5: 500</span></td>
+  <td class="id">11081004</td>
+</tr>
+</table>
+</div>
+
+<!-- ====== 1108 ====== -->
+<h2 id="sec1108">1108 CardGallaryBook — 新增行（1行）</h2>
+<div class="section">
+<table>
+<tr><th>字段</th><th>值</th></tr>
+<tr><td>ID</td><td class="id">11081004</td></tr>
+<tr><td>名称</td><td>拓荒传奇</td></tr>
+<tr><td>GroupID</td><td class="id">11074001 ~ 11074009（9组）</td></tr>
+<tr><td>DK封面</td><td class="dk">1511094005（封面）/ 1511094009（开启后）/ 1511094003（底图）/ 1511094004（标题底图）</td></tr>
+<tr><td>FX特效</td><td class="dk">1511020681</td></tr>
+<tr><td>LC名称</td><td class="lc">LC_EVENT_item_card_book_title_4</td></tr>
+<tr><td>LC描述</td><td class="lc">LC_ASSET_card_gallary_desc（通用）</td></tr>
+<tr><td>卡包ID</td><td class="id">111111339 / 111111340 / 111111341</td></tr>
+<tr><td>完成奖励</td><td>
+  <span class="tag tag-item">拓荒节头像框(111111327) ×1</span>
+  <span class="tag tag-item">特殊天赋道具(11111082) ×10</span>
+  <span class="tag tag-item">宝石升级道具(11111083) ×20</span>
+</td></tr>
+<tr><td>OpenTime</td><td>[-1,-1]（不限时间）</td></tr>
+</table>
+</div>
+
+<!-- ====== 1107 ====== -->
+<h2 id="sec1107">1107 CardGallaryGroup — 新增行（9组）</h2>
+<div class="section">
+<table>
+<tr>
+  <th>ID</th><th>组名</th><th>卡片ID范围</th><th>DK</th><th>LC</th><th>完成奖励(Rewards)</th><th>跟随奖励(RewardsFollow)</th>
+</tr>
+<tr>
+  <td class="id">11074001</td><td>启程准备</td><td class="id">11235001-006</td>
+  <td class="dk">1511094010</td>
+  <td class="lc">_collection_title_35</td>
+  <td><span class="tag tag-item">探测券(11117024)×5</span><span class="tag tag-item">英雄经验(11116402)×5</span></td>
+  <td><span class="tag tag-reward">英雄经验×5 + 食物资源×30000</span></td>
+</tr>
+<tr>
+  <td class="id">11074002</td><td>荒野行军</td><td class="id">11235011-016</td>
+  <td class="dk">1511094011</td>
+  <td class="lc">_collection_title_36</td>
+  <td><span class="tag tag-item">探测券(11117024)×5</span><span class="tag tag-item">英雄经验(11116402)×5</span></td>
+  <td><span class="tag tag-reward">英雄经验×5 + 食物资源×30000</span></td>
+</tr>
+<tr>
+  <td class="id">11074003</td><td>扎营落脚</td><td class="id">11235021-026</td>
+  <td class="dk">1511094012</td>
+  <td class="lc">_collection_title_37</td>
+  <td><span class="tag tag-item">探测券(11117024)×5</span><span class="tag tag-item">英雄经验(11116402)×5</span></td>
+  <td><span class="tag tag-reward">英雄经验×5 + 食物资源×30000</span></td>
+</tr>
+<tr>
+  <td class="id">11074004</td><td>矿脉勘探</td><td class="id">11235031-036</td>
+  <td class="dk">1511094013</td>
+  <td class="lc">_collection_title_38</td>
+  <td><span class="tag tag-item">宝石升级(11111083)×2</span><span class="tag tag-item">橙碎片(11116304)×2</span></td>
+  <td><span class="tag tag-reward">英雄经验×5 + 食物资源×30000</span></td>
+</tr>
+<tr>
+  <td class="id">11074005</td><td>河谷淘金</td><td class="id">11235041-046</td>
+  <td class="dk">1511094014</td>
+  <td class="lc">_collection_title_39</td>
+  <td><span class="tag tag-item">宝石升级(11111083)×2</span><span class="tag tag-item">橙碎片(11116304)×2</span></td>
+  <td><span class="tag tag-reward">英雄经验×5 + 食物资源×30000</span></td>
+</tr>
+<tr>
+  <td class="id">11074006</td><td>前哨筑城</td><td class="id">11235051-056</td>
+  <td class="dk">1511094015</td>
+  <td class="lc">_collection_title_40</td>
+  <td><span class="tag tag-item">宝石升级(11111083)×2</span><span class="tag tag-item">橙碎片(11116304)×2</span></td>
+  <td><span class="tag tag-reward">英雄经验×5 + 食物资源×30000</span></td>
+</tr>
+<tr>
+  <td class="id">11074007</td><td>荒原猎踪</td><td class="id">11235061-066</td>
+  <td class="dk">1511094016</td>
+  <td class="lc">_collection_title_41</td>
+  <td><span class="tag tag-item">宝石升级(11111083)×3</span><span class="tag tag-item">橙碎片(11116304)×3</span></td>
+  <td><span class="tag tag-reward">英雄经验×5 + 食物资源×30000</span></td>
+</tr>
+<tr>
+  <td class="id">11074008</td><td>地底秘境</td><td class="id">11235071-076</td>
+  <td class="dk">1511094017</td>
+  <td class="lc">_collection_title_42</td>
+  <td><span class="tag tag-item">宝石升级(11111083)×3</span><span class="tag tag-item">橙碎片(11116304)×3</span></td>
+  <td><span class="tag tag-reward">英雄经验×5 + 食物资源×30000</span></td>
+</tr>
+<tr>
+  <td class="id">11074009</td><td>拓荒盛典</td><td class="id">11235081-086</td>
+  <td class="dk">1511094018</td>
+  <td class="lc">_collection_title_43</td>
+  <td><span class="tag tag-item">橙碎片(11116304)×3</span><span class="tag tag-item">头像框(111111327)×1</span></td>
+  <td><span class="tag tag-reward">英雄经验×5 + 食物资源×30000</span></td>
+</tr>
+</table>
+<p style="color:#aaa;font-size:12px">BG DK(背景底图): 1511094019 / 1511094020（全9组共用）</p>
+</div>
+
+<!-- ====== 1123 ====== -->
+<h2 id="sec1123">1123 CardGallary — 卡片配置（54张）</h2>
+<div class="section">
+
+<h3>G1 启程准备</h3>
+<table>
+<tr><th>卡片ID</th><th>卡名</th><th>星级</th><th>DK(卡面)</th><th>LC Key</th><th>Honor</th><th>Recycle</th><th>首获奖励</th></tr>
+<tr><td class="id">11235001</td><td>整理行囊</td><td class="star3">★★★</td><td class="dk">1511094021</td><td class="lc">LC_EVENT_item_card_name_309</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235002</td><td>晨起伸懒腰</td><td class="star3">★★★</td><td class="dk">1511094022</td><td class="lc">LC_EVENT_item_card_name_310</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235003</td><td>打扫工坊</td><td class="star3">★★★</td><td class="dk">1511094023</td><td class="lc">LC_EVENT_item_card_name_311</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235004</td><td>调校日晷</td><td class="star3">★★★</td><td class="dk">1511094024</td><td class="lc">LC_EVENT_item_card_name_312</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235005</td><td>仰望星河</td><td class="star3">★★★</td><td class="dk">1511094025</td><td class="lc">LC_EVENT_item_card_name_313</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235006</td><td>指点星图</td><td class="star3">★★★</td><td class="dk">1511094026</td><td class="lc">LC_EVENT_item_card_name_314</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+</table>
+<h3>G2 荒野行军</h3>
+<table>
+<tr><th>卡片ID</th><th>卡名</th><th>星级</th><th>DK(卡面)</th><th>LC Key</th><th>Honor</th><th>Recycle</th><th>首获奖励</th></tr>
+<tr><td class="id">11235011</td><td>攀岩探路</td><td class="star3">★★★</td><td class="dk">1511094027</td><td class="lc">LC_EVENT_item_card_name_315</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235012</td><td>涉水渡河</td><td class="star3">★★★</td><td class="dk">1511094028</td><td class="lc">LC_EVENT_item_card_name_316</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235013</td><td>树下小憩</td><td class="star3">★★★</td><td class="dk">1511094029</td><td class="lc">LC_EVENT_item_card_name_317</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235014</td><td>雨中赶路</td><td class="star3">★★★</td><td class="dk">1511094030</td><td class="lc">LC_EVENT_item_card_name_318</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235015</td><td>发现脚印</td><td class="star3">★★★</td><td class="dk">1511094031</td><td class="lc">LC_EVENT_item_card_name_319</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235016</td><td>悬崖远眺</td><td class="star4">★★★★</td><td class="dk">1511094032</td><td class="lc">LC_EVENT_item_card_name_320</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+</table>
+<h3>G3 扎营落脚</h3>
+<table>
+<tr><th>卡片ID</th><th>卡名</th><th>星级</th><th>DK(卡面)</th><th>LC Key</th><th>Honor</th><th>Recycle</th><th>首获奖励</th></tr>
+<tr><td class="id">11235021</td><td>选址插旗</td><td class="star3">★★★</td><td class="dk">1511094033</td><td class="lc">LC_EVENT_item_card_name_321</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235022</td><td>搭建帐篷</td><td class="star3">★★★</td><td class="dk">1511094034</td><td class="lc">LC_EVENT_item_card_name_322</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235023</td><td>挖井取水</td><td class="star3">★★★</td><td class="dk">1511094035</td><td class="lc">LC_EVENT_item_card_name_323</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235024</td><td>砍伐木材</td><td class="star3">★★★</td><td class="dk">1511094036</td><td class="lc">LC_EVENT_item_card_name_324</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235025</td><td>升起篝火</td><td class="star4">★★★★</td><td class="dk">1511094037</td><td class="lc">LC_EVENT_item_card_name_325</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235026</td><td>第一顿饭</td><td class="star4">★★★★</td><td class="dk">1511094038</td><td class="lc">LC_EVENT_item_card_name_326</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+</table>
+<h3>G4 矿脉勘探</h3>
+<table>
+<tr><th>卡片ID</th><th>卡名</th><th>星级</th><th>DK(卡面)</th><th>LC Key</th><th>Honor</th><th>Recycle</th><th>首获奖励</th></tr>
+<tr><td class="id">11235031</td><td>采集矿样</td><td class="star3">★★★</td><td class="dk">1511094039</td><td class="lc">LC_EVENT_item_card_name_327</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235032</td><td>洞口初探</td><td class="star3">★★★</td><td class="dk">1511094040</td><td class="lc">LC_EVENT_item_card_name_328</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235033</td><td>矿壁采集</td><td class="star3">★★★</td><td class="dk">1511094041</td><td class="lc">LC_EVENT_item_card_name_329</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235034</td><td>矿车推运</td><td class="star4">★★★★</td><td class="dk">1511094042</td><td class="lc">LC_EVENT_item_card_name_330</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235035</td><td>矿脉闪光</td><td class="star4">★★★★</td><td class="dk">1511094043</td><td class="lc">LC_EVENT_item_card_name_331</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235036</td><td>标记矿脉</td><td class="star4">★★★★</td><td class="dk">1511094044</td><td class="lc">LC_EVENT_item_card_name_332</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+</table>
+<h3>G5 河谷淘金</h3>
+<table>
+<tr><th>卡片ID</th><th>卡名</th><th>星级</th><th>DK(卡面)</th><th>LC Key</th><th>Honor</th><th>Recycle</th><th>首获奖励</th></tr>
+<tr><td class="id">11235041</td><td>河边淘洗</td><td class="star3">★★★</td><td class="dk">1511094045</td><td class="lc">LC_EVENT_item_card_name_333</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235042</td><td>筛选矿砂</td><td class="star3">★★★</td><td class="dk">1511094046</td><td class="lc">LC_EVENT_item_card_name_334</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235043</td><td>发现金粒</td><td class="star4">★★★★</td><td class="dk">1511094047</td><td class="lc">LC_EVENT_item_card_name_335</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235044</td><td>搭建水渠</td><td class="star4">★★★★</td><td class="dk">1511094048</td><td class="lc">LC_EVENT_item_card_name_336</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235045</td><td>称量收获</td><td class="star4">★★★★</td><td class="dk">1511094049</td><td class="lc">LC_EVENT_item_card_name_337</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235046</td><td>满载而归</td><td class="star5">★★★★★</td><td class="dk">1511094050</td><td class="lc">LC_EVENT_item_card_name_338</td><td>400</td><td>10</td><td class="lc">vm:11151001 ×5</td></tr>
+</table>
+<h3>G6 前哨筑城</h3>
+<table>
+<tr><th>卡片ID</th><th>卡名</th><th>星级</th><th>DK(卡面)</th><th>LC Key</th><th>Honor</th><th>Recycle</th><th>首获奖励</th></tr>
+<tr><td class="id">11235051</td><td>绘制蓝图</td><td class="star3">★★★</td><td class="dk">1511094051</td><td class="lc">LC_EVENT_item_card_name_339</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235052</td><td>夯实地基</td><td class="star4">★★★★</td><td class="dk">1511094052</td><td class="lc">LC_EVENT_item_card_name_340</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235053</td><td>竖起围墙</td><td class="star4">★★★★</td><td class="dk">1511094053</td><td class="lc">LC_EVENT_item_card_name_341</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235054</td><td>瞭望塔成</td><td class="star4">★★★★</td><td class="dk">1511094054</td><td class="lc">LC_EVENT_item_card_name_342</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235055</td><td>铁匠开炉</td><td class="star4">★★★★</td><td class="dk">1511094055</td><td class="lc">LC_EVENT_item_card_name_343</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235056</td><td>升旗时刻</td><td class="star5">★★★★★</td><td class="dk">1511094056</td><td class="lc">LC_EVENT_item_card_name_344</td><td>400</td><td>10</td><td class="lc">vm:11151001 ×5</td></tr>
+</table>
+<h3>G7 荒原猎踪</h3>
+<table>
+<tr><th>卡片ID</th><th>卡名</th><th>星级</th><th>DK(卡面)</th><th>LC Key</th><th>Honor</th><th>Recycle</th><th>首获奖励</th></tr>
+<tr><td class="id">11235061</td><td>追踪足迹</td><td class="star3">★★★</td><td class="dk">1511094057</td><td class="lc">LC_EVENT_item_card_name_345</td><td>100</td><td>1</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235062</td><td>布置陷阱</td><td class="star4">★★★★</td><td class="dk">1511094058</td><td class="lc">LC_EVENT_item_card_name_346</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235063</td><td>正面对峙</td><td class="star4">★★★★</td><td class="dk">1511094059</td><td class="lc">LC_EVENT_item_card_name_347</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235064</td><td>驯服坐骑</td><td class="star4">★★★★</td><td class="dk">1511094060</td><td class="lc">LC_EVENT_item_card_name_348</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235065</td><td>荒原伙伴</td><td class="star5">★★★★★</td><td class="dk">1511094061</td><td class="lc">LC_EVENT_item_card_name_349</td><td>400</td><td>10</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235066</td><td>原野奔驰</td><td class="star5">★★★★★</td><td class="dk">1511094062</td><td class="lc">LC_EVENT_item_card_name_350</td><td>400</td><td>10</td><td class="lc">vm:11151001 ×5</td></tr>
+</table>
+<h3>G8 地底秘境</h3>
+<table>
+<tr><th>卡片ID</th><th>卡名</th><th>星级</th><th>DK(卡面)</th><th>LC Key</th><th>Honor</th><th>Recycle</th><th>首获奖励</th></tr>
+<tr><td class="id">11235071</td><td>深渊入口</td><td class="star4">★★★★</td><td class="dk">1511094063</td><td class="lc">LC_EVENT_item_card_name_351</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235072</td><td>水晶密林</td><td class="star4">★★★★</td><td class="dk">1511094064</td><td class="lc">LC_EVENT_item_card_name_352</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235073</td><td>地底暗河</td><td class="star4">★★★★</td><td class="dk">1511094065</td><td class="lc">LC_EVENT_item_card_name_353</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235074</td><td>远古化石</td><td class="star5">★★★★★</td><td class="dk">1511094066</td><td class="lc">LC_EVENT_item_card_name_354</td><td>400</td><td>10</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235075</td><td>熔岩之心</td><td class="star5">★★★★★</td><td class="dk">1511094067</td><td class="lc">LC_EVENT_item_card_name_355</td><td>400</td><td>10</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235076</td><td>上古宝藏</td><td class="star5">★★★★★</td><td class="dk">1511094068</td><td class="lc">LC_EVENT_item_card_name_356</td><td>400</td><td>10</td><td class="lc">vm:11151001 ×5</td></tr>
+</table>
+<h3>G9 拓荒盛典</h3>
+<table>
+<tr><th>卡片ID</th><th>卡名</th><th>星级</th><th>DK(卡面)</th><th>LC Key</th><th>Honor</th><th>Recycle</th><th>首获奖励</th></tr>
+<tr><td class="id">11235081</td><td>丰收集市</td><td class="star4">★★★★</td><td class="dk">1511094069</td><td class="lc">LC_EVENT_item_card_name_357</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235082</td><td>凯旋巡游</td><td class="star4">★★★★</td><td class="dk">1511094070</td><td class="lc">LC_EVENT_item_card_name_358</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235083</td><td>丰饶之宴</td><td class="star4">★★★★</td><td class="dk">1511094071</td><td class="lc">LC_EVENT_item_card_name_359</td><td>200</td><td>2</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235084</td><td>授勋仪式</td><td class="star5">★★★★★</td><td class="dk">1511094072</td><td class="lc">LC_EVENT_item_card_name_360</td><td>400</td><td>10</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235085</td><td>烟火之夜</td><td class="star5">★★★★★</td><td class="dk">1511094073</td><td class="lc">LC_EVENT_item_card_name_361</td><td>400</td><td>10</td><td class="lc">vm:11151001 ×5</td></tr>
+<tr><td class="id">11235086</td><td>新世界黎明</td><td class="star5">★★★★★</td><td class="dk">1511094074</td><td class="lc">LC_EVENT_item_card_name_362</td><td>400</td><td>10</td><td class="lc">vm:11151001 ×5</td></tr>
+</table>
+
+</div>
+
+<!-- ====== 1109 ====== -->
+<h2 id="sec1109">1109 CardGallaryStore — 商店行（3行）</h2>
+<div class="section">
+<table>
+<tr>
+  <th>ID</th><th>名称</th><th>商品(goods)</th><th>价格(星尘)</th><th>月限</th><th>DisplayOrder</th><th>解锁条件(actvend)</th>
+</tr>
+<tr>
+  <td class="id">11090031</td>
+  <td>拓荒节1-2星活动卡包</td>
+  <td class="id">111111339</td>
+  <td>15</td><td>20</td><td>1011</td>
+  <td class="id">21127380（累充活动）</td>
+</tr>
+<tr>
+  <td class="id">11090032</td>
+  <td>拓荒节1-3星活动卡包</td>
+  <td class="id">111111340</td>
+  <td>30</td><td>15</td><td>1012</td>
+  <td class="id">21127380（累充活动）</td>
+</tr>
+<tr>
+  <td class="id">11090033</td>
+  <td>拓荒节2-3星活动卡包</td>
+  <td class="id">111111341</td>
+  <td>150</td><td>10</td><td>1013</td>
+  <td class="id">21127380（累充活动）</td>
+</tr>
+</table>
+<p style="color:#f0a000;font-size:12px">⚠️ 待确认: 1109 actvend 当前用 21127380（节日累充），需确认是否为正确的解锁活动 ID</p>
+</div>
+
+<!-- ====== LC汇总 ====== -->
+<h2 id="seclc">LC Key 汇总</h2>
+<div class="section">
+<h3>卡册/组/卡包 LC Keys</h3>
+<table>
+<tr><th>LC Key</th><th>用途</th></tr>
+<tr><td class="lc">LC_EVENT_item_card_book_title_4</td><td>册名「拓荒传奇」</td></tr>
+<tr><td class="lc">LC_EVENT_item_card_collection_title_35</td><td>G1 启程准备</td></tr>
+<tr><td class="lc">LC_EVENT_item_card_collection_title_36</td><td>G2 荒野行军</td></tr>
+<tr><td class="lc">LC_EVENT_item_card_collection_title_37</td><td>G3 扎营落脚</td></tr>
+<tr><td class="lc">LC_EVENT_item_card_collection_title_38</td><td>G4 矿脉勘探</td></tr>
+<tr><td class="lc">LC_EVENT_item_card_collection_title_39</td><td>G5 河谷淘金</td></tr>
+<tr><td class="lc">LC_EVENT_item_card_collection_title_40</td><td>G6 前哨筑城</td></tr>
+<tr><td class="lc">LC_EVENT_item_card_collection_title_41</td><td>G7 荒原猎踪</td></tr>
+<tr><td class="lc">LC_EVENT_item_card_collection_title_42</td><td>G8 地底秘境</td></tr>
+<tr><td class="lc">LC_EVENT_item_card_collection_title_43</td><td>G9 拓荒盛典</td></tr>
+<tr><td class="lc">LC_EVENT_item_card_pack_name_15 / _desc_15</td><td>1-2星卡包 名/描述</td></tr>
+<tr><td class="lc">LC_EVENT_item_card_pack_name_16 / _desc_16</td><td>1-3星卡包 名/描述</td></tr>
+<tr><td class="lc">LC_EVENT_item_card_pack_name_17 / _desc_17</td><td>2-3星卡包 名/描述</td></tr>
+</table>
+
+<h3>54张卡片 LC Keys（LC_EVENT_item_card_name_309 ~ 362）</h3>
+<table>
+<tr><th>LC Key</th><th>卡名</th><th>LC Key</th><th>卡名</th><th>LC Key</th><th>卡名</th></tr>
+<tr><td class="lc">_name_309</td><td>整理行囊</td><td class="lc">_name_310</td><td>晨起伸懒腰</td><td class="lc">_name_311</td><td>打扫工坊</td></tr>
+<tr><td class="lc">_name_312</td><td>调校日晷</td><td class="lc">_name_313</td><td>仰望星河</td><td class="lc">_name_314</td><td>指点星图</td></tr>
+<tr><td class="lc">_name_315</td><td>攀岩探路</td><td class="lc">_name_316</td><td>涉水渡河</td><td class="lc">_name_317</td><td>树下小憩</td></tr>
+<tr><td class="lc">_name_318</td><td>雨中赶路</td><td class="lc">_name_319</td><td>发现脚印</td><td class="lc">_name_320</td><td>悬崖远眺</td></tr>
+<tr><td class="lc">_name_321</td><td>选址插旗</td><td class="lc">_name_322</td><td>搭建帐篷</td><td class="lc">_name_323</td><td>挖井取水</td></tr>
+<tr><td class="lc">_name_324</td><td>砍伐木材</td><td class="lc">_name_325</td><td>升起篝火</td><td class="lc">_name_326</td><td>第一顿饭</td></tr>
+<tr><td class="lc">_name_327</td><td>采集矿样</td><td class="lc">_name_328</td><td>洞口初探</td><td class="lc">_name_329</td><td>矿壁采集</td></tr>
+<tr><td class="lc">_name_330</td><td>矿车推运</td><td class="lc">_name_331</td><td>矿脉闪光</td><td class="lc">_name_332</td><td>标记矿脉</td></tr>
+<tr><td class="lc">_name_333</td><td>河边淘洗</td><td class="lc">_name_334</td><td>筛选矿砂</td><td class="lc">_name_335</td><td>发现金粒</td></tr>
+<tr><td class="lc">_name_336</td><td>搭建水渠</td><td class="lc">_name_337</td><td>称量收获</td><td class="lc">_name_338</td><td>满载而归</td></tr>
+<tr><td class="lc">_name_339</td><td>绘制蓝图</td><td class="lc">_name_340</td><td>夯实地基</td><td class="lc">_name_341</td><td>竖起围墙</td></tr>
+<tr><td class="lc">_name_342</td><td>瞭望塔成</td><td class="lc">_name_343</td><td>铁匠开炉</td><td class="lc">_name_344</td><td>升旗时刻</td></tr>
+<tr><td class="lc">_name_345</td><td>追踪足迹</td><td class="lc">_name_346</td><td>布置陷阱</td><td class="lc">_name_347</td><td>正面对峙</td></tr>
+<tr><td class="lc">_name_348</td><td>驯服坐骑</td><td class="lc">_name_349</td><td>荒原伙伴</td><td class="lc">_name_350</td><td>原野奔驰</td></tr>
+<tr><td class="lc">_name_351</td><td>深渊入口</td><td class="lc">_name_352</td><td>水晶密林</td><td class="lc">_name_353</td><td>地底暗河</td></tr>
+<tr><td class="lc">_name_354</td><td>远古化石</td><td class="lc">_name_355</td><td>熔岩之心</td><td class="lc">_name_356</td><td>上古宝藏</td></tr>
+<tr><td class="lc">_name_357</td><td>丰收集市</td><td class="lc">_name_358</td><td>凯旋巡游</td><td class="lc">_name_359</td><td>丰饶之宴</td></tr>
+<tr><td class="lc">_name_360</td><td>授勋仪式</td><td class="lc">_name_361</td><td>烟火之夜</td><td class="lc">_name_362</td><td>新世界黎明</td></tr>
+
+</table>
+</div>
+
+<!-- ====== 统计 ====== -->
+<h2 id="secstat">星级分布统计</h2>
+<div class="section">
+<table>
+<tr><th>星级</th><th>数量</th><th>占比</th><th>Honor</th><th>Recycle</th><th>出现组</th></tr>
+<tr><td class="star3">★★★ (3星)</td><td>22</td><td>40.7%</td><td>100</td><td>1</td><td>G1~G6各有 3星卡</td></tr>
+<tr><td class="star4">★★★★ (4星)</td><td>22</td><td>40.7%</td><td>200</td><td>2</td><td>G2~G9</td></tr>
+<tr><td class="star5">★★★★★ (5星)</td><td>10</td><td>18.5%</td><td>400</td><td>10</td><td>G5:1, G6:1, G7:2, G8:3, G9:3</td></tr>
+<tr style="background:#2d2d5e"><td><b>合计</b></td><td><b>54</b></td><td>100%</td><td>—</td><td>—</td><td>9组 × 6卡</td></tr>
+</table>
+
+<h3>ID 范围汇总</h3>
+<table>
+<tr><th>表</th><th>ID范围</th><th>行数</th><th>操作类型</th></tr>
+<tr><td>1111</td><td>111111339–111111341</td><td>3</td><td style="color:#ffa500">覆盖现有行</td></tr>
+<tr><td>1108</td><td>11081004</td><td>1</td><td style="color:#98fb98">新增</td></tr>
+<tr><td>1107</td><td>11074001–11074009</td><td>9</td><td style="color:#98fb98">新增</td></tr>
+<tr><td>1123</td><td>11235001–11235086（间隔10）</td><td>54</td><td style="color:#98fb98">新增</td></tr>
+<tr><td>1109</td><td>11090031–11090033</td><td>3</td><td style="color:#98fb98">新增</td></tr>
+</table>
+
+<h3>DK 范围汇总</h3>
+<table>
+<tr><th>用途</th><th>DK范围</th></tr>
+<tr><td>卡包图标</td><td class="dk">1511094006 / 1511094007 / 1511094008</td></tr>
+<tr><td>册封面/背景</td><td class="dk">1511094003 / 1511094004 / 1511094005 / 1511094009</td></tr>
+<tr><td>FX特效</td><td class="dk">1511020681</td></tr>
+<tr><td>组缩略图 G1-G9</td><td class="dk">1511094010–1511094018</td></tr>
+<tr><td>组背景底图（共用）</td><td class="dk">1511094019 / 1511094020</td></tr>
+<tr><td>通用卡背(所有卡共用)</td><td class="dk">1511094002</td></tr>
+<tr><td>卡面 G1(54021-026)</td><td class="dk">1511094021–1511094026</td></tr>
+<tr><td>卡面 G2(54027-032)</td><td class="dk">1511094027–1511094032</td></tr>
+<tr><td>卡面 G3(54033-038)</td><td class="dk">1511094033–1511094038</td></tr>
+<tr><td>卡面 G4(54039-044)</td><td class="dk">1511094039–1511094044</td></tr>
+<tr><td>卡面 G5(54045-050)</td><td class="dk">1511094045–1511094050</td></tr>
+<tr><td>卡面 G6(54051-056)</td><td class="dk">1511094051–1511094056</td></tr>
+<tr><td>卡面 G7(54057-062)</td><td class="dk">1511094057–1511094062</td></tr>
+<tr><td>卡面 G8(54063-068)</td><td class="dk">1511094063–1511094068</td></tr>
+<tr><td>卡面 G9(54069-074)</td><td class="dk">1511094069–1511094074</td></tr>
+</table>
+</div>
+
+<p style="color:#666;text-align:center;margin-top:30px">X2 2026拓荒节 集卡册配置预览 | 生成于 2026-05-21</p>
+</body>
+</html>
