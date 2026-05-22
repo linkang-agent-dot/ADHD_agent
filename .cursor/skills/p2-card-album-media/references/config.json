@@ -2,10 +2,10 @@
   "_comment": "P2 集卡册美术参考图配置。更新参考图只需替换 img/ 目录下对应文件，路径无需改动。",
 
   "characters": {
-    "roger":   "%TEMP%/p2_roger_correct.jpg",
-    "scott":   "%TEMP%/p2_scott.jpg",
-    "penguin": "%TEMP%/p2_penguin.jpg",
-    "_note": "角色立绘参考，生成套内卡时注入。更新方式：替换 Temp 下对应文件。"
+    "roger":   "{SKILL_DIR}/references/img/p2_roger_correct.jpg",
+    "scott":   "{SKILL_DIR}/references/img/p2_scott.jpg",
+    "penguin": "{SKILL_DIR}/references/img/p2_penguin.jpg",
+    "_note": "角色立绘参考，生成套内卡时注入。更新方式：替换 references/img/ 下对应文件。"
   },
 
   "cover_style": {

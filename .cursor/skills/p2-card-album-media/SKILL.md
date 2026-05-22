@@ -88,8 +88,8 @@ references/
 
 ```
 | # | 卡名     | 角色   | 角色参考路径                | 元素参考路径                |
-| 01| 修筑铁路 | Roger  | %TEMP%/p2_roger_correct.jpg| 无                         |
-| 04| 打开奖赏 | Roger  | %TEMP%/p2_roger_correct.jpg| references/img/monopoly_board_ui.png |
+| 01| 修筑铁路 | Roger  | {SKILL_DIR}/references/img/p2_roger_correct.jpg| 无                         |
+| 04| 打开奖赏 | Roger  | {SKILL_DIR}/references/img/p2_roger_correct.jpg| references/img/monopoly_board_ui.png |
 ...
 ⚠️ 确认后先出示例图，回复「确认 GN」
 ```
@@ -147,8 +147,8 @@ references/
 
 ```
 输出目录:
-  %TEMP%/p2_cards/集卡册资源/  (72张套内卡)
-  %TEMP%/p2_cards/covers/      (8张封面)
+  {OUTPUT_DIR}/p2_cards/集卡册资源/  (72张套内卡)
+  {OUTPUT_DIR}/p2_cards/covers/      (8张封面)
 
 → 通知 card-collection-config 开始扫描目录
 → 配置线 阶段一 启动
