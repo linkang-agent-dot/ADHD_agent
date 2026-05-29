@@ -157,6 +157,13 @@
 | 2135 activity_package | `1Agp8e-FfSz0ixLIVFwUIjvlkU69gB7D39URWnjzRvbs` | 活动 tab 如 `26巨猿` |
 
 - X2 i18n 暂存区 tab: `AI翻译页签`（sheetId=338656897）
+  - **外服 (1011 国际服) 20 列布局**（与 P2 21 列不同，**没有 checkbox 列**）:
+    - `A=LC_Key`（不是占位符；表头是 `-`，但实际数据行 A 列填 key）
+    - `B=cn`
+    - `C-S = 17 列国际语言`：en, fr, de, po, zh(繁中), id, th, sp, ru, tr, vi, it, pl, ar, jp, kr, cns
+    - `T=页签`（目标 tab，如 `IAP` / `EVENT`）
+  - **国服 (1JLYxVequku6nBW4kJUkAfnJCFv7p_M7nsANSctpXpAE) 没有暂存区**：所有 tab 仅 11 列（实际填充 3 列 ID_int/ID/cn，D-H 空白，I-K 是 A-C 镜像副本），无 AI 翻译暂存机制，新 key 需走其他流程
+  - 写翻译 skill 不能直接套 P2 默认（21 列含 A=checkbox/B=tab）；必须按 X2 20 列布局适配
 - ⚠️ gws CLI 无法直接访问含中文的 tab 名（如 `26挖蛋`、`activity_task_master（线上）`），需通过 gid 或 Python API
 
 #### X2 占星节卡包 item ID（2115 奖励用）
