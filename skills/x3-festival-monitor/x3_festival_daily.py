@@ -45,7 +45,7 @@ ALWAYS_INCLUDE_PACKS = ["210917", "210918", "210919"]
 # PackType → 模块名（Pack.xlsx 的 PackType 列；11=链式特惠/15=抽奖券锚点/16=家具外观/18=通行证）
 PACKTYPE_MODULE = {
     "11": "特惠连锁", "15": "抽奖券", "16": "家具/外观",
-    "18": "通行证", "3": "常规礼包", "7": "每日特惠",
+    "18": "通行证", "3": "常规礼包", "7": "每日特惠", "1": "皮肤礼包",
 }
 # 个别 Pack 单独成模块（PackType 相同但语义不同，拆开更可读）
 # 210917/918/919 是 PackType=11 但属"夏日恋语-装饰礼包"链(ChainPack 647)，与情人节复用的特惠连锁分开
@@ -66,10 +66,18 @@ REV_EXPR = "(CASE WHEN o.currency_type IN ('usd','TOKEN') THEN o.actual_charge E
 BASE_COLORS = {
     "特惠连锁": "#6c63ff", "抽奖券": "#ffd166", "家具礼包": "#34d399",
     "拜访皮肤": "#a78bfa", "许愿池": "#38bdf8", "通行证": "#fb923c",
-    "装饰礼包": "#e879f9", "常规礼包": "#00d4aa", "每日特惠": "#f472b6", "其他": "#8892a4",
+    "装饰礼包": "#e879f9", "皮肤礼包": "#f43f5e", "常规礼包": "#00d4aa", "每日特惠": "#f472b6", "其他": "#8892a4",
 }
 PALETTE = ["#00d4aa", "#ff6b6b", "#f59e0b", "#ec4899", "#22c55e", "#60a5fa",
            "#c084fc", "#fbbf24", "#fb7185", "#2dd4bf", "#818cf8", "#facc15"]
+
+# 上期节日首日对比基准（X3 26情人节 D0=2026-02-06，1-88服）
+# 两节日均 08:00 开场（节日流水从该时起跳），对比按"已跑小时数"对齐，避免拿夏日10h比情人节整天
+BENCHMARK_NAME = "情人节"
+BENCHMARK_D0 = "2026-02-06"
+# 情人节节日礼包判定（2107xx 情人节专属 + 复用的通用通行证/许愿池）
+BENCHMARK_FEST_PRED = "(o.iap_id LIKE '2107%' OR o.iap_id IN ('130020','130021','1002001'))"
+LAUNCH_HOUR = 8  # 两节日开场时点（created_at 时）
 
 
 def query(sql, limit=2000):
@@ -129,6 +137,63 @@ def load_festival_packs():
         else:
             pack_module[pid] = PACKTYPE_MODULE.get(pack_type.get(pid, ""), "其他")
     return pack_ids, pack_module
+
+
+def load_pack_type_map():
+    """读 Pack__Pack.tsv → {pack_id: PackType}，给对比用（含情人节包）。读不到返回空。"""
+    import csv
+    try:
+        prows = list(csv.reader(open(os.path.join(GDCONFIG_TSV, "Pack__Pack.tsv"),
+                                     encoding="utf-8"), delimiter="\t"))
+        hdr = next(r for r in prows[:40] if "PackType" in r)
+        ci = hdr.index("PackType")
+        return {r[0]: r[ci] for r in prows if r and r[0].isdigit() and len(r) > ci}
+    except Exception:
+        return {}
+
+
+def module_of(pid, pack_type_map):
+    if pid in PACK_OVERRIDE:
+        return PACK_OVERRIDE[pid]
+    return PACKTYPE_MODULE.get(pack_type_map.get(pid, ""), "其他")
+
+
+def query_window(d0_date, fest_pred, h_start, h_end, pack_type_map):
+    """取某节日 D0 在 [h_start, h_end] 小时窗内的 总/节日/付费/节日付费 + 模块构成。"""
+    sql = f"""
+    SELECT count(distinct o.user_id) total_payers,
+      round(sum({REV_EXPR}),0) total_rev,
+      round(sum(CASE WHEN {fest_pred} THEN {REV_EXPR} ELSE 0 END),0) fest_rev,
+      count(distinct CASE WHEN {fest_pred} THEN o.user_id END) fest_payers
+    FROM v1090.ods_user_order o
+    WHERE o.pay_status=1 AND o.partition_date='{d0_date}'
+      AND hour(o.created_at) BETWEEN {h_start} AND {h_end}
+    {SERVER_FILTER}
+    """
+    agg = query(sql)
+    if not agg:
+        return None
+    a = agg[0]
+    sql_mod = f"""
+    SELECT o.iap_id, round(sum({REV_EXPR}),0) rev
+    FROM v1090.ods_user_order o
+    WHERE o.pay_status=1 AND o.partition_date='{d0_date}'
+      AND hour(o.created_at) BETWEEN {h_start} AND {h_end}
+      AND {fest_pred}
+    {SERVER_FILTER}
+    GROUP BY o.iap_id
+    """
+    mods = {}
+    for r in query(sql_mod):
+        m = module_of(str(r["iap_id"]), pack_type_map)
+        mods[m] = mods.get(m, 0) + round(float(r["rev"] or 0))
+    return {
+        "total": round(float(a["total_rev"] or 0)),
+        "festival": round(float(a["fest_rev"] or 0)),
+        "payers": int(a["total_payers"] or 0),
+        "fest_payers": int(a["fest_payers"] or 0),
+        "modules": mods,
+    }
 
 
 def main():
@@ -230,10 +295,33 @@ def main():
     if not all_days:
         print("ERROR: 无节日期数据"); sys.exit(1)
 
+    # ---- 5b. 首日同期对比（夏日 D0 已跑 N 小时 vs 情人节 D0 同期 N 小时，按 08:00 开场对齐） ----
+    ptm = load_pack_type_map()
+    mh = query(f"SELECT max(hour(o.created_at)) mh FROM v1090.ods_user_order o "
+               f"WHERE o.pay_status=1 AND o.partition_date='{FESTIVAL_D0}' {SERVER_FILTER}")
+    through_hour = int(mh[0]["mh"]) if mh and mh[0].get("mh") is not None else 23
+    through_hour = max(LAUNCH_HOUR, min(through_hour, 23))
+    summer_pred = "o.iap_id IN (" + ",".join(f"'{p}'" for p in pack_ids) + ")"
+    cmp_summer = query_window(FESTIVAL_D0, summer_pred, LAUNCH_HOUR, through_hour, ptm)
+    cmp_val = query_window(BENCHMARK_D0, BENCHMARK_FEST_PRED, LAUNCH_HOUR, through_hour, ptm)
+    compare = None
+    if cmp_summer and cmp_val:
+        compare = {
+            "elapsed": through_hour - LAUNCH_HOUR + 1,
+            "summer_name": FESTIVAL_NAME, "val_name": BENCHMARK_NAME, "val_d0": BENCHMARK_D0,
+            "summer": cmp_summer, "valentine": cmp_val,
+        }
+        # 把对比里出现的新模块也补进配色
+        for src in (cmp_summer, cmp_val):
+            for m in src["modules"]:
+                if m not in module_colors:
+                    module_colors[m] = PALETTE[pi % len(PALETTE)]; pi += 1
+
     # ---- 6. 生成 HTML ----
     all_days_json = json.dumps(all_days, ensure_ascii=False)
     baseline_json = json.dumps(baseline, ensure_ascii=False)
     module_colors_json = json.dumps(module_colors, ensure_ascii=False)
+    benchmark_json = json.dumps(compare, ensure_ascii=False)
     bl_total_int = int(baseline["total"])
     bl_total_str = fmt_money(baseline["total"])
     pack_count = len(pack_ids)
@@ -344,6 +432,18 @@ def main():
     <div class="section-title">模块变化趋势</div>
     <div class="chart-box"><div class="mod-tabs" id="modTabs"></div><canvas id="modTrendChart" class="canvas-220"></canvas></div>
   </div>
+  <div class="section" id="compareSection" style="display:none">
+    <div class="section-title">首日同期对比 · 本期 vs 上期<span id="cmpName"></span>（按已跑小时对齐）</div>
+    <div class="conclusion" id="cmpNote" style="margin-bottom:14px"></div>
+    <div class="table-wrap" style="margin-bottom:18px"><table>
+      <thead><tr><th id="cmpHdr">首N小时</th><th class="num" id="cmpColA"></th><th class="num" id="cmpColB"></th><th class="num">差异</th></tr></thead>
+      <tbody id="cmpBody"></tbody>
+    </table></div>
+    <div class="row-2col">
+      <div><div class="chart-label" id="cmpModBLabel" style="font-weight:600"></div><div class="mod-hdr"><span>模块</span><span style="flex:1"></span><span style="width:64px">收入</span><span style="width:36px">占比</span></div><div id="cmpModB"></div></div>
+      <div><div class="chart-label" id="cmpModALabel" style="font-weight:600"></div><div class="mod-hdr"><span>模块</span><span style="flex:1"></span><span style="width:64px">收入</span><span style="width:36px">占比</span></div><div id="cmpModA"></div></div>
+    </div>
+  </div>
   <div class="section">
     <div class="section-title">关注点</div>
     <div id="alertsBox"></div>
@@ -354,6 +454,7 @@ def main():
 const allDays = {all_days_json};
 const baseline = {baseline_json};
 const modColors = {module_colors_json};
+const compare = {benchmark_json};
 const dpr = window.devicePixelRatio || 1;
 let currentDayIdx = allDays.length - 1;
 let currentMod = null;
@@ -480,6 +581,48 @@ function renderAlerts() {{
   $('alertsBox').innerHTML = alerts.map(([t, msg]) => '<div class="alert ' + (t === 'warn' ? 'alert-warn' : 'alert-info') + '"><span class="alert-icon">' + (t === 'warn' ? '&#9888;&#65039;' : '&#128204;') + '</span>' + msg + '</div>').join('');
 }}
 
+function modBarsHTML(mods) {{
+  const names = Object.keys(mods).sort((a, b) => mods[b] - mods[a]);
+  const maxR = Math.max(...Object.values(mods), 1), tot = Object.values(mods).reduce((s, v) => s + v, 0);
+  if (!names.length) return '<div class="muted" style="padding:8px 0">无数据</div>';
+  return names.map(m => {{
+    const rev = mods[m], w = rev / maxR * 100, pct = tot ? rev / tot * 100 : 0, c = modColors[m] || '#8892a4';
+    return '<div class="mod-row"><div class="mod-name">' + m + '</div><div class="mod-bar-wrap"><div class="mod-bar" style="width:' + w.toFixed(1) + '%;background:' + c + '"></div></div><div class="mod-val">' + fmtMoney(rev) + '</div><div class="mod-pct">' + pct.toFixed(0) + '%</div></div>';
+  }}).join('');
+}}
+
+function renderCompare() {{
+  if (!compare) return;
+  const S = compare.summer, V = compare.valentine;
+  $('compareSection').style.display = '';
+  $('cmpName').textContent = compare.val_name + '（' + compare.val_d0 + '）';
+  $('cmpHdr').textContent = '首 ' + compare.elapsed + ' 小时（08:00 起）';
+  $('cmpColA').textContent = '上期 ' + compare.val_name;
+  $('cmpColB').textContent = '本期 ' + compare.summer_name;
+  const vArpu = V.payers ? V.festival / V.payers : 0, sArpu = S.payers ? S.festival / S.payers : 0;  // 分母=当日总付费人数
+  const vRatio = V.total ? V.festival / V.total * 100 : 0, sRatio = S.total ? S.festival / S.total * 100 : 0;
+  function dCell(pct) {{ if (pct == null) return '<td class="num muted">—</td>'; const cls = pct > 0 ? 'up' : pct < 0 ? 'down' : 'muted'; return '<td class="num ' + cls + '">' + (pct > 0 ? '+' : '') + pct.toFixed(1) + '%</td>'; }}
+  const ppCls = (sRatio - vRatio) > 0 ? 'up' : (sRatio - vRatio) < 0 ? 'down' : 'muted';
+  const rows = [
+    ['总流水', fmtMoney(V.total), fmtMoney(S.total), dCell(pctChg(S.total, V.total))],
+    ['总付费人数', V.payers, S.payers, dCell(pctChg(S.payers, V.payers))],
+    ['节日流水', fmtMoney(V.festival), fmtMoney(S.festival), dCell(pctChg(S.festival, V.festival))],
+    ['节日占比', vRatio.toFixed(1) + '%', sRatio.toFixed(1) + '%', '<td class="num ' + ppCls + '">' + ((sRatio - vRatio) >= 0 ? '+' : '') + (sRatio - vRatio).toFixed(1) + 'pp</td>'],
+    ['节日付费人数', V.fest_payers, S.fest_payers, dCell(pctChg(S.fest_payers, V.fest_payers))],
+    ['节日ARPU(节日流水/总付费人数)', '$' + vArpu.toFixed(2), '$' + sArpu.toFixed(2), dCell(pctChg(sArpu, vArpu))],
+  ];
+  $('cmpBody').innerHTML = rows.map(r => '<tr><td>' + r[0] + '</td><td class="num">' + r[1] + '</td><td class="num">' + r[2] + '</td>' + r[3] + '</tr>').join('');
+  $('cmpModBLabel').textContent = '上期 ' + compare.val_name + ' D0 模块';
+  $('cmpModB').innerHTML = modBarsHTML(V.modules);
+  $('cmpModALabel').textContent = '本期 ' + compare.summer_name + ' D0 模块';
+  $('cmpModA').innerHTML = modBarsHTML(S.modules);
+  const note = '首 ' + compare.elapsed + ' 小时（同期对齐）：本期' + compare.summer_name + '节日 ' + fmtMoney(S.festival) + '（占比 ' + sRatio.toFixed(0) + '%、' + S.fest_payers + ' 人付费）vs 上期' + compare.val_name + ' ' + fmtMoney(V.festival) + '（占比 ' + vRatio.toFixed(0) + '%、' + V.fest_payers + ' 人）。'
+    + (sRatio >= vRatio ? '本期节日吸金占比更高' : '本期节日吸金占比偏低') + '（' + ((sRatio - vRatio) >= 0 ? '+' : '') + (sRatio - vRatio).toFixed(1) + 'pp），'
+    + (S.fest_payers >= V.fest_payers ? '节日付费人数更多' : '节日付费人数更少') + '，节日ARPU(节日流水/总付费人数) $' + sArpu.toFixed(2) + ' vs $' + vArpu.toFixed(2) + '。';
+  $('cmpNote').className = 'conclusion ' + (sRatio >= vRatio ? 'up' : 'down');
+  $('cmpNote').textContent = note;
+}}
+
 function renderAll() {{
   buildDayTabs(); renderKPI(); renderARPU(); renderModBars();
   drawTrend('totalChart', 'total', '#6c63ff', 'rgba(108,99,255,.1)', {bl_total_int}, '基线 {bl_total_str}');
@@ -487,6 +630,7 @@ function renderAll() {{
   buildModTabs(); drawModTrend(); renderAlerts();
 }}
 renderAll();
+renderCompare();
 </script>
 </body>
 </html>"""
