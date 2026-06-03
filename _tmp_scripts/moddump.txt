@@ -1,0 +1,294 @@
+R1: 深海节 · 各活动模块（除周卡/大富翁；9模块）
+R2: 落地版：复用源/配置已填；美术需求已并入各模块【美术需求】(场景+元素)。
+R3: 
+R4: 【深海节·视觉调性】(所有背景统一基调)
+R5: 主色：深蓝/浅蓝/青绿 + 金黄(宝藏/珊瑚) + 珍珠白(贝壳/浪花) + 暗绿紫(幽灵/海怪)
+R6: 风格：卡通化/奇幻探险/水流灵动/半透明质感；表现：水波·气泡·阳光光斑·鱼群环绕·航线·沉船剪影·彩虹光点
+R7: 避坑：卡通非克苏鲁写实；与航海之路原版/夏日海滨形态区分；贝壳海星走装饰感；沙滩类底部加水
+R8: 
+R9: ▌1. 深海罗盘（转盘+兑换+排行榜·英雄皮肤） D1–D14
+R10: 〇、包装层
+R11: 活动名称：深海罗盘
+R12: 界面主标题：转动深海罗盘，驶向宝藏
+R13: 副标：每一次转动，都让你离稀世皮肤更近一步
+R14: 视觉关键词：罗盘/宝箱/深海/航线
+R15: 一、设计目的
+R16: 第一周引流核心 + 英雄皮肤投放（海风旅者返场、赛米拉排行榜主投）；排行榜传说铭牌给已有皮肤玩家新冲榜动机
+R17: 二、玩法说明
+R18: 消耗抽奖券转动深海罗盘抽奖(奖池含皮肤/养成料/代币)；代币去兑换商店兑换；A+B线消费冲排行榜
+R19: ·复用/改动点
+R20: 复用【大转盘】(尼罗黄金卷轴)换深海皮——转盘UI参考大转盘.png，换深海转盘美术即可落地
+R21: 三、规则说明
+R22: ·基础设定：大转盘=ActvType10(复用尼罗黄金卷轴 ContentID1023/ActvOnline101023，自带排行榜+额外奖励)；兑换=ActvType13(1339/101339)；D1-D14；入口左HUD
+R23: ·抽奖：消耗抽奖券,单抽/10连；奖池=ActvLuckyWheelReward；额外奖励进度条=ActvLuckyWheelOtherReward(x50~x3000)；含英雄皮肤/养成料/代币
+R24: ·海风旅者返场：原600刀兑换→600刀节点充赠；重复返10000钻(皮肤Regained)
+R25: ·铭牌：深海传说·航者徽记(传说品质,3%战斗属性≈主城1/3)，走Title表，重复转钻
+R26: ·红点：有抽奖券时入口/页签/抽奖按钮；阶段奖励可领
+R27: 配置表/复用源
+R28: 大转盘=ActvLuckyWheel(ActvType10,复用1023/101023)+ActvLuckyWheelReward(奖池)+ActvLuckyWheelOtherReward(额外奖励)+RankCfg(海域排名)；转盘背景=DK_Turntable；兑换ActvType13(1339)；铭牌=Title表；海风旅者=Item_5303401
+R29: 界面交互
+R30: 复用大转盘UI(参考大转盘.png：8格轮盘/中心指针/额外奖励进度条x50-x3000/抽奖1次10次/海域排名)；排行榜加传说铭牌奖励位+『距离上榜还差{0}分』
+R31: 本地化
+R32: Text_Actv_Sea_gacha_title=深海罗盘 / _rank_tip=距离上榜还差{0}分 / 铭牌名=深海传说·航者徽记
+R33: 【美术需求】
+R34: 转盘外观(DK_Turntable换皮·逐件)：深海金边框→锚链/珊瑚/贝壳；中心=航海罗盘/舵轮；指针=金锚；8格分区蓝×青绿
+【尺寸】与尼罗转盘同尺寸·逐件取原(格子icon=img_turntable_icon1~6/元素=img_ui_turntable_bg*) 【格式】png
+【老图参考·格式结构】包装稿:KB/产出-数值设计/X3_深海节/复用参考图/夏日/大转盘.png ；复用源:client/Assets/Res/UI/Spirits/Activity/img_turntable_icon1~6.png + img_ui_turntable_bg2.png
+【新图参考·投放物/主视觉】主视觉锚 主推皮肤·热浪尤物赛米拉(海滨):client/Assets/Res/UI/Spirits/Role/Character Portraits/Img_C_H_17_Skin01.png + 立绘client/Assets/Res/Spine/Prefabs_Download/Role_Spine_17_Skin01.prefab
+R35: 转盘活动背景：明亮浅海俯瞰+航线+远景小岛/沉船宝藏/珊瑚礁+光斑+气泡(海洋阳光调,呼应海滨投放物)
+【尺寸】=尼罗大转盘背景 1080×1344(img_queen_bg_3) 【格式】png
+【老图参考·格式结构】包装稿:KB/产出-数值设计/X3_深海节/复用参考图/夏日/大转盘.png ；复用源:client/Assets/Res/UI/Spirits/ActivityImg_Download/img_queen_bg_3.png
+【新图参考·投放物/主视觉】主推皮肤·热浪尤物赛米拉(海滨):client/Assets/Res/UI/Spirits/Role/Character Portraits/Img_C_H_17_Skin01.png + 立绘client/Assets/Res/Spine/Prefabs_Download/Role_Spine_17_Skin01.prefab
+R36: 背景角色立绘=直接用主推皮肤赛米拉(海滨)立绘，现成无需新画 ✅(克利奥佩特拉位→换赛米拉)
+【尺寸】=尼罗立绘位同尺寸 【格式】spine(现成)
+【老图参考·格式结构】复用源:尼罗大转盘界面立绘槽位
+【新图参考·投放物/主视觉】主推皮肤·热浪尤物赛米拉(海滨):client/Assets/Res/UI/Spirits/Role/Character Portraits/Img_C_H_17_Skin01.png + 立绘client/Assets/Res/Spine/Prefabs_Download/Role_Spine_17_Skin01.prefab ；备选返场 返场·海风旅者霍普金斯:client/Assets/Res/UI/Spirits/Role/Character Portraits/Img_C_H_34_Skin03.png
+R37: 传说铭牌图：锚+罗盘+浪花徽章(传说品质·金+蓝) —— 深海版无现成,需新出
+【尺寸】~752×192(title标准) 【格式】png
+【老图参考·格式结构】复用源:现有title铭牌资源(client/Assets/Res/UI/Spirits/.../title)
+【新图参考·投放物/主视觉】🔧无现成投放物,需新出；主题锚 主推皮肤·热浪尤物赛米拉(海滨):client/Assets/Res/UI/Spirits/Role/Character Portraits/Img_C_H_17_Skin01.png + 立绘client/Assets/Res/Spine/Prefabs_Download/Role_Spine_17_Skin01.prefab ；另HUD icon 124×136
+R38: 
+R39: ▌2. 远航日志（通行证+史诗铭牌·纯复用） D1–D14
+R40: 〇、包装层
+R41: 活动名称：远航日志
+R42: 界面主标题：记录你的远航，每一海里都有嘉奖
+R43: 视觉关键词：航海日志/航徽
+R44: 一、设计目的
+R45: BP承载史诗铭牌权益，拉通行证升级率
+R46: 二、玩法说明
+R47: 完成任务积分逐级解锁BP奖励，免费+付费(9.99)双线
+R48: ·复用/改动点
+R49: 纯复用BP换背景；唯一新增=高级通行证加史诗铭牌(无BUFF)
+R50: 三、规则说明
+R51: ·复用BP=ActvType22(夏日2240/102240,TC1829)，规则/任务/档位不变
+R52: ·新增：高级通行证(9.99)含史诗铭牌(深海远征·航徽,无BUFF)+节日道具
+R53: ·红点复用
+R54: 配置表/复用源
+R55: BP=ActvType22(复用2240)；BP凭证复用210000系换奖励；史诗铭牌=Title表(无属性)
+R56: 界面交互
+R57: 复用BP界面换背景；铭牌在对应档位展示
+R58: 本地化
+R59: Text_Actv_Sea_bp_title=远航日志 / 铭牌名=深海远征·航徽
+R60: 【美术需求】
+R61: BP主界面背景：航海日志/海图桌——海图卷轴+罗盘/望远镜/船舵/羽毛笔,暖光船舱(海洋探险调)
+【尺寸】=夏日BP背景同尺寸(取原) 【格式】png
+【老图参考·格式结构】包装稿:KB/产出-数值设计/X3_深海节/复用参考图/夏日/02_为誓言而战_BP_102236.png ；复用源:夏日BP界面背景(client/Assets/Res/UI/Spirits/ActivityImg)
+【新图参考·投放物/主视觉】主视觉锚 主推皮肤·热浪尤物赛米拉(海滨):client/Assets/Res/UI/Spirits/Role/Character Portraits/Img_C_H_17_Skin01.png + 立绘client/Assets/Res/Spine/Prefabs_Download/Role_Spine_17_Skin01.prefab
+R62: 史诗铭牌图：船舵+海浪徽章(史诗品质) —— 深海版无现成,需新出
+【尺寸】~752×192(title) 【格式】png
+【老图参考·格式结构】复用源:现有title铭牌资源
+【新图参考·投放物/主视觉】🔧无现成投放物,需新出；主题锚 主推皮肤·热浪尤物赛米拉(海滨):client/Assets/Res/UI/Spirits/Role/Character Portraits/Img_C_H_17_Skin01.png + 立绘client/Assets/Res/Spine/Prefabs_Download/Role_Spine_17_Skin01.prefab
+R63: 
+R64: ▌3. 怦然心动·深海（每日礼包） D1–D14
+R65: 〇、包装层
+R66: 活动名称：怦然心动·深海
+R67: 界面文案：深海每日来信，今日份的心动已送达
+R68: 视觉关键词：深海/每日/信
+R69: 一、设计目的
+R70: 每日低价触达付费点
+R71: 二、玩法说明
+R72: 每日登录可购买的限定礼包
+R73: ·复用/改动点
+R74: 复用每日礼包(Pack__DailyPack)改深海版；需程序微量处理(节日版切换)
+R75: 三、规则说明
+R76: ·复用每日礼包(Pack__DailyPack)，活动期每日刷新；改深海节内容/外观
+R77: 配置表/复用源
+R78: 复用Pack__DailyPack配置，改节日版iap/内容
+R79: 界面交互
+R80: 复用每日礼包界面换背景
+R81: 本地化
+R82: 礼包名/描述(深海版)
+R83: 【美术需求】
+R84: 每日礼包背景/弹窗：深海每日来信——漂流瓶里的信+珍珠/贝壳,浅蓝水面+光斑
+【尺寸】=夏日每日礼包弹窗同尺寸 【格式】png
+【老图参考·格式结构】包装稿:KB/产出-数值设计/X3_深海节/复用参考图/夏日/怦然心动.png
+【新图参考·投放物/主视觉】主视觉锚 主推皮肤·热浪尤物赛米拉(海滨):client/Assets/Res/UI/Spirits/Role/Character Portraits/Img_C_H_17_Skin01.png + 立绘client/Assets/Res/Spine/Prefabs_Download/Role_Spine_17_Skin01.prefab
+R85: 礼包展示视频（深海版·重制，非简单换皮）
+【时长】~15s 【格式】mp4 【风格】卡通奇幻·海蓝青绿+金光
+【分镜脚本】
+镜1(0-3s)：阳光海面，镜头由海面下潜入水；一只漂流瓶随波漂入画面中央
+镜2(3-7s)：瓶塞弹开，飘出卷着丝带的来信/卷轴，珍珠贝壳环绕、气泡光斑上浮
+镜3(7-12s)：信展开化作礼包，道具逐个飞出特写(养成材料/代币/抽奖券)，金光迸发
+镜4(12-15s)：道具收束为礼包icon + 标题『怦然心动·深海』 + 『每日可领』角标，定格
+【老图参考·格式结构】包装稿:KB/产出-数值设计/X3_深海节/复用参考图/夏日/怦然心动.png ；节奏:KB/产出-数值设计/X3_深海节/复用参考图/夏日/录制_2026_05_27_17_46_46_144.mp4
+【新图参考·投放物/主视觉】主推皮肤·热浪尤物赛米拉(海滨):client/Assets/Res/UI/Spirits/Role/Character Portraits/Img_C_H_17_Skin01.png + 立绘client/Assets/Res/Spine/Prefabs_Download/Role_Spine_17_Skin01.prefab
+R86: 
+R87: ▌4. 深海印记（头像框礼包 9.99·新增通用礼包模块） D1–D14
+R88: 〇、包装层
+R89: 活动名称：深海印记
+R90: 界面文案：深海限定头像框 + 节日珍藏
+R91: 视觉关键词：深海头像框/印记
+R92: 一、设计目的
+R93: 新增可制作的节日投放付费点
+R94: 二、玩法说明
+R95: 9.99通用礼包，购买得深海头像框+节日道具
+R96: ·复用/改动点
+R97: ★需程序新增通用礼包模块(9.99+节日道具)；策划出图+跑头像框
+R98: 三、规则说明
+R99: ·新增通用礼包模块(待程序)；9.99购买得头像框+节日道具；限购(配置)；入口礼包墙/活动
+R100: ·头像框走头像框系统(BasicMeta.Personal,带Regained)
+R101: 配置表/复用源
+R102: Pack(9.99,通用礼包Type)+Reward(深海头像框+节日道具)；头像框=80xxx系列(新增深海框)
+R103: 界面交互
+R104: 通用礼包模块界面(banner+内容+购买按钮)
+R105: 本地化
+R106: 礼包名=深海印记 / 头像框名
+R107: 【美术需求】
+R108: 通用礼包banner：深海主题(贝壳/珊瑚/锚边框,预留$9.99价格位)
+【尺寸】=礼包墙banner槽位(待程序定) 【格式】png
+【老图参考·格式结构】同礼包墙现有banner
+【新图参考·投放物/主视觉】主视觉锚 主推皮肤·热浪尤物赛米拉(海滨):client/Assets/Res/UI/Spirits/Role/Character Portraits/Img_C_H_17_Skin01.png + 立绘client/Assets/Res/Spine/Prefabs_Download/Role_Spine_17_Skin01.prefab
+R109: 深海头像框图：贝壳/珊瑚/锚链环绕框+珍珠,蓝金边 —— 无现成,需新出
+【尺寸】256×256(AvatarFrame) 【格式】png
+【老图参考·格式结构】复用源:现有玩家头像框资源(AvatarFrame)
+【新图参考·投放物/主视觉】🔧无现成投放物,需新出；主题锚 主推皮肤·热浪尤物赛米拉(海滨):client/Assets/Res/UI/Spirits/Role/Character Portraits/Img_C_H_17_Skin01.png + 立绘client/Assets/Res/Spine/Prefabs_Download/Role_Spine_17_Skin01.prefab
+R110: 
+R111: ▌5. 深海馈赠（累充+行军皮肤·深海猎手） D1–D14
+R112: 〇、包装层
+R113: 活动名称：深海馈赠
+R114: 界面主标题：慷慨的远航者，深海以珍宝相报
+R115: 副标：累计远航补给，达档领取丰厚奖励
+R116: 视觉关键词：累充/行军皮肤/宝藏
+R117: 一、设计目的
+R118: 累充新增外显，拉高档达成率、强化付费深度
+R119: 二、玩法说明
+R120: 活动期累计充值达阶段目标领奖，顶端档位为行军皮肤·深海猎手
+R121: ·复用/改动点
+R122: 复用累充换背景；顶档行军皮肤=深海猎手(现成永久15065)；档位/数值待夏日复盘
+R123: 三、规则说明
+R124: ·复用累充=ActvType5(夏日597/100597,TC1829)；累充10档+gacha道具(复用夏日档结构)
+R125: ·顶档行军皮肤=深海猎手(永久 Item15065，现状'暂无获取'正好投，复用现成)；具体档位/数值待夏日复盘
+R126: 配置表/复用源
+R127: 累充=ActvType5(复用597)；ActvOnline.RechargePointPackWhitelist；累充Reward各档，顶档=深海猎手 Item15065(永久,现成)
+R128: 界面交互
+R129: 复用累充界面换背景；行军皮肤奖励展示
+R130: 本地化
+R131: 累充活动标题=深海馈赠
+R132: 【美术需求】
+R133: 累充活动背景：海底宝藏窟——沉船金币堆+宝箱金光+鱼群,金黄×亮蓝
+【尺寸】=夏日累充背景同尺寸 【格式】png
+【老图参考·格式结构】包装稿:KB/产出-数值设计/X3_深海节/复用参考图/夏日/07_花瓣与恩典_累充_100595.png ；复用源:夏日累充界面背景(client/Assets/Res/UI/Spirits/ActivityImg)
+【新图参考·投放物/主视觉】顶档投放物·深海猎手潜艇船皮肤(15065):client/Assets/Res/UI/Spirits/ItemIcons/icon_global_ship_skin_submarine.png
+R134: 顶档外显=深海猎手·潜艇船皮肤(永久 Item15065，现成) ✅ 无需新出 (注:是船皮肤,非行军皮肤)
+【新图参考·投放物】client/Assets/Res/UI/Spirits/ItemIcons/icon_global_ship_skin_submarine.png
+R135: 
+R136: ▌6. 深海居所（装饰礼包·椰风遮阳椅 19.99×3） D3–D14
+R137: 〇、包装层
+R138: 活动名称：深海居所
+R139: 界面主标题：把你的小岛，装点成深海的模样
+R140: 副标：限定装饰阶梯礼包，逐档解锁
+R141: 视觉关键词：海滨/沙滩/居所
+R142: 一、设计目的
+R143: 19.99阶梯已验证(夏日家具486%)，拉装饰复购深度
+R144: 二、玩法说明
+R145: 装饰礼包=椰风遮阳椅(151043)单道具，19.99×3阶梯每包1个
+R146: ·复用/改动点
+R147: 复用阶梯礼包结构(夏日210917-919)；装饰物=椰风遮阳椅(海滨假日151043,现成)，无需新美术
+R148: 三、规则说明
+R149: ·复用阶梯/链式礼包；3个礼包(各19.99)每包奖励=椰风遮阳椅×1；D3-D14
+R150: ·装饰物=椰风遮阳椅(家具摆件 Item151043，海滨假日，现成，DK_icon_jiaju_summer_3，带角色坐下动画)
+R151: 配置表/复用源
+R152: Pack×3(各19.99,复用210917-919结构)，每包奖励=椰风遮阳椅 Item151043×1；ChainPack链式
+R153: 界面交互
+R154: 复用装饰/阶梯礼包界面换美术
+R155: 本地化
+R156: 礼包名=深海居所 / 各档名
+R157: 【美术需求】
+R158: 礼包banner：海滨沙滩度假——椰树+遮阳伞+沙滩+海浪+泳圈,暖橘×浅蓝
+【尺寸】=装饰阶梯礼包banner同尺寸 【格式】png
+【老图参考·格式结构】包装稿:KB/产出-数值设计/X3_深海节/复用参考图/夏日/08_夏日装饰礼包_装饰阶梯_106101.png
+【新图参考·投放物/主视觉】投放物·椰风遮阳椅(151043):client/Assets/Res/UI/Spirits/Furniture/Actv/icon_jiaju_summer_3.png
+R159: 装饰物=椰风遮阳椅(海滨假日 Item151043，现成) ✅ 无需新出
+【新图参考·投放物】client/Assets/Res/UI/Spirits/Furniture/Actv/icon_jiaju_summer_3.png
+R160: 
+R161: ▌7. 海滨之约（拜访礼包·门头三件套 99.99） D7–D14
+R162: 〇、包装层
+R163: 活动名称：海滨之约
+R164: 界面主标题：为你的酒馆，挂上一道海滨的门楣
+R165: 副标：购置海滨门头，迎接远航归来的船长做客——被拜访越多，馈赠越丰
+R166: 视觉关键词：海滨门楣/酒馆/海风
+R167: 一、设计目的
+R168: 1.1刺激门头装潢礼包售卖 1.2提升社交,为超大R提供被拜访感
+R169: 二、玩法说明
+R170: 购海滨门头礼包，按被拜访次数领阶段奖励；每日领深海邀请函拜访购包者获奖励
+R171: ·复用/改动点
+R172: 复用拜访礼包(夏日5605)换门头三件套(海滨假日)+换深海banner
+R173: 三、规则说明
+R174: ·基础设定：复用拜访礼包=ActvType56(夏日5605/105605,TC1830,D7-D14);功能解锁;入口左HUD
+R175: ·礼包：海滨门头礼包$99.99;购买触发跑马灯+世界聊天通知+聊天名挂礼包图标
+R176: ·阶段奖励：仅购包者可领,按被拜访累计次数;未购也计数不可领
+R177: ·邀请函：每日领深海邀请函,当日清零不补;拜访购包者消耗1张获额外奖励(NPC气泡);活动结束回收
+R178: ·红点：①每日邀请函未领 ②阶段奖励达成未领(无论购包) ③已购+达成未领
+R179: 配置表/复用源
+R180: 拜访=ActvType56(复用5605)；ActvVisitPack[ID|备注|PackID|StageReward|InvationItem|InvationNum|InvationReward|DailyRewardDesc]+ActvVisitPackReward[ID|RewardGroup|ScoreCondition|Reward]
+R181: 门头三件套=海滨假日FurnitureSkin：横梁1001009/地板2001013/墙纸3001010
+R182: 界面交互
+R183: UIActvVisitPack：1每日邀请函(可领/已领) 2说明(读配置) 3阶段奖励(被拜访次数{0}=Text_Actv_Visit_Count;未购飘字『需拥有{0}装扮』) 4礼包信息(99.99/售罄隐藏) 5邀请拜访(弹聊天频道) 6来访记录(UIVisitLike.prefab)
+R184: 本地化
+R185: Text_Actv_Visit_Count=被拜访次数:{0} / Text_Actv_Visit_Stage_Reward_tip=需拥有{0}装扮 / 跑马灯MarqueeRuntips / 礼包名=海滨门头
+R186: 【美术需求】
+R187: 拜访活动背景：海滨酒馆门面——海风+门楣+棕榈+海平面,暖橘×浅蓝
+【尺寸】=夏日拜访背景同尺寸 【格式】png
+【老图参考·格式结构】包装稿:KB/产出-数值设计/X3_深海节/复用参考图/夏日/03_夏日柔情海湾_拜访礼包_105603.png + KB/产出-数值设计/X3_深海节/复用参考图/夏日/门头拜访礼包.png ；复用源:夏日拜访界面背景(client/Assets/Res/UI/Spirits/ActivityImg)
+【新图参考·投放物/主视觉】投放物·海滨门头(1001009)door:client/Assets/Res/Furniture/Model/Furniture_Door_Wall_Column_Skin08/Texter/Furniture_Door_Skin08.png + icon client/Assets/Res/UI/Spirits/Furniture/Actv/icon_jiaju_summer_4.png ；海滨地板(2001013):client/Assets/Res/Furniture/Prefabs/Floor/FurnitureFloor_Actv_Summer.prefab + icon client/Assets/Res/UI/Spirits/Furniture/Actv/icon_jiaju_summer_2.png ；主推 主推皮肤·热浪尤物赛米拉(海滨):client/Assets/Res/UI/Spirits/Role/Character Portraits/Img_C_H_17_Skin01.png + 立绘client/Assets/Res/Spine/Prefabs_Download/Role_Spine_17_Skin01.prefab
+R188: 投放物三件套=海滨假日(门头1001009/地板2001013/墙纸3001010，现成) ✅ 无需新出
+【新图参考·投放物】门头door:client/Assets/Res/Furniture/Model/Furniture_Door_Wall_Column_Skin08/Texter/Furniture_Door_Skin08.png + icon client/Assets/Res/UI/Spirits/Furniture/Actv/icon_jiaju_summer_4.png
+地板floor:client/Assets/Res/Furniture/Prefabs/Floor/FurnitureFloor_Actv_Summer.prefab + icon client/Assets/Res/UI/Spirits/Furniture/Actv/icon_jiaju_summer_2.png
+R189: 礼包图/icon：海滨门头礼包($99.99)
+【尺寸】=拜访礼包图同尺寸 【格式】png
+【老图参考·格式结构】包装稿:KB/产出-数值设计/X3_深海节/复用参考图/夏日/门头拜访礼包.png
+【新图参考·投放物/主视觉】投放物·海滨门头door:client/Assets/Res/Furniture/Model/Furniture_Door_Wall_Column_Skin08/Texter/Furniture_Door_Skin08.png
+R190: 
+R191: ▌8. 许愿池（名字不变·仅换背景） D1–D14
+R192: 〇、包装层
+R193: 活动名称：许愿池（名字/文案不变）
+R194: 包装动作：仅换深海背景图
+R195: 视觉关键词：深海背景
+R196: 一、设计目的
+R197: $4.99可重复抽，全服共建引流+复购
+R198: 二、玩法说明
+R199: 全服投入许愿池,达阶段奖池触发超级大奖(沿用)
+R200: ·复用/改动点
+R201: 完全复用,玩法/名字/文案不变;仅换深海背景图
+R202: 三、规则说明
+R203: ·复用许愿池=ActvType50(夏日5013/105013,TC1829,TT必须=1);规则/数值不变
+R204: 配置表/复用源
+R205: 复用ActvWishingPool/Reward/StageReward不动数值;仅替换背景图资源(DK/asset)
+R206: 界面交互
+R207: 复用许愿池界面;仅换背景图
+R208: 本地化
+R209: 不变(沿用原文案)
+R210: 【美术需求】
+R211: 活动背景(仅换图，名字/玩法不变)：深海许愿池——水底光柱+漂浮许愿币/贝壳/珍珠,明亮青绿(偏亮不阴暗)
+【尺寸】=许愿池原活动背景同尺寸(取原替换) 【格式】png
+【老图参考·格式结构】复用源:许愿池界面现有背景资源
+【新图参考·投放物/主视觉】无独立投放物,沿用节日主视觉锚 主推皮肤·热浪尤物赛米拉(海滨):client/Assets/Res/UI/Spirits/Role/Character Portraits/Img_C_H_17_Skin01.png + 立绘client/Assets/Res/Spine/Prefabs_Download/Role_Spine_17_Skin01.prefab
+R212: 
+R213: ▌9. 最佳酒馆（名字不变·仅换背景） D1–D14
+R214: 〇、包装层
+R215: 活动名称：最佳酒馆（名字/文案不变）
+R216: 包装动作：仅换深海背景图
+R217: 视觉关键词：深海背景
+R218: 一、设计目的
+R219: 跨服酒馆赛事,拉中高R冲分
+R220: 二、玩法说明
+R221: 完成节日任务赚积分,多阶段递进,阶段排名领世界级奖(沿用)
+R222: ·复用/改动点
+R223: 完全复用,玩法/名字/文案不变;仅换深海背景图
+R224: 三、规则说明
+R225: ·复用最佳酒馆=ActvType7(夏日717/10071704,TC1829);规则/数值不变
+R226: ·⚠️ActvScore ScoreID易混淆(知识库记603陷阱),落地点名具体ContentID
+R227: 配置表/复用源
+R228: 复用ActvScore系列(ScoreGroup ScoreID7011/7012等);仅替换背景图资源
+R229: 界面交互
+R230: 复用最佳酒馆界面;仅换背景图
+R231: 本地化
+R232: 不变(沿用原文案)
+R233: 【美术需求】
+R234: 活动背景(仅换图，名字/玩法不变)：远航酒馆——海图+酒桶+船舵+舷窗外深海,暖光
+【尺寸】=最佳酒馆原活动背景同尺寸(取原替换) 【格式】png
+【老图参考·格式结构】包装稿:KB/产出-数值设计/X3_深海节/复用参考图/夏日/05_为爱干杯_最佳酒馆_10071702.png ；复用源:最佳酒馆界面现有背景资源
+【新图参考·投放物/主视觉】无独立投放物,沿用节日主视觉锚 主推皮肤·热浪尤物赛米拉(海滨):client/Assets/Res/UI/Spirits/Role/Character Portraits/Img_C_H_17_Skin01.png + 立绘client/Assets/Res/Spine/Prefabs_Download/Role_Spine_17_Skin01.prefab
+R235: 
+R236: 
+R237: ★待策划定：①背景角色立绘方向(深海女海盗船长/美人鱼/深海女神)；⑤累充档位数值(夏日复盘)。其余美术已具体到场景+元素。

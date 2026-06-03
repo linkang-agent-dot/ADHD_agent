@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>航海之路 · 数值方案 v1（ROI=8）</title>
+<style>
+  :root{--bg:#071a2b;--card:#0f2c44;--card2:#13374f;--border:#1d4a66;--ink:#eaf4fb;--sub:#9fc0d6;
+    --gold:#f5c451;--teal:#34d6c4;--red:#ff6b6b;--amber:#ffb648;--good:#5bd6a0;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;background:
+    radial-gradient(1200px 600px at 80% -10%,#0e3350,transparent 60%),var(--bg);color:var(--ink);line-height:1.55;padding:28px 18px 60px}
+  .wrap{max-width:1000px;margin:0 auto}
+  h1{font-size:27px;text-align:center;background:linear-gradient(90deg,#f5c451,#ffe6a3,#34d6c4);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
+  .meta{text-align:center;color:var(--sub);font-size:13px;margin:6px 0 18px}
+  .kpi{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+  .kpibox{flex:1;min-width:150px;background:#0a2336;border:1px solid var(--border);border-radius:12px;padding:13px 16px}
+  .kpibox .k{font-size:12px;color:var(--sub)}
+  .kpibox .val{font-size:22px;font-weight:800;color:var(--gold);font-variant-numeric:tabular-nums}
+  #roiBox .val{color:var(--good)}
+  section{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--border);
+    border-radius:16px;padding:20px 22px;margin:16px 0}
+  h2{font-size:17px;color:var(--gold);margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.08)}
+  th{color:var(--teal);font-size:12.5px;background:rgba(52,214,196,.06)}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .out{font-weight:700;color:var(--gold)}
+  input[type=number]{width:78px;background:#0a2336;border:1px solid var(--border);color:var(--gold);
+    border-radius:7px;padding:5px 7px;font-size:13px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+  input:focus{outline:none;border-color:var(--gold)}
+  .cut td{color:#7d97a8;text-decoration:line-through}
+  .totrow td{border-top:2px solid var(--gold);font-weight:800;font-size:14.5px}
+  .foot{color:var(--sub);font-size:12.5px;margin-top:10px;line-height:1.7}
+  .foot b{color:var(--ink)}
+  .pill{display:inline-block;font-size:11px;padding:1px 8px;border-radius:20px;background:rgba(255,107,107,.16);
+    color:#ff9090;border:1px solid rgba(255,107,107,.35);font-weight:700}
+  .pill.k{background:rgba(91,214,160,.16);color:#7be3b4;border-color:rgba(91,214,160,.4)}
+  .gauge{height:10px;border-radius:6px;background:#0a2336;border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .gauge>i{display:block;height:100%;background:linear-gradient(90deg,#5bd6a0,#34d6c4)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>⚓ 航海之路 · 数值方案 v1</h1>
+  <div class="meta">目标 ROI = 8（对齐尼罗/春节转盘）· 口径：产出钻价值 ÷ 实付钻 · 神秘宝箱→珍珠贝进度阶段奖 · 岛屿不升级（单档）· 内容不变·数量可调</div>
+
+  <div class="kpi">
+    <div class="kpibox"><div class="k">实付（买659罗盘·钻）</div><div class="val">164,750</div></div>
+    <div class="kpibox"><div class="k">目标产出（ROI 8·钻）</div><div class="val">1,318,000</div></div>
+    <div class="kpibox"><div class="k">当前产出（钻）</div><div class="val" id="totOut">—</div></div>
+    <div class="kpibox" id="roiBox"><div class="k">当前 ROI</div><div class="val" id="roi">—</div>
+      <div class="gauge"><i id="gauge" style="width:0"></i></div></div>
+  </div>
+
+  <section>
+    <h2>各岛产出数值（改 E 值 → 实时算 ROI）</h2>
+    <table id="tbl">
+      <tr><th>岛</th><th>格数</th><th class="num">命中/700抽</th><th>产出内容（不变）</th>
+          <th class="num">单档期望 E（钻/落点）</th><th class="num">700抽产出（钻）</th></tr>
+      <tbody id="rows"></tbody>
+      <tr><td colspan="6" style="padding-top:14px;color:var(--teal);font-weight:700">起始岛过路（隐藏大头）</td></tr>
+      <tr id="startRow"></tr>
+      <tr><td>神秘宝藏(随机踩中)</td><td>1浮动</td><td class="num">—</td><td>信物/金币/加速</td><td class="num"><span class="pill">已转下方进度奖</span></td><td class="num">0</td></tr>
+      <tr><td colspan="6" style="padding-top:14px;color:var(--teal);font-weight:700">阶段奖励（按抽数·8档达标各领1次·700抽达末档全领）</td></tr>
+      <tr><td>阶段奖励(按抽数)</td><td id="stageCnt">8档</td><td class="num">阈值20~700全达</td><td>金币/海神罗盘等</td>
+          <td class="num" style="text-align:left">各档值<input type="text" id="stageVals" value="2500,2500,7500,7500,15000,15000,25000,25000" style="width:210px;text-align:left"></td>
+          <td class="num out" id="stageOut">—</td></tr>
+      <tr><td colspan="6" style="padding-top:14px;color:var(--teal);font-weight:700">珍珠贝进度阶段奖（= 原神秘宝箱 · 地格拾取 · 阈值递增封顶·可一直领）</td></tr>
+      <tr><td>珍珠贝进度奖</td><td>4格浮动</td><td class="num" id="pearlHit">拾取~117</td>
+          <td>累计满阈值→开神秘宝箱；每档所需珍珠贝按下方序列递增，末值自动续(封顶)</td>
+          <td class="num" style="text-align:left">增量<input type="text" id="incSeq" value="1,2,3,4,4,4,6,6,6,8,8,8,8,10" style="width:190px;text-align:left"> ·箱<input type="number" id="boxVal" value="15300" step="500" style="width:60px"></td>
+          <td class="num out" id="progOut">—</td></tr>
+      <tr class="totrow"><td colspan="5">合计产出（钻）</td><td class="num out" id="totOut2">—</td></tr>
+    </table>
+    <div class="foot">
+      • <b>命中率均匀</b>：每格 1/24/掷，700抽 = 每格 ≈29.17 次落点（已用宝藏岛校验）。<br>
+      • <b>起始岛跨越</b>是隐藏大头（代码确认 landIndex&gt;24 即触发，REWARD_COUNT=2）：700抽跑 ≈102 圈，<b>每跨过起点 1 次给 2 个「钻石/幸运」奖励</b>（落点停在起始格本身就是一次跨越，已含其中，不另加）→ ≈204 次抽取，按 16 个升级岛均值结算。<span class="pill">改圈数看影响</span><br>
+      • <b>钻→美刀</b>：产出标称 500钻=$1；远洋金币单价10钻、钻石单价1钻（E值即按钻填）。<br>
+      • 钻石/幸运 <span class="pill">升级已砍·单档</span>，E 值是你要定的主旋钮；预填值正好压到 ROI 8。
+    </div>
+  </section>
+
+<script>
+  const SPEND=164750, LPT=700/24; // 实付钻, 每格命中/700抽
+  // 各岛：格数 + 默认单档E(钻/落点) + 内容
+  const isl=[
+    {k:'宝藏岛(统一小池)',t:4,e:2000,c:'远洋金币(代币)·大宝藏已删',fix:true},
+    {k:'钻石岛',t:4,e:500,c:'钻石×500(原lv1)',lvcut:true},
+    {k:'幸运岛①·资源',t:4,e:1008,c:'神秘金属/高级木板(原lv1)',lvcut:true},
+    {k:'幸运岛②·加速',t:4,e:1008,c:'3h/1h/30m通用加速(原lv1)',lvcut:true},
+    {k:'幸运岛③·养成',t:4,e:940,c:'传奇技能书/英雄装备材料袋(原lv1)',lvcut:true},
+    {k:'神秘岛',t:3,e:1008,c:'海神罗盘/远洋金币（后退删·经验待调·已砍）'},
+  ];
+  let passes=102;
+  const rows=document.getElementById('rows');
+  rows.innerHTML=isl.map((o,i)=>`<tr>
+    <td>${o.k}${o.lvcut?' <span class="pill">单档</span>':(o.fix?' <span class="pill k">保留</span>':'')}</td>
+    <td>${o.t}</td><td class="num">${(o.t*LPT).toFixed(1)}</td><td>${o.c}</td>
+    <td class="num"><input type="number" data-i="${i}" value="${o.e}" step="50"></td>
+    <td class="num out" id="o${i}">—</td></tr>`).join('');
+  document.getElementById('startRow').innerHTML=
+    `<td>起始岛</td><td>1</td><td class="num">${passes}圈×2</td>
+     <td>跨过起点随机2个「钻石/幸运」岛奖励</td>
+     <td class="num">圈数 <input type="number" id="passes" value="102" step="5"></td>
+     <td class="num out" id="startOut">—</td>`;
+
+  function fmt(n){return Math.round(n).toLocaleString()}
+  function calc(){
+    isl.forEach((o,i)=>{o.e=+document.querySelector(`input[data-i="${i}"]`).value||0;});
+    passes=+document.getElementById('passes').value||0;
+    // 阶段奖励(按抽数)：8档,700抽全部达标各领1次 → 总值=各档之和
+    const stageVals=(document.getElementById('stageVals').value||'0').split(',').map(s=>+s.trim()||0).filter(x=>x>0);
+    const stage=stageVals.reduce((a,b)=>a+b,0);
+    document.getElementById('stageCnt').textContent=stageVals.length+'档(700抽全领)';
+    let tot=0;
+    isl.forEach((o,i)=>{const out=o.t*LPT*o.e; document.getElementById('o'+i).textContent=fmt(out); tot+=out;});
+    // 起始：(过路passes + 落点LPT) ×2 抽，按16个升级岛(4钻+12幸)均值
+    const eDia=isl[1].e; // 钻石(index1) + 3幸运(index2/3/4)各4格
+    const avgPull=(4*eDia + 4*isl[2].e + 4*isl[3].e + 4*isl[4].e)/16;
+    const pulls=passes*2; // 跨过起点=每圈1次,落点已含其中,不再叠加
+    const startOut=pulls*avgPull;
+    document.getElementById('startOut').textContent=fmt(startOut);
+    document.getElementById('startRow').children[2].textContent=passes+'圈×2';
+    document.getElementById('stageOut').textContent=fmt(stage);
+    // 珍珠贝进度阶段奖（=原神秘宝箱）：常驻4格停留拾取 → ~116.7/700抽，每攒N个开1箱
+    const PEARL=700*4/24;
+    const seq=(document.getElementById('incSeq').value||'10').split(',').map(s=>+s.trim()||0).filter(x=>x>0);
+    const boxVal=+document.getElementById('boxVal').value||0;
+    // 自定义递增序列，末值自动续(封顶)；累计够本档增量就开1箱，可一直领
+    let cum=0, opens=0, idx=0;
+    while(true){ const inc=seq[Math.min(idx,seq.length-1)]; if(cum+inc>PEARL) break; cum+=inc; opens++; idx++; }
+    const pearlProg=opens*boxVal;
+    document.getElementById('progOut').textContent=fmt(pearlProg);
+    document.getElementById('pearlHit').textContent='拾取'+PEARL.toFixed(0)+'·开'+opens+'箱';
+    tot+=startOut+stage+pearlProg;
+    const roi=tot/SPEND;
+    document.getElementById('totOut').textContent=fmt(tot);
+    document.getElementById('totOut2').textContent=fmt(tot);
+    document.getElementById('roi').textContent=roi.toFixed(2)+'×';
+    const box=document.getElementById('roiBox'); const ok=Math.abs(roi-8)<=0.3;
+    document.getElementById('roi').style.color = ok?'var(--good)':(roi>8?'var(--red)':'var(--amber)');
+    document.getElementById('gauge').style.width=Math.min(100,roi/12*100)+'%';
+  }
+  document.querySelectorAll('input').forEach(el=>el.addEventListener('input',calc));
+  calc();
+</script>
+</body>
+</html>

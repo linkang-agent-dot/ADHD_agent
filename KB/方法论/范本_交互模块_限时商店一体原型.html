@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>限时商店 · 原型+说明一体（点哪讲哪）</title>
+<style>
+  :root{
+    --wood:#4D2E1A;--wood2:#3a2213;--cream:#F6E9C4;--cream3:#D9BD94;--ink:#331F0D;--ink2:#736652;
+    --green:#4DB366;--green-d:#338C4D;--blue:#4D9EDE;--yellow:#F7D44A;--gold:#DBA833;--red:#D94D4D;
+    --purple:#A666D9;--hl:#F0C74D;
+    --bg:#2b2b30;--pbg:#faf7f2;--pline:#ece2d3;--pmut:#8c8074;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--bg);display:flex;gap:22px;justify-content:center;align-items:flex-start;
+    padding:24px 18px 60px;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+
+  /* ===== 手机原型 ===== */
+  .phone{width:380px;height:676px;border-radius:30px;overflow:hidden;position:relative;flex:none;
+    background:var(--wood);box-shadow:0 18px 50px rgba(0,0,0,.5);border:7px solid #1a1a1d}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;
+    background:radial-gradient(120% 60% at 50% 0%,#5e3b22 0%,var(--wood) 55%,var(--wood2) 100%)}
+  .top{padding:15px 15px 9px;display:flex;align-items:center;gap:9px;color:var(--cream)}
+  .title{font-weight:800;font-size:19px;letter-spacing:1px;text-shadow:0 2px 0 rgba(0,0,0,.35)}
+  .timer{margin-left:auto;font-size:11px;background:rgba(0,0,0,.28);padding:4px 9px;border-radius:20px;color:var(--hl);font-weight:700}
+  .close{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;border:none;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.3)}
+  .cur{margin:0 13px 7px;background:rgba(0,0,0,.25);border-radius:13px;padding:7px 11px;display:flex;gap:13px;align-items:center}
+  .coin{display:flex;align-items:center;gap:5px;color:var(--cream);font-weight:700;font-size:13px}
+  .coin .ic{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px}
+  .ic.dia{background:radial-gradient(circle at 30% 30%,#9fe4ff,#3a8fd8)} .ic.gold{background:radial-gradient(circle at 30% 30%,#ffe79a,#e0a91e)}
+  .coin .plus{width:17px;height:17px;border-radius:50%;background:var(--green);color:#fff;border:none;font-weight:800;cursor:pointer;font-size:11px;line-height:1}
+  .flash{color:var(--hl)!important;transition:color .2s}
+  .grid{flex:1;overflow-y:auto;padding:5px 13px 16px;display:grid;grid-template-columns:1fr 1fr;gap:11px;align-content:start}
+  .grid::-webkit-scrollbar{width:0}
+  .card{background:var(--cream);border-radius:11px;padding:9px;position:relative;border:3px solid var(--cream3);
+    box-shadow:0 3px 5px rgba(0,0,0,.25);display:flex;flex-direction:column;gap:5px}
+  .card.q-blue{border-color:var(--blue)}.card.q-green{border-color:var(--green)}
+  .card.q-purple{border-color:var(--purple)}.card.q-gold{border-color:var(--gold)}
+  .card.done{filter:saturate(.5)}
+  .qtag{position:absolute;top:-1px;left:-1px;font-size:9.5px;font-weight:800;color:#fff;padding:2px 6px;border-radius:9px 0 9px 0}
+  .q-blue .qtag{background:var(--blue)}.q-green .qtag{background:var(--green)}.q-purple .qtag{background:var(--purple)}.q-gold .qtag{background:var(--gold)}
+  .corner,.disc{position:absolute;top:5px;right:5px;font-size:9px;font-weight:800;color:#fff;background:var(--red);padding:2px 5px;border-radius:7px}
+  .thumb{height:54px;border-radius:8px;display:grid;place-items:center;font-size:30px;background:linear-gradient(135deg,#fff7e4,#ead9b3);margin-top:7px}
+  .pname{font-size:11.5px;font-weight:700;color:var(--ink);line-height:1.2}
+  .price{display:flex;align-items:center;gap:4px;font-weight:800;font-size:13px;color:var(--ink)}
+  .price .pic{width:14px;height:14px;border-radius:50%}
+  .pic.dia{background:radial-gradient(circle at 30% 30%,#9fe4ff,#3a8fd8)}.pic.gold{background:radial-gradient(circle at 30% 30%,#ffe79a,#e0a91e)}
+  .price .old{color:#b3a892;text-decoration:line-through;font-size:10px;font-weight:600}
+  .buy{border:none;border-radius:9px;padding:6px 0;font-weight:800;font-size:12px;color:#fff;cursor:pointer;background:linear-gradient(#5cc878,var(--green-d));box-shadow:0 3px 0 #2a6e3d}
+  .buy:active{transform:translateY(2px);box-shadow:0 1px 0 #2a6e3d}
+  .mask{position:absolute;inset:0;border-radius:9px;display:grid;place-items:center;font-weight:800;font-size:14px;color:#fff;background:rgba(40,30,20,.6)}
+  .overlay{position:absolute;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:20}
+  .overlay.show{display:flex}
+  .dlg{width:264px;background:var(--cream);border-radius:15px;padding:16px;border:3px solid var(--cream3);box-shadow:0 10px 30px rgba(0,0,0,.4);text-align:center}
+  .dlg h4{margin:0 0 10px;color:var(--ink);font-size:15px}
+  .dlg .thumb{height:50px;width:50px;margin:0 auto 9px}
+  .dlg .row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink2);margin:4px 0}
+  .dlg .row b{color:var(--ink)} .dlg .total{font-size:14px;margin-top:7px;padding-top:7px;border-top:1px dashed var(--cream3)}
+  .dlg .btns{display:flex;gap:9px;margin-top:12px}
+  .dlg button{flex:1;border:none;border-radius:9px;padding:8px 0;font-weight:800;font-size:13px;cursor:pointer}
+  .dlg .cancel{background:#d6c6a6;color:var(--ink);box-shadow:0 3px 0 #b3a079}
+  .dlg .ok{background:linear-gradient(#5cc878,var(--green-d));color:#fff;box-shadow:0 3px 0 #2a6e3d}
+  .dlg button:active{transform:translateY(2px)}
+  .toast{position:absolute;left:50%;top:72px;transform:translate(-50%,-20px);z-index:30;background:rgba(40,28,16,.92);color:var(--cream);
+    padding:9px 16px;border-radius:22px;font-size:12.5px;font-weight:700;opacity:0;pointer-events:none;transition:all .35s;display:flex;align-items:center;gap:7px;border:1px solid rgba(240,199,77,.5)}
+  .toast.show{opacity:1;transform:translate(-50%,0)} .toast.err{background:rgba(150,40,40,.95);border-color:#ff9b9b}
+  .toast .gic{width:18px;height:18px;border-radius:4px;background:linear-gradient(135deg,#fff7e4,#ead9b3);display:grid;place-items:center;font-size:11px}
+
+  /* ===== 实时说明面板 ===== */
+  .panel{width:430px;background:var(--pbg);border-radius:16px;padding:18px 20px;align-self:stretch;
+    max-height:none;color:var(--ink);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+  .panel h2{font-size:17px;margin:0 0 3px;color:var(--wood)}
+  .panel .lead{font-size:12.5px;color:var(--pmut);margin-bottom:14px}
+  .panel .lead b{color:var(--green-d)}
+  .focus{border-radius:12px;padding:14px;background:#fff;border:1px solid var(--pline);border-left:5px solid var(--green);min-height:96px;transition:border-color .2s}
+  .focus.idle{border-left-color:#cfc6b8}
+  .focus.err{border-left-color:var(--red)}
+  .focus .act{font-weight:800;font-size:14px;margin-bottom:6px}
+  .focus .map{font-size:12.5px;color:#5c5346;line-height:1.6}
+  .focus .map .k{display:inline-block;font-size:10.5px;font-weight:800;color:#fff;background:var(--wood);padding:1px 7px;border-radius:5px;margin-right:6px}
+  .focus.idle .act{color:var(--pmut)}
+
+  .secT{font-size:11.5px;letter-spacing:1px;color:var(--wood);font-weight:800;margin:16px 0 7px}
+  /* 状态机条 */
+  .sm{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .pill{font-size:11.5px;padding:3px 11px;border-radius:20px;font-weight:700;border:2px solid transparent;transition:all .2s}
+  .pill.buy{background:#e7f4ec;color:var(--green-d)} .pill.sold{background:#ece6df;color:#867a6a}
+  .pill.hot{border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,199,77,.3);transform:scale(1.06)}
+  .mod{font-size:10.5px;padding:2px 8px;border-radius:12px;background:#fbe6cf;color:#b07d15;font-weight:700;opacity:.45;transition:opacity .2s}
+  .mod.on{opacity:1}
+  /* 流程 mini */
+  .flow{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+  .node{font-size:11px;padding:3px 9px;border-radius:8px;background:#f0eadf;color:#857a68;border:1px solid #e3d9c8;transition:all .2s}
+  .node.hot{background:var(--green);color:#fff;border-color:var(--green-d);font-weight:700}
+  .node.stop.hot{background:var(--red);border-color:#a83a3a}
+  .arr{color:#c9bca8;font-size:11px}
+  /* 轨迹 */
+  .trail{margin-top:6px;max-height:150px;overflow-y:auto;font-size:12px;border:1px solid var(--pline);border-radius:10px;background:#fff;padding:8px 10px}
+  .trail .t{padding:4px 0;border-bottom:1px dashed #efe7d8;color:#5c5346}
+  .trail .t:last-child{border-bottom:none} .trail .t b{color:var(--ink)}
+  .trail .empty{color:#b7ad9d;font-size:12px}
+  details{margin-top:14px;font-size:12.5px} summary{cursor:pointer;font-weight:700;color:var(--wood)}
+  details ul{margin:8px 0;padding-left:18px} details li{margin:3px 0;color:#5c5346}
+  .yel{color:var(--amber,#e08a1e);font-weight:700}
+</style>
+</head>
+<body>
+  <!-- ===== 原型 ===== -->
+  <div class="phone">
+    <div class="scene">
+      <div class="top">
+        <div class="title">限时商店</div>
+        <div class="timer" id="timer">剩 02:59:58</div>
+        <button class="close" onclick="ev('close')">×</button>
+      </div>
+      <div class="cur">
+        <div class="coin"><span class="ic dia">◆</span><span id="dia">1200</span><button class="plus" onclick="ev('plus','钻石')">+</button></div>
+        <div class="coin"><span class="ic gold">●</span><span id="gold">50000</span><button class="plus" onclick="ev('plus','金币')">+</button></div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+    <div class="overlay" id="overlay">
+      <div class="dlg">
+        <h4 id="dlg-name">商品</h4>
+        <div class="thumb" id="dlg-thumb">🎁</div>
+        <div class="row"><span>数量</span><b>×1</b></div>
+        <div class="row"><span>单价</span><b id="dlg-price">—</b></div>
+        <div class="row total"><span>合计</span><b id="dlg-total">—</b></div>
+        <div class="row"><span>当前余额</span><b id="dlg-bal">—</b></div>
+        <div class="btns"><button class="cancel" onclick="ev('cancel')">取消</button><button class="ok" onclick="ev('confirm')">确认</button></div>
+      </div>
+    </div>
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <!-- ===== 实时说明 ===== -->
+  <div class="panel">
+    <h2>交互说明 · 实时</h2>
+    <div class="lead">👈 点左边任意操作，<b>这里立刻讲对应的说明</b>（状态 / 动线 / 边界），不用两边对照。</div>
+
+    <div class="focus idle" id="focus">
+      <div class="act">还没操作</div>
+      <div class="map">点左边的「购买」「确认」「取消」「×」「+」试试 —— 每一下都会在这里映射到对应的交互规则。</div>
+    </div>
+
+    <div class="secT">状态机（当前焦点卡片）</div>
+    <div class="sm">
+      <span class="pill buy" id="sm-buy">可购买</span>
+      <span class="arr">→</span>
+      <span class="pill sold" id="sm-sold">已售罄（终态）</span>
+      <span style="margin-left:8px">修饰：</span>
+      <span class="mod" id="mod-disc">折扣</span>
+      <span class="mod" id="mod-quota">限购剩余</span>
+    </div>
+
+    <div class="secT">操作动线</div>
+    <div class="flow" id="flow">
+      <span class="node" id="n-buy">点购买</span><span class="arr">→</span>
+      <span class="node" id="n-direct">免确认</span><span class="arr">/</span>
+      <span class="node" id="n-confirm">确认弹窗</span><span class="arr">→</span>
+      <span class="node" id="n-cancel">取消</span><span class="arr">/</span>
+      <span class="node" id="n-ok">确认</span><span class="arr">→</span>
+      <span class="node stop" id="n-insuf">不足拦截</span><span class="arr">/</span>
+      <span class="node" id="n-pay">扣款</span><span class="arr">→</span>
+      <span class="node" id="n-dec">剩N-1</span><span class="arr">/</span>
+      <span class="node" id="n-sold">已售罄</span><span class="arr">→</span>
+      <span class="node" id="n-toast">toast</span>
+    </div>
+
+    <div class="secT">交互轨迹</div>
+    <div class="trail" id="trail"><div class="empty">（操作记录会出现在这里…）</div></div>
+
+    <details>
+      <summary>边界 / 异常 / 空态（规则·原型未演示）& 🟡待定</summary>
+      <ul>
+        <li>全局倒计时归零 → 整店「已结束」空态/自动关</li>
+        <li>中途退出：确认未点即退=不扣款；已扣款服务端事务完整</li>
+        <li>空态：无商品→占位插画；加载态：骨架屏+按钮loading防连点+网络失败回滚</li>
+        <li><span class="yel">🟡</span> 待定：对外标题 / 金币图标 / 刷新机制 / 免确认价格阈值 / 限时单品</li>
+        <li style="color:#3f9e5a">✓ 已解决：限购口径=A(纯个人限购) → 售罄/已购买合并为唯一终态</li>
+      </ul>
+    </details>
+  </div>
+
+<script>
+  const products=[
+    {id:1,name:"航海宝箱·特惠",icon:"🧰",q:"purple",cur:"dia",price:600,old:900,disc:"-33%",limit:1,bought:0},
+    {id:2,name:"传说船帆",icon:"⛵",q:"gold",cur:"dia",price:1500,limit:1,bought:0},
+    {id:3,name:"金币袋",icon:"💰",q:"blue",cur:"gold",price:8000,direct:true,limit:1,bought:0},
+    {id:4,name:"加速券×5",icon:"⏩",q:"green",cur:"gold",price:3000,limit:3,bought:1},
+    {id:5,name:"稀有罗盘",icon:"🧭",q:"purple",cur:"dia",price:300,limit:1,bought:0},
+    {id:6,name:"补给礼包",icon:"📦",q:"green",cur:"gold",price:2000,limit:1,bought:0},
+    {id:7,name:"限定旗帜",icon:"🚩",q:"gold",cur:"dia",price:800,limit:1,bought:1},
+  ];
+  let dia=1200,gold=50000,pending=null;
+  const QN={blue:"优",green:"精",purple:"史",gold:"传"};
+
+  function render(){
+    const g=document.getElementById('grid');g.innerHTML='';
+    products.forEach(p=>{
+      const sold=p.bought>=p.limit;
+      const c=document.createElement('div');c.className='card q-'+p.q+(sold?' done':'');
+      let corner='';
+      if(p.disc)corner=`<span class="disc">${p.disc}</span>`;
+      else if(p.limit>1&&!sold)corner=`<span class="corner">剩 ${p.limit-p.bought}/${p.limit}</span>`;
+      let price=`<span class="pic ${p.cur}"></span>${p.price}`+(p.old?` <span class="old">${p.old}</span>`:'');
+      let b=`<span class="qtag">${QN[p.q]}</span>${corner}<div class="thumb">${p.icon}</div><div class="pname">${p.name}</div><div class="price">${price}</div>`;
+      b+= sold ? `<button class="buy" disabled style="filter:grayscale(1);opacity:.6">购买</button><div class="mask">已售罄</div>`
+               : `<button class="buy" onclick="ev('buy',${p.id})">购买</button>`;
+      c.innerHTML=b;g.appendChild(c);
+    });
+    document.getElementById('dia').textContent=dia;
+    document.getElementById('gold').textContent=gold;
+  }
+
+  // ===== 说明面板联动 =====
+  function setFocus(act, mapHtml, err){
+    const f=document.getElementById('focus');
+    f.className='focus'+(err?' err':'');
+    f.querySelector('.act').textContent=act;
+    f.querySelector('.map').innerHTML=mapHtml;
+  }
+  function trail(txt){
+    const t=document.getElementById('trail');
+    if(t.querySelector('.empty'))t.innerHTML='';
+    const d=document.createElement('div');d.className='t';d.innerHTML=txt;
+    t.insertBefore(d,t.firstChild);
+  }
+  function hotSM(which){ // 'buy' | 'sold'
+    document.getElementById('sm-buy').classList.toggle('hot',which==='buy');
+    document.getElementById('sm-sold').classList.toggle('hot',which==='sold');
+  }
+  function mods(p){
+    document.getElementById('mod-disc').classList.toggle('on',!!(p&&p.disc));
+    document.getElementById('mod-quota').classList.toggle('on',!!(p&&p.limit>1));
+  }
+  function flow(ids){ // 高亮一条路径
+    document.querySelectorAll('#flow .node').forEach(n=>n.classList.remove('hot'));
+    ids.forEach(id=>document.getElementById('n-'+id)?.classList.add('hot'));
+  }
+
+  // ===== 交互事件入口（原型每个操作都过这里→联动说明）=====
+  function ev(type,arg){
+    if(type==='buy'){
+      const p=products.find(x=>x.id===arg); pending=p; mods(p); hotSM('buy');
+      if(p.direct){ flow(['buy','direct']);
+        setFocus('点「'+p.name+'」购买 · 软货币低价',
+          '<span class="k">操作动线</span>金币 + 低价 → <b>免确认直连买</b>（跳过二次确认）。下一拍直接扣款。');
+        trail('点购买 <b>'+p.name+'</b>（金币·免确认分支）');
+        doBuy(p); return;
+      }
+      flow(['buy','confirm']);
+      setFocus('点「'+p.name+'」购买 · 钻石',
+        '<span class="k">操作动线</span>钻石/需确认 → <b>弹二次确认弹窗</b>（商品/单价/合计/余额）。等你点 确认 或 取消。');
+      trail('点购买 <b>'+p.name+'</b>（钻石·确认分支）→ 弹确认');
+      openDlg(p); return;
+    }
+    if(type==='cancel'){ closeDlg(); hotSM('buy'); flow(['confirm','cancel']);
+      setFocus('点 取消','<span class="k">操作动线</span>关弹窗、回网格，<b>不扣款</b>，状态不变。');
+      trail('取消 → 不扣款'); return;
+    }
+    if(type==='confirm'){ const p=pending; closeDlg(); flow(['ok']); doBuy(p); return; }
+    if(type==='close'){ flow([]); hotSM('buy');
+      setFocus('点 × 关闭','<span class="k">操作动线</span>直接关闭回主界面，<b>无二次确认</b>。');
+      trail('点 × → 关闭（演示）'); toast('已关闭（演示：返回主界面）'); return;
+    }
+    if(type==='plus'){ setFocus('点 '+arg+' 的「+」','<span class="k">边界·引导</span>跳转到 '+arg+' 获取入口（货币不足时也走这）。');
+      trail('点 +'+arg+' → 跳获取入口'); toast('跳转'+arg+'获取'); return;
+    }
+  }
+
+  function openDlg(p){
+    document.getElementById('dlg-name').textContent=p.name;
+    document.getElementById('dlg-thumb').textContent=p.icon;
+    const unit=p.cur==='dia'?'钻石':'金币';
+    document.getElementById('dlg-price').textContent=p.price+' '+unit;
+    document.getElementById('dlg-total').textContent=p.price+' '+unit;
+    document.getElementById('dlg-bal').textContent=(p.cur==='dia'?dia:gold)+' '+unit;
+    document.getElementById('overlay').classList.add('show');
+  }
+  function closeDlg(){document.getElementById('overlay').classList.remove('show');}
+
+  function doBuy(p){
+    const unit=p.cur==='dia'?'钻石':'金币';
+    const bal=p.cur==='dia'?dia:gold;
+    if(bal<p.price){ flow(['ok','insuf']); hotSM('buy');
+      setFocus(unit+'不足，购买被拦截',
+        '<span class="k">边界·货币不足</span>确认时校验余额 '+bal+' < '+p.price+' → <b>红 toast 拦截，不扣款、不静默</b>，引导去获取。',true);
+      trail('<b>'+unit+'不足</b>（'+bal+'<'+p.price+'）→ 拦截，不扣款');
+      toast(unit+'不足，先去获取吧',true); return;
+    }
+    if(p.cur==='dia')dia-=p.price; else gold-=p.price;
+    flash(p.cur==='dia'?'dia':'gold');
+    p.bought++;
+    const sold=p.bought>=p.limit;
+    render(); mods(p);
+    if(sold){ flow(['ok','pay','sold','toast']); hotSM('sold');
+      setFocus('确认 · 余额足 → 买到上限',
+        '<span class="k">余额校验</span>扣 '+p.price+' '+unit+'（数字闪金光）。<span class="k">状态机</span>个人限购+1，<b>达上限 → 转唯一终态「已售罄」</b>。<span class="k">反馈</span>toast 1.9s 自动消失，不打断连买。');
+      trail('确认 → 扣'+p.price+' '+unit+'，<b>达上限→已售罄</b>');
+    }else{ flow(['ok','pay','dec','toast']); hotSM('buy');
+      setFocus('确认 · 余额足 → 限购递减',
+        '<span class="k">余额校验</span>扣 '+p.price+' '+unit+'。<span class="k">状态机</span>个人限购+1，未达上限 → <b>剩 '+(p.limit-p.bought)+'/'+p.limit+'，仍可购买</b>。<span class="k">反馈</span>toast 不打断。');
+      trail('确认 → 扣'+p.price+' '+unit+'，剩 '+(p.limit-p.bought)+'/'+p.limit);
+    }
+    toast('获得 '+p.name+' ×1',false,p.icon);
+  }
+
+  function flash(id){const e=document.getElementById(id);e.classList.add('flash');setTimeout(()=>e.classList.remove('flash'),500);}
+  let tT;
+  function toast(msg,err,icon){const t=document.getElementById('toast');t.className='toast'+(err?' err':'');
+    t.innerHTML=(icon?`<span class="gic">${icon}</span>`:'')+msg;void t.offsetWidth;t.classList.add('show');
+    clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),1900);}
+  let sec=3*3600-2;
+  setInterval(()=>{sec=Math.max(0,sec-1);const h=String(Math.floor(sec/3600)).padStart(2,'0'),
+    m=String(Math.floor(sec%3600/60)).padStart(2,'0'),s=String(sec%60).padStart(2,'0');
+    document.getElementById('timer').textContent='剩 '+h+':'+m+':'+s;},1000);
+  render();
+</script>
+</body>
+</html>

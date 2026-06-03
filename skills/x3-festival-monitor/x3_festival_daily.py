@@ -4,7 +4,8 @@
 
 口径差异（vs X2）：
   - 数仓：TRINO_HF / v1090.ods_user_order + v1090.dim_iap（X2 是 v1089.dl_user_order）
-  - 收入：USD 口径 = pay_status=1 且 currency_type IN ('usd','TOKEN') 取 actual_charge，否则 pay_price
+  - 收入：USD 口径 = pay_status=1；仅 currency_type='usd' 取 actual_charge，其余(含 TOKEN)取 pay_price(USD归一价)
+    （TOKEN 的 actual_charge 自 2026-06-02 起改记代币单位=USD×100，再取 actual_charge 会放大 100 倍）
   - 节日判定：X3 的 dim_iap.iap_type 不是干净的节日标记，改用 Pack ID 前缀圈定（见 FESTIVAL_IAP_PREFIXES）
   - 服段：默认全服（X3 节日按服龄分服上线，无统一日历服段）；如需限服改 SERVER_FILTER
   - 模块：先按 iap_id_name 关键词命中 MODULE_RULES，未命中则回退 dim_iap.iap_type2 末段
@@ -67,7 +68,10 @@ FALLBACK_PACK_IDS = ["210702", "210704", "210706", "210708", "210710",
                      "130020", "130021", "1002001"]
 
 # USD 收入表达式（X3 口径）
-REV_EXPR = "(CASE WHEN o.currency_type IN ('usd','TOKEN') THEN o.actual_charge ELSE o.pay_price END)"
+# ⚠️ TOKEN 货币的 actual_charge 自 2026-06-02 起改记代币单位(=USD×100)，不能再取 actual_charge。
+# pay_price 始终是 USD 归一价（usd/TOKEN/本地币皆然）；usd 的 actual==pay，故只有 usd 取 actual_charge。
+# （旧口径 currency_type IN('usd','TOKEN') 取 actual_charge 会把 TOKEN 订单放大 100 倍，D4/D5 整份日报灌水。）
+REV_EXPR = "(CASE WHEN o.currency_type = 'usd' THEN o.actual_charge ELSE o.pay_price END)"
 
 # R级分层：v1090.dl_user_rlevel_all_info 按日快照 user_id→rlevel(chaoR/daR/zhongR/xiaoR)。
 # ⚠️ 该分级表不全：会漏掉一部分真实付费用户（任何日期/game_cd 都查不到）。
@@ -269,7 +273,7 @@ def rl_join(asof_date):
 
 def ltv_join(asof_date):
     """累充兜底子查询：每个 user 截至 asof_date 的历史累充(USD)，用于分级表漏掉者的估算落档。"""
-    return ("(SELECT user_id, sum(CASE WHEN currency_type IN ('usd','TOKEN') "
+    return ("(SELECT user_id, sum(CASE WHEN currency_type = 'usd' "
             "THEN actual_charge ELSE pay_price END) AS ltv "
             "FROM v1090.ods_user_order "
             f"WHERE pay_status=1 AND partition_date <= '{asof_date}' GROUP BY user_id)")
@@ -732,7 +736,7 @@ def main():
     <div class="section-title">每日流水趋势</div>
     <div class="chart-row">
       <div class="chart-box"><div class="chart-label">总流水</div><canvas id="totalChart" class="canvas-200"></canvas></div>
-      <div class="chart-box"><div class="chart-label">节日流水（独立坐标轴）</div><canvas id="festChart" class="canvas-200"></canvas></div>
+      <div class="chart-box"><div class="chart-label">节日流水（独立坐标轴）· 点下标注当日占比(节日/总流水)</div><canvas id="festChart" class="canvas-200"></canvas></div>
     </div>
   </div>
   <div class="section">
@@ -909,7 +913,7 @@ function renderModBars() {{
   }}).join('');
 }}
 
-function drawTrend(canvasId, key, color, areaColor, blVal, blLabel) {{
+function drawTrend(canvasId, key, color, areaColor, blVal, blLabel, showPct) {{
   const canvas = $(canvasId), W0 = canvas.offsetWidth, H = 200;
   canvas.width = W0 * dpr; canvas.height = H * dpr;
   const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
@@ -923,7 +927,7 @@ function drawTrend(canvasId, key, color, areaColor, blVal, blLabel) {{
   if (blVal > 0) {{ const blY = yp(blVal); ctx.setLineDash([4,4]); ctx.strokeStyle = '#f97316'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(pad.left, blY); ctx.lineTo(W0 - pad.right, blY); ctx.stroke(); ctx.setLineDash([]); ctx.fillStyle = '#f97316'; ctx.font = '10px -apple-system,sans-serif'; ctx.textAlign = 'right'; ctx.fillText(blLabel, W0 - pad.right, blY - 5); }}
   ctx.beginPath(); ctx.moveTo(xp(0), yp(series[0])); for (let i = 1; i < n; i++) ctx.lineTo(xp(i), yp(series[i])); ctx.lineTo(xp(n-1), yp(0)); ctx.lineTo(xp(0), yp(0)); ctx.closePath(); ctx.fillStyle = areaColor; ctx.fill();
   ctx.beginPath(); ctx.moveTo(xp(0), yp(series[0])); for (let i = 1; i < n; i++) ctx.lineTo(xp(i), yp(series[i])); ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.stroke();
-  for (let i = 0; i < n; i++) {{ const sel = (i === currentDayIdx), r = sel ? 6 : 4; ctx.beginPath(); ctx.arc(xp(i), yp(series[i]), r, 0, Math.PI * 2); ctx.fillStyle = color; ctx.fill(); ctx.strokeStyle = sel ? '#fff' : '#1a1d27'; ctx.lineWidth = sel ? 2.5 : 2; ctx.stroke(); ctx.fillStyle = sel ? '#fff' : '#e2e8f0'; ctx.font = (sel ? 'bold 12px' : '11px') + ' -apple-system,sans-serif'; ctx.textAlign = 'center'; ctx.fillText('$' + series[i].toLocaleString(), xp(i), yp(series[i]) - (sel ? 16 : 12)); ctx.fillStyle = sel ? '#fff' : '#8892a4'; ctx.font = (sel ? 'bold ' : '') + '10px -apple-system,sans-serif'; ctx.fillText(allDays[i].day_label, xp(i), H - pad.bottom + 14); }}
+  for (let i = 0; i < n; i++) {{ const sel = (i === currentDayIdx), r = sel ? 6 : 4; ctx.beginPath(); ctx.arc(xp(i), yp(series[i]), r, 0, Math.PI * 2); ctx.fillStyle = color; ctx.fill(); ctx.strokeStyle = sel ? '#fff' : '#1a1d27'; ctx.lineWidth = sel ? 2.5 : 2; ctx.stroke(); ctx.fillStyle = sel ? '#fff' : '#e2e8f0'; ctx.font = (sel ? 'bold 12px' : '11px') + ' -apple-system,sans-serif'; ctx.textAlign = 'center'; ctx.fillText('$' + series[i].toLocaleString(), xp(i), yp(series[i]) - (sel ? 16 : 12)); ctx.fillStyle = sel ? '#fff' : '#8892a4'; ctx.font = (sel ? 'bold ' : '') + '10px -apple-system,sans-serif'; ctx.fillText(allDays[i].day_label, xp(i), H - pad.bottom + 14); if (showPct) {{ const tot = allDays[i].total || 0, pct = tot ? (allDays[i].festival / tot * 100) : 0; ctx.fillStyle = sel ? '#ffd166' : '#caa84a'; ctx.font = (sel ? 'bold ' : '') + '10px -apple-system,sans-serif'; ctx.textAlign = 'center'; ctx.fillText('占比 ' + pct.toFixed(0) + '%', xp(i), yp(series[i]) + 16); }} }}
 }}
 
 function buildModTabs() {{
@@ -1330,7 +1334,7 @@ function renderCompareDay() {{
 function renderAll() {{
   buildDayTabs(); renderKPI(); renderARPU(); renderModBars();
   drawTrend('totalChart', 'total', '#6c63ff', 'rgba(108,99,255,.1)', {bl_total_int}, '基线 {bl_total_str}');
-  drawTrend('festChart', 'festival', '#ffd166', 'rgba(255,209,102,.1)', 0, '');
+  drawTrend('festChart', 'festival', '#ffd166', 'rgba(255,209,102,.1)', 0, '', true);
   renderModTotals();
   buildModTabs(); drawModTrend();
   buildRFilter(); buildHrChips(); buildHrModeToggle(); drawHourly(); drawHourlyAll();

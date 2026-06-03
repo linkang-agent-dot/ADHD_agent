@@ -86,6 +86,7 @@
     cursor:pointer;border:1px solid rgba(0,0,0,.25);font-weight:800;transition:.15s;line-height:1.1}
   .cell:hover{transform:scale(1.07);box-shadow:0 0 0 2px var(--gold)}
   .cell.sel{box-shadow:0 0 0 3px var(--gold)}
+  .cell.bigt{box-shadow:0 0 0 3px #fff, 0 0 12px #f5c451}
   .cell .em{font-size:17px}.cell .id{font-size:9px;opacity:.75}
   .c-start{background:linear-gradient(180deg,#5bd6a0,#2f9e76);color:#06223a}
   .c-treasure{background:linear-gradient(180deg,#f5c451,#c98a23);color:#3a2400}
@@ -128,7 +129,7 @@
       <span><i style="background:#9be08a"></i>幸运 ×12</span>
       <span><i style="background:#b58af0"></i>神秘 ×3</span>
     </div>
-    <div class="foot" style="text-align:center">每隔一格是幸运岛(填充)，宝藏/钻石/神秘在另一半交替分布；起始岛在角。神秘宝藏🎁<b>浮动</b>刷新在 宝藏/钻石/幸运 上(按 BoxWeight)，不固定占格。👆点格子看产出。</div>
+    <div class="foot" style="text-align:center">每隔一格是幸运岛(填充)，宝藏/钻石/神秘在另一半交替分布；起始岛在角。<b>宝藏4格统一小池(大宝藏池104已删，落地需把3号格EventGroupID 104→105)</b>。神秘宝藏🎁<b>浮动</b>刷新在 宝藏/钻石/幸运 上(按 BoxWeight)，不固定占格。👆点格子看产出。</div>
   </section>
 
   <section>
@@ -153,7 +154,7 @@
     <h2><span class="n">2</span> 产出侧（落格 + 跑圈奖励）</h2>
     <table>
       <tr><th>来源</th><th>格数</th><th>产出</th><th>700抽口径标称值</th><th>升级加速？</th></tr>
-      <tr><td>宝藏岛</td><td>4</td><td>远洋金币(代币)</td><td class="num">大 $292 / 小 $350</td><td>—</td></tr>
+      <tr><td>宝藏岛</td><td>4</td><td>远洋金币(代币)</td><td class="num">统一小池 E2000钻/落点</td><td>统一(大宝藏删)</td></tr>
       <tr><td>钻石岛</td><td>4</td><td>钻石</td><td class="num killed">原 lv1-5 $117→$700</td><td><span class="tag del">升级已砍·塌单档🔧</span></td></tr>
       <tr><td>幸运岛</td><td>12</td><td>养成料/加速(3池)</td><td class="num killed">原 lv1-5 $235→$780</td><td><span class="tag del">升级已砍·塌单档🔧</span></td></tr>
       <tr><td>神秘岛</td><td>3</td><td>海神罗盘/金币/事件</td><td class="num">$257</td><td>后退<span class="tag del">已删</span> 经验+2<span class="tag todo">待调</span></td></tr>
@@ -211,9 +212,9 @@
   const islands=[
     {key:'start',em:'🏝️',nm:'起始岛',ct:'×1 · 不升级',ty:'复合',
       outs:[['随机 2 个岛的奖励','不含宝藏岛 / 神秘岛'],['触发','到达 或 路过 时']]},
-    {key:'treasure',em:'💰',nm:'宝藏岛',ct:'×4 · 不升级',ty:'代币',
-      outs:[['远洋金币(代币 1060)·大池','×3000 / 1500 / 600 / 400 / 200'],
-            ['远洋金币·小池','×1200 / 600 / 240 / 160 / 80'],
+    {key:'treasure',em:'💰',nm:'宝藏岛',ct:'×4 · 不升级 · 统一小池',ty:'代币',
+      outs:[['远洋金币(代币 1060)','×1200 / 600 / 240 / 160 / 80（4格统一，大宝藏已删）'],
+            ['期望','E≈2000钻/落点'],
             ['用途','兑换商店主货币来源']]},
     {key:'diamond',em:'💎',nm:'钻石岛',ct:'×4 · 不升级',ty:'钻石',
       outs:[['钻石(1002)','原 lv1-5 ×500/1000/1500/2000/3000'],
@@ -258,8 +259,9 @@
   let html='<div class="ringcenter"><span class="big">🧭</span><span>罗盘 / 中心</span><span style="font-size:11px">掷骰 1~6</span></div>';
   coords.forEach((rc,i)=>{
     const id=i+1, type=LAY[id];
-    html+=`<div class="cell c-${type}" data-type="${type}" style="grid-row:${rc[0]};grid-column:${rc[1]}">
-      <span class="em">${EM[type]}</span><span class="id">${id}</span></div>`;
+    const big=false; // 宝藏已统一小池，无大宝藏
+    html+=`<div class="cell c-${type}${big?' bigt':''}" data-type="${type}" title="${big?'大宝藏岛(池104)':''}" style="grid-row:${rc[0]};grid-column:${rc[1]}">
+      <span class="em">${EM[type]}</span><span class="id">${id}${big?'·大':''}</span></div>`;
   });
   ring.innerHTML=html;
   ring.querySelectorAll('.cell').forEach(el=>el.addEventListener('click',()=>{
