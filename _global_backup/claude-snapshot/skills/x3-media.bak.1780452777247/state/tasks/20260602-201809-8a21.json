@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "task_id": "20260602-201809-8a21",
+  "status": "running",
+  "type": "general",
+  "user_prompt": "深海节兑换-新主题纪念卡概念图：沉船黄金宝库——深海巨兽守护沉没海盗帆船宝藏。区别于原月心珍珠/美人鱼,深蓝+金,gacha卡风。",
+  "params": {
+    "media_kind": "image",
+    "model": "gpt",
+    "reference_images": [],
+    "output_dir": "C:\\Users\\linkang\\_voyage_work",
+    "output_filename": "exchange_theme_sunkenvault_card_v1",
+    "postprocess": "none",
+    "prompt_en": "A vertical collectible memorial card illustration for a deep-sea pirate treasure festival, theme SUNKEN GOLD VAULT. Scene: a majestic ancient deep-sea guardian creature (a giant barnacle-and-coral-encrusted sea leviathan / colossal ancient sea turtle) coiled protectively around a sunken pirate galleon shipwreck overflowing with glowing gold coins and treasure chests, deep abyssal blue water with shafts of light, bioluminescent particles, swirling gold treasure glow, dramatic and epic. Ornate golden card frame, rich deep-blue + treasure-gold palette, high-detail painted game gacha card art, cinematic. Clearly DIFFERENT from any mermaid or pearl/shell theme. No text, no UI, portrait orientation.",
+    "note": "re-theme exchange cosmetic, distinct from pearl/mermaid; concept card for 沉船黄金宝库 theme"
+  },
+  "started_at": "2026-06-02T20:18:34.3403294+08:00",
+  "finished_at": null,
+  "result": {
+    "saved_to": [],
+    "history_lines_appended": 0,
+    "backend": null
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

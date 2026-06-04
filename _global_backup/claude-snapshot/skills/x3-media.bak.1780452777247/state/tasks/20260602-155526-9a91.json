@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "20260602-155526-9a91",
+  "status": "success",
+  "type": "general",
+  "user_prompt": "海盗金币喷发弹脸特效【视频v2】：爆一下就行——黑底，8~12枚大金币从中心干脆爆开朝屏幕，快速收/淡出。约1.5s、少粒子、无烟花光条（抽帧不穿帮）。",
+  "params": {
+    "media_kind": "video",
+    "model": "seadance",
+    "duration_seconds": 1.5,
+    "reference_images": [
+      "C:\\x3-project\\client\\Assets\\Res\\UI\\Spirits\\ItemIcons\\icon_Monopoly_currency.png"
+    ],
+    "output_dir": "C:\\Users\\linkang\\_voyage_work",
+    "output_filename": "coinburst_video_v2",
+    "postprocess": "none",
+    "prompt_en": "A very short, snappy game VFX clip on a PURE SOLID BLACK background: a SINGLE quick BURST of golden pirate coins popping outward, then settling. The coins look exactly like the reference image - a round gold coin embossed with a ship steering wheel, LARGE and clearly readable. Motion: ONE sharp pop from the center - about 8 to 12 big gold coins burst outward toward the camera and fan out a bit, then quickly settle and fade. Keep it SIMPLE and CLEAN for frame extraction: few coins, minimal sparkles, NO long radiating light rays, NO dense particle cloud, NO firework look. Punchy and fast, about 1.5 seconds total, a single burst only - NOT a fountain, NOT a slow spread, NOT a long fall. Bright treasure-gold tones, clean mobile game VFX, no text, no numbers, no UI, no characters, black background only.",
+    "note": "v2 per feedback: fewer particles (clean frame extraction, no seams), faster ~1.5s, single punchy pop only. coin ref Item 1060."
+  },
+  "started_at": "2026-06-02T15:55:30+08:00",
+  "finished_at": "2026-06-02T16:05:10+08:00",
+  "result": {
+    "saved_to": ["C:\\Users\\linkang\\_voyage_work\\coinburst_video_v2.mp4"],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

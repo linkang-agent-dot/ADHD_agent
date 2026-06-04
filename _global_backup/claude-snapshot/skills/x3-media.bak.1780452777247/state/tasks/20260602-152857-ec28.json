@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "task_id": "20260602-152857-ec28",
+  "status": "success",
+  "type": "general",
+  "user_prompt": "海盗金币喷发弹脸特效【视频】：黑底，金色舵轮海盗金币从中心起爆→扇形喷向屏幕+四周带金光拖尾→下落消散。深海节航海之路掉金币格的弹脸特效，视频先确认动作，OK后再烘焙成序列帧。",
+  "params": {
+    "media_kind": "video",
+    "model": "seadance",
+    "reference_images": [
+      "C:\\x3-project\\client\\Assets\\Res\\UI\\Spirits\\ItemIcons\\icon_Monopoly_currency.png"
+    ],
+    "output_dir": "C:\\Users\\linkang\\_voyage_work",
+    "output_filename": "coinburst_video_v1",
+    "postprocess": "none",
+    "prompt_en": "A short game VFX clip on a PURE SOLID BLACK background: a celebratory explosion of golden pirate coins. The coins look exactly like the reference image - a round gold coin embossed with a ship steering wheel. Motion: a bright flash bursts at the center, then many gold coins erupt outward in a fan / fountain, spraying toward the camera and across the screen with golden light trails and sparkles, reaching peak spread, then the coins arc and fall away, dissipating into fading gold sparkles. Bright saturated treasure-gold tones, clean mobile game particle VFX style, energetic and juicy, no text, no numbers, no UI, no characters, black background only.",
+    "note": "VIDEO first (workflow corrected): confirm motion via video, then bake to sprite sheet frames. black bg for additive keying. coin ref from config Item 1060 DK_icon_Monopoly_currency."
+  },
+  "started_at": "2026-06-02T15:29:10+08:00",
+  "finished_at": "2026-06-02T15:46:30+08:00",
+  "result": {
+    "saved_to": [
+      "C:\\Users\\linkang\\_voyage_work\\coinburst_video_v1.mp4"
+    ],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

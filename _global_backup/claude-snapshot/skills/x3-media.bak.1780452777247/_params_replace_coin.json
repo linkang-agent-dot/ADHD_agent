@@ -1,0 +1,6 @@
+{
+  "prompt": "Using the first reference image as the base, replace ONLY the golden coin that is floating/tossed above the character's right hand (viewer's right side) with the exact coin design shown in the second reference image (a circular gold-rimmed coin with a stylized blue 'M' logo and blue upward arrow on a textured blue face). Keep the character, his pose, facial expression, mustache, hood, goggles, rings, clothing, weapons, background lighting, camera angle, and composition COMPLETELY UNCHANGED. The replacement coin must match the original coin's exact position, rotation angle, 3D tilt, scale, and depth, preserving the original floating/tossing motion with matching rim lighting, soft shadow, and highlight direction. The replacement coin should blend naturally into the scene with the same 3D stylized game-art rendering style as the rest of the image. Output ONE SINGLE edited image, no grid, no collage.",
+  "model": "gemini",
+  "num_images": 1,
+  "aspect_ratio": "4:3"
+}

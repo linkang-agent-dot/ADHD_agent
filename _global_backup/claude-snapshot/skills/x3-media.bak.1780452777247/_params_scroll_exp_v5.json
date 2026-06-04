@@ -1,0 +1,6 @@
+{
+  "prompt": "Take the reference image as the base. Keep the entire composition — scroll, parchment paper, leather strap, copper buckle, tilt angle, lighting, 'EXP' letter size/position/3D style, transparent background — COMPLETELY IDENTICAL to the reference. THE ONLY CHANGE: add a thick bold outline/stroke around the 'EXP' letters to make them POP with high contrast against the yellow parchment. Outline specs: dark reddish-brown / chocolate-brown color (much darker than the golden-yellow letter fill), thickness approximately 8-12% of each letter's height, applied uniformly around the entire outer edge of all three letters (E, X, P), wrapping around the 3D extruded sides as well so the dark outline follows each letter's silhouette from all viewing angles. The outline should be clean and solid (not blurry), slightly rounded corners. The inner letter fill remains the same warm golden-yellow gradient as the reference. Result: the EXP letters clearly separate from the yellow scroll parchment behind them. Do NOT change the scroll shape, the strap, the buckle, the letter colors, the letter placement, or the background. ONE SINGLE scroll icon, transparent PNG, no extra elements.",
+  "model": "gemini",
+  "num_images": 1,
+  "aspect_ratio": "1:1"
+}

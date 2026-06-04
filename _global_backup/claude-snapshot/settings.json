@@ -1,0 +1,40 @@
+{
+  "env": {
+    "API_TIMEOUT_MS": "3000000"
+  },
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "model": "opus[1m]",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -ExecutionPolicy Bypass -NoProfile -File C:\\Users\\linkang\\.claude\\scripts\\check_flags.ps1",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python C:\\ADHD_agent\\.claude\\quality-gate\\pending_verify_gate.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
+  "skipAutoPermissionPrompt": true
+}

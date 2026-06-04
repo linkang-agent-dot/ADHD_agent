@@ -1,0 +1,112 @@
+---
+name: x3
+description: "X3 节日累充活动用 TaskType 902 + ActvOnline.RechargePointPackWhitelist 实现\"只有名单内礼包计入本活动累充\""
+metadata: 
+  node_type: memory
+  type: reference
+  originSessionId: 9fa379f1-8095-4bed-9a37-401c299ba495
+---
+
+## 背景
+
+每个节日活动（尼罗/情人节/夏日等）有自己的"累充活动"档位奖励，原先所有礼包都计入所有节日累充进度（共用 TaskType 900 全局累充），节日间会互相推进进度。改造为"累充隔离"后，每个节日只认自己白名单内的礼包。
+
+## 三张表的协同配置
+
+### 1. TaskType.xlsx — 定义 902 类型
+
+| ID | 模块 | EnumName | EventTxt |
+|----|------|----------|----------|
+| 900 | 累充 | RechargePointCount | 累计获得充值积分{0} |
+| 902 | 累充 | ActvRechargePointCount | 累计获得活动充值积分{0} |
+
+- 902 是新增的活动隔离版累充任务类型，需要 Parameter1 指定属于哪个 ActvOnline.ContentID
+- 程序端按 EnumName 识别行为
+
+#### ⚠️ ParamCount 不是 Excel 字段（高频踩坑）
+
+`ParamCount` 是导表脚本 `Tools/table_exporter/def/tasktype_def.py` **自动计算**的字段，不在 TaskType.xlsx 表里。
+
+计算逻辑（tasktype_def.py L31-L50）：
+1. 默认：按 EventTxt 里 `{N}` 占位符的最大下标+1
+2. 若 ID 在 `SPECIAL_PARAMS_COUNTS` 字典里 → 用字典里的值覆盖
+
+需要让 902 按 `(TaskType, ContentID)` **两维 key** 读进度（不是单维），必须在 `SPECIAL_PARAMS_COUNTS` 加 `902: 2`（仅改 EventTxt 文案没用，因为 902 只想显示数字不显示活动名）。
+
+历史已配 ParamCount=2 的 ID：100（制作）/400（情报）/510（奇观）。
+
+### 2. ActvOnline.xlsx — 配白名单
+
+| 列 | 字段 | 取值 |
+|----|------|-----|
+| col51 | RechargePointPackWhitelist | `Pack.ID` 列表，`|` 分隔 |
+
+- **非空** → 启用白名单，只有名单内 Pack 推进本活动累充
+- **为空** → 沿用旧逻辑（走 900 全局累充），不启用隔离
+- 范例：100594（尼罗累充）填 13 包；100595（夏日累充）填 16 包
+
+### 3. ActvTask.xlsx — 任务行 TaskType 改 902
+
+累充活动的每个档位是一行任务，**全部档位都要改**（不是只改第一行）：
+
+| 列 | 改动 |
+|----|------|
+| col4 TaskType | 900 → 902 |
+| col6 Parameter1 | 填本活动的 ContentID（如 594/595），程序据此识别加分目标 |
+
+**注意**：一个累充活动通常有 10 个档位（累计积分 100/400/1000/2000/4000/7000/10000/13000/16000/20000），改的时候 10 行联动。
+
+## 程序侧加分流程（约定）
+
+玩家买礼包后：
+1. 先查 `DoNotRechargePoints`（全局黑名单）→ 在 → 全局不计，结束
+2. 不在 → 触发 TaskType=900（全局累充积分 +）
+3. 遍历所有 IsOn=1 且 RechargePointPackWhitelist 非空的活动 → 若该 Pack 在该活动名单内 → 触发 TaskType=902，按 Parameter1 给对应活动加分
+
+## 配置案例
+
+### 尼罗累充 100594（13 个 Pack）
+特惠5档 + 抽奖券4档 + 家具 + 主城拜访 + 通行证2档：
+`210602|210604|210606|210608|210610|210612|210613|210614|210615|210616|210617|130020|130021`
+
+### 夏日恋语累充 100595（16 个 Pack，复用情人节 Pack）
+特惠5档 + 抽奖券4档 + 拜访礼包 + 装饰特惠3档 + 通行证2档：
+`210702|210704|210706|210708|210710|210712|210713|210714|210715|210717|210921|210917|210918|210919|130020|130021`
+
+（皮肤礼包 210716/210718 不入白名单——本期决策）
+
+## 实现 commit 链
+
+- ActvOnline 加白名单列 + 100594: `3c216b5`
+- ActvOnline 100595 白名单: `8904cc9`
+- TaskType 新增 902 + ActvTask 594/595 全档位改 902: `1d3caa9`
+- tasktype_def.py SPECIAL_PARAMS_COUNTS 加 `902: 2`: `042daba`
+
+## 上线前自检
+
+1. 导表机器人产出最新 ActvOnline / ActvTask / TaskType（客户端 + 服务端都拉了）
+2. TaskType 902 的 ParamCount 实际值=2（程序自动算，配置侧不可见，通过任务系统按 ContentID 读进度验证）
+3. 一个测试账号买名单内 Pack → 仅本活动累充推进；买名单外 Pack → 仅 TaskType 900 全局累充推进
+4. ActvTask 594/595 全 10 档位 Parameter1 都填了对应 ContentID
+
+## 新增节日 Pack 时必检规则
+
+**每次给某节日新增/补加付费 Pack（如 210630/631/632 尼罗装饰阶梯礼包、1002001 许愿池礼包），必须回头检查对应节日累充白名单是否需要加入**。
+
+| 实战 BUG | 漏配 | 修复 commit |
+|----------|------|--------------|
+| 尼罗 v2 新增装饰阶梯 210630/631/632 | 100594 白名单没加 | `b361846` |
+| X3NEW-761 许愿池许愿礼包 Pack 1002001（跨节日复用） | 100594 + 100595 都没加 | `6ae97fa` |
+
+判断标准：
+- 节日**专属** Pack → 一定要加进**该节日累充**白名单
+- 跨节日通用 Pack（如许愿池 1002001）→ 当前在用的所有节日累充白名单都要加
+- 免费 Pack（Price=None/0）→ 一般不计入累充，可不加
+
+新增 Pack 后开发联调时必带的测试 case：买这个 Pack 看节日累充进度涨不涨。
+
+## 相关
+
+- 改 tsv 不碰 xlsx（导入只认 tsv）见 [[reference_x3_tsv_export_migration]]
+- 必须复盘漏行问题 see [[feedback_proactive_knowledge_update]]
+- 通用 Pack ID 段见 [[reference_x3_config]]

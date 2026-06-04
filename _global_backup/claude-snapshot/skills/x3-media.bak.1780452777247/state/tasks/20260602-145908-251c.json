@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "task_id": "20260602-145908-251c",
+  "status": "success",
+  "type": "general",
+  "user_prompt": "海盗金币喷发弹脸特效序列帧测试：4x4=16帧 sprite sheet，黑底，金色海盗金币喷发炸开扇形撒开带金光拖尾再下落消散。深海节航海之路大富翁掉金币格的弹脸特效，先测AI质量。",
+  "params": {
+    "model": "gpt",
+    "reference_images": [],
+    "output_dir": "C:\\Users\\linkang\\_voyage_work",
+    "output_filename": "coinburst_spritesheet_v1",
+    "postprocess": "none",
+    "prompt_en": "A 4x4 grid sprite sheet (16 sequential animation frames, read left-to-right then top-to-bottom) of a GOLD COIN EXPLOSION visual effect for a mobile game, pirate / deep-sea treasure theme. Frame progression: frame 1 a small bright burst at center; frames 2-6 a fountain of golden pirate coins erupting outward in a fan shape with golden light trails and sparkles; frames 7-11 coins arc outward and spread across the cell reaching peak spread with shimmering gold glow; frames 12-16 coins arc downward and fall, the burst dissipating into fading sparkles. Shiny golden pirate coins, warm gold and amber treasure tones, radiant light, particle sparkles. PURE SOLID BLACK background in every cell (for additive blending in engine). Clean game VFX art style, bright saturated, no text, no numbers, no UI, no characters, no visible grid lines or borders between cells, each cell same framing and scale, consistent coin design across all frames.",
+    "note": "flipbook viability test; black bg additive; 4x4 16 frames"
+  },
+  "started_at": "2026-06-02T14:59:30+08:00",
+  "finished_at": "2026-06-02T15:14:30+08:00",
+  "result": {
+    "saved_to": [
+      "C:\\Users\\linkang\\_voyage_work\\coinburst_spritesheet_v1_1.png",
+      "C:\\Users\\linkang\\_voyage_work\\coinburst_spritesheet_v1_2.png"
+    ],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

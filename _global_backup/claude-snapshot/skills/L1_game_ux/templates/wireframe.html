@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏界面原型 - [功能名称]</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            min-height: 100vh;
+        }
+        
+        .device-frame {
+            width: 375px;
+            height: 812px;
+            margin: 20px auto;
+            background: #16213e;
+            border-radius: 40px;
+            padding: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .status-bar {
+            height: 44px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 14px;
+        }
+        
+        .game-screen {
+            height: calc(100% - 44px - 120px);
+            background: linear-gradient(180deg, #0f0f23 0%, #1a1a3e 100%);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hud-top {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .health-bar {
+            width: 120px;
+            height: 16px;
+            background: #333;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .health-fill {
+            width: 75%;
+            height: 100%;
+            background: linear-gradient(90deg, #ef4444, #f87171);
+        }
+        
+        .resource-display {
+            display: flex;
+            gap: 10px;
+            font-size: 12px;
+        }
+        
+        .resource {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .control-area {
+            height: 120px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+        
+        .joystick {
+            width: 80px;
+            height: 80px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .joystick-inner {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+        }
+        
+        .skill-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .skill-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: 2px solid rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        
+        .skill-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .skill-btn.ultimate {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        
+        /* 注释标注 */
+        .annotation {
+            position: absolute;
+            background: #fbbf24;
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        
+        .annotation::after {
+            content: '';
+            position: absolute;
+            border: 6px solid transparent;
+        }
+        
+        .annotation.left::after {
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-left-color: #fbbf24;
+        }
+        
+        /* 控制面板 */
+        .controls-panel {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            background: #fff;
+            color: #333;
+            padding: 20px;
+            border-radius: 12px;
+            width: 280px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .controls-panel h3 {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .control-item {
+            margin-bottom: 15px;
+        }
+        
+        .control-item label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .control-item input[type="range"] {
+            width: 100%;
+        }
+        
+        .control-item input[type="color"] {
+            width: 40px;
+            height: 30px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .notes {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .notes h4 {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .notes ul {
+            font-size: 12px;
+            color: #666;
+            padding-left: 15px;
+        }
+        
+        .notes li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="device-frame">
+        <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 100%</span>
+        </div>
+        
+        <div class="game-screen">
+            <div class="hud-top">
+                <div>
+                    <div class="health-bar">
+                        <div class="health-fill"></div>
+                    </div>
+                    <div style="font-size: 10px; margin-top: 4px;">Lv.25 勇者</div>
+                </div>
+                <div class="resource-display">
+                    <div class="resource">💰 12,500</div>
+                    <div class="resource">💎 88</div>
+                </div>
+            </div>
+            
+            <!-- 游戏内容区域 -->
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; opacity: 0.5;">
+                <div style="font-size: 48px;">⚔️</div>
+                <div style="font-size: 12px; margin-top: 10px;">游戏画面区域</div>
+            </div>
+            
+            <!-- 标注示例 -->
+            <div class="annotation left" style="top: 10px; left: -100px;">
+                HP条: 始终可见
+            </div>
+        </div>
+        
+        <div class="control-area">
+            <div class="joystick">
+                <div class="joystick-inner"></div>
+            </div>
+            
+            <div class="skill-buttons">
+                <div class="skill-btn">1</div>
+                <div class="skill-btn">2</div>
+                <div class="skill-btn">3</div>
+                <div class="skill-btn ultimate">R</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls-panel">
+        <h3>🎮 原型控制</h3>
+        
+        <div class="control-item">
+            <label>血量百分比</label>
+            <input type="range" min="0" max="100" value="75" 
+                   oninput="document.querySelector('.health-fill').style.width = this.value + '%'">
+        </div>
+        
+        <div class="control-item">
+            <label>主题色</label>
+            <input type="color" value="#3b82f6"
+                   oninput="document.querySelectorAll('.skill-btn:not(.ultimate)').forEach(btn => btn.style.background = 'linear-gradient(135deg, ' + this.value + ', #1d4ed8)')">
+        </div>
+        
+        <div class="notes">
+            <h4>📝 设计说明</h4>
+            <ul>
+                <li>HP条始终显示在左上角</li>
+                <li>技能按钮在右下角，拇指可达</li>
+                <li>摇杆在左下角控制移动</li>
+                <li>大招按钮比普通技能大20%</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // 技能按钮点击效果
+        document.querySelectorAll('.skill-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>

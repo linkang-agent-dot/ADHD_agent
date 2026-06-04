@@ -1,0 +1,54 @@
+{
+  "game_name": "Last Asylum Plague",
+  "display_name": "Last Asylum: Plague",
+  "game_slug": "last-asylum-plague",
+
+  "app_store": {
+    "ios_id": "6756989323",
+    "android_package": "com.phs.global"
+  },
+
+  "discord": {
+    "guild_id": "1417476085179748507",
+    "high_priority": {
+      "patch-notes": "1451055508625559634",
+      "official-post": "1451055410646614127",
+      "status-update": "1481179211581489162",
+      "dev-dialogue": "1464202561845461045",
+      "giftcode": "1451055610626969640",
+      "event-news": "1451057019510591558"
+    },
+    "medium_priority": {
+      "suggestions": "1417476086714863691",
+      "bug-report": "1417476086807265351",
+      "general": "1417476086425583706",
+      "ask-for-help": "1417476086597685389",
+      "poll": "1477949808579969127"
+    }
+  },
+
+  "reddit": {
+    "subreddit": "LastAsylumPlague"
+  },
+
+  "facebook": {
+    "page_url": "https://www.facebook.com/lastasylumplague/"
+  },
+
+  "giftcode_url": "https://www.pocketgamer.com/last-asylum-plague/codes/",
+
+  "sensortower": {
+    "app_id": "com.phs.global"
+  },
+
+  "dataai": {
+    "market": "google-play",
+    "app_id": "com.phs.global"
+  },
+
+  "output": {
+    "vault_path": "/Users/zouhanling/Desktop/zoe的仓库",
+    "folder": "Last Asylum Plague",
+    "filename_pattern": "Last Asylum Plague监控日报{date}"
+  }
+}

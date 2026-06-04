@@ -1,0 +1,47 @@
+{
+  "version": 2,
+  "description": "成就徽章 5 张底板固定资源。icon_scale：中央图标相对底板宽/高较小边的比例上限，需落在内凹平面内，勿压金属外框；可按底板单独调。",
+  "default_icon_scale": 0.35,
+  "bases": [
+    {
+      "id": "01",
+      "name": "hex_sage",
+      "label_zh": "六边形·灰绿金属框",
+      "file": "achievement_badge_bases/base_01_hex_sage.png",
+      "source_uuid": "3d134b73-f17e-4a21-bca6-ad3eee742e59",
+      "icon_scale": 0.33
+    },
+    {
+      "id": "02",
+      "name": "crown_orange",
+      "label_zh": "皇冠·橙心金框",
+      "file": "achievement_badge_bases/base_02_crown_orange.png",
+      "source_uuid": "3a03c99f-ff1e-48f1-952b-69e296a01373",
+      "icon_scale": 0.31
+    },
+    {
+      "id": "03",
+      "name": "hex_lime",
+      "label_zh": "六边形·浅绿",
+      "file": "achievement_badge_bases/base_03_hex_lime.png",
+      "source_uuid": "513d7c95-c529-46bf-85d7-c193972fefb7",
+      "icon_scale": 0.34
+    },
+    {
+      "id": "04",
+      "name": "hex_blue",
+      "label_zh": "六边形·蓝",
+      "file": "achievement_badge_bases/base_04_hex_blue.png",
+      "source_uuid": "ec61ea3d-2ac9-4669-8057-e9adeff9cec1",
+      "icon_scale": 0.34
+    },
+    {
+      "id": "05",
+      "name": "oct_purple",
+      "label_zh": "八边形·紫",
+      "file": "achievement_badge_bases/base_05_oct_purple.png",
+      "source_uuid": "92b34ed5-f3d4-4156-8594-5018e111de4b",
+      "icon_scale": 0.33
+    }
+  ]
+}

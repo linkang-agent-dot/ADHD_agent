@@ -1,0 +1,10 @@
+﻿{
+    "matcher":  "",
+    "hooks":  [
+                  {
+                      "type":  "command",
+                      "command":  "python C:\\ADHD_agent\\.claude\\quality-gate\\pending_verify_gate.py",
+                      "timeout":  10
+                  }
+              ]
+}

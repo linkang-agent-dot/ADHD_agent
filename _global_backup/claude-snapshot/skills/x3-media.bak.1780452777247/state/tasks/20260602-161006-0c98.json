@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "task_id": "20260602-161006-0c98",
+  "status": "success",
+  "type": "general",
+  "user_prompt": "②进度阶段道具图标——珍珠贝：开口贝壳中一颗发光虹彩珍珠，深海宝藏调，珍珠白+金边贝壳。画风对齐海盗金币(参考图)，单个道具图标，透明/纯净底好抠图。",
+  "params": {
+    "media_kind": "image",
+    "model": "gpt",
+    "reference_images": [
+      "C:\\x3-project\\client\\Assets\\Res\\UI\\Spirits\\ItemIcons\\icon_Monopoly_currency.png"
+    ],
+    "output_dir": "C:\\Users\\linkang\\_voyage_work",
+    "output_filename": "progress_item_pearlshell_v1",
+    "postprocess": "none",
+    "prompt_en": "ONE SINGLE game item icon, do NOT generate multiple icons or a grid. An open seashell / oyster shell with a glowing iridescent PEARL resting inside, deep-sea treasure theme. Pearly white and soft iridescent rainbow sheen on the pearl, warm golden-rimmed shell, gentle inner glow, a few sparkle highlights. Rendered in the SAME art style as the reference image (the golden ship-wheel coin): glossy cartoon semi-painted game item icon, clean bold outline, vibrant saturated, soft rim light, centered single object, mobile game UI item icon. Plain neutral/transparent background for easy cutout, no text, no numbers, no UI frame, no characters.",
+    "note": "progress item for board pickup mechanic; style-match the Monopoly coin item icon set; single icon, cutout-friendly bg."
+  },
+  "started_at": "2026-06-02T16:10:29+08:00",
+  "finished_at": "2026-06-02T16:25:47+08:00",
+  "result": {
+    "saved_to": [
+      "C:\\Users\\linkang\\_voyage_work\\progress_item_pearlshell_v1.png",
+      "C:\\Users\\linkang\\_voyage_work\\progress_item_pearlshell_v1_alt1.png"
+    ],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

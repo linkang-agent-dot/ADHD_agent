@@ -1,0 +1,85 @@
+{
+  "game_name": "Kingshot",
+  "display_name": "Kingshot",
+  "game_slug": "kingshot",
+
+  "app_store": {
+    "ios_id": "6739554056",
+    "android_package": "com.run.tower.defense"
+  },
+
+  "discord": {
+    "guild_id": "1260478586188730398",
+    "invite_code": "kingshot",
+    "high_priority": {
+      "patch-notes": "",
+      "announcements": "",
+      "events": "",
+      "giftcode": ""
+    },
+    "medium_priority": {
+      "general": "",
+      "bug-report": "",
+      "suggestions": ""
+    }
+  },
+
+  "reddit": {
+    "subreddit": "Kingshot"
+  },
+
+  "facebook": {
+    "page_url": ""
+  },
+
+  "youtube": {
+    "channels": [
+      {
+        "name": "ECHO Gaming",
+        "channel_id": "UCHZaisOyzF3duSKuBPT8CjQ",
+        "url": "https://www.youtube.com/@echogaming",
+        "subscribers": 360000,
+        "focus": "event_coverage",
+        "note": "大频道，节日活动/版本更新覆盖最全"
+      },
+      {
+        "name": "Kingshot Mastery",
+        "channel_id": "UCrL6StsEt-zcXUNZQv34azQ",
+        "url": "https://www.youtube.com/@kingshotmastery",
+        "subscribers": 869,
+        "focus": "event_coverage",
+        "note": "专注Kingshot，季节活动第一时间出视频"
+      },
+      {
+        "name": "Supe KS",
+        "channel_id": "UCzv360K-l8k7jeNYTqebOBg",
+        "url": "https://www.youtube.com/@supeks",
+        "subscribers": 8450,
+        "focus": "update_f2p",
+        "note": "版本更新+F2P视角活动分析"
+      }
+    ],
+    "search_keywords": ["kingshot event", "kingshot update", "kingshot new"],
+    "max_videos_per_channel": 3,
+    "analyze_prompt": "分析视频内容，提取：1.活动名称和类型 2.活动玩法和规则 3.付费点设计 4.攻略要点 5.玩家评价。用中文概括，200字以内。"
+  },
+
+  "giftcode_url": "https://www.pocketgamer.com/kingshot/codes/",
+
+  "sensortower": {
+    "app_id": "com.run.tower.defense"
+  },
+
+  "dataai": {
+    "market": "google-play",
+    "app_id": "com.run.tower.defense"
+  },
+
+  "developer": "Century Games Pte. Ltd.",
+
+  "output": {
+    "vault_path": "C:/ADHD_agent",
+    "folder": "竞品调研/Kingshot",
+    "filename_pattern": "Kingshot监控日报{date}"
+  }
+}

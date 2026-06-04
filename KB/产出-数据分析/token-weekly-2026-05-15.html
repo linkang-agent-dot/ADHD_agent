@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token 用量周报 2026-05-15</title>
+<style>
+  :root{
+    --bg:#0f1117; --panel:#171a21; --panel2:#1e222b; --line:#2a2f3a;
+    --txt:#e6e8ee; --muted:#8a90a0; --accent:#5b9cff; --gold:#ffcf5c; --green:#4ec98a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:"Segoe UI","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+    line-height:1.55;padding:32px 20px 60px}
+  .wrap{max-width:920px;margin:0 auto}
+  h1{font-size:26px;margin:0 0 6px;font-weight:700;letter-spacing:.5px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:28px}
+  .meta b{color:var(--txt);font-weight:600}
+  h2{font-size:16px;margin:34px 0 14px;padding-left:10px;
+    border-left:3px solid var(--accent);font-weight:600}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .card-val{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;
+    font-family:"Consolas",ui-monospace,monospace}
+  .card-label{color:var(--muted);font-size:12px;margin-top:4px}
+  .card.hl{background:linear-gradient(135deg,#2a2310,#1e222b);border-color:#5a4a1e}
+  .card.hl .card-val{color:var(--gold)}
+  .daily-wrap{display:flex;flex-direction:column;gap:18px}
+  .chart{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
+  .chart-title{font-size:13px;color:var(--muted);margin-bottom:14px}
+  .bar-row{display:flex;align-items:center;gap:12px;margin:7px 0}
+  .bar-date{width:54px;font-size:13px;color:var(--muted);font-family:"Consolas",monospace}
+  .bar-track{flex:1;background:var(--panel2);border-radius:5px;height:18px;overflow:hidden}
+  .bar-fill{height:100%;background:linear-gradient(90deg,#3a6fd0,var(--accent));border-radius:5px;min-width:2px}
+  .bar-val{width:96px;text-align:right;font-size:13px;color:var(--gold);
+    font-variant-numeric:tabular-nums;font-family:"Consolas",monospace}
+  table{width:100%;border-collapse:collapse;background:var(--panel);
+    border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:13.5px}
+  th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line)}
+  th{background:var(--panel2);color:var(--muted);font-weight:600;font-size:12px;
+    text-transform:uppercase;letter-spacing:.4px}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#1b1f28}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:"Consolas",monospace}
+  td:first-child{color:var(--txt)}
+  .footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:12px}
+</style>
+</head>
+<body><div class="wrap">
+<h1>Token 用量周报 2026-05-15</h1>
+<div class="meta">统计周期 <b>05/08 ~ 05/15</b> &nbsp;·&nbsp; 会话数 <b>70</b></div>
+<h2>汇总</h2>
+<div class="cards"><div class="card"><div class="card-val">991,833,731</div><div class="card-label">总 Token</div></div><div class="card"><div class="card-val">127,189</div><div class="card-label">Input</div></div><div class="card"><div class="card-val">8,526,748</div><div class="card-label">Output</div></div><div class="card"><div class="card-val">948,925,494</div><div class="card-label">Cache Read</div></div><div class="card"><div class="card-val">34,254,300</div><div class="card-label">Cache Write</div></div><div class="card hl"><div class="card-val">$1995.22</div><div class="card-label">估算费用</div></div></div>
+<h2>按天分布</h2>
+<div class="daily-wrap"><div class="chart"><div class="chart-title">每日花费分布</div><div class="bar-row"><div class="bar-date">05-08</div><div class="bar-track"><div class="bar-fill" style="width:8.1%"></div></div><div class="bar-val">$49.61</div></div><div class="bar-row"><div class="bar-date">05-09</div><div class="bar-track"><div class="bar-fill" style="width:7.4%"></div></div><div class="bar-val">$45.34</div></div><div class="bar-row"><div class="bar-date">05-11</div><div class="bar-track"><div class="bar-fill" style="width:48.4%"></div></div><div class="bar-val">$297.16</div></div><div class="bar-row"><div class="bar-date">05-12</div><div class="bar-track"><div class="bar-fill" style="width:26.6%"></div></div><div class="bar-val">$163.41</div></div><div class="bar-row"><div class="bar-date">05-13</div><div class="bar-track"><div class="bar-fill" style="width:59.7%"></div></div><div class="bar-val">$366.52</div></div><div class="bar-row"><div class="bar-date">05-14</div><div class="bar-track"><div class="bar-fill" style="width:100.0%"></div></div><div class="bar-val">$614.20</div></div><div class="bar-row"><div class="bar-date">05-15</div><div class="bar-track"><div class="bar-fill" style="width:74.7%"></div></div><div class="bar-val">$458.99</div></div></div><table><thead><tr><th>日期</th><th>Input</th><th>Output</th><th>Cache Read</th><th>费用</th><th>会话数</th></tr></thead><tbody><tr><td>05-08</td><td class="num">1,750</td><td class="num">760,194</td><td class="num">89,224,177</td><td class="num">$49.61</td><td class="num">5</td></tr><tr><td>05-09</td><td class="num">16,647</td><td class="num">126,919</td><td class="num">18,449,793</td><td class="num">$45.34</td><td class="num">8</td></tr><tr><td>05-11</td><td class="num">13,004</td><td class="num">3,170,095</td><td class="num">169,168,160</td><td class="num">$297.16</td><td class="num">15</td></tr><tr><td>05-12</td><td class="num">29,642</td><td class="num">587,573</td><td class="num">43,324,385</td><td class="num">$163.41</td><td class="num">9</td></tr><tr><td>05-13</td><td class="num">10,375</td><td class="num">1,457,497</td><td class="num">171,013,771</td><td class="num">$366.52</td><td class="num">15</td></tr><tr><td>05-14</td><td class="num">42,840</td><td class="num">1,144,093</td><td class="num">269,903,006</td><td class="num">$614.20</td><td class="num">9</td></tr><tr><td>05-15</td><td class="num">12,931</td><td class="num">1,280,377</td><td class="num">187,842,202</td><td class="num">$458.99</td><td class="num">9</td></tr></tbody></table></div>
+<h2>按模型分布</h2>
+<table><thead><tr><th>模型</th><th>Input</th><th>Output</th><th>费用</th></tr></thead><tbody><tr><td>Opus</td><td class="num">108,593</td><td class="num">7,513,646</td><td class="num">$1926.53</td></tr><tr><td>Sonnet</td><td class="num">18,596</td><td class="num">1,013,102</td><td class="num">$68.69</td></tr></tbody></table>
+<h2>Top 10 会话（按 token 量）</h2>
+<table><thead><tr><th>日期</th><th>模型</th><th>Input</th><th>Output</th><th>费用</th><th>主题</th></tr></thead><tbody><tr><td>05-14</td><td>Opus</td><td class="num">16,378</td><td class="num">569,013</td><td class="num">$425.23</td><td>帮我打开下X3之前的节日循环内，包括投放记录那一份</td></tr><tr><td>05-13</td><td>Opus</td><td class="num">3,731</td><td class="num">919,635</td><td class="num">$223.34</td><td>&quot;C:\ADHD_agent\KB\产出-数据分析\26尼罗河活动道具循环.ht…</td></tr><tr><td>05-11</td><td>Opus</td><td class="num">1,705</td><td class="num">2,130,954</td><td class="num">$133.95</td><td>我们现在是不是有X2前期回归的一套框架内容，https://demo.tap4f…</td></tr><tr><td>05-15</td><td>Opus</td><td class="num">617</td><td class="num">498,676</td><td class="num">$206.86</td><td>帮我搜一下目前X2挖矿（合成小游戏）拓荒节的配置</td></tr><tr><td>05-15</td><td>Opus</td><td class="num">525</td><td class="num">282,983</td><td class="num">$111.19</td><td>现在准备做一批新的拓荒节活动，需要你参考X2占星节，全部换皮一波X2拓荒节，活动…</td></tr><tr><td>05-08</td><td>Sonnet</td><td class="num">509</td><td class="num">252,676</td><td class="num">$15.76</td><td>X2需要新建一个DK，ICON和ICON-BG都用 15111044的ICON资…</td></tr><tr><td>05-14</td><td>Opus</td><td class="num">2,364</td><td class="num">250,546</td><td class="num">$82.39</td><td>帮我回归一下P2的4月OAP活动，调用下知识库</td></tr><tr><td>05-08</td><td>Sonnet</td><td class="num">415</td><td class="num">294,409</td><td class="num">$14.51</td><td>你有没有X3配置的知识库</td></tr><tr><td>05-08</td><td>Sonnet</td><td class="num">399</td><td class="num">80,910</td><td class="num">$9.71</td><td>X2导表 2013传一下当前分支</td></tr><tr><td>05-12</td><td>Opus</td><td class="num">4,061</td><td class="num">357,762</td><td class="num">$94.29</td><td>调查 X3 项目当前卡册（集卡册/CardCollection）的投放现状。  …</td></tr></tbody></table>
+<div class="footer">源：token-weekly-2026-05-15.md &nbsp;·&nbsp; 渲染于 2026-06-03 19:31 &nbsp;·&nbsp; 随周报每周自动更新</div>
+</div></body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "prompt": "Using the reference image as the exact chest design template, generate the SAME open treasure chest from the reference but in an EMPTY 'already claimed' state. CRITICAL: keep the chest body shape, wood material, gold trim, corner rivets, lid angle, hinges, lock plate, camera angle, perspective, scale, and position COMPLETELY IDENTICAL to the reference chest. ONLY these must change: (1) INSIDE the chest is now completely EMPTY — no coins at all, showing the plain dark wooden inner bottom of the chest; (2) remove ALL the golden M coins and spilled coins; (3) overall mood becomes dimmer, desaturated, slightly grayed/faded — the chest has a subtle melancholy 'already opened' feeling; (4) the bright inner golden glow is GONE, replaced with a very faint cool neutral shadow inside; (5) the surrounding sparkles and light motes are removed; (6) optionally add one tiny curl of dust/faint puff inside to suggest emptiness. KEEP the chest itself still looking crafted and intact, just without treasure. Fully transparent PNG background, ONE SINGLE chest icon centered, same 1:1 square composition as the reference, polished 3D cel-shaded game UI icon style matching the reference, no text labels, no watermark, no grid, no multiple chests.",
+  "model": "gemini",
+  "num_images": 1,
+  "aspect_ratio": "1:1"
+}
