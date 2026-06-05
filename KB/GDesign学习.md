@@ -1,3 +1,7 @@
+---
+tags: [kind/方法论, proj/通用]
+---
+
 # GDesign（DesignDeck）学习 & 反馈点
 
 > 暂存我们对 GDesign 的学习/反馈点，讨论完再集中反馈给 GDesign 团队。

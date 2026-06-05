@@ -1,6 +1,6 @@
 ---
 aliases: [dws, 钉钉, dingtalk]
-tags: [skill, 通知, 钉钉, dws]
+tags: [kind/skill, domain/通知协作, proj/通用]
 skill_path: .agents/skills/dws/
 trigger: 表格数据、日程会议、通讯录、审批、待办
 ---

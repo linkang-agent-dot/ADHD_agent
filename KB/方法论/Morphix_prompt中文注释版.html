@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morphix Prompt 中文注释版</title>
+<style>
+  :root{
+    --bg:#0f1320; --panel:#171c2e; --panel2:#1e2540; --line:#2a3354;
+    --txt:#e6e9f5; --mut:#9aa3c4; --accent:#7c8cff; --accent2:#4ad6c8;
+    --ok:#3ed598; --warn:#ffb454; --danger:#ff6b8a; --code:#0b0e18; --pill:#242c4a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;line-height:1.68;font-size:15px}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 22px 80px}
+  header.top{padding:34px 22px 20px;max-width:1200px;margin:0 auto}
+  header.top h1{margin:0;font-size:26px}
+  header.top .sub{color:var(--mut);margin-top:7px;font-size:14px}
+  .badge{display:inline-block;background:var(--pill);color:var(--accent2);padding:3px 11px;border-radius:20px;font-size:12.5px;margin-right:7px;border:1px solid var(--line)}
+  code{background:var(--code);padding:2px 7px;border-radius:6px;font-family:Consolas,monospace;font-size:13px;color:#ffd479}
+  .tabs{position:sticky;top:0;z-index:20;background:rgba(15,19,32,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto;padding:8px 22px;max-width:1200px;margin:0 auto}
+  .tab{flex:0 0 auto;padding:9px 15px;border-radius:9px;cursor:pointer;color:var(--mut);font-size:14px;white-space:nowrap;border:1px solid transparent;transition:.15s}
+  .tab:hover{color:var(--txt);background:var(--panel)}
+  .tab.active{color:#fff;background:linear-gradient(135deg,var(--accent),#5d6bff);box-shadow:0 4px 16px -6px var(--accent)}
+  .panel{display:none;animation:fade .25s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h2.sec{font-size:21px;margin:28px 0 6px;display:flex;align-items:center;gap:10px}
+  h2.sec .n{font-size:13px;background:var(--accent);color:#0b0e18;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-weight:700}
+  h3{font-size:16.5px;margin:22px 0 8px;color:#cdd4f5}
+  p{color:#d4d9ef}.mut{color:var(--mut)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin:14px 0}
+  .cn{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--accent2);border-radius:0 12px 12px 0;padding:14px 18px;margin:12px 0;white-space:pre-wrap;line-height:1.8}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--accent2);font-weight:600;background:var(--panel2)}
+  tr:hover td{background:#1a2138}
+  td.k{color:#ffd479;font-weight:600;width:25%}
+  td.f{width:38%}
+  .key{border-left:3px solid var(--accent);padding:10px 16px;background:var(--panel2);border-radius:0 10px 10px 0;margin:10px 0}
+  .key.warn{border-color:var(--warn)}.key.danger{border-color:var(--danger)}.key.ok{border-color:var(--ok)}
+  .pill{display:inline-block;background:var(--pill);border:1px solid var(--line);border-radius:7px;padding:2px 9px;font-size:12.5px;margin:2px 4px 2px 0;color:var(--accent2)}
+  ul{padding-left:20px}li{margin:5px 0;color:#d4d9ef}
+  details{background:var(--panel2);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}
+  summary{cursor:pointer;padding:12px 18px;font-weight:600;color:#fff;list-style:none;display:flex;gap:9px}
+  summary::-webkit-details-marker{display:none}
+  summary:before{content:"▶";font-size:11px;color:var(--accent)}
+  details[open] summary:before{content:"▼"}
+  pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:0 18px 14px;overflow:auto;font-family:Consolas,monospace;font-size:12px;line-height:1.5;color:#9fb8d8;white-space:pre-wrap}
+  .footer{color:var(--mut);font-size:12.5px;text-align:center;margin-top:50px;border-top:1px solid var(--line);padding-top:20px}
+  .lead{font-size:14px;color:#b9c0e0;background:#15243a;border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin:10px 0}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Morphix Prompt 中文注释版</h1>
+  <div class="sub">
+    <span class="badge">中文翻译</span><span class="badge">逐点注释</span><span class="badge">失败模式对照</span>
+    每个功能：中文全文 + "这句实现什么 / 不这么写会怎样" · 2026-06-05
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <div class="tab active" data-t="meta">🧰 通用手法(先读)</div>
+  <div class="tab" data-t="reskin">换皮</div>
+  <div class="tab" data-t="theme">主题转换</div>
+  <div class="tab" data-t="flip">横竖转换</div>
+  <div class="tab" data-t="split">元素拆分</div>
+  <div class="tab" data-t="icon">图标换皮</div>
+  <div class="tab" data-t="wireframe">线框转效果图</div>
+  <div class="tab" data-t="canvas">画布 & 局部改</div>
+</nav>
+
+<div class="wrap">
+
+<!-- ============ META ============ -->
+<section class="panel active" id="meta">
+  <h2 class="sec"><span class="n">★</span> 12 个通用 prompt 工程手法</h2>
+  <div class="lead">这 8 段 prompt 反复用同一套手法。先吃透这 12 条，你自己写换皮/生图 prompt 就有了套路——下面每个功能页签都是这些手法的具体落地。</div>
+
+  <table>
+    <tr><th>手法</th><th>怎么写</th><th>实现什么 / 不这么写会怎样</th></tr>
+    <tr><td class="k">1. 职责切分</td><td class="f">给每张参考图钉死角色：「图#1 = 布局来源，图#2 = 视觉来源」</td><td>让模型分清"抄谁的什么"。不切分 → 模型默认把两张图<b>平均混合</b>，出来四不像。</td></tr>
+    <tr><td class="k">2. ERASE 强否定</td><td class="f">不只说"用#2的风格"，还显式说「图#1 的视觉<b>必须全部擦除</b>，连进度条/开关的颜色都不留」</td><td>模型对原图有视觉惯性，会偷偷留底色/边框。必须显式清零才换得干净。</td></tr>
+    <tr><td class="k">3. 正反双约束</td><td class="f">既列 STRICT(必须做)，又列 FORBIDDEN(绝不做)，并点名具体偷懒动作</td><td>堵死具体退化模式。如横竖转换里"禁止只拉宽不翻轴"——光说正面要求，模型仍会走捷径。</td></tr>
+    <tr><td class="k">4. 量级框定</td><td class="f">「跟随 reference 的程度，subtle 保持 subtle，prominent 保持 prominent，不夸张不强化」</td><td>防特征被放大。X16 教训：分"外框/内部"两区 → 模型拉成夸张对比，外框过重内部过扁。</td></tr>
+    <tr><td class="k">5. 枚举防退化</td><td class="f">列举多种装饰让模型按 reference 灵活挑，<b>不单点名某一种</b></td><td>X3 教训：单点名"L 形角包" → 模型把所有装饰退化成 L 角包，死板。枚举才有多样性。</td></tr>
+    <tr><td class="k">6. 唯一性强制</td><td class="f">「挑<b>唯一一个</b>最匹配的角色还原，禁止融合/平均多个角色特征」</td><td>防多角色糊一起。不强制 → 模型把角色库里几个特征混成一个怪东西。</td></tr>
+    <tr><td class="k">7. 语义而非像素</td><td class="f">「轴向翻转是<b>语义重排</b>，不是把像素旋转 90°，每个档位要按新方向重新排版」</td><td>防几何偷懒。不点破 → 模型直接转 90° 像素，文字躺倒、布局别扭。</td></tr>
+    <tr><td class="k">8. 思考步骤前置</td><td class="f">给一段 INTERNAL STEPS：先清点所有元素 → 再逐个定位 → 最后画</td><td>强制规划。不前置 → 模型边画边漏，常丢掉次要元素(进度条/角标)。</td></tr>
+    <tr><td class="k">9. 禁脑补默认值</td><td class="f">「不要基于'游戏 UI 常见默认值'自由发挥；reference 没显示的视觉处理都不引入」</td><td>防模型用训练里的"通用游戏UI"脑补，偏离参考。</td></tr>
+    <tr><td class="k">10. 中间产物文本化</td><td class="f">图标换皮：先用 describe_media 把参考图榨成 ~80 词<b>风格文字</b>，再套用到每张图</td><td>文字比图参考更稳定、可批量复用。直接丢多图参考 → 每张结果风格漂移。</td></tr>
+    <tr><td class="k">11. 后处理友好约束</td><td class="f">拆分要求 <b>#B8B8B8 灰底</b>而非白底</td><td>为下游抠图服务：灰底让抗锯齿边缘融进灰色，去底后不留白边光晕。</td></tr>
+    <tr><td class="k">12. 配方最小化</td><td class="f">「参考图能说明的，就不要在 prompt 里说」——stylePrompt 只写参考图传达不出的(量级/分布约束)</td><td>避免文字命令和参考图打架。写多了反而把模型从参考带偏。</td></tr>
+  </table>
+
+  <div class="key ok"><b>一句话总纲：</b>换皮类 prompt = 钉角色(手法1) + 清原图(手法2) + 抄参考(整套design system) + 双向约束堵退化(手法3-9) + 为下游服务(手法10-11)，能让图说话就别用文字(手法12)。</div>
+</section>
+
+<!-- ============ RESKIN ============ -->
+<section class="panel" id="reskin">
+  <h2 class="sec"><span class="n">A</span> 换皮 · 中文全文</h2>
+  <div class="cn">我提供两张参考图，这是一次完整的视觉风格迁移任务。
+
+【参考图 #1 = 布局与内容来源】
+只从图#1 提取这些：
+· 画面结构布局（每个元素在哪、整体构图）
+· 文字标签及其内容（标题、分区名、按钮文字、数值标签）
+· 每个图标/头像在语义上代表什么（一个箭头、一枚金币、一张怪物头像…）
+· 每个控件的位置（滑条、勾选框、开关、按钮）
+图#1 的其余一切全部抛弃：背景色、面板色、边框样式、装饰、按钮形状/颜色、滑条颜色、勾选框样式、开关样式、边框装饰、字体、字色、整体配色、图标渲染风格——图#1 的每一处视觉特征都必须被【擦除】。只有"是什么/在哪里"保留，"长什么样"绝不保留。
+
+【参考图 #2 = 完整视觉风格来源】
+把图#2 的每一处视觉都搬到输出上：
+· 背景与面板的颜色/质感
+· 边框样式、框饰、转角装饰、分隔线样式
+· 分区标题排版（字重、颜色、字号、标题周围的装饰）
+· 按钮渲染：形状、圆角、渐变/纯色、立体/阴影、描边、内高光——完整照搬图#2 的按钮视觉语言
+· 滑条轨道与滑块样式 / 勾选框样式 / 开关样式
+· 图标渲染风格（线宽、填充、颜色）
+· 子面板渲染（内阴影、高光边、分隔样式）
+· 整体配色（每个颜色都来自图#2 或由其调色板推导）
+· 字体族/字重的感觉
+把图#2 当作设计系统。输出的每个 UI 元素都必须用图#2 的视觉语言，连确认/取消按钮、开关开/关态、进度指示都是——哪怕图#1 里这些是别的颜色，输出也用图#2 的处理。
+
+【目标】输出应当看起来 100% 像图#2 的作者亲手设计的——用他的风格从零重画，但装的是图#1 的布局和内容。
+
+输出：干净的移动端 UI 稿，竖屏，字体和图标渲染锐利，高分辨率。</div>
+
+  <h3>💡 逐点注释</h3>
+  <table>
+    <tr><th>原句要点</th><th>实现什么</th><th>不这么写会怎样</th></tr>
+    <tr><td class="k">"只提取布局/文字/语义/控件位置"</td><td>把图#1 锁死成"骨架供应商"</td><td>模型会连图#1 的颜色质感一起继承，换皮不彻底</td></tr>
+    <tr><td class="k">"每一处视觉特征必须被擦除…连进度条/开关颜色都不留"</td><td>手法2 ERASE：显式清零原图视觉惯性</td><td>进度条、开关这类"功能色"最容易被模型当默认值留下</td></tr>
+    <tr><td class="k">"把图#2 当作设计系统…扩展到每个元素"</td><td>不止抄看得见的，还要把风格<b>外推</b>到图#2 没直接展示的元素</td><td>只抄相同元素 → 图#1 独有的元素(如某个角标)风格不统一</td></tr>
+    <tr><td class="k">"100% 像图#2 作者从零重画"</td><td>给一个可衡量的终极目标，统一所有细节判断</td><td>没有总目标 → 模型在模糊处各自为政，风格不连贯</td></tr>
+  </table>
+</section>
+
+<!-- ============ THEME ============ -->
+<section class="panel" id="theme">
+  <h2 class="sec"><span class="n">B</span> 主题转换 · 中文全文（最贴节日换皮）</h2>
+  <div class="cn">这是一次【创意主题再想象】任务。把一个游戏 UI 界面重新设计成一张主题活动海报，可以大胆发挥来把节日氛围拉满。
+
+【参考图 #1 = 原始 UI（内容来源）】
+必须从图#1 保留（这些一定要活下来）：
+· 所有文字标签、按钮文案、数字、等级标识——逐字保留，不翻译、不改措辞
+· 界面的总体用途（活动/商店/设置…）和各区域的大致角色（购买按钮还是购买按钮，奖励格还是奖励格）
+· 货币/资源图标的语义含义（宝石图标、爱心图标——含义保留，视觉可重塑）
+
+【创意自由——这不是严格的 1:1 换皮】输出应当像一张全新的主题活动海报，而不是原图贴几张贴纸：
+· 构图和布局【可以重排】来更好地表现主题——主角可以换位置/换姿势，面板可以挪，装饰道具可以加在边角
+· 大量添加图#1 里原本没有的主题氛围元素：飘落的雪花、花瓣、悬挂的灯笼、飞舞的丝带、闪烁的星光、烟火、植被等——尽情堆主题点缀
+· 把吉祥物/主角重新设计成主题角色（探险家变成圣诞老人、或女巫、或赛龙舟的人——彻底重构，不是换套衣服）
+· 戏剧性地重做背景场景、光照和整体氛围来贴合主题
+· 边框装饰可以完全换新（松枝花环、蜘蛛网、梅花、金龙）
+· 配色彻底改成主题色板
+· 周围道具（灯笼、蜡烛、气球、礼物）可以自由添加
+· 把整个界面当作主题活动的营销海报来做——视觉冲击力优先
+
+【目标主题】：[用户输入的主题文字 / 若没填则从参考图#2 推断]
+
+【目标】一张精致、有戏剧感、有沉浸感的主题 UI，保留图#1 的文字内容，但感觉是为目标主题全新设计的。氛围和主题表达是第一优先级。
+
+输出：丰富、有氛围、精致的游戏 UI 稿，字体图标渲染锐利，高分辨率。
+
+[若有参考图] 参考图 #2 = 主题视觉锚点。用它取：目标主题的美术风格、配色、装饰母题、角色气质。【不要】用图#2 的布局——只取它的视觉主题线索。</div>
+
+  <h3>💡 逐点注释 — 它和普通换皮的区别全在这些措辞上</h3>
+  <table>
+    <tr><th>原句要点</th><th>实现什么</th><th>对比普通换皮</th></tr>
+    <tr><td class="k">"创意主题再想象…当海报来做"</td><td>给模型<b>松绑</b>，开放创意</td><td>换皮是"继承风格"，主题是"重新创作"——定调完全相反</td></tr>
+    <tr><td class="k">"NOT a strict 1:1 reskin"明确否定</td><td>主动告诉模型"不用对齐原图"</td><td>换皮反复强调严格保持，这里反着来</td></tr>
+    <tr><td class="k">"布局可重排 / 主角可换姿势位置"</td><td>解锁构图自由</td><td>换皮严禁动布局</td></tr>
+    <tr><td class="k">"大量添加原本没有的氛围元素"+列举</td><td>主动要求<b>无中生有</b>加节日装饰，并枚举给灵感</td><td>换皮不加新元素</td></tr>
+    <tr><td class="k">"角色彻底重构，不是换衣服"</td><td>允许把吉祥物重塑成节日形象</td><td>换皮只换皮不换形</td></tr>
+    <tr><td class="k">"文字逐字保留 + 区域语义角色不变"</td><td>放飞的同时<b>守住底线</b>：可读性和功能不丢</td><td>这是两者唯一的共同约束</td></tr>
+    <tr><td class="k">"参考图#2 只取主题线索，不取布局"</td><td>手法1 职责切分的变体——参考图只供"风味"</td><td>换皮的图#2 是要整套抄的</td></tr>
+  </table>
+  <div class="key ok"><b>给你做节日换皮的启示：</b>想"原界面轻改"就用换皮 prompt；想"做一张节日海报级界面"就用主题 prompt。后者的"列举氛围元素 + 角色重塑 + 守住文字底线"三段，可直接套你的节日包装需求。</div>
+</section>
+
+<!-- ============ FLIP ============ -->
+<section class="panel" id="flip">
+  <h2 class="sec"><span class="n">C</span> 横竖转换 · 中文全文（竖→横；横→竖镜像）</h2>
+  <div class="cn">游戏 UI 布局换向——为新的屏幕比例重新设计游戏 UI，遵循目标方向下专业游戏 UI 的惯例。
+
+参考图 #1 = 当前为【竖屏】（纵向、高）的游戏界面。
+你的任务：把【同一个】界面为【横屏】（横向、宽）画布重新设计。这【不是】拉伸、【不是】旋转、【不是】裁剪，而是一次完整的布局【重设计】，你要扮演一个懂横屏布局惯例的资深游戏 UI 设计师。
+
+【横屏游戏 UI 布局惯例】（当作设计铁律，不可协商）：
+· 左上角：返回/关闭按钮（←）。横屏绝不放底部。
+· 右上角：玩家资源/货币，横向一排。
+· 顶部居中：界面标题 + 下方副标题。
+· 底部居中：主操作按钮/页签切换，横向等距排列、水平居中。
+· 主体中央区：核心内容占最大面积。
+· 左侧或右侧：纵向侧边栏页签/导航。
+· 横向装饰条 → 变成通栏顶部条，绝不能悬浮在画面中部。
+· 竖屏 3 列的卡片网格 → 横屏变 4-6 列（吃掉多出的横向空间）。
+· 角色立绘 → 放左侧或右侧，不居中。
+
+【可滚动列表/轮播/页签条——不要把所有项硬塞进可见区】
+· 只显示新方向下舒服放得下的数量，其余隐含（屏外、可滚动）。
+· 保持每项相同的视觉密度，不要压缩到把 N 项全塞下。
+
+【轴向/线性组件——翻转其轴向以对齐新屏幕的长边】
+（进度条、奖励阶梯、赛季通行证轨道、关卡路径、时间轴、分段轨）
+· 竖→横：纵向的奖励阶梯必须变成【横向】阶梯，横跨大部分宽度。每个"档位"从纵向堆叠重排成横向并列；当前高亮锚点仍沿横轴标记进度。
+· 翻转是【语义】的，不是把像素转 90°——每个档位要按新方向重新排版成合适的单元格。
+· 12 档纵向阶梯转横屏，不必显示全部 12 档——显示 5-7 档 + 隐含可滚动才是对的。
+
+【内部思考步骤（动笔前先做）】：清点图#1 每个元素（含轴向组件）→ 按目标方向惯例为每个元素定新位置 → 重排卡片网格 → 翻转每个线性组件的轴向 → 重设计装饰条 → 移动返回键 → 居中底部操作按钮 → 重新平衡留白与比例。
+
+【严格要求】保留每个结构元素；文字逐字保留；语义角色不变（按钮还是按钮、面板还是面板）。
+【禁止行为】拉伸/挤压/扭曲；旋转 90° 抄近路；裁掉/丢弃任何元素；翻横屏时还把纵向阶梯/进度条保持纵向（这是偷懒拉伸的头号标志，明令禁止）；返回键放非惯例位置；装饰条悬浮中部；改任何文字。
+
+[有风格参考图] 参考图 #2 = 可选视觉风格锚点。把它的美术风格、配色、装饰母题应用到重设计后的布局上。输出 = 图#1 内容 + 图#2 风格 + 新方向。
+[无] 沿用图#1 原本的视觉风格——只改布局和位置，不改外观。
+
+输出：一张精致、专业排版的横屏游戏 UI 稿。</div>
+
+  <h3>💡 逐点注释 — 这是 8 段里 prompt 工程最重的一段</h3>
+  <table>
+    <tr><th>原句要点</th><th>实现什么</th><th>不这么写会怎样</th></tr>
+    <tr><td class="k">"不是拉伸/旋转/裁剪，是重设计；你是资深UI设计师"</td><td>先把廉价解法全否掉，再赋予"设计师"身份</td><td>模型默认会选最省力的拉伸/旋转</td></tr>
+    <tr><td class="k">整套"布局惯例"清单(返回键左上…)</td><td>把"专业横屏布局"显式化成可执行规则</td><td>模型不懂平台惯例，元素会乱摆</td></tr>
+    <tr><td class="k">"只显示放得下的，其余可滚动"</td><td>手法解决"列表项太多"——承认屏外内容存在</td><td>模型会把 20 项全缩小硬塞，每项小到看不清</td></tr>
+    <tr><td class="k">"轴向翻转 + 语义非像素 + 重排成单元格"</td><td>手法7：核心难点，纵向阶梯→横向阶梯的语义重排</td><td>头号失败：阶梯保持纵向只把页面拉宽，浪费横向空间</td></tr>
+    <tr><td class="k">INTERNAL STEPS 8 步</td><td>手法8：强制先清点(含轴向组件)再画</td><td>不前置必漏掉次要元素或忘了翻轴</td></tr>
+    <tr><td class="k">FORBIDDEN 里点名"保持纵向=头号偷懒标志"</td><td>手法3：把最常见的退化动作单独拎出来禁</td><td>正面要求"翻轴"还不够，必须反面再堵一次</td></tr>
+  </table>
+</section>
+
+<!-- ============ SPLIT ============ -->
+<section class="panel" id="split">
+  <h2 class="sec"><span class="n">D</span> 元素拆分 · 中文全文</h2>
+  <div class="cn">这是一次 UI 美术资源提取任务（界面元素拆分），输出是给美术/程序用的一张雪碧图。
+输入：一张完成的游戏 UI 稿。
+
+【要提取什么——只要图形美术资源】
+按钮（每个按钮单独一件，不含文字标签）/ 图标 / 装饰美术（叶子、花、宝石、丝带、灯笼、齿轮、纹饰）/ 面板·边框·底板（容纳内容的圆角板，但不含里面的内容）/ 角色立绘与头像 / 滑条轨道（只要条，不要滑块）/ 滑块（只要那个圆把手）/ 勾选框（空框与勾选两态若有则分开）/ 开关背景与开关把手 / 进度条填充与轨道 / 标题栏（装饰板，不含文字）/ 小角标（只要那个色块形状，不含里面数字）。
+
+【排除什么——绝不当作元素】
+文字串（标题、标签、按钮文案、数字、等级）——绝不把文字当精灵图提取 / 纯数字元素（"x12""900""Lv4"）——这些是运行时数据不是美术资源 / 复合组合控件——按下面规则拆解。
+
+【关键：把复合控件拆成原子部件】
+· 带加减按钮的滑条 必须拆成 4 件：减号按钮、加号按钮、空轨道、滑块。不能合成一条。
+· 带图标和文字的按钮 拆成：纯按钮底板（无图标无文字）+ 可复用的图标。
+· 奖励格 拆成：纯色框/背景 + 图标/插画（不含数量角标或数字）。
+· 开关 拆成：胶囊背景 + 圆把手。
+
+【关键：严格去重】
+每个唯一元素只出现一次，不论它在原图里出现多少次。判为重复（只留一个）：同形同渲染的元素（即使位置不同）/ 互为旋转或镜像的副本（4 个转角同纹饰转 0/90/180/270° → 只留一个）/ 因多个同类奖励格而重复的同一图标 / 同形同色的空面板板。保留有意义的不同变体：勾选框的勾选态与未勾选态都留 / 同形不同色的按钮各留一个 / 同控件的常态/按下/禁用态各留一个。不要为填满版面而硬凑。
+
+【排版要求】按类别成行（装饰→面板/框→按钮→图标→角色→滑条/滑块/开关）；元素间留 ≥20px 等距间隔；保留每个元素原本的样式、颜色、光影；不要重画、重新上色或改风格。
+
+【输出背景——关键】用统一的浅灰纯色背景 #B8B8B8（RGB 184,184,184）铺满整个画面元素之间和周围。绝不要用：白色或近白（抗锯齿边缘会与白底混合，去底后留白边光晕）/ 偏灰、暖灰、冷灰、深灰、渐变 / 米色、米白、纸纹 / 棋盘格、网格线、点、任何花纹。
+
+输出：一张高分辨率雪碧图，元素原子化、已去重，铺在统一 #B8B8B8 浅灰底上。无文字、无数字、无复合控件、无重复、无花纹。</div>
+
+  <h3>💡 逐点注释</h3>
+  <table>
+    <tr><th>原句要点</th><th>实现什么</th><th>不这么写会怎样</th></tr>
+    <tr><td class="k">"只要图形资源 / 绝不提取文字和数字"</td><td>把"美术资源"和"运行时数据"分开</td><td>模型会把"x12""Lv4"也切成图，污染素材包</td></tr>
+    <tr><td class="k">"复合控件拆成原子部件"+逐例</td><td>给出"原子化"的明确粒度(滑条=4件)</td><td>模型会把整条滑条当一件输出，程序没法复用</td></tr>
+    <tr><td class="k">"严格去重 + 旋转镜像算重复 + 但保留有意义变体"</td><td>既压掉冗余，又不误删勾选两态/多色按钮</td><td>不说 → 4 个转角纹饰输出 4 份；或矫枉过正把两态勾选框合一</td></tr>
+    <tr><td class="k">"#B8B8B8 灰底，绝不用白底"+列禁用项</td><td>手法11：为下游 remove_background 服务</td><td>白底 → 去底后每个元素留一圈白边光晕，废了</td></tr>
+    <tr><td class="k">"保留原样，不重画不上色"</td><td>限定为"提取"而非"再创作"</td><td>模型手痒会顺手美化，元素和原图对不上</td></tr>
+  </table>
+  <p class="mut">配套流水：出灰底雪碧图后 → <code>remove_background</code> 整图去底 → canvas 连通域切块 → <code>describe_media</code> 用分类 prompt 判 11 类(btn/icon/frame/…) → 命名 <code>module_type_seq_n.png</code> 打 ZIP。</p>
+</section>
+
+<!-- ============ ICON ============ -->
+<section class="panel" id="icon">
+  <h2 class="sec"><span class="n">E</span> 图标换皮 · 中文全文（两步）</h2>
+  <h3>第 1 步 · 提风格（describe_media）</h3>
+  <div class="cn">详细描述这张图的【视觉美术风格】。只关注风格，不关注画的是什么物体。要覆盖：渲染技法（3D/2D/手绘/厚涂/像素…）、确切的材质和质感（水晶/玻璃/金属/黏土/纸…）、配色与饱和度、光照风格与反射、光泽或半透程度、描边/轮廓处理、细节繁简程度、情绪氛围。输出一段约 80 词的英文，写成一条可复用的美术风格指令。不要提及任何具体物体。</div>
+
+  <h3>第 2 步 · 逐张换皮（generate_image）</h3>
+  <div class="cn">用下面描述的【新视觉风格】重画这个图标。保持图标的主体身份（它的剪影和所画之物必须仍清晰可辨），但【彻底替换】它所有的视觉处理——颜色、材质、表面质感、渲染技法、光照、边缘、细节程度——换成目标风格。
+
+要应用的目标风格：
+[第1步榨出的风格描述]
+
+关键：彻底抛弃图标原本的美术风格。输出在材质和渲染上必须与输入根本不同，但仍画的是同一个主体。想象目标风格的画师从零重画这个主体。
+
+背景：完全透明（PNG alpha 通道）。图标居中。无文字、无标签、无额外装饰。</div>
+
+  <h3>💡 逐点注释</h3>
+  <table>
+    <tr><th>原句要点</th><th>实现什么</th><th>不这么写会怎样</th></tr>
+    <tr><td class="k">第1步"只描述风格，不提物体，输出可复用指令"</td><td>手法10：把"风格"从图榨成一段可批量复用的文字</td><td>提到具体物体 → 风格描述被污染，套到别的图标上会串味</td></tr>
+    <tr><td class="k">"保持主体身份/剪影可辨"</td><td>守住"还是这个图标"的底线</td><td>不说 → 模型连画的是什么都改了</td></tr>
+    <tr><td class="k">"彻底替换…根本不同"</td><td>手法2 的图标版：逼出明显的风格差异</td><td>语气不够强 → 只微调，看不出换了皮</td></tr>
+    <tr><td class="k">"完全透明 PNG / 居中 / 无文字装饰"</td><td>直接产出可入库的规整图标</td><td>不约束 → 带白底/带阴影/带文字，还要二次处理</td></tr>
+  </table>
+  <div class="key">为什么分两步而不是直接丢"图标+风格图"两张参考：手法10——一旦每张图标都带一张风格参考图，多图之间会互相干扰导致风格漂移；先文本化再套用，10 张图标风格才一致。</div>
+</section>
+
+<!-- ============ WIREFRAME ============ -->
+<section class="panel" id="wireframe">
+  <h2 class="sec"><span class="n">F</span> 线框转效果图 · 中文全文</h2>
+  <div class="cn">这是一次线框稿转效果图任务，提供两张参考图。
+
+参考图 #1 = 线框稿（带文字标注的低保真草图）。它包含：
+· 占位框（常带 × 叉号或空矩形），标示成品 UI 元素将放的位置
+· 文字标注（多为中文），描述每个占位处该放什么（如"篮子、紫色宝石、900"= 一篮标着 900 的紫色宝石）
+· 展示所有元素位置和比例的布局结构
+
+你对图#1 的任务：只提取布局结构和每条标注的含义。把【每一个】占位框、每个 × 矩形、每个线框元素，替换成与其标注描述相符的、完整渲染的插画或 UI 组件。彻底丢掉线框线、占位框和粗糙草图质感。把中文标注翻译成实际渲染内容（如"篮子、紫色宝石、900"→ 画一个装满紫宝石的精美篮子，配数量标签 900）。
+
+参考图 #2 = 完整视觉风格目标。把图#2 的每一处视觉应用到输出：整体美术风格、配色、面板/边框设计、按钮渲染、图标风格、排版感觉、背景氛围、任何角色/吉祥物。
+
+目标：一张精致、可直接上线的高保真 UI 稿——(1) 严格匹配线框布局；(2) 把每个占位/×框替换成符合其标注的渲染插画；(3) 用图#2 的完整视觉语言。输出绝不能看起来像线框。
+
+输出：干净的游戏 UI 稿，渲染锐利，高分辨率。</div>
+
+  <h3>💡 逐点注释</h3>
+  <table>
+    <tr><th>原句要点</th><th>实现什么</th><th>不这么写会怎样</th></tr>
+    <tr><td class="k">"把中文标注翻译成实际渲染内容"+举例</td><td>核心 trick：让模型读懂草图旁的中文需求并画出来</td><td>不说 → 模型把"篮子、紫色宝石、900"这几个字直接当文字画上去</td></tr>
+    <tr><td class="k">"替换每一个占位框/×矩形，丢掉草图质感"</td><td>逼模型从"低保真"跨到"高保真"</td><td>模型会保留线框的简陋感，输出还是张草图</td></tr>
+    <tr><td class="k">"输出绝不能看起来像线框"</td><td>给一条强否定兜底</td><td>正面要求不够时，这句是最后保险</td></tr>
+    <tr><td class="k">图#2 = 完整视觉目标</td><td>复用换皮的"图#2 整套抄"思路</td><td>同换皮，不钉死则风格不统一</td></tr>
+  </table>
+</section>
+
+<!-- ============ CANVAS ============ -->
+<section class="panel" id="canvas">
+  <h2 class="sec"><span class="n">G</span> 自由画布 · 中文全文</h2>
+  <div class="cn">我提供 {n} 张参考图，按以下顺序给出：
+· 参考图 #1 就是用户所说的"图1"。
+· 参考图 #2 就是用户所说的"图2"。…（逐张列举）
+
+当用户在下面提到 图1、图2…图{n} 时，分别指我按此顺序提供的参考图 #1、#2…#{n}。
+
+仔细阅读下面用户的指令，并【完全照其字面执行】。用户的措辞是权威——无论他们描述什么操作（保留某张图为底图、替换主体、迁移风格、组合元素、修改某个特定区域等），以及把哪张图指派成什么角色，都精确照做。【不要】默认"把所有参考图融合在一起"；只有用户明确要求才融合或组合。用户说某处保持不变，就保持不变；说只从图N 取 X，就只取 X。尊重用户陈述的每一条约束、图片指派和保留规则。
+
+下面是用户指令（中文逐字）：
+{用户输入}
+
+输出：一张遵循上述用户指令的高质量图片。不要添加用户没要求的元素，不要漏掉用户要求保留的元素。</div>
+
+  <h2 class="sec"><span class="n">H</span> 局部修改 · 中文全文（图文结合）</h2>
+  <div class="cn">[在自由画布 prompt 基础上，嵌入选区约束]
+
+图#1 = 要编辑的原图，这是底图。
+图#2..#N = 用户上传的参考图。"图1"=图#2；"图2"=图#3…（顺序映射，防止模型混淆）
+
+编辑区域（唯一【可能】改变的小范围）：位于图#1 的 {区域} 部位，约由多边形顶点 {坐标列表}（坐标为图#1 的 0–100%）围成。只有这个多边形【内部】的像素可以与图#1 不同。多边形【外部】的像素必须与图#1 完全一致。
+
+规则：① 底图是图#1，整张基本保持不变；② 只有多边形内部可变；③ 只从参考图借用用户明确指定的元素（如"换成图1角色的帽子"）；④ 禁止把参考图当底图替换图#1；⑤ 示例："把选区角色的帽子换成图1角色的帽子"= 只改帽子，其余保持原样。</div>
+
+  <h3>💡 逐点注释</h3>
+  <table>
+    <tr><th>原句要点</th><th>实现什么</th><th>备注</th></tr>
+    <tr><td class="k">"图N 顺序映射 + 用户措辞权威"</td><td>让用户能用自然中文精确指挥多张图</td><td>手法1 的延伸：角色由用户临时指派</td></tr>
+    <tr><td class="k">"不要默认融合，只有明说才融合"</td><td>关掉模型"把几张图揉一起"的默认行为</td><td>多图生图最常见的翻车点</td></tr>
+    <tr><td class="k">"多边形内可变 / 外部必须与图#1 一致"</td><td>用<b>坐标描述</b>替代真 mask 做局部编辑</td><td class="danger">这是 Morphix 的短板。我们有真·mask 的 <code>image_mask_edit</code>（服务端合成框外原图），更准——局部改优先用它</td></tr>
+  </table>
+</section>
+
+<div class="footer">Morphix Prompt 中文注释版 · 配套《Morphix换皮工具逆向_prompt库.html》· 仅作内部技术参考</div>
+</div>
+
+<script>
+  const tabs=document.querySelectorAll('.tab'),panels=document.querySelectorAll('.panel');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('active'));panels.forEach(p=>p.classList.remove('active'));
+    t.classList.add('active');document.getElementById(t.dataset.t).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>

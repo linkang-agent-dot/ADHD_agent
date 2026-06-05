@@ -1,6 +1,6 @@
 ---
 aliases: [google-workspace-cli, gws, gsheet-replace, branch-diff]
-tags: [skill, 游戏配置, gsheet, gws, google-workspace]
+tags: [kind/skill, domain/配置换皮, proj/通用]
 ---
 
 # GSheet 工具集

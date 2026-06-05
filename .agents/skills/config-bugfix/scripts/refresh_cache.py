@@ -165,9 +165,17 @@ def main():
     for f in os.listdir(CACHE_DIR):
         if f.endswith(".json") and not f.startswith("_"):
             tid = f.replace(".json", "")
-            with open(os.path.join(CACHE_DIR, f), "r", encoding="utf-8") as fp:
-                d = json.load(fp)
-            cached_tables[tid] = {"name": d["name"], "rows": d["total_rows"], "cached_at": d["cached_at"]}
+            try:
+                with open(os.path.join(CACHE_DIR, f), "r", encoding="utf-8") as fp:
+                    d = json.load(fp)
+            except (json.JSONDecodeError, OSError):
+                continue
+            # tolerate legacy / single-table cache files that lack some keys
+            cached_tables[tid] = {
+                "name": d.get("name", d.get("tab", tid)),
+                "rows": d.get("total_rows", len(d.get("rows", []))),
+                "cached_at": d.get("cached_at", ""),
+            }
 
     manifest = {
         "cached_at": time.strftime("%Y-%m-%d %H:%M:%S"),

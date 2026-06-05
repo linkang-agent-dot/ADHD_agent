@@ -1,3 +1,7 @@
+---
+tags: [kind/产出, domain/本地化, domain/美术媒体, proj/X3]
+---
+
 # X3 节日活动 Banner / 礼包主背景 — AI 生图 prompt 模板
 
 > **适用项目：** X3（机甲海盗）

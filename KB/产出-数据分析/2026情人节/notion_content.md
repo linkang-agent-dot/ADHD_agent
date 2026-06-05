@@ -1,5 +1,5 @@
 ---
-tags: [产出, 复盘, 情人节, P2, 2026]
+tags: [kind/产出, domain/数据复盘, proj/P2, fest/情人节, year/2026]
 created: 2026-03-17
 format: notion
 note: 2026情人节复盘Notion版，总营收$839,629，同比+111%，chaoR人数流失中

@@ -1,5 +1,5 @@
 ---
-tags: [产出, 数据分析, 集卡册, 科技节, P2, 2026]
+tags: [kind/产出, domain/数据复盘, domain/配置换皮, proj/P2, fest/科技节, year/2026]
 note: 挖矿/掉落/签到/任务等渠道饱和度分析，demo发布版
 ---
 

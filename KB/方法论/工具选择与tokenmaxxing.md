@@ -1,5 +1,5 @@
 ---
-tags: [方法论, 工具, 模型选择, tokenmaxxing]
+tags: [kind/方法论, proj/通用]
 source: PPT "我怎么用AI工作的" (2026.04)
 ---
 

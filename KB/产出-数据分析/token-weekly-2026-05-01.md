@@ -1,5 +1,5 @@
 ---
-tags: [产出, token周报, 2026]
+tags: [kind/产出, domain/数据复盘, proj/通用, year/2026]
 period: 2026-04-24 ~ 2026-05-01
 ---
 

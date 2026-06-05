@@ -1,7 +1,8 @@
 # quality-gate — 收工前自动验收
 
 一套"做完活、想收工那一刻自动跳出来帮你对清单"的机制。**两道门**（都在 `pending_verify_gate.py`，全程 fail-open）：
-- **道1 · 验收**：有 `status=pending` 的 marker → 拦，派 task-checker 按 type 读对应清单跑验收。**通用：一个验收员 + 多份清单**（已铺 策划案 / 配置·换皮 / i18n）。
+- **道1 · 验收**：有 `status=pending` 的 marker → 拦，派 task-checker 按 type 读对应清单跑验收。**通用：一个验收员 + 多份清单**（已铺 策划案完整性 design-doc / 配置·换皮 config / i18n / **策划案设计质量 design-merit**）。
+  - ⚠️ `design-merit`（设计好不好）跟 `design-doc`（文档全不全/对不对）**互补且不同**：前者按需触发的"定稿前设计压测"，只 §1 客观项可 block，主体是顺目的长的递归拆解树（配套 `design-merit-qbank.md` 子问题库）。
 - **道2 · 收工自检（反馈循环 + 归档）**（2026-06-04 加）：本次会话**动过文件**(Write/Edit) 且没刚拦过 → 拦一次，提醒过「① 新规律沉淀 ② 产物归档 ③ 复用工具」三问，**不靠用户提醒**。防死循环：时间戳(`.codify_check_ts` 180s) + `stop_hook_active` 双保险；纯对话不拦。无需建 marker，自动触发。
 
 ## 组成（分布在两处）
@@ -19,8 +20,8 @@
 ```json
 {"task": "深海节策划案", "type": "design-doc", "sheet_id": "1AbC...", "status": "pending"}
 ```
-- `type`：`design-doc` / `config` / `i18n`（决定验收员读哪份清单）
-- 其余字段随 type 不同（产物位置）：design-doc=sheet_id；config=expected_branch + tsv_changed (+sheet_id)；i18n=text_table + data_dir
+- `type`：`design-doc` / `config` / `i18n` / `design-merit`（决定验收员读哪份清单）
+- 其余字段随 type 不同（产物位置）：design-doc=sheet_id；config=expected_branch + tsv_changed (+sheet_id)；i18n=text_table + data_dir；design-merit=sheet_id（+ 主目的，可选）
 - `status`：`pending`(要拦) / `reviewed`(验收过、有 blocker 待用户定夺，放行)
 
 ## 工作流程

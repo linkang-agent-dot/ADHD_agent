@@ -1,6 +1,6 @@
 ---
 aliases: [skill-creator, writing-skills, publish-skill, mcp-builder, find-skills]
-tags: [skill, 元工具, skill开发, mcp]
+tags: [kind/skill, domain/agent开发, proj/通用]
 ---
 
 # Skill 开发与发布

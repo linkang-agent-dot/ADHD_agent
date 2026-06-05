@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>珍珠贝进度系统 · 真底图版（效果图当底，只叠会动的件）</title>
+<!-- 正确流水线③：②效果图(真游戏满分辨率底图 board_real.png)当静态背景；HTML 只在上面叠"会动的件"：
+     角色移动标记 / 骰子结果 / 落点高亮 / 珍珠进度。坐标=菱形格位(WAYPOINTS,按图估·可调,有prefab坐标可精确)。 -->
+<style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:#10202b;display:flex;gap:18px;justify-content:center;align-items:flex-start;
+    padding:14px 16px;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+  .phone{width:368px;aspect-ratio:1152/2048;position:relative;flex:none;border-radius:20px;overflow:hidden;
+    background:#08202e url("_assets/board_real.png") center/cover no-repeat;box-shadow:0 18px 50px rgba(0,0,0,.55);border:6px solid #06141d}
+  /* ===== 叠加层（只放会动的件，绝对定位百分比，跟着底图缩放）===== */
+  .ovl{position:absolute;inset:0;z-index:5;pointer-events:none}
+  /* 落点高亮环（套在当前格上）*/
+  #ring{position:absolute;width:13%;aspect-ratio:1;transform:translate(-50%,-60%);
+    border:3px solid #ffe27a;border-radius:14px;box-shadow:0 0 16px 3px rgba(255,226,122,.85),inset 0 0 10px rgba(255,226,122,.6);
+    transition:left .42s cubic-bezier(.5,0,.3,1),top .42s cubic-bezier(.5,0,.3,1);opacity:0}
+  #ring.show{opacity:1}
+  /* 移动的角色标记（小船光点，叠在底图角色之外的"当前位置"）*/
+  #token{position:absolute;width:8%;aspect-ratio:1;transform:translate(-50%,-95%);z-index:6;
+    background:radial-gradient(circle at 50% 35%,#fff,#7fe0ff 55%,rgba(127,224,255,0) 72%);
+    border-radius:50%;filter:drop-shadow(0 0 8px #7fe0ff);
+    transition:left .42s cubic-bezier(.5,0,.3,1),top .42s cubic-bezier(.5,0,.3,1)}
+  #token:after{content:"⛵";position:absolute;inset:0;display:grid;place-items:center;font-size:18px}
+  /* 骰子结果 chip（压在中央罗盘上）*/
+  #diceChip{position:absolute;left:50%;top:49%;transform:translate(-50%,-50%) scale(.6);z-index:7;
+    min-width:54px;height:54px;padding:0 6px;border-radius:14px;background:rgba(8,30,42,.0);
+    display:grid;place-items:center;font:800 40px/1 system-ui;color:#fff;text-shadow:0 2px 6px #000,0 0 12px #ffe27a;opacity:0;transition:all .25s}
+  #diceChip.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  /* +珍珠 飘字 */
+  .float{position:absolute;z-index:8;font:800 17px/1 system-ui;color:#bff3ff;text-shadow:0 2px 4px #000;
+    pointer-events:none;transition:all .8s ease;opacity:0}
+  /* 进度 chip（叠在底部 額外獎勵 区上方）*/
+  #pgChip{position:absolute;left:7%;bottom:14.5%;z-index:7;background:rgba(8,30,42,.82);border:1px solid rgba(127,224,255,.6);
+    border-radius:10px;padding:4px 10px;font:800 12px/1.3 system-ui;color:#bff3ff;opacity:0;transition:opacity .3s}
+  #pgChip.show{opacity:1}
+  /* 探索按钮点击热区（压在底图按钮上）*/
+  #exploreHot{position:absolute;left:31%;bottom:6.5%;width:38%;height:5.5%;z-index:9;cursor:pointer;
+    pointer-events:auto;border-radius:30px;border:2px dashed rgba(255,226,122,0);transition:border-color .2s}
+  #exploreHot:hover{border-color:rgba(255,226,122,.7)}
+  #exploreHot:active{transform:translateY(2px)}
+
+  /* ===== 右侧实时说明 ===== */
+  .panel{width:430px;background:#f7f9f9;border-radius:16px;padding:14px 18px;color:#0e3a4d;box-shadow:0 8px 30px rgba(0,0,0,.3)}
+  .panel h2{font-size:16px;margin:0 0 2px;color:#0e3a4d}
+  .fid{display:inline-block;font-size:10px;font-weight:800;color:#2a8a5c;background:#e3f5ea;border:1px solid #9fd9b8;padding:2px 8px;border-radius:6px}
+  .lead{font-size:12px;color:#7d9094;margin:8px 0 12px}.lead b{color:#2a8a5c}
+  .focus{border-radius:12px;padding:12px;background:#fff;border:1px solid #e2ecec;border-left:5px solid #3fb6c4;min-height:70px}
+  .focus.auto{border-left-color:#f0c74d}.focus.idle{border-left-color:#cfd9d9}
+  .focus .act{font-weight:800;font-size:14px;margin-bottom:6px}
+  .focus .map{font-size:12.5px;color:#4a5b5e;line-height:1.65}
+  .focus .map .k{display:inline-block;font-size:10.5px;font-weight:800;color:#fff;background:#1b6b78;padding:1px 7px;border-radius:5px;margin-right:6px}
+  .focus .map .ka{background:#d9a829}
+  .secT{font-size:11px;letter-spacing:1px;color:#0e3a4d;font-weight:800;margin:12px 0 5px}
+  .flow{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+  .node2{font-size:10.5px;padding:3px 8px;border-radius:8px;background:#eef3f3;color:#7a8d90;border:1px solid #ddeaea}
+  .node2.hot{background:#3fb6c4;color:#06303c;border-color:#1b6b78;font-weight:700}
+  .node2.auto.hot{background:#f0c74d;border-color:#d9a829}
+  .arr{color:#bcccce;font-size:11px}
+  .trail{margin-top:6px;max-height:120px;overflow-y:auto;font-size:12px;border:1px solid #e2ecec;border-radius:10px;background:#fff;padding:8px 10px}
+  .trail .t{padding:4px 0;border-bottom:1px dashed #eaf0f0;color:#4a5b5e}.trail .t:last-child{border-bottom:none}.trail .t b{color:#08323f}.trail .empty{color:#aebbbb}
+  details{margin-top:14px;font-size:12.5px}summary{cursor:pointer;font-weight:700;color:#0e3a4d}
+  details div{font-size:11px;line-height:1.7;color:#4a5b5e;margin-top:8px}
+  code{background:#eadfc8;padding:0 4px;border-radius:3px;font-size:10px;color:#5a4a1a}
+</style>
+</head>
+<body>
+  <div class="phone" id="phone">
+    <div class="ovl">
+      <div id="ring"></div>
+      <div id="token"></div>
+      <div id="diceChip"></div>
+      <div id="pgChip">🦪 額外獎勵 <b id="pgNum">0</b>/700</div>
+    </div>
+    <div id="exploreHot" title="探索1次" onclick="roll()"></div>
+  </div>
+
+  <div class="panel">
+    <h2>珍珠贝进度系统 · 交互说明（实时） <span class="fid">真底图版 · 效果图当底</span></h2>
+    <div class="lead">👈 点底图上的 <b>探索1次</b> 按钮（虚线热区）。<b>底是真游戏效果图</b>（保真~9成）；HTML 只叠"会动的件"：船标记沿菱形格位移动、骰子结果、落点高亮、珍珠进度。这就是正确流水线③——<b>不再用CSS拼界面</b>。</div>
+
+    <div class="focus idle" id="focus">
+      <div class="act">还没操作</div>
+      <div class="map">点「探索1次」→ 掷骰 → 船沿航线前进 → 落点若有 🦪 则 +1 珍珠（額外獎勵进度）。</div>
+    </div>
+
+    <div class="secT">操作动线</div>
+    <div class="flow" id="flow">
+      <span class="node2" id="n-roll">探索/掷骰</span><span class="arr">→</span>
+      <span class="node2" id="n-move">船沿航线前进</span><span class="arr">→</span>
+      <span class="node2 auto" id="n-land">落点高亮</span><span class="arr">→</span>
+      <span class="node2 auto" id="n-pick">有🦪+1珍珠</span><span class="arr">→</span>
+      <span class="node2 auto" id="n-pg">額外獎勵进度</span>
+    </div>
+
+    <div class="secT">交互轨迹</div>
+    <div class="trail" id="trail"><div class="empty">（操作记录会出现在这里…）</div></div>
+
+    <details open>
+      <summary>🎯 这版做对了什么（效果图当底 vs CSS拼）</summary>
+      <div>
+        <p><b>底图</b>：真游戏满分辨率截图 <code>board_real.png</code>（菱形格阵+中央罗盘+霍普金斯起点），保真~9成，<b>不是CSS拼的</b>。</p>
+        <p><b>叠加层</b>：仅 4 个会动的件——船标记/骰子结果/落点高亮环/珍珠进度，绝对定位百分比，跟底图缩放。</p>
+        <p><b>⏳ 待精</b>：格位坐标 <code>WAYPOINTS</code> 现按图目测（菱形外环近似）；拿到 prefab 写死的 24 格坐标可像素级对齐。骰子点数随机演示。</p>
+      </div>
+    </details>
+  </div>
+
+<script>
+  // ★ 菱形外环格位（% of 底图，按真图目测·可调）；顺时针。有 prefab 坐标就替换这数组即像素级准。
+  const WAYPOINTS=[
+    [24,30],[40,38],[57,39],[71,42],          // 上沿(含霍普金斯起点→右)
+    [80,47],[83,55],[79,61],[71,65],          // 右沿下行
+    [60,67],[49,68],[39,66],[30,63],          // 下沿(右→左)
+    [22,57],[19,49],[22,43],[28,38]           // 左沿上行→回起点
+  ];
+  const PEARL_TILES=new Set([1,3,5,8,10,13]); // 哪些格位有珍珠贝(演示)
+  const N=WAYPOINTS.length; let pos=0, pearls=0, busy=false;
+  const ring=document.getElementById('ring'),token=document.getElementById('token'),
+        diceChip=document.getElementById('diceChip'),phone=document.getElementById('phone');
+  function place(el,i){const [x,y]=WAYPOINTS[i];el.style.left=x+'%';el.style.top=y+'%';}
+  function setFocus(act,map,cls){const f=document.getElementById('focus');f.className='focus '+(cls||'');f.querySelector('.act').textContent=act;f.querySelector('.map').innerHTML=map;}
+  function flow(ids){document.querySelectorAll('#flow .node2').forEach(n=>n.classList.remove('hot'));ids.forEach(id=>document.getElementById('n-'+id)?.classList.add('hot'));}
+  function trail(t){const el=document.getElementById('trail');if(el.querySelector('.empty'))el.innerHTML='';const d=document.createElement('div');d.className='t';d.innerHTML=t;el.insertBefore(d,el.firstChild);}
+  function floatPearl(i){const [x,y]=WAYPOINTS[i];const f=document.createElement('div');f.className='float';f.textContent='🦪 +1';
+    f.style.left=x+'%';f.style.top=(y-2)+'%';f.style.transform='translate(-50%,0)';phone.appendChild(f);
+    requestAnimationFrame(()=>{f.style.opacity='1';f.style.top=(y-12)+'%';});
+    setTimeout(()=>{f.style.opacity='0';},850);setTimeout(()=>f.remove(),1700);}
+
+  // 初始：船+环放起点
+  place(token,0);place(ring,0);ring.classList.add('show');
+
+  function roll(){
+    if(busy)return; busy=true;
+    const dice=1+Math.floor(Math.random()*6);
+    flow(['roll']);setFocus('掷骰中…',`<span class="k">动线</span>骰子定格 → 船沿航线<b>逐格</b>前进，非瞬移。`,'auto');
+    // 骰子结果压在中央罗盘
+    let n=0;const spin=setInterval(()=>{diceChip.textContent=(1+Math.floor(Math.random()*6));diceChip.classList.add('show');
+      if(++n>=8){clearInterval(spin);diceChip.textContent=dice;trail(`探索 → 掷出 <b>${dice}</b>`);stepMove(dice);}},60);
+  }
+  function stepMove(dice){
+    flow(['roll','move']);let step=0;
+    const mv=setInterval(()=>{step++;pos=(pos+1)%N;place(token,pos);place(ring,pos);
+      if(step>=dice){clearInterval(mv);setTimeout(()=>{diceChip.classList.remove('show');land();},250);}},420);
+  }
+  function land(){
+    flow(['roll','move','land']);
+    if(PEARL_TILES.has(pos)){
+      pearls++;floatPearl(pos);
+      document.getElementById('pgChip').classList.add('show');document.getElementById('pgNum').textContent=pearls;
+      flow(['land','pick','pg']);
+      setFocus(`落点(第${pos}格) 有 🦪 → 拾取`,`<span class="k ka">+1</span>珍珠飞入 → <b>額外獎勵 ${pearls}/700</b> 进度+1。集满阶梯档位 → 自动发奖。`,'auto');
+      trail(`落第${pos}格 🦪 拾取 → 額外獎勵 ${pearls}/700`);
+    }else{
+      setFocus(`落点(第${pos}格) 无珍珠`,`<span class="k">动线</span>普通海域，进度不变，可继续探索。`,'');
+      trail(`落第${pos}格，无珍珠`);
+    }
+    busy=false;
+  }
+</script>
+</body>
+</html>

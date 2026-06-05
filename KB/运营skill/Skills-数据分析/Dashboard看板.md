@@ -1,6 +1,6 @@
 ---
 aliases: [dashboard-skill, 看板, 报表]
-tags: [skill, 数据分析, dashboard, 可视化]
+tags: [kind/skill, domain/数据复盘, proj/通用]
 skill_path: .agents/skills/dashboard-skill/
 trigger: Dashboard、看板、报表、图表、可视化
 ---

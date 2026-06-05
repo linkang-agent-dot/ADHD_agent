@@ -1,3 +1,7 @@
+---
+tags: [kind/产出, domain/数据复盘, proj/X3]
+---
+
 # X3 外显道具总览
 
 ## 1. 岛屿皮肤（永久款 / Skin.xlsx SkinType=1）

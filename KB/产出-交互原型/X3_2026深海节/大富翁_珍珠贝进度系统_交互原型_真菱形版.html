@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>珍珠贝进度系统 · 真菱形版（活DOM真素材 + v1完整逻辑/信息）</title>
+<!-- 真菱形版 v2：真海景底 + 真海岛/罗盘/角色 PNG 摆成活 DOM 菱形环(构造对齐)；
+     GAME 逻辑/信息 = 移植第一版(refillOne恒4贝 + collapse进度条播完即收 + 逐档开箱 + 美需说明书 + 交互确认)。 -->
+<style>
+  :root{--deep:#0e3a4d;--aqua:#3fb6c4;--foam:#bfeef0;--gold:#f7d44a;--gold-d:#d9a829;--ink:#08323f;--green-d:#2a8a5c;--red:#e0664d;--teal:#1b6b78;--pmut:#7d9094;--pline:#e2ecec;}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:#10202b;display:flex;gap:18px;justify-content:center;align-items:flex-start;padding:14px 16px;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+  .leftcol{display:flex;flex-direction:column;gap:10px;flex:none}
+  .phone{width:372px;aspect-ratio:1080/1920;position:relative;flex:none;border-radius:22px;overflow:hidden;
+    background:#08202e url("_assets/board_bg.png") center/cover no-repeat;box-shadow:0 18px 50px rgba(0,0,0,.55);border:6px solid #06141d}
+  .scene{position:absolute;inset:0}
+  .scene::before{content:"";position:absolute;top:0;left:0;right:0;height:20%;background:linear-gradient(180deg,rgba(6,24,34,.55),transparent);z-index:1}
+  .top{position:absolute;top:10px;left:12px;right:12px;display:flex;align-items:center;gap:8px;z-index:8}
+  .title{font:800 16px/1 system-ui;color:#fce8b6;text-shadow:0 2px 4px #000;letter-spacing:1px}
+  .cur{margin-left:auto;display:flex;align-items:center;gap:5px;background:rgba(8,30,42,.6);border:1px solid rgba(127,224,255,.5);border-radius:16px;padding:3px 9px 3px 5px;font:700 12px/1 system-ui;color:#fce8b6}
+  .cur img{width:20px;height:20px;object-fit:contain}
+  .close{width:36px;height:36px;padding:0;background:none;border:none;cursor:pointer}
+  .close img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5))}
+  .pg{position:absolute;top:50px;left:12px;right:12px;z-index:7;background:rgba(8,40,52,.8);border:1.5px solid rgba(127,224,255,.55);border-radius:12px;padding:7px 11px;opacity:0;transform:translateY(-130%);transition:all .42s cubic-bezier(.2,.9,.3,1.2)}
+  .pg.show{opacity:1;transform:translateY(0)}
+  .pg .h{display:flex;align-items:center;gap:6px;font:800 11px/1 system-ui;color:#bff3ff;margin-bottom:6px}
+  .pg .h .cnt{margin-left:auto;color:#ffe27a;font-size:13px}
+  .pg .tk{height:11px;background:rgba(255,255,255,.16);border-radius:6px;overflow:hidden;position:relative}
+  .pg .fl{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:6px;background:linear-gradient(90deg,#3fb6c4,#bff3ff);transition:width .5s;box-shadow:0 0 8px #3fb6c4}
+  .board{position:absolute;left:0;right:0;top:14%;height:62%;z-index:4}
+  .compass{position:absolute;left:50%;top:49%;width:25%;aspect-ratio:1;transform:translate(-50%,-50%);background:url("_assets/cell_start_compass.png") center/contain no-repeat;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5));z-index:3}
+  .tile{position:absolute;width:15%;aspect-ratio:1;transform:translate(-50%,-50%);background-repeat:no-repeat;background-position:center;background-size:contain;filter:drop-shadow(0 3px 5px rgba(0,0,0,.45));transition:filter .2s}
+  .tile .no{position:absolute;right:4%;bottom:0;width:32%;height:32%;border-radius:50%;background:radial-gradient(circle at 40% 35%,#2a4a5a,#0a2230);border:1.5px solid rgba(127,224,255,.4);display:grid;place-items:center;font:800 10px/1 system-ui;color:#bff3ff}
+  .tile .pearl{position:absolute;left:50%;top:28%;transform:translate(-50%,-50%);font-size:17px;filter:drop-shadow(0 0 4px rgba(191,238,240,.9))}
+  .tile.start{filter:drop-shadow(0 0 6px rgba(127,224,192,.6)) drop-shadow(0 3px 5px rgba(0,0,0,.45))}
+  .tile.land{filter:drop-shadow(0 0 11px #ffe27a) drop-shadow(0 3px 5px rgba(0,0,0,.45))}
+  .role{position:absolute;left:50%;top:4%;width:11%;aspect-ratio:1;transform:translate(-50%,-78%);z-index:6;object-fit:contain;filter:drop-shadow(0 3px 4px rgba(0,0,0,.6));transition:left .4s cubic-bezier(.5,0,.3,1),top .4s cubic-bezier(.5,0,.3,1)}
+  .flyP{position:absolute;font-size:20px;z-index:30;pointer-events:none;transition:left .55s cubic-bezier(.5,0,.3,1),top .55s cubic-bezier(.5,0,.3,1),transform .55s,opacity .55s;filter:drop-shadow(0 0 6px rgba(191,238,240,.95))}
+  .ctrl{position:absolute;left:12px;right:12px;bottom:14px;display:flex;align-items:center;gap:10px;z-index:8}
+  .dice{width:46px;height:46px;border-radius:12px;background:linear-gradient(145deg,#fbf6e6,#e3d6b0);display:grid;place-items:center;font:800 26px/1 system-ui;color:#08323f;box-shadow:0 3px 0 #b3a079;flex:none}
+  .roll{flex:1;border:none;border-radius:12px;padding:14px 0;font:800 15px/1 system-ui;color:#fff;cursor:pointer;background:url("_assets/btn_roll.png") center/100% 100% no-repeat;background-color:transparent;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+  .roll:active{transform:translateY(2px);filter:brightness(.93)}
+  .chestOv{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:20;opacity:0;pointer-events:none;transition:opacity .3s}
+  .chestOv.show{opacity:1}
+  .chestBox{text-align:center;transform:scale(.7);transition:transform .4s cubic-bezier(.2,.9,.3,1.4)}
+  .chestOv.show .chestBox{transform:scale(1)}
+  .chestBox .lbl{font:800 13px/1 system-ui;color:#ffe27a;margin-bottom:6px;text-shadow:0 1px 3px #000}
+  .chestBox img{width:128px;filter:drop-shadow(0 6px 12px rgba(0,0,0,.5));transition:transform .4s}
+  .chestBox.open img{transform:scale(1.08) translateY(-4px)}
+  .rw{display:flex;gap:8px;justify-content:center;margin-top:8px;opacity:0;transform:translateY(8px);transition:all .4s}
+  .chestBox.open .rw{opacity:1;transform:translateY(0)}
+  .rw div{width:54px;height:54px;border-radius:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:22px;color:#bff3ff}
+  .rw small{font-size:8px}
+  .auto{font:600 10px/1.3 system-ui;color:#9fc4cc;margin-top:8px}
+  .toast{position:absolute;left:50%;top:30%;transform:translate(-50%,-10px);z-index:30;background:rgba(8,40,52,.94);color:#bff3ff;padding:8px 15px;border-radius:20px;font:700 12px/1 system-ui;opacity:0;pointer-events:none;transition:all .35s;border:1px solid rgba(127,224,255,.5);max-width:300px;text-align:center}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+  /* 左下静态说明（移植v1）*/
+  .staticNote{width:372px;background:#11333f;border:1px solid #1d5e6d;border-radius:12px;padding:9px 13px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+  .staticNote .nt{font-size:11px;font-weight:800;color:var(--aqua);margin:6px 0 3px}.staticNote .nt:first-child{margin-top:0}
+  .staticNote p{font-size:10.5px;line-height:1.5;color:#9fc4cc;margin:0 0 2px}
+  .staticNote .lg{font-size:10.5px;line-height:1.65;color:#cfe9ee}
+  /* 右侧实时说明（移植v1）*/
+  .panel{width:440px;background:#f7f9f9;border-radius:16px;padding:13px 18px;align-self:stretch;color:var(--ink);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+  .panel h2{font-size:16px;margin:0 0 2px;color:var(--deep)}
+  .fid{display:inline-block;font-size:10px;font-weight:800;color:#2a8a5c;background:#e3f5ea;border:1px solid #9fd9b8;padding:2px 8px;border-radius:6px}
+  .panel .lead{font-size:12px;color:var(--pmut);margin-bottom:10px}.panel .lead b{color:var(--green-d)}
+  .focus{border-radius:12px;padding:12px;background:#fff;border:1px solid var(--pline);border-left:5px solid var(--aqua);min-height:78px;transition:border-color .2s}
+  .focus.idle{border-left-color:#cfd9d9}.focus.warn{border-left-color:var(--red)}.focus.auto{border-left-color:var(--gold)}
+  .focus .act{font-weight:800;font-size:14px;margin-bottom:6px}.focus .map{font-size:12.5px;color:#4a5b5e;line-height:1.65}
+  .focus .map .k{display:inline-block;font-size:10.5px;font-weight:800;color:#fff;background:var(--teal);padding:1px 7px;border-radius:5px;margin-right:6px}.focus .map .ka{background:var(--gold-d)}.focus.idle .act{color:var(--pmut)}
+  .secT{font-size:11px;letter-spacing:1px;color:var(--deep);font-weight:800;margin:10px 0 5px}
+  .sm{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .pill{font-size:10.5px;padding:3px 9px;border-radius:20px;font-weight:700;border:2px solid transparent;background:#e7f2f2;color:var(--teal);transition:all .2s}
+  .pill.hot{border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,199,77,.3);transform:scale(1.05);background:#fff6df;color:var(--gold-d)}
+  .flow{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+  .node2{font-size:10.5px;padding:3px 8px;border-radius:8px;background:#eef3f3;color:#7a8d90;border:1px solid #ddeaea;transition:all .2s}
+  .node2.hot{background:var(--aqua);color:#06303c;border-color:var(--teal);font-weight:700}.node2.auto.hot{background:var(--gold);border-color:var(--gold-d)}.node2.stop.hot{background:var(--red);color:#fff;border-color:#b34a36}
+  .arr{color:#bcccce;font-size:11px}
+  .trail{margin-top:6px;max-height:92px;overflow-y:auto;font-size:12px;border:1px solid var(--pline);border-radius:10px;background:#fff;padding:8px 10px}
+  .trail .t{padding:4px 0;border-bottom:1px dashed #eaf0f0;color:#4a5b5e}.trail .t:last-child{border-bottom:none}.trail .t b{color:var(--ink)}.trail .empty{color:#aebbbb}
+  details{margin-top:14px;font-size:12.5px}summary{cursor:pointer;font-weight:700;color:var(--deep)}
+  details ul{margin:8px 0;padding-left:18px}details li{margin:4px 0;color:#4a5b5e;line-height:1.5}
+  .yel{color:#e08a1e;font-weight:800}.ok2{color:#2a8a5c;font-weight:700}
+  .artbook{display:flex;flex-direction:column;gap:7px}
+  .abrow{border-radius:9px;padding:8px 11px;border-left:4px solid}
+  .abrow.new{background:#fff7e8;border-color:var(--gold-d)}.abrow.reuse{background:#eef3f3;border-color:#9fbcbc}
+  .abh{font-size:12px;font-weight:800;margin-bottom:3px;color:var(--ink)}
+  .abr{font-size:10.6px;line-height:1.5;color:#4a5b5e;margin:2px 0}.abr b{color:var(--teal)}.abr.todo{color:#b06a12;font-weight:700}
+  .abr code{background:#eadfc8;padding:0 4px;border-radius:3px;font-size:9.8px;color:#5a4a1a}
+</style>
+</head>
+<body>
+  <div class="leftcol">
+  <div class="phone"><div class="scene">
+    <div class="top">
+      <div class="title">🌊 深海远航</div>
+      <span class="cur"><img src="_assets/currency.png" alt="币">9,380</span>
+      <button class="close" onclick="ev('close')"><img src="_assets/btn_close.png" alt="关闭"></button>
+    </div>
+    <div class="pg" id="pgFloat"><div class="h">🦪 距下个宝箱 <span class="cnt" id="pgCnt">0/1</span></div><div class="tk"><div class="fl" id="pgFill"></div></div></div>
+    <div class="board" id="board"><div class="compass"></div></div>
+    <div class="ctrl">
+      <div class="dice" id="dice">🎲</div>
+      <button class="roll" id="rollBtn" onclick="ev('roll')">掷骰前进</button>
+    </div>
+    <div class="chestOv" id="chestOv"><div class="chestBox" id="chestBox">
+      <div class="lbl" id="chestLbl">集满一档 · 自动开启神秘宝箱</div>
+      <img src="_assets/chest_big.png" alt="深海宝箱">
+      <div class="rw"><div>🔱<small>信物×2</small></div><div>🪙<small>金币×5k</small></div><div>⏩<small>加速×3</small></div></div>
+      <div class="auto">✨ 自动领取入账 · 此时仍可掷骰</div>
+    </div></div>
+    <div class="toast" id="toast"></div>
+  </div></div>
+  <div class="staticNote">
+    <div class="nt">📖 主界面说明（静态 · 不随操作变）</div>
+    <p>菱形环棋盘，4 个珍珠贝随机散在普通格（<b>拾一个补一个，场上恒 4</b>）；阿米娜在「启航港」；进度条<b>默认隐藏</b>，拾到珍珠贝才滑出、播完即收。玩家只操作底部「掷骰前进」，角色绕环航行。</p>
+    <div class="nt">🔖 素材状态</div>
+    <div class="lg">✅ 棋盘海景 / 海岛地块 / 罗盘 / 角色 / 宝箱 / 关闭键 / 掷骰键 = <b>真实游戏 PNG</b>（活 DOM，构造对齐）<br>🟡 珍珠贝🦪 / 骰子🎲 = 暂留 emoji（库内未出 → 走 Morphix 生成补齐）</div>
+  </div>
+  </div><!-- /leftcol -->
+
+  <div class="panel">
+    <h2>珍珠贝进度系统 · 交互说明（实时） <span class="fid">真菱形版 · 活DOM真素材</span></h2>
+    <div class="lead">👈 连点 <b>掷骰前进</b>。<b>左列</b>=活原型(真素材活DOM)+静态说明；<b>本侧</b>=动起来的<b>即时说明</b>，随操作更新。表现用真素材，逻辑/信息沿用第一版（恒4贝·进度条播完即收·美需齐）。</div>
+
+    <div class="focus idle" id="focus">
+      <div class="act">还没操作</div>
+      <div class="map">点「掷骰前进」。停 🦪 → 贝飞入 → 当前档进度+1。集满该档 → 自动开箱 → 进度条<b>归零、切下一档</b>（目标聚焦"下个宝箱"）。</div>
+    </div>
+
+    <div class="secT">状态机</div>
+    <div class="sm">
+      <span class="pill" id="sm-bar">进度条：填当前档 → 满 → <b>归零切下档</b></span>
+      <span class="arr">·</span>
+      <span class="pill" id="sm-box">开箱：自动开 → 自动领 · 非阻塞</span>
+    </div>
+
+    <div class="secT">操作动线（玩家只触发掷骰，后续自动·非阻塞·逐档）</div>
+    <div class="flow" id="flow">
+      <span class="node2" id="n-roll">掷骰</span><span class="arr">→</span>
+      <span class="node2" id="n-pick">停🦪·拾取</span><span class="arr">/</span>
+      <span class="node2 stop" id="n-pass">路过·不领</span><span class="arr">⇒</span>
+      <span class="node2 auto" id="n-fly">贝飞入</span><span class="arr">→</span>
+      <span class="node2 auto" id="n-fill">填当前档</span><span class="arr">→</span>
+      <span class="node2 auto" id="n-open">满→开箱</span><span class="arr">→</span>
+      <span class="node2 auto" id="n-get">领取入账</span><span class="arr">→</span>
+      <span class="node2 auto" id="n-reset">归零切下档</span><span class="arr">↺</span>
+      <span class="node2 auto" id="n-next">下档满则再开</span>
+    </div>
+
+    <div class="secT">交互轨迹</div>
+    <div class="trail" id="trail"><div class="empty">（操作记录会出现在这里…）</div></div>
+
+    <details>
+      <summary>🎨 美术资产对接说明书（占位待出 → 出图替换 · 程序照此录入；<b>点开看</b>）</summary>
+      <div class="artbook">
+      <div class="abrow new">
+        <div class="abh">🆕 寻宝进度条 UI（航海之路原版无）</div>
+        <div class="abr"><b>占位资源</b>：<code>DK_img_Activity_voyage_progress_bg</code> / <code>_fill</code> / <code>_num</code>（底框 / 填充条 / 「X/Y」数字底）</div>
+        <div class="abr"><b>录入</b>：切图→ <code>client/Assets/Res/UI/Spirits/Activity/</code> → 注册 DK(<code>Display_*.asset</code>) → 进度条 prefab(UIActvVoyage 内新增 Progress 节点)：底图 <code>SetImageWithDisplayKey(DK)</code>、填充条 <code>Image.type=Filled</code> 程序控 <code>fillAmount=cur/need</code></div>
+        <div class="abr todo">⏳ 出图后：把占位 DK 名换成实际资源路径</div>
+      </div>
+      <div class="abrow new">
+        <div class="abh">🆕 进度流动填充特效（参考 CoinMaster）</div>
+        <div class="abr"><b>占位资源</b>：<code>Fx_Ui_VoyageProgress_Fill</code>（特效 prefab，序列帧 or shader）</div>
+        <div class="abr"><b>录入</b>：挂进度条 prefab，<code>progress+1</code> 时程序播放流动填充</div>
+        <div class="abr todo">⏳ 出图后：占位 → 实际特效 prefab 路径</div>
+      </div>
+      <div class="abrow new">
+        <div class="abh">🆕 珍珠贝飞入特效</div>
+        <div class="abr"><b>占位资源</b>：<code>Fx_Ui_VoyagePearl_Fly</code>（轨迹 + 拖尾特效 prefab）</div>
+        <div class="abr"><b>录入</b>：拾取时程序——珍珠贝图标(<code>Item.DKIcon</code>)从格子坐标 → 进度条坐标位移 + 播 Fly 特效 + 到达吸入光</div>
+        <div class="abr todo">⏳ 出图后：占位 → 实际特效 prefab 路径</div>
+      </div>
+      <div class="abrow reuse">
+        <div class="abh">🔁 神秘宝箱开箱（复用 + 补动画）</div>
+        <div class="abr"><b>资源</b>：复用 X3 已有开箱资源 <code>【填实际开箱 prefab 路径】</code></div>
+        <div class="abr"><b>录入</b>：<code>progress</code> 达档位时程序自动触发开箱动画；奖励走 Reward 表</div>
+      </div>
+      <div class="abrow reuse">
+        <div class="abh">🔁 珍珠贝图标 / 角色 / 棋盘 等</div>
+        <div class="abr"><b>珍珠贝</b> <code>progress_item_pearlshell</code>(✅已出)：配置 <code>Item.DKIcon</code> 录入、<code>SetImageWithDisplayKey</code> 读；<b>角色 spine 逐格跳 / 棋盘 / 骰子 / 罗盘</b>：复用航海之路 + 整体深海换皮（见「大富翁-美术音效需求」页签）</div>
+      </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>交互层面（本原型确认的）＋ 不属交互的另说</summary>
+      <div style="font-weight:800;color:#2a8a5c;margin:7px 0 4px">✓ 交互已确认（这次点定的）</div>
+      <ul>
+        <li>进度条<b>一档一档聚焦</b>「距下个宝箱」，集满 → 开箱 → 归零切下档；多档累积<b>一个个开</b>（不一次冲多档）。</li>
+        <li>拾取 🦪 <b>飞入</b> → 进度条即时滑出填充 → <b>播完即收、不停留</b>。</li>
+        <li>达档<b>自动开箱、自动领取</b>；开箱<b>非阻塞</b>，可继续掷骰（新掷骰快进收尾）。</li>
+        <li><b>停留才领、路过不领</b>（移动经过 🦪 不拾取、贝保留）——交互边界，已演示。</li>
+      </ul>
+      <div style="font-weight:800;color:#7d9094;margin:12px 0 4px">↗ 不属交互（策划数值/规则 → 归规则说明 & 数值方案，本原型不聊）</div>
+      <ul>
+        <li>档位所需序列 1,2,3,4,4,4,6,6,6,8,8,8,8,10、封顶后上限</li>
+        <li>活动结束未开档位的处理（邮件补发 / 过期作废）</li>
+        <li>珍珠贝补刷权重、场上常驻数（BoxWeight / ProgressMax）</li>
+      </ul>
+    </details>
+  </div>
+
+<script>
+  // 菱形环坐标(% of .board层)，绕中央罗盘顺时针；位置构造→天生对齐
+  const DIAMOND=[
+    [50,4],[62,11],[74,19],[86,27], [92,42],[86,57],[74,65],[62,73],
+    [50,80],[38,73],[26,65],[14,57], [8,42],[14,27],[26,19],[38,11]
+  ];
+  const N=DIAMOND.length;
+  const TILES=['tile_island1','tile_island2','tile_island3','tile_island4'];
+  // ===== 以下 GAME 逻辑移植第一版(经验证无 bug) =====
+  let board=[], pos=0, progress=0, claimed=0, timers=[], rolling=false, rollTimer=null, moveTimer=null;
+  const incr=[1,2,3,4,4,4,6,6,6,8,8,8,8,10];
+  const need=i=>incr[Math.min(i,incr.length-1)];
+  const cum=i=>{let s=0;for(let k=0;k<=i;k++)s+=need(k);return s;};
+  const after=(ms,fn)=>{const t=setTimeout(fn,ms);timers.push(t);return t;};
+  function initBoard(){board=[];for(let i=0;i<N;i++){let t=i===0?'start':i===8?'mystery':'normal';board.push({type:t,pearl:false});}[2,5,9,13].forEach(i=>board[i].pearl=true);} // 4 珍珠贝
+  function refillOne(){const c=board.map((x,i)=>i).filter(i=>board[i].type!=='start'&&!board[i].pearl&&i!==pos);if(!c.length)return -1;const i=c[Math.floor(Math.random()*c.length)];board[i].pearl=true;return i;} // 拾一补一→恒4
+
+  const boardEl=document.getElementById('board');let role;
+  function buildTiles(){
+    boardEl.querySelectorAll('.tile').forEach(e=>e.remove());
+    board.forEach((c,i)=>{const d=document.createElement('div');d.className='tile'+(c.type==='start'?' start':'');d.id='cell'+i;
+      d.style.left=DIAMOND[i][0]+'%';d.style.top=DIAMOND[i][1]+'%';
+      d.style.backgroundImage=`url('_assets/${c.type==='start'?'tile_island1':TILES[i%4]}.png')`;
+      d.innerHTML=`<span class="no">1</span>`+(c.pearl?'<span class="pearl">🦪</span>':'');
+      boardEl.appendChild(d);});
+    if(!role){role=document.createElement('img');role.className='role';role.src='_assets/role_siren.png';role.alt='阿米娜';boardEl.appendChild(role);}
+    placeRole(pos);
+  }
+  function refreshPearls(){board.forEach((c,i)=>{const t=document.getElementById('cell'+i);if(!t)return;const has=t.querySelector('.pearl');
+    if(c.pearl&&!has){const s=document.createElement('span');s.className='pearl';s.textContent='🦪';t.appendChild(s);}
+    else if(!c.pearl&&has){has.remove();}});}
+  function placeRole(i){role.style.left=DIAMOND[i][0]+'%';role.style.top=DIAMOND[i][1]+'%';}
+  function renderBar(){const base=claimed>0?cum(claimed-1):0,cn=need(claimed),cur=Math.max(0,Math.min(cn,progress-base));
+    document.getElementById('pgFill').style.width=(cur/cn*100)+'%';document.getElementById('pgCnt').textContent=cur+'/'+cn;}
+  function setFocus(act,map,cls){const f=document.getElementById('focus');f.className='focus'+(cls?' '+cls:'');f.querySelector('.act').textContent=act;f.querySelector('.map').innerHTML=map;}
+  function trail(t){const el=document.getElementById('trail');if(el.querySelector('.empty'))el.innerHTML='';const d=document.createElement('div');d.className='t';d.innerHTML=t;el.insertBefore(d,el.firstChild);}
+  function hotSM(w){document.getElementById('sm-bar').classList.toggle('hot',w==='bar');document.getElementById('sm-box').classList.toggle('hot',w==='box');}
+  function flow(ids){document.querySelectorAll('#flow .node2').forEach(n=>n.classList.remove('hot'));ids.forEach(id=>document.getElementById('n-'+id)?.classList.add('hot'));}
+  function markLand(i){const c=document.getElementById('cell'+i);if(c){c.classList.add('land');after(700,()=>c.classList.remove('land'));}}
+  function markStep(i){const c=document.getElementById('cell'+i);if(c){c.classList.add('land');setTimeout(()=>c.classList.remove('land'),190);}}
+
+  function flyPearl(cellId,done){
+    const phone=document.querySelector('.phone'),cell=document.getElementById(cellId);
+    if(!cell){done&&done();return;}
+    const pr=phone.getBoundingClientRect(),cr=cell.getBoundingClientRect();
+    const fly=document.createElement('div');fly.className='flyP';fly.textContent='🦪';
+    fly.style.left=(cr.left-pr.left+cr.width/2-10)+'px';fly.style.top=(cr.top-pr.top+cr.height/2-10)+'px';
+    phone.appendChild(fly);
+    after(30,()=>{fly.style.left=(pr.width/2-10)+'px';fly.style.top='62px';fly.style.transform='scale(.5)';fly.style.opacity='.3';});
+    after(580,()=>{fly.remove();done&&done();});
+  }
+  function resetAnim(){timers.forEach(clearTimeout);timers=[];clearInterval(rollTimer);clearInterval(moveTimer);
+    document.getElementById('chestOv').classList.remove('show');document.querySelectorAll('.flyP').forEach(e=>e.remove());renderBar();}
+
+  function ev(type){
+    if(type==='roll'){
+      if(rolling) return;
+      resetAnim();
+      rolling=true; document.getElementById('rollBtn').disabled=true;
+      flow(['roll']);hotSM();
+      setFocus('掷骰中… 骰子滚动 + 角色绕环逐格航行',`<span class="k">动线</span>实际游戏有<b>骰子滚动 + spine 沿环逐格航行</b>动画(非瞬移)；<b>走完落点</b>才触发拾取/进度/开箱(规则 3.11)。`,'auto');
+      let n=0; rollTimer=setInterval(()=>{ document.getElementById('dice').textContent='⚀⚁⚂⚃⚄⚅'[Math.floor((Date.now()/53+n)%6)]; if(++n>=9){clearInterval(rollTimer);startMove();} },55);
+      return;
+    }
+    if(type==='close'){flow([]);setFocus('点 × 关闭','<span class="k">动线</span>关活动页回主界面，进度服务端保存，下次续上。');trail('点 × 关闭（演示）');toast('已关闭（演示）');}
+  }
+  function startMove(){
+    const dice=1+Math.floor((Date.now()/137)%6);
+    document.getElementById('dice').textContent='⚀⚁⚂⚃⚄⚅'[dice-1];
+    const from=pos,passed=[]; for(let s=1;s<dice;s++){const idx=(from+s)%N;if(board[idx].pearl)passed.push(idx);}
+    trail(`掷出 <b>${dice}</b> → 角色绕环前进 ${dice} 格`);
+    let step=0; moveTimer=setInterval(()=>{ step++; pos=(from+step)%N; placeRole(pos); markStep(pos);
+      if(step>=dice){ clearInterval(moveTimer); rolling=false; document.getElementById('rollBtn').disabled=false; landed(dice,from,passed); } },420);
+  }
+  function landed(dice,from,passed){
+    const land=pos;
+    if(board[land].pearl){ autoPick(dice,land,passed); }
+    else if(passed.length){ flow(['roll','pass']);markLand(land);
+      setFocus(`停第 ${land} 格(无贝) · 路过未领`,`<span class="k">边界·路过不领</span>逐格经过第 ${passed.join('、')} 格珍珠贝但没停 → <b>不拾取、保留</b>。`,'warn');
+      trail(`停第${land}格，<b>路过${passed.length}个🦪未领</b>`);
+    } else { flow(['roll']);markLand(land);
+      setFocus(`停第 ${land} 格(普通格)`,`<span class="k">动线</span>落点无珍珠贝 → 进度不变。`);
+      trail(`停第${land}格，无珍珠贝`);
+    }
+  }
+  function autoPick(dice,land,passed){
+    board[land].pearl=false; progress++; const rf=refillOne();
+    refreshPearls(); markLand(land);
+    document.getElementById('pgFloat').classList.add('show');
+    flow(['roll','pick','fly']);hotSM('bar');
+    const extra=passed.length?` <span class="k">边界</span>途中路过 ${passed.length} 个🦪未领、保留。`:'';
+    const base=claimed>0?cum(claimed-1):0, cn=need(claimed), cur=Math.min(cn,progress-base);
+    setFocus(`掷 ${dice} → 停第 ${land} 格 🦪 → 拾取`,`<span class="k ka">自动·1</span>贝<b>飞入进度条</b> → 当前(第 ${claimed+1})档填充 <b>${cur}/${cn}</b>。${extra} <span class="k">补刷</span>第 ${rf} 格补一贝(场上恒 4)。`,'auto');
+    trail(`掷 ${dice}→第${land}格🦪 拾取 → 第${claimed+1}档 ${cur}/${cn}，补刷第${rf}格`);
+    flyPearl('cell'+land,()=>{ renderBar(); flow(['fly','fill']); });
+    if(progress>=cum(claimed)) after(720,autoChest);
+    else after(1150,collapse); // ★填充播完即收(进度条会消失)
+  }
+  function autoChest(){
+    hotSM('box');flow(['fill','open']);
+    const ov=document.getElementById('chestOv'),box=document.getElementById('chestBox');
+    document.getElementById('chestLbl').textContent=`集满第 ${claimed+1} 档 · 自动开启神秘宝箱`;
+    box.classList.remove('open');ov.classList.add('show');
+    setFocus(`第 ${claimed+1} 档集满 → 自动开神秘宝箱（不挡掷骰）`,`<span class="k ka">自动</span>集满当前档<b>自动开箱</b>、不用点。<span class="k">非阻塞</span>此刻仍可掷骰。`,'auto');
+    trail(`第 ${claimed+1} 档集满 → <b>自动开神秘宝箱</b>`);
+    after(520,()=>{box.classList.add('open');flow(['open','get']);
+      setFocus('开箱 → 自动领取入账',`<span class="k ka">自动</span>奖励<b>自动入账</b>，无领取按钮。`,'auto');
+      trail('开箱→<b>自动领取</b>：信物×2/金币×5k/加速×3');toast('自动领取：信物×2 · 金币×5k · 加速×3');});
+    after(1700,()=>{ ov.classList.remove('show'); claimed++;
+      if(progress>=cum(claimed)){ renderBar(); flow(['get','reset','next']);
+        setFocus(`领完 → 归零切第 ${claimed+1} 档，下档已满 → 逐档再开`,`<span class="k ka">自动·逐档</span>进度条归零切下档；因仍满 → <b>接着开一箱</b>（一档一档）。`,'auto');
+        trail(`归零切第 ${claimed+1} 档 → 下档已满，逐档再开`); after(600,autoChest);
+      } else { collapse(); flow(['get']);
+        setFocus('开箱完 → 进度条直接消失',`<span class="k ka">自动·收</span>奖励入账、<b>进度条立即消失</b>（不停留），回棋盘等下次拾取。`,'auto');
+        trail('开箱完 → 进度条立即消失（不停留）');
+      }
+    });
+  }
+  function collapse(){document.getElementById('pgFloat').classList.remove('show');} // ★进度条消失
+
+  let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2200);}
+  initBoard();buildTiles();renderBar();
+</script>
+</body>
+</html>

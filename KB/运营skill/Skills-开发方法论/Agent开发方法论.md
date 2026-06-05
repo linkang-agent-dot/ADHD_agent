@@ -1,6 +1,6 @@
 ---
 aliases: [开发方法论, brainstorming, planning, debugging]
-tags: [skill, 方法论, agent, 开发流程]
+tags: [kind/skill, domain/agent开发, proj/通用]
 ---
 
 # Agent 开发方法论

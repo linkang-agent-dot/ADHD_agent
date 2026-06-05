@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>每日工作日报</title>
+<style>
+:root{--bg:#0f1115;--card:#171a21;--line:#262b36;--fg:#e6e9ef;--mut:#9aa3b2;--acc:#5b9dff;--acc2:#7c5bff;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);
+ font:15px/1.7 "Segoe UI","Microsoft YaHei",system-ui,sans-serif;}
+.wrap{max-width:860px;margin:0 auto;padding:32px 22px 64px;}
+h1{font-size:24px;margin:0 0 6px;letter-spacing:.3px;}
+.meta{color:var(--mut);font-size:13px;margin-bottom:24px;}
+h2{font-size:17px;margin:30px 0 12px;padding-left:11px;
+ border-left:3px solid var(--acc);}
+h2.sec{border-left-color:var(--acc2);}
+h3{font-size:15px;color:var(--mut);margin:18px 0 8px;}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.btn{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--fg);
+ font:inherit;font-size:13px;padding:7px 14px;border-radius:8px;white-space:nowrap;}
+.btn:hover{border-color:var(--acc);color:var(--acc);}
+.card{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);
+ border-radius:10px;padding:13px 16px;margin:10px 0;}
+.num{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--acc);
+ color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;
+ justify-content:center;margin-top:1px;}
+.card-body{flex:1;min-width:0;}
+.card-t{font-weight:600;margin-bottom:4px;}
+.card-d{color:var(--mut);font-size:14px;}
+ul{margin:8px 0;padding-left:22px;}
+li{margin:5px 0;}
+p{margin:9px 0;}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px;}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;}
+th{background:#1d212b;color:var(--fg);}
+td{color:var(--mut);}
+code{background:#1d212b;padding:1px 6px;border-radius:5px;font-size:13px;}
+strong{color:var(--fg);}
+.foot{margin-top:40px;color:#5a6373;font-size:12px;text-align:center;}
+</style></head><body><div class="wrap">
+<div class="bar"><h1>每日工作日报</h1><button id="copybtn" class="btn" onclick="copyReport()">📋 复制日报</button></div>
+<div class="meta">每日工作日报 · 2026-06-04（周四）</div>
+<div class="card"><span class="num">1</span><div class="card-body"><div class="card-t">X2 拓荒节封包前 BUG 批量收尾</div><div class="card-d">修一批活动的本地化/文案/道具图标/时长问题（GACHA累计任务、挖矿累积任务名称描述rule、BP排行榜文本+获取途径、每日礼包墨水盒→拓荒令、拓荒豪礼 HUD 图标、限时抢购 60→180 分钟、挖矿解锁前提放开），冲 06-05 封包。</div></div></div>
+<div class="card"><span class="num">2</span><div class="card-body"><div class="card-t">X2 拓荒节换皮落地</div><div class="card-d">主城皮肤(道具图标录DK→建cityskin→改item表)、GACHA 礼包(prefab图标格式+内圈2141/2142皮肤奖励)、行军特效 DK 绑定(Fx_TroopsTrail_tuohuangjie)；修 2112 map_fitter 后重传导表。</div></div></div>
+<div class="card"><span class="num">3</span><div class="card-body"><div class="card-t">X3 航海之路寻宝进度条交互原型</div><div class="card-d">活原型迭代（自动进度条+开箱动画+掷骰前进+道具飞入特效），交付测试/程序，并标注需新增美术资产(进度条UI/流动填充/珍珠贝飞入)补进策划案页签。</div></div></div>
+<div class="card"><span class="num">4</span><div class="card-body"><div class="card-t">根治 X2/P2 配表串味</div><div class="card-d">多次查表/DK 误入 P2，归因后立&quot;X2 SheetID 一律 resolve 现解、禁硬抄 P2 KB&quot;铁律写进 CLAUDE.md，并吸收换皮 skill/memory 完善 reference_x2_config_library。</div></div></div>
+<div class="card"><span class="num">5</span><div class="card-body"><div class="card-t">流程基建</div><div class="card-d">搭「收工前自检」(沉淀/归档/复用自动判断、不靠提醒)写进 CLAUDE.md 行为规范、建换皮档案知识库(KB\换皮档案\项目\日期)、导表 skill 补页签顺序约定、update GDesign 学习反馈文档。</div></div></div>
+<h2 class="sec">timeline 完成度</h2>
+<ul>
+<li>推进：X2 拓荒节 节点③配表/④翻译/⑤QA 封包前充分收尾（06-05 封包明天到）；X3 深海节/航海之路 节点①②（进度条交互原型 + 美术资产清单）。</li>
+<li>临近：X3 夏日恋歌 06-08 结束、D14 回归 06-12，今天未动数据回归。</li>
+<li>工作line.md：X2 拓荒节封包明天到、今天收尾充分，封包后可把它状态更新/移出主线。</li>
+</ul>
+<h2 class="sec">本可顺手补</h2>
+<div class="card"><span class="num">1</span><div class="card-body"><div class="card-t">activity-check 全量自检</div><div class="card-d">今天改了一大批 X2 拓荒节活动配置，封包前 ID 引用检查是节点⑤固有收尾，本可顺手跑一遍兜底。</div></div></div>
+<div class="card"><span class="num">2</span><div class="card-body"><div class="card-t">换皮档案回写</div><div class="card-d">今天新建了换皮档案库，本次 X2 拓荒节换皮的模块/进度/踩坑应顺手写入档案，别让新流程第一次就空着。</div></div></div>
+<div class="foot">自动生成 · 2026-06-04 21:19</div>
+</div>
+<pre id="copysrc" style="display:none">每日工作日报 · 2026-06-04（周四）
+
+1. X2 拓荒节封包前 BUG 批量收尾 —— 修一批活动的本地化/文案/道具图标/时长问题（GACHA累计任务、挖矿累积任务名称描述rule、BP排行榜文本+获取途径、每日礼包墨水盒→拓荒令、拓荒豪礼 HUD 图标、限时抢购 60→180 分钟、挖矿解锁前提放开），冲 06-05 封包。
+2. X2 拓荒节换皮落地 —— 主城皮肤(道具图标录DK→建cityskin→改item表)、GACHA 礼包(prefab图标格式+内圈2141/2142皮肤奖励)、行军特效 DK 绑定(Fx_TroopsTrail_tuohuangjie)；修 2112 map_fitter 后重传导表。
+3. X3 航海之路寻宝进度条交互原型 —— 活原型迭代（自动进度条+开箱动画+掷骰前进+道具飞入特效），交付测试/程序，并标注需新增美术资产(进度条UI/流动填充/珍珠贝飞入)补进策划案页签。
+4. 根治 X2/P2 配表串味 —— 多次查表/DK 误入 P2，归因后立&quot;X2 SheetID 一律 resolve 现解、禁硬抄 P2 KB&quot;铁律写进 CLAUDE.md，并吸收换皮 skill/memory 完善 reference_x2_config_library。
+5. 流程基建 —— 搭「收工前自检」(沉淀/归档/复用自动判断、不靠提醒)写进 CLAUDE.md 行为规范、建换皮档案知识库(KB\换皮档案\项目\日期)、导表 skill 补页签顺序约定、update GDesign 学习反馈文档。
+
+【timeline 完成度】
+- 推进：X2 拓荒节 节点③配表/④翻译/⑤QA 封包前充分收尾（06-05 封包明天到）；X3 深海节/航海之路 节点①②（进度条交互原型 + 美术资产清单）。
+- 临近：X3 夏日恋歌 06-08 结束、D14 回归 06-12，今天未动数据回归。
+- 工作line.md：X2 拓荒节封包明天到、今天收尾充分，封包后可把它状态更新/移出主线。
+
+【本可顺手补】
+1. activity-check 全量自检 —— 今天改了一大批 X2 拓荒节活动配置，封包前 ID 引用检查是节点⑤固有收尾，本可顺手跑一遍兜底。
+2. 换皮档案回写 —— 今天新建了换皮档案库，本次 X2 拓荒节换皮的模块/进度/踩坑应顺手写入档案，别让新流程第一次就空着。
+</pre>
+<script>function copyReport(){var t=document.getElementById('copysrc').textContent;var b=document.getElementById('copybtn');function done(){var o=b.textContent;b.textContent='\u2713 \u5df2\u590d\u5236';setTimeout(function(){b.textContent=o;},1500);}function fb(){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){alert('\u590d\u5236\u5931\u8d25\uff0c\u8bf7\u624b\u52a8\u9009\u62e9');}document.body.removeChild(ta);}if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done,fb);}else{fb();}}</script>
+</body></html>

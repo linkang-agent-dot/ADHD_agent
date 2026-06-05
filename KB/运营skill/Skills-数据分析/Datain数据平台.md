@@ -1,6 +1,6 @@
 ---
 aliases: [datain-skill, datain, 游戏数据查询]
-tags: [skill, 数据分析, datain, clickhouse]
+tags: [kind/skill, domain/数据复盘, proj/通用]
 skill_path: .agents/skills/datain-skill/
 trigger: 游戏数据、留存、DNU、Cohort、收入、ROI、DAU、ROAS
 ---
