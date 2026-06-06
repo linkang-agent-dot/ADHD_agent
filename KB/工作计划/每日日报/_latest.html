@@ -38,39 +38,49 @@ strong{color:var(--fg);}
 .foot{margin-top:40px;color:#5a6373;font-size:12px;text-align:center;}
 </style></head><body><div class="wrap">
 <div class="bar"><h1>每日工作日报</h1><button id="copybtn" class="btn" onclick="copyReport()">📋 复制日报</button></div>
-<div class="meta">每日工作日报 · 2026-06-04（周四）</div>
-<div class="card"><span class="num">1</span><div class="card-body"><div class="card-t">X2 拓荒节封包前 BUG 批量收尾</div><div class="card-d">修一批活动的本地化/文案/道具图标/时长问题（GACHA累计任务、挖矿累积任务名称描述rule、BP排行榜文本+获取途径、每日礼包墨水盒→拓荒令、拓荒豪礼 HUD 图标、限时抢购 60→180 分钟、挖矿解锁前提放开），冲 06-05 封包。</div></div></div>
-<div class="card"><span class="num">2</span><div class="card-body"><div class="card-t">X2 拓荒节换皮落地</div><div class="card-d">主城皮肤(道具图标录DK→建cityskin→改item表)、GACHA 礼包(prefab图标格式+内圈2141/2142皮肤奖励)、行军特效 DK 绑定(Fx_TroopsTrail_tuohuangjie)；修 2112 map_fitter 后重传导表。</div></div></div>
-<div class="card"><span class="num">3</span><div class="card-body"><div class="card-t">X3 航海之路寻宝进度条交互原型</div><div class="card-d">活原型迭代（自动进度条+开箱动画+掷骰前进+道具飞入特效），交付测试/程序，并标注需新增美术资产(进度条UI/流动填充/珍珠贝飞入)补进策划案页签。</div></div></div>
-<div class="card"><span class="num">4</span><div class="card-body"><div class="card-t">根治 X2/P2 配表串味</div><div class="card-d">多次查表/DK 误入 P2，归因后立&quot;X2 SheetID 一律 resolve 现解、禁硬抄 P2 KB&quot;铁律写进 CLAUDE.md，并吸收换皮 skill/memory 完善 reference_x2_config_library。</div></div></div>
-<div class="card"><span class="num">5</span><div class="card-body"><div class="card-t">流程基建</div><div class="card-d">搭「收工前自检」(沉淀/归档/复用自动判断、不靠提醒)写进 CLAUDE.md 行为规范、建换皮档案知识库(KB\换皮档案\项目\日期)、导表 skill 补页签顺序约定、update GDesign 学习反馈文档。</div></div></div>
+<div class="meta">每日工作日报 · 2026-06-05（周五）</div>
+<div class="card"><span class="num">1</span><div class="card-body"><div class="card-t">X3 夏日/尼罗礼包合并掉资源排查修复</div><div class="card-d">合并后装饰礼包背景+ICON、夏日/尼罗拜访礼包 HUD 全掉，定位后重导出修复；手动给尼罗装饰特惠 19.99 礼包补 10 张女王恩典券并整体重排 reward；核对 qa 分支累充白名单 + 礼包本体配置。</div></div></div>
+<div class="card"><span class="num">2</span><div class="card-body"><div class="card-t">X2 拓荒节封包·配表与 BUG 修复</div><div class="card-d">大富翁补 4.99/9.99/19.99 锚点档 + 骰子红包礼包 + 存钱罐礼包购买修复；合成小游戏排行榜修复；集卡册头像框/装饰奖励位调整；装饰两套排查并补全 B 套本地化。</div></div></div>
+<div class="card"><span class="num">3</span><div class="card-body"><div class="card-t">X2 拓荒节美术接入·DK 与图标</div><div class="card-d">拓荒令 ICON_DK、HeadFrame 新建 ID、挖矿累计任务 ICON/ICONBG、行军皮肤特效接入 1365 表、2112 title icon；客户端资源处理后 commit push。</div></div></div>
+<div class="card"><span class="num">4</span><div class="card-body"><div class="card-t">X2 拓荒节 Banner 出图</div><div class="card-d">BP 礼包 + 累计挖矿任务 banner（通行证眼镜妹子+书本主题、挖矿改角色用稿子），尺寸修正 + 2112 banner_url 配置核对，顺手压缩图片仓库。</div></div></div>
+<div class="card"><span class="num">5</span><div class="card-body"><div class="card-t">X2 拓荒节装饰资源命名+文案+预览图</div><div class="card-d">梳理客户端资源起名、推文案、透明化差分验真、立体件还原预览图，对比占星节资源后归档。</div></div></div>
+<div class="card"><span class="num">6</span><div class="card-body"><div class="card-t">Morphix 拆解 + 策划案打分方法论 + 交互原型素材化</div><div class="card-d">拆解 morphix demo 做成 HTML 分页签+流程图+中文 prompt 注释、对比 gdesign 评分；落地策划案 design-merit 打分框架（目的-模块-表现&amp;数值）；推进交互原型素材化（深海大富翁保真版迭代）。</div></div></div>
+<div class="card"><span class="num">7</span><div class="card-body"><div class="card-t">每日日报/任务产出 HTML 化</div><div class="card-d">每日任务产出自动打开、日报渲染 HTML 每天弹出、修复一句话分点+可直接复制；关停已结束的占星节巡检任务。</div></div></div>
+<div class="card"><span class="num">8</span><div class="card-body"><div class="card-t">X3 配置仓提交 + 导表运维</div><div class="card-d">提交全部变更并 push、dev/beta 111 导表热更、查周卡活动 ID、2115 title 本地化补填、本地服调到 D30。</div></div></div>
 <h2 class="sec">timeline 完成度</h2>
 <ul>
-<li>推进：X2 拓荒节 节点③配表/④翻译/⑤QA 封包前充分收尾（06-05 封包明天到）；X3 深海节/航海之路 节点①②（进度条交互原型 + 美术资产清单）。</li>
-<li>临近：X3 夏日恋歌 06-08 结束、D14 回归 06-12，今天未动数据回归。</li>
-<li>工作line.md：X2 拓荒节封包明天到、今天收尾充分，封包后可把它状态更新/移出主线。</li>
+<li>主推 X2 拓荒节（节点③配表/④翻译/⑤QA）—— 封包日大量配表+BUG修+DK/图标+banner，冲封包收尾；X3 夏日恋歌走的是合并掉资源抢修（非节点⑦回归）。</li>
+<li>临近 deadline 没动：X3 深海节出方案（节点①进行中，今天没推）、X3 夏日恋歌 D14 回归（06-12，未拉数据）。</li>
+<li>06-05 是 X2 拓荒节封包日，封包后 work line 应把 X2 节点③推进到⑤/⑥（部署），工作line.md 建议更新。</li>
 </ul>
 <h2 class="sec">本可顺手补</h2>
-<div class="card"><span class="num">1</span><div class="card-body"><div class="card-t">activity-check 全量自检</div><div class="card-d">今天改了一大批 X2 拓荒节活动配置，封包前 ID 引用检查是节点⑤固有收尾，本可顺手跑一遍兜底。</div></div></div>
-<div class="card"><span class="num">2</span><div class="card-body"><div class="card-t">换皮档案回写</div><div class="card-d">今天新建了换皮档案库，本次 X2 拓荒节换皮的模块/进度/踩坑应顺手写入档案，别让新流程第一次就空着。</div></div></div>
-<div class="foot">自动生成 · 2026-06-04 21:19</div>
+<ul>
+<li>activity-check ID 引用自检 —— 本属于今天 X2 配表（节点③）的封包前固有收尾（节点⑤），大改动后建议跑一遍再封包。</li>
+<li>X2 配表端到端反查 —— 大富翁/集卡册/装饰多表改完，建议补 GSheet+本地TSV+导表三层一致性反查，属节点③收口。</li>
+<li>无（策划案打分框架与交互原型素材化方法论今日已分别沉淀进 workflow_design_merit_critique / workflow_interaction_prototype_assetization，已覆盖不重列）。</li>
+</ul>
+<div class="foot">自动生成 · 2026-06-05 20:30</div>
 </div>
-<pre id="copysrc" style="display:none">每日工作日报 · 2026-06-04（周四）
+<pre id="copysrc" style="display:none">每日工作日报 · 2026-06-05（周五）
 
-1. X2 拓荒节封包前 BUG 批量收尾 —— 修一批活动的本地化/文案/道具图标/时长问题（GACHA累计任务、挖矿累积任务名称描述rule、BP排行榜文本+获取途径、每日礼包墨水盒→拓荒令、拓荒豪礼 HUD 图标、限时抢购 60→180 分钟、挖矿解锁前提放开），冲 06-05 封包。
-2. X2 拓荒节换皮落地 —— 主城皮肤(道具图标录DK→建cityskin→改item表)、GACHA 礼包(prefab图标格式+内圈2141/2142皮肤奖励)、行军特效 DK 绑定(Fx_TroopsTrail_tuohuangjie)；修 2112 map_fitter 后重传导表。
-3. X3 航海之路寻宝进度条交互原型 —— 活原型迭代（自动进度条+开箱动画+掷骰前进+道具飞入特效），交付测试/程序，并标注需新增美术资产(进度条UI/流动填充/珍珠贝飞入)补进策划案页签。
-4. 根治 X2/P2 配表串味 —— 多次查表/DK 误入 P2，归因后立&quot;X2 SheetID 一律 resolve 现解、禁硬抄 P2 KB&quot;铁律写进 CLAUDE.md，并吸收换皮 skill/memory 完善 reference_x2_config_library。
-5. 流程基建 —— 搭「收工前自检」(沉淀/归档/复用自动判断、不靠提醒)写进 CLAUDE.md 行为规范、建换皮档案知识库(KB\换皮档案\项目\日期)、导表 skill 补页签顺序约定、update GDesign 学习反馈文档。
+1. X3 夏日/尼罗礼包合并掉资源排查修复 —— 合并后装饰礼包背景+ICON、夏日/尼罗拜访礼包 HUD 全掉，定位后重导出修复；手动给尼罗装饰特惠 19.99 礼包补 10 张女王恩典券并整体重排 reward；核对 qa 分支累充白名单 + 礼包本体配置。
+2. X2 拓荒节封包·配表与 BUG 修复 —— 大富翁补 4.99/9.99/19.99 锚点档 + 骰子红包礼包 + 存钱罐礼包购买修复；合成小游戏排行榜修复；集卡册头像框/装饰奖励位调整；装饰两套排查并补全 B 套本地化。
+3. X2 拓荒节美术接入·DK 与图标 —— 拓荒令 ICON_DK、HeadFrame 新建 ID、挖矿累计任务 ICON/ICONBG、行军皮肤特效接入 1365 表、2112 title icon；客户端资源处理后 commit push。
+4. X2 拓荒节 Banner 出图 —— BP 礼包 + 累计挖矿任务 banner（通行证眼镜妹子+书本主题、挖矿改角色用稿子），尺寸修正 + 2112 banner_url 配置核对，顺手压缩图片仓库。
+5. X2 拓荒节装饰资源命名+文案+预览图 —— 梳理客户端资源起名、推文案、透明化差分验真、立体件还原预览图，对比占星节资源后归档。
+6. Morphix 拆解 + 策划案打分方法论 + 交互原型素材化 —— 拆解 morphix demo 做成 HTML 分页签+流程图+中文 prompt 注释、对比 gdesign 评分；落地策划案 design-merit 打分框架（目的-模块-表现&amp;数值）；推进交互原型素材化（深海大富翁保真版迭代）。
+7. 每日日报/任务产出 HTML 化 —— 每日任务产出自动打开、日报渲染 HTML 每天弹出、修复一句话分点+可直接复制；关停已结束的占星节巡检任务。
+8. X3 配置仓提交 + 导表运维 —— 提交全部变更并 push、dev/beta 111 导表热更、查周卡活动 ID、2115 title 本地化补填、本地服调到 D30。
 
 【timeline 完成度】
-- 推进：X2 拓荒节 节点③配表/④翻译/⑤QA 封包前充分收尾（06-05 封包明天到）；X3 深海节/航海之路 节点①②（进度条交互原型 + 美术资产清单）。
-- 临近：X3 夏日恋歌 06-08 结束、D14 回归 06-12，今天未动数据回归。
-- 工作line.md：X2 拓荒节封包明天到、今天收尾充分，封包后可把它状态更新/移出主线。
+- 主推 X2 拓荒节（节点③配表/④翻译/⑤QA）—— 封包日大量配表+BUG修+DK/图标+banner，冲封包收尾；X3 夏日恋歌走的是合并掉资源抢修（非节点⑦回归）。
+- 临近 deadline 没动：X3 深海节出方案（节点①进行中，今天没推）、X3 夏日恋歌 D14 回归（06-12，未拉数据）。
+- 06-05 是 X2 拓荒节封包日，封包后 work line 应把 X2 节点③推进到⑤/⑥（部署），工作line.md 建议更新。
 
 【本可顺手补】
-1. activity-check 全量自检 —— 今天改了一大批 X2 拓荒节活动配置，封包前 ID 引用检查是节点⑤固有收尾，本可顺手跑一遍兜底。
-2. 换皮档案回写 —— 今天新建了换皮档案库，本次 X2 拓荒节换皮的模块/进度/踩坑应顺手写入档案，别让新流程第一次就空着。
+- activity-check ID 引用自检 —— 本属于今天 X2 配表（节点③）的封包前固有收尾（节点⑤），大改动后建议跑一遍再封包。
+- X2 配表端到端反查 —— 大富翁/集卡册/装饰多表改完，建议补 GSheet+本地TSV+导表三层一致性反查，属节点③收口。
+- 无（策划案打分框架与交互原型素材化方法论今日已分别沉淀进 workflow_design_merit_critique / workflow_interaction_prototype_assetization，已覆盖不重列）。
 </pre>
 <script>function copyReport(){var t=document.getElementById('copysrc').textContent;var b=document.getElementById('copybtn');function done(){var o=b.textContent;b.textContent='\u2713 \u5df2\u590d\u5236';setTimeout(function(){b.textContent=o;},1500);}function fb(){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){alert('\u590d\u5236\u5931\u8d25\uff0c\u8bf7\u624b\u52a8\u9009\u62e9');}document.body.removeChild(ta);}if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done,fb);}else{fb();}}</script>
 </body></html>
