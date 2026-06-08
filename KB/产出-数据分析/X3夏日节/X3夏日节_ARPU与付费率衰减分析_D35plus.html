@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><title>X3 夏日节 真ARPU(/DAU)+付费率</title>
+<style>body{background:#0d1117;color:#c9d1d9;font-family:'Segoe UI',Arial;margin:0;padding:24px}
+h1{font-size:19px;margin:0 0 4px}.sub{color:#8b949e;font-size:13px;margin-bottom:16px}.hl{color:#58a6ff}
+.legend{font-size:13px;margin:10px 0}.legend span{margin-right:18px}.dot{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:5px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:18px}.note{font-size:12.5px;color:#8b949e;margin-top:14px;line-height:1.8}
+b.up{color:#3fb950}b.dn{color:#f85149}
+.sec{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:20px 22px;margin-top:18px}
+.sec h2{font-size:16px;margin:0 0 12px;color:#e6edf3;border-left:3px solid #58a6ff;padding-left:9px}
+.sec h3{font-size:13.5px;color:#58a6ff;margin:16px 0 7px}
+.sec p,.sec li{font-size:13px;line-height:1.85;color:#c9d1d9}
+.sec ul{margin:6px 0;padding-left:20px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:12.5px}
+th,td{border:1px solid #30363d;padding:6px 10px;text-align:right}
+th:first-child,td:first-child{text-align:left}
+th{background:#1c2330;color:#8b949e;font-weight:600}
+td.num{font-variant-numeric:tabular-nums}
+.kpi{display:flex;gap:14px;flex-wrap:wrap;margin:4px 0 8px}
+.kpi div{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:10px 16px;min-width:120px}
+.kpi .v{font-size:20px;font-weight:700} .kpi .l{font-size:11.5px;color:#8b949e;margin-top:2px}
+.tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:10px;margin-left:6px}
+.tag.g{background:#16331f;color:#3fb950}.tag.r{background:#3a1a1a;color:#f85149}</style></head><body>
+<h1>X3 <span class="hl">D35+成熟服</span> 真ARPU(流水/DAU) + 付费率 · 2026-04-01~06-07</h1>
+<div class="sub">固定成熟服批次(open≤2026-02-25,1000-1880)｜ARPU=单日流水/单日登录去重人数｜付费率=付费人数/DAU｜阴影=夏日节(5.29-6.7)｜虚线=基线段线性趋势</div>
+<div class="card"><div class="legend">
+<span><i class="dot" style="background:#58a6ff"></i>ARPU $/DAU(左轴)</span>
+<span><i class="dot" style="background:#f0883e"></i>付费率%(右轴)</span>
+<span><i class="dot" style="background:#8b949e;border-top:2px dashed #8b949e;height:2px"></i>基线趋势(均下行)</span>
+</div><canvas id="c" width="1180" height="440"></canvas></div>
+<div class="note" id="note"></div>
+
+<div class="sec">
+<h2>核心结论：上了节日，真 ARPU 回升了 +28.5%，但靠的是付费率不是客单</h2>
+<div class="kpi">
+<div><div class="v" style="color:#3fb950">+28.5%</div><div class="l">真 ARPU (流水/DAU)<br>$1.45 → $1.86</div></div>
+<div><div class="v" style="color:#3fb950">+32.2%</div><div class="l">付费率 (付费/DAU)<br>4.70% → 6.22%</div></div>
+<div><div class="v" style="color:#8b949e">−2.8%</div><div class="l">ARPPU (流水/付费)<br>$30.81 → $29.95</div></div>
+<div><div class="v" style="color:#3fb950">+20.9%</div><div class="l">日总流水<br>$5,602 → $6,774</div></div>
+</div>
+<p><b>口径</b>：D35+ 同批成熟服（open≤2026-02-25，1000-1880）；节前窗口 5.11–5.28 vs 节日窗口 5.29–6.7，单日均值对比。</p>
+<table>
+<tr><th>指标</th><th>节前 (5.11–5.28)</th><th>节日 (5.29–6.7)</th><th>变化</th></tr>
+<tr><td>日登录 DAU</td><td class="num">3,866</td><td class="num">3,638</td><td>−5.9%</td></tr>
+<tr><td>日付费人数</td><td class="num">182</td><td class="num">226</td><td><b class="up">+24.4%</b></td></tr>
+<tr><td>日总流水</td><td class="num">$5,602</td><td class="num">$6,774</td><td><b class="up">+20.9%</b></td></tr>
+<tr><td><b>ARPU = 流水/DAU</b></td><td class="num">$1.45</td><td class="num">$1.86</td><td><b class="up">+28.5%</b></td></tr>
+<tr><td><b>付费率 = 付费/DAU</b></td><td class="num">4.70%</td><td class="num">6.22%</td><td><b class="up">+32.2%</b></td></tr>
+<tr><td>ARPPU = 流水/付费</td><td class="num">$30.81</td><td class="num">$29.95</td><td>−2.8%（持平）</td></tr>
+</table>
+<p><b>机理一句话</b>：活跃盘(DAU)基本没变（略降 6%），节日把付费率从 4.7% 拉到 6.2%（+32%），每个付费玩家照样花 ~$30（ARPPU 持平）→ 净效果就是真 ARPU +28.5%。<b class="up">回升来自"更多活跃玩家愿意付费"（渗透），不是"付费的人花更多"（深度）。</b></p>
+<p><b>逐日看</b>：D0(5.29) ARPU $3.12 / 付费率 8.2% 首销冲高，3 天内回落到 $1.3–1.8 / 付费率 5.6–6.5%，但<b>整段仍高于节前 $1.45、也高于本来在下行的趋势线</b>。</p>
+</div>
+
+<div class="sec">
+<h2>无节日时的基线衰减：崩的不是 ARPU，是付费渗透率</h2>
+<p>用 DAU 口径重看 4.1–5.28 无节日基线段（线性趋势）：</p>
+<ul>
+<li><b>真 ARPU(/DAU) ≈ −35%</b>：确实在衰减（比之前 ARPPU 口径的 −11% 严重得多）。</li>
+<li>但 <b>DAU 只掉约 14%</b>（人还在登录）、<b class="dn">付费人数掉了 45%</b>（越来越多人不付费）。</li>
+<li><b>ARPPU 一直稳在 ~$30</b>——留下来付费的玩家，人均花的钱没变。</li>
+</ul>
+<p>→ 真正崩的是 <b class="dn">付费渗透率（付费率）</b>，不是人均、也主要不是活跃。这是成熟服自然老化的典型表现：人没大量流失，但付费意愿持续衰减。</p>
+</div>
+
+<div class="sec">
+<h2>对节日的定位结论 & 下一步</h2>
+<p><b>诊断闭环</b>：老服的病根 = 付费渗透率持续下滑；<b class="up">夏日节恰好对症——把付费率打回去了，从而抬升了 ARPU</b>。这比"只是拉人头"更准：节日有效对冲了渗透衰减。</p>
+<p><b>但深度没做起来</b>：ARPPU 全程 ~$30 没动，节日只做了宽度（渗透），没把回来的付费玩家的人均价值抬上去。</p>
+<h3>下一步方向</h3>
+<ul>
+<li>渗透已被节日证明能拉回——<b>缺的是深度款</b>：高客单、可重复养成 / 订阅，把 ARPPU 从 $30 抬上去。</li>
+<li>节日窗口的首销脉冲（D0–D2）说明高价深度款在开场有需求，但 3 天就衰减——需要<b>可重复/续费机制</b>承接，而非一次性外显宽度款。</li>
+</ul>
+<p style="color:#6e7681;font-size:11.5px;margin-top:14px">注：ARPU 一律按 流水/DAU(登录去重) 计；ARPU = 付费率 × ARPPU，三者拆开看才能区分动的是渗透还是深度。早先用 流水/付费人数(ARPPU) 口径会把"付费人数涨"消掉、得出"ARPU 没回升"的反结论。</p>
+</div>
+<script>
+const arr=[{"d": "2026-04-01", "arpu": 2.842, "payrate": 7.299, "dau": 4836}, {"d": "2026-04-02", "arpu": 3.601, "payrate": 9.303, "dau": 4665}, {"d": "2026-04-03", "arpu": 3.474, "payrate": 9.095, "dau": 4772}, {"d": "2026-04-04", "arpu": 2.405, "payrate": 7.481, "dau": 4759}, {"d": "2026-04-05", "arpu": 1.995, "payrate": 7.427, "dau": 4699}, {"d": "2026-04-06", "arpu": 1.772, "payrate": 6.146, "dau": 4800}, {"d": "2026-04-07", "arpu": 1.665, "payrate": 5.877, "dau": 4781}, {"d": "2026-04-08", "arpu": 1.605, "payrate": 5.421, "dau": 4704}, {"d": "2026-04-09", "arpu": 1.691, "payrate": 5.765, "dau": 4631}, {"d": "2026-04-10", "arpu": 1.591, "payrate": 5.674, "dau": 4547}, {"d": "2026-04-11", "arpu": 1.752, "payrate": 5.759, "dau": 4445}, {"d": "2026-04-12", "arpu": 1.539, "payrate": 5.642, "dau": 4431}, {"d": "2026-04-13", "arpu": 1.258, "payrate": 4.635, "dau": 4444}, {"d": "2026-04-14", "arpu": 1.485, "payrate": 4.934, "dau": 4459}, {"d": "2026-04-15", "arpu": 1.934, "payrate": 5.231, "dau": 4378}, {"d": "2026-04-16", "arpu": 2.449, "payrate": 5.506, "dau": 4268}, {"d": "2026-04-17", "arpu": 2.803, "payrate": 5.704, "dau": 4225}, {"d": "2026-04-18", "arpu": 2.478, "payrate": 5.19, "dau": 4335}, {"d": "2026-04-19", "arpu": 1.743, "payrate": 5.626, "dau": 4266}, {"d": "2026-04-20", "arpu": 1.503, "payrate": 4.98, "dau": 4217}, {"d": "2026-04-21", "arpu": 1.199, "payrate": 4.446, "dau": 4206}, {"d": "2026-04-22", "arpu": 1.203, "payrate": 4.141, "dau": 4129}, {"d": "2026-04-23", "arpu": 1.39, "payrate": 4.569, "dau": 4115}, {"d": "2026-04-24", "arpu": 0.966, "payrate": 4.32, "dau": 3958}, {"d": "2026-04-25", "arpu": 1.344, "payrate": 5.356, "dau": 3977}, {"d": "2026-04-26", "arpu": 1.653, "payrate": 5.239, "dau": 3932}, {"d": "2026-04-27", "arpu": 1.409, "payrate": 5.242, "dau": 3949}, {"d": "2026-04-28", "arpu": 1.234, "payrate": 4.579, "dau": 3953}, {"d": "2026-04-29", "arpu": 1.724, "payrate": 5.039, "dau": 3989}, {"d": "2026-04-30", "arpu": 1.638, "payrate": 5.066, "dau": 3810}, {"d": "2026-05-01", "arpu": 2.435, "payrate": 5.591, "dau": 3774}, {"d": "2026-05-02", "arpu": 2.12, "payrate": 5.882, "dau": 3740}, {"d": "2026-05-03", "arpu": 1.699, "payrate": 5.327, "dau": 3736}, {"d": "2026-05-04", "arpu": 0.944, "payrate": 4.667, "dau": 3771}, {"d": "2026-05-05", "arpu": 1.03, "payrate": 5.044, "dau": 3767}, {"d": "2026-05-06", "arpu": 1.005, "payrate": 4.366, "dau": 3665}, {"d": "2026-05-07", "arpu": 1.165, "payrate": 4.453, "dau": 3795}, {"d": "2026-05-08", "arpu": 1.191, "payrate": 4.406, "dau": 3836}, {"d": "2026-05-09", "arpu": 1.024, "payrate": 4.454, "dau": 3817}, {"d": "2026-05-10", "arpu": 1.056, "payrate": 4.635, "dau": 3862}, {"d": "2026-05-11", "arpu": 1.337, "payrate": 4.853, "dau": 3956}, {"d": "2026-05-12", "arpu": 1.384, "payrate": 4.818, "dau": 3923}, {"d": "2026-05-13", "arpu": 2.373, "payrate": 5.118, "dau": 4064}, {"d": "2026-05-14", "arpu": 1.474, "payrate": 4.627, "dau": 3977}, {"d": "2026-05-15", "arpu": 1.322, "payrate": 4.724, "dau": 4149}, {"d": "2026-05-16", "arpu": 1.341, "payrate": 4.222, "dau": 4216}, {"d": "2026-05-17", "arpu": 1.089, "payrate": 4.23, "dau": 4113}, {"d": "2026-05-18", "arpu": 1.14, "payrate": 4.718, "dau": 4006}, {"d": "2026-05-19", "arpu": 1.35, "payrate": 4.417, "dau": 3849}, {"d": "2026-05-20", "arpu": 1.467, "payrate": 4.634, "dau": 3755}, {"d": "2026-05-21", "arpu": 1.531, "payrate": 4.865, "dau": 3741}, {"d": "2026-05-22", "arpu": 1.453, "payrate": 5.215, "dau": 3682}, {"d": "2026-05-23", "arpu": 2.211, "payrate": 5.333, "dau": 3694}, {"d": "2026-05-24", "arpu": 1.306, "payrate": 4.651, "dau": 3698}, {"d": "2026-05-25", "arpu": 1.331, "payrate": 4.694, "dau": 3728}, {"d": "2026-05-26", "arpu": 1.142, "payrate": 4.51, "dau": 3681}, {"d": "2026-05-27", "arpu": 1.181, "payrate": 4.279, "dau": 3739}, {"d": "2026-05-28", "arpu": 1.673, "payrate": 4.828, "dau": 3625}, {"d": "2026-05-29", "arpu": 3.117, "payrate": 8.242, "dau": 3652}, {"d": "2026-05-30", "arpu": 2.289, "payrate": 6.605, "dau": 3785}, {"d": "2026-05-31", "arpu": 1.996, "payrate": 6.056, "dau": 3765}, {"d": "2026-06-01", "arpu": 1.4, "payrate": 5.727, "dau": 3824}, {"d": "2026-06-02", "arpu": 1.369, "payrate": 5.556, "dau": 3780}, {"d": "2026-06-03", "arpu": 1.849, "payrate": 6.546, "dau": 3590}, {"d": "2026-06-04", "arpu": 1.321, "payrate": 5.616, "dau": 3561}, {"d": "2026-06-05", "arpu": 1.749, "payrate": 6.147, "dau": 3449}, {"d": "2026-06-06", "arpu": 1.755, "payrate": 5.666, "dau": 3459}, {"d": "2026-06-07", "arpu": 1.766, "payrate": 6.008, "dau": 3512}];const FS='2026-05-29',FE='2026-06-07';
+const sA=-0.01738,mA=1.63998,mxA=28.5000,sR=-0.04037,mR=5.24574,mxR=28.5000;
+const c=document.getElementById('c'),x=c.getContext('2d');
+const W=c.width,H=c.height,pl=52,pr=56,pt=20,pb=60,cw=W-pl-pr,ch=H-pt-pb;
+const maxA=Math.max(...arr.map(a=>a.arpu))*1.15,maxR=Math.max(...arr.map(a=>a.payrate))*1.15;
+const X=i=>pl+cw*i/(arr.length-1),YA=v=>pt+ch*(1-v/maxA),YR=v=>pt+ch*(1-v/maxR);
+const fs=arr.findIndex(a=>a.d>=FS),fe=arr.findIndex(a=>a.d>=FE);
+x.fillStyle='rgba(88,166,255,0.07)';x.fillRect(X(fs),pt,X(fe)-X(fs),ch);
+x.strokeStyle='#21262d';x.font='11px Arial';
+for(let v=0;v<=maxA;v+=0.5){let y=YA(v);x.beginPath();x.moveTo(pl,y);x.lineTo(W-pr,y);x.stroke();x.fillStyle='#58a6ff';x.textAlign='right';x.fillText('$'+v.toFixed(1),pl-6,y+3);}
+for(let v=0;v<=maxR;v+=2){let y=YR(v);x.fillStyle='#f0883e';x.textAlign='left';x.fillText(v+'%',W-pr+6,y+3);}
+x.textAlign='center';arr.forEach((a,i)=>{if(i%7==0||i==arr.length-1){x.fillStyle='#8b949e';x.fillText(a.d.slice(5),X(i),H-pb+18);}});
+function line(k,Yf,col,w){x.strokeStyle=col;x.lineWidth=w;x.beginPath();arr.forEach((a,i)=>{i?x.lineTo(X(i),Yf(a[k])):x.moveTo(X(i),Yf(a[k]));});x.stroke();}
+line('payrate',YR,'#f0883e',1.6);line('arpu',YA,'#58a6ff',2);
+const bN=arr.filter(a=>a.d<FS).length;
+function tr(s,m,mx,Yf,col){x.strokeStyle=col;x.lineWidth=1.6;x.setLineDash([7,5]);x.beginPath();[0,bN-1].forEach((i,k)=>{let v=m+s*(i-mx);k?x.lineTo(X(i),Yf(v)):x.moveTo(X(i),Yf(v));});x.stroke();x.setLineDash([]);}
+tr(sA,mA,mxA,YA,'#5b86b8');tr(sR,mR,mxR,YR,'#b8763e');
+x.fillStyle='#58a6ff';x.textAlign='left';x.font='12px Arial';x.fillText('夏日节',X(fs)+4,pt+14);
+const f=arr.filter(a=>a.d>=FS);const fA=(f.reduce((s,a)=>s+a.arpu,0)/f.length).toFixed(2);const fR=(f.reduce((s,a)=>s+a.payrate,0)/f.length).toFixed(1);
+document.getElementById('note').innerHTML='<b>读图：</b>基线段(4.1-5.28)ARPU(蓝)与付费率(橙)趋势线<b>双双下行</b>——无节日时真ARPU在衰减(≈-35%)，病根是付费率(渗透)持续掉。'+
+'<br><b>节日窗口(阴影)：</b>ARPU升到均值$'+fA+'(节前$1.45,<b class=up>+28%</b>)、付费率升到'+fR+'%(节前4.7%,<b class=up>+32%</b>)，明显高于本来下行的趋势线。'+
+'<br><b>结论：</b>节日确实把ARPU拉回升了，<b>驱动是付费率(渗透)而非客单(ARPPU持平$30)</b>——对症了老服"付费渗透衰减"的病根，但深度(人均价值)仍没做起来。';
+</script></body></html>

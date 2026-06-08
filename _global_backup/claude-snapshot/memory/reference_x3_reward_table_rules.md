@@ -91,6 +91,21 @@ for row in ws.iter_rows(min_row=7, values_only=True):
 
 **架构层修复建议**：在客户端 ICON 渲染逻辑加 `MinNum>0 才渲染 ICON`，可一劳永逸避免每期换皮踩坑。属于后端/客户端代码改动，需立项。
 
+## 直接改 tsv 的两个易错坑（2026-06-04 夏日装饰礼包补钻石/VIP 踩坑）
+
+### 坑A：tsv_edit.py 是 0-based，列含义别记错（把 ItemType 当 seq 改了，酿成大错）
+`tsv_edit.py show` 输出 `[0]..[13]` 是 **0-based**，但本文上方字段表是 **1-based xlsx 列**，错位 1。0-based 对照：
+- `[0]` = ID（行编号/本文"seq"）　`[1]` = RewardID　**`[2]` = ItemType（道具=1）** ← 不是 seq！
+- `[3]` = ItemID　`[4]` = Note　`[5]` = Num/MinNum　`[7]` = DropType　`[8]` = DropPara
+- 教训：曾把 `[2]`(ItemType) 当 seq 从 1 改成 2/3/4 → 道具类型坏了游戏不发奖；且 ItemType=3/4 的异常行被旁人当垃圾误删。**改前先 `show` 看清，钻石/VIP/券都是普通道具 ItemType 必须=1。**
+
+### 坑B：导表硬校验"同 RewardID 内 ID(col[0]) 连续"，报错信号明确
+- 报错：`rewardID:210917 ID不连续, minID:24114 maxID:24297`（reward_def 强校验，build FAILURE 但 gate_rc=0）
+- 根因：给 RewardID 补行时用了表尾空闲号(24296)，与原行(24114/24115)断号。
+- 修法：**把该 RewardID 的所有行 col[0] 整组重排到一段连续空闲号**（如三礼包各4行 → 24302-24305/24306-24309/24310-24313），物理也挪到表尾连续。col[0] 只是 Reward 内部行号，外部按 col[1] RewardID 引用，改 col[0] 不影响引用。
+- ⚠️ 之前误以为跳号没事（被旧导表 SUCCESS 误导）——实际现在强校验，必须连续。
+- 改完别忘 [[reference_x3_tsv_export_migration]] 顶部的 xlsx-tsv gate：只改 tsv 会触发 gate 两步同步。
+
 ## 相关
 
 - 改 tsv 不碰 xlsx（导入只认 tsv）见 [[reference_x3_tsv_export_migration]]

@@ -20,6 +20,7 @@ metadata:
   ```
 - 重启单个 GameServer：`Stop-Process -Id <pid> -Force` → `Start-Process ... -WorkingDirectory server\Resource ...` → 轮询 `Test-NetConnection 127.0.0.1 <23000+sid>`
 - 想省事就直接跑 `server\Tools\start_local_server.bat skip-link`，但 bat 会同时起 GameServer+MapServer 两个（按 local_conf.ini 里的 sid）；只想动一个进程时不能用 bat
+- bat 会先 `dotnet build` 两个 Hotfix 工程（连带重编主程序，约 40s，带上最新代码），再 `start` 两个新窗口跑 `dotnet run`，末尾有 `pause`。非交互环境（Claude Code 后台跑）必须喂掉 pause，否则永久挂起：用 `echo. | cmd /c "...bat skip-link"`。**别用 `< nul` 重定向** —— cmd 的 pause 会报 `ERROR: Input redirection is not supported` 然后立即退（虽然 servers 在 pause 前已起好、不影响结果，但日志难看）。建议 `run_in_background` 跑，完成后轮询 26080/26081 确认。
 
 **telnet 端口公式（来自 [[reference_x3_project_repo]]）：** `23000 + NodeID`
 - GameServer: `23000 + sid`（sid=3080 → 26080）

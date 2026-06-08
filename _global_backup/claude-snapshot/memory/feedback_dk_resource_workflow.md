@@ -4,6 +4,8 @@ description: DisplayKey 资源写入 Unity client 仓库的流程规则：DK 区
 type: feedback
 originSessionId: 2f9bf6a0-00e5-49b7-8786-0bc10f09587d
 ---
+> ⚠️ **X2 新增 DK 优先走 [[X2 DK 录入正确链路(P2数字系统+dk-manager)]]**（x2-dk-manager skill + P2 数字系统）。本条是占星节集卡册沉淀的通用顺序原则，**不要**据此去手改 `k1/Editor/DisplayKey` 字符串系统。
+
 **DK 资源必须在配置表之前到位，流程有严格顺序依赖。**
 
 **Why:** X2 2026占星节集卡册配置 74 个 DK（54 Portrait + 14 Icon + 6 IconBg），暴露了 DK 区间冲突、GUID 手写、脚本重复追加、导出顺序等问题。

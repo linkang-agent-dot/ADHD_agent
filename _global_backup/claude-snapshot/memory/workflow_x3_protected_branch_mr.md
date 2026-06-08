@@ -64,7 +64,11 @@ with urllib.request.urlopen(req, context=ssl._create_unverified_context(), timeo
 print(f'MR iid={data["iid"]} url={data["web_url"]}')
 ```
 
-**注意 form-data POST 会触发 GitLab 500 错误**（中文 title 可能不被识别），必须用 **JSON body + `Content-Type: application/json`**。
+**⚠️ 500 错误的真正根因是 title/description 里有中文，不是 form-data**（2026-06-05 实测修正旧说法）：同一个 `curl --data-urlencode` form-data POST，中文 title → `500 Internal Server Error`；换成**纯 ASCII title** → 立刻 `HTTP 201` 建单成功。是服务端某个 hook（疑似 Jira/钉钉集成）解析中文挂掉。
+- **稳妥做法：title 用纯 ASCII**（如 `X3NEW-443 restore 6 festival DK regs`），中文说明放 commit message 或建单后口头同步。
+- 中文 description 同样会 500（建单后再 PUT `description=中文` 也失败）→ 干脆 description 也用 ASCII 或留空。
+- 这跟 form-data/JSON 无关（两种都试过），别再归因到 Content-Type。
+- GET（读 project/branch/MR 列表）中文无影响，只有「**写**带中文的 MR」触发。
 
 ## LFS 大文件 push 30 秒超时坑
 

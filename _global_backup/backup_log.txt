@@ -17,3 +17,9 @@
 2026-06-03 18:20:01  memory mirrored
 2026-06-03 18:20:01  pruned 2 oversized data file(s)
 2026-06-03 18:20:01  ===== mirror done (commit+push handled by daily PushADHD) =====
+2026-06-08 12:00:03  ===== weekly mirror start =====
+2026-06-08 12:00:03  agents mirrored
+2026-06-08 12:00:03  settings.json backed up
+2026-06-08 12:00:03  skills (code/config, <512KB) mirrored
+2026-06-08 12:00:04  memory mirrored
+2026-06-08 12:00:04  ===== mirror done (commit+push handled by daily PushADHD) =====

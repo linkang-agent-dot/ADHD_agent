@@ -55,6 +55,11 @@ with urllib.request.urlopen(req, context=ssl._create_unverified_context(), timeo
 3. **`--file reference_images=path`** 可注入参考图（自动 base64），用于"按这张图风格"出图
 4. **GPT 默认返回 2 张候选**（不是 1 张）
 5. **下载也要带 cookie**，否则 401
+6. **cookie 过期刷新必须用户交互、不能后台跑**——返回「未认证，请提供有效 Bearer token 或登录 session」=env 和 config 里的 cookie 都过期了。刷新跑 `x2-media/scripts/get_grfal_cookie.py --url https://grfal.tap4fun.com`，它弹 Chrome 钉钉扫码后**还要在终端按 ENTER**；后台(`run_in_background`)跑会因 stdin 关闭直接「Cancelled」失败 → 让用户用 `!` 前缀自己跑。
+7. **刷新写 config 但 call_grfal 读 env，二者不同步**——`get_grfal_cookie.py` 把新 cookie 写进 `config.json`，而 `call_grfal.py` 读的是 `GRFAL_COOKIE` 环境变量。刷新后要么 `export GRFAL_COOKIE=$(从 config 读)` 当场注入，要么 `[Environment]::SetEnvironmentVariable('GRFAL_COOKIE',...,'User')` 持久化，否则 call_grfal 还在用旧的过期 env cookie。
+8. **可复用自动抓 cookie 脚本**：`x2-media/scripts/auto_get_grfal_cookie.py`（2026-06-05 新建）——后台可跑、不用按 ENTER，弹 Chrome 后**轮询 CDP 直到检测到有效 `grfal_session`(len>=200)**，自动写 config + winreg 持久化用户级 env。判定一定要看**原始 cookie 列表里 name=='grfal_session' 的那枚 value 长度**，别去拼接串里搜子串(会漏判)。`grfal_session` 是会话级 cookie，但 Chrome 关了会落盘到 grfal_chrome_profile，重开同 profile 能恢复。端口冲突时先杀掉 CommandLine 含 `grfal_chrome_profile` 的 chrome(别误杀用户正常 Chrome)。
+9. **`generate_image` 是 long_running**：直接 `/api/call` 会报「long_running 请用 async/submit」。必须 `--submit-only` 拿 task_id → `--check-task <id>` 轮询(GPT 带参考图常 4-9 分钟)。GPT 后端会整条链路(ucloud/cliproxy/azure/fal)全超时失败 → fallback gemini(快且稳)。
+10. **gemini/GPT 出的"透明"图常是假透明**(mode=RGB 把棋盘格画进像素，alpha 全 255)→ 入库前必查 `mode!='RGBA' or alpha.max()==alpha.min()`；假透明就 `--tool remove_background` 抠真透明，再 `x2-dk-manager/scripts/image_utils.py resize <src> <dst> 256 0.05` 裁边缩放。见 [[feedback_transparent_asset_diff_check]]。
 
 ## 节日 Banner 出图 prompt 模板
 

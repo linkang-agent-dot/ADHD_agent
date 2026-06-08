@@ -13,15 +13,30 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "方法论/X2集卡册_美术资产手册.md",
+                "file": "方法论/X2集卡册换皮操作手册.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "X2集卡册_美术资产手册"
+              "title": "X2集卡册换皮操作手册"
+            }
+          },
+          {
+            "id": "f3917bd06205e878",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "X2 装饰投放.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "X2 装饰投放"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -183,8 +198,15 @@
       "bases:新建数据库": false
     }
   },
-  "active": "b953e470b2140d31",
+  "active": "f3917bd06205e878",
   "lastOpenFiles": [
+    "换皮档案/X2/2026-06-04.md.tmp.28448.db634f82b8c0",
+    "X2 装饰投放.md",
+    "方法论/X2集卡册换皮操作手册.md",
+    "方法论/X2集卡册_美术资产手册.md",
+    "产出-数据分析/X3夏日节/X3夏日节_ARPU与付费率衰减分析_D35plus.html",
+    "产出-数据分析/X3夏日节",
+    "工作计划/每日日报/2026-06-05.txt.tmp.38600.33d7df470993",
     "产出-本地化与美术/X2_2026拓荒节_装饰接线方案与缺件清单.md.tmp.32804.7bdf793c7c7f",
     "工作计划/每日日报/2026-06-05.txt",
     "工作计划/每日日报/2026-06-05.txt.tmp.38600.8cc825100500",
@@ -203,14 +225,8 @@
     "产出-本地化与美术/X2/活动图标/activity_icon_mining_pickaxe.png",
     "产出-本地化与美术/X2/活动图标/activity_icon_mining_pickaxe_cut.png",
     "产出-本地化与美术/X2/活动图标",
-    "方法论/交互原型素材化_工作流.md.tmp.24300.9e0f4d82ae2e",
-    "产出-交互原型/X3_2026深海节/大富翁_珍珠贝进度系统_交互原型_真菱形版.html.tmp.24300.d8bb5cec5f7d",
-    "方法论/交互原型素材化_工作流.md.tmp.24300.409e71b7e00a",
-    "产出-交互原型/X3_2026深海节/大富翁_珍珠贝进度系统_交互原型_真菱形版.html",
     "产出-数据分析/token-weekly-2026-06-05.md",
     "方法论/交互原型素材化_工作流.md",
-    "方法论/X2集卡册换皮操作手册.md",
-    "方法论/X2集卡册_美术资产手册.md",
     "方法论/X3交互模块工作流.md",
     "方法论/工具选择与tokenmaxxing.md",
     "方法论/复盘流水线.md",
@@ -230,7 +246,6 @@
     "工作计划/工作line.md",
     "产出-数值设计/X3_深海节/航海之路大富翁换皮_信息交接.md",
     "产出-数值设计/X3_深海节/深海节策划案.md",
-    "产出-数据分析/token-weekly-2026-05-29.md",
     "方法论/脑图库/未命名.canvas"
   ]
 }

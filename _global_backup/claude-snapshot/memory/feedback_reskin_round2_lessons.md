@@ -49,6 +49,18 @@ originSessionId: 03f54909-5392-432f-954e-d30d028b3fc8
 | 1365 march_effect | 行军特效外观 | 有行军特效时，注意全列克隆 |
 | 1187 FurnitureBuild | 装饰品家具 | 有装饰品时 |
 
+## rowIds 白名单静默漏行（2026-06-08 拓荒节 BP 解锁 BUG 实证）
+
+`gsheet-config-replace` 的 item 替换会被 `rowIds` 白名单**静默跳过**不在名单里的行——不报错、不警告。结果：目标表里的"引用 ID"被改成新值，但发放侧实物没改，两边对不上。
+
+- **实证链路（X2 BattlePass 解锁）**：买 IAP(`2130.Pkg`) → IAP `2013.A_ARR_other_items` 发通行证道具 → 该道具被消耗时**必须 == `2130.QualityUpItem`** 才翻 PayType 解锁档位。换皮把 `2130.QualityUpItem` 改成了新道具 `111111319/320`，但 `2013` 的 `2013910062/063` 两行没进 rowIds 白名单 → `other_items` 仍发旧占星道具 `11119495/96` → 玩家买了、道具自动消耗、PayType 停 0 不解锁。
+- **更阴的点**：这两行的 `temp_desc/pkg_title/config_id` 是另一步改的（已显示"拓荒节2026"），单看名字以为换好了，唯独 `other_items` 里的 item id 没动。**名字对 ≠ 实物对**。
+
+**How to apply：**
+1. 换皮后必须**反查发放侧 vs 期望侧一致性**：凡是"某表引用道具ID + 另一表发这个道具"的配对（BP 的 QualityUpItem↔IAP other_items、解锁道具↔发放道具），两边 ID 必须逐一比平。
+2. 跑 replace 前确认 `rowIds` 白名单**覆盖了所有该改的行**；尤其 IAP 模板（2013）的 BP/解锁类 product 行容易漏进白名单。
+3. X2 BP 解锁链速查：`2130.Pkg`(买啥) → `2013.other_items`(发啥, col18, serial_number:100/ishighlight:true 那个是通行证道具) → `==2130.QualityUpItem/LevelUpItem` → 翻 PayType。BP"买了不解锁"先查这条。
+
 ## 关键经验
 
 1. **复用旧组件不等于不用检查**：复用的旧行里的 JSON 字段可能引用了旧节日道具/活动 ID

@@ -25,4 +25,11 @@ X2 限时抢购（限购礼包）货架里礼包显示**占位/默认数据**（
 
 **若重开/重热更后仍占位**：才往客户端方向查（新 IAP id 不在客户端包 / product_id 没在充值后台上架）。详见 [[workflow_x2_table_import]] [[feedback_x2_i18n_duplicate_key]]。
 
+## 限时抢购时长 / 节奏配置位置（2026-06-04 改时长沉淀）
+全在**表 2121 activity_special**（SheetID 用 resolve `2121_x2_activity_special`，真源 GSheet，列 `A_ARR_array`=col L，单位**秒**）：
+- `flash_sale_buy_duration`：每波抢购**持续时长**，`[3600,3600,3600]`=每波 60 分钟（3 个值=3 波各自时长）。改时长改这个，如 180 分钟=`[10800,10800,10800]`。
+- `flash_sale_buy_opentime`：活动开启后**多久进入抢购**，`[7200,36000,64800]`=2h/10h/18h（对应文案"UTC 2:00、10:00、18:00 开启"）。
+- 一个时长组件可被多活动共用：21217032=沙滩节+占星节共用，212101145=拓荒节。改前用 activity_config 反查哪些活动引用了该组件 id。
+- 配套文案 = i18n key **`IAP_flashsale_schedule_desc`**（"…开启并持续60分钟"，全限时抢购共用一条，17 语言）；改时长记得同步它（17 语言里"60"都是阿拉伯数字，直接 60→180）。
+
 **换皮残留待留意**（拓荒实例，非显示 bug）：限时抢购换皮后 `iap_config/iap_template` 的描述常残留"S6春节限时抢购礼包"；`recharge_actv`/`actv_base_id` 可能仍指占星/夏日底座（影响累充归属，不影响货架）；raffle 奖池(activity_flash_sale_raffle)若复用底座奖池会开出旧节日的包。

@@ -1,0 +1,22 @@
+---
+name: ""
+description: 本会话新增的、需要透明背景的图片资源，入库前必须用差分法确认是真透明不是假透明
+metadata: 
+  node_type: memory
+  type: feedback
+  originSessionId: 0a30c6e6-6e39-49a1-a271-b75401d58a68
+---
+
+我(Claude)本次会话**新增的、需要透明背景**的图片资源，入库/交付前**必须验证是真透明**，不能只看着像透明就过。
+
+**Why:** GPT/生图模型常返回"假透明"——把棋盘格直接画成灰白像素(mode=RGB 24bpp 无 alpha 通道)，肉眼看着像透明，进游戏是死白底。2026-06 拓荒节主城皮肤图标 GPT 直出就是假透明(Format24bppRgb)，靠 remove_background 抠成真 RGBA 才可用。
+
+**How to apply:**
+- 验证手段=**差分法**：把图分别 alpha_composite 到纯白底和纯黑底→转RGB→ImageChops.difference。
+  - 有透明区域 → 两张底色不同 → diff 有非零值(bbox 非空/extrema>0)
+  - 完全不透明(假透明) → 两张一样 → diff 全 0(bbox=None)
+- 同时直接读 alpha 通道：四角应为 (_,_,_,0)，统计 alpha=0/255/中间占比，确认 mode=RGBA。
+- PIL 脚本从干净 cwd 跑(别在 %TEMP%，那有 copy.py 会 shadow stdlib 导致 PIL 导入崩)。
+- 美术自己交付的资源不在此列(默认美术保证)；这是针对**我生成/处理**的资源的自检。
+
+关联 [[X2 主城皮肤换皮完整链路]] [[feedback_proactive_knowledge_update]]

@@ -40,9 +40,18 @@ metadata:
 - 真正来源：`Pack.210921.MainBg = DK_img_gift_bg_28`
 - 修法：清空 MainBg（commit dfb3e41）
 
+## ⚠️ 链式/装饰阶梯礼包（ChainPack）根本不读 Pack.MainBg（2026-06-05 验证）
+
+上面"MainBg 覆盖弹窗背景"只对**单包**成立。**装饰阶梯礼包（ChainPack 形态，1父+3档子，UIType=5）的弹窗背景是 prefab 写死的，代码完全不读子包 MainBg**：
+- `UIPackCommonPop.cs:158-164` — `isChainGift` 分支走 `RefreshChainPackContentView` 后直接 `return`，**跳过**了非链式分支里那几个 `SetPackBasicInfo(mainBgImage: mImageMainBg)`
+- `RefreshChainPackContentView`（268-333）只设 title + 子包列表，**不碰 mImageMainBg**
+- `UIChainPack.cs` 全文无任何 MainBg/BG/Img 渲染
+
+→ 所以装饰阶梯礼包子包的 MainBg 填什么都不显示（尼罗 210630-632 填 `Egypt_bg_19`、夏日 210917-919 填 `gift_bg_28` 都是**无害冗余字段**，不用纠结、不用改）。诊断装饰阶梯礼包弹窗背景错误时，别查 Pack.MainBg，要查 prefab 或 ChainPack 渲染。
+
 ## 新增节日礼包 checklist
 
-1. **Pack.MainBg** — 拜访礼包/家具礼包类 → **必须空**；定制弹窗背景的特殊礼包（VIP/周卡/特殊活动）才填
+1. **Pack.MainBg** — **单包**拜访礼包/家具礼包类 → **必须空**（会顶替）；链式/装饰阶梯礼包 → 不读此字段，随意；定制弹窗背景的特殊单包（VIP/周卡/特殊活动）才填
 2. **Pack.Head / Icon** — 用节日定制 DK，不要复用上一节日（如 `DK_icon_jiaju_ValentinesDay_2` 是情人节专属）
 3. **Pack.BottomBg / Icon** — 跨节日通用图（如 `DK_img_gift_bg_8`）可以复用
 

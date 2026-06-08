@@ -26,18 +26,25 @@ DATASOURCE = "TRINO_HF"
 FESTIVAL_NAME = "夏日节"
 # 夏日恋语在 1-88 服的真实开场日 = 2026-05-29（05-28 在 88 服节日流水为 0，05-25 的 $30 是复用包尾单噪声）
 FESTIVAL_D0 = "2026-05-29"
+# ⚠️ 节日活动下线时点（必填）：累充活动 100595 在 2026-06-08 08:00(北京时间) 下线。
+# 数仓 created_at/partition_date 均为北京时间（开场日 hour=8 暴涨、下线日 hour=8 起零成交，已实测验证）。
+# 必须加这道时间上界：白名单里的复用包(情人节连锁 2107xx / 通用通行证 130020·130021 / 许愿池 1002001)
+# 下个活动会被重新挂上来卖，没有时间卡口会把下线后的常态流水继续误算成本届节日收入。
+# 对 D0~D9 无影响(全在卡口前)，仅精确收口 06-08 当天到 08:00 + 防未来误算。
+FESTIVAL_END_TS = "2026-06-08 08:00:00"
+FEST_TIME_GUARD = f"o.created_at < TIMESTAMP '{FESTIVAL_END_TS}'"
 BASELINE_START = "2026-05-15"       # 基线 14 日（节日前）
 BASELINE_END = "2026-05-28"
 # 双服段（核心：同期对比要"服务器生命周期一致" = 各期取「D0 时距开服天数(服龄)处于同一阶段」的服，
 #   排除新服爆发期对对比的干扰。**按服龄阈值匹配，不是同一批物理服**）：
-# - 夏日(本期，主报告+对比夏日侧) = 1-89服(server_id 1000~1880)：基本都是夏日 D0(05-29) 已过 D35 的成熟服
-#   （仅末位 1880 开服 04-27、服龄 32 天略低，占比极小可忽略）。
+# - 夏日(本期，主报告+对比夏日侧) = 1-88服(server_id 1000~1870)：节日实际投放到 1870 服为止；
+#   均为夏日 D0(05-29) 已过 D35 的成熟服（1880 开服 04-27、D0 时仅服龄 32 天未达 D35，且未上节日，排除）。
 # - 情人节(对比上期侧) = 1-55服(1000~1540)：情人节 D0(02-06) 已过 D35 的成熟服
 #   （1550+ 在情人节时未开服/未过 D35 = 爆发期新服，排除）。
 # 两期各取"D0 已过 D35 的成熟服"（服龄阶段一致），物理服可以不同 → 排除生命周期影响。
-SERVER_FILTER = "AND TRY_CAST(o.server_id AS INTEGER) BETWEEN 1000 AND 1880"      # 夏日 89服(过D35成熟盘)
+SERVER_FILTER = "AND TRY_CAST(o.server_id AS INTEGER) BETWEEN 1000 AND 1870"      # 夏日 88服(节日投放到1870/过D35成熟盘)
 SERVER_FILTER_VAL = "AND TRY_CAST(o.server_id AS INTEGER) BETWEEN 1000 AND 1540"  # 情人节 55服(过D35成熟盘)
-SERVER_LABEL = "本期夏日 1-89服(1000-1880)；上期情人节 1-55服(1000-1540)。各取D0已过D35的成熟服(服龄阶段一致，非同一批服)，排除生命周期影响"
+SERVER_LABEL = "本期夏日 1-88服(1000-1870)；上期情人节 1-55服(1000-1540)。各取D0已过D35的成熟服(服龄阶段一致，非同一批服)，排除生命周期影响"
 OUTPUT_DIR = os.path.expanduser("~")
 
 # === 节日礼包口径：从配置表读，不靠名字/前缀猜 ===
@@ -357,7 +364,7 @@ def main():
         report_date = os.environ["X3_REPORT_DATE"]
     day_num = calc_day_number(report_date)
     pack_ids, pack_module = load_festival_packs()
-    fest_cond = "o.iap_id IN (" + ",".join(f"'{p}'" for p in pack_ids) + ")"
+    fest_cond = "(o.iap_id IN (" + ",".join(f"'{p}'" for p in pack_ids) + ") AND " + FEST_TIME_GUARD + ")"
     print(f"节日礼包口径：ActvOnline {RECHARGE_ACTV_ID} 累充白名单 {len(pack_ids)} 个 Pack")
 
     # ---- 1. 每日汇总（基线期 + 节日期） ----
@@ -519,7 +526,7 @@ def main():
 
     # ---- 5b. 按日同期对比（夏日 Dn 对 情人节 Dn，逐日整日对整日；进行中的当天按已跑小时对齐才公平） ----
     ptm = load_pack_type_map()
-    summer_pred = "o.iap_id IN (" + ",".join(f"'{p}'" for p in pack_ids) + ")"
+    summer_pred = "(o.iap_id IN (" + ",".join(f"'{p}'" for p in pack_ids) + ") AND " + FEST_TIME_GUARD + ")"
     now_date = datetime.now().strftime("%Y-%m-%d")
     # 进行中当天的已跑小时上限（仅 report_date == 今天 时才算"进行中"，否则整日）
     report_max_hr = 23
@@ -1284,24 +1291,35 @@ function renderCompareDay() {{
   $('cmpHdr').textContent = cd.day_label + '（' + cd.win + '）';
   const vArpu = V.payers ? V.festival / V.payers : 0, sArpu = S.payers ? S.festival / S.payers : 0;  // 分母=当日总付费人数
   const vRatio = V.total ? V.festival / V.total * 100 : 0, sRatio = S.total ? S.festival / S.total * 100 : 0;
+  const vPayRate = V.payers ? V.fest_payers / V.payers * 100 : 0, sPayRate = S.payers ? S.fest_payers / S.payers * 100 : 0;  // 付费玩家付费率 = 节日付费/总付费
+  const vArppu = V.fest_payers ? V.festival / V.fest_payers : 0, sArppu = S.fest_payers ? S.festival / S.fest_payers : 0;  // ARPPU = 节日流水/节日付费人数
   function dCell(pct) {{ if (pct == null) return '<td class="num muted">—</td>'; const cls = pct > 0 ? 'up' : pct < 0 ? 'down' : 'muted'; return '<td class="num ' + cls + '">' + (pct > 0 ? '+' : '') + pct.toFixed(1) + '%</td>'; }}
   const ppCls = (sRatio - vRatio) > 0 ? 'up' : (sRatio - vRatio) < 0 ? 'down' : 'muted';
+  const prCls = (sPayRate - vPayRate) > 0 ? 'up' : (sPayRate - vPayRate) < 0 ? 'down' : 'muted';
   const rows = [
     ['总流水', fmtMoney(V.total), fmtMoney(S.total), dCell(pctChg(S.total, V.total))],
     ['总付费人数', V.payers, S.payers, dCell(pctChg(S.payers, V.payers))],
     ['节日流水', fmtMoney(V.festival), fmtMoney(S.festival), dCell(pctChg(S.festival, V.festival))],
     ['节日占比', vRatio.toFixed(1) + '%', sRatio.toFixed(1) + '%', '<td class="num ' + ppCls + '">' + ((sRatio - vRatio) >= 0 ? '+' : '') + (sRatio - vRatio).toFixed(1) + 'pp</td>'],
     ['节日付费人数', V.fest_payers, S.fest_payers, dCell(pctChg(S.fest_payers, V.fest_payers))],
+    ['付费率(节日付费人数/总付费人数)', vPayRate.toFixed(1) + '%', sPayRate.toFixed(1) + '%', '<td class="num ' + prCls + '">' + ((sPayRate - vPayRate) >= 0 ? '+' : '') + (sPayRate - vPayRate).toFixed(1) + 'pp</td>'],
     ['节日ARPU(节日流水/总付费人数)', '$' + vArpu.toFixed(2), '$' + sArpu.toFixed(2), dCell(pctChg(sArpu, vArpu))],
+    ['ARPPU(节日流水/节日付费人数)', '$' + vArppu.toFixed(2), '$' + sArppu.toFixed(2), dCell(pctChg(sArppu, vArppu))],
   ];
   $('cmpBody').innerHTML = rows.map(r => '<tr><td>' + r[0] + '</td><td class="num">' + r[1] + '</td><td class="num">' + r[2] + '</td>' + r[3] + '</tr>').join('');
   $('cmpModBLabel').textContent = '上期 ' + compare.val_name + ' ' + cd.day_label + ' 模块（' + cd.val_date + '）';
   $('cmpModB').innerHTML = modBarsHTML(V.modules);
   $('cmpModALabel').textContent = '本期 ' + compare.summer_name + ' ' + cd.day_label + ' 模块（' + cd.summer_date + '）';
   $('cmpModA').innerHTML = modBarsHTML(S.modules);
+  const dPR = sPayRate - vPayRate, dArppu = (vArppu ? (sArppu - vArppu) / vArppu * 100 : 0);
   const note = cd.day_label + '（' + cd.win + '）：本期' + compare.summer_name + '节日 ' + fmtMoney(S.festival) + '（占比 ' + sRatio.toFixed(0) + '%、' + S.fest_payers + ' 人付费）vs 上期' + compare.val_name + ' ' + fmtMoney(V.festival) + '（占比 ' + vRatio.toFixed(0) + '%、' + V.fest_payers + ' 人）。'
     + (sRatio >= vRatio ? '本期节日吸金占比更高' : '本期节日吸金占比偏低') + '（' + ((sRatio - vRatio) >= 0 ? '+' : '') + (sRatio - vRatio).toFixed(1) + 'pp），'
-    + (S.fest_payers >= V.fest_payers ? '节日付费人数更多' : '节日付费人数更少') + '，节日ARPU(节日流水/总付费人数) $' + sArpu.toFixed(2) + ' vs $' + vArpu.toFixed(2) + '。';
+    + (S.fest_payers >= V.fest_payers ? '节日付费人数更多' : '节日付费人数更少') + '，节日ARPU(节日流水/总付费人数) $' + sArpu.toFixed(2) + ' vs $' + vArpu.toFixed(2) + '。'
+    + '付费率 ' + vPayRate.toFixed(1) + '%→' + sPayRate.toFixed(1) + '%（' + (dPR >= 0 ? '+' : '') + dPR.toFixed(1) + 'pp）、ARPPU $' + vArppu.toFixed(2) + '→$' + sArppu.toFixed(2) + '（' + (dArppu >= 0 ? '+' : '') + dArppu.toFixed(1) + '%）：'
+    + (dPR > 0 && dArppu < 0 ? '增长靠扩大付费人群（铺广度），人均深度略降——属"宽口浅底"，下一步应补深度款把 ARPPU 拉起来。'
+     : dPR > 0 && dArppu >= 0 ? '付费面与人均深度双升，结构最健康。'
+     : dPR <= 0 && dArppu > 0 ? '靠加深人均拉动，付费面未扩——需补低门槛款拉新付费。'
+     : '付费面与人均深度双降，节日吸引力走弱。');
   $('cmpNote').className = 'conclusion ' + (sRatio >= vRatio ? 'up' : 'down');
   $('cmpNote').textContent = note;
 

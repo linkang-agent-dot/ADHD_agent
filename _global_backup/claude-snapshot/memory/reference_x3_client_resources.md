@@ -99,3 +99,39 @@ grep -rn "DK_img_Activity_summer_bg_1" C:/x3-project/client/Assets/Editor/Config
 - **配置写新 DK 前先看 client 仓有没有 .png**：硬盘上有就能用，不在硬盘上得让美术先出图 + 走 [[feedback_dk_resource_workflow]]
 - **tableResInfo.txt 看起来缺图时**：去 ActivityImg/ActivityImg_Download 目录用 `find -iname` 真实搜，名单可能是过期版本
 - **跨节日复用 DK 是 BUG 信号**：节日活动用了别节日前缀的 DK（如夏日活动用 `VD_*`），90% 是没换图，需要确认美术
+
+## ⚠️ 踩坑：Unity 全量重导出 Path_*.asset 静默删掉别人手工注册的 DK（2026-06-05）
+
+**现象**：合并/上传美术后，一批节日资源「掉了」——背景/ICON/HUD 入口图标空白，且**跨多个节日**（夏日 + 尼罗同时掉）。
+
+**根因**：有人在 Unity 里 Ctrl+T 重导出 DisplayKey 后整文件提交 `Path_Activity.asset`（commit msg 常见「XXX美术上传」「重新导出displaykey配置」），但他的本地 Unity 工作区 DisplayKey 状态是**过期的**（早于别人后来手工/单独提交追加的节日 DK）。这份全量重导出会**覆盖整个 keys/values 段、静默删掉**那些较新的注册行。`png 文件还在硬盘上，只是 .asset 里的 key+objPath 两行没了` → 加载失败表现为资源空白。
+
+实战：`046c519e874 海妖美术上传`(龚亮) 一次删了 7 个 DK（`VD_icon_9/10`、`Egypt_icon_11/12`、`summer_bg_12`、`VD_bg_18`、`ActvNewQueue_Hud`），全是 linkang `b29dc46f5cb`+team 早先单独提交注册的。
+
+**「掉了」的资源 → 配置字段定位**（先确认 DK 名，再查谁引用它）：
+- 礼包 ICON → `Pack.Icon`(col27) / `ChainPack.Icon`(col3) / `PackTypeInfo.Icon`(col4)；装饰阶梯礼包三处都要查（见 [[reference_x3_pack_tab_icon]]）
+- 礼包背景 → `Pack.MainBg`(col30) / `BottomBg`(col31)；`Pack.Head`(col25)=主界面入口图标
+- **拜访礼包面板小图** → `ActvVisitPack.DK_PackIcon`(col8)
+- **「HUD」=活动主界面入口图标** → 多在 `ActvOnline` 表（用户口中拜访礼包「HUD 掉了」常指这个，不是 Pack.Head）
+
+**诊断方法（git pickaxe 定位删除提交）**：
+```bash
+# 1. DK 当前是否还注册（key=0 即丢了）
+grep -c "key: DK_xxx$" client/Assets/Res/Config/DisplayKey/Path_Activity.asset
+# 2. 谁删的（-S 列出改变该字符串出现次数的提交，最新一条+当前缺失=删除者）
+git log --oneline -S "DK_xxx" -- client/Assets/Res/Config/DisplayKey/Path_Activity.asset
+# 3. 该提交一次删了哪些（看全貌，别只修用户报的那几个）
+git show <commit> -- .../Path_Activity.asset | grep -E '^-    - DK_'
+# 4. png 还在不在（在=只需补注册行，不用重新出图）
+git show <commit>^:.../Path_Activity.asset | grep -A1 "key: DK_xxx$"   # 取回 objPath
+```
+
+**修复（2026-06-05 实测安全手法，覆盖"按字母序插"的旧说法）**：
+- 真正的运行期不变式是 **`keys[i] == values[i].key` 按 index 平行对应**（验证：提 keys 列表 + values 的 `- key:` 列表，两者完全相等）。runtime 把两个平行数组建成 dict 查，**顺序不影响功能**。
+- ⚠️ 文件**不是 Python ordinal 排序**（`keys==sorted(keys)` 为 False）——Unity 用的是大小写不敏感/.NET 式排序，**别试图复刻字母序插入**（bisect 会算错位、还可能打乱已有行）。
+- ✅ 安全做法：**把 N 个 `key` 追加到 keys 段末尾（`values:` 行之前）+ N 个 `key/objPath` 追加到 values 段末尾（EOF 前），两段同序**。这样既保住 index 对应（老条目 0..n-1 不动、新条目 n..n+N-1 在两段同位），diff 又小又好审。下次谁 Unity 重导出会自动重排，无副作用。
+- 取 objPath：`git show <删除提交>^:.../Path_Activity.asset | grep -A1 "key: DK_xxx$"`。png 在仓库就只补注册行，不动美术。
+- 坑：文件里可能有**历史损坏条目**（如 `DK_img_Activity_underwear_icon33` 的 objPath 被拆成两行 `...icon33` + `        1.png`），解析 values 时按"只匹配 `- key:` 行定位"绕过它，**别去修**（不是你的活）。
+- client 仓 protected dev → feature branch + MR（[[workflow_x3_protected_branch_mr]]，注意 MR title 用 ASCII 否则 500）。提交只 `git add` 目标 .asset，别带进工作区里别人的 prefab WIP。
+
+**预防**：禁止「XX美术上传」式整文件全量重导出 Path_*.asset；新增 DK 应只追加自己那几条 key+value，或重导出前先 `git pull` 同步最新注册。关联 [[workflow_x3_merge_conflict_audit]] 同属「整文件覆盖丢别人改动」家族。

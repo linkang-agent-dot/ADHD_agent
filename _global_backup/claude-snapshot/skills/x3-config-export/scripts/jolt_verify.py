@@ -31,11 +31,16 @@ def get_text(url: str) -> str:
         return r.read().decode("utf-8", "replace")
 
 
-def trigger(branch: str) -> str:
-    """跑 jolt，返回原始输出(GBK 解码)。"""
+def trigger(branch: str, extra=None) -> str:
+    """跑 jolt，返回原始输出(GBK 解码)。
+
+    extra: 额外透传给 Jenkins buildWithParameters 的 kv 列表，如 ['skip_check=true']。
+    用于列变化确认重导（CheckColumn.py 的 skip_check 开关）等需带外参数的场景。
+    """
+    extra_str = (" " + " ".join(extra)) if extra else ""
     p = subprocess.Popen([JOLT], stdin=subprocess.PIPE,
                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    out, _ = p.communicate(f"excel branch={branch} code_branch={branch}\nexit\n".encode("utf-8"), timeout=600)
+    out, _ = p.communicate(f"excel branch={branch} code_branch={branch}{extra_str}\nexit\n".encode("utf-8"), timeout=600)
     try:
         return out.decode("gbk")
     except UnicodeDecodeError:
@@ -44,8 +49,9 @@ def trigger(branch: str) -> str:
 
 def main():
     branch = sys.argv[1] if len(sys.argv) > 1 else "dev-summer-love-song"
-    print(f"[1/3] 触发导表 branch={branch} ...")
-    text = trigger(branch)
+    extra = sys.argv[2:]  # 形如 skip_check=true，透传给 jolt excel 命令
+    print(f"[1/3] 触发导表 branch={branch} extra={extra or '-'} ...")
+    text = trigger(branch, extra)
     print(text.strip())
 
     m = re.search(r"/queue/item/(\d+)/", text)
