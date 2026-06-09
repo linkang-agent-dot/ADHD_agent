@@ -211,6 +211,23 @@ def ensure_grid(spreadsheet_id, tab, rows=None, cols=None):
     return rc == 0 and '"error"' not in text
 
 
+# ---------- 新建表 ----------
+def create_spreadsheet(title, tabs=None):
+    """新建 GSheet。tabs=页签名列表(可选,默认1个Sheet1)。返回 (spreadsheet_id, url)，失败 (None, None)。"""
+    body = {"properties": {"title": title}}
+    if tabs:
+        body["sheets"] = [{"properties": {"title": t}} for t in tabs]
+    rc, text, err = _call(['sheets', 'spreadsheets', 'create', '--params', '{}'], jb=body)
+    if rc != 0 or not text.strip():
+        return None, None
+    try:
+        r = json.loads(text)
+    except Exception:
+        return None, None
+    sid = r.get("spreadsheetId")
+    return sid, r.get("spreadsheetUrl", f"https://docs.google.com/spreadsheets/d/{sid}" if sid else None)
+
+
 # ---------- CLI（只读速查）----------
 if __name__ == '__main__':
     cmd = sys.argv[1] if len(sys.argv) > 1 else ''

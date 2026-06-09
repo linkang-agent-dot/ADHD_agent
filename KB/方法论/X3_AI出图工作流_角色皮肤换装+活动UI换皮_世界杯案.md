@@ -1,0 +1,120 @@
+# X3 AI 出图工作流：角色皮肤换装 + 活动UI换皮效果图（世界杯案全程沉淀）
+
+> 2026-06-09 X3 世界杯活动系列做「足球宝贝皮肤」+「开箱活动换皮效果图」全过程 + 踩坑实录。
+> 下次做**英雄皮肤换装概念图**或**活动界面换皮效果图**直接套这套流程。
+> 工具链见 [[workflow_x3_grfal_generate_image]]；归档路径见 reference_output_paths。
+
+---
+
+## 0. 工具链 & 调用骨架
+
+| 组件 | 路径 |
+|---|---|
+| call_grfal.py | `C:\ADHD_agent\.cursor\skills\grfal-api\scripts\call_grfal.py` |
+| GRFAL_COOKIE | `C:\ADHD_agent\.cursor\skills\x2-media\config.json` 的 `grfal_cookie` 字段 |
+| base url | `https://grfal.tap4fun.com` |
+| 出图归档 | `C:\ADHD_agent\KB\产出-本地化与美术\X3\{主题}\` |
+
+调用骨架（每个生图脚本都这套）：
+```python
+os.environ['GRFAL_COOKIE'] = json.load(open(CFG,encoding='utf-8'))['grfal_cookie']
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')  # 防GBK控制台崩
+# submit-only 拿 task_id → 轮询 check-task → 下载(带cookie)
+run(['--tool','generate_image','--params',json.dumps({'prompt':P,'model':'gpt','aspect_ratio':'2:3'}),
+     '--file',f'reference_images={REF}','--submit-only'])
+```
+
+---
+
+## 1. 整体流程（两条独立线，可并行）
+
+```
+角色皮肤换装线:  英雄本人立绘 → 换装概念稿(多轮迭代) → 主稿_FINAL
+活动UI换皮线:    原活动UI截图 + 皮肤主稿 + 道具图 → 换皮效果图(多轮迭代) → 效果图_FINAL
+```
+
+**核心原则（贯穿两条线）**：
+1. **方向先商量、不急着出图**：排版/配色/元素这类方向问题，先用文字(或ASCII mockup)跟用户对齐，再出图。省GRFal时间+少返工。
+2. **每轮只改一处**：锁住已认可的部分(reference图)，prompt里只动一个变量。改多了会整体漂移。
+3. **都是方向概念稿**：明确告诉用户这是给美术外包对齐方向的稿，最终资产美术会重绘——micro细节(姿态自然度等)不必死磕。
+
+---
+
+## 2. 角色皮肤换装线（本次 R1→FINAL 实录）
+
+**步骤**：
+1. 选基础英雄(D35内可得，见 [[project-x3-worldcup-activity]] 英雄选角链路) → 找她客户端立绘 `Role/FullLength/Role_F_{id}.png`。
+2. **以本人立绘当 reference**，prompt=「保身份(脸/发/身形/画风)，只换造型(球衣/道具/姿势)」→ 出 R1。
+3. 后续每轮**用上一版选中图当 reference**，逐轮只改一处。
+
+**本次迭代链（每轮一处改动）**：
+| 版本 | reference | 只改的那一处 | 结果 |
+|---|---|---|---|
+| R1 | 本人立绘 Role_F_40 | 换世界杯拉拉队造型 | 红白+含队徽+脸颊国旗 |
+| R2 | R1-v1 | 配色→白金+红点缀、去国家元素 | 白金10号干净版 |
+| R3 | R2-v1 | 胸口加奖杯印花 | 奖杯印花版(用户嫌印花占C位) |
+| R4 | (走错:红版) | — | 作废(基底选错,TaskStop掉) |
+| R5 | R2-v1(白金) | 左上胸口加**小**奖杯徽章、10号不动 | 白金+徽章 ✓ |
+| R6 | R5-v2 | 加一个足球(手臂夹) | 加球版 |
+| **FINAL** | 用户给的**高质量图**(红底带国徽) | 套R6V2设计(红→白金/国徽→奖杯/去脸颊国旗/去球袜商标字) | **主稿_FINAL.png** |
+
+---
+
+## 3. 活动UI换皮效果图线（本次 实录）
+
+**步骤**：
+1. 拿**原活动UI截图**(本次=X3"天马藏宝阁"开箱活动 `orig_ui.png`，注意是**开箱不是转盘**)。
+2. **多图参考**(call_grfal `--file reference_images=` 可重复传/append)：原UI(布局锚) + 皮肤主稿(角色) + 道具图(世界杯足球礼盒)。
+3. 模型用 **gemini**(保布局/UI比gpt稳)，aspect_ratio 跟手机UI=9:16。
+4. 逐轮调构图(见踩坑)。
+
+**本次迭代链**：
+| 版本 | 改动 | 结果 |
+|---|---|---|
+| 含足球宝贝版 | 把角色合进已有reskin场景+去看台国旗 | 有大奖杯+散足球 |
+| 人物主体版 | 去大奖杯/足球,人物当后方C位主体 | 人物太大、顶到UI文字、礼盒叠身体 |
+| V5 照原布局 | 人物=中等场景插画、置文字带下方 | 比例对了,但居中与礼盒叠 |
+| V6 偏侧 | 角色偏右+礼盒居中+小奖杯填空 | 偏侧导致人物被缩太小 |
+| **V7** | 人物按V5比例不动、礼盒缩小下移到脚前、加小奖杯填空 | **✓ 效果图_FINAL.png(V7-V2小奖杯在右)** |
+
+---
+
+## 4. ★踩坑清单（最值钱）
+
+**GRFal 调用层**：
+1. `generate_image` 是 **long_running** → 必须 `--submit-only` 拿 task_id 再 `--check-task` 轮询；加 `--sync` 会300s硬超时。
+2. 轮询脚本里 `print` 中文 → Windows GBK 控制台 `UnicodeEncodeError` 崩(任务其实没崩,只是print炸)。必须 `sys.stdout=io.TextIOWrapper(sys.stdout.buffer,encoding='utf-8',errors='replace')` 或 `PYTHONIOENCODING=utf-8`。
+3. cookie 要手工注入 `GRFAL_COOKIE` env(call_grfal不自动读config)；下载也要带cookie否则401。
+4. **多图参考**：`--file reference_images=` 重复写多次=多图(append生效)，可同时喂 UI布局+角色+道具。
+5. 模型选择：**gpt** 保角色身份/质量好但慢(4-9min/2张)；**gemini** 快/稳/保UI布局好。→ 角色换装用gpt，UI换皮用gemini。
+
+**角色换装层**：
+6. **基底选错会白跑**：本次R4错用红版当基底→TaskStop掉重来。动手前确认 reference 是哪一版。
+7. 「质量好但带违规元素」的图怎么用：用户常会给一张**渲染质量最好但违规**(带国徽/国旗/红队色)的图。解法=**以它当质量/姿势锚 reference**，prompt里**逐条列出要改的设计点**(红→白金/国徽→奖杯/去脸颊国旗/去商标字)——既得质量又合规。本次FINAL就这么来的。
+
+**UI换皮构图层（最容易翻车）**：
+8. **角色易被画太大** → 顶到/遮挡顶部UI文字 + 比例不协调。解法=**用原UI当人物尺寸位置锚**+prompt明确「中等场景插画、置于顶栏+标题文字带**下方**、不overlap任何UI文字、不oversize」。
+9. **角色与道具(礼盒)都居中会叠住**。解法二选一：①角色偏一侧+道具居中 ②角色保持比例居中、道具**缩小+下移**到脚前(只压脚踝不挡身体)。本次最终用②(因偏侧会把人物缩小)。
+10. **中间留白太空** → 加个**小**道具(小奖杯)填背景，但务必小、不抢主焦点。
+
+**IP / 合规层**：
+11. 赛事符号(大力神杯)用**原创风格化**(奖杯+月桂)，**不精确复刻** FIFA 商标造型，规避IP。
+12. 用户说「去国家元素」= 去**国旗/国徽/国家队配色**；**赛事奖杯印花不算**国家元素，可保留。
+
+**协作节奏层**：
+13. 方向问题(排版/配色)**先商量再出图**(用户明确说过"先不出图,商量")。
+14. 每轮**只改一处**，版本文件名带**语义后缀**(`_r5白金加徽章` / `_v7_V5比例+礼盒下移+小奖杯`)，主稿标 `_FINAL`，便于回溯。
+
+---
+
+## 5. 可复用脚本/模板
+
+- 角色换装：`KB\产出-本地化与美术\X3\足球宝贝爱莉希雅\gen_skin_*.py`(本人立绘当ref换装)、`gen_skin_final.py`(质量锚+逐条改设计)
+- UI换皮：`KB\产出-本地化与美术\X3\世界杯礼盒\gen_reskin_v*.py`(多图参考:原UI+角色+道具,gemini,9:16)
+- 下次换皮复制最接近的一个,改 REF / PROMPT / OUT 即可。
+
+## 6. 本次产出归档
+- 皮肤主稿：`...\足球宝贝爱莉希雅\足球宝贝爱莉希雅_主稿_FINAL.png`
+- 开箱效果图：`...\世界杯礼盒\开箱活动效果图_FINAL.png`
+- 世界杯足球礼盒(透明)：`...\世界杯礼盒\WorldCup_box1_pick2_trans.png`
+- 策划案设计稿页：GSheet `1eAG8w9y4f_hJMc1l_pMVglzdWf9M4sLTOlKcIKq_BEc`「足球宝贝设计稿」页
