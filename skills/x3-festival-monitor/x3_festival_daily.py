@@ -50,6 +50,7 @@ SERVER_FILTER = "AND TRY_CAST(o.server_id AS INTEGER) BETWEEN 1880 AND 1900"    
 #    生命周期不匹配 → 同期对比/R级对齐区块仅供粗略参考，未按本批服龄重新校准。
 SERVER_FILTER_VAL = "AND TRY_CAST(o.server_id AS INTEGER) BETWEEN 1000 AND 1540"  # 情人节 55服(过D35成熟盘) — 第一批遗留，待校准
 SERVER_LABEL = "本期夏日第二批 1880/1890/1900 三服(较年轻服，1900为大服)；对比侧情人节 1-55服为第一批遗留校准值、生命周期不匹配，仅粗略参考"
+BASELINE_HOURLY_DAYS = 3  # 分时图叠加「上线前 N 天」分时流水做基线（同服段，前端可勾选显示/隐藏）
 OUTPUT_DIR = os.path.expanduser("~")
 
 # === 节日礼包口径：从配置表读，不靠名字/前缀猜 ===
@@ -502,6 +503,31 @@ def main():
             "date": day["date"], "day_label": day["day_label"], "byR": byR,
         })
 
+    # ---- 5a1. 上线前 N 天分时流水基线（同服段；节日上线前无节日流水，只取每小时总流水，前端可勾选叠加） ----
+    baseline_hourly = []
+    if BASELINE_HOURLY_DAYS > 0:
+        _d0 = datetime.strptime(FESTIVAL_D0, "%Y-%m-%d")
+        bl_dates = [(_d0 - timedelta(days=k)).strftime("%Y-%m-%d") for k in range(1, BASELINE_HOURLY_DAYS + 1)]
+        sql_bl = f"""
+        SELECT o.partition_date AS d, hour(o.created_at) AS hr,
+          round(sum({REV_EXPR}),0) AS total_rev
+        FROM v1090.ods_user_order o
+        WHERE o.pay_status = 1
+          AND o.partition_date IN ({",".join(f"'{x}'" for x in bl_dates)})
+        {SERVER_FILTER}
+        GROUP BY o.partition_date, hour(o.created_at)
+        ORDER BY o.partition_date, hr
+        """
+        bl_cube = {}
+        for r in query(sql_bl, limit=24 * BASELINE_HOURLY_DAYS * 2):
+            bl_cube.setdefault(r["d"], {})[int(r["hr"])] = round(float(r["total_rev"] or 0))
+        for k, dt in enumerate(bl_dates, start=1):
+            hm = bl_cube.get(dt, {})
+            baseline_hourly.append({
+                "date": dt, "label": f"上线前{k}天",
+                "total": [round(hm.get(h, 0)) for h in range(24)],
+            })
+
     # ---- 5a2. R级分层累计（D0~当前，节日流水/付费人数/层ARPU；人数整窗去重） ----
     sql_rlevel = f"""
     SELECT {RCLASS} AS rb,
@@ -634,6 +660,7 @@ def main():
     # ---- 6. 生成 HTML ----
     all_days_json = json.dumps(all_days, ensure_ascii=False)
     hourly_json = json.dumps(hourly_data, ensure_ascii=False)
+    baseline_hourly_json = json.dumps(baseline_hourly, ensure_ascii=False)
     rlevels_json = json.dumps(rlevels_data, ensure_ascii=False)
     modr_json = json.dumps(module_rlevel, ensure_ascii=False)
     baseline_json = json.dumps(baseline, ensure_ascii=False)
@@ -764,7 +791,10 @@ def main():
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
         <div class="mod-tabs" id="hrDayChips" style="margin-bottom:0"></div>
-        <div class="mod-tabs" id="hrModeToggle" style="margin-bottom:0"></div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <div class="mod-tabs" id="hrBaselineToggle" style="margin-bottom:0"></div>
+          <div class="mod-tabs" id="hrModeToggle" style="margin-bottom:0"></div>
+        </div>
       </div>
       <div id="hrLegend" style="display:flex;gap:18px;flex-wrap:wrap;font-size:11px;color:var(--text-muted);margin-bottom:6px"></div>
       <canvas id="hourlyChart" class="canvas-280"></canvas>
@@ -844,6 +874,7 @@ def main():
 <script>
 const allDays = {all_days_json};
 const hourly = {hourly_json};
+const baselineHourly = {baseline_hourly_json};
 const rlevels = {rlevels_json};
 const moduleR = {modr_json};
 const baseline = {baseline_json};
@@ -856,6 +887,8 @@ const dayPalette = ['#6c63ff', '#00d4aa', '#ff6b6b', '#ffd166', '#a78bfa', '#38b
 let hrSelDays = new Set([hourly.length - 1]);  // 默认选最新一天
 let hrMode = 'hourly';  // 'hourly' 每时 | 'cum' 累计
 let currentR = '全部';  // 分时图 R级筛选：全部/超R/大R/中R/小R/非R
+let hrShowBaseline = false;  // 分时图是否叠加「上线前 N 天」基线
+const baselinePalette = ['#94a3b8', '#64748b', '#475569'];  // 基线灰阶（前1/2/3天）
 let currentModR = '全部';  // 模块×R级对比的 R级筛选
 const rLevelColors = {{ '全部': '#6c63ff', '超R': '#f43f5e', '大R': '#fb923c', '中R': '#ffd166', '小R': '#38bdf8', '非R': '#8892a4' }};
 let cmpDayIdx = 0;  // 按日对比当前选中的节日日序
@@ -1005,6 +1038,24 @@ function buildHrModeToggle() {{
   }});
 }}
 
+function buildHrBaselineToggle() {{
+  const el = $('hrBaselineToggle'); el.innerHTML = '';
+  if (!baselineHourly || !baselineHourly.length) return;
+  const btn = document.createElement('div');
+  btn.className = 'mod-tab' + (hrShowBaseline ? ' active' : '');
+  if (hrShowBaseline) {{ btn.style.background = '#64748b'; btn.style.borderColor = 'transparent'; }}
+  btn.textContent = (hrShowBaseline ? '✓ ' : '') + '上线前基线';
+  btn.title = '叠加上线前 ' + baselineHourly.length + ' 天每小时总流水（同服段）作对照';
+  btn.onclick = () => {{ hrShowBaseline = !hrShowBaseline; buildHrBaselineToggle(); drawHourly(); }};
+  el.appendChild(btn);
+}}
+
+function blSeries(idx) {{
+  const arr = (baselineHourly[idx] && baselineHourly[idx].total) ? baselineHourly[idx].total.slice() : [];
+  if (hrMode === 'cum') {{ let s = 0; for (let i = 0; i < arr.length; i++) {{ s += arr[i]; arr[i] = s; }} }}
+  return arr;
+}}
+
 function drawHourly() {{
   const sel = [...hrSelDays].sort((a, b) => a - b);
   // 图例
@@ -1012,7 +1063,10 @@ function drawHourly() {{
     const c = dayPalette[i % dayPalette.length], lab = hourly[i].day_label;
     return '<span><span style="display:inline-block;width:18px;height:0;border-top:2.5px solid ' + c + ';vertical-align:middle;margin-right:5px"></span>' + lab + ' 总流水</span>'
       + '<span><span style="display:inline-block;width:18px;height:0;border-top:2px dashed ' + c + ';vertical-align:middle;margin-right:5px"></span>' + lab + ' 节日</span>';
-  }}).join('') + '<span style="margin-left:auto">' + (currentR === '全部' ? '' : 'R级：' + currentR + ' · ') + (hrMode === 'cum' ? '当日累计流水（按小时）' : '每小时流水') + '</span>';
+  }}).join('') + (hrShowBaseline ? baselineHourly.map((b, k) => {{
+    const c = baselinePalette[k % baselinePalette.length];
+    return '<span><span style="display:inline-block;width:18px;height:0;border-top:2px dotted ' + c + ';vertical-align:middle;margin-right:5px"></span>' + b.label + ' 总流水(' + b.date.slice(5) + ')</span>';
+  }}).join('') : '') + '<span style="margin-left:auto">' + (currentR === '全部' ? '' : 'R级：' + currentR + ' · ') + (hrMode === 'cum' ? '当日累计流水（按小时）' : '每小时流水') + (hrShowBaseline ? ' · 基线=同服段上线前总流水(不分R)' : '') + '</span>';
 
   const canvas = $('hourlyChart'), W0 = canvas.offsetWidth, H = 280;
   canvas.width = W0 * dpr; canvas.height = H * dpr;
@@ -1022,6 +1076,7 @@ function drawHourly() {{
   const HOURS = 24;
   let maxVal = 1;
   sel.forEach(i => {{ ['total', 'festival'].forEach(k => {{ const s = hrSeries(i, k); s.forEach(v => {{ if (v > maxVal) maxVal = v; }}); }}); }});
+  if (hrShowBaseline) baselineHourly.forEach((b, k) => {{ blSeries(k).forEach(v => {{ if (v > maxVal) maxVal = v; }}); }});
   maxVal *= 1.15;
   function xp(h) {{ return pad.left + h / (HOURS - 1) * cW; }}
   function yp(v) {{ return pad.top + cH - (v / maxVal * cH); }}
@@ -1032,17 +1087,20 @@ function drawHourly() {{
   ctx.fillStyle = '#8892a4'; ctx.font = '10px -apple-system,sans-serif'; ctx.textAlign = 'center';
   for (let h = 0; h < HOURS; h += 3) ctx.fillText(h + ':00', xp(h), H - pad.bottom + 16);
   // 画线
-  function drawLine(series, color, dashed) {{
+  function drawLine(series, color, dashed, dotted) {{
     if (!series.length) return;
     ctx.beginPath();
     for (let h = 0; h < series.length; h++) {{ const x = xp(h), y = yp(series[h]); if (h === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); }}
-    ctx.strokeStyle = color; ctx.lineWidth = dashed ? 2 : 2.5;
-    ctx.setLineDash(dashed ? [5, 4] : []); ctx.stroke(); ctx.setLineDash([]);
-    // 末端标值
+    ctx.strokeStyle = color; ctx.lineWidth = dotted ? 1.5 : (dashed ? 2 : 2.5);
+    ctx.setLineDash(dotted ? [2, 3] : (dashed ? [5, 4] : [])); ctx.stroke(); ctx.setLineDash([]);
+    // 末端标值（基线点状线不标，避免与当期线重叠）
+    if (dotted) return;
     const last = series.length - 1;
     ctx.fillStyle = color; ctx.font = 'bold 10px -apple-system,sans-serif'; ctx.textAlign = 'left';
     ctx.fillText('$' + series[last].toLocaleString(), Math.min(xp(last) + 5, W0 - pad.right - 36), yp(series[last]) - 2);
   }}
+  // 基线（上线前 N 天）先画，置于当期线之下
+  if (hrShowBaseline) baselineHourly.forEach((b, k) => drawLine(blSeries(k), baselinePalette[k % baselinePalette.length], false, true));
   sel.forEach(i => {{ const c = dayPalette[i % dayPalette.length]; drawLine(hrSeries(i, 'festival'), c, true); drawLine(hrSeries(i, 'total'), c, false); }});
 }}
 
@@ -1360,7 +1418,7 @@ function renderAll() {{
   drawTrend('festChart', 'festival', '#ffd166', 'rgba(255,209,102,.1)', 0, '', true);
   renderModTotals();
   buildModTabs(); drawModTrend();
-  buildRFilter(); buildHrChips(); buildHrModeToggle(); drawHourly(); drawHourlyAll();
+  buildRFilter(); buildHrChips(); buildHrModeToggle(); buildHrBaselineToggle(); drawHourly(); drawHourlyAll();
   renderRLevels();
   renderRGain();
   buildModrFilter(); renderModR();
