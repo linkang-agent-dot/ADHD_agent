@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei",sans-serif; }
+  body { width:1760px; height:920px; background:linear-gradient(160deg,#0b3d1f 0%,#0e5c2e 45%,#0a3319 100%); position:relative; overflow:hidden; }
+  body::before { content:''; position:absolute; inset:0;
+    background-image:radial-gradient(circle at 20% 15%, rgba(255,215,0,.08) 0, transparent 40%),
+                     radial-gradient(circle at 85% 80%, rgba(255,215,0,.06) 0, transparent 45%);
+  }
+  .title { position:absolute; top:26px; left:48px; color:#ffd75e; font-size:38px; font-weight:bold; letter-spacing:2px;
+           text-shadow:0 2px 8px rgba(0,0,0,.5); }
+  .subtitle { position:absolute; top:84px; left:50px; color:rgba(255,255,255,.78); font-size:19px; }
+  .card { position:absolute; border-radius:16px; padding:14px 18px; box-shadow:0 8px 24px rgba(0,0,0,.45); }
+  .card h3 { font-size:21px; margin-bottom:7px; display:flex; align-items:center; gap:8px; }
+  .card p { font-size:15.5px; line-height:1.5; color:rgba(255,255,255,.92); }
+  .src { left:46px; width:368px; background:linear-gradient(135deg,#1c4f8a,#14375f); border:2px solid #5ea0e8; }
+  .src h3 { color:#9ec9ff; }
+  .ticket { left:580px; top:330px; width:300px; background:linear-gradient(135deg,#8a6a14,#5c450c); border:3px solid #ffd75e; text-align:center; padding-top:22px; height:200px;}
+  .ticket h3 { color:#ffe48a; font-size:26px; justify-content:center; }
+  .ticket .big { font-size:18px; color:#fff3c4; margin-top:6px; }
+  .chest { left:1010px; top:300px; width:330px; height:250px; background:linear-gradient(135deg,#9a4a12,#6e3209); border:3px solid #ff9d4d; }
+  .chest h3 { color:#ffc08a; font-size:24px; }
+  .prize { left:1452px; top:170px; width:264px; height:230px; background:linear-gradient(135deg,#5d2a8a,#3a1a58); border:3px solid #c08aff; }
+  .prize h3 { color:#dfc2ff; }
+  .shop { left:1452px; top:500px; width:264px; height:170px; background:linear-gradient(135deg,#0f6e46,#0a4a2f); border:2.5px solid #5fd6a2; }
+  .shop h3 { color:#a4ecd0; }
+  .badge { display:inline-block; background:rgba(255,215,0,.18); border:1px solid rgba(255,215,0,.6); color:#ffe48a;
+           border-radius:20px; padding:1px 10px; font-size:13.5px; margin:2px 2px 0 0; }
+  .gradient-bar { position:absolute; left:46px; bottom:28px; width:1668px; background:rgba(0,0,0,.42);
+                  border:1.5px solid rgba(255,215,0,.4); border-radius:14px; padding:13px 22px; }
+  .gradient-bar .label { color:#ffd75e; font-size:17px; font-weight:bold; margin-bottom:5px; }
+  .gradient-bar .chain { color:#ffefc0; font-size:17.5px; letter-spacing:.4px; }
+  .gradient-bar .chain b { color:#7dffb0; }
+  svg.arrows { position:absolute; inset:0; pointer-events:none; }
+</style>
+</head>
+<body>
+  <div class="title">⚽ 世界杯活动 · 核心循环</div>
+  <div class="subtitle">唯一闭环货币 = 世界杯抽奖券（$0.25/张）｜全部入口产券 → 开箱冲榜 → 排行榜独占顶端外显</div>
+
+  <div class="card src" style="top:140px;">
+    <h3>🎯 比赛竞猜 <span style="font-size:13px;color:#7db9ff;">模块2</span></h3>
+    <p>买助威礼包=竞猜 · 猜对 +75%<br>焦点战猜中胜利加赠(WinBonus)</p>
+  </div>
+  <div class="card src" style="top:268px;">
+    <h3>📅 签到 <span style="font-size:13px;color:#7db9ff;">模块4</span></h3>
+    <p>每日登录领券 · 可补签</p>
+  </div>
+  <div class="card src" style="top:372px;">
+    <h3>🎖 BP通行证 <span style="font-size:13px;color:#7db9ff;">模块3</span></h3>
+    <p>三轨奖励含券 · 积分=活跃砍半+竞猜加分</p>
+  </div>
+  <div class="card src" style="top:500px;">
+    <h3>🎁 传统礼包 <span style="font-size:13px;color:#7db9ff;">连锁A线 / 锚点B线</span></h3>
+    <p>A线：券+宝石+VIP（主投放）<br>B线：纯券=直购（ROI低）</p>
+  </div>
+  <div class="card src" style="top:632px;">
+    <h3>💰 累充 <span style="font-size:13px;color:#7db9ff;">模块6</span></h3>
+    <p>券按档位差值×2（$0.50/张）<br>航迹 / 头像框进档位</p>
+  </div>
+
+  <div class="card ticket">
+    <h3>🎫 世界杯抽奖券</h3>
+    <p class="big">唯一闭环货币<br>面价 <b style="color:#ffd75e">$0.25/张</b></p>
+    <span class="badge">可单卖但 ROI 低 · 软引导竞猜</span>
+  </div>
+
+  <div class="card chest">
+    <h3>📦 世界杯开箱 <span style="font-size:13px;color:#ffb87d;">模块1</span></h3>
+    <p>冠军福箱 · 10券 = $2.5/次<br>累计阶梯 5/20/40/70/100<br>
+    <span class="badge" style="border-color:#ff9d4d;color:#ffc08a;background:rgba(255,157,77,.15);">★ 开箱次数 → 冲排行榜</span></p>
+  </div>
+
+  <div class="card prize">
+    <h3>🏆 排行榜独占</h3>
+    <p>开箱次数榜 <b style="color:#e8ccff">Top 20</b>（草案）<br>
+    <b style="color:#ffd75e">足球宝贝皮肤</b>（爱莉希雅·限定）<br>+ 限定英雄<br>
+    <span class="badge" style="font-size:12.5px;">上榜门槛体感 ≈ $250 · 距上榜还有{0}次提示</span></p>
+  </div>
+
+  <div class="card shop">
+    <h3>🛒 兑换商店 <span style="font-size:13px;color:#79dcb0;">模块5</span></h3>
+    <p>开箱副产出：纪念币（$0.01）<br>兑换历史皮肤 / 养成</p>
+  </div>
+
+  <svg class="arrows" width="1760" height="920">
+    <defs>
+      <marker id="ag" markerWidth="11" markerHeight="9" refX="9" refY="4.5" orient="auto">
+        <polygon points="0 0, 11 4.5, 0 9" fill="#ffd75e"/></marker>
+      <marker id="ao" markerWidth="11" markerHeight="9" refX="9" refY="4.5" orient="auto">
+        <polygon points="0 0, 11 4.5, 0 9" fill="#ff9d4d"/></marker>
+      <marker id="ap" markerWidth="11" markerHeight="9" refX="9" refY="4.5" orient="auto">
+        <polygon points="0 0, 11 4.5, 0 9" fill="#c08aff"/></marker>
+      <marker id="ae" markerWidth="11" markerHeight="9" refX="9" refY="4.5" orient="auto">
+        <polygon points="0 0, 11 4.5, 0 9" fill="#5fd6a2"/></marker>
+    </defs>
+    <g stroke="#ffd75e" stroke-width="3.5" fill="none" opacity="0.95">
+      <path d="M 414 190 C 510 200, 520 330, 574 372" marker-end="url(#ag)"/>
+      <path d="M 414 305 C 500 320, 510 380, 574 400" marker-end="url(#ag)"/>
+      <path d="M 414 415 C 500 422, 510 428, 574 430" marker-end="url(#ag)"/>
+      <path d="M 414 550 C 500 540, 510 480, 574 460" marker-end="url(#ag)"/>
+      <path d="M 414 680 C 510 670, 520 540, 574 490" marker-end="url(#ag)"/>
+    </g>
+    <path d="M 880 430 L 1004 428" stroke="#ff9d4d" stroke-width="5" fill="none" marker-end="url(#ao)"/>
+    <text x="918" y="412" fill="#ffc08a" font-size="16" font-weight="bold">消耗</text>
+    <path d="M 1340 370 C 1400 340, 1410 320, 1446 300" stroke="#c08aff" stroke-width="5" fill="none" marker-end="url(#ap)"/>
+    <text x="1342" y="318" fill="#dfc2ff" font-size="15.5" font-weight="bold">次数冲榜</text>
+    <path d="M 1340 490 C 1400 520, 1410 545, 1446 565" stroke="#5fd6a2" stroke-width="4" fill="none" marker-end="url(#ae)"/>
+    <text x="1346" y="556" fill="#a4ecd0" font-size="15.5" font-weight="bold">纪念币</text>
+  </svg>
+
+  <div class="gradient-bar">
+    <div class="label">券效率梯度（单券成本，越低越香）</div>
+    <div class="chain">WinBonus <b>$0.111</b> ＞ 猜对 <b>$0.143</b>(≈$0.15) ＞ 竞猜EV <b>$0.18</b> ＞ 连锁A线 $0.20(+宝石VIP·综合ROI第一) ＞ B线/猜错 $0.25 ＞ 累充附赠 $0.50 　→　激励指向：<b>参与竞猜、冲焦点战</b></div>
+  </div>
+</body>
+</html>

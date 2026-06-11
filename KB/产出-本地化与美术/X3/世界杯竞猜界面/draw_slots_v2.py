@@ -91,7 +91,12 @@ for st in steps:
     d.rectangle([TX,y,TX+sum(colw),y+62],fill=(238,243,250),outline=(170,190,220),width=2)
     d.text((TX+12,y+14),st,font=F3,fill=(40,70,120)); y+=74
 y+=40
-d.text((TX,y),'交付两件套：本图(结构/产出) + 方向定稿_FINAL(观感)',font=F3,fill=(120,60,60))
+d.text((TX,y),'焦点战实例增量槽(独立活动,界面同构):',font=F2,fill=(30,30,30)); y+=44
+for st in ['F7 焦点之战角标(固定1张·挂标题区)','T3 胜利加赠标签(固定1张·挂指定方横幅侧,数字TextKey)','B1+ 夜场氛围背景(高档实例,🔧专属或复用决赛庆典)']:
+    d.rectangle([TX,y,TX+sum(colw),y+56],fill=(252,240,238),outline=(220,170,160),width=2)
+    d.text((TX+12,y+12),st,font=F3,fill=(150,60,40)); y+=66
+y+=20
+d.text((TX,y),'交付三件套：本图(结构/产出) + 最终效果图_FINAL(普通场) + 焦点战效果图_FINAL',font=F3,fill=(120,60,60))
 
 im.save('竞猜界面_槽位拆解示意图.png',quality=95)
 print('SAVED 竞猜界面_槽位拆解示意图.png')

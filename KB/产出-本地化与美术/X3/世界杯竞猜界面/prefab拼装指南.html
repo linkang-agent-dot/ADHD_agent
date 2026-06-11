@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>UIActvWorldCupGuess · prefab 拼装指南 v2</title>
+<style>
+  :root{
+    --bg:#15191f; --card:#1d232c; --card2:#232b36; --line:#313c4a;
+    --txt:#d8dee7; --dim:#8a94a3; --gold:#e8b33a; --green:#5fbf77; --red:#e06c5f; --blue:#5aa3e8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.75;font-size:15px}
+  .wrap{max-width:860px;margin:0 auto;padding:24px 20px 120px}
+  .topbar{position:sticky;top:0;z-index:10;background:rgba(21,25,31,.96);backdrop-filter:blur(4px);border-bottom:1px solid var(--line);padding:10px 20px}
+  .topbar .inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:14px}
+  .topbar h1{font-size:15px;margin:0;color:var(--gold);white-space:nowrap}
+  .bar{flex:1;height:10px;background:var(--card2);border-radius:6px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#b8860b,var(--gold));transition:width .3s}
+  .pct{font-size:13px;color:var(--dim);white-space:nowrap;min-width:70px;text-align:right}
+  h2{font-size:20px;margin:42px 0 12px;color:var(--gold);border-left:4px solid var(--gold);padding-left:10px}
+  p{margin:8px 0}
+  .dim{color:var(--dim);font-size:13.5px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0}
+  .why{background:var(--card2);border-left:3px solid var(--blue);border-radius:6px;padding:8px 12px;margin:8px 0;font-size:13.5px;color:var(--dim)}
+  .why b{color:var(--blue)}
+  .warn{background:#2c2118;border-left:3px solid var(--red);border-radius:6px;padding:8px 12px;margin:8px 0;font-size:13.5px}
+  .warn b{color:var(--red)}
+  .tip{background:#1c2a20;border-left:3px solid var(--green);border-radius:6px;padding:8px 12px;margin:8px 0;font-size:13.5px}
+  .tip b{color:var(--green)}
+  code,kbd{background:#0e1217;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-family:Consolas,monospace;font-size:13px;color:#ffd479}
+  kbd{color:#9fe0a6}
+  pre{background:#0e1217;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font-size:13px;line-height:1.6;color:#cdd6e0}
+  label.ck{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;margin:6px 0;background:var(--card2);border:1px solid var(--line);border-radius:8px;cursor:pointer;transition:.15s}
+  label.ck:hover{border-color:var(--gold)}
+  label.ck input{margin-top:5px;width:16px;height:16px;accent-color:var(--gold);flex:none}
+  label.ck.done{opacity:.55;text-decoration:line-through}
+  label.ck .t{flex:1}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+  th{background:var(--card2);color:var(--gold);font-weight:600}
+  td code{white-space:nowrap}
+  img.ref{max-width:100%;border:1px solid var(--line);border-radius:8px;margin:8px 0}
+  .two{display:flex;gap:14px;flex-wrap:wrap}
+  .two>div{flex:1;min-width:280px}
+  .tree{font-family:Consolas,monospace;font-size:13px;line-height:1.9}
+  .tree .keep{color:var(--green)} .tree .del{color:var(--red)}
+  .reset{position:fixed;right:18px;bottom:18px;background:var(--card2);color:var(--dim);border:1px solid var(--line);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px}
+  .reset:hover{color:var(--red);border-color:var(--red)}
+  .num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#15191f;font-weight:700;font-size:14px;margin-right:8px;flex:none}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="inner">
+  <h1>⚽ 竞猜界面 prefab 拼装 v2</h1>
+  <div class="bar"><i id="barFill"></i></div>
+  <div class="pct" id="pctTxt">0 / 0</div>
+</div></div>
+
+<div class="wrap">
+
+<h2>〇 · 开工前 1 分钟</h2>
+<div class="card">
+  <p>一个界面 = <b style="color:var(--gold)">prefab（积木拼装图，你拼）</b> + <b style="color:var(--blue)">代码（已写完）</b>。代码运行时<b>按名字路径</b>找零件，比如 <code>Root/Animation/Match/TeamL/Banner</code>。</p>
+  <div class="warn"><b>唯一翻车点：</b>节点名字/层级跟图纸不一致 → 代码找不到 → 空指针。大小写一字不差。</div>
+  <div class="tip"><b>保命心法：</b>不从零新建复杂节点，全程「复制现成的 → 改名 → 挪位置 → 换图」。<br>
+  <b>素材状态：</b>全部到齐 ✅，都在 Project 窗口 <code>Assets/Res/UI/Spirits/ActvWorldCup/</code>（WC_Guess_ 开头 7 张）。</div>
+  <div class="two">
+    <div><p class="dim">最终效果 ↓</p><img class="ref" src="竞猜界面_最终效果图_FINAL.png"></div>
+    <div><p class="dim">分区对照 ↓</p><img class="ref" src="竞猜界面_槽位拆解示意图.png"></div>
+  </div>
+  <p class="dim">v2 重排说明：步骤改为一条直线（抢救提前、换图集中），进度清零重计。</p>
+</div>
+
+<h2><span class="num">1</span>复制模板</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="a1"><span class="t">Unity Hub 打开工程 <code>C:\x3-project\client</code>（首次导入很久，等）</span></label>
+  <label class="ck"><input type="checkbox" data-k="a2"><span class="t">Project 窗口 → <code>Assets/Res/UI/Prefab/Activity/</code> → 选中 <code>UIActvSchedulePack.prefab</code> 按 <kbd>Ctrl+D</kbd>，副本 <kbd>F2</kbd> 改名 <code>UIActvWorldCupGuess</code></span></label>
+  <div class="why"><b>为什么：</b>代码声明了界面文件就在这个路径这个名字；用进度礼包当模板是因为顶部骨架和购买按钮能白捡。</div>
+  <label class="ck"><input type="checkbox" data-k="a3"><span class="t"><b>双击</b>副本进入编辑模式（左侧 Hierarchy 出现节点树）</span></label>
+  <pre class="tree">Root
+├── Bg            <span class="keep">← 留（第3步换图）</span>
+└── Animation
+    ├── Top       <span class="keep">← 留（第3步收拾）</span>
+    └── Content   <span class="del">← 第2步抢救完零件后删</span></pre>
+</div>
+
+<h2><span class="num">2</span>抢救零件 → 删旧 Content</h2>
+<div class="card">
+  <p>旧 Content 里有一个要保命的功能件，删之前先拖出来：</p>
+  <label class="ck"><input type="checkbox" data-k="b1"><span class="t">在 Content 里找到 <code>UIBtnPurchase</code> 节点，<b>直接拖到 Animation 下</b>暂存</span></label>
+  <label class="ck"><input type="checkbox" data-k="b2"><span class="t">再去同目录<b>双击打开</b> <code>UIActvVisitPack.prefab</code>，找到它的礼包奖励列表节点（名字带 <code>PackRewardList</code>、子层级里有 Loop Scroll Rect 和道具格模板的那个），<b>右键 → Copy</b>，然后切回我们的 prefab</span></label>
+  <label class="ck"><input type="checkbox" data-k="b3"><span class="t">在 Animation 上<b>右键 → Paste</b>，把它也暂存在 Animation 下（先不用改名）</span></label>
+  <label class="ck"><input type="checkbox" data-k="b4"><span class="t">两个零件都暂存好后，把 <code>Root/Animation/Content</code> 整个 <kbd>Delete</kbd></span></label>
+  <div class="why"><b>这俩是什么：</b>UIBtnPurchase = 购买按钮总成（价格/支付/限购变灰内置）；PackRewardList = 道具格滚动列表（内部结构有硬要求）。它们是「内脏」，AI 出的图是「皮」——皮随便换，内脏必须偷现成的。</div>
+</div>
+
+<h2><span class="num">3</span>收拾顶部 + 换背景</h2>
+<div class="card">
+  <p><code>Top</code> 下 <code>txt_title / txt_desc / Info / Time</code> <b>保持原名原样</b>（标题、倒计时代码自动填；倒计时用游戏通用件，不换图）。</p>
+  <label class="ck"><input type="checkbox" data-k="c1"><span class="t">~~标题底板~~ <b>已砍</b>（2026-06-11 定）：模板的 <code>txt_title</code> 文字够用，代码也没绑底板节点。如果你已经复制出了 <code>Banner</code> 节点，直接删掉它即可<br><span class="dim">主题感集中在礼包柱 + VS + 背景三处，标题板属于过度包装。</span></span></label>
+  <label class="ck"><input type="checkbox" data-k="c3"><span class="t"><code>Root/Bg</code> 的图换成 <code>WC_Guess_Bg</code>（体育场夜景，Image Type 用 Simple）<br><span class="dim">实测模板 Top 区只有 txt_title/Time/txt_desc/Info 四个节点，没有要删的残留——本步做完这一项就完了。</span></span></label>
+</div>
+
+<h2><span class="num">4</span>Match 区（VS + 两队）</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="d1"><span class="t"><code>Animation</code> 右键 → Create Empty → 改名 <code>Match</code>（空节点=文件夹）</span></label>
+  <label class="ck"><input type="checkbox" data-k="d2"><span class="t"><code>Vs</code>：复制一个带 Image 的节点改名，图换 <code>WC_Guess_VS</code>（Simple），RectTransform 宽高 200×200，摆中间</span></label>
+  <label class="ck"><input type="checkbox" data-k="d3"><span class="t"><code>TeamL</code>：Match 下 Create Empty，里面按下表放 3 个子节点</span></label>
+  <table>
+    <tr><th>子节点名</th><th>怎么来</th><th>放什么图</th><th>尺寸</th></tr>
+    <tr><td><code>Banner</code></td><td>复制 <code>Root/Bg</code> 改名挪进来</td><td><code>WC_Guess_TeamPlate</code>（Sliced）</td><td>480×320 区域内的横板</td></tr>
+    <tr><td><code>Badge</code></td><td>再复制一个 Bg 改名</td><td><code>WC_Guess_Badge_Brazil</code>（Simple）</td><td>256×256</td></tr>
+    <tr><td><code>txt_name</code></td><td>复制 Top 的 <code>txt_title</code> 改名</td><td>—（代码填队名）</td><td>—</td></tr>
+  </table>
+  <div class="why"><b>为什么复制 Bg/txt_title 不新建：</b>代码认组件类型——图必须 TFWImage、字必须 TFWText（项目自定义组件）。复制的类型天然对。<br><b>图只是占位：</b>横板/队徽运行时按配置（DK）动态换，现在垫巴西徽纯为了看效果。</div>
+  <div class="warn"><b>复制 Bg 后必做两件事（实测踩坑）：</b>① 删掉跟过来的 <code>Rect Transform Scaler</code> 组件（它是背景全屏自适应用的，会把 Scale 锁死在 0.26 左右，怎么改都还原）② Scale 改回 1/1/1。仅 <code>Root/Bg</code> 本体保留该组件。调大小一律改 Width/Height，别碰 Scale（入场动画也会抢 Scale）。</div>
+  <label class="ck"><input type="checkbox" data-k="d4"><span class="t"><code>TeamR</code>：选中 TeamL 按 <kbd>Ctrl+D</kbd> 改名，挪右边，Badge 的图换 <code>WC_Guess_Badge_Argentina</code></span></label>
+  <label class="ck"><input type="checkbox" data-k="d5"><span class="t">照效果图摆位：左队左、右队右、VS 居中（Scene 里拖或改 Pos X/Y）</span></label>
+</div>
+
+<h2><span class="num">5</span>Packs 区（两根礼包柱）</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="e1"><span class="t"><code>Animation</code> 下 Create Empty 改名 <code>Packs</code></span></label>
+  <label class="ck"><input type="checkbox" data-k="e2"><span class="t"><code>ColumnL</code>：Packs 下 Create Empty（约 500×900），里面放一个底板图节点用 <code>WC_Guess_PackPanel</code>（Sliced）</span></label>
+  <p>把第 2 步暂存的零件装进 ColumnL，再补两个文本：</p>
+  <table>
+    <tr><th>节点名</th><th>怎么来</th><th>干嘛的</th></tr>
+    <tr><td><code>RewardList</code></td><td>把暂存的 PackRewardList 拖进来，<b>改名 RewardList</b></td><td>必得内容物道具格（代码自动填）</td></tr>
+    <tr><td><code>UIBtnPurchase</code></td><td>把暂存的购买按钮拖进来（名字本来就对）</td><td>价格/支付/限购</td></tr>
+    <tr><td><code>BonusTips</code></td><td>复制 <code>txt_title</code> 改名</td><td>"猜对加送"文案（代码填）</td></tr>
+    <tr><td><code>txt_state</code></td><td>复制 <code>txt_title</code> 改名</td><td>"已助威/已锁定"（代码控制）</td></tr>
+  </table>
+  <label class="ck"><input type="checkbox" data-k="e3"><span class="t">ColumnL 四件装齐、名字核对</span></label>
+  <label class="ck"><input type="checkbox" data-k="e4"><span class="t"><code>ColumnR</code>：ColumnL 按 <kbd>Ctrl+D</kbd> 改名挪右边<br><span class="dim">⚠️ 检查内部子节点名没被 Unity 加 (1) 后缀。</span></span></label>
+  <label class="ck"><input type="checkbox" data-k="e5"><span class="t"><code>LockTips</code>：Packs 下 Create Empty（1020×96），里面放一个文本节点（复制 txt_title）改名 <code>txt</code><br><span class="dim">先纯文本；想要主题感再垫 WC_Guess_LockBar 底图（可选）。</span></span></label>
+  <div class="why"><b>运行行为：</b>没买→两边都有价格按钮；买左→左变"已助威"、右整柱锁定、底部提示"已选定××"。互斥逻辑在代码里，prefab 只要零件齐。</div>
+</div>
+
+<h2><span class="num">6</span>保存 + 编译</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="f1"><span class="t"><kbd>Ctrl+S</kbd> 保存，左上角 ← 退出编辑，等右下角编译转圈结束</span></label>
+  <label class="ck"><input type="checkbox" data-k="f2"><span class="t">Console（Window → General → Console）<b>没有红字</b></span></label>
+  <div class="warn"><b>有红字：</b>九成是名字打错。双击红字看内容，截图发我。</div>
+</div>
+
+<h2><span class="num">7</span>名字终检（最后一道闸）</h2>
+<div class="card">
+  <p>对着 Hierarchy 逐行勾，大小写一致：</p>
+  <div id="pathlist"></div>
+</div>
+
+<h2><span class="num">8</span>联调（我来）</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="g1"><span class="t">拼完说一声 → 我配测试活动（ActvType=29 / ContentID=2911 + 两个测试礼包）导 dev 服，你登 dev 账号活动中心看真界面</span></label>
+  <p class="dim">没配活动界面打不开，不是你拼错。</p>
+</div>
+
+<h2>⚠ 三大翻车点</h2>
+<div class="card">
+  <p><b style="color:var(--red)">1. 大小写：</b><code>TeamL</code> ≠ <code>Teaml</code>。</p>
+  <p><b style="color:var(--red)">2. 组件类型：</b>代码填图的要 TFWImage、填字的要 TFWText → 全程复制 Bg / txt_title。</p>
+  <p><b style="color:var(--red)">3. 九宫格忘选 Sliced：</b>图拉变形。切线不对去 Sprite Editor 拖绿线，纯视觉问题可最后调。</p>
+</div>
+
+</div>
+
+<button class="reset" onclick="if(confirm('清空全部勾选进度？')){localStorage.removeItem(LS);location.reload()}">重置进度</button>
+
+<script>
+const LS='wcguess_prefab_guide_v2';
+const PATHS=[
+ 'Root/Bg',
+ 'Root/Animation/Top/txt_title',
+ 'Root/Animation/Top/txt_desc',
+ 'Root/Animation/Top/Info',
+ 'Root/Animation/Top/Time/txt',
+ 'Root/Animation/Match/TeamL/Banner',
+ 'Root/Animation/Match/TeamL/Badge',
+ 'Root/Animation/Match/TeamL/txt_name',
+ 'Root/Animation/Match/TeamR/Banner',
+ 'Root/Animation/Match/TeamR/Badge',
+ 'Root/Animation/Match/TeamR/txt_name',
+ 'Root/Animation/Packs/ColumnL/RewardList',
+ 'Root/Animation/Packs/ColumnL/BonusTips',
+ 'Root/Animation/Packs/ColumnL/UIBtnPurchase',
+ 'Root/Animation/Packs/ColumnL/txt_state',
+ 'Root/Animation/Packs/ColumnR/RewardList',
+ 'Root/Animation/Packs/ColumnR/BonusTips',
+ 'Root/Animation/Packs/ColumnR/UIBtnPurchase',
+ 'Root/Animation/Packs/ColumnR/txt_state',
+ 'Root/Animation/Packs/LockTips/txt',
+];
+const holder=document.getElementById('pathlist');
+PATHS.forEach((p,i)=>{
+  const l=document.createElement('label');l.className='ck';
+  l.innerHTML=`<input type="checkbox" data-k="p${i}"><span class="t"><code>${p}</code></span>`;
+  holder.appendChild(l);
+});
+const state=JSON.parse(localStorage.getItem(LS)||'{}');
+const boxes=[...document.querySelectorAll('input[type=checkbox]')];
+function refresh(){
+  let done=0;
+  boxes.forEach(b=>{
+    b.checked=!!state[b.dataset.k];
+    b.closest('label').classList.toggle('done',b.checked);
+    if(b.checked)done++;
+  });
+  document.getElementById('barFill').style.width=(done/boxes.length*100)+'%';
+  document.getElementById('pctTxt').textContent=done+' / '+boxes.length;
+}
+boxes.forEach(b=>b.addEventListener('change',()=>{
+  state[b.dataset.k]=b.checked;
+  localStorage.setItem(LS,JSON.stringify(state));
+  refresh();
+}));
+refresh();
+</script>
+</body>
+</html>
