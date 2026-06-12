@@ -1,0 +1,21 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>透明验证</title>
+<style>
+body{margin:0;font-family:Microsoft YaHei;background:#333;color:#ccc;text-align:center}
+h3{margin:10px;font-weight:400;font-size:14px}
+.row{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;padding:14px}
+.cell{display:flex;flex-direction:column;align-items:center}
+.stage{height:78vh;width:auto;border-radius:6px;overflow:hidden;position:relative}
+.checker{background-image:linear-gradient(45deg,#888 25%,transparent 25%),linear-gradient(-45deg,#888 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#888 75%),linear-gradient(-45deg,transparent 75%,#888 75%);background-size:40px 40px;background-position:0 0,0 20px,20px -20px,-20px 0;background-color:#ccc}
+.green{background:#1f7a3a}
+.dark{background:#10243f}
+video{height:100%;display:block}
+small{color:#888}
+</style></head>
+<body>
+<h3>足球宝贝 · 透明抠像验证（webm 带 alpha，叠在不同背景上循环）— 看边缘/发丝/彩球干不干净</h3>
+<div class="row">
+<div class="cell"><div class="stage checker"><video src="足球宝贝_v7_去背_1.webm" loop autoplay muted playsinline></video></div><small>棋盘格(看透明)</small></div>
+<div class="cell"><div class="stage green"><video src="足球宝贝_v7_去背_1.webm" loop autoplay muted playsinline></video></div><small>绿茵场色</small></div>
+<div class="cell"><div class="stage dark"><video src="足球宝贝_v7_去背_1.webm" loop autoplay muted playsinline></video></div><small>深蓝UI色</small></div>
+</div>
+</body></html>

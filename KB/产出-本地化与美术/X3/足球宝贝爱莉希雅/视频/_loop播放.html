@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html><html><head><meta charset="utf-8"><title>足球宝贝视频循环</title>
+<style>body{margin:0;background:#222;display:flex;flex-direction:column;align-items:center;font-family:Microsoft YaHei;color:#ccc}
+h3{margin:10px}video{height:88vh;background:#000}button{margin:4px;padding:6px 14px;cursor:pointer}</style></head>
+<body><h3 id="t">v7 seedance版 · 循环播放中</h3>
+<video id="v" src="足球宝贝_idle循环_v7_seedance_1.mp4" loop autoplay muted controls></video>
+<div>
+<button onclick="sw('v5_脸修正','v5 脸修正')">v5 脸修正</button><button onclick="sw('v4_高冷','v4 高冷')">v4</button>
+<button onclick="sw('v3','v3 整体联动')">v3</button>
+<button onclick="sw('v2','v2 极简')">v2</button>
+<button onclick="sw('v1','v1 初版')">v1</button>
+</div>
+<script>function sw(tag,name){var v=document.getElementById('v');
+v.src='足球宝贝_idle循环_'+tag+'_kling_1.mp4';v.play();document.getElementById('t').innerText=name+' · 循环播放中';}</script>
+</body></html>
+
+

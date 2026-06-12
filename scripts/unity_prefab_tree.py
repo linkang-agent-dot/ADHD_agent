@@ -3,7 +3,9 @@
 
 用法: python unity_prefab_tree.py <prefab路径> [最大深度,默认6]
 用途: 远程指导拼 prefab、核对 FindByFullPath 路径、写操作指南前确认模板真实结构。
-局限: 嵌套 prefab 实例(stripped)不展开,只显示本文件内的 GameObject。
+局限: 嵌套 prefab 实例(class 1001 PrefabInstance,如 UIBtnPurchase 这类蓝色节点)看不到——
+      它们在 YAML 里是 PrefabInstance+修改记录,不是内联 GameObject 块。读不到≠节点不存在!
+      核对绑定路径时,嵌套 prefab 节点要去 Unity Hierarchy 里另行确认。
 """
 import re, io, sys
 

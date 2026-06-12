@@ -109,12 +109,12 @@
   <label class="ck"><input type="checkbox" data-k="d3"><span class="t"><code>TeamL</code>：Match 下 Create Empty，里面按下表放 3 个子节点</span></label>
   <table>
     <tr><th>子节点名</th><th>怎么来</th><th>放什么图</th><th>尺寸</th></tr>
-    <tr><td><code>Banner</code></td><td>复制 <code>Root/Bg</code> 改名挪进来</td><td><code>WC_Guess_TeamPlate</code>（Sliced）</td><td>480×320 区域内的横板</td></tr>
-    <tr><td><code>Badge</code></td><td>再复制一个 Bg 改名</td><td><code>WC_Guess_Badge_Brazil</code>（Simple）</td><td>256×256</td></tr>
-    <tr><td><code>txt_name</code></td><td>复制 Top 的 <code>txt_title</code> 改名</td><td>—（代码填队名）</td><td>—</td></tr>
+    <tr><td><code>Banner</code></td><td>复制一个干净图节点改名（首次没有就复制 Bg 后**删 Scaler+Scale 归 1**）</td><td><code>WC_Guess_TeamPanel_Brazil</code>（Sliced，绿色竖板·底部带名牌条）</td><td>约 480×320 竖板</td></tr>
+    <tr><td><code>Badge</code></td><td>同上</td><td><code>WC_Guess_Badge_Brazil</code>（Simple）</td><td>256×256，叠在竖板上半部</td></tr>
+    <tr><td><code>txt_name</code></td><td>复制 Top 的 <code>txt_title</code> 改名</td><td>—（代码填队名）</td><td>摆竖板底部名牌条上</td></tr>
   </table>
-  <div class="why"><b>为什么复制 Bg/txt_title 不新建：</b>代码认组件类型——图必须 TFWImage、字必须 TFWText（项目自定义组件）。复制的类型天然对。<br><b>图只是占位：</b>横板/队徽运行时按配置（DK）动态换，现在垫巴西徽纯为了看效果。</div>
-  <div class="warn"><b>复制 Bg 后必做两件事（实测踩坑）：</b>① 删掉跟过来的 <code>Rect Transform Scaler</code> 组件（它是背景全屏自适应用的，会把 Scale 锁死在 0.26 左右，怎么改都还原）② Scale 改回 1/1/1。仅 <code>Root/Bg</code> 本体保留该组件。调大小一律改 Width/Height，别碰 Scale（入场动画也会抢 Scale）。</div>
+  <div class="why"><b>为什么复制现成节点不新建：</b>代码认组件类型——图必须 TFWImage、字必须 TFWText（项目自定义组件）。复制的类型天然对。<br><b>图只是占位：</b>竖板/队徽运行时按配置（DK）动态换，现在垫巴西的纯为了看效果。TeamR 的竖板用 <code>WC_Guess_TeamPanel_Argentina</code>。</div>
+  <div class="warn"><b>★加图节点的源（实测两次踩坑后定版）：</b>优先复制<b>已清理干净的图节点</b>（如 Badge / VS）。复制 <code>Root/Bg</code> 会带上 <code>Rect Transform Scaler</code>（背景全屏自适应脚本）——轻则 Scale 锁死 0.26 改不动，重则整个界面所有图消失只剩文字（Ctrl+Z 可救）。如果只能复制 Bg：进来第一件事删 Scaler + Scale 归 1。仅 <code>Root/Bg</code> 本体保留该组件。调大小一律改 Width/Height，别碰 Scale（入场动画也会抢 Scale）。</div>
   <label class="ck"><input type="checkbox" data-k="d4"><span class="t"><code>TeamR</code>：选中 TeamL 按 <kbd>Ctrl+D</kbd> 改名，挪右边，Badge 的图换 <code>WC_Guess_Badge_Argentina</code></span></label>
   <label class="ck"><input type="checkbox" data-k="d5"><span class="t">照效果图摆位：左队左、右队右、VS 居中（Scene 里拖或改 Pos X/Y）</span></label>
 </div>
@@ -134,7 +134,22 @@
   <label class="ck"><input type="checkbox" data-k="e3"><span class="t">ColumnL 四件装齐、名字核对</span></label>
   <label class="ck"><input type="checkbox" data-k="e4"><span class="t"><code>ColumnR</code>：ColumnL 按 <kbd>Ctrl+D</kbd> 改名挪右边<br><span class="dim">⚠️ 检查内部子节点名没被 Unity 加 (1) 后缀。</span></span></label>
   <label class="ck"><input type="checkbox" data-k="e5"><span class="t"><code>LockTips</code>：Packs 下 Create Empty（1020×96），里面放一个文本节点（复制 txt_title）改名 <code>txt</code><br><span class="dim">先纯文本；想要主题感再垫 WC_Guess_LockBar 底图（可选）。</span></span></label>
-  <div class="why"><b>运行行为：</b>没买→两边都有价格按钮；买左→左变"已助威"、右整柱锁定、底部提示"已选定××"。互斥逻辑在代码里，prefab 只要零件齐。</div>
+  <div class="why"><b>运行行为：</b>没买→两边都有价格按钮；买左→左变"已助威"、右整柱锁定、底部提示恒显规则文案。互斥逻辑在代码里，prefab 只要零件齐。</div>
+</div>
+
+<h2><span class="num">5.5</span>装饰层（必得券 / 礼盒 / 加送遮罩）——对齐效果图</h2>
+<div class="card">
+  <p class="dim">2026-06-11 补：让柱子长成效果图的样子。全部用「复制 Badge」当源（干净无 Scaler）。先在 ColumnL 拼好，再整体复制到 ColumnR。</p>
+  <label class="ck"><input type="checkbox" data-k="h1"><span class="t"><b>TicketHero（必得券醒目行）</b>：ColumnL 下 Create Empty 改名 <code>TicketHero</code>，里面两件：<br>
+  ▸ <code>Icon</code> ← 复制 <code>TeamL/Badge</code> 改名，图换 <code>WC_Guess_TicketIcon</code>（Simple），约 90×90<br>
+  ▸ <code>Count</code> ← 复制 <code>txt_title</code> 改名，摆 Icon 右边（代码填"x30"，编辑器可手打 x30 占位）<br>
+  <span class="dim">整行摆柱子顶部、道具格上方。⚠️ <code>TicketHero/Count</code> 名字代码要找，一字不差。</span></span></label>
+  <label class="ck"><input type="checkbox" data-k="h2"><span class="t"><b>GiftBox（礼盒）</b>：复制 Badge → 拖进 ColumnL → 改名 <code>GiftBox</code> → 图换 <code>WC_Guess_GiftBox</code>（Simple）→ 摆柱子最顶压在面板上沿</span></label>
+  <label class="ck"><input type="checkbox" data-k="h3"><span class="t"><b>BonusBar（加送行黄遮罩）</b>：复制 Badge → 改名 <code>BonusBar</code> → Image 的 <code>Source Image</code> 点 ⊙ 选 <b>None</b>（变纯色矩形）→ Color 填 Hex <code>EBBE5A</code>、<b>A=70</b> → 约 440×70，摆"猜对加送"行<br>
+  <span class="dim">⚠️ 层级顺序：BonusBar 要在 BonusTips 的上一行（列表越靠上越垫底），文字才压在遮罩上。</span></span></label>
+  <label class="ck"><input type="checkbox" data-k="h4"><span class="t"><b>BonusIcon（加送行小券）</b>：复制 <code>TicketHero/Icon</code> → 改名 <code>BonusIcon</code> → 48×48，摆"猜对加送"文字和数字之间</span></label>
+  <label class="ck"><input type="checkbox" data-k="h5"><span class="t">四件 Ctrl+C → 选 <code>ColumnR</code> → Ctrl+V 各粘一份，微调位置，<b>检查没带 (1) 后缀</b></span></label>
+  <div class="why"><b>数据来源（零写死）：</b>必得券数量=代码解析奖励组<b>首项</b>（约定 items[0]=券）自动填 Count；道具格只显示其余资源。唯一固定文本=「猜对加送 +N」走 BonusTips 文案 key（bonus 按策划案走结算邮件、不进礼包，所以界面只能文案展示）。</div>
 </div>
 
 <h2><span class="num">6</span>保存 + 编译</h2>
@@ -150,17 +165,63 @@
   <div id="pathlist"></div>
 </div>
 
-<h2><span class="num">8</span>联调（我来）</h2>
+<h2><span class="num">8</span>GM 快速预览（看长相，零配置）✅ 已验证可用</h2>
 <div class="card">
-  <label class="ck"><input type="checkbox" data-k="g1"><span class="t">拼完说一声 → 我配测试活动（ActvType=29 / ContentID=2911 + 两个测试礼包）导 dev 服，你登 dev 账号活动中心看真界面</span></label>
-  <p class="dim">没配活动界面打不开，不是你拼错。</p>
+  <label class="ck"><input type="checkbox" data-k="g1"><span class="t">Unity 点 ▶ 进 Play 模式 → 打开 GM 菜单 → 找 <b>[界面_世界杯]打开竞猜界面</b> → 两个参数都填 <code>999999</code> → 执行</span></label>
+  <p class="dim">填大数字=查不到任何真配置 → 看到的就是纯美术布局；队名/道具/价格空着是正常（第二层配数据才有）。Console 那条 <code>animation is missing</code> 警告=入场动画未配，无害，收尾补。</p>
 </div>
 
-<h2>⚠ 三大翻车点</h2>
+<h2><span class="num">9</span>收尾阶段总览（按依赖排序）</h2>
 <div class="card">
-  <p><b style="color:var(--red)">1. 大小写：</b><code>TeamL</code> ≠ <code>Teaml</code>。</p>
-  <p><b style="color:var(--red)">2. 组件类型：</b>代码填图的要 TFWImage、填字的要 TFWText → 全程复制 Bg / txt_title。</p>
+  <table>
+    <tr><th>#</th><th>事项</th><th>谁做</th><th>说明</th></tr>
+    <tr><td>1</td><td>DK 注册</td><td>我带你在 Unity 点</td><td>队伍竖板×2 + 队徽×2 注册成 DK（图走配置动态换的前提）</td></tr>
+    <tr><td>2</td><td>配置真数据</td><td>我</td><td>Reward组(必得20券[借尼罗券占位]+资源·券放首项) → Pack×2($4.99/限购1/Name=TXT_WC_Team_*/Head·Icon=DK) → ActvPack 2911 → ActvOnline(type29+MailID 101109) → TimeController</td></tr>
+    <tr><td>3</td><td>本地化</td><td>我</td><td>TXT_WC_Oracle_Rule / Cheered / Locked + TXT_WC_Team_巴西/阿根廷（走 x3-translation-automatic）</td></tr>
+    <tr><td>4</td><td>导表 + 部署 dev</td><td>我</td><td>jolt_verify 验证构建 → igame 部署活动 → 你登 dev 看完整真数据界面</td></tr>
+    <tr><td>5</td><td>UI 生成器收口</td><td>你/客户端</td><td>客户端要求的规范：完整 prefab 过生成器打"是否导出"标记重新生成绑定、删手写 Auto 文件（功能等价，纯合规+可维护）</td></tr>
+    <tr><td>6</td><td>入场动画</td><td>客户端/后补</td><td>消掉 animation is missing 警告</td></tr>
+    <tr><td>7</td><td>剩余 30 队素材</td><td>批量 AI 产</td><td>界面+配置全跑通后再铺量（30 队徽+竖板配色变体）</td></tr>
+  </table>
+</div>
+
+<h2>🎨 文字颜色规格（补遗 2026-06-11，对照效果图取色）</h2>
+<div class="card">
+  <p>改法：选中文字节点 → Inspector 的 TFWText 组件 → Color 色块 → 粘 Hex 值。</p>
+  <div class="tip"><b>★字体方案 2026-06-12 用户冻结：以 prefab 实际状态为准，不再调整</b>（深棕/遮罩方案均试过未采纳，联调真机后再定夺）。下述记录仅供参考——<b>保模板金字，不删组件不改平色。</b>X3 文字三件套（TFWText+BetterOutline+Gradient2 金渐变）是全游戏统一风格，整体保留——界面风格的锚是游戏模板，不是效果图。<b>唯一例外：米色柱面板上的 2 个字</b>（金字在米色上糊），把它们的 <code>Gradient2 → Effect Gradient</code> 两端改深棕：左端(0%) <code>7A4F1D</code> / 右端(100%) <code>5A3A12</code>，描边保留。</div>
+  <table>
+    <tr><th>节点</th><th>内容</th><th>处理</th><th>Max Size</th></tr>
+    <tr><td><code>BonusTips</code> ×2</td><td>猜对加送 +15</td><td>★Gradient2 改深棕渐变</td><td>30</td></tr>
+    <tr><td><code>txt_state</code> ×2</td><td>已助威</td><td>★Gradient2 改深棕渐变</td><td>32</td></tr>
+    <tr><td><code>txt_name</code> ×2</td><td>巴西/阿根廷</td><td>金字原样不动</td><td>40</td></tr>
+    <tr><td><code>LockTips/txt</code></td><td>底部规则条</td><td>金字原样不动（误改过→Presets 金色预设还原）</td><td>30</td></tr>
+    <tr><td><code>txt_title</code> / <code>Time/txt</code> / <code>txt_desc</code></td><td>标题/倒计时/副标题</td><td>模板原生，全不动</td><td>不动</td></tr>
+  </table>
+  <p class="dim">★X3 文字基本都勾着 <code>Best Fit</code>（多语言自适应保护，<b>别取消</b>）——勾着时 Font Size 失效，<b>字号填到 <code>Max Size</code></b> + 把文本框 Width/Height 拉大到够装；<code>Min Size</code> 统一改 20（默认 2 太极端）。按 1080×1920 基准估的 ±4 微调。加粗：Font Style 选 Bold。</p>
+  <p class="dim">★每个文字节点五连：清 Language Key（不清占位字不生效）→ 打中文占位 → 粘颜色 → 设 Max Size → <b>描边处理</b>：米色面板上的字（BonusTips/txt_state）删 BetterOutline/Gradient2 组件（⋮→Remove Component）；深色底上的白字（txt_name/LockTips）保留描边；txt_title/Time 模板原生不动。</p>
+  <p class="dim">↓ 一图版标注（⚠️ 其中的平色 Hex 方案已被上面"保模板金字"终版取代，仅字号和节点位置仍有效）：</p>
+  <img class="ref" src="文字规格标注图.png" alt="文字规格标注图">
+  <p class="dim">遮罩 BonusBar：空 Image + 色 <code>EBBE5A</code> + Alpha 70。价格按钮文字=UIBtnPurchase 自带样式，不动。"+20"单独绿色走富文本进文案 key（<code>&lt;color=#3DA53D&gt;+20&lt;/color&gt;</code>），拼装阶段不管。</p>
+</div>
+
+<h2>📐 描图纸对位法（拼的和效果图有差时用）</h2>
+<div class="card">
+  <p>原理：把效果图半透明垫在最上层当"描图纸"，所有零件透过它对位，对完删掉。效果图已放进工程：<code>ActvWorldCup/_RefMockup_TEMP</code>。</p>
+  <label class="ck"><input type="checkbox" data-k="m1"><span class="t"><b>建描图纸节点</b>：复制 <code>TeamL/Badge</code> → 拖到 <code>Root</code> 下 → 改名 <code>_RefOverlay</code> → <b>拖到 Root 子节点列表的最后一位</b>（最后=渲染在最上层，盖住一切）</span></label>
+  <label class="ck"><input type="checkbox" data-k="m2"><span class="t"><b>铺满全屏</b>：锚点预设面板按住 <kbd>Alt</kbd> 点<b>右下角那个</b>（全拉伸 stretch-stretch），它会自动铺满父级</span></label>
+  <label class="ck"><input type="checkbox" data-k="m3"><span class="t"><b>换图调透明</b>：Source Image 换 <code>_RefMockup_TEMP</code>（Simple）→ Color 的 <b>A 拉到 120</b> 左右（半透明，能同时看到效果图和你拼的东西）</span></label>
+  <label class="ck"><input type="checkbox" data-k="m4"><span class="t"><b>逐个对位</b>：透过描图纸挪每个零件（位置/大小/字号），直到和底下的效果图影子重合。看不清时点 _RefOverlay 左上角勾选框临时开/关对比</span></label>
+  <label class="ck"><input type="checkbox" data-k="m5"><span class="t"><b>对完删除</b>：选中 <code>_RefOverlay</code> → Delete → 存盘。⚠️ 这个节点和 _RefMockup_TEMP 图都是临时物，<b>绝不能留在 prefab 里提交</b></span></label>
+  <div class="tip"><b>配套技巧：</b>对位前把 <b>Game 窗口</b>分辨率设成 <code>1080×1920</code>（Game 标签下方分辨率下拉 → 加号 → 填 1080×1920）——和效果图同比例，预览才准；Scene 里拼、Game 里验。</div>
+</div>
+
+<h2>⚠ 四大翻车点</h2>
+<div class="card">
+  <p><b style="color:var(--red)">1. 大小写/尾部空格：</b><code>TeamL</code> ≠ <code>Teaml</code>；改名后注意末尾别多敲空格（LockTips 实测踩过）。</p>
+  <p><b style="color:var(--red)">2. 组件类型：</b>代码填图的要 TFWImage、填字的要 TFWText → 全程复制现成节点，不新建。</p>
   <p><b style="color:var(--red)">3. 九宫格忘选 Sliced：</b>图拉变形。切线不对去 Sprite Editor 拖绿线，纯视觉问题可最后调。</p>
+  <p><b style="color:var(--red)">4. 加图节点别复制 Bg：</b>会带上全屏缩放脚本（Rect Transform Scaler），轻则 Scale 锁死，重则全部图消失只剩文字（Ctrl+Z 可救）。复制 Badge / VS 这类干净节点当源。</p>
+  <p><b style="color:var(--red)">5. Play 模式（▶按下）期间改 prefab = 退出全部蒸发，无提示：</b>动手前瞄一眼播放键状态。防呆：Edit → Preferences → Colors → Playmode tint 调成淡红，Play 时整个编辑器变色一眼可辨。</p>
 </div>
 
 </div>
@@ -185,11 +246,13 @@ const PATHS=[
  'Root/Animation/Packs/ColumnL/BonusTips',
  'Root/Animation/Packs/ColumnL/UIBtnPurchase',
  'Root/Animation/Packs/ColumnL/txt_state',
+ 'Root/Animation/Packs/ColumnL/TicketHero/Count',
  'Root/Animation/Packs/ColumnR/RewardList',
  'Root/Animation/Packs/ColumnR/BonusTips',
  'Root/Animation/Packs/ColumnR/UIBtnPurchase',
  'Root/Animation/Packs/ColumnR/txt_state',
- 'Root/Animation/Packs/LockTips/txt',
+ 'Root/Animation/Packs/ColumnR/TicketHero/Count',
+ 'Root/Animation/LockTips/txt',
 ];
 const holder=document.getElementById('pathlist');
 PATHS.forEach((p,i)=>{
