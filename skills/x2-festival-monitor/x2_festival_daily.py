@@ -12,39 +12,59 @@ from _datain_api import execute_sql
 
 # ============ 配置 ============
 DATASOURCE = "TRINO_HF"
-FESTIVAL_NAME = "占星节"
-FESTIVAL_D0 = "2026-05-11"
-BASELINE_START = "2026-04-27"
-BASELINE_END = "2026-05-10"
-SERVER_FILTER = "AND o.server_id >= '1001202' AND o.server_id <= '1007502'"
-SERVER_LABEL = "12-75服"
+FESTIVAL_NAME = "拓荒节"
+FESTIVAL_D0 = "2026-06-12"
+BASELINE_START = "2026-05-29"
+BASELINE_END = "2026-06-11"
+SERVER_FILTER = "AND o.server_id >= '1001202'"
+SERVER_LABEL = "正式服全量(12服+)"
 OUTPUT_DIR = os.path.expanduser("~")
 
+# 名字关键词规则（dim_iap 有名字时优先；复用旧 id 的模块靠这层识别）
 MODULE_RULES = [
     ("GACHA", ["GACHA礼包", "随机GACHA"]),
-    ("大富翁", ["大富翁", "骰子", "存钱罐"]),
-    ("巨猿金蛋", ["砸蛋"]),
+    ("大富翁", ["大富翁", "骰子"]),
+    ("巨猿砸蛋", ["砸蛋"]),
     ("BP通行证", ["通行证", "bp集结", "节日活动BP"]),
     ("七日活动", ["七日活动", "连锁触发"]),
-    ("连锁礼包", ["占星节礼包", "占星节-自选卡包"]),
-    ("行军表情", ["行军表情"]),
+    ("挖矿关卡礼包", ["挖矿小游戏礼包", "关卡"]),
+    ("挖矿特权", ["产量翻倍"]),
     ("自选周卡", ["自选周卡", "fes_weekly_card"]),
     ("每日礼包", ["每日礼包"]),
     ("掉落转付费", ["掉落转付费"]),
-    ("抽奖券礼包", ["抽奖券"]),
+    ("强消耗抽奖券", ["抽奖券"]),
     ("限时抢购", ["限时抢购"]),
+    ("行军表情", ["行军表情"]),
 ]
 
-# 节日 iap_id 前缀（dim_iap 未及时更新时兜底）
-FESTIVAL_IAP_PREFIX = "201392"
+# id 段规则（优先级高于名字关键词；真源 = iap_template_x2(qa) F列名字，2026-06-12 核对）
+# (lo, hi, 模块名)，按 iap_id 前10位字符串比较
+ID_SEG_RULES = [
+    ("2013910029", "2013910030", "连锁礼包"),    # 2025夏日节礼包 schema3-5 复用槽
+    ("2013920115", "2013920122", "限时抢购"),    # 占星2026限时抢购 复用槽
+    ("2013920123", "2013920128", "巨猿砸蛋"),    # 2026拓荒节wonder巨猿砸蛋锤
+    ("2013920129", "2013920144", "大富翁"),      # 骰子锚点129-130 + 存钱罐131 + 大富翁1-13
+    ("2013920145", "2013920149", "每日礼包"),    # 2026拓荒节每日礼包1-5
+    ("2013920150", "2013920153", "自选周卡"),
+    ("2013920154", "2013920161", "限时抢购"),    # S6春节限时抢购 复用槽
+    ("2013920162", "2013920162", "行军表情"),
+    ("2013920163", "2013920163", "连锁礼包"),    # 拓荒节自选卡包
+    ("2013920164", "2013920168", "BP通行证"),    # 拓荒节bp礼包 4.99-99.99
+    ("2013920169", "2013920187", "连锁礼包"),    # 拓荒节礼包_付费 1.99-99.99
+    ("2013920188", "2013920197", "GACHA"),       # GACHA + 随机GACHA
+    ("2013920198", "2013920199", "大富翁"),      # 大富翁9/10 副本槽
+    ("2013230201", "2013230299", "挖矿关卡礼包"),  # 挖矿小游戏 scene 关卡连锁
+]
 
 MODULE_COLORS = {
     "GACHA": "#6c63ff", "大富翁": "#00d4aa", "BP通行证": "#ffd166",
     "七日活动": "#ff6b6b", "行军表情": "#a78bfa",
     "自选周卡": "#38bdf8", "每日礼包": "#f472b6", "掉落转付费": "#fb923c",
     "连锁礼包": "#34d399",
-    "巨猿金蛋": "#e879f9",
-    "抽奖券礼包": "#f59e0b",
+    "巨猿砸蛋": "#e879f9",
+    "挖矿关卡礼包": "#60a5fa",
+    "挖矿特权": "#22d3ee",
+    "强消耗抽奖券": "#f59e0b",
     "限时抢购": "#ec4899",
     "其他": "#8892a4",
 }
@@ -60,13 +80,17 @@ def calc_day_number(date_str):
     return (datetime.strptime(date_str, "%Y-%m-%d") - d0).days
 
 
-def classify_module(iap_name):
-    if not iap_name:
-        return "其他"
-    for module, keywords in MODULE_RULES:
-        for kw in keywords:
-            if kw in iap_name:
-                return module
+def classify_module(iap_name, iap_id=""):
+    # id 段优先（QA表核对过的精确映射，dim_iap 名字常是复用旧节日的，不可信）
+    id10 = (iap_id or "")[:10]
+    for lo, hi, module in ID_SEG_RULES:
+        if lo <= id10 <= hi:
+            return module
+    if iap_name:
+        for module, keywords in MODULE_RULES:
+            for kw in keywords:
+                if kw in iap_name:
+                    return module
     return "其他"
 
 
@@ -75,12 +99,20 @@ def fmt_money(v):
 
 
 def main():
-    report_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+    # 报告日：默认今天（每小时刷新看当天实时累积）；支持回算 —— 命令行传日期 或 环境变量 X2_REPORT_DATE
+    report_date = datetime.now().strftime("%Y-%m-%d")
+    if len(sys.argv) > 1:
+        report_date = sys.argv[1]
+    elif os.environ.get("X2_REPORT_DATE"):
+        report_date = os.environ["X2_REPORT_DATE"]
     day_num = calc_day_number(report_date)
 
     # ---- 1. 每日汇总（基线期 + 节日期） ----
-    # 节日判定：iap_type 匹配 OR iap_id 前缀兜底
-    fest_cond = f"(i.iap_type IN ('混合-节日活动','活动礼包') OR o.iap_id LIKE '{FESTIVAL_IAP_PREFIX}%')"
+    # 节日判定：dim_iap 节日类型（含复用旧 id 的 BP/GACHA/大富翁/七日等）OR 拓荒新 id 段兜底
+    seg_conds = " OR ".join(
+        f"substr(o.iap_id,1,10) BETWEEN '{lo}' AND '{hi}'" for lo, hi, _ in ID_SEG_RULES
+    )
+    fest_cond = f"(i.iap_type IN ('混合-节日活动','活动礼包') OR {seg_conds})"
     sql_daily = f"""
     SELECT o.partition_date,
       sum(CASE WHEN {fest_cond} THEN o.pay_price ELSE 0 END) as festival_rev,
@@ -100,14 +132,15 @@ def main():
 
     # ---- 2. 每天的模块明细（仅节日期） ----
     sql_modules = f"""
-    SELECT o.partition_date, COALESCE(i.iap_id_name, o.iap_id) as iap_id_name,
+    SELECT o.partition_date, substr(o.iap_id,1,10) as iap_id,
+      arbitrary(i.iap_id_name) as iap_id_name,
       sum(o.pay_price) as revenue
     FROM v1089.dl_user_order o
     LEFT JOIN v1089.dim_iap i ON o.iap_id = i.iap_id
     WHERE o.partition_date BETWEEN '{FESTIVAL_D0}' AND '{report_date}'
       AND {fest_cond}
     {SERVER_FILTER}
-    GROUP BY o.partition_date, COALESCE(i.iap_id_name, o.iap_id)
+    GROUP BY o.partition_date, substr(o.iap_id,1,10)
     """
     rows_modules = query(sql_modules)
 
@@ -116,7 +149,7 @@ def main():
     all_mod_names = set()
     for r in rows_modules:
         d = r["partition_date"]
-        mod = classify_module(r.get("iap_id_name", ""))
+        mod = classify_module(r.get("iap_id_name") or "", r.get("iap_id") or "")
         rev = float(r["revenue"])
         mod_by_date.setdefault(d, {})
         mod_by_date[d][mod] = mod_by_date[d].get(mod, 0) + rev
@@ -278,7 +311,7 @@ def main():
     <div id="alertsBox"></div>
   </div>
 </div>
-<div class="footer">X2 {FESTIVAL_NAME} | 数据口径：{SERVER_LABEL}，节日模块 = dim_iap 中 iap_type 为「混合-节日活动」+「活动礼包」</div>
+<div class="footer">X2 {FESTIVAL_NAME} | 数据口径：{SERVER_LABEL}，节日 = dim_iap「混合-节日活动/活动礼包」+ 拓荒累充段(2013910029/30, 2013920115-199) + 挖矿关卡(20132302xx)</div>
 <script>
 const allDays = {all_days_json};
 const baseline = {baseline_json};
@@ -424,9 +457,14 @@ renderAll();
     output_path = os.path.join(OUTPUT_DIR, filename)
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html)
+    # 固定名"最新"副本，方便长期开着同一链接（每小时被覆盖刷新）
+    latest_path = os.path.join(OUTPUT_DIR, f"X2{FESTIVAL_NAME}日报_latest.html")
+    with open(latest_path, "w", encoding="utf-8") as f:
+        f.write(html)
 
     last_day = all_days[-1]
     print(f"HTML 日报已生成: {output_path}")
+    print(f"最新副本: {latest_path}")
     print(f"D{day_num} | {report_date} | 总流水 {fmt_money(last_day['total'])} | 节日 {fmt_money(last_day['festival'])} | 付费 {last_day['payers']}人")
 
 

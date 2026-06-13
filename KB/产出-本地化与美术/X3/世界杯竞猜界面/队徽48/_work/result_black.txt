@@ -1,0 +1,4 @@
+{
+  "success": false,
+  "error": "未认证，请提供有效的 Bearer token 或登录 session"
+}

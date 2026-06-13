@@ -1,0 +1,9 @@
+usage: call_grfal.py [-h] [--tool TOOL] [--params PARAMS] [--url URL]
+                     [--file FILES] [--timeout TIMEOUT]
+                     [--public-url PUBLIC_URL] [--list-tools] [--insecure]
+                     [--sync] [--submit-only] [--check-task TASK_ID]
+                     [--view-logs [FILENAME]] [--log-lines LOG_LINES]
+                     [--bearer-token BEARER_TOKEN] [--auth-bootstrap]
+                     [--set-refresh-token TOKEN] [--auth-interactive]
+                     [--no-auth-interactive]
+call_grfal.py: error: --tool is required (use --list-tools to see available tools)

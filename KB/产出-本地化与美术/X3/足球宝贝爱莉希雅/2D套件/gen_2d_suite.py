@@ -12,15 +12,28 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, '..', '足球宝贝爱莉希雅_主稿_FINAL.png')
 
-# ---------- 1) 抠像 ----------
+# ---------- 1) 抠像（直接跑 u2net.onnx，绕开 rembg/pymatting——pymatting 的 numba 会死循环） ----------
 cut_path = os.path.join(HERE, 'cut_full.png')
 if not os.path.exists(cut_path):
-    from rembg import remove, new_session
+    import onnxruntime as ort
     src = Image.open(SRC).convert('RGBA')
     print('主稿:', src.size)
-    out = remove(src, session=new_session('isnet-general-use'),
-                 alpha_matting=True, alpha_matting_foreground_threshold=240,
-                 alpha_matting_background_threshold=15, alpha_matting_erode_size=8)
+    rgb = src.convert('RGB')
+    inp = rgb.resize((320, 320), Image.LANCZOS)
+    x = np.array(inp).astype(np.float32) / 255.0
+    x = (x - np.array([0.485, 0.456, 0.406])) / np.array([0.229, 0.224, 0.225])
+    x = x.transpose(2, 0, 1)[None].astype(np.float32)
+    sess = ort.InferenceSession(os.path.expanduser('~/.u2net/u2net.onnx'),
+                                providers=['CPUExecutionProvider'])
+    pred = sess.run(None, {sess.get_inputs()[0].name: x})[0][0, 0]
+    pred = (pred - pred.min()) / (pred.max() - pred.min() + 1e-8)
+    mask = Image.fromarray((pred * 255).astype(np.uint8)).resize(src.size, Image.LANCZOS)
+    m = np.array(mask).astype(np.float32) / 255.0
+    # 白底图增强：mask 软边外的近白像素压到 0，主体内拉满，中间过渡保留
+    m = np.clip((m - 0.05) / 0.90, 0, 1)
+    out_arr = np.array(src)
+    out_arr[:, :, 3] = (m * 255).astype(np.uint8)
+    out = Image.fromarray(out_arr)
     out.save(cut_path)
 cut = Image.open(cut_path).convert('RGBA')
 a = np.array(cut)[:, :, 3]
@@ -54,13 +67,28 @@ card = cut.crop((cx0, cy0, cx0 + crop_w, cy0 + crop_h)).resize((CW, CH), Image.L
 card.save(os.path.join(HERE, 'Role_C_40_Skin01.png'))
 print('英雄卡 OK', card.size)
 
-# ---------- 4) 头像 256x256 (头+肩,~22%人高,方形) ----------
-hh = int(ph * 0.22)
+# ---------- 4) 头像 256x256 圆形徽章构图 ----------
+# ★格式铁律(2026-06-12行军HUD穿帮实测): 头像不是方形满幅!
+#   标准=圆形主体(直径~208px,圆心(128,132))+四边四角全透明(margin>=16px)，
+#   HUD圆框直接渲染原图，满幅方图会画到圆框外穿帮。锚=Img_C_H_39_Skin01。
+D = 208                      # 圆直径
+CCX, CCY = 128, 132          # 圆心
+hh = int(ph * 0.21)          # 取头到锁骨，脸部占比对齐34_Skin01锚
 hx0 = face_cx - hh // 2
 hy0 = y0 - int(ph * 0.01)
-head = cut.crop((hx0, hy0, hx0 + hh, hy0 + hh)).resize((256, 256), Image.LANCZOS)
+head_src = cut.crop((hx0, hy0, hx0 + hh, hy0 + hh)).resize((D + 24, D + 24), Image.LANCZOS)
+canvas_h = Image.new('RGBA', (256, 256), (0, 0, 0, 0))
+canvas_h.paste(head_src, (CCX - head_src.width // 2, CCY - head_src.height // 2), head_src)
+# 圆形遮罩(4x超采样抗锯齿)
+from PIL import ImageDraw
+mk = Image.new('L', (1024, 1024), 0)
+ImageDraw.Draw(mk).ellipse((4*(CCX - D//2), 4*(CCY - D//2), 4*(CCX + D//2), 4*(CCY + D//2)), fill=255)
+mk = mk.resize((256, 256), Image.LANCZOS)
+arr_h = np.array(canvas_h)
+arr_h[:, :, 3] = np.minimum(arr_h[:, :, 3], np.array(mk))
+head = Image.fromarray(arr_h)
 head.save(os.path.join(HERE, 'Img_C_H_40_Skin01.png'))
-print('头像 OK', head.size)
+print('头像 OK(圆形)', head.size)
 
 # ---------- 5) 透明差分验证 (feedback_transparent_asset_diff_check) ----------
 def verify(p):
