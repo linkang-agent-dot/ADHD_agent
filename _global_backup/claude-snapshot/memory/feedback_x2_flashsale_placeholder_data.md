@@ -33,3 +33,18 @@ X2 限时抢购（限购礼包）货架里礼包显示**占位/默认数据**（
 - 配套文案 = i18n key **`IAP_flashsale_schedule_desc`**（"…开启并持续60分钟"，全限时抢购共用一条，17 语言）；改时长记得同步它（17 语言里"60"都是阿拉伯数字，直接 60→180）。
 
 **换皮残留待留意**（拓荒实例，非显示 bug）：限时抢购换皮后 `iap_config/iap_template` 的描述常残留"S6春节限时抢购礼包"；`recharge_actv`/`actv_base_id` 可能仍指占星/夏日底座（影响累充归属，不影响货架）；raffle 奖池(activity_flash_sale_raffle)若复用底座奖池会开出旧节日的包。
+
+## 🔴 限时抢购换皮必 fork「抽奖奖池 2187」+ 累计道具(2026-06-09/10 X2-43094「抽不了奖/开不了箱」沉淀)
+限时抢购整套 = **5 个 2121 组件**(flash_sale_buy_duration / **flash_sale_gacha**(主) / flash_sale_popup / **flash_sale_raffle** / flash_sale_buy_opentime) + 货架包(2135) + IAP(2013) + **虚拟货 2186 activity_flash_sale_virtual**(售卖节奏系数,通用) + **抽奖池 2187 activity_flash_sale_raffle**。占星母版组件 21217032-036、拓荒 212101145-149。
+- **累计道具(机制道具)= flash_sale_gacha 的 `reward`(col4 抽奖券/HUD累计货币) + `arg2`(col7 皮肤随机宝箱 box)**。占星专属 `11119549`(抽奖道具)/`11119550`(class=flash_sale_reward_box)；拓荒换皮**误借了 gacha 活动的内圈货币 `111111315/111111316`**(套了 gacha 卷轴齿轮图标)→ X2-43094 报"抽奖券用了 gacha 道具图标"。⚠️ 315/316 同时被 gacha 活动(multi_gacha 212101356 吃316、cost 212101358 吃315×10)消耗，**不能改它俩的 display_key**(连累 gacha)。正解=机制对齐占星(reward→11119549、arg2→11119550)；但**只改组件没用**——发累计道具的礼包(2013 IAP 的 other_items)也得把机制道具一起换成 11119549，否则产出端还发旧道具、玩家身上没新道具→**抽不了奖**(踩过：只改组件 push 上去直接改崩抽奖)。
+- 🔴 **开箱断点 = flash_sale_raffle 的奖池没 fork**：`flash_sale_raffle`(拓荒212101148) 的 `status` 把货架包→奖池 id(21870001/002/003)；这些奖池在 **2187 表**,其 `category_param.drop` 的 `actv_package` 列出"开箱开出哪些货架包"。**2187 全表只有 21870001-003 三行,且占星/拓荒共用,drop 内容写死=占星货架包 21353103-108**。拓荒 fork 了货架包(213521232-240)/IAP,却没 fork 奖池→开箱去开占星包(占星活动下线取不到)→**开不了箱**。
+- **修法二选一**：① 原地改这 3 行 2187 的 drop(21353103-108→拓荒 213521232-237,1:1同权重)——0新增行,但占星那套也跟着指拓荒包(占星不再上才安全)；② fork 新池(21870004-006)+改 212101148 的 status val 指新池(占星可能重开就用这个)。
+- **教训**：raffle 奖池(2187)是藏在 flash_sale_raffle.status 里的**间接引用**(不在 2112 components 表面),和 [[x2-config-library]] 里 actv_links 不 fork 是同类坑;限时抢购换皮 checklist 必加"2187 奖池 fork + 累计道具(reward/arg2)用本节日专属 + 发累计道具的 IAP 包同步换"。
+
+## 限时抢购「开箱/抽奖」客户端代码链路 + 卡死诊断(2026-06-10 X2-43094 查 x2client 坐实)
+X2 限时抢购**完全复用 P2 的 MayFestival LimitTimeBuy 模块**,代码在 `D:\UGit\x2client\client\Assets\P2\GameScript\`(`UIActivityMayFestivalLimitTimeBuyModule.cs` / `ActivityMayFestivalLimitTimeBuyModule.cs`),X2 侧只有空壳 `UIActivityFlashSale.cs`。本机**无 X2 服务端代码仓**(发奖逻辑在服务端,未坐实)。
+- **开箱(主抽奖)数据流**：点货架格开箱 → `LimitTimeBuyGacha()` 发 **`PioneerDayFlashSalePrizeDrawReq{actvID}`** → **服务端决定奖**(从奖池抽,客户端不读奖池) → 回 `PrizeDrawAck{PackageId, rewards}` → 客户端 **`m_Module.PackDic[ack.PackageId]`** 把奖显示到对应货架格。
+- **两道"开不了"的门**：① 抽奖券(=flash_sale_gacha.reward 的 item, 拓荒 11119549) `< 1`→弹"去买礼包" ② **助力解锁 task**(=flash_sale_gacha.arg1 那条, `Displaykey==2`)的 state≠已领奖→点了弹提示开不了。换皮漏对齐这条 task = 门B 永远拦。
+- 🔴 **开箱"动画播了但奖窗弹不出来/卡住" = `PackDic[ack.PackageId]` KeyNotFound = 服务端返回的礼包 id 不在客户端 flash_sale_gacha.status 货架集(拓荒 213521232-240)**。典型成因:**服务端跑的配置还是旧 2187 奖池(掉占星包 21353103-108),返回占星包 id,拓荒客户端 PackDic 没有→崩**。本质 = **客户端/服务端 flash-sale 配置版本不一致**(改了 2187 但没构建+部署到那台服,或服跑的不是改过的分支)。
+- 🔑 **诊断口诀**:开箱"卡住没奖窗"先查两条——① 服务端 2187 奖池产出的 actv_package ⊆ 客户端 flash_sale_gacha.status 货架集;② **push≠生效**,配置改完必须构建+部署到测试服那条分支 + **重开活动**才会重读 2187。客户端代码本身没 bug,别去改客户端/重出包(前提:11119549/11119550 已正常导表进客户端 item 表、11119550 class=flash_sale_reward_box)。
+- **皮肤随机宝箱(item 11119550)是另一条独立流程**(点宝箱入口→`UIItemHelper.UseItem`按 class=flash_sale_reward_box 派发→服务端读 11119550 的 category_param.drop 发奖),**跟主抽奖按钮无关**;之前怀疑"开箱读箱子drop"已排除——主抽奖走服务端 PrizeDraw 读奖池。

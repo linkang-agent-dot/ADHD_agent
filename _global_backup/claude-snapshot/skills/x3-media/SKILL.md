@@ -55,6 +55,7 @@ description: |
 4. 主 agent 调用 Agent 工具：
    - `subagent_type: "media-worker"`
    - `run_in_background: true` ← **必须**
+   - `model: "sonnet"` ← **强烈建议显式指定**（2026-06-13 实证：不指定则 worker 继承主 agent 的 session model，若当前是 fable 等子 agent 不可用的模型，**整批 worker 全挂在"model may not exist"**，已提交的生成任务白费。media-worker 是工具型 agent，sonnet 足够且快又省）
    - `prompt`: 两行 —
      ```
      TASK_ID=<task_id>
@@ -102,7 +103,7 @@ worker 完成 → task-notification 触达主 agent → 主 agent：
 2. 按 `status` 1-2 句播报：
    - `success`：`✅ 任务 <id> 完成（<type>）。已保存：<saved_to[0]>`（多文件列前 3 个）
    - `failed`：`❌ 任务 <id> 失败（<error.step>）：<error.message>。重试 / 改参数 / 跳过？`
-   - `needs_auth`：`⚠️ 任务 <id> Cookie 过期。请运行 scripts/get_grfal_cookie.py 刷新；完成后告诉我"Cookie 已刷新"，我会自动重派该任务。`
+   - `needs_auth`：⚠️**先别让用户刷 Cookie**（2026-06-13 实证：GRFal 已迁 token 认证 device flow，refresh token 在 `~/.config/grfal-api`；部分 worker 仍按旧 GRFAL_COOKIE env 误判 needs_auth——同批其他 worker success 即为铁证）。主 agent 先跑 `python <grfal-api skill>/scripts/call_grfal.py --list-tools` 验真：**通 = 认证活着 → 直接按 resume 协议重派同 task_id**；真不通才走 `call_grfal.py --auth-bootstrap` / device flow（get_grfal_cookie.py 的 Cookie 法已过时）。
 3. 完成的 task json 保留 7 天供回查
 4. **不要**重新读 SKILL.md 或 type-*.md 来"二次校验"——worker 已写好结果
 

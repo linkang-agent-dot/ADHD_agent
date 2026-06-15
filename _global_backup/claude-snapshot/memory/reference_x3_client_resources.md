@@ -7,6 +7,25 @@ metadata:
   originSessionId: 9fa379f1-8095-4bed-9a37-401c299ba495
 ---
 
+## ⚠️ client 仓美术图是 Git LFS 指针（2026-06-14 实证，反复读不到图的根因）
+`C:\x3-project\client` 的 .png 大多是 **LFS 管理**：工作区里常只是 ~130 字节的指针文本(`version https://git-lfs...`)，**真图没下载**。症状：Read 读不到图/报不存在、PIL 也拿不到真像素、看不了别人的美术。
+- 判别：`file <png>` 显示 `ASCII text` 或 `head -c 60` 见 `version https://git-lfs` = 指针；真图是 PNG 二进制（几 KB~MB）。
+- 拉真图：`git lfs pull --include="<相对路径>"`（单张几秒；命令可能 exit 1 但文件已下载，看 `stat -c%s` 大小 >2000 即成功）。
+- 我们自己新落仓的 png（如 ActvWorldCup/WC_*）是新加的真文件、不受影响，能直接读。
+
+## X3 活动入口图标(ActvIcon)真规格 = 124×136 透明底自由形状物件（2026-06-15 实证修正）
+⚠️ **推翻 2026-06-14 旧说"1024 满幅带背景非透明"——那是错的，反复犯糊涂的根源。**
+实测真相（`git lfs pull` 后 PIL 直读）：
+- **入库的真资产 = 124×136、RGBA 含透明、自由形状的主题物件图**。证据：`Spirits/Activity/img_Activity_icon_5.png`(金色双箭头) 和 `Spirits/ActivityImg/img_Activity_VD_icon_10.png`(夏日恋语花藤拱门) 都是 124×136、alpha extrema=(0,255)、透明底自由轮廓——**不是**满幅带背景的长方形缩略图。
+- **图里不画圆/不画框**：列表里图标外那圈圆是 UI 层通用底框(`UIActivityListItem.mIconBgImage`)自动套的，所有活动共用，不在图里。把圆烤进图=双重圆+形状错（世界杯返工根因）。
+- **出图规格**：主体居中、四角透明、奇幻半厚涂、与现有 `img_Activity_*icon_*` 同风格；**生成走高分辨率(1024)再缩到 124×136**（直接按 124 出会糊——旧note唯一对的一点），用 x3-media `activity_icon` 类型(透明底硬规则)。
+- ActvOnline 表入口图标列 = **col22**（DK_img_Activity_*_icon_*）；col23=bg。
+- 💡 **反射**：对"某配置/资产该长啥样"犯糊涂时，**别空想/别靠旧note**——直接 `git lfs pull` 一个现成能用的同类活动(如夏日恋语)资产 PIL 直读+Read 看图反推，眼见为实。本条就是空想了一整会话(圆形该不该渲染、要不要写 UICircleGraphic.cs)后，靠看 img_Activity_VD_icon_10 才拉回正轨。
+- ⚠️ **x3-media activity_icon worker 不做透明化(2026-06-15 两次实证)**：worker 对 activity_icon **多半直接吐白底图**(四角 alpha=255)，`transparency_method`/双底差分指令它**不一定执行**。结论：**实体物件图标(奖杯/箱子等)别跟 worker 较劲重派，本地一步抠白更可靠** → 用 `C:\ADHD_agent\scripts\flood_remove_white_bg.py`(四边洪水填充抠纯色底+可选 `--fit 124x136` 居中，保物件内部白)。验收必查四角 alpha=0、偏白边缘≈0。
+  - ⚠️⚠️ **洪水抠白的命门**：它移除**与边缘相连**的背景白。若主体本身有白色部分且**与背景连通**(如玻璃/高光材质的白色足球顶、贴边白元素)，会被一起抠成透明/破洞(2026-06-15 世界杯足球被吃穿，调 thr 也救不了——玻璃高光是纯 255 白、与白底同色，颜色上无法分离)。
+  - ✅ **玻璃/白高光主体的根治法 = 洋红幕重出 + 色键扣图(2026-06-15 验证有效)**：白底扣不开时，**别本地硬抠、别指望 worker 透明化**，改派 x3-media `general` 图生图：以原图为参考，让模型把同一主体**原样搬到纯洋红 #FF00FF 背景**(洋红离金/白/绿都远)，再用 `C:\ADHD_agent\scripts\chroma_key_remove.py --key magenta --fit 124x136` 色键扣幕(含去紫边+羽化)。白高光得以完整保留。绿幕同理但主体含绿(草)时别用绿。
+  - ⚠️ rembg 语义抠图：本机 2026-06-15 **import 卡死**(onnxruntime 首次加载不返回)，别依赖；要用先单独验证能跑通。
+
 ## 实际资源（.png）位置
 
 | 类别 | 路径 |
@@ -65,6 +84,15 @@ MonoBehaviour:
 1. `keys:` 段按字母序找邻近位置，加 `    - DK_xxx`
 2. `values:` 段找邻近 entry，加 `    - key: DK_xxx\n      objPath: Assets/...`
 3. 两段顺序必须一致；2026-05-27 落 `DK_img_Activity_summer_bg_12` 实测可行（x3-project MR !224）
+
+## 批量注册 DK（脚本化，2026-06-14 世界杯96个实证）
+
+一次注册几十~上百个 DK（如 48 队×2）别手工，按 memory 的"两段末尾同序追加"写脚本：
+1. 落仓：图拷进 `Spirits/<目录>/`，每张配 .meta（抄同目录现成 sprite meta，正则换 `guid`+`spriteID` 为 `uuid4().hex`）。
+2. 注册 `Path_Activity.asset`（活动类资源都进这个）：定位 `    values:` 行索引 vi → keys 段在 `lines[:vi]` 末尾插 N 个 `    - DK_xxx` → values 段在 EOF 前追加 N 组 `    - key: DK_xxx`/`      objPath: Assets/Res/UI/Spirits/<目录>/xxx.png`，两段同序。先备份 .asset.bak。
+3. **必校验**：keys 列表 == values 的 key 列表（平行一致），且 `git diff --numstat` 应纯增不减（删=动了别人的行）。
+4. DK 命名 = `DK_` + 文件名去 .png（如 `DK_WC_Badge_BRA`）。
+- 实战 commit f46cd774b2e：96 DK 一次入表，1103→1199 平行一致，diff 288 增 0 减。client 直接 push dev_festival（无 Unity 也可，命令行追加比 Ctrl+T 更可控、且不会像全量重导出那样删别人的）。
 
 ## tableResInfo.txt 不是 ground truth
 

@@ -3,6 +3,13 @@
 ## 复盘报告
 - [X2 2026占星节模块回归报告](project_x2_star_festival_2026_report.md) — 7页签HTML报告，含R级分层/优化动作，生成脚本 `_gen_full.py`，2026-05-25归档
 
+## 进行中案子
+- [X3 英雄皮肤新皮肤视频化](project_x3_hero_skin_video.md) — 老皮肤走Spine不变·新皮肤走视频(AI可量产)；策划案GSheet `15Iacryl...`；含英雄皮肤展示代码链路(CreateSpine咽喉点+5界面契约+晋升礼包独立链路)，2026-06-09立项
+- [X3 世界杯活动系列](project_x3_worldcup_activity.md) — 深度付费；飞轮=竞猜+BP产抽奖券→主抽奖=世界杯开箱(ActvCrafting/ActvType15,非转盘)→英雄+足球宝贝皮肤(爱莉希雅Hero1040)；竞猜=独立Actv活动(挂礼包)买礼包规避博彩+防对冲一场选一个；★零新后端(付费=订单/免费=$0领取，结算走运营查日志+bulk-mail，砍赛果界面)；BP走ActvScore；含X3抽奖/BP/竞猜可复用资产盘点；设计定稿待给SheetID落地，2026-06-09立项
+
+## 后台自动任务
+- [后台计划任务清单](reference_background_scheduled_tasks.md) — 本机所有 Claude Windows 计划任务(触发/脚本/产出)；含晨间简报合并(09:00 MorningPriority并入10:00 DailyPlan)+新鲜度闸门坑+工作line.md闭环；问"后台有什么自动任务"或增改停任务先读
+
 ## Key Directories
 - `C:\ADHD_agent\` — 主工作仓库，包含游戏运营数据分析、活动复盘、skill 脚本等
 - `C:\ADHD_agent\KB\` — Obsidian 知识库，存放方法论、设计文档等
@@ -17,7 +24,7 @@
 - 项目ID: `calm-repeater-489707-n1`
 - 账号: `linkang@nibirutech.com`
 - 读取 Google Sheet 的方式: `node C:\ADHD_agent\scripts\gws_stdin.js`（通过 stdin 传 JSON 参数）
-- Token 可能过期，过期时运行 `gws auth login` 重新认证
+- Token 过期(401 invalid_grant)时：**Claude 自己后台跑 `gws auth login`**（run_in_background，弹浏览器给用户点授权），别让用户手动跑；授权完重试原查询
 - **GSheet 读写统一工具**: [gsheet-toolkit](reference_gsheet_toolkit.md) — `C:\ADHD_agent\scripts\gsheet_utils.py`，读/写/删/备份/**按内容定位**全封装；操作 GSheet 先 import 它，别再现写一次性脚本（5个坑已固化）
 
 ## Event Review Skill
@@ -55,6 +62,8 @@
 - [节日活动形式知识图谱](reference_festival_knowledge_graph.md) — 39种活动形式的机制、数值、历史数据回归，节日设计时先读
 - [Config Library](reference_config_library.md) — ⚠️**P2专用**表编号索引、换皮规则、常用 SheetID
 - [X2 配置表查询权威源](reference_x2_config_library.md) — 🔒X2任何表SheetID必用 `gsheet_query.py resolve <表号>` 现解，禁硬抄P2 KB（id空间重叠会静默返P2数据）；含X2 gacha内外圈结构
+- [X2 服务器schema查法](reference_x2_server_schema_lookup.md) — schema按服龄动态迁移(新服1→老服4+)，真源=数仓日报表(server_id/schema_id/schema_time)找用户要；⚠️igame-actv/skill的server-config.json全是P2服、fo/config schema表=国服死快照、iGame接口无schema字段
+- [X2 挖矿小游戏掉落链路](reference_x2_metro_minigame_rock_drop.md) — level(两套布局col2主/col3备,design_b会被加载)→rock_drop(表3514)；fo/cn坑(cn是2024死快照,真源=GSheet)；换皮漏导rock_drop→服务端miningDrop空配置nil panic→矿占格放不了工人(X2-43003)；重导前先验真源有没有行；查"空地放不了工人/挖完不发奖"先读；含挖矿全表地图(3510/13/14/15/16/17/18各管啥)+科研面板重复诊断(X2-43058判非配置/客户端未去重)+3514拓荒掉落核查
 - [X3 Config Library](reference_x3_config_library.md) — X3专属换皮知识库 `.cursor/x3-config-library/`，含 table-reference(表字典+9条必检) + activity-forms(51组活动形式/13种换皮主力)，x3-reskin skill 地基
 - [配置表字段 Schema](../../../ADHD_agent/.cursor/config-library/table-schema.md) — 2011/2013/2112/2115/2116/2121/2135/2141/2142/2154 全字段定义+跨表追踪链
 - 挖矿 35xx 表清单已写入 table-index.md — 27张表含 3510→3517→3516 追踪链、ID编码规则、26复活节案例
@@ -73,7 +82,10 @@
 - [X3 i18n 本地化工作流](reference_x3_i18n_workflow.md) — TXT_ key 命名规则(TXT_{Table}_{Field}_{ID}) + CompositeI18n monkey patch + gws.js 实际路径(run-gws.js) + 翻译术语对齐 + `_backup_*.xlsx` 污染扫描器
 - [X3 礼包弹窗背景渲染优先级](reference_x3_pack_panel_rendering.md) — Pack.MainBg 覆盖 ActvOnline.ActvImg；拜访礼包 MainBg 必须空否则顶替节日 banner
 - [X3 装饰阶梯礼包 tab 图来源](reference_x3_pack_tab_icon.md) — 底部商城页签 tab 图读 PackTypeInfo.Icon 不是 ChainPack.Icon，节日换皮必查 3 处 Icon
+- [X3 礼包开启机制速查](reference_x3_pack_open_mechanisms.md) — OpenActv 常为空时礼包靠什么触发显示：英雄晋升(PackHeroPromotion)/道具获取弹窗(ItemObtain,PackType15)/拜访礼包(ActvVisitPack,ActvType56)/链式；含 Pack tsv 表头在 row5 坑 + TimeCycle 名复用陷阱；问"礼包怎么开/不显示"先读
 - [X3 客户端资源位置 & DK 注册](reference_x3_client_resources.md) — .png 实际位置(ActivityImg/Pack)、DK→GUID asset 注册、tableResInfo.txt 名单可能过期
+- [X3 新增活动界面链路](reference_x3_client_new_ui_workflow.md) — UI框架4件套(业务类/手写Auto绑定/prefab/路由)、复用ActvType换UI按ContentID分流、可复用组件清单(UIBtnPurchase/ItemUnitView/StartTiming)、day锁纯客户端坑；做X3新界面/界面换皮前先读
+- [X3 八大外显模块→客户端资源路径总表](reference_x3_cosmetic_resource_paths.md) — 白皮书8模块(英雄皮肤/岛屿/家具/装饰三件套/航迹/头像框/纪念卡/表情)逐一对应资源类型+实际路径；前5模块3D/Spine/特效(重)后3模块纯2D(轻)；配活动/出美需/判换皮工作量时查
 - [X3 航海之路地块美术链路](reference_x3_voyage_art_chain.md) — 大富翁式活动(ActvType=28)；地块图写在 ActvVoyageEvent.DKImg(按事件组×等级换图,约4套岛图)，24格位置prefab写死；含配置表/GridItem.cs渲染链/换皮清单/开启链路
 - [X3 付费机制速查](reference_x3_monetization_mechanics.md) — 重复外显转钻补偿(Regained,通用所有外显/头衔) + 储蓄罐PiggyBank(可重复绑养成货币深度款) + 自选周卡WeeklyCard(原生复用,自选4项+7天+打包)
 - [X3 节日付费表现](reference_x3_festival_performance.md) — 单服收益排名(尼罗$1127最高)、尼罗重上D17-D35窗口、饱和度速查、数仓SQL模板
@@ -82,9 +94,11 @@
 - [X3 导表迁移到 TSV 缓存](reference_x3_tsv_export_migration.md) — 导入只认tsv；**2026-06-04起新增 jenkins-xlsx-tsv-gate 强制 xlsx 与 tsv 一致**(旧"只改tsv/xlsx下周删"已推翻)：单边改→gate自动同步另一边但本次build rc=24失败需重导；两边不一致→拒绝；想一次过就 xlsx+tsv 两边同改成一致。改X3配置/导表前必读
 
 ## 数据查询
+- [X2 节日收入日监控](reference_x2_festival_monitor.md) — `skills\x2-festival-monitor\`，新节日只改脚本顶部配置区；口径=dim_iap节日类型(抓复用旧id)+累充白名单段兜底；2026拓荒节在用
 - [X3 节日收入日监控+日报](reference_x3_festival_monitor.md) — 移植自X2，`skills\x3-festival-monitor\`，全服，**节日礼包口径=ActvOnline累充白名单(不能用Pack前缀猜)**，模块按PackType，计划任务ClaudeX3FestivalMonitor每天09:00
 - [X3 节日基线月环比分析法](reference_x3_baseline_mom_compare.md) — 评"节日有没有把基本盘做起来"：同生命周期(各窗口各取当时D35+成熟服)月环比、服数不同只比率、节日/非节日按累充白名单拆、基线窗口验无藏活动；含**合服踩坑(配置89服但只~50活跃出单服,按id区间聚合不丢数但单服指标用活跃服数)** + 夏日蚕食基本盘结论
 - [X3 节日日报模板完整说明](reference_x3_festival_report_template.md) — 12区块结构+JS数据结构+6数据源+硬口径决策(成熟服1000-1540/付费玩家付费率/R级快照+累充兜底/同期对齐)+维护校验(f-string转义查stray{{)，2026夏日大改版沉淀，改报告前必读
+- [X3 节日上线服龄覆盖+DAU查法](reference_x3_server_coverage_query.md) — 给上线日反推D35+可覆盖服+当期DAU；两坑：开服时间用真实首登(dl_server_login_info.min_register_time，非dim_open_server配置值)、合服作废id用近7日有登录过滤剔除(名义99服实际61活跃)；含一条可复用SQL+6.19/6.29基准
 - [AI-to-SQL Skill](reference_ai_to_sql.md) — Datain 数仓 Trino SQL 技能，在 `C:\ADHD_agent\.claude\skills\ai-to-sql\`，查玩家明细/建筑/付费订单
 - [X3 数仓外显/道具拥有率查法](reference_x3_datain_asset_query.md) — asset_id 带类型前缀(Item_/Hero_/Skin_/FurnitureSkin_)是最大坑(裸ID全返0)；含拥有率/R级分布/付费额SQL + dim_asset反查 + 用ai-to-sql不用datain-skill
 - [挖矿回归漏斗模板](reference_mining_funnel_template.md) — 分R级关卡漏斗HTML模板，`C:\Users\linkang\mining_funnel_template.html`，修改CONFIG对象即可复用
@@ -93,6 +107,9 @@
 
 ## 活动设计产出路径规范
 - [全链路产出路径](reference_output_paths.md) — 数值方案/美需/出图/数据分析四环节固定路径，数值方案在 `产出-数值设计\{项目}_{节日}\`
+
+## 皮肤视频化生产
+- [X3英雄皮肤视频生产知识库](reference_x3_hero_skin_video_production.md) — 替代Spine的展示视频production层：目标格式SBS(AllianceCard锚)+Spine精髓(idle循环非in/多层联动)+模型选型(kling fflf首尾帧=无缝循环命门)+透明化流水(generate_video→remove_bg→export_sbs)+★Prompt库与迭代日志(逐版优化到一步到位)；做/优化皮肤视频先读
 
 ## 美术需求生成
 - [X2 美需生成 skill](../../../.claude/skills/x2-art-requirement/SKILL.md) — 主城特效参考图+美需文档全流程，含 GRFal async API 踩坑记录，触发词"美需/主城特效/出美需"
@@ -103,6 +120,7 @@
 - **x2-media 生图保存路径**：`C:\ADHD_agent\KB\产出-本地化与美术\{项目}\{类型子文件夹}\{类型}_{模型}_{日期时间}.png`
   - 项目：X2 / P2 / 通用；类型子文件夹：行军表情、技能图标、集卡册、活动图标等
 - [透明资源必须差分法验真透明](feedback_transparent_asset_diff_check.md) — 我生成/处理的需透明图片入库前必跑差分法(白底vs黑底合成相减)，防 GPT 假透明(RGB无alpha肉眼像透明)；含 alpha 统计+PIL copy.py shadow 坑
+- [X3 AI出图工作流(角色皮肤换装+活动UI换皮)](../../../../ADHD_agent/KB/方法论/X3_AI出图工作流_角色皮肤换装+活动UI换皮_世界杯案.md) — 世界杯案全程沉淀：两条线(本人立绘换装/原UI多图参考换皮)+逐轮只改一处+14条踩坑(long_running轮询·GBK控制台·多图--file·gpt保身份gemini保布局·角色易画太大顶UI文字·角色道具居中叠·质量锚+逐条改设计·IP风格化奖杯·先商量再出图)；**§8=策划案内嵌出图完整流程S1-S5**(参考拆基因→结构稿→Morphix职责切分换本游戏UI风格→只改一处迭代→回填策划案)+Morphix 8功能挂点表；做英雄皮肤概念图/活动界面换皮/策划案出效果图先读
 
 ## 待办
 - [X2拓荒节装饰文案重写(等图)](project_x2_pioneer_decoration_copy_todo.md) — 5个装饰(350-354)文案太雷同要重写，等美术约06-05给正式图，含全部表坐标/key/遗留问题，明天接着干
@@ -116,6 +134,7 @@
 - [API Provider 切换记录](project_api_provider_switch.md) — 2026-05-22 切到 one-hub，2026-05-25 周一切回 Anthropic 官方 API
 
 ## 工作流
+- [节日What's New出稿流程](workflow_whats_new_festival.md) — 喊"what's new"=①写活动总览公告文(范本X3夏日WhatsNew_夏日恋语.txt·模块名玩法读验收文件夹截图) + ②拷美术资源进验收文件夹(装饰=Pictures\{节日}装饰资源\·主城皮肤走DK提·前缀拓荒=Pioneer) + ③节日预告邮件(占星范本骨架·挑5主打·描述严格取What's New原文禁自编)
 - [quality-gate验收系统+交互模块工作流](project_quality_gate_and_interaction_module.md) — 收工自动验收(task-checker+清单+Stop hook，有标记会拦收工) + 交互模块「活原型+实时说明一体HTML」工作流；改X3配置/写策划案/做交互原型时相关，2026-06-03搭建
 - [验收清单/double-check设计四原则](workflow_checklist_design_principles.md) — 写/优化任何验收清单或checker prompt时套：①默认有罪姿态preamble ②强制留实际值证据 ③内联防什么坑 ④开放项+剪枝；2026-06-05 config/design-doc/i18n三份清单升v2
 - [策划案设计质量验收(design-merit)方法](workflow_design_merit_critique.md) — 判"设计好不好"≠查文档全不全：好=对自己声明目的实现到位；硬gate=必须声明目的；目的→模块→表现&数值递归拆细到可查叶子(不套固定分类)；必带因果假设/基线/副作用三维；2026-06-05落地
@@ -123,8 +142,10 @@
 - [P2导表工作流](workflow_p2_table_import.md) — GSheetDownloader管道运行，表号空格分隔，触发词"P2导表/传表/导表到bugfix"
 - [导表只导第一个页签](feedback_table_export_first_tab_only.md) — P2/X2导表只读GSheet首页签；导非首页签要置顶，全部导完后还原页签顺序+删备份表
 - [X2导表工作流](workflow_x2_table_import.md) — fwcli+x2gdconf，先读路由规则再读download skill，触发词"X2导表/X2下载表/X2刷表"
+- [X2节日活动上线表写法](workflow_x2_festival_launch_table.md) — GSheet 1QfV-hLx... 每节日一页签；灰度[1002102]/正式双批次17列、日期整体平移、灰度先发的正式剔1002102、服务器从iGame现拉；写"上活动表/上线时间表"先读
 - [X2 i18n 重复key取首条](feedback_x2_i18n_duplicate_key.md) — 同一LC key多行时fwcli取首条→显示旧/错值；文案显示异常先查重复key
 - [X2 限时抢购礼包占位数据](feedback_x2_flashsale_placeholder_data.md) — 限购2222/价555/默认头像=跑旧配置；vm包正常+IAP包占位=iap跨表没加载；重开活动/重热更即修
+- [X2道具单价看白皮书不用X3钻石折算](feedback_x2_item_pricing_whitepaper.md) — X2道具美金单价查养成线白皮书/付费价值表，禁用「钻石值×比例」(那是X3口径)；装饰券=$0.5，X2.42998替换踩坑
 - [配置BUG工作流(双Agent)](workflow_config_bug_fix.md) — 巡检(Win定时任务ClaudeBugScan)+修复(按需启动)拆分架构
 - [BUG修复运维规范](workflow_bugfix_ops.md) — 检查清单、Review问题记录、翻译流程（每次改BUG前必读）
 - [批量补发邮件 skill](reference_bulk_mail_reissue.md) — `~/.claude/skills/bulk-mail-reissue`，iGame 导入表格式硬约束（GBK+逗号+JSON转义）；**P2/X2 专用，X3 不是这套**
@@ -149,7 +170,11 @@
 - 分析报告风格: 数据驱动，含模块/R级分层分析，关注节日整体ARPU（模块收入/节日付费人数）而非仅人次ARPPU
 
 ## Feedback
+- [X2通行证复用id限购坑](feedback_x2_pass_reuse_limit_trap.md) — 复用旧iap id+limit_cnt=1+period≈100年=终身限购，老玩家上期已用名额→本期买不了；修复=limit_cnt+1；上线前用老玩家账号实购验证
+- [遇问题先反馈别硬怼工具](feedback_surface_problems_not_thrash.md) — 工具异常/自己不确定立刻一句话问用户，别手搓一次性脚本/混用工具输出/跳过现成skill硬干；2026-06-09把X2限时抢购抽奖改崩+越查越乱被批
+- [生产操作先报再动](feedback_production_ops_announce_first.md) — 活动提交/取消/下线/邮件每步先说再干；**失败后的重试=新操作必须停下报告**；2026-06-12累充失败私自重试被批
 - [删改用户内容模块前先问](feedback_ask_before_modifying_user_content.md) — 删/改用户做的内容块前先单独问，授权范围精确对齐不连带删；2026-06-03误删了给制作人看的一句话总览
+- [动在途仓库前先摊清单确认](feedback_confirm_before_touching_inflight_repo.md) — 仓库有未推送提交/WIP时，merge/pull/rebase前列在途清单+方案给用户确认，承诺不push就不push；2026-06-12被打断纠正
 - [改sheet/策划案过审提速与少返工](feedback_sheet_edit_review_efficiency.md) — 复用gsheet工具不现写/按内容定位不手算行号/改前全量扫一次批量改/checker喂dump约束输出
 - [节日ARPU分母用当日总付费人数](feedback_x3_festival_arpu_denominator.md) — 节日ARPU=节日流水/当日总付费人数(所有付费玩家)，不是节日付费人数；覆盖旧"模块收入/节日付费人数"表述
 - [X3 TOKEN actual_charge 单位坑](feedback_x3_token_actual_charge_unit.md) — TOKEN货币actual_charge自2026-06-02改记代币单位(=USD×100)；收入口径只有usd取actual_charge其余取pay_price；日报数据"暴涨"先查这条
@@ -163,7 +188,7 @@
 - [碎片化并行工作节奏](feedback_fragmented_time.md) — 任务拆分要细粒度、弱耦合、可随时捡起
 - [说人话少用术语](feedback_plain_language.md) — 规划/笔记文档用功能动词+人话解释，不堆代号和技术黑话
 - [iGame cancel vs recall](feedback_igame_cancel_vs_recall.md) — "下线活动"任务，部署申请状态 → recall；上线中状态 → cancel
-- [igame-actv recall/cancel 待实测](project_igame_actv_recall_cancel_pending_test.md) — 下次"下活动/撤回活动"时主动验证这块判断
+- [igame-actv recall/cancel 已实测(X2)](project_igame_actv_recall_cancel_pending_test.md) — X2提交即直发无审批态:recall空操作(success是假象)、cancel才生效(ids逗号字符串,status 20→7)；P2审批流场景待验
 - [数据回归必须先问设计方案](feedback_data_regression_ask_design_first.md) — 不能纯看购买数据反推礼包结构，先反咨询设计方案再用数据验证
 - [数据回归分析方法论](feedback_data_regression_methodology.md) — 锚点是价格锚不需优化购买率；进度断崖要用全量/付费停留曲线验证而非归因免费资源
 - [随机礼包期望值调整原则](feedback_numerical_design_random_pkg.md) — 无数据支撑不调整 drop 权重，floor/锚点变动不自动联动期望值
@@ -171,7 +196,7 @@
 - [X3 主城皮肤=岛屿皮肤](feedback_x3_island_skin_terminology.md) — Item_81xxx非FurnitureSkin三件套；每次讨论X3皮肤先确认品类
 - [配置写完必须反查验证](feedback_plan_index_must_be_fixed.md) — 写配置表后必须反查上下游一致性，写完不检查是根因
 - [发现新规律必须立即更新知识库](feedback_proactive_knowledge_update.md) — 修BUG发现新链路/必检表时，当场更新SKILL.md，不等用户提醒
-- [GSheet 写入安全规范](feedback_gsheet_write_safety.md) — 写前必须 duplicateSheet 备份页签；禁止按行号盲删；脚本崩溃后先验证实际状态再重跑
+- [GSheet 写入安全规范](feedback_gsheet_write_safety.md) — 写前必须 duplicateSheet 备份页签；禁止按行号盲删；脚本崩溃后先验证实际状态再重跑（例外：1011本地化表不备份 → [X2/P2本地化表不备份](feedback_x2_i18n_table_no_backup.md)）
 - [X3 写配置前必须确认分支](feedback_x3_branch_check.md) — 每次 commit 前 `git branch --show-current`，2026-05-25 X3NEW-736 错分支踩坑
 - [X3 ActvOnline.MailID 必填](feedback_x3_actv_mailid_check.md) — 除 ActvType=8 外都填 101109，漏配时服务端 4 处 `MailID==0` 守卫静默吞未领奖励
 - [拓荒节换皮踩坑总结](feedback_reskin_lessons_learned.md) — 三模块(脚本/写入/知识库)17个问题+优化项，下次换皮前必读
@@ -184,8 +209,11 @@
 - [删文件前先出checklist确认](feedback_cleanup_checklist_first.md) — 清理中间产物必须先列保留/删除清单给用户确认，不自行判断（仅限用户的/已有文件）
 - [自己产生的临时文件默认清不要问](feedback_temp_file_auto_cleanup.md) — 我本次任务造的中间产物(脚本/中间图/分析json)做完默认直接删、不问；清错用户会反馈
 - [常规可逆操作直接做不要墨迹](feedback_decisive_on_reversible_ops.md) — git stash/pull/rebase/push 等可逆操作直接执行，别当高风险决策反复请示（本次被批"墨迹/变笨"）
+- [X2导表别过度验证](feedback_x2_import_dont_oververify.md) — diff是真改动直接列清楚报给用户定夺，不反复刨缓存/真源；含PS5.1编码比对正确姿势(别用Get-Content)+清tmp_xlsx被拦的绕法
+- [X2合并两节日分支进master_bugfix的坑](feedback_x2_merge_driver_drops_remote.md) — driver按行位比较非IDkeyed→插行就误报冲突+返1丢对方整份改动；正确解=ID-keyed cell级三方合并器 id_merge_3way.py(在x2-config-download/scripts)；net_new=0全表证dev⊇master,别信行位diff判分叉
 - [X3 手工启服 cwd 必须用 server\Resource](feedback_x3_server_launch_cwd.md) — RunWorkingDirectory=../Resource，cwd 错了启动期 log4net 抛 DirectoryNotFoundException 进程僵尸
 - [hook 路径必须用正斜杠](feedback_hook_path_forward_slash.md) — Windows hook command 反斜杠被 POSIX shell 吃掉，报"脚本丢失"其实没丢；报错路径反斜杠全没了=转义问题
 - [含中文的.ps1必须存带BOM的UTF-8](feedback_ps_script_needs_bom.md) — PS5.1按GBK读无BOM UTF-8脚本，中文吃掉引号报"missing terminator"，定时任务LastResult=1；Write建脚本后用Out-File -Encoding utf8重存
 - [每日报告HTML化+通用渲染器](reference_daily_report_html.md) — 每日日报/工作节点已渲染HTML每天浏览器弹出；通用 render_report_html.py 吃日报卡片格式+轻markdown，复用别现写
+- [工作日报跨天污染根因+修复](feedback_daily_report_crossday_bleed.md) — 别按jsonl文件mtime挑会话(长会话跨天续用会把多天历史误算成今天)；已加 extract_today_sessions.py 按消息真实北京时间过滤，6-08"全错"根因
 - [手改 X2 i18n tsv 两个坑](feedback_x2_i18n_tsv_handedit.md) — i18n tsv 是 CRLF(text 模式写 LF 整文件 diff，须二进制读写) + LC id 末尾含目标数字子串(只改 value 列不能整行 replace)

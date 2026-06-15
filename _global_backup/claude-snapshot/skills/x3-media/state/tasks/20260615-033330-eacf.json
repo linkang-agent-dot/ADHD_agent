@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "task_id": "20260615-033330-eacf",
+  "status": "success",
+  "type": "march_emoji",
+  "user_prompt": "世界杯应援表情【动作母版】：Q版(chibi 2头身)爱莉希雅，热情应援姿态——双手高举一对金色啦啦队花球(pom-poms)、张大嘴欢呼大笑、眼睛发亮、活力四射、身体微微跳跃。穿简洁的纯白色为主+金色描边的足球应援短上衣(plain WHITE jersey, gold trim, NO brand logo, NO flag, NO emblem, NO number — 纯白便于后续换各国队色)。保留爱莉希雅身份特征:白金长发/精致脸型/魅力气质，但转成可爱Q版大头短身。游戏内贴纸式表情包画风:圆润粗黑描边、大头、两段式赛璐璐阴影、暖色高饱和、表情夸张生动。透明背景。这是48队应援表情的动作母版,之后保持同角色同动作只换球衣。",
+  "params": {
+    "model": "gpt",
+    "reference_images": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\足球宝贝爱莉希雅\\足球宝贝爱莉希雅_主稿_FINAL.png"
+    ],
+    "output_dir": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版",
+    "output_filename": "WC_CheerMaster_Aerisia.png",
+    "postprocess": "transparify_then_256",
+    "timeout": 1200
+  },
+  "started_at": "2026-06-15T03:33:30+08:00",
+  "finished_at": "2026-06-15T03:45:01+08:00",
+  "result": {
+    "saved_to": ["C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版\\WC_CheerMaster_Aerisia.png"],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

@@ -15,3 +15,8 @@ metadata:
 - **节日日报**（X3/X2）走另一条：python 直接生成 HTML，`open_festival_report.ps1` + 任务 `ClaudeFestivalReportOpen`（09:20）每天开"今天更新过的"。
 
 改这些 .ps1 注意 [[feedback_ps_script_needs_bom]]：含中文必须 UTF-8+BOM，否则定时任务静默崩。
+
+## ⚠️ claude -p 静默失败防线（2026-06-09 加，daily_plan_scan.ps1）
+`claude -p` headless 即使退出码 0，也可能没真正写出 txt（实测 06-06~06-09 连续 4 天没写 `_daily_plan.txt`、日志却记"成功"，渲染步骤把旧 txt 重渲一遍 → HTML mtime 天天刷新但**内容冻在旧日期**，是 mtime 新/内容旧的静默失败，同源 [[feedback_daily_report_crossday_bleed]]）。
+- 修复：渲染前加**新鲜度闸门**——校验 `_daily_plan.txt` 首行日期 == 今天(`-match [regex]::Escape($today)`)。`exitCode 0 且 fresh` 才算成功并渲染+弹成功气泡；否则记真失败(区分非0退出/退出0但txt未刷新)、**跳过渲染**(HTML 保旧 mtime 便于一眼看出今天没更新)、弹⚠️警告气泡。
+- 其它两条同架构链路(daily_report/festival)如出现同样"看着更新实则旧"，照搬这道首行日期闸门。

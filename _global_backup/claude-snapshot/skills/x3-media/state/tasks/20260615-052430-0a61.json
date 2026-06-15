@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "task_id": "20260615-052430-0a61",
+  "status": "success",
+  "type": "march_emoji",
+  "user_prompt": "世界杯应援表情【母版·旗在头顶上方版】Q版(chibi)爱莉希雅球迷举旗应援。保留角色:白金长发/精致脸/Q版头身/白色足球球衣球裤球袜球鞋/张嘴欢呼。⚠️关键构图:**双臂高高伸直举过头顶,把一面大矩形旗帜完全展开在【头顶正上方】,整面旗在她头部上方、不与头/脸/头发/身体有任何重叠遮挡**(her head and face are clearly BELOW the flag; the flag floats fully above her head, completely unobstructed, all four corners visible). 旗=纯浅灰空白布(#d8d8d8)+轻微褶皱,规则矩形四角清晰,旗面无任何图案文字(留白后续贴真实国旗). 她在旗子下方仰头欢呼。构图露出:上方一整面旗+下方Q版人物,整体居中留边。画风:游戏贴纸表情包圆润粗描边大头Q版。⚠️禁双底差分(重影),单次生成+普通去背;保留2048高清_hires再缩256;旗和人完整不裁。",
+  "params": {
+    "model": "gpt",
+    "reference_images": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版\\WC_CheerMaster_Flag_hires.png"
+    ],
+    "output_dir": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版",
+    "output_filename": "WC_CheerMaster_FlagTop.png",
+    "postprocess": "single_pass_remove_bg_NO_dual_diff",
+    "keep_hires_1024": true,
+    "ensure_margin": true,
+    "timeout": 1200,
+    "override_note": "旗完全在头顶上方不遮挡头脸(让国旗中心图案可见);留白贴国旗;禁双底差分;保留hires"
+  },
+  "started_at": "2026-06-15T05:24:30+08:00",
+  "finished_at": "2026-06-15T05:40:00+08:00",
+  "result": {
+    "saved_to": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版\\WC_CheerMaster_FlagTop_1_hires.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版\\WC_CheerMaster_FlagTop_1_256.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版\\WC_CheerMaster_FlagTop_2_hires.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版\\WC_CheerMaster_FlagTop_2_256.png"
+    ],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

@@ -18,6 +18,9 @@ metadata:
 | 仓库大小 | 5.66 GB 代码 + 58 GB LFS（资源），66k+ commits |
 
 > 跟 [[reference_x3_gdconfig_repo]] `C:\x3\gdconfig\` 是**两个独立仓**：gdconfig 装配置 xlsx，x3-project 装代码+资源。
+> 但 x3-project 里**内嵌了一份 gdconfig**（`C:\x3-project\gdconfig\`，服务端读配置的来源）：pull/merge 时仓库 hook 会自动把它 fast-forward 到同名分支最新（输出 `[gdconfig] fast-forwarded ...; left superproject pointer unstaged`）。所以 pull 完 x3-project，服务端代码+配置都到位，**本地服重启才生效**；改配置仍只推 `C:\x3\gdconfig\`，内嵌这份别手动改。
+
+> **本机 ffmpeg 在这**：`client/Tools/VideoTools/ffmpeg/ffmpeg.exe`（+ffprobe/ffplay；系统 PATH 没有 ffmpeg，处理视频用它）。配套官方压缩工具 `compress_video.py`（crf28/slower/yuv420p 移动端策略）+ 视频提交合规 hook。
 
 ## 顶层结构
 

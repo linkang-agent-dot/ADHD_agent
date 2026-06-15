@@ -14,6 +14,9 @@ client 路径 `Assets/x2/Res/`：
 - `map/CityBuilding/X2_Map_{Theme}01/` — 大地图远景建筑(单模型)
 - `Shop/Town/Building/X2_T_Shop/X2_T_Shop_{Theme}01/` — 主城详细建筑(LOD0/Mesh_LOD0/1/Base + 阴影 + 4级变体01-04)
 - `Effect/Prefab/Shop/Fx_Shop_Map_{Theme}.prefab` + `Fx_Shop_{Theme}_Glow.prefab` — 大地图/主城特效
+  - ⚠️ **特效是内嵌进建筑 prefab 的子节点，换皮必查否则残留别节日特效**(X2-43083 拓荒踩坑)：`map/CityBuilding/X2_Map_{Theme}01.prefab` 内嵌 `Fx_Shop_Map_{Theme}` 子节点、`Shop/.../X2_T_Shop_{Theme}01_LOD0.prefab` 内嵌 `Fx_Shop_{Theme}_Glow`。每个主题建筑应内嵌**自己主题**的特效；从别节日复制建模时极易漏改特效引用 → 新皮肤显示旧节日特效(拓荒 X2_Map_Pioneer01 嵌成了夏日 Fx_Shop_Map_Xiarijie 泡泡+彩虹)。
+  - 主题↔特效前缀对照：拓荒/西部=`Xibu`、夏日节=`Xiarijie`、占星=`Astrology01`、飞升=`Soaring01`(美术前缀又一套，跟配置/资源前缀都不同)。
+  - 验收：`grep` 新建筑 prefab 引用的 Fx guid，比对该主题特效 prefab 的 guid；对照样板 = 同节日的 X2_Map / X2_T_Shop 必须各嵌自己的 Fx。修复需在 Unity 删旧特效子物体→拖入正确 Fx prefab（嵌套 prefab 实例的 fileID 绑死内部层级，纯文本换 guid 会留悬空引用）。
 - **2D 道具图标**：`UI/TextureNew/Decoration/{Theme}_icon_building.png`(单张方形 PNG, Sprite/2048/格式50) — 易漏，美术常只给3D不给这张；可用 grfal 拿建筑模型生图→抠图代生
   - ⚠️ **{Theme} 美术前缀≠配置前缀**：拓荒节配置用 `labor`(event_labor/LC_EVENT_labor_2026)，但**美术资源前缀是 `Pioneer`**(占星=Astrology)。找图按美术前缀，别用配置惯性猜 `Labor`。
   - ⚠️ **gacha 皮肤奖励界面的这张 icon 是 prefab 里写死的贴图引用，不走 DK**：`Assets/x2/Res/UI/Prefab/Activity/UIActivityLaborGacha.prefab` 内 `m_Sprite` 直接指 `Decoration/{Theme}_icon_building.png` 的 GUID。换节日要手动在 Unity 把这个 sprite 引用换成新主题图（2026-06-04 拓荒 commit 1eecfe36）。
@@ -43,5 +46,12 @@ client 路径 `Assets/x2/Res/`：
 - GSheet 写用 [[gsheet-toolkit]] gsheet_utils.py(写前 backup_tab、写后读回验证)；tsv 用 Edit 整行替换/追加(注意 CRLF)
 - 表号→QA表用 `gsheet_query.py resolve <表号|表名>`
 - 提交前 `python scripts/check_tsv_format.py <files>` 跑格式+跨表校验
+
+## 列表图标「偏大/顶框」类 BUG（X2-43082 拓荒踩坑）
+- 现象：CITY SKINS 选择界面里某皮肤列表图标比其他皮肤大、顶出图标框。
+- 根因：那张 `{Theme}_icon_building.png` 建筑**满铺到画布四边、无透明留白**（content fill≈100%）；图标框固定等比缩放→满铺的就顶出来。
+- 样板留白基准（Astrology，正常）：建筑只占 **高 64.8%**、宽≈80%，**顶部留白 28%、底部 7.4%**，底部对齐居中。修复时把问题图按此 profile 缩小重排即可（画布尺寸**保持原样不变**→ `.meta` 不用动）。
+- 这张图同时被 DK Icon（列表图标）+ gacha 奖励 prefab 的 `m_Sprite` 引用，改一张两处都修。
+- 处理完跑透明度差分校验（白底vs黑底合成相减）确认真透明，见 [[feedback_transparent_asset_diff_check]]。
 
 关联 [[x2-dk-p2-dk-manager]] [[gsheet-toolkit]] [[配置表知识库路径]]

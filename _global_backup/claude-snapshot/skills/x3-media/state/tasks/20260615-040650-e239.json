@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "task_id": "20260615-040650-e239",
+  "status": "success",
+  "type": "march_emoji",
+  "user_prompt": "世界杯应援表情【换队球衣·FRA】。以参考图(母版Q版爱莉希雅举花球欢呼)为准: **保持完全相同的角色、相同的姿势/动作/表情/构图/头身比/白金长发**, 唯一改变=把她的啦啦队应援装(短上衣+短裙)和双手花球的颜色图案换成: 法国 France: royal blue top and skirt with white and red French tricolor trim/accents; pom-poms blue-white-red. 不要改脸/发型/姿势/花球举姿,只换服装与花球的配色和图案。无任何品牌logo/无国旗国徽/无文字数字。Q版粗描边干净卡通画风,透明背景。⚠️禁止双底差分transparify(会重影),单次生成+普通去背;保留2048高清另存_hires再缩256;角色完整留边不裁花球。",
+  "params": {
+    "model": "gpt",
+    "reference_images": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版\\WC_CheerMaster_Aerisia_v2_1_hires.png"
+    ],
+    "output_dir": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情48",
+    "output_filename": "WC_CheerEmote_FRA.png",
+    "postprocess": "single_pass_remove_bg_NO_dual_diff",
+    "keep_hires_1024": true,
+    "ensure_margin": true,
+    "timeout": 1200,
+    "override_note": "换队球衣保持母版同角色同动作;禁双底差分;留边不裁;保留hires"
+  },
+  "started_at": "2026-06-15T04:07:00+08:00",
+  "finished_at": "2026-06-15T04:20:00+08:00",
+  "result": {
+    "saved_to": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情48\\WC_CheerEmote_FRA.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情48\\WC_CheerEmote_FRA_hires.png"
+    ],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

@@ -1,0 +1,7 @@
+{
+  "model": "gpt-image-1",
+  "prompt": "Using the reference image as the EXACT base: keep the same Q-version chibi character (platinum blonde long hair, big eyes, open mouth cheering expression, cheerleader short top + pleated mini skirt + knee-high socks + sneakers), same pose (both hands each holding one large pom-pom raised up), same front-facing half-body composition, same head-to-body ratio, same face shape. ONLY change: (1) cheerleader top + mini skirt + both pom-poms color scheme to Morocco team colors: deep red as dominant color with green trim/accents edges; (2) add a small clear face paint on the RIGHT cheek at cheekbone: Morocco flag design = solid red background with a single green pentagram star centered, approximately 1.5cm coin-sized, clean crisp edges, does NOT obscure any facial features. Art style strictly same as reference: clean thick outlines, cel-shading / cel-shaded 2D illustration, warm high-saturation colors, sticker aesthetic. Transparent background. ONE single character centered, do NOT generate multiple characters or grid layout. Full character visible with clear margin around all edges including pom-poms - do NOT crop any part.",
+  "size": "1024x1024",
+  "quality": "high",
+  "background": "transparent"
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "task_id": "20260615-051135-10fd",
+  "status": "success",
+  "type": "march_emoji",
+  "user_prompt": "世界杯应援表情【母版·举旗版】。以参考图(候选2:Q版爱莉希雅穿白足球球衣举围巾呐喊)为准:**保持完全相同的角色/脸/白金长发/Q版头身比/欢呼表情/双手高举的姿势/白色足球球衣球裤球袜球鞋**。唯一改动=把双手举的【围巾】换成【一面大的空白矩形旗帜】:both hands gripping the TOP-LEFT and TOP-RIGHT corners of a large rectangular FLAG held overhead, the flag is a PLAIN solid light-gray blank cloth(#d8d8d8) with subtle gentle fabric folds, front-facing flat rectangle, fully visible and unobstructed, NO emblem/pattern/text on it(留白以便后续贴真实国旗). 旗面尽量平整规则矩形、四角清晰。其余不变。画风:游戏内贴纸表情包圆润粗描边大头Q版。⚠️禁双底差分transparify(重影),单次生成+普通去背;保留2048高清_hires再缩256;角色+旗完整居中留边距不裁。",
+  "params": {
+    "model": "gpt",
+    "reference_images": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版\\WC_CheerMaster_Jersey_hires_2.png"
+    ],
+    "output_dir": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版",
+    "output_filename": "WC_CheerMaster_Flag.png",
+    "postprocess": "single_pass_remove_bg_NO_dual_diff",
+    "keep_hires_1024": true,
+    "ensure_margin": true,
+    "timeout": 1200,
+    "override_note": "举空白矩形旗(留白贴国旗)非围巾;保候选2角色姿势;禁双底差分;保留hires;留边不裁"
+  },
+  "started_at": "2026-06-15T05:11:35+08:00",
+  "finished_at": "2026-06-15T05:19:45+08:00",
+  "result": {
+    "saved_to": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版\\WC_CheerMaster_Flag_hires.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版\\WC_CheerMaster_Flag.png"
+    ],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "task_id": "20260615-035441-1c34",
+  "status": "success",
+  "type": "march_emoji",
+  "user_prompt": "世界杯应援表情【动作母版·重出修正版】Q版(chibi 2头身)爱莉希雅。⚠️上一版用双底差分抠图导致严重重影(半透明79%)——本次【禁止双底差分transparify】，改为【单次生成】(可生在纯绿幕solid flat green背景 #00b140 便于干净抠图，或模型直接透明)，Q版粗描边干净、普通去背即可、不要羽化重影。构图:角色完整居中、四周留足边距(margin>=8%)、双手花球不许被画布裁切。动作:双手高举一对金色啦啦队花球pom-poms、张嘴欢呼大笑、眼睛发亮、活力四射。服装:纯白为主+金色描边足球应援短上衣(plain WHITE jersey, gold trim, NO logo/flag/emblem/number, 纯白便于换队色)。保留爱莉希雅白金长发/精致脸型/魅力气质,转可爱Q版大头短身。画风:游戏内贴纸表情包(圆润粗黑描边/大头/两段式赛璐璐阴影/暖色高饱和/表情夸张)。",
+  "params": {
+    "model": "gpt",
+    "reference_images": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\足球宝贝爱莉希雅\\足球宝贝爱莉希雅_主稿_FINAL.png"
+    ],
+    "output_dir": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版",
+    "output_filename": "WC_CheerMaster_Aerisia_v2.png",
+    "postprocess": "single_pass_remove_bg_NO_dual_diff",
+    "keep_hires_1024": true,
+    "ensure_margin": true,
+    "timeout": 1200,
+    "override_note": "禁止transparify双底差分(上版重影79%);单次生成+普通remove_bg;保留1024高清版另存_hires;留边不裁花球"
+  },
+  "started_at": "2026-06-15T03:54:41+08:00",
+  "finished_at": "2026-06-15T04:08:00+08:00",
+  "result": {
+    "saved_to": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版\\WC_CheerMaster_Aerisia_v2.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版\\WC_CheerMaster_Aerisia_v2_hires.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版\\WC_CheerMaster_Aerisia_v2_2_256.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情_Q版\\WC_CheerMaster_Aerisia_v2_2_hires.png"
+    ],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

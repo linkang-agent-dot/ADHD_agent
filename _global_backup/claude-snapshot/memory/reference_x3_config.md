@@ -75,3 +75,9 @@ originSessionId: 7f1d10e6-76c8-46b3-b30d-957a641cda96
 | 210801-210811 | A线特惠连锁 | 阶梯 | 11 |
 | 210812-210815 | B线锚点 | 阶梯 | 15 |
 | 210816 | 主城皮肤礼包（新春典藏三件套） | $99.99 | 16 |
+
+## 新建可发放道具 + 道具图标DK机制(2026-06-15 世界杯券实战)
+- **建新道具**：克隆一个结构相近的现成 item 整行(如代币类1134)，改 col0=ID/col1=名/col3=描述/图标列，**清空 col10(ItemObtain 活动绑定)** 否则带着原道具的活动引用。Item 表 col20=主图标DK、col23=底框DK(如DK_Bg_CM_Item4)、col28=堆叠上限。
+- **道具图标走 Path_Item.asset**(不是Path_Activity)：两段(m_Keys列表 + key/objPath对)同序追加，**objPath直写png路径、不用GUID**。item 表 col20 填这个 DK 名。
+- **i18n**：客户端读 TXT_Item_Name_{ID}/TXT_Item_Desc_{ID}。⚠️Name 常在**多key合并行**(col0=`TXT_..._A|TXT_Item_Name_{ID}|TXT_Pack_...`)——别动合并行，**新建独立行** col0=TXT_Item_Name_{新ID}、col1=AI、col3起各语言列。Desc 多是独立行可克隆。
+- **坑**：上一会话口头说"已建item1146+图标+DK导表成功"全是假的，分支上 Item 表压根没有——**别信交接里"已完成"的说法，落地前 grep 真表确认**(`^ID\t` + 按名搜)。

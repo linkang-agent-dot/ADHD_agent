@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "task_id": "20260615-103704-3972",
+  "status": "success",
+  "type": "march_emoji",
+  "user_prompt": "世界杯应援表情【脸彩+队色·TUN】。以参考图(Q版爱莉希雅啦啦队:白金长发/大眼/张嘴欢呼/双手各举一个花球pom-pom/啦啦队短上衣+百褶短裙+过膝袜+运动鞋)为准:**保持完全相同的角色脸型/白金长发/Q版头身比/欢呼表情/双手举双花球的姿势/构图**。本队仅改:① 啦啦队上衣+短裙+双花球的配色图案换成:红色为主+白边 ② 右脸颊画一个小而清晰的国旗face paint:突尼斯(红底白圆红星月),贴在颧骨上、不遮挡五官. 画风严格沿用参考图(干净粗描边/赛璐璐/暖色高饱和/贴纸感),透明背景. ⚠️禁双底差分(重影),单次生成+普通去背;保留2048高清_hires再缩256;角色完整留边不裁花球.",
+  "params": {
+    "model": "gpt",
+    "reference_images": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情48\\WC_CheerEmote_ENG_raw2.png"
+    ],
+    "output_dir": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情48_脸彩",
+    "output_filename": "WC_FaceEmote_TUN.png",
+    "postprocess": "single_pass_remove_bg_NO_dual_diff",
+    "keep_hires_1024": true,
+    "ensure_margin": true,
+    "timeout": 1200,
+    "override_note": "脸彩+队色;保参考图同角色同动作;禁双底差分;保留hires;留边"
+  },
+  "started_at": "2026-06-15T10:37:04+08:00",
+  "finished_at": "2026-06-15T14:05:00+08:00",
+  "result": {
+    "saved_to": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情48_脸彩\\WC_FaceEmote_TUN.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情48_脸彩\\WC_FaceEmote_TUN_hires_nobg_1.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情48_脸彩\\WC_FaceEmote_TUN_hires_nobg_2.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情48_脸彩\\WC_FaceEmote_TUN_256_1.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情48_脸彩\\WC_FaceEmote_TUN_256_2.png"
+    ],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

@@ -23,6 +23,7 @@ gs.append_rows_safe(SID, '页签', rows)           # 追加到表尾（禁 appen
 gs.backup_tab(SID, '页签')                       # 备份 → _bak_MMDD_页签（写前必做）
 gs.delete_rows(SID, '页签', [(218,227),(2,139)]) # 删行（闭区间·自动从后往前）
 gs.ensure_grid(SID, '页签', rows=72, cols=11)    # 扩展行列（写超范围前调）
+sid, url = gs.create_spreadsheet('表标题', tabs=['页签1','页签2'])  # 新建表（tabs可选），返回(id,url)
 ```
 
 ## 用法（命令行只读速查）

@@ -1,22 +1,15 @@
 ---
-name: igame-actv recall/cancel 判断待实测
-description: 用户要求下次"下活动 / 撤回活动"时，主动测一下 skill 里 recall vs cancel 的分层判断是否能正确执行。
-type: project
-originSessionId: c540f3a7-ccbb-44c2-bcba-b55e73c2c111
+name: igame-actv-recall-cancel-x2
+description: 2026-06-11 X2 拓荒节试发撤回实测完成——X2 提交即直发无审批态，recall 空操作、cancel(逗号字符串ids) 才生效；P2 审批流场景仍未验证。
+metadata: 
+  node_type: memory
+  type: project
+  originSessionId: ff6264eb-1436-4bff-92cf-2ed3438db9ec
 ---
-igame-actv skill 里的"下线活动"分层判断（recall vs cancel）刚改完文档，
-**还没有在真实场景下被验证过**。
 
-**Why:** 用户 2026-04-15 在三轮纠正后定稿了"任务+状态"分层规则
-（详见 feedback_igame_cancel_vs_recall.md）。用户明确要求：下次"下活动 /
-撤回活动"时，喊一下让我测这块。
+**2026-06-11 X2 实测结果**（id 13541/13542，拓荒节试发后撤回）：
+- X2 活动提交后**直发游戏服、无审批态**（detail status 直接 20=已部署），不存在"部署申请状态"，所以 **recall 是空操作**（返回 success 但 updatedAt 不动、部署还在——别被 success 骗）。
+- 生效的是 `activity/operation/cancel`，**ids 必须逗号字符串** `"13541,13542"`（数组 400）；成功后 status 20→7。
+- 原"部署申请→recall / 上线中→cancel"规则在 X2 上简化为：**一律 cancel**（除非未来遇到真有审批态的提交）。细节已沉淀 [[workflow-x2-festival-launch-table]]。
 
-**How to apply:**
-- 触发条件：用户说"下活动" / "下线活动" / "撤回活动" / "取消活动" 等涉及
-  recall 或 cancel 的场景
-- 要做的事：主动按 SKILL.md 的"下线活动：撤回 vs 取消"小节走一遍判断
-  1. 先确认目标活动当前状态（部署申请状态 vs 上线中状态）
-  2. 按状态选 recall 或 cancel
-  3. 跟用户口头复述一遍判断逻辑再执行
-- 验证完后把结果反馈给用户，如果文档还有歧义就继续修
-- 测完可以删掉这条 memory
+**遗留**：P2（有审批流？）场景的 recall 路径仍未实测——下次 P2 下活动时再验一次，验完这条可删。

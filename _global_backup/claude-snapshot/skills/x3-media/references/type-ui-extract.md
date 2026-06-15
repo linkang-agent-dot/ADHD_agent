@@ -219,3 +219,5 @@ python "<x3-media>/scripts/ui_extract_postprocess.py" \
 7. **不甩脚本给用户**：直接执行 `call_grfal.py`（可加 `--download-dir`）
 8. **必须做后处理**：trimmed 不是终态，individual 模式跑 `ui_extract_postprocess.py`（resize + 量化），只有 `<id>_final.png` 才是入 Unity 的版本
 9. **类型归类必须显式**：individual 模式为每个 id 生成 `manifest.json`（id → element_class）
+10. **⭐ 抠"图中某一块"必须附裁片参考（2026-06-12 三连返工教训）**：只给整图 reference + 文字描述，模型自己挑区域极易错位/配色看走眼（世界杯队伍板：v1 脑补成月桂横幅、v2 配色切成深绿深蓝，实际是亮黄绿/浅蓝，返工三次）。正解=主 agent/worker 先用 PIL 按比例 bbox 把目标区域裁出来，作为**第二张 reference** 与整图一起传（整图=上下文，裁片=精确目标），prompt 注明"extract exactly the element shown in the second reference"。
+11. **⭐ 几何规整件（板/条/框）双保险打法（2026-06-12 定版）**：这类件 AI 默认手抖（波浪边/不对称/透视），prompt 必须钉死「perfectly axis-aligned rounded rectangle + 精确颜色 + 列出此前错误版本当反面清单」——钉死后 AI 能出"又正又华丽"的成品（世界杯队伍板 v3 翻盘实证）。同时用 `C:\ADHD_agent\scripts\draw_ui_panel.py` 程序绘制一版当保底（秒出/参数可调/绝对规整但偏素），两版对比择优：AI 正了用 AI（质感赢），AI 还歪用程序版。

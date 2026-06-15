@@ -20,3 +20,6 @@ metadata:
 **架构层面别动**：producer + 独立 checker agent（沙箱只读、判定与执行物理分离）是对的，优化只在 check 的内容/prompt，不在架构。价值全在第二遍的"视角独立/对抗"，不在"看了两遍"——同一 lens 查两遍只抓错别字。
 
 落地文件：`C:\ADHD_agent\.claude\quality-gate\*-checklist.md`。相关 [[project_quality_gate_and_interaction_module]] [[feedback_verification_end_to_end]] [[feedback_proactive_knowledge_update]]。
+
+**补充：UI 拼装/操作指南的"维度完整性"（2026-06-11 世界杯竞猜踩坑）**：给人写 UI 拼装类指南，逐节点覆盖六维——结构(层级命名)/组件(类型)/图(sprite+九宫格)/尺寸(WxH锚点)/**颜色(文字色遮罩色,最易漏!)**/字号。漏颜色维度=用户拼完发现文字糊在底色里返工（被批"这个你之前漏说了"）。出指南前按六维对效果图逐槽位取值。
+第七维补遗(2026-06-12)：**图层叠放结构**——效果图里的元素是"容器板→主体件→嵌入件"成组叠的，指导替换素材必须保住整组层级；只换内层单件（如只贴名牌条不垫竖板容器）=元素飘在背景上没有容器感，用户反馈"感觉很怪"。

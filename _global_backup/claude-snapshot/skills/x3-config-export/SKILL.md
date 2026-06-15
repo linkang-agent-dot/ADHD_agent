@@ -103,6 +103,15 @@ python <skill>\scripts\jolt_verify.py <branch>
 ### 其他表
 列位置因表而异，**一律先 `tsv_edit.py show` 确认列号再 set**，别凭记忆。常用表参见 memory `reference_x3_score_activity` / `reference_config_library`。
 
+### 新增整行（2026-06-12 世界杯竞猜实操沉淀）
+- tsv_edit.py 无 append 子命令——写小脚本追加：**列数 pad 到表头行宽度**、LF 写盘、写前断言 ID 不存在；先全表预查新 ID 占用。
+- **Pack.Price 列(field[7])填 PackPrice 档位 id**（105=$4.99/107=$9.99/111=$19.99/116=$49.99），不是美元数；field[6]=美元备注列；Content(field[13])=Reward 组 id。
+- **免费包无先例**：全表无 GemPrice=0 行；UseGem 不在任何 tsv（导表推导字段）——免费领取型先配 GemPrice=1 钻占位，零价支持找程序确认。
+- **pre-commit gate 实操**：只改 tsv 直接 commit 会被本地 gate 拦。流程=①工作区无关 unstaged 改动先 `git stash push -- <文件>`（否则拒 auto-sync）②`python scripts/sync_xlsx_tsv.py --from-tsv --files tsv/<改过的>.tsv` 补 xlsx ③tsv+xlsx 一起 commit，gate 逐格 identical 即过（一次过，不会 rc=24 二次触发）。
+- TimeCycle 活动行模板：TriggerType=5(部署起算)+StartTime=00:00:00+DurationType=1+Duration=29d23h59m59s。
+- ActvPack.FinalReward 别填 0/空（依赖校验风险），指向低价值真实 Reward 组兜底。
+- **★配置表文本列机制（2026-06-13 实证）**：文本列（Pack.Name/Desc、ActvOnline.ActvName/ActvDesc 等"TXT_"注释列）**单元格内容不进客户端**——proto 运行时写死拼 `TXT_{表}_{字段}_{行ID}`（如 TXT_Pack_Name_891101，见 CfgProtoTextEx.cs）去 i18n bytes 查。所以：①单元格填中文原文（仅供翻译扫描器用）②**新行文本要显示=把自动 key 直接写进 Text 表**（tsv/i18n/Text__Text.tsv，27列，key|AI|key|cn|en|...10语种，行尾 pad 空到27列）③别把自定义 key 填进单元格（白填，运行时根本不读）。代码里 LocalizationMgr.Get 直引的自定义 key 才需要自定义命名。EN 客户端文本空白=该自动 key 的 en 列没值。
+
 ## i18n 翻译例外
 
 翻译文本（`tsv/i18n/Text__Text.tsv`）涉及扫描/翻译工具链，仍可走 xlsx：改 `data/i18n/Text.xlsx` → `python C:\x3\gdconfig\scripts\xlsx_to_tsv.py --files data/i18n/Text.xlsx` 重生成 → 提交 tsv。或直接改 tsv 的语言列（状态列改 `AI`）。详见 `reference_x3_i18n_workflow`。

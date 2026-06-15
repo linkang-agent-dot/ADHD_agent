@@ -1,0 +1,32 @@
+{
+  "template": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\头像框_X3风格试点\\Img_Player_AvatarFrame_WC_France_mid_v2_alt1.png",
+  "tier": "base",
+  "color_source": "team-color-priority(48队球衣参考表)",
+  "ball": "national-colors",
+  "teams": {
+    "NED": {
+      "task_id": "20260615-160302-3756",
+      "name": "Netherlands",
+      "file": "Img_Player_AvatarFrame_WC_NED.png",
+      "status": "pilot-pending"
+    },
+    "BRA": {
+      "task_id": "20260615-160302-5e25",
+      "name": "Brazil",
+      "file": "Img_Player_AvatarFrame_WC_BRA.png",
+      "status": "pilot-pending"
+    },
+    "ARG": {
+      "task_id": "20260615-160302-bb6c",
+      "name": "Argentina",
+      "file": "Img_Player_AvatarFrame_WC_ARG.png",
+      "status": "pilot-pending"
+    },
+    "GER": {
+      "task_id": "20260615-160302-15ff",
+      "name": "Germany",
+      "file": "Img_Player_AvatarFrame_WC_GER.png",
+      "status": "pilot-pending"
+    }
+  }
+}

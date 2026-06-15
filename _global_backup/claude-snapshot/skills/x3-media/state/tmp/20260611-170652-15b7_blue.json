@@ -1,0 +1,6 @@
+{
+  "model": "gpt",
+  "prompt": "Recreate ONLY the RIGHT team container panel from the reference image. It is a tall, vertical rounded-rectangle panel with an ornate decorative GOLD border frame and a BLUE inner fill (light blue / sky-blue tone matching the reference), topped/wrapped with golden laurel-leaf ornament, and a small dark horizontal nameplate strip across the bottom. CRITICAL: produce the panel EMPTY — completely REMOVE the round shield crest, REMOVE the soccer ball decoration, REMOVE all country name text inside the dark nameplate strip. Keep ONLY: the blue panel frame, the gold ornate border, the golden laurel ornament, and the empty (blank, no text) dark nameplate strip at the bottom. Output ONE single panel, centered, on a fully TRANSPARENT background, no other UI elements, no VS badge, no gift box, no text anywhere. Same art style, colors, lighting and gold-line detailing as the reference. High resolution, crisp edges.",
+  "size": "1024x1024",
+  "transparent": false
+}

@@ -1,0 +1,7 @@
+{
+  "model": "gpt-image-1",
+  "prompt": "Q-chibi cheerleader girl, white platinum long hair, big expressive eyes, open mouth cheering, both hands raised holding colorful pom-poms, cheerleader short top + pleated mini skirt + over-knee socks + sneakers. KEEP EXACTLY the same character face shape / white-platinum hair / Q-chibi head-body ratio / cheering expression / both hands raised with pom-poms / composition as the reference image. ONLY change: (1) top + skirt + both pom-poms color scheme: predominantly white base with black-red-gold tri-color V-neck stripe trim; (2) right cheek face paint: small clear German flag (three horizontal bands: black top, red middle, gold bottom), placed on cheekbone, NOT covering eyes/nose/mouth. Art style strictly matches reference: clean thick outlines, cel-shading / cel-shade two-tone, warm high-saturation colors, sticker-like feel. Transparent background (PNG with alpha). ONE single character sticker, no grid, no multiple images. Character fully in frame with margin, do NOT crop pom-poms.",
+  "size": "1024x1024",
+  "background": "transparent",
+  "quality": "high"
+}

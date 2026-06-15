@@ -1,0 +1,30 @@
+{
+ "schema_version": 1,
+ "task_id": "20260613-095216-c7bb",
+ "status": "success",
+ "type": "general",
+ "user_prompt": "2026世界杯队徽批量·土耳其(TUR)：与参考图完全同风格的国家队徽（金盾+两侧金月桂+底部金足球），盾面=土耳其国旗元素。透明icon走双底差分。",
+ "params": {
+  "model": "gpt",
+  "reference_images": [
+   "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\切图\\T2_队徽_巴西_final.png"
+  ],
+  "output_dir": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\队徽48",
+  "output_filename": "WC_Badge_TUR.png",
+  "postprocess": "transparify_256",
+  "prompt_en": "A national football team badge in EXACTLY the same style, proportions and rendering as the reference image: an ornate golden shield crest framed by golden laurel wreath branches on both sides, with a small golden soccer ball at the bottom center. The shield face shows: Turkey flag: red face with a white crescent and star. Rich gold metallic rendering identical to the reference. NO text, NO letters, ONE single badge.",
+  "notes": "★ICON透明硬规则=双底差分：同一prompt分别生白底/黑底（除背景词外一字不差,带同一张reference）→ transparify_asset.py --white W --black B 反推alpha → trim → resize 256x256。验真透明。风格锚=巴西徽,结构(盾+月桂+球)和金色质感必须一致。"
+ },
+ "started_at": "2026-06-13T03:23:01+00:00",
+ "finished_at": "2026-06-13T03:48:34+00:00",
+ "result": {
+  "saved_to": [
+   "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\队徽48\\WC_Badge_TUR.png"
+  ],
+  "history_lines_appended": 1,
+  "backend": "grfal"
+ },
+ "error": null,
+ "retry_count": 0,
+ "created_by": "resume"
+}

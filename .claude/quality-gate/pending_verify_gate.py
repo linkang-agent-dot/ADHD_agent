@@ -3,8 +3,9 @@
 """
 收工拦门 (Stop hook)。两道，均 fail-open（任何错都放行，绝不卡死收工）：
   道1 · 验收 marker：~/.claude/.pending_verify/ 有 status=pending 的 marker → 拦，提示派 task-checker。
-  道2 · 收工自检（反馈循环 + 归档）：本次会话动过文件(Write/Edit) 且没刚拦过 → 拦一次，
-        提醒过「新规律沉淀 / 产物归档 / 复用工具」三问——不靠用户提醒（feedback_proactive_knowledge_update）。
+  道2 · 收工自检（反馈循环 + 归档 + 归纳）：本次会话动过文件(Write/Edit) 且没刚拦过 → 拦一次，
+        提醒「新规律沉淀 / 产物归档 / 复用工具 / 归纳接管化」四问——不靠用户提醒
+        （feedback_proactive_knowledge_update + workflow_handover_assetization）。
   防死循环：道2 拦一次后写时间戳，180s 内 或 stop_hook_active=true → 不再拦。
 被 ~/.claude/settings.json 的 Stop hook 调用，input(JSON) 从 stdin 进。
 marker 的建/删/改由主 Claude 负责，本脚本只读不写（仅道2 写自己的时间戳便利贴）。
@@ -94,6 +95,10 @@ def main():
         "  1. 反馈循环：有没有新规律 / 踩坑 / 方法论 / 新链路？→ 当场沉淀到 memory / 流程文档 / checklist（元规则 feedback_proactive_knowledge_update：不攒、不等提醒）。\n"
         "  2. 归档：有没有产物（原型 / 报告 / 方案 / 配置 / 图 / 范本）？→ 归档到 KB 固定路径（见 reference_output_paths）。\n"
         "  3. 复用而非现写：有没有把可复用的工具/脚本固化进知识库，而不是留一堆一次性脚本？\n"
+        "  4. 归纳（接管化·默认直接做不问用户）：1-3 只兜「有没有沉淀」，这条兜「沉淀得能不能被接管」。判据=新 agent\n"
+        "     冷启动能否在「修BUG/接管模块/换皮」任一入口立刻拿到全部 keypoint？不能就当场归纳（不必征求用户）——小任务\n"
+        "     回写一行 why，一个案子/项目=三件套(决策记录按模块/换皮清单/产物目录FINAL废弃标注)挂进唯一入口，禁止只\n"
+        "     留时间线流水账（范式 workflow_handover_assetization；用户把关靠每周归纳清单兜底,随 token 周报周五一起出）。\n"
         "都做了/不适用，再收工。"
     )
 

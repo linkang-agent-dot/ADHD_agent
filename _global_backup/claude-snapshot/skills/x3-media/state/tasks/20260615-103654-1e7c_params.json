@@ -1,0 +1,8 @@
+{
+  "tool": "generate_image",
+  "model": "gpt-image-1",
+  "prompt": "expressive in-game sticker emoji portrait, western-cartoon mobile game style, chibi proportions with oversized head and short upper torso, thick dark outline, rounded simplified shapes, clean two-step cel shading, warm saturated colors, large readable facial features, enlarged hands for gesture readability when needed, half-body close-up, centered composition, stable top padding, clear silhouette, transparent background, no frame, no card, no scene background, not realistic, not painterly, not regular UI icon, EXACTLY the same character as the reference image: same platinum-blonde long hair, same large sparkling eyes, same open-mouth cheering expression, same Q-proportion chibi head-to-body ratio, same pose with both arms raised each holding a pom-pom, same cheerleader outfit silhouette. ONLY change the colors and design: cheerleader top and pleated skirt and both pom-poms are now RED as primary color with BLUE and WHITE trim/accents (Panama team colors). On the RIGHT cheek (viewer left), paint a small clear face-paint national flag of Panama: white background with blue and red rectangular quarters and a single small star in the center, placed on the cheekbone, small and crisp, NOT covering any facial features. Art style strictly matches reference: clean thick outlines, cel-shading, warm high-saturation colors, sticker aesthetic. Transparent background. Character fully visible with margins, pom-poms fully visible, no cropping.",
+  "size": "1024x1024",
+  "quality": "high",
+  "background": "transparent"
+}

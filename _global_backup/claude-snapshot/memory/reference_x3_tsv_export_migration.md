@@ -34,6 +34,17 @@ gate 日志关键行：`[sync_xlsx_tsv] auto-safe decision group=data/Reward.xls
 - `! [rejected] HEAD -> dev (fetch first)` + `failed to push some refs to 'git@git.tap4fun.com:x3/x3-project.git'` → **导表 job 末尾把生成的配置推回 x3-project(client_master)仓时撞了并发 push**（别人同时也在 push x3-project/dev）。**表转换/depend_checks 全过了，纯下游 push race，跟你的数据无关**。解法：直接**重新触发导表**（job 会重新 fetch 再 push）；可能 build 已在队列中（`触发失败:任务已在队列`），轮询那个 build 号即可。2026-06-05 实测：#612 因此 FAILURE，重触发 #613 SUCCESS。
 - **本地 pre-commit 钩子已自动同步**：只改 tsv 时，gdconfig 的 `git commit` 本地 pre-commit hook (`sync_xlsx_tsv`) 会当场 `direction=tsv->xlsx` 把改动同步进 data/<表>.xlsx 并**把重生成的 xlsx 一起 add 进本次 commit**（输出末尾 `mismatch=0 crlf=0`）→ 提交即 xlsx/tsv 一致，导表一步过，**不再是旧版的 rc=24 两步**。副作用：commit 会顺带带进 xlsx 里别人之前只改 tsv 攒下的历史漂移（一次性刷掉，正常）。
 
+## ★xlsx 需要插行/改值时的安全编辑法（2026-06-12 HeroSkin 104001 实测）
+
+**先说结论：xlsx 千万别用 openpyxl 写，也别跑 `sync_xlsx_tsv.py --from-tsv`**——两者都用 openpyxl 重存整个工作簿，会**丢掉全簿所有公式单元格的缓存值**（文件瘦 40KB+ 即中招）。更毒的连锁：缓存空了之后 commit 时 pre-commit gate 自动 `xlsx->tsv` 同步，会把空值灌进 tsv 的公式列——实测把 `Hero__HeroSkill.tsv` 的 **Id 列整列清空**（6948行），还好没 push，`git reset --hard` 救回。校验器是**按字符串比对**不是数值比对（`95.3020134228188` ≠ `95.30201342281879` 也算 mismatch）。
+
+**安全姿势（插行，一次过 gate）**：
+1. **Excel/WPS COM 编辑**（保公式缓存）：`win32com Dispatch('Excel.Application')`，`xl.Calculation=-4135`(manual)+`CalculateBeforeSave=False`，`ws.Rows(n).Insert()` 填值，保存。表内插行会自动扩 table ref + 自动填计算列公式。
+2. COM 保存仍会"规范化"少量浮点缓存串（17位→15位 shortest repr，本次 15 个格子）→ **zip 手术**改回：遍历 `xl/worksheets/sheetN.xml` 的 `<c r="X"><v>num</v>`，与同坐标 tsv 串比对，**数值相等但字符串不同的，把 xlsx 串替换成 tsv 串**。已固化成工具 `~/.claude/skills/x3-config-export/scripts/xlsx_cache_repair.py`（用法见脚本 docstring）。
+3. `python scripts/sync_xlsx_tsv.py --check --files data/<表>.xlsx` 到 **mismatch=0**，再把 tsv 改成与 xlsx 完全一致 → commit。gate 输出 `both sides changed, formatted diffs are identical; no sync needed` = 理想通过形态。
+
+**只改一个字符串单元格**（如换 DK 名）不用 COM：直接 zip 手术 `xl/sharedStrings.xml` 字符串替换 + tsv 同串替换，零重算噪声，秒过。
+
 > 下面 2026-05-29 的"只改 tsv 不碰 xlsx / xlsx 下周删"是 gate 出现**之前**的旧流程，保留作沿革；以本章节为准。
 
 ---
