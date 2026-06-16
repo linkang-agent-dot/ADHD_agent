@@ -1,0 +1,232 @@
+{
+  "template": "环=队色渐变纹理+国旗球+骨架不变",
+  "paradigm": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\头像框_国旗球_环纹理试点\\Img_Player_AvatarFrame_WC_JPN.png",
+  "done4": [
+    "JPN",
+    "FRA",
+    "CRO",
+    "BRA"
+  ],
+  "teams": {
+    "MEX": {
+      "task_id": "20260615-220829-9be8",
+      "name": "Mexico",
+      "status": "pending"
+    },
+    "RSA": {
+      "task_id": "20260615-220829-08f8",
+      "name": "South Africa",
+      "status": "pending"
+    },
+    "KOR": {
+      "task_id": "20260615-220829-3c42",
+      "name": "South Korea",
+      "status": "pending"
+    },
+    "CZE": {
+      "task_id": "20260615-220829-b59f",
+      "name": "Czechia",
+      "status": "pending"
+    },
+    "CAN": {
+      "task_id": "20260615-220829-43f0",
+      "name": "Canada",
+      "status": "pending"
+    },
+    "BIH": {
+      "task_id": "20260615-220829-4456",
+      "name": "Bosnia",
+      "status": "pending"
+    },
+    "QAT": {
+      "task_id": "20260615-220829-0fd2",
+      "name": "Qatar",
+      "status": "pending"
+    },
+    "SUI": {
+      "task_id": "20260615-220829-9fa2",
+      "name": "Switzerland",
+      "status": "pending"
+    },
+    "MAR": {
+      "task_id": "20260615-220829-f579",
+      "name": "Morocco",
+      "status": "pending"
+    },
+    "HAI": {
+      "task_id": "20260615-220829-892e",
+      "name": "Haiti",
+      "status": "pending"
+    },
+    "SCO": {
+      "task_id": "20260615-220829-229b",
+      "name": "Scotland",
+      "status": "pending"
+    },
+    "USA": {
+      "task_id": "20260615-220829-b8f3",
+      "name": "United States",
+      "status": "pending"
+    },
+    "PAR": {
+      "task_id": "20260615-220829-c420",
+      "name": "Paraguay",
+      "status": "pending"
+    },
+    "AUS": {
+      "task_id": "20260615-220829-c740",
+      "name": "Australia",
+      "status": "pending"
+    },
+    "TUR": {
+      "task_id": "20260615-220829-6b74",
+      "name": "Turkey",
+      "status": "pending"
+    },
+    "GER": {
+      "task_id": "20260615-220829-94c1",
+      "name": "Germany",
+      "status": "pending"
+    },
+    "CUW": {
+      "task_id": "20260615-220829-ca03",
+      "name": "Curacao",
+      "status": "pending"
+    },
+    "CIV": {
+      "task_id": "20260615-220829-4826",
+      "name": "Ivory Coast",
+      "status": "pending"
+    },
+    "ECU": {
+      "task_id": "20260615-220829-b529",
+      "name": "Ecuador",
+      "status": "pending"
+    },
+    "NED": {
+      "task_id": "20260615-220829-e98f",
+      "name": "Netherlands",
+      "status": "pending"
+    },
+    "SWE": {
+      "task_id": "20260615-220829-fed9",
+      "name": "Sweden",
+      "status": "pending"
+    },
+    "TUN": {
+      "task_id": "20260615-220829-0c04",
+      "name": "Tunisia",
+      "status": "pending"
+    },
+    "BEL": {
+      "task_id": "20260615-220829-1e06",
+      "name": "Belgium",
+      "status": "pending"
+    },
+    "EGY": {
+      "task_id": "20260615-220829-3192",
+      "name": "Egypt",
+      "status": "pending"
+    },
+    "IRN": {
+      "task_id": "20260615-220829-b1e7",
+      "name": "Iran",
+      "status": "pending"
+    },
+    "NZL": {
+      "task_id": "20260615-220829-64d5",
+      "name": "New Zealand",
+      "status": "pending"
+    },
+    "ESP": {
+      "task_id": "20260615-220829-111e",
+      "name": "Spain",
+      "status": "pending"
+    },
+    "CPV": {
+      "task_id": "20260615-220829-d345",
+      "name": "Cape Verde",
+      "status": "pending"
+    },
+    "KSA": {
+      "task_id": "20260615-220829-3518",
+      "name": "Saudi Arabia",
+      "status": "pending"
+    },
+    "URU": {
+      "task_id": "20260615-220829-9a77",
+      "name": "Uruguay",
+      "status": "pending"
+    },
+    "SEN": {
+      "task_id": "20260615-220829-26ee",
+      "name": "Senegal",
+      "status": "pending"
+    },
+    "IRQ": {
+      "task_id": "20260615-220829-516f",
+      "name": "Iraq",
+      "status": "pending"
+    },
+    "NOR": {
+      "task_id": "20260615-220829-60c4",
+      "name": "Norway",
+      "status": "pending"
+    },
+    "ALG": {
+      "task_id": "20260615-220829-7041",
+      "name": "Algeria",
+      "status": "pending"
+    },
+    "AUT": {
+      "task_id": "20260615-220829-9d4b",
+      "name": "Austria",
+      "status": "pending"
+    },
+    "JOR": {
+      "task_id": "20260615-220829-c4f1",
+      "name": "Jordan",
+      "status": "pending"
+    },
+    "POR": {
+      "task_id": "20260615-220829-de08",
+      "name": "Portugal",
+      "status": "pending"
+    },
+    "COD": {
+      "task_id": "20260615-220829-fbd7",
+      "name": "DR Congo",
+      "status": "pending"
+    },
+    "UZB": {
+      "task_id": "20260615-220829-24c9",
+      "name": "Uzbekistan",
+      "status": "pending"
+    },
+    "COL": {
+      "task_id": "20260615-220829-102c",
+      "name": "Colombia",
+      "status": "pending"
+    },
+    "ENG": {
+      "task_id": "20260615-220829-d7f8",
+      "name": "England",
+      "status": "pending"
+    },
+    "GHA": {
+      "task_id": "20260615-220829-20ba",
+      "name": "Ghana",
+      "status": "pending"
+    },
+    "PAN": {
+      "task_id": "20260615-220829-3f62",
+      "name": "Panama",
+      "status": "pending"
+    },
+    "ARG": {
+      "task_id": "20260615-220858-1b6f",
+      "name": "Argentina",
+      "status": "pending"
+    }
+  }
+}
