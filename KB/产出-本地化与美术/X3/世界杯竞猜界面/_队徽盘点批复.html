@@ -1,0 +1,31 @@
+<html><head><meta charset=utf-8><style>
+body{background:#1a1d29;color:#eee;font-family:sans-serif;padding:20px}
+h2{text-align:center}
+.bar{position:sticky;top:0;background:#2a2f42;padding:12px;border-radius:8px;margin-bottom:16px;text-align:center;z-index:9}
+.bar b{color:#7af} .bar button{margin:0 6px;padding:6px 14px;border-radius:6px;border:0;background:#4a5680;color:#fff;cursor:pointer}
+#out{display:inline-block;min-width:200px;background:#1a1d29;padding:4px 10px;border-radius:4px;font-family:monospace}
+.g{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;max-width:1400px;margin:auto}
+.cd{background:#252a3a;border-radius:10px;padding:10px;text-align:center}
+.cd.ref{background:#3a2e1a;border:2px solid #d4a017}
+.cd img{width:100%;background:repeating-conic-gradient(#444 0 25%,#383838 0 50%) 50%/20px 20px;border-radius:6px}
+.nm{font-size:15px;font-weight:bold;margin-top:6px} .mt{font-size:11px;color:#9ab;margin:4px 0;line-height:1.5}
+label{font-size:12px;cursor:pointer;display:block;margin-top:4px;color:#ffd}
+</style></head><body>
+<h2>世界杯队徽批复 — 勾"免标准化(已OK)"的,其余我做标准化</h2>
+<div class=bar>已勾免标准化 <b id=cnt>0</b> 个: <span id=out>(未勾选)</span>
+<button onclick=cp()>复制清单</button> <button onclick=clr()>清空</button>
+<br><small style="color:#9ab">勾选自动保存,刷新不丢。勾完点"复制清单"发我。标杆BRA/ARG=占画面~83×80%/填充50%</small></div>
+<div class=g><div class="cd ref"><img src="队徽48/WC_Badge_BRA.png"><div class=nm>BRA ★标杆</div><div class=mt>256×256 | 填充49% | 占画面 83×80%<br>边距 上25 下26 左21 右22 px | 半透明0.0%</div></div><div class="cd ref"><img src="队徽48/WC_Badge_ARG.png"><div class=nm>ARG ★标杆</div><div class=mt>256×256 | 填充51% | 占画面 84×78%<br>边距 上28 下29 左20 右22 px | 半透明0.0%</div></div><div class="cd "><img src="队徽48_重抠试点/WC_Badge_CAN.png"><div class=nm>CAN</div><div class=mt>256×256 | 填充68% | 占画面 97×95%<br>边距 上6 下7 左4 右4 px | 半透明1.8%</div><label><input type=checkbox class=ck data-code="CAN" onchange=save()> 免标准化(已OK)</label></div><div class="cd "><img src="队徽48_重出FINAL/WC_Badge_CIV.png"><div class=nm>CIV</div><div class=mt>256×256 | 填充48% | 占画面 83×82%<br>边距 上15 下31 左22 右22 px | 半透明2.1%</div><label><input type=checkbox class=ck data-code="CIV" onchange=save()> 免标准化(已OK)</label></div><div class="cd "><img src="队徽48_重出FINAL/WC_Badge_COD.png"><div class=nm>COD</div><div class=mt>256×256 | 填充45% | 占画面 79×79%<br>边距 上15 下38 左28 右27 px | 半透明1.7%</div><label><input type=checkbox class=ck data-code="COD" onchange=save()> 免标准化(已OK)</label></div><div class="cd "><img src="队徽48_重出试点4/WC_Badge_COL.png"><div class=nm>COL</div><div class=mt>256×256 | 填充41% | 占画面 76×76%<br>边距 上23 下38 左30 右31 px | 半透明2.2%</div><label><input type=checkbox class=ck data-code="COL" onchange=save()> 免标准化(已OK)</label></div><div class="cd "><img src="队徽48_重出试点4/WC_Badge_CUW.png"><div class=nm>CUW</div><div class=mt>256×256 | 填充37% | 占画面 60×80%<br>边距 上22 下28 左51 右51 px | 半透明0.8%</div><label><input type=checkbox class=ck data-code="CUW" onchange=save()> 免标准化(已OK)</label></div><div class="cd "><img src="队徽48_重抠试点/WC_Badge_GER.png"><div class=nm>GER</div><div class=mt>256×256 | 填充36% | 占画面 84×80%<br>边距 上19 下33 左20 右20 px | 半透明17.8%</div><label><input type=checkbox class=ck data-code="GER" onchange=save()> 免标准化(已OK)</label></div><div class="cd "><img src="队徽48_重出试点4/WC_Badge_KOR.png"><div class=nm>KOR</div><div class=mt>256×256 | 填充39% | 占画面 74×74%<br>边距 上19 下48 左33 右33 px | 半透明1.7%</div><label><input type=checkbox class=ck data-code="KOR" onchange=save()> 免标准化(已OK)</label></div><div class="cd "><img src="队徽48_重抠试点/WC_Badge_NED.png"><div class=nm>NED</div><div class=mt>256×256 | 填充28% | 占画面 77×77%<br>边距 上22 下36 左29 右29 px | 半透明19.5%</div><label><input type=checkbox class=ck data-code="NED" onchange=save()> 免标准化(已OK)</label></div><div class="cd "><img src="队徽48_重出FINAL/WC_Badge_NOR.png"><div class=nm>NOR</div><div class=mt>256×256 | 填充48% | 占画面 84×79%<br>边距 上19 下34 左21 右21 px | 半透明1.7%</div><label><input type=checkbox class=ck data-code="NOR" onchange=save()> 免标准化(已OK)</label></div><div class="cd "><img src="队徽48_重出NZL_SWE/WC_Badge_NZL.png"><div class=nm>NZL</div><div class=mt>256×256 | 填充43% | 占画面 77×77%<br>边距 上22 下36 左30 右30 px | 半透明1.9%</div><label><input type=checkbox class=ck data-code="NZL" onchange=save()> 免标准化(已OK)</label></div><div class="cd "><img src="队徽48_重出试点4/WC_Badge_POR.png"><div class=nm>POR</div><div class=mt>256×256 | 填充36% | 占画面 58×84%<br>边距 上17 下25 左54 右53 px | 半透明0.7%</div><label><input type=checkbox class=ck data-code="POR" onchange=save()> 免标准化(已OK)</label></div><div class="cd "><img src="队徽48_重出FINAL/WC_Badge_SUI.png"><div class=nm>SUI</div><div class=mt>256×256 | 填充49% | 占画面 82×82%<br>边距 上17 下28 左22 右23 px | 半透明2.2%</div><label><input type=checkbox class=ck data-code="SUI" onchange=save()> 免标准化(已OK)</label></div><div class="cd "><img src="队徽48_重出NZL_SWE/WC_Badge_SWE.png"><div class=nm>SWE</div><div class=mt>256×256 | 填充38% | 占画面 69×83%<br>边距 上12 下32 左40 右40 px | 半透明2.3%</div><label><input type=checkbox class=ck data-code="SWE" onchange=save()> 免标准化(已OK)</label></div><div class="cd "><img src="队徽48_重出FINAL/WC_Badge_TUR.png"><div class=nm>TUR</div><div class=mt>256×256 | 填充43% | 占画面 77×77%<br>边距 上22 下36 左29 右29 px | 半透明2.2%</div><label><input type=checkbox class=ck data-code="TUR" onchange=save()> 免标准化(已OK)</label></div><div class="cd "><img src="队徽48_重出FINAL/WC_Badge_UZB.png"><div class=nm>UZB</div><div class=mt>256×256 | 填充48% | 占画面 79×85%<br>边距 上14 下25 左26 右27 px | 半透明2.0%</div><label><input type=checkbox class=ck data-code="UZB" onchange=save()> 免标准化(已OK)</label></div></div>
+<script>
+function save(){let s=[...document.querySelectorAll('.ck:checked')].map(x=>x.dataset.code);
+localStorage.setItem('badge_ok',JSON.stringify(s));render();}
+function render(){let s=JSON.parse(localStorage.getItem('badge_ok')||'[]');
+document.getElementById('out').textContent=s.length?s.join(' '):'(未勾选)';
+document.getElementById('cnt').textContent=s.length;}
+function load(){let s=JSON.parse(localStorage.getItem('badge_ok')||'[]');
+document.querySelectorAll('.ck').forEach(x=>{x.checked=s.includes(x.dataset.code)});render();}
+function clr(){localStorage.removeItem('badge_ok');document.querySelectorAll('.ck').forEach(x=>x.checked=false);render();}
+function cp(){navigator.clipboard.writeText(document.getElementById('out').textContent);alert('已复制,发给Kiro');}
+window.onload=load;
+</script>
+</body></html>

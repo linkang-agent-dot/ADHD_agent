@@ -42,83 +42,83 @@ strong{color:var(--fg);}
 .foot{margin-top:40px;color:#5a6373;font-size:12px;text-align:center;}
 </style></head><body><div class="wrap">
 <div class="bar"><h1>每日工作日报</h1><button id="copybtn" class="btn" onclick="copyReport()">📋 复制日报</button></div>
-<div class="meta">每日工作日报 · 2026-06-15（周一）</div>
+<div class="meta">每日工作日报 · 2026-06-16（周二）</div>
 <h2 class="sec">一句话版本</h2>
 <ul>
-<li>X3 世界杯竞猜开箱活动配置（新皮肤透明视频作背景）</li>
-<li>X3 世界杯竞猜界面付费/免费档定档 + 礼包逻辑</li>
-<li>X3 世界杯 48 队头像框出图</li>
-<li>X3 世界杯 48 国应援表情出图 + 注册配表</li>
-<li>X3 世界杯系列卡 + 纪念卡 + 礼盒箱子</li>
-<li>X3 世界杯知识库结构化沉淀 + 收口归纳机制</li>
-<li>X3 英雄皮肤视频化修正（对齐 Spine 比例）</li>
-<li>后台日报/规划任务排查补跑 + API provider 切换</li>
+<li>X3 世界杯竞猜活动配置 + 投放排期甘特图（给 leader）</li>
+<li>X3 世界杯自选宝箱 + 头像框/表情道具落地 + 透明度修复</li>
+<li>X3 世界杯聊天表情 DK 注册不进客户端排查</li>
+<li>X3 世界杯换皮活动（累充/BP/签到/开箱/兑换商店）</li>
+<li>X3 世界杯纪念卡卡面（正面 + 256 侧面定稿）</li>
+<li>X3 决赛助威表情（视频化模板）</li>
+<li>X3 周卡活动 3080 开启 + 本地化/数值</li>
+<li>X2 补偿邮件 + 主数据更新</li>
 </ul>
 <h2 class="sec">详细版本</h2>
-<div class="card"><span class="num">1</span><div class="card-body"><div class="card-t">X3 世界杯竞猜开箱活动配置</div><div class="card-d">基于全模块交接总文档新增竞猜开箱活动，确认走开箱模块（ActvType15，非 64 竞猜），爱莉希雅新皮肤透明版视频作活动背景、世界杯抽奖券为开箱道具；原 Spine 改为播视频，视频角色新开一列配视频 DK（51/52 列手动对齐替换、排查累充配置占列冲突）；TimeCycle 暂配元旦后续 GM 自开，本服（3080/893）重启 + GM 开活动（101516/102913）实测，补开盖版本对齐历史。</div></div></div>
-<div class="card"><span class="num">2</span><div class="card-body"><div class="card-t">X3 世界杯竞猜界面付费/免费档定档 + 礼包逻辑</div><div class="card-d">入口 ICON 收敛为 4 个（抽奖券 / 特殊投放[头像框+表情] / 钻石 / VIP 点数）；付费档定 1 级 4.99→5 级 99.99，每档含钻石 + VIP 点数 + 酒馆宝箱；免费档统一 5 个道具 ICON（5 分钟加速 + 资源袋 + 钻石约等于免费）；竞猜礼包逻辑改为购买后只显示&quot;已助威&quot;、隐藏已锁定文本。</div></div></div>
-<div class="card"><span class="num">3</span><div class="card-body"><div class="card-t">X3 世界杯 48 队头像框出图</div><div class="card-d">试点 X3 原生头像框风格，迭代到&quot;国家自身颜色为主、少金色&quot;，足球做成国旗配色/国旗样式边框（纯配色看不出国家的问题修掉）；预留进半决赛/决赛的第二版（加高卢雄鸡、桑巴等国家元素）；subagent 判稿选优后套 48 队模板。</div></div></div>
-<div class="card"><span class="num">4</span><div class="card-body"><div class="card-t">X3 世界杯 48 国应援表情出图 + 注册配表</div><div class="card-d">Q 版英雄举国旗版本（先静态、动态后做），修糊图/切图模板问题后出 48 国版本，直接注册 + 配表落地，命名对齐模板 + I18N 起名。</div></div></div>
-<div class="card"><span class="num">5</span><div class="card-body"><div class="card-t">X3 世界杯系列卡 + 纪念卡 + 礼盒箱子</div><div class="card-d">爱莉希雅皮肤系列卡卡面（兑换商店获取、数值不变）；纪念卡确立&quot;基础参考直出&quot;流程（alt1 缩放 + 透明化，弃合成图路径）；世界杯礼盒箱子对比春节箱子调整大小/上移位置/补左侧阴影；其余界面活动背景 + HUD 同步换皮，排查箱子/背景丢失的 DK 定义问题后 push。</div></div></div>
-<div class="card"><span class="num">6</span><div class="card-body"><div class="card-t">X3 世界杯知识库结构化沉淀 + 收口归纳机制</div><div class="card-d">把世界杯全流程按模块沉淀进 KB（含出现过的问题 &amp; 迭代 &amp; 改动原因），目标新 agent 冷启动即可拿到修 BUG/换皮全部 keypoint；整理一份配置相关知识库+memory 总文档供同事换 agent 接手；把&quot;收口归纳&quot;定为每次任务完成的默认动作并写进 CLAUDE.md，挂到 token 周报 skill 出每周&quot;知识|模块|来源&quot;归纳验收清单。</div></div></div>
-<div class="card"><span class="num">7</span><div class="card-body"><div class="card-t">X3 英雄皮肤视频化修正</div><div class="card-d">反馈视频部分被切，定位为占比未对齐，改为直接读 Spine 动画本身比例、全部视频统一 1080×1920 按比例调整（游戏内 UI 对人物有遮挡、主体占比不变）；参考专业 GUI 提交实现滑动居中 + 两行展示，沉淀进 KB GUI 知识专章。</div></div></div>
-<div class="card"><span class="num">8</span><div class="card-body"><div class="card-t">后台日报/规划任务排查补跑 + API provider 切换</div><div class="card-d">排查每日规划 HTML 未弹出、今日工作日报未触发（claude -p 退出码 0 但未刷新的静默失败），改用 opus 补跑；按需在 settings 切换 team / onehub provider。</div></div></div>
+<div class="card"><span class="num">1</span><div class="card-body"><div class="card-t">X3 世界杯竞猜活动配置 + 投放排期甘特图</div><div class="card-d">按真实赛程梳理付费场次（32 强 16 场起、各轮 4.99/9.99/19.99 档位、决赛/季军各 3 档），配 56 场竞猜活动（随机 48 队对抗先验美术、per-team 头像框/表情/宝箱奖励、先写备份等另一 agent 完再同步）；补规则说明（次日发放 + 最终解释权 + 焦点战胜利加赠走本地化）；定淘汰赛投放（16 强头像框 / 8 强自选宝箱 / 4 强晋级之路框 / 决赛世界之巅框 + 世界之巅聊天表情）；给 leader 出资产进包甘特图（删冗余信息、强化&quot;各资产+何时进包&quot;、每周三封包）。</div></div></div>
+<div class="card"><span class="num">2</span><div class="card-body"><div class="card-t">X3 世界杯自选宝箱 + 头像框/表情道具落地 + 透明度修复</div><div class="card-d">48 头像框道具 + 48 表情道具 + 2 自选宝箱 + 2 奖池配置落地（导表 #945 dev_festival SUCCESS），48 队头像框配置推 client，本地化定&quot;世界杯·{国}&quot;、四强/决赛模板预留；批量修队徽/头像框假透明与重影（佛得角/卡塔尔/土耳其/新西兰/荷兰），最终用 GRFal 抠图解决。</div></div></div>
+<div class="card"><span class="num">3</span><div class="card-body"><div class="card-t">X3 世界杯聊天表情 DK 注册不进客户端排查</div><div class="card-d">配置有、dkasset 也写了，但游戏内看不到、客户端注册不进；重启编辑器无效，开 sub-agent 单独重走 DK 注册流程定位。</div></div></div>
+<div class="card"><span class="num">4</span><div class="card-body"><div class="card-t">X3 世界杯换皮活动（累充/BP/签到/开箱/兑换商店）</div><div class="card-d">冠军基金累充(100597)/冠军通行证 BP(102240)/绿茵签到(101403) 换皮新建 ID、统一走世界杯单独 HUD 入口(139)、背景大力神杯居中放大、糖牌全换世界杯抽奖券；开箱活动照元旦换皮（新兑换道具 + 阶梯/累抽换道具 + 排行榜参考情人节、修荣耀金币 ICON 偏大、锚点礼包缺失待补）；兑换商店复刻情人节换世界杯卡；修 BP 升级卡 1 级 BUG（升级积分需求配错→改本地导表验证后 push+jolt）；GM 在 3080 开活动实测、重启清数据部署。</div></div></div>
+<div class="card"><span class="num">5</span><div class="card-body"><div class="card-t">X3 世界杯纪念卡卡面</div><div class="card-d">对齐历史卡面格式同时出正面大图 + 256 侧面双版本（256 侧放带内倾角、梯形填充 + 边框处理），多轮对比定稿后配表（纪念卡）。</div></div></div>
+<div class="card"><span class="num">6</span><div class="card-body"><div class="card-t">X3 决赛助威表情（视频化模板）</div><div class="card-d">决赛助威表情走视频出再切动态，先出模板并保留 prompt，确立后续流程（先出球衣图→出视频→切帧），等决赛队伍定了再做。</div></div></div>
+<div class="card"><span class="num">7</span><div class="card-body"><div class="card-t">X3 周卡活动 3080 开启 + 本地化/数值</div><div class="card-d">GM 在 3080 开周卡活动，对比 X2 周卡补周卡名称(3 条)/页签本地化 + 正式数值（先做进备份、等另一 agent 完再同步），备注同步。</div></div></div>
+<div class="card"><span class="num">8</span><div class="card-body"><div class="card-t">X2 补偿邮件 + 主数据更新</div><div class="card-d">拉 111111315 服一周被回收玩家道具明细生成补偿邮件（通用补偿文案、&quot;数据问题误回收已修复请查收&quot;）；X2 更新主数据。</div></div></div>
 <h2 class="sec">timeline 完成度</h2>
 <ul>
-<li>主推 X3 世界杯系列 —— 今日从&quot;持续跟进&quot;转入多模块密集生产：竞猜开箱活动配置 + 竞猜界面定档 + 头像框/应援表情/系列卡/纪念卡美术全产出 + 知识库结构化沉淀，节点②美需 + ③配表并行推进。</li>
-<li>并行推进 X3 英雄皮肤视频化（修视频被切、对齐 Spine 比例），属独立线。</li>
-<li>临近 deadline：X3 夏日恋歌(第二批 1880-1900) 约 06-19 结束今天未拉数据；X3 深海节出方案（节点①）今天没动。</li>
+<li>主推 X3 世界杯系列 —— 多模块同时落地：竞猜活动+投放排期、自选宝箱/头像框/表情道具(#945)、5 类换皮活动(累充/BP/签到/开箱/兑换商店)、纪念卡、决赛表情模板，节点②美需 + ③配表密集推进，已给 leader 出排期。</li>
+<li>06-24（周三）= 世界杯首批资产进包封包日，已成明确近端 deadline。</li>
+<li>临近 deadline 未动：X3 夏日恋歌(第二批 1880-1900) 约 06-19 结束今天未拉数据；X3 深海节出方案（节点①）今天没动。</li>
 </ul>
 <h2 class="sec">工作line 改动</h2>
 <ul>
-<li>五、deadline 速查：「持续跟进｜X3｜世界杯系列（案子部分已做完）」→「进行中｜X3｜世界杯系列（多模块换皮+美术产出落地中：开箱/竞猜/头像框/表情/系列卡/纪念卡）」。</li>
-<li>三、X3 下期行 + 当前节点行：世界杯由&quot;持续跟进&quot;更新为&quot;多模块生产中（节点②美需+③配表并行）&quot;。</li>
-<li>顶部「最后更新」2026-06-11 → 2026-06-15。</li>
+<li>五、deadline 速查：新增「06-24（周三）｜X3｜世界杯首批资产进包封包」一行；X3 世界杯行细化为&quot;多模块落地中（竞猜/道具#945/换皮活动/纪念卡/表情），给 leader 已出排期&quot;。</li>
+<li>三、X3 下期行 + 当前节点行：世界杯更新为&quot;多模块落地中（②美需+③配表），06-24 首封包&quot;。</li>
+<li>顶部「最后更新」2026-06-15 → 2026-06-16。</li>
 </ul>
 <h2 class="sec">本可顺手补</h2>
 <ul>
-<li>activity-check ID 引用自检 —— 本属于今天 X3 世界杯配表（节点③）的固有收尾（节点⑤），开箱/竞猜/系列卡多表配完建议跑一遍引用检查再封包。</li>
-<li>世界杯配表端到端反查 —— 开箱活动视频 DK 列 + 竞猜礼包 + 系列卡兑换商店多处改动，建议补 tsv + 导表 + GSheet 三层一致性反查，属节点③收口。</li>
-<li>无（世界杯知识库沉淀 / 收口归纳机制 / GUI 滑动居中 / 皮肤视频化经验今日已分别落 KB 总文档与 GUI 知识专章，已覆盖不重列）。</li>
+<li>activity-check ID 引用自检 —— 本属于今天 X3 世界杯多活动配表（节点③）的封包前固有收尾（节点⑤），累充/BP/签到/开箱/竞猜多活动 ID 链建议跑一遍引用检查，尤其开箱锚点礼包缺失项。</li>
+<li>世界杯换皮活动端到端反查 —— 累充 100597/BP 102240/签到 101403 + 56 场竞猜多处改动，建议补 tsv + 导表(dev_festival 分支核对) + 客户端 DK 三层一致性反查，属节点③收口；与今日已暴露的&quot;聊天表情 DK 注册不进&quot;同源，一并核。</li>
+<li>无（世界杯道具/Reward/客户端资源经验今日已分别回写 project_x3_worldcup_activity / reference_x3_reward_table_rules / reference_x3_client_resources，已覆盖不重列）。</li>
 </ul>
-<div class="foot">自动生成 · 2026-06-15 21:51</div>
+<div class="foot">自动生成 · 2026-06-16 21:19</div>
 </div>
-<pre id="copysrc" style="display:none">每日工作日报 · 2026-06-15（周一）
+<pre id="copysrc" style="display:none">每日工作日报 · 2026-06-16（周二）
 
 【一句话版本】
-1. X3 世界杯竞猜开箱活动配置（新皮肤透明视频作背景）
-2. X3 世界杯竞猜界面付费/免费档定档 + 礼包逻辑
-3. X3 世界杯 48 队头像框出图
-4. X3 世界杯 48 国应援表情出图 + 注册配表
-5. X3 世界杯系列卡 + 纪念卡 + 礼盒箱子
-6. X3 世界杯知识库结构化沉淀 + 收口归纳机制
-7. X3 英雄皮肤视频化修正（对齐 Spine 比例）
-8. 后台日报/规划任务排查补跑 + API provider 切换
+1. X3 世界杯竞猜活动配置 + 投放排期甘特图（给 leader）
+2. X3 世界杯自选宝箱 + 头像框/表情道具落地 + 透明度修复
+3. X3 世界杯聊天表情 DK 注册不进客户端排查
+4. X3 世界杯换皮活动（累充/BP/签到/开箱/兑换商店）
+5. X3 世界杯纪念卡卡面（正面 + 256 侧面定稿）
+6. X3 决赛助威表情（视频化模板）
+7. X3 周卡活动 3080 开启 + 本地化/数值
+8. X2 补偿邮件 + 主数据更新
 
 【详细版本】
-1. X3 世界杯竞猜开箱活动配置 —— 基于全模块交接总文档新增竞猜开箱活动，确认走开箱模块（ActvType15，非 64 竞猜），爱莉希雅新皮肤透明版视频作活动背景、世界杯抽奖券为开箱道具；原 Spine 改为播视频，视频角色新开一列配视频 DK（51/52 列手动对齐替换、排查累充配置占列冲突）；TimeCycle 暂配元旦后续 GM 自开，本服（3080/893）重启 + GM 开活动（101516/102913）实测，补开盖版本对齐历史。
-2. X3 世界杯竞猜界面付费/免费档定档 + 礼包逻辑 —— 入口 ICON 收敛为 4 个（抽奖券 / 特殊投放[头像框+表情] / 钻石 / VIP 点数）；付费档定 1 级 4.99→5 级 99.99，每档含钻石 + VIP 点数 + 酒馆宝箱；免费档统一 5 个道具 ICON（5 分钟加速 + 资源袋 + 钻石约等于免费）；竞猜礼包逻辑改为购买后只显示&quot;已助威&quot;、隐藏已锁定文本。
-3. X3 世界杯 48 队头像框出图 —— 试点 X3 原生头像框风格，迭代到&quot;国家自身颜色为主、少金色&quot;，足球做成国旗配色/国旗样式边框（纯配色看不出国家的问题修掉）；预留进半决赛/决赛的第二版（加高卢雄鸡、桑巴等国家元素）；subagent 判稿选优后套 48 队模板。
-4. X3 世界杯 48 国应援表情出图 + 注册配表 —— Q 版英雄举国旗版本（先静态、动态后做），修糊图/切图模板问题后出 48 国版本，直接注册 + 配表落地，命名对齐模板 + I18N 起名。
-5. X3 世界杯系列卡 + 纪念卡 + 礼盒箱子 —— 爱莉希雅皮肤系列卡卡面（兑换商店获取、数值不变）；纪念卡确立&quot;基础参考直出&quot;流程（alt1 缩放 + 透明化，弃合成图路径）；世界杯礼盒箱子对比春节箱子调整大小/上移位置/补左侧阴影；其余界面活动背景 + HUD 同步换皮，排查箱子/背景丢失的 DK 定义问题后 push。
-6. X3 世界杯知识库结构化沉淀 + 收口归纳机制 —— 把世界杯全流程按模块沉淀进 KB（含出现过的问题 &amp; 迭代 &amp; 改动原因），目标新 agent 冷启动即可拿到修 BUG/换皮全部 keypoint；整理一份配置相关知识库+memory 总文档供同事换 agent 接手；把&quot;收口归纳&quot;定为每次任务完成的默认动作并写进 CLAUDE.md，挂到 token 周报 skill 出每周&quot;知识|模块|来源&quot;归纳验收清单。
-7. X3 英雄皮肤视频化修正 —— 反馈视频部分被切，定位为占比未对齐，改为直接读 Spine 动画本身比例、全部视频统一 1080×1920 按比例调整（游戏内 UI 对人物有遮挡、主体占比不变）；参考专业 GUI 提交实现滑动居中 + 两行展示，沉淀进 KB GUI 知识专章。
-8. 后台日报/规划任务排查补跑 + API provider 切换 —— 排查每日规划 HTML 未弹出、今日工作日报未触发（claude -p 退出码 0 但未刷新的静默失败），改用 opus 补跑；按需在 settings 切换 team / onehub provider。
+1. X3 世界杯竞猜活动配置 + 投放排期甘特图 —— 按真实赛程梳理付费场次（32 强 16 场起、各轮 4.99/9.99/19.99 档位、决赛/季军各 3 档），配 56 场竞猜活动（随机 48 队对抗先验美术、per-team 头像框/表情/宝箱奖励、先写备份等另一 agent 完再同步）；补规则说明（次日发放 + 最终解释权 + 焦点战胜利加赠走本地化）；定淘汰赛投放（16 强头像框 / 8 强自选宝箱 / 4 强晋级之路框 / 决赛世界之巅框 + 世界之巅聊天表情）；给 leader 出资产进包甘特图（删冗余信息、强化&quot;各资产+何时进包&quot;、每周三封包）。
+2. X3 世界杯自选宝箱 + 头像框/表情道具落地 + 透明度修复 —— 48 头像框道具 + 48 表情道具 + 2 自选宝箱 + 2 奖池配置落地（导表 #945 dev_festival SUCCESS），48 队头像框配置推 client，本地化定&quot;世界杯·{国}&quot;、四强/决赛模板预留；批量修队徽/头像框假透明与重影（佛得角/卡塔尔/土耳其/新西兰/荷兰），最终用 GRFal 抠图解决。
+3. X3 世界杯聊天表情 DK 注册不进客户端排查 —— 配置有、dkasset 也写了，但游戏内看不到、客户端注册不进；重启编辑器无效，开 sub-agent 单独重走 DK 注册流程定位。
+4. X3 世界杯换皮活动（累充/BP/签到/开箱/兑换商店）—— 冠军基金累充(100597)/冠军通行证 BP(102240)/绿茵签到(101403) 换皮新建 ID、统一走世界杯单独 HUD 入口(139)、背景大力神杯居中放大、糖牌全换世界杯抽奖券；开箱活动照元旦换皮（新兑换道具 + 阶梯/累抽换道具 + 排行榜参考情人节、修荣耀金币 ICON 偏大、锚点礼包缺失待补）；兑换商店复刻情人节换世界杯卡；修 BP 升级卡 1 级 BUG（升级积分需求配错→改本地导表验证后 push+jolt）；GM 在 3080 开活动实测、重启清数据部署。
+5. X3 世界杯纪念卡卡面 —— 对齐历史卡面格式同时出正面大图 + 256 侧面双版本（256 侧放带内倾角、梯形填充 + 边框处理），多轮对比定稿后配表（纪念卡）。
+6. X3 决赛助威表情（视频化模板）—— 决赛助威表情走视频出再切动态，先出模板并保留 prompt，确立后续流程（先出球衣图→出视频→切帧），等决赛队伍定了再做。
+7. X3 周卡活动 3080 开启 + 本地化/数值 —— GM 在 3080 开周卡活动，对比 X2 周卡补周卡名称(3 条)/页签本地化 + 正式数值（先做进备份、等另一 agent 完再同步），备注同步。
+8. X2 补偿邮件 + 主数据更新 —— 拉 111111315 服一周被回收玩家道具明细生成补偿邮件（通用补偿文案、&quot;数据问题误回收已修复请查收&quot;）；X2 更新主数据。
 
 【timeline 完成度】
-- 主推 X3 世界杯系列 —— 今日从&quot;持续跟进&quot;转入多模块密集生产：竞猜开箱活动配置 + 竞猜界面定档 + 头像框/应援表情/系列卡/纪念卡美术全产出 + 知识库结构化沉淀，节点②美需 + ③配表并行推进。
-- 并行推进 X3 英雄皮肤视频化（修视频被切、对齐 Spine 比例），属独立线。
-- 临近 deadline：X3 夏日恋歌(第二批 1880-1900) 约 06-19 结束今天未拉数据；X3 深海节出方案（节点①）今天没动。
+- 主推 X3 世界杯系列 —— 多模块同时落地：竞猜活动+投放排期、自选宝箱/头像框/表情道具(#945)、5 类换皮活动(累充/BP/签到/开箱/兑换商店)、纪念卡、决赛表情模板，节点②美需 + ③配表密集推进，已给 leader 出排期。
+- 06-24（周三）= 世界杯首批资产进包封包日，已成明确近端 deadline。
+- 临近 deadline 未动：X3 夏日恋歌(第二批 1880-1900) 约 06-19 结束今天未拉数据；X3 深海节出方案（节点①）今天没动。
 
 【工作line 改动】
-- 五、deadline 速查：「持续跟进｜X3｜世界杯系列（案子部分已做完）」→「进行中｜X3｜世界杯系列（多模块换皮+美术产出落地中：开箱/竞猜/头像框/表情/系列卡/纪念卡）」。
-- 三、X3 下期行 + 当前节点行：世界杯由&quot;持续跟进&quot;更新为&quot;多模块生产中（节点②美需+③配表并行）&quot;。
-- 顶部「最后更新」2026-06-11 → 2026-06-15。
+- 五、deadline 速查：新增「06-24（周三）｜X3｜世界杯首批资产进包封包」一行；X3 世界杯行细化为&quot;多模块落地中（竞猜/道具#945/换皮活动/纪念卡/表情），给 leader 已出排期&quot;。
+- 三、X3 下期行 + 当前节点行：世界杯更新为&quot;多模块落地中（②美需+③配表），06-24 首封包&quot;。
+- 顶部「最后更新」2026-06-15 → 2026-06-16。
 
 【本可顺手补】
-- activity-check ID 引用自检 —— 本属于今天 X3 世界杯配表（节点③）的固有收尾（节点⑤），开箱/竞猜/系列卡多表配完建议跑一遍引用检查再封包。
-- 世界杯配表端到端反查 —— 开箱活动视频 DK 列 + 竞猜礼包 + 系列卡兑换商店多处改动，建议补 tsv + 导表 + GSheet 三层一致性反查，属节点③收口。
-- 无（世界杯知识库沉淀 / 收口归纳机制 / GUI 滑动居中 / 皮肤视频化经验今日已分别落 KB 总文档与 GUI 知识专章，已覆盖不重列）。
+- activity-check ID 引用自检 —— 本属于今天 X3 世界杯多活动配表（节点③）的封包前固有收尾（节点⑤），累充/BP/签到/开箱/竞猜多活动 ID 链建议跑一遍引用检查，尤其开箱锚点礼包缺失项。
+- 世界杯换皮活动端到端反查 —— 累充 100597/BP 102240/签到 101403 + 56 场竞猜多处改动，建议补 tsv + 导表(dev_festival 分支核对) + 客户端 DK 三层一致性反查，属节点③收口；与今日已暴露的&quot;聊天表情 DK 注册不进&quot;同源，一并核。
+- 无（世界杯道具/Reward/客户端资源经验今日已分别回写 project_x3_worldcup_activity / reference_x3_reward_table_rules / reference_x3_client_resources，已覆盖不重列）。
 </pre>
 <script>function copyReport(){var t=document.getElementById('copysrc').textContent;var b=document.getElementById('copybtn');function done(){var o=b.textContent;b.textContent='\u2713 \u5df2\u590d\u5236';setTimeout(function(){b.textContent=o;},1500);}function fb(){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){alert('\u590d\u5236\u5931\u8d25\uff0c\u8bf7\u624b\u52a8\u9009\u62e9');}document.body.removeChild(ta);}if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done,fb);}else{fb();}}</script>
 </body></html>

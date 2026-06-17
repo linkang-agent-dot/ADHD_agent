@@ -1,78 +1,65 @@
 <!DOCTYPE html><html lang="zh"><head><meta charset="utf-8">
-<title>世界杯竞猜 · 进包一图看懂</title><style>
-:root{--bg:#161922;--ink:#ece9e0;--mut:#9a948a;--line:#374050}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);
-font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;padding:34px 30px}
-h1{font-size:22px;margin:0 0 22px}
-.tl{display:flex;align-items:center;gap:0;margin:0 0 28px;font-size:13px;flex-wrap:wrap}
-.tl .pt{display:flex;flex-direction:column;align-items:center;min-width:96px}
-.tl .pt b{font-size:14px}.tl .pt span{color:var(--mut);font-size:11.5px}
-.tl .build b{color:#e0a94a}.tl .round b{color:#7fb0e0}
-.tl .arr{color:#4a5160;font-size:18px;padding:0 2px;margin-bottom:16px}
-.cards{display:flex;gap:18px;flex-wrap:wrap}
-.card{flex:1;min-width:280px;border:1px solid var(--line);border-radius:14px;padding:20px 22px;background:#1c212c}
-.card .hd{font-size:17px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
-.card .tag{font-size:12px;color:var(--mut);margin-bottom:14px}
-.card.big{flex:1.5;border-color:#3f7a52;background:#1b2620}
-.card.small{border-color:#8a5340;background:#241c1a}
-.card.cfg{border-color:#7a6a3f;background:#221f18}
-.item{display:flex;align-items:center;gap:9px;padding:6px 0;font-size:14px;border-top:1px dashed #2c3340}
-.item:first-of-type{border-top:none}
-.chk{width:20px;text-align:center;font-size:14px}
-.ok{color:#5fd0a0}.wait{color:#e0a94a}.todo{color:#e88}
-.big .hd{color:#7fd8a8}.small .hd{color:#e89a78}.cfg .hd{color:#e0c468}
-.foot{margin-top:24px;font-size:14px;color:var(--ink);background:#1c212c;border:1px solid var(--line);border-radius:10px;padding:14px 18px;line-height:1.8}
-.foot b{color:#e0a94a}
+<title>世界杯竞猜 · 资源 / 热更 排期</title><style>
+:root{--bg:#15171f;--ink:#ece9e0;--mut:#8f8a80;--line:#2a313d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;padding:30px 26px;max-width:760px}
+h1{font-size:20px;margin:0 0 4px}.sub{color:var(--mut);font-size:13px;margin-bottom:20px}
+.tabs{display:flex;gap:10px;margin-bottom:18px}
+.tab{flex:1;text-align:center;padding:12px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:#1b212c;color:var(--mut)}
+.tab.on{background:#222c1c;color:#9fd06a;border-color:#3f6a2e}
+.tab.on.hot{background:#2a1c2e;color:#d98ad0;border-color:#6a3a66}
+.tab.on.sop{background:#1c2533;color:#7fb0e0;border-color:#3a567a}
+.sop .dt{color:#7fb0e0;font-size:15px}.sop .row .step{background:#1c2533;color:#7fb0e0;font-weight:700;border-radius:50%;min-width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.pane{display:none}.pane.on{display:block}
+.row{display:flex;align-items:flex-start;gap:16px;padding:14px 16px;border:1px solid var(--line);border-radius:11px;margin-bottom:10px;background:#1b212c}
+.dt{font-size:15px;font-weight:700;min-width:158px;white-space:normal;line-height:1.5}
+.res .dt{color:#9fd06a}.hot .dt{color:#d98ad0}
+.what{font-size:14px;line-height:1.6}.what b{color:#e0a94a}.note{color:var(--mut);font-size:12px;margin-top:3px}
+.foot{margin-top:18px;color:var(--mut);font-size:12.5px;line-height:1.8}
+.pill{font-size:11px;padding:1px 7px;border-radius:4px;margin-left:6px}
+.pkg{background:#3a2e16;color:#e7c052}.done{background:#1f3a2a;color:#6ad09a}
 </style></head><body>
+<h1>⚽ 世界杯竞猜 · 排期</h1>
+<div class="sub">资源 = 进客户端包（周三封包）　｜　热更 = 改配置热更（服务端·随时）</div>
 
-<h1>⚽ 世界杯竞猜 · 进包一图看懂</h1>
-
-<div class="tl">
-  <div class="pt build"><b>📦6/24</b><span>首包</span></div><div class="arr">→</div>
-  <div class="pt round"><b>6/28</b><span>32强开赛</span></div><div class="arr">→</div>
-  <div class="pt round"><b>7/4</b><span>16强</span></div><div class="arr">→</div>
-  <div class="pt build"><b>📦7/8</b><span>补包</span></div><div class="arr">→</div>
-  <div class="pt round"><b>7/14</b><span>四强</span></div><div class="arr">→</div>
-  <div class="pt build"><b>📦7/15</b><span>补包</span></div><div class="arr">→</div>
-  <div class="pt round"><b>7/19</b><span>决赛</span></div>
+<div class="tabs">
+  <div class="tab res on" onclick="sw('res')">🎨 资源（封包）</div>
+  <div class="tab hot" onclick="sw('hot')">🔄 热更（改配置）</div>
+  <div class="tab sop" onclick="sw('sop')">📋 运营SOP（每天）</div>
 </div>
 
-<div class="cards">
-
-  <div class="card big">
-    <div class="hd">📦 6/24 首包</div>
-    <div class="tag">几乎全部资产一次进完 · 已就绪</div>
-    <div class="item"><span class="chk ok">✓</span>竞猜界面 + 代码（ActvType64）</div>
-    <div class="item"><span class="chk ok">✓</span>入口图标 + 真券道具</div>
-    <div class="item"><span class="chk ok">✓</span>48 队徽 + 48 队伍板</div>
-    <div class="item"><span class="chk ok">✓</span>48 助威头像框</div>
-    <div class="item"><span class="chk ok">✓</span>48 助威聊天表情</div>
-    <div class="item"><span class="chk ok">✓</span>2 自选宝箱（图标 + 道具 + 自选池）</div>
-  </div>
-
-  <div class="card small">
-    <div class="hd">📦 后续补包（跟车）</div>
-    <div class="tag">2 个客户端资产要赶后面的包</div>
-    <div class="item"><span class="chk todo">●</span><b>四强专属国旗框 ×8</b> <span style="color:var(--mut);font-size:12px">→ 7/8 包</span></div>
-    <div class="item" style="border:none;color:var(--mut);font-size:12px;display:block;padding:4px 0 10px 29px">
-      7/7 R16 定出 8 强 → 赶产 8 支 → 7/14 四强上线（库有概念图打底）</div>
-    <div class="item"><span class="chk wait">◐</span><b>决赛行军表情 ×1（模板已有）</b> <span style="color:var(--mut);font-size:12px">→ 7/15 包</span></div>
-    <div class="item" style="border:none;color:var(--mut);font-size:12px;display:block;padding:4px 0 0 29px">
-      白金中性母版已做(决赛助威表情4×4) → 决赛定夺冠队后按队色调 → 7/19 上线</div>
-  </div>
-
-  <div class="card cfg">
-    <div class="hd">🔄 导表（不占客户端包）</div>
-    <div class="tag">服务端配置 · 随时可上</div>
-    <div class="item"><span class="chk wait">◐</span><b>56 个竞猜活动实例</b></div>
-    <div class="item" style="border:none;color:var(--mut);font-size:12.5px;display:block;padding-top:10px">
-      $4.99 纯竞猜 ×32 / $9.99 头像框 ×16 / $19.99 表情 ×8。<br>对阵抽签（~6/27）后导表即可上，<b>不受周三封包限制</b>。</div>
-  </div>
-
+<div id="res" class="pane res on">
+  <div class="row"><div class="dt">6.24（周三）</div><div class="what"><b>全部基础资产</b><span class="pill pkg">封包</span><span class="pill done">已就绪</span><div class="note">竞猜界面+入口图+真券道具 ｜ 48 队徽 + 48 队伍板 + 48 助威头像框 + 48 聊天表情 + 2 自选宝箱</div></div></div>
+  <div class="row"><div class="dt">7.8（周三）</div><div class="what"><b>晋级之路头像框（通用×1 + 专属×8）</b><span class="pill pkg">封包</span><div class="note">半决赛档用 ｜ 专属按 <b>8强8队</b>：8强 7.7 定 → 出这8队专属 → 赶 7.8 封包（半决赛4队必在这8个里）<br><span style="color:#e07a5a">※ 为何是8不是4：半决赛4队 7.11 才定，但 7.11→半决赛7.14 之间无周三封包，只能往上覆盖8强</span></div></div></div>
+  <div class="row"><div class="dt">7.15（周三）</div><div class="what"><b>世界之巅头像框（通用×1 + 专属×4）+ 世界之巅聊天表情</b><span class="pill pkg">封包</span><div class="note">决赛档用 ｜ 通用×1 + 7.11 赶出的半决赛4队专属 + 表情，一起进 7.15 封包</div></div></div>
+  <div class="foot">★ 通用 + 里程碑款（晋级之路/世界之巅通用/表情）非队伍专属、可提前封；★唯一赶工 = 世界之巅专属×4，4强定(7/11)后出、赶 7/15 封包。</div>
 </div>
 
-<div class="foot">
-  📌 <b>一句话：客户端 6/24 一大包基本全进；后面 2 个跟车 —— 7/8 四强国旗框、7/15 决赛行军表情（均模板已有·按队伍调）；竞猜活动全走导表、不占客户端封包。</b>
+<div id="hot" class="pane hot">
+  <div class="what" style="margin-bottom:12px;color:var(--mut);font-size:12.5px">赛区北美(ET)，运营按<b style="color:#e0a94a">北京时间</b>(=ET+12h)。热更是个<b style="color:#e0a94a">窗口</b>：本轮末场打完 → 下轮首场开赛前，窗口内配完导完。</div>
+  <div class="row"><div class="dt">6.27（周六）-6.28（周日）</div><div class="what">填 <b>32强 16场</b> 真队伍 → 热更<div class="note">6.27 抽签出对阵 → 6.28 32强首场前 ｜ 队伍板/队徽/队名/该队奖励</div></div></div>
+  <div class="row"><div class="dt">7.4（周六）-7.5（周日）</div><div class="what">填 <b>16强 8场</b> → 热更<div class="note">7.4 R32末场打完 → 7.5 16强首场前　<b style="color:#e07a5a">(约1天·最紧)</b></div></div></div>
+  <div class="row"><div class="dt">7.8（周三）-7.10（周五）</div><div class="what">填 <b>8强 4场</b> → 热更<div class="note">7.8 06:30 16强末场打完 → 7.10 8强首场前 (约2天)</div></div></div>
+  <div class="row"><div class="dt">7.12（周日）-7.15（周三）</div><div class="what">填 <b>半决赛 2场</b> → 热更<div class="note">7.12 11:30 8强末场打完 → 7.15 半决赛首场前 (约3天)</div></div></div>
+  <div class="row"><div class="dt">7.16（周四）-7.19（周日）</div><div class="what">填 <b>决赛 + 季军</b> → 热更<div class="note">7.16 05:30 半决赛末场打完 → 7.19 季军/决赛首场前 (约3天)</div></div></div>
+  <div class="foot">★ 每行=末场打完→把下轮实例队伍(板/徽/名/奖励)改成晋级队→热更，窗口内完成。服务端随时可上、不受周三封包限制；<b style="color:#e07a5a">16强窗口最紧(~1天)</b>。时间=ET+12h换北京，以FIFA最终赛程为准。</div>
 </div>
 
+<div id="sop" class="pane sop">
+  <div class="what" style="margin-bottom:12px;color:var(--mut);font-size:12.5px">结算<b style="color:#e0a94a">零后端</b>，全靠运营：每个比赛日重复下面 4 步（配合策划案六章·运营SOP）。</div>
+  <div class="row"><div class="step">1</div><div class="what"><b>上线当日竞猜场次</b><div class="note">场次表填〔左/右队ID · 开赛时间 · 价格档 · 焦点战加赠方(可空)〕→ igame 部署</div></div></div>
+  <div class="row"><div class="step">2</div><div class="what"><b>结算上一日赛果（次日发）</b><div class="note">拿真实赛果(含加时/点球最终晋级方) → 查日志命中「买对/猜对」玩家 → bulk-mail 批量发 <b>bonus抽奖券 + 结算邮件</b>(兼赛果通知，游戏内不另设赛果界面)</div></div></div>
+  <div class="row"><div class="step">3</div><div class="what"><b>焦点战加赠</b><div class="note">押中「指定加赠方」且其获胜 → 常规bonus外再额外加赠(结算时一并算进邮件)</div></div></div>
+  <div class="row"><div class="step">4</div><div class="what"><b>BP竞猜积分</b><div class="note">GM命令给参与竞猜玩家加 BP 积分(随每日结算一起发) ⚠️上线前先实测GM批量加分命令</div></div></div>
+  <div class="row" style="background:#241c1a;border-color:#5a3a30"><div class="dt" style="color:#e89a78;font-size:14px">活动末</div><div class="what"><b>抽奖券回收</b><div class="note">活动结束，玩家剩余抽奖券按比例回收 → 发补偿邮件(MailID)</div></div></div>
+  <div class="foot">★ 全程不依赖后端结算逻辑：赛果命中靠查日志、发奖靠 bulk-mail。每天固定跑 1→4。</div>
+</div>
+
+<script>
+function sw(id){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  document.querySelector('.tab.'+id).classList.add('on');
+}
+</script>
 </body></html>
