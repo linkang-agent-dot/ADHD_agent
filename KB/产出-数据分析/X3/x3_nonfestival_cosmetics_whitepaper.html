@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<title>X3 非节日外显投放梳理 · 全模块</title>
+<style>
+:root{--blue:#4a6cf7;--ink:#222;--mut:#666}
+*{box-sizing:border-box}
+body{font-family:"Microsoft YaHei",sans-serif;background:#f4f5f7;margin:0;padding:24px 28px;color:var(--ink);line-height:1.6}
+h1{font-size:24px;margin:0 0 4px}
+h2{margin-top:42px;border-left:5px solid var(--blue);padding-left:11px;font-size:19px;scroll-margin-top:14px}
+h3{margin-top:24px;color:#444;font-size:15px;font-weight:600}
+.sub{color:var(--mut);font-size:13px;margin:4px 0 14px}
+.lead{color:#555;font-size:13.5px;max-width:1100px}
+.toc{background:#fff;border-radius:8px;padding:14px 20px;margin:14px 0;font-size:13px;line-height:2.1;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.toc a{color:var(--blue);text-decoration:none;margin-right:18px;white-space:nowrap;display:inline-block}
+.toc a:hover{text-decoration:underline}
+.box{background:#fff;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.07);padding:16px 20px;margin:12px 0}
+.note{background:#fffbe6;border:1px solid #f0e0a0;border-radius:6px;padding:10px 14px;margin:12px 0;font-size:12.5px;color:#5a4a00}
+.note b{color:#7a5d00}
+.warn{background:#fff0f0;border:1px solid #f4c0c0;border-radius:6px;padding:10px 14px;margin:12px 0;font-size:12.5px;color:#8a2a2a}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:12.5px;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+th,td{border:1px solid #e6e8ec;padding:6px 9px;text-align:left;vertical-align:top}
+th{background:#eef1ff;color:#33408a;font-weight:600;white-space:nowrap}
+tr:nth-child(even) td{background:#fafbff}
+code{background:#eef;border-radius:3px;padding:1px 5px;font-size:12px;color:#3a3a8a}
+.tag{display:inline-block;border-radius:4px;padding:1px 7px;font-size:11px;color:#fff;white-space:nowrap}
+.t-buff{background:#e0573b}.t-free{background:#3aa76d}.t-pay{background:#c9a227}.t-pvp{background:#7b54d6}.t-sys{background:#5a7184}.t-grow{background:#2f8fbf}
+.kpi{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}
+.kpi .c{background:#fff;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.07);padding:14px 18px;min-width:140px;flex:1}
+.kpi .n{font-size:26px;font-weight:700;color:var(--blue)}
+.kpi .l{font-size:12px;color:var(--mut);margin-top:2px}
+.legend{font-size:12px;color:var(--mut);margin:6px 0 0}
+.legend .tag{margin-right:4px}
+small{color:#999}
+.foot{margin-top:50px;padding-top:16px;border-top:1px solid #ddd;font-size:12px;color:#999}
+</style>
+
+<h1>X3 非节日外显投放梳理 · 全模块</h1>
+<p class="sub">配置真源：<code>C:\x3\gdconfig\tsv\</code>（导表只认 tsv） · 名称解析：<code>i18n/Text__Text.tsv</code> · 梳理日期：2026-06-18</p>
+<p class="lead">
+《<b>X3 节日外显投放白皮书</b>》聚焦 <b>节日外显 110 件</b>，把 <b>非节日外显 187 件</b> 只在 §1.1 列了分类、未展开。本文档把这块补齐：<b>逐件/逐模块</b>梳理「<b>内容（名称）→ 属性（品质/战力/Buff）→ 投放来源活动</b>」。
+数据全部来自当前 tsv 实地核对，与白皮书规划口径若有出入已逐处标注。
+</p>
+
+<div class="note">
+<b>一句话结论：</b>非节日外显与节日外显是<b>两套完全不同的逻辑</b>——节日外显主打<b>付费视觉</b>（多纯视觉、$49.99~$99.99 直购）；非节日外显几乎<b>全部带数值 Buff</b>，绑在<b>养成进度 / PvP 赛季 / 英雄拥有度</b>上，是<b>免费养成产出</b>为主，付费点极少（只有家具内购礼包、表情礼包、战役终结礼包三处）。
+</div>
+
+<div class="toc">
+<b>目录：</b>
+<a href="#ov">0 · 总览</a>
+<a href="#m1">① 技能皮肤 / 非节日英雄皮肤</a>
+<a href="#m2">② 非节日纪念卡</a>
+<a href="#m3">③ 基础家具</a>
+<a href="#m4">④ 基础装饰</a>
+<a href="#m5">⑤ 基础聊天表情</a>
+<a href="#m6">⑥ 头衔/铭牌 + 非节日头像框</a>
+<a href="#m7">⑦ 非节日航迹/船皮肤</a>
+<a href="#m8">⑧ 英雄羁绊贴纸</a>
+<a href="#insight">9 · 横向洞察</a>
+</div>
+
+<!-- ============ 总览 ============ -->
+<h2 id="ov">0 · 总览</h2>
+
+<div class="kpi">
+  <div class="c"><div class="n">9</div><div class="l">非节日外显模块</div></div>
+  <div class="c"><div class="n">~200</div><div class="l">梳理到的非节日外显件数</div></div>
+  <div class="c"><div class="n">7+</div><div class="l">带 Buff 的模块（9 个里）</div></div>
+  <div class="c"><div class="n">3</div><div class="l">仅有的付费投放管线</div></div>
+</div>
+
+<p class="legend">投放来源色标：
+<span class="tag t-free">免费/内置</span>
+<span class="tag t-sys">系统/进度解锁</span>
+<span class="tag t-pvp">PvP/赛季</span>
+<span class="tag t-grow">养成/英雄绑定</span>
+<span class="tag t-pay">付费礼包</span>
+<span class="tag t-buff">带 Buff</span>
+</p>
+
+<table>
+<tr><th>模块</th><th>件数（实测）</th><th>带属性?</th><th>主要投放来源</th><th>有无付费点</th></tr>
+<tr><td>① 技能皮肤/非节日英雄皮肤</td><td>28 款（22 款带技能）</td><td><span class="tag t-buff">解锁技能 + 万分比 Buff</span></td><td><span class="tag t-pay">战役终结礼包</span> <span class="tag t-grow">道具/礼包发放</span></td><td>少（仅 1 款配了专用售卖活动）</td></tr>
+<tr><td>② 非节日纪念卡</td><td>79 张</td><td><span class="tag t-buff">10 组战斗/航行 Buff（30 级升级）</span></td><td><span class="tag t-sys">建筑/系统进度 18 张</span> <span class="tag t-free">运营活动 ~58 张</span></td><td>无（纯免费产出）</td></tr>
+<tr><td>③ 基础家具</td><td>99 条（非节日）</td><td>多数无；10 件带 Buff</td><td><span class="tag t-sys">主城默认/功能解锁</span> <span class="tag t-pay">10 个内购礼包 $2.99~$49.99</span></td><td>有（家具礼包）</td></tr>
+<tr><td>④ 基础装饰</td><td>13~16 件</td><td>横梁带 +100；地板/墙纸基本无</td><td><span class="tag t-sys">初始/钻石商店常驻</span> <span class="tag t-pay">新手注册礼包</span></td><td>弱（注册礼包）</td></tr>
+<tr><td>⑤ 基础聊天表情</td><td>25 件</td><td>纯外显无属性</td><td><span class="tag t-free">内置/问答活动</span> <span class="tag t-pay">3 个表情礼包 $4.99</span></td><td>弱（$4.99 礼包）</td></tr>
+<tr><td>⑥ 头衔/铭牌 + 头像框</td><td>头衔 4 + 头像框 15</td><td><span class="tag t-buff">头衔站位 Buff / 头像框攻防万分比</span></td><td><span class="tag t-pvp">KvK/GvG/赛季</span> <span class="tag t-sys">初始/常驻运营</span></td><td>无</td></tr>
+<tr><td>⑦ 非节日航迹/船皮肤</td><td>船皮肤 8 套 + 航迹 7 条</td><td>船皮肤带小 Buff；航迹纯特效</td><td><span class="tag t-sys">声望解锁/初始</span> <span class="tag t-pvp">KvK 风暴</span></td><td>无</td></tr>
+<tr><td>⑧ 英雄羁绊贴纸</td><td>27 枚</td><td><span class="tag t-buff">永久 +0.15%~+1.5% Buff</span></td><td><span class="tag t-grow">点亮（拥有英雄/皮肤/星级）→间接绑 gacha</span></td><td>无（间接绑 gacha）</td></tr>
+</table>
+
+<div class="warn">
+<b>口径校正（与白皮书 §1.1 的差异）：</b>白皮书估「许愿池技能皮肤 25 / 基础家具 23 / 基础装饰 24 / 基础表情 15 / KvK·GvG 7」。实测：① <b>许愿池不直接发英雄皮肤</b>（奖池大奖是家具木匣+节日代币），「25 款」对不上当前 tsv，实际非节日技能皮肤 <b>22 款</b>；② 基础家具按"纯外显常驻装修"严格口径约 70 条，白皮书 23 应只数开局核心装修件；③ 基础装饰实测可获取 <b>13 件</b>（白皮书 24 疑把横梁三件套拆开重复计）；④ 头衔实际 <b>4 件</b>，白皮书「7」疑把头衔 + 同名 KvK/GvG 头像框混算。
+</div>
+
+<!-- ============ ① 技能皮肤 ============ -->
+<h2 id="m1">① 技能皮肤 / 非节日英雄皮肤（28 款 · 22 款带技能）</h2>
+<div class="box">
+<b>这是什么：</b><code>Hero__HeroSkin.tsv</code> 里带 <code>BuffTemplate</code> 的非基础皮肤即「皮肤商品」，共 44 款，排除 16 款节日皮肤后 = <b>28 款非节日皮肤</b>，其中 <b>22 款带「解锁/替换技能」</b>（即真正的「技能皮肤」）。<br>
+<b>属性：</b>每款技能皮肤带两样——① <code>HeroSkill</code> 列解锁/替换英雄技能（<code>9XXX</code>=一阶 / <code>8XXX</code>=二阶）；② <code>BuffTemplate</code>（万分比加成），<b>该值同时也是皮肤的 Item ID</b>（一表三用：属性模板 / 道具 ID / 发放引用）。<br>
+<b>投放来源：</b>当前唯一明确的专用活动管线 = <b>英雄技能售卖活动「战役终结礼包」</b>（<code>ActvHeroSkillSell</code>，仅配 1 款：10141 魔法师·柳柳，挂 Pack 19024）；其余皮肤靠 Item/Reward/各礼包间接发放。
+</div>
+<div class="warn"><b>「许愿池 25 款技能皮肤」存疑：</b>实测 6 个许愿池奖池（fountain/Egypt/VD/CNY…）大奖均为 <code>154002 幸运家具木匣</code> + 节日代币，<b>没有任何 HeroSkin/技能皮肤道具引用</b>。白皮书「许愿池 25 款」在当前 tsv 无法逐条对应，疑为规划/历史口径——本梳理以「<b>22 款非节日技能皮肤</b>」为准。</div>
+
+<table>
+<tr><th>皮肤ID</th><th>名称</th><th>英雄</th><th>带技能?</th><th>Buff(=ItemID)</th><th>投放来源</th></tr>
+<tr><td>10011</td><td>仙蒂公主·格蕾丝</td><td>格蕾丝</td><td>是 9001</td><td>530011</td><td>道具/礼包</td></tr>
+<tr><td>10012</td><td>白雪公主·格蕾丝</td><td>格蕾丝</td><td>是 8001</td><td>530012</td><td>道具/礼包</td></tr>
+<tr><td>10041</td><td>初妆·鲁比</td><td>鲁比</td><td>是 9004</td><td>530041</td><td>道具/礼包</td></tr>
+<tr><td>10042</td><td>钢羽战衣·鲁比</td><td>鲁比</td><td>否</td><td>530042</td><td>道具/礼包</td></tr>
+<tr><td>10081</td><td>仙女教母·克里斯塔尔</td><td>克里斯塔尔</td><td>是 9008</td><td>530081</td><td>道具/礼包</td></tr>
+<tr><td>10111</td><td>微醺·哈珀</td><td>哈珀</td><td>是 9011</td><td>530111</td><td>道具/礼包</td></tr>
+<tr><td>10141</td><td>魔法师·柳柳</td><td>柳柳</td><td>是 9014</td><td>530141</td><td><b>战役终结礼包（ActvHeroSkillSell 4701 / Pack 19024）</b></td></tr>
+<tr><td>10142</td><td>自由·柳柳</td><td>柳柳</td><td>是 8014</td><td>530142</td><td>道具/礼包</td></tr>
+<tr><td>10161</td><td>战神·艾丽丝</td><td>艾丽丝</td><td>是 9016</td><td>530161</td><td>道具/礼包</td></tr>
+<tr><td>10201</td><td>海上女王·阿米娜</td><td>阿米娜</td><td>是 9020</td><td>530201</td><td>道具/礼包</td></tr>
+<tr><td>10202</td><td>红绸剑姬·阿米娜 <small>※</small></td><td>阿米娜</td><td>否</td><td>530202</td><td>道具/礼包（buff 在排除名单但为 5 位常驻型，归属存疑）</td></tr>
+<tr><td>10211</td><td>传奇女仆·贝拉</td><td>贝拉</td><td>是 9021</td><td>530211</td><td>道具/礼包</td></tr>
+<tr><td>102102</td><td>内裤宗师·贝拉</td><td>贝拉</td><td>否</td><td>5302101</td><td>道具/礼包</td></tr>
+<tr><td>10221</td><td>丰收女生·阿迪娜</td><td>阿迪娜</td><td>是 9022</td><td>530221</td><td>道具/礼包</td></tr>
+<tr><td>10241</td><td>海洋精灵·芬贝克</td><td>芬贝克</td><td>是 9024</td><td>530241</td><td>道具/礼包</td></tr>
+<tr><td>10291</td><td>史诗舞者·奥黛丽</td><td>奥黛丽</td><td>是 9029</td><td>530291</td><td>道具/礼包</td></tr>
+<tr><td>10292</td><td>传奇舞者·奥黛丽</td><td>奥黛丽</td><td>是 8029</td><td>530292</td><td>道具/礼包</td></tr>
+<tr><td>10311</td><td>白衣梦魇·海瑟</td><td>海瑟</td><td>是 9031</td><td>530311</td><td>道具/礼包</td></tr>
+<tr><td>10321</td><td>艺术大师·斯隆</td><td>斯隆</td><td>是 9032</td><td>530321</td><td>道具/礼包</td></tr>
+<tr><td>103401</td><td>兔耳魅影·霍普金斯 <small>※</small></td><td>霍普金斯</td><td>否</td><td>53034</td><td>道具/礼包（buff 不在排除名单，归非节日）</td></tr>
+<tr><td>103502</td><td>征服者·阿什顿</td><td>阿什顿</td><td>是 9035</td><td>5303502</td><td>道具/礼包</td></tr>
+<tr><td>104001</td><td>足球宝贝·爱莉希雅 <small>※</small></td><td>爱莉希雅</td><td>否</td><td>5304001</td><td>道具/礼包（世界杯英雄）</td></tr>
+<tr><td>10421</td><td>圣光·夜玫瑰</td><td>夜玫瑰</td><td>是 9042</td><td>530421</td><td>道具/礼包</td></tr>
+<tr><td>10422</td><td>幻彩·夜玫瑰</td><td>夜玫瑰</td><td>是 8042</td><td>530422</td><td>道具/礼包</td></tr>
+<tr><td>10431</td><td>伤痕累累·凌霜</td><td>凌霜</td><td>是 9043</td><td>530431</td><td>道具/礼包</td></tr>
+<tr><td>10432</td><td>凌霜·布鲁斯·李</td><td>凌霜</td><td>是 8043</td><td>530432</td><td>道具/礼包</td></tr>
+<tr><td>10433</td><td>武道冠军·凌霜</td><td>凌霜</td><td>否</td><td>530433</td><td>道具/礼包</td></tr>
+<tr><td>10471</td><td>狼魂之主·艾琳娜</td><td>艾琳娜</td><td>是 9047</td><td>530471</td><td>道具/礼包</td></tr>
+<tr><td>105601</td><td>霓裳羽衣·维丹蒂亚</td><td>维丹蒂亚</td><td>否</td><td>530456</td><td>道具/礼包</td></tr>
+</table>
+<p class="sub"><small>※ 边界存疑项（按"buff 是否命中节日排除名单"机械归类），白皮书口径若不同需人工复核。</small></p>
+
+<!-- ============ ② 纪念卡 ============ -->
+<h2 id="m2">② 非节日纪念卡（79 张）</h2>
+<div class="box">
+<b>属性：带养成 Buff，非纯收藏。</b>每张卡的属性组（<code>MemorialCardLevel</code> 组 1001–1012）= 30 级升级、每级给一项战斗/航行加成 + 声望。加成类型：<code>1001</code>所有水手攻击 / <code>1002</code>所有水手防御 / <code>1003</code>猎人攻击 / <code>1004</code>射手攻击 / <code>1005</code>斗士攻击 / <code>1006</code>伤害 / <code>1008</code>舰船航速 / <code>1010</code>猎人防御 / <code>1011</code>射手防御 / <code>1012</code>斗士防御。升级靠集齐相同卡片。<br>
+<b>投放来源两条主线：</b>① <b>建筑/系统进度解锁（常驻，18 张：ID 45–62）</b>——酒馆/麦田/医馆/肉铺/香草棚等达指定等级 + 首次进竞技场，是唯一稳定常驻获取池；② <b>运营活动产出（~58 张）</b>——伟大航道、夜下垂钓、风暴逐鹿、蒸汽纪元等限时活动；③ 预留未投放 6 张（20–22、35–37）。
+</div>
+<div class="note"><b>口径说明：</b>白皮书要排除的节日卡 180074–180078 <b>不在本表 ID 空间（1–79）内</b>，属另一套系统，故本表 79 张全计入非节日。卡名 col3 在 tsv 内已是中文。<code>CardGallary</code> 是另一套 v2 集卡册（ID 1123xxxx），未纳入。</div>
+
+<table>
+<tr><th>ID</th><th>名称</th><th>属性组(Buff)</th><th>投放来源</th></tr>
+<tr><td>1</td><td>圣诞纪念！</td><td>1008 舰船航速</td><td>2024圣诞节活动</td></tr>
+<tr><td>2</td><td>风暴尽头</td><td>1006 伤害</td><td>风暴逐鹿活动</td></tr>
+<tr><td>3</td><td>浪漫烟花</td><td>1010 猎人防御</td><td>2024春节活动</td></tr>
+<tr><td>4</td><td>兔宝宝河边垂钓</td><td>1005 斗士攻击</td><td>兔宝宝的夜下垂钓</td></tr>
+<tr><td>5</td><td>兔宝宝的夜钓</td><td>1001 所有水手攻击</td><td>兔宝宝的夜下垂钓</td></tr>
+<tr><td>6</td><td>兔宝宝海边捕捞</td><td>1012 斗士防御</td><td>兔宝宝的夜下垂钓</td></tr>
+<tr><td>7</td><td>浪漫之夜</td><td>1002 所有水手防御</td><td>2025情人节活动</td></tr>
+<tr><td>8</td><td>姊妹情深</td><td>1006 伤害</td><td>2025情人节活动</td></tr>
+<tr><td>9</td><td>新世界！</td><td>1006 伤害</td><td>海洋入侵活动</td></tr>
+<tr><td>10</td><td>少女与蒸汽岛</td><td>1005 斗士攻击</td><td>蒸汽纪元活动</td></tr>
+<tr><td>11</td><td>迷情瞬间</td><td>1004 射手攻击</td><td>夜下垂钓</td></tr>
+<tr><td>12</td><td>邮轮假期</td><td>1005 斗士攻击</td><td>夜下垂钓</td></tr>
+<tr><td>13</td><td>治疗时刻</td><td>1003 猎人攻击</td><td>夜下垂钓</td></tr>
+<tr><td>14</td><td>战场重逢</td><td>1003 猎人攻击</td><td>夜下垂钓</td></tr>
+<tr><td>15</td><td>玫瑰园偶遇</td><td>1004 射手攻击</td><td>夜下垂钓</td></tr>
+<tr><td>16</td><td>战斗演练</td><td>1005 斗士攻击</td><td>夜下垂钓</td></tr>
+<tr><td>17</td><td>贵族之女</td><td>1010 猎人防御</td><td>蔷薇盛典活动</td></tr>
+<tr><td>18</td><td>松鼠的演出</td><td>1011 射手防御</td><td>2025愚人节活动</td></tr>
+<tr><td>19</td><td>微醺少女</td><td>1003 猎人攻击</td><td>春日品酒节</td></tr>
+<tr><td>20</td><td>沉睡星璃</td><td>1011 射手防御</td><td><small>预留·暂无渠道</small></td></tr>
+<tr><td>21</td><td>玫瑰之约</td><td>1004 射手攻击</td><td><small>预留·暂无渠道</small></td></tr>
+<tr><td>22</td><td>盛夏（占坑）</td><td>1004 射手攻击</td><td><small>预留·占坑</small></td></tr>
+<tr><td>23</td><td>巨鲸</td><td>1003 猎人攻击</td><td>伟大航道-猎人指挥官</td></tr>
+<tr><td>24</td><td>沉船</td><td>1010 猎人防御</td><td>伟大航道-猎人航线</td></tr>
+<tr><td>25</td><td>遗忘都市</td><td>1004 射手攻击</td><td>伟大航道-射手指挥官</td></tr>
+<tr><td>26</td><td>远航</td><td>1011 射手防御</td><td>伟大航道-射手航线</td></tr>
+<tr><td>27</td><td>涅槃</td><td>1005 斗士攻击</td><td>伟大航道-斗士指挥官</td></tr>
+<tr><td>28</td><td>聚会</td><td>1012 斗士防御</td><td>伟大航道-斗士航线</td></tr>
+<tr><td>29</td><td>不屈的斯嘉丽</td><td>1001 所有水手攻击</td><td>伟大航道-鼓舞航线</td></tr>
+<tr><td>30</td><td>泳装派对</td><td>1003 猎人攻击</td><td>伟大航道-猎人指挥官</td></tr>
+<tr><td>31</td><td>雅典娜万岁</td><td>1010 猎人防御</td><td>伟大航道-猎人航线</td></tr>
+<tr><td>32</td><td>自由</td><td>1004 射手攻击</td><td>伟大航道-射手指挥官</td></tr>
+<tr><td>33</td><td>训练时刻</td><td>1011 射手防御</td><td>伟大航道-射手航线</td></tr>
+<tr><td>34</td><td>午后时光</td><td>1005 斗士攻击</td><td>伟大航道-斗士指挥官</td></tr>
+<tr><td>35</td><td>艾丽丝的想法</td><td>1012 斗士防御</td><td><small>预留·暂无渠道</small></td></tr>
+<tr><td>36</td><td>古老巨树</td><td>1001 所有水手攻击</td><td><small>预留·暂无渠道</small></td></tr>
+<tr><td>37</td><td>林中小屋</td><td>1010 猎人防御</td><td><small>预留·暂无渠道</small></td></tr>
+<tr><td>38</td><td>格蕾丝的游园日</td><td>1002 所有水手防御</td><td>2025儿童节活动</td></tr>
+<tr><td>39</td><td>烤肉派对</td><td>1010 猎人防御</td><td>烧烤派对活动</td></tr>
+<tr><td>40</td><td>自由游行</td><td>1012 斗士防御</td><td>七月盛典活动</td></tr>
+<tr><td>41</td><td>美人鱼的梦境</td><td>1006 伤害</td><td>航海之路活动</td></tr>
+<tr><td>42</td><td>这一年有你真好</td><td>1004 射手攻击</td><td>周年盛宴活动</td></tr>
+<tr><td>43</td><td>灵魂回响</td><td>1005 斗士攻击</td><td>魂归之潮活动</td></tr>
+<tr><td>44</td><td>比基尼热浪</td><td>1003 猎人攻击</td><td>海滨假日活动</td></tr>
+<tr><td>45</td><td>金麦醇酿师</td><td>1005 斗士攻击</td><td><b>酒馆达 1 级</b></td></tr>
+<tr><td>46</td><td>炭火香魂</td><td>1003 猎人攻击</td><td><b>酒馆达 2 级</b></td></tr>
+<tr><td>47</td><td>麦田守望</td><td>1004 射手攻击</td><td><b>麦田达 3 级</b></td></tr>
+<tr><td>48</td><td>金杯女侍</td><td>1012 斗士防御</td><td><b>酒馆达 3 级</b></td></tr>
+<tr><td>49</td><td>银夜舞姬</td><td>1005 斗士攻击</td><td><b>酒馆达 4 级</b></td></tr>
+<tr><td>50</td><td>白衣心语</td><td>1010 猎人防御</td><td><b>医馆达 5 级</b></td></tr>
+<tr><td>51</td><td>原野屠刀</td><td>1003 猎人攻击</td><td><b>肉铺达 6 级</b></td></tr>
+<tr><td>52</td><td>芳香园丁</td><td>1010 猎人防御</td><td><b>香草棚达 7 级</b></td></tr>
+<tr><td>53</td><td>绿影调剂师</td><td>1012 斗士防御</td><td><b>药店达 8 级</b></td></tr>
+<tr><td>54</td><td>梦境甜心</td><td>1011 射手防御</td><td><b>甜品坊达 9 级</b></td></tr>
+<tr><td>55</td><td>书香盈袖</td><td>1003 猎人攻击</td><td><b>图书馆达 10 级</b></td></tr>
+<tr><td>56</td><td>荣耀斗魂</td><td>1005 斗士攻击</td><td><b>首次进入竞技场</b></td></tr>
+<tr><td>57</td><td>仓库守护人</td><td>1012 斗士防御</td><td><b>仓库达 11 级</b></td></tr>
+<tr><td>58</td><td>海盗女王</td><td>1010 猎人防御</td><td><b>猎人营地达 12 级</b></td></tr>
+<tr><td>59</td><td>烈焰神枪手</td><td>1004 射手攻击</td><td><b>射手营地达 13 级</b></td></tr>
+<tr><td>60</td><td>烈焰女武士</td><td>1005 斗士攻击</td><td><b>斗士营地达 14 级</b></td></tr>
+<tr><td>61</td><td>港湾信使</td><td>1011 射手防御</td><td><b>港口达 15 级</b></td></tr>
+<tr><td>62</td><td>林间坚果小筑</td><td>1003 猎人攻击</td><td><b>坚果林达 15 级</b></td></tr>
+<tr><td>63</td><td>千帆归来</td><td>1012 斗士防御</td><td>望帆节活动</td></tr>
+<tr><td>64</td><td>美人鱼之舞</td><td>1004 射手攻击</td><td>人鱼之歌活动</td></tr>
+<tr><td>65</td><td>魔海回声</td><td>1002 所有水手防御</td><td>魔海回声活动</td></tr>
+<tr><td>66</td><td>炎龙之威</td><td>1010 猎人防御</td><td>炎龙苏醒活动</td></tr>
+<tr><td>67</td><td>玉兔赐福</td><td>1005 斗士攻击</td><td>团圆之夜活动</td></tr>
+<tr><td>68</td><td>第一届秋季酿酒大赛</td><td>1005 斗士攻击</td><td>秋季酿酒大赛</td></tr>
+<tr><td>69</td><td>重铸荣光</td><td>1003 猎人攻击</td><td>公会合并活动</td></tr>
+<tr><td>70</td><td>魔女的邀约</td><td>1010 猎人防御</td><td>魔女之夜活动</td></tr>
+<tr><td>71</td><td>荣光的继承者</td><td>1012 斗士防御</td><td>骑士的荣光活动</td></tr>
+<tr><td>72</td><td>救赎与审判</td><td>1011 射手防御</td><td>光之双面活动</td></tr>
+<tr><td>73</td><td>凛冬补给战</td><td>1005 斗士攻击</td><td>凛冬补给战活动</td></tr>
+<tr><td>74</td><td>礼物堆里的小精灵</td><td>1004 射手攻击</td><td>圣诞庆典活动</td></tr>
+<tr><td>75</td><td>天马的守护</td><td>1004 射手攻击</td><td>再启征帆活动</td></tr>
+<tr><td>76</td><td>尼罗回响</td><td>1011 射手防御</td><td>尼罗之辉活动</td></tr>
+<tr><td>77</td><td>我对你的誓言</td><td>1004 射手攻击</td><td>白色花嫁活动</td></tr>
+<tr><td>78</td><td>新春特辑</td><td>1003 猎人攻击</td><td>新春龙舞活动</td></tr>
+<tr><td>79</td><td>绿茵之星</td><td>1011 射手防御</td><td>世界杯活动</td></tr>
+</table>
+
+<!-- ============ ③ 基础家具 ============ -->
+<h2 id="m3">③ 基础家具（99 条非节日条目）</h2>
+<div class="box">
+<b>口径：</b><code>FurnitureDecorate__FurnitureDecorate.tsv</code> 共 138 条数据。带 TimeCycle = 39 条节日家具（与白皮书"38"吻合）；<b>不带 TimeCycle = 99 条非节日</b>。分布：家具装饰 60 / 壁挂 13 / 资源箱 11 / 功能家具 10 / 地毯 3 / 柜台 1 / 场景 1。<br>
+<b>属性：</b>常驻装修件基本 <b>0 Buff</b>；99 条里只有 <b>10 件带 BuffTemplate</b>，全是付费内购礼包款 + 三尊角色雕像。<br>
+<b>投放来源：</b>① 主城默认/常驻（~70 条，无来源字段）；② 功能解锁默认给（10 条 type=11 功能入口家具）；③ <b>内购家具礼包（10 条，PackType16，$2.99~$49.99，限购 1 次）</b>——基础家具唯一付费点；④ 任务奖励 1 条。
+</div>
+<div class="note"><b>白皮书"约 23 件基础家具"</b>大概率只数开局核心装修件（21001xxx 一族）；实际纯外显常驻装修约 70 条。下表列付费款 + 功能家具 + 代表性常驻款，完整 99 条见子 agent 原始挖掘记录。</div>
+
+<h3>带 Buff / 付费内购家具礼包（10 件 — 模块唯一变现点）</h3>
+<table>
+<tr><th>ID</th><th>名称</th><th>Buff</th><th>投放来源（礼包价）</th></tr>
+<tr><td>31001041</td><td>篝火</td><td>否</td><td>内购礼包 20200 · $4.99</td></tr>
+<tr><td>31001048</td><td>实木床</td><td>是 220001</td><td>内购礼包 20201 · $19.99</td></tr>
+<tr><td>31001049</td><td>航海图</td><td>否</td><td>内购礼包 20202 · $2.99</td></tr>
+<tr><td>31001050</td><td>钢琴</td><td>是 220002</td><td>内购礼包 20203 · $19.99</td></tr>
+<tr><td>31001051</td><td>船锚</td><td>是 220003</td><td>内购礼包 20204 · $9.99</td></tr>
+<tr><td>31001056</td><td>牛油果沙发</td><td>是 21010</td><td>内购礼包 20205 · $9.99</td></tr>
+<tr><td>31001057</td><td>古董盔甲</td><td>是 220013</td><td>内购礼包 20206 · $9.99</td></tr>
+<tr><td>31001061</td><td>绿意秋千</td><td>是 220001</td><td>内购礼包 20207 · $29.99</td></tr>
+<tr><td>31001062</td><td>露营帐篷</td><td>是 220011</td><td>内购礼包 20208 · $19.99</td></tr>
+<tr><td>31001071</td><td>仰望星空</td><td>是 220002</td><td>内购礼包 20209 · $49.99</td></tr>
+<tr><td>31001042</td><td>阿米娜的雕像</td><td>是 220001</td><td>成就类（默认）</td></tr>
+<tr><td>31001043</td><td>霍普金斯的雕像</td><td>是 220003</td><td>成就类（默认）</td></tr>
+<tr><td>31001044</td><td>弗莱彻的雕像</td><td>是 220002</td><td>成就类（默认）</td></tr>
+</table>
+
+<h3>功能家具（10 件 · FunctionUnlock 解锁时自动出现）</h3>
+<table>
+<tr><th>ID</th><th>名称</th><th>功能解锁ID</th></tr>
+<tr><td>61001001</td><td>台账</td><td>1058</td></tr>
+<tr><td>61001002</td><td>拜访</td><td>1056</td></tr>
+<tr><td>61001003</td><td>甜心助力</td><td>1059</td></tr>
+<tr><td>61001004</td><td>世界新闻</td><td>1054</td></tr>
+<tr><td>61001005</td><td>钓鱼</td><td>1049</td></tr>
+<tr><td>61001007</td><td>黑市</td><td>1057</td></tr>
+<tr><td>61001008</td><td>商店</td><td>1043</td></tr>
+<tr><td>61001009</td><td>竞技场</td><td>1075</td></tr>
+<tr><td>61001010</td><td>开拓航道</td><td>1082</td></tr>
+<tr><td>61001011</td><td>纪念卡</td><td>1088</td></tr>
+</table>
+<p class="sub">其余 ~70 条为主城默认常驻装修件（资源箱 11xxx、家具装饰 21001xxx/31001xxx 基础款、壁挂 41001xxx、地毯 51001xxx、柜台 11101001 等），无来源字段、无 Buff，玩家正常游玩即拥有。</p>
+
+<!-- ============ ④ 基础装饰 ============ -->
+<h2 id="m4">④ 基础装饰（13~16 件）</h2>
+<div class="box">
+<b>口径：</b><code>FurnitureSkin__FurnitureSkin.tsv</code> 实际 42 个皮肤。横梁(<code>1001xxx</code>=门/柱/墙三件套，1 个皮肤 ID)、地板(<code>2001xxx</code>)、墙纸(<code>3001xxx</code>)。排除 26 件节日/活动款后 = <b>16 行（含 3 件初始款），可获取基础装饰 13 件</b>。<br>
+<b>属性：</b>横梁基础款带「水手攻击 +100」；地板/墙纸基础款<b>基本无 Buff</b>（仅"橡木"系来自注册礼包带 +100）。节日款横梁统一 +500（付费数值钩子）。<br>
+<b>投放来源（不走 Shop/Exchange/Reward 表，由 FurnitureSkin 表自身字段驱动家具皮肤界面）：</b>① 初始解锁（sort=1，3 件）；② 钻石商店常驻（sort=100–104，7 件，1万–8万钻 + lv3–22 解锁）；③ 新手注册第 4 天礼包（TC=6010，2 件橡木）。
+</div>
+<div class="note"><b>口径校正：</b>白皮书估"24 件基础装饰"偏高，疑把横梁三件套(Door/Column/Wall)拆开重复计——实际基础装饰只有 <b>13 件</b>可获取，节日/活动款占了 26 件。</div>
+<table>
+<tr><th>ID</th><th>名称</th><th>类型</th><th>投放来源</th><th>Buff</th></tr>
+<tr><td>1001001</td><td>普通横梁</td><td>横梁</td><td>初始解锁</td><td>无</td></tr>
+<tr><td>1001002</td><td>复古横梁</td><td>横梁</td><td>钻石商店 lv10 · 1万钻</td><td>水手攻击+100</td></tr>
+<tr><td>1001003</td><td>地中海横梁</td><td>横梁</td><td>钻石商店 lv15 · 2万钻</td><td>水手攻击+100</td></tr>
+<tr><td>1001004</td><td>古堡横梁</td><td>横梁</td><td>钻石商店 lv18 · 5万钻</td><td>水手攻击+100</td></tr>
+<tr><td>2001001</td><td>普通地板</td><td>地板</td><td>初始解锁</td><td>无</td></tr>
+<tr><td>2001003</td><td>复古地砖</td><td>地板</td><td>钻石商店 lv3 · 1万钻</td><td>无</td></tr>
+<tr><td>2001004</td><td>蓝白格子</td><td>地板</td><td>钻石商店 lv12 · 1.5万钻</td><td>无</td></tr>
+<tr><td>2001005</td><td>琉璃白砖</td><td>地板</td><td>钻石商店 lv15 · 3万钻</td><td>无</td></tr>
+<tr><td>2001006</td><td>实木地板</td><td>地板</td><td>钻石商店 lv18 · 5万钻</td><td>无</td></tr>
+<tr><td>2001007</td><td>庭院地钻</td><td>地板</td><td>钻石商店 lv22 · 8万钻</td><td>无</td></tr>
+<tr><td>2001009</td><td>橡木地板</td><td>地板</td><td>注册第4天礼包 (TC6010)</td><td>水手攻击+100</td></tr>
+<tr><td>3001001</td><td>普通墙纸</td><td>墙纸</td><td>初始解锁</td><td>无</td></tr>
+<tr><td>3001002</td><td>白砖墙纸</td><td>墙纸</td><td>钻石商店 lv10 · 1万钻</td><td>无</td></tr>
+<tr><td>3001003</td><td>老砖墙纸</td><td>墙纸</td><td>钻石商店 lv12 · 2万钻</td><td>无</td></tr>
+<tr><td>3001004</td><td>实木墙纸</td><td>墙纸</td><td>钻石商店 lv18 · 5万钻</td><td>无</td></tr>
+<tr><td>3001006</td><td>橡木墙纸</td><td>墙纸</td><td>注册第4天礼包 (TC6010)</td><td>水手攻击+100</td></tr>
+</table>
+
+<!-- ============ ⑤ 基础表情 ============ -->
+<h2 id="m5">⑤ 基础聊天表情（25 件）</h2>
+<div class="box">
+<b>组成：</b>① <code>ChatEmojyReply</code> 快捷回复 <b>9 个内置免费</b>通用情绪图标；② <code>Emoticons</code> 角色表情里的 <b>16 件非节日款</b>。<br>
+<b>属性：</b>纯外显，<b>无任何战斗/养成属性</b>（仅聊天频道展示一张图）。<br>
+<b>投放来源：</b>内置免费（9+1）/ 玩法活动解锁（秘密问答、审判之光等，8 件，买了/获得后才显示）/ <b>表情礼包 $4.99（3 个：10064/10065/10066，PackType105，永久限购 1 次）</b> / 尚未投放（2 件）。已排除节日 7 件 + 世界杯应援 48 国。
+</div>
+<table>
+<tr><th>ID</th><th>名称</th><th>显示规则</th><th>投放来源</th></tr>
+<tr><td colspan="4" style="background:#eef1ff;font-weight:600">A · 快捷回复（9 件内置免费）</td></tr>
+<tr><td>1–9</td><td>点赞 / 踩 / 好的 / 微笑 / 膜拜 / 庆祝 / 惊讶 / 无语 / 生气</td><td>一直显示</td><td>内置免费</td></tr>
+<tr><td colspan="4" style="background:#eef1ff;font-weight:600">B · Emoticons 非节日角色表情（16 件）</td></tr>
+<tr><td>100</td><td>贝拉·欢庆</td><td>一直显示</td><td>内置免费（秘密问答）</td></tr>
+<tr><td>101</td><td>贝拉·害羞</td><td>获得后显示</td><td>表情礼包 10064 · $4.99</td></tr>
+<tr><td>102</td><td>贝拉·点赞</td><td>获得后显示</td><td>表情礼包 10065 · $4.99</td></tr>
+<tr><td>103</td><td>贝拉·震惊</td><td>获得后显示</td><td><small>尚未投放</small></td></tr>
+<tr><td>104</td><td>贝拉·疑惑</td><td>获得后显示</td><td><small>尚未投放</small></td></tr>
+<tr><td>110</td><td>哈珀·举杯</td><td>获得后显示</td><td>活动-秘密问答</td></tr>
+<tr><td>120</td><td>护士·打针</td><td>获得后显示</td><td>活动-秘密问答</td></tr>
+<tr><td>131</td><td>阿米娜·上！</td><td>获得后显示</td><td>活动-秘密问答</td></tr>
+<tr><td>150</td><td>舞娘·跳舞</td><td>获得后显示</td><td>活动-秘密问答</td></tr>
+<tr><td>160</td><td>格蕾丝·开心</td><td>获得后显示</td><td>活动-秘密问答</td></tr>
+<tr><td>162</td><td>格蕾丝·大哭</td><td>获得后显示</td><td>表情礼包 10066 · $4.99</td></tr>
+<tr><td>190</td><td>维奥莱特·祈祷</td><td>获得后显示</td><td>活动-审判之光</td></tr>
+<tr><td>200</td><td>阿迪娜·下劈</td><td>获得后显示</td><td>活动-25凛冬补给战</td></tr>
+</table>
+
+<!-- ============ ⑥ 头衔/头像框 ============ -->
+<h2 id="m6">⑥ 头衔/铭牌（4 件） + 非节日头像框（15 件）</h2>
+<div class="box">
+<b>头衔/铭牌（PlayerTitle）：</b>实测仅 4 行，全橙品质。101/102/103 带<b>站位 Buff</b>，104 无 Buff（纯荣誉）。全部带重复获取钻石补偿（单日100/上限1000）。<b>全部来自 PvP/跨服赛季</b>。<br>
+<b>注：</b>X3 无独立"铭牌"系统，铭牌即头衔。白皮书"7 件"疑把头衔 + 同名 KvK/GvG 头像框混算。
+</div>
+<table>
+<tr><th>ID</th><th>头衔</th><th>品质</th><th>带Buff</th><th>投放来源</th></tr>
+<tr><td>101</td><td>风暴领主</td><td>橙</td><td>是 站位Buff</td><td>KvK 风暴逐鹿（ActvKvk 102001）</td></tr>
+<tr><td>102</td><td>海皇</td><td>橙</td><td>是 站位Buff</td><td>永恒之岛/巢穴争夺（KingOfSeasTitle）</td></tr>
+<tr><td>103</td><td>魔海之主</td><td>橙</td><td>是 站位Buff</td><td>KvK 魔海回声/魔山决战（102003/102005）</td></tr>
+<tr><td>104</td><td>世界之巅</td><td>橙</td><td>否</td><td>世界杯跨服排行榜 前 5</td></tr>
+</table>
+
+<div class="box">
+<b>非节日头像框（PersonalizeAvatarFrameCfg）：</b>定义表 76 个（10000–10075），经 Item 80xxx 包成道具发放。排除 12 个节日框 + 48 个世界杯竞猜框后 = <b>15 件非节日常驻</b>。<br>
+<b>属性：</b>几乎全部带 Buff（攻防万分比 50~350 + 虚战力 2万~3.5万），<b>唯一例外 10000 默认框无属性</b>。<br>
+<b>投放来源：</b>① 初始解锁（默认框）；② PvP/赛季（风暴逐鹿/魔山/GvG 公会争霸/世界入侵/巢穴争夺）；③ 常驻运营活动（俘获芳心/女仆嘉奖/满月庆祝/秋季酿酒大赛排名）。分发走活动 Reward + 常驻商店 + 自选礼包 Item 1080（SubGroup 519）；<b>不经 VIP 发放</b>。
+</div>
+<table>
+<tr><th>ID</th><th>头像框</th><th>带Buff</th><th>投放来源</th></tr>
+<tr><td>10000</td><td>默认头像框</td><td>否</td><td>初始解锁（所有玩家默认）</td></tr>
+<tr><td>10001</td><td>时间旅者</td><td>攻击+200</td><td>俘获芳心活动</td></tr>
+<tr><td>10002</td><td>暗夜皇冠</td><td>防御+200</td><td><small>预留·暂无渠道</small></td></tr>
+<tr><td>10003</td><td>光明使者</td><td>防御+200</td><td>女仆嘉奖活动</td></tr>
+<tr><td>10004</td><td>征服者</td><td>攻击+200</td><td>公会占领/争夺巢穴（PvP）</td></tr>
+<tr><td>10005</td><td>浪涛之巅</td><td>防御+200</td><td>每日福利活动</td></tr>
+<tr><td>10007</td><td>酒香四溢</td><td>稀有商品产出+1000</td><td>满月庆祝/海洋女王（开服30天纪念）</td></tr>
+<tr><td>10010</td><td>世界之战</td><td>部队伤害+150</td><td>世界入侵活动（PvP）</td></tr>
+<tr><td>10013</td><td>风暴领主</td><td>防御+350</td><td>KvK 风暴逐鹿（PvP）</td></tr>
+<tr><td>10014</td><td>雷霆守卫</td><td>防御+150</td><td>KvK 风暴逐鹿（PvP）</td></tr>
+<tr><td>10021</td><td>秋酿金环</td><td>防御+150</td><td>秋季酿酒大赛 第1名</td></tr>
+<tr><td>10022</td><td>秋酿银环</td><td>防御+100</td><td>秋季酿酒大赛 第2–3名</td></tr>
+<tr><td>10023</td><td>秋酿铜环</td><td>防御+50</td><td>秋季酿酒大赛 第4–10名</td></tr>
+<tr><td>10024</td><td>魔海之主</td><td>防御+350</td><td>KvK 魔山决战/魔海回声（PvP）</td></tr>
+<tr><td>10025</td><td>至尊盟契</td><td>防御+350</td><td>GvG 公会争霸赛 至尊段位（PvP）</td></tr>
+</table>
+
+<!-- ============ ⑦ 航迹/船皮肤 ============ -->
+<h2 id="m7">⑦ 非节日航迹/船皮肤（船皮肤 8 套 + 航迹 7 条）</h2>
+<div class="box">
+<b>重要纠正：船皮肤≠纯外显。</b><code>Ship__ShipSkin.tsv</code> 船皮肤带 <b>声望解锁门槛（1万~3万）+ 小幅属性 Buff</b>（万分比）；真正纯外显是它引用的 <b>航迹 <code>Skin</code>(type2 拖尾特效)</b>，无任何属性。<br>
+<b>投放来源：</b>统一走「<b>声望(reputation)解锁</b>」经济，不在 Shop 商店、不走 RoutePack（RoutePack 是另一套数值航线系统，勿混淆）。节日款随对应节日活动发放，非节日款随版本作声望兑换/常驻投放。
+</div>
+<table>
+<tr><th>船皮肤ID</th><th>名称</th><th>属性增益</th><th>声望</th><th>投放来源</th></tr>
+<tr><td>1</td><td>深蓝海</td><td>无</td><td>初始默认</td><td>初始解锁</td></tr>
+<tr><td>2</td><td>阳光黄</td><td>220001,100</td><td>10000</td><td>声望解锁</td></tr>
+<tr><td>3</td><td>翡翠绿</td><td>220002,100</td><td>10000</td><td>声望解锁</td></tr>
+<tr><td>4</td><td>星辰紫</td><td>220003,100</td><td>10000</td><td>声望解锁</td></tr>
+<tr><td>5</td><td>烈焰红</td><td>220011,100</td><td>10000</td><td>声望解锁</td></tr>
+<tr><td>6</td><td>银河灰</td><td>220012,100</td><td>10000</td><td>声望解锁</td></tr>
+<tr><td>7</td><td>小克拉肯</td><td>120100,100</td><td>10000</td><td>声望解锁</td></tr>
+<tr><td>8</td><td>深海猎食者</td><td>120100,120</td><td>12000</td><td>声望解锁</td></tr>
+</table>
+<p class="sub"><b>非节日航迹（纯特效，7 条）：</b>3001 普通航迹（初始）· 3003 梦伞（菌伞幽航）· 3004 瑞竹（熊猫之旅）· 3005 风暴（KvK 风暴王座）· 3011 圣鳐（回声圣鳐）· 3013 梦幻王蝶（新赛季）· 3014 天马（新年/启航）。已排除 7 条节日航迹（3002/3006/3007/3008/3009/3010/3012）。</p>
+
+<!-- ============ ⑧ 羁绊贴纸 ============ -->
+<h2 id="m8">⑧ 英雄羁绊贴纸 HeroStickers（27 枚）</h2>
+<div class="box">
+<b>这是什么：</b>英雄<b>羁绊收集册</b>——每位英雄/CP 一枚专属贴纸，集齐前置条件后<b>自动「点亮」</b>。是<b>外显 + 养成二合一</b>的常驻系统：图鉴(外显) + 点亮给永久属性 Buff(养成) + 累计积分换铜/银/金/钻档位奖励。<br>
+<b>属性：</b>每枚点亮后给 1 条永久属性加成（<code>StickerBuff</code>，万分比），梯度 <b>1500 / 3000 / 4500 / 7500 / 15000（即 +0.15%~+1.5%）</b>；高价值如 1010 舞会之星、1024 矿工传奇 = +1.5%。全 27 枚 = 一套可观隐性养成。<br>
+<b>投放来源（点亮机制，非购买）：</b>由 <code>LightConditionGroup</code> 决定——满足「拥有英雄 / 拥有英雄皮肤 / 英雄达指定星级」即<b>自动点亮</b>；<code>ShowConditionGroup</code> 控制何时在册中显形。门槛绑英雄/皮肤/星级 → <b>间接绑 gacha</b>。新英雄/CP 上线必配套出新贴纸。
+</div>
+<table>
+<tr><th>档位</th><th>最低积分</th><th>说明</th></tr>
+<tr><td>铜 / 银 / 金 / 金+ / 钻</td><td>25 / 50 / 75 / 100 / 150</td><td>每点亮一枚累加积分，达档领奖（道具 15900716）</td></tr>
+</table>
+<table>
+<tr><th>贴纸ID段</th><th>代表贴纸</th><th>关联英雄</th><th>点亮条件</th><th>Buff(万分比)</th></tr>
+<tr><td>1001–1004</td><td>不醉不归 / 异国美酒 / 特权名片</td><td>阿米娜·贝拉·芬贝克·凌霜等</td><td>获取英雄/皮肤</td><td>1500–4500</td></tr>
+<tr><td>1005–1012</td><td>大显身手 / 舞会之星 / 海上女王</td><td>柳柳·格蕾丝·奥黛丽等</td><td>星级 + 前置贴纸</td><td>4500–15000</td></tr>
+<tr><td>1013–1018</td><td>合作共赢 / 玫瑰之约 / 珍藏衣物</td><td>克里斯塔尔·阿什顿·夜玫瑰等</td><td>获取英雄/星级</td><td>3000–15000</td></tr>
+<tr><td>1019–1023</td><td>狩猎行动 / 荣耀皇冠 / 双截棍</td><td>斯隆·爱莉希雅·艾琳娜·凌霜</td><td>获取英雄/星级</td><td>3000–15000</td></tr>
+<tr><td>1024–1027</td><td>矿工传奇 / 王座之争 / 回声海螺</td><td>鲁比·爱莉希雅等</td><td>获取英雄/皮肤</td><td>3000–15000</td></tr>
+</table>
+
+<!-- ============ 横向洞察 ============ -->
+<h2 id="insight">9 · 横向洞察</h2>
+<div class="box">
+<h3 style="margin-top:4px">① 非节日外显 = 养成/PvP 引擎，不是付费视觉</h3>
+<p class="lead">与节日外显（多纯视觉、$49.99~$99.99 直购）相反，非节日外显<b>几乎全部带数值 Buff</b>：纪念卡（10 组战斗 Buff）、头像框（攻防万分比）、头衔（站位 Buff）、船皮肤（声望 Buff）、羁绊贴纸（永久 +1.5%）、技能皮肤（解锁技能）。它们是<b>把"外显"挂到养成深度和 PvP 荣誉上</b>，靠数值驱动收集，而非靠视觉付费。</p>
+
+<h3>② 投放来源高度集中在 5 条免费/进度线</h3>
+<p class="lead">
+<span class="tag t-sys">系统进度</span> 建筑/主城等级解锁（纪念卡 18 张、家具默认、装饰初始/钻石商店）·
+<span class="tag t-pvp">PvP 赛季</span> KvK/GvG/世界入侵（头衔 4、头像框 6、船皮肤）·
+<span class="tag t-grow">英雄绑定</span> 拥有英雄/皮肤/星级点亮（羁绊贴纸 27、技能皮肤）·
+<span class="tag t-free">运营活动</span> 限时活动产出（纪念卡 ~58、表情）·
+<span class="tag t-free">初始/内置</span> 开局默认（默认框、初始装饰、快捷回复表情）。
+</p>
+
+<h3>③ 付费点只有 3 处，且都很浅</h3>
+<table>
+<tr><th>付费管线</th><th>价位</th><th>覆盖</th><th>深度</th></tr>
+<tr><td>内购家具礼包（PackType16）</td><td>$2.99~$49.99 × 10 个</td><td>10 件带 Buff 家具</td><td>限购 1 次，无阶梯</td></tr>
+<tr><td>表情礼包（PackType105）</td><td>$4.99 × 3 个</td><td>3 个角色表情</td><td>限购 1 次</td></tr>
+<tr><td>战役终结礼包（ActvHeroSkillSell）</td><td>挂 Pack 19024</td><td>仅 1 款技能皮肤（柳柳）</td><td>当前只配 1 款</td></tr>
+</table>
+<p class="lead">→ 非节日外显的<b>变现潜力基本未挖掘</b>：27 枚羁绊贴纸、79 张纪念卡、22 款技能皮肤都带可观养成价值却几乎零直接付费，与节日外显（集中变现）形成镜像。技能皮肤的"战役终结礼包"管线只配了 1 款，是明显的可扩展付费位。</p>
+
+<h3>④ 配置陷阱备忘（给接手人）</h3>
+<ul class="lead" style="margin:6px 0 0;padding-left:20px;line-height:1.9">
+<li><b>HeroSkin 判技能皮肤</b>：看 <code>HeroSkill</code> 是否为 <code>9XXX/8XXX</code>（非默认）；<code>BuffTemplate</code> 才是"是否皮肤商品"的判据，且 = 皮肤 Item ID（一表三用）。</li>
+<li><b>头像框定义 ID(10xxx) ≠ 道具 ID(80xxx)</b>：排除清单是 80xxx 道具，需经 Item 表 <code>Items</code> 字段回溯到 10xxx 定义。</li>
+<li><b>船皮肤 vs 航线礼包</b>：船拖尾皮肤走 ShipSkin/Skin(type2)+声望；<code>Route__RoutePack</code> 是另一套数值航线系统（AddPower），别误当外显渠道。</li>
+<li><b>装饰来源特殊</b>：FurnitureSkin 不走 Shop/Exchange/Reward，由表自身的等级/货币/价格/TimeCycle/Pack 字段驱动家具皮肤界面。</li>
+<li><b>纪念卡 ID 空间</b>：MemorialCard(1–79) 与节日卡(180074–78) 是两套；CardGallary(1123xxxx) 是 v2 集卡册，第三套，别混。</li>
+</ul>
+</div>
+
+<div class="foot">
+配置真源 <code>C:\x3\gdconfig\tsv\</code>（只读核对，未改动任何文件） · 配套文档《X3 节日外显投放白皮书》<code>x3_festival_cosmetics_whitepaper.md</code>（同目录）+ 实物图库 <code>外显图库_表情头像框铭牌\X3节日外显图库_8大模块全集.html</code> · 梳理日期 2026-06-18
+</div>
+</html>

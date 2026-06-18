@@ -1,0 +1,3 @@
+# 字段:	ID	Name		Desc	Type	SubType	UseType	UseEffect	UseParameter	IsCount	ObtainID	ObtainTips	IsDelete	Value	Tier	Blueprint	DiscountEnergy	SurchargeEnergy	SuggestEnergy	SpeedUpEnergy	DK_Icon	DK_MiniIcon	DK_Prefab	DK_Background	Subtitle	DiscountScore	ResourceBuilding	ItemWeight	Order	GuildDonateCoin	GuildDonateAward2	GuildDonateBeer	GuildDonateMP	ItemLife	ItemLife2							
+# 模板(Egypt双羽冠辉):	80110	双羽冠辉（永久）	头像框-26尼罗之辉	使用后可获得传说级头像框。	9		1	4	10026|-1		100314	通过尼罗之辉活动获得									DK_Img_Player_AvatarFrame_Egypt			DK_Bg_CM_Item4					9999													
+80348	深海印记（永久）	头像框-26深海印记	使用后可获得传说级头像框。	9		1	4	10076|-1			通过深海印记礼包获得									DK_Img_Player_AvatarFrame_DeepSea			DK_Bg_CM_Item4					9999													

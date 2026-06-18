@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>护航令·3档（免费/进阶/至尊）· 真素材拼装（端内sprite还原）</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif;}
+  body{background:#1a1410;display:flex;gap:24px;padding:24px;align-items:flex-start;flex-wrap:wrap;}
+  /* 设备：竖屏，对齐真实截图 444:767 ≈ 450:777 */
+  .device{width:450px;height:777px;position:relative;overflow:hidden;border-radius:14px;
+    background:#241710;box-shadow:0 14px 50px rgba(0,0,0,.7);border:1px solid #4a3520;}
+  /* 顶部船海背景（真实sprite img_battlepass_bg_1） */
+  .bg{position:absolute;left:0;top:0;width:100%;height:330px;
+    background:url(./_assets/bg_scene.png) center top/cover no-repeat;}
+  .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(36,23,16,0) 55%,#241710 100%);}
+  /* 英雄立绘（截图裁，唯一非独立sprite，仿参考例木底CSS兜底同理） */
+  .hero{position:absolute;right:-6px;top:34px;width:244px;height:264px;
+    background:url(./_assets/hero.png) center top/contain no-repeat;}
+  .title{position:absolute;left:14px;top:40px;font-size:21px;font-weight:900;color:#ffe6a3;
+    text-shadow:0 2px 0 #6b3d12,0 0 10px rgba(255,180,60,.5);letter-spacing:1px;}
+  .rulebtn{position:absolute;right:10px;top:10px;width:30px;height:30px;
+    background:url(./_assets/rule.png) center/contain no-repeat;cursor:pointer;}
+  .countdown{position:absolute;left:16px;top:72px;display:flex;align-items:center;gap:5px;
+    font-size:12px;color:#ffeccb;background:rgba(0,0,0,.4);padding:3px 9px;border-radius:11px;}
+  .countdown .clk{width:15px;height:15px;background:url(./_assets/time.png) center/contain no-repeat;}
+  .subtitle{position:absolute;left:16px;top:100px;width:205px;font-size:11px;color:#e7cfa0;line-height:1.45;
+    text-shadow:0 1px 2px #000;}
+  /* 两个购买入口（真实金按钮sprite）：进阶 / 至尊 */
+  .buy{position:absolute;right:12px;width:120px;height:36px;z-index:6;
+    background:url(./_assets/btn_gold.png) center/100% 100% no-repeat;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;
+    color:#5a3208;text-shadow:0 1px 0 rgba(255,255,255,.4);}
+  .buy .bt{font-size:11px;font-weight:800;line-height:1.05;}
+  .buy .bp{font-size:13px;font-weight:900;line-height:1.05;}
+  .buy-mid{top:206px;filter:saturate(.85) brightness(.96);}
+  .buy-sup{top:248px;}
+  .buy-sup::after{content:"";position:absolute;inset:0;border-radius:6px;
+    box-shadow:0 0 10px 2px rgba(190,120,255,.55);pointer-events:none;}
+  .badge{position:absolute;right:118px;width:46px;height:46px;
+    background:url(./_assets/badge.png) center/contain no-repeat;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;
+    color:#fff;text-shadow:0 1px 2px #900;transform:rotate(8deg);}
+  .badge-mid{top:202px;} .badge-sup{top:244px;}
+  /* 列头条：免费 | 進度 | 进阶 | 至尊 */
+  .heads{position:absolute;left:10px;top:300px;width:430px;height:34px;display:flex;align-items:center;z-index:4;}
+  .h{height:28px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:3px;
+    font-size:13px;font-weight:800;color:#5c3614;
+    background:linear-gradient(180deg,#f0e0b8,#d8bd86);border:1px solid #b08a4a;
+    box-shadow:0 1px 2px rgba(0,0,0,.3);}
+  .h.lk::before{content:"";width:13px;height:16px;background:url(./_assets/lock_row.png) center/contain no-repeat;}
+  .h-free{width:56px;margin-left:0;}
+  .h-rail{width:38px;background:none;border:none;box-shadow:none;color:#ffe6a3;font-size:11px;}
+  .h-mid{width:76px;}
+  .h-sup{width:160px;}
+  /* 奖励面板（reward板=九宫格sprite程序拼·无整底图→此处木质CSS兜底，note说明） */
+  .panel{position:absolute;left:10px;top:336px;width:430px;height:430px;border-radius:8px;
+    background:linear-gradient(180deg,#3a2616,#2c1d11);border:1px solid #5a4326;
+    padding:8px 6px;overflow-y:auto;}
+  .row{display:flex;align-items:center;height:78px;border-bottom:1px dashed rgba(150,110,60,.35);}
+  .col{display:flex;align-items:center;justify-content:center;gap:4px;}
+  .col-free{width:56px;} .col-rail{width:38px;flex-direction:column;position:relative;}
+  .col-mid{width:76px;} .col-sup{width:160px;gap:6px;}
+  /* 奖励格：真实sprite cell.png(底框) */
+  .cell{position:relative;width:50px;height:58px;
+    background:url(./_assets/cell.png) center/100% 100% no-repeat;
+    display:flex;align-items:center;justify-content:center;}
+  .col-free .cell{width:44px;height:50px;}   /* 免费压窄 */
+  .cell .ico{width:74%;height:74%;background-size:contain;background-repeat:no-repeat;background-position:center;}
+  .cell .qty{position:absolute;bottom:0px;right:3px;font-size:9px;font-weight:800;color:#fff;
+    text-shadow:0 1px 1px #000,0 0 2px #000;}
+  .cell .lk{position:absolute;top:1px;right:1px;width:12px;height:15px;
+    background:url(./_assets/lock_cell.png) center/contain no-repeat;}
+  .cell .gou{position:absolute;inset:0;background:url(./_assets/gou.png) center/52% no-repeat;}
+  /* 進度轴：菱形节点 + 竖线 */
+  .col-rail .line{position:absolute;top:0;bottom:0;width:4px;left:50%;transform:translateX(-50%);
+    background:linear-gradient(180deg,#c9912f,#7a571c);}
+  .node{position:relative;z-index:2;width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+    background:url(./_assets/node_off.png) center/contain no-repeat;
+    font-size:11px;font-weight:900;color:#fff;text-shadow:0 1px 2px #000;}
+  .node.on{background-image:url(./_assets/node_on.png);}
+  /* 说明侧栏 */
+  .side{flex:1;min-width:320px;max-width:500px;color:#e7cfa0;}
+  .side h1{color:#ffe6a3;font-size:19px;margin-bottom:8px;}
+  .side p{font-size:13px;line-height:1.8;margin-bottom:6px;}
+  .side .real{color:#9ad08a;font-weight:700;} .side .new{color:#ffd98a;font-weight:700;}
+  .side code{background:#11100c;color:#9ad0ff;padding:1px 5px;border-radius:4px;font-size:12px;}
+  .side ul{margin:8px 0 8px 18px;font-size:12.5px;line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="device">
+  <div class="bg"></div>
+  <div class="hero"></div>
+  <div class="title">獵殺時刻</div>
+  <div class="rulebtn"></div>
+  <div class="countdown"><span class="clk"></span><span>3D 11:19:57</span></div>
+  <div class="subtitle">海上的海盗越发猖獗了，我们必须要破灭其嚣张气焰！</div>
+
+  <!-- 两个购买入口（新增·真实金按钮sprite） -->
+  <div class="badge badge-mid">3030%</div>
+  <div class="buy buy-mid"><span class="bt">进阶护航</span><span class="bp">$9.99</span></div>
+  <div class="badge badge-sup">5600%</div>
+  <div class="buy buy-sup"><span class="bt">至尊护航</span><span class="bp">$19.99</span></div>
+
+  <!-- 列头：免费 | 進度 | 进阶 | 至尊 -->
+  <div class="heads">
+    <div class="h h-free">免费</div>
+    <div class="h h-rail">進度</div>
+    <div class="h h-mid lk">进阶</div>
+    <div class="h h-sup lk">至尊</div>
+  </div>
+
+  <!-- 奖励面板 -->
+  <div class="panel" id="panel"></div>
+</div>
+
+<div class="side">
+  <h1>护航令 · 3档（免费 / 进阶 / 至尊）· 真素材拼装</h1>
+  <p>全部用 <span class="real">UIActvBattlePass.prefab 实际引用的端内真实 sprite</span> 拼成，素材已拷进同目录 <code>_assets/</code>，可独立打开。每个节点=独立真实 PNG，<b>直接拆得动</b>。</p>
+  <p><b>真实组件（从 prefab GUID 反查·client\Assets\Res\UI\Spirits）：</b></p>
+  <ul>
+    <li>奖励格底框 = <code>HeroFavor\img_hgd_bg6</code>（通用）</li>
+    <li>等级菱形 达成/未达成 = <code>ui_battlepass_point_1 / point_2</code></li>
+    <li>行锁/格锁/勾 = <code>img_battlepass_icon_lock</code> / <code>img_remember_icon_lock</code> / <code>TXDS_icon_gou</code></li>
+    <li>折扣徽章/规则键/金按钮/倒计时 = <code>img_gift_bg_Discount</code> / <code>img_cm_anniu_guize</code> / <code>img_cm_anniu1_gold</code> / <code>img_gift_time</code></li>
+    <li>船海大背景 = <code>ActivityImg_Download\img_battlepass_bg_1</code></li>
+    <li>道具图标 = 真实 ItemIcons（钻石/金币/技能书）</li>
+  </ul>
+  <p><span class="new">改造（保持节点不变·改位置+新增）：</span>现界面 2 列 <code>免費 | 至尊</code> → 3 列 <b>免费(压) | 進度 | 进阶(1格) | 至尊(2格)</b>。</p>
+  <ul>
+    <li>现付费"至尊"($9.99)→降级改名 <b>进阶</b>（2格→1格）</li>
+    <li>新增更贵 <b>至尊</b> 顶档（$19.99，2格，superset：买至尊含进阶轨）</li>
+    <li>prefab 改法：行模板复制 <code>Pack单元→Super单元</code>（HorizontalLayoutGroup加格自动排版）+ Title 复制标签 + 三列重分 x；顶部加第2个 <code>UIBtnPurchase</code></li>
+  </ul>
+  <p style="margin-top:8px;font-size:11px;color:#9c8c6f;">※ 列头米色标签 & 奖励木板=CSS兜底（reward板是九宫格sprite程序拼，无整块底图，对应 ui_battlepass_bg_1/2 标签底在落地时用真实九宫格）；英雄立绘=截图裁（spine无单PNG）。天数/道具为示意，实际以配置为准。</p>
+</div>
+
+<script>
+const ICONS={gem:"it_gem.png",gold:"it_gold.png",book:"it_book.png"};
+function ico(t){return `<div class="ico" style="background-image:url(./_assets/${ICONS[t]})"></div>`;}
+function cell(t,q,opt){opt=opt||{};
+  const lk=opt.lock?'<div class="lk"></div>':''; const gou=opt.gou?'<div class="gou"></div>':'';
+  const sz=opt.free?' free':'';
+  return `<div class="cell${sz}">${ico(t)}<div class="qty">×${q}</div>${lk}${gou}</div>`;}
+const LV=[10,20,30,40,50];
+function render(){
+  const p=document.getElementById('panel'); p.innerHTML='';
+  LV.forEach((lv,i)=>{
+    const on = i===0;                       // 首级已达成(金菱形)，其余未达成
+    const claimedFree = i===0;              // 免费首级已领(打勾)
+    // 免费1格 / 进阶1格(锁) / 至尊2格(锁)
+    const free = cell(i%2?'gold':'book', i%2?5000:1, {free:true, gou:claimedFree});
+    const mid  = cell('gem', 100, {lock:true});
+    const sup  = cell('gem',100,{lock:true}) + cell(i%2?'book':'gold', i%2?2:20000,{lock:true});
+    p.insertAdjacentHTML('beforeend',
+      `<div class="row">
+        <div class="col col-free">${free}</div>
+        <div class="col col-rail"><div class="line"></div><div class="node${on?' on':''}">${lv}</div></div>
+        <div class="col col-mid">${mid}</div>
+        <div class="col col-sup">${sup}</div>
+      </div>`);
+  });
+}
+render();
+</script>
+</body>
+</html>

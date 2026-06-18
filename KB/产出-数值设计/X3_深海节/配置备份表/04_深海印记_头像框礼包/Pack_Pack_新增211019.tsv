@@ -1,0 +1,18 @@
+# Pack__Pack.tsv 新增行：211019 深海印记头像框礼包（$9.99 通用礼包）
+# ⚠️ PackType/UIType 因「通用礼包模块需程序」未定，下面按字段名给值，待程序定型后再拼成整行 paste 进 Pack__Pack.tsv
+# 列索引对照（Pack__Pack.tsv row5 字段名）：0ID 7Price 9PackType 10UIType 11ContentID 13Content 19TimeCycleID 20BuyCount 25Head 27Icon 30MainBg 35Name 36Desc 50OpenActv
+字段	值	说明
+ID	211019	深海块(GSheet开发配置需求【4】分配)
+Price	107	GiftPriceCfg/PackPrice id=107 → $9.99（已核 Pack__PackPrice.tsv：107 Dollar=999）
+PackType	<待程序>	新通用礼包模块，PackType 待程序定型
+UIType	<待程序·参考1=通用礼包>	现有通用礼包 UIType=1；新模块是否复用待程序确认
+ContentID	（空）	头像框礼包无独立 ActvOnline（礼包墙直售）
+Content	80348*1 + <深海节节日道具*N>	奖励=深海头像框道具80348×1 + 节日道具(深海节抽奖券/兑换代币·ID待建)；⚠️Pack.Content 实际写法待确认(inline道具列表 or RewardID)
+TimeCycleID	1830	深海主时间(GSheet【3】)
+BuyCount	1	限购1次
+Head	<DK·深海框icon待入库>	可用 DK_Img_Player_AvatarFrame_DeepSea 或专门礼包icon
+Icon	<DK·同上>
+MainBg	（通用礼包默认走模板·留空）	若程序支持自定义弹窗背景，则填我们做的「头像框礼包弹窗背景_v1.png」入库后的 DK；否则留空(见 reference_x3_pack_panel_rendering 通用礼包MainBg一律空)
+Name	深海印记	TXT 本地化后替换
+Desc	购买得深海头像框 + 深海节节日道具	TXT
+OpenActv	<礼包墙·待程序>

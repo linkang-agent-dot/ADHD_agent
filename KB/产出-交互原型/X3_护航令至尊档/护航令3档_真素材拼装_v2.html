@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="UTF-8">
+<title>护航令·3档 · 真素材拼装v2（实机图UI组件morphix抠出+端内sprite）</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif;}
+  body{background:#1a1410;display:flex;gap:24px;padding:24px;align-items:flex-start;flex-wrap:wrap;}
+  .device{width:450px;height:777px;position:relative;overflow:hidden;border-radius:14px;
+    background:#241710;box-shadow:0 14px 50px rgba(0,0,0,.7);border:1px solid #4a3520;}
+  .bg{position:absolute;left:0;top:0;width:100%;height:340px;
+    background:url(./_assets/bg_scene.png) center top/cover no-repeat;}
+  .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(36,23,16,0) 60%,#241710 100%);}
+  .hero{position:absolute;right:-10px;top:30px;width:250px;height:275px;
+    background:url(./_assets/n_hero.png) center top/contain no-repeat;}
+  .title{position:absolute;left:14px;top:40px;font-size:21px;font-weight:900;color:#ffe6a3;
+    text-shadow:0 2px 0 #6b3d12,0 0 10px rgba(255,180,60,.5);}
+  .rulebtn{position:absolute;right:10px;top:10px;width:30px;height:30px;
+    background:url(./_assets/rule.png) center/contain no-repeat;}
+  .countdown{position:absolute;left:16px;top:72px;display:flex;align-items:center;gap:5px;
+    font-size:12px;color:#ffeccb;background:rgba(0,0,0,.4);padding:3px 9px;border-radius:11px;}
+  .countdown .clk{width:15px;height:15px;background:url(./_assets/time.png) center/contain no-repeat;}
+  .subtitle{position:absolute;left:16px;top:100px;width:200px;font-size:11px;color:#e7cfa0;
+    line-height:1.45;text-shadow:0 1px 2px #000;}
+  .buy{position:absolute;right:12px;width:120px;height:36px;z-index:6;
+    background:url(./_assets/btn_gold.png) center/100% 100% no-repeat;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:#5a3208;text-shadow:0 1px 0 rgba(255,255,255,.4);cursor:pointer;}
+  .buy .bt{font-size:11px;font-weight:800;line-height:1.05;}
+  .buy .bp{font-size:13px;font-weight:900;line-height:1.05;}
+  .buy-mid{top:208px;filter:saturate(.9) brightness(.97);}
+  .buy-sup{top:250px;}
+  .buy-sup::after{content:"";position:absolute;inset:-1px;border-radius:7px;
+    box-shadow:0 0 11px 2px rgba(190,120,255,.6);pointer-events:none;}
+  .badge{position:absolute;right:120px;width:44px;height:44px;
+    background:url(./_assets/badge.png) center/contain no-repeat;
+    display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;
+    color:#fff;text-shadow:0 1px 2px #900;transform:rotate(8deg);}
+  .badge-mid{top:204px;} .badge-sup{top:246px;}
+  /* 列头：真实标签sprite底 + 文字 */
+  .heads{position:absolute;left:12px;top:304px;width:426px;height:30px;display:flex;align-items:center;z-index:4;gap:0;}
+  .h{height:26px;display:flex;align-items:center;justify-content:center;gap:3px;
+    font-size:13px;font-weight:800;color:#5c3614;
+    background:url(./_assets/label_free.png) center/100% 100% no-repeat;}
+  .h.paid{background-image:url(./_assets/label_paid.png);}
+  .h.lk::before{content:"";width:12px;height:15px;background:url(./_assets/lock_row.png) center/contain no-repeat;}
+  .h-free{width:54px;} .h-rail{width:40px;background:none;color:#ffe6a3;font-size:11px;}
+  .h-mid{width:78px;} .h-sup{width:156px;}
+  /* 面板：真实采样木板底 */
+  .panel{position:absolute;left:10px;top:334px;width:430px;height:432px;
+    background:url(./_assets/board.png) center/100% 100% no-repeat;
+    padding:6px 6px;overflow:hidden;}
+  .row{display:flex;align-items:center;height:80px;}
+  .col{display:flex;align-items:center;justify-content:center;gap:5px;}
+  .col-free{width:54px;} .col-rail{width:40px;position:relative;}
+  .col-mid{width:78px;} .col-sup{width:156px;}
+  .cell{height:60px;background-size:contain;background-repeat:no-repeat;background-position:center;}
+  .c-free{width:46px;height:52px;}   /* 免费压窄 */
+  .c-mid {width:62px;}
+  .c-sup {width:62px;}
+  .rail-line{position:absolute;top:-10px;bottom:-10px;left:50%;width:5px;transform:translateX(-50%);
+    background:linear-gradient(180deg,#c9912f,#7a571c);z-index:1;}
+  .node{position:relative;z-index:2;width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+    background:url(./_assets/node_off.png) center/contain no-repeat;
+    font-size:12px;font-weight:900;color:#fff;text-shadow:0 1px 2px #000;}
+  .node.on{background-image:url(./_assets/node_on.png);}
+  .side{flex:1;min-width:320px;max-width:500px;color:#e7cfa0;}
+  .side h1{color:#ffe6a3;font-size:19px;margin-bottom:8px;}
+  .side p{font-size:13px;line-height:1.75;margin-bottom:6px;}
+  .side .real{color:#9ad08a;font-weight:700;} .side .new{color:#ffd98a;font-weight:700;}
+  .side code{background:#11100c;color:#9ad0ff;padding:1px 5px;border-radius:4px;font-size:12px;}
+  .side ul{margin:8px 0 8px 18px;font-size:12.5px;line-height:1.7;}
+</style></head>
+<body>
+<div class="device">
+  <div class="bg"></div>
+  <div class="hero"></div>
+  <div class="title">獵殺時刻</div>
+  <div class="rulebtn"></div>
+  <div class="countdown"><span class="clk"></span><span>3D 11:19:57</span></div>
+  <div class="subtitle">海上的海盗越发猖獗了，我们必须要破灭其嚣张气焰！</div>
+
+  <div class="badge badge-mid">3030%</div>
+  <div class="buy buy-mid"><span class="bt">进阶护航</span><span class="bp">$9.99</span></div>
+  <div class="badge badge-sup">5600%</div>
+  <div class="buy buy-sup"><span class="bt">至尊护航</span><span class="bp">$19.99</span></div>
+
+  <div class="heads">
+    <div class="h h-free">免费</div>
+    <div class="h h-rail">進度</div>
+    <div class="h h-mid paid lk">进阶</div>
+    <div class="h h-sup paid lk">至尊</div>
+  </div>
+
+  <div class="panel" id="panel"></div>
+</div>
+
+<div class="side">
+  <h1>护航令 · 3档 · 真素材拼装 v2（实机图组件 morphix 抠出）</h1>
+  <p><span class="real">奖励格/英雄=用 GRFal(morphix) remove_background 从你的实机图「猎杀时刻」直接抠出的透明件</span>；菱形节点/列头标签/按钮/徽章/规则键/船海背景=端内真实 sprite；木板底=从实机图采真实奶油色生成。<b>全真像素，无 CSS 假件，每件可独立拆。</b></p>
+  <p><b>抠出的实机图组件（_assets/n_*.png）：</b></p>
+  <ul>
+    <li>免费格 <code>n_cell_free</code> / 付费格(锁) <code>n_cell_lock</code> / gem格 <code>n_cell_gem</code></li>
+    <li>英雄立绘 <code>n_hero</code>（spine无单PNG→从实机图抠）</li>
+  </ul>
+  <p><b>端内真实 sprite：</b>菱形 <code>ui_battlepass_point_1/2</code>、列头底 <code>ui_battlepass_bg_1/2</code>、按钮 <code>img_cm_anniu1_gold</code>、徽章 <code>img_gift_bg_Discount</code>、船海背景 <code>img_battlepass_bg_1</code>。</p>
+  <p><span class="new">改造：</span>现 2 列 <code>免費|至尊</code> → 3 列 <b>免费(压) | 進度 | 进阶(1格) | 至尊(2格)</b>。现付费"至尊"($9.99)→改名进阶；新增更贵至尊($19.99,2格)。</p>
+  <p style="font-size:11px;color:#9c8c6f;">※ 列头文字/价格为HTML文本(crisp)，落地走i18n；天数/道具为示意。下一步=程序按「组件&节点改造」spec改prefab(复制Pack单元→Super)出真机图。</p>
+</div>
+
+<script>
+const LV=[10,20,30,40,50];
+const CELLS={free:['n_cell_free.png'],mid:['n_cell_lock.png'],sup:['n_cell_gem.png','n_cell_lock.png']};
+function bgcell(cls,png){return `<div class="cell ${cls}" style="background-image:url(./_assets/${png})"></div>`;}
+function render(){
+  const p=document.getElementById('panel');p.innerHTML='';
+  LV.forEach((lv,i)=>{
+    const on=i===0;
+    p.insertAdjacentHTML('beforeend',
+     `<div class="row">
+       <div class="col col-free">${bgcell('c-free','n_cell_free.png')}</div>
+       <div class="col col-rail"><div class="rail-line"></div><div class="node${on?' on':''}">${lv}</div></div>
+       <div class="col col-mid">${bgcell('c-mid','n_cell_lock.png')}</div>
+       <div class="col col-sup">${bgcell('c-sup','n_cell_gem.png')}${bgcell('c-sup','n_cell_lock.png')}</div>
+     </div>`);
+  });
+}
+render();
+</script>
+</body></html>

@@ -1,0 +1,22 @@
+海滨之约·门头三件套 复用资源清单（海滨假日 = Skin08 拱门套 + 海滨地板 + 海滨墙纸）
+本文件夹内 复用_*.png = 可直接看的图片资源（icon + 贴图）。
+3D 模型/prefab/材质体积大且拷出 Unity 会断引用，留在 client 原位，路径如下供美术/接管用。
+
+① 横梁/门头 1001009（拱门 Door+Wall+Column 三件建筑）
+   icon：复用_投放物_海滨门头_1001009.png（=icon_jiaju_summer_4）
+   贴图：复用_门头贴图_Door_Skin08.png（门/横梁）+ 复用_门头贴图_立柱墙_Skin08.png（立柱/墙）
+   3D（client原位）：Assets/Res/Furniture/Model/Furniture_Door_Wall_Column_Skin08/Fbx/Furniture_{Door,column,_Wall}_Skin08.fbx
+        prefab：Assets/Res/Furniture/Prefabs/Door/Skin08/Furniture_{Door,Wall,Column}_Skin08.prefab
+        材质：.../Furniture_Door_Wall_Column_Skin08/Materials/*.mat
+
+② 地板 2001013
+   icon：复用_投放物_海滨地板_2001013.png（=icon_jiaju_summer_2）
+   贴图：复用_地板贴图_Summer.png（Furniture_Floor_Summer.png）
+   prefab（client原位）：Assets/Res/Furniture/Prefabs/Floor/FurnitureFloor_Actv_Summer.prefab
+
+③ 墙纸 3001010
+   icon：复用_投放物_海滨墙纸_3001010.png（=icon_jiaju_summer_1）
+   贴图：复用_墙纸贴图_Summer.png（Furniture_Wallpaper_Summer.png）
+   prefab（client原位）：Assets/Res/Furniture/Prefabs/Wallpaper/Wallpaper_Summer.prefab
+
+用途：美术做礼包/门面终稿可直接在 Unity 摆①②③的 prefab 渲染截图（比AI准）；做换皮方向稿时这些贴图可当精确 subject 参考。

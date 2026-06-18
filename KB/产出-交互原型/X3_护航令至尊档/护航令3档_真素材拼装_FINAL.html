@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="UTF-8">
+<title>护航令·3档 · 真素材拼装 FINAL（端内真实 sprite 拼 prefab）</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif;}
+  body{background:#15100c;display:flex;gap:26px;padding:24px;align-items:flex-start;flex-wrap:wrap;}
+
+  /* ===== 设备：竖屏，比例对齐真实截图 ===== */
+  .device{width:444px;height:790px;position:relative;overflow:hidden;border-radius:14px;
+    background:#1d130c;box-shadow:0 16px 54px rgba(0,0,0,.75);border:1px solid #463320;}
+
+  /* —— 顶部船海背景（端内真实 sprite img_battlepass_bg_1） —— */
+  .bg{position:absolute;left:0;top:0;width:100%;height:300px;
+    background:url(./_assets/bg_scene.png) center top/cover no-repeat;}
+  .bg::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(29,19,12,0) 52%,rgba(29,19,12,.55) 80%,#1d130c 100%);}
+
+  /* —— 海盗女英雄（从实机图抠出的透明立绘） —— */
+  .hero{position:absolute;right:-6px;top:36px;width:188px;height:228px;z-index:2;
+    background:url(./_assets/hero_final.png) center top/contain no-repeat;
+    filter:drop-shadow(0 6px 14px rgba(0,0,0,.55));}
+
+  /* —— 标题 / 倒计时 / 副标题 / 规则键 —— */
+  .title{position:absolute;left:14px;top:14px;font-size:22px;font-weight:900;color:#ffe6a3;z-index:3;
+    text-shadow:0 2px 0 #6b3d12,0 0 10px rgba(255,180,60,.55);letter-spacing:1px;}
+  .rulebtn{position:absolute;right:10px;top:12px;width:30px;height:30px;z-index:5;cursor:pointer;
+    background:url(./_assets/rule.png) center/contain no-repeat;}
+  .countdown{position:absolute;left:14px;top:48px;display:flex;align-items:center;gap:5px;z-index:3;
+    font-size:12px;color:#ffeccb;background:rgba(0,0,0,.42);padding:3px 9px;border-radius:11px;}
+  .countdown .clk{width:15px;height:15px;background:url(./_assets/time.png) center/contain no-repeat;}
+  .subtitle{position:absolute;left:14px;top:78px;width:196px;font-size:11px;color:#ecd6a8;z-index:3;
+    line-height:1.5;text-shadow:0 1px 3px #000;}
+
+  /* —— 两个购买入口：进阶 $9.99 / 至尊 $19.99，各带折扣红角标 —— */
+  .buy{position:absolute;right:12px;width:128px;height:40px;z-index:6;cursor:pointer;
+    background:url(./_assets/btn_gold.png) center/100% 100% no-repeat;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:#5a3208;text-shadow:0 1px 0 rgba(255,255,255,.45);}
+  .buy .bt{font-size:11px;font-weight:800;line-height:1.05;}
+  .buy .bp{font-size:14px;font-weight:900;line-height:1.1;}
+  .buy-mid{top:142px;filter:saturate(.92) brightness(.98);}
+  .buy-sup{top:190px;}
+  /* 至尊按钮：更高级——紫金描边发光 */
+  .buy-sup::after{content:"";position:absolute;inset:-2px;border-radius:8px;pointer-events:none;
+    box-shadow:0 0 12px 2px rgba(190,120,255,.55),inset 0 0 0 1px rgba(255,225,150,.6);}
+  .badge{position:absolute;right:118px;width:42px;height:42px;z-index:7;
+    background:url(./_assets/badge.png) center/contain no-repeat;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;
+    color:#fff;text-shadow:0 1px 2px #7a0d0d;transform:rotate(-9deg);
+    filter:drop-shadow(0 2px 3px rgba(0,0,0,.4));}
+  .badge .pct{font-size:9px;line-height:.95;text-align:center;}
+  .badge-mid{top:140px;} .badge-sup{top:188px;}
+
+  /* —— 列头标签：端内真实 tab sprite；几何与下方面板列严格对齐（panel content 起点 x=16） —— */
+  .heads{position:absolute;left:16px;top:298px;width:412px;height:30px;z-index:4;
+    display:flex;align-items:flex-end;}
+  .h{height:27px;display:flex;align-items:center;justify-content:center;gap:3px;
+    font-size:12.5px;font-weight:800;color:#5c3614;line-height:1;}
+  .h .tab{display:flex;align-items:center;justify-content:center;gap:3px;height:26px;width:88%;
+    background:url(./_assets/tab_cream.png) center/100% 100% no-repeat;}
+  .h.gold .tab{background-image:url(./_assets/tab_gold.png);color:#5a3208;}
+  .h.lk .tab::before{content:"";width:12px;height:15px;flex:none;
+    background:url(./_assets/lock_row.png) center/contain no-repeat;}
+  .h-free{width:74px;}
+  .h-rail{width:48px;color:#ffe6a3;font-size:11px;text-shadow:0 1px 2px #000;}
+  .h-mid{width:88px;}
+  .h-sup{width:202px;}
+
+  /* —— 木板奖励面板（程序生成真实木纹板 + 金边） —— */
+  .panel{position:absolute;left:8px;top:322px;width:428px;height:454px;z-index:3;
+    background:url(./_assets/board.png) center/100% 100% no-repeat;
+    padding:8px 8px 10px;overflow:hidden;}
+  .row{display:flex;align-items:center;height:88px;}
+  .row + .row{border-top:1px solid rgba(0,0,0,.22);box-shadow:0 -1px 0 rgba(150,110,60,.18);}
+  .col{display:flex;align-items:center;justify-content:center;}
+  .col-free{width:74px;}
+  .col-rail{width:48px;position:relative;align-self:stretch;}
+  .col-mid{width:88px;}
+  .col-sup{width:202px;gap:6px;padding-right:2px;}
+
+  /* —— 奖励格：端内真实金框 / 锁框 + 真实道具图标 —— */
+  .cell{position:relative;width:62px;height:62px;
+    background:url(./_assets/frame_gold.png) center/100% 100% no-repeat;}
+  .cell.lock{background-image:url(./_assets/frame_lock.png);}
+  .cell.sm{width:54px;height:54px;}        /* 免费列压窄 */
+  .cell .ico{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
+    width:74%;height:74%;background-size:contain;background-repeat:no-repeat;background-position:center;}
+  .cell.lock .ico{filter:grayscale(.55) brightness(.7);}
+  .cell .qty{position:absolute;right:3px;bottom:1px;font-size:11px;font-weight:900;color:#fff;
+    text-shadow:0 1px 2px #000,0 0 3px #000;white-space:nowrap;}
+  .cell.sm .qty{font-size:9.5px;right:2px;}
+  .cell .lk{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:24px;height:26px;background:url(./_assets/lock_cell.png) center/contain no-repeat;
+    filter:drop-shadow(0 1px 2px rgba(0,0,0,.6));opacity:.95;}
+
+  /* —— 进度轴：竖线 + 真实菱形节点 + 等级数字 —— */
+  .rail-line{position:absolute;top:0;bottom:0;left:50%;width:6px;transform:translateX(-50%);
+    background:linear-gradient(180deg,#d6a23a 0%,#9a6f22 50%,#6e4d18 100%);
+    box-shadow:inset 0 0 2px rgba(0,0,0,.5),0 0 4px rgba(0,0,0,.3);z-index:1;border-radius:3px;}
+  .node{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+    width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+    background:url(./_assets/node_off.png) center/contain no-repeat;
+    font-size:14px;font-weight:900;color:#fff;text-shadow:0 1px 2px #000,0 0 3px #000;}
+  .node.on{background-image:url(./_assets/node_on.png);color:#5a3208;text-shadow:0 1px 0 rgba(255,255,255,.5);}
+
+  /* —— 说明侧栏 —— */
+  .side{flex:1;min-width:340px;max-width:520px;color:#e7cfa0;}
+  .side h1{color:#ffe6a3;font-size:19px;margin-bottom:8px;}
+  .side p{font-size:13px;line-height:1.78;margin-bottom:6px;}
+  .side .real{color:#9ad08a;font-weight:700;} .side .new{color:#ffd98a;font-weight:700;}
+  .side code{background:#11100c;color:#9ad0ff;padding:1px 5px;border-radius:4px;font-size:12px;}
+  .side ul{margin:8px 0 8px 18px;font-size:12.5px;line-height:1.7;}
+</style></head>
+<body>
+<div class="device">
+  <div class="bg"></div>
+  <div class="hero"></div>
+  <div class="title">護航令</div>
+  <div class="rulebtn"></div>
+  <div class="countdown"><span class="clk"></span><span>3D 11:19:57</span></div>
+  <div class="subtitle">海上的海盗越发猖獗了，我们必须破灭其嚣张气焰！完成任务提升等级，解锁三档护航豪礼。</div>
+
+  <!-- 两个购买入口 + 折扣红角标 -->
+  <div class="badge badge-mid"><span class="pct">30%<br>OFF</span></div>
+  <div class="buy buy-mid"><span class="bt">进阶护航</span><span class="bp">$9.99</span></div>
+  <div class="badge badge-sup"><span class="pct">45%<br>OFF</span></div>
+  <div class="buy buy-sup"><span class="bt">至尊护航</span><span class="bp">$19.99</span></div>
+
+  <!-- 列头：免费 | 進度 | 进阶🔒 | 至尊🔒 -->
+  <div class="heads">
+    <div class="h h-free"><span class="tab">免费</span></div>
+    <div class="h h-rail">進度</div>
+    <div class="h h-mid gold lk"><span class="tab">进阶</span></div>
+    <div class="h h-sup gold lk"><span class="tab">至尊</span></div>
+  </div>
+
+  <!-- 奖励面板 -->
+  <div class="panel" id="panel"></div>
+</div>
+
+<div class="side">
+  <h1>护航令 · 3 档战令界面 · 真素材拼装 FINAL</h1>
+  <p><span class="real">全部用端内真实 sprite + 实机图抠出的透明立绘拼成</span>，素材已拷进同目录 <code>_assets/</code>，每件可独立拆，CSS 仅负责摆位。</p>
+  <p><b>关键真实组件（端内 GUID 反查）：</b></p>
+  <ul>
+    <li>奖励格金框/锁框 = <code>img_cm_bg_iconkuang_gold</code> / <code>img_cm_bg_iconkuang</code>（船舵纹，与猎杀时刻实机一致）</li>
+    <li>进度菱形节点 = <code>ui_battlepass_point_1</code>(达成金) / <code>point_2</code>(未达成灰)</li>
+    <li>列头标签底 = <code>ui_battlepass_bg_1</code>(免费奶油) / <code>bg_2</code>(付费金)</li>
+    <li>船海背景 = <code>img_battlepass_bg_1</code>；行锁 = <code>img_battlepass_icon_lock</code>；格锁 = <code>img_remember_icon_lock</code></li>
+    <li>金按钮/规则键/折扣徽章/倒计时 = <code>img_cm_anniu1_gold</code> / <code>img_cm_anniu_guize</code> / <code>img_gift_bg_Discount</code> / <code>img_gift_time</code></li>
+    <li>道具图标 = 真实 ItemIcons（钻石/金币袋/技能书/海宝箱/资源袋/折扣券/资源箱…每格不同）</li>
+    <li>英雄立绘 = 从实机图「猎杀时刻」抠出（spine 无单 PNG）</li>
+  </ul>
+  <p><span class="new">改造（2 列 → 4 列布局）：</span><b>免费(压窄) | 進度轴(偏左) | 进阶(1格) | 至尊(2格)</b>。现付费"至尊"($9.99)→改名<b>进阶</b>；新增更贵<b>至尊</b>($19.99,2格 ICON)。进阶/至尊列头带🔒锁，免费列头无锁。</p>
+  <p style="font-size:11px;color:#9c8c6f;">※ 木板底为程序生成真实木纹（无对应独立 sprite，正式由美术出板皮）；等级/道具/数量为示意，落地以配置为准；列头文字与价格走 i18n。下一步=程序按 spec 改 prefab（复制 Pack 单元 → Super 双格）出真机图。</p>
+</div>
+
+<script>
+// 每行 = 一个等级节点；进阶/至尊解锁需购买，未解锁置锁
+const ROWS=[
+  {lv:10, on:true,  free:{ic:'it_gold',q:'5,000'},      mid:{ic:'it_book1',q:'1'},        sup:[{ic:'it_gem',q:'100'},{ic:'it_chest_b',q:'2'}]},
+  {lv:20, on:false, free:{ic:'it_res_bag',q:'3'},        mid:{ic:'it_gem',q:'80'},         sup:[{ic:'it_goldbag',q:'1'},{ic:'it_voucher',q:'5'}]},
+  {lv:30, on:false, free:{ic:'it_book2',q:'1'},          mid:{ic:'it_voucher',q:'3'},      sup:[{ic:'it_chest_sea',q:'1'},{ic:'it_gem',q:'200'}]},
+  {lv:40, on:false, free:{ic:'it_gem',q:'30'},           mid:{ic:'it_res_chest',q:'2'},    sup:[{ic:'it_book1',q:'3'},{ic:'it_goldbag',q:'2'}]},
+  {lv:50, on:false, free:{ic:'it_voucher',q:'1'},        mid:{ic:'it_chest_b',q:'1'},      sup:[{ic:'it_chest_sea',q:'2'},{ic:'it_gem',q:'500'}]},
+];
+function cell(d, cls, locked){
+  return `<div class="cell ${cls} ${locked?'lock':''}">
+    <div class="ico" style="background-image:url(./_assets/${d.ic}.png)"></div>
+    <div class="qty">×${d.q}</div>
+    ${locked?'<div class="lk"></div>':''}
+  </div>`;
+}
+function render(){
+  const p=document.getElementById('panel'); p.innerHTML='';
+  ROWS.forEach(r=>{
+    // 免费列恒解锁；进阶/至尊：达成节点(on)解锁，否则锁
+    const paidLocked = !r.on;
+    const sup = r.sup.map(s=>cell(s,'',paidLocked)).join('');
+    p.insertAdjacentHTML('beforeend',
+     `<div class="row">
+        <div class="col col-free">${cell(r.free,'sm',false)}</div>
+        <div class="col col-rail"><div class="rail-line"></div>
+          <div class="node ${r.on?'on':''}">${r.lv}</div></div>
+        <div class="col col-mid">${cell(r.mid,'',paidLocked)}</div>
+        <div class="col col-sup">${sup}</div>
+      </div>`);
+  });
+}
+render();
+</script>
+</body></html>

@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X3 深海节 · 开发对齐总览</title>
+<style>
+  :root{
+    --deep:#0a2540; --deep2:#0e3a5c; --teal:#1b8a9c; --aqua:#4fb4e6;
+    --gold:#e9b949; --pearl:#f4f7fa; --ink:#1a2733; --muted:#6b8299;
+    --green:#2e9e6b; --amber:#d98e0b; --red:#d65745; --grey:#9bb0c2;
+    --card:#ffffff; --line:#dde7ef;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    color:var(--ink);background:linear-gradient(160deg,#eaf3f9 0%,#f4f7fa 40%,#eef5f0 100%);
+    line-height:1.6;padding:0 0 80px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  header{background:linear-gradient(135deg,var(--deep) 0%,var(--deep2) 45%,var(--teal) 100%);
+    color:#fff;padding:46px 0 38px;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;right:-60px;bottom:-80px;width:340px;height:340px;
+    border-radius:50%;background:radial-gradient(circle,rgba(79,180,230,.35),transparent 70%)}
+  header .wrap{position:relative;z-index:1}
+  .tag{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
+    padding:3px 12px;border-radius:20px;font-size:12px;letter-spacing:.5px;margin-bottom:14px}
+  h1{font-size:32px;font-weight:800;letter-spacing:.5px}
+  .sub{margin-top:8px;color:#cfe6f3;font-size:15px}
+  .meta-row{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{background:rgba(255,255,255,.12);padding:6px 14px;border-radius:8px;font-size:13px}
+  .chip b{color:var(--gold)}
+
+  section{margin-top:40px}
+  h2{font-size:21px;font-weight:800;color:var(--deep);display:flex;align-items:center;gap:10px;
+    padding-bottom:10px;border-bottom:2px solid var(--line);margin-bottom:18px}
+  h2 .n{background:var(--teal);color:#fff;width:30px;height:30px;border-radius:8px;
+    display:inline-flex;align-items:center;justify-content:center;font-size:15px;flex:none}
+  h3{font-size:16px;color:var(--deep2);margin:22px 0 10px;font-weight:700}
+
+  .callout{border-radius:12px;padding:16px 20px;margin:16px 0;border-left:5px solid}
+  .callout.warn{background:#fff6e9;border-color:var(--amber)}
+  .callout.info{background:#eaf4fb;border-color:var(--aqua)}
+  .callout.strat{background:#edf7f1;border-color:var(--green)}
+  .callout b{color:var(--deep)}
+  .callout .h{font-weight:800;font-size:15px;margin-bottom:4px;display:flex;gap:8px;align-items:center}
+
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .loop-cards{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:780px){.g2,.loop-cards{grid-template-columns:1fr}}
+
+  .loop{background:var(--card);border-radius:14px;padding:20px;border:1px solid var(--line);
+    box-shadow:0 2px 10px rgba(20,60,90,.05)}
+  .loop .wk{font-size:12px;font-weight:700;color:#fff;padding:3px 10px;border-radius:6px;display:inline-block}
+  .loop.w1 .wk{background:var(--aqua)} .loop.w2 .wk{background:var(--gold);color:#5a4400}
+  .loop h4{font-size:17px;margin:10px 0 6px;color:var(--deep)}
+  .loop p{font-size:13.5px;color:var(--muted)}
+  .loop ul{margin:10px 0 0 18px;font-size:13.5px}
+  .loop li{margin:4px 0}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border-radius:10px;overflow:hidden;
+    box-shadow:0 2px 10px rgba(20,60,90,.05);font-size:13.5px}
+  th{background:var(--deep);color:#fff;text-align:left;padding:10px 12px;font-weight:600;font-size:13px}
+  td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+  tr:nth-child(even) td{background:#f7fafc}
+  .mono{font-family:"SF Mono",Consolas,monospace;font-size:12.5px;color:var(--teal)}
+
+  .badge{display:inline-block;padding:2px 9px;border-radius:5px;font-size:11.5px;font-weight:700;white-space:nowrap}
+  .b-prog{background:#fde8e4;color:var(--red)}
+  .b-cfg{background:#e6f3ec;color:var(--green)}
+  .b-art{background:#fbf0d8;color:var(--amber)}
+  .b-reuse{background:#e9eef3;color:var(--muted)}
+  .b-new{background:#e7f0fb;color:#2563a8}
+  .ok{color:var(--green);font-weight:700}
+  .new{color:#2563a8;font-weight:700}
+
+  .mods{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  @media(max-width:820px){.mods{grid-template-columns:1fr}}
+  .mod{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+    box-shadow:0 2px 8px rgba(20,60,90,.04);position:relative}
+  .mod .num{position:absolute;top:-10px;left:16px;background:var(--teal);color:#fff;font-size:12px;
+    font-weight:700;padding:2px 9px;border-radius:6px}
+  .mod h4{font-size:15.5px;margin:8px 0 4px;color:var(--deep)}
+  .mod .span{font-size:12px;color:var(--grey);font-weight:600}
+  .mod .desc{font-size:13px;color:var(--ink);margin:8px 0}
+  .mod .kv{font-size:12.5px;color:var(--muted);margin:3px 0}
+  .mod .kv b{color:var(--ink)}
+  .mod .tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}
+
+  .dep{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;
+    font-family:"SF Mono",Consolas,monospace;font-size:13px;color:var(--ink);overflow-x:auto;
+    box-shadow:0 2px 10px rgba(20,60,90,.05);line-height:1.9}
+  .dep .blk{color:var(--teal);font-weight:700}
+  .dep .arr{color:var(--grey)}
+  .dep .note{color:var(--muted)}
+
+  .pill-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .pill{background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:12.5px}
+  .pill.new{border-color:var(--aqua);background:#f0f8fd;color:#2563a8;font-weight:600}
+  .pill.reuse{color:var(--muted)}
+
+  footer{margin-top:50px;text-align:center;color:var(--grey);font-size:12px}
+  .src{background:#0e2436;color:#9fc2d8;border-radius:10px;padding:14px 18px;font-size:12.5px;
+    font-family:"SF Mono",Consolas,monospace;margin-top:14px;line-height:1.8}
+  .src b{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="tag">X3 · 2026 深海节 · 开发对齐总览</span>
+    <h1>🌊 深海节 · 全模块开发对齐</h1>
+    <div class="sub">设计已到「可执行级」，进入配置 + 美术 + 程序落地阶段 — 供拆 agent 前细看</div>
+    <div class="meta-row">
+      <span class="chip">核心路线 <b>提高付费深度</b></span>
+      <span class="chip">结构 <b>双周双核心循环</b></span>
+      <span class="chip">模块数 <b>11</b></span>
+      <span class="chip">开启范围 <b>D50+ 老服</b></span>
+      <span class="chip">排期 <b>D1–D14</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- 战略 -->
+  <section>
+    <h2><span class="n">1</span>节日定位与核心策略</h2>
+    <div class="callout strat">
+      <div class="h">🎯 一句话</div>
+      夏日恋语验证：<b>breadth 成功</b>（中小R 节日渗透 ×6.5/×2.1），但 <b>depth 没起来</b>（高价款偏弱、成熟服反跑输情人节）。
+      深海节 = <b>双周双核心循环</b>，第二周专攻深度 + 继续铺可制作的节日付费点。
+    </div>
+    <div class="grid loop-cards">
+      <div class="loop w1">
+        <span class="wk">第一周 · D1–D7</span>
+        <h4>英雄皮肤转盘抽奖 + 排行榜</h4>
+        <p>铺 breadth：老皮肤返场给新玩家获取通道，排行榜传说铭牌给老玩家冲榜动机。</p>
+        <ul>
+          <li>转盘有概率直接抽到「海风旅者·霍普金斯」（全服 41 人持有）</li>
+          <li>排行榜投「热浪尤物·赛米拉」皮肤（17 人持有）</li>
+          <li><b>新增传说品质铭牌</b>（3% 战斗属性 ≈ 主城皮肤增益 1/3）</li>
+        </ul>
+      </div>
+      <div class="loop w2">
+        <span class="wk">第二周 · D8–D14</span>
+        <h4>主城皮肤大富翁 + 航海通行证</h4>
+        <p>本期<b>付费深度大头</b>：边跑边攒边付费的深度循环。</p>
+        <ul>
+          <li>大富翁产出主城皮肤「深海花园」（≈300刀，30 人持有人均终身 $22k）</li>
+          <li>新增成就礼包（跑满 15 圈解锁）+ 存钱罐礼包（搬 X2 代码）</li>
+          <li>航海通行证 9.99 + 史诗品质铭牌（无 BUFF）</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 前置项已完成 -->
+  <section>
+    <h2><span class="n">2</span>前置项：ID 分配总表 ✅ 已完成（2026-06-18）</h2>
+    <div class="callout strat">
+      <div class="h">✅ 深海版「开发配置需求」总表已建好</div>
+      GSheet 新建页签 <span class="mono">深海节-开发配置需求</span>（未动夏日那份）。已<b>扫 tsv 防撞（无任何深海半成品·干净起点）</b>，给 11 模块分配全套新 ID。<br>
+      <b>核心规律</b>：<span class="mono">ActvOnline ID = 100000 + ContentID</span>（酒馆/拜访为序列号例外）→ 只需分配新 ContentID，AO 自动派生。
+      权威交叉源 = <span class="mono">ActvOnline__ActvOnline.tsv</span>，按 ActvType 取该型 max+1。
+    </div>
+    <table>
+      <tr><th>模块</th><th>Type</th><th>新 ContentID</th><th>新 ActvOnline</th><th>TimeCycle</th><th>复用/新增</th></tr>
+      <tr><td>深海罗盘·转盘</td><td>10</td><td class="mono">1025</td><td class="mono">101025</td><td>1830</td><td>复用换皮</td></tr>
+      <tr><td>深海罗盘·兑换</td><td>13</td><td class="mono">1340</td><td class="mono">101340</td><td>1830</td><td>复用</td></tr>
+      <tr><td>远航日志 BP</td><td>22</td><td class="mono">2242</td><td class="mono">102242</td><td>1830</td><td>复用换奖励</td></tr>
+      <tr><td>深海馈赠累充</td><td>5</td><td class="mono">598</td><td class="mono">100598</td><td>1830</td><td>复用换奖励</td></tr>
+      <tr><td>海滨之约拜访</td><td>56</td><td class="mono">5606</td><td class="mono">105605</td><td>1831</td><td>复用换门头</td></tr>
+      <tr><td>许愿池</td><td>50</td><td class="mono">5013</td><td class="mono">105013</td><td>1830</td><td>仅换背景</td></tr>
+      <tr><td>最佳酒馆</td><td>7</td><td class="mono">717(复用)</td><td class="mono">10071704</td><td>1830</td><td>仅换背景</td></tr>
+      <tr style="background:#fffaf0"><td>🏆 大富翁</td><td>28</td><td class="mono">2801(原位)</td><td class="mono">102801</td><td>2702(现成·TT4)</td><td>复用换皮·原位改</td></tr>
+      <tr><td colspan="6" style="font-size:12.5px;color:var(--muted)">
+        另：<b>ActvGroup</b>=140 · <b>TimeCycle</b> 主1830/拜访1831/周卡1832(节日段空闲，大富翁复用2702) ·
+        <b>Pack 块</b> 211016-211025(避开夏日2109xx+2110xx已占) · <b>WeeklyCard</b> 2008-2010 · <b>RankCfg</b> 186(RankType12)。
+        头像框/装饰/每日礼包无独立 ActvOnline(Pack直售/独立表)。
+      </td></tr>
+    </table>
+    <div class="callout warn" style="margin-top:14px">
+      <b>⚠️ 落地前需点名确认（已写进 GSheet 表【8】）</b>：①转盘新建 CID1025 vs 原位改尼罗1023 ②深海猎手归属(01排行榜 vs 05累充顶档两处都列) ③周卡是否需独立 AO ④主TC1830 起始日期 ⑤成就礼包圈数+定价/累充档位数值/航迹皮肤ID/通行证礼包是否与BP高级档重复。
+    </div>
+  </section>
+
+  <!-- 11模块 -->
+  <section>
+    <h2><span class="n">3</span>11 个活动模块落地清单</h2>
+    <div class="callout info" style="margin-bottom:6px">
+      <b>图例：</b>
+      <span class="badge b-prog">需程序</span> 卡程序，agent 仅配合配置
+      <span class="badge b-cfg">纯配置</span> 待 ID 分配后可做
+      <span class="badge b-art">需新美术</span>
+      <span class="badge b-reuse">复用现成</span>
+      <br><span style="font-size:12.5px;color:var(--muted)">编号取自给制作人的 Jira 拆分单（题材命名）。</span>
+    </div>
+    <div class="mods">
+
+      <div class="mod">
+        <span class="num">01</span>
+        <h4>深海罗盘 <span class="span">D1–D14</span></h4>
+        <div class="desc">第一周引流核心：转盘投英雄皮「海风旅者」返场 + 兑换商店 + 排行榜投行军皮「深海猎手」。</div>
+        <div class="kv"><b>复用源</b>：大转盘 ActvType10（尼罗黄金卷轴 1023/101023，自带排行榜）+ 兑换 ActvType13(1339)</div>
+        <div class="kv"><b>配置</b>：ActvLuckyWheel + Reward + OtherReward + RankCfg；铭牌走 Title 表</div>
+        <div class="tags"><span class="badge b-prog">需程序(门槛提示)</span><span class="badge b-art">转盘皮+背景+传说铭牌</span></div>
+      </div>
+
+      <div class="mod">
+        <span class="num">02</span>
+        <h4>远航日志（BP）<span class="span">D1–D14</span></h4>
+        <div class="desc">通行证承载史诗铭牌权益，拉升级率。纯复用换背景，唯一新增=高级通行证加史诗铭牌（无BUFF）。</div>
+        <div class="kv"><b>复用源</b>：BP ActvType22（夏日 2240/102240，TC1829）</div>
+        <div class="kv"><b>配置</b>：BP 凭证复用 210000 系换奖励；史诗铭牌=Title 表（无属性）</div>
+        <div class="tags"><span class="badge b-cfg">纯配置</span><span class="badge b-art">BP背景+史诗铭牌</span></div>
+      </div>
+
+      <div class="mod">
+        <span class="num">03</span>
+        <h4>怦然心动·深海（每日礼包）<span class="span">D1–D14</span></h4>
+        <div class="desc">每日低价触达付费点。复用 Pack__DailyPack 改深海版，需程序微量处理（节日版切换）。</div>
+        <div class="kv"><b>复用源</b>：Pack__DailyPack</div>
+        <div class="kv"><b>美术</b>：弹窗背景 + <b>15s 展示视频（分镜已写·重制非换皮）</b></div>
+        <div class="tags"><span class="badge b-prog">需程序(切换)</span><span class="badge b-art">背景+视频</span></div>
+      </div>
+
+      <div class="mod">
+        <span class="num">04</span>
+        <h4>深海印记（头像框礼包 9.99）<span class="span">D1–D14</span></h4>
+        <div class="desc">新增可制作的节日付费点。9.99 通用礼包，购买得深海头像框 + 节日道具。</div>
+        <div class="kv"><b>★需程序</b>：新增<b>通用礼包模块</b>（9.99+节日道具）</div>
+        <div class="kv"><b>配置</b>：Pack(通用Type)+Reward；头像框走 80xxx 系列（新增深海框，带 Regained）</div>
+        <div class="tags"><span class="badge b-prog">需程序(通用模块)</span><span class="badge b-art">banner+头像框256²</span></div>
+      </div>
+
+      <div class="mod">
+        <span class="num">05</span>
+        <h4>深海馈赠（累充）<span class="span">D1–D14</span></h4>
+        <div class="desc">累充新增外显拉高档达成。10 档 + gacha 道具，顶档=行军皮「深海猎手」。</div>
+        <div class="kv"><b>复用源</b>：累充 ActvType5（夏日 597/100597，TC1829）</div>
+        <div class="kv"><b>顶档外显</b>：深海猎手·潜艇船皮肤 <span class="mono">Item15065</span>（永久现成 ✅，$0.5/个 ROI50%）</div>
+        <div class="kv"><span class="amber" style="color:var(--amber);font-weight:700">待定</span>：档位/数值待夏日复盘；航迹皮肤 ID 待确认</div>
+        <div class="tags"><span class="badge b-cfg">纯配置</span><span class="badge b-art">累充背景</span><span class="badge b-reuse">潜艇皮复用</span></div>
+      </div>
+
+      <div class="mod">
+        <span class="num">06</span>
+        <h4>深海居所（装饰 19.99×3）<span class="span">D3–D14</span></h4>
+        <div class="desc">19.99 阶梯已验证（夏日家具486%）。3 个礼包各 19.99，每包奖励=椰风遮阳椅×1。</div>
+        <div class="kv"><b>复用源</b>：阶梯/链式礼包（夏日 210917-919 结构）</div>
+        <div class="kv"><b>投放物</b>：椰风遮阳椅 <span class="mono">Item151043</span>（海滨假日现成 ✅，带坐下动画）</div>
+        <div class="tags"><span class="badge b-cfg">纯配置</span><span class="badge b-art">礼包banner</span><span class="badge b-reuse">遮阳椅复用</span></div>
+      </div>
+
+      <div class="mod">
+        <span class="num">07</span>
+        <h4>海滨之约（拜访 99.99）<span class="span">D7–D14</span></h4>
+        <div class="desc">门头装潢礼包 + 社交，为超大R提供被拜访感。按被拜访次数领阶段奖励 + 每日邀请函。</div>
+        <div class="kv"><b>复用源</b>：拜访 ActvType56（夏日 5605/105605，TC1830）</div>
+        <div class="kv"><b>投放物</b>：海滨假日门头三件套（横梁1001009/地板2001013/墙纸3001010 现成 ✅）</div>
+        <div class="tags"><span class="badge b-cfg">纯配置</span><span class="badge b-art">拜访背景+礼包图</span><span class="badge b-reuse">门头三件套复用</span></div>
+      </div>
+
+      <div class="mod">
+        <span class="num">08</span>
+        <h4>许愿池 <span class="span">D1–D14</span></h4>
+        <div class="desc">$4.99 可重复抽，全服共建引流。<b>名字/玩法/数值全不变，仅换深海背景图</b>。</div>
+        <div class="kv"><b>复用源</b>：许愿池 ActvType50（夏日 5013/105013，TC1829，TT 必须=1）</div>
+        <div class="kv"><b>配置</b>：ActvWishingPool 数值不动，仅替换背景资源</div>
+        <div class="tags"><span class="badge b-cfg">纯配置(仅换图)</span><span class="badge b-art">背景</span></div>
+      </div>
+
+      <div class="mod">
+        <span class="num">09</span>
+        <h4>最佳酒馆 <span class="span">D1–D14</span></h4>
+        <div class="desc">跨服酒馆赛事拉中高R冲分。<b>名字/玩法/数值全不变，仅换深海背景图</b>。</div>
+        <div class="kv"><b>复用源</b>：最佳酒馆 ActvType7（夏日 717/10071704，TC1829）</div>
+        <div class="kv"><span class="amber" style="color:var(--amber);font-weight:700">⚠️</span> ActvScore ScoreID 易混淆（603 陷阱），落地点名具体 ContentID</div>
+        <div class="tags"><span class="badge b-cfg">纯配置(仅换图)</span><span class="badge b-art">背景</span></div>
+      </div>
+
+      <div class="mod" style="border-color:var(--gold);box-shadow:0 2px 14px rgba(233,185,73,.18)">
+        <span class="num" style="background:var(--gold);color:#5a4400">10</span>
+        <h4>🏆 大富翁（主城皮肤）<span class="span">D8–D14 · 第二周核心</span></h4>
+        <div class="desc">复用航海之路 ActvVoyage(Type28) 换皮。最重模块，详见第 4 节。</div>
+        <div class="kv"><b>复用源</b>：ActvVoyage ContentID 2801 / ActvOnline 102801</div>
+        <div class="kv"><b>新增</b>：珍珠贝进度系统 + 海盗金币弹脸 + 成就礼包 + 存钱罐 + ROI 重调=8</div>
+        <div class="tags"><span class="badge b-prog">需程序(多)</span><span class="badge b-art">24地块岛图+角色</span><span class="badge b-cfg">大量配置</span></div>
+      </div>
+
+      <div class="mod" style="border-color:var(--aqua)">
+        <span class="num" style="background:var(--aqua)">11</span>
+        <h4>节日周卡（自选）<span class="span">D8–D14</span></h4>
+        <div class="desc">低价高频付费点，7 天每日触达。三档 9.99/19.99/29.99 + BUY ALL 49.99(85折)，每日自选 4 项。</div>
+        <div class="kv"><b>复用源</b>：X3 原生 WeeklyCard + Replacement + OptionalPack（X2 拓荒节自选周卡同构）</div>
+        <div class="kv"><b>程序</b>：确认 WeeklyCardReplacement 支持「自选4项」即可（X2 有先例）</div>
+        <div class="tags"><span class="badge b-prog">需程序(确认/小开发)</span><span class="badge b-art">三档卡面+banner</span><span class="badge b-cfg">奖池配置</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 各模块投放内容明细 -->
+  <section>
+    <h2><span class="n">4</span>各模块投放内容明细（投放物 ↔ 模块）</h2>
+    <div class="callout info">
+      逐模块列出<b>本期投放什么、给谁（获取方式/定价）、道具 ID、复用 or 新增</b>。
+      <span class="new">蓝色</span>=本期新增/新出，<span style="color:var(--muted);font-weight:700">灰</span>=复用现成。
+    </div>
+    <table>
+      <tr><th style="width:14%">模块</th><th style="width:28%">投放内容</th><th style="width:24%">获取方式 / 定价</th><th style="width:18%">道具ID</th><th>复用/新增</th></tr>
+
+      <tr>
+        <td rowspan="4"><b>01 深海罗盘</b><br><span class="span" style="font-size:11px;color:var(--grey)">转盘+兑换+排行榜</span></td>
+        <td>海风旅者·霍普金斯（英雄皮肤）</td>
+        <td>转盘有概率直抽 + 兑换商店；600刀节点充赠；重复返 10000 钻</td>
+        <td class="mono">Item_5303401</td>
+        <td><span class="b-reuse badge">复用老皮肤</span></td>
+      </tr>
+      <tr>
+        <td>养成材料 + 抽奖代币</td>
+        <td>转盘奖池 + 额外奖励进度条 x50~x3000</td>
+        <td class="mono">ActvLuckyWheelReward</td>
+        <td><span class="b-reuse badge">复用</span></td>
+      </tr>
+      <tr>
+        <td>深海猎手（排行榜皮肤）<span style="color:var(--amber)">⚠</span></td>
+        <td>排行榜 A+B 线消费冲榜 Top 段</td>
+        <td class="mono">(取消赛米拉·见注)</td>
+        <td><span class="b-reuse badge">复用</span></td>
+      </tr>
+      <tr>
+        <td class="new">传说铭牌·航者徽记</td>
+        <td>排行榜 Top 段；传说品质 · <b>3% 战斗属性</b>(≈主城1/3)；重复转钻</td>
+        <td class="mono">Title 表</td>
+        <td><span class="b-new badge">新增+新出图</span></td>
+      </tr>
+
+      <tr>
+        <td rowspan="3"><b>02 远航日志</b><br><span class="span" style="font-size:11px;color:var(--grey)">BP 通行证</span></td>
+        <td class="new">史诗铭牌·深海远征·航徽</td>
+        <td>高级通行证(9.99) 含；<b>无 BUFF</b></td>
+        <td class="mono">Title 表(无属性)</td>
+        <td><span class="b-new badge">新增+新出图</span></td>
+      </tr>
+      <tr>
+        <td>BP 奖励（免费线 + 付费线 9.99）</td>
+        <td>完成任务积分逐级解锁</td>
+        <td class="mono">复用 210000 系</td>
+        <td><span class="b-reuse badge">复用换奖励</span></td>
+      </tr>
+      <tr>
+        <td>节日道具 + 头像框 + 聊天表情</td>
+        <td>BP 进度档位</td>
+        <td class="mono">复用</td>
+        <td><span class="b-reuse badge">复用</span></td>
+      </tr>
+
+      <tr>
+        <td><b>03 怦然心动·深海</b><br><span class="span" style="font-size:11px;color:var(--grey)">每日礼包</span></td>
+        <td>每日限定礼包（养成材料/代币/抽奖券）</td>
+        <td>每日登录可购买（低价高频）</td>
+        <td class="mono">Pack__DailyPack</td>
+        <td><span class="b-reuse badge">复用改节日版</span></td>
+      </tr>
+
+      <tr>
+        <td><b>04 深海印记</b><br><span class="span" style="font-size:11px;color:var(--grey)">头像框礼包</span></td>
+        <td class="new">深海头像框 + 节日道具</td>
+        <td>通用礼包 <b>$9.99</b>，限购</td>
+        <td class="mono">80xxx 系列(新增)</td>
+        <td><span class="b-new badge">新增+新出图</span></td>
+      </tr>
+
+      <tr>
+        <td rowspan="3"><b>05 深海馈赠</b><br><span class="span" style="font-size:11px;color:var(--grey)">累充 10 档</span></td>
+        <td>深海猎手·潜艇船皮肤（顶档外显）</td>
+        <td>累充顶档(第10档 $2000)；现状「暂无获取」正好投</td>
+        <td class="mono">Item15065(永久)</td>
+        <td><span class="b-reuse badge">复用现成 ✅</span></td>
+      </tr>
+      <tr>
+        <td class="new">航迹皮肤</td>
+        <td>累充第 4 档($200)外显</td>
+        <td class="mono">待确认</td>
+        <td><span class="b-new badge">新增(ID待定)</span></td>
+      </tr>
+      <tr>
+        <td>加速 + gacha 道具（10 档）</td>
+        <td>累计充值达档领取；$0.5/个 ROI50%</td>
+        <td class="mono">复用夏日档结构</td>
+        <td><span class="b-reuse badge">复用·数值待复盘</span></td>
+      </tr>
+
+      <tr>
+        <td><b>06 深海居所</b><br><span class="span" style="font-size:11px;color:var(--grey)">装饰阶梯礼包</span></td>
+        <td>椰风遮阳椅（家具摆件，带坐下动画）</td>
+        <td>3 礼包各 <b>$19.99</b>，每包 ×1（链式）</td>
+        <td class="mono">Item151043</td>
+        <td><span class="b-reuse badge">复用现成 ✅</span></td>
+      </tr>
+
+      <tr>
+        <td rowspan="3"><b>07 海滨之约</b><br><span class="span" style="font-size:11px;color:var(--grey)">拜访礼包</span></td>
+        <td>海滨门头三件套（横梁/地板/墙纸）</td>
+        <td>海滨门头礼包 <b>$99.99</b>；购买触发跑马灯+世界通知</td>
+        <td class="mono">1001009/2001013/3001010</td>
+        <td><span class="b-reuse badge">复用现成 ✅</span></td>
+      </tr>
+      <tr>
+        <td>阶段奖励（按被拜访次数）</td>
+        <td>仅购包者可领；未购也计数不可领</td>
+        <td class="mono">ActvVisitPackReward</td>
+        <td><span class="b-reuse badge">复用</span></td>
+      </tr>
+      <tr>
+        <td>深海邀请函（每日）+ 拜访额外奖励</td>
+        <td>每日领，当日清零；拜访购包者消耗1张获奖</td>
+        <td class="mono">InvationItem</td>
+        <td><span class="b-reuse badge">复用</span></td>
+      </tr>
+
+      <tr>
+        <td><b>08 许愿池</b><br><span class="span" style="font-size:11px;color:var(--grey)">全服共建</span></td>
+        <td>沿用（许愿币/阶段奖池/超级大奖）</td>
+        <td>$4.99 可重复抽；<b>玩法/数值/名字全不变，仅换背景</b></td>
+        <td class="mono">ActvWishingPool(不动)</td>
+        <td><span class="b-reuse badge">完全复用</span></td>
+      </tr>
+
+      <tr>
+        <td><b>09 最佳酒馆</b><br><span class="span" style="font-size:11px;color:var(--grey)">跨服赛事</span></td>
+        <td>沿用（积分阶段奖 + 世界级排名奖）</td>
+        <td><b>玩法/数值/名字全不变，仅换背景</b>；落地点名具体 ContentID</td>
+        <td class="mono">ActvScore(ScoreID 7011/7012)</td>
+        <td><span class="b-reuse badge">完全复用</span></td>
+      </tr>
+
+      <tr>
+        <td rowspan="5" style="background:#fffaf0"><b>🏆 10 大富翁</b><br><span class="span" style="font-size:11px;color:var(--grey)">主城皮肤·第二周核心</span></td>
+        <td><b>主城皮肤「深海花园」</b>（最终大奖）</td>
+        <td>大富翁产出；<b>≈300刀</b>(同原航海之路)；现有皮肤投放·不换皮</td>
+        <td class="mono">现有 Skin</td>
+        <td><span class="b-reuse badge">现有投放</span></td>
+      </tr>
+      <tr>
+        <td>普通抽卡 / 精准抽卡 / 海神罗盘(付费骰)</td>
+        <td>掷骰跑圈核心货币；海神罗盘=付费自选格数</td>
+        <td class="mono">1057 / 1058 / 海盗金币1060</td>
+        <td><span class="b-reuse badge">复用</span></td>
+      </tr>
+      <tr>
+        <td class="new">珍珠贝 → 神秘宝箱</td>
+        <td>棋盘常驻4个，停留拾取攒进度开箱(信物/金币/加速)；ROI≈7.65</td>
+        <td class="mono">新 Item(节日段)</td>
+        <td><span class="b-new badge">新增+图标已出</span></td>
+      </tr>
+      <tr>
+        <td class="new">成就礼包（跑满 15 圈解锁）</td>
+        <td>限购 1 次；内容/定价搬运 X2</td>
+        <td class="mono">ActvAchievePack</td>
+        <td><span class="b-new badge">搬X2·占位待定</span></td>
+      </tr>
+      <tr>
+        <td class="new">存钱罐礼包</td>
+        <td>投骰存进度，存满购买敲碎；每期限购1次</td>
+        <td class="mono">PiggyBank</td>
+        <td><span class="b-new badge">搬X2/P2</span></td>
+      </tr>
+
+      <tr>
+        <td rowspan="2" style="background:#f3fafe"><b>11 节日周卡</b><br><span class="span" style="font-size:11px;color:var(--grey)">自选周卡</span></td>
+        <td>三档卡（基础/中级/高级）+ BUY ALL 打包</td>
+        <td>$9.99 / $19.99 / $29.99；BUY ALL <b>$49.99</b>(原价59.97·85折)</td>
+        <td class="mono">Pack__WeeklyCard</td>
+        <td><span class="b-reuse badge">复用换配置</span></td>
+      </tr>
+      <tr>
+        <td>每日自选 4 项（10 项奖池）</td>
+        <td>购后连续7天每日领；奖池见下</td>
+        <td class="mono">COptionalPack(自选数=4)</td>
+        <td><span class="b-reuse badge">复用</span></td>
+      </tr>
+    </table>
+
+    <div class="callout warn" style="margin-top:14px">
+      <b>⚠ 投放冲突待澄清</b>：「深海猎手」在 01 排行榜与 05 累充顶档<b>两处都被列为投放物</b>（GSheet 各活动模块同时出现）；
+      且 01 设计意图写「取消赛米拉」，但 01 的美术主视觉锚仍引赛米拉立绘。落地前需点名确认排行榜 / 累充各自的最终投放皮肤。
+    </div>
+
+    <h3>节日周卡 · 每日自选奖池 10 项（三档每日数量递增）</h3>
+    <table>
+      <tr><th>#</th><th>道具</th><th>ItemID</th><th>基础 $9.99/日</th><th>中级 $19.99/日</th><th>高级 $29.99/日</th></tr>
+      <tr><td>1</td><td class="new">深海节抽奖券</td><td class="mono">节日道具·待建</td><td>4</td><td>8</td><td>12</td></tr>
+      <tr><td>2</td><td class="new">深海节兑换代币</td><td class="mono">节日道具·待建</td><td>50</td><td>100</td><td>150</td></tr>
+      <tr><td>3</td><td>万能英雄碎片·橙</td><td class="mono">待核</td><td>1</td><td>2</td><td>3</td></tr>
+      <tr><td>4</td><td>传奇技能书</td><td class="mono">19003</td><td>1</td><td>2</td><td>3</td></tr>
+      <tr><td>5</td><td>史诗技能书</td><td class="mono">19002</td><td>2</td><td>4</td><td>6</td></tr>
+      <tr><td>6</td><td>神秘金属</td><td class="mono">55101</td><td>12</td><td>25</td><td>40</td></tr>
+      <tr><td>7</td><td>通用技能碎片</td><td class="mono">55000</td><td>4</td><td>8</td><td>12</td></tr>
+      <tr><td>8</td><td>船只装备强化石</td><td class="mono">160102</td><td>6</td><td>12</td><td>20</td></tr>
+      <tr><td>9</td><td>60分钟通用加速</td><td class="mono">11004</td><td>2</td><td>4</td><td>8</td></tr>
+      <tr><td>10</td><td>钻石</td><td class="mono">1002</td><td>100</td><td>250</td><td>500</td></tr>
+    </table>
+    <div class="callout info" style="margin-top:10px">
+      ★ 奖池/数量为草案，需数值核定：①节日道具(抽奖券/兑换代币) ID 待建 ②各档量按 ROI(参考 P2 约 5.6~8.2)反推。
+    </div>
+  </section>
+
+  <!-- 大富翁深挖 -->
+  <section>
+    <h2><span class="n">5</span>大富翁深挖（第二周核心 · 最重）</h2>
+    <div class="callout info">
+      <b>本质</b>：复用 ActvVoyage(ActvType=28，全表唯一)，24 格首尾相连棋盘掷骰跑圈。
+      24 格位置写死在 <span class="mono">UIActvVoyage.prefab</span>，<b>布局/移动动画零改，换皮只换贴图</b>。
+      最终大奖=主城皮肤「深海花园」(现有皮肤投放·不换皮，≈300刀)。
+    </div>
+
+    <h3>本期改动点（vs 原航海之路）</h3>
+    <table>
+      <tr><th>改动</th><th>内容</th><th>性质</th></tr>
+      <tr><td><b>新包装</b></td><td>整体换深海探险风格，棋盘布局改变</td><td><span class="badge b-art">纯换皮</span></td></tr>
+      <tr><td><b>取消升级</b></td><td>钻石/幸运岛固定单档(取 lv1 值)，不读 ActvVoyageLevel，Event 统一 Level=1</td><td><span class="badge b-cfg">配置</span></td></tr>
+      <tr><td><b>珍珠贝进度系统</b></td><td>棋盘常驻 4 个珍珠贝(替代神秘宝藏)，停留拾取→进度+1→补刷；独立进度条攒满开神秘宝箱</td><td><span class="badge b-prog">需程序</span><span class="badge b-art">图标已出</span></td></tr>
+      <tr><td><b>海盗金币弹脸</b></td><td>停在掉币格/结算获代币时金币爆开特效(参考 CoinMaster，序列帧)</td><td><span class="badge b-prog">需程序</span></td></tr>
+      <tr><td><b>成就礼包</b></td><td>跑满 15 圈(≈103抽)解锁购买·限购1次；搬 X2 <span class="mono">activity_hero_achievement.tsv</span></td><td><span class="badge b-prog">搬X2代码</span></td></tr>
+      <tr><td><b>存钱罐礼包</b></td><td>每投掷 N 次存 1 个，存满 HUD 发光，购买敲碎；搬 X2 <span class="mono">PiggyBank.tsv</span></td><td><span class="badge b-prog">搬X2代码</span></td></tr>
+      <tr><td><b>数值重调</b></td><td>原 ROI 太高且越抽越高 → 调整为通用节日 <b>ROI=8</b></td><td><span class="badge b-cfg">数值</span></td></tr>
+    </table>
+
+    <h3>珍珠贝进度系统（程序落地需求已写清 · 美术全复用）</h3>
+    <table>
+      <tr><th>功能点</th><th>美术资源</th><th>实现</th></tr>
+      <tr><td>寻宝进度条 UI</td><td>复用全局 9-slice（蓝色 <span class="mono">#4FB4E6</span> tint）</td><td>加节点 + fillAmount</td></tr>
+      <tr><td>进度流动填充特效</td><td>复用 <span class="mono">Fx_Ui_FillArea</span>（已验对版）</td><td>progress+1 时播放</td></tr>
+      <tr><td>珍珠贝飞入特效</td><td>珍珠贝图标(已出)+复用拖尾/吸入 Fx</td><td>DOTween 位移 + 挂特效</td></tr>
+    </table>
+    <div class="callout strat" style="margin-top:10px">
+      ✅ 三个功能点的<b>美术资源全部复用游戏现成件</b>，珍珠贝绿壳图已出，DK 待程序功能完成后再落 —— <b>不卡开发</b>。
+    </div>
+
+    <h3>配置表清单（<span class="mono">C:\x3\gdconfig\tsv\ActvVoyage__*.tsv</span>）</h3>
+    <table>
+      <tr><th>表</th><th>作用</th><th>本期改动</th></tr>
+      <tr><td>ActvVoyage</td><td>主活动</td><td>新增 <span class="mono">ProgressItemID</span>(珍珠贝)+<span class="mono">ProgressMax</span>(=4)；神秘宝藏不投放</td></tr>
+      <tr><td>ActvVoyageIsland</td><td>24 地块</td><td>类型分布：起始×1/宝藏×4/神秘×3/钻石×4/幸运×12；换 DK_Img+岛名</td></tr>
+      <tr><td>ActvVoyageEvent</td><td>事件+地块图</td><td>统一 Level=1(不分级)；换 DKImg</td></tr>
+      <tr><td>ActvVoyageLevel</td><td>升级经验</td><td><b>本期废弃·不用</b></td></tr>
+      <tr><td>ActvVoyageOtherReward</td><td>阶段奖励</td><td>Group=100 原抽奖次数档 + <b>新增 Group=101 珍珠贝进度档</b>并存</td></tr>
+      <tr><td>新 Item 珍珠贝</td><td>进度道具</td><td>节日 ID 段新 ID + DK_Icon(=生成图标)</td></tr>
+      <tr><td>ActvAchievePack</td><td>成就礼包</td><td>搬 X2，Fincond 新增 <span class="mono">typ=monopoly_lap</span>(需程序加条件类型)</td></tr>
+      <tr><td>PiggyBank</td><td>存钱罐</td><td>搬 X2，EffectParams=投骰行为</td></tr>
+    </table>
+  </section>
+
+  <!-- 美术资产 ↔ 模块 -->
+  <section>
+    <h2><span class="n">6</span>美术资产 ↔ 活动模块对应表</h2>
+    <div class="callout info">
+      按模块归类，每件资产标<b>类型 / 尺寸格式 / 新出 or 复用 / 复用源·参考</b>。
+      统计：<b class="new">新出 ~18 件</b>（背景×7 / 铭牌×2 / 头像框 / 各 banner / 卡面 / 视频 / 大富翁岛图+角色+特效），
+      <b style="color:var(--muted)">复用 ~9 件</b>。新出全走 <span class="mono">x3-media</span>，可一资产一 agent 并行。
+    </div>
+    <table>
+      <tr><th style="width:13%">模块</th><th style="width:23%">资产</th><th style="width:11%">类型</th><th style="width:20%">尺寸 / 格式</th><th style="width:9%">状态</th><th>复用源 / 参考</th></tr>
+
+      <tr><td rowspan="4"><b>01 深海罗盘</b></td>
+        <td>转盘皮（DK_Turntable·逐件）</td><td>UI换皮</td><td>=尼罗转盘(icon1~6/bg2)·png</td><td><span class="badge b-new">新出</span></td><td>夏日/大转盘.png；复用源 img_turntable_icon1~6</td></tr>
+      <tr><td>转盘活动背景</td><td>背景</td><td>1080×1344·png</td><td><span class="badge b-new">新出</span></td><td>img_queen_bg_3(尼罗大转盘背景)</td></tr>
+      <tr><td class="new">传说铭牌·航者徽记</td><td>铭牌</td><td>~752×192·png + HUD 124×136</td><td><span class="badge b-new">新出</span></td><td>🔧无现成投放物，新出；锚=现有title资源</td></tr>
+      <tr><td>背景角色立绘=海风旅者</td><td>立绘</td><td>现成</td><td><span class="badge b-reuse">复用 ✅</span></td><td>转盘主推皮立绘</td></tr>
+
+      <tr><td rowspan="2"><b>02 远航日志</b></td>
+        <td>BP 主界面背景（海图桌）</td><td>背景</td><td>=夏日BP背景·png</td><td><span class="badge b-new">新出</span></td><td>夏日/02_为誓言而战_BP_102236.png</td></tr>
+      <tr><td class="new">史诗铭牌·航徽</td><td>铭牌</td><td>~752×192·png</td><td><span class="badge b-new">新出</span></td><td>🔧无现成，新出；锚=现有title资源</td></tr>
+
+      <tr><td rowspan="2"><b>03 怦然心动·深海</b></td>
+        <td>每日礼包弹窗背景</td><td>背景/弹窗</td><td>=夏日每日礼包弹窗·png</td><td><span class="badge b-new">新出</span></td><td>夏日/怦然心动.png</td></tr>
+      <tr><td class="new">礼包展示视频（深海重制）</td><td>视频</td><td>~15s·mp4（分镜已写）</td><td><span class="badge b-new">新出</span></td><td>节奏参考 夏日/录制_..._144.mp4</td></tr>
+
+      <tr><td rowspan="2"><b>04 深海印记</b></td>
+        <td>通用礼包 banner</td><td>banner</td><td>礼包墙槽位(待程序定)·png</td><td><span class="badge b-new">新出</span></td><td>同礼包墙现有 banner</td></tr>
+      <tr><td class="new">深海头像框</td><td>头像框</td><td>256×256·png</td><td><span class="badge b-new">新出</span></td><td>🔧无现成，新出；锚=现有 AvatarFrame</td></tr>
+
+      <tr><td rowspan="2"><b>05 深海馈赠</b></td>
+        <td>累充活动背景（海底宝藏窟）</td><td>背景</td><td>=夏日累充背景·png</td><td><span class="badge b-new">新出</span></td><td>夏日/07_花瓣与恩典_累充_100595.png</td></tr>
+      <tr><td>顶档外显=深海猎手潜艇皮</td><td>船皮 icon</td><td>现成</td><td><span class="badge b-reuse">复用 ✅</span></td><td>Item15065 · icon_global_ship_skin_submarine</td></tr>
+
+      <tr><td rowspan="2"><b>06 深海居所</b></td>
+        <td class="new">礼包展示视频（海滨度假·环境动效）</td><td>视频</td><td>~5s·mp4(图生视频·循环)</td><td><span class="badge b-new">新出·改视频</span></td><td>首帧=已批准装饰 banner；水波/光斑/棕榈摇曳动效</td></tr>
+      <tr><td>装饰物=椰风遮阳椅</td><td>家具 icon</td><td>现成</td><td><span class="badge b-reuse">复用 ✅</span></td><td>Item151043 · icon_jiaju_summer_3</td></tr>
+
+      <tr><td rowspan="3"><b>07 海滨之约</b></td>
+        <td>拜访活动背景（海滨酒馆门面）</td><td>背景</td><td>=夏日拜访背景·png</td><td><span class="badge b-new">新出</span></td><td>夏日/03_柔情海湾_拜访_105603.png + 门头拜访礼包.png</td></tr>
+      <tr><td>礼包图/icon（海滨门头礼包$99.99）</td><td>礼包图</td><td>=拜访礼包图·png</td><td><span class="badge b-new">新出</span></td><td>夏日/门头拜访礼包.png</td></tr>
+      <tr><td>投放物=门头三件套</td><td>家具</td><td>现成</td><td><span class="badge b-reuse">复用 ✅</span></td><td>1001009/2001013/3001010(海滨假日)</td></tr>
+
+      <tr><td><b>08 许愿池</b></td>
+        <td>活动背景（深海许愿池·仅换图）</td><td>背景</td><td>=许愿池原背景·png</td><td><span class="badge b-new">新出</span></td><td>许愿池界面现有背景(取原替换)</td></tr>
+
+      <tr><td><b>09 最佳酒馆</b></td>
+        <td>活动背景（远航酒馆·仅换图）</td><td>背景</td><td>=最佳酒馆原背景·png</td><td><span class="badge b-new">新出</span></td><td>夏日/05_为爱干杯_最佳酒馆_10071702.png</td></tr>
+
+      <tr style="background:#fffaf0"><td rowspan="7"><b>🏆 10 大富翁</b></td>
+        <td class="new">24 地块岛图（约 5 套）</td><td>地块图 DK</td><td>命名 DK_img_Activity_icon_island_*·png</td><td><span class="badge b-new">新出</span></td><td>按岛屿类型(起始/宝藏/钻石/幸运/神秘)；本期取消升级→单档不分级</td></tr>
+      <tr style="background:#fffaf0"><td class="new">角色模型 DKRoleMedel</td><td>3D/Spine</td><td>深海角色</td><td><span class="badge b-new">新出/换</span></td><td>ActvVoyage.DKRoleMedel(如 DK_Role_*)</td></tr>
+      <tr style="background:#fffaf0"><td class="new">大富翁界面/UI 换皮</td><td>UI 贴图</td><td>prefab 贴图(布局零改)</td><td><span class="badge b-new">新出</span></td><td>UIActvVoyage.prefab 只换贴图</td></tr>
+      <tr style="background:#fffaf0"><td class="new">海盗金币弹脸特效</td><td>特效序列帧</td><td>~1.5s</td><td><span class="badge b-new">新出</span></td><td>参考 CoinMaster；金币=Item1060</td></tr>
+      <tr style="background:#fffaf0"><td>珍珠贝图标</td><td>icon</td><td>256px·透明</td><td><span class="badge b-reuse">复用 ✅</span></td><td>green_shell_nobg(已出)·待落 DK</td></tr>
+      <tr style="background:#fffaf0"><td>神秘宝箱开箱动画</td><td>特效</td><td>—</td><td><span class="badge b-reuse">复用 ✅</span></td><td>复用 X3 已有开箱资源加动画</td></tr>
+      <tr style="background:#fffaf0"><td>珍珠贝进度 3 件套</td><td>UI+特效</td><td>—</td><td><span class="badge b-reuse">复用 ✅</span></td><td>9-slice(蓝tint) / Fx_Ui_FillArea / FX_Trail+Sparkle</td></tr>
+
+      <tr style="background:#f3fafe"><td rowspan="3"><b>11 节日周卡</b></td>
+        <td class="new">三档卡面（基础/中级/高级）</td><td>卡面</td><td>深海主题·png</td><td><span class="badge b-new">新出</span></td><td>对齐 X2 拓荒节自选周卡 周卡.png</td></tr>
+      <tr style="background:#f3fafe"><td class="new">深海 banner + BUY ALL banner</td><td>banner</td><td>png</td><td><span class="badge b-new">新出</span></td><td>—</td></tr>
+      <tr style="background:#f3fafe"><td>奖池 10 项图标</td><td>icon</td><td>—</td><td><span class="badge b-reuse">混合</span></td><td>养成料现成；节日道具(抽奖券/兑换代币)待建需新出</td></tr>
+    </table>
+
+    <div class="callout info" style="margin-top:16px">
+      <b>换皮必双参考（KB 规范）</b>：老图=格式结构锚（夏日复用稿 <span class="mono">KB/产出-数值设计/X3_深海节/复用参考图/夏日/</span>）+ 新图=投放物/主视觉锚（赛米拉海滨立绘 <span class="mono">Img_C_H_17_Skin01</span>）。
+      每条美需都已在 GSheet「各活动模块」标注【尺寸】【格式】【老图参考】【新图参考】，逐件可执行。
+    </div>
+  </section>
+
+  <!-- 依赖图 -->
+  <section>
+    <h2><span class="n">7</span>依赖关系（决定 agent 怎么拆）</h2>
+    <div class="dep">
+<span class="blk">① ID 分配总表（深海版 开发配置需求）</span>  <span class="note">← ✅ 已完成(2026-06-18)，阻塞已解除</span>
+        <span class="arr">↓</span>
+<span class="blk">② B 类纯配置 tsv 落地（6 模块）</span>        <span class="note">← 依赖①(已就绪)，模块间弱耦合可并行 ← 下一步</span>
+<span class="blk">③ 美术资产生成（A 类）</span>                <span class="note">← 零依赖，立即可并行（最高并行度）</span>
+<span class="blk">④ C 类程序模块（5 个）</span>                <span class="note">← 外部 Jira 给制作人，agent 只在程序好后配配置</span>
+<span class="blk">⑤ 本地化 i18n</span>                         <span class="note">← 依赖②配置 key 落地</span>
+    </div>
+    <div class="callout warn" style="margin-top:14px">
+      <b>占位待定</b>：成就礼包跑 X 圈的 X 值 + 定价 → 卡在大富翁数值定稿（本期暂定 15 圈，需复盘校准）。
+      累充档位数值待夏日复盘。航迹皮肤 ID 待确认。
+    </div>
+  </section>
+
+  <!-- 拆agent参考 -->
+  <section>
+    <h2><span class="n">8</span>拆 agent 参考（你自己拆）</h2>
+    <table>
+      <tr><th>批次</th><th>agent</th><th>干什么</th><th>并行度</th></tr>
+      <tr>
+        <td><span class="badge b-art">先跑·无依赖</span></td>
+        <td><b>美术 fleet</b></td>
+        <td>每个新资产 1 agent 走 x3-media 生图/视频（铭牌×2、头像框、岛图4套、角色、各背景、卡面、视频…）</td>
+        <td>高 ~15+</td>
+      </tr>
+      <tr style="opacity:.6">
+        <td><span class="badge b-cfg">✅ 已完成</span></td>
+        <td><b><s>ID 分配 agent</s></b></td>
+        <td>深海版「开发配置需求」总表已建（GSheet 深海节-开发配置需求页签），ID 全分配+扫 tsv 防撞完成</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><span class="badge b-cfg">②就绪后</span></td>
+        <td><b>配置 fleet</b></td>
+        <td>6 个纯配置模块各 1 agent 改 tsv（依赖 ID 表），端到端反查 GSheet+tsv 一致</td>
+        <td>中 ~6</td>
+      </tr>
+      <tr>
+        <td><span class="badge b-prog">程序好后</span></td>
+        <td><b>大富翁配置 agent</b></td>
+        <td>ActvVoyage 全套 tsv + 珍珠贝/成就/存钱罐配置 + ROI=8 数值</td>
+        <td>单个(复杂)</td>
+      </tr>
+      <tr>
+        <td><span class="badge b-reuse">最后</span></td>
+        <td><b>i18n agent</b></td>
+        <td>统一跑 x3-translation-automatic 翻译</td>
+        <td>单个</td>
+      </tr>
+    </table>
+  </section>
+
+  <div class="src">
+    <b>数据源</b><br>
+    策划案 GSheet：<b>1mC0yssLkuae_vPc0UvbwzNzXCJiv6m0M-6Ir_AyFxVI</b>（深海节策划案 / 各活动模块 / 大富翁×7 页签 / 节日周卡 / 开发配置需求）<br>
+    本地交接：KB\产出-数值设计\X3_深海节\（深海节策划案.md / 航海之路大富翁换皮_信息交接.md / Jira单拆分_给制作人.txt）<br>
+    程序需求：KB\产出-交互原型\X3_2026深海节\珍珠贝进度系统_程序落地需求.md<br>
+    配置仓 tsv：C:\x3\gdconfig\tsv\　|　代码仓：C:\x3-project\
+  </div>
+
+  <footer>X3 · 2026 深海节 开发对齐总览 · 生成于 2026-06-18 · 供拆 agent 前细看</footer>
+
+</div>
+</body>
+</html>

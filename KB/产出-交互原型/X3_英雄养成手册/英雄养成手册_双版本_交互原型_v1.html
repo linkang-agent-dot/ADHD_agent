@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X3 英雄养成手册（双版本）交互原型 v1</title>
+<style>
+  :root{
+    --gold:#f6d089; --gold2:#c9962f; --panel:#2a2118; --panel2:#3a2e20;
+    --line:#5a4a32; --txt:#f2e7d0; --sub:#b8a888; --lock:#6b6258;
+    --basic:#5aa9e6; --deluxe:#c77dff; --ok:#7ad17a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;}
+  body{background:#171310;color:#f2e7d0;display:flex;gap:18px;padding:18px;align-items:flex-start;flex-wrap:wrap;}
+  /* ===== 手机竖屏面板 ===== */
+  .device{width:420px;flex:0 0 420px;background:linear-gradient(180deg,#241c14,#1a140d);
+    border:2px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.6);}
+  .topbar{position:relative;height:118px;background:
+    radial-gradient(120% 90% at 30% 0%,#4a3a22 0%,#2a2014 60%,#1c150d 100%);
+    border-bottom:1px solid var(--line);padding:12px 14px;}
+  .title{font-size:22px;font-weight:800;color:var(--gold);
+    text-shadow:0 1px 0 #000,0 0 8px rgba(201,150,47,.5);letter-spacing:1px;}
+  .subtitle{font-size:12px;color:#d8c39a;margin-top:4px;max-width:250px;line-height:1.4;}
+  .time{position:absolute;right:12px;top:12px;background:rgba(0,0,0,.4);border:1px solid var(--line);
+    border-radius:14px;padding:4px 10px;font-size:12px;color:#ffe;display:flex;gap:5px;align-items:center;}
+  .info{position:absolute;right:12px;top:46px;width:26px;height:26px;border-radius:50%;
+    border:1px solid var(--line);background:rgba(0,0,0,.4);color:var(--gold);font-weight:700;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;}
+  .role{position:absolute;left:6px;bottom:-8px;width:84px;height:104px;
+    background:linear-gradient(180deg,rgba(246,208,137,.15),transparent);
+    border-radius:50% 50% 8px 8px;display:flex;align-items:flex-end;justify-content:center;
+    font-size:11px;color:#9c8c6f;border:1px dashed #6b583a;cursor:pointer;}
+  /* ===== 页签栏（新增）===== */
+  .tabs{display:flex;gap:0;background:#1f1810;border-bottom:1px solid var(--line);}
+  .tab{flex:1;padding:11px 6px;text-align:center;cursor:pointer;position:relative;
+    border-right:1px solid #2c2317;transition:.15s;background:#1a140d;}
+  .tab:last-child{border-right:none;}
+  .tab .name{font-size:14px;font-weight:700;color:#9c8c6f;}
+  .tab .price{font-size:12px;margin-top:2px;color:#7d6f57;}
+  .tab.active{background:linear-gradient(180deg,#3a2e1c,#2a2014);}
+  .tab.active .name{color:var(--gold);}
+  .tab.active .price{color:#ffd98a;}
+  .tab.active::after{content:"";position:absolute;left:0;bottom:-1px;width:100%;height:3px;background:var(--gold);}
+  .tab .tag{position:absolute;top:3px;right:6px;font-size:9px;background:#c0392b;color:#fff;
+    padding:1px 5px;border-radius:8px;font-weight:700;}
+  .tab.owned .name::after{content:" ✓拥有";color:var(--ok);font-size:11px;}
+  .tab.locked{opacity:.55;}
+  .tab.locked .name::after{content:" 🔒";font-size:12px;}
+  /* ===== 奖励轨 ===== */
+  .track{height:300px;overflow-y:auto;padding:10px;background:#1c150d;}
+  .day{display:flex;align-items:center;gap:10px;padding:8px 10px;margin-bottom:7px;
+    background:linear-gradient(90deg,#2a2115,#241c12);border:1px solid #3a2e1d;border-radius:10px;cursor:pointer;}
+  .day .dnum{width:46px;font-size:12px;color:#cdbb94;text-align:center;flex:0 0 46px;}
+  .day .icon{width:42px;height:42px;border-radius:8px;flex:0 0 42px;
+    background:radial-gradient(circle at 50% 35%,#5a4a2e,#2c2316);border:1px solid #6b583a;
+    display:flex;align-items:center;justify-content:center;font-size:20px;}
+  .day .rwd{flex:1;font-size:13px;color:#e8dcc0;}
+  .day .rwd small{color:#9c8c6f;font-size:11px;}
+  .day .stat{flex:0 0 64px;text-align:center;font-size:11px;padding:4px 0;border-radius:7px;
+    background:#3a2e1d;color:#cdbb94;}
+  .day.cap{background:linear-gradient(90deg,#3a2410,#2e1d0c);border:1px solid var(--gold2);
+    box-shadow:0 0 12px rgba(201,150,47,.35) inset;}
+  .day.cap .icon{background:radial-gradient(circle at 50% 35%,#8a5a1e,#3a2410);border-color:var(--gold);font-size:22px;}
+  .day.cap .rwd{color:#ffe0a3;font-weight:700;}
+  .day.cap .capbadge{font-size:10px;color:#1a140d;background:var(--gold);padding:1px 6px;border-radius:8px;margin-left:6px;font-weight:800;}
+  /* ===== 购买条 ===== */
+  .buybar{padding:12px;background:#1f1810;border-top:1px solid var(--line);}
+  .buybtn{width:100%;padding:13px;border-radius:12px;border:none;font-size:16px;font-weight:800;
+    cursor:pointer;color:#1a140d;background:linear-gradient(180deg,#ffe6a8,#e0aa3c);
+    box-shadow:0 3px 0 #9c6f1c;transition:.12s;}
+  .buybtn:active{transform:translateY(2px);box-shadow:0 1px 0 #9c6f1c;}
+  .buybtn.owned{background:linear-gradient(180deg,#5a5a5a,#3a3a3a);color:#cfcfcf;box-shadow:0 3px 0 #222;cursor:default;}
+  .buybtn.locked{background:linear-gradient(180deg,#544c40,#3a342b);color:#9c8c6f;box-shadow:0 3px 0 #221d16;cursor:not-allowed;}
+  .locktip{margin-top:8px;font-size:12px;color:#e08a8a;text-align:center;min-height:16px;}
+  /* ===== 右侧说明 ===== */
+  .side{flex:1;min-width:340px;max-width:560px;}
+  .side h1{font-size:20px;color:var(--gold);margin-bottom:6px;}
+  .side .meta{font-size:12px;color:#9c8c6f;margin-bottom:14px;}
+  .explain{background:#221b12;border:1px solid var(--line);border-radius:12px;padding:16px;min-height:120px;}
+  .explain .etitle{font-size:16px;color:var(--gold);font-weight:700;margin-bottom:8px;}
+  .explain .erow{font-size:13px;line-height:1.7;color:#e8dcc0;margin-bottom:5px;}
+  .explain .k{color:#ffd98a;font-weight:700;}
+  .explain code{background:#11100c;color:#9ad0ff;padding:1px 6px;border-radius:5px;font-size:12px;}
+  .ctrls{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;}
+  .ctrls button{padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:#2c2317;
+    color:#e8dcc0;cursor:pointer;font-size:13px;}
+  .ctrls button:hover{background:#3a2e1d;}
+  .legend{margin-top:16px;font-size:12px;color:#9c8c6f;line-height:1.8;}
+  .legend b{color:#cdbb94;}
+  .hint{font-size:11px;color:#7d6f57;margin-top:6px;}
+</style>
+</head>
+<body>
+
+<!-- ===================== 设备面板 ===================== -->
+<div class="device">
+  <div class="topbar" data-exp="title">
+    <div class="title">英雄养成手册</div>
+    <div class="subtitle" id="subtitle">每日登录领养成豪礼 · 豪华版翻倍 + 满勤封顶大奖</div>
+    <div class="time" data-exp="time" onclick="explain('time',event)">⏳ <span>14d 06:21:08</span></div>
+    <div class="info" data-exp="info" onclick="explain('info',event)">i</div>
+    <div class="role" data-exp="role" onclick="explain('role',event)">英雄<br>Spine</div>
+  </div>
+
+  <!-- 页签栏（新增 P3 客户端） -->
+  <div class="tabs" id="tabs">
+    <div class="tab active" id="tab-basic" onclick="switchTab('basic',event)">
+      <div class="name">基础版</div><div class="price">$29.99</div>
+    </div>
+    <div class="tab" id="tab-deluxe" onclick="switchTab('deluxe',event)">
+      <span class="tag">2.0×</span>
+      <div class="name">豪华版</div><div class="price">$49.99</div>
+    </div>
+  </div>
+
+  <!-- 奖励轨 -->
+  <div class="track" id="track"></div>
+
+  <!-- 购买条 -->
+  <div class="buybar">
+    <button class="buybtn" id="buybtn" onclick="buy(event)">$29.99 购买</button>
+    <div class="locktip" id="locktip"></div>
+  </div>
+</div>
+
+<!-- ===================== 右侧实时说明 ===================== -->
+<div class="side">
+  <h1>英雄养成手册（双版本）· 交互原型 v1</h1>
+  <div class="meta">改造对象：现有 <code>UIActvLogin.prefab</code>（ActvType=27 / ActvOnline 102701）｜点面板任意元素看交互说明</div>
+
+  <div class="explain" id="explain">
+    <div class="etitle">👆 点左侧面板任意元素</div>
+    <div class="erow">右侧会实时讲解该元素的<b class="k">交互 / 状态机 / 读哪个配置 / Text key</b>。</div>
+    <div class="erow">先点页签 <span class="k">[基础版]/[豪华版]</span> 看奖励轨切换，再点 <span class="k">购买</span> 看二选一互斥锁定。</div>
+  </div>
+
+  <div class="ctrls">
+    <button onclick="switchTab('basic',event)">切到基础版</button>
+    <button onclick="switchTab('deluxe',event)">切到豪华版</button>
+    <button onclick="reset()">↺ 重置(未购买态)</button>
+  </div>
+
+  <div class="legend">
+    <b>本原型演示的 4 个交互状态：</b><br>
+    ① 页签切换 → 奖励轨 + 购买按钮随页签换数据源<br>
+    ② 购买当前版 → 该版页签标「✓拥有」、购买按钮变「已拥有」<br>
+    ③ 二选一互斥 → 买了一版后，另一版页签置灰🔒、购买按钮锁定 + 红字提示<br>
+    ④ 豪华版第30天「满勤封顶大奖」格高亮（基础版无此格强调）
+    <div class="hint">※ 视觉为自洽占位、讲清交互用；真实美术走后续 ②效果图 + 美术需求页（双页签按钮态/豪华banner换色/锁定遮罩/封顶光效）。</div>
+  </div>
+</div>
+
+<script>
+// ============ 数据（锚自真实配置：基础版day1=传奇信物×10/day30=装备材料袋×100）============
+const DAYS = 30;
+function basicReward(d){
+  if(d===1)  return {icon:"🎖️", name:"万能传奇信物", sub:"×10"};
+  if(d===30) return {icon:"🎁", name:"英雄装备材料袋", sub:"×100"};
+  if(d%7===0)return {icon:"📘", name:"高阶技能书", sub:"×"+(2+Math.floor(d/7))};
+  return {icon:"💎", name:"养成资源包", sub:"×"+(20+d)};
+}
+// 豪华版 = 同槽 ×2.0；第30天追加专属大奖
+function deluxeReward(d){
+  const b = basicReward(d);
+  const mult = (s)=> "×"+ (parseInt(s.replace('×',''))*2);
+  let r = {icon:b.icon, name:b.name, sub:mult(b.sub)};
+  if(d===30) r.cap = "封顶大奖：传奇信物×30 + 高阶技能书 等（用现有X3数值）";
+  return r;
+}
+
+const EXP = {
+  title:{t:"活动标题 / 副标（包装层）", rows:[
+    "显示：<span class='k'>英雄养成手册</span> + 副标卖点文案。",
+    "读：<code>ActvOnline 102701</code> 标题（沿用）；副标 = 包装层成品文案。",
+    "<b class='k'>沿用</b> 现有 UIHelper.SetActivityBaseInfo，不改。"]},
+  time:{t:"倒计时", rows:["显示活动剩余时间。读 <code>ActvOnline</code> 时间。<b class='k'>沿用</b> UIHelper.StartTiming。"]},
+  info:{t:"规则按钮 (i)", rows:["点击弹活动规则。<b class='k'>沿用</b> UIHelper.ShowActivityRuleInfo(CfgId)。"]},
+  role:{t:"英雄 Spine 展示位", rows:["Role/EffectRoot 节点。读 <code>ActvOnline.ActvPrefab</code>(DK) 走 Path_Spine。<b class='k'>沿用</b>。"]},
+  "tab-basic":{t:"页签①：基础版（新增 · 元素①）", rows:[
+    "<b class='k'>新增页签栏</b>（P3 客户端）。点击切到基础版数据源。",
+    "Text key：<code>TXT_ActvLogin_Tab_Basic</code>。",
+    "状态机：未购→可点切换；已购本版→标「✓拥有」；已购另版→置灰🔒。",
+    "读：<code>ActvLoginPurchase.Pack/Group</code>（第一档）。"]},
+  "tab-deluxe":{t:"页签②：豪华版（新增 · 元素①）", rows:[
+    "<b class='k'>新增页签栏</b>。$49.99 / 2.0×标签。Text key：<code>TXT_ActvLogin_Tab_Deluxe</code>。",
+    "读：<code>ActvLoginPurchase.Pack2/Group2</code>（新增第二档，依赖 P1 schema 扩展）。",
+    "Pack2 = 豪华礼包 <code>220002</code>（价格点116=$49.99）；Group2 = <code>101</code>。"]},
+  day:{t:"每日奖励格 (元素③)", rows:[
+    "30 天列表，按当前页签的 Group 渲染。<b class='k'>沿用</b> LoopVerticalScrollRectList + UIActvLoginSlotItem。",
+    "豪华版 = 基础版同槽道具 <b class='k'>×2.0</b>。读 <code>ActvLoginRewardGroup</code> 对应 Group。",
+    "状态：未达成/可领取/已领取（购买后才可领）。"]},
+  cap:{t:"第30天 满勤封顶大奖 (元素④ · 仅豪华版)", rows:[
+    "豪华版第30格高亮 + 封顶大奖。<b class='k'>满勤</b>第30天发放（非立即）。",
+    "Text key：<code>TXT_ActvLogin_Day30_Prize</code>。美术：封顶位高亮框/光效（强调态，非新道具图）。",
+    "奖励用现有 X3 数值（传奇信物 + 高阶技能书等）。"]},
+  buy:{t:"购买按钮 (元素②)", rows:[
+    "显示当前页签 Pack 的价格/折扣 Tag。<b class='k'>改 ShowBtnPurchase</b>：各页签独立。",
+    "读：<code>CActvLoginPurchase.Pack(N)</code>；状态：<code>GetGiftPurchaseNum</code>。",
+    "已购本版→「已拥有」隐藏购买；已购另版→<b class='k'>置灰锁定</b>。"]},
+  lock:{t:"二选一互斥锁定 (核心 · 元素⑤)", rows:[
+    "<b class='k'>核心机制</b>：买任一版后，另一版购买按钮置灰 + 红字提示。",
+    "Text key：<code>TXT_ActvLogin_Lock_Tip</code> = 「已购买另一版本，无法购买本版本」。",
+    "服务端 P2：买任一 Pack 后拦截另一 Pack 购买（防并发同时买）。客户端：置灰+锁遮罩+提示。"]},
+};
+
+let cur = 'basic';      // 当前页签
+let owned = null;       // null / 'basic' / 'deluxe'
+
+function explain(key,ev){ if(ev)ev.stopPropagation();
+  const e = EXP[key]; if(!e) return;
+  document.getElementById('explain').innerHTML =
+    "<div class='etitle'>"+e.t+"</div>" + e.rows.map(r=>"<div class='erow'>"+r+"</div>").join("");
+}
+
+function renderTrack(){
+  const t = document.getElementById('track'); t.innerHTML='';
+  for(let d=1; d<=DAYS; d++){
+    const r = (cur==='basic') ? basicReward(d) : deluxeReward(d);
+    const isCap = (cur==='deluxe' && d===30);
+    const div = document.createElement('div');
+    div.className = 'day' + (isCap?' cap':'');
+    let statTxt = owned===cur ? '可领取' : '未购买';
+    div.innerHTML =
+      "<div class='dnum'>第"+d+"天</div>"+
+      "<div class='icon'>"+r.icon+"</div>"+
+      "<div class='rwd'>"+r.name+" <small>"+r.sub+"</small>"+
+        (isCap?"<span class='capbadge'>封顶</span><br><small style='color:#ffd98a'>"+r.cap+"</small>":"")+"</div>"+
+      "<div class='stat'>"+statTxt+"</div>";
+    div.onclick = (ev)=> explain(isCap?'cap':'day', ev);
+    t.appendChild(div);
+  }
+}
+
+function refreshBuyBar(){
+  const btn = document.getElementById('buybtn');
+  const tip = document.getElementById('locktip');
+  const price = cur==='basic' ? '$29.99' : '$49.99';
+  btn.className='buybtn'; tip.textContent='';
+  if(owned===cur){
+    btn.textContent='✓ 已拥有'; btn.classList.add('owned');
+  } else if(owned && owned!==cur){
+    btn.textContent='🔒 '+price+' 购买'; btn.classList.add('locked');
+    tip.textContent='已购买'+(owned==='basic'?'基础版':'豪华版')+'，无法购买本版本';
+  } else {
+    btn.textContent=price+' 购买';
+  }
+}
+
+function refreshTabs(){
+  ['basic','deluxe'].forEach(k=>{
+    const el = document.getElementById('tab-'+k);
+    el.classList.toggle('active', k===cur);
+    el.classList.toggle('owned', owned===k);
+    el.classList.toggle('locked', owned && owned!==k);
+  });
+}
+
+function switchTab(k,ev){ if(ev)ev.stopPropagation();
+  cur=k; refreshTabs(); renderTrack(); refreshBuyBar();
+  explain('tab-'+k, ev);
+}
+
+function buy(ev){ if(ev)ev.stopPropagation();
+  if(owned===cur){ explain('buy',ev); return; }
+  if(owned && owned!==cur){ explain('lock',ev); return; }   // 互斥：点锁定按钮 → 讲互斥
+  owned=cur;                                                // 购买成功
+  refreshTabs(); renderTrack(); refreshBuyBar();
+  explain('lock',ev);
+}
+
+function reset(){ owned=null; cur='basic'; refreshTabs(); renderTrack(); refreshBuyBar();
+  document.getElementById('explain').innerHTML="<div class='etitle'>↺ 已重置为未购买态</div><div class='erow'>买任一版后再点另一版页签/购买，看二选一互斥锁定。</div>";
+}
+
+// init
+refreshTabs(); renderTrack(); refreshBuyBar();
+</script>
+</body>
+</html>
