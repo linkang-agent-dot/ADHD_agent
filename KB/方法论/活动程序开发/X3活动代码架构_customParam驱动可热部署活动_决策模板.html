@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X3 customParam 驱动可热部署活动 · 代码决策模板</title>
+<style>
+  :root{
+    --bg:#0b1020; --bg2:#11182e; --card:#161f3a; --card2:#1b274a;
+    --line:#2a375f; --ink:#e8ecf7; --mute:#9aa6c7; --dim:#6b779b;
+    --grn:#34d399; --grn-bg:#0e3527; --red:#f87171; --red-bg:#3a1620;
+    --gold:#ffd24a; --blue:#5b8cff; --pur:#a78bfa; --cyan:#3ad0e0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:radial-gradient(1200px 600px at 50% -10%,#1a2547 0%,var(--bg) 55%);
+    color:var(--ink);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.65;padding:0 0 80px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  code{font-family:"SF Mono","Cascadia Code",Consolas,monospace;font-size:.86em;
+    background:#0a0f1f;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--cyan)}
+
+  /* hero */
+  header{text-align:center;padding:64px 24px 40px;position:relative;overflow:hidden}
+  header::before{content:"⚽";position:absolute;font-size:340px;opacity:.04;top:-40px;left:50%;transform:translateX(-50%)}
+  .kicker{letter-spacing:3px;color:var(--gold);font-size:13px;font-weight:600;text-transform:uppercase}
+  h1{font-size:38px;font-weight:800;margin:14px 0 8px;line-height:1.25;
+    background:linear-gradient(90deg,#fff,#bcd0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--mute);font-size:17px;max-width:720px;margin:0 auto}
+  .tags{margin-top:22px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .tag{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:13px;color:var(--mute)}
+  .tag b{color:var(--gold)}
+
+  /* one-liner */
+  .punch{background:linear-gradient(135deg,#16224a,#101935);border:1px solid var(--line);
+    border-left:4px solid var(--gold);border-radius:14px;padding:26px 30px;margin:8px 0 44px}
+  .punch .big{font-size:22px;font-weight:700;line-height:1.5}
+  .punch .big em{color:var(--gold);font-style:normal}
+  .punch .zero{display:inline-flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .punch .zero span{background:var(--grn-bg);color:var(--grn);border:1px solid #1c5440;
+    border-radius:8px;padding:4px 12px;font-size:14px;font-weight:600}
+
+  h2{font-size:25px;font-weight:800;margin:54px 0 6px;display:flex;align-items:center;gap:12px}
+  h2 .n{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:9px;
+    background:var(--card2);border:1px solid var(--line);font-size:16px;color:var(--blue)}
+  .lead{color:var(--mute);margin-bottom:24px;font-size:15px}
+
+  /* before/after */
+  .ba{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .ba .col{border-radius:14px;padding:22px;border:1px solid var(--line)}
+  .ba .before{background:var(--red-bg);border-color:#522430}
+  .ba .after{background:var(--grn-bg);border-color:#1c5440}
+  .ba h3{font-size:15px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;display:flex;gap:8px;align-items:center}
+  .ba .before h3{color:var(--red)} .ba .after h3{color:var(--grn)}
+  .ba ul{list-style:none} .ba li{padding:9px 0;border-top:1px dashed rgba(255,255,255,.08);font-size:14.5px;color:#d7def2}
+  .ba li:first-child{border-top:none}
+  .ba li b{color:#fff}
+
+  /* optimization rows */
+  .opt{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .opt .row{display:grid;grid-template-columns:150px 1fr 1fr 1.1fr;gap:0;border-top:1px solid var(--line)}
+  .opt .row:first-child{border-top:none}
+  .opt .row.head{background:var(--card2);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--dim)}
+  .opt .cell{padding:15px 16px;font-size:14px;border-left:1px solid var(--line)}
+  .opt .cell:first-child{border-left:none}
+  .opt .what{font-weight:700;color:var(--gold)}
+  .opt .b{color:var(--red)} .opt .a{color:var(--grn)} .opt .why{color:var(--mute);font-size:13.5px}
+
+  /* flow */
+  .flow{display:flex;flex-direction:column;gap:0}
+  .step{display:flex;gap:18px;align-items:stretch}
+  .step .gut{display:flex;flex-direction:column;align-items:center;width:40px}
+  .dot{width:18px;height:18px;border-radius:50%;flex:none;margin-top:20px;
+    background:var(--blue);box-shadow:0 0 0 5px rgba(91,140,255,.15)}
+  .step.srv .dot{background:var(--pur);box-shadow:0 0 0 5px rgba(167,139,250,.15)}
+  .step.cli .dot{background:var(--cyan);box-shadow:0 0 0 5px rgba(58,208,224,.15)}
+  .bar{flex:1;width:2px;background:var(--line)}
+  .step .body{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:10px 0}
+  .step .body .t{font-weight:700;font-size:15px}
+  .step .body .t .pill{font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;margin-left:8px;vertical-align:middle}
+  .pill.s{background:rgba(167,139,250,.16);color:var(--pur)}
+  .pill.c{background:rgba(58,208,224,.16);color:var(--cyan)}
+  .pill.x{background:rgba(255,210,74,.16);color:var(--gold)}
+  .step .body .d{color:var(--mute);font-size:13.5px;margin-top:4px}
+
+  /* decision cards */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .dc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;position:relative;transition:.18s}
+  .dc:hover{border-color:var(--blue);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.35)}
+  .dc .id{position:absolute;top:-11px;left:18px;background:var(--blue);color:#06122e;font-weight:800;
+    font-size:13px;padding:2px 10px;border-radius:7px}
+  .dc h4{font-size:16px;margin:8px 0 8px}
+  .dc .why{font-size:13.5px;color:var(--mute)}
+  .dc .why b{color:#dde6ff}
+  .dc .no{display:inline-block;margin-top:9px;font-size:12.5px;color:var(--red);
+    background:var(--red-bg);border:1px solid #522430;border-radius:7px;padding:3px 9px}
+
+  /* checklist */
+  .chk{counter-reset:c;display:flex;flex-direction:column;gap:8px}
+  .chk .it{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);
+    border-radius:11px;padding:13px 16px}
+  .chk .it::before{counter-increment:c;content:counter(c);flex:none;width:26px;height:26px;border-radius:7px;
+    background:var(--card2);border:1px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--gold)}
+  .chk .f{font-family:"SF Mono",Consolas,monospace;font-size:12.5px;color:var(--cyan);display:block}
+  .chk .x{font-size:13.5px;color:var(--mute);margin-top:2px}
+
+  /* traps */
+  .traps{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .trap{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--red);border-radius:11px;padding:15px 18px}
+  .trap .h{font-weight:700;color:var(--red);font-size:14.5px;margin-bottom:5px}
+  .trap .d{font-size:13.5px;color:var(--mute)}
+  .roll{margin-top:16px;background:var(--grn-bg);border:1px solid #1c5440;border-radius:11px;padding:15px 18px}
+  .roll .h{color:var(--grn);font-weight:700;margin-bottom:4px}.roll .d{font-size:14px;color:#cdeede}
+
+  /* retrospective */
+  .retro{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+  .rcol{border-radius:14px;padding:22px;border:1px solid var(--line)}
+  .rcol.wall{background:var(--red-bg);border-color:#522430}
+  .rcol.door{background:var(--grn-bg);border-color:#1c5440}
+  .rcol .rh{font-size:16px;font-weight:700;margin-bottom:12px}
+  .rcol.wall .rh{color:var(--red)} .rcol.door .rh{color:var(--grn)}
+  .rcol p{font-size:14.5px;color:#dde6ff;margin-bottom:8px}
+  .rcol .small{font-size:13px;color:var(--mute)}
+  .lessons{display:flex;flex-direction:column;gap:10px}
+  .lz{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);
+    border-left:3px solid var(--gold);border-radius:11px;padding:14px 18px}
+  .lz .ln{flex:none;width:28px;height:28px;border-radius:50%;background:var(--gold);color:#2a2000;
+    font-weight:800;display:grid;place-items:center;font-size:14px}
+  .lz b{font-size:15px} .lz .ld{font-size:13.5px;color:var(--mute);margin-top:3px}
+  footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);color:var(--dim);font-size:13px;text-align:center}
+  footer code{color:var(--mute)}
+  @media(max-width:820px){.ba,.grid,.traps{grid-template-columns:1fr}.opt .row{grid-template-columns:1fr 1fr}
+    .opt .cell:nth-child(1){grid-column:1/-1}h1{font-size:30px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="kicker">X3 · 活动代码架构 · 决策模板</div>
+    <h1>customParam 驱动「可热部署活动」</h1>
+    <p class="sub">把活动的可变运营参数从「配表 + 热更」搬到「iGame 后台部署参数」——逆向自大哥的世界杯竞猜重构（X3NEW-1432）</p>
+    <div class="tags">
+      <span class="tag">范例：<b>世界杯竞猜 ActvType=64</b></span>
+      <span class="tag">commit <b>f6e2d08</b></span>
+      <span class="tag">作者 <b>zhangli</b></span>
+      <span class="tag">76 个活动 · 一次切</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="punch">
+    <div class="big">活动的可变参数（哪两队对阵）通过 iGame 后台 <em>customParam(JSON)</em> 部署时传入，服务端读它建<em>专属数据结构</em> —— 换对阵 = 改后台重部署。</div>
+    <div class="zero">
+      <span>✓ 零代码改动</span><span>✓ 零服务端热更</span><span>✓ 零客户端打包</span><span>✓ 运营自助换</span>
+    </div>
+  </div>
+
+  <!-- 动机 -->
+  <h2><span class="n">1</span>为什么要重构</h2>
+  <p class="lead">老套路：换对阵要「改 ActvPack 配表 + 服务端热更」。客户端早已零打包，但运营换对阵还卡在改表+热更，不对称。</p>
+  <div class="ba">
+    <div class="col before">
+      <h3>🔴 重构前 · 痛点</h3>
+      <ul>
+        <li>换对阵要 <b>改配表 + 服务端热更</b>，和客户端零打包不对称</li>
+        <li>竞猜两队<b>硬塞进"进度礼包"</b>的 <code>day=0 / day=1</code> hack，语义模糊</li>
+        <li>76 场比赛 = <b>76 行 ActvPack</b> 各维护一行，配置冗余</li>
+        <li>带着<b>"最终奖判定"死代码</b>（本玩法根本不会触发）</li>
+      </ul>
+    </div>
+    <div class="col after">
+      <h3>🟢 重构后 · 结果</h3>
+      <ul>
+        <li>换对阵 = iGame 后台填两个数字<b>重新部署</b>，运营自助</li>
+        <li>专属 proto <code>WorldCupGuessData{packA,packB}</code>，<b>语义清晰</b></li>
+        <li>旧 76 行配表<b>绕开不读</b>，参数挪到部署参数</li>
+        <li>新结构<b>不含最终奖</b>，运营用 BI 筛名单统一邮件发奖</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4处优化 -->
+  <h2><span class="n">2</span>具体优化了 4 处</h2>
+  <div class="opt">
+    <div class="row head">
+      <div class="cell">优化点</div><div class="cell">改之前</div><div class="cell">改之后</div><div class="cell">为什么</div>
+    </div>
+    <div class="row">
+      <div class="cell what">① 换对阵方式</div>
+      <div class="cell b">改 ActvPack.PackList 配表 + 服务端热更</div>
+      <div class="cell a">iGame 填 {"packIdA":894071,"packIdB":894211}，服务端读 customParam 建数据</div>
+      <div class="cell why">客户端早已零打包，换对阵不该还卡在改表+热更</div>
+    </div>
+    <div class="row">
+      <div class="cell what">② 数据结构</div>
+      <div class="cell b">硬塞进度礼包 day=0/day=1 hack</div>
+      <div class="cell a">专属 proto WorldCupGuessData（tag 62）</div>
+      <div class="cell why">借用结构语义模糊，还被无关逻辑拖累</div>
+    </div>
+    <div class="row">
+      <div class="cell what">③ 配表冗余</div>
+      <div class="cell b">76 场 = 76 行 ActvPack 各维护</div>
+      <div class="cell a">旧 76 行绕开不读，参数挪到部署参数</div>
+      <div class="cell why">一行配表都不用为换场次维护</div>
+    </div>
+    <div class="row">
+      <div class="cell what">④ 死代码</div>
+      <div class="cell b">带"最终奖判定"(finalReward)</div>
+      <div class="cell a">新结构不含最终奖字段</div>
+      <div class="cell why">运营改 BI 筛名单邮件发奖，逻辑永不触发</div>
+    </div>
+  </div>
+
+  <!-- 数据流 -->
+  <h2><span class="n">3</span>端到端数据流</h2>
+  <p class="lead">一条参数从 iGame 后台一路流到客户端 UI。<span style="color:var(--pur)">●服务端</span> <span style="color:var(--cyan)">●客户端</span> <span style="color:var(--gold)">●部署</span></p>
+  <div class="flow">
+    <div class="step"><div class="gut"><div class="dot"></div><div class="bar"></div></div>
+      <div class="body"><div class="t">iGame 后台 deploy<span class="pill x">部署</span></div>
+        <div class="d"><code>customParam = {"packIdA":894071,"packIdB":894211}</code>（BRA vs GER）</div></div></div>
+    <div class="step srv"><div class="gut"><div class="dot"></div><div class="bar"></div></div>
+      <div class="body"><div class="t">ActivityMgr.Ark.cs<span class="pill s">服务端</span></div>
+        <div class="d">deploy handler 通用、<b>不解析</b>，只透传 <code>arkCustomParam</code> 给 CreateNewServerActivity</div></div></div>
+    <div class="step srv"><div class="gut"><div class="dot"></div><div class="bar"></div></div>
+      <div class="body"><div class="t">持久化到 entity Data<span class="pill s">服务端</span></div>
+        <div class="d">原始 JSON 写进 <code>ServerActivityBasicData.arkCustomParam</code> —— 跨重启可复读</div></div></div>
+    <div class="step srv"><div class="gut"><div class="dot"></div><div class="bar"></div></div>
+      <div class="body"><div class="t">ActivityWorldCupGuessCondition.OnAddActivity<span class="pill s">服务端 · 专属入口</span></div>
+        <div class="d">读 arkCustomParam → <b>反序列化 + 校验</b>(packId&gt;0) → 调 GiftMeta</div></div></div>
+    <div class="step srv"><div class="gut"><div class="dot"></div><div class="bar"></div></div>
+      <div class="body"><div class="t">GiftMeta.CreateActivityWorldCupGuess<span class="pill s">服务端</span></div>
+        <div class="d">CPack 校验 → IdGenerater 生成 giftId → 填 packA/packB → <b>复用 CreateActivityPack 底层原语</b></div></div></div>
+    <div class="step cli"><div class="gut"><div class="dot"></div><div class="bar"></div></div>
+      <div class="body"><div class="t">下发 worldCupGuessData<span class="pill c">proto tag 62</span></div>
+        <div class="d">progressPackData(tag 35) 完全不动，新字段顺序追加</div></div></div>
+    <div class="step cli"><div class="gut"><div class="dot"></div></div>
+      <div class="body"><div class="t">UIActvWorldCupGuess.RefreshView<span class="pill c">客户端</span></div>
+        <div class="d">GetWorldCupGuessData → mPackList[0]=packA / [1]=packB → 队徽/队名/横幅/奖励全从 Pack 配置渲染</div></div></div>
+  </div>
+
+  <!-- 9决策 -->
+  <h2><span class="n">4</span>九条代码决策</h2>
+  <p class="lead">这才是模板的精华 —— 每条都带「为什么」和「被否决方案」，加同类活动时逐条照判。</p>
+  <div class="grid">
+    <div class="dc"><span class="id">D1</span><h4>专属 Condition 入口，不动通用流程</h4>
+      <p class="why">新玩法走自己的 Condition，通用进度礼包链路<b>物理保留</b>。</p><span class="no">收益：回滚 = rollback MR，旧链路立即可用</span></div>
+    <div class="dc"><span class="id">D2</span><h4>customParam payload 取最薄</h4>
+      <p class="why">只传<b>数据本质</b>（两个 packId）。</p><span class="no">❌ 传国家 code / matchupId（刻死命名 / 回到改配表）</span></div>
+    <div class="dc"><span class="id">D3</span><h4>新建独立 DTO，不复用现成的</h4>
+      <p class="why">建 <code>WorldCupGuessCustomParam</code>，字段干净。</p><span class="no">❌ 塞进 KvK 的 DTO（带无关 mapServerID）</span></div>
+    <div class="dc"><span class="id">D4</span><h4>proto 新 tag 顺序追加</h4>
+      <p class="why">先查<b>当前最大 tag</b> 再追加（竞猜误判 36 空闲，实占 → 改 62）。</p><span class="no">❌ 复用 / 改旧 tag = 全链路兼容灾难</span></div>
+    <div class="dc"><span class="id">D5</span><h4>字段名贴数据本质</h4>
+      <p class="why">叫 <code>packA/packB</code> 不叫 teamA/teamB。服务端只认 packId，业务语义留 UI。</p></div>
+    <div class="dc"><span class="id">D6</span><h4>反序列化 + 校验放 Condition 层</h4>
+      <p class="why">Condition 自己 Deserialize + CPack 校验。</p><span class="no">❌ 放共享 deploy handler（它不该懂每种格式）</span></div>
+    <div class="dc"><span class="id">D7</span><h4>原始 JSON 持久化到 entity Data</h4>
+      <p class="why">写 server entity，<b>不放 proto</b>（客户端不需看原始 JSON）→ OnLogin/OnReload 可复读。</p></div>
+    <div class="dc"><span class="id">D8</span><h4>复用底层原语，挂专属结构</h4>
+      <p class="why">gift 创建复用 <code>CreateActivityPack</code>，数据挂专属 WorldCupGuessData。</p><span class="no">复用机制 + 专属语义</span></div>
+    <div class="dc"><span class="id">D9</span><h4>配套 GM 命令本地复现</h4>
+      <p class="why"><code>GMDeployWorldCupGuess</code> 走同一条 CreateNewServerActivity，无需 iGame 即可端到端验收。</p></div>
+  </div>
+
+  <!-- checklist -->
+  <h2><span class="n">5</span>加同类活动 · 文件 checklist</h2>
+  <p class="lead">把「竞猜/Xxx」换成你的新玩法，逐文件 copy-and-swap。</p>
+  <div class="chk">
+    <div class="it"><div><span class="f">docs/plans/{日期}-xxx-design.md</span><span class="x">先写设计文档（套九决策）</span></div></div>
+    <div class="it"><div><span class="f">activity.proto + Protos/activity.cs + msgid.def</span><span class="x">加 message XxxData + ActivityData 追加新 tag（先查最大 tag！）→ 跑 proto 生成</span></div></div>
+    <div class="it"><div><span class="f">ArkModel.Activity.cs</span><span class="x">加 XxxCustomParam DTO</span></div></div>
+    <div class="it"><div><span class="f">ActivityMgr.Ark.cs</span><span class="x">deploy handler 透传 arkCustomParam（已有通用透传则免改）</span></div></div>
+    <div class="it"><div><span class="f">GiftMeta.Activity.cs</span><span class="x">加 CreateActivityXxx：校验 CPack → IdGenerater → 填 data → 复用底层原语</span></div></div>
+    <div class="it"><div><span class="f">ActivityMeta.Xxx.cs ×2（服务端 + 客户端 · 新文件）</span><span class="x">partial class + GetXxxData(activityId)</span></div></div>
+    <div class="it"><div><span class="f">ActivityXxxCondition.cs（新文件）</span><span class="x">_SERVERLOGIC_ 段 OnAddActivity/OnRemoveActivity；_CLIENTLOGIC_ 段 GetActivityUIType</span></div></div>
+    <div class="it"><div><span class="f">UIActvXxx.cs</span><span class="x">RefreshView 读 GetXxxData 而非配表</span></div></div>
+    <div class="it"><div><span class="f">ActivityMgr.Ark.cs · GMDeployXxx</span><span class="x">GM 命令本地复现</span></div></div>
+    <div class="it"><div><span class="f">验收</span><span class="x">server build 全绿 + Unity 编译过 + GM 端到端 + 静态扫描旧共享链路没被误删</span></div></div>
+  </div>
+
+  <!-- traps -->
+  <h2><span class="n">6</span>陷阱 &amp; 回滚</h2>
+  <div class="traps">
+    <div class="trap"><div class="h">proto tag 别信"空闲"假设</div><div class="d">必须先查最大 tag 再追加。竞猜踩过 36→实占→改 62。</div></div>
+    <div class="trap"><div class="h">客户端版本必须同步上线</div><div class="d">新 tag 旧客户端忽略 → UI 拿不到数据显示空。VersionControl 版本号联动。</div></div>
+    <div class="trap"><div class="h">iGame customParam 错填</div><div class="d">填错 packId 靠 CPack 校验在 deploy 时回滚，运营收失败回执。保留校验。</div></div>
+    <div class="trap"><div class="h">旧配表保留不读有误用风险</div><div class="d">76 行 ActvPack 还在但已绕开，建议加备注"已被 customParam 替代，勿改"。</div></div>
+  </div>
+  <div class="roll"><div class="h">🔄 回滚成本极低</div><div class="d">rollback MR → 旧 progressPackData 链路（tag 35）完整保留立即可用；已部署活动需 iGame 重新 deploy 一次重建数据。</div></div>
+
+  <!-- 复盘 -->
+  <h2><span class="n">7</span>复盘：我们当时为什么没做到</h2>
+  <p class="lead">这套设计不是大哥才想得到——第一版（含本 AI）把一条约束抬成了死墙，于是绕过去而不是穿过去。</p>
+
+  <div class="retro">
+    <div class="rcol wall">
+      <div class="rh">🧱 当时自设的硬墙</div>
+      <p>"新增 proto 字段 = 走客户端打包（proto 是客户端 bundle、热更只服务端）= <b>不可接受</b>"</p>
+      <p class="small">→ 在"绝不能动客户端"前提下，复用 progressPackData 的 <code>day=0/day=1</code> hack 是局部最优。<b>不是 proto 技术卡住</b>——proto 改动是机械活，生成工具自动出 250 行。</p>
+    </div>
+    <div class="rcol door">
+      <div class="rh">🚪 大哥怎么穿过去的</div>
+      <p>没把"新增 proto"当死墙，识别出它只是<b>一次性成本</b>。</p>
+      <p class="small">→ 付一次客户端打包上线专属 proto，换来<b>永久干净架构 + 未来对阵切换照样零打包</b>。一次成本买永久收益。</p>
+    </div>
+  </div>
+
+  <div class="lessons">
+    <div class="lz"><span class="ln">1</span><div><b>分清"永久红线"还是"一次性成本"</b><div class="ld">遇到"绝不能动 X"，先问：动 X 是每次都要付，还是付一次就翻篇？一次成本常比永久 hack 债划算。</div></div></div>
+    <div class="lz"><span class="ln">2</span><div><b>警惕红线范围蔓延</b><div class="ld">合理目标"换对阵时零打包"被无意识扩成绝对禁令"任何时候不准动客户端"，然后为守自抬的禁令接受 hack。定期回看红线有没有被悄悄放大。</div></div></div>
+    <div class="lz"><span class="ln">3</span><div><b>hack ≠ 错，长期当正解才错</b><div class="ld">没发版窗口时复用 progressPackData 是合理的"先上线"动作（第一版客户端改动还是大哥重构的前置台阶）。但要留 TODO：有窗口了做对。</div></div></div>
+  </div>
+
+  <footer>
+    KB 全文 <code>KB\方法论\活动开发\X3活动代码架构_customParam驱动可热部署活动_决策模板.md</code> ·
+    memory <code>reference_x3_customparam_activity_pattern</code> ·
+    大哥原设计文档 <code>x3-project\docs\plans\2026-06-18-worldcup-guess-customparam-refactor-design.md</code>
+  </footer>
+
+</div>
+</body>
+</html>
