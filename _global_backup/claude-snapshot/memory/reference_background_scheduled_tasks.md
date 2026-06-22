@@ -16,11 +16,12 @@ metadata:
 | **ClaudeMorningPriority** | ~~每天 09:00~~ **已停用** | 跨项目今日优先 top-3（长期产出失败，已并入 DailyPlan） | `.claude\scripts\morning_priority_scan.ps1` + `_prompt.txt`（保留未删，回退用） |
 | **ClaudeDailyPlan** | 每天 10:00 | **今日工作简报**（跨项目 top-3 + X2 节点 timeline+Jira+BUG）→ HTML 弹浏览器 | `.claude\scripts\daily_plan_scan.ps1`（2026-06-15 改：显式 `--model sonnet` + 预算 5→8）+ `daily_plan_prompt.txt` |
 | **ClaudeBugScan** | 工作日(周一-五)每小时 09:23 起 | 扫 Jira 名下未解决 BUG 写 `_my_bugs_summary.txt` | bug-scan skill |
-| **ClaudeFestivalReportOpen** | 每天 09:20 | 自动打开节日日报 HTML | — |
+| **ClaudeFestivalReportOpen** | 每天 09:20 | 自动打开节日日报 HTML（2026-06-22 起扫 `KB\产出-数据分析\节日日报_实时\`，不再扫 home） | `open_festival_report.ps1`（$scanDir） |
 | **ClaudeDailyReport** | 每天 21:00 | 生成工作日报 txt + 回写 `工作line.md` 三/五节 | `_daily_report.py`（在 C--Windows-System32 项目目录） |
-| **ClaudeX3FestivalMonitor** | 全天每小时 | X3 节日收入监控（现指夏日节第二批 1880-1900） | [[x3]] x3-festival-monitor |
+| **ClaudeX3FestivalMonitor** | 全天每小时 | X3 节日收入监控（06-19 08:30 后转夏日节第三批 1910-1930） | [[x3]] x3-festival-monitor |
+| **ClaudeX3SwitchBatch3** | 一次性 2026-06-19 08:30 | 夏日节日报 批二(1880-1900)→批三(1910-1930) 自动切换，跑完自删 | `skills\x3-festival-monitor\_switch_batch3.py`，详见 [[x3]] |
 | **ClaudeX2FestivalMonitor** | 全天每小时(:05) | X2 拓荒节日报(2026-06-12 D0 启用)，产出 `~\X2拓荒节日报_latest.html`，节日结束删任务 | [[reference_x2_festival_monitor]] |
-| **ClaudeTokenWeeklyReport** | 每周五 17:00 | Token 用量周报 | — |
+| **ClaudeTokenWeeklyReport** | 每周五 17:00 | ①Token 用量周报 ②**本周归纳清单**(2026-06-15加挂)：扫7天KB/memory改动→`claude -p`按模块列「知识\|对应模块\|来源」→`~\归纳验收周报_latest.md`+气泡。两步独立fail-open | `token_weekly_scan.ps1`(末尾归纳段) + `token_weekly_report.py`/`_html.py`(token) + `handover_review_prompt.txt`(归纳) |
 | **ClaudeWeeklyBackup** | 每周一 12:00 | 周备份 | — |
 | **ClaudeMorningPriority/X3Monitor 退出码偶发 1** | — | 退出码 1 不一定真失败（claude -p 退出码不可靠）；DailyPlan 有新鲜度闸门兜底，X3Monitor 看产出 HTML 是否当日刷新判断 | — |
 
@@ -43,6 +44,16 @@ metadata:
   2. 外部查询用**验证过的健壮写法**（Jira：`assignee=linkang`+`statusCategory!=Done`，SSL 失败走 PowerShell+Tls12，见 [[reference_jira]]）。
   3. **重负载任务预算给够**：DailyReport 已从 `--max-budget-usd 5` → `8`。
   - 排查口诀：先看 `_daily_plan_log.txt`/`_daily_report_log.txt` 区分「exit≠0(环境/PATH)」还是「exit 0 但未刷新(预算耗尽/没写盘)」；后者去对应 prompt 加写盘护栏 / 提预算。
+
+## ⚠️ DailyReport 瞬时静默失败 → 加自愈重试（2026-06-15）
+
+- **现象**：`ClaudeDailyReport`（21:00）06-12~15 连续 4 天失败 —— `claude -p` 退出码 0 但没写出今日 `_latest.txt`，新鲜度闸门判失败、`_latest.txt` 冻在 06-11。`--model opus` / `$null|` 喂 stdin / `--max-budget 8` 三道已知修复当时都在了。
+- **定位**：交互环境用**原样命令**手动复现（把 `_latest.txt` 设回过期态再跑）→ **176s 正常写出、exit 0、成功**。即命令本身没 bug，是 21:00 headless 跑的**瞬时态**失败（API 抖动/模型路由/资源争用，重跑即好）。无法在交互会话稳定复现。
+- **修法（已落地）**：`daily_report_scan.ps1` 把 `claude -p` + 新鲜度闸门包进**最多 3 次自愈重试循环**，刷新到今日即 break；每次尝试写日志。re-run 必成立 → 重试能兜住这类瞬时失败。备份 `daily_report_scan.ps1.bak.20260615b`。
+- 排查口诀：DailyReport 失败先看是否「exit 0 但 _latest.txt 没刷新」；是 → 八成瞬时态，手动 `Start-ScheduledTask ClaudeDailyReport` 或直接重跑命令多半即好；重试循环现已自动兜底。同源 DailyPlan 若复发可照搬此重试块。
+- **重试仍救不回的两种实测（06-16/06-17）**：① 06-16 三次重试全失败、第3次 exit 1 报 `API Error: The socket connection was closed unexpectedly`——21:00 那一刻 API 网络层整段抖、背靠背重试撞同一波；② 06-17 三次全 exit 0 但不写盘、**无任何报错**——claude 真返回成功却没写文件。两次都是手动重跑即成。
+- **增强（2026-06-18 落地，仍在观察）**：(a) 重试改**带间隔退避** `@(0,120,240)` 秒，跨过 21:00 短时提供商抖动（治 socket 类）；(b) **每次尝试把 claude 完整输出+真实耗时落盘** `~\_daily_report_attempts.txt`（治"exit 0 不写盘"——此前成功路径不记 $result，连日失败手里没证据；下次失败看这个文件即可判断 claude 报错/没调Write/预算耗尽/提供商degraded）。备份 `daily_report_scan.ps1.bak.20260615b`。**根因尚未坐实**，靠 attempts 文件取证后再定。
+- ⚠️ 猜测但未证实：用户频繁切 team/onehub provider，若 21:00 活跃 provider 是 onehub 且不稳，claude -p 可能拿到 degraded 响应/空结果却 exit 0。等 attempts 取证。
 
 ## ⚠️ 调度脚本 `claude -p` 不带 `--model` 会漂移到停服模型（2026-06-15 DailyPlan 中招）
 

@@ -12,6 +12,7 @@ metadata:
 **Why:** GPT/生图模型常返回"假透明"——把棋盘格直接画成灰白像素(mode=RGB 24bpp 无 alpha 通道)，肉眼看着像透明，进游戏是死白底。2026-06 拓荒节主城皮肤图标 GPT 直出就是假透明(Format24bppRgb)，靠 remove_background 抠成真 RGBA 才可用。
 
 **How to apply:**
+- ★**做透明化的标准手段 = GRFal 抠图 `remove_background`（2026-06-17 用户强调:图标做完必须过这道）**：生图模型/worker 直出的图标常带白底或假透明(RGB无alpha),**交付前必须用 GRFal `remove_background` 抠成真 RGBA**,不是"看着透明就过"。⚠️参数坑(coin/兑换商店 icon 实证):`remove_background` 要 `--file image_paths=<图>`(不是 `image=`),错 key 会**静默失败、只在 check-task 才看到报错**。抠完再走下面差分法验真。**例外**:活动**背景图(bg,如 WC_Exchange_Bg 540×500 满幅)本就不透明,不抠**;只有"图标/物件"(HUD icon/道具icon/箱子等自由形状)需透明。
 - 验证手段=**差分法**：把图分别 alpha_composite 到纯白底和纯黑底→转RGB→ImageChops.difference。
   - 有透明区域 → 两张底色不同 → diff 有非零值(bbox 非空/extrema>0)
   - 完全不透明(假透明) → 两张一样 → diff 全 0(bbox=None)

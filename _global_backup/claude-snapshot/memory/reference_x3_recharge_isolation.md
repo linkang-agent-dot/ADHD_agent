@@ -39,11 +39,12 @@ metadata:
 
 | 列 | 字段 | 取值 |
 |----|------|-----|
-| col51 | RechargePointPackWhitelist | `Pack.ID` 列表，`|` 分隔 |
+| **col50**(tsv简名`Pack`) | RechargePointPackWhitelist | `Pack.ID` 列表，`|` 分隔 |
 
+- ⚠️**列号是 col50 不是 col51**（旧版本文档写错）；tsv row3 简名=`Pack`，但 xlsx 表头(row6)的真字段名=`RechargePointPackWhitelist`。用 `apply_xlsx_patch.py` 时 `--col` 要填 **RechargePointPackWhitelist**（不是 Pack），否则报"找不到 col_name"（该工具表头读 xlsx row6=XLSX_ROW_HEADER5+1，数据从 row7；tsv 只4行表头但 xlsx 有6行）。
 - **非空** → 启用白名单，只有名单内 Pack 推进本活动累充
 - **为空** → 沿用旧逻辑（走 900 全局累充），不启用隔离
-- 范例：100594（尼罗累充）填 13 包；100595（夏日累充）填 16 包
+- 范例：100594（尼罗）col50=210601~210617+130020/021+210630~632+1002001；100595（夏日/情人节）特惠+券+装饰+BP+1002001；**100597（世界杯，2026-06-18配）= 核心12(特惠5档211002/004/006/008/010 + 抽奖券4档211012~015 + BP130020/021 + 通用1002001) + 竞猜全部付费包144(894XX1/2/3×48国,免费档894XX0不计) = 156个**。竞猜计入=决策"竞猜真金购买算世界杯充值"。
 
 ### 3. ActvTask.xlsx — 任务行 TaskType 改 902
 

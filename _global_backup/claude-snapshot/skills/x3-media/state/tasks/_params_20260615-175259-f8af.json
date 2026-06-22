@@ -1,0 +1,6 @@
+{
+  "model": "gpt-image-1",
+  "prompt": "X3 game UI circular avatar frame, World Cup / soccer theme, France national identity. EXACT RESKIN of reference image: keep identical skeleton, layout, proportions, and all ornaments (top gold crest with gem, side gold diamond clips, bottom gold wings). The ring band is colored in blue-white-red (French tricolor vertical stripes) with slim gold trim on both edges. The bottom-center soccer ball is painted/textured with the French flag — vertical blue-white-red panels wrapped onto the ball surface like a real flag-textured ball, clearly recognizable as France colors. Clean cel-shaded X3 game-UI art style matching the reference. Square 1:1 aspect ratio, circular hollow center FULLY TRANSPARENT for avatar placement, fully transparent background outside the frame, NO text, NO national emblem, NO coat of arms, NO scene background. Must be readable and recognizable at 256x256. ONE SINGLE avatar frame, not multiple frames, not a grid.",
+  "aspect_ratio": "1:1",
+  "output_format": "png"
+}

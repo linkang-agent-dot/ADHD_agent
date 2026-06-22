@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "task_id": "20260616-113537-7dd6",
+  "status": "success",
+  "type": "dynamic_march_emoji",
+  "user_prompt": "世界杯【决赛助威动态表情·模板】4×4逐帧sprite sheet循环动画。角色=参考图里的Q版啦啦队爱莉希雅(白金长发/大眼/Q版头身,保持完全同款脸型画风)。**决赛助威动作循环**:双拳紧握高举过头顶振臂、仰头张大嘴热情大喊呐喊(口型GO/加油)、身体随振臂上下用力、马尾/裙摆跟着甩动,充满决赛冲刺的燃与激情(助威打气,不是庆祝夺冠、无奖杯)。**服装中性**:白色为主+金边啦啦队短上衣+短裙(纯白便于后续套决赛队色),无队徽无脸彩无国旗(模板版留白)。严格4×4=16格,每格256×256,半身close-up,同角色同裁切同机位,粗描边赛璐璐贴纸画风,透明底,**首尾帧可无缝循环**(振臂上→下→回起始)。最终1024×1024透明PNG。",
+  "params": {
+    "model": "gpt",
+    "reference_images": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\应援表情48_FINAL\\WC_FaceEmote_BRA.png"
+    ],
+    "output_dir": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\决赛助威表情",
+    "output_filename": "WC_Final_Cheer_template_4x4.png",
+    "grid": "4x4",
+    "cell": 256,
+    "final": "1024x1024",
+    "loop": true,
+    "transparent": true,
+    "timeout": 1200,
+    "note": "决赛助威模板:双拳振臂大喊;中性白底留白套队色;4x4循环;透明"
+  },
+  "started_at": "2026-06-16T11:35:37+08:00",
+  "finished_at": "2026-06-16T12:25:00+08:00",
+  "result": {
+    "saved_to": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\决赛助威表情\\WC_Final_Cheer_template_4x4_v1.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\决赛助威表情\\WC_Final_Cheer_template_4x4_v2.png"
+    ],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

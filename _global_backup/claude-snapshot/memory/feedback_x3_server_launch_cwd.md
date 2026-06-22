@@ -28,3 +28,26 @@ metadata:
 - CenterServer: `23000 + centerid`
 
 热重载用 telnet 发 `!gm ReloadGameServer` 就够（3.8s 不掉玩家），只有 core/proto 改动才需要进程重启。判断标准在 [[reference_x3_project_repo]] 提到的 server_reload.py classify。
+
+## ⚠️ Claude Code headless 后台「重新Build接入最新配置」别用 start_local_server.bat
+
+`start_local_server.bat` 用 `start "title" dotnet run`（行53/56）开**新控制台窗口**跑服，外加结尾 `pause`。在 Claude Code 的无窗口站后台环境里：① Bash 工具里 `echo. | cmd /c "...bat skip-link"` 的 `echo.` 不是 bash 命令（`command not found`），pause 喂不进去；② 即便喂进去，`start` 开的新窗口在 headless 下存活不了。实测后果：bat 秒退（根本没跑 ~40s 的 dotnet build）、两个服直接挂掉、端口不监听。
+
+**✅ 一键脚本（2026-06-17 沉淀，下次"重新部署/接入最新配置"直接用，别再手敲）**：`pwsh C:\Users\linkang\x3_redeploy.ps1 [-Sid 3080] [-CenterId 61] [-ForceBuild]` —— 自动跑完下面整条链路：查 gdconfig 新旧 → mtime 预检(config .bytes vs dll, 新就重编) → `stop_gs` → 按需重编双 Hotfix → `Start-Process` 起 Game+Map → 轮询端口 + 验日志 `PlayService started` 无 protobuf 异常。不清库、GM 活动(MongoDB)重启保留。**用 `run_in_background` 跑**(含 dotnet build ~2-3min + 轮询)，完成看输出尾部 `[OK]`/`[FAIL]`。
+
+**headless 可靠链路（脚本背后的手动步骤，排障时参考）**：
+1. 先把两个 Hotfix build 出来（`dotnet build` 在 server 目录，~40s+35s）：
+   ```
+   cd C:\x3-project\server
+   dotnet build GameServer.Hotfix\GameServer.Hotfix.csproj   # 确认 0 错误
+   dotnet build MapServer.Hotfix\MapServer.Hotfix.csproj      # 确认 0 错误
+   ```
+2. 停旧进程：`Stop-Process -Id <GameServer pid>,<MapServer pid> -Force`
+3. 用 `Start-Process` detached 拉起（`--no-build` 复用步骤1产物，**必带 `-RedirectStandardError`** 否则启动崩了看不到异常，`-WorkingDirectory` 用 `server`，dotnet run 会按 csproj RunWorkingDirectory 自动切到 Resource）：
+   ```powershell
+   Start-Process dotnet -ArgumentList 'run','--project','GameServer','--no-build','--','-sid','3080','-nid','3080','-csid','61','-e','local','-ll','debug','-lf','logs/game-3080.log' -WorkingDirectory 'C:\x3-project\server' -RedirectStandardError '...\game-err.log' -WindowStyle Hidden
+   # 等 ~5s 再起 MapServer：nid=3081（=sid+1），其余同
+   ```
+4. 轮询 `Test-NetConnection 127.0.0.1 -Port 26080/26081` 至 True；不 up 就 tail err.log。干净启动 err.log = 0 字节。
+
+`-csid`=local_conf.ini 的 centerid（3080 服=61），`-nid` GameServer=sid、MapServer=sid+1。配置真源：服务端读**内嵌** `C:\x3-project\gdconfig\`，重启前确认它已 ff 到最新（`cd gdconfig; git rev-list --left-right --count @{u}...HEAD` = `0 0`）。

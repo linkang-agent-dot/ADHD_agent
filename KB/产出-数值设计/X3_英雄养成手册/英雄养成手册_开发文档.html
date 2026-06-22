@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>英雄养成手册（双版本）· 开发文档</title>
+<style>
+  :root{--blue:#2f6fb0;--line:#d8c39a;--bg:#fbf7ee;--ok:#1f9c4a;--warn:#c0392b;--purple:#7a4fd0;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:"Microsoft YaHei","Segoe UI",sans-serif;background:var(--bg);color:#33312c;line-height:1.62;padding:0 0 60px;}
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px;}
+  header{background:linear-gradient(135deg,#1e2a3a,#0e1620);color:#bfe0ff;padding:26px 0 22px;border-bottom:3px solid var(--blue);}
+  h1{font-size:24px;font-weight:900;}
+  .sub{color:#9fc0d8;font-size:13px;margin-top:5px;}
+  .basis{margin-top:9px;font-size:12.5px;background:rgba(47,111,176,.2);border:1px solid #4f86b8;border-radius:8px;padding:8px 12px;color:#cfe6ff;}
+  h2{font-size:19px;color:#1e3a5a;margin:28px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--blue);display:flex;align-items:center;gap:9px;}
+  h2 .n{background:var(--blue);color:#fff;width:25px;height:25px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex:0 0 25px;}
+  h3{font-size:15px;color:#1e5a8a;margin:15px 0 6px;}
+  p{margin-bottom:9px;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 17px;margin:10px 0;box-shadow:0 2px 8px rgba(80,90,120,.06);}
+  .hero{background:linear-gradient(180deg,#fffdf7,#eef4fb);border:1px solid var(--blue);}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:12.5px;}
+  th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top;}
+  th{background:#e6eef6;color:#1e3a5a;font-weight:700;}
+  tr:nth-child(even) td{background:#fafcfe;}
+  code{background:#1e2a3a;color:#bfe0ff;padding:1px 6px;border-radius:4px;font-size:11.5px;font-family:Consolas,monospace;word-break:break-all;}
+  .ln{color:#7ad17a;}
+  ul,ol{margin:6px 0 10px 22px;}li{margin-bottom:5px;}
+  .flow{background:#11202e;color:#bfe0ff;border-radius:9px;padding:13px 15px;font-family:Consolas,monospace;font-size:11.5px;line-height:1.7;overflow-x:auto;white-space:pre;margin:10px 0;}
+  .note{background:#eef4fb;border-left:4px solid var(--blue);padding:9px 13px;margin:9px 0;font-size:13px;border-radius:0 7px 7px 0;}
+  .ok{background:#eafaef;border-left-color:var(--ok);}
+  .warn{background:#fdecea;border-left-color:var(--warn);}
+  .path{font-family:Consolas,monospace;font-size:11px;color:#5a4632;background:#f2ead6;padding:1px 5px;border-radius:4px;}
+  .ck{list-style:none;margin-left:0;}.ck li{padding-left:25px;position:relative;}.ck li::before{content:"☐";position:absolute;left:0;color:var(--blue);font-size:15px;}
+  b.k{color:var(--warn);} b.g{color:var(--ok);}
+  .q{background:#fff7e6;border:1px solid #e0aa3c;border-radius:8px;padding:10px 13px;margin:9px 0;font-size:13px;}
+  .q b{color:#b07a2f;}
+</style></head>
+<body>
+<header><div class="wrap">
+  <h1>英雄养成手册（双版本）· 开发文档</h1>
+  <div class="sub">二选一双档购买 · copy 现成 ChoiceGiftPack 改造 · 2026-06-18（代码坐标基于 2026-06 仓库摸底，落地前请按当前 HEAD 复核行号）</div>
+  <div class="basis">📐 架构基线：① 现成「选择礼包 ChoiceGiftPack」(ActvType=64) 当二选一选购弹窗基底；② 养成手册日历沿用 ActvType=27；③ 通用方法论见 <span class="path">KB\方法论\活动程序开发\X3活动代码架构_customParam驱动可热部署活动_决策模板.md</span>（大哥竞猜重构 proto 模板）。</div>
+</div></header>
+
+<div class="wrap">
+
+<div class="card hero">
+<b>需求</b>：现「英雄养成手册」(ActvType=27 付费登录 30 天·单档 $29.99) → 升级<b>基础版 / 豪华版二选一</b>。主界面<b>删价格</b>，点「购买」<b>弹二选一选购窗</b>选档；豪华版=含基础版全部+每日 ×2+第30天满勤封顶大奖；<b>买任一版即锁定</b>（另一版进不来）。<br>
+<b>实现一句话</b>：<b class="k">选购弹窗 = copy 现成 UIChoiceGiftPack(ActvType=64) 裁 3 档→2 档</b>；它原生 <code>ActvPack.PackList</code> 驱动（=「二选一 pack 组」）且<b>「任意档已购→整个选购活动隐藏」</b>≈ 天然二选一+弹窗不再进。日历 30 天双轨复用 ActvType=27，按已购 pack 出基础/豪华轨。两活动靠 pack(220001/220002) 联动。
+</div>
+
+<h2><span class="n">1</span>方案概述（两活动 + 一组 pack）</h2>
+<table>
+<tr><th>构件</th><th>载体</th><th>来源</th></tr>
+<tr><td>① 日历主界面（30天登录领奖）</td><td><b>ActvType=27</b> 养成手册（ActvOnline 102701 / ContentID 2701）</td><td>现有，小改</td></tr>
+<tr><td>② 二选一选购弹窗</td><td><b>ActvType=64 ChoiceGiftPack</b>（新 ActvOnline + ActvPack）</td><td>copy UIChoiceGiftPack 裁 2 档</td></tr>
+<tr><td>③ 二选一 pack 组</td><td><code>ActvPack.PackList = [基础220001 ｜ 豪华220002]</code></td><td>配置</td></tr>
+<tr><td>联动</td><td>弹窗买的 pack → 日历(27) 读 <code>GetGiftPurchaseNum</code> 出基础/豪华轨</td><td>—</td></tr>
+</table>
+<p class="note ok"><b>为什么用 ChoiceGiftPack</b>：它已是「多档 pack 选购弹窗」——自带 ActvPack.PackList 驱动、关闭键开关、各档 UIBtnPurchase、服务端通用购买链路、弹窗推送；且<b>买任一档→整体隐藏</b>正好满足"二选一+买后不再进"。比新建界面省一大截。</p>
+
+<h2><span class="n">2</span>ChoiceGiftPack 现状摸底（事实 + 代码坐标）</h2>
+<p class="sub" style="color:#888">⚠️ 行号为摸底时坐标，落地前按当前 HEAD 复核。</p>
+<table>
+<tr><th>维度</th><th>事实</th><th>坐标</th></tr>
+<tr><td>类型常量</td><td>TRIGGER_TYPE_CHOICE_GIFT_PACK = <b>64</b>；MALL_TYPE_CHOICE_GIFT_PACK = <b>11</b></td><td><code>ActivityConst.cs:145</code> / <code>GiftConst.cs:181</code></td></tr>
+<tr><td>UI 业务类</td><td>3 档蓝/紫/金，各一个 <code>UIBtnPurchase</code> + 各自 Item 列；第4档=BUY ALL</td><td><code>UIChoiceGiftPack.cs:69-79</code>(3档绑定)、<code>:193-205</code>(BuyAll买PackList[3])</td></tr>
+<tr><td>档数写死</td><td><code>OnShown</code> 判 <code>PackList.Count &gt;= 3</code> 才显示；RefreshPackItems 逐档写死</td><td><code>UIChoiceGiftPack.cs:45</code>；prefab <code>ActvMecha/UIChoiceGiftPack.prefab</code>(Blue/Purple/Yellow)</td></tr>
+<tr><td>prefab/绑定</td><td>Auto_UIChoiceGiftPack 绑 3 UIBtnPurchase + 3 组 Item</td><td><code>Auto_UIChoiceGiftPack.cs</code></td></tr>
+<tr><td>配置驱动</td><td>ActvPack 表：ID/IsOn/<b>PackList(竖线分隔多pack)</b>/FinalReward/ShowTarget(1页内/2弹窗)/PopTimes(弹窗次数)。ActvOnline.ContentID→CActvPack</td><td><code>ActvPack__ActvPack.tsv</code>（实例行：<code>2901  1  800000｜800001｜800002｜800003｜800004 …</code>）</td></tr>
+<tr><td><b class="k">购买语义</b></td><td>各档<b>独立可买、无服务端互斥</b>；但 <b>「任意一档 purchaseNum≥BuyCount → 整个活动隐藏/不再加入商店」</b></td><td><code>GiftNavigator.cs:255-268</code> IsChoiceGiftPackBought / <code>:302</code> AddChoiceGiftPackIfCanSee</td></tr>
+<tr><td>购买回调</td><td>通用 <code>OnBuyGiftAck/OnBuyGiftSuccessNtf</code> → ChangeGiftBuyInfo 更新 purchaseNum；客户端听 <code>BuyGiftSuccess</code> 刷新</td><td><code>GiftMeta.cs:341-350</code> / <code>GiftMeta.API.cs:165-190</code>(GetGiftPurchaseNum)</td></tr>
+<tr><td>服务端建活动</td><td><b>无 customParam、无专属 proto</b>；走通用 <code>CreateActivityPack</code>。Condition 仅类型识别(GetReward/SubCount 返 null/0)</td><td><code>ActivityChoiceGiftPackCondition.cs</code> / <code>GiftMeta.ChoiceGiftPack.cs:40-44</code></td></tr>
+<tr><td>弹窗推送</td><td><code>TryPushActvPackPopup</code> 按 PopTimes + MALL_TYPE 11 → <code>WndMgr.Push&lt;UIChoiceGiftPack&gt;</code></td><td><code>UIHelper.Pay.cs:1097-1111</code></td></tr>
+<tr><td>关闭键</td><td><code>UIChoiceGiftPackData.showCloseBtn</code>（弹窗=true/内嵌=false）→ <code>mBtnBtnClose.SetActive</code></td><td><code>UIChoiceGiftPack.cs:19-20,43</code></td></tr>
+<tr><td>价格源</td><td>各档 <code>UIBtnPurchase.Show()</code> 读 <code>CPack.Price</code>；BUY ALL 读 PackList[3] 价</td><td><code>UIBtnPurchase.cs:210-267</code></td></tr>
+</table>
+<div class="note ok"><b>二选一互斥结论</b>：原生<b>不做"逐档拦截"</b>，但<b>「买任一档→整体隐藏+不再弹」</b>对"二选一+买后不再进入"<b class="g">基本够用</b>——买基础后选购活动消失，自然买不到豪华。唯一缺口=<b>同一刷新周期内连点买两档</b>的极端并发；要堵死则加服务端拦截（见 §4 可选项）。</div>
+
+<h2><span class="n">3</span>端到端数据流</h2>
+<div class="flow">主界面(ActvType27)·点【购买】(无价)
+   │ 客户端判：基础&豪华 purchaseNum 都为0 → WndMgr.Show&lt;UIChoiceGiftPack&gt;(选购活动data)；否则不开(已决策)
+   ▼
+二选一选购弹窗(ActvType64, copy裁2档) 选基础/豪华 → 点【购买】(无价)
+   │ 走通用礼包购买(Pack 220001 或 220002，各 BuyCount=1)
+   ▼
+服务端 GiftMeta 通用购买回调：发该 Pack + purchaseNum++ (无互斥校验)
+   ▼
+IsChoiceGiftPackBought()==true → 选购活动整体隐藏/不再弹 (=另一档买不到 + 弹窗不再进)
+   ▼
+日历主界面(27) RefreshView：GetGiftPurchaseNum(豪华220002)&gt;0 ? Group101 : Group100 出30天轨
+   ▼
+每日登录领奖 / 第30天满勤封顶大奖 → 沿用 ActvType=27 现成发奖链路</div>
+
+<h2><span class="n">4</span>改动清单（按端）</h2>
+
+<h3>A. 选购弹窗 — copy UIChoiceGiftPack 裁 2 档 <span style="color:#2f6fb0">[客户端]</span></h3>
+<table>
+<tr><th>文件</th><th>改动</th></tr>
+<tr><td>UIChoiceGiftPack.cs → 新 <code>UIHeroHandbookChoice.cs</code></td><td>① <code>OnShown</code> 档数判 <code>&gt;=3</code> 改 <code>&gt;=2</code>(<code>:45</code>)；② InitStaticContent 删金档(mGoldItems)循环，保留蓝=基础/紫=豪华两档；③ 删 BUY ALL(<code>:193-205</code> + PackList[3] 价)；④ <b>删价格显示</b>（UIBtnPurchase 价格隐藏，或 prefab 去价格文本节点）</td></tr>
+<tr><td><code>Auto_UIChoiceGiftPack.cs</code></td><td>prefab 改后重生成：删 mGoUIBtnGold / mUIItemTemplateGold* / BUY ALL 绑定</td></tr>
+<tr><td>prefab <code>UIChoiceGiftPack.prefab</code></td><td>删 Yellow(金)档容器 + 全买键；蓝/紫两档重排居中；<b>reskin 养成手册羊皮纸/金木风</b>（视觉参照下方产物）</td></tr>
+</table>
+<p class="note">弹窗视觉定稿 = <span class="path">KB\产出-本地化与美术\X3\英雄养成手册\二选一弹窗_X3风格设计稿_v1_alt1.jpg</span>；真素材拼装(可交互) = <span class="path">KB\产出-交互原型\X3_英雄养成手册\二选一弹窗_真素材拼装_v1.html</span>（真实 sprite：tanchukuang框/iconkuang格/anniu键/close）。</p>
+
+<h3>B. 日历主界面 UIActvLogin — 改 3 点 <span style="color:#2f6fb0">[客户端]</span></h3>
+<p><span class="path">client\Assets\Scripts\UI\Actv\UIActvLogin.cs</span></p>
+<table>
+<tr><th>函数</th><th>改动</th></tr>
+<tr><td><code>ShowBtnPurchase()</code> <span class="ln">:59-70</span></td><td>① 购买键<b>删价格</b>（去 <code>mTFWTextDiscount</code>/Tag）；② 点击回调：已购任一→不开；否则 <code>WndMgr.Show&lt;UIHeroHandbookChoice&gt;(选购活动data)</code></td></tr>
+<tr><td><code>ShowSignInfos()</code> <span class="ln">:72-112</span></td><td>取奖励组按已购 pack：<code>group = GetGiftPurchaseNum(豪华220002)&gt;0 ? 101 : 100</code>（原 <code>CActvLoginPurchase.I(mContentId).Group</code> 在 <code>:80</code>，改为按 pack 选组；未购默认 100 基础预览）</td></tr>
+<tr><td><code>mIsPurchased</code> <span class="ln">:61</span></td><td>= 买了<b>任一</b>版（基础 OR 豪华 purchaseNum&gt;0）</td></tr>
+</table>
+
+<h3>C. 服务端 <span style="color:#7a4fd0">[服务端]</span></h3>
+<div class="card">
+<p class="note ok"><b>选购侧大概率零业务代码</b>：ChoiceGiftPack 走通用 <code>CreateActivityPack</code> + 通用购买回调，Condition 已存在。两 Pack 配 <code>BuyCount=1</code> 限购即可。</p>
+<table>
+<tr><th>点</th><th>是否改</th><th>说明</th></tr>
+<tr><td>ChoiceGiftPack 购买/发奖</td><td><b class="g">零改</b></td><td>通用礼包链路现成（GiftMeta.cs:341-350）</td></tr>
+<tr><td>日历(27) 双轨发奖</td><td><b class="k">需确认</b></td><td>见下方"待确认①"——按已购 pack 发对应 Group 的每日奖，可能要小改服务端登录发奖处</td></tr>
+<tr><td>严格二选一(防同帧买两档)</td><td>可选</td><td>若要堵并发：<code>CheckCanBuyGift</code>(GiftMeta.cs:560) 加"同选购活动已购另一档→拒绝"。不加则靠"整体隐藏"，极端并发可能漏（业务上可接受度待大哥定）</td></tr>
+<tr><td>proto</td><td><b class="g">零改</b></td><td>无需新 proto 字段（purchaseNum 现成）</td></tr>
+</table>
+</div>
+
+<h3>D. 配置 <span style="color:#b07a2f">[配置]</span></h3>
+<table>
+<tr><th>表(tsv)</th><th>改动</th></tr>
+<tr><td>ActvPack__ActvPack</td><td>新增一行：<code>PackList=[220001｜220002]</code>(二选一pack组,2档)、ShowTarget=2(弹窗)、PopTimes 按需、FinalReward 空(删全买大奖)</td></tr>
+<tr><td>ActvOnline__ActvOnline</td><td>新增选购活动行：ActvType=<b>64</b>、ContentID→上面 ActvPack ID（日历 102701/2701 沿用）</td></tr>
+<tr><td>Pack__Pack</td><td>新增豪华礼包 <b>220002</b>(克隆220001，价格点116=$49.99，<b>BuyCount=1</b>)；基础220001 确认 BuyCount=1</td></tr>
+<tr><td>Pack__PackPrice</td><td>沿用 116=$49.99(已存在)</td></tr>
+<tr><td>ActvLoginPurchase__ActvLoginRewardGroup</td><td>新增 Group=<b>101</b>，30 行(天1-30)，豪华 RewardID（=基础同槽×2.0）</td></tr>
+<tr><td>Reward__Reward</td><td>豪华每日(×2) + 第30天满勤封顶大奖（现有 X3 数值；基础 day1=信物52003×10/day30=装备袋165905×100）</td></tr>
+</table>
+
+<h2><span class="n">5</span>待程序确认（请大哥拍板）</h2>
+<div class="q"><b>① 日历双轨发奖怎么接（核心）</b><br>
+ActvType=27 原本一个 ContentID 绑死一个 RewardGroup（<code>ActvLoginPurchase.Group</code>）。双轨(基础100/豪华101)两种接法：<br>
+&nbsp;&nbsp;<b>a)</b> 客户端按已购 pack 切 Group 取数显示 + 服务端登录发奖也按已购 pack 选 100/101（服务端小改）；<br>
+&nbsp;&nbsp;<b>b)</b> 用 ActvLoginPurchase 双档 schema(加 Pack2/Group2)由 27 机制自身分档（改 27 配置 schema + 读表）。<br>
+→ 哪种更顺？决定服务端/配置改动形态。</div>
+<div class="q"><b>② 选购用 ChoiceGiftPack(64) 独立活动，还是并进养成手册(27)？</b><br>
+推荐：选购=独立 ChoiceGiftPack 活动(64)，与日历(27)靠 pack 联动（改动最小、复用最大）。是否接受"一个功能两个 ActvOnline 实例"？</div>
+<div class="q"><b>③ 二选一严格度</b><br>
+"买任一档→整体隐藏" 够不够？还是要服务端 <code>CheckCanBuyGift</code> 硬拦"同活动已购另一档"防并发？</div>
+
+<h2><span class="n">6</span>落地 Checklist</h2>
+<ul class="ck">
+<li>配置：ActvPack 行(PackList=[220001｜220002]) + ActvOnline(ActvType64) + Pack220002(BuyCount=1) + Group101(×2.0) + Reward(豪华每日+封顶) → jolt_verify</li>
+<li>客户端·弹窗：copy UIChoiceGiftPack→UIHeroHandbookChoice 裁2档(删金档/BUY ALL/价格) + reskin；prefab+Auto 重生成</li>
+<li>客户端·主界面：UIActvLogin 删价 + 购买改 <code>WndMgr.Show&lt;UIHeroHandbookChoice&gt;</code> + 日历按已购pack切Group</li>
+<li>服务端：双轨发奖按确认①落地；二选一严格度按确认③（默认靠整体隐藏，零改）</li>
+<li>i18n：豪华礼包名/描述、弹窗标题/二选一描述、版本名/已购买/封顶大奖标签 → 补 16 语种</li>
+<li>验收：本地服 GM 开两活动 → 主界面购买弹窗 → 选档买 → 整体隐藏(另一档进不来) → 日历出对应轨 → 每日领+第30天封顶；server build 绿 + Unity 编译过</li>
+</ul>
+
+<p style="margin-top:22px;font-size:12px;color:#9c8c6f;text-align:center;">配套：落地总览 <span class="path">英雄养成手册_落地总览.html</span> / 切图 <span class="path">切图交付_主界面_v1.md</span> / 原型+设计稿见 KB · memory: project_x3_hero_handbook · 行号以当前 HEAD 为准</p>
+</div>
+</body>
+</html>

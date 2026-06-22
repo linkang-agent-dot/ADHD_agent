@@ -39,6 +39,9 @@ python C:\ADHD_agent\scripts\gsheet_utils.py dump <SID> "<页签>!A1:K90" [out.t
 4. 改格用 **find_row_by_value 按内容定位**，别手算行号（大富翁验收 #14/#15 被改到错行的教训）。
 5. 写禁 append INSERT_ROWS；找末行遍历 ID 列不用 len(values)（空行截断）；删行从后往前；写前 backup_tab。
 
+## ★update_range 行宽 > A1范围列数 = 整块静默失败（2026-06-18 教训）
+`update_range(SID,tab,'A11:F20',rows)`：若 rows 里**任何一行的列数 > 范围列数**（这里 F=6 列，但某行有 7 个元素），values API **整块拒绝、`update_range` 返回 False**——脚本若不检查返回值就以为写成功了（实为 0 行落地）。两个防线：①范围列数 = `max(len(r) for r in rows)`，别写死；②**检查 update_range 的返回值**，False 就排查。同源坑：手动 `[r+['']*(N-len(r))]` 补齐时若某行已超 N，`['']*(负数)=[]` 不会截断，行仍超宽。
+
 ## 批量写：整行 update_range，别逐格 update_cell（2026-06-04 教训）
 改一行的多个语言/字段时，**读出整行 → 内存改 → 一次 `update_range` 整行写回**；不要对每格调 `update_cell`。逐格写 = 每格一次 node 启动，几百格要数分钟、且**放后台跑会随 turn 结束被杀**（拓荒节本地化 280 格逐写跑了一半被中断；改整行批量 22 次调用秒级跑完）。`backup_tab` 别在可能重跑的脚本里反复调（会建多份同名备份）。
 

@@ -18,7 +18,8 @@ BASELINE_START = "2026-05-29"
 BASELINE_END = "2026-06-11"
 SERVER_FILTER = "AND o.server_id >= '1001202'"
 SERVER_LABEL = "正式服全量(12服+)"
-OUTPUT_DIR = os.path.expanduser("~")
+OUTPUT_DIR = r"C:\ADHD_agent\KB\产出-数据分析\节日日报_实时"  # 2026-06-22 从 home 改到 KB 归档落地区（节日结束后手动归到对应节日文件夹）
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # 名字关键词规则（dim_iap 有名字时优先；复用旧 id 的模块靠这层识别）
 MODULE_RULES = [

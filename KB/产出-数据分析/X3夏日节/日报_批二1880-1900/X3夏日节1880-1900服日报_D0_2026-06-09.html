@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X3夏日节1880-1900服日报 D0</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #222536; --border: #2e3248;
+    --accent: #6c63ff; --accent2: #00d4aa; --accent3: #ff6b6b; --accent4: #ffd166;
+    --text: #e2e8f0; --text-muted: #8892a4; --green: #22c55e; --orange: #f97316; --red: #ef4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; font-size: 14px; }
+  .header { background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%); border-bottom: 1px solid var(--border); padding: 28px 40px 20px; }
+  .header h1 { font-size: 24px; font-weight: 700; }
+  .header h1 .hl { color: var(--accent); }
+  .meta-row { margin-top: 6px; display: flex; gap: 20px; font-size: 12px; color: var(--text-muted); }
+  .meta-row b { color: var(--text); }
+  .container { max-width: 1200px; margin: 0 auto; padding: 28px 40px 60px; }
+  .section { margin-bottom: 36px; }
+  .section-title { font-size: 14px; font-weight: 700; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+  .day-tabs { display: flex; gap: 0; margin-bottom: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; flex-wrap: wrap; }
+  .day-tab { flex: 1; min-width: 70px; padding: 12px 0; text-align: center; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-muted); border-right: 1px solid var(--border); transition: all .15s; }
+  .day-tab:last-child { border-right: none; }
+  .day-tab:hover { background: var(--surface2); color: var(--text); }
+  .day-tab.active { background: var(--accent); color: #fff; }
+  .day-tab .day-date { font-size: 10px; font-weight: 400; opacity: .7; display: block; margin-top: 2px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; border-top: 3px solid var(--accent); }
+  .kpi-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .8px; }
+  .kpi-value { font-size: 24px; font-weight: 800; margin: 4px 0 2px; font-variant-numeric: tabular-nums; }
+  .kpi-change { font-size: 12px; }
+  .up { color: var(--green); } .down { color: var(--red); } .muted { color: var(--text-muted); }
+  .row-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .table-wrap { border-radius: 10px; border: 1px solid var(--border); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { background: var(--surface2); padding: 10px 14px; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .6px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+  tbody td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(108,99,255,.05); }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .conclusion { margin-top: 10px; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-size: 13px; }
+  .mod-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .mod-name { width: 96px; font-size: 12px; color: var(--text-muted); text-align: right; flex-shrink: 0; }
+  .mod-bar-wrap { flex: 1; background: var(--surface2); border-radius: 4px; height: 24px; }
+  .mod-bar { height: 100%; border-radius: 4px; min-width: 2px; transition: width .25s; }
+  .mod-val { width: 64px; font-size: 13px; font-variant-numeric: tabular-nums; text-align: right; flex-shrink: 0; font-weight: 600; }
+  .mod-pct { width: 36px; font-size: 11px; color: var(--text-muted); text-align: right; flex-shrink: 0; }
+  .mod-chg { width: 56px; font-size: 11px; text-align: right; flex-shrink: 0; }
+  .mod-hdr { display: flex; gap: 10px; font-size: 10px; color: var(--text-muted); margin-bottom: 10px; padding-left: 106px; }
+  .mod-hdr span { text-align: right; }
+  .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .chart-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .chart-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+  canvas { width: 100%; display: block; }
+  .canvas-200 { height: 200px; } .canvas-220 { height: 220px; } .canvas-280 { height: 280px; }
+  .mod-tabs { display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap; }
+  .mod-tab { padding: 6px 16px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); font-size: 12px; font-weight: 600; cursor: pointer; transition: all .15s; }
+  .mod-tab:hover { background: var(--surface2); color: var(--text); }
+  .mod-tab.active { color: #fff; border-color: transparent; }
+  .alert { padding: 10px 14px; border-radius: 8px; margin-bottom: 8px; font-size: 13px; display: flex; align-items: flex-start; gap: 8px; }
+  .alert-icon { flex-shrink: 0; }
+  .alert-warn { background: rgba(249,115,22,.08); border: 1px solid rgba(249,115,22,.2); }
+  .alert-info { background: rgba(108,99,255,.06); border: 1px solid rgba(108,99,255,.15); }
+  .footer { text-align: center; color: var(--text-muted); font-size: 11px; padding: 20px 0; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>X3 <span class="hl">夏日节1880-1900服</span> 日报</h1>
+  <div class="meta-row">
+    <span>本期夏日第二批 1880/1890/1900 三服(较年轻服，1900为大服)；对比侧情人节 1-55服为第一批遗留校准值、生命周期不匹配，仅粗略参考</span>
+    <span>基线 2026-05-26 ~ 2026-06-08 (14日均值)</span>
+    <span>生成于 23:01</span>
+  </div>
+</div>
+<div class="container">
+  <div class="day-tabs" id="dayTabs"></div>
+  <div class="section"><div class="kpi-grid" id="kpiGrid"></div></div>
+  <div class="section row-2col">
+    <div>
+      <div class="section-title">ARPU 增量分析</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>指标</th><th class="num">当日</th><th class="num">基线</th><th class="num">净增</th></tr></thead>
+        <tbody id="arpuBody"></tbody>
+      </table></div>
+      <div class="conclusion" id="arpuConclusion"></div>
+    </div>
+    <div>
+      <div class="section-title">节日模块构成</div>
+      <div class="mod-hdr"><span>模块</span><span style="flex:1"></span><span style="width:64px">当日</span><span style="width:36px">占比</span><span style="width:56px">环比</span></div>
+      <div id="modBars"></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">节日模块构成 · 全程累计总量</div>
+    <div class="mod-hdr"><span>模块</span><span style="flex:1"></span><span style="width:64px">累计</span><span style="width:36px">占比</span><span style="width:56px">日均</span></div>
+    <div id="modTotalBars"></div>
+    <div class="conclusion" id="modTotalNote" style="margin-top:12px"></div>
+  </div>
+  <div class="section">
+    <div class="section-title">每日流水趋势</div>
+    <div class="chart-row">
+      <div class="chart-box"><div class="chart-label">总流水</div><canvas id="totalChart" class="canvas-200"></canvas></div>
+      <div class="chart-box"><div class="chart-label">节日流水（独立坐标轴）· 点下标注当日占比(节日/总流水)</div><canvas id="festChart" class="canvas-200"></canvas></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">模块变化趋势</div>
+    <div class="chart-box"><div class="mod-tabs" id="modTabs"></div><canvas id="modTrendChart" class="canvas-220"></canvas></div>
+  </div>
+  <div class="section">
+    <div class="section-title">分时收入趋势</div>
+    <div class="chart-box">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+        <span style="font-size:11px;color:var(--text-muted);flex-shrink:0">R级筛选</span>
+        <div class="mod-tabs" id="hrRFilter" style="margin-bottom:0"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <div class="mod-tabs" id="hrDayChips" style="margin-bottom:0"></div>
+        <div class="mod-tabs" id="hrModeToggle" style="margin-bottom:0"></div>
+      </div>
+      <div id="hrLegend" style="display:flex;gap:18px;flex-wrap:wrap;font-size:11px;color:var(--text-muted);margin-bottom:6px"></div>
+      <canvas id="hourlyChart" class="canvas-280"></canvas>
+      <div style="margin-top:18px;border-top:1px solid var(--border);padding-top:14px">
+        <div class="chart-label" style="margin-bottom:8px">D0–D3 全程分时（总流水实线 / 节日虚线，随上方「每时 · 累计」与「R级筛选」切换）</div>
+        <canvas id="hourlyAllChart" class="canvas-280"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">节日收入 · R级分层（累计到当前）</div>
+    <div class="mod-hdr"><span>R级</span><span style="flex:1"></span><span style="width:64px">节日累计</span><span style="width:36px">占比</span><span style="width:56px">付费人数</span><span style="width:64px">层节日ARPU</span></div>
+    <div id="rlevelBars"></div>
+    <div class="conclusion" id="rlevelNote" style="margin-top:12px"></div>
+  </div>
+  <div class="section" id="rgainSection" style="display:none">
+    <div class="section-title">R级付费玩家付费率 & ARPU · 本期 vs 上期<span id="rgainName"></span>（累计同期·排除免费玩家）</div>
+    <div class="conclusion" id="rgainNote" style="margin-bottom:14px"></div>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th>R级</th>
+        <th class="num">总付费人数<br>上→本</th>
+        <th class="num">付费玩家付费率<br>上→本</th>
+        <th class="num">付费ARPU<br>上→本</th>
+        <th class="num">ARPPU<br>上→本</th>
+        <th class="num">节日流水<br>上→本</th>
+      </tr></thead>
+      <tbody id="rgainBody"></tbody>
+    </table></div>
+    <div class="chart-label" style="margin-top:8px;font-size:11px">付费玩家付费率 = 节日付费人数 / 当期总付费人数（分母仅付费玩家，排除非R免费玩家占比干扰）；付费ARPU = 节日流水 / 总付费人数；ARPPU = 节日流水 / 节日付费人数。同期窗口 = 累计 D0~当前（进行中当天首 N 小时两边对齐）。↑绿=本期更高。<br>R级口径：分级表快照优先；分级表漏收的付费用户按累充(USD)估档（≥$1500超R/≥$500大R/≥$50中R/&gt;0小R）。非R 为零充免费玩家、无付费，本表已剔除。</div>
+  </div>
+  <div class="section" id="modrSection" style="display:none">
+    <div class="section-title">节日模块 · R级对比 · 本期 vs 上期<span id="modrName"></span>（付费率 / ARPU / ARPPU）</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+      <span style="font-size:11px;color:var(--text-muted);flex-shrink:0">R级筛选</span>
+      <div class="mod-tabs" id="modrFilter" style="margin-bottom:0"></div>
+    </div>
+    <div class="conclusion" id="modrNote" style="margin-bottom:14px"></div>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th>模块</th>
+        <th class="num">付费率 上→本</th>
+        <th class="num">ARPU 上→本</th>
+        <th class="num">ARPPU 上→本</th>
+        <th class="num">节日流水 上→本</th>
+      </tr></thead>
+      <tbody id="modrBody"></tbody>
+    </table></div>
+    <div class="chart-label" style="margin-top:8px;font-size:11px">选定 R级下：付费率 = 买该模块人数 / 该R级总付费人数；ARPU = 模块节日流水 / 该R级总付费人数；ARPPU = 模块节日流水 / 买该模块人数。「全部」= 付费档合计。同期窗口 = 累计 D0~当前（进行中当天首 N 小时两边对齐）。↑绿=本期更高。</div>
+  </div>
+  <div class="section" id="compareSection" style="display:none">
+    <div class="section-title">按日同期对比 · 本期 vs 上期<span id="cmpName"></span>（D 对 D，逐日同序对齐）</div>
+    <div class="day-tabs" id="cmpDayTabs" style="margin-bottom:18px"></div>
+    <div class="conclusion" id="cmpNote" style="margin-bottom:14px"></div>
+    <div class="table-wrap" style="margin-bottom:18px"><table>
+      <thead><tr><th id="cmpHdr">指标</th><th class="num" id="cmpColA"></th><th class="num" id="cmpColB"></th><th class="num">差异</th></tr></thead>
+      <tbody id="cmpBody"></tbody>
+    </table></div>
+    <div class="row-2col">
+      <div><div class="chart-label" id="cmpModBLabel" style="font-weight:600"></div><div class="mod-hdr"><span>模块</span><span style="flex:1"></span><span style="width:64px">收入</span><span style="width:36px">占比</span></div><div id="cmpModB"></div></div>
+      <div><div class="chart-label" id="cmpModALabel" style="font-weight:600"></div><div class="mod-hdr"><span>模块</span><span style="flex:1"></span><span style="width:64px">收入</span><span style="width:36px">占比</span></div><div id="cmpModA"></div></div>
+    </div>
+    <div id="cmpRSection" style="margin-top:20px;display:none">
+      <div class="chart-label" style="font-weight:600;margin-bottom:8px">R级对打 · 节日流水 / 层ARPU（上期情人节 → 本期夏日，各期按当期 R级档位）</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>R级</th><th class="num" id="cmpRColV"></th><th class="num" id="cmpRColS"></th><th class="num">节日Δ</th><th class="num" id="cmpRArpuV"></th><th class="num" id="cmpRArpuS"></th></tr></thead>
+        <tbody id="cmpRBody"></tbody>
+      </table></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">关注点</div>
+    <div id="alertsBox"></div>
+  </div>
+</div>
+<div class="footer">X3 夏日节1880-1900服 | 数据口径：本期夏日第二批 1880/1890/1900 三服(较年轻服，1900为大服)；对比侧情人节 1-55服为第一批遗留校准值、生命周期不匹配，仅粗略参考，节日收入 = ActvOnline 100595 累充白名单 17 个 Pack（USD口径，pay_status=1）；模块按 Pack.PackType 归类</div>
+<script>
+const allDays = [{"date": "2026-06-09", "day_label": "D0", "day_num": 0, "total": 597, "festival": 285, "non_festival": 313, "payers": 29, "modules": {"抽奖券": 10, "特惠连锁": 55, "装饰礼包": 80, "许愿池": 30, "通行证": 110}}];
+const hourly = [{"date": "2026-06-09", "day_label": "D0", "byR": {"全部": {"total": [22, 0, 2, 10, 10, 0, 0, 17, 65, 32, 70, 80, 20, 0, 20, 55, 0, 45, 20, 70, 30, 30], "festival": [0, 0, 0, 0, 0, 0, 0, 0, 65, 10, 60, 50, 20, 0, 20, 10, 0, 5, 20, 0, 20, 5]}, "超R": {"total": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 45, 0, 0, 0, 0, 0, 0], "festival": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}, "大R": {"total": [0, 0, 0, 0, 10, 0, 0, 15, 10, 0, 20, 30, 20, 0, 0, 0, 0, 0, 0, 30, 20, 5], "festival": [0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 20, 30, 20, 0, 0, 0, 0, 0, 0, 0, 20, 0]}, "中R": {"total": [20, 0, 2, 10, 0, 0, 0, 2, 55, 21, 50, 20, 0, 0, 20, 10, 0, 45, 20, 30, 0, 15], "festival": [0, 0, 0, 0, 0, 0, 0, 0, 55, 5, 40, 20, 0, 0, 20, 10, 0, 5, 20, 0, 0, 5]}, "小R": {"total": [2, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10, 10], "festival": [0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}, "非R": {"total": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "festival": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}}}];
+const rlevels = [{"rlevel": "超R", "total": 75, "festival": 0, "payers": 1, "fest_payers": 0}, {"rlevel": "大R", "total": 160, "festival": 100, "payers": 5, "fest_payers": 5}, {"rlevel": "中R", "total": 320, "festival": 180, "payers": 17, "fest_payers": 10}, {"rlevel": "小R", "total": 43, "festival": 5, "payers": 6, "fest_payers": 1}, {"rlevel": "非R", "total": 0, "festival": 0, "payers": 0, "fest_payers": 0}];
+const moduleR = {"summer_name": "夏日节1880-1900服", "val_name": "情人节", "win": "D0~D0·首22h", "modules": ["通行证", "皮肤礼包", "家具礼包", "特惠连锁", "许愿池", "装饰礼包", "抽奖券"], "summer": {"byR": {"大R": {"抽奖券": {"buyers": 1, "rev": 5}, "特惠连锁": {"buyers": 1, "rev": 15}, "通行证": {"buyers": 3, "rev": 60}, "装饰礼包": {"buyers": 1, "rev": 20}}, "中R": {"特惠连锁": {"buyers": 4, "rev": 40}, "许愿池": {"buyers": 4, "rev": 25}, "通行证": {"buyers": 3, "rev": 50}, "装饰礼包": {"buyers": 3, "rev": 60}, "抽奖券": {"buyers": 1, "rev": 5}}, "小R": {"许愿池": {"buyers": 1, "rev": 5}}}, "payers": {"超R": 1, "大R": 5, "中R": 17, "小R": 6, "非R": 0}}, "valentine": {"byR": {"中R": {"许愿池": {"buyers": 5, "rev": 25}, "特惠连锁": {"buyers": 6, "rev": 60}, "皮肤礼包": {"buyers": 3, "rev": 150}, "通行证": {"buyers": 17, "rev": 320}}, "小R": {"特惠连锁": {"buyers": 4, "rev": 20}, "许愿池": {"buyers": 1, "rev": 5}, "抽奖券": {"buyers": 1, "rev": 5}, "通行证": {"buyers": 7, "rev": 90}}, "大R": {"皮肤礼包": {"buyers": 5, "rev": 250}, "特惠连锁": {"buyers": 8, "rev": 110}, "抽奖券": {"buyers": 1, "rev": 20}, "家具礼包": {"buyers": 1, "rev": 100}, "许愿池": {"buyers": 1, "rev": 5}, "通行证": {"buyers": 13, "rev": 360}}, "超R": {"特惠连锁": {"buyers": 3, "rev": 195}, "家具礼包": {"buyers": 4, "rev": 400}, "皮肤礼包": {"buyers": 5, "rev": 250}, "通行证": {"buyers": 7, "rev": 180}, "许愿池": {"buyers": 3, "rev": 25}}}, "payers": {"超R": 11, "大R": 28, "中R": 89, "小R": 80, "非R": 0}}};
+const baseline = {"total": 962.69, "non_festival": 927.71, "payers": 39.4, "arpu_total": 24.46, "arpu_nonfest": 23.57};
+const modColors = {"特惠连锁": "#6c63ff", "抽奖券": "#ffd166", "家具礼包": "#34d399", "拜访皮肤": "#a78bfa", "许愿池": "#38bdf8", "通行证": "#fb923c", "装饰礼包": "#e879f9", "皮肤礼包": "#f43f5e", "常规礼包": "#00d4aa", "每日特惠": "#f472b6", "其他": "#8892a4"};
+const compare = {"summer_name": "夏日节1880-1900服", "val_name": "情人节", "val_d0": "2026-02-06", "days": [{"day_label": "D0", "win": "首22h", "summer_date": "2026-06-09", "val_date": "2026-02-06", "summer": {"total": 597, "festival": 285, "payers": 29, "fest_payers": 16, "modules": {"特惠连锁": 55, "通行证": 110, "许愿池": 30, "抽奖券": 10, "装饰礼包": 80}}, "valentine": {"total": 11400, "festival": 2569, "payers": 208, "fest_payers": 65, "modules": {"特惠连锁": 385, "通行证": 950, "家具礼包": 500, "许愿池": 60, "抽奖券": 25, "皮肤礼包": 650}}, "summer_r": {"超R": {"festival": 0, "payers": 1, "fest_payers": 0}, "大R": {"festival": 100, "payers": 5, "fest_payers": 5}, "中R": {"festival": 180, "payers": 17, "fest_payers": 10}, "小R": {"festival": 5, "payers": 6, "fest_payers": 1}, "非R": {"festival": 0, "payers": 0, "fest_payers": 0}}, "valentine_r": {"超R": {"festival": 1050, "payers": 11, "fest_payers": 10}, "大R": {"festival": 845, "payers": 28, "fest_payers": 16}, "中R": {"festival": 555, "payers": 89, "fest_payers": 26}, "小R": {"festival": 120, "payers": 80, "fest_payers": 13}, "非R": {"festival": 0, "payers": 0, "fest_payers": 0}}}], "cumulative": {"day_label": "累计", "win": "D0~D0·首22h", "summer_date": "2026-06-09~2026-06-09", "val_date": "2026-02-06~2026-02-06", "summer": {"total": 597, "festival": 285, "payers": 29, "fest_payers": 16, "modules": {"特惠连锁": 55, "抽奖券": 10, "通行证": 110, "许愿池": 30, "装饰礼包": 80}}, "valentine": {"total": 11400, "festival": 2569, "payers": 208, "fest_payers": 65, "modules": {"通行证": 950, "特惠连锁": 385, "抽奖券": 25, "许愿池": 60, "皮肤礼包": 650, "家具礼包": 500}}, "summer_r": {"超R": {"festival": 0, "payers": 1, "fest_payers": 0}, "大R": {"festival": 100, "payers": 5, "fest_payers": 5}, "中R": {"festival": 180, "payers": 17, "fest_payers": 10}, "小R": {"festival": 5, "payers": 6, "fest_payers": 1}, "非R": {"festival": 0, "payers": 0, "fest_payers": 0}}, "valentine_r": {"超R": {"festival": 1050, "payers": 11, "fest_payers": 10}, "大R": {"festival": 845, "payers": 28, "fest_payers": 16}, "中R": {"festival": 555, "payers": 89, "fest_payers": 26}, "小R": {"festival": 120, "payers": 80, "fest_payers": 13}, "非R": {"festival": 0, "payers": 0, "fest_payers": 0}}}};
+const dpr = window.devicePixelRatio || 1;
+let currentDayIdx = allDays.length - 1;
+let currentMod = null;
+const dayPalette = ['#6c63ff', '#00d4aa', '#ff6b6b', '#ffd166', '#a78bfa', '#38bdf8', '#fb923c', '#22c55e'];
+let hrSelDays = new Set([hourly.length - 1]);  // 默认选最新一天
+let hrMode = 'hourly';  // 'hourly' 每时 | 'cum' 累计
+let currentR = '全部';  // 分时图 R级筛选：全部/超R/大R/中R/小R/非R
+let currentModR = '全部';  // 模块×R级对比的 R级筛选
+const rLevelColors = { '全部': '#6c63ff', '超R': '#f43f5e', '大R': '#fb923c', '中R': '#ffd166', '小R': '#38bdf8', '非R': '#8892a4' };
+let cmpDayIdx = 0;  // 按日对比当前选中的节日日序
+
+function $(id) { return document.getElementById(id); }
+function fmtMoney(v) { return v >= 1000 ? '$' + v.toLocaleString('en-US', {maximumFractionDigits:0}) : '$' + Math.round(v); }
+function fmtPct(v) { if (v == null || v === 0) return '—'; return (v > 0 ? '+' : '') + v.toFixed(1) + '%'; }
+function fmtDelta(v) { return (v >= 0 ? '+$' : '-$') + Math.abs(v).toFixed(2); }
+function pctChg(a, b) { return b ? (a - b) / b * 100 : null; }
+
+function buildDayTabs() {
+  const el = $('dayTabs'); el.innerHTML = '';
+  allDays.forEach((d, i) => {
+    const div = document.createElement('div');
+    div.className = 'day-tab' + (i === currentDayIdx ? ' active' : '');
+    div.innerHTML = d.day_label + '<span class="day-date">' + d.date + '</span>';
+    div.onclick = () => { currentDayIdx = i; renderAll(); };
+    el.appendChild(div);
+  });
+}
+
+function renderKPI() {
+  const d = allDays[currentDayIdx];
+  const prev = currentDayIdx > 0 ? allDays[currentDayIdx - 1] : null;
+  const cum_total = allDays.slice(0, currentDayIdx + 1).reduce((s, x) => s + x.total, 0);
+  const cum_fest = allDays.slice(0, currentDayIdx + 1).reduce((s, x) => s + x.festival, 0);
+  const festRatio = cum_total > 0 ? (cum_fest / cum_total * 100) : 0;
+  const items = [
+    { label: '总流水', value: fmtMoney(d.total), chg: prev ? pctChg(d.total, prev.total) : null, color: 'var(--accent)' },
+    { label: '付费人数', value: d.payers, chg: prev ? pctChg(d.payers, prev.payers) : null, color: 'var(--accent2)' },
+    { label: '节日流水', value: fmtMoney(d.festival), chg: prev ? pctChg(d.festival, prev.festival) : null, color: 'var(--accent4)' },
+    { label: '非节日流水', value: fmtMoney(d.non_festival), chg: prev ? pctChg(d.non_festival, prev.non_festival) : null, color: 'var(--green)' },
+    { label: '节日累计流水', value: fmtMoney(cum_fest), chg: null, sub: 'D0~' + d.day_label, color: 'var(--accent3)' },
+    { label: '节日累计占比', value: festRatio.toFixed(1) + '%', chg: null, sub: fmtMoney(cum_fest) + ' / ' + fmtMoney(cum_total), color: 'var(--orange)' },
+  ];
+  $('kpiGrid').innerHTML = items.map(it => {
+    const chgCls = it.chg == null ? 'muted' : it.chg > 0 ? 'up' : it.chg < 0 ? 'down' : 'muted';
+    const chgStr = it.chg != null ? fmtPct(it.chg) + ' vs 昨日' : (it.sub || 'D0~' + d.day_label);
+    return '<div class="kpi-card" style="border-top-color:' + it.color + '"><div class="kpi-label">' + it.label + '</div><div class="kpi-value">' + it.value + '</div><div class="kpi-change ' + chgCls + '">' + chgStr + '</div></div>';
+  }).join('');
+}
+
+function renderARPU() {
+  const d = allDays[currentDayIdx];
+  const fa = d.festival / Math.max(d.payers, 1), nfa = d.non_festival / Math.max(d.payers, 1), ta = d.total / Math.max(d.payers, 1);
+  const rows = [['节日 ARPU', fa, 0, fa], ['非节日 ARPU', nfa, baseline.arpu_nonfest, nfa - baseline.arpu_nonfest], ['综合 ARPU', ta, baseline.arpu_total, ta - baseline.arpu_total]];
+  $('arpuBody').innerHTML = rows.map(r => {
+    const cls = r[3] > 0.5 ? 'up' : r[3] < -0.5 ? 'down' : 'muted';
+    return '<tr><td>' + r[0] + '</td><td class="num">$' + r[1].toFixed(2) + '</td><td class="num muted">$' + r[2].toFixed(2) + '</td><td class="num ' + cls + '">' + fmtDelta(r[3]) + '</td></tr>';
+  }).join('');
+  const nfD = nfa - baseline.arpu_nonfest; let c, cl;
+  if (nfD > 1) { c = '节日纯增量 +$' + fa.toFixed(2) + '/人，非节日被带动 +$' + nfD.toFixed(2) + '/人'; cl = 'up'; }
+  else if (nfD < -1) { c = '节日纯增量 +$' + fa.toFixed(2) + '/人，非节日被挤占 ' + fmtDelta(nfD) + '/人'; cl = 'down'; }
+  else { c = '节日纯增量 +$' + fa.toFixed(2) + '/人，非节日基本持平'; cl = 'muted'; }
+  $('arpuConclusion').className = 'conclusion ' + cl; $('arpuConclusion').textContent = c;
+}
+
+function renderModBars() {
+  const d = allDays[currentDayIdx], prev = currentDayIdx > 0 ? allDays[currentDayIdx - 1] : null;
+  const mods = d.modules, modNames = Object.keys(mods).sort((a, b) => mods[b] - mods[a]);
+  const maxRev = Math.max(...Object.values(mods), 1), modTotal = Object.values(mods).reduce((s, v) => s + v, 0);
+  $('modBars').innerHTML = modNames.map(m => {
+    const rev = mods[m], pct = modTotal > 0 ? rev / modTotal * 100 : 0, barW = rev / maxRev * 100;
+    const color = modColors[m] || '#8892a4', prevRev = prev ? (prev.modules[m] || 0) : 0;
+    const chg = pctChg(rev, prevRev), chgCls = chg != null ? (chg > 0 ? 'up' : 'down') : 'muted';
+    return '<div class="mod-row"><div class="mod-name">' + m + '</div><div class="mod-bar-wrap"><div class="mod-bar" style="width:' + barW.toFixed(1) + '%;background:' + color + '"></div></div><div class="mod-val">' + fmtMoney(rev) + '</div><div class="mod-pct">' + pct.toFixed(0) + '%</div><div class="mod-chg"><span class="' + chgCls + '">' + (chg != null ? fmtPct(chg) : '—') + '</span></div></div>';
+  }).join('');
+}
+
+function drawTrend(canvasId, key, color, areaColor, blVal, blLabel, showPct) {
+  const canvas = $(canvasId), W0 = canvas.offsetWidth, H = 200;
+  canvas.width = W0 * dpr; canvas.height = H * dpr;
+  const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
+  const pad = { top: 20, right: 16, bottom: 32, left: 52 };
+  const cW = W0 - pad.left - pad.right, cH = H - pad.top - pad.bottom;
+  const series = allDays.map(d => d[key]), n = series.length, maxVal = Math.max(...series, 1) * 1.3;
+  function xp(i) { return pad.left + (n > 1 ? i / (n - 1) * cW : cW / 2); }
+  function yp(v) { return pad.top + cH - (v / maxVal * cH); }
+  ctx.strokeStyle = '#2e3248'; ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 4; i++) { const yy = pad.top + cH * i / 4; ctx.beginPath(); ctx.moveTo(pad.left, yy); ctx.lineTo(W0 - pad.right, yy); ctx.stroke(); ctx.fillStyle = '#8892a4'; ctx.font = '10px -apple-system,sans-serif'; ctx.textAlign = 'right'; ctx.fillText('$' + Math.round(maxVal * (4 - i) / 4).toLocaleString(), pad.left - 6, yy + 3); }
+  if (blVal > 0) { const blY = yp(blVal); ctx.setLineDash([4,4]); ctx.strokeStyle = '#f97316'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(pad.left, blY); ctx.lineTo(W0 - pad.right, blY); ctx.stroke(); ctx.setLineDash([]); ctx.fillStyle = '#f97316'; ctx.font = '10px -apple-system,sans-serif'; ctx.textAlign = 'right'; ctx.fillText(blLabel, W0 - pad.right, blY - 5); }
+  ctx.beginPath(); ctx.moveTo(xp(0), yp(series[0])); for (let i = 1; i < n; i++) ctx.lineTo(xp(i), yp(series[i])); ctx.lineTo(xp(n-1), yp(0)); ctx.lineTo(xp(0), yp(0)); ctx.closePath(); ctx.fillStyle = areaColor; ctx.fill();
+  ctx.beginPath(); ctx.moveTo(xp(0), yp(series[0])); for (let i = 1; i < n; i++) ctx.lineTo(xp(i), yp(series[i])); ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.stroke();
+  for (let i = 0; i < n; i++) { const sel = (i === currentDayIdx), r = sel ? 6 : 4; ctx.beginPath(); ctx.arc(xp(i), yp(series[i]), r, 0, Math.PI * 2); ctx.fillStyle = color; ctx.fill(); ctx.strokeStyle = sel ? '#fff' : '#1a1d27'; ctx.lineWidth = sel ? 2.5 : 2; ctx.stroke(); ctx.fillStyle = sel ? '#fff' : '#e2e8f0'; ctx.font = (sel ? 'bold 12px' : '11px') + ' -apple-system,sans-serif'; ctx.textAlign = 'center'; ctx.fillText('$' + series[i].toLocaleString(), xp(i), yp(series[i]) - (sel ? 16 : 12)); ctx.fillStyle = sel ? '#fff' : '#8892a4'; ctx.font = (sel ? 'bold ' : '') + '10px -apple-system,sans-serif'; ctx.fillText(allDays[i].day_label, xp(i), H - pad.bottom + 14); if (showPct) { const tot = allDays[i].total || 0, pct = tot ? (allDays[i].festival / tot * 100) : 0; ctx.fillStyle = sel ? '#ffd166' : '#caa84a'; ctx.font = (sel ? 'bold ' : '') + '10px -apple-system,sans-serif'; ctx.textAlign = 'center'; ctx.fillText('占比 ' + pct.toFixed(0) + '%', xp(i), yp(series[i]) + 16); } }
+}
+
+function buildModTabs() {
+  const mods = Object.keys(allDays[0].modules);
+  let best = mods[0], bestSum = 0;
+  mods.forEach(m => { const s = allDays.reduce((a, d) => a + (d.modules[m] || 0), 0); if (s > bestSum) { bestSum = s; best = m; } });
+  currentMod = currentMod || best;
+  const el = $('modTabs'); el.innerHTML = '';
+  mods.sort((a, b) => { const sa = allDays.reduce((a2, d) => a2 + (d.modules[a] || 0), 0), sb = allDays.reduce((a2, d) => a2 + (d.modules[b] || 0), 0); return sb - sa; });
+  mods.forEach(m => { const btn = document.createElement('div'); btn.className = 'mod-tab' + (m === currentMod ? ' active' : ''); btn.style.background = m === currentMod ? (modColors[m] || '#8892a4') : ''; btn.style.borderColor = m === currentMod ? 'transparent' : ''; btn.textContent = m; btn.onclick = () => { currentMod = m; buildModTabs(); drawModTrend(); }; el.appendChild(btn); });
+}
+
+function drawModTrend() {
+  const mod = currentMod, series = allDays.map(d => d.modules[mod] || 0), color = modColors[mod] || '#8892a4';
+  const canvas = $('modTrendChart'), W0 = canvas.offsetWidth, H = 220;
+  canvas.width = W0 * dpr; canvas.height = H * dpr;
+  const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
+  const pad = { top: 28, right: 20, bottom: 32, left: 52 }, cW = W0 - pad.left - pad.right, cH = H - pad.top - pad.bottom;
+  const n = series.length, maxVal = Math.max(...series, 1) * 1.35;
+  function xp(i) { return pad.left + (n > 1 ? i / (n - 1) * cW : cW / 2); }
+  function yp(v) { return pad.top + cH - (v / maxVal * cH); }
+  ctx.strokeStyle = '#2e3248'; ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 4; i++) { const yy = pad.top + cH * i / 4; ctx.beginPath(); ctx.moveTo(pad.left, yy); ctx.lineTo(W0 - pad.right, yy); ctx.stroke(); ctx.fillStyle = '#8892a4'; ctx.font = '10px -apple-system,sans-serif'; ctx.textAlign = 'right'; ctx.fillText('$' + Math.round(maxVal * (4 - i) / 4).toLocaleString(), pad.left - 6, yy + 3); }
+  ctx.beginPath(); ctx.moveTo(xp(0), yp(series[0])); for (let i = 1; i < n; i++) ctx.lineTo(xp(i), yp(series[i])); ctx.lineTo(xp(n-1), yp(0)); ctx.lineTo(xp(0), yp(0)); ctx.closePath();
+  const grad = ctx.createLinearGradient(0, pad.top, 0, H - pad.bottom); grad.addColorStop(0, color + '30'); grad.addColorStop(1, color + '05'); ctx.fillStyle = grad; ctx.fill();
+  ctx.beginPath(); ctx.moveTo(xp(0), yp(series[0])); for (let i = 1; i < n; i++) ctx.lineTo(xp(i), yp(series[i])); ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.stroke();
+  for (let i = 0; i < n; i++) { const sel = (i === currentDayIdx), r = sel ? 6 : 4; ctx.beginPath(); ctx.arc(xp(i), yp(series[i]), r, 0, Math.PI * 2); ctx.fillStyle = color; ctx.fill(); ctx.strokeStyle = sel ? '#fff' : '#1a1d27'; ctx.lineWidth = sel ? 2.5 : 2; ctx.stroke(); ctx.fillStyle = sel ? '#fff' : '#e2e8f0'; ctx.font = (sel ? 'bold 12px' : 'bold 11px') + ' -apple-system,sans-serif'; ctx.textAlign = 'center'; ctx.fillText('$' + series[i].toLocaleString(), xp(i), yp(series[i]) - 18); if (i > 0 && series[i-1] > 0) { const chg = (series[i] - series[i-1]) / series[i-1] * 100; ctx.fillStyle = chg >= 0 ? '#22c55e' : '#ef4444'; ctx.font = '10px -apple-system,sans-serif'; ctx.fillText((chg >= 0 ? '+' : '') + chg.toFixed(0) + '%', xp(i), yp(series[i]) - 30); } ctx.fillStyle = sel ? '#fff' : '#8892a4'; ctx.font = (sel ? 'bold ' : '') + '11px -apple-system,sans-serif'; ctx.fillText(allDays[i].day_label, xp(i), H - pad.bottom + 16); }
+  const cum = series.reduce((a, b) => a + b, 0); ctx.fillStyle = color; ctx.font = 'bold 13px -apple-system,sans-serif'; ctx.textAlign = 'left'; ctx.fillText(mod, pad.left, 18); ctx.fillStyle = '#8892a4'; ctx.font = '12px -apple-system,sans-serif'; ctx.fillText('累计 $' + cum.toLocaleString(), pad.left + ctx.measureText(mod + '  ').width + 8, 18);
+}
+
+function hrSeries(dayIdx, key) {
+  const byR = hourly[dayIdx] && hourly[dayIdx].byR, slot = byR && (byR[currentR] || byR['全部']);
+  const arr = (slot && slot[key]) ? slot[key].slice() : [];
+  if (hrMode === 'cum') { let s = 0; for (let i = 0; i < arr.length; i++) { s += arr[i]; arr[i] = s; } }
+  return arr;
+}
+
+function buildHrChips() {
+  const el = $('hrDayChips'); el.innerHTML = '';
+  hourly.forEach((h, i) => {
+    const on = hrSelDays.has(i), color = dayPalette[i % dayPalette.length];
+    const btn = document.createElement('div');
+    btn.className = 'mod-tab' + (on ? ' active' : '');
+    if (on) { btn.style.background = color; btn.style.borderColor = 'transparent'; }
+    btn.textContent = h.day_label;
+    btn.onclick = () => {
+      if (hrSelDays.has(i)) { if (hrSelDays.size > 1) hrSelDays.delete(i); } else hrSelDays.add(i);
+      buildHrChips(); drawHourly();
+    };
+    el.appendChild(btn);
+  });
+}
+
+function buildHrModeToggle() {
+  const el = $('hrModeToggle'); el.innerHTML = '';
+  [['hourly', '每时'], ['cum', '累计']].forEach(([k, label]) => {
+    const on = hrMode === k, btn = document.createElement('div');
+    btn.className = 'mod-tab' + (on ? ' active' : '');
+    if (on) { btn.style.background = 'var(--accent)'; btn.style.borderColor = 'transparent'; }
+    btn.textContent = label;
+    btn.onclick = () => { hrMode = k; buildHrModeToggle(); drawHourly(); drawHourlyAll(); };
+    el.appendChild(btn);
+  });
+}
+
+function drawHourly() {
+  const sel = [...hrSelDays].sort((a, b) => a - b);
+  // 图例
+  $('hrLegend').innerHTML = sel.map(i => {
+    const c = dayPalette[i % dayPalette.length], lab = hourly[i].day_label;
+    return '<span><span style="display:inline-block;width:18px;height:0;border-top:2.5px solid ' + c + ';vertical-align:middle;margin-right:5px"></span>' + lab + ' 总流水</span>'
+      + '<span><span style="display:inline-block;width:18px;height:0;border-top:2px dashed ' + c + ';vertical-align:middle;margin-right:5px"></span>' + lab + ' 节日</span>';
+  }).join('') + '<span style="margin-left:auto">' + (currentR === '全部' ? '' : 'R级：' + currentR + ' · ') + (hrMode === 'cum' ? '当日累计流水（按小时）' : '每小时流水') + '</span>';
+
+  const canvas = $('hourlyChart'), W0 = canvas.offsetWidth, H = 280;
+  canvas.width = W0 * dpr; canvas.height = H * dpr;
+  const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
+  const pad = { top: 16, right: 20, bottom: 30, left: 56 };
+  const cW = W0 - pad.left - pad.right, cH = H - pad.top - pad.bottom;
+  const HOURS = 24;
+  let maxVal = 1;
+  sel.forEach(i => { ['total', 'festival'].forEach(k => { const s = hrSeries(i, k); s.forEach(v => { if (v > maxVal) maxVal = v; }); }); });
+  maxVal *= 1.15;
+  function xp(h) { return pad.left + h / (HOURS - 1) * cW; }
+  function yp(v) { return pad.top + cH - (v / maxVal * cH); }
+  // 网格 + y 轴
+  ctx.strokeStyle = '#2e3248'; ctx.lineWidth = 0.5;
+  for (let g = 0; g <= 4; g++) { const yy = pad.top + cH * g / 4; ctx.beginPath(); ctx.moveTo(pad.left, yy); ctx.lineTo(W0 - pad.right, yy); ctx.stroke(); ctx.fillStyle = '#8892a4'; ctx.font = '10px -apple-system,sans-serif'; ctx.textAlign = 'right'; ctx.fillText('$' + Math.round(maxVal * (4 - g) / 4).toLocaleString(), pad.left - 6, yy + 3); }
+  // x 轴小时刻度（每 3h）
+  ctx.fillStyle = '#8892a4'; ctx.font = '10px -apple-system,sans-serif'; ctx.textAlign = 'center';
+  for (let h = 0; h < HOURS; h += 3) ctx.fillText(h + ':00', xp(h), H - pad.bottom + 16);
+  // 画线
+  function drawLine(series, color, dashed) {
+    if (!series.length) return;
+    ctx.beginPath();
+    for (let h = 0; h < series.length; h++) { const x = xp(h), y = yp(series[h]); if (h === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); }
+    ctx.strokeStyle = color; ctx.lineWidth = dashed ? 2 : 2.5;
+    ctx.setLineDash(dashed ? [5, 4] : []); ctx.stroke(); ctx.setLineDash([]);
+    // 末端标值
+    const last = series.length - 1;
+    ctx.fillStyle = color; ctx.font = 'bold 10px -apple-system,sans-serif'; ctx.textAlign = 'left';
+    ctx.fillText('$' + series[last].toLocaleString(), Math.min(xp(last) + 5, W0 - pad.right - 36), yp(series[last]) - 2);
+  }
+  sel.forEach(i => { const c = dayPalette[i % dayPalette.length]; drawLine(hrSeries(i, 'festival'), c, true); drawLine(hrSeries(i, 'total'), c, false); });
+}
+
+function hrAllSeries(key) {
+  const out = []; let cum = 0;
+  hourly.forEach(h => { const slot = h.byR[currentR] || h.byR['全部']; (slot[key] || []).forEach(v => { if (hrMode === 'cum') { cum += v; out.push(cum); } else out.push(v); }); });
+  return out;
+}
+
+function drawHourlyAll() {
+  const total = hrAllSeries('total'), fest = hrAllSeries('festival'), N = total.length;
+  if (!N) return;
+  // 各天边界（按各天已有的小时数累计）
+  const bounds = []; let acc = 0;
+  hourly.forEach(h => { const len = h.byR['全部'].total.length; bounds.push({ label: h.day_label, start: acc, len: len }); acc += len; });
+  const canvas = $('hourlyAllChart'), W0 = canvas.offsetWidth, H = 280;
+  canvas.width = W0 * dpr; canvas.height = H * dpr;
+  const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
+  const pad = { top: 16, right: 20, bottom: 30, left: 56 };
+  const cW = W0 - pad.left - pad.right, cH = H - pad.top - pad.bottom;
+  let maxVal = Math.max(...total, ...fest, 1) * 1.15;
+  function xp(i) { return pad.left + (N > 1 ? i / (N - 1) * cW : cW / 2); }
+  function yp(v) { return pad.top + cH - (v / maxVal * cH); }
+  // 网格 + y 轴
+  ctx.strokeStyle = '#2e3248'; ctx.lineWidth = 0.5;
+  for (let g = 0; g <= 4; g++) { const yy = pad.top + cH * g / 4; ctx.beginPath(); ctx.moveTo(pad.left, yy); ctx.lineTo(W0 - pad.right, yy); ctx.stroke(); ctx.fillStyle = '#8892a4'; ctx.font = '10px -apple-system,sans-serif'; ctx.textAlign = 'right'; ctx.fillText('$' + Math.round(maxVal * (4 - g) / 4).toLocaleString(), pad.left - 6, yy + 3); }
+  // 日界分隔线 + 标签
+  bounds.forEach((b, bi) => {
+    if (bi > 0) { const x = xp(b.start); ctx.strokeStyle = '#3a3f5a'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, H - pad.bottom); ctx.stroke(); ctx.setLineDash([]); }
+    const midX = xp(b.start + Math.max(b.len - 1, 0) / 2);
+    ctx.fillStyle = '#8892a4'; ctx.font = 'bold 11px -apple-system,sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(b.label, midX, H - pad.bottom + 16);
+  });
+  function drawLine(series, color, dashed) {
+    ctx.beginPath();
+    for (let i = 0; i < series.length; i++) { const x = xp(i), y = yp(series[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); }
+    ctx.strokeStyle = color; ctx.lineWidth = dashed ? 2 : 2.5;
+    ctx.setLineDash(dashed ? [5, 4] : []); ctx.stroke(); ctx.setLineDash([]);
+    const last = series.length - 1;
+    ctx.fillStyle = color; ctx.font = 'bold 11px -apple-system,sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText('$' + series[last].toLocaleString(), W0 - pad.right, yp(series[last]) - 4);
+  }
+  drawLine(fest, '#ffd166', true);
+  drawLine(total, '#6c63ff', false);
+  // 图例
+  ctx.textAlign = 'left'; ctx.font = '11px -apple-system,sans-serif';
+  ctx.fillStyle = '#6c63ff'; ctx.fillText('— 总流水', pad.left, pad.top + 4);
+  ctx.fillStyle = '#ffd166'; ctx.fillText('-- 节日流水', pad.left + 70, pad.top + 4);
+}
+
+function buildRFilter() {
+  const el = $('hrRFilter'); el.innerHTML = '';
+  ['全部', '超R', '大R', '中R', '小R', '非R'].forEach(rl => {
+    const on = currentR === rl, btn = document.createElement('div');
+    btn.className = 'mod-tab' + (on ? ' active' : '');
+    if (on) { btn.style.background = rLevelColors[rl] || 'var(--accent)'; btn.style.borderColor = 'transparent'; }
+    btn.textContent = rl;
+    btn.onclick = () => { currentR = rl; buildRFilter(); drawHourly(); drawHourlyAll(); };
+    el.appendChild(btn);
+  });
+}
+
+function renderRLevels() {
+  const data = rlevels.slice();
+  const sumFest = data.reduce((s, r) => s + r.festival, 0);
+  const maxFest = Math.max(...data.map(r => r.festival), 1);
+  $('rlevelBars').innerHTML = data.map(r => {
+    const w = r.festival / maxFest * 100, pct = sumFest ? r.festival / sumFest * 100 : 0;
+    const arpu = r.payers ? r.festival / r.payers : 0, c = rLevelColors[r.rlevel] || '#8892a4';
+    return '<div class="mod-row"><div class="mod-name">' + r.rlevel + '</div>'
+      + '<div class="mod-bar-wrap"><div class="mod-bar" style="width:' + w.toFixed(1) + '%;background:' + c + '"></div></div>'
+      + '<div class="mod-val">' + fmtMoney(r.festival) + '</div>'
+      + '<div class="mod-pct">' + pct.toFixed(0) + '%</div>'
+      + '<div class="mod-chg muted" style="width:56px">' + r.payers + '人</div>'
+      + '<div class="mod-chg" style="width:64px">$' + arpu.toFixed(2) + '</div></div>';
+  }).join('');
+  const paying = data.filter(r => r.rlevel !== '非R');
+  const payFest = paying.reduce((s, r) => s + r.festival, 0);
+  const top = data.slice().sort((a, b) => b.festival - a.festival)[0];
+  let note = '全程累计节日收入 ' + fmtMoney(sumFest) + '：付费 R 级（超/大/中/小 R）贡献 ' + fmtMoney(payFest)
+    + '（' + (sumFest ? (payFest / sumFest * 100).toFixed(0) : 0) + '%）';
+  if (top && top.festival > 0) note += '，其中 ' + top.rlevel + ' 单层 ' + fmtMoney(top.festival) + '（' + (top.festival / sumFest * 100).toFixed(0) + '%）领跑';
+  note += '。层节日ARPU = 该层节日流水 / 该层总付费人数。';
+  $('rlevelNote').textContent = note;
+}
+
+function renderRGain() {
+  if (!compare || !compare.cumulative || !compare.cumulative.summer_r || !compare.cumulative.valentine_r) return;
+  const cu = compare.cumulative, sr = cu.summer_r, vr = cu.valentine_r, order = ['超R', '大R', '中R', '小R'];  // 非R无付费玩家,剔除
+  $('rgainSection').style.display = '';
+  $('rgainName').textContent = compare.val_name;
+  const payRate = o => (o.payers ? o.fest_payers / o.payers * 100 : 0);  // 付费玩家付费率% = 节日付费/总付费
+  const arpu = o => (o.payers ? o.festival / o.payers : 0);             // 付费ARPU = 节日流水/总付费人数
+  const arppu = o => (o.fest_payers ? o.festival / o.fest_payers : 0);  // ARPPU = 节日流水/节日付费人数
+  // 上→本 单元格：值变化 + 涨跌色
+  function cell(vOld, vNew, fmt) {
+    const up = vNew > vOld, dn = vNew < vOld, cls = (up ? 'up' : dn ? 'down' : 'muted');
+    return '<td class="num"><span class="muted">' + fmt(vOld) + '</span> → <span class="' + cls + '">' + fmt(vNew) + '</span></td>';
+  }
+  const money = v => fmtMoney(v), pct = v => v.toFixed(1) + '%', usd = v => '$' + v.toFixed(2), usd0 = v => '$' + v.toFixed(0), int0 = v => Math.round(v).toLocaleString();
+  const rows = order.map(rb => {
+    const S = sr[rb] || {}, V = vr[rb] || {};
+    return '<tr><td style="color:' + (rLevelColors[rb] || '#8892a4') + ';font-weight:600">' + rb + '</td>'
+      + cell(V.payers || 0, S.payers || 0, int0)
+      + cell(payRate(V), payRate(S), pct)
+      + cell(arpu(V), arpu(S), usd)
+      + cell(arppu(V), arppu(S), usd0)
+      + cell(V.festival || 0, S.festival || 0, money) + '</tr>';
+  }).join('');
+  // 合计行（付费四档；档位互斥，人数/流水可直接相加）
+  const agg = src => order.reduce((a, rb) => { const o = src[rb] || {}; a.payers += o.payers || 0; a.fest_payers += o.fest_payers || 0; a.festival += o.festival || 0; return a; }, {payers: 0, fest_payers: 0, festival: 0});
+  const oS = agg(sr), oV = agg(vr);
+  const totalRow = '<tr style="font-weight:700"><td>合计</td>'
+    + cell(oV.payers, oS.payers, int0) + cell(payRate(oV), payRate(oS), pct)
+    + cell(arpu(oV), arpu(oS), usd) + cell(arppu(oV), arppu(oS), usd0) + cell(oV.festival, oS.festival, money) + '</tr>';
+  $('rgainBody').innerHTML = rows + totalRow;
+  // 结论：聚焦付费玩家付费率（已排除免费玩家）
+  const rImp = order.filter(rb => payRate(sr[rb] || {}) > payRate(vr[rb] || {}));
+  const dPP = payRate(oS) - payRate(oV);
+  let note = '累计同期（' + cu.win + '）整体付费玩家付费率 <b>' + payRate(oV).toFixed(1) + '% → '
+    + '<span class="' + (dPP >= 0 ? 'up' : 'down') + '">' + payRate(oS).toFixed(1) + '%</span></b>（' + (dPP >= 0 ? '+' : '') + dPP.toFixed(1) + 'pp，已排除免费玩家），'
+    + '付费ARPU <b>$' + arpu(oV).toFixed(2) + ' → <span class="' + (arpu(oS) >= arpu(oV) ? 'up' : 'down') + '">$' + arpu(oS).toFixed(2) + '</span></b>。';
+  note += '提升集中在中低档：' + (rImp.length ? rImp.map(rb => rb + '（' + payRate(vr[rb]).toFixed(0) + '%→' + payRate(sr[rb]).toFixed(0) + '%）').join('、') : '无') + '。高档本就接近饱和。';
+  $('rgainNote').className = 'conclusion ' + (dPP >= 0 ? 'up' : 'down');
+  $('rgainNote').innerHTML = note;
+}
+
+function buildModrFilter() {
+  const el = $('modrFilter'); el.innerHTML = '';
+  ['全部', '超R', '大R', '中R', '小R'].forEach(rl => {
+    const on = currentModR === rl, btn = document.createElement('div');
+    btn.className = 'mod-tab' + (on ? ' active' : '');
+    if (on) { btn.style.background = rLevelColors[rl] || 'var(--accent)'; btn.style.borderColor = 'transparent'; }
+    btn.textContent = rl;
+    btn.onclick = () => { currentModR = rl; buildModrFilter(); renderModR(); };
+    el.appendChild(btn);
+  });
+}
+
+function renderModR() {
+  if (!moduleR) return;
+  $('modrSection').style.display = '';
+  $('modrName').textContent = moduleR.val_name;
+  const tiers = ['超R', '大R', '中R', '小R', '非R'];
+  // 取某侧在当前R级筛选下：denom(总付费人数) + 各模块 buyers/rev
+  function side(srcKey) {
+    const src = moduleR[srcKey], byR = src.byR, pay = src.payers;
+    const sel = (currentModR === '全部') ? tiers : [currentModR];
+    let denom = 0; const mod = {};
+    sel.forEach(rb => {
+      denom += pay[rb] || 0;
+      const mb = byR[rb] || {};
+      for (const mm in mb) { mod[mm] = mod[mm] || {buyers: 0, rev: 0}; mod[mm].buyers += mb[mm].buyers; mod[mm].rev += mb[mm].rev; }
+    });
+    return {denom, mod};
+  }
+  const S = side('summer'), V = side('valentine');
+  const payRate = (m, d) => (d && m ? m.buyers / d * 100 : 0);
+  const arpu = (m, d) => (d && m ? m.rev / d : 0);
+  const arppu = m => (m && m.buyers ? m.rev / m.buyers : 0);
+  function cell(vOld, vNew, fmt) {
+    const cls = vNew > vOld ? 'up' : vNew < vOld ? 'down' : 'muted';
+    return '<td class="num"><span class="muted">' + fmt(vOld) + '</span> → <span class="' + cls + '">' + fmt(vNew) + '</span></td>';
+  }
+  const pct = v => v.toFixed(1) + '%', usd = v => '$' + v.toFixed(2), usd0 = v => '$' + v.toFixed(0), money = v => fmtMoney(v);
+  const rows = moduleR.modules.map(mm => {
+    const sm = S.mod[mm], vm = V.mod[mm];
+    if (!sm && !vm) return '';
+    const c = modColors[mm] || '#8892a4';
+    return '<tr><td style="color:' + c + ';font-weight:600">' + mm + '</td>'
+      + cell(payRate(vm, V.denom), payRate(sm, S.denom), pct)
+      + cell(arpu(vm, V.denom), arpu(sm, S.denom), usd)
+      + cell(arppu(vm), arppu(sm), usd0)
+      + cell(vm ? vm.rev : 0, sm ? sm.rev : 0, money) + '</tr>';
+  }).join('');
+  $('modrBody').innerHTML = rows || '<tr><td colspan="5" class="muted">无数据</td></tr>';
+  $('modrNote').className = 'conclusion';
+  $('modrNote').innerHTML = 'R级筛选【<b style="color:' + (rLevelColors[currentModR] || '#fff') + '">' + currentModR + '</b>】下，各节日模块在该人群的付费率/ARPU/ARPPU（上期' + moduleR.val_name + ' → 本期' + moduleR.summer_name + '）。分母总付费人数：上期 ' + V.denom + ' 人 → 本期 ' + S.denom + ' 人。';
+}
+
+function renderModTotals() {
+  const tot = {};
+  allDays.forEach(d => { for (const [m, v] of Object.entries(d.modules)) tot[m] = (tot[m] || 0) + v; });
+  const names = Object.keys(tot).sort((a, b) => tot[b] - tot[a]);
+  const maxR = Math.max(...Object.values(tot), 1), sum = Object.values(tot).reduce((s, v) => s + v, 0);
+  const nDays = allDays.length;
+  if (!names.length) { $('modTotalBars').innerHTML = '<div class="muted" style="padding:8px 0">无数据</div>'; return; }
+  $('modTotalBars').innerHTML = names.map(m => {
+    const rev = tot[m], w = rev / maxR * 100, pct = sum ? rev / sum * 100 : 0, avg = rev / nDays, c = modColors[m] || '#8892a4';
+    return '<div class="mod-row"><div class="mod-name">' + m + '</div><div class="mod-bar-wrap"><div class="mod-bar" style="width:' + w.toFixed(1) + '%;background:' + c + '"></div></div><div class="mod-val">' + fmtMoney(rev) + '</div><div class="mod-pct">' + pct.toFixed(0) + '%</div><div class="mod-chg muted">' + fmtMoney(avg) + '/d</div></div>';
+  }).join('');
+  const top = names[0], top2 = names[1];
+  let note = '全程（' + allDays[0].day_label + '~' + allDays[nDays - 1].day_label + '）累计节日收入 ' + fmtMoney(sum) + '，' + top + ' 以 ' + fmtMoney(tot[top]) + '（' + (tot[top] / sum * 100).toFixed(0) + '%）领跑';
+  if (top2) note += '，其次 ' + top2 + ' ' + fmtMoney(tot[top2]) + '（' + (tot[top2] / sum * 100).toFixed(0) + '%）';
+  note += '。';
+  $('modTotalNote').textContent = note;
+}
+
+function renderAlerts() {
+  const d = allDays[currentDayIdx], prev = currentDayIdx > 0 ? allDays[currentDayIdx - 1] : null;
+  const nfArpu = d.non_festival / Math.max(d.payers, 1), nfDelta = nfArpu - baseline.arpu_nonfest;
+  const modTotal = Object.values(d.modules).reduce((s, v) => s + v, 0);
+  const alerts = [];
+  if (prev) { for (const [m, rev] of Object.entries(d.modules)) { const p = prev.modules[m] || 0; if (p > 100 && rev < p * 0.5) alerts.push(['warn', m + '从' + prev.day_label + '的' + fmtMoney(p) + '降至' + d.day_label + '的' + fmtMoney(rev) + '，降幅' + Math.abs(pctChg(rev, p)).toFixed(0) + '%']); if (p < 50 && rev > 500) alerts.push(['info', m + '今日新开即贡献' + fmtMoney(rev) + '，占节日收入' + (rev / modTotal * 100).toFixed(0) + '%']); } }
+  if (nfDelta < -2) alerts.push(['warn', '非节日ARPU下降' + fmtDelta(nfDelta) + '/人，存在挤占风险']);
+  else if (nfDelta > 2) alerts.push(['info', '非节日ARPU上升' + fmtDelta(nfDelta) + '/人，节日带动日常消费']);
+  else alerts.push(['info', '非节日消费持平，节日为纯增量模型']);
+  $('alertsBox').innerHTML = alerts.map(([t, msg]) => '<div class="alert ' + (t === 'warn' ? 'alert-warn' : 'alert-info') + '"><span class="alert-icon">' + (t === 'warn' ? '&#9888;&#65039;' : '&#128204;') + '</span>' + msg + '</div>').join('');
+}
+
+function modBarsHTML(mods) {
+  const names = Object.keys(mods).sort((a, b) => mods[b] - mods[a]);
+  const maxR = Math.max(...Object.values(mods), 1), tot = Object.values(mods).reduce((s, v) => s + v, 0);
+  if (!names.length) return '<div class="muted" style="padding:8px 0">无数据</div>';
+  return names.map(m => {
+    const rev = mods[m], w = rev / maxR * 100, pct = tot ? rev / tot * 100 : 0, c = modColors[m] || '#8892a4';
+    return '<div class="mod-row"><div class="mod-name">' + m + '</div><div class="mod-bar-wrap"><div class="mod-bar" style="width:' + w.toFixed(1) + '%;background:' + c + '"></div></div><div class="mod-val">' + fmtMoney(rev) + '</div><div class="mod-pct">' + pct.toFixed(0) + '%</div></div>';
+  }).join('');
+}
+
+function renderCompare() {
+  if (!compare || !compare.days || !compare.days.length) return;
+  $('compareSection').style.display = '';
+  $('cmpName').textContent = compare.val_name + '（D0 ' + compare.val_d0 + '）';
+  $('cmpColA').textContent = '上期 ' + compare.val_name;
+  $('cmpColB').textContent = '本期 ' + compare.summer_name;
+  $('cmpRColV').textContent = compare.val_name + ' 节日';
+  $('cmpRColS').textContent = compare.summer_name + ' 节日';
+  $('cmpRArpuV').textContent = compare.val_name + ' 层ARPU';
+  $('cmpRArpuS').textContent = compare.summer_name + ' 层ARPU';
+  const tabs = compare.days.slice();
+  if (compare.cumulative) tabs.push(compare.cumulative);  // 末尾追加「累计」tab
+  if (cmpDayIdx > tabs.length - 1) cmpDayIdx = tabs.length - 1;
+  const tabsEl = $('cmpDayTabs'); tabsEl.innerHTML = '';
+  tabs.forEach((cd, i) => {
+    const div = document.createElement('div');
+    div.className = 'day-tab' + (i === cmpDayIdx ? ' active' : '');
+    div.innerHTML = cd.day_label + '<span class="day-date">' + cd.win + '</span>';
+    div.onclick = () => { cmpDayIdx = i; renderCompareDay(); };
+    tabsEl.appendChild(div);
+  });
+  renderCompareDay();
+}
+
+function cmpTabs() { const t = compare.days.slice(); if (compare.cumulative) t.push(compare.cumulative); return t; }
+
+function renderCompareDay() {
+  const tabs = cmpTabs();
+  const cd = tabs[cmpDayIdx], S = cd.summer, V = cd.valentine, isCum = (cd.day_label === '累计');
+  [...$('cmpDayTabs').children].forEach((c, i) => { c.className = 'day-tab' + (i === cmpDayIdx ? ' active' : ''); });
+  $('cmpHdr').textContent = cd.day_label + '（' + cd.win + '）';
+  const vArpu = V.payers ? V.festival / V.payers : 0, sArpu = S.payers ? S.festival / S.payers : 0;  // 分母=当日总付费人数
+  const vRatio = V.total ? V.festival / V.total * 100 : 0, sRatio = S.total ? S.festival / S.total * 100 : 0;
+  const vPayRate = V.payers ? V.fest_payers / V.payers * 100 : 0, sPayRate = S.payers ? S.fest_payers / S.payers * 100 : 0;  // 付费玩家付费率 = 节日付费/总付费
+  const vArppu = V.fest_payers ? V.festival / V.fest_payers : 0, sArppu = S.fest_payers ? S.festival / S.fest_payers : 0;  // ARPPU = 节日流水/节日付费人数
+  function dCell(pct) { if (pct == null) return '<td class="num muted">—</td>'; const cls = pct > 0 ? 'up' : pct < 0 ? 'down' : 'muted'; return '<td class="num ' + cls + '">' + (pct > 0 ? '+' : '') + pct.toFixed(1) + '%</td>'; }
+  const ppCls = (sRatio - vRatio) > 0 ? 'up' : (sRatio - vRatio) < 0 ? 'down' : 'muted';
+  const prCls = (sPayRate - vPayRate) > 0 ? 'up' : (sPayRate - vPayRate) < 0 ? 'down' : 'muted';
+  const rows = [
+    ['总流水', fmtMoney(V.total), fmtMoney(S.total), dCell(pctChg(S.total, V.total))],
+    ['总付费人数', V.payers, S.payers, dCell(pctChg(S.payers, V.payers))],
+    ['节日流水', fmtMoney(V.festival), fmtMoney(S.festival), dCell(pctChg(S.festival, V.festival))],
+    ['节日占比', vRatio.toFixed(1) + '%', sRatio.toFixed(1) + '%', '<td class="num ' + ppCls + '">' + ((sRatio - vRatio) >= 0 ? '+' : '') + (sRatio - vRatio).toFixed(1) + 'pp</td>'],
+    ['节日付费人数', V.fest_payers, S.fest_payers, dCell(pctChg(S.fest_payers, V.fest_payers))],
+    ['付费率(节日付费人数/总付费人数)', vPayRate.toFixed(1) + '%', sPayRate.toFixed(1) + '%', '<td class="num ' + prCls + '">' + ((sPayRate - vPayRate) >= 0 ? '+' : '') + (sPayRate - vPayRate).toFixed(1) + 'pp</td>'],
+    ['节日ARPU(节日流水/总付费人数)', '$' + vArpu.toFixed(2), '$' + sArpu.toFixed(2), dCell(pctChg(sArpu, vArpu))],
+    ['ARPPU(节日流水/节日付费人数)', '$' + vArppu.toFixed(2), '$' + sArppu.toFixed(2), dCell(pctChg(sArppu, vArppu))],
+  ];
+  $('cmpBody').innerHTML = rows.map(r => '<tr><td>' + r[0] + '</td><td class="num">' + r[1] + '</td><td class="num">' + r[2] + '</td>' + r[3] + '</tr>').join('');
+  $('cmpModBLabel').textContent = '上期 ' + compare.val_name + ' ' + cd.day_label + ' 模块（' + cd.val_date + '）';
+  $('cmpModB').innerHTML = modBarsHTML(V.modules);
+  $('cmpModALabel').textContent = '本期 ' + compare.summer_name + ' ' + cd.day_label + ' 模块（' + cd.summer_date + '）';
+  $('cmpModA').innerHTML = modBarsHTML(S.modules);
+  const dPR = sPayRate - vPayRate, dArppu = (vArppu ? (sArppu - vArppu) / vArppu * 100 : 0);
+  const note = cd.day_label + '（' + cd.win + '）：本期' + compare.summer_name + '节日 ' + fmtMoney(S.festival) + '（占比 ' + sRatio.toFixed(0) + '%、' + S.fest_payers + ' 人付费）vs 上期' + compare.val_name + ' ' + fmtMoney(V.festival) + '（占比 ' + vRatio.toFixed(0) + '%、' + V.fest_payers + ' 人）。'
+    + (sRatio >= vRatio ? '本期节日吸金占比更高' : '本期节日吸金占比偏低') + '（' + ((sRatio - vRatio) >= 0 ? '+' : '') + (sRatio - vRatio).toFixed(1) + 'pp），'
+    + (S.fest_payers >= V.fest_payers ? '节日付费人数更多' : '节日付费人数更少') + '，节日ARPU(节日流水/总付费人数) $' + sArpu.toFixed(2) + ' vs $' + vArpu.toFixed(2) + '。'
+    + '付费率 ' + vPayRate.toFixed(1) + '%→' + sPayRate.toFixed(1) + '%（' + (dPR >= 0 ? '+' : '') + dPR.toFixed(1) + 'pp）、ARPPU $' + vArppu.toFixed(2) + '→$' + sArppu.toFixed(2) + '（' + (dArppu >= 0 ? '+' : '') + dArppu.toFixed(1) + '%）：'
+    + (dPR > 0 && dArppu < 0 ? '增长靠扩大付费人群（铺广度），人均深度略降——属"宽口浅底"，下一步应补深度款把 ARPPU 拉起来。'
+     : dPR > 0 && dArppu >= 0 ? '付费面与人均深度双升，结构最健康。'
+     : dPR <= 0 && dArppu > 0 ? '靠加深人均拉动，付费面未扩——需补低门槛款拉新付费。'
+     : '付费面与人均深度双降，节日吸引力走弱。');
+  $('cmpNote').className = 'conclusion ' + (sRatio >= vRatio ? 'up' : 'down');
+  $('cmpNote').textContent = note;
+
+  // R级对打表
+  const sr = cd.summer_r, vr = cd.valentine_r;
+  if (sr && vr) {
+    $('cmpRSection').style.display = '';
+    const order = ['超R', '大R', '中R', '小R', '非R'];
+    let sFestSum = 0, vFestSum = 0, sPaySum = 0, vPaySum = 0;
+    const body = order.map(rb => {
+      const Sx = sr[rb] || {festival: 0, payers: 0}, Vx = vr[rb] || {festival: 0, payers: 0};
+      sFestSum += Sx.festival; vFestSum += Vx.festival; sPaySum += Sx.payers; vPaySum += Vx.payers;
+      const sA = Sx.payers ? Sx.festival / Sx.payers : 0, vA = Vx.payers ? Vx.festival / Vx.payers : 0;
+      const d = pctChg(Sx.festival, Vx.festival);
+      const dcell = d == null ? '<td class="num muted">—</td>' : '<td class="num ' + (d > 0 ? 'up' : d < 0 ? 'down' : 'muted') + '">' + (d > 0 ? '+' : '') + d.toFixed(0) + '%</td>';
+      return '<tr><td>' + rb + '</td><td class="num">' + fmtMoney(Vx.festival) + '</td><td class="num">' + fmtMoney(Sx.festival) + '</td>' + dcell
+        + '<td class="num muted">$' + vA.toFixed(2) + '</td><td class="num">$' + sA.toFixed(2) + '</td></tr>';
+    }).join('');
+    const dSum = pctChg(sFestSum, vFestSum);
+    const dSumCell = dSum == null ? '<td class="num muted">—</td>' : '<td class="num ' + (dSum > 0 ? 'up' : dSum < 0 ? 'down' : 'muted') + '">' + (dSum > 0 ? '+' : '') + dSum.toFixed(0) + '%</td>';
+    const sArpuAll = sPaySum ? sFestSum / sPaySum : 0, vArpuAll = vPaySum ? vFestSum / vPaySum : 0;
+    const totalRow = '<tr style="font-weight:700"><td>合计</td><td class="num">' + fmtMoney(vFestSum) + '</td><td class="num">' + fmtMoney(sFestSum) + '</td>' + dSumCell
+      + '<td class="num muted">$' + vArpuAll.toFixed(2) + '</td><td class="num">$' + sArpuAll.toFixed(2) + '</td></tr>';
+    $('cmpRBody').innerHTML = body + totalRow;
+  } else {
+    $('cmpRSection').style.display = 'none';
+  }
+}
+
+function renderAll() {
+  buildDayTabs(); renderKPI(); renderARPU(); renderModBars();
+  drawTrend('totalChart', 'total', '#6c63ff', 'rgba(108,99,255,.1)', 962, '基线 $963');
+  drawTrend('festChart', 'festival', '#ffd166', 'rgba(255,209,102,.1)', 0, '', true);
+  renderModTotals();
+  buildModTabs(); drawModTrend();
+  buildRFilter(); buildHrChips(); buildHrModeToggle(); drawHourly(); drawHourlyAll();
+  renderRLevels();
+  renderRGain();
+  buildModrFilter(); renderModR();
+  renderAlerts();
+}
+renderAll();
+renderCompare();
+</script>
+</body>
+</html>

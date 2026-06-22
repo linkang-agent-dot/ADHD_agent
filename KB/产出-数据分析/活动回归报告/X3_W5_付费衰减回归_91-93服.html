@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X3 W5付费衰减回归（更新）— 91-93服 尼罗之辉</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;line-height:1.7;color:#24292e;background:#fff;margin:0;padding:0}
+#content{max-width:960px;margin:0 auto;padding:48px 32px 80px}
+.report-header{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);color:#fff;padding:48px 32px 36px;margin:-48px -32px 40px;border-radius:0 0 16px 16px}
+.report-header h1{font-size:2rem;font-weight:700;margin:0 0 8px;letter-spacing:-0.5px}
+.report-header .subtitle{color:rgba(255,255,255,0.7);font-size:0.9rem;margin:0}
+h2{font-size:1.4rem;font-weight:600;color:#24292e;margin-top:48px;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #e1e4e8}
+h3{font-size:1.1rem;font-weight:600;color:#586069;margin-top:24px;margin-bottom:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+.card{background:#f6f8fa;border-radius:12px;padding:20px;text-align:center;border:1px solid #e1e4e8}
+.card .lb{font-size:0.85rem;color:#586069;margin-bottom:4px}
+.card .vl{font-size:2.2rem;font-weight:700;margin:4px 0}
+.card .sb{font-size:0.8rem;color:#959da5}
+table{border-collapse:collapse;width:100%;margin:12px 0 20px;font-size:0.85rem}
+th,td{border:1px solid #e1e4e8;padding:8px 10px;text-align:right}
+th{background:#f6f8fa;color:#24292e;font-weight:600;white-space:nowrap}
+td:first-child,th:first-child{text-align:left}
+tr:nth-child(even){background:#fafbfc}
+.hl{background:#fffbdd!important}
+.pos{color:#22863a;font-weight:600}
+.neg{color:#cb2431;font-weight:600}
+.zero{color:#959da5}
+.callout{border-radius:8px;padding:16px 20px;margin:16px 0;font-size:0.9rem;line-height:1.6}
+.callout-danger{background:#ffeef0;border-left:4px solid #cb2431}
+.callout-success{background:#dcffe4;border-left:4px solid #22863a}
+.callout-warning{background:#fffbdd;border-left:4px solid #f9c513}
+.callout-info{background:#f1f8ff;border-left:4px solid #0366d6}
+.section-group{display:inline-block;font-size:0.75rem;font-weight:600;color:#fff;padding:2px 10px;border-radius:12px;margin-right:8px;vertical-align:middle}
+.bg-red{background:#cb2431}.bg-green{background:#22863a}.bg-blue{background:#0366d6}.bg-gray{background:#586069}
+</style>
+</head>
+<body>
+<div id="content">
+
+<div class="report-header">
+  <h1>X3 W5 付费衰减回归（更新版）</h1>
+  <p class="subtitle">本期：91-93服（server_id 1900-1920，3服，已过D35可分析）&nbsp;|&nbsp; 对照基准：上期 W5报告（80-83服）&nbsp;|&nbsp; 2026-06-22</p>
+</div>
+
+<div class="callout callout-info">
+  <b>本报告目的：</b>上期 W5 报告发现尼罗活动期<b>超投万能传奇信物（占20.2%）+ 英雄装备箱（73.6%）→ 碎片积压（W3消耗率从89%跌到66%）→ 5个下游礼包付费深度衰减</b>。本次把该「活动后付费衰减」分析回归到 91-96服这一批。<br>
+  <b>⚠️ 时间范围限制：</b>W5 衰减需要 D35+ 数据。本批6服中仅 <b>91-93服（1900/1910/1920）已过 D35</b>（开服5/05~5/13），94-96服(1930-1950)尚未到 D35，<b>无法纳入</b>，待其长出数据后补。
+</div>
+
+<!-- 一、核心结论 -->
+<h2 id="s1"><span class="section-group bg-green">核心</span>一、核心结论：碎片积压基本没复现</h2>
+
+<div class="grid2">
+  <div class="card"><div class="lb">万能传奇信物 消耗率（本期91-93）</div><div class="vl" style="color:#22863a">85.3%</div><div class="sb">上期积压时 66% · 健康基准 89%</div></div>
+  <div class="card"><div class="lb">活动后逐周收入（W3→W5）</div><div class="vl" style="color:#cb2431">-33%</div><div class="sb">$47.8k → $32.1k，主因付费人数掉</div></div>
+</div>
+
+<div class="callout callout-success">
+  <b>结论 1（关键好转）：上期最大问题「万能传奇信物积压」本轮基本解决。</b>91-93服活动窗口(D20-34)万能传奇信物消耗率 <b>85.3%</b>（产出44,417 / 消耗37,869），远高于上期积压时的 66%、接近健康基准 89%。说明碎片不再积压——大概率是 P0 优化（累充碎片→抽奖券）落地见效，或本批大服自身消化能力更强。
+</div>
+<div class="callout callout-warning">
+  <b>结论 2：活动后仍有逐周付费衰减，但性质变了。</b>W3→W5 收入 -33%，<b>主要是付费人数下滑（542→303）而非付费深度崩塌</b>——ARPPU 反而从 $88 升到 $106（低档玩家自然流失、留下高价值玩家）。这更接近<b>自然生命周期衰减</b>，而非上期那种「碎片积压→大R不再深买」的活动副作用。
+</div>
+
+<!-- 二、逐周衰减曲线 -->
+<h2 id="s2"><span class="section-group bg-red">数据</span>二、活动后逐周付费曲线（91-93服，各服窗口对齐）</h2>
+<table>
+<tr><th>周</th><th>窗口</th><th>收入</th><th>付费人</th><th>ARPPU</th><th>环比收入</th><th>说明</th></tr>
+<tr><td>W2</td><td>D14-20（活动前）</td><td>$66,722</td><td>672</td><td>$99</td><td class="zero">基线</td><td></td></tr>
+<tr class="hl"><td>W3</td><td>D21-27（尼罗活动周）</td><td>$47,784</td><td>542</td><td>$88</td><td class="neg">-28%</td><td>活动周，付费率升但总额随活跃自然回落</td></tr>
+<tr><td>W4</td><td>D28-34（活动尾）</td><td>$40,107</td><td>423</td><td>$95</td><td class="neg">-16%</td><td>尼罗窗口收尾</td></tr>
+<tr><td>W5</td><td>D35-41（活动后）</td><td>$32,102</td><td>303</td><td>$106</td><td class="neg">-20%</td><td>活动结束，付费人继续掉</td></tr>
+<tr><td>W6*</td><td>D42-48</td><td>$14,914</td><td>158</td><td>—</td><td class="zero">—</td><td>*数据不完整（多数服未到D48），仅供参考</td></tr>
+</table>
+<div class="callout callout-info">付费人数是衰减主因（W2→W5：672→303，-55%），ARPPU 同期反升（$99→$106）。衰减形态=低/中档玩家自然流失，留存玩家价值更高——与上期「碎片积压压制大R深买」的机制不同。</div>
+
+<!-- 三、碎片消耗验证 -->
+<h2 id="s3"><span class="section-group bg-blue">验证</span>三、万能传奇信物 产出/消耗（Item_52003，91-93服 D20-34）</h2>
+<table>
+<tr><th>口径</th><th>本期 91-93</th><th>上期 80-83（W5报告）</th><th>健康基准</th></tr>
+<tr class="hl"><td><b>消耗率</b></td><td class="pos"><b>85.3%</b></td><td class="neg">66%（积压）</td><td>89%</td></tr>
+<tr><td>窗口产出</td><td>44,417</td><td>—</td><td>—</td></tr>
+<tr><td>窗口消耗</td><td>37,869</td><td>—</td><td>—</td></tr>
+</table>
+<h3>产出来源（change_type=1，Top）</h3>
+<table>
+<tr><th>来源 reason_id</th><th>产出量</th><th>占比</th></tr>
+<tr><td>activity_reward（通用活动奖励·含累充/转盘等）</td><td>21,035</td><td>47.4%</td></tr>
+<tr><td>Mail（邮件，含补发）</td><td>7,670</td><td>17.3%</td></tr>
+<tr><td>activity_hero_secret_point_reward</td><td>2,725</td><td>6.1%</td></tr>
+<tr><td>fishing_goal_reward</td><td>2,405</td><td>5.4%</td></tr>
+<tr><td>activity_battle_pass_score_reward（BP积分）</td><td>2,207</td><td>5.0%</td></tr>
+<tr><td>item_op_activity_gvg_lottery（竞技转盘）</td><td>1,715</td><td>3.9%</td></tr>
+<tr><td>activity_exchange（兑换商店）</td><td>934</td><td>2.1%</td></tr>
+<tr><td>其余</td><td>~5,700</td><td>~12.8%</td></tr>
+</table>
+<div class="callout callout-warning">
+  <b>归因精度说明：</b>本批服万能传奇信物产出走通用 <code>activity_reward</code>（占47%），<b>reason_id 无法直接拆出"尼罗"精确占比</b>（上期 W5 报告的 20.2% 是按 activity_id/task 级拆的）。要精确复现"尼罗供给占比从20.2%降到多少"，需按 activity_id（101023转盘/100594累充/102234 BP/101334兑换）做产出归因——<b>这一步待深挖</b>。但消耗率 85.3%（vs 66%）已足以判断积压问题基本解除。
+</div>
+
+<h3>3.2 英雄装备箱（幸运 · Item_166006，91-93服 D20-34）</h3>
+<table>
+<tr><th>口径</th><th>本期 91-93</th><th>上期 80-83（W5报告）</th></tr>
+<tr class="hl"><td><b>消耗率</b></td><td class="pos"><b>98.0%</b></td><td class="zero">（上期未测消耗率，仅报供给占比73.6%）</td></tr>
+<tr><td>窗口产出</td><td>6,708</td><td>1,572（全渠道）</td></tr>
+<tr><td>窗口消耗</td><td>6,576</td><td>—</td></tr>
+</table>
+<h4 style="margin:8px 0 4px;color:#586069">产出来源（change_type=1）</h4>
+<table>
+<tr><th>来源</th><th>产出</th><th>占比</th></tr>
+<tr><td>BP奖励（activity_battle_pass_reward · 尼罗护航令）</td><td>2,930</td><td>43.7%</td></tr>
+<tr><td>兑换商店（activity_exchange · 尼罗兑换）</td><td>2,263</td><td>33.7%</td></tr>
+<tr><td>礼包购买（buy_gift · 黑猫神龛210616）</td><td>1,505</td><td>22.4%</td></tr>
+<tr><td>其余</td><td>10</td><td>0.2%</td></tr>
+</table>
+<div class="callout callout-success">
+  <b>装备箱结论：供给仍几乎全来自尼罗（BP+兑换+黑猫≈100%），但消耗率 98%——投得多、也用得掉，没积压。</b>来源结构相比上期从"黑猫神盒为主"转向"BP奖励为主"（44%）。上期"黑猫神盒每人50个过多"的供给集中问题，本批主要由 BP 承接、且消耗充分，未形成滞留。
+</div>
+
+<!-- 新增：五个下游礼包恢复情况 -->
+<h2 id="s35"><span class="section-group bg-green">复测</span>四、上期点名的 5 个下游礼包：恢复情况</h2>
+<p style="font-size:0.88rem;color:#586069">上期 W5 报告点名这 5 个礼包因万能橙碎片积压而付费衰减。本批 91-93服逐周复测（各服窗口对齐）：</p>
+<table>
+<tr><th>礼包</th><th>价</th><th>上期W5问题</th><th>W2</th><th>W3</th><th>W4</th><th>W5</th><th>判断</th></tr>
+<tr class="hl"><td>竞技转盘包2</td><td>$29.99</td><td class="neg">付费深度-56%</td><td>12人</td><td>5人</td><td class="pos">11人/$480</td><td>9人</td><td class="pos">✅回升</td></tr>
+<tr class="hl"><td>英雄养成手册</td><td>$29.99</td><td class="neg">付费率腰斩</td><td>46人</td><td>44人</td><td class="pos">60人</td><td>25人</td><td class="pos">✅W3未腰斩</td></tr>
+<tr class="hl"><td>每日回馈</td><td>$4.99</td><td class="neg">买家22→7(-44%)</td><td>123人</td><td class="pos">138人(+12%)</td><td>97人</td><td>92人</td><td class="pos">✅不降反升</td></tr>
+<tr><td>豪华登录好礼</td><td>$9.99</td><td class="neg">-29%</td><td>65人</td><td>43人</td><td>31人</td><td>30人</td><td class="neg">⚠️仍偏软</td></tr>
+<tr class="hl"><td>竞技转盘包1</td><td>$2.99</td><td class="neg">买家-50%</td><td>59人</td><td>54人</td><td>51人</td><td>43人</td><td class="pos">✅基本持平</td></tr>
+</table>
+<div class="callout callout-success">
+  <b>上期 5 个全被碎片积压打趴，本轮 4 个恢复/持平，只剩豪华登录好礼($9.99)仍偏软。</b>所有礼包 W3→W5 下滑幅度均 ≤ 大盘自然付费人下滑(-44%)，未再出现"碎片够用→不买"的超额衰减。与碎片(85.3%)/装备箱(98%)消耗率回升互证：<b>上期的碎片积压→下游退坑问题，本轮基本解决</b>（大概率 P0 优化「累充碎片改抽奖券」落地见效）。
+</div>
+<div class="callout callout-warning"><b>仅剩观察项：豪华登录好礼($9.99)</b> W2→W5 持续下滑(65→43→31→30)，是 5 个里唯一未恢复的。上期归因为"ROI高但不即时反馈，碎片已够"；本批碎片已不积压，仍偏软，需看是否另有原因（如同价位被每日回馈$4.99分流）。</div>
+
+<h3>4.2 三维度两期严格对比（付费率 / 付费深度 / 买家留存，同方法重算）</h3>
+<p style="font-size:0.85rem;color:#586069">上期=80-83服(1790-1820,4服)、本期=91-93服(1900-1920,3服)，均按各服开服日对齐 W2(D14-20活动前)→W5(D35-41活动后)。逐周活跃AU：上期 1854/1292/1019/830；本期 4756/3430/2706/2344。三维度=付费率(买家/AU)、付费深度(ARPPU=$/买家)、绝对买家。</p>
+<table>
+<tr><th>礼包</th><th>期</th><th>付费率 W2→W5</th><th>付费深度 ARPPU W2→W5</th><th>绝对买家 W2→W5</th></tr>
+<tr><td rowspan="2">竞技转盘包2 $29.99</td><td>上期</td><td>0.16%→0.36%</td><td>$40→$30（-25%）</td><td>3→3（小样本）</td></tr>
+<tr><td>本期</td><td>0.25%→0.38%</td><td>$40→$30（W4冲$44）</td><td>12→9（-25%）</td></tr>
+<tr><td rowspan="2">英雄养成手册 $29.99</td><td>上期</td><td>0.43%→0.72%</td><td>$30→$30（0%）</td><td>8→6（-25%）</td></tr>
+<tr><td>本期</td><td>0.97%→1.07%</td><td>$30→$30（0%）</td><td>46→25（-46%）</td></tr>
+<tr class="hl"><td rowspan="2">每日回馈 $4.99</td><td>上期</td><td class="neg">1.67%→1.45%（-14%）</td><td class="neg">$6.8→$5.8（-14%）</td><td class="neg">31→12（-61%）</td></tr>
+<tr class="hl"><td>本期</td><td class="pos">2.59%→3.93%（+52%）</td><td class="pos">$9.0→$8.9（-2%）</td><td class="pos">123→92（-25%）</td></tr>
+<tr><td rowspan="2">豪华登录好礼 $9.99</td><td>上期</td><td>0.86%→0.84%（-2%）</td><td class="neg">$11.3→$10.0（-11%）</td><td class="neg">16→7（-56%）</td></tr>
+<tr><td>本期</td><td>1.37%→1.28%（-6%）</td><td class="pos">$10.5→$11.0（+5%）</td><td class="neg">65→30（-54%）</td></tr>
+<tr class="hl"><td rowspan="2">竞技转盘包1 $2.99</td><td>上期</td><td class="neg">0.92%→0.84%（-8%）</td><td>$3.9→$9.0*（噪声）</td><td class="neg">17→7（-59%）</td></tr>
+<tr class="hl"><td>本期</td><td class="pos">1.24%→1.84%（+48%）</td><td class="pos">$4.4→$4.7（+8%）</td><td class="pos">59→43（-27%）</td></tr>
+</table>
+<p style="font-size:0.8rem;color:#959da5">*上期竞技转盘包1 W5 仅7人样本，ARPPU 噪声大。</p>
+<div class="callout callout-success">
+  <b>三维度互证：上期"碎片积压→下游礼包付费率↓/深度↓/买家腰斩"三杀，本轮基本消除。</b><br>
+  • <b>付费深度(ARPPU)：</b>上期普遍侵蚀（每日回馈-14%/豪华-11%），本期守住（每日-2%/豪华+5%/养成0%/竞技1+8%）——"大R不再深买"的指纹消失。<br>
+  • <b>买家留存：</b>本期显著好于上期——每日回馈 -25% vs <b>-61%</b>、竞技转盘包1 -27% vs <b>-59%</b>。上期活动后买家腰斩，本期只随大盘自然掉。<br>
+  • <b>付费率(买家/AU)：</b>之前下滑的两个（每日回馈、竞技转盘包1）本期从"衰减"反转为"走高"（+52%/+48%）。<br>
+  <b>⚠️ 方法提醒：</b>付费率分母(活跃)活动后自然萎缩，付费率天然抗跌/偏升，<b>单看付费率会高估健康度</b>——必须三维度合看，结论才稳。
+</div>
+<div class="callout callout-warning"><b>唯一两期都没恢复：豪华登录好礼($9.99)。</b>两期买家都掉~55%（本期-54% vs 上期-56%），但深度本期反升（+5%）——它的软是<b>买家流失而非深度崩</b>，与碎片无关，疑同价位被每日回馈$4.99分流，单独跟进。</div>
+
+<!-- 四、与上期对比 + 待办 -->
+<h2 id="s4"><span class="section-group bg-gray">小结</span>五、与上期对比 & 待办</h2>
+<table>
+<tr><th>维度</th><th>上期 80-83（W5报告）</th><th>本期 91-93</th><th>判断</th></tr>
+<tr class="hl"><td>万能传奇信物消耗率</td><td class="neg">66%（积压）</td><td class="pos">85.3%</td><td class="pos">✅ 基本解决</td></tr>
+<tr><td>衰减主因</td><td>碎片积压→大R不深买（付费深度崩）</td><td>付费人数自然流失（ARPPU反升）</td><td>性质转为自然衰减</td></tr>
+<tr><td>付费深度（ARPPU）W3后</td><td class="neg">深度断崖（竞技转盘-56%等）</td><td class="pos">ARPPU $88→$106</td><td class="pos">未见深度崩塌</td></tr>
+</table>
+<div class="callout callout-info">
+  <b>待补（数据/精度）：</b><br>
+  ① 94-96服（1930-1950）过 D35 后纳入，补全本批 W5；<br>
+  ② 万能传奇信物按 activity_id 精确拆尼罗供给占比（验证 20.2%→? 的下降幅度，坐实 P0 优化效果）；<br>
+  ③ <s>英雄装备箱(幸运) 供给占比复测</s> ✅ 已补（见 3.2：消耗率98%、无积压，来源转向BP为主）；<br>
+  ④ <s>上期点名的 5 个下游礼包本批 ROI/付费深度是否恢复</s> ✅ 已补（见四：4/5恢复，仅豪华登录好礼仍偏软）。
+</div>
+
+<hr style="border:none;border-top:1px solid #e1e4e8;margin:48px 0 16px">
+<p style="text-align:center;color:#959da5;font-size:0.8rem">X3 W5付费衰减回归（更新版·91-93服） &nbsp;|&nbsp; 2026-06-22 &nbsp;|&nbsp; 配套主报告：x3_nile_regression_91-96服.html</p>
+
+</div>
+</body>
+</html>

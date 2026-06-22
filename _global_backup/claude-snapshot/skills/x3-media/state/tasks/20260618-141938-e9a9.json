@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "task_id": "20260618-141938-e9a9",
+  "status": "running",
+  "type": "general",
+  "user_prompt": "深海节头像框礼包弹窗背景（竖版~438x742，版式锚=夏日拜访礼包弹窗，配色锚=深海拜访背景，干净无UI/文字）",
+  "params": {
+    "model": "gpt",
+    "reference_images": [
+      "C:/ADHD_agent/KB/产出-数值设计/X3_深海节/复用参考图/夏日/门头拜访礼包.png",
+      "C:/ADHD_agent/KB/产出-本地化与美术/X3/深海节/07_海滨之约_拜访礼包/拜访活动背景_选定.png"
+    ],
+    "output_dir": "C:/ADHD_agent/KB/产出-本地化与美术/X3/深海节/04_深海印记_头像框礼包",
+    "output_filename": "头像框礼包弹窗背景_v1.png",
+    "postprocess": "none",
+    "aspect_ratio": "2:3",
+    "prompt": "Deep-sea festival GIFT-PACK POPUP BACKGROUND panel, PORTRAIT orientation ~3:5 (target ~438x742). Use reference image 1 ONLY for the popup PANEL LAYOUT/SHAPE (a vertical gift-pack popup with an ornate top header and a framed body) — ERASE ALL of reference 1's content: remove every UI widget, button, text, number, item icon, price tag, character, and its spring/red color scheme. Use reference image 2 for COLOR/THEME consistency (bright underwater ocean, teal/aqua/deep-blue, light rays, corals, bubbles — NOT dark abyss). OUTPUT = a CLEAN decorative deep-sea popup background ONLY: ornate underwater-themed frame/border plus a soft ocean backdrop, with an empty center area for frontend overlay. Absolutely NO text, NO UI, NO buttons, NO item icons, NO numbers, NO people. Seamless polished 3D cartoon game-UI art."
+  },
+  "started_at": "2026-06-18T14:19:38+08:00",
+  "finished_at": null,
+  "result": {
+    "saved_to": [],
+    "history_lines_appended": 0,
+    "backend": null
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

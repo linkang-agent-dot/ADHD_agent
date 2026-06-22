@@ -150,6 +150,26 @@ comm -23 <(git show HEAD:tsv/T.tsv|cut -f1|sort -u) <(git show MERGE_HEAD:tsv/T.
 合并后、push 前/导表前，跑 **`python ~/.claude/skills/x3-config-export/scripts/merge_tsv_audit.py [merge_commit]`**：自动取 `^1`(目标分支)/`^2`(被合入)/merge-base 三方，对「目标分支相对 base 改过的每个 tsv」做**整行集合差** `lost=(目标分支行-base行)-合并后行`，`lost>0` 的表就是被合并冲掉的独有行，逐个人工确认是否恢复。**整行级对比是唯一可信信号**——别用任何单列判断主键存在性（Reward 的 col1 seq 会被双方重用，必漏，我栽过）。本次实测：节日分支改过 5 个 tsv，只有 Reward 报 lost=34，其余(ActvOnline/Pack/ActvWeeklyCard×2)全保留。
 - 触发 jolt 导表 + 自动验证：[[workflow_x3_auto_jolt_export]]；Reward 写入规则：[[reference_x3_reward_table_rules]]
 
+## 反向合并 dev→dev_festival 大分叉实战（2026-06-22，503 vs 115 commit）
+
+把最新 origin/dev 反合进 dev_festival 的全套打法（本地 dev 落后 503、合本地 dev=空操作，必须合 origin/dev）。
+
+**① 先注册 merge driver，否则退化合并静默丢改动（最大坑）**：`.gitattributes` 声明了 `tsv3way`/`xlsx3way` 但 driver **注册在本机 `.git/config`、不随 clone**。没跑 `python scripts/install_hooks.py` 就 merge → 退化成 tsv 炸原始 `<<<<<<<` 标记 + xlsx 二进制选边。**判定**：`git config --get merge.tsv3way.driver` 为空 = 没注册。**修**：`git merge --abort` → `python scripts/install_hooks.py`(注册俩 driver+hooks) → 重 merge。注册后 driver 自动 cell 级 union，只把真冲突写 `scripts/.merge_conflicts_pending.json`（冲突类型 row_add_conflict/cell_conflict/column_only_in_remote/sheet_only_in_remote）。
+
+**② 撞 ID 分两类，先验业务键别瞎判**：
+- **纯 seq 撞车（都保留）**：如 Reward，driver 按 col0=seq 报 row_add_conflict，但两边 RewardID(col2 真业务键)不同→不同奖励组只是 seq 撞。验证 `local RewardID ∩ remote RewardID == ∅` → dev 行整批追加到新 seq(max+1)、节日行不动（引用靠 RewardID 不靠 seq，零风险）。
+- **真 ID 撞车（整套重排一侧）**：本次=节日**世界杯** vs dev**推币机(CoinPusher)** 两个完整活动占同一批 ID(ActvOnline102240/RankCfg1004/ChainPack675-676/BattlePassScore2240+组140/ItemObtain100357/头像框10028-31)。按「重排节日侧」(将来发版回 dev 不再撞)：每个 row_add_conflict → 节日行 relocate 到新号(`apply_xlsx_patch row_set` 新ID=append) + dev行落原号(row_set 原ID=覆盖driver保留的节日旧行) + 改节日侧跨表引用。
+
+**③ 找引用必用 row3 FK 标记，禁纯 token 扫**（用户硬要求「别纯扫」）：tsv 第3行标了每列引用哪张表（如 ActvOnline col21=RankID→RankCfg、col32=ChainPackID→ChainPack；RankRewardSlotCfg col2=RankType→RankCfg；Item col=ObtainID→ItemObtain）。纯 grep 短数字(140/1004/675)命中几百处全噪音。**陷阱**：头像框 ID 与 Item ID **空间重叠**——`Reward.ItemType=1 ItemID=10028` 指的是**美酒道具10028不是头像框10028**(Item表真有10028)；头像框走动态引用/代码解锁，全仓**0个FK列**引用 PersonalizeAvatarFrameCfg，重排框ID只需跟 i18n key(`TXT_PersonalizeAvatarFrameCfg_Name_<id>`)。**还栽过**：误把 ActvOnline.TimeController(引用 TimeCycle 不是 BP)跟着 ContentID 一起从2240改2242→xref报TimeCycle无2242→改回。重排时**逐列确认引用目标表**，只改该跟着走的。
+
+**④ openpyxl 安全性**：含公式表用 openpyxl(apply_xlsx_patch)会清公式缓存→ sync `--from-xlsx` 把空/错值写进 tsv。先 `zipfile`扫 `<f` 确认公式位置；本次仅 Rank 有14公式但都在 `#世界排行榜`(#开头不导出)→安全。Reward/ActvOnline/Item 等全0公式→放心 patch。
+
+**⑤ 收15个非冲突表的 xlsx↔tsv 漂移**(driver 双合并 tsv3way/xlsx3way 对个别 cell/排位解得不一致，`sync --check` 报 mismatch)：按差异方向定向——**仅排序不同(行ID集合相同)的非公式表**→`--from-tsv` 对齐；**tsv空/xlsx有值(公式缓存)如Hero**→`--from-xlsx`(sync reader 能读xlsx缓存且自动把陈旧#VALUE!/#REF!解析成空，比parent还干净)；**类型行差异如 ActvScoreMulti `int`vs`int[]`**→看实际数据有无`|`数组定方向(有→int[]取dev/xlsx)。逐个 `--check` 到 mismatch=0。
+
+**⑥ 验收三连(全绿才算完)**：①`sync_xlsx_tsv.py --check` mismatch=0；②整行集合差审计 festival独有 + dev独有**双向**丢行各=0(只验单边会漏)；③`xref_scan_full.py` 看新增引用错(本次38个全 pre-existing 噪音:**管道数组`147|148`不拆分=误报**+ActvVoyage/HeroStickers/PackRecommend 本来就坏)。xref误报多→交叉验 RankCfg 实际含不含那些ID再下结论。
+
+> 用户要「先别提交」时：merge 停在 `--no-commit`/有冲突未提交态，全程 origin/dev 只读、不 checkout dev、不往 dev 推；随时 `git merge --abort` 可整撤。导表时 dev 带入的新列触发列顺序gate→`jolt_verify.py <branch> skip_check=true` 放行([[workflow_x3_auto_jolt_export]] §139)。
+
 ## 相关
 
 - 导入只认 tsv、改 tsv 不碰 xlsx：[[reference_x3_tsv_export_migration]]（旧 xlsx 公式缓存/CalculateFull 问题随 xlsx 弃用已不适用）

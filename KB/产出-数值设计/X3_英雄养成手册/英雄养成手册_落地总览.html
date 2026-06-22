@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>英雄养成手册（双版本）· 落地总览</title>
+<style>
+  :root{--gold:#e0aa3c;--gold2:#ffe6a8;--ink:#2a2014;--cream:#f6efe0;--line:#d8c39a;--bg:#fbf7ee;--ok:#1f9c4a;--warn:#c0392b;--blue:#2f6fb0;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:"Microsoft YaHei","Segoe UI",sans-serif;background:var(--bg);color:#3a2e1d;line-height:1.6;padding:0 0 60px;}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px;}
+  header{background:linear-gradient(135deg,#3a2a16,#241a0e);color:var(--gold2);padding:30px 0 26px;margin-bottom:8px;
+    border-bottom:3px solid var(--gold);}
+  header .wrap{display:flex;flex-direction:column;gap:6px;}
+  h1{font-size:27px;font-weight:900;letter-spacing:.5px;}
+  .sub{color:#d8c39a;font-size:14px;}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+  .b{font-size:12px;padding:3px 10px;border-radius:20px;font-weight:700;}
+  .b.done{background:rgba(31,156,74,.22);color:#7ff0a8;border:1px solid #3fae6a;}
+  .b.todo{background:rgba(192,57,43,.22);color:#ffb0a6;border:1px solid #c0563f;}
+  .b.info{background:rgba(47,111,176,.22);color:#9fd0ff;border:1px solid #4f86b8;}
+  h2{font-size:20px;color:#6b3d12;margin:30px 0 12px;padding-bottom:7px;border-bottom:2px solid var(--gold);display:flex;align-items:center;gap:9px;}
+  h2 .n{background:var(--gold);color:#fff;width:27px;height:27px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 27px;}
+  h3{font-size:15px;color:#9a4b12;margin:16px 0 7px;}
+  p{margin-bottom:9px;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:11px;padding:16px 18px;margin:10px 0;box-shadow:0 2px 8px rgba(120,90,40,.07);}
+  .hero{background:linear-gradient(180deg,#fffdf7,#fbf2dd);border:1px solid var(--gold);}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:13px;}
+  th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top;}
+  th{background:#f0e4c8;color:#6b3d12;font-weight:700;}
+  tr:nth-child(even) td{background:#fdfaf2;}
+  code{background:#2a2014;color:#ffd98a;padding:1px 6px;border-radius:4px;font-size:12px;font-family:Consolas,monospace;}
+  .tag{font-size:11px;padding:1px 7px;border-radius:5px;font-weight:700;color:#fff;}
+  .t-p{background:#7a4fd0;}.t-c{background:#2f6fb0;}.t-cfg{background:#b07a2f;}.t-art{background:#c0563f;}.t-i18n{background:#1f9c4a;}
+  ul,ol{margin:6px 0 10px 22px;}li{margin-bottom:5px;}
+  .flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:13px;font-weight:700;margin:10px 0;}
+  .flow .s{background:#fff;border:1.5px solid var(--gold);border-radius:9px;padding:7px 11px;color:#6b3d12;}
+  .flow .a{color:var(--gold);font-size:18px;}
+  .flow .s.hl{background:var(--gold);color:#fff;}
+  .note{background:#fff7e6;border-left:4px solid var(--gold);padding:9px 13px;margin:9px 0;font-size:13px;border-radius:0 7px 7px 0;}
+  .danger{border-left-color:var(--warn);background:#fdecea;}
+  .ok{background:#eafaef;border-left-color:var(--ok);}
+  .path{font-family:Consolas,monospace;font-size:11.5px;color:#5a4632;background:#f2ead6;padding:2px 6px;border-radius:4px;display:inline-block;word-break:break-all;}
+  .ck{list-style:none;margin-left:0;}.ck li{padding-left:26px;position:relative;}
+  .ck li::before{content:"☐";position:absolute;left:0;color:var(--gold);font-size:16px;}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:680px){.two{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>英雄养成手册（双版本）· 落地总览</h1>
+  <div class="sub">新一期 3 活动之第 1 个 · ActvType=27 扩双档 · 2026-06-18</div>
+  <div class="badges">
+    <span class="b done">设计/效果图定稿</span>
+    <span class="b done">交互定稿</span>
+    <span class="b todo">待程序/配置/美术落地</span>
+  </div>
+</div></header>
+
+<div class="wrap">
+
+<div class="card hero">
+  <b>一句话</b>：现有「英雄养成手册」(付费登录30天·单档$29.99) → 升级为<b>基础版/豪华版二选一</b>。主界面<b>删价格</b>，点「购买」<b>弹出二选一选择窗</b>选档；豪华版 = 含基础版全部 + 每日奖励<b>×2</b> + 第30天<b>满勤封顶大奖</b>；<b>二选一互斥</b>(买一版另一版购买键消失、弹窗不再可进入)。奖励<b>用现有 X3 数值</b>，无新增数值体系。
+</div>
+
+<h2><span class="n">1</span>变更总览（相对现版）</h2>
+<table>
+<tr><th>项</th><th>现版</th><th>改成</th></tr>
+<tr><td>档位</td><td>单档 $29.99</td><td>基础版 $29.99 / 豪华版 $49.99 <b>二选一</b></td></tr>
+<tr><td>主界面价格</td><td>购买按钮显 $29.99</td><td><b>删价格</b>，按钮只显「购买」</td></tr>
+<tr><td>购买入口</td><td>主界面直接购买</td><td>点「购买」→ <b>弹二选一选择窗</b>，窗内选档+确认</td></tr>
+<tr><td>豪华版价值</td><td>—</td><td>含基础版全部 + 每日 <b>×2</b> + 第30天<b>满勤封顶大奖</b></td></tr>
+<tr><td>互斥</td><td>—</td><td>买任一版 → 另一版购买键<b>消失</b>(不压暗)、<b>弹窗不再可进入</b>(一次性决策)</td></tr>
+<tr><td>主界面其余</td><td>—</td><td><b>只改日历区</b>，标题/宝箱/倒计时/底板/底部页签全保持</td></tr>
+</table>
+
+<h2><span class="n">2</span>界面落地（两块）</h2>
+
+<h3>A. 主界面 — 复用真实养成手册，只改 3 点 <span class="tag t-c">客户端</span></h3>
+<div class="card">
+<p><b>Prefab</b>：<span class="path">x3-project\client\Assets\Res\UI\Prefab\Activity\UIActvLogin.prefab</span> ｜ <b>业务类</b>：<span class="path">Assets\Scripts\UI\Actv\UIActvLogin.cs</span></p>
+<ol>
+<li><b>删价格</b>：购买按钮去掉 <code>$29.99</code> 文字（去掉 <code>CPack.Tag</code>/价格显示），只留「购买」。</li>
+<li><b>购买改触发弹窗</b>：原 <code>ShowBtnPurchase</code> 的购买点击 → 不直接下单，改为<b>打开二选一弹窗</b>。</li>
+<li><b>日历区</b>：30天奖励按"已购版本"出数据（基础=Group100 / 豪华=Group101×2）；未购时展示基础版预览。</li>
+</ol>
+<p class="note">主界面美术<b>零新增</b>——全部复用真实 sprite（见 §4 切图清单）。补回真实图里有的：每日宝箱入口 / 规则按钮(!) / 底部说明条。</p>
+</div>
+
+<h3>B. 二选一选择弹窗 — 新界面 <span class="tag t-c">客户端</span> <span class="tag t-art">美术</span></h3>
+<div class="card">
+<p>布局/风格定稿 = <span class="path">KB\产出-本地化与美术\X3\英雄养成手册\二选一弹窗_X3风格设计稿_v1_alt1.jpg</span>；可交互拼装 = <span class="path">KB\产出-交互原型\X3_英雄养成手册\二选一弹窗_真素材拼装_v1.html</span></p>
+<table>
+<tr><th>弹窗组件</th><th>来源</th></tr>
+<tr><td>弹窗外框</td><td>真实 <code>img_cm_bg_tanchukuang</code>（9-patch）</td></tr>
+<tr><td>奖励格</td><td>真实 <code>img_cm_bg_iconkuang_gold</code> 216²</td></tr>
+<tr><td>购买按钮</td><td>真实 <code>img_cm_anniu1_gold</code>（<b>无价格</b>，只显"购买"）</td></tr>
+<tr><td>关闭键</td><td>真实 <code>img_evaluate_icon_close</code></td></tr>
+<tr><td>版本面板/货币/道具图标</td><td>复用 <code>nourish_3</code> 羊皮纸 + 真实 ItemIcons</td></tr>
+<tr><td>豪华版角标 / 选中高亮</td><td>🔧 新出小件（角标 + 选中金框态）或 CSS 实现</td></tr>
+</table>
+<p><b>弹窗内交互</b>：左基础版/右豪华版并列 → 点面板选中(金框高亮) → 点对应「购买」确认 → 该版变「<b style="color:#1f9c4a">已购买</b>」、<b>另一版购买键消失</b>(不压暗)。标题下固定一行「基础版与豪华版二选一购买，择一即可」。</p>
+</div>
+
+<h2><span class="n">3</span>程序需求 <span class="tag t-p">服务端</span> <span class="tag t-c">客户端</span></h2>
+<table>
+<tr><th>#</th><th>端</th><th>改动</th></tr>
+<tr><td>P1</td><td><span class="tag t-cfg">配置</span></td><td>ActvLoginPurchase 支持<b>双档</b>：加 <code>Pack2</code>+<code>Group2</code> 列（或新增"档位"子表挂二档）。导表/读表支持。</td></tr>
+<tr><td>P2</td><td><span class="tag t-p">服务端</span></td><td>① 二选一<b>互斥校验</b>：买任一版 Pack 后，拒绝另一版购买（防并发同时买）；② 豪华版第30天<b>满勤封顶大奖</b>发放；③ 已购任一版 → 标记"已决策"，<b>弹窗入口不再开</b>。</td></tr>
+<tr><td>P3</td><td><span class="tag t-c">客户端</span></td><td>① UIActvLogin：删价格、购买改触发弹窗、日历按版本出数据；② <b>新建二选一弹窗界面</b>(选档/购买/已购态-按钮消失/关闭)；③ 已购后主界面购买入口不再弹窗。</td></tr>
+</table>
+<p class="note ok"><b>奖励发放</b>沿用 ActvType=27 现有"每日登录领取"机制，仅扩第二档奖励组 + 第30天封顶大奖追加。<b>无新数值体系</b>，全用现有 X3 道具数值。</p>
+
+<h2><span class="n">4</span>配置落地 <span class="tag t-cfg">配置</span></h2>
+<p class="note">真源 = <span class="path">C:\x3\gdconfig\tsv\</span>（改 tsv 不碰 xlsx）；改完 push 后 <code>jolt_verify.py &lt;分支&gt;</code> 触发导表验证。</p>
+<table>
+<tr><th>配置表(tsv)</th><th>改动</th><th>关键值</th></tr>
+<tr><td>ActvOnline__ActvOnline</td><td>沿用</td><td>ID=102701, ActvType=27, ContentID=2701</td></tr>
+<tr><td>ActvLoginPurchase__ActvLoginPurchase</td><td>2701行加二档</td><td>现 Pack=220001/Group=100；加 Pack2=<b>220002</b>/Group2=<b>101</b>（依赖 P1 schema）</td></tr>
+<tr><td>Pack__Pack</td><td>新增豪华礼包</td><td>克隆220001→<b>220002</b>，价格点=<b>116</b>($49.99)，PackType=16</td></tr>
+<tr><td>Pack__PackPrice</td><td>沿用</td><td>116=$49.99（已存在）</td></tr>
+<tr><td>ActvLoginPurchase__ActvLoginRewardGroup</td><td>新增 Group=101</td><td>30行(天1-30)，各指向豪华 RewardID</td></tr>
+<tr><td>Reward__Reward</td><td>新增豪华每日+大奖</td><td>豪华每日=基础同槽<b>×2.0</b>；第30天追加封顶大奖(传奇信物52003等，现有数值)</td></tr>
+</table>
+<p><b>数值锚</b>（实查）：基础 day1=万能传奇信物(52003)×10、day30=英雄装备材料袋(165905)×100；豪华=同槽×2.0。落表前用 x3-config-export 拉 Group100 全30天实数×2 落 Group101。</p>
+
+<h2><span class="n">5</span>本地化 <span class="tag t-i18n">i18n</span></h2>
+<p>新增带 <code>TXT_</code> 字段须同 commit 补全 16 语种（走 x3-translation-automatic）。清单：</p>
+<table>
+<tr><th>用途</th><th>cn</th></tr>
+<tr><td>豪华礼包名/描述</td><td>英雄养成手册·豪华版 / 包含基础版全部奖励+每日翻倍+满勤封顶大奖</td></tr>
+<tr><td>弹窗标题/二选一描述</td><td>英雄养成手册 / 基础版与豪华版 二选一购买，择一即可</td></tr>
+<tr><td>版本名+副标</td><td>基础版·每日登录领取养成奖励 / 豪华版·含基础版全部+每日翻倍+满勤封顶大奖</td></tr>
+<tr><td>购买按钮/已购态</td><td>购买 / 已购买</td></tr>
+<tr><td>封顶大奖标签</td><td>满勤封顶大奖</td></tr>
+</table>
+
+<h2><span class="n">6</span>交互状态机</h2>
+<div class="flow">
+  <span class="s">主界面·购买(无价)</span><span class="a">→</span>
+  <span class="s hl">弹二选一窗</span><span class="a">→</span>
+  <span class="s">选基础/豪华</span><span class="a">→</span>
+  <span class="s">点购买确认</span><span class="a">→</span>
+  <span class="s">该版「已购买」+另一版键消失</span><span class="a">→</span>
+  <span class="s">弹窗不再可进入</span>
+</div>
+<ul>
+<li>未购：主界面购买键可点 → 弹窗两档均可选购。</li>
+<li>已购任一版：主界面进入活动正常领奖；购买入口不再弹窗（一次性决策）。</li>
+<li>每日领取：买后达成的天可领，第30天满勤发封顶大奖（豪华版）。</li>
+</ul>
+
+<h2><span class="n">7</span>产物索引（唯一入口）</h2>
+<table>
+<tr><th>类型</th><th>路径</th></tr>
+<tr><td>策划案</td><td>GSheet <code>15NKt8gF5H5fbPTKYkciYL-yFpmkY31VFIivZgyh6EcA</code>（界面交互段待按"弹窗"转向回改）</td></tr>
+<tr><td>主界面·效果图(定稿)</td><td><span class="path">KB\产出-本地化与美术\X3\英雄养成手册\英雄养成手册_双版本_效果图_AI合成v1_reskin.png</span></td></tr>
+<tr><td>主界面·真素材拼装原型</td><td><span class="path">KB\产出-交互原型\X3_英雄养成手册\英雄养成手册_双版本_真素材拼装_v1.html</span></td></tr>
+<tr><td>弹窗·效果图(定稿 alt1)</td><td><span class="path">KB\产出-本地化与美术\X3\英雄养成手册\二选一弹窗_X3风格设计稿_v1_alt1.jpg</span></td></tr>
+<tr><td>弹窗·真素材拼装原型</td><td><span class="path">KB\产出-交互原型\X3_英雄养成手册\二选一弹窗_真素材拼装_v1.html</span></td></tr>
+<tr><td>主界面切图清单</td><td><span class="path">KB\产出-本地化与美术\X3\英雄养成手册\切图交付_主界面_v1.md</span></td></tr>
+<tr><td>真实组件库</td><td><span class="path">KB\产出-交互原型\X3_英雄养成手册\_assets\</span>（全真实 sprite）</td></tr>
+<tr><td>出图方法论</td><td>KB\方法论\X3_AI出图工作流…§12（真组件拼装→AI reskin）/§12b（竞品横竖转换→reskin）</td></tr>
+</table>
+
+<h2><span class="n">8</span>落地顺序 Checklist</h2>
+<ul class="ck">
+<li><b>P1</b> 程序加 ActvLoginPurchase 双档 schema（Pack2/Group2）</li>
+<li><b>配置</b> 拉 Group100×2.0 落 Group101 + 克隆 Pack220002/Reward + 填二档 + 第30天封顶大奖</li>
+<li><b>P3</b> 客户端：主界面删价+购买改弹窗+日历按版本；新建二选一弹窗界面</li>
+<li><b>P2</b> 服务端：二选一互斥+封顶大奖发放+已购不再弹窗</li>
+<li><b>美术</b> 弹窗角标/选中态小件（其余复用真 sprite）；主界面补每日宝箱入口/规则键/说明条</li>
+<li><b>i18n</b> 补全 §5 文案 16 语种</li>
+<li><b>导表</b> jolt_verify + 本地服自测全流程（弹窗→选档→购买→互斥→领取→封顶）</li>
+<li><b>策划案</b> GSheet 界面交互/规则段回改对齐"弹窗二选一"转向</li>
+</ul>
+
+<p style="margin-top:24px;font-size:12px;color:#9c8c6f;text-align:center;">真源=各产物文件；本总览随设计变更更新 · 对应项目 memory: project_x3_hero_handbook</p>
+
+</div>
+</body>
+</html>

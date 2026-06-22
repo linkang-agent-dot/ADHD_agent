@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "task_id": "20260618-112751-a00a",
+  "status": "success",
+  "type": "uiframe",
+  "user_prompt": "世界杯铭牌(PlayerTitle头衔板)·主题=世界之巅·跨服排行榜前三名统一款·候选2",
+  "params": {
+    "model": "gpt",
+    "reference_images": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\外显图库_表情头像框铭牌\\铭牌\\101_风暴领主_kvk_icon_title.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯礼盒\\荣耀金币\\WC_GloryCoin_FINAL.png"
+    ],
+    "output_dir": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\铭牌_世界之巅",
+    "output_filename": "WC_Title_PeakOfWorld_v2.png",
+    "aspect_ratio": "3:2",
+    "size": "1536x1024",
+    "timeout": 1200,
+    "postprocess": "uiframe_transparent",
+    "postprocess_notes": "1) remove_background to cut the plate out onto transparent RGBA (keep inner panel & all frame detail, only remove area outside the plate); 2) trim to the plate bounding box; 3) resize to 752x192 (target X3 PlayerTitle title-board size), preserve transparency. Save final as output_filename; keep the pre-resize transparent version as *_full.png too.",
+    "prompt": "A premium ornate fantasy game UI title nameplate (player title banner / 铭牌), horizontal wide layout. Use the SAME structure and format as reference image 1 (the gold winged title plate): one long horizontal decorative plate with a central top crest emblem, symmetrical decorative wing-like flourishes spreading from both left and right sides, an ornate golden metallic border with glossy highlights, and a smooth EMPTY inner panel area meant for title text. THEME = World Cup champion 'Peak of the World': the central top crest is a stylized golden championship trophy with a laurel wreath and a soccer ball, matching the style of reference image 2 (gold trophy + laurel + football). Color scheme = champion gold combined with emerald football-pitch green; glowing gold accents; laurel leaves and small golden footballs woven into the side flourishes. The inner panel is a smooth emerald-to-gold gradient, completely EMPTY with absolutely NO text. Polished 3D cartoon game-art rendering, clean crisp outlines, vibrant, high detail. Background OUTSIDE the plate is plain/solid for easy cutout. ONE single horizontal nameplate only, do NOT generate a grid or multiple plates. Reject: no text, no letters, no numbers, no watermark, no national flags, no FIFA logo, no realistic photo, no scene background."
+  },
+  "started_at": "2026-06-18T11:27:51+08:00",
+  "finished_at": "2026-06-18T11:36:45+08:00",
+  "result": {
+    "saved_to": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\铭牌_世界之巅\\WC_Title_PeakOfWorld_v2.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\铭牌_世界之巅\\WC_Title_PeakOfWorld_v2_full.png"
+    ],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

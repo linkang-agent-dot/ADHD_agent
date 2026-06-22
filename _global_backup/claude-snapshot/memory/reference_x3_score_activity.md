@@ -117,6 +117,29 @@ A=SlotID, B=**RankID**, C=StartRank, D=EndRank, **E=RewardID**
 - 跨服活动调度可能依赖"所有服在同一绝对时间窗口"做服务器分组匹配
 - TT=2 + 跨服 = 未验证组合，X3NEW-735 修完后 QA 验证若仍不显示跨服玩家，先改 TimeCycle 该行为 TT=1
 
+## 🎫 BP/通行证积分系统(≠ActvScore, 走专用表; 2026-06-17 世界杯实证)
+**重要更正**：BP(Battle Pass/通行证)**不走 ActvScore**,走专用三表(WC project memory 旧写"BP走ActvScore"不准):
+- `ActvBattlePass__BattlePass.tsv` — BP定义行(每行=一种BP任务类型): ID/IsOn/TaskType/Desc/Param1/Param2/PreTrace/Pack/Group(BattlePassReward.Group)。如 BP-情报循环/BP-登录循环(通用复用)。
+- `ActvBattlePassScore__BattlePassScore.tsv` — **积分获取途径**配置(BP经验/积分来源)。**行ID = 该BP的ContentID**(世界杯BP ActvOnline=102240→ContentID=2240→BattlePassScore行2240)。列(0-idx): `[0]ID [1]备注 [2]IsOn [3]ActvScoreTask(管道串=积分途径!) [4]Pack(管道串) [5]BattlePassScoreReward.Group [6]bool`。
+- `ActvBattlePass__BattlePassReward.tsv` — BP奖励档位。
+- **积分途径就是 [3]列的 ActvScoreTask 管道串**(复用 ActvScore 同一套 ActvScoreTask 池!): 通用BP标配 = `501|502|503|504|505|506`(集结击杀1-6级海兽,100-400分)`|601`(采集每分钟1分)`|602`(情报任务100分); 部分BP加 `1901`(回声战船,KVK)。
+- **加一个积分途径** = ①新建 ActvScoreTask 行(若无现成) ②`tsv_edit.py add --file tsv/ActvBattlePassScore__BattlePassScore.tsv --id <BP的ContentID> --cols 3 --ids <新TaskID> --after <锚点ID>` 挂进途径串。
+- **★空 TaskType 合规**(301-310 招募水手先例): TaskType列留空=不挂服务端自动计数hook,靠 **GM手动发**积分;Score列仍填(每次发的分值)。世界杯案: 新建 1910"竞猜命中1场比赛"Score=600 空TT(竞猜结果GM手动结算发分),挂入 2240 途径串。
+- **★同commit补翻译**: 新增 ActvScoreTask 行的 col2 是 TXT_字段→必须同时往 Text.tsv 加 `TXT_ActvScoreTask_TaskDesc_<id>` 全16语种(否则非中文客户端显空/中文母版,见 X3NEW-734 漏翻教训)。
+- **落地后**: sync_xlsx_tsv.py --auto 同步 xlsx(ActvScore/ActvBattlePassScore/Text 各一) → 本地 ExportTable.py 自测 → commit(tsv+xlsx一起) → push → jolt。
+
+## 🎫🎫 X3 有「两套」BattlePass — 改BP前必先分清是哪套(2026-06-18 护航令至尊档案实证)
+| | 简易战令 `ActvType=11` | 积分战令 `ActvType=22/33` |
+|---|---|---|
+| 配置 | `ActvBattlePass__BattlePass`(Pack=单包) + `BattlePassReward`(**只有 FreeReward/PackReward 两列=2档**) | `ActvBattlePassScore`(**FreeReward/AdvanceReward/SuperReward 三列=3档**)+UpgradePrice钻石升级列 |
+| 客户端 | `UIActvBattlePass.BattlePassItem` **prefab 写死2轨**(`Free`/`Pack` 两个ChildGroupController) | 数据驱动；**3档UI已实现**(世界盃通行證就是它,带"一鍵領取"+"X段/3000"进度) |
+| 服务端 | `ActivityMeta.BattlePass.cs` **免费/付费两分支硬编码** | `ActivityMeta.BattlePassScore.cs` **位标志引擎** `Free=1/Advance=2/Super=4`,加档≈零代码 |
+| 档位区分 | 靠不同列(FreeReward列 vs PackReward列),非Type字段 | 位标志 `purchased & rewardType`,Pack管道列表index→tier位 |
+- **现有2档简易BP实例**(改造对象)：101102新手主线/101110情报循环/101104登录循环/101120兔女郎(都IsOn)。**界面付费列头实际叫「至尊」**(不是"付费/高级")。
+- **要给简易BP加档** = 把它改成积分BP那套位标志引擎(抄 `BattlePassScore.cs`)：`BattlePass.Pack` 单包→管道串、`BattlePassReward` 加 `SuperReward` 列、prefab 加第3轨、proto purchased 多位、`BattlePassRwdItem`/`UIActvBattlePassPop` 加第3档分支。改动面=客户端~200-300行+服务端中等+配置schema。**老BP不配第2包+不填SuperReward=保持2档零回归**。
+- **「钻石升级」= `BattlePassScore.UpgradePrice`**(花钻跳级),是积分BP独有、可选;护航令至尊档案明确**砍掉不要**。
+- **🎫护航令至尊档案(2026-06-18·策划案已落地+task-checker验收通过)**：简易BP 2档→3档(免费/进阶/至尊);现界面"免費/至尊"两列→现付费"至尊"($9.99)**降级改名"进阶"(2格→1格)**,**新增更贵"至尊"顶档(≈$19.99,2格)**,免费压窄;superset买至尊含进阶轨,纯加奖励轨不送等级不双倍,❌不要钻石升级。布局=免费(压)｜進度(偏左,在免费与进阶间)｜进阶(1格)｜至尊(2格)。**策划案GSheet=`1BP_qkISn-YfDDsYoBMQLD9-lLRQebYlz1rFjmOmpgLE`**(9页签,含「组件&节点改造」页);构建脚本+草稿+效果图脚本=`KB\产出-数值设计\X3_护航令至尊档\`(build_design.py/mock_3tier.py可复跑)。真实界面截图`Pictures\X3验收\BP新增档位\`(4张现状+节日BP模板)。**真实UI素材+节点改造已挖**:奖励板=九宫格sprite程序拼无整底图;战令专属素材`client\Assets\Res\UI\Spirits\Activity\ui_battlepass_*`(列头bg_1/2标签·point_1/2菱形·icon_lock)+大背景`ActivityImg_Download\img_battlepass_bg_1.png`(船海场景);加档=行模板复制Pack单元(x+197宽618,HorizontalLayoutGroup)→Super单元+Title复制标签,三列重分x。**效果图真正可拆组件源=真实asset非截图;reward板九宫格程序拼,像素级重建不划算**。**下一步=程序按案改client(prefab复制Pack→Super+脚本+proto)+server(抄BattlePassScore.cs位标志引擎)+配表(BattlePass.Pack管道化+BattlePassReward加SuperReward列)**。
+
 ## 关联
-- [[reference_x3_gdconfig_repo]] [[reference_x3_tsv_export_migration]] [[reference_x3_reward_table_rules]] [[feedback_x3_branch_check]]
+- [[reference_x3_gdconfig_repo]] [[reference_x3_tsv_export_migration]] [[reference_x3_reward_table_rules]] [[feedback_x3_branch_check]] [[reference_x3_i18n_workflow]]
 - [[feedback_jira_bug_ticket_field_swap]] — BUG customfield 实际/预期可能被 QA 填反，看标题

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 尼罗河活动 数据回归报告 · 91-96服（跨期对比版）</title>
+<style>
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;max-width:1260px;margin:0 auto;padding:24px;color:#333;background:#f5f6fa}
+h1{color:#1a1a2e;border-bottom:3px solid #e94560;padding-bottom:12px;margin-bottom:8px}
+h2{color:#16213e;border-left:5px solid #e94560;padding-left:14px;margin-top:40px}
+h3{color:#0f3460;margin-top:22px;padding-left:6px;border-left:3px solid #bbb}
+h4{color:#555;margin:14px 0 6px;font-size:0.95em}
+.card{background:#fff;border-radius:8px;padding:20px 24px;margin:14px 0;box-shadow:0 2px 10px rgba(0,0,0,0.07)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi{background:#fff;border-radius:8px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.kpi .v{font-size:1.7em;font-weight:700;color:#e94560}
+.kpi .l{font-size:0.82em;color:#666;margin-top:5px}
+table{width:100%;border-collapse:collapse;font-size:0.875em}
+th{background:#1a1a2e;color:#fff;padding:9px 10px;text-align:center}
+td{padding:8px 10px;border-bottom:1px solid #eee;text-align:center}
+tr:nth-child(even){background:#f9f9fb}
+.up{color:#27ae60;font-weight:700}
+.dn{color:#e74c3c;font-weight:700}
+.fl{color:#888}
+.note{background:#fffbe6;border-left:4px solid #f0c040;padding:11px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:0.875em}
+.ins{background:#e8f4fd;border-left:4px solid #3498db;padding:11px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:0.875em}
+.warn{background:#ffeaea;border-left:4px solid #e74c3c;padding:11px 16px;border-radius:0 6px 6px 0;margin:12px 0;font-size:0.875em}
+.conclusion-dark{background:#1a1a2e;color:#fff;border-radius:8px;padding:20px 24px;margin:14px 0}
+.conclusion-dark p{color:#e0e0e0;margin:8px 0}
+.conclusion-dark b{color:#ffd700}
+.cmp{font-size:0.8em;color:#999}
+</style>
+</head>
+<body>
+
+<h1>X3 尼罗河活动 · 数据回归报告（91-96服 · 跨期对比版）</h1>
+<p style="color:#666;margin-top:0">
+  本期范围：91-96服（server_id 1900-1950，6服，开服 5/05~5/19）&nbsp;|&nbsp;
+  对比基准：上期 80-86服（1790-1850，7服，开服 3/22~4/15）&nbsp;|&nbsp;
+  口径：W2=D14-D20（活动前）/ W3=D21-D27（活动周），<b>各服按自身开服日对齐</b> &nbsp;|&nbsp;
+  分析日期：2026-06-22
+</p>
+
+<div class="note">
+  <b>方法论变更说明：</b>上期回归是 A/B 测试（80-86开尼罗 vs 70-77不开做对照）。本期尼罗已<b>全量滚动上线、无 holdout 对照服</b>，故改用<b>「vs 上期80-86同生命周期基准」做跨期对比</b>——两期均用完全相同的查询/窗口口径重算（上期数已复刻吻合原报告）。<br>
+  <b>⚠️ 时间范围：</b>本批6服开服 5/05~5/19，各服 D21-D27 落在不同日历日（1900: 5/26-6/01 … 1950: 6/09-6/15），均已跑完，W2/W3 数据完整。
+</div>
+
+<!-- KPI -->
+<div class="card">
+  <div class="grid4">
+    <div class="kpi"><div class="v">8.7%</div><div class="l">尼罗占W3总收入<br><span class="cmp">上期 8.9% · 基本持平</span></div></div>
+    <div class="kpi"><div class="v">+$0.48/AU</div><div class="l">尼罗单位活跃产出<br><span class="cmp">$0.64→$1.11/AU（+75%）</span></div></div>
+    <div class="kpi"><div class="v">+1.88ppt</div><div class="l">W3付费率提升<br><span class="cmp">上期 +0.93ppt</span></div></div>
+    <div class="kpi"><div class="v">主城 ×6.5</div><div class="l">金字塔礼包买家<br><span class="cmp">2人/$200 → 13人/$1,300</span></div></div>
+  </div>
+</div>
+
+<!-- 一、整体对比 -->
+<h2>一、整体盘面对比（W2→W3）</h2>
+<div class="card">
+  <div class="ins">
+    两期<b>自然衰减背景一致</b>（总收入 W2→W3 上期 -26.0% / 本期 -27.0%），<b>尼罗占W3收入的份额也几乎相同</b>（8.9% vs 8.7%）——说明尼罗"贡献占比"在不同批次稳定可复现。
+    本期最大变化是<b>尼罗单位活跃产出大涨（+75%）</b>与<b>高价档/BP结构改善</b>（见三）。
+  </div>
+  <table>
+    <tr><th>指标</th><th>上期 80-86（1790-1850 · 7服）</th><th>本期 91-96（1900-1950 · 6服）</th><th>对比</th></tr>
+    <tr><td>W2 总收入</td><td>$21,854</td><td>$92,288</td><td class="fl">本批服更大</td></tr>
+    <tr><td>W3 总收入</td><td>$16,176（<span class="dn">-26.0%</span>）</td><td>$67,380（<span class="dn">-27.0%</span>）</td><td>衰减一致</td></tr>
+    <tr><td>W3 尼罗收入</td><td>$1,435</td><td>$5,891</td><td class="up">+311%</td></tr>
+    <tr style="background:#eef7ff"><td><b>尼罗占W3收入</b></td><td><b>8.9%</b></td><td><b>8.7%</b></td><td>持平</td></tr>
+    <tr style="background:#eef7ff"><td><b>尼罗 / W3活跃(AU)</b></td><td>$0.636</td><td><b>$1.114</b></td><td class="up">+75%</td></tr>
+    <tr><td>W2 / W3 付费人</td><td>210 / 171</td><td>1,053 / 868</td><td class="fl">—</td></tr>
+    <tr><td>W2 / W3 活跃(7日去重)</td><td>3,159 / 2,256</td><td>7,246 / 5,288</td><td class="fl">—</td></tr>
+    <tr><td>W2 付费率</td><td>6.65%</td><td>14.53%</td><td class="fl">本批基数高</td></tr>
+    <tr style="background:#eef7ff"><td><b>W3 付费率（Δ）</b></td><td>7.58%（<span class="up">+0.93ppt</span>）</td><td>16.41%（<span class="up">+1.88ppt</span>）</td><td class="up">提升更大</td></tr>
+    <tr><td>W2 / W3 ARPPU</td><td>$104.1 / $94.6（<span class="dn">-9.1%</span>）</td><td>$87.6 / $77.6（<span class="dn">-11.4%</span>）</td><td>均自然回落</td></tr>
+    <tr><td>W3 尼罗去重买家（占W3付费玩家）</td><td>55（32.2%）</td><td>188（21.7%）</td><td class="fl">见下注</td></tr>
+  </table>
+  <div class="note">
+    <b>口径提醒：</b>① 本批服（1900-1950）本身付费率基数远高于上期（W2 14.5% vs 6.6%，多为高付费大服），故付费率/ARPPU 的<b>绝对值跨期不可比</b>，对比应看<b>变化方向与幅度（Δ）、以及尼罗占比/单位产出</b>这些归一化指标。② "尼罗去重买家占比"= 买了任意尼罗包的人 / W3付费人，与原报告"节日触发当周首单 14%"定义不同（那是更严的首单口径），此处两期同口径可比。
+  </div>
+</div>
+
+<!-- 二、付费率 -->
+<h2>二、付费率与活跃（分服）</h2>
+<div class="card">
+  <table>
+    <tr><th>服</th><th>开服</th><th>W3窗口</th><th>W2活跃</th><th>W3活跃</th><th>W2付费率</th><th>W3付费率</th><th>Δ</th><th>W3尼罗$</th></tr>
+    <tr><td>91 (1900)</td><td>5/05</td><td>5/26-6/01</td><td>918</td><td>627</td><td>11.9%</td><td>14.4%</td><td class="up">+2.5</td><td>485</td></tr>
+    <tr><td>92 (1910)</td><td>5/09</td><td>5/30-6/05</td><td>2548</td><td>1822</td><td>14.7%</td><td>16.1%</td><td class="up">+1.5</td><td>1,899</td></tr>
+    <tr><td>93 (1920)</td><td>5/13</td><td>6/03-6/09</td><td>1290</td><td>981</td><td>14.7%</td><td>16.1%</td><td class="up">+1.4</td><td>1,439</td></tr>
+    <tr><td>94 (1930)</td><td>5/15</td><td>6/05-6/11</td><td>1210</td><td>884</td><td>16.0%</td><td>19.3%</td><td class="up">+3.3</td><td>824</td></tr>
+    <tr><td>95 (1940)</td><td>5/17</td><td>6/07-6/13</td><td>742</td><td>572</td><td>15.9%</td><td>17.0%</td><td class="up">+1.1</td><td>934</td></tr>
+    <tr><td>96 (1950)</td><td>5/19</td><td>6/09-6/15</td><td>538</td><td>402</td><td>12.8%</td><td>14.4%</td><td class="up">+1.6</td><td>310</td></tr>
+    <tr style="background:#e8f4fd;font-weight:700"><td>聚合</td><td>—</td><td>—</td><td>7,246</td><td>5,288</td><td>14.53%</td><td>16.41%</td><td class="up">+1.88</td><td>5,891</td></tr>
+  </table>
+  <div class="ins">6 个服 W3 付费率<b>全部高于 W2</b>（与上期 7/7 一致），活动周付费率普涨；94服(1930) 提升最大 +3.3ppt。</div>
+</div>
+
+<!-- 三、模块结构 -->
+<h2>三、尼罗模块结构对比（W3）</h2>
+<div class="card">
+  <div class="ins">
+    本期模块结构相比上期<b>明显向高价档与BP倾斜</b>：<b>主城金字塔礼包 14%→22%</b>（$200/2人 → $1,300/13人，买家 ×6.5）、<b>BP通行证 29%→36%</b>、<b>女王恩典卷 2%→7%</b>；而<b>特惠连锁 30%→18%、家具 25%→17% 份额回落</b>。高价档（主城$99.99）这次显著卖动，与英雄/外显投放调整方向一致。
+  </div>
+  <table>
+    <tr><th>模块</th><th>iap_id</th><th colspan="3">上期 80-86</th><th colspan="3">本期 91-96</th></tr>
+    <tr><th></th><th></th><th>买家</th><th>收入</th><th>占尼罗%</th><th>买家</th><th>收入</th><th>占尼罗%</th></tr>
+    <tr><td><b>BP 通行证</b></td><td class="fl">130020/21</td><td>21</td><td>$420</td><td>29%</td><td>97</td><td><b>$2,109</b></td><td class="up">36%</td></tr>
+    <tr><td><b>主城（金字塔）</b></td><td class="fl">210617</td><td>2</td><td>$200</td><td>14%</td><td>13</td><td><b>$1,300</b></td><td class="up">22%</td></tr>
+    <tr><td><b>特惠连锁</b></td><td class="fl">210601-11</td><td>28</td><td>$424</td><td>30%</td><td>78</td><td>$1,064</td><td class="dn">18%</td></tr>
+    <tr><td><b>家具（黑猫神龛）</b></td><td class="fl">210616</td><td>18</td><td>$360</td><td>25%</td><td>49</td><td>$980</td><td class="dn">17%</td></tr>
+    <tr><td><b>女王恩典卷（锚点）</b></td><td class="fl">210612-15</td><td>6</td><td>$30</td><td>2%</td><td>23</td><td>$440</td><td class="up">7%</td></tr>
+    <tr><td><b>装饰特惠</b></td><td class="fl">210630-32</td><td>0</td><td>$0</td><td>—</td><td>1</td><td>$60</td><td class="dn">1%</td></tr>
+    <tr style="background:#e8f4fd;font-weight:700"><td>合计</td><td></td><td>—</td><td>$1,434</td><td>100%</td><td>—</td><td>$5,953</td><td>100%</td></tr>
+  </table>
+  <div class="note">
+    亮点：<b>主城金字塔</b>上期仅 2 个超R 尝鲜（$200），本期 13 人买入（$1,300）——高价标志性产品转化大幅改善。<b>女王恩典卷</b>锚点上期近乎失效（$30），本期 $440 有起色但仍是最弱模块。<br>
+    <b>口径补全（按尼罗累充100594白名单全集核对）：</b>① 新增<b>装饰特惠（210630-632 尼罗装饰特惠）</b>——本批全量仅 9 单 / $180（W3 窗口内 1 单 $60），是近乎失效的死模块，量级同女王恩典卷；上期 80-86 无此包。② <b>许愿池（1002001）</b>也在白名单，但它<b>集中在 D35-41 才卖（79人/$605），落在 W3 窗口之外</b>，且 1002001 是<b>跨节日复用包</b>——该批服 D35+ 已切向下个节日，这段许愿池不计入本期尼罗。
+  </div>
+</div>
+
+<!-- 四、结论 -->
+<h2>四、整合结论</h2>
+<div class="conclusion-dark">
+  <p>尼罗回归到 91-96 服，<b>核心机制依旧有效且更强</b>：尼罗占W3收入份额跨期稳定（~8.7%），但<b>单位活跃产出提升 75%</b>、<b>付费率提升幅度翻倍</b>（+1.88ppt vs +0.93ppt）。</p>
+  <p>结构上从"连锁/家具为主"转向<b>"BP+高价档（主城金字塔）为主"</b>——<b>付费深度侧（高价档）这次明显卖动</b>，是相比上期最实质的改善。</p>
+  <p>遗留风险：活动后存在 <b>D30+ 付费衰减</b>（碎片/装备箱超投导致下游礼包退坑），见配套《W5 付费衰减回归》——本批仅 91-93服(1900-1920) 已过 D35 可分析。</p>
+</div>
+
+<div class="note">
+  <b>本报告范围与口径已知限制：</b>① 跨期基准法（非 A/B），自然衰减以两期同生命周期窗口对比近似控制；本批服基数偏大，绝对付费率/ARPPU 不跨期可比，结论以归一化指标与方向为准。② 未含 R级分层 / 兑换商店（猫眼石币）明细——可按需补。③ W5 衰减另见专报。
+</div>
+
+</body>
+</html>

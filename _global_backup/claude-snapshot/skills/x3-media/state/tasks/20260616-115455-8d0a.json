@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "task_id": "20260616-115455-8d0a",
+  "status": "success",
+  "type": "general",
+  "user_prompt": "以参考图那个金色宝箱为准(同款箱体造型/视角/齿轮装饰/锁扣/角落足球,务必一致),**只把箱体正面的眨眼表情气泡徽记，换成一个金色圆环头像框徽记**(纯金色描边圆环造型,像头像框的环)。其余一模一样:纯金色调、团队中性无任何国旗国家色、干净半厚涂游戏宝箱风格、不爆光。★背景换成【纯洋红色 solid pure magenta #FF00FF 铺满全幅】便于扣像,宝箱边界清晰,单一物件居中,无文字。【硬负向】no checkerboard, no white bg, no flag, no text, no glow burst.",
+  "params": {
+    "model": "nano-banana",
+    "reference_images": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\自选宝箱\\WC_EmoteChest.png"
+    ],
+    "output_dir": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\自选宝箱",
+    "output_filename": "WC_AvatarFrameChest_v4_magenta.png",
+    "postprocess": "none"
+  },
+  "started_at": "2026-06-16T11:54:55+08:00",
+  "finished_at": "2026-06-16T11:58:00+08:00",
+  "result": {
+    "saved_to": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\自选宝箱\\WC_AvatarFrameChest_v4_magenta.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\自选宝箱\\WC_AvatarFrameChest_v4_magenta_b.png"
+    ],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

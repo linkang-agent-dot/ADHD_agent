@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>七日连胜活动回归报告 - 21127752</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --border: #2a2d3a;
+    --text: #e0e0e6;
+    --text-dim: #8b8fa3;
+    --accent: #6c5ce7;
+    --accent2: #00cec9;
+    --accent3: #fdcb6e;
+    --accent4: #e17055;
+    --accent5: #55efc4;
+    --green: #00b894;
+    --red: #d63031;
+    --orange: #e17055;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 24px;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .header .meta {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  .header .meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* KPI Cards */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    text-align: center;
+  }
+  .kpi-card .label { font-size: 13px; color: var(--text-dim); margin-bottom: 6px; }
+  .kpi-card .value { font-size: 32px; font-weight: 700; }
+  .kpi-card .sub { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+  .kpi-card.purple .value { color: var(--accent); }
+  .kpi-card.teal .value { color: var(--accent2); }
+  .kpi-card.yellow .value { color: var(--accent3); }
+  .kpi-card.red .value { color: var(--accent4); }
+
+  /* Section */
+  .section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .section h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section h2 .num {
+    width: 28px; height: 28px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--border);
+    color: var(--text-dim);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(108, 92, 231, 0.06); }
+  .num-cell { text-align: right; font-variant-numeric: tabular-nums; }
+  .total-row { font-weight: 700; background: rgba(108, 92, 231, 0.08); }
+
+  /* Chart containers */
+  .chart-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  .chart-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .chart-box h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-dim);
+  }
+  .chart-wrapper { position: relative; height: 280px; }
+
+  /* Insight boxes */
+  .insight {
+    background: rgba(108, 92, 231, 0.08);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+  .insight strong { color: var(--text); }
+
+  .warning {
+    background: rgba(225, 112, 85, 0.1);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .warning strong { color: var(--orange); }
+
+  /* Conclusion */
+  .conclusion-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .conclusion-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .conclusion-card.good { border-left: 3px solid var(--green); }
+  .conclusion-card.bad { border-left: 3px solid var(--red); }
+  .conclusion-card h4 { font-size: 14px; margin-bottom: 10px; }
+  .conclusion-card.good h4 { color: var(--green); }
+  .conclusion-card.bad h4 { color: var(--red); }
+  .conclusion-card ul { padding-left: 18px; font-size: 13px; color: var(--text-dim); }
+  .conclusion-card li { margin-bottom: 6px; }
+
+  /* Tag */
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tag.green { background: rgba(0, 184, 148, 0.15); color: var(--green); }
+  .tag.red { background: rgba(214, 48, 49, 0.15); color: var(--red); }
+  .tag.orange { background: rgba(225, 112, 85, 0.15); color: var(--orange); }
+
+  /* Bar in table */
+  .bar-cell { position: relative; }
+  .bar-bg {
+    position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    height: 22px; border-radius: 4px; opacity: 0.15;
+  }
+  .bar-label { position: relative; z-index: 1; }
+
+  /* Progress bar */
+  .progress-track {
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s ease;
+  }
+
+  @media (max-width: 800px) {
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .chart-row, .conclusion-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>七日连胜活动数据回归</h1>
+    <div class="meta">
+      <span>Activity ID: 21127752</span>
+      <span>2026-04-23 ~ 2026-04-30</span>
+      <span>登月节档期</span>
+      <span>报告日期: 2026-05-15</span>
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="kpi-row">
+    <div class="kpi-card purple">
+      <div class="label">总参与人数</div>
+      <div class="value">11,472</div>
+      <div class="sub">去重合并 3 个子活动</div>
+    </div>
+    <div class="kpi-card teal">
+      <div class="label">活动专属收入</div>
+      <div class="value">$245</div>
+      <div class="sub">付费礼包 + 触发礼包</div>
+    </div>
+    <div class="kpi-card yellow">
+      <div class="label">D6 留存率</div>
+      <div class="value">47%</div>
+      <div class="sub">D0: 6,183 → D6: 2,934</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="label">任务完成率</div>
+      <div class="value">0.2%</div>
+      <div class="sub">Step 6 仅 14 人 (D0)</div>
+    </div>
+  </div>
+
+  <!-- Chart Row 1: DAU + R-Level -->
+  <div class="chart-row">
+    <div class="chart-box">
+      <h3>日活跃用户趋势 (DAU)</h3>
+      <div class="chart-wrapper"><canvas id="chartDAU"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <h3>参与者 R 级分布</h3>
+      <div class="chart-wrapper"><canvas id="chartRLevel"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Section 1: Participation -->
+  <div class="section">
+    <h2><span class="num">1</span> 参与概况</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>子活动</th>
+          <th>Activity Type</th>
+          <th>功能</th>
+          <th class="num-cell">参与人数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>星星积分追踪</td><td>21127753</td><td>累计星星，驱动宝箱升级</td><td class="num-cell">8,340</td></tr>
+        <tr><td>宝箱系统</td><td>21127755</td><td>宝箱升/降/保级</td><td class="num-cell">2,055</td></tr>
+        <tr><td>任务进度</td><td>21127759</td><td>每日任务完成追踪</td><td class="num-cell">9,820</td></tr>
+        <tr class="total-row"><td colspan="3">总计（去重）</td><td class="num-cell">11,472</td></tr>
+      </tbody>
+    </table>
+    <div class="insight">
+      <strong>宝箱系统（21127755）参与仅 2,055 人</strong>，远低于其他两个子系统。可能原因：仅在升/降级时触发记录，或玩家对宝箱机制认知不足。
+    </div>
+  </div>
+
+  <!-- Section 2: DAU Detail -->
+  <div class="section">
+    <h2><span class="num">2</span> 日活跃 & 留存</h2>
+    <table>
+      <thead>
+        <tr><th>日期</th><th>天数</th><th class="num-cell">DAU</th><th class="num-cell">D0 留存</th><th>留存条</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>04-23</td><td>D0</td><td class="num-cell">6,183</td><td class="num-cell">100%</td><td><div class="progress-track"><div class="progress-fill" style="width:100%;background:var(--accent)"></div></div></td></tr>
+        <tr><td>04-24</td><td>D1</td><td class="num-cell">5,765</td><td class="num-cell">93%</td><td><div class="progress-track"><div class="progress-fill" style="width:93%;background:var(--accent)"></div></div></td></tr>
+        <tr><td>04-25</td><td>D2</td><td class="num-cell">4,327</td><td class="num-cell">70%</td><td><div class="progress-track"><div class="progress-fill" style="width:70%;background:var(--accent3)"></div></div></td></tr>
+        <tr><td>04-26</td><td>D3</td><td class="num-cell">4,054</td><td class="num-cell">66%</td><td><div class="progress-track"><div class="progress-fill" style="width:66%;background:var(--accent3)"></div></div></td></tr>
+        <tr><td>04-27</td><td>D4</td><td class="num-cell">4,125</td><td class="num-cell">67%</td><td><div class="progress-track"><div class="progress-fill" style="width:67%;background:var(--accent3)"></div></div></td></tr>
+        <tr><td>04-28</td><td>D5</td><td class="num-cell">3,137</td><td class="num-cell">51%</td><td><div class="progress-track"><div class="progress-fill" style="width:51%;background:var(--orange)"></div></div></td></tr>
+        <tr><td>04-29</td><td>D6</td><td class="num-cell">2,934</td><td class="num-cell">47%</td><td><div class="progress-track"><div class="progress-fill" style="width:47%;background:var(--orange)"></div></div></td></tr>
+        <tr><td>04-30</td><td>D7</td><td class="num-cell">989</td><td class="num-cell">16%</td><td><div class="progress-track"><div class="progress-fill" style="width:16%;background:var(--red)"></div></div></td></tr>
+      </tbody>
+    </table>
+    <div class="warning">
+      <strong>D1→D2 断崖</strong>（93% → 70%）：首日新鲜感退去后 1/4 玩家流失。D7 仅 16%，推测活动当日进入结算/开箱阶段，正常活跃行为减少。
+    </div>
+  </div>
+
+  <!-- Chart Row 2: Stars + Funnel -->
+  <div class="chart-row">
+    <div class="chart-box">
+      <h3>星星积累分布（逐日堆叠）</h3>
+      <div class="chart-wrapper"><canvas id="chartStars"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <h3>任务完成漏斗（D0）</h3>
+      <div class="chart-wrapper"><canvas id="chartFunnel"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Section 3: Stars -->
+  <div class="section">
+    <h2><span class="num">3</span> 星星积累分析</h2>
+    <table>
+      <thead>
+        <tr><th>日期</th><th class="num-cell">&lt;500</th><th class="num-cell">500-999</th><th class="num-cell">1000-1499</th><th class="num-cell">1500-1999</th><th class="num-cell">2000+</th><th class="num-cell">2000+ 占比</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>D0</td><td class="num-cell">37</td><td class="num-cell">702</td><td class="num-cell">395</td><td class="num-cell">440</td><td class="num-cell">2,610</td><td class="num-cell"><span class="tag orange">62%</span></td></tr>
+        <tr><td>D1</td><td class="num-cell">15</td><td class="num-cell">477</td><td class="num-cell">298</td><td class="num-cell">354</td><td class="num-cell">3,388</td><td class="num-cell"><span class="tag orange">75%</span></td></tr>
+        <tr><td>D2</td><td class="num-cell">8</td><td class="num-cell">202</td><td class="num-cell">152</td><td class="num-cell">171</td><td class="num-cell">2,974</td><td class="num-cell"><span class="tag green">85%</span></td></tr>
+        <tr><td>D3</td><td class="num-cell">5</td><td class="num-cell">144</td><td class="num-cell">87</td><td class="num-cell">121</td><td class="num-cell">2,942</td><td class="num-cell"><span class="tag green">89%</span></td></tr>
+        <tr><td>D4</td><td class="num-cell">8</td><td class="num-cell">149</td><td class="num-cell">99</td><td class="num-cell">105</td><td class="num-cell">3,070</td><td class="num-cell"><span class="tag green">89%</span></td></tr>
+        <tr><td>D5</td><td class="num-cell">7</td><td class="num-cell">89</td><td class="num-cell">71</td><td class="num-cell">63</td><td class="num-cell">2,299</td><td class="num-cell"><span class="tag green">91%</span></td></tr>
+        <tr><td>D6</td><td class="num-cell">5</td><td class="num-cell">72</td><td class="num-cell">57</td><td class="num-cell">48</td><td class="num-cell">2,180</td><td class="num-cell"><span class="tag green">92%</span></td></tr>
+      </tbody>
+    </table>
+    <div class="warning">
+      <strong>免费星星投放偏多</strong>：D0 即 62% 玩家达 2000+，升级门槛可轻松达成。星星作为宝箱升级驱动力的付费压力严重不足。建议提高升级门槛或减少免费投放量。
+    </div>
+  </div>
+
+  <!-- Section 4: Task Funnel -->
+  <div class="section">
+    <h2><span class="num">4</span> 任务完成漏斗</h2>
+    <table>
+      <thead>
+        <tr><th>步骤</th><th class="num-cell">D0 人数</th><th class="num-cell">D0 占比</th><th class="num-cell">D6 人数</th><th>转化率</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Step 0</td><td class="num-cell">5,102</td><td class="num-cell">86.3%</td><td class="num-cell">281</td><td><div class="progress-track"><div class="progress-fill" style="width:100%;background:var(--accent)"></div></div></td></tr>
+        <tr><td>Step 1</td><td class="num-cell">505</td><td class="num-cell">8.5%</td><td class="num-cell">43</td><td><div class="progress-track"><div class="progress-fill" style="width:8.5%;background:var(--accent2)"></div></div></td></tr>
+        <tr><td>Step 2</td><td class="num-cell">189</td><td class="num-cell">3.2%</td><td class="num-cell">37</td><td><div class="progress-track"><div class="progress-fill" style="width:3.2%;background:var(--accent3)"></div></div></td></tr>
+        <tr><td>Step 3</td><td class="num-cell">46</td><td class="num-cell">0.8%</td><td class="num-cell">21</td><td><div class="progress-track"><div class="progress-fill" style="width:0.8%;background:var(--accent4)"></div></div></td></tr>
+        <tr><td>Step 4</td><td class="num-cell">28</td><td class="num-cell">0.5%</td><td class="num-cell">9</td><td><div class="progress-track"><div class="progress-fill" style="width:0.5%;background:var(--accent4)"></div></div></td></tr>
+        <tr><td>Step 5</td><td class="num-cell">19</td><td class="num-cell">0.3%</td><td class="num-cell">5</td><td><div class="progress-track"><div class="progress-fill" style="width:0.3%;background:var(--red)"></div></div></td></tr>
+        <tr><td>Step 6 (完成)</td><td class="num-cell">14</td><td class="num-cell">0.2%</td><td class="num-cell">2</td><td><div class="progress-track"><div class="progress-fill" style="width:0.2%;background:var(--red)"></div></div></td></tr>
+      </tbody>
+    </table>
+    <div class="warning">
+      <strong>漏斗极陡</strong>：86% 停在 Step 0，全完成率仅 0.2%。需核实 activity_step 业务含义 —— 若确实代表任务完成层数，则说明任务难度/引导存在严重障碍。
+    </div>
+  </div>
+
+  <!-- Section 5: Revenue -->
+  <div class="section">
+    <h2><span class="num">5</span> 活动专属收入</h2>
+    <table>
+      <thead>
+        <tr><th>礼包名称</th><th>IAP ID</th><th class="num-cell">价格</th><th class="num-cell">订单数</th><th class="num-cell">购买人数</th><th class="num-cell">收入 (USD)</th><th class="num-cell">收入占比</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>新七日活动-付费礼包（第1天）</td><td>2013101136</td><td class="num-cell">$4.99</td><td class="num-cell">11</td><td class="num-cell">11</td><td class="num-cell">$54.89</td><td class="num-cell">22%</td></tr>
+        <tr><td>新七日活动-付费礼包（第2天）</td><td>2013101137</td><td class="num-cell">$4.99</td><td class="num-cell">18</td><td class="num-cell">18</td><td class="num-cell">$89.82</td><td class="num-cell">37%</td></tr>
+        <tr><td>新七日活动-付费礼包（第3天）</td><td>2013101138</td><td class="num-cell">$4.99</td><td class="num-cell">9</td><td class="num-cell">9</td><td class="num-cell">$44.91</td><td class="num-cell">18%</td></tr>
+        <tr><td>新七日活动-付费礼包（第4天）</td><td>2013101139</td><td class="num-cell">$4.99</td><td class="num-cell">7</td><td class="num-cell">7</td><td class="num-cell">$34.93</td><td class="num-cell">14%</td></tr>
+        <tr><td>新七日活动-付费礼包（第5天）</td><td>2013101140</td><td class="num-cell">$4.99</td><td class="num-cell">13</td><td class="num-cell">13</td><td class="num-cell">$64.87</td><td class="num-cell">27%</td></tr>
+        <tr><td>连胜7日触发礼包</td><td>2013511204</td><td class="num-cell">$19.99</td><td class="num-cell">1</td><td class="num-cell">1</td><td class="num-cell">$19.99</td><td class="num-cell">8%</td></tr>
+        <tr class="total-row"><td colspan="3">合计</td><td class="num-cell">59</td><td class="num-cell">~50</td><td class="num-cell">$309.41</td><td class="num-cell">100%</td></tr>
+      </tbody>
+    </table>
+    <div class="warning">
+      <strong>活动付费转化极低</strong>：11,472 参与者中仅约 50 人（0.4%）购买了活动礼包，总收入仅 $309。<br>
+      <strong>设计的 $1.99 补给礼包和 $9.99 补给礼包在本期未产生销售</strong>，实际只卖出 $4.99 付费礼包和 $19.99 触发礼包。<br>
+      <strong>触发礼包仅 1 笔购买</strong>：最终日触发机制未能有效转化，说明玩家对升级需求不强（与星星积累过快一致）。
+    </div>
+  </div>
+
+  <!-- Chart Row 3: Revenue -->
+  <div class="chart-row">
+    <div class="chart-box">
+      <h3>活动礼包收入构成</h3>
+      <div class="chart-wrapper"><canvas id="chartRevPie"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <h3>付费礼包逐日销量</h3>
+      <div class="chart-wrapper"><canvas id="chartDailyRev"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Section 7: Conclusions -->
+  <div class="section">
+    <h2><span class="num">7</span> 核心结论与建议</h2>
+    <div class="conclusion-grid">
+      <div class="conclusion-card good">
+        <h4>亮点</h4>
+        <ul>
+          <li><strong>参与规模 11,472 人</strong>，覆盖全 R 级，免费/付费各半，结构健康</li>
+          <li><strong>D1 留存 93%</strong>，首日体验吸引力强</li>
+          <li>D3~D4 留存稳定在 66-67%，周中有轻微回升</li>
+          <li>活跃度驱动机制有效：连胜+升降级产生每日回访动力</li>
+        </ul>
+      </div>
+      <div class="conclusion-card bad">
+        <h4>需改进</h4>
+        <ul>
+          <li><strong>付费转化极低（0.4%）</strong>：11,472 参与者仅约 50 人购买礼包，总收入仅 $309</li>
+          <li><strong>星星积累过快</strong>：D0 即 62% 达 2000+，升级门槛偏低，免费投放过多，付费驱动力严重不足</li>
+          <li><strong>任务漏斗极陡</strong>：86% 停 Step 0，全完成率 0.2%，需核实含义或降低难度</li>
+          <li><strong>触发礼包几乎无转化</strong>：仅 1 笔 $19.99，最后一天弹窗机制未发挥作用</li>
+          <li><strong>$1.99 和 $9.99 补给礼包零销售</strong>：设计了但没卖出，需检查是否正确配置上线</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Color palette
+const colors = {
+  purple: '#6c5ce7',
+  purpleLight: 'rgba(108,92,231,0.3)',
+  teal: '#00cec9',
+  tealLight: 'rgba(0,206,201,0.3)',
+  yellow: '#fdcb6e',
+  orange: '#e17055',
+  green: '#55efc4',
+  red: '#d63031',
+  grey: '#636e72',
+  text: '#8b8fa3',
+  grid: 'rgba(42,45,58,0.8)',
+};
+
+const defaultOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { labels: { color: colors.text, font: { size: 12 } } },
+  },
+  scales: {
+    x: { ticks: { color: colors.text }, grid: { color: colors.grid } },
+    y: { ticks: { color: colors.text }, grid: { color: colors.grid } },
+  },
+};
+
+// 1. DAU Chart
+new Chart(document.getElementById('chartDAU'), {
+  type: 'line',
+  data: {
+    labels: ['D0\n04-23','D1\n04-24','D2\n04-25','D3\n04-26','D4\n04-27','D5\n04-28','D6\n04-29','D7\n04-30'],
+    datasets: [{
+      label: 'DAU',
+      data: [6183, 5765, 4327, 4054, 4125, 3137, 2934, 989],
+      borderColor: colors.purple,
+      backgroundColor: colors.purpleLight,
+      fill: true,
+      tension: 0.3,
+      pointRadius: 5,
+      pointBackgroundColor: colors.purple,
+    }]
+  },
+  options: {
+    ...defaultOptions,
+    plugins: {
+      ...defaultOptions.plugins,
+      tooltip: {
+        callbacks: {
+          afterLabel: (ctx) => {
+            const pct = Math.round(ctx.raw / 6183 * 100);
+            return `留存: ${pct}%`;
+          }
+        }
+      }
+    }
+  }
+});
+
+// 2. R-Level Doughnut
+new Chart(document.getElementById('chartRLevel'), {
+  type: 'doughnut',
+  data: {
+    labels: ['R0 免费 (51%)','R1-4 微付费 (11%)','R5-9 小付费 (8%)','R10-19 中付费 (12%)','R20-29 大付费 (8%)','R30+ 鲸鱼 (9%)'],
+    datasets: [{
+      data: [3333, 701, 552, 788, 553, 610],
+      backgroundColor: [colors.grey, '#74b9ff', colors.teal, colors.yellow, colors.orange, colors.red],
+      borderColor: '#1a1d27',
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { color: colors.text, font: { size: 11 }, padding: 10 } },
+    }
+  }
+});
+
+// 3. Stars Stacked Bar
+new Chart(document.getElementById('chartStars'), {
+  type: 'bar',
+  data: {
+    labels: ['D0','D1','D2','D3','D4','D5','D6'],
+    datasets: [
+      { label: '<500', data: [37,15,8,5,8,7,5], backgroundColor: '#636e72' },
+      { label: '500-999', data: [702,477,202,144,149,89,72], backgroundColor: '#74b9ff' },
+      { label: '1000-1499', data: [395,298,152,87,99,71,57], backgroundColor: colors.teal },
+      { label: '1500-1999', data: [440,354,171,121,105,63,48], backgroundColor: colors.yellow },
+      { label: '2000+', data: [2610,3388,2974,2942,3070,2299,2180], backgroundColor: colors.purple },
+    ]
+  },
+  options: {
+    ...defaultOptions,
+    scales: {
+      x: { stacked: true, ticks: { color: colors.text }, grid: { color: colors.grid } },
+      y: { stacked: true, ticks: { color: colors.text }, grid: { color: colors.grid } },
+    },
+    plugins: {
+      ...defaultOptions.plugins,
+      legend: { position: 'top', labels: { color: colors.text, font: { size: 11 }, usePointStyle: true } },
+    }
+  }
+});
+
+// 4. Task Funnel (Horizontal Bar)
+new Chart(document.getElementById('chartFunnel'), {
+  type: 'bar',
+  data: {
+    labels: ['Step 0','Step 1','Step 2','Step 3','Step 4','Step 5','Step 6'],
+    datasets: [{
+      label: 'D0 人数',
+      data: [5102, 505, 189, 46, 28, 19, 14],
+      backgroundColor: [colors.purple, '#74b9ff', colors.teal, colors.yellow, colors.orange, colors.red, '#d63031'],
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    ...defaultOptions,
+    indexAxis: 'y',
+    plugins: {
+      ...defaultOptions.plugins,
+      legend: { display: false },
+    }
+  }
+});
+
+// 5. Revenue Pie
+new Chart(document.getElementById('chartRevPie'), {
+  type: 'doughnut',
+  data: {
+    labels: ['付费礼包-第1天 $54.89','付费礼包-第2天 $89.82','付费礼包-第3天 $44.91','付费礼包-第4天 $34.93','付费礼包-第5天 $64.87','连胜7日触发礼包 $19.99'],
+    datasets: [{
+      data: [54.89, 89.82, 44.91, 34.93, 64.87, 19.99],
+      backgroundColor: ['#74b9ff', colors.teal, colors.yellow, colors.orange, colors.purple, colors.red],
+      borderColor: '#1a1d27',
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { color: colors.text, font: { size: 11 }, padding: 8 } },
+    }
+  }
+});
+
+// 6. Daily Pack Sales Bar
+new Chart(document.getElementById('chartDailyRev'), {
+  type: 'bar',
+  data: {
+    labels: ['第1天','第2天','第3天','第4天','第5天','触发礼包'],
+    datasets: [
+      {
+        label: '订单数',
+        data: [11, 18, 9, 7, 13, 1],
+        backgroundColor: [colors.purple, colors.purple, colors.purple, colors.purple, colors.purple, colors.red],
+        borderRadius: 4,
+      }
+    ]
+  },
+  options: {
+    ...defaultOptions,
+    plugins: {
+      ...defaultOptions.plugins,
+      legend: { display: false },
+    }
+  }
+});
+</script>
+</body>
+</html>

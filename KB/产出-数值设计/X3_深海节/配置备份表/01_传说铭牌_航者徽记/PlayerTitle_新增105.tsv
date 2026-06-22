@@ -1,0 +1,3 @@
+# 字段:	ID	Name(TXT_名字)	DK_Icon(头衔标志大图)	PositionBuff(BUFF)	Reimburse(重复转钻 单日|上限)	ObtainDesc(TXT_获取方式)	DK_SmallIcon(小图标)	Quality(3=橙/传说)	Order
+# 模板=104世界之巅(传说·无BUFF·榜单获取):	104	世界之巅	DK_WC_title_PeakOfWorld		100|1000	世界杯跨服排行榜前5名获取	DK_icon_global_WCtitle	3	4
+105	航者徽记	DK_deepsea_icon_title		100|1000	深海罗盘排行榜顶端获取	DK_icon_global_deepseatitle	3	5

@@ -28,5 +28,11 @@ X3 一个 Pack 能不能在玩家端弹出来，**不只看 `Pack.IsOn` 和 `Ope
 - **TimeCycle 名字是历史复用残留**：TC 1826 名"白色花嫁活动"(2026-02-06起10天,情人节)，却被"夏日柔情海湾"拜访礼包活动(ActvOnline 105603,type=56)复用绑定——看 StartTime 实际值判断窗口，别信名字（见 [[feedback_x3_timecycle_name_legacy]]）。
 - 节日过期后这些包玩家端开不出来=TimeCycle 窗口已过；想重开要新建/改 TimeCycle 到目标日期，别直接改被其他活动复用的 TC。
 
+## ★锚点礼包/PackType15「道具获取」靠 ItemObtain 表触发显示（2026-06-17 世界杯实证，查"锚点不显示"先看这）
+PackType=15 的"抽奖券-道具获取"锚点礼包(纯券、4档$4.99-99.99)**自身 Pack 行的 TriggerType/Param 全空**，不靠 Pack 行触发——靠 **`ItemObtain__ItemObtain.tsv`(道具获取途径表)** 挂出来：
+- 机制：`ItemObtain` 一行 = 某道具的一条"获取途径"。`ObtainType=7`(礼包快捷购买) + `Value=礼包id数组(竖线分隔,如 210612|210613|210614|210615)` + `ObtainName=道具名`。玩家在该道具的"获取途径/在哪买"面板看到这4档锚点礼包。
+- **双向挂钩缺一不可**：① ItemObtain 表有这行(Value=锚点包ids) ② **道具(券) Item 行的 `ObtainID`(col10) 列出这个 ItemObtain 行 id**(尼罗券1128 ObtainID=`503|504|599|100313|100310|...`,100310 就是锚点包那行)。少②=道具不引用→锚点不显示。
+- **换皮坑(世界杯实证)**：clone 锚点 Pack(PackType15)只复制 Pack 表，**漏了 ItemObtain 注册 + 券 ObtainID**→锚点永不显示。修=新建 ItemObtain 行(clone 尼罗100310,Value换WC锚点包ids,ObtainName换券名) + 把新行id写进券 Item.ObtainID。ObtainType 速查(ItemObtain row3注释):1宝箱/2快捷购买/3礼包/4商店/5界面/6兑换/7礼包快捷购买。
+
 ## 关联
 - [[reference_x3_config_library]] §2.2 礼包族 · [[reference_x3_timecycle]] · [[reference_x3_pack_panel_rendering]] · [[reference_x3_pack_tab_icon]]

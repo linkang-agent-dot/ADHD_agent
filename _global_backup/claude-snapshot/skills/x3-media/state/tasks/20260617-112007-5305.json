@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "task_id": "20260617-112007-5305",
+  "status": "success",
+  "type": "general",
+  "user_prompt": "Reference image 1 is Brazil World Cup emblem. Keep the outer soccer ball, composition, style and layout. FULLY replace the central crest with FRA flag design — the crest pattern and colors are entirely a French flag shield (vertical blue, white, red bands), with NO leftover Brazil yellow or diamond/rhombus shape. White background.",
+  "params": {
+    "model": "gpt",
+    "reference_images": [
+      "C:\\ADHD_agent\\.cache_wc_anchor\\BRA_badge.png"
+    ],
+    "output_dir": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\队徽48_整盾替换试点",
+    "output_filename": "WC_Badge_FRA.png",
+    "postprocess": "remove_background_then_256",
+    "aspect_ratio": "1:1"
+  },
+  "started_at": "2026-06-17T11:20:07+08:00",
+  "finished_at": "2026-06-17T11:34:00+08:00",
+  "result": {
+    "saved_to": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\队徽48_整盾替换试点\\WC_Badge_FRA_1.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\队徽48_整盾替换试点\\WC_Badge_FRA_2.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\队徽48_整盾替换试点\\WC_Badge_FRA_1_256.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\队徽48_整盾替换试点\\WC_Badge_FRA_2_256.png"
+    ],
+    "history_lines_appended": 2,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

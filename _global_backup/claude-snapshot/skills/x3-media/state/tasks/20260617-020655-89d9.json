@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "task_id": "20260617-020655-89d9",
+  "status": "pending",
+  "type": "general",
+  "user_prompt": "A clean single football team CREST/BADGE: shield emblem, maroon and white serrated shield. Same polished glossy crest style as reference image 1 (bold clean outlines, vibrant flat colors, subtle gold metallic rim), single centered crest filling ~50% of frame. CRITICAL: ONE single clean crest only — NO double image, NO ghosting, NO offset duplicate, NO overlapping second shield, NO motion-blur echo, NO semi-transparent halo. Crisp solid single emblem with sharp edges. Plain white background (for later background removal), NO text, NO grid, NO scene.",
+  "params": {
+    "model": "gpt",
+    "reference_images": [
+      "C:\\ADHD_agent\\.cache_wc_anchor\\BRA_badge.png"
+    ],
+    "output_dir": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯竞猜界面\\队徽48_重出FINAL",
+    "output_filename": "WC_Badge_QAT.png",
+    "postprocess": "remove_background_then_256",
+    "aspect_ratio": "1:1"
+  },
+  "started_at": null,
+  "finished_at": null,
+  "result": {
+    "saved_to": [],
+    "history_lines_appended": 0,
+    "backend": null
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

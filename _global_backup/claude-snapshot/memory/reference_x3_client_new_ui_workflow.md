@@ -27,6 +27,12 @@ X3 = 纯 UGUI + prefab + 代码生成绑定（**无** UI Toolkit/UI Builder/Fair
 - 价格购买按钮 `UIBtnPurchase`（`Scripts\UI\Gift\`）：本地化价格+拉支付+限购变灰全内置，`WidgetContainer.AddSingle` 挂上调 `Show(giftID)`；样式 prefab UIBtnPriceBlue/Green
 - 道具格 `ItemUnitView`+`ItemSmall.prefab`（自带品质框）；整列表一行填充 `ItemUnitHelper.RefreshLoopReward(go, rewardID)`——go 内需 LoopScrollRect+ItemUnitView 模板
 - 倒计时 `UIHelper.StartTiming` / 标题倒计时背景一条龙 `UIHelper.SetActivityBaseInfo`；通用美术=img_gift_bg_4+沙漏 img_gift_time（别新出）。**背景天然配置驱动**：传入的 bgImage 会被 `ActvOnline.ActvImg`(DK) 覆盖（UIHelper.Activity.cs:249）——prefab 里垫的背景图只是兜底，多套背景=每实例 ActvImg 填不同 DK，零代码
+- **活动「主题展示位」=配置级可换的角色 Spine/视频**（2026-06-15 开箱案验证）：界面 prefab 放一个 `Root/Role` 节点挂 `EffectDisplay` 组件，`UIHelper.SetActivityBaseInfo(..., effectDisplay)` 会把 `ActvOnline.ActvPrefab[0]`（col23/0-idx[23]，proto 注释「DK_主题spine」）填进 `effectDisplay.DisplayKey`→走 `Path_Spine.asset` 注册表→`Res/Spine/Role_Spine_XX/`。开箱(ActvType15/天马福箱 101513)就是这么把卡蜜拉 Spine 配成背景角色的（[23]=DK_Role_Spine_39_Skin01；底图 ActvImg[22] 在后、Role Spine 在前两层叠）。⚠️**同一个 EffectDisplay 还有 `VideoDisplayKey` 分支(与 DisplayKey/Spine 互斥)**——视频化皮肤(DK_Spine空/DK_Video有值)走它。要让某界面背景放「活的角色」：加 Role/EffectDisplay 节点，Spine 皮肤填 ActvPrefab、视频皮肤走 VideoDisplayKey。竞猜界面(UIActvWorldCupGuess)现在只有静态 Bg 无 Role 节点，要加才能放爱莉希雅视频背景
+- **可滑动+居中的列表（奖励/道具列表标准做法，2026-06-15 莫琪 GUI 做世界杯竞猜验证）**：别用 `localScale` 死缩硬塞（静态、多了挤、少了靠左）。三件套——
+  ① **滑动**=节点挂原生 `ScrollRect`：`m_Horizontal:1 / m_Vertical:0`（只横滑锁竖滑）+ `m_MovementType:1`(Elastic 弹性，Elasticity 0.1/Inertia 1/Deceleration 0.135)，连 `m_Viewport`(可视窗，带 Mask/RectMask2D 裁溢出) + `m_Content`(排物品容器)。
+  ② **居中**=Content 挂 `GridLayoutGroup`，命门 `m_ChildAlignment:4`(=MiddleCenter，物品少没填满时整体居中不靠左)；配 `m_CellSize`(如180×180)/`m_Spacing`/`m_Constraint`(1=FixedColumnCount)+`m_ConstraintCount` 控行列。
+  ③ **内容自适应**=Content 同时挂 `ContentSizeFitter` `m_HorizontalFit:2`(PreferredSize)→内容宽度随物品数自动撑开，ScrollRect 才知道能滑多远（漏了=滑不动/滑过头）。
+  左右两列(ColumnL/ColumnR)各独立一套此结构。一句话：**滑动容器+居中布局(MiddleCenter)+内容自适应，别用缩放硬塞**。
 - DK 动态图 `UIHelper.SetImageWithDisplayKey(img, dk)`；会随配置变的图走 DK，固定装饰焊死 prefab
 - 通用图库：`Res\UI\NewSprite\Common\`（frame/IconBox 品质框/ProgressBar）、`Spirits\CommonNew\`（按钮 img_cm_anniu 系列）
 

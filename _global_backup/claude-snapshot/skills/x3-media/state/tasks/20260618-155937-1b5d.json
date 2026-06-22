@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "task_id": "20260618-155937-1b5d",
+  "status": "success",
+  "type": "general",
+  "user_prompt": "kling 首尾帧(fflf) 重出装饰礼包展示视频：banner同图当首帧+尾帧→无缝循环。ref_types=首帧图像,尾帧图像；reference_images 传同一张 banner 两次（不要走 image_to_video 单帧模式）；model=kling, duration=5, aspect_ratio=auto。锁机位只加循环式氛围动，保住banner全部元素。",
+  "params": {
+    "model": "kling",
+    "ref_types": "首帧图像,尾帧图像",
+    "duration": 5,
+    "aspect_ratio": "auto",
+    "prompt": "A short SEAMLESS LOOPING ambient clip of the same beach-resort scene. Keep ALL elements, layout, colors and identity from the source image UNCHANGED (the striped beach lounge chair, parasol, palms, shore) — DO NOT redraw, morph, move or restyle anything. ONLY add gentle cyclic ambient motion that returns exactly to the start: slow rolling sea waves, shimmering water light caustics, soft drifting sunlight god-rays, slowly rising bubbles, palm fronds swaying lightly, the parasol and striped fabric fluttering faintly. LOCKED static camera — absolutely NO camera push-in, zoom or pan (it would break the loop). Subtle, calm, premium beach-resort mood. The last frame must match the first frame for a perfect seamless loop. NO text, NO UI, NO new objects, NO people.",
+    "reference_images": [
+      "C:/ADHD_agent/KB/产出-本地化与美术/X3/深海节/06_深海居所_装饰礼包/装饰礼包banner_选定.png",
+      "C:/ADHD_agent/KB/产出-本地化与美术/X3/深海节/06_深海居所_装饰礼包/装饰礼包banner_选定.png"
+    ],
+    "output_dir": "C:/ADHD_agent/KB/产出-本地化与美术/X3/深海节/06_深海居所_装饰礼包",
+    "output_filename": "装饰礼包展示视频_kling.mp4",
+    "postprocess": "none"
+  },
+  "started_at": "2026-06-18T16:00:00+08:00",
+  "finished_at": "2026-06-18T16:12:00+08:00",
+  "result": {
+    "saved_to": ["C:/ADHD_agent/KB/产出-本地化与美术/X3/深海节/06_深海居所_装饰礼包/装饰礼包展示视频_kling.mp4"],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

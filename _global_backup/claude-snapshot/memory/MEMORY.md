@@ -2,10 +2,15 @@
 
 ## 复盘报告
 - [X2 2026占星节模块回归报告](project_x2_star_festival_2026_report.md) — 7页签HTML报告，含R级分层/优化动作，生成脚本 `_gen_full.py`，2026-05-25归档
+- [X2 两节日开局窗口收入对比方法论](reference_x2_festival_compare_method.md) — 「为啥这期比上期少/差哪几个模块/能否追平」：口径三铁律(服数可比/D0-D9对齐/按模块语义归类剔往期残留)+缺口=广度×深度拆解+渗透率用节日付费人分母(DAC两期不可比)+追平预测算法；含FEST口径/classify；占星vs拓荒案(缺口$8.4k=付费人数塌方)
 
 ## 进行中案子
 - [X3 英雄皮肤新皮肤视频化](project_x3_hero_skin_video.md) — 老皮肤走Spine不变·新皮肤走视频(AI可量产)；策划案GSheet `15Iacryl...`；含英雄皮肤展示代码链路(CreateSpine咽喉点+5界面契约+晋升礼包独立链路)，2026-06-09立项
-- [X3 世界杯活动系列](project_x3_worldcup_activity.md) — 深度付费；飞轮=竞猜+BP产抽奖券→主抽奖=世界杯开箱(ActvCrafting/ActvType15,非转盘)→英雄+足球宝贝皮肤(爱莉希雅Hero1040)；竞猜=独立Actv活动(挂礼包)买礼包规避博彩+防对冲一场选一个；★零新后端(付费=订单/免费=$0领取，结算走运营查日志+bulk-mail，砍赛果界面)；BP走ActvScore；含X3抽奖/BP/竞猜可复用资产盘点；设计定稿待给SheetID落地，2026-06-09立项
+- [X3 世界杯活动系列](project_x3_worldcup_activity.md) — 深度付费；飞轮=竞猜+BP产抽奖券→主抽奖=世界杯开箱(ActvCrafting/ActvType15,非转盘)→英雄+足球宝贝皮肤(爱莉希雅Hero1040)；竞猜=独立Actv活动(挂礼包)买礼包规避博彩+防对冲一场选一个；★零新后端(付费=订单/免费=$0领取，结算走运营查日志+bulk-mail，砍赛果界面)；BP走ActvScore；含X3抽奖/BP/竞猜可复用资产盘点；**换人交接先读全模块交接总文档`KB\产出-数值设计\X3_世界杯\_世界杯活动_全模块交接总文档.md`**(竞猜界面ActvType64已落地,余5模块设计定稿待配)，2026-06-09立项
+
+- [X3 英雄养成手册双版本](project_x3_hero_handbook.md) — 新一期3活动之第1个；现有ActvType=27养成手册(102701/付费登录30天单档$29.99)加$49.99豪华版·二选一互斥·每日2.0×加厚+第30天专属大奖·新页签；★ActvType=27单档死结构(每ContentID只挂1 Pack/Group)→双档必改程序(扩ActvLoginPurchase加Pack2/Group2+UIActvLogin加页签)；策划案GSheet`15NKt8gF...`已过验收·待程序P1后配表，2026-06-18立项
+- [X3 异国美酒储蓄罐改造](../../../../ADHD_agent/KB/产出-数值设计/X3_异国美酒储蓄罐/异国美酒储蓄罐_可重复购买改造_策划案.md) — 新一期3活动之第2个；★定型「每日2档」(v2,旧5档永久方案废弃)：现状每天1次$9.99→每天2档$9.99(10)+$19.99(20)·各档独立24h CD(都能买·非小中大互斥)·服务端零改动。**最终实现=纯追加配置(档1不动·克隆Pack500031→500032 Group11/Price111·PiggyBank行51 GroupId261·Grade组261 Num20)+客户端UIPiggyBankContent 2处(OnRefreshPackGiftUI加PrefixData()·选档改「第一个不在CD的档」→CD状态=本周期已砸)+界面零新增**；改动包备份`改动包_每日双档_FINAL\`(README+apply脚本+client patch)；★**2026-06-18已落地到两个feature分支`X3NEW-wine-piggy-daily-dual`(gdconfig+x3-project,均基origin/dev·用户明确要dev基底·dev与dev_festival大分叉见[[feedback_x3_branch_strategy]]):配置三表+客户端2处已应用·本地导表验证通过(ExportTable.py exit0·xlsx已sync闸门解)·**配置已拷ProtoGen+热重载到3080服(26080)live(errCode=0,data-only无需重启服)**·均未commit(用户要先自测不走MR);dev_festival原WIP已stash在gdconfig待恢复;剩客户端重建+自测玩法。⚠️**2026-06-18用户转去做newbie-recharge,x3-project已切走到`feature/x3-newbie-recharge-firstpay-popup`,储蓄罐客户端改动(UIPiggyBankContent.cs+2个不明prefab)已stash在piggy分支(`WIP_piggy_cs+unknown_2prefab_before_newbie_switch`),返工=`cd x3-project&&git checkout X3NEW-wine-piggy-daily-dual&&git stash pop`;gdconfig仍在piggy分支配置原样;3080服配置仍live**。遗留:dev基底客户端报`ConstCfg CustomerToRefreshProbability is empty`卡住,查实该常量dev/dev_festival都有值(0.75|0.5|0.25,酒馆顾客刷新)非本改动致,疑dev基底版本不匹配,待排**；机制见[[reference_x3_monetization_mechanics]]，2026-06-18立项
+- [X3 深海节活动](project_x3_deepsea_festival.md) — 双周双核心循环主攻付费深度(一周转盘+排行榜/二周大富翁+BP)；11模块(需程序5/纯配置6)；**唯一入口=对齐总览HTML`KB\产出-数值设计\X3_深海节\深海节开发对齐总览.html`**+策划案GSheet`1mC0yssL...`；ID分配总表已落地(扫tsv防撞,AO=100000+CID)；下一步B类配置/美术fleet，2026-06-18进入配置落地
 
 ## 后台自动任务
 - [后台计划任务清单](reference_background_scheduled_tasks.md) — 本机所有 Claude Windows 计划任务(触发/脚本/产出)；含晨间简报合并(09:00 MorningPriority并入10:00 DailyPlan)+新鲜度闸门坑+工作line.md闭环；问"后台有什么自动任务"或增改停任务先读
@@ -24,7 +29,7 @@
 - 项目ID: `calm-repeater-489707-n1`
 - 账号: `linkang@nibirutech.com`
 - 读取 Google Sheet 的方式: `node C:\ADHD_agent\scripts\gws_stdin.js`（通过 stdin 传 JSON 参数）
-- Token 过期(401 invalid_grant)时：**Claude 自己后台跑 `gws auth login`**（run_in_background，弹浏览器给用户点授权），别让用户手动跑；授权完重试原查询
+- Token 过期(401 invalid_grant)时重新授权。⚠️**实测(2026-06-22)`gws auth login` 用 run_in_background 不弹浏览器、无输出**；正确做法=`gws auth login -s sheets,drive > /tmp/gws_login.log 2>&1 &` 后 sleep 几秒 `cat` 日志**抓出打印的授权 URL 贴给用户手点**(浏览器不自动弹)，回调端口由这次进程接收；点完 `gws auth status` / 重试原查询验证。`gws auth status` 看 has_refresh_token/encryption_valid
 - **GSheet 读写统一工具**: [gsheet-toolkit](reference_gsheet_toolkit.md) — `C:\ADHD_agent\scripts\gsheet_utils.py`，读/写/删/备份/**按内容定位**全封装；操作 GSheet 先 import 它，别再现写一次性脚本（5个坑已固化）
 
 ## Event Review Skill
@@ -59,6 +64,7 @@
 - [X2 活动 banner 换皮直出链路](reference_x2_operation_banner.md) — banner不走DK走路径：真源`C:\ADHD_agent\in-game-remote-assets\...\Assets\X2\operation\EventBanner\`，2112的banner_url列直接写`assets/x2/operation/EventBanner/x.png`；占星节同槽=格式锚+拓荒节同族=元素锚→GRFal生成(gpt现是long_running必须submit-only轮询)→upscale→PIL裁原尺寸→覆盖(留.meta)
 
 ## 配置表知识库
+- [X3配置知识库交接文档](reference_x3_config_handover_doc.md) — 整合版单份交接doc(给同事)，KB留底+推到gdconfig仓dev_festival根目录；约定不主动update喊了再改
 - [节日活动形式知识图谱](reference_festival_knowledge_graph.md) — 39种活动形式的机制、数值、历史数据回归，节日设计时先读
 - [Config Library](reference_config_library.md) — ⚠️**P2专用**表编号索引、换皮规则、常用 SheetID
 - [X2 配置表查询权威源](reference_x2_config_library.md) — 🔒X2任何表SheetID必用 `gsheet_query.py resolve <表号>` 现解，禁硬抄P2 KB（id空间重叠会静默返P2数据）；含X2 gacha内外圈结构
@@ -76,6 +82,8 @@
 - [xlsx git 差异对比脚本](reference_xlsx_git_diff_tool.md) — `C:\Users\linkang\xlsx_git_diff.py`，看 xlsx 配置表 HEAD vs 工作区单元格变更，问"看diff/改了啥"时调用
 - [X3 仓库路径](reference_x3_gdconfig_repo.md) — X3 配置仓 `C:\x3\gdconfig\`；**导入只认 tsv\（改 tsv 不碰 xlsx）**，data\xlsx 仅备份下周删，旧 `C:\X3\`/`C:\x3dev\` 弃用
 - [X3 代码仓](reference_x3_project_repo.md) — `C:\x3-project\` 服务端+客户端代码仓，含 server 目录结构/高频路径/GitLab API 访问，触发"查X3代码/X3服务端/X3代码库"先读
+- [X3 unity-mcp 现状与起法](reference_x3_unity_mcp.md) — X3客户端工程已装unity-mcp包+本机已装uv；Windows起法(Unity Start Server+Auto-Configure，必须在C:\x3-project根起cc)；做X3客户端Unity自动化先读
+- [X3 customParam驱动可热部署活动·代码决策模板](reference_x3_customparam_activity_pattern.md) — 可变运营参数从配表搬到iGame部署参数=零代码/零热更换参数；9条代码决策+文件checklist(KB全文);逆向大哥竞猜重构;加同类活动/学活动代码架构先读
 - [X3 配置知识库](reference_x3_config.md) — Item ID规则、asset_id格式、配置真源 tsv\(改tsv不碰xlsx)、节日Pack ID段
 - [X3 Reward 表写入规则](reference_x3_reward_table_rules.md) — DropPara 必填+同 RewardID 内 seq 必须连续，2026-05 夏日 210921 踩坑总结
 - [X3 累充隔离机制](reference_x3_recharge_isolation.md) — TaskType 902 + ActvOnline.RechargePointPackWhitelist + ActvTask 全档位 Parameter1 三表协同
@@ -101,6 +109,7 @@
 - [X3 节日上线服龄覆盖+DAU查法](reference_x3_server_coverage_query.md) — 给上线日反推D35+可覆盖服+当期DAU；两坑：开服时间用真实首登(dl_server_login_info.min_register_time，非dim_open_server配置值)、合服作废id用近7日有登录过滤剔除(名义99服实际61活跃)；含一条可复用SQL+6.19/6.29基准
 - [AI-to-SQL Skill](reference_ai_to_sql.md) — Datain 数仓 Trino SQL 技能，在 `C:\ADHD_agent\.claude\skills\ai-to-sql\`，查玩家明细/建筑/付费订单
 - [X3 数仓外显/道具拥有率查法](reference_x3_datain_asset_query.md) — asset_id 带类型前缀(Item_/Hero_/Skin_/FurnitureSkin_)是最大坑(裸ID全返0)；含拥有率/R级分布/付费额SQL + dim_asset反查 + 用ai-to-sql不用datain-skill
+- [X2 数仓资产流水/被回收名单查法](reference_x2_datain_asset_query.md) — v1089,asset_id裸数字无前缀(不同X3),change_type 1增2减,北京时间;回收=reason_id='item_recycle'+change_type='2',含补偿名单SQL;⚠️asset_id==cfgId但event道具发邮件可能报illegal
 - [挖矿回归漏斗模板](reference_mining_funnel_template.md) — 分R级关卡漏斗HTML模板，`C:\Users\linkang\mining_funnel_template.html`，修改CONFIG对象即可复用
 - [BINGO卡包日志查询](reference_bingo_asset_logging.md) — BINGO连线奖励白/绿包用任务ID查（不是活动ID），任务ID映射表+科技节发放汇总
 - [P2数仓时区](feedback_p2_datain_timezone.md) — P2 ods_user_asset 的 created_at 是北京时间，不做UTC转换
@@ -120,7 +129,7 @@
 - **x2-media 生图保存路径**：`C:\ADHD_agent\KB\产出-本地化与美术\{项目}\{类型子文件夹}\{类型}_{模型}_{日期时间}.png`
   - 项目：X2 / P2 / 通用；类型子文件夹：行军表情、技能图标、集卡册、活动图标等
 - [透明资源必须差分法验真透明](feedback_transparent_asset_diff_check.md) — 我生成/处理的需透明图片入库前必跑差分法(白底vs黑底合成相减)，防 GPT 假透明(RGB无alpha肉眼像透明)；含 alpha 统计+PIL copy.py shadow 坑
-- [X3 AI出图工作流(角色皮肤换装+活动UI换皮)](../../../../ADHD_agent/KB/方法论/X3_AI出图工作流_角色皮肤换装+活动UI换皮_世界杯案.md) — 世界杯案全程沉淀：两条线(本人立绘换装/原UI多图参考换皮)+逐轮只改一处+14条踩坑(long_running轮询·GBK控制台·多图--file·gpt保身份gemini保布局·角色易画太大顶UI文字·角色道具居中叠·质量锚+逐条改设计·IP风格化奖杯·先商量再出图)；**§8=策划案内嵌出图完整流程S1-S5**(参考拆基因→结构稿→Morphix职责切分换本游戏UI风格→只改一处迭代→回填策划案)+Morphix 8功能挂点表；做英雄皮肤概念图/活动界面换皮/策划案出效果图先读
+- [X3 AI出图工作流(角色皮肤换装+活动UI换皮)](../../../../ADHD_agent/KB/方法论/X3_AI出图工作流_角色皮肤换装+活动UI换皮_世界杯案.md) — 世界杯案全程沉淀：两条线(本人立绘换装/原UI多图参考换皮)+逐轮只改一处+14条踩坑(long_running轮询·GBK控制台·多图--file·gpt保身份gemini保布局·角色易画太大顶UI文字·角色道具居中叠·质量锚+逐条改设计·IP风格化奖杯·先商量再出图)；**§8=策划案内嵌出图完整流程S1-S5**(参考拆基因→结构稿→Morphix职责切分换本游戏UI风格→只改一处迭代→回填策划案)+Morphix 8功能挂点表；**§12=改造现有界面效果图首选「真组件拼装→AI reskin五步法」**(拆prefab真sprite→CSS拼装定精确布局[=图#1,胜线框]→AI buildReskinPrompt职责切分[图#2=真实界面design system]合成统一成品；各取所长:拼装保位置/AI保观感统一·验证于养成手册双版本案)；做英雄皮肤概念图/活动界面换皮/策划案出效果图/给现有界面加改元素先读
 
 ## 待办
 - [X2拓荒节装饰文案重写(等图)](project_x2_pioneer_decoration_copy_todo.md) — 5个装饰(350-354)文案太雷同要重写，等美术约06-05给正式图，含全部表坐标/key/遗留问题，明天接着干
@@ -134,6 +143,8 @@
 - [API Provider 切换记录](project_api_provider_switch.md) — 2026-05-22 切到 one-hub，2026-05-25 周一切回 Anthropic 官方 API
 
 ## 工作流
+- [配置改动备份规范(归KB·按功能·脚本进KB·导表成功删staging)](workflow_config_backup_kb.md) — 配置类改动备份沉KB固定路径，一个功能一份自包含.md(含before→after+恢复法)，脚本也进KB，仓内staging导表成功后即删；2026-06-18周卡案拍板
+- [项目收口接管化归纳范式](workflow_handover_assetization.md) — 每次任务完成收口，判据=新agent冷启动能否在修BUG/接模块/换皮入口秒懂；大案子产三件套(决策记录按模块/换皮清单/目录FINAL标注)禁只留流水账；已进CLAUDE.md收口④
 - [节日What's New出稿流程](workflow_whats_new_festival.md) — 喊"what's new"=①写活动总览公告文(范本X3夏日WhatsNew_夏日恋语.txt·模块名玩法读验收文件夹截图) + ②拷美术资源进验收文件夹(装饰=Pictures\{节日}装饰资源\·主城皮肤走DK提·前缀拓荒=Pioneer) + ③节日预告邮件(占星范本骨架·挑5主打·描述严格取What's New原文禁自编)
 - [quality-gate验收系统+交互模块工作流](project_quality_gate_and_interaction_module.md) — 收工自动验收(task-checker+清单+Stop hook，有标记会拦收工) + 交互模块「活原型+实时说明一体HTML」工作流；改X3配置/写策划案/做交互原型时相关，2026-06-03搭建
 - [验收清单/double-check设计四原则](workflow_checklist_design_principles.md) — 写/优化任何验收清单或checker prompt时套：①默认有罪姿态preamble ②强制留实际值证据 ③内联防什么坑 ④开放项+剪枝；2026-06-05 config/design-doc/i18n三份清单升v2
@@ -217,3 +228,4 @@
 - [每日报告HTML化+通用渲染器](reference_daily_report_html.md) — 每日日报/工作节点已渲染HTML每天浏览器弹出；通用 render_report_html.py 吃日报卡片格式+轻markdown，复用别现写
 - [工作日报跨天污染根因+修复](feedback_daily_report_crossday_bleed.md) — 别按jsonl文件mtime挑会话(长会话跨天续用会把多天历史误算成今天)；已加 extract_today_sessions.py 按消息真实北京时间过滤，6-08"全错"根因
 - [手改 X2 i18n tsv 两个坑](feedback_x2_i18n_tsv_handedit.md) — i18n tsv 是 CRLF(text 模式写 LF 整文件 diff，须二进制读写) + LC id 末尾含目标数字子串(只改 value 列不能整行 replace)
+- [别把一次性成本误当硬约束](feedback_constraint_framing_onetime_cost.md) — 红线先分"永久"还是"一次性"；竞猜复盘:我把"新增proto=动客户端"当死墙绕成hack,大哥识别出只是一次性成本付一次买永久干净架构;警惕红线范围蔓延

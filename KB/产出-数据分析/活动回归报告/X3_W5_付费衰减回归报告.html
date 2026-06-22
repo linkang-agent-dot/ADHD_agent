@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X3 W5付费率衰减回归报告 — 尼罗之辉影响分析</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;line-height:1.7;color:#24292e;background:#fff;margin:0;padding:0}
+#content{max-width:960px;margin:0 auto;padding:48px 32px 80px}
+
+/* Header */
+.report-header{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);color:#fff;padding:48px 32px 36px;margin:-48px -32px 40px;border-radius:0 0 16px 16px}
+.report-header h1{font-size:2rem;font-weight:700;margin:0 0 8px;letter-spacing:-0.5px}
+.report-header .subtitle{color:rgba(255,255,255,0.7);font-size:0.9rem;margin:0}
+
+/* TOC */
+.toc{background:#f6f8fa;border-radius:12px;padding:20px 24px;margin-bottom:36px}
+.toc h3{margin:0 0 12px;font-size:1rem;color:#586069}
+.toc a{color:#0366d6;text-decoration:none;display:block;padding:3px 0;font-size:0.9rem}
+.toc a:hover{text-decoration:underline}
+
+/* Sections */
+h2{font-size:1.4rem;font-weight:600;color:#24292e;margin-top:48px;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #e1e4e8}
+h3{font-size:1.1rem;font-weight:600;color:#586069;margin-top:24px;margin-bottom:8px}
+
+/* Cards */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+.card{background:#f6f8fa;border-radius:12px;padding:20px;text-align:center;border:1px solid #e1e4e8}
+.card .lb{font-size:0.85rem;color:#586069;margin-bottom:4px}
+.card .vl{font-size:2.2rem;font-weight:700;margin:4px 0}
+.card .sb{font-size:0.8rem;color:#959da5}
+
+/* Tags */
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:0.75rem;font-weight:600}
+.tag-up{background:#dcffe4;color:#22863a}
+.tag-dn{background:#ffeef0;color:#cb2431}
+
+/* Tables */
+table{border-collapse:collapse;width:100%;margin:12px 0 20px;font-size:0.85rem}
+th,td{border:1px solid #e1e4e8;padding:8px 10px;text-align:right}
+th{background:#f6f8fa;color:#24292e;font-weight:600;white-space:nowrap}
+td:first-child,th:first-child{text-align:left}
+td:nth-child(2),th:nth-child(2){text-align:left}
+tr:nth-child(even){background:#fafbfc}
+.hl{background:#fffbdd!important}
+
+/* Text colors */
+.pos{color:#22863a;font-weight:600}
+.neg{color:#cb2431;font-weight:600}
+.zero{color:#959da5}
+
+/* Callout boxes */
+.callout{border-radius:8px;padding:16px 20px;margin:16px 0;font-size:0.9rem;line-height:1.6}
+.callout-danger{background:#ffeef0;border-left:4px solid #cb2431}
+.callout-success{background:#dcffe4;border-left:4px solid #22863a}
+.callout-warning{background:#fffbdd;border-left:4px solid #f9c513}
+.callout-info{background:#f1f8ff;border-left:4px solid #0366d6}
+.callout-purple{background:#f5f0ff;border-left:4px solid #6f42c1;white-space:pre-line}
+
+/* Section header badges */
+.section-group{display:inline-block;font-size:0.75rem;font-weight:600;color:#fff;padding:2px 10px;border-radius:12px;margin-right:8px;vertical-align:middle}
+.bg-red{background:#cb2431}.bg-green{background:#22863a}.bg-blue{background:#0366d6}.bg-purple{background:#6f42c1}.bg-orange{background:#e36209}.bg-gray{background:#586069}
+
+/* Category row headers in tables */
+.cat-row td,.cat-row th{background:#e1e4e8!important;color:#24292e;font-weight:600;text-align:left}
+</style>
+</head>
+<body>
+<div id="content">
+
+<!-- ====== Header ====== -->
+<div class="report-header">
+  <h1>X3 W5 付费率衰减回归报告</h1>
+  <p class="subtitle">对比：69-78服(10服) vs 80-83服(4服，W1跑尼罗之辉节日) &nbsp;|&nbsp; 2026-05-21</p>
+</div>
+
+<!-- ====== TOC ====== -->
+<div class="toc">
+<h3>目录</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:0 32px">
+<div>
+<p style="font-weight:600;color:#24292e;margin:8px 0 4px;font-size:0.85rem">结论与方案</p>
+<a href="#s1">一、核心结论（问题 → 因果 → 优化）</a>
+<a href="#s10">十、优化方向汇总</a>
+<p style="font-weight:600;color:#24292e;margin:12px 0 4px;font-size:0.85rem">衰减定位</p>
+<a href="#s2">二、ARPU衰减TOP10 + 归因</a>
+<a href="#s3">三、养成线饱和度验证</a>
+<a href="#s6">六、已排除的假设</a>
+</div>
+<div>
+<p style="font-weight:600;color:#24292e;margin:8px 0 4px;font-size:0.85rem">深挖分析</p>
+<a href="#s4">四、礼包ROI对比</a>
+<a href="#s5">五、尼罗全链路产出占比</a>
+<a href="#s7">七、竞技转盘 vs 尼罗转盘</a>
+<a href="#s8">八、竞技转盘ARPU衰减分析</a>
+<a href="#s9">九、英雄装备箱投放问题</a>
+<p style="font-weight:600;color:#24292e;margin:12px 0 4px;font-size:0.85rem">附录</p>
+<a href="#s11">十一、数据基础</a>
+</div>
+</div>
+</div>
+
+<!-- ====== 一、核心结论 ====== -->
+<h2 id="s1"><span class="section-group bg-red">核心</span>一、核心结论</h2>
+
+<div class="grid2">
+  <div class="card"><div class="lb">69-78 W3付费率</div><div class="vl" style="color:#22863a">8.08%</div><div class="sb">W1 7.16% <span class="tag tag-up">+0.92pp</span></div></div>
+  <div class="card"><div class="lb">80-83 W3付费率</div><div class="vl" style="color:#cb2431">6.55%</div><div class="sb">W1 7.16% <span class="tag tag-dn">-0.61pp</span></div></div>
+</div>
+
+<h3>问题</h3>
+<table>
+<tr><th>问题</th><th>数据支撑</th><th>影响范围</th></tr>
+<tr class="hl"><td><b>核心：万能橙碎片(传奇信物)投放过多</b></td><td>尼罗活动整体产出（主要是累充）贡献了D20-34期间<b>20.2%</b>的万能传奇信物；W3碎片消耗率从89%(对照组)降到<b>66%</b></td><td>竞技转盘包×2、英雄养成手册、每日回馈、豪华登录好礼（5个礼包），合计W3 ARPU损失$0.270/人</td></tr>
+<tr class="hl"><td><b>核心：英雄装备箱(幸运)投放过多</b></td><td>尼罗贡献全渠道<b>73.6%</b>的英雄装备箱产出（黑猫神盒650+兑换商店507）</td><td>英雄装备箱单一节日过度供给</td></tr>
+<tr><td>次要：每日回馈ROI吸引力不足</td><td>同$4.99档，尼罗A线ROI(9,264/$) > 每日回馈(7,816/$)，高18%</td><td>每日回馈(60001)，W3买家22→7人</td></tr>
+</table>
+
+<h3>因果链路</h3>
+<div class="callout callout-purple"><b>万能橙碎片积压 → 5个礼包衰减</b>
+尼罗活动投放万能传奇信物(占全渠道20.2%)
+  → W1/W2期间碎片持续积累
+  → W3碎片消耗率从89%降到66%，形成积压
+  → 碎片相关礼包需求下降：
+    → 竞技转盘：付费深度下降56%（碎片是核心产出，积压后不需要再深买）
+    → 英雄养成手册/豪华登录好礼：ROI高但不即时反馈，碎片已够用不急着买
+    → 每日回馈：ROI低于尼罗A线(7,816 vs 9,264)，碎片积压后吸引力进一步下滑</div>
+
+<h3>优化方向</h3>
+<table>
+<tr><th>优先级</th><th>方向</th><th>具体措施</th><th>预期效果</th></tr>
+<tr class="hl"><td><b>P0</b></td><td>累充碎片改为抽奖券</td><td>累充10档万能传奇信物(340个)替换为抽奖券(476张，原ROI×0.7)；抽奖池：传奇技能书(15%)+装备材料袋(15%)+史诗技能书(15%)+英雄美酒(10%)+30min加速(20%)+万能传奇信物(5%)+万能史诗信物(10%)+永生玫瑰(10%)</td><td>碎片占比从20.2%→4.7%，技能书/装备材料等不饱和品类获得补充，全品类占比&lt;8%</td></tr>
+<tr class="hl"><td><b>P0</b></td><td>降低英雄装备箱投放</td><td>黑猫神盒装备箱从50降至20-30；兑换商店限购下调</td><td>装备箱不再由单一节日过度供给</td></tr>
+<tr><td>P1</td><td>调整节日礼包ROI平衡</td><td>节日A线首坑ROI(9,264/$)高于每日回馈(7,816/$) 18%，降低节日A线钻石/转盘代币投放量，或提升每日回馈奖励，拉近ROI差距</td><td>每日回馈不再被节日礼包吸引力碾压，W3付费率回升</td></tr>
+<tr><td>P1</td><td>拜访礼包新增技能书</td><td>替换部分奖券投放为传奇/史诗技能书，补充技能书缺口</td><td>技能书消耗率113%/116%均透支，不饱和品类，新增投放填补需求缺口</td></tr>
+</table>
+
+<!-- ====== 二、ARPU衰减TOP10 ====== -->
+<h2 id="s2"><span class="section-group bg-red">数据</span>二、ARPU衰减TOP10</h2>
+
+<table>
+<tr><th>#</th><th>礼包</th><th>价格</th><th>主要产出</th><th>80-83<br>ARPU变化</th><th>69-78<br>ARPU变化</th><th>差距</th><th>与尼罗相关性</th><th>下降原因</th><th>归因</th></tr>
+<tr class="hl"><td>1</td><td>竞技转盘包2(2006004)</td><td>$29.99</td><td>竞技奖券→技能书+碎片</td><td class="neg">-$0.080</td><td>-$0.014</td><td>-$0.066</td><td class="neg">强相关</td><td>付费深度↓56%，付费率仅↓5%</td><td>万能橙碎片积压，碎片是核心产出，积压后不需深买</td></tr>
+<tr class="hl"><td>2</td><td>英雄养成手册(220001)</td><td>$29.99</td><td>技能书+装备材料+美酒</td><td class="neg">-$0.080</td><td class="pos">+$0.014</td><td>-$0.094</td><td class="neg">强相关</td><td>付费率腰斩(0.54→0.27%)</td><td>万能橙碎片积压；ROI高(38,013/$)但不即时反馈(30天BP)，W1/W2已累计碎片存量</td></tr>
+<tr class="hl"><td>3</td><td>每日回馈1~3(60001)</td><td>$4.99</td><td>英雄橙色碎片</td><td class="neg">-$0.073</td><td class="pos">+$0.035</td><td>-$0.108</td><td class="neg">强相关</td><td>付费率↓44%，买家22→7人</td><td>万能橙碎片积压；且ROI(7,816/$)低于尼罗A线(9,264/$)，吸引力下滑</td></tr>
+<tr><td>4</td><td>提亚马特(2009001)</td><td>$19.99</td><td>海妖碎片</td><td class="neg">-$0.034</td><td class="pos">+$0.114</td><td>-$0.148</td><td class="zero">无关</td><td>付费率↓(0.31→0.14%)</td><td>海妖线养成，尼罗无相关投放</td></tr>
+<tr class="hl"><td>5</td><td>豪华登录好礼(130004)</td><td>$9.99</td><td>英雄招募BP</td><td class="neg">-$0.022</td><td class="pos">+$0.003</td><td>-$0.025</td><td class="neg">强相关</td><td>付费率↓29%，ARPPU不变</td><td>万能橙碎片积压；ROI高但不即时反馈，W1/W2累计碎片存量</td></tr>
+<tr class="hl"><td>6</td><td>竞技转盘包1(2006002)</td><td>$2.99</td><td>竞技奖券→技能书+碎片</td><td class="neg">-$0.015</td><td class="pos">+$0.023</td><td>-$0.038</td><td class="neg">强相关</td><td>买家↓50%，深度↓15%</td><td>同#1，万能橙碎片存量影响</td></tr>
+<tr><td>7</td><td>建造队列(10002)</td><td>$4.99</td><td>建造队列</td><td class="neg">-$0.012</td><td>-$0.005</td><td>-$0.007</td><td class="zero">无关</td><td>付费率↓，ARPPU不变</td><td>独立功能线，尼罗无相关投放</td></tr>
+<tr><td>8</td><td>玫瑰花束(110001)</td><td>$4.99</td><td>永生玫瑰+约会</td><td class="neg">-$0.009</td><td class="pos">+$0.025</td><td>-$0.034</td><td style="color:#e36209;font-weight:600">弱相关</td><td>付费率↓(0.31→0.14%)</td><td>尼罗转盘额外产出玫瑰(占5.6%)，影响不大可接受</td></tr>
+<tr><td>9</td><td>诅咒龙骸(12301)</td><td>$4.99</td><td>船只装备材料</td><td class="neg">-$0.009</td><td class="pos">+$0.001</td><td>-$0.010</td><td class="zero">无关</td><td>付费率↓(0.31→0.14%)</td><td>独立养成线，尼罗不产船只材料</td></tr>
+<tr><td>10</td><td>转盘中级包(1003031)</td><td>$29.99</td><td>竞技奖券→技能书+碎片</td><td>-$0.005</td><td class="neg">-$0.111</td><td class="pos">+$0.106</td><td class="zero">无关</td><td>买家↓50%</td><td>69-78跌更多（反向）</td></tr>
+</table>
+
+<div class="callout callout-success">
+<b>归因分类：</b><br>
+&#x2022; <b>万能橙碎片积压（5个）</b>：#1竞技转盘包2、#2英雄养成手册、#3每日回馈、#5豪华登录好礼、#6竞技转盘包1<br>
+&#x2022; 独立养成线无关：#4提亚马特（海妖线）<br>
+&#x2022; 独立功能线无关：#7建造队列<br>
+&#x2022; 轻微影响可接受：#8玫瑰花束<br>
+&#x2022; 独立养成线无关：#9诅咒龙骸<br>
+&#x2022; 反向：#10转盘中级包
+</div>
+
+<!-- ====== 三、饱和度验证 ====== -->
+<h2 id="s3"><span class="section-group bg-blue">验证</span>三、养成线饱和度验证</h2>
+
+<table>
+<tr><th>道具</th><th>80-83 W3消耗率</th><th>69-78 W3消耗率</th><th>尼罗投放占比(D20-34)</th><th>结论</th></tr>
+<tr class="hl"><td><b>万能传奇信物</b></td><td class="neg"><b>66%</b> (积压)</td><td>89%</td><td class="neg"><b>20.2%</b></td><td><b>W3积压，尼罗贡献了1/5投放</b></td></tr>
+<tr><td>传奇技能书</td><td>113% (透支)</td><td>116% (透支)</td><td>2.0%</td><td>不饱和，两边都缺</td></tr>
+<tr><td>英雄装备材料袋</td><td>71%</td><td>83%</td><td>0%</td><td>不饱和，尼罗完全不产</td></tr>
+<tr><td>英雄美酒</td><td>86%</td><td>94%</td><td>0%</td><td>轻微积压，尼罗完全不产</td></tr>
+</table>
+
+<h3>尼罗万能传奇信物投放途径</h3>
+<table>
+<tr><th>途径</th><th>数量</th><th>占比</th></tr>
+<tr><td>累充(59401-59410)</td><td>1,265</td><td>73.8%</td></tr>
+<tr><td>护航令BP</td><td>243</td><td>14.2%</td></tr>
+<tr><td>兑换商店(1334)</td><td>207</td><td>12.1%</td></tr>
+<tr style="font-weight:700"><td>合计</td><td>1,715</td><td>100%</td></tr>
+</table>
+
+<!-- ====== 四、ROI对比 ====== -->
+<h2 id="s4"><span class="section-group bg-orange">对比</span>四、礼包ROI对比（钻石价值/$）</h2>
+
+<table>
+<tr><th>礼包</th><th>花费</th><th>钻石价值</th><th>ROI(钻值/$)</th><th>说明</th></tr>
+<tr><td>竞技转盘(GvG)</td><td>$2.99</td><td>241,188</td><td class="pos"><b>80,665</b></td><td>每转产出技能书+碎片，钻值极高</td></tr>
+<tr><td>英雄养成手册(220001)</td><td>$29.99</td><td>1,140,000</td><td class="pos"><b>38,013</b></td><td>30天登录BP，纯英雄养成</td></tr>
+<tr><td>尼罗A线首坑(含免费)</td><td>$4.99</td><td>46,226</td><td><b>9,264</b></td><td>钻石+VIP+转盘代币</td></tr>
+<tr><td>每日回馈1~3(60001)</td><td>$4.99</td><td>~39,000</td><td><b>7,816</b></td><td>碎片+技能书+钻石</td></tr>
+<tr><td>尼罗护航令BP(130021)</td><td>$19.99</td><td>151,100</td><td>7,559</td><td>转盘代币+钻石+加速</td></tr>
+<tr><td>黑猫神盒(210616)</td><td>$19.99</td><td>55,000+</td><td>2,751</td><td>钻石+装备箱+家具</td></tr>
+<tr><td>B线(210612)</td><td>$4.99</td><td>11,500</td><td>2,305</td><td>纯转盘代币</td></tr>
+</table>
+<div class="callout callout-warning">同$4.99档：尼罗A线ROI(9,264) > 每日回馈(7,816)，A线高18%。每日回馈在同价位竞争中吸引力不足。</div>
+
+<!-- ====== 五、尼罗全链路产出 ====== -->
+<h2 id="s5"><span class="section-group bg-purple">产出</span>五、尼罗活动全链路产出占比</h2>
+
+<h3>尼罗活动配置</h3>
+<table>
+<tr><th>ActvID</th><th>类型</th><th>说明</th></tr>
+<tr><td>101023</td><td>大转盘</td><td>尼罗转盘(30,519转/484人)</td></tr>
+<tr><td>102234</td><td>BP</td><td>尼罗护航令(130020/130021)</td></tr>
+<tr><td>100594</td><td>累充</td><td>10档(task 59401-59410)</td></tr>
+<tr><td>101334</td><td>兑换</td><td>Cat's Eye兑换商店</td></tr>
+<tr><td>105602</td><td>返场商店</td><td>圣甲虫返场</td></tr>
+<tr><td>101825</td><td>拼图</td><td>尼罗拼图</td></tr>
+<tr><td>105010</td><td>许愿池</td><td>尼罗许愿池</td></tr>
+<tr><td>10071801</td><td>酒馆</td><td>最佳酒馆</td></tr>
+</table>
+
+<h3>养成线产出占比（D20-D34全渠道 vs 尼罗）</h3>
+<table>
+<tr><th>养成线</th><th>道具</th><th>全渠道总量</th><th>尼罗产出</th><th>占比</th></tr>
+<tr class="cat-row"><td colspan="5">英雄养成线</td></tr>
+<tr class="hl"><td>碎片</td><td>万能传奇信物</td><td>8,487</td><td>1,715</td><td class="neg"><b>20.2%</b></td></tr>
+<tr><td>碎片</td><td>万能史诗信物</td><td>14,232</td><td>617</td><td>4.3%</td></tr>
+<tr><td>技能书</td><td>传奇技能书</td><td>110,288</td><td>2,219</td><td>2.0%</td></tr>
+<tr><td>装备</td><td>英雄装备材料袋</td><td>35,336</td><td>0</td><td>0%</td></tr>
+<tr class="hl"><td>装备</td><td>英雄装备箱(幸运)</td><td>1,572</td><td>1,157</td><td class="neg">73.6%</td></tr>
+<tr><td>好感</td><td>英雄美酒</td><td>34,927</td><td>0</td><td>0%</td></tr>
+<tr class="cat-row"><td colspan="5">SLG养成线</td></tr>
+<tr><td>基础</td><td>硬木板</td><td>724,207,290</td><td>2,154,000</td><td>0.3%</td></tr>
+<tr><td>基础</td><td>冒险阅历</td><td>1,160,865,480</td><td>7,755,000</td><td>0.7%</td></tr>
+<tr><td>酒馆</td><td>胡萝卜币</td><td>86,907</td><td>7,141</td><td>8.2%</td></tr>
+<tr class="cat-row"><td colspan="5">加速线（折算分钟）</td></tr>
+<tr><td>通用</td><td>全类型加速合计</td><td>11,717,183min</td><td>702,075min</td><td>6.0%</td></tr>
+<tr><td></td><td>其中建造加速</td><td>1,095,060min</td><td>134,640min</td><td>12.3%</td></tr>
+<tr><td></td><td>其中研究加速</td><td>964,469min</td><td>134,640min</td><td>14.0%</td></tr>
+<tr><td></td><td>其中治疗加速</td><td>2,460,304min</td><td>0</td><td>0%</td></tr>
+<tr class="cat-row"><td colspan="5">硬通货</td></tr>
+<tr><td>钻石</td><td>钻石</td><td>98,628,257</td><td>744,000</td><td>0.75%</td></tr>
+<tr><td>VIP</td><td>100VIP积分</td><td>41,491</td><td>4,175</td><td>10.1%</td></tr>
+<tr class="cat-row"><td colspan="5">船只线</td></tr>
+<tr><td>材料</td><td>高级木材</td><td>114,685</td><td>981</td><td>0.9%</td></tr>
+<tr><td>材料</td><td>Mystic Metal</td><td>19,398</td><td>1,685</td><td>8.7%</td></tr>
+<tr class="cat-row"><td colspan="5">社交/装饰</td></tr>
+<tr><td>玫瑰</td><td>永生玫瑰</td><td>29,300</td><td>1,639</td><td>5.6%</td></tr>
+<tr><td>造船</td><td>造船券</td><td>248,429</td><td>18,806</td><td>7.6%</td></tr>
+</table>
+
+<!-- ====== 六、已排除假设 ====== -->
+<h2 id="s6"><span class="section-group bg-gray">排除</span>六、已排除的假设</h2>
+
+<table>
+<tr><th>假设</th><th>验证方法</th><th>结果</th></tr>
+<tr><td>钻石存量过多导致不想付费</td><td>四期钻石收支净余对比</td><td class="neg">排除 — 净余差距不大(-1100/+2900/-3100/-900)</td></tr>
+<tr><td>英雄升星已饱和</td><td>升星碎片消耗分布对比</td><td class="neg">排除 — 两边升星结构几乎一致</td></tr>
+<tr><td>尼罗全面投放过多</td><td>全养成线产出占比</td><td class="neg">排除 — 大部分品类尼罗占比&lt;5%，仅碎片达20%</td></tr>
+<tr><td>技能书投放过多</td><td>技能书消耗率</td><td class="neg">排除 — 两边都在透支(113%/116%)，不饱和</td></tr>
+</table>
+
+<!-- ====== 七、竞技转盘 vs 尼罗转盘 ====== -->
+<h2 id="s7"><span class="section-group bg-blue">对比</span>七、竞技转盘 vs 尼罗转盘 产出对比</h2>
+
+<table>
+<tr><th></th><th>尼罗转盘</th><th>竞技转盘(GvG)</th></tr>
+<tr><td>总转数</td><td>30,519</td><td>6,944</td></tr>
+<tr><td>参与人</td><td>484</td><td>424</td></tr>
+<tr><td>每转传奇技能书</td><td>0.05</td><td class="pos"><b>1.47</b></td></tr>
+<tr><td>每转万能传奇信物</td><td>0</td><td class="pos"><b>0.55</b></td></tr>
+<tr><td>每转万能史诗信物</td><td>0</td><td class="pos"><b>1.60</b></td></tr>
+<tr><td>每转30min加速</td><td>0.10</td><td class="pos"><b>5.53</b></td></tr>
+<tr><td>每转Cat's Eye</td><td class="pos"><b>3.65</b></td><td>0</td></tr>
+<tr style="font-weight:700"><td>每转总钻值</td><td>~411</td><td class="pos"><b>~14,867</b></td></tr>
+<tr style="font-weight:700"><td>倍率</td><td>1x</td><td class="pos"><b>36x</b></td></tr>
+</table>
+<div class="callout callout-info">竞技转盘每转产出英雄养成道具(技能书+碎片)，钻值是尼罗转盘的36倍。尼罗转盘主要产出Cat's Eye→兑换建筑材料。两个转盘服务完全不同的养成线。</div>
+
+<!-- ====== 八、竞技转盘ARPU衰减分析 ====== -->
+<h2 id="s8"><span class="section-group bg-orange">深挖</span>八、竞技转盘ARPU衰减分析</h2>
+
+<h3>竞技转盘产出链路</h3>
+<div class="callout callout-info" style="font-family:monospace;font-size:0.85rem">
+买2006系列礼包 → 钻石+VIP+竞技奖券(1133) → GvG抽奖 → 技能书+碎片+加速
+</div>
+
+<h3>GvG抽奖产出（6,944转/424人）</h3>
+<table>
+<tr><th>产出</th><th>每转</th><th>钻值/转</th></tr>
+<tr><td>传奇技能书</td><td>1.47</td><td>1,470</td></tr>
+<tr><td>史诗技能书</td><td>2.78</td><td>1,391</td></tr>
+<tr><td>万能传奇信物</td><td>0.55</td><td>2,743</td></tr>
+<tr><td>万能史诗信物</td><td>1.60</td><td>1,600</td></tr>
+<tr><td>Verdantia碎片</td><td>0.80</td><td>3,973</td></tr>
+<tr><td>永生玫瑰</td><td>0.99</td><td>1,478</td></tr>
+<tr><td>30min加速</td><td>5.53</td><td>2,212</td></tr>
+<tr style="font-weight:700"><td>每转总钻值</td><td></td><td>~14,867 (尼罗转盘的36倍)</td></tr>
+</table>
+
+<h3>竞技转盘W1→W3：付费率 vs 付费深度</h3>
+<table>
+<tr><th>指标</th><th>W1</th><th>W3</th><th>变化</th></tr>
+<tr><td>总收入</td><td>$509.58</td><td>$122.86</td><td class="neg">-76%</td></tr>
+<tr><td>买家</td><td>~15人</td><td>~8人</td><td>-47%</td></tr>
+<tr><td>ARPPU</td><td>~$34</td><td>~$15</td><td class="neg">-56%</td></tr>
+<tr><td>付费率</td><td>~1.15%</td><td>~1.09%</td><td>-5%</td></tr>
+</table>
+<div class="callout callout-warning"><b>付费率几乎不变(-5%)，核心是付费深度断崖(-56%)</b>。W1有人买到Pack3($49.99)，W3没人超过Pack2。碎片积压导致大R不需要再深买。</div>
+
+<h3>D30-34活动叠加排期评估</h3>
+<p>竞技转盘与尼罗在D30-34有5天重叠。ARPU/天对比：</p>
+<table>
+<tr><th>时期</th><th>天数</th><th>活跃</th><th>竞技ARPU/天</th><th>尼罗ARPU/天</th><th>合计</th></tr>
+<tr><td>D20-29 (尼罗独占)</td><td>10</td><td>1,592</td><td>$0.037</td><td>$0.067</td><td>$0.104</td></tr>
+<tr><td>D30-34 (重叠期)</td><td>5</td><td>855</td><td>$0.044</td><td>$0.065</td><td>$0.109</td></tr>
+<tr><td>D35-39 (尼罗结束)</td><td>5</td><td>733</td><td>$0.034</td><td>—</td><td>$0.034</td></tr>
+</table>
+<p>对照组69-78竞技ARPU/天：D20-29 $0.116 → D30-34 $0.057 → D35-39 $0.060</p>
+<div class="callout callout-success"><b>叠加排期结论：不需要调整。</b><br>尼罗87.6%收入在D20-29独占期完成，重叠期尼罗短期多赚~$95，但碎片积压造成W3损失~$198。净影响不大，排期不是核心问题。</div>
+
+<!-- ====== 九、英雄装备箱投放问题 ====== -->
+<h2 id="s9"><span class="section-group bg-red">问题</span>九、英雄装备箱(幸运)投放过多</h2>
+
+<table>
+<tr><th>来源</th><th>数量</th><th>占比</th></tr>
+<tr><td>尼罗-黑猫神盒(210616)直接发放</td><td>650</td><td>41.3%</td></tr>
+<tr><td>尼罗-兑换商店(1334)</td><td>507</td><td>32.3%</td></tr>
+<tr><td>其他BP直接购买奖励</td><td>400</td><td>25.4%</td></tr>
+<tr><td>开服第5天包</td><td>15</td><td>1.0%</td></tr>
+<tr style="font-weight:700"><td>合计</td><td>1,572</td><td>100%</td></tr>
+<tr style="font-weight:700"><td>其中尼罗贡献</td><td>1,157</td><td class="neg">73.6%</td></tr>
+</table>
+<div class="callout callout-danger"><b>英雄装备箱(幸运)全渠道产出1,572个，尼罗占73.6%。</b>尼罗通过黑猫神盒(650)+兑换商店(507)大量投放。<br><br><b>优化方向</b>：调低尼罗链路的英雄装备箱投放量。黑猫神盒每人50个过多，建议降至20-30个；兑换商店限购下调。</div>
+
+<!-- ====== 十、优化方向汇总 ====== -->
+<h2 id="s10"><span class="section-group bg-green">方案</span>十、优化方向汇总</h2>
+
+<table>
+<tr><th>优先级</th><th>方向</th><th>具体措施</th><th>预期效果</th><th>开发量</th></tr>
+<tr class="hl"><td><b>P0</b></td><td>累充碎片改为抽奖券</td><td>累充10档万能传奇信物(340个)替换为抽奖券(476张，原ROI×0.7)；抽奖池：传奇技能书(15%)+装备材料袋(15%)+史诗技能书(15%)+英雄美酒(10%)+30min加速(20%)+万能传奇信物(5%)+万能史诗信物(10%)+永生玫瑰(10%)</td><td>碎片占比从20.2%→4.7%，全品类占比&lt;8%</td><td>改配置+新建抽奖池</td></tr>
+<tr class="hl"><td><b>P0</b></td><td>降低英雄装备箱投放</td><td>黑猫神盒装备箱从50降至20-30；兑换商店限购下调</td><td>装备箱不再由单一节日过度供给</td><td>改配置</td></tr>
+<tr><td>P1</td><td>调整节日礼包ROI平衡</td><td>节日A线首坑ROI(9,264/$)高于每日回馈(7,816/$) 18%，降低节日A线钻石/转盘代币投放量，或提升每日回馈奖励，拉近ROI差距</td><td>每日回馈不再被节日礼包吸引力碾压，W3付费率回升</td><td>改配置</td></tr>
+<tr><td>P1</td><td>拜访礼包新增技能书投放</td><td>替换部分奖券投放为传奇/史诗技能书，补充技能书缺口</td><td>技能书当前消耗率113%/116%（两组均透支），属于不饱和品类，新增投放不会造成积压，反而填补需求缺口</td><td>改配置</td></tr>
+</table>
+
+<!-- ====== 十一、数据基础 ====== -->
+<h2 id="s11"><span class="section-group bg-gray">附录</span>十一、数据基础</h2>
+
+<h3>服务器信息</h3>
+<table>
+<tr><th>批次</th><th>服务器</th><th>开服时间</th><th>W1活跃</th><th>W3活跃</th><th>活跃衰减</th></tr>
+<tr><td>69-78服</td><td>1680-1770 (10服)</td><td>2026-02-19~03-14</td><td>3,713</td><td>2,105</td><td>-43.3%</td></tr>
+<tr><td>80-83服</td><td>1790-1820 (4服)</td><td>2026-03-22~04-03</td><td>1,299</td><td>733</td><td>-43.6%</td></tr>
+</table>
+
+<h3>尼罗活跃窗口</h3>
+<p>按转盘代币(1128)消耗确认：<b>D20~D34</b>（15天），D35开始基本结束。</p>
+
+<h3>道具价值来源</h3>
+<p><a href="https://docs.google.com/spreadsheets/d/1M2KmUg1KzuF0ryfooxhjhyyVmuD2dWx4378B6MmXtMI/edit?gid=1474503131">X3道具价值表</a></p>
+
+<h3>数据来源</h3>
+<p>Datain v1090 (TRINO_HF) + C:/x3dev/配置表 (Pack.xlsx, Reward.xlsx, ActvTask.xlsx, ActvLuckyWheel.xlsx, ActvBattlePassScore.xlsx, Rank.xlsx)</p>
+
+<hr style="border:none;border-top:1px solid #e1e4e8;margin:48px 0 16px">
+<p style="text-align:center;color:#959da5;font-size:0.8rem">X3 W5付费率衰减回归报告 &nbsp;|&nbsp; 2026-05-21</p>
+
+</div>
+</body>
+</html>

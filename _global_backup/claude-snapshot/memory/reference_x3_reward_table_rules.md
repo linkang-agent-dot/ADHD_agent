@@ -22,6 +22,12 @@ metadata:
 
 ## 硬约束规则
 
+### 规则0：★别把 ItemType(Col3/idx2) 当序号填递增！（2026-06-16 世界杯签到day7踩坑）
+- 「同 RewardID 内必须连续」的递增编号是 **Col1=行编号(idx0,全表唯一RowID)**，**不是 ItemType**。
+- 多道具同组时 **ItemType(Col3/idx2) 全填 1**(都是道具)，靠 Col1 RowID 区分各行；**误把 idx2 填成 1/2/3** → 导表把 ItemType=3 当**嵌套奖励包**去找 ItemID 对应的 Reward 组(找不到就 `depend not existed` 报错)，ItemType=2 当蓝图。
+- tsv_edit 是 **0-indexed**：idx0=行编号 / idx1=RewardID / idx2=ItemType / idx3=ItemID / idx5=Num / idx7=DropPara。（上表是 1-indexed Col，对应 -1）
+- 实例：签到 day7 Reward 59812 三行(券1146/加速11003/资源袋3101)误填 idx2=1/2/3 → 导表报 `key:... not existed`/把3101当奖励包；修=全改 1(commit 7ea0a10)。
+
 ### 规则1：DropPara 必填（导表 `int('')` 报错根因）
 
 - 即使 DropType=1（单独概率/必掉），DropPara 也**不能为空**
@@ -105,6 +111,17 @@ for row in ws.iter_rows(min_row=7, values_only=True):
 - 修法：**把该 RewardID 的所有行 col[0] 整组重排到一段连续空闲号**（如三礼包各4行 → 24302-24305/24306-24309/24310-24313），物理也挪到表尾连续。col[0] 只是 Reward 内部行号，外部按 col[1] RewardID 引用，改 col[0] 不影响引用。
 - ⚠️ 之前误以为跳号没事（被旧导表 SUCCESS 误导）——实际现在强校验，必须连续。
 - 改完别忘 [[reference_x3_tsv_export_migration]] 顶部的 xlsx-tsv gate：只改 tsv 会触发 gate 两步同步。
+
+## 坑C：假道具不能投放进 Reward（2026-06-15 世界杯商会赠礼踩坑）
+- 报错：`Exception: ID: <rowID> 不能投放预览道具 <itemID>`，build FAILURE。
+- 根因：该 item 的 **Item 表 col2(0-based)= "假道具"** —— 是某系统的**展示/预览用占位道具**，不可作奖励发放。典型：**商会赠礼I~V (12101-12105)**(col2=假道具,图标DK_Icon_guild_gift_purchase1)=公会赠礼**购买界面展示图标**，不是真道具。
+- 商会赠礼的真相：是「买礼包→给公会送礼」的**系统特权**(UnionGift)，按 IAP 价格档自动挂(UnionGiftCfg 编号201-205,类型2=商会礼物)；公会成员实收=Reward 404001-404005=钻×1+5分钟加速×N。**整套不在礼包 Reward 里配**，礼包侧无需配它。
+- **配 Reward 前先验**：`awk -F'\t' '$1==<item>{print $2}' Item__Item.tsv`，col2 是"假道具"的一律不能进 Reward。
+
+## ⚠️改 Reward 表的正确姿势(2026-06-15 血泪：别裸 python 整组重写)
+- **单格改(换item/改数量)→ 用 `tsv_edit.py set`**(保LF、单格、不动行结构)，`git add tsv` 后 **pre-commit gate 自动同步 xlsx**(显示"auto action staged"+mismatch=0)，一次过。
+- **裸 python 整组重写行(加/删行+重排ID)→ 翻车**：split('\n')/join 易破坏行尾→引入 CRLF(gate crlf≠0 拒)+round-trip 不稳(mismatch),手动 `--from-tsv`/`--from-xlsx` 反复同步只会越弄越糟(mismatch 0→3)。
+- 真要加/删行：能用单格替换达成目的就别加减行(如把第5物换成另一道具,而非删行重排)；非加行不可时，**改完用全仓 `python scripts/sync_xlsx_tsv.py` 验 mismatch=0 且 crlf=0 再提交**，崩了立刻 `git reset --hard origin/<branch>` 回纯净态别硬怼。
 
 ## 相关
 

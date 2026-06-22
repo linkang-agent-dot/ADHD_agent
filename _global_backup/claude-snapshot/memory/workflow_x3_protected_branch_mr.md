@@ -87,6 +87,12 @@ png > 1 MB 的图（如 AI 生成的活动 banner 4-5 MB）走 LFS。
 | MR | [!224](https://git.tap4fun.com/x3/x3-project/-/merge_requests/224) source → dev |
 | API 调用 | JSON body，1 次成功 |
 
+## ⚠️ MR 只为「合进受保护的 dev」,推工作分支不用 MR(2026-06-17 澄清)
+受保护的**只有 `dev`**。`dev_festival` / `dev_summer_*` / `dev-xxx` 这类**工作分支可直接 `git push origin <分支>`,不需要 MR**(仓里一堆 dev_summer_bg_12_v2/v4/v5 就是直推的)。
+- **只为测试验证** → 客户端改动 push 到工作分支(如当前活跃的 `dev_festival`),让测试客户端从该分支出包即可,**全程不开 MR**。
+- **要进正式线 `dev`** → 才走 feature branch + MR + review(dev 直接 push 会被拒)。
+- 别为一次测试就开 MR 走 review,白增负担。
+
 ## 相关
 
 - x3-project 仓配置详情：[[reference_x3_project_repo]]

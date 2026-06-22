@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X2占星节 D0-D10 汇总报告</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #222536; --border: #2e3248;
+    --accent: #6c63ff; --accent2: #00d4aa; --accent3: #ff6b6b; --accent4: #ffd166;
+    --text: #e2e8f0; --text-muted: #8892a4; --green: #22c55e; --orange: #f97316; --red: #ef4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; font-size: 14px; }
+  .header { background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%); border-bottom: 1px solid var(--border); padding: 28px 40px 20px; }
+  .header h1 { font-size: 26px; font-weight: 700; }
+  .header h1 .hl { color: var(--accent); }
+  .header h1 .tag { font-size: 13px; background: var(--accent); color: #fff; padding: 2px 10px; border-radius: 4px; margin-left: 10px; vertical-align: middle; }
+  .meta-row { margin-top: 6px; display: flex; gap: 20px; font-size: 12px; color: var(--text-muted); }
+  .container { max-width: 1280px; margin: 0 auto; padding: 28px 40px 60px; }
+  .section { margin-bottom: 36px; }
+  .section-title { font-size: 14px; font-weight: 700; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; border-top: 3px solid var(--accent); }
+  .kpi-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .8px; }
+  .kpi-value { font-size: 22px; font-weight: 800; margin: 4px 0 2px; font-variant-numeric: tabular-nums; }
+  .kpi-sub { font-size: 12px; color: var(--text-muted); }
+  .up { color: var(--green); } .down { color: var(--red); } .muted { color: var(--text-muted); }
+  .row-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .row-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .table-wrap { border-radius: 10px; border: 1px solid var(--border); overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { background: var(--surface2); padding: 10px 12px; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .6px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; position: sticky; top: 0; }
+  tbody td { padding: 9px 12px; border-bottom: 1px solid var(--border); font-size: 13px; white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(108,99,255,.05); }
+  tbody tr.row-total { background: var(--surface2); font-weight: 700; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .chart-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .chart-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+  canvas { width: 100%; display: block; }
+  .mod-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .mod-name { width: 80px; font-size: 12px; color: var(--text-muted); text-align: right; flex-shrink: 0; }
+  .mod-bar-wrap { flex: 1; background: var(--surface2); border-radius: 4px; height: 26px; }
+  .mod-bar { height: 100%; border-radius: 4px; min-width: 2px; display: flex; align-items: center; padding-left: 8px; font-size: 11px; font-weight: 600; color: #fff; }
+  .mod-val { width: 72px; font-size: 13px; font-variant-numeric: tabular-nums; text-align: right; flex-shrink: 0; font-weight: 600; }
+  .mod-pct { width: 42px; font-size: 11px; color: var(--text-muted); text-align: right; flex-shrink: 0; }
+  .phase-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .phase-title { font-size: 13px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .phase-badge { font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+  .phase-kv { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
+  .phase-kv .k { color: var(--text-muted); }
+  .phase-kv .v { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .alert { padding: 10px 14px; border-radius: 8px; margin-bottom: 8px; font-size: 13px; display: flex; align-items: flex-start; gap: 8px; }
+  .alert-icon { flex-shrink: 0; }
+  .alert-warn { background: rgba(249,115,22,.08); border: 1px solid rgba(249,115,22,.2); }
+  .alert-info { background: rgba(108,99,255,.06); border: 1px solid rgba(108,99,255,.15); }
+  .alert-good { background: rgba(34,197,94,.06); border: 1px solid rgba(34,197,94,.15); }
+  .footer { text-align: center; color: var(--text-muted); font-size: 11px; padding: 20px 0; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 30px 0; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>X2 <span class="hl">占星节</span> <span class="tag">D0-D10 汇总</span></h1>
+  <div class="meta-row">
+    <span>12-75服</span>
+    <span>节日周期 2026-05-11 ~ 2026-05-21 (11天)</span>
+    <span>基线 2026-04-27 ~ 2026-05-10 (14日均值)</span>
+    <span>生成于 2026-05-22</span>
+  </div>
+</div>
+<div class="container">
+
+<!-- KPI Overview -->
+<div class="section">
+  <div class="section-title">累计 KPI 总览</div>
+  <div class="kpi-grid" id="kpiGrid"></div>
+</div>
+
+<!-- Daily Table -->
+<div class="section">
+  <div class="section-title">每日明细</div>
+  <div class="table-wrap" id="dailyTable"></div>
+</div>
+
+<!-- Trend Charts -->
+<div class="section">
+  <div class="section-title">流水趋势</div>
+  <div class="row-2col">
+    <div class="chart-box"><div class="chart-label">总流水 vs 基线</div><canvas id="totalChart" height="220"></canvas></div>
+    <div class="chart-box"><div class="chart-label">节日 / 非节日 流水拆分</div><canvas id="splitChart" height="220"></canvas></div>
+  </div>
+</div>
+
+<!-- Module Summary -->
+<div class="section">
+  <div class="section-title">模块收入排行 (累计)</div>
+  <div class="row-2col">
+    <div id="modBars"></div>
+    <div class="chart-box"><div class="chart-label">模块占比饼图</div><canvas id="pieChart" height="280"></canvas></div>
+  </div>
+</div>
+
+<!-- Module Daily Detail Table -->
+<div class="section">
+  <div class="section-title">模块逐日明细</div>
+  <div class="table-wrap" id="modDailyTable"></div>
+</div>
+
+<!-- Module Trend -->
+<div class="section">
+  <div class="section-title">模块逐日趋势</div>
+  <div class="chart-box"><canvas id="modStackChart" height="260"></canvas></div>
+</div>
+
+<!-- Phase Analysis -->
+<div class="section">
+  <div class="section-title">分阶段分析</div>
+  <div class="row-3col" id="phaseCards"></div>
+</div>
+
+<!-- ARPU Analysis -->
+<div class="section">
+  <div class="section-title">ARPU 深度分析</div>
+  <div class="row-2col">
+    <div class="chart-box"><div class="chart-label">综合 ARPU 趋势 (vs 基线 $30.80)</div><canvas id="arpuChart" height="220"></canvas></div>
+    <div class="chart-box"><div class="chart-label">节日 ARPU vs 非节日 ARPU</div><canvas id="arpuSplitChart" height="220"></canvas></div>
+  </div>
+</div>
+
+<!-- Key Insights -->
+<div class="section">
+  <div class="section-title">关键发现</div>
+  <div id="insightsBox"></div>
+</div>
+
+</div>
+<div class="footer">X2 占星节 D0-D10 汇总 | 数据口径：12-75服，节日模块 = dim_iap 中 iap_type 为「混合-节日活动」+「活动礼包」</div>
+
+<script>
+const allDays = [
+  {"date":"2026-05-11","day_label":"D0","total":8125,"festival":2495,"non_festival":5631,"payers":175,"modules":{"BP通行证":206,"GACHA":2194,"七日活动":0,"大富翁":0,"巨猿金蛋":0,"抽奖券礼包":0,"掉落转付费":15,"每日礼包":0,"自选周卡":0,"行军表情":80,"连锁礼包":0,"限时抢购":0}},
+  {"date":"2026-05-12","day_label":"D1","total":11026,"festival":4585,"non_festival":6441,"payers":180,"modules":{"BP通行证":367,"GACHA":2529,"七日活动":119,"大富翁":1481,"巨猿金蛋":0,"抽奖券礼包":0,"掉落转付费":0,"每日礼包":0,"自选周卡":0,"行军表情":90,"连锁礼包":0,"限时抢购":0}},
+  {"date":"2026-05-13","day_label":"D2","total":6192,"festival":2307,"non_festival":3885,"payers":159,"modules":{"BP通行证":168,"GACHA":715,"七日活动":113,"大富翁":1227,"巨猿金蛋":0,"抽奖券礼包":0,"掉落转付费":0,"每日礼包":60,"自选周卡":0,"行军表情":25,"连锁礼包":0,"限时抢购":0}},
+  {"date":"2026-05-14","day_label":"D3","total":6283,"festival":2400,"non_festival":3883,"payers":157,"modules":{"BP通行证":244,"GACHA":575,"七日活动":118,"大富翁":305,"巨猿金蛋":0,"抽奖券礼包":0,"掉落转付费":0,"每日礼包":135,"自选周卡":1020,"行军表情":5,"连锁礼包":0,"限时抢购":0}},
+  {"date":"2026-05-15","day_label":"D4","total":7708,"festival":3496,"non_festival":4212,"payers":166,"modules":{"BP通行证":896,"GACHA":605,"七日活动":24,"大富翁":603,"巨猿金蛋":0,"抽奖券礼包":0,"掉落转付费":0,"每日礼包":85,"自选周卡":360,"行军表情":30,"连锁礼包":564,"限时抢购":330}},
+  {"date":"2026-05-16","day_label":"D5","total":5542,"festival":2250,"non_festival":3292,"payers":164,"modules":{"BP通行证":766,"GACHA":830,"七日活动":36,"大富翁":214,"巨猿金蛋":0,"抽奖券礼包":0,"掉落转付费":10,"每日礼包":115,"自选周卡":150,"行军表情":10,"连锁礼包":120,"限时抢购":0}},
+  {"date":"2026-05-17","day_label":"D6","total":4962,"festival":2311,"non_festival":2651,"payers":149,"modules":{"BP通行证":306,"GACHA":680,"七日活动":12,"大富翁":184,"巨猿金蛋":0,"抽奖券礼包":345,"掉落转付费":339,"每日礼包":95,"自选周卡":250,"行军表情":5,"连锁礼包":96,"限时抢购":0}},
+  {"date":"2026-05-18","day_label":"D7","total":6392,"festival":2717,"non_festival":3676,"payers":154,"modules":{"BP通行证":527,"GACHA":460,"七日活动":6,"大富翁":301,"巨猿金蛋":0,"抽奖券礼包":720,"掉落转付费":250,"每日礼包":65,"自选周卡":100,"行军表情":10,"连锁礼包":279,"限时抢购":0}},
+  {"date":"2026-05-19","day_label":"D8","total":3802,"festival":1283,"non_festival":2519,"payers":144,"modules":{"BP通行证":407,"GACHA":245,"七日活动":5,"大富翁":256,"巨猿金蛋":180,"抽奖券礼包":140,"掉落转付费":40,"每日礼包":0,"自选周卡":0,"行军表情":5,"连锁礼包":6,"限时抢购":0}},
+  {"date":"2026-05-20","day_label":"D9","total":6237,"festival":1874,"non_festival":4363,"payers":140,"modules":{"BP通行证":65,"GACHA":485,"七日活动":0,"大富翁":614,"巨猿金蛋":90,"抽奖券礼包":305,"掉落转付费":50,"每日礼包":0,"自选周卡":100,"行军表情":10,"连锁礼包":156,"限时抢购":0}},
+  {"date":"2026-05-21","day_label":"D10","total":5044,"festival":1993,"non_festival":3051,"payers":144,"modules":{"BP通行证":768,"GACHA":135,"七日活动":0,"大富翁":97,"巨猿金蛋":20,"抽奖券礼包":305,"掉落转付费":35,"每日礼包":0,"自选周卡":0,"行军表情":5,"连锁礼包":459,"限时抢购":170}}
+];
+const baseline = {"total":4866.07,"non_festival":4787.49,"payers":158.0,"arpu_total":30.8,"arpu_nonfest":30.3};
+const modColors = {"GACHA":"#6c63ff","大富翁":"#00d4aa","BP通行证":"#ffd166","自选周卡":"#38bdf8","连锁礼包":"#34d399","抽奖券礼包":"#f59e0b","掉落转付费":"#fb923c","每日礼包":"#f472b6","七日活动":"#ff6b6b","限时抢购":"#ec4899","巨猿金蛋":"#e879f9","行军表情":"#a78bfa"};
+const dpr = window.devicePixelRatio || 1;
+const N = allDays.length;
+
+// Aggregations
+const cumTotal = allDays.reduce((s,d)=>s+d.total,0);
+const cumFest = allDays.reduce((s,d)=>s+d.festival,0);
+const cumNonFest = allDays.reduce((s,d)=>s+d.non_festival,0);
+const cumPayers = allDays.reduce((s,d)=>s+d.payers,0);
+const avgTotal = cumTotal/N;
+const avgFest = cumFest/N;
+const avgPayers = cumPayers/N;
+const blTotal11 = baseline.total * N;
+const festRatio = cumFest/cumTotal*100;
+const avgArpu = allDays.reduce((s,d)=>s+d.total/d.payers,0)/N;
+const avgFestArpu = allDays.reduce((s,d)=>s+d.festival/d.payers,0)/N;
+const avgNfArpu = allDays.reduce((s,d)=>s+d.non_festival/d.payers,0)/N;
+
+// Module cumulative
+const modNames = Object.keys(allDays[0].modules);
+const modCum = {};
+modNames.forEach(m => { modCum[m] = allDays.reduce((s,d) => s+(d.modules[m]||0), 0); });
+const modSorted = Object.entries(modCum).sort((a,b)=>b[1]-a[1]);
+const modTotal = Object.values(modCum).reduce((s,v)=>s+v,0);
+
+function $(id){return document.getElementById(id)}
+function fmt(v){return v>=1000?'$'+v.toLocaleString('en-US',{maximumFractionDigits:0}):'$'+Math.round(v)}
+function fmtPct(v){return (v>0?'+':'')+v.toFixed(1)+'%'}
+
+// ===== KPI =====
+(function(){
+  const uplift = (avgTotal-baseline.total)/baseline.total*100;
+  const items = [
+    {label:'累计总流水',value:fmt(cumTotal),sub:'11天 (D0~D10)',color:'var(--accent)'},
+    {label:'累计节日流水',value:fmt(cumFest),sub:festRatio.toFixed(1)+'% 占比',color:'var(--accent4)'},
+    {label:'日均总流水',value:fmt(avgTotal),sub:'<span class="'+(uplift>0?'up':'down')+'">'+fmtPct(uplift)+'</span> vs 基线 '+fmt(baseline.total),color:'var(--accent2)'},
+    {label:'日均付费人数',value:avgPayers.toFixed(0),sub:'基线 '+baseline.payers,color:'var(--green)'},
+    {label:'日均综合ARPU',value:'$'+avgArpu.toFixed(2),sub:'<span class="'+(avgArpu>baseline.arpu_total?'up':'down')+'">'+fmtPct((avgArpu-baseline.arpu_total)/baseline.arpu_total*100)+'</span> vs 基线 $'+baseline.arpu_total,color:'var(--accent3)'},
+    {label:'vs 基线增收',value:fmt(cumTotal-blTotal11),sub:'总流水 - 基线×11天',color:'var(--orange)'},
+  ];
+  $('kpiGrid').innerHTML=items.map(it=>'<div class="kpi-card" style="border-top-color:'+it.color+'"><div class="kpi-label">'+it.label+'</div><div class="kpi-value">'+it.value+'</div><div class="kpi-sub">'+it.sub+'</div></div>').join('');
+})();
+
+// ===== Daily Table =====
+(function(){
+  let html='<table><thead><tr><th>Day</th><th>日期</th><th class="num">总流水</th><th class="num">节日</th><th class="num">非节日</th><th class="num">付费人数</th><th class="num">综合ARPU</th><th class="num">节日ARPU</th><th class="num">非节日ARPU</th><th class="num">节日占比</th></tr></thead><tbody>';
+  let sTot=0,sFest=0,sNf=0,sPay=0;
+  allDays.forEach(d=>{
+    sTot+=d.total; sFest+=d.festival; sNf+=d.non_festival; sPay+=d.payers;
+    const arpu=d.total/d.payers, fa=d.festival/d.payers, nfa=d.non_festival/d.payers, fr=d.festival/d.total*100;
+    const arpuCls=arpu>baseline.arpu_total?'up':'down', nfCls=nfa>baseline.arpu_nonfest?'up':'down';
+    html+='<tr><td><b>'+d.day_label+'</b></td><td>'+d.date+'</td><td class="num">'+fmt(d.total)+'</td><td class="num" style="color:var(--accent4)">'+fmt(d.festival)+'</td><td class="num">'+fmt(d.non_festival)+'</td><td class="num">'+d.payers+'</td><td class="num '+arpuCls+'">$'+arpu.toFixed(2)+'</td><td class="num" style="color:var(--accent4)">$'+fa.toFixed(2)+'</td><td class="num '+nfCls+'">$'+nfa.toFixed(2)+'</td><td class="num">'+fr.toFixed(1)+'%</td></tr>';
+  });
+  const tArpu=sTot/sPay*N/N; // not right, use avg
+  html+='<tr class="row-total"><td><b>合计</b></td><td>11天</td><td class="num">'+fmt(sTot)+'</td><td class="num" style="color:var(--accent4)">'+fmt(sFest)+'</td><td class="num">'+fmt(sNf)+'</td><td class="num">日均 '+Math.round(sPay/N)+'</td><td class="num">$'+avgArpu.toFixed(2)+'</td><td class="num" style="color:var(--accent4)">$'+avgFestArpu.toFixed(2)+'</td><td class="num">$'+avgNfArpu.toFixed(2)+'</td><td class="num">'+(sFest/sTot*100).toFixed(1)+'%</td></tr>';
+  html+='</tbody></table>';
+  $('dailyTable').innerHTML=html;
+})();
+
+// ===== Charting helpers =====
+function setupCanvas(id,h){
+  const c=document.getElementById(id);
+  const W=c.offsetWidth;
+  c.width=W*dpr; c.height=h*dpr;
+  const ctx=c.getContext('2d'); ctx.scale(dpr,dpr);
+  return {c,ctx,W,H:h};
+}
+function gridY(ctx,pad,W,H,maxVal,steps){
+  ctx.strokeStyle='#2e3248'; ctx.lineWidth=.5;
+  for(let i=0;i<=steps;i++){
+    const y=pad.top+(H-pad.top-pad.bottom)*i/steps;
+    ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(W-pad.right,y); ctx.stroke();
+    ctx.fillStyle='#8892a4'; ctx.font='10px -apple-system,sans-serif'; ctx.textAlign='right';
+    ctx.fillText('$'+Math.round(maxVal*(steps-i)/steps).toLocaleString(),pad.left-6,y+3);
+  }
+}
+function drawLine(ctx,pts,color,width){
+  ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]);
+  for(let i=1;i<pts.length;i++) ctx.lineTo(pts[i][0],pts[i][1]);
+  ctx.strokeStyle=color; ctx.lineWidth=width; ctx.stroke();
+}
+function drawDots(ctx,pts,color,labels,pad,H){
+  pts.forEach((p,i)=>{
+    ctx.beginPath(); ctx.arc(p[0],p[1],4,0,Math.PI*2); ctx.fillStyle=color; ctx.fill();
+    ctx.strokeStyle='#1a1d27'; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle='#e2e8f0'; ctx.font='10px -apple-system,sans-serif'; ctx.textAlign='center';
+    ctx.fillText('$'+labels[i].toLocaleString(),p[0],p[1]-10);
+  });
+}
+function xLabels(ctx,pts,labels,H,pad){
+  ctx.fillStyle='#8892a4'; ctx.font='10px -apple-system,sans-serif'; ctx.textAlign='center';
+  pts.forEach((p,i)=>ctx.fillText(labels[i],p[0],H-pad.bottom+14));
+}
+
+// ===== Total Trend =====
+(function(){
+  const {ctx,W,H}=setupCanvas('totalChart',220);
+  const pad={top:20,right:16,bottom:32,left:56};
+  const cW=W-pad.left-pad.right, cH=H-pad.top-pad.bottom;
+  const vals=allDays.map(d=>d.total);
+  const maxV=Math.max(...vals,baseline.total)*1.25;
+  const xp=i=>pad.left+(N>1?i/(N-1)*cW:cW/2);
+  const yp=v=>pad.top+cH-(v/maxV*cH);
+  gridY(ctx,pad,W,H,maxV,4);
+  // baseline
+  ctx.setLineDash([5,5]); ctx.strokeStyle='#f97316'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(pad.left,yp(baseline.total)); ctx.lineTo(W-pad.right,yp(baseline.total)); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#f97316'; ctx.font='10px -apple-system,sans-serif'; ctx.textAlign='right';
+  ctx.fillText('基线 $'+Math.round(baseline.total).toLocaleString(),W-pad.right,yp(baseline.total)-5);
+  // area
+  ctx.beginPath(); ctx.moveTo(xp(0),yp(vals[0]));
+  for(let i=1;i<N;i++) ctx.lineTo(xp(i),yp(vals[i]));
+  ctx.lineTo(xp(N-1),yp(0)); ctx.lineTo(xp(0),yp(0)); ctx.closePath();
+  ctx.fillStyle='rgba(108,99,255,.1)'; ctx.fill();
+  const pts=allDays.map((d,i)=>[xp(i),yp(d.total)]);
+  drawLine(ctx,pts,'#6c63ff',2.5);
+  drawDots(ctx,pts,'#6c63ff',vals,pad,H);
+  xLabels(ctx,pts,allDays.map(d=>d.day_label),H,pad);
+})();
+
+// ===== Split Chart (Festival / Non-Festival stacked bars) =====
+(function(){
+  const {ctx,W,H}=setupCanvas('splitChart',220);
+  const pad={top:20,right:16,bottom:32,left:56};
+  const cW=W-pad.left-pad.right, cH=H-pad.top-pad.bottom;
+  const maxV=Math.max(...allDays.map(d=>d.total))*1.2;
+  const barW=cW/N*0.6;
+  gridY(ctx,pad,W,H,maxV,4);
+  allDays.forEach((d,i)=>{
+    const cx=pad.left+(i+0.5)/N*cW;
+    const hFest=d.festival/maxV*cH, hNf=d.non_festival/maxV*cH;
+    const base=pad.top+cH;
+    // non-festival
+    ctx.fillStyle='rgba(108,99,255,.4)';
+    ctx.fillRect(cx-barW/2,base-hNf-hFest,barW,hNf);
+    // festival
+    ctx.fillStyle='#ffd166';
+    ctx.fillRect(cx-barW/2,base-hFest,barW,hFest);
+    // label
+    ctx.fillStyle='#8892a4'; ctx.font='10px -apple-system,sans-serif'; ctx.textAlign='center';
+    ctx.fillText(d.day_label,cx,H-pad.bottom+14);
+    // total on top
+    ctx.fillStyle='#e2e8f0'; ctx.font='10px -apple-system,sans-serif';
+    ctx.fillText('$'+d.total.toLocaleString(),cx,base-hNf-hFest-6);
+  });
+  // legend
+  ctx.fillStyle='#ffd166'; ctx.fillRect(W-pad.right-140,8,12,12);
+  ctx.fillStyle='#e2e8f0'; ctx.font='11px -apple-system,sans-serif'; ctx.textAlign='left';
+  ctx.fillText('节日',W-pad.right-124,18);
+  ctx.fillStyle='rgba(108,99,255,.5)'; ctx.fillRect(W-pad.right-76,8,12,12);
+  ctx.fillStyle='#e2e8f0'; ctx.fillText('非节日',W-pad.right-60,18);
+})();
+
+// ===== Module Bars =====
+(function(){
+  const maxRev=modSorted[0][1];
+  $('modBars').innerHTML=modSorted.map(([m,rev])=>{
+    const pct=modTotal>0?rev/modTotal*100:0;
+    const barW=rev/maxRev*100;
+    const color=modColors[m]||'#8892a4';
+    return '<div class="mod-row"><div class="mod-name">'+m+'</div><div class="mod-bar-wrap"><div class="mod-bar" style="width:'+barW.toFixed(1)+'%;background:'+color+'"></div></div><div class="mod-val">'+fmt(rev)+'</div><div class="mod-pct">'+pct.toFixed(1)+'%</div></div>';
+  }).join('');
+})();
+
+// ===== Pie Chart =====
+(function(){
+  const {ctx,W,H}=setupCanvas('pieChart',280);
+  const cx=W/2-40, cy=H/2, r=Math.min(cx,cy)-20;
+  let startAngle=-Math.PI/2;
+  const topMods=modSorted.filter(([m,v])=>v>0);
+  topMods.forEach(([m,rev])=>{
+    const sweep=rev/modTotal*Math.PI*2;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,startAngle,startAngle+sweep); ctx.closePath();
+    ctx.fillStyle=modColors[m]||'#8892a4'; ctx.fill();
+    ctx.strokeStyle='#0f1117'; ctx.lineWidth=2; ctx.stroke();
+    // label
+    const mid=startAngle+sweep/2;
+    const lx=cx+Math.cos(mid)*(r*0.65), ly=cy+Math.sin(mid)*(r*0.65);
+    if(rev/modTotal>0.04){
+      ctx.fillStyle='#fff'; ctx.font='bold 11px -apple-system,sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText((rev/modTotal*100).toFixed(0)+'%',lx,ly);
+    }
+    startAngle+=sweep;
+  });
+  // legend
+  let ly2=16;
+  topMods.forEach(([m,rev])=>{
+    const lx2=W-130;
+    ctx.fillStyle=modColors[m]||'#8892a4'; ctx.fillRect(lx2,ly2,10,10);
+    ctx.fillStyle='#e2e8f0'; ctx.font='11px -apple-system,sans-serif'; ctx.textAlign='left'; ctx.textBaseline='top';
+    ctx.fillText(m+' '+fmt(rev),lx2+16,ly2);
+    ly2+=18;
+  });
+})();
+
+// ===== Module Daily Detail Table =====
+(function(){
+  const ordMods = modSorted.map(([m])=>m);
+  let html='<table><thead><tr><th>Day</th>';
+  ordMods.forEach(m=>{
+    const c=modColors[m]||'#8892a4';
+    html+='<th class="num" style="color:'+c+'">'+m+'</th>';
+  });
+  html+='<th class="num" style="color:var(--accent4)">节日合计</th><th class="num">占总流水</th></tr></thead><tbody>';
+  allDays.forEach(d=>{
+    const modSum=Object.values(d.modules).reduce((s,v)=>s+v,0);
+    const fr=d.total>0?(d.festival/d.total*100):0;
+    html+='<tr><td><b>'+d.day_label+'</b><br><span style="font-size:10px;color:var(--text-muted)">'+d.date+'</span></td>';
+    ordMods.forEach(m=>{
+      const v=d.modules[m]||0;
+      const opacity=v===0?'0.3':'1';
+      html+='<td class="num" style="opacity:'+opacity+'">'+fmt(v)+'</td>';
+    });
+    html+='<td class="num" style="color:var(--accent4);font-weight:600">'+fmt(d.festival)+'</td>';
+    html+='<td class="num">'+fr.toFixed(1)+'%</td></tr>';
+  });
+  // total row
+  html+='<tr class="row-total"><td><b>累计</b></td>';
+  ordMods.forEach(m=>{
+    const c=modColors[m]||'#8892a4';
+    html+='<td class="num" style="color:'+c+';font-weight:700">'+fmt(modCum[m])+'</td>';
+  });
+  html+='<td class="num" style="color:var(--accent4);font-weight:700">'+fmt(cumFest)+'</td>';
+  html+='<td class="num">'+(cumFest/cumTotal*100).toFixed(1)+'%</td></tr>';
+  // percentage row
+  html+='<tr style="background:var(--surface)"><td style="color:var(--text-muted)">占比</td>';
+  ordMods.forEach(m=>{
+    html+='<td class="num" style="color:var(--text-muted);font-size:11px">'+(modTotal>0?(modCum[m]/modTotal*100).toFixed(1):0)+'%</td>';
+  });
+  html+='<td class="num" style="color:var(--text-muted);font-size:11px">100%</td><td></td></tr>';
+  html+='</tbody></table>';
+  $('modDailyTable').innerHTML=html;
+})();
+
+// ===== Module Stack Chart =====
+(function(){
+  const {ctx,W,H}=setupCanvas('modStackChart',260);
+  const pad={top:20,right:16,bottom:32,left:56};
+  const cW=W-pad.left-pad.right, cH=H-pad.top-pad.bottom;
+  const maxV=Math.max(...allDays.map(d=>Object.values(d.modules).reduce((s,v)=>s+v,0)))*1.2;
+  const barW=cW/N*0.65;
+  gridY(ctx,pad,W,H,maxV,4);
+  const orderedMods=modSorted.map(([m])=>m);
+  allDays.forEach((d,i)=>{
+    const cx2=pad.left+(i+0.5)/N*cW;
+    let accH=0;
+    orderedMods.slice().reverse().forEach(m=>{
+      const rev=d.modules[m]||0;
+      if(rev<=0) return;
+      const h=rev/maxV*cH;
+      ctx.fillStyle=modColors[m]||'#8892a4';
+      ctx.fillRect(cx2-barW/2,pad.top+cH-accH-h,barW,h);
+      accH+=h;
+    });
+    ctx.fillStyle='#8892a4'; ctx.font='10px -apple-system,sans-serif'; ctx.textAlign='center';
+    ctx.fillText(d.day_label,cx2,H-pad.bottom+14);
+  });
+  // legend row
+  let lx=pad.left;
+  orderedMods.forEach(m=>{
+    ctx.fillStyle=modColors[m]||'#8892a4'; ctx.fillRect(lx,4,10,10);
+    ctx.fillStyle='#e2e8f0'; ctx.font='10px -apple-system,sans-serif'; ctx.textAlign='left';
+    ctx.fillText(m,lx+14,13);
+    lx+=ctx.measureText(m).width+28;
+  });
+})();
+
+// ===== Phase Analysis =====
+(function(){
+  const phases=[
+    {name:'开幕期',label:'D0-D1',days:allDays.slice(0,2),color:'#6c63ff'},
+    {name:'中期',label:'D2-D5',days:allDays.slice(2,6),color:'#00d4aa'},
+    {name:'尾期',label:'D6-D10',days:allDays.slice(6,11),color:'#ffd166'},
+  ];
+  $('phaseCards').innerHTML=phases.map(p=>{
+    const tot=p.days.reduce((s,d)=>s+d.total,0);
+    const fest=p.days.reduce((s,d)=>s+d.festival,0);
+    const nf=p.days.reduce((s,d)=>s+d.non_festival,0);
+    const avgP=p.days.reduce((s,d)=>s+d.payers,0)/p.days.length;
+    const avgA=p.days.reduce((s,d)=>s+d.total/d.payers,0)/p.days.length;
+    const avgFA=p.days.reduce((s,d)=>s+d.festival/d.payers,0)/p.days.length;
+    const avgNA=p.days.reduce((s,d)=>s+d.non_festival/d.payers,0)/p.days.length;
+    const fr=fest/tot*100;
+    // top module
+    const phModCum={};
+    p.days.forEach(d=>{ for(const[m,v] of Object.entries(d.modules)) phModCum[m]=(phModCum[m]||0)+v; });
+    const topMod=Object.entries(phModCum).sort((a,b)=>b[1]-a[1])[0];
+    return '<div class="phase-card"><div class="phase-title"><span class="phase-badge" style="background:'+p.color+';color:#000">'+p.label+'</span>'+p.name+' ('+p.days.length+'天)</div>'+
+      '<div class="phase-kv"><span class="k">总流水</span><span class="v">'+fmt(tot)+'</span></div>'+
+      '<div class="phase-kv"><span class="k">节日流水</span><span class="v" style="color:var(--accent4)">'+fmt(fest)+' ('+fr.toFixed(0)+'%)</span></div>'+
+      '<div class="phase-kv"><span class="k">日均ARPU</span><span class="v '+(avgA>baseline.arpu_total?'up':'down')+'">$'+avgA.toFixed(2)+'</span></div>'+
+      '<div class="phase-kv"><span class="k">节日ARPU</span><span class="v">$'+avgFA.toFixed(2)+'</span></div>'+
+      '<div class="phase-kv"><span class="k">非节日ARPU</span><span class="v '+(avgNA>baseline.arpu_nonfest?'up':'down')+'">$'+avgNA.toFixed(2)+'</span></div>'+
+      '<div class="phase-kv"><span class="k">日均付费人数</span><span class="v">'+avgP.toFixed(0)+'</span></div>'+
+      '<div class="phase-kv"><span class="k">Top模块</span><span class="v" style="color:'+(modColors[topMod[0]]||'#8892a4')+'">'+topMod[0]+' '+fmt(topMod[1])+'</span></div>'+
+      '</div>';
+  }).join('');
+})();
+
+// ===== ARPU Chart =====
+(function(){
+  const {ctx,W,H}=setupCanvas('arpuChart',220);
+  const pad={top:20,right:16,bottom:32,left:52};
+  const cW=W-pad.left-pad.right, cH=H-pad.top-pad.bottom;
+  const vals=allDays.map(d=>d.total/d.payers);
+  const maxV=Math.max(...vals)*1.3;
+  const xp=i=>pad.left+(N>1?i/(N-1)*cW:cW/2);
+  const yp=v=>pad.top+cH-(v/maxV*cH);
+  // grid
+  ctx.strokeStyle='#2e3248'; ctx.lineWidth=.5;
+  for(let i=0;i<=4;i++){
+    const y=pad.top+cH*i/4;
+    ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(W-pad.right,y); ctx.stroke();
+    ctx.fillStyle='#8892a4'; ctx.font='10px -apple-system,sans-serif'; ctx.textAlign='right';
+    ctx.fillText('$'+(maxV*(4-i)/4).toFixed(0),pad.left-6,y+3);
+  }
+  // baseline
+  ctx.setLineDash([5,5]); ctx.strokeStyle='#f97316'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(pad.left,yp(baseline.arpu_total)); ctx.lineTo(W-pad.right,yp(baseline.arpu_total)); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#f97316'; ctx.font='10px -apple-system,sans-serif'; ctx.textAlign='right';
+  ctx.fillText('基线 $'+baseline.arpu_total,W-pad.right,yp(baseline.arpu_total)-5);
+  // line
+  const pts=vals.map((v,i)=>[xp(i),yp(v)]);
+  // area
+  ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]);
+  for(let i=1;i<N;i++) ctx.lineTo(pts[i][0],pts[i][1]);
+  ctx.lineTo(pts[N-1][0],yp(0)); ctx.lineTo(pts[0][0],yp(0)); ctx.closePath();
+  ctx.fillStyle='rgba(0,212,170,.08)'; ctx.fill();
+  drawLine(ctx,pts,'#00d4aa',2.5);
+  pts.forEach((p,i)=>{
+    ctx.beginPath(); ctx.arc(p[0],p[1],4,0,Math.PI*2);
+    ctx.fillStyle='#00d4aa'; ctx.fill(); ctx.strokeStyle='#1a1d27'; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle='#e2e8f0'; ctx.font='10px -apple-system,sans-serif'; ctx.textAlign='center';
+    ctx.fillText('$'+vals[i].toFixed(1),p[0],p[1]-10);
+  });
+  xLabels(ctx,pts,allDays.map(d=>d.day_label),H,pad);
+})();
+
+// ===== ARPU Split Chart =====
+(function(){
+  const {ctx,W,H}=setupCanvas('arpuSplitChart',220);
+  const pad={top:20,right:16,bottom:32,left:52};
+  const cW=W-pad.left-pad.right, cH=H-pad.top-pad.bottom;
+  const fVals=allDays.map(d=>d.festival/d.payers);
+  const nfVals=allDays.map(d=>d.non_festival/d.payers);
+  const maxV=Math.max(...fVals,...nfVals)*1.3;
+  const xp=i=>pad.left+(N>1?i/(N-1)*cW:cW/2);
+  const yp=v=>pad.top+cH-(v/maxV*cH);
+  ctx.strokeStyle='#2e3248'; ctx.lineWidth=.5;
+  for(let i=0;i<=4;i++){
+    const y=pad.top+cH*i/4;
+    ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(W-pad.right,y); ctx.stroke();
+    ctx.fillStyle='#8892a4'; ctx.font='10px -apple-system,sans-serif'; ctx.textAlign='right';
+    ctx.fillText('$'+(maxV*(4-i)/4).toFixed(0),pad.left-6,y+3);
+  }
+  // baseline nf
+  ctx.setLineDash([5,5]); ctx.strokeStyle='#f97316'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(pad.left,yp(baseline.arpu_nonfest)); ctx.lineTo(W-pad.right,yp(baseline.arpu_nonfest)); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#f97316'; ctx.font='10px -apple-system,sans-serif'; ctx.textAlign='right';
+  ctx.fillText('非节日基线 $'+baseline.arpu_nonfest,W-pad.right,yp(baseline.arpu_nonfest)-5);
+  // festival line
+  const fPts=fVals.map((v,i)=>[xp(i),yp(v)]);
+  const nfPts=nfVals.map((v,i)=>[xp(i),yp(v)]);
+  drawLine(ctx,fPts,'#ffd166',2);
+  drawLine(ctx,nfPts,'#6c63ff',2);
+  fPts.forEach((p,i)=>{
+    ctx.beginPath(); ctx.arc(p[0],p[1],3,0,Math.PI*2); ctx.fillStyle='#ffd166'; ctx.fill();
+    ctx.fillStyle='#ffd166'; ctx.font='9px -apple-system,sans-serif'; ctx.textAlign='center';
+    ctx.fillText('$'+fVals[i].toFixed(1),p[0],p[1]-8);
+  });
+  nfPts.forEach((p,i)=>{
+    ctx.beginPath(); ctx.arc(p[0],p[1],3,0,Math.PI*2); ctx.fillStyle='#6c63ff'; ctx.fill();
+    ctx.fillStyle='#6c63ff'; ctx.font='9px -apple-system,sans-serif'; ctx.textAlign='center';
+    ctx.fillText('$'+nfVals[i].toFixed(1),p[0],p[1]-8);
+  });
+  xLabels(ctx,fPts,allDays.map(d=>d.day_label),H,pad);
+  // legend
+  ctx.fillStyle='#ffd166'; ctx.fillRect(pad.left,4,10,10);
+  ctx.fillStyle='#e2e8f0'; ctx.font='11px -apple-system,sans-serif'; ctx.textAlign='left';
+  ctx.fillText('节日ARPU',pad.left+14,13);
+  ctx.fillStyle='#6c63ff'; ctx.fillRect(pad.left+90,4,10,10);
+  ctx.fillStyle='#e2e8f0'; ctx.fillText('非节日ARPU',pad.left+104,13);
+})();
+
+// ===== Key Insights =====
+(function(){
+  const alerts=[];
+  // 1. overall revenue
+  const uplift=(avgTotal-baseline.total)/baseline.total*100;
+  alerts.push(['good','节日期间日均总流水 '+fmt(avgTotal)+'，较基线 '+fmt(baseline.total)+' 提升 '+fmtPct(uplift)+'，11天累计增收 '+fmt(cumTotal-blTotal11)]);
+
+  // 2. festival ratio
+  alerts.push(['info','节日模块累计贡献 '+fmt(cumFest)+'，占总流水 '+festRatio.toFixed(1)+'%。GACHA 为第一大模块 ($'+modCum['GACHA'].toLocaleString()+')，占节日收入 '+(modCum['GACHA']/modTotal*100).toFixed(1)+'%']);
+
+  // 3. non-festival squeeze
+  const nfDelta=avgNfArpu-baseline.arpu_nonfest;
+  if(nfDelta<-2) alerts.push(['warn','非节日ARPU均值 $'+avgNfArpu.toFixed(2)+' vs 基线 $'+baseline.arpu_nonfest+'，下降 $'+Math.abs(nfDelta).toFixed(2)+'/人，存在节日挤占效应']);
+  else if(nfDelta>2) alerts.push(['good','非节日ARPU均值 $'+avgNfArpu.toFixed(2)+'，较基线上升 $'+nfDelta.toFixed(2)+'/人，节日带动日常消费']);
+  else alerts.push(['info','非节日ARPU均值 $'+avgNfArpu.toFixed(2)+'，与基线 $'+baseline.arpu_nonfest+' 基本持平，挤占效应不明显']);
+
+  // 4. peak day
+  const peakDay=allDays.reduce((a,b)=>a.total>b.total?a:b);
+  alerts.push(['info','峰值出现在 '+peakDay.day_label+' ('+peakDay.date+')，总流水 '+fmt(peakDay.total)+'，其中大富翁 D1 开启首日贡献 $1,481 拉高节日收入']);
+
+  // 5. payer trend
+  const d0pay=allDays[0].payers, d10pay=allDays[N-1].payers;
+  const payDrop=(d10pay-d0pay)/d0pay*100;
+  alerts.push(['warn','付费人数从 D0 的 '+d0pay+' 下降至 D10 的 '+d10pay+'，降幅 '+Math.abs(payDrop).toFixed(1)+'%，尾期付费参与度持续走低']);
+
+  // 6. D8 trough
+  alerts.push(['warn','D8 为最低谷 (总流水 $3,802)，节日流水仅 $1,283，七日活动/每日礼包/自选周卡均归零，模块窗口关闭导致断崖下跌']);
+
+  // 7. module lifecycle
+  alerts.push(['info','抽奖券礼包 D6 起发力，D7 峰值 $720，累计 $'+modCum['抽奖券礼包'].toLocaleString()+'；连锁礼包 D4 上线后持续贡献，D10 回升至 $459，累计 $'+modCum['连锁礼包'].toLocaleString()]);
+  alerts.push(['info','自选周卡 D3 爆发 ($1,020) 后快速衰减；BP通行证全程稳定，尾期 D10 仍有 $768；巨猿金蛋 D8 才开放，3天累计 $'+modCum['巨猿金蛋'].toLocaleString()]);
+
+  $('insightsBox').innerHTML=alerts.map(([t,msg])=>{
+    const cls=t==='warn'?'alert-warn':t==='good'?'alert-good':'alert-info';
+    const icon=t==='warn'?'&#9888;&#65039;':t==='good'?'&#9989;':'&#128204;';
+    return '<div class="alert '+cls+'"><span class="alert-icon">'+icon+'</span>'+msg+'</div>';
+  }).join('');
+})();
+</script>
+</body>
+</html>

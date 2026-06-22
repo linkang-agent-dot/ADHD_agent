@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "task_id": "20260618-141539-a075",
+  "status": "success",
+  "type": "general",
+  "user_prompt": "IMAGE-TO-VIDEO. Use the provided image as the first frame and animate it into a short seamless looping ambient clip. Keep ALL elements, layout, colors and identity from the source image UNCHANGED — only add gentle natural motion: slow rolling sea waves, shimmering underwater light caustics, soft drifting sunlight god-rays, slowly rising bubbles, palm leaves swaying lightly, the parasol/striped lounge chair fabric fluttering faintly. Very slow subtle camera push-in. Calm cheerful premium beach-resort mood. Seamless loop. NO text, NO UI, NO new objects, NO people appearing.",
+  "params": {
+    "model": "vidu",
+    "prompt": "IMAGE-TO-VIDEO. Use the provided image as the first frame and animate it into a short seamless looping ambient clip. Keep ALL elements, layout, colors and identity from the source image UNCHANGED — only add gentle natural motion: slow rolling sea waves, shimmering underwater light caustics, soft drifting sunlight god-rays, slowly rising bubbles, palm leaves swaying lightly, the parasol/striped lounge chair fabric fluttering faintly. Very slow subtle camera push-in. Calm cheerful premium beach-resort mood. Seamless loop. NO text, NO UI, NO new objects, NO people appearing.",
+    "reference_images": [
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\深海节\\06_深海居所_装饰礼包\\装饰礼包banner_选定.png"
+    ],
+    "output_dir": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\深海节\\06_深海居所_装饰礼包",
+    "output_filename": "装饰礼包展示视频.mp4",
+    "postprocess": "none",
+    "duration": 5,
+    "mode": "image_to_video"
+  },
+  "started_at": "2026-06-18T14:16:00+08:00",
+  "finished_at": "2026-06-18T14:19:35+08:00",
+  "result": {
+    "saved_to": ["C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\深海节\\06_深海居所_装饰礼包\\装饰礼包展示视频.mp4"],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

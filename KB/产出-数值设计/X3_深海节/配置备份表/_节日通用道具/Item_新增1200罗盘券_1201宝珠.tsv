@@ -1,0 +1,5 @@
+# 字段:	ID	Name		Desc	Type	SubType	UseType	UseEffect	UseParameter	IsCount	ObtainID	ObtainTips	IsDelete	Value	Tier	Blueprint	DiscountEnergy	SurchargeEnergy	SuggestEnergy	SpeedUpEnergy	DK_Icon	DK_MiniIcon	DK_Prefab	DK_Background	Subtitle	DiscountScore	ResourceBuilding	ItemWeight	Order	GuildDonateCoin	GuildDonateAward2	GuildDonateBeer	GuildDonateMP	ItemLife	ItemLife2							
+# 1200深海罗盘券=转盘Consume(抄1134一封情书Type1); 1201深海宝珠=兑换商店货币(抄1135玫瑰花瓣)
+# 用途: 转盘Consume/奖池 + 兑换商店货币 + 周卡奖池 + 头像框/装饰礼包节日道具
+1200	深海罗盘券		深海罗盘的通行信物，投入罗盘即可转动，赢取深海珍稀奖励！	1		0			1											DK_icon_global_VD01			DK_Bg_CM_Item4					9999							500						
+1201	深海宝珠		深海凝结的珍贵宝珠，可用于深海活动商店兑换珍稀道具与外显。	1		0														DK_icon_global_VD02			DK_Bg_CM_Item4					9999							50						

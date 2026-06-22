@@ -49,7 +49,8 @@ SERVER_FILTER = "AND TRY_CAST(o.server_id AS INTEGER) BETWEEN 1910 AND 1930"    
 SERVER_FILTER_VAL = "AND TRY_CAST(o.server_id AS INTEGER) BETWEEN 1530 AND 1550"  # 情人节生命周期匹配服(D0服龄35-43d)
 SERVER_LABEL = "本期夏日第三批 1910/1920/1930(D0服龄41/37/35d)；对比侧情人节 1530/1540/1550(D0服龄43/39/35d) 生命周期匹配"
 BASELINE_HOURLY_DAYS = 3  # 分时图叠加「上线前 N 天」分时流水做基线（同服段，前端可勾选显示/隐藏）
-OUTPUT_DIR = os.path.expanduser("~")
+OUTPUT_DIR = r"C:\ADHD_agent\KB\产出-数据分析\节日日报_实时"  # 2026-06-22 从 home 改到 KB 归档落地区（节日结束后手动归到 X3夏日节\日报_批X\）
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # === 节日礼包口径：从配置表读，不靠名字/前缀猜 ===
 # 礼包全集来源 = ActvOnline 累充活动的 RechargePointPackWhitelist（权威：哪些 Pack 算本节日）

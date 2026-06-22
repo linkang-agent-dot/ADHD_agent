@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "task_id": "20260618-142606-d3ba",
+  "status": "running",
+  "type": "general",
+  "user_prompt": "深海节头像框礼包弹窗主背景（1016x980近方形, 上场景下渐隐留白, 版式锚=img_gift_bg_13, 配色锚=深海拜访背景, 干净无UI/文字）",
+  "params": {
+    "model": "gpt",
+    "reference_images": [
+      "C:/x3-project/client/Assets/Res/UI/Spirits/Pack/img_gift_bg_13.png",
+      "C:/ADHD_agent/KB/产出-本地化与美术/X3/深海节/07_海滨之约_拜访礼包/拜访活动背景_选定.png"
+    ],
+    "output_dir": "C:/ADHD_agent/KB/产出-本地化与美术/X3/深海节/04_深海印记_头像框礼包",
+    "output_filename": "头像框礼包弹窗背景_v1.png",
+    "postprocess": "none",
+    "aspect_ratio": "1:1",
+    "prompt": "Deep-sea festival GIFT-PACK POPUP MAIN BACKGROUND, near-square ~1016x980 (1:1-ish). Match the COMPOSITION of reference image 1 (a standard X3 gift-pack popup background): a themed centerpiece scene occupying the UPPER ~60%, smoothly FADING to soft light / near-white at the BOTTOM ~40% so foreground item icons and a buy button can overlay cleanly; gentle radial glow vignette, light/airy/desaturated rendering. DEEP-SEA THEME (use reference image 2 for color): an open giant clam shell with a large glowing pearl and an underwater treasure chest among soft corals, scattered gold and pearls, bright aqua-teal underwater light rays and rising bubbles — BRIGHT shallow sunlit ocean, NOT a dark abyss. ERASE every UI element from the references. NO text, NO UI widgets, NO buttons, NO item icons, NO numbers, NO price tags, NO people, NO hard frame/border lines. Output ONLY the soft polished 3D cartoon game-UI background art."
+  },
+  "started_at": "2026-06-18T14:26:30+08:00",
+  "finished_at": null,
+  "result": {
+    "saved_to": [],
+    "history_lines_appended": 0,
+    "backend": null
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "task_id": "20260618-141938-a933",
+  "status": "success",
+  "type": "uiframe",
+  "user_prompt": "深海节头像框 256x256 透明方图（锚=mermaid海洋框，深海重配色：珊瑚/海贝/珍珠贝/气泡/金边）",
+  "params": {
+    "model": "gpt",
+    "reference_images": [
+      "C:/x3-project/client/Assets/Res/UI/Spirits/Personalise/AvatarFrame/Img_Player_AvatarFrame_mermaid.png"
+    ],
+    "output_dir": "C:/ADHD_agent/KB/产出-本地化与美术/X3/深海节/04_深海印记_头像框礼包",
+    "output_filename": "深海头像框_v1.png",
+    "postprocess": "uiframe",
+    "size": "256x256",
+    "aspect_ratio": "1:1",
+    "prompt": "X3 avatar frame, 256x256 transparent PNG, square 1:1, ornate ring frame around a HOLLOW TRANSPARENT center (~diameter 165) for the player avatar. DEEP-SEA festival theme. Keep the same composition/quality as the reference mermaid frame (corals, shells, pearls, bubbles) but RESTYLE to deep-sea: rich teal and deep ocean-blue palette, pearl-clam (珍珠贝) and treasure-pearl accents, soft sea-green corals, translucent floating bubbles, light golden metallic EPIC-quality border with highlights, subtle light caustics, decorative reinforced corners. Transparent outside the ring. NO text, NO internal icons, NO scene background, NO people. Bright underwater jewel look, not dark abyss."
+  },
+  "started_at": "2026-06-18T14:19:38+08:00",
+  "finished_at": "2026-06-18T14:26:10+08:00",
+  "result": {
+    "saved_to": [
+      "C:/ADHD_agent/KB/产出-本地化与美术/X3/深海节/04_深海印记_头像框礼包/深海头像框_v1.png"
+    ],
+    "history_lines_appended": 1,
+    "backend": "grfal"
+  },
+  "error": null,
+  "retry_count": 0,
+  "created_by": "main-agent"
+}

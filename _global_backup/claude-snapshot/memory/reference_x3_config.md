@@ -45,6 +45,19 @@ originSessionId: 7f1d10e6-76c8-46b3-b30d-957a641cda96
 | 礼包 | `Pack` | 多 sheet：Pack/ChainPack/PackTypeInfo 等 |
 | 排行榜奖励 | `Rank` | 各 Actv 排行榜挂这里 |
 
+## ★Pack 奖励内容机制（查/clone 礼包必懂，2026-06-17 世界杯开箱礼包实证）
+**Pack 行 col13 `Content` = `Reward` 表 col1=同值的掉落包 ID**（不是独立内容表）。例：Pack 210602 → Reward 表所有 col1=210602 的行 = 该礼包发的道具(券×20+钻×2500+VIP×25)。col11 `ContentID` 另有用途、常空。
+- **clone 礼包铁律**：复制 Pack 行**必须同时 clone Reward 表对应掉落包**（按需换券/道具 ItemID），否则礼包内容空。世界杯开箱礼包=clone 尼罗 210601-615 的 Pack 行 + 各自 Reward 掉落包(券1128→1146)，Pack.Content 与 Reward.col1 同步 +400。
+- 连锁礼包：`ChainPack.PackList`=`|`分隔的 Pack ID 序列；活动靠 `ActvOnline.col31 ChainPackID` 挂某个 ChainPack。锚点礼包=独立 `PackType=15` Pack，`TimeCycleID` 绑售卖窗口(6001="礼包-永久"通用)。
+
+## ★活动 ID 分配规律（每次节日「开发配置需求」必用，2026-06-18 深海节实证）
+- **ActvOnline ID = 100000 + ContentID**（铁律，例外仅 酒馆Type7=`100717xx`序列、拜访Type56=`1056xx`序列）。例：BP CID2240→AO102240、累充597→100597、转盘1023→101023、大富翁2801→102801。所以只需分配新 **ContentID**，AO 自动派生。
+- **权威交叉源 = `ActvOnline__ActvOnline.tsv`**（col0=AO_ID / col4=ContentID / col5=ActvType / col7=TimeController）。按 ActvType 分组取该型 ContentID max+1 = 新 CID（节日款常走偶数序列，如累充593/594.../597→598、BP2236/2238/2240→2242）。**禁止只看内容表裸 max**：兑换 ActvExchange、酒馆 ActvScore 等表有双 ID 体系(2100xx 行 vs ContentID)，会算错。
+- **复用源=拷贝模板，一律分配新 ID**（夏日/世界杯惯例），不原位改旧节日；唯一例外=大富翁 ActvVoyage(Type28，全表唯一系统)复用 2801 原位改。
+- 各型内容表(ID=ContentID直接对应)：转盘`ActvLuckyWheel`、BP`ActvBattlePass__BattlePass`(注:此表PK是11xx,与AO的CID 22xx不同源,落地另查)、拜访`ActvVisitPack`、许愿池`ActvWishingPool`、大富翁`ActvVoyage`。
+- **TimeCycle**：节日段 1800-1832 当前用到 1829，1830-1832 空闲；大富翁复用现成 2702(TT=4 海域开放第13天)。**Pack 块**：2106xx/2109xx(917-921)/2110xx(至211015)已占，深海起 211016+。**ActvGroup** max=139→新140。**RankCfg** 节日段 max=185→新186(RankType=12)。
+- 落地前必扫 tsv 防撞(无半成品才动手)；深海分配总表见 GSheet「深海节-开发配置需求」页签。
+
 ## 节日礼包 Pack ID 段
 
 | 节日 | Pack ID 范围 | ChainID | 时间 | 备注 |

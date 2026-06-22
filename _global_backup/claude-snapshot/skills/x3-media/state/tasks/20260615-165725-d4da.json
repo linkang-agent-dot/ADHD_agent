@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "task_id": "20260615-165725-d4da",
+  "status": "failed",
+  "type": "general",
+  "user_prompt": "A painterly semi-realistic GAME-ART CARD ILLUSTRATION, same rich rendering style as reference image 1 (a Nile collectible card art). VERY IMPORTANT: NO card frame, NO border, NO rounded card shape — produce ONLY the full-bleed interior artwork that fills the whole image. Depict the woman from reference image 2 (long silver-white hair, fair skin, voluptuous figure, white-and-gold cheerleader sports outfit with a golden trophy emblem and number 10, holding gold-and-white pom-poms and a black-and-white soccer ball) integrated as ONE element of a cinematic World Cup scene: she stands on a lush green stadium pitch, a grand golden championship trophy gleaming beside her, falling golden confetti and ribbons, warm celebratory stadium lights, softly blurred crowd-filled stands behind. Compose her into the scene exactly the way reference image 1 integrates its character (the figure occupies one portion of the frame while a rich painted scene fills the rest) — NOT a character cutout on a plain green field, NOT a giant centered figure filling the whole frame. Keep her face and identity faithful to reference image 2. Near-square portrait composition, 1:1. NO national flags or emblems. ONE single illustration, no grid.",
+  "params": {
+    "model": "gpt",
+    "reference_images": [
+      "C:\\x3-project\\client\\Assets\\Res\\UI\\Spirits\\ItemIcons\\icon_card_image_76.png",
+      "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\足球宝贝爱莉希雅\\足球宝贝爱莉希雅_主稿_FINAL.png"
+    ],
+    "output_dir": "C:\\ADHD_agent\\KB\\产出-本地化与美术\\X3\\世界杯纪念卡",
+    "output_filename": "WC_MemorialCard_Aerisia_art.png",
+    "postprocess": "none",
+    "note": "世界杯纪念卡【内框场景画】(无框!)→主agent后续用#76做框模板PIL合成成256卡面;1:1近方构图,人物融入场景非大头贴;ref1=76风格/场景融入锚,ref2=主稿身份锚"
+  },
+  "started_at": "2026-06-15T16:57:30+08:00",
+  "finished_at": "2026-06-15T18:10:00+08:00",
+  "result": {
+    "saved_to": [],
+    "history_lines_appended": 0,
+    "backend": null
+  },
+  "error": {
+    "message": "GRFal all backends failed twice (ucloud 408/azure 503-504/fal data-safety/cliproxy 503-401, elapsed ~870s each attempt)",
+    "step": "generate"
+  },
+  "retry_count": 2,
+  "created_by": "resume"
+}
