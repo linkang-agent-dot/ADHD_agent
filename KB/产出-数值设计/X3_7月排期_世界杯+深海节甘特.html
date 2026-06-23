@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>X3 七月排期 · 世界杯 × 深海节</title><style>
+:root{--bg:#15171f;--ink:#ece9e0;--mut:#8f8a80;--line:#2a313d;--gold:#e0a94a;--wc:#9fd06a;--ds:#7fb0e0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;padding:30px 26px}
+h1{font-size:21px;margin:0 0 4px}.sub{color:var(--mut);font-size:13px;margin-bottom:20px;line-height:1.6;max-width:880px}
+.tabs{display:flex;gap:10px;margin-bottom:18px;max-width:520px}
+.tab{flex:1;text-align:center;padding:12px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:#1b212c;color:var(--mut)}
+.tab.on.sch{background:#222c1c;color:var(--wc);border-color:#3f6a2e}
+.tab.on.det{background:#1c2533;color:var(--ds);border-color:#3a567a}
+.pane{display:none}.pane.on{display:block}
+
+/* ===== 甘特图 ===== */
+.glegend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--mut);margin-bottom:12px}
+.glegend i{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;margin-right:5px}
+.gantt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:11px;background:#1b212c}
+.gantt{display:grid;grid-template-columns:200px repeat(32,minmax(26px,1fr));min-width:1080px}
+.gcorner{grid-column:1;grid-row:1/3;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;align-items:flex-end;padding:6px 10px;font-size:11px;color:var(--mut);font-weight:600;background:#1c222c}
+.gmonth{grid-row:1;text-align:center;font-size:12px;font-weight:700;color:var(--ink);padding:6px 0;border-bottom:1px solid var(--line);background:#1c222c}
+.gday{grid-row:2;text-align:center;padding:3px 0;border-left:1px solid #20262f;border-bottom:1px solid var(--line);background:#191d25}
+.gday.wknd{background:#13161c}.gday.today{background:#2a2410;box-shadow:inset 0 -2px 0 var(--gold)}
+.gday .dn{font-size:11px;font-weight:700;line-height:1.1}.gday.today .dn{color:var(--gold)}.gday .wd{font-size:8.5px;color:#5f6873}
+.gsec{grid-column:1/34;font-size:12.5px;font-weight:800;padding:8px 12px;border-bottom:1px solid var(--line)}
+.gsec.wc{color:var(--wc);background:#1b2417}.gsec.ds{color:var(--ds);background:#172230}
+.grow{display:contents}
+.glabel{grid-column:1;font-size:11.5px;color:var(--ink);padding:5px 10px;border-right:1px solid var(--line);border-bottom:1px solid #20262f;display:flex;align-items:center;line-height:1.3}
+.glabel.sub{color:var(--mut);font-size:10.5px}
+.gtrack{grid-column:2/34;display:grid;grid-template-columns:repeat(32,minmax(26px,1fr));border-bottom:1px solid #20262f}
+.gbar{margin:4px 1px;border-radius:5px;font-size:10.5px;padding:0 7px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;color:#10141a;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.gbar span{overflow:hidden;text-overflow:ellipsis}
+.b-hub{background:#bfe296}.b-g1{background:#9fd06a}.b-g2{background:#5fae3a;color:#fff}.b-g3{background:#3f7a22;color:#fff}.b-free{background:#384a2a;color:#bcd9a0;box-shadow:none}.b-cos{background:#7a6aa8;color:#fff}
+.b-prep{background:#4a5a8a;color:#fff}.b-qa{background:#a85f5f;color:#fff}.b-win{background:#2f7da5;color:#fff}.b-depth{background:#15607c;color:#fff}
+.gseg{margin:4px 1px;border-radius:4px;background:#333f4d;color:#c4ccd5;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.gtime{margin:4px 1px;border-radius:4px;background:#caa23e;color:#1a1408;font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden}
+.gseg-sign{background:#5f8a3a;color:#eef7e2}
+.gmk{display:flex;align-items:center;justify-content:center;font-size:13px}
+.gmk.pk{color:#e7c052}.gmk.launch{color:#6ad09a}.gmk.ms{color:#e07a9a;font-size:11px}
+.gfoot{margin-top:12px;color:var(--mut);font-size:12px;line-height:1.7;max-width:880px}
+
+/* ===== 详细信息卡片 ===== */
+.detwrap{max-width:880px}
+.grouphd{font-size:15px;font-weight:800;margin:22px 0 11px;padding-left:11px;border-left:4px solid var(--mut)}
+.grouphd small{font-weight:500;color:var(--mut);font-size:12px;margin-left:8px}
+.row{display:flex;align-items:flex-start;gap:16px;padding:13px 16px;border:1px solid var(--line);border-radius:11px;margin-bottom:9px;background:#1b212c}
+.dt{font-size:14px;font-weight:700;min-width:124px;white-space:normal;line-height:1.45}
+.row.star{border-color:#5a4a1e;background:#241f12}.row.star .dt{color:var(--gold)}
+.row.wc .dt{color:var(--wc)}.row.ds .dt{color:var(--ds)}
+.what{font-size:14px;line-height:1.6;flex:1}.what b{color:var(--gold)}
+.note{color:var(--mut);font-size:12px;margin-top:3px;line-height:1.55}
+.step{background:#1c2533;color:var(--ds);font-weight:700;border-radius:50%;min-width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.subtabs{display:flex;gap:8px;margin:2px 0 16px;max-width:420px}
+.subtab{flex:1;text-align:center;padding:9px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:#1b212c;color:var(--mut)}
+.subtab.on{background:#1c2533;color:var(--ds);border-color:#3a567a}
+.subpane{display:none}.subpane.on{display:block}
+.tk{border:1px solid var(--line);border-radius:10px;padding:12px 15px;margin-bottom:10px;background:#1b212c}
+.tk-h{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:4px}
+.tk-tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px}
+.tag-art{background:#3a2e4a;color:#c79ad9}.tag-dev{background:#2a3a4a;color:#8ab8d9}.tag-cli{background:#2a3f33;color:#8ad9a0}.tag-loc{background:#4a3a2a;color:#d9b48a}.tag-cfg{background:#3a3320;color:#e0cf8a}.tag-ops{background:#10384a;color:#7fd0e0}
+.tk-pkg{font-size:11px;color:var(--gold);font-weight:700;margin-left:auto}
+.tk-t{font-size:14px;font-weight:700}
+.tk-d{font-size:12.5px;color:var(--mut);line-height:1.55;margin-top:3px}
+.tk-time{background:#10243a;border-left:3px solid var(--ds);padding:7px 11px;border-radius:5px;margin:7px 0 9px;font-size:12.5px;color:#cfe6f2;line-height:1.5}
+.tk-step{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.55;margin:5px 0;color:var(--ink)}
+.tk-no{flex:none;width:20px;height:20px;border-radius:50%;background:#10384a;color:var(--ds);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.tk-step b{color:var(--gold)}
+.tk-ref{font-size:11.5px;color:var(--mut);line-height:1.55;margin-top:8px;padding-top:7px;border-top:1px dashed var(--line)}
+.tk-ref b{color:var(--gold)}
+</style></head><body>
+
+<h1>⚽🌊 X3 七月排期 · 世界杯 × 深海节</h1>
+<div class="sub">基准日 2026-06-22（黄高亮）｜世界杯锚定 FIFA 真实淘汰赛 6/28–7/19（运营按北京时间=美东ET+12h）｜深海节 7/3–7/12（D1–D10，提前避开世界杯半决7/15+决赛7/19）｜服务器分批待定</div>
+
+<div class="tabs">
+  <div class="tab sch on" onclick="sw('sch')">📅 排期甘特</div>
+  <div class="tab det" onclick="sw('det')">📋 详细信息</div>
+</div>
+
+<!-- ============ 模块一：排期甘特图 ============ -->
+<div id="sch" class="pane on">
+<div class="glegend">
+  <span><i style="background:#bfe296"></i>系列hub</span>
+  <span><i style="background:#9fd06a"></i>$4.99竞猜</span>
+  <span><i style="background:#5fae3a"></i>$9.99头像框</span>
+  <span><i style="background:#3f7a22"></i>$19.99表情</span>
+  <span><i style="background:#2f7da5"></i>深海窗口</span>
+  <span><i style="background:#15607c"></i>depth核心</span>
+  <span>◆模块开启</span>
+</div>
+<div class="gantt-wrap"><div class="gantt">
+  <div class="gcorner">模块 / 活动</div>
+  <div class="gmonth" style="grid-column:2/11">6 月</div>
+  <div class="gmonth" style="grid-column:11/34">7 月</div>
+  <div class="gday today"><div class="dn">22</div><div class="wd">一</div></div><div class="gday"><div class="dn">23</div><div class="wd">二</div></div><div class="gday"><div class="dn">24</div><div class="wd">三</div></div><div class="gday"><div class="dn">25</div><div class="wd">四</div></div><div class="gday"><div class="dn">26</div><div class="wd">五</div></div><div class="gday wknd"><div class="dn">27</div><div class="wd">六</div></div><div class="gday wknd"><div class="dn">28</div><div class="wd">日</div></div><div class="gday"><div class="dn">29</div><div class="wd">一</div></div><div class="gday"><div class="dn">30</div><div class="wd">二</div></div><div class="gday"><div class="dn">1</div><div class="wd">三</div></div><div class="gday"><div class="dn">2</div><div class="wd">四</div></div><div class="gday"><div class="dn">3</div><div class="wd">五</div></div><div class="gday wknd"><div class="dn">4</div><div class="wd">六</div></div><div class="gday wknd"><div class="dn">5</div><div class="wd">日</div></div><div class="gday"><div class="dn">6</div><div class="wd">一</div></div><div class="gday"><div class="dn">7</div><div class="wd">二</div></div><div class="gday"><div class="dn">8</div><div class="wd">三</div></div><div class="gday"><div class="dn">9</div><div class="wd">四</div></div><div class="gday"><div class="dn">10</div><div class="wd">五</div></div><div class="gday wknd"><div class="dn">11</div><div class="wd">六</div></div><div class="gday wknd"><div class="dn">12</div><div class="wd">日</div></div><div class="gday"><div class="dn">13</div><div class="wd">一</div></div><div class="gday"><div class="dn">14</div><div class="wd">二</div></div><div class="gday"><div class="dn">15</div><div class="wd">三</div></div><div class="gday"><div class="dn">16</div><div class="wd">四</div></div><div class="gday"><div class="dn">17</div><div class="wd">五</div></div><div class="gday wknd"><div class="dn">18</div><div class="wd">六</div></div><div class="gday wknd"><div class="dn">19</div><div class="wd">日</div></div><div class="gday"><div class="dn">20</div><div class="wd">一</div></div><div class="gday"><div class="dn">21</div><div class="wd">二</div></div><div class="gday"><div class="dn">22</div><div class="wd">三</div></div><div class="gday"><div class="dn">23</div><div class="wd">四</div></div>
+
+  <div class="gsec wc">🏆 世界杯 · 系列 hub（6/27 上线 · 不依赖赛果）</div>
+  <div class="grow"><div class="glabel">开箱「世界杯福箱」</div><div class="gtrack"><div class="gbar b-hub" style="grid-column:6/29"><span>贯穿全程</span></div></div></div>
+  <div class="grow"><div class="glabel">BP「赛季通行证」</div><div class="gtrack"><div class="gbar b-hub" style="grid-column:6/29"><span>贯穿全程 · 竞猜产积分</span></div></div></div>
+  <div class="grow"><div class="glabel">累充</div><div class="gtrack"><div class="gbar b-hub" style="grid-column:6/29"><span>贯穿全程</span></div></div></div>
+  <div class="grow"><div class="glabel">兑换商店</div><div class="gtrack"><div class="gbar b-hub" style="grid-column:6/29"><span>贯穿全程</span></div></div></div>
+  <div class="grow"><div class="glabel">签到（4 期）</div><div class="gtrack"><div class="gseg gseg-sign" style="grid-column:6/11">期1</div><div class="gseg gseg-sign" style="grid-column:11/16">期2</div><div class="gseg gseg-sign" style="grid-column:16/22">期3</div><div class="gseg gseg-sign" style="grid-column:22/29">期4</div></div></div>
+  <div class="grow"><div class="glabel">纪念卡「绿茵之星」</div><div class="gtrack"><div class="gbar b-cos" style="grid-column:6/29"><span>贯穿全程</span></div></div></div>
+
+  <div class="gsec wc">🏆 世界杯 · 竞猜（依赖赛程 · 各档止于决赛锁盘 7/19）</div>
+  <div class="grow"><div class="glabel">赛程轮次（对阵确定时点·北京）</div><div class="gtrack"><div class="gseg" style="grid-column:7/13" title="32强 对阵确定 6/28 12:00（小组赛全打完）→ 6/28下午上首包 · 6/29 03:00 首场开赛">32强 定6/28 12:00</div><div class="gseg" style="grid-column:13/17" title="16强 对阵确定 7/4 上午（32强末场打完·时点待赛程）→ 7/5 起开打">16强 定7/4</div><div class="gseg" style="grid-column:17/21" title="8强 对阵确定 7/8 06:30（16强末场打完）→ 7/10 起开打">8强 定7/8 06:30</div><div class="gseg" style="grid-column:21/25" title="半决 对阵确定 7/12 11:30（8强末场打完）→ 7/15 起开打">半决 定7/12 11:30</div><div class="gseg" style="grid-column:25/29" title="季军/决赛 对阵确定 7/16 05:30（半决末场打完）→ 7/19 起 · 竞猜最晚截止">季/决 定7/16 05:30</div></div></div>
+  <div class="grow"><div class="glabel">$4.99 纯竞猜</div><div class="gtrack"><div class="gbar b-g1" style="grid-column:7/29"><span>每场都上（6/28下午首发）｜止 7/19</span></div></div></div>
+  <div class="grow"><div class="glabel">$9.99 头像框档</div><div class="gtrack"><div class="gbar b-g2" style="grid-column:14/29"><span>16强起 → 自选框宝箱 → 四强专属｜止 7/19</span></div></div></div>
+  <div class="grow"><div class="glabel">$19.99 表情档</div><div class="gtrack"><div class="gbar b-g3" style="grid-column:19/29"><span>8强起 → 自选表情宝箱｜止 7/19</span></div></div></div>
+  <div class="grow"><div class="glabel">免费预测 / 应援表情</div><div class="gtrack"><div class="gbar b-free" style="grid-column:7/29"><span>每比赛日1场 · 全程</span></div></div></div>
+
+  <div class="gsec ds">🌊 深海节（全服 7/3 · D1–D10 到 7/12 · 提前避开世界杯半决/决赛）</div>
+  <div class="grow"><div class="glabel">深海节窗口 D1–D10（7/3–7/12）</div><div class="gtrack"><div class="gbar b-win" style="grid-column:12/22"><span>D1开：转盘/BP/每日礼包/头像框/累充/许愿池/酒馆</span></div></div></div>
+  <div class="grow"><div class="glabel">大富翁（全程 D1–D10）</div><div class="gtrack"><div class="gbar b-depth" style="grid-column:12/22"><span>depth 核心 · 全程 7/3–7/12</span></div></div></div>
+  <div class="grow"><div class="glabel">节日周卡（D4–D10）</div><div class="gtrack"><div class="gbar b-depth" style="grid-column:15/22"><span>7/6–7/12</span></div></div></div>
+  <div class="grow"><div class="glabel sub">◆ 模块开启</div><div class="gtrack"><div class="gmk ms" style="grid-column:12/13" title="7/3 D1 全服开 + 大富翁开">◆</div><div class="gmk ms" style="grid-column:14/15" title="7/5 D3 装饰阶梯$19.99×3">◆</div><div class="gmk ms" style="grid-column:15/16" title="7/6 D4 节日周卡开">◆</div><div class="gmk ms" style="grid-column:18/19" title="7/9 D7 拜访礼包$99.99">◆</div></div></div>
+</div></div>
+<div class="gfoot">★ 世界杯每轮＝上一轮末场打完的北京白天把整轮场次<b style="color:#d98ad0">热更</b>上线，服务端随时、不受周三封包限制（<b style="color:#e07a5a">16强窗口最紧~1天</b>）。★ 深海节模块开启窗口（D1/D3/D7/D8）是活动内投放节奏，部署时一次配好、靠 TimeController/iGame 定时开。★ 每个排期节点具体要做啥见「详细信息」页签 SOP。</div>
+</div>
+
+<!-- ============ 模块二：详细信息（仅 SOP） ============ -->
+<div id="det" class="pane"><div class="detwrap">
+  <div class="subtabs">
+    <div class="subtab on" onclick="sw2('sop',this)">📋 运营 SOP</div>
+    <div class="subtab" onclick="sw2('jira',this)">🎫 Jira 单</div>
+  </div>
+
+  <div id="sop" class="subpane on">
+
+  <div class="grouphd" style="border-color:#3a567a;color:var(--ds)">🕐 上线 & 发奖时点甘特<small>世界杯竞猜 · 北京时间 · 具体到小时</small></div>
+  <div class="glegend">
+    <span><i style="background:#9fd06a"></i>竞猜开盘</span>
+    <span><i style="background:#333f4d"></i>各轮末场（发奖起点）</span>
+    <span><i style="background:#2a2410;border:1px solid #4a3f1e"></i>发奖截止 末场+24h</span>
+    <span>⚑ hub上线</span>
+  </div>
+  <div class="gantt-wrap"><div class="gantt">
+    <div class="gcorner">上线 / 发奖</div>
+    <div class="gmonth" style="grid-column:2/11">6 月</div>
+    <div class="gmonth" style="grid-column:11/34">7 月</div>
+    <div class="gday today"><div class="dn">22</div><div class="wd">一</div></div><div class="gday"><div class="dn">23</div><div class="wd">二</div></div><div class="gday"><div class="dn">24</div><div class="wd">三</div></div><div class="gday"><div class="dn">25</div><div class="wd">四</div></div><div class="gday"><div class="dn">26</div><div class="wd">五</div></div><div class="gday wknd"><div class="dn">27</div><div class="wd">六</div></div><div class="gday wknd"><div class="dn">28</div><div class="wd">日</div></div><div class="gday"><div class="dn">29</div><div class="wd">一</div></div><div class="gday"><div class="dn">30</div><div class="wd">二</div></div><div class="gday"><div class="dn">1</div><div class="wd">三</div></div><div class="gday"><div class="dn">2</div><div class="wd">四</div></div><div class="gday"><div class="dn">3</div><div class="wd">五</div></div><div class="gday wknd"><div class="dn">4</div><div class="wd">六</div></div><div class="gday wknd"><div class="dn">5</div><div class="wd">日</div></div><div class="gday"><div class="dn">6</div><div class="wd">一</div></div><div class="gday"><div class="dn">7</div><div class="wd">二</div></div><div class="gday"><div class="dn">8</div><div class="wd">三</div></div><div class="gday"><div class="dn">9</div><div class="wd">四</div></div><div class="gday"><div class="dn">10</div><div class="wd">五</div></div><div class="gday wknd"><div class="dn">11</div><div class="wd">六</div></div><div class="gday wknd"><div class="dn">12</div><div class="wd">日</div></div><div class="gday"><div class="dn">13</div><div class="wd">一</div></div><div class="gday"><div class="dn">14</div><div class="wd">二</div></div><div class="gday"><div class="dn">15</div><div class="wd">三</div></div><div class="gday"><div class="dn">16</div><div class="wd">四</div></div><div class="gday"><div class="dn">17</div><div class="wd">五</div></div><div class="gday wknd"><div class="dn">18</div><div class="wd">六</div></div><div class="gday wknd"><div class="dn">19</div><div class="wd">日</div></div><div class="gday"><div class="dn">20</div><div class="wd">一</div></div><div class="gday"><div class="dn">21</div><div class="wd">二</div></div><div class="gday"><div class="dn">22</div><div class="wd">三</div></div><div class="gday"><div class="dn">23</div><div class="wd">四</div></div>
+
+    <div class="gsec wc">🏆 世界杯竞猜 · 上线 & 发奖</div>
+    <div class="grow"><div class="glabel sub">⚑ hub 上线</div><div class="gtrack"><div class="gmk launch" style="grid-column:6/7" title="6/27 系列hub上线（时点自定）">⚑</div></div></div>
+    <div class="grow"><div class="glabel">竞猜开盘（每日上当日场次）</div><div class="gtrack"><div class="gbar b-g1" style="grid-column:7/29"><span>6/28 14:00 起 → 7/19 决赛</span></div></div></div>
+    <div class="grow"><div class="glabel">各轮末场（发奖起点）</div><div class="gtrack"><div class="gseg" style="grid-column:13/17" title="32强末场约7/4（具体钟点待FIFA）">32强末 7/4</div><div class="gseg" style="grid-column:17/21" title="16强末场 7/8 06:30">16强末 7/8 06:30</div><div class="gseg" style="grid-column:21/25" title="8强末场 7/12 11:30">8强末 7/12 11:30</div><div class="gseg" style="grid-column:25/28" title="半决末场 7/16 05:30">半决末 7/16 05:30</div><div class="gseg" style="grid-column:28/30" title="决赛 7/19（末场钟点待FIFA）">决赛 7/19</div></div></div>
+    <div class="grow"><div class="glabel">🎁 发奖截止（末场+24h）</div><div class="gtrack"><div class="gtime" style="grid-column:14/17" title="32强阶段发奖 by 7/5">7/5</div><div class="gtime" style="grid-column:18/21" title="16强发奖 by 7/9 06:30">7/9 06:30</div><div class="gtime" style="grid-column:22/25" title="8强发奖 by 7/13 11:30">7/13 11:30</div><div class="gtime" style="grid-column:26/28" title="半决发奖 by 7/17 05:30">7/17 05:30</div><div class="gtime" style="grid-column:29/31" title="决赛发奖 by 7/20">7/20</div></div></div>
+  </div></div>
+  <div class="gfoot">★ 竞猜每个比赛日上当日场次、当日末场打完 24h 内发奖+加分；上图是「各轮末场→发奖截止」的轮级时点（已知精确钟点黄色/灰色标），轮内每日末场随 FIFA 完整赛程出来后再细化到每天。</div>
+
+  <div class="grouphd" style="border-color:#3a567a;color:var(--ds)">🔁 每个比赛日 · 就两件事<small>世界杯竞猜零后端 · 全靠运营 · 北京时间</small></div>
+  <div class="row" style="border-color:#3a4a30;background:#1a2417"><div class="dt" style="color:var(--wc)">发奖时限</div><div class="what"><b>该比赛日最后一场打完 → 1 天（24h）内 发奖 + 加分一起做完</b><div class="note">各轮末场（北京·已知精确点）：16强 <b style="color:var(--gold)">7/8 06:30</b> ｜ 8强 <b style="color:var(--gold)">7/12 11:30</b> ｜ 半决 <b style="color:var(--gold)">7/16 05:30</b> ｜ 决赛 7/19（末场具体时点待 FIFA）。其余每日末场随 FIFA 赛程，统一按「末场打完 +24h 内」结算。</div></div></div>
+  <div class="row"><div class="step" style="background:#10384a">①</div><div class="what"><b>发邮件（结算）</b><div class="note">1) 拉当日真实赛果（含加时/点球的最终晋级方）；<br>2) 查游戏日志，导出命中「买对/猜对」的玩家名单（含焦点战押中指定方且其获胜者）；<br>3) 用 bulk-mail 批量发 → <b>bonus 抽奖券 + 结算邮件</b>（结算邮件兼赛果通知，游戏内无赛果界面）；<br>4) 焦点战额外加赠一并算进同一封邮件。</div></div></div>
+  <div class="row"><div class="step" style="background:#10384a">②</div><div class="what"><b>加分（BP 积分）</b><div class="note">1) 统计当日参与竞猜的玩家；2) GM 命令批量加 BP 积分（随①一起发）。<br><b style="color:#e8a05a">每竞猜命中（赢）一次 = +600 BP 分</b>；命令 <b style="color:var(--ds)">GMAddActivityScore ［BP活动id］ 600</b>（player-scope·普通GM权限，已有、之前测过）。</div></div></div>
+  <div class="row" style="border-color:#5a3a30;background:#241c1a"><div class="dt" style="color:#e89a78">活动末</div><div class="what"><b>抽奖券回收</b><div class="note">活动结束，玩家剩余抽奖券按比例回收 → 发补偿邮件（MailID）。</div></div></div>
+  </div><!-- /#sop -->
+
+  <div id="jira" class="subpane">
+  <div class="note" style="margin:2px 2px 16px;color:var(--mut);font-size:12.5px">深海节美术资源<b style="color:var(--ds)">今天（6/23）已全部进包</b>。下面分两类：<b style="color:var(--ds)">运营单</b>（每比赛日结算）+ <b style="color:var(--wc)">世界杯进包/配置单</b>（每个新头像框 + 对应礼包配置成对提）。过 Leader 后提 Jira。</div>
+
+  <div class="grouphd" style="border-color:#3a567a;color:var(--ds)">📋 运营单（每比赛日 · 全程 6/29–7/19）</div>
+  <div class="tk"><div class="tk-h"><span class="tk-tag tag-ops">运营</span><span class="tk-t">世界杯竞猜每日结算：发奖 + 加分（同一单）</span><span class="tk-pkg">每天 15:00 北京</span></div>
+    <div class="tk-time">⏰ 约定：<b>每天 15:00（北京）固定做一次</b> —— 当天凌晨~上午打完的竞猜场次，此时已出齐，必在「末场 +24h」内。</div>
+    <div class="tk-step"><span class="tk-no">①</span><div><b>发奖</b>：拉当日赛果 → 查日志命中「买对/猜对」玩家（含焦点战押中）→ bulk-mail 发 <b>bonus 抽奖券 + 结算邮件</b>（兼赛果通知）。</div></div>
+    <div class="tk-step"><span class="tk-no">②</span><div><b>加分</b>：GM <b style="color:var(--ds)">GMAddActivityScore ［BP活动id］ 600</b> 给命中玩家加 BP（每命中 +600），随 ① 一起发。</div></div>
+    <div class="tk-ref">各轮末场参考（核赛果用·北京）：16强 <b>7/8 06:30</b> ｜ 8强 <b>7/12 11:30</b> ｜ 半决 <b>7/16 05:30</b> ｜ 决赛 7/19。零后端全手动；活动末另发一次「剩余券回收 + 补偿邮件」。</div>
+  </div>
+
+  <div class="grouphd" style="border-color:#3f6a2e;color:var(--wc)">📦 7/8（周三）包 — 晋级之路（半决赛档）</div>
+  <div class="tk"><div class="tk-h"><span class="tk-tag tag-art">美术</span><span class="tk-t">「晋级之路」头像框</span><span class="tk-pkg">进包 7/8</span></div><div class="tk-d">通用×1 + 8强8队专属；8强 7/7 定 → 赶 7/8 包（半决 4 队必在这 8 队内）。</div></div>
+  <div class="tk"><div class="tk-h"><span class="tk-tag tag-cfg">策划/配置</span><span class="tk-t">「晋级之路」对应礼包配置</span><span class="tk-pkg">7/8 随包后热更</span></div><div class="tk-d">$9.99 头像框档（半决赛·四强专属框）；绑定上面新头像框资源 + 价格/上线时点/限购。</div></div>
+
+  <div class="grouphd" style="border-color:#3f6a2e;color:var(--wc)">📦 7/15（周三）包 — 世界之巅（决赛档）</div>
+  <div class="tk"><div class="tk-h"><span class="tk-tag tag-art">美术</span><span class="tk-t">「世界之巅」头像框 + 聊天表情</span><span class="tk-pkg">进包 7/15</span></div><div class="tk-d">通用 + 四强 4 队专属；四强 7/11 定 → 赶 7/15 包（唯一赶工项）。</div></div>
+  <div class="tk"><div class="tk-h"><span class="tk-tag tag-cfg">策划/配置</span><span class="tk-t">「世界之巅」对应礼包配置</span><span class="tk-pkg">7/15 随包后热更</span></div><div class="tk-d">$9.99 自选框宝箱 + $19.99 自选表情宝箱（决赛档）；绑定上面新资源。</div></div>
+  </div><!-- /#jira -->
+
+</div></div>
+
+<script>
+function sw(id){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  document.querySelector('.tab.'+id).classList.add('on');
+}
+function sw2(id,el){
+  document.querySelectorAll('.subpane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.subtab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  el.classList.add('on');
+}
+</script>
+</body></html>

@@ -1,0 +1,360 @@
+<title>世界杯活动验收测试清单</title>
+<style>
+:root{--bg:#0b1424;--card:#13203a;--card2:#1a2c4d;--line:#2a3f63;--txt:#e2e9f5;--dim:#8fa3c4;--cyan:#4fd0ff;--gold:#ffce5c;--green:#46df8a;--red:#ff7070;--purple:#bd92ff;--grass:#3ec96b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:linear-gradient(180deg,#081020,#0b1424 42%);color:var(--txt);font-family:"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.55;padding:24px 16px 80px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto}
+h1{font-size:26px;color:var(--gold);letter-spacing:1px;margin-bottom:4px}
+.sub{color:var(--dim);font-size:13px;margin-bottom:16px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:12.5px;align-items:center}
+.bar b{color:var(--gold)}
+.chip{background:var(--card2);border:1px solid var(--line);border-radius:20px;padding:3px 11px;color:var(--dim)}
+.chip.ok{color:var(--green);border-color:#1f5a3a}.chip.wait{color:var(--gold);border-color:#5a4a1f}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--dim);margin-bottom:8px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.ctrl{display:flex;gap:8px;margin:10px 0 16px}
+.ctrl button{background:var(--card2);color:var(--cyan);border:1px solid var(--line);border-radius:6px;padding:6px 14px;font-size:12px;cursor:pointer}
+.ctrl button:hover{background:#22386080}
+.prog{margin-left:auto;color:var(--dim);font-size:12px;align-self:center}
+.tag{font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px;vertical-align:middle;white-space:nowrap}
+.t-new{background:#143a5c;color:var(--cyan);border:1px solid #1f5a8c}
+.t-risk{background:#3a1414;color:var(--red);border:1px solid #5c1f1f}
+.t-art{background:#2a1a3a;color:var(--purple);border:1px solid #432a5c}
+.t-todo{background:#3a3014;color:var(--gold);border:1px solid #5c4a1f}
+.mod{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:14px;overflow:hidden}
+.mod>summary{cursor:pointer;list-style:none;padding:13px 18px;font-size:16px;color:var(--cyan);font-weight:600;display:flex;align-items:center;gap:10px;background:var(--card2)}
+.mod>summary::-webkit-details-marker{display:none}
+.mod>summary::before{content:"▸";color:var(--dim);font-size:12px;transition:.15s}
+.mod[open]>summary::before{transform:rotate(90deg)}
+.mod>summary .id{font-size:11px;color:var(--dim);font-weight:400;margin-left:auto;font-family:Consolas,monospace}
+.mod.hot>summary{background:#1a2238;border-left:3px solid var(--red)}
+.row{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:11px 18px;border-top:1px solid var(--line);align-items:start}
+.row:first-child{border-top:none}
+.cb{width:19px;height:19px;margin-top:2px;accent-color:var(--cyan);cursor:pointer;flex-shrink:0}
+.row.done .what{text-decoration:line-through;opacity:.45}
+.what{font-size:14.5px;color:var(--txt);font-weight:600;margin-bottom:4px}
+.exp{font-size:13.5px;color:var(--green);margin-top:2px}
+.exp::before{content:"✔ 预期 ";color:var(--dim);font-weight:700;font-size:12px}
+.detail{margin-top:6px}
+.detail>summary{cursor:pointer;list-style:none;font-size:11px;color:#5e7da0;display:inline-flex;align-items:center;gap:4px}
+.detail>summary::-webkit-details-marker{display:none}
+.detail>summary::before{content:"＋ 配置/原因";color:#557}
+.detail[open]>summary::before{content:"－ 收起"}
+.detail .meta{font-size:12px;color:var(--dim);margin-top:5px;padding-left:2px;border-left:2px solid var(--line);padding:4px 0 4px 9px}
+.detail .meta b{color:#bcd}
+.detail .where{font-size:10.5px;color:#6d8aa3;margin-top:4px;font-family:Consolas,monospace}
+.note{background:#101f33;border-left:3px solid var(--gold);padding:10px 14px;margin:12px 0;font-size:12.5px;color:#d8c89a;border-radius:0 6px 6px 0}
+.note b{color:var(--gold)}
+.flywheel{background:#0f1f16;border-left:3px solid var(--grass);padding:10px 14px;margin:12px 0;font-size:12.5px;color:#bfe6cc;border-radius:0 6px 6px 0}
+.flywheel b{color:var(--grass)}
+.foot{text-align:center;color:#4a6378;font-size:12px;margin-top:24px}
+</style>
+
+<div class="wrap">
+<h1>⚽ 世界杯活动 · 验收测试清单</h1>
+<div class="sub">逐项进游戏看「预期」对不对，对了就勾掉 ｜ 配置/原因默认折叠，要查再点开</div>
+
+<div class="bar">
+  <span><b>怎么上活动</b></span>
+  <span class="chip">运营在 iGame 后台部署（填活动+时间+服务器）</span>
+  <span class="chip">竞猜场次额外填「两支队的礼包号」</span>
+  <span class="chip wait">客户端美术改动需更新到 dev 服才看得到</span>
+</div>
+
+<div class="flywheel">
+  <b>这活动怎么玩（先懂再测）</b>：猜比赛 + 打 BP 攒「世界杯抽奖券」→ 用券去开箱 → 开得多的人上排行榜，前 20 名拿足球宝贝皮肤。券只能靠 猜比赛 / BP / 签到累充 拿到，只能在开箱花掉。猜对了发的额外奖励、排行榜皮肤，都是<b>运营事后手动查名单补发邮件</b>，游戏里不自动结算。
+</div>
+
+<div class="legend">
+  <span><i class="tag t-risk">本轮重点</i> 先测这些</span>
+  <span><i class="tag t-new">本轮改的</i></span>
+  <span><i class="tag t-art">看图显示</i></span>
+  <span><i class="tag t-todo">还没做/占位</i></span>
+</div>
+<div class="ctrl">
+  <button onclick="document.querySelectorAll('.mod').forEach(m=>m.open=true)">展开全部</button>
+  <button onclick="document.querySelectorAll('.mod').forEach(m=>m.open=false)">收起全部</button>
+  <button onclick="document.querySelectorAll('.detail').forEach(m=>m.open=true)">展开配置详情</button>
+  <button onclick="document.querySelectorAll('.detail').forEach(m=>m.open=false)">收起配置详情</button>
+  <span class="prog" id="prog">0 / 0 已勾</span>
+</div>
+
+<!-- ===== 怎么上活动 ===== -->
+<details class="mod hot" open>
+  <summary>📌 第一步：怎么把活动弄到游戏里（不上出来啥都测不了）</summary>
+  <div class="note" style="margin:10px 14px">活动不会自己出现，得先「上」出来才能在游戏里看到。两种上法，看你连的是哪个服 —— <b>非竞猜模块用 A 最快；竞猜只能走 B</b>。</div>
+
+  <div style="padding:4px 18px 10px">
+  <div style="font-size:14px;color:var(--gold);font-weight:700;margin:8px 0 4px">A · 本地测试服，自己用 GM 开（最快）</div>
+  <div style="font-size:12.5px;color:var(--dim);margin-bottom:8px">前提：游戏连的是本地服 + 知道一个本服在线玩家的 uid（不知道就问开发，<b>当前可用 27798</b>，报「LoadPlayerFail」就换一个）。把下面命令逐条发给 GM，发完进游戏，活动就出现在世界杯入口里。</div>
+  <div style="overflow-x:auto">
+  <table style="width:100%;border-collapse:collapse;font-size:12.5px">
+    <thead><tr style="color:#9bb8d0;text-align:left"><th style="padding:6px 12px">活动</th><th style="padding:6px 12px">活动ID</th><th style="padding:6px 12px">复制这条命令（uid 换成你的）</th></tr></thead>
+    <tbody style="font-family:Consolas,monospace;font-size:12px">
+      <tr style="border-top:1px solid var(--line)"><td style="padding:6px 12px">开箱</td><td style="padding:6px 12px;color:var(--cyan)">101516</td><td style="padding:6px 12px">!gm @27798 GMAddServerActivityByCfgId 101516 0</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:6px 12px">付费 BP</td><td style="padding:6px 12px;color:var(--cyan)">102240</td><td style="padding:6px 12px">!gm @27798 GMAddServerActivityByCfgId 102240 0</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:6px 12px">签到</td><td style="padding:6px 12px;color:var(--cyan)">101403</td><td style="padding:6px 12px">!gm @27798 GMAddServerActivityByCfgId 101403 0</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:6px 12px">累充</td><td style="padding:6px 12px;color:var(--cyan)">100597</td><td style="padding:6px 12px">!gm @27798 GMAddServerActivityByCfgId 100597 0</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:6px 12px">兑换</td><td style="padding:6px 12px;color:var(--cyan)">101339</td><td style="padding:6px 12px">!gm @27798 GMAddServerActivityByCfgId 101339 0</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div style="font-size:12px;color:var(--red);margin-top:8px">⚠️ 竞猜不能这么开 —— GM 开出来「没有对阵两队」（GM 命令带不了对阵参数），竞猜只能走下面 B。</div>
+
+  <div style="font-size:14px;color:var(--gold);font-weight:700;margin:18px 0 4px">B · 让运营在 iGame 后台部署（竞猜必走这条）</div>
+  <div style="font-size:12.5px;color:var(--dim);margin-bottom:6px">你自己没 iGame 权限的话，把「测哪些活动 + 哪个服 + 起止时间」发给运营，他在 iGame 后台按<b>活动名</b>搜出来填好部署即可。部署成功后你直接进游戏玩，不用再做别的。</div>
+  <div style="font-size:12.5px;color:var(--dim)"><b style="color:#bcd">竞猜场次</b>要额外告诉运营「这场打哪两队」—— 在活动参数 customParam 里填两个礼包号，格式：<br>
+  <span style="font-family:Consolas,monospace;color:var(--cyan);display:inline-block;margin:6px 0;background:#0e1a2c;padding:6px 12px;border-radius:6px">customParam：{"packIdA":894071, "packIdB":894211}</span><br>
+  这例是 <b>巴西 vs 德国（$4.99 档）</b>。换对阵 = 改这两个号重新部署，不用动配置表、不用热更。</div>
+
+  <div style="font-size:13px;color:var(--cyan);font-weight:700;margin:14px 0 4px">📋 customParam 参数范围（填错活动建不出来）</div>
+  <div style="font-size:12.5px;color:var(--dim)">
+  • <b>packIdA / packIdB 取值</b>：<b style="color:#bcd">894010 ～ 894483</b> 之间的礼包号，两个必须是<b>不同的队</b>。<br>
+  • <b>礼包号公式</b>：<b style="color:#bcd">894000 + 队号×10 + 档位</b>。队号=国家英文名字母序 01–48（=助威头像框道具号 −80299，全表见下方外显速查）；档位 <b>0=免费 / 1=$4.99 / 2=$9.99 / 3=$19.99</b>。<br>
+  &nbsp;&nbsp;例：德国队号21、$4.99 → 894000+210+1 = <b>894211</b>。<br>
+  • <b>一个活动只出两个包</b>（两队各一、同一个档位）。想让同一场比赛上多个价格档 = <b>部署该场的多个实例</b>（每个实例填同一对队、不同档位的号），不是在一个实例里填 4 个号。</div>
+
+  <div style="font-size:13px;color:var(--cyan);font-weight:700;margin:14px 0 4px">🎯 抽查测试（随便挑几个实例部署验证）</div>
+  <div style="font-size:12px;color:var(--dim);margin-bottom:6px">竞猜实例 ActvOnline <b>102920–102992（共 73 个）</b>，随便挑几个上 iGame、填下面 customParam，进游戏看对阵/购买/锁定正常不：</div>
+  <div style="overflow-x:auto">
+  <table style="width:100%;border-collapse:collapse;font-size:12px">
+    <thead><tr style="color:#9bb8d0;text-align:left"><th style="padding:6px 12px">抽查活动ID</th><th style="padding:6px 12px">填这个 customParam</th><th style="padding:6px 12px">游戏里应显示</th></tr></thead>
+    <tbody style="font-size:12px">
+      <tr style="border-top:1px solid var(--line)"><td style="padding:6px 12px;font-family:Consolas;color:var(--cyan)">102920</td><td style="padding:6px 12px;font-family:Consolas">{"packIdA":894071,"packIdB":894211}</td><td style="padding:6px 12px;color:var(--green)">巴西 vs 德国，$4.99 各一包</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:6px 12px;font-family:Consolas;color:var(--cyan)">102930</td><td style="padding:6px 12px;font-family:Consolas">{"packIdA":894022,"packIdB":894202}</td><td style="padding:6px 12px;color:var(--green)">阿根廷 vs 法国，$9.99 各一包</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:6px 12px;font-family:Consolas;color:var(--cyan)">102960</td><td style="padding:6px 12px;font-family:Consolas">{"packIdA":894273,"packIdB":894183}</td><td style="padding:6px 12px;color:var(--green)">日本 vs 英格兰，$19.99 各一包</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:6px 12px;font-family:Consolas;color:var(--cyan)">102992</td><td style="padding:6px 12px;font-family:Consolas">{"packIdA":894190,"packIdB":894370}</td><td style="padding:6px 12px;color:var(--green)">西班牙 vs 葡萄牙，免费场各一包</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div style="font-size:11.5px;color:#6d8aa3;margin-top:6px">队号速算：阿根廷02 / 巴西07 / 英格兰18 / 西班牙19 / 法国20 / 德国21 / 日本27 / 葡萄牙37（完整 48 队照下方助威头像框 80300–80347 顺序，队号=头像框号−80299）。</div>
+  </div>
+
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">（验收）活动按部署/GM 设的时间正常开、过点关</div>
+    <div class="exp">活动在设定窗口内能在游戏里看到、能进；窗口外不显示。</div>
+    <details class="detail"><summary></summary><div class="meta">iGame 部署填的是 iGame 自己的活动号 activityConfigId（按活动名搜，≠ 上面 gdconfig 的 ActvOnline 号），时间用 UTC 不转时区。本地 GM 时长填 0=按配置周期；竞猜类 GM 开需填 43200(30天) 否则报错，但仍开不出对阵。本地服 GM 链路(telnet/uid/清库)见 memory workflow_x3_local_server_gm_telnet。<div class="where">submitActivity · ActivityMeta.Gm.cs GMAddServerActivityByCfgId(cfgId, durationMinutes=0)</div></div></details></div></div>
+</details>
+
+<!-- ===== GM 测试速查 + 外显ID ===== -->
+<details class="mod">
+  <summary>🎮 GM 测试速查 · 发皮肤/表情/头像框（本地服）</summary>
+  <div class="note" style="margin:10px 14px">统一发道具命令：<b>!gm @&lt;uid&gt; GMAddItem &lt;道具号&gt; &lt;数量&gt;</b>（player-scope，必须带 @uid）。发完进游戏对应界面看外观/解锁。</div>
+  <div style="overflow-x:auto;padding:6px 0">
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead><tr style="color:#9bb8d0;text-align:left">
+      <th style="padding:8px 14px">外显</th><th style="padding:8px 14px">道具号</th><th style="padding:8px 14px">GM 命令</th><th style="padding:8px 14px">游戏里预期</th>
+    </tr></thead>
+    <tbody style="font-size:12.5px">
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">足球宝贝皮肤</td><td style="padding:7px 14px;color:var(--cyan);font-family:Consolas">5304001</td><td style="padding:7px 14px;font-family:Consolas">GMAddItem 5304001 1</td><td style="padding:7px 14px;color:var(--green)">使用后英雄爱莉希雅换足球宝贝皮肤（视频展示）</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">助威头像框（48 队）</td><td style="padding:7px 14px;color:var(--cyan);font-family:Consolas">80300–80347</td><td style="padding:7px 14px;font-family:Consolas">GMAddItem 80306 1</td><td style="padding:7px 14px;color:var(--green)">使用后头像外圈显示该队头像框（例 80306=巴西）</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">应援表情解锁道具（48 队）</td><td style="padding:7px 14px;color:var(--cyan);font-family:Consolas">15420–15467</td><td style="padding:7px 14px;font-family:Consolas">GMAddItem 15420 1</td><td style="padding:7px 14px;color:var(--green)">使用后解锁该队应援表情，聊天可发（例 15420=阿尔及利亚）</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">抽奖券 / 荣耀金币</td><td style="padding:7px 14px;color:var(--cyan);font-family:Consolas">1146 / 1147</td><td style="padding:7px 14px;font-family:Consolas">GMAddItem 1146 100</td><td style="padding:7px 14px;color:var(--green)">发券用于开箱 / 发荣耀金币用于兑换</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">三种外显号段对照（队号通用规律）<i class="tag t-todo">参考</i></div>
+    <div class="exp">同一支队：头像框 80300+(队号−1)、应援表情解锁 15420+(队号−1)、竞猜礼包 894+队号+档位、表情本体 Emoticons 300+(队号−1)。队号 = 国家英文名字母序（01=ALG阿尔及利亚 … 07=BRA巴西 … 21=GER德国 … 48=UZB乌兹别克）。</div>
+    <details class="detail"><summary></summary><div class="meta">完整 48 队号顺序照头像框道具 80300–80347 的名称顺序（已是字母序）；礼包号=894000+队号×10+档位，例 日本 JPN=队27→894270-273 / 英格兰 ENG=队18→894180-183。</div></details></div></div>
+</details>
+
+<!-- ===== 本轮重点 ===== -->
+<details class="mod hot" open>
+  <summary>🔴 本轮重点（先测这几个）</summary>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">竞猜礼包上能看到「猜对加送 N 张券」的字 <i class="tag t-new">本轮修</i><i class="tag t-risk">易翻车</i></div>
+    <div class="exp">每个竞猜礼包弹窗下方有「猜对加送 +N 券」的提示文字（按价格档不同：免费 +5 / $4.99 +15 / $9.99 +30 / $19.99 +60），不再是空白，也没有显示乱码 key。各语言都正常。</div>
+    <details class="detail"><summary></summary><div class="meta">之前全空白：客户端把这行文字硬拼成每个礼包专属 key，根本不读配置表里配的共享文案。本轮给 192 个礼包各补了一条文案。<div class="where">Text 表 TXT_Pack_Desc_894xxx（192条）· UIActvWorldCupGuess.cs:132</div></div></details></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">BP（远航日志/通行证）在世界杯活动入口里显示 <i class="tag t-new">本轮修</i></div>
+    <div class="exp">进世界杯活动分组，能看到 BP 通行证，跟竞猜、开箱在一起，不会单独散落在普通活动列表里。</div>
+    <details class="detail"><summary></summary><div class="meta">BP 之前漏配活动组，本轮归入世界杯入口组。<div class="where">ActvOnline 102240 ActvGroup=139</div></div></details></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">各活动用的是世界杯的背景图，不是别的节日/推币机的图 <i class="tag t-art">看图</i></div>
+    <div class="exp">开箱、BP、累充等界面的背景都是世界杯主题（体育场/足球），不是元旦、推币机、世界杯之前临时占位的图。</div>
+    <details class="detail"><summary></summary><div class="meta">各模块从复用源克隆，背景图 DK 需逐个改成世界杯的，别留克隆残留。</div></details></div></div>
+</details>
+
+<!-- ===== 速查表 ===== -->
+<details class="mod">
+  <summary>🔑 活动 ID 速查表（gdconfig 号 · 本地 GM 开活动用 · ≠ iGame 部署号）</summary>
+  <div style="overflow-x:auto;padding:6px 0">
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead><tr style="color:#9bb8d0;text-align:left">
+      <th style="padding:8px 14px">模块</th><th style="padding:8px 14px">ContentID</th><th style="padding:8px 14px">ActvOnline</th><th style="padding:8px 14px">Type</th>
+    </tr></thead>
+    <tbody style="font-family:Consolas,monospace">
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">每日竞猜（73 个实例）</td><td style="padding:7px 14px;color:var(--cyan)">2920–2992</td><td style="padding:7px 14px;color:var(--cyan)">102920–992</td><td style="padding:7px 14px">64</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">主抽奖=开箱</td><td style="padding:7px 14px;color:var(--cyan)">1516</td><td style="padding:7px 14px;color:var(--cyan)">101516</td><td style="padding:7px 14px">15</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">付费 BP</td><td style="padding:7px 14px;color:var(--cyan)">102240</td><td style="padding:7px 14px;color:var(--cyan)">102240</td><td style="padding:7px 14px">22</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">签到</td><td style="padding:7px 14px;color:var(--cyan)">1403</td><td style="padding:7px 14px;color:var(--cyan)">101403</td><td style="padding:7px 14px">14</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">累充</td><td style="padding:7px 14px;color:var(--cyan)">597</td><td style="padding:7px 14px;color:var(--cyan)">100597</td><td style="padding:7px 14px">5</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">兑换 荣耀兑换所</td><td style="padding:7px 14px;color:var(--cyan)">1339</td><td style="padding:7px 14px;color:var(--cyan)">101339</td><td style="padding:7px 14px">13</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">纪念卡 绿茵之星</td><td style="padding:7px 14px;color:var(--dim)">MemorialCard79</td><td style="padding:7px 14px;color:var(--dim)">Item180079</td><td style="padding:7px 14px">卡</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">世界杯入口组</td><td style="padding:7px 14px;color:var(--dim)">ActvGroup139</td><td style="padding:7px 14px;color:var(--dim)">—</td><td style="padding:7px 14px">Grp</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">抽奖券 / 荣耀金币</td><td style="padding:7px 14px;color:var(--dim)">Item1146 / 1147</td><td style="padding:7px 14px;color:var(--dim)">—</td><td style="padding:7px 14px">道具</td></tr>
+    </tbody>
+  </table>
+  </div>
+</details>
+
+<!-- ===== 01 竞猜 ===== -->
+<details class="mod">
+  <summary>⚽ 01 每日竞猜 <span class="id">type64</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">竞猜界面能打开，显示对阵的两支队</div>
+    <div class="exp">进竞猜界面，背景是体育场，左右两支队的队名、队徽、横幅都显示正确、清晰，不空白/问号。</div>
+    <details class="detail"><summary></summary><div class="meta">一场比赛=一个活动实例；两队信息靠后台填的两个礼包号决定，队名/队徽/横幅由礼包配置带出来在界面渲染。队徽=足球+国旗盾合体勋章，48 队定稿。</div></details></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">只能押一支队，押了就锁、不能改 <i class="tag t-risk">重点</i></div>
+    <div class="exp">买了 A 队的礼包后，B 队那边就置灰锁住，不能再买、不能改押注（防止两边都买稳赢）。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">买竞猜礼包必得抽奖券</div>
+    <div class="exp">买任意一档礼包（免费 / $4.99 / $9.99 / $19.99），都立刻发对应数量的世界杯抽奖券；猜对的额外奖励由运营事后补发。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">免费场能领一次</div>
+    <div class="exp">每个比赛日有 1 场免费场，花 1 钻购买领取，押注后记录所选结果。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">标题、规则、文案各语言都正常 <i class="tag t-todo">查</i></div>
+    <div class="exp">活动标题、描述、规则弹窗、加送提示，中文和其它语言都正常，没有空白或乱码 key。</div></div></div>
+</details>
+
+<!-- ===== 02 开箱 ===== -->
+<details class="mod">
+  <summary>🎁 02 主抽奖 = 世界杯开箱 <span class="id">type15</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">开箱界面能打开，是世界杯礼盒 <i class="tag t-art">看图</i></div>
+    <div class="exp">背景是体育场，箱子是世界杯足球礼盒；开箱有开盖动画 + 金光特效，箱子大小协调、不顶满屏、有落地阴影。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">用抽奖券开箱，开出奖励</div>
+    <div class="exp">开箱扣抽奖券，开出资源/养成料/荣耀金币等；皮肤不会从箱子里随机开出（皮肤只走排行榜）。</div>
+    <details class="detail"><summary></summary><div class="meta">目前消耗 1 券/次是测试值，设计 10 券/次。奖池克隆情人节，超级大奖=荣耀金币×500。</div></details></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">开得越多，到档位发额外奖（荣耀金币）<i class="tag t-new">本轮换皮</i></div>
+    <div class="exp">累计开箱次数到 50/150/300… 各档，额外发一笔荣耀金币，数量递增。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">开箱次数上跨服排行榜，前 20 名拿皮肤 <i class="tag t-risk">重点</i></div>
+    <div class="exp">按开箱次数跨服排名；活动结束后前 20 名收到邮件，发足球宝贝皮肤（皮肤只能靠上榜拿，开箱里抽不到）。</div>
+    <details class="detail"><summary></summary><div class="meta">克隆情人节跨服排行 Top100；$250≈上榜门槛。结算后运营/系统按名次发奖。<div class="where">RankCfg1004 · 101516 跨服=1</div></div></details></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">能直接买券包（大 R 跳过竞猜的通道）<i class="tag t-new">本轮落地</i></div>
+    <div class="exp">开箱界面里能直接买券包（$4.99~$99.99 几档），买了发对应数量的抽奖券。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">开箱界面有「活的」足球宝贝 <i class="tag t-art">依赖客户端</i></div>
+    <div class="exp">开箱界面里足球宝贝爱莉希雅是会动的视频（idle 循环），不是静态图。</div>
+    <details class="detail"><summary></summary><div class="meta">走视频展示，依赖客户端视频化改造已合 dev_festival；透明 SBS 视频。</div></details></div></div>
+</details>
+
+<!-- ===== 03 BP ===== -->
+<details class="mod">
+  <summary>📋 03 付费 BP 通行证 <span class="id">type22</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">BP 能打开，免费/付费双轨都能领奖</div>
+    <div class="exp">积分升级后，免费轨和付费轨每一级的奖励都能正常领；买了通行证后付费轨解锁，已到的等级能补领。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">BP 奖励是世界杯专属的，没改坏元旦的 BP <i class="tag t-risk">重点</i></div>
+    <div class="exp">世界杯 BP 发的是世界杯奖励（糖牌换成券、烟花表情换成券×5）；元旦那个 BP 的奖励没被一起改动。</div>
+    <details class="detail"><summary></summary><div class="meta">世界杯 BP 与元旦原本共享奖励组，本轮克隆出专属奖励块避免连带改坏。<div class="where">奖励块 4099xxx</div></div></details></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">猜对比赛能给 BP 加分</div>
+    <div class="exp">玩家竞猜命中后，运营 GM 加分，BP 积分增加（每命中 1 场 +600）；BP 升级门槛不变，竞猜只是额外加速途径。</div>
+    <details class="detail"><summary></summary><div class="meta">竞猜加分走 GM 命令随每日结算发，不集成 BP 任务；门槛与元旦一致=3000。</div></details></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">文案各语言正常 <i class="tag t-todo">查</i></div></div></div>
+</details>
+
+<!-- ===== 04 签到 ===== -->
+<details class="mod">
+  <summary>📅 04 签到 <span class="id">type14</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">签到界面能打开，逐日领券</div>
+    <div class="exp">每天签到领世界杯抽奖券，前 6 天各 1 张、第 7 天 3 张；漏签可补签。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">文案各语言正常 <i class="tag t-todo">查</i></div></div></div>
+</details>
+
+<!-- ===== 05 累充 ===== -->
+<details class="mod">
+  <summary>💰 05 累充 <span class="id">type5</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">累充界面能打开，背景是世界杯 <i class="tag t-art">看图</i></div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">充值累计到档发券</div>
+    <div class="exp">累计充值达各档，发对应世界杯抽奖券。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">只有买竞猜付费包才算累充进度</div>
+    <div class="exp">买竞猜的付费礼包计入累充进度；其它普通付费不计。</div>
+    <details class="detail"><summary></summary><div class="meta">白名单=付费竞猜包；数值沿用尼罗，尼罗残留待清。<div class="where">RechargePointPackWhitelist</div></div></details></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">数值占位 <i class="tag t-todo">占位</i> + 文案各语言正常 <i class="tag t-todo">查</i></div></div></div>
+</details>
+
+<!-- ===== 06 兑换 ===== -->
+<details class="mod">
+  <summary>🛒 06 荣耀兑换所 <span class="id">type13</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">兑换界面能打开，背景是世界杯 <i class="tag t-art">看图</i></div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">用荣耀金币兑换，15 个兑换项都能兑</div>
+    <div class="exp">各兑换项可兑换、扣荣耀金币、发养成料/外显。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">纪念卡那项兑出来的是世界杯的「绿茵之星」</div>
+    <div class="exp">纪念卡兑换项兑出的是世界杯纪念卡（绿茵之星），不是情人节旧卡。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">文案各语言正常 <i class="tag t-todo">查</i></div></div></div>
+</details>
+
+<!-- ===== 07 纪念卡 ===== -->
+<details class="mod">
+  <summary>🃏 07 纪念卡「绿茵之星」 <span class="id">MemorialCard79</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">能拿到卡、入册、升级</div>
+    <div class="exp">从兑换商店拿到卡后，进纪念册，可用相同卡升级；卡的属性正常生效。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">卡大图和图标都显示正常 <i class="tag t-art">看图</i></div>
+    <div class="exp">卡面大图、道具图标都显示，不空白/问号。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">卡名/描述等文案各语言正常 <i class="tag t-todo">查</i></div></div></div>
+</details>
+
+<!-- ===== 08 皮肤 ===== -->
+<details class="mod">
+  <summary>👗 08 足球宝贝皮肤 <span class="id">爱莉希雅 · 待落地</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">排行榜前 20 拿到皮肤后能换装 <i class="tag t-todo">待落地</i></div>
+    <div class="exp">拿到皮肤后，英雄爱莉希雅能换成足球宝贝外观；皮肤展示是会动的视频。</div>
+    <details class="detail"><summary></summary><div class="meta">主稿出图完，依赖客户端视频化改造先落地。</div></details></div></div>
+</details>
+
+<!-- ===== 09 队徽队伍板 ===== -->
+<details class="mod">
+  <summary>🛡️ 09 48 队徽 + 队伍板 <span class="id">看图</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">48 队的队徽、队伍板都显示正确 <i class="tag t-art">看图</i></div>
+    <div class="exp">竞猜界面和礼包上，48 个队的队徽（足球+国旗盾勋章）和队伍横幅都清晰显示，国旗画对、不串味、无毛边/残白底。</div></div></div>
+</details>
+
+<!-- ===== 10 应援表情 ===== -->
+<details class="mod">
+  <summary>🎉 10 48 队应援表情 <span class="id">Emoticons</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">应援表情在聊天里能正常发 <i class="tag t-art">看图</i></div>
+    <div class="exp">48 个队的应援表情（Q版爱莉希雅啦啦队，脸彩+队服）发到聊天能正常显示，没有灰底/白框。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">买押某队的竞猜礼包会送该队表情 <i class="tag t-todo">待办</i></div>
+    <div class="exp">买押某队的竞猜礼包，附带送该队应援表情，使用后解锁。</div></div></div>
+</details>
+
+<div class="note">
+  <b>运营手动结算提醒</b>：竞猜猜对的额外券、开箱排行前 20 的皮肤、BP 竞猜加分，游戏里都<b>不自动发</b>——靠运营每天查名单、用补发邮件/GM 发。验收时确认：名单能查到、补发流程跑得通、漏发错发有补偿办法。
+</div>
+
+<div class="foot">勾选仅本页临时保存（刷新清空）｜ KB\产出-数值设计\X3_世界杯\世界杯本轮配置验收测试清单.html</div>
+
+<script>
+function upd(){const all=document.querySelectorAll('.cb:not([disabled])');const done=[...all].filter(c=>c.checked).length;document.getElementById('prog').textContent=done+' / '+all.length+' 已勾';}
+document.querySelectorAll('.cb').forEach(cb=>cb.addEventListener('change',e=>{e.target.closest('.row').classList.toggle('done',e.target.checked);upd();}));
+upd();
+</script>
+</div>

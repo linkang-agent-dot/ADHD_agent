@@ -1,0 +1,326 @@
+<title>深海节全模块验收测试清单</title>
+<style>
+:root{--bg:#0a1929;--card:#0f2438;--card2:#13304a;--line:#1d3f5e;--txt:#dce8f2;--dim:#8aa6bf;--cyan:#2fd6e0;--gold:#ffd76a;--green:#3fd97f;--red:#ff6b6b;--purple:#b78aff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:linear-gradient(180deg,#081420,#0a1929 40%);color:var(--txt);font-family:"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.5;padding:24px 16px 80px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto}
+h1{font-size:26px;color:var(--cyan);letter-spacing:1px;margin-bottom:4px}
+.sub{color:var(--dim);font-size:13px;margin-bottom:16px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:12.5px;align-items:center}
+.bar b{color:var(--gold)}
+.chip{background:var(--card2);border:1px solid var(--line);border-radius:20px;padding:3px 11px;color:var(--dim)}
+.chip.ok{color:var(--green);border-color:#1f5a3a}.chip.wait{color:var(--gold);border-color:#5a4a1f}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--dim);margin-bottom:8px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.ctrl{display:flex;gap:8px;margin:10px 0 16px}
+.ctrl button{background:var(--card2);color:var(--cyan);border:1px solid var(--line);border-radius:6px;padding:6px 14px;font-size:12px;cursor:pointer}
+.ctrl button:hover{background:#1a3a56}
+.prog{margin-left:auto;color:var(--dim);font-size:12px;align-self:center}
+.tag{font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px;vertical-align:middle;white-space:nowrap}
+.t-new{background:#143a5c;color:var(--cyan);border:1px solid #1f5a8c}
+.t-risk{background:#3a1414;color:var(--red);border:1px solid #5c1f1f}
+.t-art{background:#2a1a3a;color:var(--purple);border:1px solid #432a5c}
+.t-todo{background:#3a3014;color:var(--gold);border:1px solid #5c4a1f}
+.mod{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:14px;overflow:hidden}
+.mod>summary{cursor:pointer;list-style:none;padding:13px 18px;font-size:16px;color:var(--cyan);font-weight:600;display:flex;align-items:center;gap:10px;background:var(--card2)}
+.mod>summary::-webkit-details-marker{display:none}
+.mod>summary::before{content:"▸";color:var(--dim);font-size:12px;transition:.15s}
+.mod[open]>summary::before{transform:rotate(90deg)}
+.mod>summary .id{font-size:11.5px;color:var(--dim);font-weight:400;margin-left:auto;font-family:Consolas,monospace}
+.mod.hot>summary{background:#16243a;border-left:3px solid var(--red)}
+.row{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:11px 18px;border-top:1px solid var(--line);align-items:start}
+.row:first-child{border-top:none}
+.cb{width:19px;height:19px;margin-top:2px;accent-color:var(--cyan);cursor:pointer;flex-shrink:0}
+.row.done .what{text-decoration:line-through;opacity:.45}
+.what{font-size:14.5px;color:var(--txt);font-weight:600;margin-bottom:3px}
+.meta{font-size:12.5px;color:var(--dim)}.meta b{color:#bcd}
+.exp{font-size:12.5px;color:var(--green);margin-top:3px}
+.exp::before{content:"预期 ";color:var(--dim);font-weight:700}
+.where{font-size:10.5px;color:#6d8aa3;margin-top:3px;font-family:Consolas,monospace}
+.note{background:#10243a;border-left:3px solid var(--gold);padding:10px 14px;margin:12px 0;font-size:12.5px;color:#d8c89a;border-radius:0 6px 6px 0}
+.note b{color:var(--gold)}
+.foot{text-align:center;color:#4a6378;font-size:12px;margin-top:24px}
+</style>
+
+<div class="wrap">
+<h1>🌊 深海节 · 全模块验收测试清单</h1>
+<div class="sub">feature/x3-deepsea-art（两仓·基于 dev）｜整节日首次完整验收，逐项跑、勾掉已过的</div>
+
+<div class="bar">
+  <span><b>提交</b></span>
+  <span class="chip">gdconfig 配置已落 feature</span>
+  <span class="chip">client DK 已入库 feature</span>
+  <span class="chip ok" id="exportchip">本地导表 ✓ 通过(mismatch=0/protoc/MD5)</span>
+  <span class="chip wait">jolt 不触发(等 cxy 修 CI)</span>
+</div>
+
+<div class="legend">
+  <span><i class="tag t-risk">本轮重点</i> 这次会话改的/已上线/易翻车</span>
+  <span><i class="tag t-new">本轮新改</i></span>
+  <span><i class="tag t-art">美术显示</i></span>
+  <span><i class="tag t-todo">待办/占位</i> 知悉即可</span>
+</div>
+<div class="ctrl">
+  <button onclick="document.querySelectorAll('.mod').forEach(m=>m.open=true)">展开全部</button>
+  <button onclick="document.querySelectorAll('.mod').forEach(m=>m.open=false)">收起全部</button>
+  <span class="prog" id="prog">0 / 0 已勾</span>
+</div>
+
+<div class="note">
+  <b>开测前提</b>：① 深海全活动 TC=0，靠 <b>iGame 部署 / GM 把活动开出来</b>才能进界面（开活动用下表 ContentID/AO）。② DK 入库后 Unity Ctrl+T save 已做 ✓。③ 本地导表 ExportTable 跑过 = 配置无语法错；下面是<b>游戏内表现验收</b>。④ 数值多为世界杯/夏日<b>占位待调</b>（标 <i class="tag t-todo">占位</i>），本次只验「跑得通、显示对」，不验数值平衡。
+</div>
+
+<details class="mod" open>
+  <summary>🔑 活动 ID 速查表（GM 开活动 / 定位用）</summary>
+  <div style="overflow-x:auto;padding:6px 0">
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead><tr style="color:#9bb8d0;text-align:left">
+      <th style="padding:8px 14px">模块</th><th style="padding:8px 14px">ContentID</th><th style="padding:8px 14px">ActvOnline</th><th style="padding:8px 14px">Type</th><th style="padding:8px 14px">关键ID</th>
+    </tr></thead>
+    <tbody style="font-family:Consolas,monospace">
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">01 转盘+排行榜</td><td style="padding:7px 14px;color:var(--cyan)">1025</td><td style="padding:7px 14px;color:var(--cyan)">101025</td><td style="padding:7px 14px">10</td><td style="padding:7px 14px;color:var(--dim)">LuckyWheel1025·奖池Grp321·RankCfg2000·铭牌Item82005→Title105</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">02 BP 远航日志</td><td style="padding:7px 14px;color:var(--cyan)">2244</td><td style="padding:7px 14px;color:var(--cyan)">102244</td><td style="padding:7px 14px">22</td><td style="padding:7px 14px;color:var(--dim)">BattlePassScore组142</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">03 每日礼包(砰然心动)</td><td style="padding:7px 14px;color:var(--cyan)">2901</td><td style="padding:7px 14px;color:var(--cyan)">102901</td><td style="padding:7px 14px">29</td><td style="padding:7px 14px;color:var(--dim)">TC2901非0</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">04 头像框(黑猫式)</td><td style="padding:7px 14px;color:var(--dim)">—</td><td style="padding:7px 14px;color:var(--dim)">无独立AO</td><td style="padding:7px 14px">Pack</td><td style="padding:7px 14px;color:var(--dim)">Pack211019·框10080·框道具Item80100·骑TC1830</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">05 累充 深海馈赠</td><td style="padding:7px 14px;color:var(--cyan)">598</td><td style="padding:7px 14px;color:var(--cyan)">100598</td><td style="padding:7px 14px">5</td><td style="padding:7px 14px;color:var(--dim)">ActvTask59811-820·TaskType902</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">06 装饰阶梯礼包</td><td style="padding:7px 14px;color:var(--dim)">—</td><td style="padding:7px 14px;color:var(--dim)">ChainPack700</td><td style="padding:7px 14px">链式</td><td style="padding:7px 14px;color:var(--dim)">子包211016/017/018·$19.99×3</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">07 拜访 海滨之约</td><td style="padding:7px 14px;color:var(--cyan)">5606</td><td style="padding:7px 14px;color:var(--cyan)">105605</td><td style="padding:7px 14px">56</td><td style="padding:7px 14px;color:var(--dim)">ActvVisitPack5606·Pack211020·$99.99·门头152017/18/19</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">08 许愿池</td><td style="padding:7px 14px;color:var(--cyan)">5013</td><td style="padding:7px 14px;color:var(--cyan)">105013</td><td style="padding:7px 14px">50</td><td style="padding:7px 14px;color:var(--dim)">WishingPool5013·水池复用fountain_bg_7</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">09 酒馆 最佳酒馆</td><td style="padding:7px 14px;color:var(--cyan)">717</td><td style="padding:7px 14px;color:var(--cyan)">10071704</td><td style="padding:7px 14px">7</td><td style="padding:7px 14px;color:var(--dim)">Rank131·系列共享</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">10 大富翁(另agent)</td><td style="padding:7px 14px;color:var(--cyan)">2802</td><td style="padding:7px 14px;color:var(--cyan)">102802</td><td style="padding:7px 14px">28</td><td style="padding:7px 14px;color:var(--dim)">骰1153/1155·珍珠贝·主城皮肤大奖</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">11 周卡(原生复用)</td><td style="padding:7px 14px;color:var(--cyan)">61001</td><td style="padding:7px 14px;color:var(--cyan)">109101</td><td style="padding:7px 14px">70</td><td style="padding:7px 14px;color:var(--dim)">自选4档6100101-104·7天</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">兑换商店</td><td style="padding:7px 14px;color:var(--cyan)">1340</td><td style="padding:7px 14px;color:var(--cyan)">101340</td><td style="padding:7px 14px">13</td><td style="padding:7px 14px;color:var(--dim)">ActvExchange1340·14项·货币深海宝珠1201·纪念卡槽134002</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">纪念卡 80 远航之歌</td><td style="padding:7px 14px;color:var(--dim)">—</td><td style="padding:7px 14px;color:var(--dim)">MemorialCard80</td><td style="padding:7px 14px">卡</td><td style="padding:7px 14px;color:var(--dim)">Item180080·斗士防御Grp1012 / 79绿茵之星斗士攻击Grp1005</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">通用道具</td><td style="padding:7px 14px;color:var(--dim)">—</td><td style="padding:7px 14px;color:var(--dim)">—</td><td style="padding:7px 14px">Item</td><td style="padding:7px 14px;color:var(--dim)">深海罗盘券1200(转盘消耗/券)·深海宝珠1201(兑换货币)</td></tr>
+      <tr style="border-top:1px solid var(--line)"><td style="padding:7px 14px">入口组</td><td style="padding:7px 14px;color:var(--dim)">—</td><td style="padding:7px 14px;color:var(--dim)">—</td><td style="padding:7px 14px">Grp</td><td style="padding:7px 14px;color:var(--dim)">ActvGroup140·主TC1830</td></tr>
+    </tbody>
+  </table>
+  </div>
+</details>
+
+<!-- ===== 0 入口 ===== -->
+<details class="mod" open>
+  <summary>🚪 0 · 活动入口 / 通用</summary>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">深海节活动组入口正常</div>
+    <div class="meta">ActvGroup 140 深海入口分组，排序 97。</div>
+    <div class="exp">活动面板有深海节分组，点进能看到下属各活动；入口图标/名称正常。</div>
+    <div class="where">ActvGroup 140</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">各活动按部署时间正常开启/关闭</div>
+    <div class="meta">TC=0，iGame 部署控时。投放窗口：D1 转盘/BP/每日礼包/头像框/累充/许愿池/酒馆，D3 装饰，D7 拜访，D8 大富翁+周卡。</div>
+    <div class="exp">部署后对应活动在窗口内可见可进，窗口外不显示。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">通用道具显示正常</div>
+    <div class="meta">深海罗盘券 1200（转盘消耗/抽奖券）、深海宝珠 1201（兑换货币）。</div>
+    <div class="exp">两道具图标/名称正常，获取与消耗数量正确。</div>
+    <div class="where">Item 1200 / 1201</div></div></div>
+</details>
+
+<!-- ===== 本轮重点 ===== -->
+<details class="mod hot" open>
+  <summary>🔴 本轮重点变更（务必先测）</summary>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">纪念卡 79「绿茵之星」= 斗士攻击 <i class="tag t-new">新改</i><i class="tag t-risk">已上线</i></div>
+    <div class="meta">原射手防御→斗士攻击（Group1005/BuffTemplate220003）。世界杯活动已上线、卡可能已发玩家。</div>
+    <div class="exp">卡面属性「斗士攻击 +X」，多语言正确，数值梯度 200→6000 不变。</div>
+    <div class="where">MemorialCard 79 col9=1005</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">纪念卡 80「远航之歌」= 斗士防御 <i class="tag t-new">新改</i></div>
+    <div class="meta">原射手防御→斗士防御（Group1012/BuffTemplate220013）。</div>
+    <div class="exp">卡面属性「斗士防御 +X」，多语言正确，数值不变。</div>
+    <div class="where">MemorialCard 80 col9=1012</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">纪念卡 80 大图+icon、深海头像框 都正常显示 <i class="tag t-risk">高风险</i><i class="tag t-art">美术</i></div>
+    <div class="meta">这 3 个 DK 曾被 Ctrl+T 全量重导出清掉（只入 Path 没登 Display），已补 Display 双补根治。</div>
+    <div class="exp">纪念卡 80 大图/道具图标、深海头像框 都显示，不空白/问号。</div>
+    <div class="where">Display+Path: img/icon_card_image_80 · AvatarFrame_deepsea</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">累充背景=深海（非世界杯）、BP背景=深海v2（非推币机）<i class="tag t-new">新改</i></div>
+    <div class="exp">累充界面非世界杯/足球图；BP 界面非推币机图，是深海航海图。</div>
+    <div class="where">AO100598 fund_bg / AO102244 bp_bg</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div>
+    <div class="what">7 模块 HUD 入口图标统一潜艇 <i class="tag t-new">新改</i></div>
+    <div class="meta">转盘/兑换/拜访/许愿池/酒馆/累充/BP/每日礼包 ActvIcon 全=潜艇。</div>
+    <div class="exp">这几个活动入口小图标统一潜艇，无残留旧节日/推币机图标。</div></div></div>
+</details>
+
+<!-- ===== 01 转盘 ===== -->
+<details class="mod">
+  <summary>🎡 01 深海罗盘 · 转盘抽奖+排行榜 <span class="id">AO101025 · type10</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">活动可打开，背景=大潜艇，转盘皮3件=深海 <i class="tag t-art">美术</i></div>
+    <div class="exp">背景潜艇大图；盘面/指针/底台深海皮；8扇格图标位正常。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">抽奖消耗深海罗盘券，奖池出奖正常</div>
+    <div class="meta">消耗 1200；奖池 Group321 共10项（核心大奖深海猎手潜艇皮 Item15065 + 深海宝珠 + 养成料）。</div>
+    <div class="exp">扣券正常；能抽到潜艇皮/宝珠/养成料，概率权重生效。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">进度额外奖励正常</div>
+    <div class="meta">OtherReward Group3020（抽X次给阶段奖）。</div>
+    <div class="exp">累计抽奖到档位发额外奖。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">排行榜+排名邮件发奖 <i class="tag t-risk">重点</i></div>
+    <div class="meta">本服榜 RankCfg2000，NeedSendMailReward=1/MailID1000018/Top3，Top3发传说铭牌「航者徽记」(Item82005→Title105，无属性)。</div>
+    <div class="exp">结算后按名次<b>邮件</b>发奖；Top3收航者徽记头衔道具，用后得传说铭牌；4-100名按档发宝珠/加速。</div>
+    <div class="where">ServerRank=2000 · Reward30910-30917 · RankRewardSlotCfg RankID2000</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">文案 i18n（标题/描述/奖励名）<i class="tag t-todo">查</i></div>
+    <div class="exp">中文及其它语言文案正常，无 TXT_ 裸 key/空白。</div></div></div>
+</details>
+
+<!-- ===== 02 BP ===== -->
+<details class="mod">
+  <summary>📜 02 远航日志 · BP通行证 <span class="id">AO102244 · type22</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">活动可打开，背景=深海v2 <i class="tag t-art">美术</i></div>
+    <div class="exp">背景深海航海图（非推币机）。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">免费+付费双轨 20 级奖励发放</div>
+    <div class="meta">BattlePassScore 组142（克隆139·20级），三轨奖励。</div>
+    <div class="exp">积分升级，免费轨/付费轨各级奖励正常领取。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">购买通行证解锁付费轨</div>
+    <div class="exp">购买后付费轨解锁，已达等级可补领。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">积分获取途径正常 / 数值 <i class="tag t-todo">占位</i></div>
+    <div class="meta">奖励数值=世界杯占位待调，本次只验跑通。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">文案 i18n <i class="tag t-todo">查</i></div></div></div>
+</details>
+
+<!-- ===== 03 每日礼包 ===== -->
+<details class="mod">
+  <summary>💝 03 砰然心动 · 每日礼包 <span class="id">AO102901 · type29</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">活动可打开，每日切换礼包 <i class="tag t-todo">名是「砰」</i></div>
+    <div class="meta">⚠️ 是否归深海入口组140 待定（当前组140空）；TC2901 非0。</div>
+    <div class="exp">每日刷新出当日礼包，可购买。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">礼包弹窗背景=深海图（走图不做视频）<i class="tag t-art">美术</i></div>
+    <div class="meta">Pack.MainBg 用每日礼包弹窗背景图。</div>
+    <div class="exp">弹窗背景深海，无视频。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">购买发奖 + 文案 i18n <i class="tag t-todo">查</i></div></div></div>
+</details>
+
+<!-- ===== 04 头像框 ===== -->
+<details class="mod">
+  <summary>🖼️ 04 深海印记 · 头像框礼包 <span class="id">Pack211019 · 黑猫式 · $9.99</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">礼包按 TC 触发显示（黑猫式，无独立活动）</div>
+    <div class="meta">Pack211019 靠 TimeCycle 1830 触发弹出（TriggerType1）。</div>
+    <div class="exp">深海期内礼包按机制弹出/可在商城见到。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">购买 $9.99 发头像框</div>
+    <div class="meta">发框道具 Item80100（UseEffect4）→ 框 PersonalizeAvatarFrameCfg 10080。</div>
+    <div class="exp">购买后获深海框道具，使用后头像外圈显示深海框。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">深海框图显示正常 <i class="tag t-art">美术</i></div>
+    <div class="exp">深海框 256² 正常显示（已入 Path_Personalise）。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">礼包弹窗背景 <i class="tag t-todo">弹窗bg DK 待入库</i></div>
+    <div class="meta">⚠️ 弹窗背景 DK 本轮未入库，可能显示默认/空。</div></div></div>
+</details>
+
+<!-- ===== 05 累充 ===== -->
+<details class="mod">
+  <summary>💰 05 深海馈赠 · 累充 <span class="id">AO100598 · type5</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">活动可打开，背景=深海 <i class="tag t-new">背景本轮改</i><i class="tag t-art">美术</i></div>
+    <div class="exp">背景深海（非世界杯）。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">10 档累充达标发奖</div>
+    <div class="meta">ActvTask 59811-820，TaskType902 累充，阈值递增。</div>
+    <div class="exp">累计充值达各档阈值发对应奖励。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">顶档投放抽奖券（非潜艇皮）</div>
+    <div class="meta">顶档投深海罗盘券1200（潜艇皮归转盘独占，消重复）。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">累充白名单 / 数值 <i class="tag t-todo">占位</i></div>
+    <div class="meta">⚠️ RechargePointPackWhitelist 深海 packs、奖励数值待调。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">文案 i18n <i class="tag t-todo">查</i></div></div></div>
+</details>
+
+<!-- ===== 06 装饰 ===== -->
+<details class="mod">
+  <summary>🪑 06 深海居所 · 装饰阶梯礼包 <span class="id">ChainPack700 · $19.99×3</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">商城装饰 tab 图标显示 <i class="tag t-new">本轮入库</i><i class="tag t-art">美术</i></div>
+    <div class="meta">124×136 从 banner 切（留意是否合适当 tab 图）。</div>
+    <div class="exp">商城底部装饰页签图标正常。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">展示视频播放 <i class="tag t-new">本轮入库</i><i class="tag t-art">美术</i></div>
+    <div class="exp">礼包弹窗展示视频正常播放、循环无缝。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">3 档 $19.99 子包购买发装饰</div>
+    <div class="meta">子包211016/017/018，发椰风遮阳椅151043等+抽奖券+钻+VIP。</div>
+    <div class="exp">购买发对应装饰道具，阶梯链正常。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">3 处 Icon 都对（ChainPack/PackTypeInfo/子包）+ i18n <i class="tag t-todo">查</i></div></div></div>
+</details>
+
+<!-- ===== 07 拜访 ===== -->
+<details class="mod">
+  <summary>🏠 07 海滨之约 · 拜访礼包 <span class="id">AO105605 · type56 · $99.99</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">活动可打开，背景=深海 <i class="tag t-art">美术</i></div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">拜访礼包图显示 <i class="tag t-new">本轮入库</i><i class="tag t-art">美术</i></div>
+    <div class="meta">368×260（竖版源 crop-fill，留意是否裁偏）。</div>
+    <div class="exp">礼包图显示门头三件套主题，不空白。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">购买 $99.99 发门头三件套</div>
+    <div class="meta">发横梁152017/地板152018/墙纸152019各×1（解锁道具，非皮肤ID）+钻5万+VIP。</div>
+    <div class="exp">购买后发3个解锁道具，使用解锁对应门头皮肤。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">拜访邀请机制 + 阶段奖 + i18n <i class="tag t-todo">查</i></div></div></div>
+</details>
+
+<!-- ===== 08 许愿池 ===== -->
+<details class="mod">
+  <summary>💧 08 许愿池 <span class="id">AO105013 · type50</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">活动可打开，背景=深海 <i class="tag t-art">美术</i></div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">水池图=复用通用喷泉（不出新图）<i class="tag t-new">本轮改</i></div>
+    <div class="meta">原未入库 deepsea_wishingpool_pool → 复用 fountain_bg_7。</div>
+    <div class="exp">中央水池图正常显示（通用喷泉），不空白。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">许愿玩法+奖励发放+i18n <i class="tag t-todo">查</i></div>
+    <div class="meta">RewardGroup105/2103，PackID1002001，Numble6。</div></div></div>
+</details>
+
+<!-- ===== 09 酒馆 ===== -->
+<details class="mod">
+  <summary>🍺 09 最佳酒馆 <span class="id">AO10071704 · type7</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">活动可打开，背景=深海 <i class="tag t-art">美术</i></div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">积分玩法+排行正常（共享系列）</div>
+    <div class="meta">CID717/Rank131 最佳酒馆系列共享复用，积分一套不碰。</div>
+    <div class="exp">积分获取/排行/奖励与系列一致。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">i18n <i class="tag t-todo">查</i></div></div></div>
+</details>
+
+<!-- ===== 10 大富翁 ===== -->
+<details class="mod">
+  <summary>🎲 10 大富翁 · 主城皮肤 <span class="id">AO102802 · type28 · 另agent</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">活动可打开，地图=深海 <i class="tag t-art">美术·另agent</i></div>
+    <div class="meta">⚠️ 大富翁 DK/美术 + 程序件由另 agent 负责。</div>
+    <div class="exp">地图深海潜水视角，24格正常。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">骰子/岛屿事件/代币/珍珠贝 神秘宝箱</div>
+    <div class="meta">深海罗盘骰1153/海神付费骰1155；珍珠贝走神秘宝藏机制。⚠️里子货币仍旧（另agent换）。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">成就礼包/存钱罐/弹脸/取消升级 <i class="tag t-todo">需程序</i></div>
+    <div class="meta">⚠️ 这些是程序件（Jira），按程序交付情况测。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">主城皮肤大奖「深海花园」≈$300</div>
+    <div class="exp">跑完获主城皮肤大奖。</div></div></div>
+</details>
+
+<!-- ===== 11 周卡 ===== -->
+<details class="mod">
+  <summary>🎟️ 11 节日周卡 · 自选周卡 <span class="id">AO109101 · type70 · 原生复用</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">周卡特惠可购买，4 档自选 <i class="tag t-todo">原生复用</i></div>
+    <div class="meta">原生复用 61001，4档自选6100101-104，7天，深海期 iGame 部署带上（不新配深海专属）。</div>
+    <div class="exp">购买后7天每日领，自选4项生效。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">i18n <i class="tag t-todo">查</i></div></div></div>
+</details>
+
+<!-- ===== 兑换 ===== -->
+<details class="mod">
+  <summary>🛒 兑换商店 <span class="id">AO101340 · type13</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">活动可打开，背景=深海宝藏集市 <i class="tag t-art">美术</i></div>
+    <div class="meta">540×500 横版裁切。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">15 个兑换项正常，货币=深海宝珠1201</div>
+    <div class="meta">ActvExchange1340，14项（134000-014），用深海宝珠兑换。</div>
+    <div class="exp">各项可兑换，扣宝珠，发养成料/外显。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">纪念卡槽兑换=80 远航之歌</div>
+    <div class="exp">纪念卡槽134002兑换出深海卡180080（非情人节旧卡）。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">i18n <i class="tag t-todo">查</i></div></div></div>
+</details>
+
+<!-- ===== 纪念卡 ===== -->
+<details class="mod">
+  <summary>🃏 纪念卡 80「远航之歌」 <span class="id">Item180080 · MemorialCard80</span></summary>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">获取（兑换）+ 入册 + 升级</div>
+    <div class="meta">兑换商店获取；霍普金斯主题。</div>
+    <div class="exp">获得后入纪念册，可用相同卡升级（30级），属性=斗士防御。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">大图(384金框)+icon(256梯形)显示 <i class="tag t-art">美术</i></div>
+    <div class="exp">见本轮重点段（Ctrl+T 根治后）。</div></div></div>
+  <div class="row"><input type="checkbox" class="cb"><div><div class="what">7 条文案 i18n（卡名/描述/获取提示+道具名/描述）<i class="tag t-todo">查</i></div></div></div>
+</details>
+
+<div class="foot">勾选仅本页临时保存（刷新清空）｜ KB\产出-数值设计\X3_深海节\深海节本轮配置验收测试清单.html</div>
+
+<script>
+function upd(){const all=document.querySelectorAll('.cb:not([disabled])');const done=[...all].filter(c=>c.checked).length;document.getElementById('prog').textContent=done+' / '+all.length+' 已勾';}
+document.querySelectorAll('.cb').forEach(cb=>cb.addEventListener('change',e=>{e.target.closest('.row').classList.toggle('done',e.target.checked);upd();}));
+upd();
+</script>
+</div>
