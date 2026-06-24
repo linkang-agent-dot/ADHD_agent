@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>英雄养成手册（双版本）· 真素材拼装（还原prefab模板）</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif;}
+  body{background:#1a1410;display:flex;gap:24px;padding:24px;align-items:flex-start;flex-wrap:wrap;}
+  /* ===== 设备：竖屏，比例对齐真实截图 450:772 ===== */
+  .device{width:450px;height:772px;position:relative;overflow:hidden;border-radius:14px;
+    /* 外层木质底（真实界面是酒馆木底，此处唯一CSS填充，无对应独立sprite） */
+    background:
+      radial-gradient(120% 60% at 50% 0%, #5a3d24 0%, #3a2616 55%, #241710 100%);
+    box-shadow:0 14px 50px rgba(0,0,0,.7);border:1px solid #4a3520;}
+  /* —— 顶部信息区 —— */
+  .title{position:absolute;left:14px;top:12px;font-size:22px;font-weight:900;color:#ffe6a3;
+    text-shadow:0 2px 0 #6b3d12,0 0 10px rgba(255,180,60,.5);letter-spacing:1px;}
+  .rulebtn{position:absolute;right:10px;top:10px;width:30px;height:30px;
+    background:url(./_assets/img_cm_anniu_guize.png) center/contain no-repeat;cursor:pointer;}
+  .countdown{position:absolute;left:16px;top:46px;display:flex;align-items:center;gap:5px;
+    font-size:12px;color:#ffeccb;background:rgba(0,0,0,.35);padding:3px 9px;border-radius:11px;}
+  .countdown .clk{width:16px;height:16px;background:url(./_assets/img_gift_time.png) center/contain no-repeat;}
+  .subtitle{position:absolute;left:16px;top:72px;width:210px;font-size:11px;color:#e7cfa0;line-height:1.45;}
+  .chest{position:absolute;right:-4px;top:20px;width:144px;height:140px;
+    background:url(./_assets/img_Activity_bg_nourish.png) center/contain no-repeat;}
+  .badge{position:absolute;right:96px;top:34px;width:52px;height:52px;
+    background:url(./_assets/img_gift_bg_Discount.png) center/contain no-repeat;
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;
+    color:#fff;text-shadow:0 1px 2px #900;transform:rotate(8deg);}
+  /* —— 切换按钮：挂在日历底板上(非独立页签)，豪华侧突出2X —— */
+  /* 切换按钮：精确贴合面板图里画好的凹槽带(测量 y5.3%~14.6%,中心~10%);无自身背景框=不再box-in-box */
+  .switch{position:absolute;left:26px;right:26px;top:28px;height:52px;z-index:4;
+    display:flex;align-items:center;justify-content:center;gap:10px;background:none;}
+  .seg{height:40px;padding:0 22px;border-radius:14px;cursor:pointer;font-size:15px;font-weight:800;color:#8a6a3a;
+    display:flex;align-items:center;gap:7px;transition:.15s;white-space:nowrap;}
+  .seg.active{background:url(./_assets/img_cm_anniu1_gold.png) center/100% 100% no-repeat;color:#5a3208;
+    text-shadow:0 1px 0 rgba(255,255,255,.45);}
+  /* 突出2X奖励：发光红章+脉冲 */
+  .seg .x2{font-size:13px;font-weight:900;color:#fff;
+    background:linear-gradient(180deg,#ff6a30,#c0392b);border-radius:9px;padding:2px 9px;
+    box-shadow:0 0 9px rgba(255,110,40,.9);animation:pulse 1.15s infinite;}
+  @keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 7px rgba(255,110,40,.7);}
+    50%{transform:scale(1.14);box-shadow:0 0 15px rgba(255,160,50,1);}}
+  /* —— 羊皮纸面板（真实sprite nourish_3）—— */
+  .panel{position:absolute;left:10px;top:172px;width:430px;height:550px;
+    background:url(./_assets/panel_with_header.png) center/100% 100% no-repeat;
+    padding:92px 22px 16px;}
+  .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px 6px;height:100%;
+    overflow-y:auto;align-content:start;}
+  /* 每日格：真实金框(解锁)/棕框(锁定) */
+  .cell{position:relative;aspect-ratio:186/225;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .cell.unlock{background:url(./_assets/img_Activity_bg_nourish_2.png) center/100% 100% no-repeat;}
+  .cell.lock{background:url(./_assets/img_Activity_bg_nourish_1.png) center/100% 100% no-repeat;}
+  .cell .day{position:absolute;top:3px;left:0;width:100%;text-align:center;font-size:10.5px;font-weight:800;
+    color:#6b3d12;}
+  .cell.lock .day{color:#d8c39a;}
+  .cell .ico{width:68%;height:54%;margin-top:9px;background-size:contain;background-repeat:no-repeat;background-position:center;}
+  .cell .qty{position:absolute;bottom:3px;right:5px;font-size:10.5px;font-weight:800;color:#3a2410;
+    text-shadow:0 1px 0 rgba(255,255,255,.4);}
+  .cell.lock .qty{color:#e7d3ab;text-shadow:0 1px 0 #000;}
+  .cell .lk{position:absolute;top:2px;right:3px;width:13px;height:17px;
+    background:url(./_assets/img_cm_lock.png) center/contain no-repeat;}
+  .cell .gou{position:absolute;inset:0;background:url(./_assets/img_TXDS_icon_gou.png) center/44% no-repeat;}
+  /* 豪华态每日格 突出2X */
+  .cell .x2tag{position:absolute;top:2px;left:3px;background:linear-gradient(180deg,#1fbf4a,#0f8a32);
+    color:#fff;font-size:8px;font-weight:900;padding:0 4px;border-radius:6px;
+    box-shadow:0 0 6px rgba(50,230,100,.85);}
+  /* 第30天 满勤封顶大奖宽格 */
+  .finale{grid-column:1 / -1;aspect-ratio:auto;height:64px;flex-direction:row;gap:10px;
+    background:url(./_assets/img_Activity_bg_nourish_2.png) center/100% 100% no-repeat;
+    justify-content:flex-start;padding-left:14px;position:relative;}
+  .finale.deluxe{filter:hue-rotate(255deg) saturate(1.25) brightness(1.02);}
+  .finale .fday{font-size:12px;font-weight:900;color:#6b3d12;}
+  .finale .fico{width:48px;height:48px;background:url(./_assets/icon_global_HeroEquipment.png) center/contain no-repeat;}
+  .finale .ftxt{font-size:12px;font-weight:800;color:#6b3d12;}
+  .finale .fcap{position:absolute;right:10px;top:8px;background:#b8341f;color:#ffe;font-size:10px;
+    padding:2px 7px;border-radius:9px;font-weight:900;}
+  /* 底部购买按钮（真实金按钮sprite） */
+  /* 购买按钮：右上角·宝箱下方（保留原界面习惯，价格随当前页签） */
+  .buy{position:absolute;right:12px;top:110px;width:142px;height:46px;z-index:5;
+    background:url(./_assets/img_cm_anniu1_gold.png) center/100% 100% no-repeat;
+    display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;
+    color:#5a3208;text-shadow:0 1px 0 rgba(255,255,255,.4);cursor:pointer;}
+  /* 豪华版：面板罩一层金紫高级感 */
+  .panel.deluxe::after{content:"";position:absolute;inset:24px 14px 12px;
+    background:linear-gradient(180deg,rgba(150,60,200,.16),rgba(120,40,170,.10));
+    pointer-events:none;border-radius:8px;mix-blend-mode:overlay;}
+  /* 说明 */
+  .side{flex:1;min-width:300px;max-width:480px;color:#e7cfa0;}
+  .side h1{color:#ffe6a3;font-size:19px;margin-bottom:8px;}
+  .side p{font-size:13px;line-height:1.8;margin-bottom:6px;}
+  .side .real{color:#9ad08a;font-weight:700;}
+  .side .new{color:#ffd98a;font-weight:700;}
+  .side code{background:#11100c;color:#9ad0ff;padding:1px 5px;border-radius:4px;font-size:12px;}
+  .side ul{margin:8px 0 8px 18px;font-size:12.5px;line-height:1.7;}
+  .btns{margin-top:12px;}
+  .btns button{padding:8px 14px;border:1px solid #5a4a32;background:#2c2317;color:#e7cfa0;
+    border-radius:8px;cursor:pointer;margin-right:8px;}
+  /* —— 交互态：购买 / 二选一互斥锁 / 领取 —— */
+  .buy.owned{filter:brightness(1.02);cursor:default;font-size:13px;}
+  .buy.locked{filter:grayscale(.85) brightness(.66);cursor:not-allowed;}
+  .locktip{position:absolute;right:8px;top:166px;width:150px;text-align:center;font-size:10px;
+    color:#ff9a9a;line-height:1.3;z-index:5;min-height:12px;text-shadow:0 1px 2px #000;}
+  .cell.claimable{cursor:pointer;}
+  .cell.claimable::after{content:"";position:absolute;inset:1px;border:2px solid #5fe07a;border-radius:10px;
+    box-shadow:0 0 9px rgba(95,224,122,.85);animation:cpulse 1.2s infinite;pointer-events:none;}
+  @keyframes cpulse{0%,100%{opacity:.5;}50%{opacity:1;}}
+  .cell.predim{opacity:.62;}
+  .statebar{position:absolute;left:10px;right:10px;bottom:7px;background:rgba(20,12,6,.85);
+    border:1px solid #6b542f;border-radius:9px;padding:6px 11px;font-size:11px;color:#ffeccb;
+    display:flex;justify-content:space-between;align-items:center;gap:8px;z-index:7;}
+  .statebar b{color:#ffd98a;}
+  .statebar a{color:#9fe0ff;cursor:pointer;text-decoration:underline;white-space:nowrap;}
+</style>
+</head>
+<body>
+
+<div class="device" id="device">
+  <div class="title">英雄养成手册</div>
+  <div class="rulebtn"></div>
+  <div class="countdown"><span class="clk"></span><span>28D 15:53:54</span></div>
+  <div class="subtitle">购买养成手册后，活动期间内每日登录都可领取一份奖励。豪华版每日翻倍 + 满勤封顶大奖。</div>
+  <div class="chest"></div>
+  <div class="badge">9600%</div>
+
+  <!-- 羊皮纸面板 + 每日格阵；切换按钮挂在面板上(非独立页签) -->
+  <div class="panel" id="panel">
+    <div class="switch">
+      <div class="seg active" id="seg-basic" onclick="sw('basic')">基础版</div>
+      <div class="seg" id="seg-deluxe" onclick="sw('deluxe')">豪华版 <span class="x2">×2 奖励</span></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <div class="buy" id="buy" onclick="buy()">$29.99 购买</div>
+  <div class="locktip" id="locktip"></div>
+  <div class="statebar" id="statebar"></div>
+</div>
+
+<div class="side">
+  <h1>真素材拼装 · 还原 prefab 模板（零 AI）</h1>
+  <p>全部用 <span class="real">UIActvLogin.prefab 实际引用的真实 sprite</span> 拼成，素材已拷进同目录 <code>_assets/</code>，可独立打开。</p>
+  <p><b>真实组件（从 prefab GUID 反查）：</b></p>
+  <ul>
+    <li>羊皮纸活页夹面板 = <code>img_Activity_bg_nourish_3</code></li>
+    <li>每日格 解锁态/锁定态 = <code>nourish_2</code>(金) / <code>nourish_1</code>(棕)</li>
+    <li>宝箱主视觉 = <code>img_Activity_bg_nourish</code></li>
+    <li>锁/勾/倒计时/规则按钮/价格按钮 = <code>img_cm_lock</code>/<code>TXDS_icon_gou</code>/<code>img_gift_time</code>/<code>img_cm_anniu_guize</code>/<code>img_cm_anniu1_gold</code></li>
+    <li>道具图标 = 真实 ItemIcons（信物/钻石/金币/技能书/装备）</li>
+  </ul>
+  <p><span class="new">新增（拼上去的）：</span><b>切换按钮挂在日历底板上</b>[基础版/豪华版]（非独立页签），豪华侧<b>发光「×2 奖励」</b>突出；购买按钮保持右上原位、价格随切换变；第30天<b>满勤封顶大奖宽格</b>。</p>
+  <p>切到豪华：每日格打绿色<b>×2</b>标、数量翻倍、价格→$49.99、封顶格金紫态。面板金紫高级感为占位，正式由美术出豪华皮。</p>
+  <p><span class="new">完整交互（已补齐，对齐首版原型）：</span></p>
+  <ul>
+    <li><b>购买</b>→该版按钮变「✓已拥有」，达成的天(前2天)格子<b>闪绿框可点领取</b>→领后盖✓</li>
+    <li><b>二选一互斥</b>：买了一版，另一版购买按钮<b>置灰🔒</b>+提示「已购…无法再购买」</li>
+    <li>未到的天=🔒锁定预览；未购买时达成的天<b>变暗</b>（购买后才可领）</li>
+    <li>底部状态条实时反馈 + <b>重置</b></li>
+  </ul>
+  <div class="btns">
+    <button onclick="sw('basic')">看基础版</button>
+    <button onclick="sw('deluxe')">看豪华版</button>
+    <button onclick="buy()">购买当前版</button>
+    <button onclick="reset()">↺ 重置</button>
+  </div>
+  <p style="margin-top:10px;font-size:11px;color:#9c8c6f;">※ 木质外底是唯一 CSS 填充（无对应独立 sprite）；天数/道具为示意，实际以配置为准。下一步可走 S6 拆槽给美术。</p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const PRICE={basic:'$29.99',deluxe:'$49.99'};
+const NAME ={basic:'基础版',deluxe:'豪华版'};
+const CURDAY=2;                                   // 活动进行到第2天(前2天已达成可领)
+let cur='basic';
+let owned=null;                                   // null|'basic'|'deluxe'（二选一互斥）
+const claimed={basic:new Set(),deluxe:new Set()}; // 各版已领取的天
+
+function reward(d){ // 锚真实：day1=传奇信物×10, day30=装备材料袋×100
+  let ico,q;
+  if(d===1){ico="Img_Siren_Token_40011003.png";q=10;}
+  else if(d%5===0){ico="icon_Skill_Book_1_3.png";q=2;}
+  else if(d%3===0){ico="img_cm_icon_gold.png";q=2000;}
+  else if(d%2===0){ico="icon_global_gem.png";q=100;}
+  else {ico="icon_global_HeroEquipment.png";q=1;}
+  if(cur==='deluxe') q*=2;
+  return {ico,q};
+}
+function render(){
+  const g=$('grid'); g.innerHTML='';
+  for(let d=1; d<=29; d++){
+    const reached=d<=CURDAY;                       // 已达成的天
+    const ownThis=owned===cur;
+    const isClaimed=claimed[cur].has(d);
+    const claimable=reached && ownThis && !isClaimed;
+    const r=reward(d);
+    const c=document.createElement('div');
+    c.className='cell '+(reached?'unlock':'lock')
+      +(claimable?' claimable':'')
+      +(reached&&!ownThis?' predim':'');
+    c.innerHTML=`<div class="day">第${d}天</div>
+      <div class="ico" style="background-image:url(./_assets/${r.ico})"></div>
+      <div class="qty">×${r.q}</div>
+      ${reached?'':'<div class="lk"></div>'}
+      ${isClaimed?'<div class="gou"></div>':''}
+      ${cur==='deluxe'?'<div class="x2tag">×2</div>':''}`;
+    if(claimable) c.onclick=()=>claim(d);
+    g.appendChild(c);
+  }
+  // 第30天 满勤封顶宽格（未到第30天=锁定预览）
+  const f=document.createElement('div');
+  f.className='cell finale'+(cur==='deluxe'?' deluxe':'');
+  const fq=cur==='deluxe'?200:100;
+  f.innerHTML=`<div class="fico"></div><div><div class="fday">第30天</div>
+    <div class="ftxt">满勤封顶大奖 · 英雄装备材料袋 ×${fq}${cur==='deluxe'?' + 传奇信物×30':''}</div></div>
+    <div class="fcap">封顶</div><div class="lk" style="top:6px;right:8px;"></div>`;
+  g.appendChild(f);
+}
+function refreshBuy(){
+  const b=$('buy'), tip=$('locktip'); b.className='buy';
+  if(owned===cur){ b.textContent='✓ 已拥有'; b.classList.add('owned'); tip.textContent=''; }
+  else if(owned){ b.textContent='🔒 '+PRICE[cur]; b.classList.add('locked');
+    tip.textContent='已购买'+NAME[owned]+'，二选一互斥'; }
+  else { b.textContent=PRICE[cur]+' 购买'; tip.textContent=''; }
+}
+function setState(msg){
+  $('statebar').innerHTML='<span>'+msg+'</span><a onclick="reset()">↺ 重置</a>';
+}
+function buy(){
+  if(owned===cur){ setState('已拥有<b>'+NAME[cur]+'</b>，达成的天点格子领取'); return; }
+  if(owned){ setState('⚠ 二选一互斥：已购<b>'+NAME[owned]+'</b>，无法再购买'+NAME[cur]); return; }
+  owned=cur; refreshBuy(); render();
+  setState('✅ 已购买<b>'+NAME[cur]+'</b>（'+PRICE[cur]+'）。前'+CURDAY+'天可领，点闪烁的格子领取');
+}
+function claim(d){
+  claimed[cur].add(d); render();
+  setState('已领取<b>'+NAME[cur]+'</b>第'+d+'天奖励');
+}
+function sw(v){
+  cur=v;
+  $('seg-basic').classList.toggle('active',v==='basic');
+  $('seg-deluxe').classList.toggle('active',v==='deluxe');
+  $('panel').classList.toggle('deluxe',v==='deluxe');
+  refreshBuy(); render();
+  setState((owned?('已购'+NAME[owned]+' · '):'')+'当前查看<b>'+NAME[v]+'</b>'+(v==='deluxe'?'（每日×2 + 满勤封顶大奖）':''));
+}
+function reset(){ owned=null; claimed.basic.clear(); claimed.deluxe.clear(); cur='basic'; sw('basic');
+  setState('已重置为未购买态 · 点右上购买，或切豪华版看 ×2'); }
+// init
+refreshBuy(); render();
+setState('未购买 · 点右上<b>购买</b>按钮，或切<b>豪华版</b>看 ×2 奖励');
+</script>
+</body>
+</html>

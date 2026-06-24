@@ -42,85 +42,83 @@ strong{color:var(--fg);}
 .foot{margin-top:40px;color:#5a6373;font-size:12px;text-align:center;}
 </style></head><body><div class="wrap">
 <div class="bar"><h1>每日工作日报</h1><button id="copybtn" class="btn" onclick="copyReport()">📋 复制日报</button></div>
-<div class="meta">每日工作日报 · 2026-06-22（周一）</div>
+<div class="meta">每日工作日报 · 2026-06-23（周二）</div>
 <h2 class="sec">一句话版本</h2>
 <ul>
-<li>X2 拓荒节 D10 复盘归因 → X3 排期决策</li>
-<li>深海节 + 世界杯活动排期甘特图（HTML）</li>
-<li>X3 深海节开发推进（岛屿换皮 + 整套配置新建）</li>
-<li>X3 深海节美术换皮（铭牌 / 转盘深海罗盘 / HUD）</li>
-<li>X3 三个新付费活动续作（储蓄罐 / 养成手册）</li>
-<li>X3 配置仓双向合并 + 分支运维</li>
-<li>X3 尼罗回归日报更新（91-96 服）</li>
-<li>回归日报归档进 KB + 监控产出迁 KB</li>
+<li>X3 深海节配置整套落地（大富翁/累充/BP/转盘/兑换/铭牌/头像框/纪念卡）</li>
+<li>X3 深海节美术换皮 + DK 注册（岛屿/铭牌/转盘/9 张 HUD/拜访门头/纪念卡 256 梯形）</li>
+<li>X3 世界杯 debug + 合并收尾</li>
+<li>X3 配置仓多分支合并 + 服部署运维</li>
+<li>世界杯竞猜测试文档 + 排期 SOP/Jira 单（给 leader）</li>
+<li>节日外显白皮书更新 + HUD 图标库归档分类</li>
+<li>绩效自评 + AI 工具使用报告</li>
+<li>个人工具链：策略游戏每日雷达 + 知识库中间产物清理</li>
 </ul>
 <h2 class="sec">详细版本</h2>
-<div class="card"><span class="num">1</span><div class="card-body"><div class="card-t">X2 拓荒节 D10 复盘归因 → X3 排期决策</div><div class="card-d">分析拓荒节 D10 vs 占星节 D10 收入差 ~7k 的模块归因（付费玩家ARPU / 付费玩家付费率 / 累计 vs 按日可切换曲线 HTML），定位根因=大富翁从 D0 撤到 D7、首周付费率轴丢失且 D7 也没提起来、深度未达预期；据此定 X3 不踩坑：回归 5 月&quot;D0 同时上 gacha+大富翁&quot;、世界杯补缺失付费深度、Week2 再搬 X2 内外圈做付费点。</div></div></div>
-<div class="card"><span class="num">2</span><div class="card-body"><div class="card-t">深海节 + 世界杯活动排期甘特图（HTML）</div><div class="card-d">两节日排期一图（含进包时间），拆&quot;排期 + 零碎信息&quot;两模块；世界杯系列 27 号开、标注竞猜礼包上线/32 强抽签时点、锁盘=赛前 10 分钟结束。</div></div></div>
-<div class="card"><span class="num">3</span><div class="card-body"><div class="card-t">X3 深海节开发推进（岛屿换皮 + 整套配置新建）</div><div class="card-d">定岛屿改造逻辑（神秘岛只换周边珊瑚 / 宝藏岛加宝箱 / 代币岛新深海代币换金币 / 钻石岛删→代币 / 幸运岛珊瑚+深海宝箱）、新建珍珠贝代币；切 dev_festival 新建整套配置（新 ITEM 不改旧、子活动全新建、TimeCycle 配 0、抽卡道具深海版、actvgroup 新建、ID 往大建避冲突），本地导表过后 push+jolt；头像框礼包走黑猫礼包 Pack 自带 TimeCycle 机制、不走活动。</div></div></div>
-<div class="card"><span class="num">4</span><div class="card-body"><div class="card-t">X3 深海节美术换皮</div><div class="card-d">铭牌深海主题（无属性，挑 1 个）、转盘深海罗盘（ActvLuckyWheel1025 + 奖池 Group321 + RankCfg2000、底台 V2 / 转盘皮 V1、指针翻转、HUD 用潜水艇行军皮肤、许愿池背景深海化）、每日礼包走图片不出视频；DK list 整理待批量注册，资源入库、client 仓单独提交。</div></div></div>
-<div class="card"><span class="num">5</span><div class="card-body"><div class="card-t">X3 三个新付费活动续作</div><div class="card-d">储蓄罐多次购买（自然日 0 点重置走 C 方案、修礼包标题超值折扣本地化、sub-agent 验不影响其他存钱罐模块、玩法测完提 MR 合 dev）；英雄养成手册新档位（购买按钮消失/已购态逻辑、按大哥新 proto 的二选一 pack 组方案、找现有 prefab 改、出 HTML 落地指南）。</div></div></div>
-<div class="card"><span class="num">6</span><div class="card-body"><div class="card-t">X3 配置仓双向合并 + 分支运维</div><div class="card-d">dev→dev_festival 合并（用合并 skill + 结合知识库逐个处理 + 出 HTML 给 review + sub-agent 复核 + 提交导表）、dev_festival→dev 合并；世界杯客户端资源合并后丢失修复（跟车 MR 合 dev）；多次触发 jolt/本地导表、dev 部署到 3080、本地服推后 1 天/跨天。</div></div></div>
-<div class="card"><span class="num">7</span><div class="card-body"><div class="card-t">X3 尼罗回归日报更新（91-96 服）</div><div class="card-d">以 x3_nile_regression_report.html 为模板回归 91-96 服尼罗（严格对齐时间范围、前期衰减专项也更新），装备箱 + 下游礼包两次回归的 ARPPU/付费率/付费深度对比补进报告；查尼罗各服付费、蓝莲花宴上线核查、最佳酒馆 dev 改动记录（X3NEW-735）。</div></div></div>
-<div class="card"><span class="num">8</span><div class="card-body"><div class="card-t">回归日报归档进 KB + 监控产出迁 KB</div><div class="card-d">把 home 里 ~70 份节日/回归日报归档到 <code>产出-数据分析</code>（已结束节日归位 + 写 README），监控脚本 OUTPUT_DIR 从 home 迁到 KB 落地区、09:20 自动打开任务同步改；补跑 06-18 日报；dev_festival 剩余美术 DK 注册收尾。</div></div></div>
+<div class="card"><span class="num">1</span><div class="card-body"><div class="card-t">X3 深海节配置整套落地</div><div class="card-d">整个活动新建一套配置（不复用旧）：大富翁航海之路(2803/IslandGroup2/Island201-224/事件组/珍珠贝+深海代币新 item)、累充(冠军基金式 clone)、BP(clone BattlePassScore)、转盘深海罗盘(ActvLuckyWheel1025+奖池 Group321)、兑换商店、传说铭牌(无属性)、头像框礼包(走黑猫礼包 Pack 自带 TimeCycle 不走活动)、纪念卡 80(霍普金斯主题)；TimeCycle 全配 0（改 PostProcessData SKIP 集），ID 往高位重排避撞，本地导表过后 push+jolt；装饰礼包 type 改 63、拜访礼包美术+本地化修复。</div></div></div>
+<div class="card"><span class="num">2</span><div class="card-body"><div class="card-t">X3 深海节美术换皮 + DK 注册</div><div class="card-d">岛屿换皮（神秘岛珊瑚问号/宝藏岛代币/钻石岛复用最高级/幸运岛珊瑚宝箱/起始岛潜艇）、铭牌、转盘底台+皮(指针翻转)、9 张 HUD 图标（参考历史同类活动、GRFal 抠图透明化）、拜访礼包门头三件套(参考情人节构图重出)、纪念卡 256 梯形（复用 _warp_trapezoid.py 按 icon_card_image_76 真实四角）；DK 双注册(Display+Path)、ctrl+T save，资源入库 client 提交。</div></div></div>
+<div class="card"><span class="num">3</span><div class="card-body"><div class="card-t">X3 世界杯 debug + 合并收尾</div><div class="card-d">核查 BP 竞猜获胜加分途径(赢一次 600 分)、礼包跟世界杯页签 group、全竞猜活动 TimeCycle=0 修复；处理合并后配置顺序错位(全塞最后)+非节日改动被误带；text 表 TXT_Pack_Name/PiggyBank 删除排查；世界杯 HUD reimport、BP 活动标题掉修复；feature 已合 dev。</div></div></div>
+<div class="card"><span class="num">4</span><div class="card-body"><div class="card-t">X3 配置仓多分支合并 + 服部署运维</div><div class="card-d">feature↔dev_festival↔dev 多向合并（dev 合入时 xlsx modify/delete 冲突全删 + 本地 sync_xlsx_tsv --from-tsv 重生，沉淀成 SOP 说明书）；3080/957/400 服部署（400 服=3080 改 400、走 x3project/memory 不走 skill）、GM 批量开深海/夏日活动对比；改 X3NEW-1115 规则描述；装 merge driver。</div></div></div>
+<div class="card"><span class="num">5</span><div class="card-body"><div class="card-t">世界杯竞猜测试文档 + 排期 SOP/Jira 单</div><div class="card-d">写竞猜测试文档（走 igame 后台上活动参数：抽查活动 ID + 上线填参 + 礼包号范围，模拟&quot;啥都不懂的测试人&quot;能看懂、配置详情加收起）；排期甘特图拆 SOP+Jira 单两页签给 leader（后两周进包内容、发奖+加分同一单、每天固定时间点发奖加分、深海节窗口 7.3-7.12 全程开）。</div></div></div>
+<div class="card"><span class="num">6</span><div class="card-body"><div class="card-t">节日外显白皮书更新 + HUD 图标库归档</div><div class="card-d">外显白皮书纪念卡补 2 张新卡 + 英雄属性（霍普金斯/艾莉西亚，皮肤属性为范围）；历史 HUD 图标按&quot;尼罗/各活动·总入口/活动图标&quot;分类归档进 KB 参考库 + 同步参考图文件夹。</div></div></div>
+<div class="card"><span class="num">7</span><div class="card-body"><div class="card-t">绩效自评 + AI 工具使用报告</div><div class="card-d">1-6 月主要业绩概述 + 不足&amp;提升计划（统一口径、付费深度下半年补、5 月起熟练用 AI 后基本无测试期问题）+ 工作效率自评 + AI 工具使用说明（Claude token 部门 1/6、claudecode team 深度数据解读）做成 HTML，用于绩效；探讨后续发展方向（一线舒适区 vs 管理影响力辐射）。</div></div></div>
+<div class="card"><span class="num">8</span><div class="card-body"><div class="card-t">个人工具链 + 杂项</div><div class="card-d">搭策略游戏每日雷达监控（中/美/日 App Store+Google Play+YouTube+Reddit 热门/飙升榜，结合日报工作内容做&quot;推荐玩啥&quot;引擎，GameRadar-Daily 09:00）；清理知识库/AI 路径中间产物（评危险度，docker/npm 保留）；播客下载转文字、P2 弹珠文档查阅。</div></div></div>
 <h2 class="sec">timeline 完成度</h2>
 <ul>
-<li>X2 拓荒节进入回归分析（节点⑦）：D10 复盘出归因结论 + 直接喂给 X3 下期排期决策，是今天的核心输出。</li>
-<li>X3 深海节从出方案转入开发推进（节点①→②③并行：岛屿/铭牌/转盘美术换皮 + 整套配置新建）；世界杯系列 06-24 首封包、06-27 开活动两个近端节点；三个新付费活动续作推进。</li>
-<li>尼罗滚动回归更新（91-96 服）属节点⑦。</li>
+<li>主推 X3 深海节：从开发推进进到配置整套落地 + 美术换皮 + DK 注册（节点②③密集冲刺），深海节窗口确认 7.3-7.12。</li>
+<li>X3 世界杯：feature 合 dev、debug 收尾（06-24 首封包前清问题）；给 leader 出了测试文档 + 排期 SOP/Jira 单。</li>
+<li>个人侧：绩效自评材料完成；搭好策略游戏雷达自动监控。</li>
 </ul>
 <h2 class="sec">工作line 改动</h2>
 <ul>
-<li>三、X2：当期节点从&quot;⑥ 部署上线&quot;更新为&quot;⑦ D14 回归分析进行中（D10 复盘已出：双付费点拆分致付费率下滑）&quot;。</li>
-<li>三、X3：深海节由&quot;① 出方案&quot;更新为&quot;开发推进中（②③：岛屿/铭牌/转盘换皮 + 配置整套新建）&quot;；世界杯补&quot;06-27 开系列活动&quot;。</li>
-<li>五、deadline：新增「06-27｜X3｜世界杯系列活动开（32 强）」；X2 拓荒节行更新为&quot;D14 回归分析中&quot;。</li>
-<li>顶部「最后更新」2026-06-17 → 2026-06-22。</li>
+<li>三、X3：深海节由&quot;开发推进&quot;更新为&quot;配置整套落地中（②③：大富翁/累充/BP/转盘/纪念卡 + 美术换皮 + DK 注册），窗口 7.3-7.12&quot;；世界杯补&quot;feature 已合 dev、debug 收尾&quot;。</li>
+<li>五、deadline：新增「07-03~07-12｜X3｜深海节窗口」；世界杯行补&quot;06-24 首封包前 debug 收尾&quot;。</li>
+<li>顶部「最后更新」2026-06-22 → 2026-06-23。</li>
 </ul>
 <h2 class="sec">本可顺手补</h2>
 <ul>
-<li>X3 深海节配置 activity-check + 端到端反查 —— 今天整套新建（ITEM/活动/TimeCycle/actvgroup，ID 往大建），属节点③封包前固有收尾，建议跑引用检查 + tsv/导表/GSheet 三层一致性反查。</li>
-<li>尼罗回归报告归档 KB —— 91-96 服回归更新后建议归到 <code>产出-数据分析\</code>（与上期 x3_nile_* 同目录），属节点⑦收口。</li>
-<li>无（拓荒节 D10 归因结论 / 监控产出迁移 / 排期甘特图今日已分别落 KB 数据分析与节日日报归档，已覆盖不重列）。</li>
+<li>深海节配置 activity-check + 端到端反查 —— 今天整套新建（大富翁/累充/BP/转盘/纪念卡多活动 + 新 item + DK），属节点③封包前固有收尾，建议跑引用检查 + tsv/导表/客户端 DK 三层一致性反查（与今天暴露的&quot;纪念卡缺 DK/转盘背景不对/text 误删&quot;同源）。</li>
+<li>深海节 i18n —— 多模块配置已落但全语种翻译未做（备份表已跑一轮待 BUG 解完同步），属节点④，建议接着配表顺手收口。</li>
+<li>无（HUD 图标库归档 / xlsx 冲突合并 SOP / 256 梯形复用脚本今日已分别落 KB 参考库 / memory / _warp_trapezoid.py，已覆盖不重列）。</li>
 </ul>
-<div class="foot">自动生成 · 2026-06-22 21:29</div>
+<div class="foot">自动生成 · 2026-06-24 10:00</div>
 </div>
-<pre id="copysrc" style="display:none">每日工作日报 · 2026-06-22（周一）
+<pre id="copysrc" style="display:none">每日工作日报 · 2026-06-23（周二）
 
 【一句话版本】
-1. X2 拓荒节 D10 复盘归因 → X3 排期决策
-2. 深海节 + 世界杯活动排期甘特图（HTML）
-3. X3 深海节开发推进（岛屿换皮 + 整套配置新建）
-4. X3 深海节美术换皮（铭牌 / 转盘深海罗盘 / HUD）
-5. X3 三个新付费活动续作（储蓄罐 / 养成手册）
-6. X3 配置仓双向合并 + 分支运维
-7. X3 尼罗回归日报更新（91-96 服）
-8. 回归日报归档进 KB + 监控产出迁 KB
+1. X3 深海节配置整套落地（大富翁/累充/BP/转盘/兑换/铭牌/头像框/纪念卡）
+2. X3 深海节美术换皮 + DK 注册（岛屿/铭牌/转盘/9 张 HUD/拜访门头/纪念卡 256 梯形）
+3. X3 世界杯 debug + 合并收尾
+4. X3 配置仓多分支合并 + 服部署运维
+5. 世界杯竞猜测试文档 + 排期 SOP/Jira 单（给 leader）
+6. 节日外显白皮书更新 + HUD 图标库归档分类
+7. 绩效自评 + AI 工具使用报告
+8. 个人工具链：策略游戏每日雷达 + 知识库中间产物清理
 
 【详细版本】
-1. X2 拓荒节 D10 复盘归因 → X3 排期决策 —— 分析拓荒节 D10 vs 占星节 D10 收入差 ~7k 的模块归因（付费玩家ARPU / 付费玩家付费率 / 累计 vs 按日可切换曲线 HTML），定位根因=大富翁从 D0 撤到 D7、首周付费率轴丢失且 D7 也没提起来、深度未达预期；据此定 X3 不踩坑：回归 5 月&quot;D0 同时上 gacha+大富翁&quot;、世界杯补缺失付费深度、Week2 再搬 X2 内外圈做付费点。
-2. 深海节 + 世界杯活动排期甘特图（HTML）—— 两节日排期一图（含进包时间），拆&quot;排期 + 零碎信息&quot;两模块；世界杯系列 27 号开、标注竞猜礼包上线/32 强抽签时点、锁盘=赛前 10 分钟结束。
-3. X3 深海节开发推进（岛屿换皮 + 整套配置新建）—— 定岛屿改造逻辑（神秘岛只换周边珊瑚 / 宝藏岛加宝箱 / 代币岛新深海代币换金币 / 钻石岛删→代币 / 幸运岛珊瑚+深海宝箱）、新建珍珠贝代币；切 dev_festival 新建整套配置（新 ITEM 不改旧、子活动全新建、TimeCycle 配 0、抽卡道具深海版、actvgroup 新建、ID 往大建避冲突），本地导表过后 push+jolt；头像框礼包走黑猫礼包 Pack 自带 TimeCycle 机制、不走活动。
-4. X3 深海节美术换皮 —— 铭牌深海主题（无属性，挑 1 个）、转盘深海罗盘（ActvLuckyWheel1025 + 奖池 Group321 + RankCfg2000、底台 V2 / 转盘皮 V1、指针翻转、HUD 用潜水艇行军皮肤、许愿池背景深海化）、每日礼包走图片不出视频；DK list 整理待批量注册，资源入库、client 仓单独提交。
-5. X3 三个新付费活动续作 —— 储蓄罐多次购买（自然日 0 点重置走 C 方案、修礼包标题超值折扣本地化、sub-agent 验不影响其他存钱罐模块、玩法测完提 MR 合 dev）；英雄养成手册新档位（购买按钮消失/已购态逻辑、按大哥新 proto 的二选一 pack 组方案、找现有 prefab 改、出 HTML 落地指南）。
-6. X3 配置仓双向合并 + 分支运维 —— dev→dev_festival 合并（用合并 skill + 结合知识库逐个处理 + 出 HTML 给 review + sub-agent 复核 + 提交导表）、dev_festival→dev 合并；世界杯客户端资源合并后丢失修复（跟车 MR 合 dev）；多次触发 jolt/本地导表、dev 部署到 3080、本地服推后 1 天/跨天。
-7. X3 尼罗回归日报更新（91-96 服）—— 以 x3_nile_regression_report.html 为模板回归 91-96 服尼罗（严格对齐时间范围、前期衰减专项也更新），装备箱 + 下游礼包两次回归的 ARPPU/付费率/付费深度对比补进报告；查尼罗各服付费、蓝莲花宴上线核查、最佳酒馆 dev 改动记录（X3NEW-735）。
-8. 回归日报归档进 KB + 监控产出迁 KB —— 把 home 里 ~70 份节日/回归日报归档到 `产出-数据分析`（已结束节日归位 + 写 README），监控脚本 OUTPUT_DIR 从 home 迁到 KB 落地区、09:20 自动打开任务同步改；补跑 06-18 日报；dev_festival 剩余美术 DK 注册收尾。
+1. X3 深海节配置整套落地 —— 整个活动新建一套配置（不复用旧）：大富翁航海之路(2803/IslandGroup2/Island201-224/事件组/珍珠贝+深海代币新 item)、累充(冠军基金式 clone)、BP(clone BattlePassScore)、转盘深海罗盘(ActvLuckyWheel1025+奖池 Group321)、兑换商店、传说铭牌(无属性)、头像框礼包(走黑猫礼包 Pack 自带 TimeCycle 不走活动)、纪念卡 80(霍普金斯主题)；TimeCycle 全配 0（改 PostProcessData SKIP 集），ID 往高位重排避撞，本地导表过后 push+jolt；装饰礼包 type 改 63、拜访礼包美术+本地化修复。
+2. X3 深海节美术换皮 + DK 注册 —— 岛屿换皮（神秘岛珊瑚问号/宝藏岛代币/钻石岛复用最高级/幸运岛珊瑚宝箱/起始岛潜艇）、铭牌、转盘底台+皮(指针翻转)、9 张 HUD 图标（参考历史同类活动、GRFal 抠图透明化）、拜访礼包门头三件套(参考情人节构图重出)、纪念卡 256 梯形（复用 _warp_trapezoid.py 按 icon_card_image_76 真实四角）；DK 双注册(Display+Path)、ctrl+T save，资源入库 client 提交。
+3. X3 世界杯 debug + 合并收尾 —— 核查 BP 竞猜获胜加分途径(赢一次 600 分)、礼包跟世界杯页签 group、全竞猜活动 TimeCycle=0 修复；处理合并后配置顺序错位(全塞最后)+非节日改动被误带；text 表 TXT_Pack_Name/PiggyBank 删除排查；世界杯 HUD reimport、BP 活动标题掉修复；feature 已合 dev。
+4. X3 配置仓多分支合并 + 服部署运维 —— feature↔dev_festival↔dev 多向合并（dev 合入时 xlsx modify/delete 冲突全删 + 本地 sync_xlsx_tsv --from-tsv 重生，沉淀成 SOP 说明书）；3080/957/400 服部署（400 服=3080 改 400、走 x3project/memory 不走 skill）、GM 批量开深海/夏日活动对比；改 X3NEW-1115 规则描述；装 merge driver。
+5. 世界杯竞猜测试文档 + 排期 SOP/Jira 单 —— 写竞猜测试文档（走 igame 后台上活动参数：抽查活动 ID + 上线填参 + 礼包号范围，模拟&quot;啥都不懂的测试人&quot;能看懂、配置详情加收起）；排期甘特图拆 SOP+Jira 单两页签给 leader（后两周进包内容、发奖+加分同一单、每天固定时间点发奖加分、深海节窗口 7.3-7.12 全程开）。
+6. 节日外显白皮书更新 + HUD 图标库归档 —— 外显白皮书纪念卡补 2 张新卡 + 英雄属性（霍普金斯/艾莉西亚，皮肤属性为范围）；历史 HUD 图标按&quot;尼罗/各活动·总入口/活动图标&quot;分类归档进 KB 参考库 + 同步参考图文件夹。
+7. 绩效自评 + AI 工具使用报告 —— 1-6 月主要业绩概述 + 不足&amp;提升计划（统一口径、付费深度下半年补、5 月起熟练用 AI 后基本无测试期问题）+ 工作效率自评 + AI 工具使用说明（Claude token 部门 1/6、claudecode team 深度数据解读）做成 HTML，用于绩效；探讨后续发展方向（一线舒适区 vs 管理影响力辐射）。
+8. 个人工具链 + 杂项 —— 搭策略游戏每日雷达监控（中/美/日 App Store+Google Play+YouTube+Reddit 热门/飙升榜，结合日报工作内容做&quot;推荐玩啥&quot;引擎，GameRadar-Daily 09:00）；清理知识库/AI 路径中间产物（评危险度，docker/npm 保留）；播客下载转文字、P2 弹珠文档查阅。
 
 【timeline 完成度】
-- X2 拓荒节进入回归分析（节点⑦）：D10 复盘出归因结论 + 直接喂给 X3 下期排期决策，是今天的核心输出。
-- X3 深海节从出方案转入开发推进（节点①→②③并行：岛屿/铭牌/转盘美术换皮 + 整套配置新建）；世界杯系列 06-24 首封包、06-27 开活动两个近端节点；三个新付费活动续作推进。
-- 尼罗滚动回归更新（91-96 服）属节点⑦。
+- 主推 X3 深海节：从开发推进进到配置整套落地 + 美术换皮 + DK 注册（节点②③密集冲刺），深海节窗口确认 7.3-7.12。
+- X3 世界杯：feature 合 dev、debug 收尾（06-24 首封包前清问题）；给 leader 出了测试文档 + 排期 SOP/Jira 单。
+- 个人侧：绩效自评材料完成；搭好策略游戏雷达自动监控。
 
 【工作line 改动】
-- 三、X2：当期节点从&quot;⑥ 部署上线&quot;更新为&quot;⑦ D14 回归分析进行中（D10 复盘已出：双付费点拆分致付费率下滑）&quot;。
-- 三、X3：深海节由&quot;① 出方案&quot;更新为&quot;开发推进中（②③：岛屿/铭牌/转盘换皮 + 配置整套新建）&quot;；世界杯补&quot;06-27 开系列活动&quot;。
-- 五、deadline：新增「06-27｜X3｜世界杯系列活动开（32 强）」；X2 拓荒节行更新为&quot;D14 回归分析中&quot;。
-- 顶部「最后更新」2026-06-17 → 2026-06-22。
+- 三、X3：深海节由&quot;开发推进&quot;更新为&quot;配置整套落地中（②③：大富翁/累充/BP/转盘/纪念卡 + 美术换皮 + DK 注册），窗口 7.3-7.12&quot;；世界杯补&quot;feature 已合 dev、debug 收尾&quot;。
+- 五、deadline：新增「07-03~07-12｜X3｜深海节窗口」；世界杯行补&quot;06-24 首封包前 debug 收尾&quot;。
+- 顶部「最后更新」2026-06-22 → 2026-06-23。
 
 【本可顺手补】
-- X3 深海节配置 activity-check + 端到端反查 —— 今天整套新建（ITEM/活动/TimeCycle/actvgroup，ID 往大建），属节点③封包前固有收尾，建议跑引用检查 + tsv/导表/GSheet 三层一致性反查。
-- 尼罗回归报告归档 KB —— 91-96 服回归更新后建议归到 `产出-数据分析\`（与上期 x3_nile_* 同目录），属节点⑦收口。
-- 无（拓荒节 D10 归因结论 / 监控产出迁移 / 排期甘特图今日已分别落 KB 数据分析与节日日报归档，已覆盖不重列）。
+- 深海节配置 activity-check + 端到端反查 —— 今天整套新建（大富翁/累充/BP/转盘/纪念卡多活动 + 新 item + DK），属节点③封包前固有收尾，建议跑引用检查 + tsv/导表/客户端 DK 三层一致性反查（与今天暴露的&quot;纪念卡缺 DK/转盘背景不对/text 误删&quot;同源）。
+- 深海节 i18n —— 多模块配置已落但全语种翻译未做（备份表已跑一轮待 BUG 解完同步），属节点④，建议接着配表顺手收口。
+- 无（HUD 图标库归档 / xlsx 冲突合并 SOP / 256 梯形复用脚本今日已分别落 KB 参考库 / memory / _warp_trapezoid.py，已覆盖不重列）。
 </pre>
 <script>function copyReport(){var t=document.getElementById('copysrc').textContent;var b=document.getElementById('copybtn');function done(){var o=b.textContent;b.textContent='\u2713 \u5df2\u590d\u5236';setTimeout(function(){b.textContent=o;},1500);}function fb(){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){alert('\u590d\u5236\u5931\u8d25\uff0c\u8bf7\u624b\u52a8\u9009\u62e9');}document.body.removeChild(ta);}if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done,fb);}else{fb();}}</script>
 </body></html>

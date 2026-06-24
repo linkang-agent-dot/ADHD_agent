@@ -1,0 +1,233 @@
+<title>X3 英雄皮肤生产工作流</title>
+<style>
+  :root{
+    --bg:#0f1115; --card:#171a21; --card2:#1d212b; --line:#2a2f3a;
+    --txt:#e6e8ec; --mut:#9aa3b2; --acc:#c792ea; --acc2:#7ee3a7;
+    --warn:#ffd166; --bad:#ff7a85; --mid:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font:15px/1.6 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif;}
+  .wrap{max-width:1040px;margin:0 auto;padding:32px 22px 80px}
+  header.hero{padding:30px 30px 26px;border-radius:16px;margin-bottom:26px;
+    background:linear-gradient(135deg,#3a1f4d,#241634 60%,#171a21);
+    border:1px solid var(--line)}
+  header.hero h1{margin:0 0 8px;font-size:27px;letter-spacing:.5px}
+  header.hero .sub{color:var(--mut);font-size:14px;max-width:780px}
+  .tag{display:inline-block;background:#3a2a4d;color:#e0c8ff;border:1px solid #553a6b;
+    padding:2px 10px;border-radius:20px;font-size:12px;margin-right:6px;margin-top:10px}
+  h2{font-size:20px;margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:10px}
+  h2 .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;
+    background:var(--acc);color:#0a0e16;border-radius:8px;font-size:14px;font-weight:700}
+  h3{font-size:16px;margin:22px 0 8px;color:#e6d4ff}
+  p{margin:8px 0}
+  .mut{color:var(--mut)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+  .grid{display:grid;gap:12px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:780px){.g3,.g2{grid-template-columns:1fr}}
+  .pill{font-size:12px;padding:1px 8px;border-radius:6px;font-weight:600;white-space:nowrap}
+  .ok{background:#16361f;color:#7ee3a7;border:1px solid #265a37}
+  .mid{background:#3a2e12;color:#ffb454;border:1px solid #5e4a1c}
+  .no{background:#3a1820;color:#ff7a85;border:1px solid #5e2630}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px;display:block;overflow-x:auto}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--card2);color:#e6d4ff;font-weight:600;white-space:nowrap}
+  td code,p code,li code{background:#1f0c1a;color:#f0a8d8;padding:1px 6px;border-radius:5px;font-size:12.5px;
+    font-family:"Cascadia Code",Consolas,monospace}
+  pre{background:#0a0d13;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;
+    font-family:"Cascadia Code",Consolas,monospace;font-size:12.5px;line-height:1.55;color:#cdd6e3}
+  ul,ol{margin:8px 0;padding-left:22px}
+  li{margin:5px 0}
+  .lead{background:var(--card2);border-left:3px solid var(--acc);border-radius:8px;padding:12px 16px;margin:14px 0}
+  .star{color:var(--warn);font-weight:600}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+  .step{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-size:13px}
+  .arr{color:var(--acc);font-weight:700}
+  .creed{counter-reset:c;list-style:none;padding-left:0}
+  .creed li{position:relative;padding-left:38px;margin:10px 0}
+  .creed li:before{counter-increment:c;content:counter(c);position:absolute;left:0;top:0;
+    width:26px;height:26px;background:var(--acc);color:#0a0e16;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+  .foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+  a{color:var(--acc)}
+  .kbd{background:#222;border:1px solid #3a3f4a;border-bottom-width:2px;border-radius:5px;padding:0 6px;font-size:12px}
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <h1>🦸 X3 英雄皮肤生产工作流</h1>
+  <div class="sub">英雄皮肤从「概念稿 → Spine 资产 → 展示视频」的全链路打法。重头戏是<b>用 AI 视频替代 Spine 做皮肤展示</b>（idle 循环 + 入场片），含模型选型、透明化流水、演出/prompt 心法、踩坑。是 <a href="X3_美术出图工作流总览.html">《X3 美术出图工作流总览》</a> 的皮肤专项深挖。</div>
+  <div>
+    <span class="tag">概念稿 gpt</span>
+    <span class="tag">展示视频 seedance</span>
+    <span class="tag">SBS 透明 1080×1920</span>
+    <span class="tag">更新 2026-06-24</span>
+  </div>
+</header>
+
+<div class="lead">
+<b>为什么有这条线</b>：英雄皮肤核心是 Spine 2D 骨骼动画立绘，AI 做不了 Spine。但皮肤的<b>展示</b>（详情/预览/抽卡/获得/礼包里那段循环立绘）可以用<b>视频</b>替代——AI 量产视频比美术逐个绑 Spine 便宜得多。于是分工：<b>老皮肤 Spine 不变，新皮肤展示走视频</b>。
+</div>
+
+<h2><span class="n">1</span> 皮肤的三种资产 + AI 落地度</h2>
+<table>
+<tr><th>资产</th><th>是什么</th><th>路径</th><th>AI 落地度</th></tr>
+<tr><td>① 换装概念稿</td><td>给美术对齐方向的静态原画</td><td>归档 KB</td><td><span class="pill ok">✅ AI 端到端出概念</span></td></tr>
+<tr><td>② Spine 立绘资产</td><td>骨骼动画 .skel.bytes+atlas+SkeletonData+prefab</td><td><code>Res\Spine\Prefabs_Download\Role_Spine_&lt;id&gt;_Skin&lt;n&gt;.prefab</code></td><td><span class="pill no">❌ 美术在 Spine 软件做</span></td></tr>
+<tr><td>③ 展示视频</td><td>替代 Spine 展示的 SBS 透明循环视频</td><td><code>client\Assets\Res\Video\VideoRes\</code></td><td><span class="pill ok">✅ AI 量产（本文重点）</span></td></tr>
+<tr><td>头图</td><td>角色头像</td><td><code>Res\UI\Spirits\Role\Character Portraits\Img_C_H_&lt;id&gt;_Skin&lt;n&gt;.png</code></td><td><span class="pill ok">✅</span></td></tr>
+</table>
+<p class="mut">GRFal ✗ Spine 实测 0 命中：sprite_sheet=逐帧序列帧(和 Spine 骨骼两套体系不兼容)、generate_motion=3D 人形(非 2D Spine)、generate_video=MP4(非可换肤循环立绘)。AI 能帮的只有上游：出静态全身原画 + image_layered 辅助拆件。</p>
+
+<h2><span class="n">2</span> 线 A：换装概念稿（gpt）</h2>
+<ol>
+<li>选基础英雄 → 找客户端立绘 <code>Role/FullLength/Role_F_{id}.png</code>。</li>
+<li><b>本人立绘当 reference</b>，prompt =「保身份(脸/发/身形/画风)，只换造型(服饰/道具/姿势)」→ 出 R1。</li>
+<li>后续每轮用上一版选中图当 ref，<b>逐轮只改一处</b>，版本名带语义后缀。</li>
+<li><b>用户给的「质量好但带违规元素」的图</b>：以它当质量/姿势锚 ref，prompt 逐条列要改的设计点（红→白金 / 国徽→奖杯 / 去脸颊国旗）——既得质量又合规，FINAL 常这么来。</li>
+</ol>
+<p class="mut">坑：基底选错会白跑，动手前确认 ref 是哪一版；IP 合规用原创风格化不精确复刻商标。这张概念稿同时是<b>展示视频的起点图</b>（见 §3 心法第 1 条）。</p>
+
+<h2><span class="n">3</span> 线 C：皮肤展示视频（替代 Spine，重头戏）</h2>
+
+<h3>3.1 显示框架与格式真相（先读，决定怎么出）</h3>
+<div class="card">
+<ul>
+<li><b>显示链</b>：<code>HeroSkin.DKVideo → EffectDisplay.VideoDisplayKey → VideoRoot → RawImage</code>，<code>ScaleMode=ScaleToFit</code>（保比例、加黑边、不裁切）。</li>
+<li><span class="star">★ 统一 1080×1920(9:16) 原生直出</span>，不做后期裁切（2026-06-15 客户端拍板）。早期容器是 1024×1536(2:3) 导致 letterbox + 补偿裁切把彩球切出框，已作废。</li>
+<li><b>SBS 透明视频</b>：左半=彩色画面，右半=alpha 烧成的白模 on 黑底，并排。Unity shader 从右半重建 alpha（mp4 存不了原生 alpha，SBS 是标准 trick）。格式锚 <code>Res/Video/VideoRes/AllianceCard_icon_1_a.mp4</code>。</li>
+<li><b>不透明 showcase 视频</b>（节日/礼包/解锁展示，非角色透明）：普通满幅 mp4，格式锚 <code>egypt_sphinx.mp4</code>（608×1080/h264/yuv420p/24fps）。分辨率无统一值，按展示框走。</li>
+<li>时长基准 4-8s（idle 循环）；入场片方案 ~10s 单条直出。</li>
+</ul>
+</div>
+
+<h3>3.2 模型选型（实测推翻早期结论）</h3>
+<table>
+<tr><th>模型</th><th>结论</th><th>说明</th></tr>
+<tr><td><span class="pill ok">seedance</span></td><td><b>角色立绘 idle 首选</b></td><td>2D 脸稳(嘴不张/不 warp) + 运动 3.2（真 Spine 量级）。代价：fflf 首尾差 1.79，无缝循环需后续治</td></tr>
+<tr><td>kling</td><td>仅用于需严格无缝循环</td><td>fflf 首尾锁得紧(0.6)，但给 2D 立绘脸<b>必张嘴/warp 且压不动</b>，是模型级硬伤</td></tr>
+<tr><td>vidu</td><td>需 ≤3s 时备选</td><td>fflf 能更短(1-16s)，默认带音频</td></tr>
+<tr><td>veo3 / sora</td><td>排除</td><td>渲染慢(&gt;10min)、过杀</td></tr>
+<tr><td>happyhorse</td><td>排除</td><td>强制音频不可关</td></tr>
+</table>
+
+<h3>3.3 透明化流水（白底主稿 → SBS 游戏格式）</h3>
+<div class="flow">
+  <span class="step">generate_video<br>(seedance / kling fflf，白底)</span><span class="arr">→</span>
+  <span class="step">video_remove_background<br>(.webm 原生 alpha)</span><span class="arr">→</span>
+  <span class="step">export_sbs_video<br>(左彩右白模)</span><span class="arr">→</span>
+  <span class="step">抽帧验收</span>
+</div>
+<ul>
+<li><span class="star">★ export_sbs_video 的 quality = CRF（越低越清晰），不是 0-100 百分比！</span> q12 = 甜点(7MB 肉眼无损，正式用这个)；传 95 会糊成马赛克。15s 片用 q19(~12MB)。</li>
+<li><span class="star">★ export_sbs_video 禁并发</span>——同账号两个 export 会互相覆盖服务端输出路径，下到字节级相同的废文件。永远串行。</li>
+<li>无缝循环杀招：kling <code>ref_types="首帧图像,尾帧图像"</code> 同一张主稿传两次 → 首尾强制一致（实测像素差 0.64）。</li>
+<li>抠像最大敌人=杂背景/撞色。主稿纯白底+边缘干净已规避大半；银白发丝吃边的保险=背景换纯绿/品红再抠。</li>
+<li>验 SBS：左半 BGR std 高(彩色) / 右半三通道差≈0(灰阶白模)；验透明：RGBA alpha 0-255 都有。</li>
+<li><span class="star">★ 最终压缩走 GRFal <code>compress_video</code>，别用本地 ffmpeg 手调参数</span>（2026-06-24 大哥反馈：compress_video 后端参数已调优、效果明显更好；本地 ffmpeg 手调 crf/preset 参数不对、效果差很多）。本地 ffmpeg 只留给 compress_video 覆盖不到的几何操作（SBS 双半 crop+hstack / 裁切 / 缩放 / 去音轨）。</li>
+</ul>
+
+<h3>3.4 演出脚本 = 入场表演 + 静态循环 结合（一条直出，循环播）</h3>
+<div class="lead">
+<span class="star">★ 方案演进（重要）</span>：早期想做<b>纯静态 idle 循环</b>（站着微呼吸+wink），但站桩撩不起来、纯静态太单薄。最终收敛成 <b>一条 ~10s 直出片：前半段「入场表演」+ 落定 + 后半段「静态 idle 循环」</b>，客户端<b>循环播整条</b>（循环点=待机完→再次入场，叙事自洽）。<b>下面分两段看，编舞自由度和「别动太多」的约束在两段是相反的。</b>
+</div>
+<p><b>看的人</b>：纠结冲不冲榜的付费玩家 + 已拥有反复欣赏的鲸鱼。视频=转化面/炫耀面。钩眼三板斧：①眼神(扫镜头+了然微笑，最狠) ②招牌 beat 挑一个做透 ③身段曲线持续撩。</p>
+<div class="grid g2">
+  <div class="card">
+    <b>① 入场表演段（前半，可以动、要有戏）</b>
+    <p class="mut" style="margin-top:6px">叙事：拿彩球入场跳舞 → 踩球/颠球(挑起→膝颠→脚背两触) → 兜进左腋 → 落定到主稿姿势 → 表情用整整 1s 连续渐变到 idle 终帧的脸。</p>
+    <ul>
+      <li>这段是<b>转化的钩子</b>，有大动作/技巧/表演张力，不受「别动太多」约束。</li>
+      <li>表演段措辞从「动态感」起笔；动作写成可数节拍才会被执行。</li>
+      <li>颠球=最高崩险(球物理+脚接触)，崩了减一触。</li>
+    </ul>
+  </div>
+  <div class="card">
+    <b>② 静态 idle 循环段（后半，<span class="star">别动太多</span>）</b>
+    <p class="mut" style="margin-top:6px">落定后接 2-3s 待机循环，要克制自然，动太大循环就假。</p>
+    <ul>
+      <li>必须有：<b>胸随呼吸微微起伏</b>（核心卖点，克制不浮夸）。</li>
+      <li>beat：<b>能做出 wink 就够了</b>，不要转球/抛接/撩发/大幅身段（循环杀手）。</li>
+      <li>道具(足球)：完全静止（转动破坏循环）。</li>
+      <li>节奏：基准帧→吸气峰值(胸微起)→中段一次 wink→呼气回落→精确回到基准帧。</li>
+    </ul>
+  </div>
+</div>
+<p class="mut"><b>表情连续性</b>：先定 idle 循环的脸（如高冷），入场表情弧线倒推——入场全程笑容收弱、落定段连续渐变到循环终帧脸，禁突切。fflf 首=入场版图 / 尾=idle 循环基准帧，保证整条循环无缝交棒。</p>
+
+<h3>3.5 <span class="star">★ 皮肤视频撩人 prompt 心法（跨 12 版总结）</span></h3>
+<ol class="creed">
+<li><b>撩不撩的根在起点图</b>：fflf 锁主稿 → 主稿端正则视频再调也端正。撩人主稿(有张力姿态+眼神)是地基。</li>
+<li><b>眼神给不给镜头 = 死活线</b>：不给=证件照/糖人；给(暖撩或冷扫都行)=活。</li>
+<li><b>写「一条贯穿全身的动作线」不写零件清单</b>：重心移→胯→腰→胸→肩→头→眼神，强调整体协调；否则各部位独立动=糖人。</li>
+<li><b>情绪要细颗粒可导演</b>：别用「性感/高冷」糙词，拆成眼睑/嘴角/节奏/重心的具体微行为。</li>
+<li><b>压制词(minimal/never/almost still)会叠加压死动作</b>，克制用。idle 段措辞永远从「动态感」起笔，别从「安静」起笔。</li>
+<li><b>prompt 长度 = 注意力预算</b>：350 词长 prompt 里可数节拍照样被丢；瘦身到 200 词、把最重要那段标 THIS IS THE MOST IMPORTANT PART，token 砸给最易被丢的那段。</li>
+<li><b>动作要可数才会被执行</b>：氛围形容词模型常丢弃，写成「左…右…左…右，约 2s 一周期、共 3 周期、NEVER frozen」。idle 运动量尺子：&lt;3.5=木头，4-7=正常活（帧间平均像素差）。</li>
+<li><b>氪佬视角验收</b>（色不色/吸引力/购买欲）比技术指标(联动/幅度)更接近真实成败。</li>
+</ol>
+
+<h3>3.6 关键迭代教训（少走 12 版弯路）</h3>
+<table>
+<tr><th>现象</th><th>根因 / 解</th></tr>
+<tr><td>糖人病（人是死的、各动各的）</td><td>动作写成零件清单 → 改成「一条贯穿全身的重心线」</td></tr>
+<tr><td>太木（运动掉到 0.1）</td><td>minimal/never/almost still 压制词叠加压死 → 克制用，从动态感起笔</td></tr>
+<tr><td>kling 给 2D 脸嘴必张/warp</td><td>模型级硬伤，措辞绕不过 → 换 seedance</td></tr>
+<tr><td>锁嘴锁成呆脸</td><td>锁「嘴形状」不锁「位置」——嘴形不变但可随头平移；脸部活气来自头微侧倾+眨眼，不是嘴</td></tr>
+<tr><td>大动作甩出框</td><td>缩小角色救不了（是动作够到框外）→ 收敛编舞(彩球只在胸/胯前抖) + 首尾参考帧人物整体缩 90% 让安全边距</td></tr>
+<tr><td>时序不准（写 7s 实跑 9.5s）</td><td>seedance 不遵守秒数 → 压时长=砍动作内容，数字只是参考</td></tr>
+</table>
+
+<h3>3.7 单条直出的工程铁律（§3.4 演出落地时必守）</h3>
+<div class="card">
+<ul>
+<li><span class="star">★ 用户铁律：皮肤视频全部一条直出，不拼接</span>。拼接方案(SegA+SegB+渐变缝)技术终缝 0.0 但缝内光影漂移肉眼仍突兀，被毙两次。入场段+idle 段必须写进<b>同一镜的 Phase 时序</b>里一次出。</li>
+<li><b>程序零改动</b>：单条循环片直接替换原循环 mp4、走现有播放链路（不需要「入场播一次→切循环」的程序支持）。这是选单条直出而非两段切换的关键原因。</li>
+<li><b>时长</b>：seedance 单镜 10s 七阶段时序实测扛得住；不够先探 submit 是否接受更长 duration（15s 可提交），别想当然按 10s 上限切段。</li>
+<li>seedance 不遵守 prompt 里的秒数 → 压时长=砍动作内容，数字只作参考；验时序=抽目标秒数处的帧看演到哪。</li>
+</ul>
+</div>
+
+<h2><span class="n">4</span> 调用 & 工具坑</h2>
+<table>
+<tr><th>坑</th><th>解</th></tr>
+<tr><td>认证</td><td>走 <code>~/.config/grfal-api/token_store.json</code> 的 Bearer(长效到 2036)，什么都不用设；脚本开头 <code>os.environ.pop('GRFAL_COOKIE', None)</code> 防过期 cookie 顶掉好 token→401</td></tr>
+<tr><td>generate_video 是 long_running</td><td>--submit-only 拿 task_id → --check-task 轮询(间隔 20s，video 5-12min)，禁 --sync</td></tr>
+<tr><td>cookie/token 失效症状</td><td>轮询整场空状态(check-task 返 success:false)，轮询必须对 success:false fail-fast；后台跑别加 <code>| tail -N</code>(截掉 task_id 无法续查)</td></tr>
+<tr><td>cv2.imwrite 写不了中文路径(静默 False)</td><td><code>cv2.imencode('.png',fr)[1].tofile(path)</code>（读 VideoCapture 中文路径反而没事）</td></tr>
+<tr><td>aspect_ratio auto 会抽风</td><td>竖版显式传 <code>'9:16'</code>，auto 可能随机出横屏</td></tr>
+<tr><td><span class="star">最终压缩</span></td><td>走 GRFal <code>compress_video</code>（参数已调优，效果优于本地手调 ffmpeg）；本地 <code>ffmpeg.exe</code> 只用于几何操作(crop/缩放/去音轨)，cv2 写不了可控码率不拿来编码</td></tr>
+<tr><td>GBK 控制台 print 中文崩</td><td>脚本开头 <code>sys.stdout=io.TextIOWrapper(...,errors='replace')</code></td></tr>
+</table>
+<p class="mut">验收 HTML 工具：<code>_loop播放.html</code>(切版对比循环，注意只能引 GRFal 原片 H.264) / <code>_透明验证.html</code>(webm 叠棋盘格/绿/深蓝三背景看发丝) / 单文件分享=mp4 base64 内嵌进 HTML。</p>
+
+<h2><span class="n">5</span> 落地 & 沉淀</h2>
+<h3>落地分工</h3>
+<div class="flow">
+  <span class="step">AI 出概念稿(原画)</span><span class="arr">→</span>
+  <span class="step">美术 Spine(老皮肤)<br>/ AI 视频(新皮肤)</span><span class="arr">→</span>
+  <span class="step">Unity prefab + DK 注册</span><span class="arr">→</span>
+  <span class="step">生头图</span><span class="arr">→</span>
+  <span class="step">配 HeroSkin 表(DKVideo)</span>
+</div>
+<h3>沉淀规范</h3>
+<ul>
+<li>归档 <code>KB\产出-本地化与美术\X3\{皮肤主题}\视频\</code>；<b>真源=生成脚本</b>(<code>gen_skin_video_seedance.py</code> 改 REF/PROMPT 复用)，不手改产物。</li>
+<li>版本带语义后缀，定稿标 <code>_FINAL</code>；prompt 库定稿留中英双份（中文对措辞、英文对动作约束更稳）。</li>
+<li>迭代日志按版记「改了啥+运动量+无缝差+结论」，命中要点后固化为「一步到位」模板——别只留时间线。</li>
+</ul>
+
+<div class="foot">
+<b>关联</b>：<br>
+· 总览：<a href="X3_美术出图工作流总览.html">X3 美术出图工作流总览.html</a>（皮肤是其中线 D）<br>
+· 换装+UI换皮 世界杯案全程：<code>KB\方法论\X3_AI出图工作流_角色皮肤换装+活动UI换皮_世界杯案.md</code><br>
+· 生产脚本 / prompt 库 / 迭代日志：<code>KB\产出-本地化与美术\X3\足球宝贝爱莉希雅\视频\</code><br>
+· 皮肤展示视频生产知识库 / 英雄皮肤外显资源路径：见本机知识库 memory 同名条目<br>
+<br>X3 英雄皮肤生产工作流 · 2026-06-24
+</div>
+
+</div>

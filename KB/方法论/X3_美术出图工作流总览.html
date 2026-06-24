@@ -1,0 +1,320 @@
+<title>X3 美术出图工作流总览</title>
+<style>
+  :root{
+    --bg:#0f1115; --card:#171a21; --card2:#1d212b; --line:#2a2f3a;
+    --txt:#e6e8ec; --mut:#9aa3b2; --acc:#6ea8fe; --acc2:#7ee3a7;
+    --warn:#ffd166; --bad:#ff7a85; --mid:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font:15px/1.6 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif;}
+  .wrap{max-width:1040px;margin:0 auto;padding:32px 22px 80px}
+  header.hero{padding:30px 30px 26px;border-radius:16px;margin-bottom:26px;
+    background:linear-gradient(135deg,#1b2a4a,#152033 60%,#171a21);
+    border:1px solid var(--line)}
+  header.hero h1{margin:0 0 8px;font-size:27px;letter-spacing:.5px}
+  header.hero .sub{color:var(--mut);font-size:14px;max-width:760px}
+  .tag{display:inline-block;background:#22304d;color:#bcd3ff;border:1px solid #2e436b;
+    padding:2px 10px;border-radius:20px;font-size:12px;margin-right:6px;margin-top:10px}
+  h2{font-size:20px;margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:10px}
+  h2 .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;
+    background:var(--acc);color:#0a0e16;border-radius:8px;font-size:14px;font-weight:700}
+  h3{font-size:16px;margin:22px 0 8px;color:#cfe0ff}
+  p{margin:8px 0}
+  .mut{color:var(--mut)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+  .grid{display:grid;gap:12px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:780px){.g3{grid-template-columns:1fr}}
+  .pill{font-size:12px;padding:1px 8px;border-radius:6px;font-weight:600;white-space:nowrap}
+  .ok{background:#16361f;color:#7ee3a7;border:1px solid #265a37}
+  .mid{background:#3a2e12;color:#ffb454;border:1px solid #5e4a1c}
+  .no{background:#3a1820;color:#ff7a85;border:1px solid #5e2630}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px;display:block;overflow-x:auto}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--card2);color:#cfe0ff;font-weight:600;white-space:nowrap}
+  td code,p code,li code{background:#0c1f17;color:#9ff0c4;padding:1px 6px;border-radius:5px;font-size:12.5px;
+    font-family:"Cascadia Code",Consolas,monospace}
+  pre{background:#0a0d13;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;
+    font-family:"Cascadia Code",Consolas,monospace;font-size:12.5px;line-height:1.55;color:#cdd6e3}
+  ul,ol{margin:8px 0;padding-left:22px}
+  li{margin:5px 0}
+  .lead{background:var(--card2);border-left:3px solid var(--acc);border-radius:8px;padding:12px 16px;margin:14px 0}
+  .star{color:var(--warn);font-weight:600}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+  .step{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-size:13px}
+  .arr{color:var(--acc);font-weight:700}
+  .creed{counter-reset:c;list-style:none;padding-left:0}
+  .creed li{position:relative;padding-left:38px;margin:10px 0}
+  .creed li:before{counter-increment:c;content:counter(c);position:absolute;left:0;top:0;
+    width:26px;height:26px;background:var(--acc);color:#0a0e16;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+  .foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+  a{color:var(--acc)}
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <h1>🎨 X3 美术出图工作流总览</h1>
+  <div class="sub">给所有跟 X3 美术出图打交道的同事的上手地图：<b>我要出某类图 → 走哪条线 → 怎么跑起来 → 出完往哪放</b>。
+  统一入口是 <code>x3-media</code> skill，后端是 GRFal。冷启动看这一篇就够上手。</div>
+  <div>
+    <span class="tag">统一入口 x3-media</span>
+    <span class="tag">后端 GRFal</span>
+    <span class="tag">异步 media-worker</span>
+    <span class="tag">更新 2026-06-24</span>
+  </div>
+</header>
+
+<div class="lead">
+<b>4 条贯穿所有线的信条</b>（先记这个，比记流程重要）：
+<ol class="creed">
+  <li><b>方向先商量、不急着出图</b>——排版/配色/元素先用文字或 ASCII mockup 跟需求方对齐，再烧 GRFal 时间，省返工。</li>
+  <li><b>每轮只改一处</b>——锁住已认可的部分当 reference，prompt 只动一个变量，否则整体漂移。</li>
+  <li><b>出的都是给美术对齐方向的概念稿</b>（纯 2D 端到端类除外）——最终资产美术会重绘，micro 细节别死磕。</li>
+  <li><b>真源 = 生成脚本</b>——改图改脚本重跑，不手改产物；下次复制最接近的脚本改参数。</li>
+</ol>
+</div>
+
+<h2><span class="n">1</span> 这套能帮你做什么（先看落地度）</h2>
+<p>GRFal 只能产 <b>静态 2D 图 / 视频 / 3D mesh 毛坯 / 序列帧 / 音频</b>；<b>产不了 Spine 2D 骨骼动画，也产不了能直接进游戏的特效 prefab</b>。先按落地度判断 AI 能不能帮你省美术：</p>
+<table>
+<tr><th>落地度</th><th>模块</th><th>AI 能做到哪</th></tr>
+<tr><td><span class="pill ok">✅ 端到端</span></td><td>头像框 / 纪念卡 / 聊天表情 / 活动图标 / banner / 道具·资源·小图标 / 按钮 / UI框</td><td>一个 worker 出成品 PNG + DK 注册即进游戏</td></tr>
+<tr><td><span class="pill mid">🟡 只能做上游</span></td><td>英雄皮肤原画 / 岛屿·主城皮肤 / 家具 / 装饰三件套（3D 模型）</td><td>出原画锚 / FBX 毛坯当概念参考，带绑点·LOD·规范的 prefab 仍靠美术重做</td></tr>
+<tr><td><span class="pill no">❌ AI 做不了</span></td><td>英雄皮肤 Spine 骨骼动画 / 航迹等特效 prefab</td><td>搭骨骼+蒙皮+K帧 / 引擎里搭粒子，绕不过美术</td></tr>
+</table>
+<div class="lead"><span class="star">⚠️ 换皮场景优先「找现成」不是生成</span>：换皮投放的皮肤/家具/船皮肤绝大多数是游戏里已有的资源，去配置表(HeroSkin/FurnitureSkin/Item)+客户端搜出来；真搜不到才标「🔧 需新出」。</div>
+
+<h2><span class="n">2</span> 我要出某类图 → 走哪条线</h2>
+
+<h3>A. 单件 2D 图标/素材 → x3-media 的 type 路由</h3>
+<p>说人话给 x3-media，它自动匹配 type 走对应配方：</p>
+<table>
+<tr><th>你要的</th><th>type</th><th>关键约束</th></tr>
+<tr><td>技能图标</td><td>skill_icon</td><td>256×256，必跑贴边后处理</td></tr>
+<tr><td>集卡册/图鉴卡</td><td>card_gallery</td><td>640×900，带框非透明</td></tr>
+<tr><td>行军表情（静/动）</td><td>march_emoji / dynamic_march_emoji</td><td>透明底 256×256；动态=4×4 半身循环逐帧</td></tr>
+<tr><td>成就徽章</td><td>achievement_badge</td><td>128×128</td></tr>
+<tr><td>活动入口/奖励图标</td><td>activity_icon</td><td>透明底 256×256</td></tr>
+<tr><td>从现成图拆 UI 元素</td><td>ui_extract / ui_extract_fine</td><td>去文字，分档 resize+量化到 1-80KB；毛发/半透明走精细双底差分</td></tr>
+<tr><td>Unity 粒子/特效贴图</td><td>effect_texture</td><td>RGB 全白 + Alpha 蒙版，2^N 正方形</td></tr>
+<tr><td>UI 按钮 / 框 / 弹窗背景</td><td>button / uiframe</td><td>透明底，9-patch 兼容</td></tr>
+<tr><td>节日活动主背景/banner</td><td>general（带主体 reference）</td><td>居中主体+边缘渐隐透明，见 §4 模板</td></tr>
+<tr><td>啥都行/泛化</td><td>general</td><td>查默认风格</td></tr>
+</table>
+<div class="lead"><span class="star">★ 透明化硬规则</span>：行军表情 / 各种 ICON / 道具类 DK 资产 <b>默认走双底差分</b>（生白底→生黑底→反推 alpha，脚本 <code>transparify_asset.py</code>），<b>禁用</b> <code>generate transparent</code> 参数和 <code>remove_background</code>（会白边/穿洞/吃毛发）。例外：effect_texture 走 Alpha 蒙版；ui_extract 是拆现成图；card_gallery 带框非透明。</div>
+
+<h3>B. 跨多步的大活 → 4 条重型工作流</h3>
+<table>
+<tr><th>场景</th><th>线</th><th>核心打法 & 模型</th></tr>
+<tr><td>英雄皮肤换装概念稿</td><td>A 角色皮肤换装</td><td>本人立绘当 ref → 逐轮只改一处 → 质量锚+逐条改设计出 FINAL。模型 <b>gpt</b>（保身份）</td></tr>
+<tr><td>新活动界面效果图</td><td>B 活动 UI 换皮</td><td>多图参考(原UI布局锚+皮肤主稿+道具) → <b>gemini</b>(保布局) → S1-S6 编排</td></tr>
+<tr><td>给已上线界面加/改元素</td><td>C 改造现有界面</td><td>真组件拼装定布局=图#1 + 真实界面截图=图#2 → buildReskinPrompt 合成。<b>首选</b></td></tr>
+<tr><td>替代 Spine 的皮肤展示视频</td><td>D 皮肤展示视频</td><td><b>seedance</b>(脸稳+动得足) → SBS 透明化 → 1080×1920 直出不拼接</td></tr>
+</table>
+
+<h3>C. UI 切图 / 拆素材 → 先分清「切现成的」还是「切生成的」</h3>
+<p>「切图」有三条路线，<b>第一反应应该是去游戏里找现成切片，不是 AI 切</b>——能拿现成就别拆：</p>
+<table>
+<tr><th>路线</th><th>什么时候用</th><th>怎么做</th></tr>
+<tr><td><b>① 从 prefab 反查真实 sprite</b><br><span class="mut">(不切，直接拿)</span></td><td>目标元素游戏里已有（改造现有界面、拼真组件原型）</td><td>目标界面 prefab 抽 <code>m_Sprite</code> GUID → 扫 <code>.meta</code> 反查 PNG → 拷进 <code>_assets/</code>。<span class="mut">详见《X3客户端GUI知识》控件模式库</span></td></tr>
+<tr><td><b>② ui_extract / ui_extract_fine</b><br><span class="mut">(AI 拆一张现成参考图)</span></td><td>有一张参考图(竞品/旧界面)，要从里面抠出 UI 元素</td><td>x3-media type=ui_extract：去文字 + 分档 resize + pngquant 量化到 1-80KB；毛发/半透明边缘走 ui_extract_fine（双底差分反推 alpha）</td></tr>
+<tr><td><b>③ Morphix E 元素拆分四步</b><br><span class="mut">(把自己生成的效果图切成切片)</span></td><td>效果图认可后，要拆成 F 固定层的可用切片交美术/程序</td><td>见下方四步流水</td></tr>
+</table>
+<div class="card">
+<b>③ Morphix E 元素拆分四步流水</b>（全 AI+脚本，零手裁；2026-06-11 竞猜界面 F 固定层首跑即成 8 件）：
+<ol>
+<li><b>雪碧图</b>：<code>generate_image(gpt)</code> + 效果图当 reference + buildSplitPrompt（关键：#B8B8B8 灰底防白边 / 原子化 / 严格去重 / 无文字版 / 行排列 20px 间距 / 不重绘）。</li>
+<li><b>去底</b>：<code>remove_background</code>（sync 可用，⚠️ result 是嵌套 list <code>[[url],null]</code> 要解开；验真透明 RGBA alpha 0-255）。</li>
+<li><b>切块</b>：PIL 投影递归分割（行带 gap18 → 列段 → 粘连块二次行分割）；脚本 <code>split_blocks.py</code>。</li>
+<li><b>归档</b>：按槽位命名（<code>F1_xx_九宫格_无字.png</code>）+ README 映射规格表（目标尺寸）。</li>
+</ol>
+</div>
+<div class="lead"><span class="star">★ 切图 vs 拆槽别混</span>：这里的「切图」=把一张图拆成<b>独立素材切片</b>（F 固定层用）；§5.3 的「S6 拆槽」=把效果图按<b>更新频率分四层</b>（F固定/T主题/B背景/TXT文本）的交付策略。先拆槽定层，再对 F 固定层用本节的切图流水。</div>
+
+<h2><span class="n">3</span> 怎么跑起来（最小可用）</h2>
+
+<h3>工具链 & 认证</h3>
+<table>
+<tr><th>组件</th><th>位置</th></tr>
+<tr><td>入口 skill</td><td><code>~/.claude/skills/x3-media/SKILL.md</code>（type router / 默认风格 / 模型列表）</td></tr>
+<tr><td>call_grfal.py</td><td><code>.cursor/skills/grfal-api/scripts/call_grfal.py</code></td></tr>
+<tr><td>base url</td><td><code>https://grfal.tap4fun.com</code></td></tr>
+<tr><td><span class="star">认证（2026-06-12 起）</span></td><td>走 <code>~/.config/grfal-api/token_store.json</code> 的 Bearer access_token（长效到 2036），<b>什么都不用设</b>，call_grfal 自动 fallback。旧 cookie 注入法已废</td></tr>
+</table>
+<p class="mut">认证铁律：脚本开头 <code>os.environ.pop('GRFAL_COOKIE', None)</code> 兜底（残留过期 cookie 优先级更高会顶掉好 token→401）；下载结果也带 <code>Authorization: Bearer</code>。验活 <code>GET /api/tasks?page=1&amp;page_size=1</code> 带 Bearer 应 200。</p>
+
+<h3>执行模式：异步 media-worker（强制）</h3>
+<ul>
+<li>主 agent <b>不得直调</b> call_grfal / 生成脚本——一律派 <code>media-worker</code> 子 agent 后台异步跑。</li>
+<li>一次原子 GRFal 调用 = 1 个独立 worker（3 张图 = 3 个并发 worker，不在一个 worker 里循环）。</li>
+<li>派发时 <code>run_in_background: true</code> + <code>model: "sonnet"</code>（必须显式指定，否则继承不可用模型整批挂掉）。</li>
+<li>task_id = 单一事实来源，主 agent 只读 <code>state/tasks/&lt;id&gt;.json</code>，不接子 agent 长文本。</li>
+</ul>
+
+<h3>GRFal 调用骨架（worker 内）</h3>
+<pre>os.environ.pop('GRFAL_COOKIE', None)
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')  # 防 GBK 控制台崩
+
+# generate_image / generate_video 是 long_running:
+#   必须 --submit-only 拿 task_id → --check-task 轮询；禁 --sync(300s 硬超时)
+#   gpt 带参考图常 4-9min，video 5-12min
+#   --file reference_images=path  可重复写 = 多图参考(append)
+#   result 可能嵌套 list 要递归 flat；URL 拼 base，下载带 Bearer</pre>
+
+<h3>模型选型速查</h3>
+<table>
+<tr><th>模型</th><th>强项</th><th>用在</th></tr>
+<tr><td><b>gpt</b></td><td>保角色身份/质量好，但慢(4-9min/2张)</td><td>角色换装、风格保真要求高的 reskin</td></tr>
+<tr><td><b>gemini</b></td><td>快/稳/保 UI 布局好</td><td>UI 换皮、结构确认稿、改造现有界面 reskin</td></tr>
+<tr><td><b>seedance</b></td><td>2D 立绘脸稳 + 运动足</td><td>皮肤展示视频首选</td></tr>
+<tr><td><b>kling</b></td><td>fflf 首尾帧锁得紧、循环无缝</td><td>视频需严格无缝循环时（但 2D 脸必张嘴/warp）</td></tr>
+</table>
+
+<h3><span class="star">★ 出图后默认核验（所有换皮出图后必做）</span></h3>
+<p>拿对应参考图(复用源)核 4 项，不只看尺寸（脚本 PIL <code>getbbox()</code> 算 bbox+四边 margin+占比逐项对参考）：</p>
+<div class="grid g3">
+  <div class="card"><b>① 尺寸</b><br><span class="mut">W×H = 参考。gpt 默认出 1024~2048 大图，必须缩到目标</span></div>
+  <div class="card"><b>② 格式/透明</b><br><span class="mut">图标=RGBA 真透明，背景=RGB。gpt「透明底」常是假透明，验 <code>alpha.min()&lt;255</code></span></div>
+  <div class="card"><b>③ 四边边距</b><br><span class="mut">= 参考，决定 sprite 在槽位的对齐</span></div>
+  <div class="card"><b>④ 主体占比</b><br><span class="mut">= 参考，不能简单居中（岛底座要落格子同位）</span></div>
+</div>
+
+<h2><span class="n">4</span> 四条重型工作流详解</h2>
+
+<div class="card">
+<h3>A. 角色皮肤换装线（gpt）</h3>
+<ol>
+<li>选基础英雄 → 找客户端立绘 <code>Role/FullLength/Role_F_{id}.png</code>。</li>
+<li><b>本人立绘当 reference</b>，prompt =「保身份(脸/发/身形/画风)，只换造型(服饰/道具/姿势)」→ 出 R1。</li>
+<li>后续每轮用上一版选中图当 ref，<b>逐轮只改一处</b>，版本名带语义后缀。</li>
+<li><b>用户给的「质量好但带违规元素」的图</b>：以它当质量/姿势锚 ref，prompt 逐条列要改的设计点（红→白金 / 国徽→奖杯 / 去脸颊国旗）——既得质量又合规，FINAL 常这么来。</li>
+</ol>
+<p class="mut">坑：基底选错会白跑，动手前确认 ref 是哪一版；IP 合规用原创风格化不精确复刻商标。</p>
+</div>
+
+<div class="card">
+<h3>B. 活动 UI 换皮效果图 + S1–S6 编排（gemini 为主）</h3>
+<div class="flow">
+  <span class="step">S1 结构设计(不出图)</span><span class="arr">→</span>
+  <span class="step">S2 结构确认稿</span><span class="arr">→</span>
+  <span class="step">S3 风格化</span><span class="arr">→</span>
+  <span class="step">S4 细节迭代</span><span class="arr">→</span>
+  <span class="step">S5 回填闭环</span><span class="arr">→</span>
+  <span class="step">S6 拆槽</span>
+</div>
+<ul>
+<li><b>S1</b>：收参考图 → 拆「每张取什么基因」→ ASCII mockup + 要素清单对齐 → 拍板布局分区/交互状态机/红线(IP·国家元素)。</li>
+<li><b>S2</b>(gemini 快)：多参考合成出 2 候选，确认「结构对」。只验结构不追风格。</li>
+<li><b>S3</b>(Morphix buildReskinPrompt 职责切分)：图#1=S2 结构稿(视觉全 ERASE 只留 WHAT/WHERE) + 图#2=<b>本游戏真实 UI 截图</b>(design system 整套照搬)，模型 gpt。图#2 优先用验收截图库里与目标框架最接近的一张。</li>
+<li><b>S4</b>：每轮只改一处；<span class="star">★ 变体覆盖检查</span>——规则里写的 UI 元素(角标/锁定态/结算态)必须有图可对，只出默认态 = 漏交付。</li>
+<li><b>S5</b>：效果图路径回填策划案「界面交互」段 +「美术需求」页签（双参考交付）。</li>
+<li><b>S6</b>：拆槽（见 §5.3）。</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>C. 改造现有界面效果图 = 真组件拼装 → AI reskin 五步法（首选）</h3>
+<p class="mut">给「已上线界面加/改元素」出落地效果图，比纯 AI 整张生成(布局飘)和纯 CSS 拼装(接缝/光影不统一)都强。</p>
+<ol>
+<li><b>拆真组件</b>：目标 prefab 抽 <code>m_Sprite</code> GUID → 反查 PNG → 真 sprite 拷进原型 <code>_assets/</code>。</li>
+<li><b>CSS 拼装定精确布局</b>(=图#1 结构稿)：HTML 用真组件按真实坐标拼，新控件也摆到位；chrome headless 截设备区。</li>
+<li>(选) 出适配新控件的底图。</li>
+<li><span class="star">★ AI reskin 合成成品（关键步）</span>：<code>reference_images=[图#1拼装截图, 图#2真实界面]</code>，gemini，9:16；图#1 只取布局/文字/控件位置(视觉全 ERASE)，图#2 = design system 整套抄；新元素显式声明「按图#2 视觉语言原生渲染」。</li>
+<li><b>S6 拆槽交付</b>。</li>
+</ol>
+<div class="lead"><span class="star">★ 血泪教训</span>：拼装(图#1)看着糙完全没关系（它的视觉在第 4 步全被 ERASE，只取布局）——<b>别在第 2 步死磕拼装精度，赶紧进第 4 步</b>。把结构锚当成品交 = 必烂。<br>变体：图#1 来源是竞品横屏截图但要竖屏 → 先 <code>buildFlipPrompt</code> 横竖转换再 reskin（两段式）。</div>
+</div>
+
+<div class="card">
+<h3>D. 皮肤展示视频线（替代 Spine）</h3>
+<ul>
+<li><b>目标格式</b>：SBS 透明视频(左半彩色+右半 alpha 烧成白模 on 黑底)，Unity shader 重建 alpha。不透明 showcase 走普通满幅 mp4。</li>
+<li><b>统一 1080×1920(9:16) 直出</b>，不做后期裁切（客户端拍板）。</li>
+<li><b>模型 seedance 首选</b>（脸稳+运动足；kling 给 2D 脸必张嘴/warp 压不动）；kling 仅用于需严格无缝循环。</li>
+<li><b>无缝循环</b>：kling <code>ref_types="首帧图像,尾帧图像"</code> 同图传两次。</li>
+<li><b>透明化链路</b>：<code>generate_video → video_remove_background(.webm) → export_sbs_video</code>（<span class="star">quality=CRF 不是百分比！q12 是甜点，传 95 会糊成马赛克</span>）。</li>
+<li><b>演出心法</b>：撩不撩的根在起点图；眼神给镜头=死活线；写「一条贯穿全身的动作线」不写零件清单(否则糖人)；压制词(minimal/never)会叠加压死动作；prompt 长度=注意力预算。</li>
+<li>视频处理一律用项目自带 <code>client/Tools/VideoTools/ffmpeg/ffmpeg.exe</code>（cv2 写不了可控码率，且中文路径静默失败）。</li>
+</ul>
+</div>
+
+<h2><span class="n">5</span> 出完图怎么收口（最易漏）</h2>
+
+<h3>5.1 归档路径</h3>
+<table>
+<tr><th>产物</th><th>根路径</th></tr>
+<tr><td>出图/主稿/效果图</td><td><code>KB\产出-本地化与美术\X3\{主题}\</code></td></tr>
+<tr><td>节日活动主背景</td><td><code>KB\产出-本地化与美术\X3\活动主背景\</code></td></tr>
+<tr><td>美需本地存档</td><td><code>KB\产出-本地化与美术\{项目}_{年份节日}_{类型}_美需.md</code></td></tr>
+<tr><td>生成/拆槽脚本</td><td>同主题目录（<code>gen_*.py</code> / <code>draw_slots_*.py</code> / <code>split_blocks.py</code>）</td></tr>
+</table>
+
+<h3>5.2 命名与版本</h3>
+<ul>
+<li>命名 <code>{活动名}_{模型}_{时间}_v{N}.png</code>，版本带<b>语义后缀</b>(<code>_r5白金加徽章</code>)，定稿标 <b><code>_FINAL</code></b>。</li>
+<li><b>真源=生成脚本</b>：改图改脚本重跑，不手改产物；下次复制最接近的脚本改 REF/PROMPT/OUT。</li>
+</ul>
+
+<h3>5.3 <span class="star">★ S6 图槽模板化拆解（效果图认可后、交美术前必做）</span></h3>
+<p>效果图别直接交美术——先<b>拆槽</b>，否则文字/渐变烧死在图里 = 美术量 × 场次 × 语言爆炸：</p>
+<table>
+<tr><th>层</th><th>内容</th><th>更新成本</th></tr>
+<tr><td>F 固定层</td><td>1 套切图，无文字，永不换</td><td>一次性</td></tr>
+<tr><td>T 主题层</td><td>按复用单元出（对称设计一图翻转省一半）</td><td>每主题一次，维表驱动</td></tr>
+<tr><td>B 背景层</td><td>整图按阶段几张（最便宜的仪式感）</td><td>低</td></tr>
+<tr><td>TXT 文本层</td><td>全 TextKey 叠加，i18n 一次翻，不烧图</td><td>近零</td></tr>
+</table>
+<p class="mut">成本判断：「出图便宜，改程序贵」——渐变/材质烧进图里批量出，不做程序染色。槽位示意图独立画(PIL 线框 / HTML+chrome 截图)，别叠在效果图上；配槽位尺寸规格表(px/比例/数量/基准 1080×1920)。</p>
+
+<h3>5.4 落地到 X3 客户端的链路</h3>
+<pre>1. GRFal 生图 → 下载到 KB\产出-本地化与美术\X3\{主题}\
+2. 选定 → 复制到 client\Assets\Res\UI\Spirits\{对应目录}\
+3. Unity import 生成 .meta(GUID)
+4. 编辑 DisplayKey asset 加 DK→path（或 Unity Ctrl+T 面板）
+5. git commit + push（feature branch + MR，dev 受保护）
+6. gdconfig 配置表字段 = 新 DK
+7. push gdconfig + jolt 自动导表</pre>
+
+<h3>5.5 <span class="star">★ 交美术的双参考（换皮活动缺一不能出图）</span></h3>
+<ul>
+<li><b>老图参考·格式结构</b> = 复用源旧界面图（告诉美术版式/尺寸怎么对齐）。</li>
+<li><b>新图参考·投放物元素</b> = 本期实际投放新东西的资源图（告诉美术新主题该画成啥样）。背景类无独立投放物 → 挂节日主视觉锚。</li>
+</ul>
+<p class="mut">投放物绝大多数是游戏现成资源，去配置表+客户端搜出来，写完逐路径验存在。</p>
+
+<h3>5.6 知识库回写（收工自检）</h3>
+<ul>
+<li>新规律/踩坑/新链路 → 当场沉淀进知识库/本文档。</li>
+<li>大案子产三件套：决策记录(按模块·为什么+被否决方案) / 换皮清单(骨vs皮) / 产物目录 FINAL 标注。</li>
+<li>判据 = 新人冷启动能否在「修BUG/接管模块/换皮」任一入口秒懂；<b>禁止只留时间线流水账</b>。</li>
+</ul>
+
+<h2><span class="n">6</span> 踩坑速查（最值钱）</h2>
+<table>
+<tr><th>坑</th><th>解</th></tr>
+<tr><td>generate_image/video 是 long_running</td><td>必须 --submit-only + --check-task 轮询，禁 --sync</td></tr>
+<tr><td>Windows GBK 控制台 print 中文崩</td><td>脚本开头 <code>sys.stdout=io.TextIOWrapper(...,errors='replace')</code></td></tr>
+<tr><td>残留过期 cookie 顶掉好 token→401</td><td>脚本开头 <code>os.environ.pop('GRFAL_COOKIE', None)</code></td></tr>
+<tr><td>gpt「透明底」是假透明</td><td>双底差分 / remove_background，验 alpha 真透明</td></tr>
+<tr><td>角色被画太大顶到 UI 文字</td><td>用原 UI 当尺寸位置锚；ref 整体缩 90% 让安全边距</td></tr>
+<tr><td>角色与道具都居中会叠</td><td>道具缩小下移到脚前 / 角色偏一侧二选一</td></tr>
+<tr><td>cv2 写不了中文路径(静默 False)</td><td><code>cv2.imencode('.png',fr)[1].tofile(path)</code></td></tr>
+<tr><td>export_sbs_video quality 是 CRF 不是百分比</td><td>q12=甜点(肉眼无损)，传 95 糊成马赛克；并发会互相覆盖输出，串行跑</td></tr>
+<tr><td>改造现有界面整张 AI 重画「风格对但底飘」</td><td>真组件拼装当图#1，必走第 4 步 reskin，别拼装当成品交</td></tr>
+<tr><td>GIF 表情聊天里显灰底</td><td>LSD 背景色索引必须==GCE 透明色索引；.bytes 改完需重建资源包</td></tr>
+</table>
+
+<div class="foot">
+<b>关联深挖文档</b>（在 <code>KB\方法论\</code> 与团队知识库）：<br>
+· 换装+UI换皮 世界杯案全程（S1-S6 / Morphix 五步法）：<code>KB\方法论\X3_AI出图工作流_角色皮肤换装+活动UI换皮_世界杯案.md</code><br>
+· Morphix 换皮工具逆向 + prompt 库：<code>KB\方法论\Morphix换皮工具逆向_prompt库.html</code><br>
+· 统一媒体生成入口：<code>~/.claude/skills/x3-media/SKILL.md</code><br>
+· 皮肤展示视频生产 / 出美需规范 / 外显资源路径 / DK 注册：见本机知识库 memory 同名条目<br>
+<br>X3 美术出图工作流总览 · 2026-06-24
+</div>
+
+</div>

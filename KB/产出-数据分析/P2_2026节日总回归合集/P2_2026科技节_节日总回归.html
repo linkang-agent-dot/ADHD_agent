@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔬 2026科技节 活动复盘报告</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222536;
+    --border: #2e3248;
+    --accent: #6c63ff;
+    --accent2: #00d4aa;
+    --accent3: #ff6b6b;
+    --accent4: #ffd166;
+    --text: #e2e8f0;
+    --text-muted: #8892a4;
+    --green: #22c55e;
+    --orange: #f97316;
+    --red: #ef4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  /* ── 顶栏 ── */
+  .header {
+    background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 48px 24px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+  .header h1 span { color: var(--accent); }
+  .meta-row { margin-top: 8px; display: flex; gap: 24px; font-size: 12px; color: var(--text-muted); }
+  .meta-row b { color: var(--text); }
+
+  /* ── 布局 ── */
+  .container { max-width: 1400px; margin: 0 auto; padding: 32px 48px 80px; }
+  .section { margin-bottom: 48px; }
+  .section-title {
+    font-size: 16px; font-weight: 700; color: var(--accent);
+    border-left: 3px solid var(--accent); padding-left: 12px;
+    margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;
+  }
+
+  /* ── KPI 卡片 ── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+    position: relative; overflow: hidden;
+    transition: transform .2s;
+  }
+  .kpi-card:hover { transform: translateY(-2px); }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: var(--accent);
+  }
+  .kpi-card.green::before { background: var(--green); }
+  .kpi-card.orange::before { background: var(--orange); }
+  .kpi-card.red::before { background: var(--red); }
+  .kpi-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .8px; }
+  .kpi-value { font-size: 26px; font-weight: 800; margin: 6px 0 4px; }
+  .kpi-change { font-size: 12px; }
+  .up { color: var(--green); }
+  .down { color: var(--red); }
+
+  /* ── 表格 ── */
+  .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    background: var(--surface2); padding: 12px 14px;
+    font-size: 11px; font-weight: 600; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: .6px;
+    border-bottom: 1px solid var(--border); text-align: left;
+    white-space: nowrap;
+  }
+  tbody td { padding: 11px 14px; border-bottom: 1px solid var(--border); }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(108,99,255,.05); }
+  .highlight-row { background: rgba(108,99,255,.08) !important; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .bold { font-weight: 700; }
+  .tag {
+    display: inline-block; padding: 2px 8px; border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+  }
+  .tag-game { background: rgba(0,212,170,.15); color: var(--accent2); }
+  .tag-visual { background: rgba(255,107,107,.15); color: var(--red); }
+  .tag-hybrid { background: rgba(108,99,255,.15); color: var(--accent); }
+  .tag-mine { background: rgba(255,209,102,.15); color: var(--accent4); }
+
+  /* ── R级表 ── */
+  .rtier-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .rtier-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px; text-align: center;
+  }
+  .rtier-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+  .rtier-now { font-size: 28px; font-weight: 800; color: var(--accent); }
+  .rtier-vs { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .rtier-change { font-size: 13px; font-weight: 700; color: var(--green); margin-top: 2px; }
+
+  /* ── 日收入 bar ── */
+  .daily-chart { padding: 8px 0; }
+  .day-row { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .day-label { width: 56px; font-size: 12px; color: var(--text-muted); flex-shrink: 0; text-align: right; }
+  .day-bar-wrap { flex: 1; background: var(--surface2); border-radius: 4px; height: 22px; position: relative; }
+  .day-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), #a78bfa); transition: width .3s; }
+  .day-bar.peak { background: linear-gradient(90deg, var(--accent4), #f97316); }
+  .day-val { width: 80px; font-size: 12px; font-variant-numeric: tabular-nums; color: var(--text); text-align: right; flex-shrink: 0; }
+
+  /* ── 活动诊断 ── */
+  .diag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .diag-card {
+    background: var(--surface); border-radius: 12px;
+    border: 1px solid var(--border); padding: 20px;
+  }
+  .diag-card.keep { border-left: 3px solid var(--green); }
+  .diag-card.optimize { border-left: 3px solid var(--orange); }
+  .diag-status { font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; }
+  .diag-status.keep { color: var(--green); }
+  .diag-status.optimize { color: var(--orange); }
+  .diag-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .diag-rev { font-size: 18px; font-weight: 800; color: var(--accent); margin-bottom: 8px; }
+  .diag-reason { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ── Action Items ── */
+  .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .action-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+  }
+  .action-p { font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 12px; padding: 4px 10px; border-radius: 6px; display: inline-block; }
+  .p0 { background: rgba(239,68,68,.15); color: var(--red); }
+  .p1 { background: rgba(249,115,22,.15); color: var(--orange); }
+  .p2 { background: rgba(108,99,255,.15); color: var(--accent); }
+  .action-item { font-size: 13px; margin-bottom: 10px; display: flex; gap: 8px; line-height: 1.5; }
+  .action-item::before { content: '→'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+
+  /* ── 模块饼图 ── */
+  .module-grid { display: grid; grid-template-columns: 240px 1fr; gap: 32px; align-items: center; }
+  .donut-wrap { position: relative; width: 200px; height: 200px; }
+  .donut-wrap svg { transform: rotate(-90deg); }
+  .donut-center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    text-align: center;
+  }
+  .donut-center-val { font-size: 20px; font-weight: 800; }
+  .donut-center-label { font-size: 11px; color: var(--text-muted); }
+  .module-legend { display: flex; flex-direction: column; gap: 14px; }
+  .legend-item { display: flex; align-items: center; gap: 12px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .legend-name { flex: 1; font-size: 13px; }
+  .legend-val { font-size: 14px; font-weight: 700; }
+  .legend-pct { font-size: 12px; color: var(--text-muted); margin-left: 6px; }
+
+  /* ── 折叠 ── */
+  details summary {
+    cursor: pointer; padding: 10px 14px;
+    font-size: 12px; color: var(--text-muted);
+    background: var(--surface2);
+    border-top: 1px solid var(--border);
+    user-select: none;
+  }
+  details summary:hover { color: var(--text); }
+
+  /* ── 页脚 ── */
+  .footer {
+    text-align: center; padding: 24px;
+    font-size: 12px; color: var(--text-muted);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── 响应式 ── */
+  @media (max-width: 1024px) {
+    .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+    .rtier-grid { grid-template-columns: repeat(2, 1fr); }
+    .diag-grid { grid-template-columns: 1fr; }
+    .action-grid { grid-template-columns: 1fr; }
+    .module-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ 顶栏 ══ -->
+<div class="header">
+  <h1>🔬 2026<span>科技节</span> 活动复盘报告</h1>
+  <div class="meta-row">
+    <span>活动周期：<b>2026-03-13 ~ 04-03</b></span>
+    <span>对标活动：<b>2026情人节</b></span>
+    <span>生成时间：<b>2026-04-07</b></span>
+    <span>数据来源：<b>v1041.ods_user_order + dim.iap</b></span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ══ Section 1: KPI ══ -->
+<div class="section">
+  <div class="section-title">核心指标</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">总营收</div>
+      <div class="kpi-value">$1,796,469</div>
+      <div class="kpi-change up">vs 情人节 +13.2%</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">节日礼包收入</div>
+      <div class="kpi-value">$855,121</div>
+      <div class="kpi-change" style="color:var(--text-muted)">占总收入 47.6%</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">ARPU</div>
+      <div class="kpi-value">$1.07</div>
+      <div class="kpi-change up">vs 情人节 +30.5%</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">付费率</div>
+      <div class="kpi-value">3.09%</div>
+      <div class="kpi-change up">vs 情人节 +0.63pp</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">付费人数</div>
+      <div class="kpi-value">4,903</div>
+      <div class="kpi-change" style="color:var(--text-muted)">ARPPU $174.40</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Section 2: 横向对比 ══ -->
+<div class="section">
+  <div class="section-title">近期节日横向对比（实时拉取）</div>
+  <div style="margin-bottom:10px;font-size:12px;color:var(--text-muted)">数据口径：全量 iap_type（含节日+日常礼包）· 活跃用户 = 节日期间任意一天登录过的去重用户 · 节日礼包 = iap_type=混合-节日活动</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>节日</th>
+          <th class="num">日期区间</th>
+          <th class="num">总营收</th>
+          <th class="num">节日礼包收入</th>
+          <th class="num">节日占比</th>
+          <th class="num">活跃用户</th>
+          <th class="num">付费率</th>
+          <th class="num">ARPPU</th>
+          <th class="num">ARPU</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🎃 万圣节</td>
+          <td class="num" style="color:var(--text-muted);font-size:12px">10-17~11-06</td>
+          <td class="num">$1,991,799</td>
+          <td class="num">$636,593</td>
+          <td class="num">32.0%</td>
+          <td class="num">2,704,479</td>
+          <td class="num">0.38%</td>
+          <td class="num">$192.15</td>
+          <td class="num">$0.74</td>
+        </tr>
+        <tr>
+          <td>🦃 感恩节</td>
+          <td class="num" style="color:var(--text-muted);font-size:12px">11-13~12-04</td>
+          <td class="num">$1,902,046</td>
+          <td class="num">$788,996</td>
+          <td class="num">41.5%</td>
+          <td class="num">2,735,632</td>
+          <td class="num">0.36%</td>
+          <td class="num">$195.08</td>
+          <td class="num">$0.70</td>
+        </tr>
+        <tr>
+          <td>🎄 圣诞节</td>
+          <td class="num" style="color:var(--text-muted);font-size:12px">12-12~01-01</td>
+          <td class="num">$2,014,761</td>
+          <td class="num">$941,774</td>
+          <td class="num">46.7%</td>
+          <td class="num">2,824,648</td>
+          <td class="num">0.34%</td>
+          <td class="num">$208.09</td>
+          <td class="num">$0.71</td>
+        </tr>
+        <tr>
+          <td style="color:var(--green);font-weight:600">🧧 春节 ★</td>
+          <td class="num" style="color:var(--text-muted);font-size:12px">01-13~02-08</td>
+          <td class="num" style="color:var(--green);font-weight:700">$2,233,587</td>
+          <td class="num" style="color:var(--green);font-weight:700">$1,067,907</td>
+          <td class="num" style="color:var(--green);font-weight:700">47.8% ★</td>
+          <td class="num">3,143,677</td>
+          <td class="num">0.34%</td>
+          <td class="num" style="color:var(--green);font-weight:700">$209.75</td>
+          <td class="num">$0.71</td>
+        </tr>
+        <tr>
+          <td>💝 情人节</td>
+          <td class="num" style="color:var(--text-muted);font-size:12px">02-11~03-05</td>
+          <td class="num">$1,821,008</td>
+          <td class="num">$841,202</td>
+          <td class="num">46.2%</td>
+          <td class="num">2,618,739</td>
+          <td class="num">0.40%</td>
+          <td class="num">$174.51</td>
+          <td class="num">$0.70</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="bold">🔬 科技节</td>
+          <td class="num" style="color:var(--text-muted);font-size:12px">03-13~04-03</td>
+          <td class="num bold">$1,798,726</td>
+          <td class="num bold" style="color:var(--accent2)">$855,121</td>
+          <td class="num bold" style="color:var(--accent2)">47.5%</td>
+          <td class="num bold" style="color:var(--orange)">2,230,027 ↓</td>
+          <td class="num bold" style="color:var(--accent2)">0.42% ▲</td>
+          <td class="num bold">$192.40</td>
+          <td class="num bold" style="color:var(--accent)">$0.81 ▲</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;font-size:12px">
+    <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent2)">
+      <div style="color:var(--text-muted)">ARPU 最高</div>
+      <div style="font-weight:700;margin-top:2px">科技节 <span style="color:var(--accent2)">$0.81</span></div>
+      <div style="color:var(--text-muted);margin-top:2px">活跃少但人均消费高</div>
+    </div>
+    <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--green)">
+      <div style="color:var(--text-muted)">总收入最高</div>
+      <div style="font-weight:700;margin-top:2px">春节 <span style="color:var(--green)">$2,233,587</span></div>
+      <div style="color:var(--text-muted);margin-top:2px">大富翁异族主题爆发</div>
+    </div>
+    <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent)">
+      <div style="color:var(--text-muted)">节日礼包占比最高</div>
+      <div style="font-weight:700;margin-top:2px">春节 <span style="color:var(--accent)">47.8%</span></div>
+      <div style="color:var(--text-muted);margin-top:2px">科技节 47.5%，近三期稳定 ~47%</div>
+    </div>
+    <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--orange)">
+      <div style="color:var(--text-muted)">活跃用户最少</div>
+      <div style="font-weight:700;margin-top:2px">科技节 <span style="color:var(--orange)">223万</span></div>
+      <div style="color:var(--text-muted);margin-top:2px">但付费率 0.42% 是最高</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Section 3: R级 ARPU 横向对比 ══ -->
+<div class="section">
+  <div class="section-title">各 R 级 ARPU 横向对比（近6期，全量口径）</div>
+  <div style="margin-bottom:14px;font-size:12px;color:var(--text-muted)">R级定义基于累计历史付费额快照（节日开始前一天）· ARPU = 节日期间总付费 / 当R级活跃用户数</div>
+
+  <!-- ARPU 折线趋势迷你图 -->
+  <div class="table-wrap" style="margin-bottom:20px">
+    <table>
+      <thead>
+        <tr>
+          <th>R级</th>
+          <th class="num">万圣节</th>
+          <th class="num">感恩节</th>
+          <th class="num">圣诞节</th>
+          <th class="num">🧧 春节</th>
+          <th class="num">情人节</th>
+          <th class="num" style="color:var(--accent)">科技节</th>
+          <th class="num">趋势</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--red);font-weight:700">🔴 超R ARPU</td>
+          <td class="num">$976</td>
+          <td class="num">$976</td>
+          <td class="num">$1,012</td>
+          <td class="num" style="color:var(--green);font-weight:700">$1,179 ★</td>
+          <td class="num">$922</td>
+          <td class="num bold" style="color:var(--accent)">$930</td>
+          <td class="num" style="color:var(--text-muted)">→ 稳定 $900-1000，春节爆峰</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">🟠 大R ARPU</td>
+          <td class="num">$296</td>
+          <td class="num">$278</td>
+          <td class="num" style="color:var(--green)">$311</td>
+          <td class="num" style="color:var(--green);font-weight:700">$339 ★</td>
+          <td class="num">$286</td>
+          <td class="num bold" style="color:var(--accent)">$281</td>
+          <td class="num" style="color:var(--text-muted)">→ 稳定 $280-340</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">🟡 中R ARPU</td>
+          <td class="num">$86</td>
+          <td class="num">$82</td>
+          <td class="num">$91</td>
+          <td class="num" style="color:var(--green);font-weight:700">$93 ★</td>
+          <td class="num">$83</td>
+          <td class="num bold" style="color:var(--red)">$77 ↓</td>
+          <td class="num" style="color:var(--orange)">⚠ 科技节6期最低</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">⚪ 小R ARPU</td>
+          <td class="num">$7.14</td>
+          <td class="num">$6.23</td>
+          <td class="num">$7.40</td>
+          <td class="num">$7.04</td>
+          <td class="num">$7.18</td>
+          <td class="num bold" style="color:var(--accent)">$6.89</td>
+          <td class="num" style="color:var(--text-muted)">→ 稳定 $6-7.5</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 付费率对比 -->
+  <div class="table-wrap" style="margin-bottom:20px">
+    <table>
+      <thead>
+        <tr>
+          <th>R级</th>
+          <th class="num">万圣节</th>
+          <th class="num">感恩节</th>
+          <th class="num">圣诞节</th>
+          <th class="num">🧧 春节</th>
+          <th class="num">情人节</th>
+          <th class="num" style="color:var(--accent)">科技节</th>
+          <th>评估</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--red);font-weight:700">🔴 超R 付费率</td>
+          <td class="num">87.9%</td>
+          <td class="num">87.2%</td>
+          <td class="num">85.6%</td>
+          <td class="num" style="color:var(--green);font-weight:700">88.4% ★</td>
+          <td class="num">88.6%</td>
+          <td class="num bold">87.2%</td>
+          <td style="color:var(--green)">稳定高转化，接近天花板</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">🟠 大R 付费率</td>
+          <td class="num" style="color:var(--green)">81.6% ★</td>
+          <td class="num">78.2%</td>
+          <td class="num">80.1%</td>
+          <td class="num">81.2%</td>
+          <td class="num">80.3%</td>
+          <td class="num bold">81.3%</td>
+          <td style="color:var(--green)">稳定 78-82%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">🟡 中R 付费率</td>
+          <td class="num" style="color:var(--green)">70.3% ★</td>
+          <td class="num">66.7%</td>
+          <td class="num">68.2%</td>
+          <td class="num">68.4%</td>
+          <td class="num">67.6%</td>
+          <td class="num bold">68.4%</td>
+          <td style="color:var(--text-muted)">万圣节最高，之后稳定 67-68%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">⚪ 小R 付费率</td>
+          <td class="num" style="color:var(--green)">24.3% ★</td>
+          <td class="num">22.3%</td>
+          <td class="num">24.1%</td>
+          <td class="num">24.2%</td>
+          <td class="num">23.9%</td>
+          <td class="num bold">23.7%</td>
+          <td style="color:var(--orange)">6期微降趋势，需要引导</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 超R/大R 收入贡献对比 -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>R级</th>
+          <th class="num">活跃</th>
+          <th class="num">付费</th>
+          <th class="num">付费率</th>
+          <th class="num">收入</th>
+          <th class="num">ARPU</th>
+          <th class="num">收入占比</th>
+        </tr>
+      </thead>
+      <caption style="text-align:left;padding:8px 14px;font-size:12px;color:var(--accent);font-weight:700;caption-side:top">▶ 科技节 R级收入结构</caption>
+      <tbody>
+        <tr>
+          <td style="color:var(--red);font-weight:700">🔴 超R</td>
+          <td class="num">1,090</td><td class="num">950</td>
+          <td class="num" style="color:var(--green)"><b>87.2%</b></td>
+          <td class="num" style="color:var(--red)"><b>$1,013,571</b></td>
+          <td class="num bold" style="color:var(--red)">$929.88</td>
+          <td class="num bold" style="color:var(--red)">56.4%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">🟠 大R</td>
+          <td class="num">1,258</td><td class="num">1,023</td>
+          <td class="num">81.3%</td>
+          <td class="num bold">$354,048</td>
+          <td class="num">$281.44</td>
+          <td class="num bold">19.7%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">🟡 中R</td>
+          <td class="num">3,670</td><td class="num">2,509</td>
+          <td class="num">68.4%</td>
+          <td class="num bold">$283,811</td>
+          <td class="num" style="color:var(--orange)">$77.33</td>
+          <td class="num bold">15.8%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">⚪ 小R</td>
+          <td class="num">6,381</td><td class="num">1,510</td>
+          <td class="num" style="color:var(--orange)">23.7%</td>
+          <td class="num bold">$43,952</td>
+          <td class="num">$6.89</td>
+          <td class="num bold">2.4%</td>
+        </tr>
+        <tr style="background:rgba(108,99,255,.06)">
+          <td class="bold">R级合计</td>
+          <td class="num">12,399</td><td class="num">5,992</td>
+          <td class="num">48.3%</td>
+          <td class="num bold" style="color:var(--accent)">$1,695,382</td>
+          <td class="num bold" style="color:var(--accent)">$136.74</td>
+          <td class="num bold" style="color:var(--accent)">94.3%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-top:12px;padding:12px 16px;background:rgba(249,115,22,.08);border-radius:8px;border-left:3px solid var(--orange);font-size:12px;line-height:1.7">
+    ⚠ <b style="color:var(--orange)">中R 预警</b>：科技节中R ARPU $77 是6期最低（峰值春节 $93，降幅 17%）。中R 是最大的可培育群体（3,670活跃），ARPU 下滑意味着他们在本期节日礼包的参与度下降，需要针对性提升低门槛礼包触达。
+  </div>
+</div>
+
+<!-- ══ Section 4: 大盘分层 ══ -->
+<div class="section">
+  <div class="section-title">科技节核心大盘（分 R 级，全量口径）</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>分层</th>
+          <th class="num">活跃人数</th>
+          <th class="num">付费人数</th>
+          <th class="num">付费率</th>
+          <th class="num">总收入</th>
+          <th class="num">收入占比</th>
+          <th class="num">ARPU</th>
+          <th class="num">vs 情人节 ARPU</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td class="bold">全体（R级用户合计）</td>
+          <td class="num">12,399</td><td class="num">5,992</td>
+          <td class="num">48.3%</td>
+          <td class="num bold">$1,695,382</td>
+          <td class="num">94.3%</td>
+          <td class="num bold" style="color:var(--accent)">$136.74</td>
+          <td class="num" style="color:var(--text-muted)">—</td>
+        </tr>
+        <tr>
+          <td style="color:var(--red);font-weight:600">🔴 超R</td>
+          <td class="num">1,090</td><td class="num">950</td>
+          <td class="num" style="color:var(--green)"><b>87.2%</b></td>
+          <td class="num bold" style="color:var(--red)">$1,013,571</td>
+          <td class="num bold" style="color:var(--red)">56.4%</td>
+          <td class="num bold" style="color:var(--red)">$929.88</td>
+          <td class="num">vs $921.72 <span style="color:var(--green)">+0.9%</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">🟠 大R</td>
+          <td class="num">1,258</td><td class="num">1,023</td>
+          <td class="num">81.3%</td>
+          <td class="num bold">$354,048</td>
+          <td class="num bold">19.7%</td>
+          <td class="num">$281.44</td>
+          <td class="num">vs $286.17 <span style="color:var(--orange)">-1.7%</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">🟡 中R</td>
+          <td class="num">3,670</td><td class="num">2,509</td>
+          <td class="num">68.4%</td>
+          <td class="num bold">$283,811</td>
+          <td class="num bold">15.8%</td>
+          <td class="num" style="color:var(--red)">$77.33 ↓</td>
+          <td class="num">vs $82.83 <span style="color:var(--red)">-6.6%</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">⚪ 小R</td>
+          <td class="num">6,381</td><td class="num">1,510</td>
+          <td class="num" style="color:var(--orange)">23.7%</td>
+          <td class="num bold">$43,952</td>
+          <td class="num bold">2.4%</td>
+          <td class="num">$6.89</td>
+          <td class="num">vs $7.18 <span style="color:var(--orange)">-4.0%</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ Section 5: 模块结构 ══ -->
+<div class="section">
+  <div class="section-title">模块收入结构</div>
+  <div class="module-grid">
+    <div class="donut-wrap">
+      <svg width="200" height="200" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="75" fill="none" stroke="#222536" stroke-width="28"/>
+        <!-- 节日特惠 81.8% -->
+        <circle cx="100" cy="100" r="75" fill="none" stroke="#00d4aa" stroke-width="28"
+          stroke-dasharray="385.5 471.2" stroke-dashoffset="0"/>
+        <!-- 节日皮肤 9.8% -->
+        <circle cx="100" cy="100" r="75" fill="none" stroke="#ff6b6b" stroke-width="28"
+          stroke-dasharray="46.2 471.2" stroke-dashoffset="-385.5"/>
+        <!-- 节日BP 6.9% -->
+        <circle cx="100" cy="100" r="75" fill="none" stroke="#6c63ff" stroke-width="28"
+          stroke-dasharray="32.5 471.2" stroke-dashoffset="-431.7"/>
+        <!-- 挖矿小游戏 1.6% -->
+        <circle cx="100" cy="100" r="75" fill="none" stroke="#ffd166" stroke-width="28"
+          stroke-dasharray="7.5 471.2" stroke-dashoffset="-464.2"/>
+      </svg>
+      <div class="donut-center">
+        <div class="donut-center-val">$855K</div>
+        <div class="donut-center-label">节日礼包</div>
+      </div>
+    </div>
+    <div class="module-legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#00d4aa"></div>
+        <div class="legend-name">节日特惠</div>
+        <div class="legend-val">$699,177<span class="legend-pct">81.8%</span></div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#ff6b6b"></div>
+        <div class="legend-name">节日皮肤</div>
+        <div class="legend-val">$83,539<span class="legend-pct">9.8%</span></div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#6c63ff"></div>
+        <div class="legend-name">节日BP</div>
+        <div class="legend-val">$59,052<span class="legend-pct">6.9%</span></div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#ffd166"></div>
+        <div class="legend-name">挖矿小游戏</div>
+        <div class="legend-val">$13,353<span class="legend-pct">1.6%</span></div>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--text-muted);line-height:1.6">
+        💡 分类依据 dim_iap.iap_type2 官方字段 · 节日特惠含挖孔/推币/大富翁/弹珠GACHA/限时抢购等全部玩法礼包
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Section 6: 礼包排名 ══ -->
+<div class="section">
+  <div class="section-title">各礼包效率排名（共 51 条 · iap_type2 分类）</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>礼包名称</th>
+          <th>模块</th>
+          <th class="num">收入</th>
+          <th class="num">占比</th>
+          <th class="num">购买人次</th>
+          <th class="num">去重人数</th>
+          <th class="num">人均次数</th>
+          <th class="num">人次ARPPU</th>
+          <th class="num">节日ARPU</th>
+        </tr>
+      </thead>
+      <tbody id="rank-body">
+        <!-- Top 20 -->
+        <tr class="highlight-row"><td>1</td><td class="bold">挖孔小游戏礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$206,191</td><td class="num">24.1%</td><td class="num">11,693</td><td class="num">2,710</td><td class="num">4.3x</td><td class="num">$17.63</td><td class="num bold" style="color:var(--accent2)">$76.09</td></tr>
+        <tr class="highlight-row"><td>2</td><td class="bold">2026科技节弹珠GACHA</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$129,800</td><td class="num">15.2%</td><td class="num">6,466</td><td class="num">1,170</td><td class="num">5.5x</td><td class="num">$20.07</td><td class="num bold" style="color:var(--accent2)">$110.94</td></tr>
+        <tr class="highlight-row"><td>3</td><td class="bold">推币机礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$64,042</td><td class="num">7.5%</td><td class="num">4,326</td><td class="num">1,110</td><td class="num">3.9x</td><td class="num">$14.80</td><td class="num bold">$57.70</td></tr>
+        <tr><td>4</td><td class="bold">推币机随机GACHA礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num bold">$56,054</td><td class="num">6.6%</td><td class="num">1,559</td><td class="num">458</td><td class="num">3.4x</td><td class="num">$35.96</td><td class="num bold" style="color:var(--accent2)">$122.39</td></tr>
+        <tr><td>5</td><td class="bold">挖矿小游戏活动</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$48,494</td><td class="num">5.7%</td><td class="num">7,859</td><td class="num">544</td><td class="num">14.4x</td><td class="num">$6.17</td><td class="num bold" style="color:var(--accent2)">$89.14</td></tr>
+        <tr><td>6</td><td class="bold">2025复活节大富翁礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$47,421</td><td class="num">5.5%</td><td class="num">4,911</td><td class="num">1,542</td><td class="num">3.2x</td><td class="num">$9.66</td><td class="num bold">$30.75</td></tr>
+        <tr><td>7</td><td class="bold">限时抢购</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$45,858</td><td class="num">5.4%</td><td class="num">1,240</td><td class="num">447</td><td class="num">2.8x</td><td class="num">$36.98</td><td class="num bold" style="color:var(--accent2)">$102.59</td></tr>
+        <tr><td>8</td><td class="bold">科技节高级通行证_2025</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num bold">$23,588</td><td class="num">2.8%</td><td class="num">1,180</td><td class="num">1,180</td><td class="num">1.0x</td><td class="num">$19.99</td><td class="num bold">$19.99</td></tr>
+        <tr><td>9</td><td class="bold">节日大富翁礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$18,298</td><td class="num">2.1%</td><td class="num">216</td><td class="num">161</td><td class="num">1.3x</td><td class="num">$84.71</td><td class="num bold" style="color:var(--accent2)">$113.65</td></tr>
+        <tr><td>10</td><td class="bold">周年庆预购连锁_schema6</td><td><span class="tag tag-game">节日特惠</span></td><td class="num bold">$17,998</td><td class="num">2.1%</td><td class="num">180</td><td class="num">180</td><td class="num">1.0x</td><td class="num">$99.99</td><td class="num bold" style="color:var(--accent2)">$99.99</td></tr>
+        <tr><td>11</td><td>2025深海节-节日礼包团购</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$17,945</td><td class="num">2.1%</td><td class="num">2,627</td><td class="num">1,224</td><td class="num">2.1x</td><td class="num">$6.83</td><td class="num">$14.66</td></tr>
+        <tr><td>12</td><td>万圣节小连锁随机礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$15,811</td><td class="num">1.8%</td><td class="num">3,378</td><td class="num">1,430</td><td class="num">2.4x</td><td class="num">$4.68</td><td class="num">$11.06</td></tr>
+        <tr><td>13</td><td>科技节初级通行证_2025</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num">$14,050</td><td class="num">1.6%</td><td class="num">2,010</td><td class="num">2,010</td><td class="num">1.0x</td><td class="num">$6.99</td><td class="num">$6.99</td></tr>
+        <tr><td>14</td><td>2026复活节-行军特效</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num">$13,253</td><td class="num">1.5%</td><td class="num">663</td><td class="num">663</td><td class="num">1.0x</td><td class="num">$19.99</td><td class="num">$19.99</td></tr>
+        <tr><td>15</td><td>节日大富翁</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$12,727</td><td class="num">1.5%</td><td class="num">2,422</td><td class="num">2,191</td><td class="num">1.1x</td><td class="num">$5.25</td><td class="num">$5.81</td></tr>
+        <tr><td>16</td><td>挖矿小游戏活动</td><td><span class="tag tag-mine">挖矿</span></td><td class="num">$11,897</td><td class="num">1.4%</td><td class="num">3,129</td><td class="num">1,038</td><td class="num">3.0x</td><td class="num">$3.80</td><td class="num">$11.46</td></tr>
+        <tr><td>17</td><td>2026科技节-行军表情</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num">$11,252</td><td class="num">1.3%</td><td class="num">2,255</td><td class="num">2,255</td><td class="num">1.0x</td><td class="num">$4.99</td><td class="num">$4.99</td></tr>
+        <tr><td>18</td><td>情人节BP</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num">$10,919</td><td class="num">1.3%</td><td class="num">1,148</td><td class="num">709</td><td class="num">1.6x</td><td class="num">$9.51</td><td class="num">$15.40</td></tr>
+        <tr><td>19</td><td>25感恩节每日补给升级礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$9,371</td><td class="num">1.1%</td><td class="num">4,709</td><td class="num">1,787</td><td class="num">2.6x</td><td class="num">$1.99</td><td class="num">$5.24</td></tr>
+        <tr><td>20</td><td>对对碰</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$7,695</td><td class="num">0.9%</td><td class="num">868</td><td class="num">510</td><td class="num">1.7x</td><td class="num">$8.87</td><td class="num">$15.09</td></tr>
+      </tbody>
+    </table>
+    <details>
+      <summary>▼ 展开查看剩余 31 条礼包（#21 ~ #51）</summary>
+      <table>
+        <tbody>
+          <tr><td style="padding:11px 14px">21</td><td style="padding:11px 14px">2026科技节集结奖励解锁礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$6,387</td><td class="num" style="padding:11px 14px">0.75%</td><td class="num" style="padding:11px 14px">1,280</td><td class="num" style="padding:11px 14px">1,279</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$4.99</td><td class="num" style="padding:11px 14px">$4.99</td></tr>
+          <tr><td style="padding:11px 14px">22</td><td style="padding:11px 14px">掉落转付费礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$6,030</td><td class="num" style="padding:11px 14px">0.71%</td><td class="num" style="padding:11px 14px">974</td><td class="num" style="padding:11px 14px">820</td><td class="num" style="padding:11px 14px">1.2x</td><td class="num" style="padding:11px 14px">$6.19</td><td class="num" style="padding:11px 14px">$7.35</td></tr>
+          <tr><td style="padding:11px 14px">23</td><td style="padding:11px 14px">2025深海节累充服务器礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$5,785</td><td class="num" style="padding:11px 14px">0.68%</td><td class="num" style="padding:11px 14px">502</td><td class="num" style="padding:11px 14px">502</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$11.52</td><td class="num" style="padding:11px 14px">$11.52</td></tr>
+          <tr><td style="padding:11px 14px">24</td><td style="padding:11px 14px">2025复活节-强消耗抽奖券礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$5,466</td><td class="num" style="padding:11px 14px">0.64%</td><td class="num" style="padding:11px 14px">389</td><td class="num" style="padding:11px 14px">280</td><td class="num" style="padding:11px 14px">1.4x</td><td class="num" style="padding:11px 14px">$14.05</td><td class="num" style="padding:11px 14px">$19.52</td></tr>
+          <tr><td style="padding:11px 14px">25</td><td style="padding:11px 14px">科技节自选周卡</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$5,184</td><td class="num" style="padding:11px 14px">0.61%</td><td class="num" style="padding:11px 14px">121</td><td class="num" style="padding:11px 14px">120</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$42.84</td><td class="num" style="padding:11px 14px">$43.20</td></tr>
+          <tr><td style="padding:11px 14px">26</td><td style="padding:11px 14px">节日大富翁组队礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$4,386</td><td class="num" style="padding:11px 14px">0.51%</td><td class="num" style="padding:11px 14px">439</td><td class="num" style="padding:11px 14px">279</td><td class="num" style="padding:11px 14px">1.6x</td><td class="num" style="padding:11px 14px">$9.99</td><td class="num" style="padding:11px 14px">$15.72</td></tr>
+          <tr><td style="padding:11px 14px">27</td><td style="padding:11px 14px">kvk基因高级bp通行证</td><td style="padding:11px 14px"><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="padding:11px 14px">$3,700</td><td class="num" style="padding:11px 14px">0.43%</td><td class="num" style="padding:11px 14px">37</td><td class="num" style="padding:11px 14px">37</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$99.99</td><td class="num" style="padding:11px 14px">$99.99</td></tr>
+          <tr><td style="padding:11px 14px">28</td><td style="padding:11px 14px">kvk基因bp通行证</td><td style="padding:11px 14px"><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="padding:11px 14px">$3,673</td><td class="num" style="padding:11px 14px">0.43%</td><td class="num" style="padding:11px 14px">245</td><td class="num" style="padding:11px 14px">244</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$14.99</td><td class="num" style="padding:11px 14px">$15.05</td></tr>
+          <tr><td style="padding:11px 14px">29</td><td style="padding:11px 14px">节日挖矿-砍价礼包-折扣5</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$3,401</td><td class="num" style="padding:11px 14px">0.40%</td><td class="num" style="padding:11px 14px">1,709</td><td class="num" style="padding:11px 14px">954</td><td class="num" style="padding:11px 14px">1.8x</td><td class="num" style="padding:11px 14px">$1.99</td><td class="num" style="padding:11px 14px">$3.56</td></tr>
+          <tr><td style="padding:11px 14px">30</td><td style="padding:11px 14px">改造猴特权-节日版</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$3,097</td><td class="num" style="padding:11px 14px">0.36%</td><td class="num" style="padding:11px 14px">310</td><td class="num" style="padding:11px 14px">310</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$9.99</td><td class="num" style="padding:11px 14px">$9.99</td></tr>
+          <tr><td style="padding:11px 14px">31</td><td style="padding:11px 14px">周年庆预购连锁礼包_schema3-5</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$2,900</td><td class="num" style="padding:11px 14px">0.34%</td><td class="num" style="padding:11px 14px">29</td><td class="num" style="padding:11px 14px">29</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$99.99</td><td class="num" style="padding:11px 14px">$99.99</td></tr>
+          <tr><td style="padding:11px 14px">32</td><td style="padding:11px 14px">酒馆登陆bp</td><td style="padding:11px 14px"><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="padding:11px 14px">$2,128</td><td class="num" style="padding:11px 14px">0.25%</td><td class="num" style="padding:11px 14px">150</td><td class="num" style="padding:11px 14px">87</td><td class="num" style="padding:11px 14px">1.7x</td><td class="num" style="padding:11px 14px">$14.19</td><td class="num" style="padding:11px 14px">$24.47</td></tr>
+          <tr><td style="padding:11px 14px">33</td><td style="padding:11px 14px">2026科技节wonder巨猿砸蛋锤礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$2,068</td><td class="num" style="padding:11px 14px">0.24%</td><td class="num" style="padding:11px 14px">207</td><td class="num" style="padding:11px 14px">207</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$9.99</td><td class="num" style="padding:11px 14px">$9.99</td></tr>
+          <tr><td style="padding:11px 14px">34</td><td style="padding:11px 14px">2025周年庆累充服务器礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$2,049</td><td class="num" style="padding:11px 14px">0.24%</td><td class="num" style="padding:11px 14px">100</td><td class="num" style="padding:11px 14px">100</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$20.49</td><td class="num" style="padding:11px 14px">$20.49</td></tr>
+          <tr><td style="padding:11px 14px">35</td><td style="padding:11px 14px">挖矿小游戏-卡包礼包-节日版本</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$1,996</td><td class="num" style="padding:11px 14px">0.23%</td><td class="num" style="padding:11px 14px">400</td><td class="num" style="padding:11px 14px">161</td><td class="num" style="padding:11px 14px">2.5x</td><td class="num" style="padding:11px 14px">$4.99</td><td class="num" style="padding:11px 14px">$12.40</td></tr>
+          <tr><td style="padding:11px 14px">36</td><td style="padding:11px 14px">2023装饰兑换券礼包</td><td style="padding:11px 14px"><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="padding:11px 14px">$1,894</td><td class="num" style="padding:11px 14px">0.22%</td><td class="num" style="padding:11px 14px">56</td><td class="num" style="padding:11px 14px">42</td><td class="num" style="padding:11px 14px">1.3x</td><td class="num" style="padding:11px 14px">$33.83</td><td class="num" style="padding:11px 14px">$45.11</td></tr>
+          <tr><td style="padding:11px 14px">37</td><td style="padding:11px 14px">2023装饰兑换券礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$1,759</td><td class="num" style="padding:11px 14px">0.21%</td><td class="num" style="padding:11px 14px">76</td><td class="num" style="padding:11px 14px">60</td><td class="num" style="padding:11px 14px">1.3x</td><td class="num" style="padding:11px 14px">$23.15</td><td class="num" style="padding:11px 14px">$29.32</td></tr>
+          <tr><td style="padding:11px 14px">38</td><td style="padding:11px 14px">成长线1+1礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$1,618</td><td class="num" style="padding:11px 14px">0.19%</td><td class="num" style="padding:11px 14px">184</td><td class="num" style="padding:11px 14px">154</td><td class="num" style="padding:11px 14px">1.2x</td><td class="num" style="padding:11px 14px">$8.80</td><td class="num" style="padding:11px 14px">$10.51</td></tr>
+          <tr><td style="padding:11px 14px">39</td><td style="padding:11px 14px">情人节bingo活动宝箱礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$1,502</td><td class="num" style="padding:11px 14px">0.18%</td><td class="num" style="padding:11px 14px">301</td><td class="num" style="padding:11px 14px">301</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$4.99</td><td class="num" style="padding:11px 14px">$4.99</td></tr>
+          <tr><td style="padding:11px 14px">40</td><td style="padding:11px 14px">2025复活节强消耗触发礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$1,333</td><td class="num" style="padding:11px 14px">0.16%</td><td class="num" style="padding:11px 14px">404</td><td class="num" style="padding:11px 14px">390</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$3.30</td><td class="num" style="padding:11px 14px">$3.42</td></tr>
+          <tr><td style="padding:11px 14px">41</td><td style="padding:11px 14px">挖矿小游戏</td><td style="padding:11px 14px"><span class="tag tag-mine">挖矿</span></td><td class="num" style="padding:11px 14px">$1,098</td><td class="num" style="padding:11px 14px">0.13%</td><td class="num" style="padding:11px 14px">219</td><td class="num" style="padding:11px 14px">142</td><td class="num" style="padding:11px 14px">1.5x</td><td class="num" style="padding:11px 14px">$5.01</td><td class="num" style="padding:11px 14px">$7.73</td></tr>
+          <tr><td style="padding:11px 14px">42</td><td style="padding:11px 14px">休眠仓</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$973</td><td class="num" style="padding:11px 14px">0.11%</td><td class="num" style="padding:11px 14px">195</td><td class="num" style="padding:11px 14px">83</td><td class="num" style="padding:11px 14px">2.3x</td><td class="num" style="padding:11px 14px">$4.99</td><td class="num" style="padding:11px 14px">$11.72</td></tr>
+          <tr><td style="padding:11px 14px">43</td><td style="padding:11px 14px">kvk基因高级bp通行证-V81-kvk5</td><td style="padding:11px 14px"><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="padding:11px 14px">$700</td><td class="num" style="padding:11px 14px">0.08%</td><td class="num" style="padding:11px 14px">7</td><td class="num" style="padding:11px 14px">7</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$99.99</td><td class="num" style="padding:11px 14px">$99.99</td></tr>
+          <tr><td style="padding:11px 14px">44</td><td style="padding:11px 14px">节日挖矿-砍价礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$695</td><td class="num" style="padding:11px 14px">0.08%</td><td class="num" style="padding:11px 14px">41</td><td class="num" style="padding:11px 14px">32</td><td class="num" style="padding:11px 14px">1.3x</td><td class="num" style="padding:11px 14px">$16.94</td><td class="num" style="padding:11px 14px">$21.71</td></tr>
+          <tr><td style="padding:11px 14px">45</td><td style="padding:11px 14px">千万下载礼包</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$675</td><td class="num" style="padding:11px 14px">0.08%</td><td class="num" style="padding:11px 14px">77</td><td class="num" style="padding:11px 14px">43</td><td class="num" style="padding:11px 14px">1.8x</td><td class="num" style="padding:11px 14px">$8.77</td><td class="num" style="padding:11px 14px">$15.70</td></tr>
+          <tr><td style="padding:11px 14px">46</td><td style="padding:11px 14px">泳池派对礼包</td><td style="padding:11px 14px"><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="padding:11px 14px">$605</td><td class="num" style="padding:11px 14px">0.07%</td><td class="num" style="padding:11px 14px">23</td><td class="num" style="padding:11px 14px">11</td><td class="num" style="padding:11px 14px">2.1x</td><td class="num" style="padding:11px 14px">$26.29</td><td class="num" style="padding:11px 14px">$54.98</td></tr>
+          <tr><td style="padding:11px 14px">47</td><td style="padding:11px 14px">2022幼猴节gacha礼包</td><td style="padding:11px 14px"><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="padding:11px 14px">$480</td><td class="num" style="padding:11px 14px">0.06%</td><td class="num" style="padding:11px 14px">16</td><td class="num" style="padding:11px 14px">8</td><td class="num" style="padding:11px 14px">2.0x</td><td class="num" style="padding:11px 14px">$29.99</td><td class="num" style="padding:11px 14px">$59.98</td></tr>
+          <tr><td style="padding:11px 14px">48</td><td style="padding:11px 14px">挖矿小游戏-产量翻倍特权</td><td style="padding:11px 14px"><span class="tag tag-mine">挖矿</span></td><td class="num" style="padding:11px 14px">$359</td><td class="num" style="padding:11px 14px">0.04%</td><td class="num" style="padding:11px 14px">120</td><td class="num" style="padding:11px 14px">87</td><td class="num" style="padding:11px 14px">1.4x</td><td class="num" style="padding:11px 14px">$2.99</td><td class="num" style="padding:11px 14px">$4.12</td></tr>
+          <tr><td style="padding:11px 14px">49</td><td style="padding:11px 14px">基因bp通行证BP积分礼包</td><td style="padding:11px 14px"><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="padding:11px 14px">$295</td><td class="num" style="padding:11px 14px">0.03%</td><td class="num" style="padding:11px 14px">38</td><td class="num" style="padding:11px 14px">25</td><td class="num" style="padding:11px 14px">1.5x</td><td class="num" style="padding:11px 14px">$7.75</td><td class="num" style="padding:11px 14px">$11.78</td></tr>
+          <tr><td style="padding:11px 14px">50</td><td style="padding:11px 14px">转盘折扣小额</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$132</td><td class="num" style="padding:11px 14px">0.02%</td><td class="num" style="padding:11px 14px">13</td><td class="num" style="padding:11px 14px">11</td><td class="num" style="padding:11px 14px">1.2x</td><td class="num" style="padding:11px 14px">$10.14</td><td class="num" style="padding:11px 14px">$11.99</td></tr>
+          <tr><td style="padding:11px 14px">51</td><td style="padding:11px 14px">2023幼猴节-7日活动宝箱</td><td style="padding:11px 14px"><span class="tag tag-game">节日特惠</span></td><td class="num" style="padding:11px 14px">$90</td><td class="num" style="padding:11px 14px">0.01%</td><td class="num" style="padding:11px 14px">18</td><td class="num" style="padding:11px 14px">18</td><td class="num" style="padding:11px 14px">1.0x</td><td class="num" style="padding:11px 14px">$4.99</td><td class="num" style="padding:11px 14px">$4.99</td></tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+</div>
+
+<!-- ══ Section 7: 日收入 ══ -->
+<div class="section">
+  <div class="section-title">日收入走势（3.13 ~ 4.03）</div>
+  <div class="daily-chart">
+    <script>
+      const days = [
+        ['03-13',92830],['03-14',80966],['03-15',75303],['03-16',80704],
+        ['03-17',62763],['03-18',58695],['03-19',64968],['03-20',103585],
+        ['03-21',76176],['03-22',76392],['03-23',75173],['03-24',74371],
+        ['03-25',61160],['03-26',76653],['03-27',90762],['03-28',96476],
+        ['03-29',91760],['03-30',104638],['03-31',112312],['04-01',97358],
+        ['04-02',93075],['04-03',52608]
+      ];
+      const maxVal = Math.max(...days.map(d=>d[1]));
+      document.addEventListener('DOMContentLoaded', () => {
+        const wrap = document.querySelector('.daily-chart');
+        days.forEach(([label, val]) => {
+          const pct = (val / maxVal * 100).toFixed(1);
+          const isPeak = val === maxVal;
+          const row = document.createElement('div');
+          row.className = 'day-row';
+          row.innerHTML = `
+            <div class="day-label">${label}</div>
+            <div class="day-bar-wrap">
+              <div class="day-bar ${isPeak?'peak':''}" style="width:${pct}%"></div>
+            </div>
+            <div class="day-val">$${val.toLocaleString()}</div>
+          `;
+          wrap.appendChild(row);
+        });
+      });
+    </script>
+  </div>
+</div>
+
+<!-- ══ Section 8: 模块趋势 ══ -->
+<div class="section">
+  <div class="section-title">节日礼包模块趋势（近6期）</div>
+  <div style="margin-bottom:12px;font-size:12px;color:var(--text-muted)">
+    分类依据：dim_iap.iap_type2 官方字段 · 日期为实际礼包购买覆盖期
+  </div>
+
+  <!-- 堆叠柱状图 -->
+  <div id="module-stacked" style="display:flex;gap:6px;align-items:flex-end;height:240px;margin-bottom:20px;padding:0 4px">
+  </div>
+  <div style="display:flex;gap:24px;margin-bottom:24px;font-size:12px">
+    <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#00d4aa;display:inline-block"></span>节日特惠</span>
+    <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#ff6b6b;display:inline-block"></span>节日皮肤</span>
+    <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#6c63ff;display:inline-block"></span>节日BP</span>
+    <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#ffd166;display:inline-block"></span>挖矿小游戏</span>
+  </div>
+
+  <!-- 数字表格 -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>iap_type2</th>
+          <th class="num">🎃 万圣节<br><span style="font-weight:400;color:var(--text-muted)">10-17~11-06</span></th>
+          <th class="num">🦃 感恩节<br><span style="font-weight:400;color:var(--text-muted)">11-13~12-04</span></th>
+          <th class="num">🎄 圣诞节<br><span style="font-weight:400;color:var(--text-muted)">12-12~01-01</span></th>
+          <th class="num">🧧 春节<br><span style="font-weight:400;color:var(--text-muted)">01-13~02-08</span></th>
+          <th class="num">💝 情人节<br><span style="font-weight:400;color:var(--text-muted)">02-11~03-05</span></th>
+          <th class="num" style="color:var(--accent)">🔬 科技节<br><span style="font-weight:400;color:var(--text-muted)">03-13~04-03</span></th>
+          <th class="num">趋势</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--accent2);font-weight:700">🎁 节日特惠</td>
+          <td class="num">$251,378<br><span style="color:var(--text-muted);font-size:11px">39.5%</span></td>
+          <td class="num">$584,683<br><span style="color:var(--text-muted);font-size:11px">74.1%</span></td>
+          <td class="num">$668,073<br><span style="color:var(--text-muted);font-size:11px">70.9%</span></td>
+          <td class="num" style="color:var(--green);font-weight:700">$851,887<br><span style="font-size:11px">79.8% ★</span></td>
+          <td class="num">$533,450<br><span style="color:var(--text-muted);font-size:11px">63.4%</span></td>
+          <td class="num bold" style="color:var(--accent2)">$699,177<br><span style="font-size:11px">81.8%</span></td>
+          <td class="num" style="color:var(--green);font-size:16px">↑ 占比持续提升</td>
+        </tr>
+        <tr>
+          <td style="color:var(--red);font-weight:700">✨ 节日皮肤</td>
+          <td class="num" style="color:var(--green);font-weight:700">$299,951<br><span style="font-size:11px">47.1% ★</span></td>
+          <td class="num">$107,661<br><span style="color:var(--text-muted);font-size:11px">13.6%</span></td>
+          <td class="num">$188,722<br><span style="color:var(--text-muted);font-size:11px">20.0%</span></td>
+          <td class="num">$125,820<br><span style="color:var(--text-muted);font-size:11px">11.8%</span></td>
+          <td class="num">$227,954<br><span style="color:var(--text-muted);font-size:11px">27.1%</span></td>
+          <td class="num bold" style="color:var(--red)">$83,539<br><span style="font-size:11px">9.8%</span></td>
+          <td class="num" style="color:var(--red);font-size:16px">↓↓ 6期最低</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent);font-weight:700">🏆 节日BP</td>
+          <td class="num">$69,209<br><span style="color:var(--text-muted);font-size:11px">10.9%</span></td>
+          <td class="num" style="color:var(--green);font-weight:700">$83,195<br><span style="font-size:11px">10.5%</span></td>
+          <td class="num">$69,802<br><span style="color:var(--text-muted);font-size:11px">7.4%</span></td>
+          <td class="num">$76,754<br><span style="color:var(--text-muted);font-size:11px">7.2%</span></td>
+          <td class="num">$65,799<br><span style="color:var(--text-muted);font-size:11px">7.8%</span></td>
+          <td class="num bold" style="color:var(--accent)">$59,052<br><span style="font-size:11px">6.9%</span></td>
+          <td class="num" style="color:var(--orange);font-size:16px">↓ 持续下滑</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent4);font-weight:700">⛏ 挖矿小游戏</td>
+          <td class="num">$16,055<br><span style="color:var(--text-muted);font-size:11px">2.5%</span></td>
+          <td class="num">$13,457<br><span style="color:var(--text-muted);font-size:11px">1.7%</span></td>
+          <td class="num">$15,177<br><span style="color:var(--text-muted);font-size:11px">1.6%</span></td>
+          <td class="num">$13,447<br><span style="color:var(--text-muted);font-size:11px">1.3%</span></td>
+          <td class="num">$13,998<br><span style="color:var(--text-muted);font-size:11px">1.7%</span></td>
+          <td class="num bold" style="color:var(--accent4)">$13,353<br><span style="font-size:11px">1.6%</span></td>
+          <td class="num" style="color:var(--text-muted);font-size:16px">→ 稳定 $13-16K</td>
+        </tr>
+        <tr style="background:rgba(108,99,255,.06)">
+          <td class="bold">总计</td>
+          <td class="num">$636,593</td>
+          <td class="num">$788,996</td>
+          <td class="num">$941,774</td>
+          <td class="num" style="color:var(--green);font-weight:700">$1,067,907 ★</td>
+          <td class="num">$841,202</td>
+          <td class="num bold" style="color:var(--accent)">$855,121</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:16px;padding:14px 18px;background:rgba(108,99,255,.08);border-radius:10px;border-left:3px solid var(--accent);font-size:13px;line-height:1.8">
+    <b style="color:var(--accent)">📊 结构性洞察（基于 iap_type2 官方分类）：</b>
+    <br>• <b style="color:var(--accent2)">节日特惠持续扩大</b>：万圣节仅 39.5%，科技节已达 81.8%，涵盖挖孔/推币/大富翁/弹珠GACHA 等核心玩法礼包
+    <br>• <b style="color:var(--red)">节日皮肤科技节跌至6期最低 9.8%</b>（$83K）：万圣节弹珠+机甲GACHA 曾达 47.1%（$300K），情人节云上探宝拉到 27.1%，科技节缺乏强力皮肤内容
+    <br>• <b style="color:var(--accent)">节日 BP 绝对值持续下滑</b>：感恩节 $83K → 科技节 $59K，占比从 10.5% 降至 6.9%
+    <br>• <b>挖矿小游戏</b>是唯一单独分类的玩法，6期稳定在 $13-16K，体量不大但持续贡献
+    <br>• ⚠ 注：科技节弹珠GACHA（$129K）在 dim_iap 中的 iap_type2 是<b style="color:var(--accent2)">节日特惠</b>而非节日皮肤，与万圣节弹珠（归为节日皮肤）的分类不同
+  </div>
+</div>
+
+<!-- ══ Section 9: 子活动横向对比 ══ -->
+<div class="section">
+  <div class="section-title">子活动横向对比（近6期，自动生成）</div>
+  <div style="margin-bottom:10px;font-size:12px;color:var(--text-muted)">分类依据：dim_iap.iap_type2 · 日期为礼包购买覆盖期 · 显示任一期收入≥$5K的礼包</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>子活动</th>
+          <th>iap_type2</th>
+          <th class="num">🎃 万圣节</th>
+          <th class="num">🦃 感恩节</th>
+          <th class="num">🎄 圣诞节</th>
+          <th class="num">🧧 春节</th>
+          <th class="num">💝 情人节</th>
+          <th class="num" style="color:var(--accent)">🔬 科技节</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>挖孔小游戏礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$82,371</td><td class="num">$139,061</td><td class="num">$139,652</td><td class="num">$243,458</td><td class="num">$206,191</td></tr>
+        <tr><td>2026科技节弹珠GACHA</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$129,800</td></tr>
+        <tr><td>推币机礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$38,368</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$64,042</td></tr>
+        <tr><td>推币机随机GACHA礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$33,279</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$56,054</td></tr>
+        <tr><td>2025复活节大富翁礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$32,681</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$24,155</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$47,421</td></tr>
+        <tr><td>限时抢购</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$70,502</td><td class="num">$63,085</td><td class="num">$54,615</td><td class="num">$45,858</td></tr>
+        <tr><td>科技节高级通行证_2025</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$23,588</td></tr>
+        <tr><td>节日大富翁礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$23,097</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$20,548</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$18,298</td></tr>
+        <tr><td>周年庆预购连锁_schema6</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$34,497</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$17,998</td></tr>
+        <tr><td>2025深海节-节日礼包团购</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$23,095</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$17,945</td></tr>
+        <tr><td>万圣节小连锁随机礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$15,811</td></tr>
+        <tr><td>科技节初级通行证_2025</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$14,050</td></tr>
+        <tr><td>2026复活节-行军特效</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$13,253</td></tr>
+        <tr><td>节日大富翁</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$12,965</td><td class="num">$67,470</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$75,633</td><td class="num">$12,727</td></tr>
+        <tr><td>挖矿小游戏活动</td><td><span class="tag tag-mine">挖矿小游戏</span></td><td class="num">$10,838</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$12,465</td><td class="num">$11,897</td></tr>
+        <tr><td>2026科技节-行军表情</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$11,252</td></tr>
+        <tr><td>情人节BP</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$18,851</td><td class="num">$21,144</td><td class="num">$11,445</td><td class="num">$6,277</td><td class="num">$10,919</td></tr>
+        <tr><td>25感恩节每日补给升级礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$9,371</td></tr>
+        <tr><td>对对碰</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$14,010</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$8,237</td><td class="num">$7,695</td></tr>
+        <tr><td>2025万圣节弹珠随机GACHA礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num">$92,702</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$144,919</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2025异族大富翁</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$134,234</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>云上探宝</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$125,616</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>异族大富翁随机礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$123,318</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>钓鱼活动礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$79,706</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>机甲GACHA</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num">$63,419</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$75,801</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2025万圣节弹珠GACHA礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num">$67,730</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>MJ8小游戏</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$66,077</td><td class="num">$62,027</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>春节抽奖成就礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$64,725</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>S300赛车特惠</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$60,478</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>节日-幸运多重礼GACHA礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$54,291</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$33,217</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2024感恩节随机GACHA礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$52,079</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2025情人节送花礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$50,610</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>黑五省省卡礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$40,763</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>黑五英雄专属礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$40,623</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>预购连锁</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$37,896</td><td class="num">$19,698</td><td class="num">$26,997</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>通用小额随机-转盘</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$36,976</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$18,853</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2024感恩节GACHA礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$36,029</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>斗士抽奖成就礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$31,721</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2025周年庆返场买三赠一SCHEMA6</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$21,796</td><td class="num">$30,624</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>开箱强消耗钥匙礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$28,549</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>S6周年庆特效返场-1限时抢购礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$24,910</td><td class="num">$28,378</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>万圣节自选周卡-schema6</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$28,084</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2025万圣节bp礼包</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num">$27,733</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>S300赛车常驻-高级抽奖券</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$27,633</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>圣诞节高级通行证_2025</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$27,166</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>砍价-欢乐币礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$25,538</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$16,019</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>黑五满减礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$25,050</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2024万圣节随机GACHA礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num">$24,403</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>斗士抽奖GACHA随机礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$24,213</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>一番赏GACHA礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$23,747</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2025春节随机GACHA礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$22,193</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>圣诞节自选周卡</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$22,130</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>春节高级通行证_2025</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$21,989</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2025周年庆-装饰许愿礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$21,800</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>万圣节高级通行证_2025</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num">$21,773</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>春节自选周卡</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$20,930</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>情人节组队BP</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$20,809</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2024万圣节GACHA礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num">$20,793</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>S300赛车常驻-升级券</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$19,885</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>感恩节高级通行证_2025</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$19,630</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>感恩节终极连锁礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$18,696</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>斗士抽奖GACHA礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$17,660</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>圣诞节初级通行证_2025</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$16,797</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>25万圣节gacha每日礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num">$15,988</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>25感恩节本体gacha每日礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$15,609</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2025春节GACHA礼包</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$15,295</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2026情人节-行军特效</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$15,012</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>节日特惠卡</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$14,680</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>万圣节初级通行证_2025</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num">$14,655</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>春节初级通行证_2025</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$13,092</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>科技节套装S2折扣礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$12,439</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2026春节-行军特效</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$12,154</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>感恩节自选周卡-schema6</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$12,147</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2025万圣节-行军表情</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num">$10,958</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>感恩节初级通行证_2025</td><td><span class="tag tag-hybrid">节日BP</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$10,478</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2026情人节-行军表情</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$10,165</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2025春节-行军表情</td><td><span class="tag tag-visual">节日皮肤</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$9,985</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>2025万圣节集结奖励解锁礼包</td><td><span class="tag tag-game">节日特惠</span></td><td class="num">$8,413</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>情人节自选周卡</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$7,988</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+        <tr><td>情人节-强消耗（扭蛋机）</td><td><span class="tag tag-game">节日特惠</span></td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num" style="color:var(--text-muted)">—</td><td class="num">$7,430</td><td class="num" style="color:var(--text-muted)">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 子活动诊断卡片 -->
+  <div style="margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+    <div style="background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.25);border-left:3px solid var(--accent2);border-radius:10px;padding:16px">
+      <div style="font-size:11px;font-weight:700;color:var(--accent2);letter-spacing:1px;margin-bottom:8px">🥇 BEST — 挖孔小游戏</div>
+      <div style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px">$82K → $139K → $140K → $243K → $206K</div>
+      <div style="font-size:12px;color:var(--text-muted);line-height:1.6">
+        5期连续出场，感恩→情人节稳步增长，情人节峰值 $243K。科技节 $206K 环比-15% 但仍是收入第一。
+        <br><b style="color:var(--accent2)">建议：稳固保留，关注是否到达增长天花板</b>
+      </div>
+    </div>
+    <div style="background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.25);border-left:3px solid var(--accent);border-radius:10px;padding:16px">
+      <div style="font-size:11px;font-weight:700;color:var(--accent);letter-spacing:1px;margin-bottom:8px">🚀 RISING — 推币机</div>
+      <div style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px">春节$72K → 科技节$120K（+68%）</div>
+      <div style="font-size:12px;color:var(--text-muted);line-height:1.6">
+        春节首次上线即 $72K，情人节缺席，科技节回归直接增至 $120K。两次出场均创新高，增速最快的玩法。
+        <br><b style="color:var(--accent)">建议：常驻化，主推位扶持，增加高档位 SKU</b>
+      </div>
+    </div>
+    <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-left:3px solid var(--red);border-radius:10px;padding:16px">
+      <div style="font-size:11px;font-weight:700;color:var(--red);letter-spacing:1px;margin-bottom:8px">⚠ DECLINING — 通行证/BP</div>
+      <div style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px">科技节 $59K（6期最低）</div>
+      <div style="font-size:12px;color:var(--text-muted);line-height:1.6">
+        从感恩节 $83K 降至科技节 $59K，占比从 10.5% 降至 6.9%。玩家注意力被小游戏抢占，权益吸引力不足。
+        <br><b style="color:var(--red)">建议：与小游戏进度联动，重塑价值感</b>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Section 10: 活动诊断 ══ -->
+<div class="section">
+  <div class="section-title">子活动诊断</div>
+  <div class="diag-grid">
+    <div class="diag-card keep">
+      <div class="diag-status keep">✅ KEEP</div>
+      <div class="diag-name">科技节特惠礼包系列</div>
+      <div class="diag-rev">$705,005</div>
+      <div class="diag-reason">贡献节日线 82.4%，是绝对核心收入抓手；多档位价格梯度设计合理，建议保留并优化高档位触达。</div>
+    </div>
+    <div class="diag-card keep">
+      <div class="diag-status keep">✅ KEEP</div>
+      <div class="diag-name">科技节通行证BP</div>
+      <div class="diag-rev">$56,702</div>
+      <div class="diag-reason">双BP稳定贡献 7.1%，具备中长期留存价值与每日付费锚定效果；建议保留并丰富权益层级。</div>
+    </div>
+    <div class="diag-card optimize">
+      <div class="diag-status optimize">🔧 OPTIMIZE</div>
+      <div class="diag-name">科技节主题皮肤</div>
+      <div class="diag-rev">$80,265</div>
+      <div class="diag-reason">较情人节占比从 15.5% 下滑至 10.0%，外显吸引力下降；建议强化稀缺性标签与套装联动，提升视觉转化。</div>
+    </div>
+    <div class="diag-card optimize">
+      <div class="diag-status optimize">🔧 OPTIMIZE</div>
+      <div class="diag-name">科技节小游戏挖矿</div>
+      <div class="diag-rev">$13,130</div>
+      <div class="diag-reason">体量偏小（1.6%），但有参与深度潜力；建议优化奖励可视化与进度感，提升付费转化。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Section 9: Action Items ══ -->
+<div class="section">
+  <div class="section-title">Action Items</div>
+  <div class="action-grid">
+    <div class="action-card">
+      <div class="action-p p0">P0 立即执行</div>
+      <div class="action-item">小游戏模块持续投入 — 挖孔/推币机/挖矿三玩法验证成功（合计 $330,624），下期保持并扩展高频复购设计</div>
+      <div class="action-item">弹珠GACHA 形式复用 — ARPU $110.94 为节日线第二，考虑在复活节 / 周年庆延续该形式</div>
+    </div>
+    <div class="action-card">
+      <div class="action-p p1">P1 下期优化</div>
+      <div class="action-item">外显模块重塑 — 主题皮肤收入下滑，需配合高品质内容或稀缺限定玩法提振</div>
+      <div class="action-item">小R 低门槛引导 — 11,154 活跃小R 仅 8.8% 付费，增加 $0.99~$1.99 低价入口礼包</div>
+      <div class="action-item">节日挖矿扩容 — $13,130 体量偏小，增加玩法深度和奖励档位</div>
+    </div>
+    <div class="action-card">
+      <div class="action-p p2">P2 中期规划</div>
+      <div class="action-item">礼包命名规范化 — 49 条中多条延用往期节日名，在科技节期间仍有购买，建议建立礼包生命周期管理机制</div>
+      <div class="action-item">头部依赖风险监控 — 超R 1,208 人贡献节日线 63.5%，持续跟踪超R 活跃留存</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  数据来源：v1041.ods_user_order + dim.iap（图表9 SQL）&nbsp;·&nbsp;
+  模块映射：iap_module_map.json&nbsp;·&nbsp;
+  自动生成于 2026-04-08
+</div>
+
+<script>
+// 模块趋势堆叠柱状图（6期，含春节，日期已修正）
+document.addEventListener('DOMContentLoaded', function() {
+  const festivals = ['🎃万圣节\n10月', '🦃感恩节\n11月', '🎄圣诞节\n12月', '🧧春节\n1月', '💝情人节\n2月', '🔬科技节\n3月'];
+  const data = [
+    // [节日特惠, 节日皮肤, 节日BP, 挖矿小游戏] — iap_type2 分类
+    [251378, 299951,  69209, 16055],  // 万圣节 10-17~11-06
+    [584683, 107661,  83195, 13457],  // 感恩节 11-13~12-04
+    [668073, 188722,  69802, 15177],  // 圣诞节 12-12~01-01
+    [851887, 125820,  76754, 13447],  // 春节   01-13~02-08
+    [533450, 227954,  65799, 13998],  // 情人节 02-11~03-05
+    [699177,  83539,  59052, 13353],  // 科技节 03-13~04-03
+  ];
+  const colors = ['#00d4aa', '#ff6b6b', '#6c63ff', '#ffd166'];
+  const labels = ['节日特惠', '节日皮肤', '节日BP', '挖矿小游戏'];
+  const maxTotal = Math.max(...data.map(d => d.reduce((a,b)=>a+b,0)));
+  const wrap = document.getElementById('module-stacked');
+  const chartH = 220;
+
+  data.forEach((d, fi) => {
+    const total = d.reduce((a,b)=>a+b,0);
+    const colWrap = document.createElement('div');
+    colWrap.style.cssText = 'flex:1;display:flex;flex-direction:column;align-items:center;gap:4px';
+
+    // 总收入标签
+    const totalLabel = document.createElement('div');
+    totalLabel.style.cssText = 'font-size:10px;color:#8892a4;font-weight:600;white-space:nowrap';
+    totalLabel.textContent = '$' + (total/1000).toFixed(0) + 'K';
+    if (fi === 3) totalLabel.style.color = '#22c55e'; // 春节最高
+    colWrap.appendChild(totalLabel);
+
+    // 柱子容器
+    const barCol = document.createElement('div');
+    barCol.style.cssText = `width:100%;height:${chartH}px;display:flex;flex-direction:column-reverse;border-radius:6px;overflow:hidden;cursor:default`;
+
+    // 高亮科技节（当前期）和春节（最高峰）
+    if (fi === 5) barCol.style.outline = '2px solid #6c63ff';
+    if (fi === 3) barCol.style.outline = '2px solid #22c55e';
+
+    // 叠加段
+    d.forEach((val, mi) => {
+      const pct = (val / maxTotal * chartH);
+      const seg = document.createElement('div');
+      seg.style.cssText = `height:${pct}px;background:${colors[mi]};position:relative;transition:opacity .2s`;
+      seg.title = `${labels[mi]}: $${val.toLocaleString()} (${(val/total*100).toFixed(1)}%)`;
+      if (pct > 22) {
+        const pctLabel = document.createElement('div');
+        pctLabel.style.cssText = 'position:absolute;width:100%;text-align:center;top:50%;transform:translateY(-50%);font-size:10px;font-weight:700;color:rgba(0,0,0,0.6);pointer-events:none';
+        pctLabel.textContent = (val/total*100).toFixed(0) + '%';
+        seg.appendChild(pctLabel);
+      }
+      barCol.appendChild(seg);
+    });
+    colWrap.appendChild(barCol);
+
+    // 节日标签
+    const nameLabel = document.createElement('div');
+    nameLabel.style.cssText = 'font-size:10px;color:#8892a4;text-align:center;white-space:pre-line;line-height:1.3;margin-top:4px';
+    nameLabel.textContent = festivals[fi];
+    if (fi === 5) nameLabel.style.color = '#6c63ff';
+    if (fi === 3) nameLabel.style.color = '#22c55e';
+    colWrap.appendChild(nameLabel);
+
+    wrap.appendChild(colWrap);
+  });
+});
+</script>
+
+</body>
+</html>

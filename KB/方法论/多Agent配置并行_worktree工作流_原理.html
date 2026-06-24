@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>多 Agent 配置并行 · git worktree 工作流原理</title>
+<style>
+  :root{
+    --bg:#0f1419; --panel:#1a2230; --panel2:#222d3d; --ink:#e6edf3; --muted:#9aa7b4;
+    --accent:#4ea1ff; --good:#3fb950; --warn:#e3b341; --bad:#f85149; --line:#2d3a4d;
+    --mono:"Cascadia Code",ui-monospace,"SF Mono",Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Segoe UI","Microsoft YaHei",system-ui,sans-serif;line-height:1.65;}
+  .wrap{max-width:960px;margin:0 auto;padding:48px 24px 80px;}
+  header{text-align:center;margin-bottom:48px;}
+  header h1{font-size:30px;margin:0 0 10px;letter-spacing:.5px;}
+  header .sub{color:var(--muted);font-size:15px;}
+  header .meta{margin-top:14px;font-size:12px;color:var(--muted);}
+  h2{font-size:21px;margin:46px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:10px;}
+  h2 .n{display:inline-flex;width:28px;height:28px;border-radius:8px;background:var(--accent);
+    color:#04121f;font-size:15px;font-weight:700;align-items:center;justify-content:center;flex:none;}
+  h3{font-size:16px;margin:24px 0 8px;color:var(--accent);}
+  p{margin:10px 0;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:16px 0;}
+  .muted{color:var(--muted);}
+  code{font-family:var(--mono);background:#0b1118;padding:1px 6px;border-radius:5px;font-size:13px;color:#cfe3ff;}
+  pre{font-family:var(--mono);background:#0b1118;border:1px solid var(--line);border-radius:10px;
+    padding:14px 16px;overflow-x:auto;font-size:13px;line-height:1.55;margin:12px 0;}
+  pre .c{color:var(--muted);}
+  pre .g{color:var(--good);} pre .a{color:var(--accent);} pre .w{color:var(--warn);}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .pill{display:inline-block;font-size:12px;padding:2px 9px;border-radius:20px;font-weight:600;}
+  .pill.bad{background:rgba(248,81,73,.15);color:var(--bad);}
+  .pill.good{background:rgba(63,185,80,.15);color:var(--good);}
+  .pill.warn{background:rgba(227,179,65,.15);color:var(--warn);}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px;}
+  .diagram{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:22px;margin:18px 0;}
+  .repo-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:stretch;}
+  .box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-width:150px;text-align:center;}
+  .box .t{font-family:var(--mono);font-size:12px;color:var(--ink);}
+  .box .b{margin-top:6px;font-size:12px;}
+  .git-core{background:#04121f;border:1px dashed var(--accent);border-radius:10px;padding:10px 16px;text-align:center;
+    font-family:var(--mono);font-size:13px;color:var(--accent);margin:0 auto 16px;max-width:280px;}
+  .arrow{color:var(--muted);text-align:center;font-size:20px;margin:6px 0;}
+  .flow{counter-reset:step;}
+  .step{display:flex;gap:14px;margin:12px 0;align-items:flex-start;}
+  .step .dot{counter-increment:step;flex:none;width:30px;height:30px;border-radius:50%;
+    background:var(--panel2);border:1px solid var(--accent);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;}
+  .step .dot::before{content:counter(step);}
+  .step .body{flex:1;}
+  .step .body b{color:var(--ink);}
+  .callout{border-left:3px solid var(--warn);background:rgba(227,179,65,.07);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;}
+  .callout.good{border-color:var(--good);background:rgba(63,185,80,.07);}
+  .callout.bad{border-color:var(--bad);background:rgba(248,81,73,.07);}
+  .kicker{font-size:12px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;font-weight:700;}
+  footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">X3 配置 · 多窗口并行</div>
+  <h1>多 Agent 同机改配置：git worktree 工作流</h1>
+  <div class="sub">一台机器、多个窗口、同一个配置仓 —— 怎么不撞车</div>
+  <div class="meta">2026-06-24 · 配套 memory <code>workflow_x3_multiagent_worktree</code> · skill <code>x3-config-export</code> 步骤0</div>
+</header>
+
+<h2><span class="n">1</span>问题：共享一个工作目录</h2>
+<p>多个 Claude 窗口在同一台机器跑，改的是同一个仓 <code>C:\x3\gdconfig</code>。git 的铁律是：<b>一个工作目录同一时刻只能停在一个分支上</b>。</p>
+<div class="callout bad">
+  <p style="margin:0"><span class="pill bad">撞车</span> 窗口 A 想在 <code>dev_festival</code> 改，窗口 B 一句 <code>git checkout dev</code>，<b>整个目录的文件被换成 dev 的版本</b> —— A 正在编辑的内容瞬间被掀翻。今天上午实测：主仓在 dev↔dev_festival 之间来回切了 5 次以上。</p>
+</div>
+<p class="muted">土办法（各自备份到文件夹、手动合）治标不治本：状态只存在人脑里，<b>会忘记合并</b>。</p>
+
+<h2><span class="n">2</span>核心原理：git worktree</h2>
+<p>worktree 让<b>同一个仓库长出多个独立工作目录</b>，每个停在自己的分支，共享同一份 <code>.git</code>（不重复 clone、不占多份历史）。改动互不可见。</p>
+<div class="diagram">
+  <div class="git-core">.git （唯一，共享对象库）</div>
+  <div class="arrow">↑ 三个目录共用 ↑</div>
+  <div class="repo-row">
+    <div class="box"><div class="t">gdconfig/</div><div class="b"><span class="pill good">dev_festival</span></div><div class="b muted">主目录（你自己）</div></div>
+    <div class="box"><div class="t">gdconfig-bpfix/</div><div class="b"><span class="pill warn">feature/bpfix</span></div><div class="b muted">窗口 A 隔离区</div></div>
+    <div class="box"><div class="t">gdconfig-wt-hud/</div><div class="b"><span class="pill warn">deepsea-hud</span></div><div class="b muted">窗口 B 隔离区</div></div>
+  </div>
+  <p class="muted" style="text-align:center;margin:14px 0 0;font-size:13px;">各停各的分支 · 文件物理隔离 · 谁切分支都不影响别人</p>
+</div>
+<pre><span class="c"># 给一个窗口开隔离区</span>
+git worktree add ../gdconfig-bpfix <span class="a">-b feature/bpfix</span> dev_festival
+<span class="c"># 干完拆掉</span>
+git worktree remove ../gdconfig-bpfix --force
+git worktree list   <span class="c"># 谁还没收尾，一查就知道（取代"人脑记忆"）</span></pre>
+
+<h2><span class="n">3</span>判断：什么时候才开 worktree</h2>
+<p>不是每次都开（开 worktree 有 ~2 分钟后台重建 xlsx 的成本）。判据很简单 —— <b>看主仓当前是否被别人占着没收尾</b>：</p>
+<pre>cd C:\x3\gdconfig ; git status -sb</pre>
+<div class="grid">
+  <div class="card"><span class="pill good">干净 · 无 [ahead]</span><p style="margin:8px 0 0">没人占 → <b>直接在主仓干</b>。第一个进来的人留主仓。</p></div>
+  <div class="card"><span class="pill bad">有改动 / [ahead N]</span><p style="margin:8px 0 0">别人在改没收尾 → <b>开 worktree 隔离</b>。后到的人自动分流。</p></div>
+</div>
+<p class="muted">这道判断写在 skill <code>x3-config-export</code> 的「步骤0」，改配置触发 skill 时第一件事就是它。</p>
+
+<h2><span class="n">4</span>兜底：PreToolUse Hook</h2>
+<p>skill 步骤0 靠 LLM 自觉；为防漏判，加一道<b>硬兜底</b>——一个 hook 在「<b>动手碰主仓配置表那一刻</b>」自动拦截。</p>
+<div class="flow">
+  <div class="step"><div class="dot"></div><div class="body"><b>触发面</b>：Edit/Write 主仓 <code>.tsv/.xlsx</code>，或 Bash 跑 <code>tsv_edit.py</code> 没指向 worktree。</div></div>
+  <div class="step"><div class="dot"></div><div class="body"><b>判断</b>：主仓干净 → 放行 + 落 session 标记（本会话认领主仓，之后自己改不再打扰）；主仓脏/ahead → <span class="pill bad">exit 2 拦下</span>，提示开 worktree。</div></div>
+  <div class="step"><div class="dot"></div><div class="body"><b>放行例外</b>：改 worktree 里的、跑别的命令、<b>合并冲突解决中（MERGE_HEAD 存在）</b> —— 一律放行，不误伤。</div></div>
+  <div class="step"><div class="dot"></div><div class="body"><b>fail-open</b>：hook 自己出任何错都放行，绝不卡住正常工作。</div></div>
+</div>
+<div class="callout"><p style="margin:0"><span class="pill warn">关键认知</span> hook 在<b>会话启动那一刻</b>从 settings.json 加载。上线前就开着的老窗口装不上 —— 要兜底生效，<b>得重启或新开窗口</b>。</p></div>
+
+<h2><span class="n">5</span>合并回：本地直合（不走 MR）</h2>
+<p><code>dev_festival</code> 是工作分支（不受保护）、gdconfig 仓也不受保护 → <b>本地 merge + 直接 push</b>，不开 MR（MR 只为进受保护的 <code>dev</code>）。</p>
+<div class="callout"><p style="margin:0"><span class="pill" style="background:rgba(78,161,255,.15);color:var(--accent)">方向铁律</span> <b>把 dev_festival 合进 feature（在 worktree 里解冲突），再让 dev_festival 干净 ff 上来。</b> 冲突解决全程在隔离区，主仓只做 ff，不产生冲突编辑。</p></div>
+<div class="flow">
+  <div class="step"><div class="dot"></div><div class="body"><b>前置（一次性）</b>：确认 merge driver 注册 —— <code>git config --get merge.tsv3way.driver</code> 非空。<span class="pill bad">头号坑</span>没注册就 merge = tsv 炸 <code>&lt;&lt;&lt;&lt;</code> 标记 + xlsx 二进制选边静默丢改动。</div></div>
+  <div class="step"><div class="dot"></div><div class="body"><b>串行化</b>：同一刻只许一个窗口往 dev_festival 整合（整合=改共享分支=临界区）。并行<i>编辑</i>随意，整合要<i>排队</i>。</div></div>
+  <div class="step"><div class="dot"></div><div class="body"><b>worktree 内合</b>：<code>git merge --no-commit --no-ff origin/dev_festival</code>，按审计 KB 解冲突。</div></div>
+  <div class="step"><div class="dot"></div><div class="body"><b>验收四连</b>：<code>sync_xlsx_tsv.py --check</code>=0 → <code>merge_tsv_audit.py</code> 双向 lost=0 → <b><code>ExportTable.py</code> exit 0</b>（前三过≠能导表，这才是硬门）→ commit。</div></div>
+  <div class="step"><div class="dot"></div><div class="body"><b>ff 回去 + 推</b>：主仓 <code>git merge --ff-only feature/&lt;名&gt;</code> → <code>git push origin dev_festival</code> → <code>jolt_verify.py dev_festival skip_check=true</code>。ff 失败=整合期被别人推进了→重合再来。</div></div>
+  <div class="step"><div class="dot"></div><div class="body"><b>收尾</b>：<code>git worktree remove</code> + <code>git branch -D</code>。</div></div>
+</div>
+
+<h2><span class="n">6</span>四个真实踩坑</h2>
+<table>
+  <tr><th>坑</th><th>后果 & 解法</th></tr>
+  <tr><td><b>merge driver 没注册</b></td><td>不随 clone，在本机 <code>.git/config</code>。没注册 merge 静默丢改动 → 先 <code>install_hooks.py</code>。</td></tr>
+  <tr><td><b>审计看了本地分支</b></td><td>本地 dev_festival 常滞后 origin（这套流程 push 到远端、别窗口不 pull）。判"合回没合回"<b>必须看 <code>origin/dev_festival</code></b>，看本地会误判"工作丢失"。</td></tr>
+  <tr><td><b>tsv_edit.py 默认写主仓</b></td><td>默认 <code>--repo C:\x3\gdconfig</code>。worktree 里干活每条命令<b>必带 <code>--repo &lt;worktree&gt;</code></b>，漏了静默写回主仓，worktree 白开。</td></tr>
+  <tr><td><b>建 worktree 后秒拆失败</b></td><td>post-checkout 钩子后台重建 xlsx(~2min)锁住新目录。真干活不受影响，只"建完立刻拆"会撞 Device busy。</td></tr>
+</table>
+
+<h2><span class="n">7</span>实战验证（2026-06-24）</h2>
+<div class="callout good">
+  <p style="margin:0 0 6px"><span class="pill good">首个完整成功案例 · bpfix-monopoly-bp</span></p>
+  <p style="margin:0" class="muted">真人在另一个窗口独立跑通全链路：开 worktree(15:19) → 提交(15:28) → 把 dev_festival 合进 feature(15:29) → push origin → 拆 worktree+删分支。merge driver 已注册、合并方向完全正确、work 安全落在 origin/dev_festival。</p>
+</div>
+<p>同一时段 <code>gdconfig-bpfix</code> 与 <code>gdconfig-wt-hud</code> <b>两个 worktree 并行</b>，互不干扰 —— 满血多 agent 场景。从工作流搭好到被真实采用，几个小时。</p>
+
+<h2><span class="n">8</span>推广到客户端仓（代码 / 资源）</h2>
+<p>同样多窗口改 x3-project（<code>C:\x3-project\</code>，代码+资源）也撞共享 checkout —— <b>隔离概念照搬，但合并回和成本跟配置仓反着来</b>，照搬必翻车。</p>
+<div class="callout"><p style="margin:0 0 6px"><span class="pill" style="background:rgba(78,161,255,.15);color:var(--accent)">合并回看目标分支</span>（你=Developer：非保护分支全权，保护 dev 只能开 MR 不能点合并）</p>
+<p style="margin:0">· 合进 <b><code>dev_festival</code>（非保护，日常）</b>：自助、<b>不用 MR</b>，push feature → 整合 → push dev_festival。<br>
+· <b><code>dev_festival</code> → <code>dev</code>（保护，发版）</b>：才需 MR，<b>你开单、大哥(Maintainer)合</b>，title/desc 纯 ASCII。</p></div>
+<div class="callout bad"><p style="margin:0"><span class="pill bad">本地禁跨分叉 merge</span> 不论目标，x3-project 分叉分支本地 merge 会炸二进制 ProtoGen 冲突 + LFS pointer + <code>git clean</code> 误删合法 Unity 目录。<b>本地只做干净 ff，跨分叉合并交给远端/MR/大哥。</b>大文件先 <code>git lfs push</code>。</p></div>
+<table>
+  <tr><th></th><th>gdconfig（配置）</th><th>x3-project（代码/资源）</th></tr>
+  <tr><td>dev 保护</td><td>否，可直推</td><td><span class="pill bad">是，必 MR</span></td></tr>
+  <tr><td>worktree 成本</td><td><span class="pill good">极低（~2080文件）</span></td><td><span class="pill warn">高（多GB+LFS）</span></td></tr>
+  <tr><td>worktree 用法</td><td>随建随拆</td><td>长寿 / 按feature / sparse-checkout</td></tr>
+  <tr><td>合并回</td><td>本地 merge+ff+push dev_festival</td><td>进 dev_festival 自助(无MR)；进 dev 才 MR(你开·大哥合)；本地禁跨分叉 merge</td></tr>
+  <tr><td>串行化</td><td>本地整合需排队</td><td>MR 服务端天然排队</td></tr>
+</table>
+<p class="muted">只改代码不碰资源时用 <code>git worktree add --no-checkout</code> + <code>git sparse-checkout set server/</code> 只铺子树，省几 GB。提交规则不变：X3NEW- 前缀 · 内嵌 gdconfig 子模块须干净 · 大文件先 lfs push。</p>
+
+<footer>
+  唯一入口：memory <code>workflow_x3_multiagent_worktree</code>（开窗 prompt / 合并 SOP / 客户端推广 / 全部坑）<br>
+  关联：<code>x3-config-export</code> 步骤0 · <code>workflow_x3_merge_conflict_audit</code> · hook <code>scripts/x3_config_isolation_gate.py</code>
+</footer>
+
+</div>
+</body>
+</html>

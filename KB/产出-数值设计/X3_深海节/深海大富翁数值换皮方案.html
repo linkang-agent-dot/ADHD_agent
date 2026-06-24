@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>深海大富翁 · 数值换皮方案</title>
+<style>
+  :root{--bg:#071a2b;--card:#0f2c44;--card2:#13374f;--border:#1d4a66;--ink:#eaf4fb;--sub:#9fc0d6;
+    --gold:#f5c451;--teal:#34d6c4;--red:#ff6b6b;--amber:#ffb648;--good:#5bd6a0;--vio:#b58af0;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;background:
+    radial-gradient(1200px 600px at 80% -10%,#0e3350,transparent 60%),
+    radial-gradient(900px 500px at 0% 0%,#0a263c,transparent 55%),var(--bg);
+    color:var(--ink);line-height:1.6;padding:30px 18px 70px}
+  .wrap{max-width:1080px;margin:0 auto}
+  header{text-align:center}
+  h1{font-size:29px;letter-spacing:1px;background:linear-gradient(90deg,#f5c451,#ffe6a3,#34d6c4);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
+  .meta{color:var(--sub);font-size:13px;margin-top:6px}
+  section{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--border);
+    border-radius:16px;padding:20px 24px;margin:18px 0;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  h2{font-size:18px;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  h2 .n{display:inline-flex;width:26px;height:26px;border-radius:8px;background:var(--gold);color:#06223a;
+    align-items:center;justify-content:center;font-size:14px;font-weight:800}
+  h3{font-size:15px;color:var(--teal);margin:14px 0 8px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px}
+  th,td{text-align:left;padding:8px 11px;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top}
+  th{color:var(--teal);font-weight:700;font-size:12.5px;background:rgba(52,214,196,.06)}
+  td.num{font-variant-numeric:tabular-nums;color:var(--gold);font-weight:600;text-align:right}
+  .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:700;white-space:nowrap}
+  .tag.keep{background:rgba(91,214,160,.16);color:#7be3b4;border:1px solid rgba(91,214,160,.4)}
+  .tag.flow{background:rgba(52,214,196,.16);color:#7fe6da;border:1px solid rgba(52,214,196,.4)}
+  .tag.cash{background:rgba(245,196,81,.16);color:#ffd97a;border:1px solid rgba(245,196,81,.4)}
+  .tag.todo{background:rgba(255,182,72,.16);color:#ffce85;border:1px solid rgba(255,182,72,.45)}
+  .tag.new{background:rgba(181,138,240,.18);color:#d3b6ff;border:1px solid rgba(181,138,240,.45)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:720px){.two{grid-template-columns:1fr}}
+  .box{background:#0a2336;border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+  .box .h{font-size:13px;color:var(--sub);margin-bottom:6px;font-weight:700}
+  .box.flow{border-color:rgba(52,214,196,.5)}
+  .box.cash{border-color:rgba(245,196,81,.5)}
+  .kpi{display:flex;gap:12px;flex-wrap:wrap;margin:6px 0}
+  .kpibox{flex:1;min-width:130px;background:#0a2336;border:1px solid var(--border);border-radius:12px;padding:13px 16px}
+  .kpibox .k{font-size:12px;color:var(--sub)}
+  .kpibox .val{font-size:21px;font-weight:800;color:var(--gold);font-variant-numeric:tabular-nums}
+  .kpibox.good .val{color:var(--good)}
+  ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:6px}
+  li{display:flex;gap:9px;align-items:flex-start;font-size:13.5px}
+  li .d{color:var(--gold);font-weight:800;flex-shrink:0}
+  .foot{color:var(--sub);font-size:12.5px;margin-top:10px;line-height:1.7}
+  .foot b{color:var(--ink)}
+  .verdict{margin:20px 0;padding:16px 20px;border-radius:14px;
+    background:linear-gradient(100deg,rgba(52,214,196,.14),rgba(91,214,160,.08));
+    border:1px solid rgba(52,214,196,.35);display:flex;gap:13px;align-items:flex-start}
+  .verdict .ico{font-size:26px}.verdict b{color:var(--teal)}
+  .ask{background:rgba(255,182,72,.10);border:1px dashed rgba(255,182,72,.5)}
+  .ask h2{color:var(--amber)}.ask h2 .n{background:var(--amber)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>⚓ 深海大富翁 · 数值换皮方案</h1>
+    <div class="meta">深海节第二周核心循环 · 航海之路 ActvVoyage(102802) 复用 · 2026-06-23 · 待用户过</div>
+  </header>
+
+  <div class="verdict">
+    <div class="ico">🧭</div>
+    <div>大富翁经济盘<b>沿用现成「航海之路 ROI=8 盘」</b>（<code>数值框架.html</code>+<code>ROI8_v1.html</code>，已压平加速器、对齐尼罗/春节转盘 ROI 8）——这是<b>变现侧、不改</b>。本方案只动<b>流量侧</b>（深海节奏校准）+ 补策划案待定的<b>成就礼包(跑X圈)</b>。换皮原则：<b>流量侧改、变现侧不改</b>。</div>
+  </div>
+
+  <section>
+    <h2><span class="n">0</span> 换皮决策（流量侧改 / 变现侧不改）</h2>
+    <div class="two">
+      <div class="box cash">
+        <div class="h">💰 变现侧 — 不改（沿用航海之路盘）</div>
+        <ul>
+          <li><span class="d">▸</span>整盘 ROI = 8（产出钻价值 ÷ 实付钻），对齐尼罗/春节转盘。</li>
+          <li><span class="d">▸</span>主城皮肤「月心珍珠」永久 <b>300,000 钻</b>（≈$300），霍普金斯 150,000 钻 — 定价=原航海之路。</li>
+          <li><span class="d">▸</span>海神罗盘（付费自选骰子）、抽奖代币礼包档位（$9.99/19.99/49.99）、各池期望 E 值结构。</li>
+          <li><span class="d">▸</span>各岛产出<b>内容/ROI 不变</b>，只换道具皮（货币 ID reskin 是另一轮）。</li>
+        </ul>
+      </div>
+      <div class="box flow">
+        <div class="h">🌊 流量侧 — 可调（深海校准）</div>
+        <ul>
+          <li><span class="d">▸</span>掷骰产出节奏 / 门槛（让"能玩多深"匹配真实活跃）。</li>
+          <li><span class="d">▸</span>珍珠贝进度阈值（产出速率=常驻4格×跑圈量）。</li>
+          <li><span class="d">▸</span>阶段奖励梯度（压平后段暴涨）。</li>
+          <li><span class="d">▸</span><b>成就礼包跑 X 圈门槛</b>（本方案新增·见 §3）。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot">⚠️ <b>夏日骰子根因教训（必带）</b>：2026 夏日 BP 经验/骰子产出只达设计 <b>1/3</b>（满级门槛 411 太高、活跃达不到）→ 三渠道产出全打折、满级率仅 5.8% 没触发"满级后购买"。<b>本期门槛按真实活跃校准（满级料降到 200–250 区间思路），产出/奖励结构不动</b>——坑够深，降难度不伤付费深度，覆盖率可从 15%→60%+。</div>
+  </section>
+
+  <section>
+    <h2><span class="n">1</span> 大富翁经济盘（沿用 ROI8 · 变现侧基线）</h2>
+    <div class="kpi">
+      <div class="kpibox"><div class="k">评估锚</div><div class="val">700 抽</div></div>
+      <div class="kpibox"><div class="k">实付（买659罗盘）</div><div class="val">164,750 钻</div></div>
+      <div class="kpibox good"><div class="k">目标 ROI</div><div class="val">8×</div></div>
+      <div class="kpibox"><div class="k">目标产出</div><div class="val">1,318,000 钻</div></div>
+    </div>
+    <table>
+      <tr><th>来源</th><th>格数</th><th>产出内容（换皮不变）</th><th class="num">单档期望 E（钻/落点）</th><th>换皮处理</th></tr>
+      <tr><td>宝藏岛</td><td>4</td><td>远洋金币(代币 1060)</td><td class="num">2,000</td><td><span class="tag keep">保留·统一小池</span></td></tr>
+      <tr><td>钻石岛</td><td>4</td><td>钻石(1002)</td><td class="num">500</td><td><span class="tag cash">单档·升级已砍</span></td></tr>
+      <tr><td>幸运岛①资源</td><td>4</td><td>神秘金属/高级木板</td><td class="num">1,008</td><td><span class="tag cash">单档</span></td></tr>
+      <tr><td>幸运岛②加速</td><td>4</td><td>3h/1h/30m 通用加速</td><td class="num">1,008</td><td><span class="tag cash">单档</span></td></tr>
+      <tr><td>幸运岛③养成</td><td>4</td><td>传奇技能书/英雄装备材料袋</td><td class="num">940</td><td><span class="tag cash">单档</span></td></tr>
+      <tr><td>神秘岛</td><td>3</td><td>海神罗盘(1058)/远洋金币</td><td class="num">1,008</td><td><span class="tag flow">后退已删·经验+2待调</span></td></tr>
+      <tr><td>起始岛</td><td>1</td><td>随机 2 岛奖励（跨起点触发·≈102圈×2）</td><td class="num">按16升级岛均值</td><td>—</td></tr>
+      <tr><td>阶段奖励（按抽数）</td><td>8档</td><td>金币/海神罗盘</td><td class="num" style="text-align:left">2500,2500,7500,7500,<br>15000,15000,25000,25000</td><td><span class="tag flow">梯度压平</span></td></tr>
+      <tr><td>珍珠贝进度奖（=原神秘宝箱）</td><td>4格浮动</td><td>累计满阈值开神秘宝箱</td><td class="num" style="text-align:left">增量 1,2,3,4,4,4,6,6,6,<br>8,8,8,8,10 · 箱值15300</td><td><span class="tag flow">阈值校准</span></td></tr>
+    </table>
+    <div class="foot">• 数值已在 <code>ROI8_v1.html</code>（交互表，可改 E 值实时算 ROI）压到 ROI=8，本表是定盘快照。<br>• <b>货币循环</b>：宝藏/部分池产<b>远洋金币 1060</b> → 兑换商店 → 月心珍珠 300,000钻 / 霍普金斯 150,000钻 / 纪念卡 / 养成料。<br>• <b>已定的刀</b>：① 神秘岛"后退N格"删 ② 岛屿升级砍（钻石/幸运塌单档，不显示等级UI）③ 神秘宝藏转珍珠贝进度奖。</div>
+  </section>
+
+  <section>
+    <h2><span class="n">2</span> 流量侧 · 深海换皮调整</h2>
+    <table>
+      <tr><th>项</th><th>现状(航海之路)</th><th>深海换皮处理</th><th>依据</th></tr>
+      <tr><td>抽卡货币皮</td><td>航海罗盘1057/海神罗盘1058/远洋金币1060</td><td>道具皮换深海（藏宝图等），<b>数量/ROI 不变</b>；货币 ID reskin 归另一轮（团队在做 1200/1201）</td><td>变现侧不改</td></tr>
+      <tr><td>掷骰产出节奏</td><td>700抽≈102圈</td><td>保持；确保骰子总产出≥设计（别再像夏日只达1/3）</td><td>夏日根因</td></tr>
+      <tr><td>珍珠贝阈值</td><td>增量 1,2,3,4,4,4,6,6,6,8,8,8,8,10</td><td>沿用（产出速率=常驻4格×102圈≈117拾取，覆盖到末档）</td><td>流量校准</td></tr>
+      <tr><td>阶段奖励梯度</td><td>8档 2.5k→25k（后段10×）</td><td>已压平为 2.5k/7.5k/15k/25k 两两一组；前移价值</td><td>压加速器</td></tr>
+      <tr><td>岛屿布局</td><td>24格(起1/宝4/钻4/幸12/神3)</td><td>布局不动；每格突出深海奖励（启航港/沉船宝藏/珊瑚秘境/海风礁/迷雾漩涡）</td><td>策划案</td></tr>
+    </table>
+  </section>
+
+  <section class="ask">
+    <h2><span class="n">3</span> 成就礼包（跑 X 圈）· 新增 · 参考 X2 成就礼包系统 <span class="tag new">本方案重点·已对X2数值</span></h2>
+    <div class="verdict" style="margin:0 0 12px;background:linear-gradient(100deg,rgba(91,214,160,.14),rgba(52,214,196,.08));border-color:rgba(91,214,160,.4)">
+      <div class="ico">✅</div>
+      <div style="font-size:13px"><b style="color:var(--good)">ROI=8×（800%）· 骰子投放</b>（用户 2026-06-24 定）：成就礼包**按大富翁骰子（深海罗盘）投放**，ROI 做到 800%（X3 标准·对齐抽奖盘 ROI=8）。<b style="color:var(--amber)">不是 X2 的 2×</b>（跨游戏换皮铁律：ROI 用目标游戏 X3 标准，只借 X2 结构）。骰子价值=抽奖产出 <b>2,000 钻/个</b> → 骰子数 = 实付钻÷250。</div>
+    </div>
+    <p style="font-size:13.5px;color:var(--sub);margin-bottom:10px">9 档·跑圈节点 3/5/10/20/30/50/70/100/150（第3圈就能买）。投放=<b>深海罗盘 + 钻石 + VIP点数</b>，纪念卡 $49.99 起。后 4 档 $99.99 同内容（深R跑越多解锁越多档=可重复变现）：</p>
+    <table>
+      <tr><th class="num">跑圈</th><th class="num">定价</th><th class="num">实付(钻)</th><th class="num">深海罗盘</th><th class="num">钻石</th><th class="num">VIP点数</th><th class="num">纪念卡</th><th class="num">产出(钻)</th><th class="num">ROI</th></tr>
+      <tr><td class="num">3</td><td class="num">$1.99</td><td class="num">995</td><td class="num">×3</td><td class="num">1,000</td><td class="num">500</td><td class="num">—</td><td class="num">7,000</td><td class="num">7.0×</td></tr>
+      <tr><td class="num">5</td><td class="num">$4.99</td><td class="num">2,495</td><td class="num">×9</td><td class="num">2,500</td><td class="num">1,000</td><td class="num">—</td><td class="num">20,500</td><td class="num">8.2×</td></tr>
+      <tr><td class="num">10</td><td class="num">$9.99</td><td class="num">4,995</td><td class="num">×17</td><td class="num">5,000</td><td class="num">2,500</td><td class="num">—</td><td class="num">39,000</td><td class="num">7.8×</td></tr>
+      <tr><td class="num">20</td><td class="num">$19.99</td><td class="num">9,995</td><td class="num">×35</td><td class="num">10,000</td><td class="num">5,000</td><td class="num">—</td><td class="num">80,000</td><td class="num">8.0×</td></tr>
+      <tr><td class="num">30</td><td class="num">$49.99</td><td class="num">24,995</td><td class="num">×85</td><td class="num"><b>25,000</b></td><td class="num">10,000</td><td class="num">×1</td><td class="num">200,000</td><td class="num">8.0×</td></tr>
+      <tr><td class="num">50</td><td class="num">$99.99</td><td class="num">49,995</td><td class="num">×170</td><td class="num"><b>50,000</b></td><td class="num">25,000</td><td class="num"><b style="color:var(--vio)">×2</b></td><td class="num">400,000</td><td class="num">8.0×</td></tr>
+      <tr><td class="num">70</td><td class="num">$99.99</td><td class="num">49,995</td><td class="num">×170</td><td class="num"><b>50,000</b></td><td class="num">25,000</td><td class="num"><b style="color:var(--vio)">×2</b></td><td class="num">400,000</td><td class="num">8.0×</td></tr>
+      <tr><td class="num">100</td><td class="num">$99.99</td><td class="num">49,995</td><td class="num">×170</td><td class="num"><b>50,000</b></td><td class="num">25,000</td><td class="num"><b style="color:var(--vio)">×2</b></td><td class="num">400,000</td><td class="num">8.0×</td></tr>
+      <tr><td class="num">150</td><td class="num">$99.99</td><td class="num">49,995</td><td class="num">×170</td><td class="num"><b>50,000</b></td><td class="num">25,000</td><td class="num"><b style="color:var(--vio)">×2</b></td><td class="num">400,000</td><td class="num">8.0×</td></tr>
+    </table>
+    <p style="font-size:12px;color:var(--sub);margin-top:6px">深海罗盘=2,000钻/个(抽奖产出值) · 钻石=1钻 · 纪念卡180080=5,000钻($10)。ROI(计 罗盘+钻石+纪念卡)=8×；VIP点数=scaling bonus(钻值口径未定·暂不计ROI)。钻石/罗盘比例可调(现钻石~18-25%)。</p>
+    <div class="foot">
+      • <b>后4档 $99.99 同内容</b>（50/70/100/150圈解锁）=深R跑越多越多档可买=**可重复 $99.99 变现**（"再加2档99刀"意图·whale milking）。<br>
+      • <b>★纪念卡</b>（用户定）：$49.99 含×1，**每 $99.99 含×2**；集卡可升级·重复=升级料/Regained。⚠️全买 whale 拿 9 张 → 确认集卡升级吃得下这么多 dupe（否则高档改纪念卡碎片/其他cosmetic）。<br>
+      • <b>VIP点数</b>（用户加）：20→1,000 scaling bonus；钻值口径定了再决定是否计入 ROI（计入则等量减罗盘/钻石）。<br>
+      • <b>触发礼包：不上</b>。<b>机制</b>：ActvAchievePack 复用 X2，完成条件 <code>monopoly_lap≥N圈</code>，Iap 限购1次。<br>
+      • ⚠️ <b>正式数值阶段定</b>：① 钻石:罗盘 精确比例 ② VIP点数钻值口径 ③ 纪念卡 dupe 处理（集卡升级 vs 碎片）。
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="n">4</span> 主城皮肤大奖（X3 养成线价值 · 变现侧不改）</h2>
+    <table>
+      <tr><th>产出</th><th class="num">定价(兑换/钻)</th><th>价值锚</th><th>处理</th></tr>
+      <tr><td>月心珍珠（主城皮肤·永久）</td><td class="num">300,000 钻 ≈$300</td><td>30人持有·全付费·人均终身 $22,149·超R向(1-88服)</td><td><span class="tag cash">=原航海之路·不改</span></td></tr>
+      <tr><td>海风旅者·霍普金斯（晋升皮）</td><td class="num">150,000 钻</td><td>深海主视觉角色</td><td><span class="tag cash">不改</span></td></tr>
+      <tr><td>深海纪念卡 / 养成料</td><td class="num">兑换盘内</td><td>中段奖励</td><td><span class="tag keep">复用兑换盘</span></td></tr>
+    </table>
+    <div class="foot">主城皮肤是大富翁的"飞轮终点"，定价复用月心珍珠盘（超R向），<b>不参与换皮调整</b>——这是变现侧核心，动它会改深 R 经济，违背"变现侧不改"。</div>
+  </section>
+
+  <section class="ask">
+    <h2><span class="n">✦</span> 待你拍板</h2>
+    <ul>
+      <li><span class="d">1</span><b>成就礼包 3 档</b>（§3）：X 圈门槛 20/50/100、定价 $9.99/19.99/49.99 是否 OK？有 X2 原数值的话给我校准。</li>
+      <li><span class="d">2</span><b>夏日根因门槛校准</b>：是否按"满级料降到 200–250 思路"放宽深海大富翁/BP 经验门槛（提覆盖率不伤深度）？</li>
+      <li><span class="d">3</span><b>流量侧其余</b>（阶段奖励梯度、珍珠贝阈值）沿用 ROI8 现值即可，还是要再压？</li>
+    </ul>
+    <div class="foot">确认后我把终值回填到 <code>ActvVoyage__*</code> tsv（深海 EG199-206/OtherReward/ProgressReward）+ 成就礼包 Pack 677 配置。变现侧(主城皮肤/ROI)一律不动。</div>
+  </section>
+
+  <div class="foot" style="text-align:center;margin-top:24px">
+    基线：<code>航海之路数值框架.html</code> + <code>航海之路数值方案_ROI8_v1.html</code>(2026-06-02) · 换皮框架：流量侧改/变现侧不改 · 夏日骰子根因(2026-04-21) · 策划案 深海节第二周核心循环
+  </div>
+</div>
+</body>
+</html>
