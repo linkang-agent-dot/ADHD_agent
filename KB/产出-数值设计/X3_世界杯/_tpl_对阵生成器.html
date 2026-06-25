@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>X3 世界杯竞猜 · 对阵生成器 + PACK 总表</title><style>
+:root{--bg:#15171f;--ink:#ece9e0;--mut:#8f8a80;--line:#2a313d;--gold:#e0a94a;--wc:#9fd06a;--ds:#7fb0e0;--card:#1b212c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;padding:28px 24px}
+h1{font-size:20px;margin:0 0 4px}.sub{color:var(--mut);font-size:12.5px;margin-bottom:18px;line-height:1.65;max-width:920px}
+.sub b{color:var(--gold)}
+.tabs{display:flex;gap:10px;margin-bottom:18px;max-width:480px}
+.tab{flex:1;text-align:center;padding:11px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:#1b212c;color:var(--mut)}
+.tab.on{background:#222c1c;color:var(--wc);border-color:#3f6a2e}
+.pane{display:none}.pane.on{display:block}
+.gen{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:760px;margin-bottom:16px}
+.fld{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.fld.full{grid-column:1/3}
+.fld label{display:block;font-size:12px;color:var(--mut);font-weight:700;margin-bottom:7px}
+select,input{width:100%;background:#10141a;color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:9px 10px;font-size:14px;font-family:inherit}
+.tiers{display:flex;gap:8px;flex-wrap:wrap}
+.tchip{flex:1;min-width:90px;text-align:center;padding:9px;border-radius:8px;border:1px solid var(--line);background:#10141a;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer;user-select:none}
+.tchip.on{background:#1c2533;color:var(--ds);border-color:#3a567a}
+.tchip.on.free{background:#222c1c;color:var(--wc);border-color:#3f6a2e}
+.swap{cursor:pointer;text-align:center;color:var(--ds);font-size:12px;margin-top:8px;text-decoration:underline}
+.out{max-width:760px}
+.ocard{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:14px 16px;margin-bottom:11px}
+.ocard.free{border-color:#3f6a2e}.ocard h3{margin:0 0 9px;font-size:14.5px;color:var(--gold)}.ocard.free h3{color:var(--wc)}
+.json{background:#0c0f14;border:1px solid var(--line);border-radius:8px;padding:11px 13px;font-family:"Cascadia Code",Consolas,monospace;font-size:14px;color:#cfe6f2;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.json code{white-space:pre-wrap;word-break:break-all}
+.cp{flex:none;background:#1c2533;color:var(--ds);border:1px solid #3a567a;border-radius:6px;padding:6px 13px;font-size:12px;font-weight:700;cursor:pointer}
+.cp:active{background:#2a3a52}.cp.done{background:#222c1c;color:var(--wc);border-color:#3f6a2e}
+.det{margin-top:9px;font-size:11.5px;color:var(--mut);line-height:1.7}
+.det b{color:var(--ink);font-weight:600}.det .pk{color:var(--gold);font-weight:700}
+.copyall{background:#222c1c;color:var(--wc);border:1px solid #3f6a2e;border-radius:9px;padding:11px 18px;font-size:13.5px;font-weight:800;cursor:pointer;margin-bottom:10px}
+.copyall:active{opacity:.8}
+.empty{color:var(--mut);font-size:13px;padding:18px;text-align:center;border:1px dashed var(--line);border-radius:10px}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:11px}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:12.5px}
+th,td{padding:7px 10px;text-align:center;border-bottom:1px solid #20262f;white-space:nowrap}
+th{background:#1c222c;color:var(--mut);font-weight:700;position:sticky;top:0}
+tr:hover td{background:#1c2230}
+td.zh{color:var(--ink);font-weight:600}td.code{color:var(--ds);font-weight:700;font-family:monospace}
+td.pf{color:#bcd9a0;font-family:monospace}td.p1{color:var(--gold);font-family:monospace}
+td.p2{color:#9fd06a;font-family:monospace}td.p3{color:#e0a94a;font-family:monospace}
+.srch{max-width:300px;margin-bottom:12px}
+.foot{margin-top:16px;color:var(--mut);font-size:11.5px;line-height:1.7;max-width:920px;border-top:1px solid var(--line);padding-top:12px}
+.foot b{color:var(--gold)}.foot code{color:#cfe6f2}
+</style></head><body>
+
+<h1>⚽ X3 世界杯竞猜 · 对阵生成器</h1>
+<div class="sub">竞猜活动 <b>ActvType=71</b>（customParam 驱动）：iGame 部署时填 <b>customParam</b> 建本场对阵，<b>零配表 / 零热更</b>，改对阵=改参数重部署。礼包号公式 <b>894000 + 队号×10 + 档位</b>（队号=FIFA三字码字母序 1–48）。<b>一个实例=两个礼包（两队各一·同档）</b>；多档=同一场部署多个实例。下方选两队+档位即出 customParam。</div>
+
+<div class="tabs">
+  <div class="tab on" onclick="sw(0)">🎯 对阵生成器</div>
+  <div class="tab" onclick="sw(1)">📦 PACK 总表（192）</div>
+</div>
+
+<div class="pane on" id="p0">
+  <div class="gen">
+    <div class="fld"><label>轮次（仅用于命名/备注）</label>
+      <select id="rnd"><option>32强</option><option>16强</option><option>8强</option><option>半决赛</option><option>季军</option><option>决赛</option></select></div>
+    <div class="fld"><label>场次备注（可选，例：焦点战）</label><input id="memo" placeholder="留空即可"></div>
+    <div class="fld"><label>A 队（packIdA）</label><select id="tA"></select></div>
+    <div class="fld"><label>B 队（packIdB）</label><select id="tB"></select></div>
+    <div class="fld full"><label>档位（可多选 · 每档=一个独立活动实例）</label>
+      <div class="tiers" id="tiers">
+        <div class="tchip free" data-t="0">免费</div>
+        <div class="tchip on" data-t="1">$4.99</div>
+        <div class="tchip" data-t="2">$9.99</div>
+        <div class="tchip" data-t="3">$19.99</div>
+      </div>
+      <div class="swap" onclick="swapTeams()">⇄ 交换 A / B</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px">
+    <button class="copyall" style="margin:0" onclick="addToPlan()">➕ 加入部署清单（自动分配活动ID）</button>
+    <span id="poolinfo" style="font-size:12px;color:var(--mut)"></span>
+  </div>
+  <div class="out" id="out"></div>
+
+  <div id="plansec" style="max-width:760px;margin-top:22px"></div>
+</div>
+
+<div class="pane" id="p1">
+  <input class="srch" id="srch" placeholder="🔍 搜索队名 / 三字码 / 礼包号" oninput="renderTbl()">
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>队号</th><th>三字码</th><th>队伍</th><th>免费 ·0</th><th>$4.99 ·1</th><th>$9.99 ·2</th><th>$19.99 ·3</th><th>助威框道具</th><th>应援表情道具</th></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table></div>
+</div>
+
+<div class="foot">
+  <b>部署</b>：iGame 选一个空闲竞猜实例（ActvOnline 102920–102992，ActvType=71），customParam 填 <code>{"packIdA":x,"packIdB":y}</code> → 设开盘/锁盘时间 → 提交。锁盘=各场开赛前10分钟自动。<br>
+  <b>结算（每比赛日）</b>：拉赛果 → 查日志命中玩家 → bulk-mail 发奖券+结算邮件；GM <code>GMAddActivityScore [BP活动id] 600</code> 每命中+600 BP（BP=ActvOnline 102243）。<br>
+  <b>外显道具 GM 发放</b>：<code>!gm @&lt;uid&gt; GMAddItem &lt;号&gt; &lt;数&gt;</code>；助威头像框=80299+队号，应援表情解锁道具=15419+队号，抽奖券1146，荣耀金币1147，足球宝贝皮肤5304001。
+</div>
+
+<script>
+const TEAMS=__TEAMS__;
+const TIERLBL={0:"免费",1:"$4.99",2:"$9.99",3:"$19.99"};
+const sel=document.querySelectorAll('.tchip');
+let picked=new Set([1]);
+
+function sw(i){document.querySelectorAll('.pane').forEach((p,j)=>p.classList.toggle('on',j===i));
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('on',j===i));}
+
+function opt(t){return '<option value="'+t.num+'">'+t.zh+' '+t.code+' · 队'+String(t.num).padStart(2,'0')+'</option>';}
+document.getElementById('tA').innerHTML=TEAMS.map(opt).join('');
+document.getElementById('tB').innerHTML=TEAMS.map(opt).join('');
+document.getElementById('tA').value=7;
+document.getElementById('tB').value=21;
+
+sel.forEach(c=>c.onclick=()=>{const t=+c.dataset.t;if(picked.has(t)){picked.delete(t);c.classList.remove('on');}else{picked.add(t);c.classList.add('on');}render();});
+['tA','tB','rnd','memo'].forEach(id=>document.getElementById(id).addEventListener('input',render));
+function swapTeams(){const a=document.getElementById('tA'),b=document.getElementById('tB');const v=a.value;a.value=b.value;b.value=v;render();}
+
+const POOL_START=102920, POOL_END=102992;            // ActvType=71 竞猜实例池(共73)
+let plan=[];                                          // 已加入部署清单的实例
+function nextId(){return POOL_START+plan.length;}     // 下一个待分配ID
+
+function team(n){return TEAMS.find(t=>t.num==n);}
+let cards=[], curInsts=[];
+function curState(){
+  const A=team(document.getElementById('tA').value), B=team(document.getElementById('tB').value);
+  const rnd=document.getElementById('rnd').value, memo=document.getElementById('memo').value.trim();
+  const tiers=[...picked].sort((a,b)=>a-b);
+  return {A,B,rnd,memo,tiers};
+}
+function render(){
+  const {A,B,rnd,memo,tiers}=curState();
+  const out=document.getElementById('out'); cards=[]; curInsts=[];
+  const free=POOL_END-POOL_START+1-plan.length;
+  document.getElementById('poolinfo').innerHTML='活动ID池 '+POOL_START+'–'+POOL_END+' ｜ 已分配 <b style="color:var(--gold)">'+plan.length+'</b> ｜ 剩余 <b style="color:var(--wc)">'+free+'</b>';
+  if(!tiers.length){out.innerHTML='<div class="empty">请至少选一个档位</div>';renderPlan();return;}
+  if(A.num===B.num){out.innerHTML='<div class="empty">A、B 不能是同一队</div>';renderPlan();return;}
+  out.innerHTML=tiers.map((t,i)=>{
+    const pa=A.base+t, pb=B.base+t;
+    const j='{"packIdA":'+pa+',"packIdB":'+pb+'}'; cards.push(j);
+    const aid=nextId()+i;                              // 加入后将分配的活动ID(预览)
+    const nm='WC-'+rnd+'-'+A.code+'vs'+B.code+'-'+TIERLBL[t]+(memo?'-'+memo:'');
+    curInsts.push({aid,j,nm,round:rnd,tier:TIERLBL[t],a:A.code,b:B.code});
+    const fr=t===0?' free':'';
+    return '<div class="ocard'+fr+'"><h3>'+A.zh+' vs '+B.zh+' · '+TIERLBL[t]+' <span style="color:var(--mut);font-weight:500;font-size:12px">→ 活动ID '+aid+'</span></h3>'+
+      '<div class="json"><code>'+j+'</code><button class="cp" onclick="cp(this,\''+j+'\')">复制</button></div>'+
+      '<div class="det">备注名 <b>'+nm+'</b><br>'+
+      'A=<b>'+A.zh+'</b> '+A.code+' → packIdA <span class="pk">'+pa+'</span> ｜ 框道具 '+A.frame+' ｜ 表情道具 '+A.emote+'<br>'+
+      'B=<b>'+B.zh+'</b> '+B.code+' → packIdB <span class="pk">'+pb+'</span> ｜ 框道具 '+B.frame+' ｜ 表情道具 '+B.emote+'</div></div>';
+  }).join('');
+  renderPlan();
+}
+function addToPlan(){
+  if(!curInsts.length)return;
+  if(plan.length+curInsts.length>POOL_END-POOL_START+1){alert('活动ID池(73个)不够了，先清理部署清单');return;}
+  curInsts.forEach(c=>plan.push(Object.assign({},c)));  // 提交分配
+  render();
+  document.getElementById('plansec').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function delPlan(i){plan.splice(i,1);render();}
+function clearPlan(){if(plan.length&&confirm('清空部署清单？已分配的活动ID会全部释放重排'))plan=[],render();}
+function renderPlan(){
+  const s=document.getElementById('plansec');
+  if(!plan.length){s.innerHTML='';return;}
+  const rows=plan.map((p,i)=>'<tr><td class="p1">'+p.aid+'</td><td>'+p.round+'</td><td class="zh">'+p.a+' vs '+p.b+'</td><td>'+p.tier+'</td>'+
+    '<td style="font-family:monospace;color:#cfe6f2;text-align:left">'+p.j+'</td>'+
+    '<td><button class="cp" onclick="cp(this,\''+p.j+'\')">复制</button> <button class="cp" style="color:#e08a8a;border-color:#5a3030" onclick="delPlan('+i+')">删</button></td></tr>').join('');
+  s.innerHTML='<h3 style="font-size:15px;color:var(--gold);margin:0 0 4px">📋 部署清单（'+plan.length+' 个实例 · 活动ID已分配·不重复）</h3>'+
+    '<div style="display:flex;gap:8px;margin:8px 0 12px"><button class="copyall" style="margin:0" onclick="copyPlanTSV()">📋 复制清单(TSV: 活动ID+对阵+customParam)</button>'+
+    '<button class="copyall" style="margin:0;background:#1c2533;color:var(--ds);border-color:#3a567a" onclick="copyPlanJSON()">复制全部 customParam</button>'+
+    '<button class="copyall" style="margin:0;background:#241c1a;color:#e08a8a;border-color:#5a3030" onclick="clearPlan()">清空</button></div>'+
+    '<div class="tbl-wrap"><table><thead><tr><th>活动ID</th><th>轮次</th><th>对阵</th><th>档位</th><th>customParam</th><th>操作</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+function copyPlanTSV(){const t=plan.map(p=>p.aid+'\t'+p.round+' '+p.a+'vs'+p.b+' '+p.tier+'\t'+p.j).join('\n');doCopy(t).then(ok=>flash(event.target,ok?'✓ 已复制 '+plan.length+' 行':'失败'));}
+function copyPlanJSON(){const t=plan.map(p=>p.j).join('\n');doCopy(t).then(ok=>flash(event.target,ok?'✓ 已复制':'失败'));}
+function flash(b,msg){const o=b.textContent;b.textContent=msg;setTimeout(()=>b.textContent=o,1400);}
+function doCopy(txt){
+  if(navigator.clipboard&&window.isSecureContext){return navigator.clipboard.writeText(txt).then(()=>true).catch(()=>fallbackCopy(txt));}
+  return Promise.resolve(fallbackCopy(txt));
+}
+function fallbackCopy(txt){
+  const ta=document.createElement('textarea');ta.value=txt;
+  ta.style.position='fixed';ta.style.top='-9999px';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.focus();ta.select();
+  let ok=false;try{ok=document.execCommand('copy');}catch(e){ok=false;}
+  document.body.removeChild(ta);return ok;
+}
+function cp(btn,txt){doCopy(txt).then(ok=>{btn.textContent=ok?'已复制✓':'复制失败';btn.classList.add('done');setTimeout(()=>{btn.textContent='复制';btn.classList.remove('done');},1200);});}
+function copyAll(){if(!cards.length)return;const b=event.target;const o=b.textContent;doCopy(cards.join('\n')).then(ok=>{b.textContent=ok?('✓ 已复制 '+cards.length+' 条'):'复制失败';setTimeout(()=>b.textContent=o,1400);});}
+
+function renderTbl(){
+  const q=document.getElementById('srch').value.trim().toUpperCase();
+  document.getElementById('tbody').innerHTML=TEAMS.filter(t=>!q||t.code.includes(q)||t.zh.includes(q)||String(t.base).includes(q)).map(t=>
+    '<tr><td>'+t.num+'</td><td class="code">'+t.code+'</td><td class="zh">'+t.zh+'</td>'+
+    '<td class="pf">'+t.base+'</td><td class="p1">'+(t.base+1)+'</td><td class="p2">'+(t.base+2)+'</td><td class="p3">'+(t.base+3)+'</td>'+
+    '<td class="pf">'+t.frame+'</td><td class="pf">'+t.emote+'</td></tr>').join('');
+}
+render();renderTbl();
+</script>
+</body></html>

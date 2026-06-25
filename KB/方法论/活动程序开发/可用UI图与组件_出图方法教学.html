@@ -147,8 +147,44 @@ for root,_,fs in os.walk(r"...\Assets"):
 </div>
 </div>
 
+<h2>五、★实操：实际怎么调（专补"调用层"，详版见 附录A）</h2>
+<div class="key"><b>先破一个误解：</b>「Morphix」不是独立工具，本质是 <b>GRFal 的一层 prompt 前处理</b>——底层只调 3 个 GRFal 工具（<code>generate_image</code> / <code>describe_media</code> / <code>remove_background</code>）。所以<b>所有出图/拆图，最终都是命令行调一个 CLI：<code>call_grfal.py</code></b>。</div>
+
+<h3>调用接口（三件事记住）</h3>
+<table>
+<tr><th>项</th><th>值</th></tr>
+<tr><td>CLI</td><td><span class="path">C:\ADHD_agent\.cursor\skills\grfal-api\scripts\call_grfal.py</span></td></tr>
+<tr><td>cookie</td><td>读 <span class="path">…\x2-media\config.json</span> 的 <code>grfal_cookie</code> 注入 env <code>GRFAL_COOKIE</code>（下载也要带，否则 401）</td></tr>
+<tr><td>★async 铁律</td><td><code>generate_image</code> 必须 <code>--submit-only</code> 拿 task_id → <code>--check-task</code> 轮询；加 <code>--sync</code> 会 300s 硬超时</td></tr>
+</table>
+<pre><code># async 调用骨架（生图脚本都这套）
+submit('generate_image', {'prompt':P,'model':'gemini','aspect_ratio':'9:16'},
+       ['reference_images='+IMG1, 'reference_images='+IMG2])   # --submit-only 拿 task_id
+poll(task_id)        # 每15s --check-task，拿 result(url列表)
+download(urls)       # 带 Cookie 下载；result 是相对路径要拼 https://grfal.tap4fun.com</code></pre>
+
+<h3>★拆组件（Morphix E 元素拆分）真实 4 步</h3>
+<pre><code>效果图 ──①generate_image(gpt)+拆分prompt──► #B8B8B8 灰底雪碧图（组件平铺）
+       ──②remove_background──► 透明雪碧图
+       ──③PIL 连通域投影切块(纯本地)──► 一件件原子 PNG
+       ──④describe_media 分类 + 命名归档──► 组件库</code></pre>
+<ul>
+<li><b>拆分 prompt 4 条不能省</b>：① <b>#B8B8B8 灰底</b>（不是白底！白底抠图留白边）② 原子化+严格去重 ③ EMPTY/no text/no numbers（出空壳，文字走 TextKey 别烤图）④ don't redraw or recolor（保原风格）。</li>
+<li><b>第③步纯本地零 AI</b>：透明图按 alpha 投影递归分割（行带→列段→收紧 bbox→过滤噪点）。</li>
+<li>真实 prompt 全文 + 切块代码 → <b>附录A 第 1 节</b>。</li>
+</ul>
+
+<h3>可复用脚本（本包 <code>脚本可复用\</code>，改 3 个变量复跑）</h3>
+<table>
+<tr><th>脚本</th><th>干什么</th></tr>
+<tr><td><code>01_拆组件_出灰底雪碧图+去底_gen_split_fixed.py</code></td><td>效果图 → 灰底雪碧图 → 去底（改 REF/PROMPT/OUT）</td></tr>
+<tr><td><code>02_拆组件_连通域切块_split_blocks.py</code></td><td>透明雪碧图 → 一件件原子 PNG（改 SRC）</td></tr>
+<tr><td><code>03_reskin换皮_图1拼装+图2真界面_gen_reskin.py</code></td><td>拼装+真界面 → 成品效果图（改 IMG1/IMG2/PROMPT）</td></tr>
+</table>
+<p class="muted">★ 完整可执行手册（调用骨架全代码 / 拆分 prompt 全文 / 切块代码 / 横竖转换 / 8 条踩坑）见同目录 <b>附录A_实操_GRFal真实调用与拆组件脚本.md</b></p>
+
 <hr>
-<h2>五、整套链路一图记住</h2>
+<h2>六、整套链路一图记住</h2>
 <pre><code>可用组件 ──┐
  (prefab    │   STEP1 抠真 sprite
   GUID反查) │        │

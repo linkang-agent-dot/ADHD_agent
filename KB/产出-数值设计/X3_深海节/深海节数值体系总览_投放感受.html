@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>深海节 · 数值体系总览（投放感受）</title>
+<style>
+  :root{
+    --bg:#0a1420; --bg2:#0f1c2e; --card:#13243a; --card2:#172d47;
+    --ink:#e8f1fb; --mut:#8aa6c4; --line:#22405f;
+    --teal:#34d6c4; --gold:#f1c15a; --pink:#ff7b9c; --blue:#5aa6ff; --green:#5fd38a; --red:#ff6b6b; --purple:#b88cff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(160deg,#081019,#0a1420 40%,#0c1828);color:var(--ink);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.5;padding:0 0 80px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+  header{padding:34px 0 18px;border-bottom:1px solid var(--line);margin-bottom:26px}
+  h1{margin:0 0 6px;font-size:26px;letter-spacing:.5px}
+  h1 .em{color:var(--teal)}
+  .sub{color:var(--mut);font-size:14px}
+  h2{font-size:19px;margin:34px 0 14px;padding-left:11px;border-left:4px solid var(--teal)}
+  h2 .tag{font-size:12px;color:var(--mut);font-weight:400;margin-left:8px}
+  h3{font-size:15px;margin:0 0 8px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:14px 0}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .kpi .n{font-size:24px;font-weight:700;color:var(--gold)}
+  .kpi .l{font-size:12px;color:var(--mut);margin-top:3px}
+  table{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:13.5px;background:var(--card);border-radius:10px;overflow:hidden}
+  th,td{padding:8px 11px;text-align:left;border-bottom:1px solid var(--line)}
+  th{background:var(--bg2);color:var(--teal);font-weight:600;font-size:12.5px;white-space:nowrap}
+  td.r,th.r{text-align:right}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:var(--card2)}
+  .mod{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:13px 0}
+  .mod .top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+  .mod .nm{font-size:16px;font-weight:700}
+  .mod .week{font-size:11px;padding:2px 8px;border-radius:20px;background:#16324a;color:var(--blue);border:1px solid #1e4a6b}
+  .pill{font-size:11px;padding:2px 9px;border-radius:20px;display:inline-block}
+  .p-w1{background:#13374a;color:#67c7ff;border:1px solid #1c5675}
+  .p-w2{background:#3a2740;color:#ff9ec2;border:1px solid #6b3a55}
+  .p-all{background:#26382a;color:#7be0a0;border:1px solid #305a3d}
+  .meta{color:var(--mut);font-size:13px;margin:5px 0}
+  .meta b{color:var(--ink);font-weight:600}
+  .band{display:flex;align-items:center;gap:8px;margin:5px 0}
+  .band .lab{width:78px;text-align:right;font-size:13px;color:var(--gold);font-weight:600;flex:none}
+  .band .bar{height:22px;border-radius:5px;background:linear-gradient(90deg,var(--teal),#1f7d75);display:flex;align-items:center;padding:0 8px;font-size:11px;color:#04121a;font-weight:700;min-width:24px}
+  .band .who{font-size:11.5px;color:var(--mut)}
+  .ladder{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:12px 0}
+  @media(max-width:820px){.ladder{grid-template-columns:1fr 1fr}}
+  .rung{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;border-top:3px solid var(--teal)}
+  .rung.r1{border-top-color:var(--green)} .rung.r2{border-top-color:var(--blue)}
+  .rung.r3{border-top-color:var(--gold)} .rung.r4{border-top-color:var(--pink)} .rung.r5{border-top-color:var(--red)}
+  .rung .h{font-size:13px;font-weight:700;margin-bottom:2px} .rung .s{font-size:11px;color:var(--mut);margin-bottom:7px}
+  .rung ul{margin:0;padding-left:15px;font-size:12px;color:#cfe0f0} .rung li{margin:2px 0}
+  .diag{background:linear-gradient(150deg,#1a2236,#1d1830);border:1px solid #3a3252;border-radius:14px;padding:6px 20px 16px;margin:14px 0}
+  .issue{border-left:3px solid var(--gold);padding:8px 0 8px 14px;margin:14px 0}
+  .issue.hi{border-left-color:var(--red)} .issue.lo{border-left-color:var(--blue)}
+  .issue .t{font-weight:700;font-size:14.5px;margin-bottom:3px}
+  .issue .t .sev{font-size:10.5px;padding:1px 7px;border-radius:20px;margin-left:8px;vertical-align:middle}
+  .sev-hi{background:#46232a;color:#ff8e8e} .sev-mid{background:#46401f;color:#f1c15a} .sev-lo{background:#1f3346;color:#7bb6ff}
+  .issue .d{font-size:13px;color:#cdd9e7} .issue .d b{color:#fff}
+  .issue .fix{font-size:12.5px;color:var(--teal);margin-top:4px}
+  .timeline{display:flex;gap:4px;margin:12px 0;font-size:11px}
+  .day{flex:1;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:6px 4px;text-align:center;color:var(--mut)}
+  .day.w2{background:#231a2e}
+  .note{font-size:12px;color:var(--mut);font-style:italic;margin:6px 0}
+  .legend{font-size:12px;color:var(--mut);margin:4px 0 14px}
+  .legend span{margin-right:14px}
+  .warn{color:var(--gold)} .dim{color:var(--mut)}
+  a{color:var(--teal)}
+  .foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--mut)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>深海节 · <span class="em">数值体系总览</span> <span style="font-size:15px;color:var(--mut)">投放感受视角</span></h1>
+  <div class="sub">11 模块 · <b style="color:var(--teal)">10 天周期 · 全部 D1 开局就开，仅周卡延后（后7天）</b> · 主攻付费深度 ｜ 数据源：各模块配置备份草稿（部分未定稿，已标注）｜ 生成 2026-06-25</div>
+</header>
+
+<!-- ===== 总览 KPI ===== -->
+<div class="cards">
+  <div class="kpi"><div class="n">11</div><div class="l">活动模块（程序5 / 纯配置6）</div></div>
+  <div class="kpi"><div class="n">$1.99–$2000</div><div class="l">付费档跨度</div></div>
+  <div class="kpi"><div class="n">~$3,000+</div><div class="l">单期 whale 天花板（全买估）</div></div>
+  <div class="kpi"><div class="n">50%–1000%</div><div class="l">ROI 区间（口径不统一·见诊断）</div></div>
+  <div class="kpi"><div class="n">$99.99 ×6</div><div class="l">大富翁成就重复档（whale milking）</div></div>
+</div>
+<div class="legend">
+  <span class="pill p-all">D1 开局开</span>大富翁(含BINGO地格任务) / 转盘 / 累充 / BP / 许愿池 / 每日 / 装饰 / 头像框 / 酒馆
+  <span class="pill p-w2">后7天 D4–D10</span>周卡 + 拜访（错峰补后段）
+</div>
+
+<!-- ===== 节奏 ===== -->
+<h2>① 节奏 <span class="tag">10 天周期 · 谁什么时候开</span></h2>
+<div class="timeline">
+  <div class="day">D1</div><div class="day">D2</div><div class="day">D3</div><div class="day w2">D4</div><div class="day w2">D5</div><div class="day w2">D6</div><div class="day w2">D7</div>
+  <div class="day w2">D8</div><div class="day w2">D9</div><div class="day w2">D10</div>
+</div>
+<table>
+<thead><tr><th>开放时机</th><th>模块</th><th>性质</th></tr></thead>
+<tbody>
+<tr><td><b>D1 开局开</b></td><td>大富翁(成就+存钱罐+兑换+<b>BINGO地格任务</b>) · 深海罗盘转盘 · 累充 · 远航日志BP · 许愿池 · 怦然心动每日 · 装饰 · 头像框 · 最佳酒馆</td><td>主体变现 D1 齐上 · 整期 10 天常驻</td></tr>
+<tr><td><b>后7天 D4–D10</b></td><td>节日周卡（自选4项）· <b>拜访（海滨之约 $99.99）</b></td><td>错峰补后段付费</td></tr>
+<tr><td><b>❌ 待修</b></td><td>最佳酒馆（跨服赛·D1开）</td><td>14天是误会(本就10天)；真bug=ContentID误配719(应717)，积分体系全空、冲榜跑不起来</td></tr>
+</tbody>
+</table>
+<div class="note warn">⚠ 排期=10天，主体 D1 开；周卡+拜访 错峰到后7天(D4–D10)。「后7天」按 D4–D10 理解，若是 D8 起请说。BINGO=大富翁地格任务免费层(随大富翁D1开)。酒馆跨服赛季14天问题见下方酒馆卡。</div>
+
+<!-- ===== 价位带分布 ===== -->
+<h2>② 价位带分布 <span class="tag">每个价位有几个 SKU、谁在卖</span></h2>
+<div class="band"><div class="lab">$1.99</div><div class="bar" style="width:40px">1</div><div class="who">成就档1（跑10圈）</div></div>
+<div class="band"><div class="lab">$4.99</div><div class="bar" style="width:150px">7</div><div class="who">每日礼包×5 · 许愿池(可重复) · 成就档2</div></div>
+<div class="band"><div class="lab">$9.99</div><div class="bar" style="width:90px">3</div><div class="who">头像框印记 · BP进阶 · 成就档3</div></div>
+<div class="band"><div class="lab">$14.99</div><div class="bar" style="width:24px;background:#3a3a3a;color:#888">0</div><div class="who dim">空档</div></div>
+<div class="band"><div class="lab">$19.99</div><div class="bar" style="width:130px">6</div><div class="who">装饰×3 · BP至尊 · 存钱罐 · 成就档4</div></div>
+<div class="band"><div class="lab">$29.99</div><div class="bar" style="width:24px;background:#3a3a3a;color:#888">0</div><div class="who dim">空档</div></div>
+<div class="band"><div class="lab">$49.99</div><div class="bar" style="width:40px">1</div><div class="who">成就档5（纪念卡×1 入场）</div></div>
+<div class="band"><div class="lab">$59.99</div><div class="bar" style="width:24px;background:#3a3a3a;color:#888">0</div><div class="who dim">空档</div></div>
+<div class="band"><div class="lab">$99.99</div><div class="bar" style="width:150px;background:linear-gradient(90deg,#ff7b9c,#a5455f)">7</div><div class="who">成就档6–11（<b>×6 重复</b>）· 拜访门头</div></div>
+<div class="band"><div class="lab">$200</div><div class="bar" style="width:40px;background:linear-gradient(90deg,#f1c15a,#9a7a25)">1</div><div class="who">累充中档（航迹皮）</div></div>
+<div class="band"><div class="lab">$2000</div><div class="bar" style="width:40px;background:linear-gradient(90deg,#ff6b6b,#8a2f2f)">1</div><div class="who">累充顶档（罗盘券大包）</div></div>
+<div class="band"><div class="lab">间接</div><div class="bar" style="width:70px;background:#2a4a5a">~$300</div><div class="who">大富翁兑换：月心珍珠主城皮（30万代币·需肝/买券）</div></div>
+<div class="note warn">⚠ 重心明显堆在 $4.99 / $19.99 / $99.99；中高端 $29.99 / $59.99 全空；$99.99 → $200 → $2000 三连跳断层大。</div>
+
+<!-- ===== R级付费阶梯 ===== -->
+<h2>③ 付费深度阶梯 <span class="tag">从免费到鲸，各层被谁接住</span></h2>
+<div class="ladder">
+  <div class="rung r1"><div class="h">免费 / 泛用户</div><div class="s">$0 · 活跃留存</div><ul>
+    <li>许愿池可参与</li><li>酒馆冲榜</li><li>BP免费轨</li><li>棋盘抽奖(免费投骰)</li><li>周卡/礼包赠的罗盘券</li></ul></div>
+  <div class="rung r2"><div class="h">小 R</div><div class="s">$5–10 · 高频低价</div><ul>
+    <li>每日礼包 $4.99×5</li><li>许愿池 $4.99(可重复)</li><li>BP进阶 $9.99</li><li>成就档1–3 ($1.99–9.99)</li></ul></div>
+  <div class="rung r3"><div class="h">中 R</div><div class="s">$10–20 · 外显+养成</div><ul>
+    <li>头像框印记 $9.99</li><li>装饰 $19.99×3</li><li>BP至尊 $19.99</li><li>存钱罐 $19.99(超值10×)</li><li>成就档4 $19.99</li></ul></div>
+  <div class="rung r4"><div class="h">大 R</div><div class="s">$50–100 · 旗舰外显</div><ul>
+    <li>成就档5 $49.99(纪念卡)</li><li>拜访门头 $99.99</li><li>成就档6 $99.99</li><li>累充中档 $200(航迹皮)</li></ul></div>
+  <div class="rung r5"><div class="h">鲸 Whale</div><div class="s">$300–3000 · 深度变现</div><ul>
+    <li>成就 $99.99×6 = <b>$600</b></li><li>累充顶档 $2000</li><li>兑换主城皮 ~$300</li><li>转盘冲 SSR 潜艇皮</li></ul></div>
+</div>
+<div class="note">whale 单期理论天花板：成就 $719 + 累充 $2000 + 拜访 $100 + 装饰 $60 + 兑换皮 ~$300 + 转盘券包 ≈ <b>$3000+</b>。</div>
+
+<!-- ===== 逐模块数值卡 ===== -->
+<h2>④ 逐模块数值 <span class="tag">玩法 · 价位 · ROI · 投放物 · R级 · 状态</span></h2>
+
+<div class="mod">
+  <div class="top"><span class="nm">10 · 大富翁「深海航行」</span><span class="pill p-w1">D1开·变现核心</span><span class="pill" style="background:#26382a;color:#7be0a0">数值已封板</span></div>
+  <div class="meta">棋盘抽奖(免费投骰·ROI8×) + <b>成就礼包11档</b>(跑圈解锁) + <b>存钱罐</b>$19.99(超值10×) + 兑换商店(代币→主城皮$300) + 珍珠贝进度线(独立) + <b>BINGO 地格任务</b>(累计地格升级·免费层·50%活跃可玩)</div>
+  <div class="meta"><b>成就11档</b>：$1.99/4.99/9.99/19.99/49.99 + <b>$99.99×6</b>（跑60–200圈，内容相同=whale milking）· ROI 8× · 投放=罗盘1057+钻石+VIP+纪念卡180080($49.99起×1/$99.99×2)</div>
+  <div class="meta"><b>存钱罐</b>：投骰满10次敲碎 $19.99 → 罗盘×45+钻石1万+VIP50 · ROI10× · 限购1</div>
+  <div class="meta dim">R级：新R($1.99扎根)→中R($49.99纪念卡)→whale(后6档$99.99重复+$300兑换皮)。whale全买 $719.81。</div>
+  <div class="meta"><span class="warn">投放感受：</span>三层变现(棋盘+成就+存钱罐)+珍珠贝替升级，ROI稳健不越抽越赚；后6档$99.99重复是单模块最重的 whale 钩子。</div>
+</div>
+
+<div class="mod">
+  <div class="top"><span class="nm">01 · 深海罗盘（转盘抽奖 + 兑换商店）</span><span class="pill p-w1">D1开·变现核心</span><span class="pill" style="background:#3a2f1a;color:#f1c15a">数值草稿</span></div>
+  <div class="meta">消耗<b>罗盘券1150</b>转盘抽英雄皮（<b>潜艇皮15065 SSR·权重10</b>）+ 养成料；产出<b>宝珠1151</b>→兑换商店换养成/外显；排行榜 Top3 给铭牌。</div>
+  <div class="meta">价位：转盘=消耗品(券包价<span class="dim">草稿未明确</span>) · 兑换商店15商品(宝珠1~4000)。</div>
+  <div class="meta dim">R级：免费薄参与→中大R冲SSR皮→whale冲皮+排行Top3铭牌。中等密度完整链条。</div>
+  <div class="meta"><span class="warn">投放感受：</span>第一周唯一变现核；SSR权重仅10、券包真金入口未定 → 第一周流水强度全押在转盘权重/券价定稿上。</div>
+</div>
+
+<div class="mod">
+  <div class="top"><span class="nm">05 · 深海馈赠（累充）</span><span class="pill p-w1">D1开</span><span class="pill" style="background:#3a2f1a;color:#f1c15a">数值待复盘</span></div>
+  <div class="meta">累计充值达档自动领奖 · 10档 · 顶档<b>$2000</b> / 中档<b>$200</b>(航迹皮) · gacha道具 <b>ROI 50%</b> · 主投放=罗盘券1150大包（顶档不发潜艇皮，归转盘独占）。</div>
+  <div class="meta dim">R级：中大R及以上；策划估累充+航迹联动 +0.06 ARPU。</div>
+  <div class="meta"><span class="warn">投放感受：</span>ROI50% 是全节日最"抠"口径；顶档$2000发的是抽奖材料(罗盘券)非直接皮肤，诱惑次于转盘核心皮；档位数值还在待复盘。</div>
+</div>
+
+<div class="mod">
+  <div class="top"><span class="nm">02 · 远航日志（BP 通行证）</span><span class="pill p-w1">D1开</span><span class="pill" style="background:#3a2f1a;color:#f1c15a">进阶轨占位待定</span></div>
+  <div class="meta">3轨制：免费 / 进阶 <b>$9.99</b> / 至尊 <b>$19.99</b> · 靠积分解锁(全满~20150分·早缓后陡) · 20级×3轨。</div>
+  <div class="meta dim">R级：轻氪→中氪。</div>
+  <div class="meta"><span class="warn">投放感受：</span>进阶轨奖励现为克隆至尊轨的<b>占位值</b>，进阶/至尊差值未定 → 性价比无法评估，需对标其他节日BP真值。</div>
+</div>
+
+<div class="mod">
+  <div class="top"><span class="nm">03 · 怦然心动（每日礼包）</span><span class="pill p-all">全程</span><span class="pill" style="background:#26382a;color:#7be0a0">已验收落地</span></div>
+  <div class="meta">5档每日切换·统一 <b>$4.99</b>·<b>ROI 10×</b>·7天一轮无重复 · 每档=罗盘1057×10+藏宝图1200×20+钻石2500+VIP25(=2.5万钻) · 买全送藏宝图×100。</div>
+  <div class="meta dim">R级：$4.99中度·低门槛高频。重复购买压力极低（纯选购非续卡）。</div>
+  <div class="meta"><span class="warn">投放感受：</span>ROI10 性价比厚；但5档无差异定价、产出全是转盘前置券 → 像"转盘补给站"，外显/惊喜感弱。</div>
+</div>
+
+<div class="mod">
+  <div class="top"><span class="nm">06 · 深海居所（装饰阶梯礼包）</span><span class="pill p-all">全程</span><span class="pill" style="background:#3a2f1a;color:#f1c15a">家具待确认</span></div>
+  <div class="meta">链式3档·均 <b>$19.99</b> · 每包=椰风遮阳椅×1 + 抽奖券40/60/80 + 钻石10000 + VIP100 · 标称ROI 3200–5000%(实为固定产出兑换比例标签·非真溢价)。</div>
+  <div class="meta dim">R级：中度·住宅系统活跃层。</div>
+  <div class="meta"><span class="warn">投放感受：</span><b>3包同一把椅子</b>（夏日模板是3件不同家具）→ 重复购买新鲜感低；产出核心仍是抽奖券（又一个转盘喂量点）。</div>
+</div>
+
+<div class="mod">
+  <div class="top"><span class="nm">07 · 海滨之约（拜访礼包）</span><span class="pill p-w2">后7天 D4–D10（已挪后）</span><span class="pill" style="background:#3a2f1a;color:#f1c15a">阶段奖复用夏日</span></div>
+  <div class="meta">门头三件套装扮 <b>$99.99</b>·限购1 · 含钻石50000+VIP500+每日邀请函 · 装扮=拜访社交入场凭证。</div>
+  <div class="meta dim">R级：中大R·社交留存。</div>
+  <div class="meta"><span class="warn">投放感受：</span>$99.99门头+5万钻补偿，外显长期可见+社交粘性强；属中高价位非顶档，阶段奖数值沿用夏日未披露。</div>
+</div>
+
+<div class="mod">
+  <div class="top"><span class="nm">04 · 深海印记（头像框礼包）</span><span class="pill p-all">全程</span><span class="pill" style="background:#3a2f1a;color:#f1c15a">依赖通用礼包程序</span></div>
+  <div class="meta">$9.99 一次性·限购1 · 头像框10076(防御+20000虚战力·传说级) + 节日道具(ID待建)。</div>
+  <div class="meta dim">R级：中高付费(月卡级)·养成驱动。</div>
+  <div class="meta"><span class="warn">投放感受：</span>外显+虚战力 buff 双钩，定价对标埃及框合理；但 DK 美术/节日道具/程序定型都未就绪。</div>
+</div>
+
+<div class="mod">
+  <div class="top"><span class="nm">08 · 许愿池</span><span class="pill p-all">D1开·全程</span><span class="pill p-all">纯复用·无数值调整</span></div>
+  <div class="meta">$4.99 可重复·日3次 · <b>全复用春节许愿池(105012)</b>·仅换背景/ID/时间。</div>
+  <div class="meta dim">R级：泛用户·基础付费深度。 <span class="warn">投放感受：</span>稳定预期、零数值风险，但也无深海特色。</div>
+</div>
+
+<div class="mod">
+  <div class="top"><span class="nm">09 · 最佳酒馆</span><span class="pill p-w1">D1开</span><span class="pill" style="background:#46232a;color:#ff8e8e">❌ ContentID误配·积分空</span></div>
+  <div class="meta">跨服排名赛·积分冲榜·无直接付费 · 第4个共享成员 · 排行榜给传说铭牌(3%战力)。</div>
+  <div class="meta" style="color:#7be0a0"><b>✅ "14天"是误会</b>：酒馆赛季本就 10 天（情人节TimeCycle1514备注"持续10天"），跟深海10天节日天然对齐，无14天硬约束。深海酒馆 TimeCycle=0(iGame控10天)即可。</div>
+  <div class="meta" style="color:#ff9b9b"><b>❌ 真bug</b>：深海酒馆 ContentID 配成 <b>719</b>，但 719 在积分/任务/排行表里<b>一行都没有</b>。其他3个节日酒馆(元旦/情人节/春节)全用 <b>717</b>（共享"节庆通用"积分7171-7173+排行131）。719=玩家无积分→冲榜跑不起来（AO行+背景在、核心玩法空）。</div>
+  <div class="meta fix" style="color:var(--teal)">→ 修法：AO 10071704 ContentID(c5) <b>719 → 717</b>（复用通用积分，与另3个节日一致）。717本就是"节庆通用"设计给跨节日复用。</div>
+  <div class="meta dim">R级：竞争向。靠铭牌驱动冲榜，不直接贡献流水。</div>
+</div>
+
+<div class="mod">
+  <div class="top"><span class="nm">11 · 节日周卡</span><span class="pill p-w2">D4 开（后7天）·唯一延后</span><span class="pill" style="background:#3a2f1a;color:#f1c15a">数值未抽取</span></div>
+  <div class="meta">自选周卡（自选 4 项，X2 有先例）· <b>全节日唯一延后开的模块</b>，排在后段 7 天（D4–D10）补后段付费。</div>
+  <div class="meta dim">R级：中度·订阅型。 <span class="warn">投放感受：</span>延后开=后段唯一的"新增"付费点，相当于给后段补一针；但前面 10 个模块 D1 全开，周卡 D4 才上，能否撑起后段节奏取决于它的自选诱惑。</div>
+  <div class="note">（本卡数值未抽取，待补；其余 10 模块数值见上。）</div>
+</div>
+
+<!-- ===== 投放感受诊断 ===== -->
+<h2>⑤ 投放感受诊断 <span class="tag">我标出的可能要调的点 — 你拍板</span></h2>
+<div class="diag">
+
+  <div class="issue hi">
+    <div class="t">ROI 口径不统一，跨模块对比会"忽厚忽薄"<span class="sev sev-hi">高</span></div>
+    <div class="d">累充 <b>50%</b>(gacha口径) / 成就 <b>800%</b> / 存钱罐 <b>1000%</b> / 每日 <b>1000%</b> / 装饰标称 <b>3200–5000%</b>(其实是固定产出兑换比例标签、非真溢价)。玩家不会区分口径，只会感觉"累充好抠、装饰虚高"。</div>
+    <div class="fix">→ 建议：统一对外口径，或明确分两类——<b>福利型</b>(每日/存钱罐/装饰，高倍直观)vs <b>变现型</b>(累充/转盘，材料抽奖口径)，装饰别再标3200%误导。</div>
+  </div>
+
+  <div class="issue hi">
+    <div class="t">价位带断层：中高端空、顶端三连跳<span class="sev sev-hi">高</span></div>
+    <div class="d">SKU 全堆在 $4.99 / $19.99 / $99.99；<b>$29.99 / $59.99 全空</b>；$99.99 → $200 → $2000 跨度过大，$100–$2000 之间只有累充一根线接。中 R 想再加码、够不到大 R 时没有合适台阶。</div>
+    <div class="fix">→ 建议：补 1 个 $29.99 或 $59.99 档（大富翁成就中段 / 一个深海大礼包），让 $100→$2000 之间有过渡。</div>
+  </div>
+
+  <div class="issue">
+    <div class="t">重复变现集中在大富翁后6档<span class="sev sev-mid">中</span></div>
+    <div class="d">单模块 <b>$99.99×6 = $600</b>（跑60/70/80/90/100/200圈，内容完全相同）。ROI 稳是好事，但 6 个一模一样的 $99.99 摆出来，whale 容易疲劳、感知"重复刷钱"。</div>
+    <div class="fix">→ 建议：后段档拉点差异（递增纪念卡/限定外显/递增罗盘），或砍到 4 档，把强度并进更稀缺的高档。</div>
+  </div>
+
+  <div class="issue">
+    <div class="t">"罗盘券/抽奖券"投放点过多，可能稀释转盘付费<span class="sev sev-mid">中</span></div>
+    <div class="d">每日礼包、装饰、周卡、头像框、累充顶档都在发罗盘券/藏宝图。转盘是主变现核之一，免费券给太足会压低券包真金购买欲。</div>
+    <div class="fix">→ 建议：盘一下全节日免费券总投放量 vs 转盘消耗，确认"白嫖能抽多少"，别让转盘付费入口形同虚设。</div>
+  </div>
+
+  <div class="issue">
+    <div class="t">主体仍 D1 齐开，错峰刚起步（10天排期）<span class="sev sev-mid">中·改善中</span></div>
+    <div class="d">已把<b>拜访 + 周卡</b>错峰到后7天(D4–D10)，后段有了补给点 👍。但 D1 仍同时点亮 8 个（大富翁/转盘/累充/BP/许愿池/每日/装饰/头像框）+酒馆 → 开局选择仍偏过载、付费焦点散。</div>
+    <div class="fix">→ 可继续：再错峰 1–2 个（如存钱罐随大富翁但延后触发、某档礼包中段上），或 HUD 做<b>每日推荐位轮换</b>让玩家分天聚焦，别一进来 9 个入口糊脸。</div>
+  </div>
+
+  <div class="issue lo">
+    <div class="t">外显钩子分散，缺统一招牌皮<span class="sev sev-lo">观察</span></div>
+    <div class="d">核心外显散在 5 处（转盘潜艇皮 / 兑换月心珍珠主城皮$300 / 拜访门头 / 印记头像框 / 成就纪念卡），没有一个"全节日招牌外显"统一引流——D1 全开后这个问题更突出（一上来五个皮各喊各的）。</div>
+    <div class="fix">→ 建议：选 1 个当节日 KV 主皮(潜艇皮或月心珍珠)集中曝光，其余做配套。</div>
+  </div>
+
+  <div class="issue lo">
+    <div class="t">大量模块数值仍是草稿/占位<span class="sev sev-lo">前置</span></div>
+    <div class="d">累充10档值待复盘、BP进阶轨是占位值、转盘SSR权重/券价未定、装饰是否换3件不同家具未定。<b>投放感受的最终手感，很大程度取决于这几处定稿</b>。</div>
+    <div class="fix">→ 建议：先把累充档位 + BP进阶轨 + 转盘权重/券价这三处定了，再整体回看一遍曲线。</div>
+  </div>
+
+</div>
+
+<div class="foot">
+  生成：2026-06-25 ·【数据源】配置备份草稿（<code>KB\产出-数值设计\X3_深海节\配置备份表\</code>各模块）+ 策划案 + 大富翁封板数值。<br>
+  标"草稿/待复盘/占位"处为未定稿，最终投放感受以定稿为准。本表为投放感受评估视角，非配置落地清单。
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+
+序号 | 表名 | 状态
+1 | 资产类型表: dim.asset_type | DONE
+2 | 资产:dim.asset | DONE
+3 | buff资产：dim.buff_asset | DONE
+4 | 变化原因:dim.reason | DONE
+5 | 任务:dim.task | DONE
+6 | 物品维表：dim.goods | NoPlan
+7 | 行军:dim.march_type | NoPlan
+8 | 行军地点:dim.march_point_type | NoPlan
+9 | 服务器:dim.open_server | DONE
+10 | 战斗:dim.battle_type | DONE
+11 | 举报:dim.report_type | NoPlan
+12 | 礼包:dim.iap | DONE
+13 | 地图事件:dim.map_event_type | NoPlan
+14 | 领土:dim.territory_type | NoPlan
+15 | 资产价格:dim.asset_price | NoPlan
+16 | 活动:dim.activity | NoPlan
+17 | 建筑:dim.building | DONE

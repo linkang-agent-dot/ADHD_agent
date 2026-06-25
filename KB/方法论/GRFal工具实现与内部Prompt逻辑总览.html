@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRFal 工具实现与内部 Prompt 逻辑总览</title>
+<style>
+  :root{
+    --bg:#0f1320; --panel:#171c2e; --panel2:#1e2540; --line:#2a3354;
+    --txt:#e6e9f5; --mut:#9aa3c4; --accent:#7c8cff; --accent2:#4ad6c8;
+    --ok:#3ed598; --warn:#ffb454; --danger:#ff6b8a; --code:#0b0e18; --pill:#242c4a;
+  }
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;line-height:1.65;font-size:15px}
+  a{color:var(--accent)}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 22px 80px}
+  header.top{padding:34px 22px 22px;max-width:1180px;margin:0 auto}
+  header.top h1{margin:0;font-size:27px;letter-spacing:.5px}
+  header.top .sub{color:var(--mut);margin-top:7px;font-size:14.5px}
+  .badge{display:inline-block;background:var(--pill);color:var(--accent2);padding:3px 11px;border-radius:20px;font-size:12.5px;margin-right:7px;border:1px solid var(--line)}
+  .tabs{position:sticky;top:0;z-index:20;background:rgba(15,19,32,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto;padding:8px 22px;max-width:1180px;margin:0 auto;scrollbar-width:thin}
+  .tab{flex:0 0 auto;padding:9px 15px;border-radius:9px;cursor:pointer;color:var(--mut);font-size:14px;white-space:nowrap;border:1px solid transparent;transition:.15s}
+  .tab:hover{color:var(--txt);background:var(--panel)}
+  .tab.active{color:#fff;background:linear-gradient(135deg,var(--accent),#5d6bff);border-color:transparent;box-shadow:0 4px 16px -6px var(--accent)}
+  .panel{display:none;animation:fade .25s ease}.panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h2.sec{font-size:21px;margin:30px 0 6px;display:flex;align-items:center;gap:10px}
+  h2.sec .n{font-size:13px;background:var(--accent);color:#0b0e18;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-weight:700}
+  h3{font-size:16.5px;margin:24px 0 8px;color:#cdd4f5}
+  p{color:#d4d9ef}.mut{color:var(--mut)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:16px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:820px){.grid2{grid-template-columns:1fr}}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--accent2);font-weight:600;background:var(--panel2)}
+  tr:hover td{background:#1a2138}
+  code{background:var(--code);padding:2px 7px;border-radius:6px;font-family:"Cascadia Code",Consolas,monospace;font-size:13px;color:#ffd479}
+  pre{background:var(--code);border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-family:"Cascadia Code",Consolas,monospace;font-size:12.5px;line-height:1.55;color:#cfe3ff;white-space:pre-wrap;word-break:break-word}
+  details{background:var(--panel2);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}
+  details summary{cursor:pointer;padding:13px 18px;font-weight:600;color:#fff;list-style:none;display:flex;align-items:center;gap:9px;user-select:none}
+  details summary::-webkit-details-marker{display:none}
+  details summary:before{content:"▶";font-size:11px;color:var(--accent);transition:.2s}
+  details[open] summary:before{transform:rotate(90deg)}
+  details .body{padding:0 18px 16px}
+  .pill{display:inline-block;background:var(--pill);border:1px solid var(--line);border-radius:7px;padding:2px 9px;font-size:12.5px;margin:2px 4px 2px 0;color:var(--accent2)}
+  .tag-ok{color:var(--ok);border-color:#1c5e44}.tag-warn{color:var(--warn)}.tag-danger{color:var(--danger)}
+  .key{border-left:3px solid var(--accent);padding:10px 16px;background:var(--panel2);border-radius:0 10px 10px 0;margin:12px 0}
+  .key.warn{border-color:var(--warn)}.key.danger{border-color:var(--danger)}.key.ok{border-color:var(--ok)}
+  ul{padding-left:20px}li{margin:4px 0;color:#d4d9ef}
+  .flow{display:flex;flex-direction:column;gap:0;margin:18px 0}
+  .flowrow{display:flex;align-items:stretch;gap:14px;flex-wrap:wrap;justify-content:center}
+  .fbox{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:13px 15px;min-width:150px;flex:0 1 200px;text-align:center;position:relative}
+  .fbox .t{font-weight:700;font-size:14px}.fbox .d{font-size:12px;color:var(--mut);margin-top:4px}
+  .fbox.in{border-color:#3a4a7a;background:#1a2444}
+  .fbox.cli{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+  .fbox.srv{border-color:var(--accent2);background:#10302d}
+  .fbox.ext{border-color:var(--warn);background:#2a2412}
+  .fbox.out{border-color:var(--ok);background:#10301f}
+  .arrowdown{display:flex;justify-content:center;margin:6px 0;color:var(--accent);font-size:22px}
+  .flowlabel{text-align:center;color:var(--mut);font-size:12.5px;letter-spacing:2px;text-transform:uppercase;margin:10px 0 4px}
+  .footer{color:var(--mut);font-size:12.5px;text-align:center;margin-top:50px;border-top:1px solid var(--line);padding-top:20px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>GRFal 工具实现与内部 Prompt 逻辑总览</h1>
+  <div class="sub">
+    <span class="badge">公司内网 AI 媒体网关</span>
+    <span class="badge">三层架构</span>
+    <span class="badge">prompt 内嵌在服务端工具</span>
+    源：<code>grfal.tap4fun.com</code> · skill <code>~/.claude/skills/grfal-api/</code> · 2026-06-25
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <div class="tab active" data-t="arch">🏗 架构总览</div>
+  <div class="tab" data-t="client">客户端层</div>
+  <div class="tab" data-t="server">服务端 & 后端矩阵</div>
+  <div class="tab" data-t="prompt">内部 Prompt 清单</div>
+  <div class="tab" data-t="pattern">Prompt 设计模式</div>
+  <div class="tab" data-t="morphix">Morphix 应用层</div>
+  <div class="tab" data-t="use">怎么用 / 接入</div>
+</nav>
+
+<div class="wrap">
+
+<!-- ============ ARCH ============ -->
+<section class="panel active" id="arch">
+  <h2 class="sec"><span class="n">★</span> 一句话结论</h2>
+  <div class="key ok">
+    GRFal = <b>公司内网自建的 AI 媒体能力网关</b>。它<b>自己不训练模型</b>，而是把请求转发给一堆外部商业模型后端（FAL / Azure / 阿里百炼 / 即梦豆包 / ElevenLabs / MiniMax / Tripo / Hunyuan…），再做本地后处理。
+    <b>Prompt 不在客户端，全在服务端工具内部</b>——分三类：① 工具自带的写死 prompt；② LLM 驱动的中间步骤；③ creative_workflow 多步管线。Morphix 那套换皮 prompt 只是<b>应用层</b>，底层还是调 GRFal 的 3 个工具。
+  </div>
+
+  <h2 class="sec"><span class="n">1</span> 三层架构图</h2>
+  <div class="flow">
+    <div class="flowlabel">输入层</div>
+    <div class="flowrow">
+      <div class="fbox in"><div class="t">本地文件 / URL</div><div class="d">图/视频/音频/PDF/3D</div></div>
+      <div class="fbox in"><div class="t">params JSON</div><div class="d">prompt + model + ref_types…</div></div>
+    </div>
+    <div class="arrowdown">↓</div>
+
+    <div class="flowlabel">① 客户端层 ── 纯 HTTP 壳子，无任何 prompt/AI 逻辑</div>
+    <div class="flowrow">
+      <div class="fbox cli"><div class="t">call_grfal.py</div><div class="d">urllib HTTP 客户端</div></div>
+      <div class="fbox cli"><div class="t">文件→base64</div><div class="d">本地文件内联</div></div>
+      <div class="fbox cli"><div class="t">token 管理</div><div class="d">device flow / 续期 / 缓存</div></div>
+      <div class="fbox cli"><div class="t">域名故障回退</div><div class="d">域名挂→切内网 IP</div></div>
+    </div>
+    <div class="arrowdown">↓ POST /api/call（同步）· /api/async/submit+poll（异步）</div>
+
+    <div class="flowlabel">② 服务端层 ── gradio.Server，~78 个 @tool（prompt 埋在这里）</div>
+    <div class="flowrow">
+      <div class="fbox srv"><div class="t">@tool 注册表</div><div class="d">对外约 53 个</div></div>
+      <div class="fbox srv"><div class="t">内置 prompt</div><div class="d">face_swap / 换头模板…</div></div>
+      <div class="fbox srv"><div class="t">LLM 中间步骤</div><div class="d">找物体/反推/推比例</div></div>
+      <div class="fbox srv"><div class="t">本地后处理</div><div class="d">ffmpeg/PIL/色键/SBS</div></div>
+    </div>
+    <div class="arrowdown">↓ 转发</div>
+
+    <div class="flowlabel">③ 外部模型后端矩阵 ── 真正出活的模型</div>
+    <div class="flowrow">
+      <div class="fbox ext"><div class="t">FAL</div><div class="d">gpt-image-2 / 各类生成</div></div>
+      <div class="fbox ext"><div class="t">阿里百炼 / 即梦豆包</div><div class="d">happyhorse / seadance 视频</div></div>
+      <div class="fbox ext"><div class="t">ElevenLabs / MiniMax</div><div class="d">SFX / 音乐</div></div>
+      <div class="fbox ext"><div class="t">Tripo / Hunyuan / Rodin</div><div class="d">3D</div></div>
+    </div>
+    <div class="arrowdown">↓</div>
+
+    <div class="flowlabel">输出</div>
+    <div class="flowrow">
+      <div class="fbox out"><div class="t">结果 URL</div><div class="d">可直接下载</div></div>
+    </div>
+  </div>
+
+  <h2 class="sec"><span class="n">2</span> Prompt 在哪一层（核心问题）</h2>
+  <table>
+    <tr><th>层</th><th>有没有 prompt</th><th>说明</th></tr>
+    <tr><td>① 客户端 <code>call_grfal.py</code></td><td><span class="pill tag-ok">无</span></td><td>纯 HTTP 转发 + 文件编码 + 鉴权，不碰任何 AI 提示词</td></tr>
+    <tr><td>② 服务端 @tool</td><td><span class="pill tag-danger">有（核心资产）</span></td><td>每个工具内部写死 prompt / 调 LLM 做中间步骤 / 多步编排，详见「内部 Prompt 清单」页签</td></tr>
+    <tr><td>③ 外部模型后端</td><td><span class="pill">透传</span></td><td>接收服务端拼好的最终 prompt，出图/出视频</td></tr>
+    <tr><td>Morphix（独立网页）</td><td><span class="pill tag-warn">有（应用层）</span></td><td>不属于 GRFal，自己拼 prompt 后调 GRFal 的 generate_image 等 3 个工具，详见「Morphix 应用层」</td></tr>
+  </table>
+</section>
+
+<!-- ============ CLIENT ============ -->
+<section class="panel" id="client">
+  <h2 class="sec"><span class="n">A</span> 客户端层（你机器上的部分）</h2>
+  <p class="mut">入口脚本 <code>~/.claude/skills/grfal-api/scripts/call_grfal.py</code>，约 1150 行，纯 <code>urllib</code> 写的 HTTP 客户端，<b>不含任何 AI / prompt 逻辑</b>。</p>
+  <div class="grid2">
+    <div class="card"><h3 style="margin-top:0">干的四件事</h3>
+      <ul>
+        <li><b>调用转发</b>：本地文件→base64 → POST <code>/api/call</code>（图片同步）或 <code>/api/async/submit</code>+轮询（视频/3D/训练）</li>
+        <li><b>token 管理</b>：device flow 浏览器授权、自动续期，缓存在 <code>~/.config/grfal-api/token_store.json</code></li>
+        <li><b>故障回退</b>：域名挂了自动切内网 IP <code>172.20.90.45:6018</code></li>
+        <li><b>URL 补全</b>：服务端返回相对路径 <code>/api/output/…</code> 时按来源补全 host</li>
+      </ul>
+    </div>
+    <div class="card"><h3 style="margin-top:0">同步 vs 异步路由</h3>
+      <table>
+        <tr><th>类型</th><th>模式</th><th>超时</th></tr>
+        <tr><td>图片工具</td><td>同步 <code>/api/call</code></td><td>300s</td></tr>
+        <tr><td>视频/3D/训练</td><td>异步 submit+poll</td><td>1800s</td></tr>
+        <tr><td>超长任务<br>(video_avatar/train_model/<br>screenshot_localization…)</td><td>后台 background<br>(返 task_id，手动 --check-task)</td><td>—</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="key">鉴权优先级（高→低）：<code>--bearer-token</code> → env <code>GRFAL_BEARER_TOKEN</code> → 缓存 access → refresh 续期 → device flow 浏览器授权。access 12h / refresh 30d 自动续。30 天没用重跑 <code>--auth-bootstrap</code>。</div>
+  <details><summary>常用调用速查</summary><div class="body"><pre># 首次登录
+python "&lt;skill&gt;/scripts/call_grfal.py" --auth-bootstrap
+
+# 文生图
+python call_grfal.py --tool generate_image --params "{\"prompt\":\"a cat\",\"model\":\"gpt\",\"num_images\":1}"
+
+# 本地文件换背景
+python call_grfal.py --tool replace_background --file image_paths=a.png --params "{\"background_prompt\":\"forest\"}"
+
+# 异步视频 + 回查
+python call_grfal.py --tool generate_video --params "{\"prompt\":\"...\",\"model\":\"kling\"}" --file reference_images=k.png
+python call_grfal.py --check-task &lt;task_id&gt;
+
+# 列工具 / 看服务端日志
+python call_grfal.py --list-tools
+python call_grfal.py --view-logs</pre></div></details>
+</section>
+
+<!-- ============ SERVER ============ -->
+<section class="panel" id="server">
+  <h2 class="sec"><span class="n">B</span> 服务端 & 后端模型矩阵</h2>
+  <p class="mut">服务端在内网 <code>grfal.tap4fun.com</code> → 代理 <code>172.20.90.129</code> → 后端 <code>172.20.90.45:6018</code>，跑在 gradio.Server。注册 ~78 个 <code>@tool</code>（对外约 53 个；admin 管线 <code>comic_*</code>/<code>drama_*</code>/<code>cf_*</code> 不暴露）。真值清单 <code>GET /api/tools</code>，本地缓存版 <code>references/tool_catalog.md</code>。</p>
+  <div class="key">关键认知：GRFal <b>自己不造模型</b>，是个「网关 + 编排 + 后处理」层。每个工具 = 选哪个外部后端 + 拼什么 prompt/参数 + 出来后做什么本地后处理。</div>
+  <h3>后端模型矩阵（按能力）</h3>
+  <table>
+    <tr><th>能力</th><th>外部后端 / 模型</th></tr>
+    <tr><td>文生图 / 图编辑</td><td>FAL gpt-image-2(默认 gpt) / gemini / grok / flux / seedream / qwen / firered / zimage(NSFW)</td></tr>
+    <tr><td>视频</td><td>seadance(即梦豆包2.0) / happyhorse(阿里百炼) / kling / veo3 / sora / vidu / wan / runway / grok / hailuo</td></tr>
+    <tr><td>超分</td><td>SeedVR / Topaz / Recraft / Ideogram / Crystal / Sima / Flux</td></tr>
+    <tr><td>3D</td><td>tripo_v31 / tripo_p1 / hunyuan / meshy / rodin / trellis</td></tr>
+    <tr><td>音频</td><td>Gemini(TTS 30 音色) / MiniMax Music v2.6 / ElevenLabs SFX v2</td></tr>
+    <tr><td>视频擦除</td><td>Bria video eraser（+ LLM 视觉定位）</td></tr>
+  </table>
+  <h3>本地后处理（不调外部模型）</h3>
+  <p><span class="pill">video_compression ffmpeg H.265</span><span class="pill">extract_video_frames ffmpeg 抽帧</span><span class="pill">remove_background 本地色键/抠图</span><span class="pill">export_sbs_video SBS 透明导出</span><span class="pill">image_resize 透明 PNG 走本地 PIL</span><span class="pill">image_erase LaMa 兜底</span></p>
+</section>
+
+<!-- ============ PROMPT INVENTORY ============ -->
+<section class="panel" id="prompt">
+  <h2 class="sec"><span class="n">C</span> 内部 Prompt 清单（GRFal 自带工具）</h2>
+  <div class="key danger">这是回答「<b>内部有没有 Prompt</b>」的正面清单——指 GRFal <b>自己工具</b>里埋的 prompt，<b>不含 Morphix</b>。分三类。</div>
+
+  <h3>① 工具自带的写死 prompt（有缺省全文）</h3>
+  <table>
+    <tr><th>工具</th><th>内置 prompt 干什么</th></tr>
+    <tr><td><code>face_swap</code></td><td>缺省「换头」prompt：以图1为底保留光照背景、把头换成图2并严格保留发型/眼色/鼻型、复制图1的表情朝向。可自定义覆盖。<b>全文见下方折叠</b></td></tr>
+  </table>
+  <details><summary>face_swap 缺省 prompt 全文（tool_catalog.md:205）</summary><div class="body"><pre>head_swap: start with Picture 1 as the base image, keeping its lighting, environment, and background. remove the head from Picture 1 completely and replace it with the head from Picture 2, strictly preserving the hair, eye color, nose structure of Picture 2. copy the direction of the eye, head rotation, micro expressions from Picture 1, high quality, sharp details, 4k. Describe the expression in Picture 1 and copy it to the new image.</pre></div></details>
+
+  <h3>② LLM 驱动的中间步骤（prompt 在服务端，不暴露全文）</h3>
+  <table>
+    <tr><th>工具</th><th>LLM 在里面做什么</th></tr>
+    <tr><td><code>generate_image</code> / <code>generate_video</code></td><td><code>aspect_ratio="auto"</code>（或留空/脏值）→ LLM 据 prompt 自动推断画面比例（视频还会先看 prompt 显式比例→参考素材尺寸→才 LLM 兜底）</td></tr>
+    <tr><td><code>video_inpainting</code></td><td><code>mask_prompt</code> 描述要擦的物体 → LLM 在首帧定位 → Bria eraser 跨帧擦除</td></tr>
+    <tr><td><code>video_remove_watermark</code></td><td>LLM 视觉自动检测首帧水印位置 → Bria 擦除</td></tr>
+    <tr><td><code>seedance_prompt_reverse</code></td><td>对已有视频跑两遍 LLM 分析（运镜 + 逐镜头细节）→ 合并成 Seedance 2.0 的 <code>[0-2s]…[2-5s]…</code> 多镜头 prompt</td></tr>
+    <tr><td><code>describe_media</code></td><td>用 AI 给图/视频出文字描述（被 Morphix 图标换皮/拆分分类复用）</td></tr>
+    <tr><td><code>screenshot_localization</code></td><td>GPT Image 2 做多语言截图本地化，按平台原生尺寸出图，可加 <code>extra_prompt</code></td></tr>
+    <tr><td><code>pdf_enhancement</code></td><td>Gemini 增强 PDF 文字清晰度，可传 <code>custom_prompt</code></td></tr>
+    <tr><td><code>generate_pbr_material</code> / <code>generate_panorama</code> / <code>generate_motion</code></td><td>都吃 <code>multimodal.text</code> / <code>prompt</code> 描述驱动生成</td></tr>
+  </table>
+
+  <h3>③ creative_workflow 多步 prompt 管线（每个 tool_id 一整套编排）</h3>
+  <p class="mut">同一入口 <code>creative_workflow</code>，靠 <code>tool_id</code> 切不同管线，每条背后是一整套精调多步 prompt（全文不通过 skill 暴露）：</p>
+  <p>
+    <span class="pill">sprite_sheet 游戏角色多动作精灵图</span>
+    <span class="pill">storyboard_expand 分镜 1→8 场景</span>
+    <span class="pill">p2_mech_design</span><span class="pill">p2_mech_skin_design</span>
+    <span class="pill">p2_fighter_design</span><span class="pill">p2_carrier_design</span>
+    <span class="pill">p2_festival_design</span><span class="pill">x2_hero_design</span><span class="pill">ppt_generation</span>
+  </p>
+  <div class="key warn">admin-only 不暴露的更重 prompt 管线：<code>comic_generation</code>/<code>drama_generation</code>（端到端漫画/短剧）+ <code>cf_*</code> 买量素材工厂全套。要看 schema 直接调 <code>/api/tools</code>。</div>
+</section>
+
+<!-- ============ PATTERN ============ -->
+<section class="panel" id="pattern">
+  <h2 class="sec"><span class="n">D</span> Prompt 设计模式（可复用方法论）</h2>
+  <p class="mut">从 GRFal 内置 prompt + Morphix 8 段 build*Prompt 提炼出的通用规律，做任何「图像换皮/编辑」prompt 时直接套。</p>
+
+  <div class="card"><h3 style="margin-top:0">模式 1 · 职责切分（双参考图）</h3>
+    <div class="key">多张参考图各司其职，<b>显式声明每张图只贡献什么</b>：图#1 = 布局/内容/语义来源（只留 WHAT &amp; WHERE）；图#2 = 视觉/design system 来源（HOW IT LOOKS）。换头同理：图1=底+光照，图2=头。</div>
+  </div>
+  <div class="card"><h3 style="margin-top:0">模式 2 · ERASE 铁律（防串味）</h3>
+    <div class="key danger">凡"只要布局不要视觉"的场景，必须<b>逐项点名要擦掉的视觉特征</b>（背景色/边框/按钮形/字体/调色/进度条颜色…），否则模型会把图#1 的视觉漏出来。光说"换风格"不够，要说"ERASE 哪些"。</div>
+  </div>
+  <div class="card"><h3 style="margin-top:0">模式 3 · 先文本化再批量（图标换皮）</h3>
+    <div class="key">多张要套同一风格时：先 <code>describe_media</code> 把风格榨成 ~80 词英文文本，再逐张 <code>generate_image</code> 并发套用。<b>避免每张都丢多图参考造成风格漂移</b>。</div>
+  </div>
+  <div class="card"><h3 style="margin-top:0">模式 4 · 灰底而非白底（拆图/抠图）</h3>
+    <div class="key warn">出待抠图的雪碧图用 <code>#B8B8B8</code> 灰底，<b>不要白底</b>——抗锯齿边缘与灰融合，去底后不留白边光晕。</div>
+  </div>
+  <div class="card"><h3 style="margin-top:0">模式 5 · 语义翻译（线框→实渲）</h3>
+    <div class="key">把图里的中文标注/占位框<b>翻译成实际渲染内容</b>（"篮子、紫宝石、900" → 画出装满紫宝石的篮子+数量 900），并擦掉线框线/×标记/草图感。</div>
+  </div>
+  <div class="card"><h3 style="margin-top:0">模式 6 · 放飞分级（节日换皮 vs 严格换皮）</h3>
+    <div class="key ok">节日主题转换是<b>唯一鼓励放飞</b>的：可重排布局+加氛围元素+角色重塑+背景光影戏剧化，但<b>文字逐字保留、区域语义角色不变</b>。普通换皮则严格保布局。做节日换皮抄主题转换那段。</div>
+  </div>
+  <div class="card"><h3 style="margin-top:0">模式 7 · 参考图能说明的别在 prompt 里说</h3>
+    <div class="key">配方原则：stylePrompt 只写参考图<b>传达不出</b>的信息（量级/分布/数量约束），不描述具体颜色/场景——那些交给参考图。过度描述反而和参考图打架。</div>
+  </div>
+  <div class="key danger">踩坑黑名单（来自 Morphix templates.js 注释）：X3 的 "painterly"/"笔触" 永久 BAN（涂抹感罪魁）；"L 形角包"单独点名会让所有装饰退化成 L 角包 → 要列举多种金色装饰让模型按 reference 灵活挑。</div>
+</section>
+
+<!-- ============ MORPHIX ============ -->
+<section class="panel" id="morphix">
+  <h2 class="sec"><span class="n">E</span> Morphix —— GRFal 应用层换皮 prompt 库（全文内嵌）</h2>
+  <div class="key ok">
+    Morphix（<code>demo.tap4fun.com/morphix-demo_0e8f</code>）是个<b>独立换皮网页</b>，本质是 GRFal 的一层「前处理」：<b>没有任何独有能力</b>，底层只调 GRFal 的 3 个工具（<code>generate_image</code> / <code>describe_media</code> / <code>remove_background</code>），调用契约跟 <code>call_grfal.py</code> 完全一致。它的全部价值 = <b>精调的 prompt + 多步编排</b>。8 段 <code>build*Prompt</code> 全文已<b>整段内嵌在本页签</b>，直接复用别重写。
+  </div>
+
+  <h3>8 功能精髓速查</h3>
+  <table>
+    <tr><th>功能</th><th>工具链</th><th>步数</th><th>精髓</th></tr>
+    <tr><td>换皮</td><td>generate_image</td><td>1</td><td>图#1 只留布局/文字，视觉全 ERASE；图#2 当 design system 整套抄</td></tr>
+    <tr><td>线框转效果图</td><td>generate_image</td><td>1</td><td>中文标注翻译成实际渲染内容，擦掉线框感</td></tr>
+    <tr><td>图标换皮</td><td>describe_media→generate_image</td><td>2</td><td>先榨 ~80 词风格文本，再逐张并发；prompt 强制透明背景</td></tr>
+    <tr><td>横竖转换</td><td>generate_image</td><td>1</td><td>内置横/竖屏布局规范 + 轴向翻转 + "只画放得下的"</td></tr>
+    <tr><td>元素拆分</td><td>generate_image→remove_bg→canvas→describe</td><td>4+</td><td>灰底雪碧图→去底→连通域切块→分类→ZIP</td></tr>
+    <tr><td>主题转换</td><td>generate_image</td><td>1</td><td>唯一放飞：重排布局+节日氛围+角色重塑，文字逐字保留</td></tr>
+    <tr><td>自由画布</td><td>generate_image</td><td>1</td><td>多图按"图1/图2"顺序，用户中文指令逐字当权威，禁默认融合</td></tr>
+    <tr><td>局部修改</td><td>generate_image</td><td>1</td><td>多边形坐标写进 prompt（短板）——我们有真 mask 的 image_mask_edit 更准</td></tr>
+  </table>
+
+  <h3>A · 换皮（核心）</h3>
+  <div class="grid2">
+    <div class="card"><h3 style="margin-top:0">调用</h3>
+      <pre>reference_images = [原图, 风格图]
+prompt = buildReskinPrompt(用户附加)
+model = gpt(默认) / gemini / seedream
+num_images = 1~4 · aspect_ratio = 由原图自动推</pre>
+    </div>
+    <div class="card"><h3 style="margin-top:0">精髓</h3>
+      <div class="key">图#1 = LAYOUT &amp; CONTENT，只抽布局/文字/语义/控件位置。</div>
+      <div class="key danger">图#1 一切视觉特征<b>必须全 ERASE</b>（背景/边框/按钮形/字体/调色，连进度条开关颜色都不留）。</div>
+      <div class="key">图#2 = 完整 design system，整套照搬。</div>
+    </div>
+  </div>
+  <details><summary>buildReskinPrompt 全文</summary><div class="body"><pre>I am providing TWO reference images. This is a complete visual style transfer task.
+
+Reference image #1 = LAYOUT &amp; CONTENT SOURCE.
+From image #1, extract ONLY these things:
+- The structural arrangement of the screen (where each element sits, the overall composition)
+- The text labels and what they say (titles, section names, button text, value labels)
+- What each icon/avatar represents semantically (an arrow, a coin, a monster portrait, etc.)
+- The positions of every control (sliders, checkboxes, toggles, buttons)
+DISCARD EVERYTHING ELSE about image #1: its background color, panel color, border style, ornaments, button shapes, button colors, slider colors, checkbox style, toggle style, frame decorations, font choice, font color, color palette, icon rendering style — every visual aspect of image #1 must be ERASED. Only the WHAT and WHERE survives, never the HOW IT LOOKS.
+
+Reference image #2 = COMPLETE VISUAL STYLE SOURCE.
+From image #2, copy EVERY visual aspect onto the output:
+- Background and panel color/texture
+- Border style, frame decorations, corner ornaments, divider style
+- Section heading typography (font weight, color, size, decorative ornaments around the heading)
+- Button rendering: shape, corner radius, gradient/solid, depth/shadow, outline, inner highlights
+- Slider track and knob style / Checkbox style / Toggle/switch style
+- Icon rendering style (line weight, fill, color)
+- Sub-panel rendering (inner shadow, highlight rim, separator style)
+- Color palette as a whole (every color must come from image #2 or be derived from its palette)
+- Font family/weight feel
+Treat image #2 as the design system.
+
+Goal: The output should look 100% like a design made by the artist of image #2, redrawn from scratch in their style, but containing the layout and content of image #1.
+
+Output: clean mobile UI mockup, vertical portrait, sharp font and icon rendering, high resolution.</pre></div></details>
+
+  <h3>B · 线框转效果图</h3>
+  <div class="key ok">最值得抄：把线框里的<b>中文标注翻译成实际渲染内容</b>（"篮子、紫宝石、900" → 装满紫宝石的篮子+数量 900），擦掉所有线框线/占位框/×标记/草图感。</div>
+  <details><summary>buildWireframePrompt 全文</summary><div class="body"><pre>This is a wireframe-to-mockup conversion task. Two reference images are provided.
+
+Reference image #1 = WIREFRAME (low-fidelity sketch with text annotations).
+It contains:
+- Placeholder boxes (often with × cross marks or empty rectangles) representing where finished UI elements will go
+- Text annotations (mostly Chinese) describing what each placeholder should contain
+- Layout structure showing positions and proportions of all elements
+
+Your job for image #1: extract ONLY the layout structure and the meaning of each annotation. Replace EVERY placeholder box, every × marked rectangle, and every wireframe element with a fully-rendered illustration or UI component matching what its annotation describes. Discard the wireframe lines, placeholder boxes, and the rough sketch quality entirely. Translate Chinese annotations into actual rendered content (e.g. "篮子、紫色宝石、900" → render a beautiful basket overflowing with purple gems with a "900" quantity label).
+
+Reference image #2 = COMPLETE VISUAL STYLE TARGET.
+Apply EVERY visual aspect from image #2 to the output: overall art style, color palette, panel/frame design, button rendering, icon style, typography feel, background atmosphere, any characters/mascots.
+
+Goal: a polished, production-ready high-fidelity UI mockup that (1) matches the wireframe layout exactly, (2) replaces every placeholder/× box with a rendered illustration matching its annotation, (3) uses image #2's complete visual language.
+The output must NOT look like a wireframe.
+
+Output: clean game UI mockup, sharp rendering, high resolution.</pre></div></details>
+
+  <h3>C · 图标换皮（两步流水，最多 10 个）</h3>
+  <div class="key">设计要点：<b>先文本化风格再批量套用</b>，避免每张丢多图参考造成混乱；prompt 强制透明背景(PNG alpha)+居中+无文字，透明由 prompt 驱动不二次抠图。</div>
+  <details><summary>Step1 风格提取 prompt（describe_media）全文</summary><div class="body"><pre>Describe the VISUAL ART STYLE of this image in detail. Focus ONLY on style, NOT on what objects are shown. Cover: rendering technique (3D/2D/hand-drawn/painted/pixel art/etc.), exact materials and textures (crystal/glass/metal/clay/paper/etc.), color palette and saturation, lighting style and reflections, glossiness or translucency level, edge/outline treatment, level of detail and simplification, mood. Output a single English paragraph of about 80 words, written as a reusable art-style instruction. Do not mention any specific subjects.</pre></div></details>
+  <details><summary>Step2 buildIconReskinPromptSingle 全文（generate_image · Promise.all 并发）</summary><div class="body"><pre>Redraw this icon in a NEW visual style described below. Keep the icon's subject identity (its silhouette and what it depicts must remain clearly recognizable), but COMPLETELY REPLACE all its visual treatment — colors, materials, surface finish, rendering technique, lighting, edges, level of detail — with the target style.
+
+TARGET STYLE TO APPLY:
+[styleDescription]
+
+CRITICAL: Discard the icon's original art style entirely. The output must look fundamentally different from the input in terms of materials and rendering, while still depicting the same subject. Imagine the target style's artist drew this subject from scratch.
+
+Background: fully transparent (PNG alpha channel). Center the icon. No text, no labels, no extra decorations.</pre></div></details>
+
+  <h3>D · 横竖转换（prompt 工程最重）</h3>
+  <div class="grid2">
+    <div class="key warn"><b>轴向翻转(最核心)</b>：竖排奖励阶梯/进度条 → 横排，每个档位从纵向堆叠重排成横向并列。禁止"只拉宽不翻轴"。</div>
+    <div class="key ok">滚动列表智慧：<b>"只画放得下的，其余隐含可滚动"</b>——12 档竖阶梯转横屏只显示 5-7 档。</div>
+  </div>
+  <details><summary>buildFlipPrompt 全文（竖→横分支；横→竖为方向词镜像）</summary><div class="body"><pre>GAME UI LAYOUT REORIENTATION — redesign a game UI for a new aspect ratio, FOLLOWING the conventions of professional game UI for the target orientation.
+
+Reference image #1 = a game UI screen currently in PORTRAIT (vertical, tall).
+Your job: redesign the SAME UI for a LANDSCAPE (horizontal, wide) canvas. This is NOT a stretch, NOT a rotation, NOT a crop. It is a full layout REDESIGN where you act as a senior game UI designer.
+
+LANDSCAPE GAME UI LAYOUT CONVENTIONS (non-negotiable):
+• TOP-LEFT: back/close button (←). NEVER at the bottom in landscape.
+• TOP-RIGHT: player resources/currencies in a horizontal row.
+• TOP CENTER: screen title with subtitle below.
+• BOTTOM CENTER: primary action buttons / tab switchers, horizontal, equal spacing, centered.
+• MAIN CENTER: the primary content takes the largest area.
+• LEFT/RIGHT SIDE: vertical sidebar tabs/nav.
+• Decorative banner strips → full-width header bar; MUST NOT float mid-screen.
+• 3-column portrait grids → 4-6 columns in landscape.
+• Character art → left or right side, NOT centered.
+
+SCROLLABLE LISTS / CAROUSELS / TAB STRIPS — DO NOT cram every item into view.
+• Show only what comfortably fits; the rest is implicit (off-screen, scrollable).
+• Keep the SAME visual density per item, NOT compressed to fit all N items.
+
+AXIAL / LINEAR COMPONENTS — FLIP THEIR AXIS TO MATCH THE NEW SCREEN'S LONG SIDE.
+(progress bar, reward ladder, season pass track, level path, timeline, segmented rail)
+• PORTRAIT→LANDSCAPE: a VERTICAL reward ladder must become a HORIZONTAL ladder spanning most width. Each rung rotates from rows-stacked into columns-side-by-side. The active-glow anchor still marks progress along the horizontal axis.
+• The rotation is SEMANTIC, not literal — do NOT rotate pixels 90°. Re-lay-out each rung as a proper target-orientation cell.
+• A 12-tier vertical ladder need not show all 12 — 5-7 visible tiers with implied scroll is correct.
+
+INTERNAL STEPS: inventory every element incl. axial components → reposition each by convention → reflow grids → flip axis of every linear component → re-design decorative strips → move back button → center action buttons → rebalance whitespace.
+
+STRICT: preserve every structural element; preserve text verbatim; preserve semantic roles.
+FORBIDDEN: stretch/squeeze/distort; rotate 90° shortcut; crop/drop elements; keep a vertical ladder vertical when flipping to landscape (the #1 sign of a lazy stretch); back button in non-conventional position; float banners mid-screen; change any wording.
+
+[有风格参考图] Reference image #2 = OPTIONAL VISUAL STYLE ANCHOR. Output = image #1 content + image #2 style + new orientation.
+[无] Match image #1's original visual style — only LAYOUT and POSITIONS change.
+
+Output: a polished, professionally laid-out game UI mockup in LANDSCAPE.</pre></div></details>
+
+  <h3>E · 元素拆分（4 步流水）</h3>
+  <div class="flow"><div class="flowrow">
+    <div class="fbox cli"><div class="t">① 出雪碧图</div><div class="d">generate_image · #B8B8B8 灰底</div></div>
+    <div class="fbox srv"><div class="t">② 去底</div><div class="d">remove_background 整图</div></div>
+    <div class="fbox ext"><div class="t">③ 切块</div><div class="d">canvas 连通域逐块裁</div></div>
+    <div class="fbox cli"><div class="t">④ 分类</div><div class="d">describe_media 并发判类</div></div>
+    <div class="fbox out"><div class="t">⑤ 打包</div><div class="d">JSZip · README</div></div>
+  </div></div>
+  <div class="grid2">
+    <div class="key warn">用 <b>#B8B8B8 灰底而非白底</b>：抗锯齿边缘与灰融合，去底后不留白边光晕。</div>
+    <div class="key">强制<b>原子化拆分+严格去重</b>：滑条拆成减/加按钮+轨道+滑块 4 件；旋转/镜像副本只留一个；命名 <code>module_type_seq_n.png</code>。11 类白名单：<span class="pill">btn</span><span class="pill">icon</span><span class="pill">frame</span><span class="pill">bg</span><span class="pill">decoration</span><span class="pill">character</span><span class="pill">panel</span><span class="pill">bar</span><span class="pill">knob</span><span class="pill">popup</span><span class="pill">item</span></div>
+  </div>
+  <details><summary>buildSplitPrompt 全文（节选核心段）</summary><div class="body"><pre>This is a UI ART ASSET extraction task. The output is a sprite sheet for game artists / developers.
+
+WHAT TO EXTRACT — only GRAPHIC ART ASSETS:
+Buttons (no label text) / Icons / Decorative artwork / Panel-frame-background plates (no content inside) / Character portraits / Slider tracks (bar only) / Slider knobs / Checkbox squares / Toggle backgrounds &amp; knobs / Progress fills &amp; tracks / Header bars (no text) / Small badges (shape only, no number).
+
+WHAT TO EXCLUDE: Text strings (NEVER extract text as a sprite) / Number-only elements / Composite widgets (decompose them).
+
+DECOMPOSE COMPOUND WIDGETS into atomic parts:
+- A slider with ± buttons → 4 elements: minus button, plus button, empty track, knob.
+- A button with icon+text → button plate alone + icon alone.
+- A reward tile → frame/background alone + icon/illustration alone (no badge/number).
+
+STRICT DEDUPLICATION: each unique element appears ONCE; rotational/mirror copies → keep one; identical reward tiles → keep one. KEEP separate meaningful variants (checked vs unchecked; different color frames; n/pressed/disabled states).
+
+Layout: tidy rows by category (decorations → panels → buttons → icons → character → sliders/knobs/toggles); ≥20px padding; preserve each element's exact original style; do NOT redraw/recolor.
+
+OUTPUT BACKGROUND — CRITICAL: uniform light gray solid #B8B8B8 (184,184,184) filling the whole image. Do NOT use white/near-white (anti-aliased edges leave white halo after bg removal), off-gray, gradient, cream, paper, checkerboard or any pattern.
+
+Output: a single high-res sprite sheet with ATOMIC, DEDUPLICATED assets on uniform #B8B8B8. No text, no numbers, no compound widgets, no duplicates.</pre></div></details>
+
+  <h3>F · 主题转换（最贴节日换皮）</h3>
+  <div class="key ok">这是<b>唯一鼓励"放飞"</b>的功能——明确写 "NOT a strict 1:1 reskin"，把界面当节日营销海报来重做。做节日换皮最该抄这段。布局可重排 / 大量加氛围元素 / 角色完全重塑 / 背景光影戏剧化，但<b>文字逐字 + 区域语义角色必须保留</b>。</div>
+  <details><summary>buildThemePrompt 全文</summary><div class="body"><pre>This is a CREATIVE THEME REIMAGINATION task. Re-design a game UI screen as a themed event poster, taking creative liberty to maximize the seasonal vibe.
+
+Reference image #1 = ORIGINAL UI (CONTENT SOURCE).
+KEEP from image #1 (MUST survive):
+- All text labels, button captions, numbers, level indicators verbatim — do not translate, do not change wording
+- The general purpose of the screen and the rough roles of each region (a buy-button stays a buy-button, a reward grid stays a reward grid)
+- The semantic meaning of currency/resource icons (visually re-style is OK)
+
+CREATIVE FREEDOM — NOT a strict 1:1 reskin. Should feel like a fresh themed event poster, not a copy with stickers slapped on:
+- Composition and layout can be REARRANGED to better showcase the theme (hero can move/pose differently, panels repositioned, props added on edges)
+- Add abundant themed atmosphere elements that did NOT exist in image #1: snowflakes, falling petals, lanterns, ribbons, sparkles, fireworks, foliage — be generous
+- Re-design the mascot/hero into a themed character (an explorer becomes Santa or a witch — fully reimagined, not just a costume swap)
+- Re-design background scenery, lighting, mood dramatically
+- Frame/border ornaments can be entirely new (pine garlands, spider webs, plum blossoms, golden dragons)
+- Color palette completely overhauled to theme palette
+- Treat the screen as a marketing poster for the themed event — high visual impact wins
+
+TARGET THEME: [themeText  或  (no description provided — infer from reference image #2)]
+
+[hasRef] Reference image #2 = THEME VISUAL ANCHOR. Use it for art style, color palette, decorative motifs, mascot vibe. Do NOT use image #2's layout — only its visual theme cues.
+
+Output: rich, atmospheric, polished game UI mockup, sharp font and icon rendering, high resolution.</pre></div></details>
+
+  <h3>G · 自由画布 &amp; 局部修改</h3>
+  <div class="key">自由画布：多图按用户在 UI 看到的"图1/图2"顺序进 reference_images，<b>用户中文指令逐字当权威</b>，明确禁止默认"把所有图融合"。</div>
+  <div class="key danger">局部修改是<b>短板</b>：Morphix 没用 mask，而是让用户画多边形→把顶点坐标(0-100%)写进 prompt 靠模型自觉"框外像素与原图一致"。我们有真·二值 mask 的 <code>image_mask_edit</code>（服务端合成框外原图），这块能做得比 Morphix 更准。</div>
+  <details><summary>buildCanvasPrompt 全文</summary><div class="body"><pre>I am providing {n} reference images, given in the following order:
+- Reference image #1 is what the user refers to as "图1". … (逐个列举)
+
+When the user mentions 图1, 图2, … below, they mean reference image #1, #2, … respectively, in the exact order I provided them.
+
+Read the user's instructions below carefully and execute them EXACTLY as written. The user's wording is authoritative — whatever operation they describe (keep one image as the base, swap subjects, transfer style, combine elements, modify a specific region, etc.) and whichever image they assign to which role, do precisely that. Do NOT assume a default "blend all reference images together" behavior; only blend if the user explicitly asks. If the user says to keep something unchanged from a specific image, keep it unchanged. If the user says to take only X from 图N, take only X.
+
+User instructions (verbatim, in Chinese):
+{userPrompt}
+
+Output: a single high-quality image that follows the user's instructions above. Do not add elements the user did not request. Do not omit elements the user asked to preserve.</pre></div></details>
+
+  <h3>H · 预制模版系统（buildReskinPayload · 5-pass）</h3>
+  <div class="key danger">⚠️ <b>资产缺口先说在前头</b>：模版系统 = <code>分类参考图库</code> + <code>stylePrompt</code>。stylePrompt 逻辑我们逆向到了，但<b>那套分类参考图库（X2/X16/X17/P2/X3 每个一组）在 Morphix 服务器上，我们从没下到本地，也不打算去拿</b>（已决策走自建，见下）。所以本节的「编排逻辑」当方法论留存，「图库」按我方素材另起。</div>
+
+  <h4>逻辑层（已具备，当方法论用）</h4>
+  <p class="mut">5 个系统模版每个 = 一组按元素类型分类的参考图 + 一段 stylePrompt。<code>selectRefs</code> 按 5 个 pass 把元素槽映射进 reference_images：</p>
+  <table>
+    <tr><th>Pass</th><th>元素槽</th><th>映射 / 规则</th></tr>
+    <tr><td>0</td><td>character 角色（多张拼板）</td><td>→ image #2；存在时 prompt 顶部强制首令：从角色库挑<b>唯一</b>最匹配的一个还原，<b>禁止多角色融合/平均</b></td></tr>
+    <tr><td>0.5</td><td>scene 场景</td><td>→ image #3</td></tr>
+    <tr><td>1</td><td>screen 整屏 <b>(冲突解决点)</b></td><td>有 userRef → 用 userRef 占 #4、模版自带 screen <b>让位</b>；无 userRef → 用模版 screen</td></tr>
+    <tr><td>2</td><td>panel / widget / icon / frame / other 各 1</td><td>→ image #5..#8</td></tr>
+    <tr><td>3</td><td>补充屏幕（仅当无 userRef 时）</td><td>—</td></tr>
+  </table>
+  <div class="key">冲突规则一句话：<b>整屏按用户参考图，其余元素按模版库</b>。本质是"用户给了什么就尊重什么，没给的槽才从预置库兜底"——模版系统存在的<b>唯一目的</b>就是兜「用户没给风格参考图」这个场景。</div>
+  <div class="key ok">stylePrompt 配方原则（templates.js 注释，自建时照搬）：<b>参考图能说明的就别在 prompt 里说</b>——stylePrompt 只写参考图传达不出的信息（量级/分布/数量约束），不描述具体颜色/场景。踩坑黑名单：X3 "painterly"/"笔触" 永久 BAN（涂抹感罪魁）；"L 形角包"单独点名会让所有装饰退化成 L 角包 → 要列举多种金色装饰让模型按 reference 灵活挑。</div>
+
+  <h4>资产层（缺口 + 自建路径 · 已决策走 C）</h4>
+  <div class="grid2">
+    <div class="card"><h3 style="margin-top:0">为什么不去拿 Morphix 的库</h3>
+      <ul>
+        <li>它在 Morphix 服务器上，本地无；逆向只拿到了 prompt 文本，没下图集。</li>
+        <li>Morphix 预置的 <b>X16/X17 压根不是我们在做的项目</b>，抄它的图对我方无用。</li>
+        <li>模版库本就该<b>按自己项目建</b>——这不是"少了个现成资源"，是"本来就该自产"。</li>
+      </ul>
+    </div>
+    <div class="card"><h3 style="margin-top:0">用我方素材自建迷你模版库</h3>
+      <ul>
+        <li>现成料：<b>X3 Spirits 库 6353 张 PNG</b>（<code>C:\x3-project\client\Assets\Res\UI\Spirits</code>）+ 交互原型 6034 库 + 各项目美术。</li>
+        <li>方法：按 7 类元素槽（character/scene/screen/panel/widget/icon/frame）各挑代表图，配一段 stylePrompt（遵循上面配方原则）。</li>
+        <li>真要做模版化再建；不是当前阻塞项。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key ok"><b>当前可用路径（无需任何图库，今天就能跑）</b>：单次换皮直接喂 <code>reference_images=[图#1 布局, 图#2 你手头的风格图]</code> 走 buildReskinPrompt 即可。模版库只是省掉"你自己找风格图"这一步，<b>不是换皮的前置条件</b>。</div>
+
+  <div class="key">逆向源（含 app.js 10016 行流程图等更细节）：<code>KB\方法论\Morphix换皮工具逆向_prompt库.html</code> + <code>Morphix_prompt中文注释版.html</code>。本页签已把 8 段 prompt 全文搬全，日常用本文档即可。</div>
+</section>
+
+<!-- ============ USE ============ -->
+<section class="panel" id="use">
+  <h2 class="sec"><span class="n">F</span> 怎么用 / 接入</h2>
+  <div class="grid2">
+    <div class="card"><h3 style="margin-top:0">日常生图生视频</h3>
+      <p>统一走 <code>x3-media</code> / <code>x2-media</code> skill（GRFal 为主后端，art-skills 自动 fallback），不必直接敲 <code>call_grfal.py</code>。media skill 的 type-*.md 已把常用场景固化。</p>
+    </div>
+    <div class="card"><h3 style="margin-top:0">换皮 / 节日换皮 / 图标 / 拆图</h3>
+      <p>先读 <code>Morphix换皮工具逆向_prompt库.html</code>，8 段 prompt 直接拿。节日换皮优先抄「主题转换」段。局部改用我们已有的 <code>image_mask_edit</code>（比 Morphix 多边形法准）。</p>
+    </div>
+  </div>
+  <h3>接入新能力的两层料</h3>
+  <ol>
+    <li><b>Prompt 资产层（零开发）</b>：把 build*Prompt / 内置 prompt 沉淀成 media skill 的 <code>type-reskin.md</code> / <code>type-theme.md</code> 等。</li>
+    <li><b>编排层（少量开发）</b>：把多步流水固化成 skill 命令——图标换皮 = describe→批量 generate；元素拆分 = 灰底图→去底→切块→分类→打包。</li>
+  </ol>
+  <div class="key">相关 KB / memory：<br>
+    · skill：<code>~/.claude/skills/grfal-api/</code>（SKILL.md + scripts/call_grfal.py + references/tool_catalog.md）<br>
+    · memory <code>reference_morphix_reskin_prompts.md</code>（morphix-prompt）<br>
+    · memory <code>reference_x3_media_skill_location.md</code> / <code>workflow_x3_grfal_generate_image.md</code><br>
+    · <code>KB\方法论\X3_AI出图工作流_角色皮肤换装+活动UI换皮_世界杯案.md</code>（实战出图流程 + 改造现有界面五步法）
+  </div>
+  <div class="footer">GRFal 工具实现与内部 Prompt 逻辑总览 · 基于 grfal-api skill 源码 + tool_catalog + Morphix 逆向 · 仅作内部技术参考 · 2026-06-25</div>
+</section>
+
+</div>
+
+<script>
+  const tabs=document.querySelectorAll('.tab');
+  const panels=document.querySelectorAll('.panel');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('active'));
+    panels.forEach(p=>p.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.t).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>
