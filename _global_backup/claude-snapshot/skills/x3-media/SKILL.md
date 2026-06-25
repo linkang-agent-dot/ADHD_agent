@@ -3,7 +3,7 @@ name: x3-media
 description: |
   X3 项目统一媒体生成入口 — 所有图片、视频、3D 及媒体处理请求的唯一 skill。
   GRFal 为主后端，art-skills 为自动 fallback，双后端互备。
-  覆盖 13 种专属类型（技能图标、集卡册卡片、行军表情、成就徽章、游戏视频、UI素材提取、活动图标、白图图标、资源图标、道具图标、小图标、英雄碎片图标、通用生图/修图/生视频）
+  覆盖 14 种专属类型（技能图标、集卡册卡片、行军表情、成就徽章、游戏视频、改造界面出效果图、UI素材提取、活动图标、白图图标、资源图标、道具图标、小图标、英雄碎片图标、通用生图/修图/生视频）
   及 17+ 种工具能力（抠图、超分、换背景、扩图、3D、虚拟试穿、LoRA 等）。
   确保在用户提到任何视觉资产生成或媒体处理需求时使用此技能，
   即使用户没有明确说"生图"——如描述角色外观、要求做素材、讨论 UI 切图风格、
@@ -13,11 +13,13 @@ description: |
   抠图、超分、换背景、扩图、放大图片、去背景、修图、P图、AI画画、
   3D、虚拟试穿、CardGallary、SBS导出、行军表情包、
   切图、拆UI、拆图素、提取UI素材、UI元素提取、UI拆解、活动图标、活动ICON、
+  改造界面、改界面出效果图、界面加档位、界面加页签、界面加格子、UI换皮、reskin界面、真组件拼装、AI reskin、横竖转换、竞品界面改我方风格、出整张界面效果图、
   特效贴图、粒子贴图、特效Alpha贴图、白模贴图、剪影贴图、Unity特效图、Obj贴图。
   触发词(en): generate image, generate video, skill icon, card gallery,
   march emoji, achievement badge, game video, remove background,
   upscale, grfal, art-skills, media processing, LoRA,
   UI extract, extract UI elements, UI teardown, activity icon,
+  UI reskin, redesign existing UI, restyle screen, assemble-then-reskin,
   white icon, resource icon, item icon, small icon, hero fragment.
 ---
 
@@ -166,6 +168,7 @@ python "<x3-media_skill绝对路径>/scripts/install_cursor_rule.py" --project "
 | 动态行军表情 | dynamic_march_emoji | `references/type-dynamic-march-emoji.md` | 需人物参考图 + 先首帧确认 + 4×4 半身循环逐帧（每格 `256×256`）+ 透明底 `1024×1024` |
 | 成就徽章 | achievement_badge | `references/type-achievement-badge.md` | 1中央+5底板 + 128×128 |
 | 游戏视频制作 | game_video | `references/type-game-video.md` | 视频生成+处理+Unity保存+C#代码 |
+| 改造现有界面出效果图 | ui_reskin | `references/type-ui-reskin.md` | 真组件拼装→AI reskin 五步法（prefab反查sprite→拼装图#1→图#2真实界面→reskin→拆槽）；含竞品横竖转换 variant。**出整张改造后界面效果图**（区别于 ui_extract 的拆元素） |
 | UI素材提取 | ui_extract | `references/type-ui-extract.md` | 从参考图提取UI元素，去文字，按类型分档 resize + pngquant 量化（成品对齐项目标准 1-80KB） |
 | 精细拆图（毛发/光晕/无白边） | ui_extract_fine | `references/type-ui-extract-fine.md` | gpt-image-1 双背景差分法（白底+黑底各画一次 → transparify_dual_bg.py 反推 alpha），适合角色 / 特效 / 半透明边缘 |
 | 活动图标 | activity_icon | `references/type-activity-icon.md` | 活动入口/奖励图标，透明底 256×256，需节日参考元素 |
