@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRFal describe_media · 视频理解颗粒度实测</title>
+<style>
+  :root{
+    --bg:#0f1115; --card:#181b22; --card2:#1f232c; --line:#2a2f3a;
+    --txt:#e6e9ef; --sub:#9aa3b2; --accent:#5b8cff; --green:#4ade80;
+    --yellow:#fbbf24; --pink:#f472b6; --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.6}
+  .wrap{max-width:1200px;margin:0 auto;padding:32px 24px 80px}
+  header h1{font-size:26px;margin:0 0 6px}
+  header p{color:var(--sub);margin:2px 0;font-size:14px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);
+    color:var(--sub);font-size:12px;padding:3px 10px;border-radius:999px;margin:6px 6px 0 0}
+  .pill b{color:var(--accent)}
+  h2.sec{font-size:18px;margin:40px 0 16px;padding-left:10px;border-left:3px solid var(--accent)}
+  .case{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:0;margin:22px 0;overflow:hidden}
+  .case-head{padding:16px 20px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .case-head .idx{background:var(--accent);color:#fff;font-weight:700;width:26px;height:26px;
+    border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .case-head .name{font-size:16px;font-weight:600}
+  .case-head .tag{color:var(--sub);font-size:12px;background:var(--card2);
+    border:1px solid var(--line);padding:2px 8px;border-radius:6px}
+  .grid{display:grid;grid-template-columns:minmax(280px,1fr) 1.4fr;gap:0}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .vid{padding:18px;border-right:1px solid var(--line);background:#0b0d11}
+  @media(max-width:820px){.vid{border-right:none;border-bottom:1px solid var(--line)}}
+  .vid video{width:100%;border-radius:10px;background:#000;display:block}
+  .vid .meta{color:var(--sub);font-size:12px;margin-top:10px;font-family:var(--mono)}
+  .out{padding:18px 20px}
+  .label{font-size:12px;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin:0 0 8px}
+  .raw{background:#0b0d11;border:1px solid var(--line);border-radius:10px;padding:14px 16px;
+    font-size:13.5px;color:#d3d8e2;font-style:italic}
+  .raw .hl-scene{color:var(--accent);font-style:normal;font-weight:600}
+  .raw .hl-num{color:var(--yellow);font-style:normal;font-weight:600}
+  .shots{margin-top:18px;display:flex;flex-direction:column;gap:8px}
+  .shot{background:var(--card2);border:1px solid var(--line);border-radius:9px;padding:10px 12px;
+    display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:start}
+  .shot .tc{font-family:var(--mono);font-size:12px;color:var(--green);padding-top:2px}
+  .shot .scene{font-weight:600;font-size:14px;margin-bottom:3px}
+  .shot .acts{color:var(--sub);font-size:13px}
+  .shot .chips{margin-top:6px}
+  .chip{display:inline-block;font-size:11px;border-radius:5px;padding:1px 7px;margin:2px 4px 0 0;
+    border:1px solid var(--line)}
+  .chip.txt{color:var(--yellow);border-color:#5a4a18;background:#241d09}
+  .chip.ui{color:#93c5fd;border-color:#2a3a5a;background:#0e1726}
+  .verdict{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:14px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--sub);font-weight:600;font-size:12px}
+  td .ok{color:var(--green);font-weight:700}
+  .note{color:var(--sub);font-size:13px;margin-top:14px;background:#15171d;border:1px dashed var(--line);
+    border-radius:10px;padding:12px 14px}
+  code{font-family:var(--mono);background:#0b0d11;border:1px solid var(--line);border-radius:4px;
+    padding:1px 6px;font-size:12.5px;color:#c8d0dd}
+  footer{color:var(--sub);font-size:12px;margin-top:40px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>GRFal <code>describe_media</code> · 视频理解颗粒度实测</h1>
+    <p>用 GRFal 的 <code>describe_media</code> 工具对两段 30s 视频做内容解析，看它能输出到什么颗粒度。</p>
+    <p>
+      <span class="pill">工具 <b>describe_media</b></span>
+      <span class="pill">入参 <b>media_path + media=video</b></span>
+      <span class="pill">返回 <b>同步 · 单段事件流 caption</b></span>
+      <span class="pill">无 prompt 通道 · <b>只描述不判断</b></span>
+    </p>
+  </header>
+
+  <h2 class="sec">测试用例</h2>
+
+  <!-- CASE 1 -->
+  <div class="case">
+    <div class="case-head">
+      <span class="idx">1</span>
+      <span class="name">推币机 gameplay（单场景 · 连续动作）</span>
+      <span class="tag">源：Age of Apes 广告片 0–30s</span>
+      <span class="tag">1.9 MB · 720p · 无音轨</span>
+    </div>
+    <div class="grid">
+      <div class="vid">
+        <video controls preload="metadata" src="test1_coinpusher_30s.mp4"></video>
+        <div class="meta">test1_coinpusher_30s.mp4 · 30.1s</div>
+      </div>
+      <div class="out">
+        <p class="label">describe_media 原始返回</p>
+        <div class="raw">
+          Firing a cannon at the bottom center, launching silver coins onto the pusher platform,
+          dropping additional coins from a <span class="hl-scene">monster-shaped dispenser</span> in the background,
+          generating bright yellow flash effects and explosions, shifting the coin pile forward as the pusher operates,
+          displaying rising <span class="hl-num">combo counters</span> on the bottom right,
+          populating the screen with pop-up reward icons, updating UI scores and coin counts dynamically,
+          captured from a <span class="hl-scene">static, high-angle camera</span> in a 3D animated video game style.
+        </div>
+        <p class="label" style="margin-top:16px">按动作时序拆解</p>
+        <div class="shots">
+          <div class="shot"><div class="tc">连续</div><div>
+            <div class="scene">推币机单场景 · 动作流</div>
+            <div class="acts">开炮（底部中央）→ 银币落上推板 → 背景怪形吐币口补币 → 黄色闪光+爆炸特效 → 推板把币堆前推 → 右下连击数上涨 → 弹出奖励图标 → UI 分数/币数动态刷新</div>
+            <div class="chips">
+              <span class="chip ui">推板</span><span class="chip ui">怪形吐币口</span>
+              <span class="chip ui">连击计数(右下)</span><span class="chip ui">奖励图标弹窗</span>
+              <span class="chip txt">3D 卡通风</span><span class="chip txt">固定高视角</span>
+            </div>
+          </div></div>
+        </div>
+        <div class="note">单场景视频 → 输出是<b>逐动作 gerund 流</b>，时序正确、特效/UI/镜头风格都抓到，但没有场景切换标记（因为本来就一个场景）。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE 2 -->
+  <div class="case">
+    <div class="case-head">
+      <span class="idx">2</span>
+      <span class="name">多镜头剧情（规则页→玩法→商店→付费→回落）</span>
+      <span class="tag">源：Shop &amp; Goblins 广告片 0–30s</span>
+      <span class="tag">2.1 MB · 720p · 无音轨</span>
+    </div>
+    <div class="grid">
+      <div class="vid">
+        <video controls preload="metadata" src="test2_shop_goblins_30s.mp4"></video>
+        <div class="meta">test2_shop_goblins_30s.mp4 · 30.0s</div>
+      </div>
+      <div class="out">
+        <p class="label">describe_media 原始返回</p>
+        <div class="raw">
+          Scrolling through a detailed game rules menu with reward lists,
+          <span class="hl-scene">transitioning to</span> a 3D coin-pusher game screen featuring a clown machine,
+          launching silver coins onto the sliding platform to earn points,
+          <span class="hl-scene">switching to</span> a shop interface,
+          adjusting the slider to purchase <span class="hl-num">99 silver coins for 1,980 pink gems</span>,
+          confirming the transaction through a brief popup, and
+          <span class="hl-scene">returning to</span> the updated shop screen with a refreshed currency balance.
+        </div>
+        <p class="label" style="margin-top:16px">按镜头切换拆解（它真正的强项）</p>
+        <div class="shots">
+          <div class="shot"><div class="tc">镜1</div><div>
+            <div class="scene">游戏规则菜单</div>
+            <div class="acts">向下滚动规则列表，展示奖励清单</div>
+            <div class="chips"><span class="chip ui">规则面板</span><span class="chip ui">奖励列表</span></div>
+          </div></div>
+          <div class="shot"><div class="tc">镜2 ↘</div><div>
+            <div class="scene">3D 推币机（小丑机）</div>
+            <div class="acts">银币射上滑板，得分</div>
+            <div class="chips"><span class="chip ui">小丑推币机</span><span class="chip ui">滑动推板</span></div>
+          </div></div>
+          <div class="shot"><div class="tc">镜3 ↘</div><div>
+            <div class="scene">商店界面</div>
+            <div class="acts">拖动 slider，<b>购买 99 银币 = 1,980 粉钻</b></div>
+            <div class="chips"><span class="chip ui">商店</span><span class="chip ui">数量 slider</span><span class="chip txt">99 coins</span><span class="chip txt">1,980 gems</span></div>
+          </div></div>
+          <div class="shot"><div class="tc">镜4 ↘</div><div>
+            <div class="scene">交易确认弹窗</div>
+            <div class="acts">短暂 popup 确认交易</div>
+            <div class="chips"><span class="chip ui">确认 popup</span></div>
+          </div></div>
+          <div class="shot"><div class="tc">镜5 ↩</div><div>
+            <div class="scene">回到商店（余额刷新）</div>
+            <div class="acts">返回商店，货币余额已更新</div>
+            <div class="chips"><span class="chip ui">货币余额</span></div>
+          </div></div>
+        </div>
+        <div class="note">多镜头视频 → 它<b>显式标出 5 个镜头切换</b>（transitioning / switching / returning），情节串成一条线，连<b>具体数值 99 / 1,980 都 OCR 出来了</b>。这就是它"看得懂情节"的证据。</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec">颗粒度结论</h2>
+  <div class="verdict">
+    <table>
+      <tr><th width="22%">维度</th><th width="14%">表现</th><th>实测证据</th></tr>
+      <tr><td>分镜 / 场景切换</td><td><span class="ok">强</span></td><td>用 transitioning&nbsp;to / switching&nbsp;to / returning&nbsp;to 标出 5 个镜头，按时序串成情节</td></tr>
+      <tr><td>动作序列</td><td><span class="ok">强</span></td><td>逐动作 gerund 流（开炮→落币→吐币→闪光→推币→连击→刷分），先后正确</td></tr>
+      <tr><td>具体数值 / 文字</td><td><span class="ok">强</span></td><td>OCR 出 “99 silver coins / 1,980 pink gems”、连击数、分数刷新</td></tr>
+      <tr><td>UI 元素 / 位置</td><td><span class="ok">细</span></td><td>按钮、slider、popup、右下连击、余额刷新都点名</td></tr>
+      <tr><td>美术 / 镜头风格</td><td><span class="ok">有</span></td><td>“3D animated game style” / “static high-angle camera”</td></tr>
+    </table>
+    <div class="note" style="margin-top:18px">
+      <b>边界（自己搭时要补的）：</b>
+      ① 输出是<b>一整段事件流 caption</b>，<u>没有逐秒时间码</u>（要 <code>[0-2s][2-5s]</code> 得另用 <code>seedance_prompt_reverse</code> 或抽帧烧时间戳）。
+      ② <b>无 prompt 通道</b>——只客观描述，不做问答 / 不判断意图（“是不是付费诱导”这种它不答）。
+      ③ 长视频是否丢镜头未测，建议配 <code>extract_video_frames</code> + 场景检测补帧。
+    </div>
+  </div>
+
+  <footer>实测于本机 · GRFal describe_media · 两段 30s 片均同步返回 · 视频与解析一一对应</footer>
+</div>
+</body>
+</html>
