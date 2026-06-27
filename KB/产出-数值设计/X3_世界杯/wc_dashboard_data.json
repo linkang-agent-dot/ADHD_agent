@@ -1,0 +1,11 @@
+{
+  "_说明": "世界杯竞猜运营看板数据源。schedule=赛程对阵(随轮次更新);settled=已发奖的场次key;env=看板拉哪个iGame环境的已上线竞猜。对阵确定后加进schedule;某场发完奖把它的key加进settled。时间均UTC。",
+  "env": "prod",
+  "schedule": [
+    {"key": "R32-SAvCAN", "round": "1/16决赛", "a_code": "RSA", "b_code": "CAN", "kickoff_utc": "2026-06-28 19:00", "lock_utc": "2026-06-28 18:50", "result": ""},
+    {"key": "R32-BRAvJPN", "round": "1/16决赛", "a_code": "BRA", "b_code": "JPN", "kickoff_utc": "2026-06-29 17:00", "lock_utc": "2026-06-29 16:50", "result": ""},
+    {"key": "R32-GERvPAR", "round": "1/16决赛", "a_code": "GER", "b_code": "PAR", "kickoff_utc": "2026-06-29 20:30", "lock_utc": "2026-06-29 20:20", "result": ""},
+    {"key": "R32-NEDvMAR", "round": "1/16决赛", "a_code": "NED", "b_code": "MAR", "kickoff_utc": "2026-06-30 01:00", "lock_utc": "2026-06-30 00:50", "result": ""}
+  ],
+  "settled": []
+}
