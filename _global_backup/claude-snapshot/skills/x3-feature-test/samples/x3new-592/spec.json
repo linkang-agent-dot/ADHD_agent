@@ -1,0 +1,19 @@
+{
+  "title": "X3NEW-592 验证报告 · 限时招募池断档修复",
+  "ticket": "X3NEW-592",
+  "headline": "英雄限时招募池 174 天+ 断档修复",
+  "subtitle": "异国美酒(7002)限时招募池排程止于开服 173 天，老服无消耗入口 —— 验证修复是否生效、且能否永久循环。",
+  "status": "pass",
+  "banner": "<b>通过 —— 核心 + 进阶循环均已验证</b><p>纯配置改动（零代码、零客户端改动）。6 个返场池 TimeCycle 开启 <code>CycleType=1 / ReOpenTime=84d</code>，开服满 89 天后每 84 天（6 池 × 14 天一圈）轮播、永不断档。</p>",
+  "screenshots": [
+    {"path": "recruit_175d_lingshuang.png", "caption": "<b>核心证据 · 服龄 175 天</b><br>酒館招募界面，主打「凌霜（功夫妹）· 異國功夫」，消耗 <span class='hero'>异国美酒（7002）</span>。代码同步确认 <code>CDrawCards.I(11011).CostType = 7002</code>。修复前 174 天+ 此池一个都没有。"},
+    {"path": "popup_state_175d.png", "caption": "<b>测试过程 · 弹窗坑位</b><br>GM 跳服龄后会连发登录类弹窗（開業回饋等）挡住招募界面；用 <code>ClearPushes()</code> 停队列 + <code>Hide()</code> 逐个清，避开 <code>HideAll</code>（会致界面假死）。"}
+  ],
+  "sections": [
+    {"h2": "运行时实测 · 各服龄开放的招募池", "html": "<p class='lead'>用 GM 推进服务器时间模拟服龄（招募池开/关由客户端按「开服时间 + 当前时间 + TimeCycle」自算），逐点读 <code>GetOpenCardPoolIDs()</code>。</p><div class='scroll'><table><thead><tr><th>服龄</th><th>开放池</th><th>含 7002 限时池</th><th>TimeCycle</th><th>主打英雄</th><th>取证</th></tr></thead><tbody><tr><td class='k mono'>0 天（基线）</td><td class='mono'>[1, 1101, 1201]</td><td><span class='pill no'>无</span></td><td class='mono'>—</td><td>—（89 天后才有）</td><td>代码</td></tr><tr><td class='k mono'>175 天</td><td class='mono'>[1, 11011]</td><td><span class='pill yes'>✓ 11011</span></td><td class='mono'>71011</td><td>凌霜（功夫妹）</td><td>代码 + 截图</td></tr><tr><td class='k mono'>180 天</td><td class='mono'>[1, 11011]</td><td><span class='pill yes'>✓ 11011</span></td><td class='mono'>71011</td><td>凌霜（功夫妹）</td><td>代码</td></tr><tr><td class='k mono'>210 天</td><td class='mono'>[1, 12011]</td><td><span class='pill yes'>✓ 12011</span></td><td class='mono'>72011</td><td>夜玫瑰（洛丽塔）</td><td>代码</td></tr><tr><td class='k mono'>250 天</td><td class='mono'>[1, 13021]</td><td><span class='pill yes'>✓ 13021</span></td><td class='mono'>73021</td><td>露娜（黑萨满）</td><td>代码</td></tr><tr><td class='k mono'>300 天</td><td class='mono'>[1, 12021]</td><td><span class='pill yes'>✓ 12021</span></td><td class='mono'>72021</td><td>爱莉希雅（白毛）</td><td>代码</td></tr></tbody></table></div><ul style='margin-top:16px'><li>池 <code>1</code> = 御女酒宴常驻池（CostType=<b>7001</b>、PoolsType=0）—— 按要求<b>不作为证据</b>。</li><li>每个服龄<b>恰好 1 个</b> 7002 异国美酒限时池在线（不空、不重叠）；英雄按 6 池轮换。</li><li>300 天已过第 3 次重开点（257 天），证明<b>永久循环成立</b>。</li></ul>"},
+    {"h2": "前置 ① · 配置已生效（客户端运行时实读）", "html": "<div class='scroll'><table><thead><tr><th>字段</th><th>运行时值</th><th>含义</th></tr></thead><tbody><tr><td class='k'>CycleType</td><td class='mono'>1</td><td>间隔循环（空 → 1 已生效）</td></tr><tr><td class='k'>ReOpenTime</td><td class='mono'>7257600000 ms = 84 天</td><td>每 84 天重开（空 → 84d 已生效）</td></tr><tr><td class='k'>NeedCycle</td><td class='mono'>True</td><td>循环开关（关键，否则不循环）</td></tr><tr><td class='k'>EndTime</td><td class='mono'>空</td><td>永不停</td></tr></tbody></table></div><p class='sub' style='margin-top:12px'>改动行：TimeCycle <code>71011 / 71021 / 72011 / 72021 / 73011 / 73021</code>（gdconfig dev 分支 commit <span class='mono'>2ea512a</span>）。</p>"},
+    {"h2": "已知项 · 不算 Bug", "html": "<div class='grid2'><ul><li>绿茵小萝莉（佐伊）不在循环池 —— 本次止血方案未纳入，正常。</li><li>循环重开池不带「异域盛典」活动外壳 —— 盛典是另一套一次性活动。</li><li>一次一个池轮流出现 —— 设计预期，非漏。</li></ul><div class='note'><b>测试副作用（非修复问题）：</b>GM 一次猛跳服龄会让服务端瞬间堆积大量活动（210 天 ≈ 45 个 Ark 活动），其倒计时同帧狂转曾把 Editor 拖至 3GB+ 假死；<code>forceNewRecord=true</code> 反射强开招募 UI 也会跑死。真实老服随时间自然走时不会如此。</div></div>"}
+  ],
+  "footer_left": "验收：核心标准（服龄>173 天有 ≥1 个消耗 7002 的限时池）通过 → 🟢",
+  "footer_right": "2026-06-24"
+}

@@ -106,6 +106,17 @@ A=SlotID, B=**RankID**, C=StartRank, D=EndRank, **E=RewardID**
 - **X3NEW-735**：最佳酒馆排行榜应跨服却只显本服 → 方案 C 新建独立跨服 RankID 619-625(阶段) + 626(总)，RankType=12；改 ActvOnline.10071801 CrossServerRank=1 + RankID=626；ActvScoreMulti R27-R33 改 RankID 619-625。**避开与启程补给站(131/601-607)、KVK(601-607)冲突**
 - **X3NEW-736**：排行奖励显示与实发不符 → Rank.xlsx RankRewardSlotCfg RankID=160 八档 RewardID 由 785301-785308 → 30391-30398（735 修完后 RankID=160 变孤儿，但保留有占位价值）
 
+## 🔴 占位过期时间在尼罗实战翻车 + 「活动有没有上线」诊断法（2026-06-22）
+**背景**：X3NEW-735 把最佳酒馆(10071801)改跨服后，TimeCycle 718 被填占位过期时间 `TT=1 + 2026-02-16 + 14d`（跨服强制 TT=1，真实时间靠 iGame 后台手动设）。
+**翻车**：尼罗 6 月滚动批(服 1900-1990，开服 5/05~5/27)上，**所有其它尼罗模块正常**(大转盘 type=10 2.4w人/累充 type=5 等十几个模块全在跑)，**唯独最佳酒馆「蓝莲花宴」type=7 = 0 参与**。服龄都到过/正处「D21开始14天」窗口(1950/1970/1990 此刻在窗口内)却零记录 → iGame 后台漏给酒馆设真实时间，活动套用配置过期时间不触发。本服模块不受 TT=1 跨服约束所以照常上。**教训：跨服活动(CrossServerRank=1)的占位过期 TimeCycle 是真实上线隐患，每次滚动部署必在 iGame 核实酒馆时间窗。**
+**诊断法（查"某活动/模块有没有正常上线"，纯数据、不依赖 iGame）**：
+1. 配置层先看绑定的 TimeCycle 是不是过期占位(跨服活动尤其)——`awk -F'\t' '$1=="<TC_id>"' TimeCycle__TimeCycle.tsv`，看 TriggerType(col5)/TriggerTime(col6)。
+2. 数据层查 `v1090.ods_user_activity`：`activity_type`=ActvType(最佳酒馆=7,大转盘=10)，`activity_id`是运行时雪花ID(≠ContentID,别用它过滤)。按 `server_id`+`partition_date` group 看目标服窗口期内有没有参与记录。
+3. **隔离"整个节日没上"vs"单模块没上"**：查目标服该 ActvType 缺席、但同服其它 activity_type 都在 → 单模块问题。
+4. **排除"服太新没到窗口"**：`dim_open_server.open_time` 算服龄，对照活动的 D-window(酒馆=D21~D35)。
+5. **找对照**：同 type 在别批服(跑别的节日、复用同模板)正常 → 证明 type 本身没坏，是这批没挂上。
+⚠️ ContentID 718 = 尼罗 & 夏日恋语共用酒馆模板 → 光看 type=7 区分不了哪个皮肤，必须按"哪批服当前跑哪个节日"(看礼包流水服段)交叉判断。
+
 ## 跨服活动配套表清查结论（X3NEW-735 验证后）
 - `ActvScoreMultiServer` sheet：**仅 KVK/远征类活动登记**，最佳酒馆系列不需要登记
 - `ActvScoreGroup` 71811-71874：本服/跨服共用，无需修改
@@ -117,6 +128,15 @@ A=SlotID, B=**RankID**, C=StartRank, D=EndRank, **E=RewardID**
 - 跨服活动调度可能依赖"所有服在同一绝对时间窗口"做服务器分组匹配
 - TT=2 + 跨服 = 未验证组合，X3NEW-735 修完后 QA 验证若仍不显示跨服玩家，先改 TimeCycle 该行为 TT=1
 
+## 🔍 「BP积分没加/海兽击杀没分」诊断链路 — 查哪个日志(2026-06-26 世界杯俄服工单实证)
+**先分清:配置层没问题≠运行时加上了。** 世界杯BP(102243)积分途径串实查 = `501|502|503|504|505|506|601|602|1910`,**海兽击杀任务501-506完整挂着**(不是配置漏)。"打了海兽没分"的真因要去**运行时日志**判,不是看配表。
+- **积分变化/BP升级落点 = 游戏服 BI 日志 `game-<服号>.bi.log`,事件名(第4列)=`user_activity`**。世界杯BP是积分战令(ActvType=22)→走 `ActivityMeta.BattlePassScore.cs:391 → BIUserActivity.BattlePassScore`(实现在 `client/Assets/Scripts/CSSharedHotfix/Game/Server~/BI/BIUserActivity.cs`),`BIActivityType=BattlePassScore`。关键字段:`activityCfgID`=ActvOnline id(世界杯BP=**102243**)、`activityScore`=变化后progressScore、`activityStep/TotalStep`=完成/总任务数。(简易BP type11走 BattlePass 支;多阶段积分活动走 PlayerMultiPhaseActivityScore,JSON带`stepScore`。)
+- **海兽击杀任务触发落点 = 同 bi.log 的 `user_task` 事件**(501-506,TaskType=450)。⚠️**501-506=「集结击杀」N级海兽**(Param=怪等级1-6),**玩家单刷海兽不计、必须是集结(rally)击杀**;海兽等级>6 或没参与该场集结也不计 → 「打了海兽却没分」最常见根因,且与时间窗无关。
+- 🔴🔴**BP积分日志「只在升级时写一条」——别把"没记录"当"没加分"(本案真相)**: `user_activity` 的 BattlePassScore 行**不是每次击杀/采集都写**,而是**progressScore 跨过整级门槛时才落一条**(世界杯BP奖励组141每级门槛=**3000**固定,见 `BattlePassScoreReward.tsv` $2==141 needScore列)。本案玩家积分 0→3000→6000→9000 = 升到2/3/4级,各落一条;**单次海兽/采集加的零碎分(100-400/1)夹在两级之间,日志根本不单独记**→玩家/排查者看"没新记录"误判成"没加分"。**判前必先确认:该值是不是每级才写**。
+- 🔴🔴**X3 BP积分任务(ActvScoreTask 501-506/601)不进 `ods_user_task` 表**: 查玩家近2天 user_task 只有 task_type 4/8/9/11/12,**没有 450(集结击杀)/143(采集)**——因为这些是**活动积分hook**,不是常规任务系统。海兽集结击杀的战斗事实在 **`ods_user_battle`**(battle_object_type=2/6野怪集结·base_level是玩家本体级非怪级·battle_detail含sceneCfgId/troopBattleType),采集在 march/采集表。601采集TT=143/602情报TT=410/1910竞猜空TT(GM发)。
+- **判据树**:①BP `activity_score` 在涨(按3000阶梯)=积分正常入,"没分"是误读日志粒度;②`activity_score` 真不动+活动在窗内=才去查 `UpdateActivityScore` gate(时间窗 `ActivityMeta.cs:699`/score==old);③对账击杀量=去 `ods_user_battle` 数集结海兽胜场×(100-400),别去 user_task。
+- 🟢🟢**X3线上玩家行为数仓查得到!上一版"查不到"是错的——根因=`query_trino.py` 默认 `--datasource TRINO_AWS`(老游戏P2/AWS集群),X3必须显式加 `--datasource TRINO_HF`**(`get_game_info` 早写明 1090=TRINO_HF)。打错集群会静默返0行/SHOW CATALOGS只剩hive、误判成"停更/查不到"。**TRINO_HF 上 `v1090.ods_user_activity/ods_user_task/ods_user_battle` 数据新鲜到当天**(本案查到 6/26 当天)。坑:`user_id`/`server_id`/`partition_date` 都是 **varchar**(过滤加引号);时间戳比较用 `TIMESTAMP '...'` 字面量;`created_at` 是**北京时间**;BP活动走部署时 `activity_id`=雪花号,配置号102243藏在 `attribute1` JSON(`activityCfgID`),按 `attribute1 LIKE '%102243%'` 才捞得全。详见 [[reference_ai_to_sql]]。
+
 ## 🎫 BP/通行证积分系统(≠ActvScore, 走专用表; 2026-06-17 世界杯实证)
 **重要更正**：BP(Battle Pass/通行证)**不走 ActvScore**,走专用三表(WC project memory 旧写"BP走ActvScore"不准):
 - `ActvBattlePass__BattlePass.tsv` — BP定义行(每行=一种BP任务类型): ID/IsOn/TaskType/Desc/Param1/Param2/PreTrace/Pack/Group(BattlePassReward.Group)。如 BP-情报循环/BP-登录循环(通用复用)。
@@ -127,6 +147,29 @@ A=SlotID, B=**RankID**, C=StartRank, D=EndRank, **E=RewardID**
 - **★空 TaskType 合规**(301-310 招募水手先例): TaskType列留空=不挂服务端自动计数hook,靠 **GM手动发**积分;Score列仍填(每次发的分值)。世界杯案: 新建 1910"竞猜命中1场比赛"Score=600 空TT(竞猜结果GM手动结算发分),挂入 2240 途径串。
 - **★同commit补翻译**: 新增 ActvScoreTask 行的 col2 是 TXT_字段→必须同时往 Text.tsv 加 `TXT_ActvScoreTask_TaskDesc_<id>` 全16语种(否则非中文客户端显空/中文母版,见 X3NEW-734 漏翻教训)。
 - **落地后**: sync_xlsx_tsv.py --auto 同步 xlsx(ActvScore/ActvBattlePassScore/Text 各一) → 本地 ExportTable.py 自测 → commit(tsv+xlsx一起) → push → jolt。
+
+### 🎮 GM 给玩家加 BP/活动积分(2026-06-25 世界杯BP·iGame 链路实测·链路通但卡时间窗)
+- **🔴🔴🔴 最隐蔽坑:加分卡「计分时间窗」gate——GM 和完成任务两条路一起被静默吞(`ActivityMeta.cs:699`)**:`UpdateActivityScore` 内 `if (now < activityItem.startTime || now > activityItem.endTime) return;`。即**活动能显示/在玩家列表里(在展示窗内),但 `now` 不在 `[startTime,endTime]` 计分窗内时,不管 GM `GMAddActivityScore` 还是玩家真完成任务,加的分全被这行吞掉、不报错、数据纹丝不动**。**判定法**:"GM加不上 + 完成任务也加不上"=典型时间窗 gate(单纯 id 错只会让 GM 报「活动未开启」、不影响任务)。**根因常见两种**:①部署 start 在未来(如 hub 6/27 上线但 6/25 就测,now<start);②iGame 部署时间**按 UTC 直填不换算**([[igame-activity-deploy]]),误按北京时间填会偏 8h 把 now 顶出窗。**解法**:iGame 把 start 改到现在或更早(end 留足)重部署,窗口覆盖 now 后 GM/任务加分才进。**查窗口**=`GMPrintServerActivityByCfgId <配置号>` 返回的 `start:/end:`(UTC) 对当前服时间。
+- **加 BP 分的 GM = `GMAddActivityScore(activityId, score)`**(`ActivityMeta.Gm.cs:292`,[活动_活动]增加进度积分,GM_NORMAL)。代码=`UpdateActivityScore(progressScore + score)`;**BP 升级吃的就是 progressScore**(`ActivityMeta.BattlePassScore.cs:339` 同一入口,等级由 progressScore 反推)→ 此 GM 直接给 BP 加分**且绕过竞猜任务**,正合「GM随结算发BP分」SOP。`score<=0` 报 ParamError。
+- **🔴🔴🔴 第一个参数 activityId ≠ 配置号(如102243),必须是运行时雪花号(实测踩坑)**: GM 内部 `GetActivityData(activityId)=Data.activityDict[activityId]`:
+  - **本地 TimeCycle 触发**的活动: `activityId = cfgId`(`ActivityMeta.cs:1630`)→ 可直接填配置号。
+  - **iGame/ark 部署 或 海域活动(TC清0走部署控时,世界杯全hub模块都是)**: `activityId = serverActivity.id`(雪花运行时号,`ActivityMeta.cs:1345`)→ **填配置号 102243 会静默不加(GetActivityData 返 null→ErrCodeActivityIsNotOpened),但 iGame 后台仍显示"成功"**。2026-06-25 实测:填 102243 数据没涨,换雪花号才真涨。
+- **★★两步法 SOP(iGame 部署型活动给玩家加积分)**:
+  1. **拿雪花 id**: `--cmd GMPrintServerActivityByCfgId --args "<配置号>"`(`Gm.cs:171`,[活动_活动]通过配置ID查询服务器活动,server-scope)→ 返回 `id:<雪花> cfg:<配置号> start:.. end:..`。⚠️结果**异步回 iGame 后台**(send_gm.py stdout 只有网关 ack),需让用户从后台读那行 `id:` 雪花数字回贴。
+  2. **用雪花 id 加分**: `--cmd GMAddActivityScore --args "<雪花id>,<分>"`。
+  - 没部署则 print 返回 `no server activity found for cfgId=...`。
+- **🪤 iGame 网关 `success:true` ≠ GM 真生效**: `ark/gm-operate/add` 只回「网关已登记」,**不回游戏侧 ErrorCode**(连 `__probe_noop__` 也 success:true);真执行结果/报错**异步回 iGame 后台**。所以打完必须**登号/查后台 GM 结果/查数仓**核 progressScore 真涨,别凭网关 success 下结论。
+- **🐛 send_gm.py 尾随 `；` bug(2026-06-25 修)**: 旧脚本在 gm JSON 末尾强补全角 `；`,服务端 `ArkModule.Gm.cs:20` 用 `JsonConvert.DeserializeObject` 严格解析整条 body,遇尾随 `；` 抛 `Additional text encountered after finished reading JSON content: ；`→**GM 静默不执行**(网关仍 success)。已删脚本补尾逻辑;SKILL.md「末尾追加 ；」文档亦已纠正。详见 [[reference_igame_gm_send]]。
+- **其它「给玩家加分」GM**: `GMAddSubActivityProgress`(子任务进度)/`GMAddNoParamTaskScore`·`GMAddOneParamTaskScore`·`GMAddTwoParamTaskScore`(按TaskType喂任务进度)/`GMPlayerDeltaUpdateCrossPrepareScore`(跨服备战)/`GMAddBountyScore`(悬赏令)/`GMSetArenaScore`(竞技场)。
+
+## 🎫 节日积分BP(ActvType22)标准模板 = 情人节(2236)·配新节日BP照它克隆别抄推币机/世界杯(2026-06-23 深海BP换皮实证)
+**踩坑**：深海BP当初从**推币机/世界杯BP(2240)**克隆=**模板错**。世界杯/推币机BP是**2轨**(免费+至尊·单包`2026016`·带推币机专属积分任务`2201`)，不是节日标准。**节日标准BP=3轨**(元旦2233/尼罗2234/情人节2236/春节2238 全同构)。
+- **BattlePassScore 行结构(cols)**：[1]ID(=ContentID) [2]备注 [3]IsOn [4]积分途径(pipe串) [5]购买礼包(pipe串) [6]奖励组(BattlePassScoreReward.Group) [7]bool。
+- **★节日通用件(跨节日共享·不用克隆·直接指向)**：①积分途径=`501|502|503|504|505|506|601|602`(集结击杀1-6+采集+情报) ②购买礼包=`130020`($9.99**进阶**)`|130021`($19.99**至尊**)。**唯一每节日专属=奖励组**(情人节135/深海142)。
+- **奖励组 3轨结构(BattlePassScoreReward)**：每级1行·[1]行id [2]Group [3]等级 [4]升级所需积分 [5]免费轨RewardID [6]**进阶轨** [7]**至尊轨** [8]col8。**2轨BP=col6进阶轨空**(世界杯/推币机就这样)→换成3轨必把col6每级填上进阶轨RewardID。
+- **🔴🔴 BattlePassScoreReward 行id 是硬契约 `id = 组号×100 + 等级`（引擎按 id%100 取等级，根本不读「等级」列！2026-06-24 深海BP"等级不连贯"实证）**：客户端 `ActivityUtils.cs:391-412`(`NewBattlePassScoreRewardCfgID=groupId*100+level` / `BattlePassScoreRewardGroupId=id/100` / `BattlePassScoreRewardLevel=id%100`) + 服务端 `ActivityMeta.BattlePassScore.cs:364` 都按 `id%100` 算等级。**组142等级1-20 → 行id 必须是 14201-14220**(正常组135=13501-13520印证)。**坑**：深海BP当初行id被写成连续块 `14121-14140`(满足"id连续"导表校验,但 14121%100=21 → 引擎解码成组141/等级21-40 乱序)→ 玩家看到"等级不连贯"。**修复=行id按 14200+等级 重排**(commit 61768af·dev_festival)。**配/换皮BP奖励组铁律：先定组号G,20级行id 直接写 G×100+1 .. G×100+20,别用"找个连续空块"的思路(连续≠合契约);"等级"列只是冗余备注,引擎不看**。导表的"id连续"校验只兜连续性、不兜 id↔等级映射,所以光过校验≠显示对。
+- **换皮深海BP实操(commit 08cc675·feature/x3-deepsea-art)**：BattlePassScore 2244 备注→深海/途径去2201/包2026016→130020|131021/组142；组142补进阶轨col6=新建Reward块4344040-059(克隆至尊轨4344020-039占位)；ActvOnline 102244壳已对没动。备份表`KB\产出-数值设计\X3_深海节\配置备份表\02_远航日志_BP\`。
+- **跨节日RewardID隔离铁律**(见[[reference_x3_config]])：克隆奖励组必先克隆**专属Reward块**(深海=4344xxx)别引用原节日的RewardID。Reward表**组内行id(seq)必须连续**。
 
 ## 🎫🎫 X3 有「两套」BattlePass — 改BP前必先分清是哪套(2026-06-18 护航令至尊档案实证)
 | | 简易战令 `ActvType=11` | 积分战令 `ActvType=22/33` |

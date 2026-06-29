@@ -7,6 +7,14 @@ metadata:
   originSessionId: 9fa379f1-8095-4bed-9a37-401c299ba495
 ---
 
+## ⚠️ commit 踩坑(2026-06-22)
+- **x3-project pre-commit hook：内嵌 gdconfig 子模块(`C:\x3-project\gdconfig`)有未提交内容时，拒绝 commit x3-project**（报 `[gdconfig] uncommitted gdconfig content changes block x3-project commit; commit/stash/revert inside gdconfig first; 超级仓不再自动提交config编辑`）。解法=进内嵌 gdconfig `git stash push <文件>`(可恢复)→提 x3-project→`git stash pop` 还原。内嵌 gdconfig 常停在别的分支(如 newbie)且带零星脏文件(GenProto.py 等)。
+- **只提自己的文件用路径限定 commit**：`git commit -m "..." -- 文件1 文件2`（工作树混入别人 staged 的 DK/.asset/.meta/.spriteatlas/子模块指针时，路径限定只提指定文件、不卷入其它，其它原样留着另合）。
+- **push feature 别用裸 `git push`**：本地 feature 分支常 track origin/dev，裸 push 会推 dev 被拒；用 `git push origin <feature分支名>` 显式推同名 feature ref。
+- ⚠️**push 前必验 MR 三点 diff**：`git diff origin/dev...HEAD --stat`——分支可能混入别人之前的提交(如 DK 修复 fe3f456)，导致 MR 卷入非本功能改动。只领先1个 commit 才干净；多于1个先查 `git log origin/dev..HEAD` 是不是混了别人的，混了要 rebase --onto/cherry-pick 剔除(但工作树脏会挡 rebase)。
+- ★**单提交隔离推法(2026-06-22 实证，工作树脏也能用)**：想把某个 commit 单独提 MR、又不想动当前脏工作区/不想 cherry-pick——若该 commit 的**父提交已在 origin/dev**(`git merge-base --is-ancestor <sha>^ origin/dev`)，直接 `git push origin <sha>:refs/heads/<新分支>` 把这一个提交推成新分支，MR diff = 纯该提交改动。无需 checkout/worktree/rebase，工作区零打扰。
+- ⚠️**MR 标题+描述都必须 ASCII(2026-06-22 实证，推翻"只标题")**：GitLab API 创建 MR 时**描述含中文也会 500**，不只标题。两个字段都用纯 ASCII。
+
 ## 受保护分支规则
 
 | 仓库 | dev 是否受保护 | 直接 push dev |
@@ -69,6 +77,8 @@ print(f'MR iid={data["iid"]} url={data["web_url"]}')
 - 中文 description 同样会 500（建单后再 PUT `description=中文` 也失败）→ 干脆 description 也用 ASCII 或留空。
 - 这跟 form-data/JSON 无关（两种都试过），别再归因到 Content-Type。
 - GET（读 project/branch/MR 列表）中文无影响，只有「**写**带中文的 MR」触发。
+- 🟢**2026-06-26 gdconfig 仓实测出可用解法(与上面 x3-project 结论冲突,疑项目差异或 POST/PUT 差异)**：`gdconfig`(项目 **id=4454**, path `x3/gdconfig`)上 **POST form-data 中文 title→500**(一致),但**先用纯英文 title `POST` 建出 MR(HTTP201),再用 `PUT /merge_requests/{iid}` + JSON body(`Content-Type: application/json`, utf-8, `json.dumps(...,ensure_ascii=False)`) 补中文 title+description → 成功**(MR!43 实证,标题描述都中文落地)。→ **遇中文 MR 500 先试"英文POST建单 + 中文JSON PUT补"**;x3-project(2859)是否也吃这招待复验(旧记录说 PUT 也失败,可能当时用的 form-data 不是 JSON)。
+- **项目 id 速查**：x3-project=**2859** / gdconfig(配置仓)=**4454**。
 
 ## LFS 大文件 push 30 秒超时坑
 

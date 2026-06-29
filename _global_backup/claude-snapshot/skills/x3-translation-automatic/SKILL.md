@@ -322,7 +322,25 @@ gws sheets spreadsheets values append \
   --json '{"values": [["中文","English","Spanish","French","Indonesian","German","Korean","繁中","Russian","Ukrainian"]]}'
 ```
 
+### 第5.9步：⛔ 提交前泄漏审计（强制门禁，2026-06-24 新增，别跳）
+
+> **背景**：翻译最坑的不是"漏填"（空缺审计能查），而是 **cn之外的语言列照抄英文/中文**——
+> 单元格非空、看着"15语已填"，其实只有中英（"伪完整"）。世界杯抽奖券、深海节都因此漏了一大片，
+> 肉眼和"语言齐全"检查都查不出。**必须跑确定性脚本**：
+
+```bash
+python C:\Users\linkang\.claude\skills\x3-translation-automatic\scripts\i18n_leak_audit.py --changed
+```
+
+- 只审本次 `git diff HEAD` 改动过的行（不会被全表历史 jp 缺口刷屏）。退出码 1=有泄漏，**修完再提交**。
+- 三类 block：`EN_LEAK`(列==en英文原文) / `CJK_LEAK`(非中日列含汉字) / `EMPTY`(空缺)；`ZH_RAW`(warn)=zh疑未转繁。
+- 按范围查（非 git 改动场景）：`--grep <主题词>` 或 `--prefix <key前缀>`，如 `--grep 世界杯`。
+- 修法：从**同义已正确翻译的兄弟行**抄术语逐语言重译（如券名去 `ActvDesc` 摘【…】现成译名），en 保留。
+- 收工 Stop hook 的 quality-gate(type=i18n) 会用同一脚本兜底（见 `C:\ADHD_agent\.claude\quality-gate\i18n-checklist.md`），但**以自觉先跑为主**。
+
 ### 第6步：git 提交
+
+> ⚠️ 当前 X3 真源 = **tsv**（`tsv/i18n/Text__Text.tsv`，导入只认它；`data/i18n/*.xlsx` 已于 commit 68685d2 下线出 git，本地钩子自动 tsv→xlsx 同步即可）。下面的 `git add data/i18n/Text.xlsx` 是旧环境写法，**实际应 `git add tsv/i18n/Text__Text.tsv`**。
 
 ```bash
 cd {X3_CONFIG_DIR}

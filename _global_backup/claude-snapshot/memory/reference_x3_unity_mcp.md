@@ -38,4 +38,17 @@ claude mcp add --scope local --transport stdio UnityMCP -- "C:\Users\linkang\.lo
 
 **踩坑**：`.mcp.json`（项目根）只有 gitlab、没 unity；全局/项目 mcpServers 默认全空——「看不到」99% 是**根本没注册成功** + **transport 没对齐(窗口默认HTTP vs 注册stdio)**，不是 Unity 没装。包文件夹名带短 hash（`com.coplaydev.unity-mcp@e6d5df7bd1`）不含 "coplay" 全称，glob 用 `*coplay*` 能中、`*unity-mcp*` 反而中不了。
 
+**📍 起 cc 的目录铁律（每次开新 MCP 会话先做）**：UnityMCP 是 **local scope**，写在 `~\.claude.json` 的 `projects["C:/x3-project"].mcpServers`，绑定 **git 仓根**。所以 `cd C:\x3-project`（或子目录 `C:\x3-project\client`）起 `claude` 都能 `/mcp` 看到 UnityMCP（绑 git 根，两处通用，别重注册=报 already exists）；在 `C:\Users\linkang` 等其他目录起**看不到**。要工具真操作 Unity：Unity 开 `client` 工程 + 窗口 Transport 切 `Stdio`（默认 HTTPLocal 不对齐）；红点 `No Session` 是正常初始态，cc 连上瞬间变绿。
+
+**📸 运行时截图取证手法（验证「UI 真显示」用，2026-06-19 实战沉淀）**：验证某功能弹窗/界面**真显示在屏上**时，eval 读不到「当前已显示窗口集合」（`m_AllShownUI` 是 X2 字段，X3 没有；`WndMgr.Get` 要 Type/泛型，eval 给不了）——此时唯一手段是**截游戏画面**。走 `DebugUtils/scripts/client.py`（脚本已在仓，不依赖任何注册 skill），Bash 直接调：
+```bash
+cd /c/x3-project/client
+python "../.claude/skills/DebugUtils/scripts/client.py" invoke --type UnityEngine.ScreenCapture --member CaptureScreenshot --kind call --args "<输出png路径>"
+python "../.claude/skills/DebugUtils/scripts/client.py" eval --code "1+1"   # 空转一帧逼截图刷盘(CaptureScreenshot是帧末异步写文件,不tick一帧文件落不下来)
+```
+- 这是**单帧 PNG**，不是录屏；在不同状态各截一张串起来看像录屏，实为逐节点取证。
+- 取证分两层：① 代码路径跑通(dedup key/flag/日志) ② UI 真显示(截图)。dedup=1 只证明「PushActivityPanel 推了窗入队」，X3 `WndMgr.Push` 是**队列式**，推窗≠立即显示(可能排在引导奖励等弹窗后)，所以截图才是显示层铁证。后来 `x3-feature-test` skill 第7步就是把此法固化。
+
+**⚠️ Edit 模式自测的硬天花板(2026-06-26 派子agent自测220实测)**：DebugUtils 桥能连 Editor、反射求值正常(`Application.isPlaying`/`Time.frameCount` 等只读静态都读得到),但 **Editor 没进 Play 模式时**：①**无运行时**→`NetManager`(`Singleton<NetManager>`)单例**未实例化**,`Instance/RawInstance` 反射 "Member not found"→**读不到客户端连的环境(dev/beta)和 serverId**(连接信息只在运行时 `NetManager._address/_port`);②**无 Game View 渲染**→`ScreenCapture.CaptureScreenshot` 调用返回 ok 但 **PNG 永不落盘**(即便 tick 多帧),截图取证全废;③进不到任何 UI/界面→活动/礼包/奖励类**运行时验证一概够不到**。**结论:要做"某服运行时/界面/奖励"自测,必须先让 Editor 进 Play 并用测试账号登录到目标服(会改现场,需先确认)。光连桥+Edit模式只能验"桥通+是哪个工程",验不了任何服务端/运行时的东西。** 另:eval 表达式解析器**不认算术运算符 `+` 等**(报 FormatException),只能成员访问/属性读/静态方法调用,别写 `1+1`。继承自泛型基类 `Singleton<T>` 的静态 `Instance` 也解析不了(需 invoke-chain 或具体实例字段)。
+
 相关：[[reference_x3_project_repo]] [[reference_x3_client_new_ui_workflow]]

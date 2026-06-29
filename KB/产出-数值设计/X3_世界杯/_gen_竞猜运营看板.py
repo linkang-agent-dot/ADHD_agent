@@ -29,6 +29,12 @@ def tier_of(packid):
 def zh(c): return ZH.get(c, c)
 def parse(t): return datetime.datetime.strptime(t, "%Y-%m-%d %H:%M")
 def bj(dt_utc): return (dt_utc + datetime.timedelta(hours=8)).strftime("%m-%d %H:%M")
+def payout_bj(kutc):
+    # 发奖时间=完赛(开球+2h)后的那个北京13:30
+    end = parse(kutc) + datetime.timedelta(hours=10)   # 北京完赛 = 开球UTC + 8(时区) + 2(赛时)
+    d = end.replace(hour=13, minute=30, second=0, microsecond=0)
+    if end > d: d += datetime.timedelta(days=1)
+    return d.strftime("%m-%d 13:30")
 
 now = datetime.datetime.utcnow()
 now_bj = (now + datetime.timedelta(hours=8)).strftime("%Y-%m-%d %H:%M")
@@ -102,7 +108,9 @@ OVC = {"已发奖":"#3fb950","待发奖":"#f0883e","已上线":"#58a6ff","待上
 
 ov_html = "\n".join(
     f'<tr><td>{esc(m["round"])}</td><td>{esc(zh(a))} vs {esc(zh(b))}</td><td>{bj(ko)}</td><td>{bj(lk)}</td>'
-    f'<td style="color:{OVC[ov]};font-weight:bold">{ov}</td><td>{nd or "-"}</td></tr>'
+    f'<td style="color:{OVC[ov]};font-weight:bold">{ov}</td><td>{nd or "-"}</td>'
+    f'<td>{payout_bj(m["kickoff_utc"])}</td>'
+    f'<td><a class="dbtn" href="世界杯竞猜_发奖详情.html#{esc(m["key"])}">发奖详情 ▶</a></td></tr>'
     for (m,a,b,ko,lk,ov,nd) in rows_overview)
 def tbl(rows, cols, fmt):
     if not rows: return '<div class="empty">（暂无）</div>'
@@ -131,21 +139,22 @@ tr:nth-child(even){{background:#11161d}}
 .empty{{color:#6e7681;font-size:13px;padding:6px 0}}
 .err{{background:#3d0d0d;border:1px solid #b91c1c;border-radius:6px;padding:8px 12px;color:#ff9b9b;font-size:12px;margin:8px 0}}
 .badge{{display:inline-block;padding:2px 8px;border-radius:10px;font-size:12px;margin-right:6px}}
+.dbtn{{display:inline-block;background:#1f6feb;color:#fff;padding:3px 10px;border-radius:5px;text-decoration:none;font-size:12px;white-space:nowrap}}
+.dbtn:hover{{background:#388bfd}}
 </style></head><body>
 <h1>🏆 世界杯竞猜运营看板</h1>
 <div class="sub">环境 <b>{ENV}</b> · 数据来自 iGame 实时 + 赛程表 · 每天北京 12:00 自动刷新（页面每小时自刷）</div>
 <div class="cnt">更新时间(北京): <b>{now_bj}</b> ｜ 已上线 {len(sec_online)} 场 · 待上线 {len(sec_pending)} 场 · 待发奖 {len(sec_await)} 场 · 已发奖 {len(sec_rewarded)} 场</div>
+<div style="margin-bottom:14px"><a href="世界杯竞猜_发奖详情.html" style="display:inline-block;background:#1f6feb;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:14px">🏆 打开「发奖详情」→ 自动赛果 + 猜中玩家名单 + 邮件名单/内容 + GM命令清单</a></div>
 {errbar}
-<h2>📋 对阵总览</h2>
-<table><thead><tr><th>轮次</th><th>对阵</th><th>开球(北京)</th><th>锁盘(北京)</th><th>状态</th><th>已部署档数</th></tr></thead><tbody>
+<h2>📋 对阵总览（每场含发奖详情入口）</h2>
+<table><thead><tr><th>轮次</th><th>对阵</th><th>开球(北京)</th><th>锁盘(北京)</th><th>状态</th><th>已部署档数</th><th>发奖时间(北京)</th><th>发奖详情</th></tr></thead><tbody>
 {ov_html}
 </tbody></table>
 <h2>🟢 已上线竞猜</h2>
 {online_html}
 <h2>🔵 待上线竞猜（对阵已定、未部署）</h2>
 {pending_html}
-<h2>🟠 待发奖（已开赛、未结算）</h2>
-{await_html}
 <h2>✅ 已发奖</h2>
 {reward_html}
 <div class="cnt" style="margin-top:18px">维护：对阵确定→加进 wc_dashboard_data.json 的 schedule；某场发完奖→把它的 key 加进 settled。生成器 _gen_竞猜运营看板.py。</div>
@@ -153,3 +162,11 @@ tr:nth-child(even){{background:#11161d}}
 OUT.write_text(html, encoding='utf-8')
 print(f"WROTE {OUT}")
 print(f"已上线{len(sec_online)} 待上线{len(sec_pending)} 待发奖{len(sec_await)} 已发奖{len(sec_rewarded)}; fetch_err={fetch_err or '无'}")
+
+# 顺带刷新「发奖详情」(自动赛果ESPN+猜中玩家+邮件+GM)——每天12点任务跑看板时一并刷
+try:
+    import subprocess
+    rc=subprocess.run([sys.executable, str(ROOT/"_gen_发奖详情.py")], timeout=240).returncode
+    print("发奖详情已刷新" if rc==0 else f"⚠️发奖详情刷新返回非0(rc={rc})——查datain/文件锁")
+except Exception as e:
+    print("发奖详情刷新失败(非致命):", repr(e)[:120])

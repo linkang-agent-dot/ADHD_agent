@@ -39,6 +39,15 @@ GROUP BY 1
 ## 拥有者付费额
 join `ods_user_order`（pay_status=1；USD: `currency_type IN ('usd','TOKEN') ? actual_charge : pay_price`）。可算终身付费 / 某活动礼包付费（iap_id IN 礼包集）。礼包名反查 `dim_iap.iap_id_name`。
 
+## 🔑 reason_id + reason_sub_id：按来源拆资产变动（隔离竞猜/免费领取等）
+`ods_user_asset` 有 **`reason_id`(来源类型)** + **`reason_sub_id`(来源具体id)** + reason_sub_id_level/reason_status。这是按「为什么获得」拆资产流水的关键（订单表拆不出免费/非付费时用它）。
+- Item_1146(世界杯抽奖券)获取 reason_id 分布(2026-06-27实测)：**`buy_gift`(买礼包,reason_sub_id=礼包号)** / `activity_battle_pass_score_reward`(BP) / `activity_reward`(累充/签到等) / item_op_activity_unclaimed_reward。
+- **竞猜参与(含免费!)的正确查法**=`asset_id='Item_1146' AND change_type='1' AND reason_id='buy_gift' AND reason_sub_id LIKE '894%'`,按 reason_sub_id 分组=每个竞猜礼包的领取(免费档894xx0=进界面+选队=触达;付费894xx1/2/3=买家,与订单表对得上)。
+- **界面触达率代理**=免费竞猜领取distinct人数 / 55服DAU(`ods_user_login` distinct,同期);竞猜无UI曝光埋点([[reference_x3_config]]),免费参与率是最佳触达代理(领免费=必进界面选队)。2026-06-27 D0实测=2192/6375=34.4%,付费23人/0.36%,免费→付费转化1.05%。
+- 通用:任何"买礼包/免费领礼包"参与都可用 `reason_id='buy_gift' + reason_sub_id=礼包号` 拆,不限竞猜。
+- ⚠️**活动奖励类拆不出单个cfgId**:`activity_reward`/`activity_daily_free_reward`/`activity_resign` 的 **reason_sub_id 都是空**,且 **asset 表 activity_id 列全空**(没用)→无法把签到(101403)等精确锁到单活动。只有"买礼包"(buy_gift)带reason_sub_id=礼包号。签到的最佳口径=`reason_id='activity_daily_free_reward'`(每日免费奖励·签到走它,但可能含其他每日免费活动,非严格101403);补签=`activity_resign`(给Item_1002钻·小众·付费玩家0)。
+- **付费玩家触达对比口径(2026-06-27 D0实测)**:付费玩家=`ods_user_order pay_status=1`当日distinct(55服);触达=JOIN asset对应reason的distinct user。结果:付费玩家499,**竞猜触达316/63.3%**(buy_gift 894%) vs **签到94.2%**(daily_free_reward)。付费玩家碰竞猜概率≈普通DAU(34.4%)的2倍。⚠️今日订单数仓T+1延迟(订单max分区滞后1天),"今天"无数据时用最新可用日。
+
 ## 其他表
 - `dl_active_user_asset_balance_d`：活跃用户资产**余额快照**（无 server_id，要 join 用户→服）。注意：皮肤"用后解锁"余额可能为0，拥有看 ods_user_asset 的 change_type='1' 流水更准。
 

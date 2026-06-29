@@ -9,6 +9,14 @@ metadata:
 
 X3 节日活动**需产出新美术资源**时的规范（纯复用不出资源的只标"复用XX现成✅"，不进此规范）。每个资源类型定 3 个维度。配合 [[reference_x3_client_resources]]（DK→GUID 注册）、[[workflow_x3_festival_design_doc]]（策划案模板）。
 
+## ★出图后默认核验（用户定2026-06-22·所有换皮出图后必做，不等提醒）
+拿**对应参考图(复用源)**核一遍，4 项都要对齐，不只是尺寸：
+1. **尺寸** W×H（=参考；gpt默认出1024~2048大图，必须缩到目标）
+2. **格式/透明** mode（图标/tile=RGBA真透明；背景=RGB不透明）。⚠️**gpt"透明底"常是假透明**(RGB画浅灰/棋盘底,无alpha)→走 **GRFal remove_background 抠图**(单次,非双底差分)扣真透明 [[reference_x3_hero_skin_video_production]];验真=`Image.getchannel('A').getextrema()[0]<255`。
+3. **上下左右边距**（=参考；决定 sprite 在 prefab 格子/槽位的对齐）
+4. **主体占比**（内容 bbox 宽/高/面积 % = 参考；**不能简单居中**——如iso岛底座要落格子同位、高物件向上溢出）。
+核验脚本：PIL 读 `getbbox()` 算内容 bbox + 四边 margin + 占比，逐项对参考。差太多→trim 后按参考 bbox 位置缩放重贴，不是直接 resize。
+
 ## 维度 A · 出美需颗粒度（策划写美需必含要素）
 | 资源类型 | 美需必含 |
 |---|---|

@@ -13,6 +13,8 @@ metadata:
 |-----|------|------|------|------|
 | 1 | seq (行编号) | int | ✅ | 表内唯一编号；同一 RewardID 内必须连续 |
 | 2 | RewardID | int | ✅ | 关联键；Pack/活动等外部表引用此值 |
+
+> ⚠️**查某 RewardID 是否存在，要 grep RewardID 列（tsv 0-indexed col1）不是行首 col0**（col0=seq 唯一行号，RewardID 几乎不在行首）。2026-06-23 排查拜访礼包用 `grep "^211020\t"`（查 col0）→ 0 行 → 虚报"Reward 211020 没了/拜访礼包搞挂"，实际 RewardID=211020 完整在（seq 40000-40004，门头三件套 152017/18/19+钻+VIP）。正确：`grep "\t211020\t"` 或 csv 读 col1==211020。
 | 3 | ItemType | int | ✅ | 1=道具，其他类型见 def |
 | 4 | ItemID | int | ✅ | 道具 ID |
 | 5 | Note | string | — | 备注（道具中文名） |
@@ -122,6 +124,25 @@ for row in ws.iter_rows(min_row=7, values_only=True):
 - **单格改(换item/改数量)→ 用 `tsv_edit.py set`**(保LF、单格、不动行结构)，`git add tsv` 后 **pre-commit gate 自动同步 xlsx**(显示"auto action staged"+mismatch=0)，一次过。
 - **裸 python 整组重写行(加/删行+重排ID)→ 翻车**：split('\n')/join 易破坏行尾→引入 CRLF(gate crlf≠0 拒)+round-trip 不稳(mismatch),手动 `--from-tsv`/`--from-xlsx` 反复同步只会越弄越糟(mismatch 0→3)。
 - 真要加/删行：能用单格替换达成目的就别加减行(如把第5物换成另一道具,而非删行重排)；非加行不可时，**改完用全仓 `python scripts/sync_xlsx_tsv.py` 验 mismatch=0 且 crlf=0 再提交**，崩了立刻 `git reset --hard origin/<branch>` 回纯净态别硬怼。
+
+## 🔁「整组复制翻倍」bug 识别 + 去重修法(2026-06-26 节日礼包翻倍事故·MR!43)
+master 上一批奖励组被同一 bug **整组复制**(组内所有行整块复制一份→玩家实得2倍),团队分轮修。识别+修法可复用：
+- **识别 signature(比"组内同道具≥2次"更稳)**：`组内每个道具都出现偶数次` → awk 按 RewardID 聚合,某组所有 ItemID 计数全偶=整组复制嫌疑。`{grp[$2]=grp[$2]" "$4;it[$2"|"$4]++} END{逐组判所有item计数%2==0}`。再按 id 段(节日=210xxx/211xxx)过滤。⚠️ "完全相同行(组+item+num+DropPara)重复"扫法**偏保守会漏**(非字节级复制的漏掉),实测 23 vs 团队基线法 106。
+- **🔴正确目标来源=该表自己的 git 历史(铁律,2026-06-26 翻车纠正)**：去重要还原到「翻倍前的单份态」，**必须查该表本身的提交历史**找翻倍 commit 前一版(`for c in $(git log origin/master -15 -- Reward.tsv); do git show $c:..|awk '组行数'; done` 看行数 5↔10 震荡,取 5 的那版逐行内容)。**绝不能拿落后主干一大截的旁支当"正确态"**——`master_fix_fes_pack` 落后 1366 提交,它的 210919=4行 是「×10 券还没合进来的远古态」,我误信它把**合法的 ×10 券当脏数据删了**(10→4)，AI 审 MR 抓出，纯去重应是 10→**5**(保留 ×10)。
+- **★纯去重原则=只撤销复制,不做"这行像脏数据"的额外判断**：整组复制=`[N行单份]×2`,正确修=**只删后半 N 行**(前半已是连续 seq 块→**不用重排**,更简单)。210632/210919 单份就是 5 行(含 1134/1128 的 ×10 **和** ×80 两条券,合法),别因为"和 tier1/2 单条券不同构"就删 ×10——tier3 本就允许多档券。**少动=安全**。
+- **共享组坑**：210521/210632/210919 等组 id 与 `Route__RouteLevels`(海域航线掉落)/UnitConfigMonster 撞车共享(同 RewardID 被礼包+航线掉落都引用)→ 去重是干净2×时,删复制块对两个消费方都对;但务必先确认非"两消费方各自的真实行被合到一组"。
+- **WC 不在 master**：世界杯 894/211 全套只在 dev_festival,master=0,故 master 的翻倍 bug 不碰 WC(查 `git show origin/master:tsv/Pack__Pack.tsv|awk '$1+0>=894010'`=0)。
+
+## 🔢 Reward seq(col0) 连续性铁律(2026-06-26 复核确认,改/删行前必读)
+- **表头注释自带规则**：Reward__Reward.tsv **第4行 col0 注释=「该列仅保证不重复即可」**,col1=「相同ID为同一个掉落包」;第5-7行是 seq 段位分配注释(8000付费/9000每日特惠/10000治疗)。即 **col0 硬规则=全局唯一(允许空洞)**。
+- **叠加 reward_def 强校验**：**同 RewardID 内 seq 必须连续**(max-min+1==count,断号报 `rewardID:X ID不连续`)。
+- **删行修法(不全局重排,省巨大diff)**：删组内部分行后若断号,**只把该组保留行 col0 重排回本组自己的连续低位**(如210632删后保留4行→25192-25195),其余全局留空洞=合规(表规则允许)。**别全局renumber**(会动几千行+可能破坏段位语义)。
+- **字节安全删行**：读 bytes→`split(b"\n")`→处理→`join(b"\n")`→写 bytes,**绝不 decode/re-encode 行尾**(防 CRLF)。删行+改col0 后必验:①各组组内连续 ②全局无重复 seq ③`grep -c $'\r'`=0。
+- **终极校验=本地 `cd Tools/table_exporter && python ExportTable.py`**(纯Python,跑真 reward_def),尾部 `protoc编译成功+bytes生成+MD5`=过。**当前仓 xlsx 已基本退役(git tracked xlsx仅2个,Reward.xlsx不在内)→ Reward 改动纯 tsv commit,无需同步 xlsx**。
+
+## 🚪 master 受保护→走 MR(2026-06-26 实操路径)
+- worktree 隔离: `git worktree add ../gdconfig-<名> -b fix/<名> origin/master`(基于 master 不是 dev_festival);改完 commit(`X3NEW` 前缀)+`git push -u origin <分支>`;完事 `git worktree remove ../gdconfig-<名> --force`(改动已推送则安全),主仓 dev_festival 不受扰。
+- **建 MR = GitLab API**(项目 `x3/gdconfig` id=**4454**)：`POST /projects/4454/merge_requests` source/target=master/title。🔴**坑：title/description 含中文走 `--data-urlencode`(form)会 500 Internal Server Error**;先用**纯英文 title** POST 建出 MR,再 **PUT 用 JSON body(`Content-Type: application/json`, utf-8)** 补中文 title+description=成功。Token=`$GITLAB_TAP4FUN_TOKEN`(len20)+`PRIVATE-TOKEN` header。
 
 ## 相关
 

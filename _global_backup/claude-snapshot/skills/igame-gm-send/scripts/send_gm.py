@@ -92,15 +92,20 @@ def main() -> int:
         print("Invalid --players: must be integers separated by commas.", file=sys.stderr)
         return 2
 
+    # ✅2026-06-25 实测确认的正确格式(用户在 iGame UI 验证 + 本脚本 API 复现 errCode 0)：
+    #  - serverIds = 字符串(如 "3080")，不是 server_ids 数组
+    #  - playerIds = 字符串(多个用逗号 "27877,27878")，不是 players 数组
+    #  - cmd = GM 命令名(大小写均可，服务端会 lower+补 gm 前缀，如 addactivityscore / GMAddActivityScore)
+    #  - args = 字符串数组
+    #  - 不要尾随 ；(；是 iGame UI 的命令分隔符；走 API 直发纯 JSON，加 ； 会让服务端
+    #    ArkModule.Gm.cs:20 JsonConvert 抛 "Additional text encountered" → 静默不执行)
     gm_line_obj = {
-        "server_ids": [int(args.server)],
+        "serverIds": str(args.server).strip(),
         "cmd": args.cmd.strip(),
-        "players": players,
+        "playerIds": ",".join(str(p) for p in players),
         "args": parse_csv_str(args.args),
     }
     gm_line = json.dumps(gm_line_obj, ensure_ascii=False)
-    if not gm_line.endswith((";", "；")):
-        gm_line += "；"
 
     payload = {
         "operateType": args.operate_type,

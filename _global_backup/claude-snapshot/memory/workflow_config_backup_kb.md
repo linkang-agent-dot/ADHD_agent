@@ -19,3 +19,12 @@ metadata:
 5. 删仓内目录前先 `git status` 确认是未跟踪的 staging（别误删别人 WIP）。
 
 范例：周卡换皮 `KB\产出-数值设计\X3_夏日恋语\周卡_备份\`（功能1价格名称/功能2本地化/功能3奖池数值 各一 .md + 脚本\）。关联收口接管化范式 [[workflow_handover_assetization]]。
+
+## ★备份 snippet 搬进 live tsv 的搬运 checklist（跨节日复用·2026-06-22 深海节首批落地沉淀）
+搬 KB 备份的 `新增*.tsv` 进 `C:\x3\gdconfig\tsv\` 时按序扫，每条都卡过导表：
+1. **格式防线先扫**：每个 snippet 数据行 **列数==目标表数据行列数** + **新id在目标表不存在**（在**目标分支**上扫——切了分支占用不同！）。不符=补列/换高位id。
+2. **数字列里的 TODO 占位文本必 scrub**：备份常把待定值写成 `<深海节抽奖券·待建>`/`【待补…】`(累充白名单col49/RankCfg MailID/抽奖券ItemID)→导表 `ConvertError`/`could not convert to int/float`。搬前全部换成真 id 或清空。
+3. **空壳活动撤批**：只有 ActvOnline 行、没配对应 content 表(累充→ActvTask / BP→BattlePassScore)→`depend_checks: ContentID not existed` 挂。配全再搬，否则从批次撤掉。
+4. **共享行别漏**：ActvGroup 入口行、被引用的 Reward/ChainPack 组、TC——backup 常只给模块自己的行漏共享行。Pack.TimeCycleID/ChainPack.TimeCycle 不能指不存在的 TC→用 **6001(永久)**；活动级 TC 配0 要 ActvType 在导表 `SKIP_TIMECYCLE_CHECK`(PostProcessData.py)。
+5. **导表前必 sync xlsx**：`python scripts/sync_xlsx_tsv.py --from-tsv --files tsv/<改过的>.tsv`（否则 `ExportTable.py` 的 verify_xlsx_tsv 预检 abort）。⚠️openpyxl 重存会污染**同 xlsx 的其他页签**→该 xlsx 的子页签 tsv **带齐一起 sync**。验证用本地 `cd Tools/table_exporter && python ExportTable.py`（0 异常=过）。
+6. **push 遇 dev_festival 分叉**：`git rebase origin/dev_festival`——仓内有 `tsv_merge_pro`/`xlsx_merge_pro` 智能合并驱动自动行级合数据；.py 走 git 3-way。rebase 后**重验导表**再 push+jolt。

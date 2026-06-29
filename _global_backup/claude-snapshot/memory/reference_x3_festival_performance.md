@@ -71,6 +71,7 @@ v1090.ods_user_activity   -- 活动参与
 ```
 
 ### ods_user_order 关键字段
+- ⚠️ 用户列名是 `user_id`（VARCHAR），**不是 `uid`**（本文模板里历史写的 `uid` 会报 Column cannot be resolved，2026-06-22 查尼罗踩坑）。`server_id` 也是 VARCHAR，排序/比较前 `cast(... as integer)`。
 - `iap_id` VARCHAR — Pack ID（如 '210716'）
 - `pay_status` INT — 1=成功
 - `actual_charge` — USD实际扣款额

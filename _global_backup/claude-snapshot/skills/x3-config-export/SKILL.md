@@ -20,6 +20,27 @@ description: >
 
 tsv 命名：`tsv/{data下相对目录}/{xlsx文件名}__{Sheet名}.tsv`（顶层 data/ 无子目录前缀）。
 
+## 步骤0：主目录 or worktree（开工第一件事，必跑）
+
+多窗口/多 agent 同机改 X3 配置会踩同一工作区。开工先判**当前分支是否被别人占着没收尾**：
+> 注：全局 `PreToolUse` hook（`scripts/x3_config_isolation_gate.py`）会**强制兜底**这步——主仓脏时改主仓配置会被 exit 2 拦下。机制/绕过见 memory `workflow_x3_multiagent_worktree`。
+
+```powershell
+cd C:\x3\gdconfig ; git status -sb
+```
+读首行 + 文件行，按下表决策：
+
+| 工作区状态 | 含义 | 怎么干 |
+|---|---|---|
+| 干净（无文件行）**且** 无 `[ahead N]` | 没人在改、本地没攒未推送提交 | **直接在主目录 `C:\x3\gdconfig` 干**，走下面 5 步 |
+| 有未提交改动 **或** 显示 `[ahead N]` | 已有人/别的窗口在改且没收尾 | **开 worktree 隔离**，本功能改完不碰主目录 |
+
+开 worktree 时（机制/坑/prompt 模板见 memory `workflow_x3_multiagent_worktree.md`）：
+```powershell
+git worktree add ../gdconfig-<短名> -b feature/<短名> dev_festival
+```
+**铁律**：之后 `tsv_edit.py` 每条带 `--repo C:\x3\gdconfig-<短名>`；commit/push 都 `cd` 进该 worktree；不碰主目录。漏了 `--repo` 会按默认值静默写回主目录，worktree 白开。
+
 ## 工作流（5 步）
 
 ```powershell

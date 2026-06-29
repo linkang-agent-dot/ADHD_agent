@@ -25,15 +25,17 @@ description: 在 iGame 后台执行 GM 指令（toolbox/gm/update，对应 ark/g
 {
   "operateType": 3,
   "gmCommand": [
-    "{ \"server_ids\": [ 402 ], \"cmd\": \"paddassets\", \"players\": [123456], \"args\": [\"11151001\", \"100000\"] }；"
+    "{ \"serverIds\": \"402\", \"cmd\": \"paddassets\", \"playerIds\": \"123456\", \"args\": [\"11151001\", \"100000\"] }"
   ]
 }
 ```
 
 - `operateType` 默认 `3`。
-- `gmCommand` 是字符串数组；每条为一段 GM JSON 文本，末尾追加 `；`。
-- GM JSON 内部字段使用：`server_ids`、`cmd`、`players`、`args`。
+- `gmCommand` 是字符串数组；每条为一段**纯 JSON** 文本。⚠️**禁止在末尾追加 `；`**：服务端 `ArkModule.Gm.cs:20` 用 `JsonConvert.DeserializeObject` 严格解析整条 body，任何尾随字符（含全角 `；`）都会抛 `Additional text encountered after finished reading JSON content`，导致 **GM 静默不执行（网关仍返回 success:true）**。
+- 🔴**字段名/类型必须是（2026-06-25 实测纠正）**：`serverIds`=**字符串**（如 `"402"`，不是 `server_ids` 数组）、`playerIds`=**字符串**（多个逗号隔，如 `"123,456"`，不是 `players` 数组）、`cmd`、`args`(字符串数组)。**用错字段名（server_ids/players）会让网关识别不到目标，GM 落到默认服 server 100、玩家绑不上、静默不执行**。
+- 成功核验：`GET /ark/gm-operate/detail?id=<操作id>` 看 `contents[].returnInfo`=`[{"uid":<玩家>,"errCode":0}]`（uid=玩家号、errCode0 才是真成功；空 `[]` 或 `uid:100 entity is not existed`=没绑到玩家）。
 - 鉴权来自本地 `C:/Users/linkang/.igame-auth.json`（`token` + `clientId`）。
+- **批量加活动/BP积分**：用 `scripts/batch_add_score.py`（`--csv 服,玩家,活动雪花id,分` / `--rows "..."`，逐条发+自动核 errCode0）。
 
 ## 执行步骤
 

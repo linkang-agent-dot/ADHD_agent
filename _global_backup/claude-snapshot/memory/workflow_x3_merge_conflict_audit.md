@@ -168,7 +168,66 @@ comm -23 <(git show HEAD:tsv/T.tsv|cut -f1|sort -u) <(git show MERGE_HEAD:tsv/T.
 
 **⑥ 验收三连(全绿才算完)**：①`sync_xlsx_tsv.py --check` mismatch=0；②整行集合差审计 festival独有 + dev独有**双向**丢行各=0(只验单边会漏)；③`xref_scan_full.py` 看新增引用错(本次38个全 pre-existing 噪音:**管道数组`147|148`不拆分=误报**+ActvVoyage/HeroStickers/PackRecommend 本来就坏)。xref误报多→交叉验 RankCfg 实际含不含那些ID再下结论。
 
-> 用户要「先别提交」时：merge 停在 `--no-commit`/有冲突未提交态，全程 origin/dev 只读、不 checkout dev、不往 dev 推；随时 `git merge --abort` 可整撤。导表时 dev 带入的新列触发列顺序gate→`jolt_verify.py <branch> skip_check=true` 放行([[workflow_x3_auto_jolt_export]] §139)。
+**⑦ commit 坑**：解决+`git add` 后若又改了文件（如修引用），pre-commit 会因同一表 **staged+unstaged 双层** abort（`Refusing staged auto-sync ... both staged and unstaged changes`）→ commit 前重跑一次 `git add data/ tsv/` 再 `git commit -F msg.txt`（Windows 中文 msg 必须 -F UTF8 文件，禁 `-m "中文"`）。pre-commit 钩子会自己跑一致性同步并把生成的 tsv 一并 staged，正常 mismatch=0 通过。commit message 按 [[workflow_x3_merge_conflict_audit]]/x3_skill_merge §六 列冲突文件+决策。
+
+> 用户要「先别提交」时：merge 停在 `--no-commit`/有冲突未提交态，全程 origin/dev 只读、不 checkout dev、不往 dev 推；随时 `git merge --abort` 可整撤。提交=merge commit(2 parent)留在分支即可，**push 另需用户明确同意**（dev_festival 受保护分支策略见 [[feedback_x3_branch_strategy]]）。
+
+## ⑧ sync --check/xref 过了 ≠ 能导表：必须本地 ExportTable.py 验收（2026-06-22 血泪）
+
+`mismatch=0` + xref 干净 + 双向零丢行**全过，本地导表照样一路炸**。push/jolt 前**必须** `cd Tools/table_exporter && python ExportTable.py`（它有 `verify_xlsx_tsv_before_export` 门，xlsx/tsv 不一致直接 abort；之后跑类型/连续性/depend_keys 全套校验）。导表**逐个 abort**，修一个再跑，直到 `protoc 编译成功 + MD5 written + exit0`。本次大合并暴露 4 类：
+
+1. **类型 int→int[] 漏带**：dev 升级了某列类型(`int`→`int[]`)+配套代码(`len(item.X)`/`for..in item.X`)，但 merge 只带了**代码**没带**类型行**(driver 对 type 行 cell 解成了 festival 的 int)→ `TypeError: object of type 'int' has no len()`/`'int' object is not iterable`。**一次性查法**：扫所有 `def/*_def.py` 找 `len(item.X)`/`for..in item.X`/`item.X[` 的列，对该表 tsv 第2行类型，非 `[]` 的就是漏带→改类型行为 `int[]`(本次 ActvOnline.RankID、ActvScoreMulti.RankID)。判方向看实际数据有无 `|`。
+
+2. **Reward 同 RewardID seq 必须连续**(`reward_def` 校验 `seqs[-1]==seqs[0]+len-1`)：我把 dev 撞车行**按冲突序**追加到末尾→同组行被拆散→`ID不连续`。正解：append 时**按 RewardID 分组连续**，或事后扫非连续组、每组重分配一段连续 seq(只改 col0)。
+
+3. **★merge driver(openpyxl) 清公式缓存=系统性**：xlsx3way driver 经 openpyxl 存盘会**清掉所有公式格的缓存值**→`--from-xlsx` 把空写进 tsv→公式列(尤其**公式生成的主键 ID**，如 `=IslandGroup*100+IslandID`)在 tsv 为空→空主键/depend_keys 崩。**波及面=merge 改过且含公式的所有 xlsx**(本次 6 个:Hero 22106/ShipEquipData 1212/FurnitureDecorate 375/BattleValue 52/Dialogue 17/Rank 14但在#sheet不导出)。**修法=Excel COM CalculateFull 批量重算→`--from-xlsx`**：
+   ```python
+   import pythoncom,win32com.client,os
+   pythoncom.CoInitialize(); xl=win32com.client.gencache.EnsureDispatch('Excel.Application')
+   xl.Visible=False; xl.DisplayAlerts=False
+   for t in [...]: wb=xl.Workbooks.Open(os.path.abspath(f'data/{t}.xlsx')); wb.Application.CalculateFull(); wb.Save(); wb.Close(False)
+   xl.Quit(); pythoncom.CoUninitialize()
+   ```
+   本机 Excel COM 可用(v12)。**铁律：含公式的 xlsx 永远别用 openpyxl 存**(apply_xlsx_patch 也是 openpyxl→同样清缓存!)；改公式表只用 ① tsv 编辑+`--from-tsv`(XML手术保公式) ② Excel CalculateFull。先 `zipfile` 扫 `<f` 确认公式位置(#开头 sheet 不导出可忽略)。
+
+4. **festival WIP 表自带 authoring bug**(本次 ActvVoyage X3NEW-1044，dev 无此表、纯 festival 新增、非合并引入)：① workbook.xml **重复声明同名 sheet**(两 `<sheet>` 同指一个 rId)→zip XML 手术删重复 `<sheet>` 元素(不碰 worksheet/公式) ② 引用标记**标错列**(`Item` 标在 ItemCount 上、应在 ItemID)→移正。这类是别人的 WIP，先 `git show HEAD^1/HEAD^2` 确认是哪边带入的、dev 侧有没有，再决定修还是退回 owner。
+
+**总流程**：merge→冲突解→sync --check=0→**本地 ExportTable.py 跑到 exit0**(逐个修上述4类)→commit→push→`jolt_verify.py <branch> skip_check=true`(dev 新列撞列gate)。详见 [[workflow_x3_auto_jolt_export]]。导表时 dev 带入的新列触发列顺序gate→`jolt_verify.py <branch> skip_check=true` 放行([[workflow_x3_auto_jolt_export]] §139)。
+
+## ⑨ 正向合并 festival→dev(发版方向) + driver 在「无冲突自动合并」表上也会静默清列(2026-06-22)
+
+把 dev_festival 全量合进主干 dev(发版)：因今天先做过反向合并(origin/dev→dev_festival,a6b04e6)，festival 已是 dev 超集(只缺 dev 最新 3 个新手累充 commit:ActvOnline 101108 + TimeCycle 1108)。流程与反向一致(merge driver 已注册→merge--no-commit→解冲突→三连验收→ExportTable exit0→commit→push→jolt skip_check=true)。dev 是否受保护：API 读 protected_branches 返 403(权限不够看不出)，但**实测 push 直接成功(dev 当时未禁 push)**，pre-push 钩子自动跑列结构+Reward ID 连续性校验。
+
+**★新陷阱:merge driver 对「两侧都改、自动合并无冲突」的表，会静默清空单侧新增行的某列**。本次 TimeCycle driver 报「全量80行自动合并、零冲突」，却把 festival 新增的 80 行(世界杯赛程等)的 **col2 名称列清成空**(值列 col3-8 正常)。→ **教训:「driver 说无冲突自动合并」≠安全，必须照跑双向丢行审计**(§⑥)；整行集合差会报这些行「丢失」，再按业务键(col1 ID)复核——ID 全在=非真丢但要逐字段查是不是被清了列。**判定真假阳性:抽样 lost 行做 festival-row vs worktree-row 逐字段 diff**(本次发现 col2 festival 有值/worktree 空=真清列,不是格式尾空差异)。
+
+**统一解法(冲突 column_only_in_remote 和这种静默清列都适用)**:`git checkout dev_festival -- data/X.xlsx tsv/X.tsv` 整表取 festival 版(节日侧是超集,结构+全行都对) → 再把对侧(dev)的小 delta 精确套回(本次各 1 行 2 字段:ActvOnline 101108 col12/col24、TimeCycle 1108 col2/col8;先验 `festival 该行 == merge-base 该行` 确认对侧没碰过,再 split('\t') 改指定 index) → `sync_xlsx_tsv.py --from-tsv`(两表均 0 公式,安全)。比逐 cell 修 driver 输出稳。**只有「两侧都改」的表才需这么处理**(本次仅 ActvOnline+TimeCycle);只 festival 改的表 git 直接取 festival blob 不经 driver、无此问题(审计也证实零丢行)。
+
+## ⑩ tsv-only 仓后再做 festival→dev 简化版(2026-06-24，37 vs 4 commit)
+
+仓库已基本 tsv-only：`git ls-files 'data/*.xlsx'` 返 0(顶层 xlsx 全删)，仅 `data/i18n/Text.xlsx` 等少数子目录 xlsx 还在、且 `.gitattributes` 标 `data/**/*.xlsx -merge binary`、pre-commit 钩子自动 `tsv->xlsx` 重建并 staged。**后果:§⑧/§⑨ 那套 xlsx↔tsv 漂移收尾、Excel COM CalculateFull 重算公式缓存、apply_xlsx_patch 清缓存——基本都不用做了**(改 tsv→钩子重建 xlsx，单向、幂等)。merge driver 现也只剩 tsv3way(`.gitattributes` 无 xlsx3way；`git config merge.xlsx3way.driver` 空属正常)。
+
+**本次(dev_festival 37↑ vs origin/dev 4↑，已分叉非超集)全流程**：① 本地 dev `merge --ff-only origin/dev`(local dev 落后origin 2、可FF) → ② `git merge --no-commit --no-ff dev_festival`(driver 报 Text 66处/ActvOnline 14处全自动合并、`.merge_conflicts_pending.json` 空、`diff --diff-filter=U` 空=零真冲突) → ③ **仍照跑双向丢行审计**(§⑨ 教训:零冲突≠安全)→ 命中 ActvOnline `101341`/`106103` 两行 col1 内部名被静默清空(纯 festival 新增行,base/dev 都无)→从 MERGE_HEAD 整行恢复 → ④ ExportTable.py exit0 → ⑤ commit(钩子重建 Text.xlsx 一并入)。merge commit `0992212`。
+
+**push 被 reject 后(他人并发推 dev)别强推:fetch→`merge --no-commit origin/dev`→照跑双向审计→ExportTable exit0→commit `--no-edit`→重推。本次中途有人推了 2 个本地化 commit(动 ActvOnline/Item/UnionRedPackShow)，按此整合零丢行、未覆盖对方改动。**
+
+**导表列gate本次未触发:** `jolt_verify.py dev`(无 skip_check) → build #1222 **SUCCESS**。与 06-22(§⑧/§⑨ festival→dev 撞列顺序gate需 skip_check=true)不同——列gate触发与否取决于「dev 上次成功导表基准 vs 当前」是否检测到插列；本次 dev 基准已含相关列结构变化、故未触发。**先裸跑 jolt_verify，真撞 gate 再加 `skip_check=true` 重跑**，别预防性加。
+
+**审计提速:不必等 merge commit，--no-commit 态直接对工作树跑**——base=`git merge-base HEAD MERGE_HEAD`、dev=`HEAD` blob、festival=`MERGE_HEAD` blob、merged=磁盘工作树文件，双向 `dev_lost=(dev-base)-merged` / `fest_lost=(fest-base)-merged`。比 `merge_tsv_audit.py`(要 merge commit、单向) 更早拦截，提交前就能修、不用 amend。**坑:审计脚本输出别打 emoji/✅**(Windows 控制台 GBK 编码 ✅/⚠ 会 UnicodeEncodeError 崩)，结果写 UTF-8 文件再 Read。
+
+## ⑪ 删除/修改冲突先验「这个 ID 在两边是不是同一个活动」(2026-06-24 ActvOnline 102240 撞车)
+
+合并遇到某 ActvOnline ID 的「一边删、一边改」冲突时，**别只看字段 diff 就判**——先 `git show <分支>:tsv/ActvOnline__ActvOnline.tsv | grep '^<id>' | cut -f1-2` **对比两边 col2 活动名**。同一 ID 在并行开发线上常被复用成两个完全不同的活动：
+
+- **本次**：`102240` 在 festival/dev_festival 是 `世界杯-BP`(世界杯BP废弃克隆，TC=0，linkang 6/24 删之因已迁 `102243 世界杯通行证`)；在 master/qa/线上是 `推币机BP-单服`(活的 CoinPusher，TC=160007，hehaofei 6/22「线上重新开放」/6/23「下活动」还在运营)。用户最初以为是「qa 改了 dev 要删的那行的 TimeController」，实为**两个不同活动撞了同一 ID**，TC 0 vs 160007 正是它们不是一回事的症状。
+
+**判定 + 解法**：
+1. 撞车 ID 在某侧是否**线上活的**？查该 ID 近期有无 `线上重新开放`/`下活动`/`PlayerLv 改`/`排期修改` 类 commit(`git log -S'<id>' -- tsv/ActvOnline__ActvOnline.tsv`)。有 → **那侧绝不能被删**，删了=杀线上活动(线上事故)。
+2. 另一侧的「删除」往往针对的是这个 ID 的**旧含义**(本次=世界杯BP克隆)，而该含义在合并后的主干上**已不存在**(世界杯BP=102243)→「删废弃克隆」意图**已自动满足，没有需要再删的东西**。
+3. → 冲突**取「保留线上活动」侧，丢弃 delete**。本次 origin/dev 的 qa→dev 合并已正确保留 `102240=推币机BP TC=160007`，线上安全。
+4. **隐患在本地分支**：本地 dev 若还停在 festival 的删除态(102240 不存在)且落后 origin → **绝不能 push**(一推删线上推币机)。对齐法：确认本地领先 commit 都已在 dev_festival 上(`git merge-base --is-ancestor <c> origin/dev_festival`)→ `git branch -f _bak_xxx HEAD` 留底 → `git reset --hard origin/dev`。
+5. **下次 dev_festival→dev 再合一定会再撞这个删除/修改冲突** → 必须再次选「保留推币机 102240」、丢弃 festival 删除。
+
+> 通用教训：delete/modify 冲突先核 ID 的**业务身份(名字/含义)**，不是字段值；并行线复用 ID 是常态，删错就是删线上。
 
 ## 相关
 

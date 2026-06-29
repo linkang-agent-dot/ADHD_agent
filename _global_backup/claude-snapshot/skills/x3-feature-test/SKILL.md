@@ -25,6 +25,9 @@ description: >-
 | `references/client-runtime.md` | 要读客户端运行时状态（玩家/Meta/配置/UI）、写 eval 表达式时 |
 | `references/server-arch.md` | 要搞清功能在服务端"由什么触发、有哪些门槛"、连 telnet 跑服务端 C# 时 |
 | `references/gm-commands.md` | 要用 GM 构造前置状态（建号/升级/加资源/开活动）、玩家域 GM 不生效时 |
+| `references/bridge-debug-lessons.md` | **用桥给业务 UI 取证/截图前必看**：GM 跳服龄、关弹窗安全套路、带数据 UI 桥开不了、Editor 假死定位——便携精简版，随 skill 传播 |
+| `references/stuck-escalation.md` | **撞墙时看**：卡住判据（同 blocker ≥3 次 / 空转 ≥10 调用 / 环境崩 ≥2 次 / 硬限制）→ 停手、先交付不受影响部分、通知人工（有 dws 钉钉 MCP 走钉钉，没有走网页弹窗兜底）|
+| `scripts/make_html_report.py` | **要出带截图的可分享 HTML 验证报告时**：JSON spec → base64 内联截图（CSP 安全）→ 单文件 HTML。范例 `samples/x3new-592/` |
 
 ## Brief 生命周期（流程骨架）
 测试以一份**轻量 brief** 贯穿始终，对齐项目「可验证目标前置」——不是测完补文档，是**先出 brief 再测、边测边补、测完即配方**：
@@ -80,6 +83,7 @@ description: >-
 ## 报告分档（对齐项目 CLAUDE.md）
 - 单点验证：一句话说清验了什么、结论、证据。
 - 完整端到端：给"改了什么 / 触发条件 / 验证证据表 / 待确认 / 复现配方"。触及 CSShared / 协议 / 配置结构的，点明回归面。
+- **要可分享 HTML 报告（带截图）**：用 `scripts/make_html_report.py <spec.json>`——读 JSON、把本地 PNG base64 内联（Artifact CSP 禁外链图必须内联）、出配色 + 验收横幅 + 数据表的单文件 HTML。**别手写 base64 内联**。范例照抄 `samples/x3new-592/spec.json` 改字段。
 
 ## 边界
 - 适用：X3 客户端+服务端联动功能的运行时验证。**不适用** X2、不适用纯静态代码审查（那走 review）、不替代单元测试。

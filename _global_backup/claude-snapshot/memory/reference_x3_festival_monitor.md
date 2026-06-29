@@ -10,7 +10,17 @@ metadata:
 X3 版节日日报，移植自 [[reference_ai_to_sql]] 用的 x2-festival-monitor。
 
 ## 位置
-- 脚本：`C:\ADHD_agent\skills\x3-festival-monitor\x3_festival_daily.py`
+- 脚本：`C:\ADHD_agent\skills\x3-festival-monitor\x3_festival_daily.py`（夏日节）
+- **世界杯专属脚本**：`x3_worldcup_daily.py`（2026-06-26 起，**克隆夏日脚本仅改配置块**，不动数据层/HTML）。任务 `ClaudeX3WorldCupMonitor` 每小时(:35)，产出 `KB\产出-数据分析\节日日报_实时\X3世界杯日报_latest.html`。
+  - **配置差异**：FESTIVAL_NAME=世界杯 / D0=2026-06-26(全服同步上线·开服06-26 00:00 UTC=08:00北京·hour=8) / END_TS=2026-07-20 08:00(决赛7/19+收尾) / 基线06-12~06-25 / SERVER_FILTER=`BETWEEN 1000 AND 1970`(**全服1-98服·X3 server号N→server_id=1000+(N-1)×10**·98服=1970) / 对比侧情人节全服`1000-1540`(55服·绝对值不可比仅比率) / RECHARGE_ACTV_ID=**100597**(世界杯-累充·白名单156包=144竞猜894xxx+9锚点211xxx+2通行证130020/021+1许愿池1002001)。
+  - **模块归类**：PackType 11→付费连锁 / 15→抽奖券锚点 / 16→竞猜礼包 / 18→通行证；许愿池1002001(也是PackType16)用 PACK_OVERRIDE 单独拎出。**16在世界杯白名单只有{894竞猜, 1002001许愿池}两类成员**，故16→竞猜礼包+override 1002001即全覆盖，**零代码改动纯配置换皮**。
+  - ⚠️ 口径外溢：深海节07-03全服上线若复用130020/021/1002001，7/3–7/19这三包销量会被算进世界杯(金额小可接受)。
+  - 模型差异：世界杯=**全服单段**(套拓荒模型)，无夏日的分批滚动/生命周期匹配/批次切换任务。
+  - **★UTC 日切（2026-06-26 用户要求，世界杯专属，夏日脚本仍北京日切）**：世界杯是 UTC 定义的活动(iGame UTC、UTC 0点开=北京08:00)，报表按 **UTC 日**聚合，不按北京日。否则数仓北京日切会把"北京6/26凌晨0-8点的常态盘"算进 D0(上线前背景)，造成"还没开就有收入"的错觉。
+    - 实现(纯 SQL 层，Python 侧不变)：`UD = date_format(o.created_at - INTERVAL '8' HOUR, '%Y-%m-%d')`(UTC日,AS partition_date 回填) + `HRU = hour(... - 8h)`(UTC小时)；WHERE 仍带**北京 partition_date 超集[a, b+1]做分区剪枝**(否则全表扫)，再叠精确 `UD BETWEEN a AND b`。helper `utc_range_where(a,b)`/`utc_day_where(d)`；`report_date=datetime.now(timezone.utc)`；`LAUNCH_HOUR=0`(世界杯&情人节均UTC0点开)。
+    - 上线前(UTC今天<D0)写"未开始"占位 latest.html 并 **exit 0**(不红灯每小时任务)。
+    - 已交叉验证：UTC日6/25 总额 == 北京窗口[6/25 08:00,6/26 08:00) 完全相等；北京凌晨背景正确归到 UTC 前一日，D0 干净。
+    - ⚠️ 换其它北京活动别照抄此 UTC 改造——夏日/拓荒等北京日切活动用原 `x3_festival_daily.py`。下个 UTC 活动可复用此 UTC helper 模式。
 - 建计划任务：`create_task.bat`（任务名 `ClaudeX3FestivalMonitor`，每天 09:00 跑，报昨天完整日）
 - 日志：`C:\Users\linkang\_x3_festival_daily_log.txt`
 - 产出：`C:\ADHD_agent\KB\产出-数据分析\节日日报_实时\X3{节日名}日报_D{n}_{日期}.html`（带按天页签的暗色 HTML，KPI/ARPU增量/模块构成/趋势/关注点）。**2026-06-22 起 OUTPUT_DIR 从 home 迁到此 KB 落地区**（脚本顶部 OUTPUT_DIR + os.makedirs；X2 监控同改）；节日结束后手动归到 `产出-数据分析\X3夏日节\日报_批X\`。09:20 ClaudeFestivalReportOpen 也已改扫此目录。
@@ -43,6 +53,13 @@ X3 版节日日报，移植自 [[reference_ai_to_sql]] 用的 x2-festival-monito
   夏日恋语累充 ContentID = **100595**（行名"26情人节-累充"是 TimeCycle 复用残留，别被名字骗，见 [[feedback_x3_timecycle_name_legacy]]）。
 - **模块分类 = Pack.PackType**（11=特惠连锁 / 15=抽奖券 / 16=家具外观 / 18=通行证），PACK_OVERRIDE 拆细：210717家具/1002001许愿池/210921拜访皮肤/210917·918·919装饰礼包（PackType11但属夏日恋语装饰链647，单独成"装饰礼包"模块）。
 - **ALWAYS_INCLUDE_PACKS**：装饰礼包 917/918/919 强制并入节日（累充白名单本期可能不收它们，且配置在被实时编辑会 14↔17 抖动；并入后收入口径稳定）。累充白名单口径 = "算不算累充积分"，≠ "是不是节日礼包"，收入监控按后者。
+
+## 🛞 尼罗滚动回归监控（2026-06-22 待办 + 历史定位）
+尼罗是**滚动回归**（按服龄 D17–D35 窗口逐服接力上线，无统一 D0，活跃 cohort 每天漂），跟夏日「固定批次+统一D0+同期对比」模型不同。
+- **尼罗礼包池**：专属 2106xx = `210601-210617,210630-210632`；累充 ContentID=**100594**（≠夏日 100595）；跨节日复用包 130020/130021/1002001 算收入要带时间卡口。
+- **上次回归(2026-05-15~20)覆盖服**：80–86服 = **server_id 1790–1850**，D21–D35，W2→W3 匹配对照法（对照组 75+77服）。产物在 `KB\产出-数据分析\`：`x3_nile_tap4fun_report.html`(对外最终版)/`x3_nile_regression_report.html`(简洁版)/`x3_nile_exec_summary.html`(逐服R级)/`x3_nile_optimization_eval.html`(下期优化)。
+- **现在(06-22)同窗口服已滚到 1920–2050**（开服5/13~6/02，核心D20–D34在1950–2050；1920–1940过D35收尾）。明天2060+进、1950出。
+- **待办**：用户已定「并行另起尼罗任务」(不动夏日,夏日窗口到06-29)。拟复制 x3_festival_daily.py 配尼罗(累充100594/动态活跃带服段/模块按PackType)+新建计划任务 `ClaudeX3NileMonitor` 每天09:00。口径=动态活跃带(每天自动纳入当前D17-D35窗口服)，待用户最终确认服段后开配。
 
 ## 换节日只改脚本顶部配置块
 `FESTIVAL_NAME / FESTIVAL_D0(Pack首销日) / BASELINE_START/END / RECHARGE_ACTV_ID(该节日累充ContentID)`

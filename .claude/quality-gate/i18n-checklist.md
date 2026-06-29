@@ -30,6 +30,7 @@
 | `zh未转繁` | warn | 脚本 ZH_RAW：zh列==cn简体疑似未做简繁转换（换皮 clone 高发）。列出复核 |
 | `无重复key` | warn | 同一 LC key 不应出现多行（fwcli/导入取首条 → 显示旧/错值）。发现重复列出 |
 | `改名对齐` | warn | 道具/实体若改过名（换皮残留）：新名必须在 **title(全语言) + desc + drop/获取途径文案** 全部一致；旧名残留列出。2026-06 拓荒节"墨水盒"只改了 title-cn/zh，desc+drop 仍是旧名"纪念钻头"、其余语言抄英文，踩坑 |
+| `换皮残留·RESIDUE` | block（换皮任务才查） | **换皮 clone 活动/礼包/规则时必查**：复用了源活动带文本ID（RuleTips/Title/Content/Pack名等）→ i18n 译文**完整但写的是源节日名**（世界杯累充 15013 全16语言译好却写"尼罗"；开箱 16031 乌克兰语整段元旦残留）。**完整性三类(EN/CJK/EMPTY)和肉眼都漏判**（非空、非泄漏、纯主题错）。跑 `i18n_leak_audit.py --reskin-residue --src-festival <源节日> --grep/--prefix <新ID范围>`（内置 nile/newyear/spring/valentine/deepsea/summer 词表，或 `--source-terms` 自定义多语言词）。报 RESIDUE 即 fail。2026-06-29 世界杯实证 |
 
 ## 主观项（标 level=human，不计 pass/fail）
 - 译文质量 / 术语对齐

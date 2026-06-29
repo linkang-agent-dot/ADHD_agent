@@ -20,9 +20,12 @@ metadata:
 | **ClaudeDailyReport** | 每天 21:00 | 生成工作日报 txt + 回写 `工作line.md` 三/五节 | `_daily_report.py`（在 C--Windows-System32 项目目录） |
 | **ClaudeX3FestivalMonitor** | 全天每小时 | X3 节日收入监控（06-19 08:30 后转夏日节第三批 1910-1930） | [[x3]] x3-festival-monitor |
 | **ClaudeX3SwitchBatch3** | 一次性 2026-06-19 08:30 | 夏日节日报 批二(1880-1900)→批三(1910-1930) 自动切换，跑完自删 | `skills\x3-festival-monitor\_switch_batch3.py`，详见 [[x3]] |
-| **ClaudeX2FestivalMonitor** | 全天每小时(:05) | X2 拓荒节日报(2026-06-12 D0 启用)，产出 `~\X2拓荒节日报_latest.html`，节日结束删任务 | [[reference_x2_festival_monitor]] |
+| **ClaudeX3WorldCupMonitor** | 全天每小时(:35) | X3 世界杯节日收入监控(D0=2026-06-26·全服1-98=server_id 1000-1970·累充100597·END 07-20)，产出 `KB\产出-数据分析\节日日报_实时\X3世界杯日报_latest.html`；决赛后(7/20+)删任务 | `skills\x3-festival-monitor\x3_worldcup_daily.py`(克隆夏日脚本仅改配置块)，详见 [[x3]] |
+| ~~**ClaudeX2FestivalMonitor**~~ **已删除(2026-06-29 D17 收工)** | ~~全天每小时(:05)~~ | X2 拓荒节日报(2026-06-12 D0~06-29 D17)，产出 `~\X2拓荒节日报_latest.html`；节日结束用户确认停，已 Unregister | [[reference_x2_festival_monitor]] |
 | **ClaudeTokenWeeklyReport** | 每周五 17:00 | ①Token 用量周报 ②**本周归纳清单**(2026-06-15加挂)：扫7天KB/memory改动→`claude -p`按模块列「知识\|对应模块\|来源」→`~\归纳验收周报_latest.md`+气泡。两步独立fail-open | `token_weekly_scan.ps1`(末尾归纳段) + `token_weekly_report.py`/`_html.py`(token) + `handover_review_prompt.txt`(归纳) |
+| **WC-GuessDashboard-Daily12** | 每天 12:00(北京) | X3世界杯竞猜运营看板：拉iGame(prod)实时竞猜+赛程交叉分类→对阵总览/已上线/待上线/待发奖/已发奖 HTML | `KB\产出-数值设计\X3_世界杯\_gen_竞猜运营看板.py`(数据源 `wc_dashboard_data.json`:对阵确定加schedule、发完奖加settled);产出 `..\世界杯竞猜运营看板.html`;决赛后删任务。⚠️任务**直调python.exe+脚本路径**(非.bat·中文路径在cmd/.bat下Task环境编码崩→result1;直调python Unicode传参=result0) |
 | **ClaudeWeeklyBackup** | 每周一 12:00 | 周备份 | — |
+| **GameRadar-Daily** | 每天 09:00 | 策略游戏雷达(中/美/日)：App Store+Google Play+YouTube+Reddit 热门/飙升榜→HTML 弹浏览器；个人选游戏用 | `C:\Users\linkang\game-radar\run_daily.ps1`(纯 python，非 claude -p，无静默失败风险)，详见 [[reference_game_radar]] |
 | **ClaudeMorningPriority/X3Monitor 退出码偶发 1** | — | 退出码 1 不一定真失败（claude -p 退出码不可靠）；DailyPlan 有新鲜度闸门兜底，X3Monitor 看产出 HTML 是否当日刷新判断 | — |
 
 ## 关键架构
@@ -54,6 +57,13 @@ metadata:
 - **重试仍救不回的两种实测（06-16/06-17）**：① 06-16 三次重试全失败、第3次 exit 1 报 `API Error: The socket connection was closed unexpectedly`——21:00 那一刻 API 网络层整段抖、背靠背重试撞同一波；② 06-17 三次全 exit 0 但不写盘、**无任何报错**——claude 真返回成功却没写文件。两次都是手动重跑即成。
 - **增强（2026-06-18 落地，仍在观察）**：(a) 重试改**带间隔退避** `@(0,120,240)` 秒，跨过 21:00 短时提供商抖动（治 socket 类）；(b) **每次尝试把 claude 完整输出+真实耗时落盘** `~\_daily_report_attempts.txt`（治"exit 0 不写盘"——此前成功路径不记 $result，连日失败手里没证据；下次失败看这个文件即可判断 claude 报错/没调Write/预算耗尽/提供商degraded）。备份 `daily_report_scan.ps1.bak.20260615b`。**根因尚未坐实**，靠 attempts 文件取证后再定。
 - ⚠️ 猜测但未证实：用户频繁切 team/onehub provider，若 21:00 活跃 provider 是 onehub 且不稳，claude -p 可能拿到 degraded 响应/空结果却 exit 0。等 attempts 取证。
+
+## 🎯 DailyReport 连续失败真根因坐实（2026-06-25，前面所有猜测作废）
+
+- **真根因**：`ClaudeDailyReport` 计划任务 cwd=`C:\Windows\System32`，`claude -p` 据此加载的是 **`C--Windows-System32` 项目的 memory**（不是 `C--Users-linkang`！）。那里的 `daily-report-from-transcripts.md` 把日报输出路径写成旧的 **`C:\Users\linkang\工作日报_{date}.txt`**（home，错），claude 听 memory 不听 prompt → **每晚都成功生成、却写错地方**；新鲜度闸门只认 KB `每日日报\_latest.txt`，永远判失败。06-08~06-24 home 里堆了 16 份 `工作日报_{date}.txt` 就是铁证。
+- **为什么之前查不出/手动跑能成**：① 手动跑 cwd=`C:\Users\linkang` → 加载 linkang memory（无此坑）→ 听 prompt 写对 KB ✅；② 脚本成功路径不记 $result，直到 06-18 加了 `_daily_report_attempts.txt` 才抓到 claude 自报"日报已生成：C:\Users\linkang\工作日报_2026-06-24.txt"——一眼看穿写错路径。**之前"瞬时态/socket/provider"全是误判**（socket 那次 06-16 是真插曲，但不是连续失败主因）。
+- **修法（2026-06-25 落地，治本+兜底）**：① 改 `C--Windows-System32\memory\daily-report-from-transcripts.md`+`daily-report-format-prefs.md`，顶部钉死输出路径=KB `每日日报\{date}.txt`+`_latest.txt`、首行须含今日日期；② `daily_report_scan.ps1` 加路径漂移保险：闸门没过但 home 有今日 `工作日报_{today}.txt` 就自动搬到 KB 救活。
+- **通用教训**：调度任务 cwd 决定 `claude -p` 加载哪个项目 memory；System32 cwd 的任务（DailyReport/BugScan）吃 `C--Windows-System32` memory，别以为是 linkang 的。改这类任务行为先看它的 cwd→对应 memory 目录。
 
 ## ⚠️ 调度脚本 `claude -p` 不带 `--model` 会漂移到停服模型（2026-06-15 DailyPlan 中招）
 

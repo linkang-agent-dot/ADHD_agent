@@ -19,6 +19,8 @@ metadata:
 
 > 跟 [[reference_x3_gdconfig_repo]] `C:\x3\gdconfig\` 是**两个独立仓**：gdconfig 装配置 xlsx，x3-project 装代码+资源。
 > 但 x3-project 里**内嵌了一份 gdconfig**（`C:\x3-project\gdconfig\`，服务端读配置的来源）：pull/merge 时仓库 hook 会自动把它 fast-forward 到同名分支最新（输出 `[gdconfig] fast-forwarded ...; left superproject pointer unstaged`）。所以 pull 完 x3-project，服务端代码+配置都到位，**本地服重启才生效**；改配置仍只推 `C:\x3\gdconfig\`，内嵌这份别手动改。
+> - ⚠️**子模块脏时 hook 跳过自动 ff**（2026-06-22 实测）：内嵌 gdconfig 若在某 feature 分支上有未提交改动，pull 主仓时 hook 输出 `[gdconfig] skip auto pull: submodule has uncommitted changes on '<branch>'`，**不会更新子模块**。但这对**本地服部署无影响**——本地服 config 读的是 `client/Assets/Res/Config/ProtoGen/*.bytes`（client 在主仓工作树内，随主仓 pull 一起更新），不读这个内嵌子模块。所以「把某分支部署到本地服」= stash 工作区 WIP → `git pull --ff-only origin <branch>`（带上 client ProtoGen）→ 重编 GameServer.Hotfix+MapServer.Hotfix → stop_gs → 重启，子模块脏不脏无所谓。
+> - 🔴**判 X3 配置新不新：看 client ProtoGen `.bytes` 的 robot commit 时间，绝不看 x3-project 记录的 gdconfig 子模块指针**（2026-06-23 实测，差点误判）：x3-project 各分支记录的子模块 SHA（如 `feature/x3-deepsea-art` 和 `origin/dev_festival` 都停在 `dd2941d8`=2026-05-27）是**无人维护的陈旧指针**，与实际部署的配置毫无关系。真实配置 = `client/Assets/Res/Config/ProtoGen/*.bytes`，由 jolt/robot 导表后**独立回写**（commit 尾 `-robot-NNNNN`），跟子模块指针解耦。判新鲜度：`git log -1 --format="%ci %s" <branch> -- client/Assets/Res/Config/ProtoGen/` 看 robot 写入时间；比两分支配置差异 `git diff --stat <A> <B> -- .../ProtoGen/`（差异只在 `i18n/*.bytes`+`AllTableDataMd5.txt`、无 gameplay 表 = 配置表实质一致，只差翻译）。**别拿子模块指针 `dd2941d8` 的日期当"配置停在5/27"——会把今天的配置误判成一个月前的**。
 
 > **本机 ffmpeg 在这**：`client/Tools/VideoTools/ffmpeg/ffmpeg.exe`（+ffprobe/ffplay；系统 PATH 没有 ffmpeg，处理视频用它）。配套官方压缩工具 `compress_video.py`（crf28/slower/yuv420p 移动端策略）+ 视频提交合规 hook。
 
@@ -103,3 +105,11 @@ x3-project 仓 `git commit` 时 pre-commit hook 强制 message 格式：
 ## dev 受保护
 
 不能直接 `git push origin dev`，必须走 feature branch + MR。MR 创建可用 GitLab API 自动化，详见 [[workflow_x3_protected_branch_mr]]。
+
+## 「拉最新客户端 / 合并两个分叉分支」别本地硬合（2026-06-23 art↔dev_festival 实测血泪）
+两个分叉的 x3-project 分支（如 `feature/x3-deepsea-art` ↔ `dev_festival`）**本地 `git merge` 是雷区**：
+- **二进制冲突**：生成的 `client/Assets/Res/Config/ProtoGen/i18n/*.bytes`（各分支 robot 导出不一致）+ `VersionControl.cs` 会冲突，二进制 protobuf 没法盲解，解错=客户端配置错乱。
+- **LFS 雷**：合并时报 `Encountered N files that should have been pointers, but weren't`（ProtoGen .bytes 被 robot 以原始字节提交、但 .gitattributes 标 LFS）。
+- **`git merge --abort` 清不干净**：abort 后工作区残留「被自动合并的 tracked .asset 改动 + 未跟踪的新 png」（pre-merge 明明只有 `M gdconfig`）。**清理只能按显式路径** `git checkout -- <文件>` + `rm <具体未跟踪文件>`；**绝对别在 client/ 跑 `git clean`**——会连 AVProVideo/Domain/WeatherSystem 等**合法的未跟踪 Unity 目录**一起删。
+- ✅**正解=让合并发生在远端**（喊大哥/走 MR 在 origin 上把 A 合进 B），本地只做**干净切换**：`git fetch` → 确认 `git rev-list --count origin/B..A == 0`（A 已全进 B）→ `git checkout B && git merge --ff-only origin/B`。ff-only 无冲突、无 LFS 涂抹噩梦。切换后 `M gdconfig` 指针残留是 hook 的正常产物（无害）。
+- ⚠️切分支后**本地服(3080)还跑着旧分支的编译** → 客户端配置+服务端代码都变了 → 要 3080 跟上得重编 Hotfix+重启（见 [[workflow_x3_local_server_gm_telnet]] 重启预检：config mtime > dll 必重编）。

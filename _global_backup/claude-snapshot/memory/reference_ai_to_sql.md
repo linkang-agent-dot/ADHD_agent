@@ -44,3 +44,16 @@ C:\ADHD_agent\.claude\skills\ai-to-sql\scripts\
 ## How to apply
 查游戏玩家明细数据（建筑等级、付费订单、活动参与等）时用 ai-to-sql skill，不用 datain-skill 的聚合 API。
 datain-skill 适合查 Cohort LTV/ARPU 等聚合指标；ai-to-sql 适合查明细原始数据。
+
+## 🔴🔴 查 X3(1090) 必须显式 `--datasource TRINO_HF`(2026-06-26 纠正,极易踩)
+**`query_trino.py` / `search_tables.py` 默认 `DEFAULT_DATASOURCE="TRINO_AWS"`(老游戏 P2/AWS 集群)。X3 在 TRINO_HF，不加 `--datasource TRINO_HF` 就打到错集群**——**静默返 0 行 / `SHOW CATALOGS` 只剩 hive+system / 查任何 X3 玩家都"查不到"**，极易误判成"数仓没数据/停更/玩家不存在"。
+- ✅ **加上 `--datasource TRINO_HF` 后,X3 `v1090.ods_*` 数据新鲜到当天**(2026-06-26 实测 `ods_user_activity`/`ods_user_task`/`ods_user_battle` max(partition_date)=当天,13亿+行)。**下方"ODS停更2026-01-08"是上一版打错AWS集群得出的错误结论,作废**。
+- 例:`python query_trino.py --datasource TRINO_HF --sql "SELECT max(partition_date) FROM v1090.ods_user_activity"`。
+- ⚠️ **TRINO_HF 上 catalog 是 hive**(不是 memory 旧写的"iceberg默认");`v1090.<表>` 直接用不加 catalog 前缀即可。`search_tables` 返回的 `iceberg.v{...}` 前缀只是元数据提示,当前 key 实际连的是 hive。
+
+## v1090(X3) 查询字段坑(TRINO_HF)
+- `user_id` / `server_id` / `partition_date` 全是 **varchar**:过滤加引号(`user_id='1684352'` / `partition_date>='2026-06-25'`),整数比较或 `date'...'` 比 partition_date 都报 `Cannot apply operator`。
+- 时间戳列(`created_at` 等)比较用 **`TIMESTAMP '2026-06-26 08:00:00'`** 字面量,别用裸字符串。`created_at` 是**北京时间**。
+- 直接 `SELECT * FROM v1090.<表> LIMIT 1` 看列,比 explore_tables/DESCRIBE(要 schema 前缀)省事。
+- **dev/本地 `-e local` 服(如 3080)不上报数仓**(v1090 只收生产/CBT 段 server_id 1000–1560);本地服行为日志只在 `C:\x3-project\server\GameServer\bin\Debug\net8.0\logs\game-<sid>.bi.log`。
+- 活动类玩家查询见 [[reference_x3_score_activity]]「BP积分诊断链路」(BP日志按升级才写/积分任务不进 ods_user_task/击杀对账走 ods_user_battle)。
