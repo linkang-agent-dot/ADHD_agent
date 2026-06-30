@@ -20,7 +20,13 @@ PURE_IDS  = "'11600','11601','11602'"
 BM_ARPPU, BM_REV, BM_TOTAL = 9.99, 815, 1563
 
 def q(sql):
-    return execute_sql(sql, 'TRINO_HF')
+    last = None
+    for _ in range(2):                     # datain 偶发超时/抖动 → 重试1次(每次上限600s,控制总挂时)
+        try:
+            return execute_sql(sql, 'TRINO_HF')
+        except Exception as e:
+            last = e
+    raise last
 
 def main():
     pig = {r['pd']: r for r in q(

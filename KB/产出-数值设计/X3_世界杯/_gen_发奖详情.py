@@ -47,6 +47,16 @@ MAIL={
 def write_mail_csv(path): write_multilang_mail(path, MAIL)   # 走 skill 模块写转置模板
 write_mail_csv(CSVDIR/"多语言邮件内容.csv")   # 通用一份(不含队名,可复用)
 
+# 每场本地化邮件:通用贺词 + 「对阵+最终结果」(队名20语言翻译,无emoji无换行,见 _wc_team_i18n)
+import _wc_team_i18n as TI
+def match_mail(a,b,win,score,pens):
+    out={}
+    for lang,(t,c) in MAIL.items():
+        ta=TI.team_name(a,lang); tb=TI.team_name(b,lang)
+        rl=TI.result_line(a,b,win,score,pens,lang)
+        out[lang]=(f"{t} - {ta} vs {tb}", f"{c} {rl}")
+    return out
+
 sched=json.loads((ROOT/"wc_dashboard_data.json").read_text(encoding="utf-8"))["schedule"]
 _cache={}
 def espn(ds):
@@ -64,14 +74,15 @@ def result_of(m):
         names=" ".join(c.get('team',{}).get('displayName','').lower() for c in cs)
         if EN[a] in names and EN[b] in names:
             st=comp.get('status',{}).get('type',{})
-            if not st.get('completed'): return (False,None,st.get('description','未开始'))
-            sc={}; win=None
+            if not st.get('completed'): return (False,None,st.get('description','未开始'),None)
+            sc={}; sh={}; win=None
             for c in cs:
                 nm=c.get('team',{}).get('displayName','').lower(); code=a if EN[a] in nm else b
-                sc[code]=c.get('score')
+                sc[code]=c.get('score'); sh[code]=c.get('shootoutScore')
                 if c.get('winner'): win=code
-            return (True,win,f"{sc.get(a,'?')}-{sc.get(b,'?')}")
-    return (False,None,"无ESPN数据")
+            pens=f"{sh.get(a)}-{sh.get(b)}" if sh.get(a) is not None and sh.get(b) is not None else None
+            return (True,win,f"{sc.get(a,'?')}-{sc.get(b,'?')}",pens)
+    return (False,None,"无ESPN数据",None)
 def bp_snowflakes():
     auth=json.loads((pathlib.Path.home()/".igame-auth.json").read_text(encoding="utf-8"))
     h={"accept":"*/*","authorization":f"Bearer {auth['token']}","clientid":auth['clientId'],"gameid":auth.get('gameId','1090'),"regionid":auth.get('regionId','201'),"origin":"https://igame.tap4fun.com","referer":"https://igame.tap4fun.com/"}
@@ -120,12 +131,13 @@ from collections import Counter
 rows_overview=[]; sections=[]; total_part=0
 for m in sched:
     a,b=m["a_code"],m["b_code"]; key=m["key"]; label=f"{ZH[a]} vs {ZH[b]}"
-    comp,win,score=result_of(m); payT=payout_bj(m["kickoff_utc"])
+    comp,win,score,pens=result_of(m); payT=payout_bj(m["kickoff_utc"])
     if not comp:
         rows_overview.append((label,score,"—","—",payT,"—","待赛后")); continue
+    scoredisp=score if not pens else f"{score}（点球{pens}）"
     npart=participants_of(a,b); total_part+=npart
     if not win:
-        rows_overview.append((label,score,"平局",str(npart),"—","—","平局无猜中")); continue
+        rows_overview.append((label,scoredisp,"平局",str(npart),"—","—","平局无猜中")); continue
     W=winners_of(win); tc=Counter(w['tier'] for w in W)
     nwin_people=len(set((w['sid'],w['uid']) for w in W)); nrows=len(W)
     hit=f"{nwin_people/npart*100:.1f}%" if npart else "—"
@@ -133,8 +145,8 @@ for m in sched:
     rew=[[w['sid'],w['uid'],f"[{RES_ID}*{BONUS[w['tier']]}]","","",""] for w in W]
     with open(CSVDIR/f"奖励_{key}.csv","w",encoding="gbk",newline="",errors="replace") as f:
         csv.writer(f).writerows(rew)
-    # 多语言邮件(本场一份,通用文案): 复用通用模板
-    write_mail_csv(CSVDIR/f"多语言邮件_{key}.csv")
+    # 多语言邮件(本场一份): 通用贺词 + 「对阵+最终结果」(队名20语言翻译)
+    write_multilang_mail(CSVDIR/f"多语言邮件_{key}.csv", match_mail(a,b,win,score,pens))
     # GM csv(按笔): server,user,BP雪花,600
     gm=[[w['sid'],w['uid'],bp[w['sid']],600] for w in W if w['sid'] in bp]
     with open(CSVDIR/f"GM_{key}.csv","w",encoding="utf-8",newline="") as f:
@@ -164,8 +176,8 @@ for m in sched:
     pure=[f'{{"serverIds": "{r[0]}", "cmd": "addactivityscore", "playerIds": "{r[1]}", "args": ["{r[2]}", "600"]}}' for r in gm]
     (CSVDIR/f"GM纯命令_{key}.txt").write_text("\n".join(pure),encoding="utf-8")
     tierstr=" / ".join(f"{TIERNAME[t]}:{tc[t]}笔(各+{BONUS[t]}券)" for t in sorted(tc))
-    rows_overview.append((label,score,ZH[win],str(npart),f"{nwin_people}人/{nrows}笔",hit,"已生成"))
-    sections.append((key,label,score,ZH[win],tierstr,npart,nwin_people,nrows,len(gm),rew[:8]))
+    rows_overview.append((label,scoredisp,ZH[win],str(npart),f"{nwin_people}人/{nrows}笔",hit,"已生成"))
+    sections.append((key,label,scoredisp,ZH[win],tierstr,npart,nwin_people,nrows,len(gm),rew[:8]))
 
 def esc(s): return str(s).replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
 now_bj=(datetime.datetime.utcnow()+datetime.timedelta(hours=8)).strftime("%Y-%m-%d %H:%M")

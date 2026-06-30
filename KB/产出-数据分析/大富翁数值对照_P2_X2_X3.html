@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>大富翁数值对照 · P2 / X2 / X3</title>
+<style>
+  :root{
+    --bg:#0f1419; --panel:#171e26; --panel2:#1d2731; --line:#2a3642;
+    --ink:#e6edf3; --muted:#8a99a8; --dim:#62707d;
+    --p2:#c792ea; --x2:#82aaff; --x3:#7ee787;
+    --red:#ff6b6b; --redbg:#3a1d1f; --yel:#ffc857; --yelbg:#382f17; --grn:#56d364; --grnbg:#16301d;
+    --accent:#7ee787;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.6;font-size:15px}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 22px 80px}
+  header.top{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:8px}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:13.5px}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:13px}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .dot.p2{background:var(--p2)} .dot.x2{background:var(--x2)} .dot.x3{background:var(--x3)}
+
+  section{margin-top:34px}
+  h2{font-size:19px;margin:0 0 4px;padding-left:11px;border-left:4px solid var(--accent)}
+  h2 .en{color:var(--dim);font-size:13px;font-weight:400;margin-left:8px}
+  .note{color:var(--muted);font-size:13px;margin:6px 0 14px}
+
+  .tldr{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 4px;margin-top:20px}
+  .tldr .row{display:flex;gap:14px;align-items:flex-start;padding:13px 18px;border-bottom:1px solid var(--line)}
+  .tldr .row:last-child{border-bottom:none}
+  .badge{flex:0 0 auto;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;margin-top:2px}
+  .b-red{background:var(--redbg);color:var(--red);border:1px solid #5a2a2d}
+  .b-yel{background:var(--yelbg);color:var(--yel);border:1px solid #5a4a1d}
+  .b-grn{background:var(--grnbg);color:var(--grn);border:1px solid #2a5a32}
+  .tldr .txt b{color:var(--ink)} .tldr .txt{color:var(--muted);font-size:14px}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin-top:6px}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:640px}
+  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{background:var(--panel2);color:var(--muted);font-weight:600;position:sticky;top:0;
+    font-size:12.5px;letter-spacing:.3px;text-transform:none}
+  tbody tr:hover{background:#1a232c}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .col-x3{background:rgba(126,231,135,.05)}
+  th.col-x3{color:var(--x3)}
+  .miss{color:var(--red);font-weight:600}
+  .ok{color:var(--grn)}
+  .warn{color:var(--yel)}
+  .tag{font-size:11px;padding:1px 7px;border-radius:5px;background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
+  small.s{color:var(--dim);font-size:11.5px}
+  .zero{color:var(--dim)}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:6px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h3{margin:0 0 4px;font-size:15px}
+  .card h3 .p2{color:var(--p2)} .card h3 .x2{color:var(--x2)} .card h3 .x3{color:var(--x3)}
+  .card p{margin:6px 0;font-size:13.5px;color:var(--muted)}
+  .card .big{font-size:22px;font-weight:700;color:var(--ink)}
+  .card .lbl{font-size:11.5px;color:var(--dim)}
+
+  .verdict{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
+    border-radius:0 10px 10px 0;padding:13px 18px;margin-top:14px;font-size:14px;color:var(--muted)}
+  .verdict b{color:var(--ink)}
+  .verdict.red{border-left-color:var(--red)}
+  .verdict.yel{border-left-color:var(--yel)}
+
+  ol.rec{counter-reset:r;list-style:none;padding:0;margin:10px 0 0}
+  ol.rec li{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 16px 13px 52px;
+    position:relative;margin-bottom:10px;font-size:14px;color:var(--muted)}
+  ol.rec li:before{counter-increment:r;content:counter(r);position:absolute;left:14px;top:13px;
+    width:24px;height:24px;border-radius:50%;background:var(--panel2);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;border:1px solid var(--line)}
+  ol.rec li b{color:var(--ink)}
+  ol.rec li.r:before{color:var(--red)} ol.rec li.y:before{color:var(--yel)} ol.rec li.g:before{color:var(--grn)}
+
+  footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);color:var(--dim);font-size:12px}
+  .arrow{color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>大富翁数值对照 · P2 / X2 / X3</h1>
+  <div class="sub">三家「大富翁」逐模块数值盘点 — 道具获取/投放 · 兑换商店 · 累计奖励 · 成就礼包｜重点：X3 深海节(航海之路换皮)还差什么、哪些对不上</div>
+  <div class="legend">
+    <span><i class="dot p2"></i><b style="color:var(--p2)">P2</b> 异族/万圣/周年 — 成熟基准（原版）</span>
+    <span><i class="dot x2"></i><b style="color:var(--x2)">X2</b> 换皮 P2·竖屏首发（74服回归）</span>
+    <span><i class="dot x3"></i><b style="color:var(--x3)">X3</b> 航海之路 ActvType=28·深海节(换皮 X2 代码)</span>
+  </div>
+</header>
+
+<!-- TL;DR -->
+<div class="tldr">
+  <div class="row"><span class="badge b-red">头号风险</span><div class="txt"><b>骰子(罗盘1057)免费投放清单，X3 根本没盘。</b> X2 恰恰就死在投放——设计 470 个/人、实际只到 26%，进度全卡 30 圈内、40圈+成就礼包 0 购买。X3 照搬了 X2 的「跑X圈解锁」结构，却用「700抽≈102圈」凭空假设，没有任何免费骰产出渠道设计。</div></div>
+  <div class="row"><span class="badge b-yel">对不上</span><div class="txt"><b>ROI 口径差 4 倍：</b>P2/X2 成就礼包 ROI ≈ 2×，X3 = <b>8×</b>。这是换皮铁律的有意决定（用目标游戏数值库标准），但跟深海节其它模块（累充50%/装饰3200%）口径不统一，需节日层统一裁决。</div></div>
+  <div class="row"><span class="badge b-yel">对不上</span><div class="txt"><b>累计奖励没校准：</b>X3 阶段奖励(OtherReward 8档)「沿用原值不压平」，后段是暴涨梯度，没跟成就礼包 8× 对齐，可能出现免费线压过付费线、或门槛 700抽 在投放不足时够不到。</div></div>
+  <div class="row"><span class="badge b-grn">已核实·订正</span><div class="txt"><b>锚点礼包 X3 其实有</b>（Pack 13017-13020·$4.99/$19.99/$49.99/$99.99 卖航海罗盘×5/20/50/100·ROI 400%·比 X2 少一个 $9.99 档）；喂骰子的<b>每日礼包也部分存在</b>（ActvOnline 102993「深海进度礼包」发深海罗盘）。<b>帮派/骰子红包确实没有</b>（X2 单服 0 购买·社交弱，不补合理）；大富翁专属每日礼包可加（合理）。</div></div>
+</div>
+
+<!-- 已落地汇总 -->
+<div class="tldr" style="border-color:#2a5a32">
+  <div class="row"><span class="badge b-grn">已落地</span><div class="txt"><b>2026-06-30 已推 dev_festival（4 commits·worktree gdconfig-monopoly-roi）。</b>本报告下方第五/八节已按最终值更新。</div></div>
+  <div class="row"><span class="badge b-grn">棋盘</span><div class="txt"><b>宝藏岛代币砍半</b>（每骰 33.3→16.65代币）+ <b>加速岛换低档</b>（30分→5分×3 等·均-50%）；钻石岛/神秘岛保留。整盘 ROI 8→~4.8。<small class="s">e285838</small></div></div>
+  <div class="row"><span class="badge b-grn">兑换提价</span><div class="txt">月心珍珠 25000→<b>50000</b>代币（$1000）· 霍普金斯 15000→<b>30000</b>（$600）。<small class="s">e285838</small></div></div>
+  <div class="row"><span class="badge b-grn">兑换限购</span><div class="txt">技能碎片/传奇信物→<b>20</b>· 神秘金属→<b>50</b>· 技能书→<b>100</b>。<small class="s">8895e26</small></div></div>
+  <div class="row"><span class="badge b-grn">成就礼包圈数</span><div class="txt">对齐数值设计：<b>3/5/10/20/30/50/70/100/150/200/300</b>（前9档设计+后延2档·价格档不变）。<small class="s">7a4d969</small></div></div>
+  <div class="row"><span class="badge b-grn">兑换新增</span><div class="txt"><b>藏宝图</b>（转盘券·100代币/张·限购50）+ <b>加速 sink</b>（30分加速·100代币·ROI0.4·限购9999=代币回收口）。<small class="s">3b674ce</small></div></div>
+  <div class="row"><span class="badge b-red">未闭环</span><div class="txt"><b>🔴 骰子免费投放表未定</b>→成就礼包 50-300 圈深档免费够不到（免费骰仅~15圈）。<b>jolt 导表</b>因构建机基建故障未验绿（本地 ExportTable 已验证配置链路 OK）。</div></div>
+</div>
+
+<!-- 模块对照 -->
+<section>
+  <h2>一、模块对照<span class="en">一眼看 X3 缺哪几块</span></h2>
+  <div class="scroll">
+  <table>
+    <thead><tr>
+      <th>子模块</th>
+      <th>P2（成熟基准）</th>
+      <th>X2（换皮P2·竖屏）</th>
+      <th class="col-x3">X3 深海（航海之路）</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>棋盘玩法</td><td>24格跑圈·岛屿<b>可升级</b></td><td>24格·岛屿可升级</td><td class="col-x3">24格5类岛·<span class="warn">砍升级=单等级</span></td></tr>
+      <tr><td>成就礼包<br><small class="s">跑X圈解锁</small></td><td><b>18档</b> 严格递增</td><td>13档（价格倒挂）</td><td class="col-x3"><b>11档</b>（6价值档 + $99.99×6 重复）</td></tr>
+      <tr><td>兑换商店</td><td>兑换装饰套装</td><td>兑换装饰物</td><td class="col-x3">主城皮肤 $300 / 纪念卡 / 养成料</td></tr>
+      <tr><td>阶段累计奖励</td><td>装饰组件(套装升级)</td><td>阶段奖励 <span class="warn">ROI仅0.37</span></td><td class="col-x3">OtherReward 8档 + <b>珍珠贝进度奖</b>(新增双线)</td></tr>
+      <tr><td>存钱罐</td><td>周年庆有</td><td>$2.99 / 骰×40</td><td class="col-x3">$19.99 / 超值10×</td></tr>
+      <tr><td>锚点礼包</td><td>有（价格锚定）</td><td>5档 $4.99–$99.99</td><td class="col-x3"><span class="ok">✅ 有 · 4档</span><br><small class="s">Pack 13017-13020·$4.99/19.99/49.99/99.99·罗盘×5/20/50/100·ROI400%·缺$9.99档</small></td></tr>
+      <tr><td>帮派/骰子红包</td><td>有（社交·做大带小）</td><td>2档 $49.99/$99.99</td><td class="col-x3"><span class="miss">❌ 没有</span><br><small class="s">X2单服0购买·社交弱·不补合理</small></td></tr>
+      <tr><td>大富翁每日礼包</td><td>有（5天×$4.99）</td><td>—</td><td class="col-x3"><span class="warn">△ 可加（合理）</span><br><small class="s">ActvOnline 102993「深海进度礼包」已发深海罗盘·大富翁专属版可加</small></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="verdict"><b>X3 大富翁里子</b> = 成就礼包 + 存钱罐 + 双线累计奖励 + 兑换商店 + <b>锚点礼包(Pack 13017-13020·已配)</b>。相比 P2/X2 只缺<b>帮派/骰子红包</b>（社交弱·不补合理）；大富翁专属每日礼包可加（喂骰子的 102993 深海进度礼包已存在）。<small class="s">订正：初版误判锚点礼包缺失——只看模块清单没查 live Pack 表所致。</small></div>
+</section>
+
+<!-- 维度1 投放 -->
+<section>
+  <h2>二、道具获取 / 投放（骰子）<span class="en">🔴 最大缺口</span></h2>
+  <p class="note">大富翁的命脉：免费骰子够不够决定玩家能跑多少圈，进而决定成就礼包/兑换/累计奖励能不能触达。</p>
+  <div class="cards">
+    <div class="card">
+      <h3><span class="p2">P2</span> 投放健康 ✅</h3>
+      <div class="big">900 <span class="lbl">设计免费投放 / 9 渠道</span></div>
+      <p>20格·一圈5.7骰·走满200圈需 <b>1143</b> 骰；<b>纯活跃≈600 刚好拿满阶段奖励</b>，累充再溢出 300，缺口靠成就礼包卖骰补。实测人均获取 370、饱和度41%、触达69.72%。</p>
+    </div>
+    <div class="card">
+      <h3><span class="x2">X2</span> 投放失败 🔴</h3>
+      <div class="big">44.4 <span class="lbl">个/人 = 目标的 26%</span></div>
+      <p>设计 <b>470</b>（累充300+BP50+扭蛋30+掉转30+7日30+抢购30）。BP骰后置 L21-25、均值玩家 L13-14 拿不到；强消耗/掉落转付费覆盖率仅 16%/21%。<b>进度卡 30 圈内，40圈+ 礼包 0 购买。</b></p>
+    </div>
+    <div class="card" style="border-color:#5a2a2d">
+      <h3><span class="x3">X3</span> 没有投放设计 🔴</h3>
+      <div class="big warn">? <span class="lbl">渠道/人均/目标圈 全空</span></div>
+      <p>成就礼包草稿直接<b>假设「700抽≈102圈」</b>，但深海全方案<b>没有一份免费骰(罗盘1057)产出渠道清单</b>。海域开放触发，没有 X2 那样的多渠道投放。</p>
+    </div>
+  </div>
+  <div class="verdict red"><b>头号「对不上」：</b>X3 照搬了 X2 的成就礼包结构（11档跑圈解锁），而 X2 这套<b>恰恰就栽在投放上</b>。700 抽的假设悬空——不补投放清单，X3 的 60/70/100/150 圈那几档 $99.99 会复刻 X2「后段 0 购买」。<b>而且兑换商店 $300 主城皮肤靠代币产出，代币又回到骰子投放——投放不够，深度锚点连带失效。</b></div>
+
+  <h3 style="margin:22px 0 4px;font-size:15px;color:var(--p2)">P2 投放清单模板（X3 该照抄的就是这个）</h3>
+  <p class="note">P2 2026复活节大富翁源表 · 这份 9 渠道明细就是 X3 缺的东西。设计原则：<b>纯活跃免费渠道铺到「刚好拿满阶段奖励」</b>，累充溢出引导付费，深度缺口留给成就礼包卖骰。</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>骰子来源渠道</th><th class="num">P2 投放量</th><th>性质</th><th>X3 深海有无对应载体</th></tr></thead>
+    <tbody>
+      <tr><td>长节日 BP（高级行军皮肤轨）</td><td class="num">200</td><td>活跃/付费双轨</td><td class="ok">✅已配 航海通行证BP(CID2246·20级)：免费轨 <b>7骰</b> / 高级轨+35($9.99) / 至尊轨+170($19.99)</td></tr>
+      <tr><td>新强消耗（超时空传送）</td><td class="num">100</td><td>强消耗</td><td class="miss">❌不做（用户定 2026-06-30）</td></tr>
+      <tr><td>掉落转付费</td><td class="num">50</td><td>掉落</td><td class="miss">❌不做（用户定 2026-06-30）</td></tr>
+      <tr><td>7日活动</td><td class="num">50</td><td>新手/活跃</td><td class="warn">签到7(10071704)可挂</td></tr>
+      <tr><td>BINGO</td><td class="num">50</td><td>活跃玩法</td><td class="ok">深海大富翁本身含 BINGO 层</td></tr>
+      <tr><td>挂机 BP</td><td class="num">50</td><td>活跃</td><td class="warn">待确认</td></tr>
+      <tr><td>巨猿（核心玩法）</td><td class="num">50</td><td>核心循环</td><td class="warn">需挂 X3 对应核心玩法</td></tr>
+      <tr><td>签到</td><td class="num">50</td><td>日活</td><td class="ok">签到7(10071704)可挂</td></tr>
+      <tr><td>节日累充</td><td class="num">300</td><td>付费引导(溢出)</td><td class="ok">深海馈赠累充(100598)可挂</td></tr>
+      <tr style="font-weight:700;background:var(--panel2)"><td>合计</td><td class="num">900</td><td>纯活跃≈600 拿满 / 累充300 溢出</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="verdict yel"><b>X3 投放进度（2026-06-30）：</b>✅ <b>BP(航海通行证2246) 已配</b>（免费轨7骰·大头35/170在付费令）；强消耗 + 掉落转付费 <b>用户定不做</b>；累充喂转盘券1200·不算大富翁骰。</div>
+
+  <h3 style="margin:22px 0 4px;font-size:15px;color:var(--x3)">X3 大富翁免产方案（≈200 骰·对标 X2·用户定 2026-06-30）</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>渠道</th><th class="num">骰子(罗盘1057)</th><th>配置载体</th><th>状态</th></tr></thead>
+    <tbody>
+      <tr><td>BP 免费轨</td><td class="num">7</td><td>航海通行证 2246</td><td class="ok">✅ 已配</td></tr>
+      <tr><td>签到</td><td class="num">50</td><td>深海签到 10071704</td><td class="warn">⏳ 待配</td></tr>
+      <tr><td>7日活动</td><td class="num">50</td><td>（待定载体）</td><td class="warn">⏳ 待配</td></tr>
+      <tr><td>BINGO</td><td class="num">50</td><td>大富翁 BINGO 层</td><td class="warn">⏳ 待配</td></tr>
+      <tr><td>核心玩法（对应巨猿位）</td><td class="num">43</td><td>（待定载体）</td><td class="warn">⏳ 待配</td></tr>
+      <tr style="font-weight:700;background:var(--panel2)"><td>免产合计</td><td class="num">200</td><td>→ ÷6.86骰/圈 ≈ 29 圈</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="verdict"><b>对得上：</b>200骰 ≈ <b>29 圈</b> → 免费解锁成就礼包<b>档1-5（3/5/10/20/30圈·$1.99-$49.99）</b>，卡在 $49.99 档；<b>$99.99 深档（50圈起）靠付费</b>（BP高级/至尊令 + 锚点礼包13017-20·$1/骰 + 成就礼包自带骰）。对标基线：P2纯活跃600(到~88圈)·X2纯活跃170(到30圈·实际仅达26%翻车)。<br><b>下一步：</b>把 签到/7日/BINGO/核心玩法 4 条的罗盘1057奖励配上（BP 已 done）。</div>
+</section>
+
+<!-- 维度2 兑换 -->
+<section>
+  <h2>三、兑换商店奖励<span class="en">口径升级了，但有隐患</span></h2>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>项目</th><th>兑换货币</th><th>兑换内容（性质）</th><th>深度定位</th></tr></thead>
+    <tbody>
+      <tr><td><b style="color:var(--p2)">P2</b></td><td>大富翁货币</td><td>装饰套装（cosmetic）</td><td>装饰驱动，<span class="warn">拿满后衰减</span>（P2 自承缺深度）</td></tr>
+      <tr><td><b style="color:var(--x2)">X2</b></td><td>大富翁货币</td><td>装饰物（cosmetic）</td><td><span class="warn">缺高价值外显锚点</span>，超R 花不出去</td></tr>
+      <tr class="col-x3"><td><b style="color:var(--x3)">X3</b></td><td>深海代币 1202<br><small class="s">宝藏岛/神秘岛产出</small></td><td>主城皮肤「月心珍珠」<b>300,000钻≈$300</b> + 霍普金斯150,000钻 + 纪念卡180080 + 养成料</td><td><span class="ok">把兑换当深度锚点</span>（补 X2 缺的、P2 靠行军套装补的东西）方向对</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="verdict yel"><b>隐患：</b>X3 用兑换商店当深度锚点，方向对——但 $300 主城皮肤的<b>触达门槛取决于代币产出速率</b>，代币又来自骰子投放（见维度二）。投放不够 → 代币攒不够 → $300 皮肤兑不动 → 深度锚点形同虚设。</div>
+</section>
+
+<!-- 维度3 累计奖励 -->
+<section>
+  <h2>四、累计奖励<span class="en">X3 做成双线，但 ROI 没对齐</span></h2>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>项目</th><th>累计奖励机制</th><th>表现 / 问题</th></tr></thead>
+    <tbody>
+      <tr><td><b style="color:var(--p2)">P2</b></td><td>阶段奖励 = 装饰组件（套装升级）</td><td>42% 玩家拿到组件3 符合预期；<span class="warn">拿满后参与度明显衰减</span></td></tr>
+      <tr><td><b style="color:var(--x2)">X2</b></td><td>阶段奖励（按抽数）</td><td><span class="miss">ROI 仅 0.37</span>，远低于成就礼包 2.42 = 几乎没驱动力</td></tr>
+      <tr class="col-x3"><td><b style="color:var(--x3)">X3</b></td>
+        <td><b>双线并行：</b><br>① OtherReward 8档（按抽数·门槛 20/50/100/150/250/350/500/700·<b>沿用原值不压平</b>）<br>② 珍珠贝进度奖（按捡贝壳·序列 1,2,3,4,4,4,6,6,6,8,8,8,8,10·每档≈15,300钻神秘箱）</td>
+        <td><span class="warn">OtherReward 照搬原航海之路原值，后段是暴涨梯度，未跟成就礼包 8× 校准</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="verdict yel"><b>对不上点：</b>OtherReward 直接照搬原值「不压平」（曾建议压成 2.5k/7.5k/15k/25k 被否）。这条<b>免费</b>线的 ROI 没跟成就礼包的 8× 对过——可能出现「免费阶段奖励比付费礼包还划算」的倒挂，或后段门槛 700抽 在投放不足时根本够不到。</div>
+</section>
+
+<!-- 维度4 成就礼包 -->
+<section>
+  <h2>五、成就礼包梯度 + ROI<span class="en">X3 修好了 X2 倒挂，但 ROI 高 4 倍</span></h2>
+
+  <p class="note"><b style="color:var(--x2)">X2 13档实测</b>（74服首发）：价格倒挂 + 仅 5 档有购买、40圈+ 全 0。</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>档</th><th class="num">解锁圈</th><th class="num">价格</th><th>核心奖励</th><th class="num">设计ROI</th><th class="num">达到人数</th><th class="num">实际购买</th><th class="num">触达购买率</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="num">5</td><td class="num">$1.99</td><td>骰子×20</td><td class="num">5.03</td><td class="num">25</td><td class="num">8</td><td class="num warn">32%</td></tr>
+      <tr><td>2</td><td class="num">10</td><td class="num">$99.99</td><td>骰子×300+宝箱×20</td><td class="num">1.90</td><td class="num">4</td><td class="num">1</td><td class="num">25%</td></tr>
+      <tr><td>3</td><td class="num">15</td><td class="num warn">$49.99</td><td>骰子×150+宝箱×10</td><td class="num">1.90</td><td class="num">3</td><td class="num zero">0</td><td class="num miss">0% ←价格倒挂被跳过</td></tr>
+      <tr><td>4</td><td class="num">20</td><td class="num">$19.99</td><td>骰子×60+宝箱×4</td><td class="num">1.90</td><td class="num">3</td><td class="num">2</td><td class="num ok">67%</td></tr>
+      <tr><td>5</td><td class="num">30</td><td class="num">$9.99</td><td>骰子×30+宝箱×2</td><td class="num">1.90</td><td class="num">2</td><td class="num">1</td><td class="num">50%</td></tr>
+      <tr><td>6–8</td><td class="num">40/50/60</td><td class="num">$4.99</td><td>骰子×15+宝箱×1</td><td class="num">1.90</td><td class="num">≤1</td><td class="num zero">0</td><td class="num zero">—</td></tr>
+      <tr><td>9–13</td><td class="num">70–200</td><td class="num">$9.99–$99.99</td><td>骰子/装饰升级×6</td><td class="num">1.9–3.1</td><td class="num zero">0</td><td class="num zero">0</td><td class="num zero">进度够不到</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p class="note" style="margin-top:18px"><b style="color:var(--x3)">X3 11档封板</b>：梯度严格递增（修好倒挂）+ 后6档全 $99.99（whale milking）；ROI 统一 8×。</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Pack</th><th class="num">跑圈门槛</th><th class="num">价格</th><th class="num">罗盘1057</th><th class="num">钻石</th><th class="num">VIP点(2022)</th><th class="num">纪念卡180080</th><th class="num">ROI</th></tr></thead>
+    <tbody>
+      <tr class="col-x3"><td>2801001</td><td class="num">3</td><td class="num">$1.99</td><td class="num">3</td><td class="num">1,000</td><td class="num">5</td><td class="num zero">—</td><td class="num">7.0×</td></tr>
+      <tr class="col-x3"><td>2801002</td><td class="num">5</td><td class="num">$4.99</td><td class="num">9</td><td class="num">2,500</td><td class="num">10</td><td class="num zero">—</td><td class="num">8.2×</td></tr>
+      <tr class="col-x3"><td>2801003</td><td class="num">10</td><td class="num">$9.99</td><td class="num">17</td><td class="num">5,000</td><td class="num">25</td><td class="num zero">—</td><td class="num">7.8×</td></tr>
+      <tr class="col-x3"><td>2801004</td><td class="num">20</td><td class="num">$19.99</td><td class="num">35</td><td class="num">10,000</td><td class="num">50</td><td class="num zero">—</td><td class="num">8.0×</td></tr>
+      <tr class="col-x3"><td>2801005</td><td class="num">30</td><td class="num">$49.99</td><td class="num">85</td><td class="num">25,000</td><td class="num">100</td><td class="num">1</td><td class="num">8.0×</td></tr>
+      <tr class="col-x3"><td>2801006–011</td><td class="num">50/70/100/150/200/300</td><td class="num">$99.99</td><td class="num">170</td><td class="num">50,000</td><td class="num">250</td><td class="num">2</td><td class="num">8.0×</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="cards" style="margin-top:16px">
+    <div class="card"><h3>梯度</h3><p>X2：$1.99 <span class="arrow">→</span> <span class="miss">$99.99</span> <span class="arrow">→</span> $49.99（倒挂，玩家主动跳过）。X3：$1.99/4.99/9.99/19.99/49.99 严格递增 + 后6档 $99.99 = <b class="ok">结构上修好了倒挂</b>。</p></div>
+    <div class="card"><h3>ROI 对不上</h3><p>P2/X2 ≈ <b>1.9–3.1</b>（均2.42）；X3 = <b class="warn">8×</b>。换皮铁律的有意决定，但《深海节数值体系总览》已自诊「全节日 ROI 口径不统一、$99.99 后6档重复、价位带断层」—— <b>大富翁 8× 跟节日其它模块没对齐</b>。</p></div>
+  </div>
+</section>
+
+<!-- 建议 -->
+<section>
+  <h2>六、该补什么<span class="en">优先级</span></h2>
+  <ol class="rec">
+    <li class="r"><b>🔴 必补：骰子(罗盘1057)免费投放清单——照 P2 那张 9 渠道表盘。</b> 定走满末档(200圈)需多少骰、纯活跃铺多少（P2=纯活跃600拿满/累充300溢出/总需1143），把缺的渠道（强消耗/挂机BP/掉落转付费）找载体补上，累充别算进保底额度。X3 全程没盘，而 X2 就死在这。</li>
+    <li class="y"><b>🟡 校准累计奖励 ROI。</b> OtherReward「不压平」的原值要跟成就礼包 8× 对一遍，别让免费线压过付费线；并确认门槛 700抽 在真实投放下可达。</li>
+    <li class="y"><b>🟡 节日层 ROI 统一。</b> 大富翁 8× vs 节日其它模块（累充50%/装饰3200%）要么对齐、要么书面说明为何特例。</li>
+    <li class="g"><b>🟢 付费点已基本齐：</b>锚点礼包已配（Pack 13017-13020），帮派红包不补合理（X2 单服 0 购买）。<b>可选补「大富翁专属每日礼包」</b>（喂骰子→直接缓解维度二的投放缺口，且 102993 已有深海罗盘每日礼包可参考）。</li>
+  </ol>
+</section>
+
+<!-- 投放拆分 + $/骰 -->
+<section>
+  <h2>七、投放拆分 + 「多少刀一个骰子」<span class="en">累充/BP 按美刀拆 · X3 实查</span></h2>
+
+  <h3 style="margin:18px 0 4px;font-size:15px;color:var(--p2)">P2 投放结构：累充+BP 是最粗的两条管子</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>类别</th><th>渠道</th><th class="num">骰子</th><th class="num">占比</th><th>要花钱?</th></tr></thead>
+    <tbody>
+      <tr><td>纯免费/活跃</td><td>7日50 + bingo50 + 巨猿50 + 签到50</td><td class="num">200</td><td class="num">22%</td><td>否</td></tr>
+      <tr><td>软消耗</td><td>强消耗100 + 掉落转付费50</td><td class="num">150</td><td class="num">17%</td><td>间接</td></tr>
+      <tr><td><b>累充</b></td><td>节日累充</td><td class="num">300</td><td class="num">33%</td><td class="warn">是（充值）</td></tr>
+      <tr><td><b>BP</b></td><td>长节日BP200 + 挂机BP50</td><td class="num">250</td><td class="num">28%</td><td class="warn">是（买BP/部分免费轨）</td></tr>
+      <tr style="font-weight:700;background:var(--panel2)"><td colspan="2">累充+BP 合计</td><td class="num">550</td><td class="num">61%</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 style="margin:22px 0 4px;font-size:15px;color:var(--red)">🔴 X3 的坑：累充/BP 喂的是「转盘」，不是大富翁骰子</h3>
+  <p class="note">深海累充 9 档发的是 <b>罗盘券 1200 → 喂深海罗盘转盘</b>，<b>不是大富翁骰子 1057</b>。深海 BP(2244) 奖励组里同样没有 1057。<br>门槛单位=<b>累计充值积分</b>，<b>积分 = 美元 × 10</b>（Pack__PackPrice col6：$1.99→20 / $4.99→50 / $9.99→100 / $99.99→1000）→ 累计充值美元 = 积分 ÷ 10，这是一条 <b>$10 → $1600 的鲸鱼累充线</b>。</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>累计充值积分</th><th class="num">100</th><th class="num">400</th><th class="num">1000</th><th class="num">2000</th><th class="num">4000</th><th class="num">7000</th><th class="num">10000</th><th class="num">13000</th><th class="num">16000</th></tr></thead>
+    <tbody>
+      <tr><td><b>= 累计充值 $</b></td><td class="num">$10</td><td class="num">$40</td><td class="num">$100</td><td class="num">$200</td><td class="num">$400</td><td class="num">$700</td><td class="num">$1000</td><td class="num">$1300</td><td class="num">$1600</td></tr>
+      <tr><td>罗盘券1200<br><small class="s">→转盘·非大富翁</small></td><td class="num">20</td><td class="num">60</td><td class="num">120</td><td class="num">200</td><td class="num">400</td><td class="num">600</td><td class="num">600</td><td class="num">600</td><td class="num">600</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="verdict red"><b>最根本的「对不上」：</b>P2 靠累充+BP（占 61%）直接喂大富翁骰子；<b>X3 把累充/BP 整个让给了转盘</b>，大富翁骰子(1057)一个都没从累充/BP 拿到。</div>
+
+  <h3 style="margin:22px 0 4px;font-size:15px">大富翁骰子(1057) 在 X3 的实际投放渠道</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>渠道</th><th>档位</th><th class="num">骰子</th><th class="num">$/骰</th></tr></thead>
+    <tbody>
+      <tr><td>航海礼包·免费档 ×7</td><td>0刀</td><td class="num">76 <small class="s">(7天集齐)</small></td><td class="num ok">免费</td></tr>
+      <tr><td>航海礼包·付费阶梯 ×6</td><td>$2.99–$99.99</td><td class="num">302</td><td class="num">$0.62</td></tr>
+      <tr><td>锚点礼包 13017-20</td><td>$4.99/19.99/49.99/99.99</td><td class="num">5/20/50/100</td><td class="num">$1.00</td></tr>
+      <tr><td>成就礼包版小包 ×11</td><td>$0.5–$1.6</td><td class="num">1–6</td><td class="num zero">bundled</td></tr>
+      <tr><td>成就礼包/存钱罐 1028021-027</td><td>跑圈解锁</td><td class="num">3–170</td><td class="num zero">bundled</td></tr>
+      <tr><td>棋盘阶段奖励 4006xxx</td><td>走格</td><td class="num">1–3</td><td class="num ok">免费</td></tr>
+      <tr><td>签到 603702-3</td><td>—</td><td class="num">3+10</td><td class="num ok">免费</td></tr>
+      <tr style="font-weight:700;background:var(--panel2)"><td colspan="2">免费投放合计（礼包76 + 棋盘 + 签到13）</td><td class="num warn">≈100+</td><td>vs P2 纯活跃 600 = 差一个量级</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 style="margin:22px 0 4px;font-size:15px">X3 多少刀一个骰子</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>口径</th><th class="num">X3 $/骰</th><th class="num">P2/X2</th><th class="num">倍数</th></tr></thead>
+    <tbody>
+      <tr><td>锚点买价</td><td class="num">$1.00</td><td class="num">$0.50</td><td class="num warn">2×</td></tr>
+      <tr><td>付费阶梯买价</td><td class="num">$0.62</td><td class="num">~$0.50</td><td class="num">~1.2×</td></tr>
+      <tr><td><b>设计产出值</b><br><small class="s">一掷盘面期望 2000钻·按 $1=500钻</small></td><td class="num"><b>$4.00</b></td><td class="num">$0.58<br><small class="s">投放按$0.5</small></td><td class="num miss">~8×</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="verdict yel"><b>骰子经济：</b>X3 骰子卖价贵一倍（$1 vs $0.5），但一掷产出值 8 倍（$4 vs $0.5）——锚点礼包 ROI 400%、成就礼包 ROI 800%，全是 ROI8 的连锁后果。</div>
+
+  <div class="verdict red"><b>头号结论：</b>X3 大富翁骰子问题不是"完全没投放"，而是 <b>P2 靠累充/BP 两条最粗管子喂骰（占61%），X3 把累充/BP 整个让给了转盘</b>，大富翁只剩自己的礼包阶梯（大头付费）+ 棋盘 + ~100 免费骰。要么 (a) 给大富翁骰子单独接累充/BP档；要么 (b) 认账"大富翁=礼包驱动"而非"活跃驱动"——但那它就不是 P2/X2 那套全民高频模型了。</div>
+</section>
+
+<!-- 兑换商店定价 + 砍半提价方案 -->
+<section>
+  <h2>八、兑换商店定价 + 砍半提价方案<span class="en">CID 1341 · 货币=深海代币1202 · 待确认</span></h2>
+
+  <h3 style="margin:16px 0 4px;font-size:15px">每骰期望代币（数值方案文档口径）</h3>
+  <p class="note">文档锚：评估 <b>700抽</b> · 命中率均匀(每格1/24) · <b>宝藏岛4格产代币·E=2000钻/落点</b> · 代币单价10钻。<br>
+  每骰期望代币 = (4格÷24格) × (2000钻÷10) = <b>33.3 代币/骰</b>；全程700抽 ≈ <b>23,300 代币</b>。<br>
+  <span class="warn">宝藏岛代币砍半后 → 16.65 代币/骰（文档主口径）· 700抽 ≈ 11,650 代币</span>；神秘岛代币<b>保留</b>（用户定·额外补充，代币略宽于此）。</p>
+
+  <h3 style="margin:18px 0 4px;font-size:15px">兑换商店：现状 → 砍半+提价后</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>兑换品</th><th class="num">现代币价</th><th class="num">新代币价</th><th class="num">现骰子<small class="s">(÷33.3)</small></th><th class="num">新骰子<small class="s">(÷16.65)</small></th><th class="num">钻值$</th><th class="num">限购</th></tr></thead>
+    <tbody>
+      <tr class="col-x3"><td>月心珍珠·主城皮肤(永久) 81101</td><td class="num">25,000</td><td class="num warn"><b>50,000</b> <small class="s">×2</small></td><td class="num">751</td><td class="num"><b>≈3,003</b></td><td class="num"><b>$1,000</b></td><td class="num">1</td></tr>
+      <tr class="col-x3"><td>霍普金斯·兑换皮 5303401</td><td class="num">15,000</td><td class="num warn"><b>30,000</b> <small class="s">×2</small></td><td class="num">450</td><td class="num"><b>≈1,802</b></td><td class="num"><b>$600</b></td><td class="num">1</td></tr>
+      <tr><td>传奇英雄装备宝箱 166004</td><td class="num">3,500</td><td class="num zero">不动</td><td class="num">105</td><td class="num">210</td><td class="num">$70</td><td class="num">3</td></tr>
+      <tr><td>道具 160110</td><td class="num">2,500</td><td class="num zero">不动</td><td class="num">75</td><td class="num">150</td><td class="num">$50</td><td class="num">10</td></tr>
+      <tr><td>美人鱼的梦境·纪念卡 180041</td><td class="num">2,000</td><td class="num zero">不动</td><td class="num">60</td><td class="num">120</td><td class="num">$40</td><td class="num">99</td></tr>
+      <tr><td>通用技能碎片 55000</td><td class="num">1,000</td><td class="num zero">不动</td><td class="num">30</td><td class="num">60</td><td class="num">$20</td><td class="num">50</td></tr>
+      <tr><td>万能传奇信物 52003</td><td class="num">1,000</td><td class="num zero">不动</td><td class="num">30</td><td class="num">60</td><td class="num">$20</td><td class="num">50</td></tr>
+      <tr><td>神秘金属 55101 / 技能书19003 / 木板55100·1015</td><td class="num">120–3</td><td class="num zero">不动</td><td class="num">3.6–0.1</td><td class="num">7–0.2</td><td class="num">低</td><td class="num">100–9999</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="verdict yel"><b>连带效应：</b>每骰代币砍半后，<b>"不动"的道具实际骰子成本也翻倍</b>（传奇装备宝箱 105→210 骰）。代币价没改，但产出砍半 = 全盘兑换都更贵——与"皮肤要贵"一致。</div>
+
+  <h3 style="margin:18px 0 4px;font-size:15px">对设计目标的核对</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>目标</th><th>结果</th><th>判定</th></tr></thead>
+    <tbody>
+      <tr><td>皮肤至少 $600 才能拿到</td><td>霍普金斯=$600(下限) · 月心=$1,000（钻值口径）</td><td class="ok">✅ 达成</td></tr>
+      <tr><td>免产占皮肤 ~10%</td><td>纯免费(免费骰~100)≈1,665代币=月心3.3%/霍普5.5%；全程700抽=月心23%。10%落在两者之间</td><td class="warn">⚠️ 方向对·待投放表定后精卡</td></tr>
+      <tr><td>棋盘产出砍 50%</td><td>代币 E 33.3→16.65/骰</td><td class="ok">✅ 方案就绪</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 style="margin:18px 0 4px;font-size:15px">棋盘 ROI 调整（除钻石岛/神秘岛，其余砍 ~50%）</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>岛 (EventGroup)</th><th class="num">现 E(钻/落点)</th><th>处理</th><th class="num">新 E</th></tr></thead>
+    <tbody>
+      <tr><td>钻石岛 EG200（钻石×500）</td><td class="num">500</td><td class="ok">保留</td><td class="num">500</td></tr>
+      <tr><td>神秘岛 EG206（代币+海神罗盘）</td><td class="num">1,008</td><td class="ok">保留（用户定）</td><td class="num">1,008</td></tr>
+      <tr class="col-x3"><td>宝藏岛 EG204/205（代币1202）</td><td class="num">2,000</td><td class="warn">代币 ÷2</td><td class="num">1,000</td></tr>
+      <tr class="col-x3"><td>幸运·资源 EG201</td><td class="num">1,008</td><td class="warn">改奖励内容→低档</td><td class="num">~504</td></tr>
+      <tr class="col-x3"><td>幸运·加速 EG202</td><td class="num">1,008</td><td class="warn">改奖励内容→低档</td><td class="num">~504</td></tr>
+      <tr class="col-x3"><td>幸运·养成 EG203</td><td class="num">940</td><td class="warn">改奖励内容→低档</td><td class="num">~470</td></tr>
+      <tr><td>起始岛 EG199（随机引用其他岛）</td><td class="num">—</td><td>自动跟随</td><td class="num">—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="verdict yel">整盘 ROI：<b>8 → ~4.8</b>（保留钻石+神秘约 1/4 产出，其余砍半）。每骰代币 33.3→16.65（宝藏砍半）。</div>
+
+  <h3 style="margin:18px 0 4px;font-size:15px">幸运岛：不锁数量 · 改奖励内容（加速岛 EG202 示例 · 均精确 50%）</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>现 (EG202)</th><th>改为</th><th class="num">时长 现→新</th><th class="num">降幅</th></tr></thead>
+    <tbody>
+      <tr><td>3小时通用加速 ×2</td><td>1小时通用加速 ×3</td><td class="num">360→180 min</td><td class="num">50%</td></tr>
+      <tr><td>3小时 ×1</td><td>30分钟 ×3</td><td class="num">180→90 min</td><td class="num">50%</td></tr>
+      <tr><td>1小时 ×2</td><td>30分钟 ×2</td><td class="num">120→60 min</td><td class="num">50%</td></tr>
+      <tr><td>1小时 ×1</td><td>30分钟 ×1</td><td class="num">60→30 min</td><td class="num">50%</td></tr>
+      <tr><td>30分钟 ×1</td><td><b>5分钟 ×3</b> ← 你的例子</td><td class="num">30→15 min</td><td class="num">50%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note"><b>资源岛 EG201 / 养成岛 EG203 同法</b>：换低档道具 / 小包凑到 ~50%（低档资源/养成料 ID 待确认后填具体值）。改内容比锁数量好——避开"主力是 x1、砍不动"的坑，能精确到 50%。</p>
+
+  <h3 style="margin:18px 0 4px;font-size:15px">实施方案（确认后执行 · dev_festival）</h3>
+  <ol class="rec">
+    <li class="y"><b>宝藏岛代币产出砍半</b> — <code>ActvVoyage__ActvVoyageEvent.tsv</code> col6÷2：宝藏大EG204(204001-5)→1500/750/300/200/100 · 宝藏小EG205(205001-5)→600/300/120/80/40。<b>神秘岛EG206、钻石岛EG200 不动。</b></li>
+    <li class="y"><b>幸运三岛改奖励内容（~50%）</b> — EG202加速按上表换档；EG201资源/EG203养成同法换低档（确认低档ID后填）。</li>
+    <li class="y"><b>月心珍珠提价100%</b> — <code>ActvExchange</code> id 134100 col8：25000 → <b>50000</b>。</li>
+    <li class="y"><b>霍普金斯提价100%</b> — id 134101 col8：15000 → <b>30000</b>。</li>
+    <li class="g"><b>其他兑换项不动</b>；改完 本地 ExportTable + jolt 验证。</li>
+  </ol>
+  <p class="note">状态：<b>✅ 已落地 dev_festival（2026-06-30·见顶部已落地汇总）</b>。宝藏代币砍半+皮肤×2+限购+圈数3-300+藏宝图+加速sink 全部已推（4 commits）。资源/养成岛改内容（Round2）用户定先不做。jolt 导表待构建机恢复复验。</p>
+</section>
+
+<footer>
+  数据源：X3 深海节大富翁配置草稿（成就礼包/存钱罐/岛屿/货币里子·已落 dev_festival commit 7634213）+ live Pack tsv（锚点礼包13017-13020 / 每日礼包102993）· X2《大富翁数据回归》(74服/1006802/1006902,Datain v1089) · <b>P2 2026复活节大富翁数值设计源表（GSheet 1wHjoiSt…/gid=858242277「86数值设计」·骰子9渠道投放900）</b> + 节日活动形式知识图谱 §7.13 + wiki回归(异族版pageId=233093544)。
+  生成于 2026-06-29 ·归档 KB\产出-数据分析\大富翁数值对照_P2_X2_X3.html
+</footer>
+
+</div>
+</body>
+</html>
