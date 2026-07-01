@@ -1,0 +1,166 @@
+<meta charset="utf-8">
+<title>英雄养成手册·双版本 落地方案</title>
+<style>
+:root{--bg:#0f1115;--card:#171a21;--bd:#2a2f3a;--fg:#e6e9ef;--mut:#9aa4b2;--acc:#ffd24a;--g:#37c871;--y:#f0b429;--r:#ff6b6b;--b:#5aa9ff;}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:14.5px/1.7 -apple-system,"Microsoft YaHei",sans-serif;padding:0 0 80px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+header{background:linear-gradient(120deg,#1b1f2a,#11141b);border-bottom:1px solid var(--bd);padding:30px 0 24px;margin-bottom:8px}
+h1{margin:0 0 6px;font-size:26px}h1 .em{color:var(--acc)}
+.sub{color:var(--mut);font-size:13.5px}
+h2{font-size:19px;margin:34px 0 12px;padding-left:11px;border-left:4px solid var(--acc)}
+h3{font-size:15.5px;margin:20px 0 8px;color:var(--b)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:16px 18px;margin:12px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+th,td{border:1px solid var(--bd);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:#1d2struct;background:#1e222b;color:var(--mut);font-weight:600}
+code{background:#0c0e13;border:1px solid #262b35;border-radius:4px;padding:1px 6px;color:#9ad0ff;font-size:12.5px;font-family:Consolas,monospace}
+.tag{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:20px;white-space:nowrap}
+.done{background:rgba(55,200,113,.16);color:var(--g);border:1px solid rgba(55,200,113,.4)}
+.todo{background:rgba(240,180,41,.14);color:var(--y);border:1px solid rgba(240,180,41,.4)}
+.unity{background:rgba(90,169,255,.14);color:var(--b);border:1px solid rgba(90,169,255,.4)}
+.block{background:rgba(255,107,107,.14);color:var(--r);border:1px solid rgba(255,107,107,.4)}
+.k{color:var(--acc);font-weight:600}
+ul{margin:6px 0 6px 4px;padding-left:20px}li{margin:3px 0}
+.note{color:var(--mut);font-size:12.5px}
+.flow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.step{background:#1e222b;border:1px solid var(--bd);border-radius:8px;padding:8px 12px;font-size:12.5px}
+.arrow{color:var(--mut)}
+pre{background:#0c0e13;border:1px solid #262b35;border-radius:8px;padding:12px 14px;overflow-x:auto;font-size:12px;line-height:1.55}
+.pill{font-size:11px;color:var(--mut);border:1px solid var(--bd);border-radius:20px;padding:1px 8px}
+b.hl{color:var(--acc)}
+</style>
+<header><div class="wrap">
+<h1>英雄养成手册 · <span class="em">双版本（基础 + 豪华）</span> 落地方案</h1>
+<div class="sub">2026-06-30 · 范式：新开独立活动，老活动 2701 完全不变 · ActvType=27 二选一互斥 · 飞流程：配置 + 服务端 + 客户端</div>
+</div></header>
+<div class="wrap">
+
+<h2>1. 一句话目标</h2>
+<div class="card">
+给「英雄养成手册」加 <b class="hl">$49.99 豪华版</b>（现有 $29.99 单档之外）。<b>不改老活动</b>——<b class="hl">新开一个独立活动</b>，一上来就带「基础 / 豪华」<b>二选一互斥</b>购买：点购买弹二选一窗（去价格），选一档付费；豪华 = 基础每日奖励 <b class="hl">×2</b> + 满勤封顶大奖。
+</div>
+
+<h2>2. 三个关键设计决策（为什么这么做）</h2>
+<div class="grid">
+<div class="card"><h3>① 新独立活动，不碰老活动</h3>
+老活动 <code>ContentID 2701</code> 一行不动。新活动 = 新 ContentID + 新 ActvOnline + <b>自己独立一套</b>基础 Pack/Group/Reward（购买状态与老活动物理隔离，玩家在老活动买过不会让新活动误判已购）。<br><span class="note">表级新增的 Pack2/FinalReward 两列对老活动默认空(=0) → 老活动仍走单档逻辑，<b class="k">向下兼容</b>。</span>
+</div>
+<div class="card"><h3>② 豪华日奖 = 基础 ×2「发奖翻倍」</h3>
+不另建豪华奖励组(Group2)、不克隆 30 行 ×2 的 Reward。服务端发奖时，豪华买家把<b>同一个 RewardID 再发一次</b> = 数量精确 ×2（种类不变）。<br><span class="note">好处：<b class="k">零新增 Reward 行</b>、无「向上取整」歧义（翻倍永远整）、对共享框架改动最小、策划改基础数值豪华自动跟随。</span>
+</div>
+<div class="card"><h3>③ 二选一 = 双礼包 + 客户端互斥</h3>
+活动挂两个礼包：基础 <code>giftId = activityId</code>（沿用旧逻辑）+ 豪华独立 <code>giftId</code>。互斥为<b>客户端表现</b>（买一档→隐藏另一档购买键），与<b>世界杯竞猜(ActvType=71)</b>同款成熟范式。<br><span class="note">满勤大奖：新增 <code>FinalReward</code> 列，豪华买家满勤(最后一天)追加发放一次。</span>
+</div>
+<div class="card"><h3>对比早期方案（Pack2 + Group2）</h3>
+早期设计用 Pack2 + 独立 Group2（豪华奖励显式 ×2 配在表里）。本方案改用 <b>Pack2 + FinalReward + 发奖翻倍</b>：少一张奖励组、少 30+ 行配置、框架风险更低。<br><span class="note">若策划/审核要「豪华数值显式可见」，可回退到 Group2，服务端 GetReward 改读 Group2 即可（已预留判断点）。</span>
+</div>
+</div>
+
+<h2>3. 改动总览（按层）</h2>
+<table>
+<tr><th>层</th><th>文件 / 表</th><th>改动</th><th>状态</th></tr>
+<tr><td rowspan="2">配置<br>gdconfig<br><span class="pill">分支 X3NEW-hero-handbook-deluxe</span></td>
+<td><code>ActvLoginPurchase__ActvLoginPurchase.tsv</code></td><td>加 <code>Pack2</code> + <code>FinalReward</code> 两列（表头+老行留空）</td><td><span class="tag done">已完成</span></td></tr>
+<tr><td>新活动：ActvOnline / ActvLoginPurchase 行 / 基础 Pack·Group·Reward / 豪华 Pack2 / 满勤大奖 Reward</td><td>新建独立一套（见 §5）</td><td><span class="tag todo">待建·部分待数值</span></td></tr>
+<tr><td rowspan="4">服务端<br>x3-project<br><span class="pill">分支 X3NEW-hero-handbook-deluxe</span></td>
+<td><code>ActivityPaySignCondition.cs</code></td><td>OnAddActivity 建双礼包 / OnRemoveActivity 删双礼包 / GetReward 豪华×2+满勤大奖 / IsLuxuryPurchased / IsLastSignDay</td><td><span class="tag done">已写</span></td></tr>
+<tr><td><code>GiftMeta.Activity.cs</code></td><td>CreateActivityPaySignLuxuryGift / GetActivityPaySignLuxuryGiftId / TryFindActivityGiftByCfgId（豪华礼包独立 giftId + 重登复用）</td><td><span class="tag done">已写</span></td></tr>
+<tr><td><code>ActivityMeta.cs</code> · OnBuyGiftForGiftId</td><td>加 PaySignOnBuyGift：豪华 giftId≠activityId，购买后路由标记活动已购</td><td><span class="tag done">已写</span></td></tr>
+<tr><td><code>ActivityMeta.cs</code> · ClearActivityGiftPurchasedOnRefund</td><td>豪华礼包退款也能清购买标记（按 gift→activity 反查）</td><td><span class="tag done">已写</span></td></tr>
+<tr><td rowspan="3">客户端<br>x3-project</td>
+<td><code>ActvLoginPurchase.cs</code>（生成类）</td><td>导表后自动多出 <code>Pack2</code>/<code>FinalReward</code> 属性（勿手改）</td><td><span class="tag todo">待导表重生成</span></td></tr>
+<tr><td><code>UIActvLogin.cs</code> + <code>UIActvLogin.prefab</code></td><td>读 Pack2 / 双档展示 / 购买弹二选一窗 / 互斥 / 豪华轨×2 显示 + 满勤大奖位</td><td><span class="tag unity">需 Unity</span></td></tr>
+<tr><td>二选一购买弹窗（新 prefab + .cs）</td><td>本期唯一新界面（设计稿 alt1 已定）</td><td><span class="tag unity">需 Unity</span></td></tr>
+</table>
+
+<h2>4. 服务端改动详情（已写入分支）</h2>
+<div class="card">
+<h3>核心思路：单 chokepoint 注入，老活动零影响</h3>
+ActvType=27 所有发奖路径（单天领 / 一键领 / 自动补发）都经 <code>ActivityPaySignCondition.GetReward()</code>。豪华翻倍 + 满勤大奖只在这一处注入，且全部用 <code>#if _SERVERLOGIC_</code> + <code>IsLuxuryPurchased()</code> + <code>Pack2&gt;0</code> 三重闸门 → 基础档 / 老活动完全不进新分支。
+</div>
+<pre>// ActivityPaySignCondition.GetReward —— 发奖唯一入口
+var rewards = new List&lt;int&gt;(){ cfg.Reward };
+#if _SERVERLOGIC_
+if (IsLuxuryPurchased(activityId)) {        // 豪华买家
+    rewards.Add(cfg.Reward);                // ← 同 RewardID 再发一次 = 数量×2
+    if (purchaseCfg.FinalReward &gt; 0 &amp;&amp; IsLastSignDay(activityId, cfg.Day))
+        rewards.Add(purchaseCfg.FinalReward);// ← 满勤最后一天追加封顶大奖
+}
+#endif
+return rewards;</pre>
+<div class="flow">
+<span class="step">买礼包</span><span class="arrow">→</span>
+<span class="step">OnBuyGiftForGiftId → PaySignOnBuyGift</span><span class="arrow">→</span>
+<span class="step">gift→activity 反查 → SetActivityGiftPurchased(activityId)</span><span class="arrow">→</span>
+<span class="step">isPurchased=true</span><span class="arrow">→</span>
+<span class="step">领奖时 GetReward 判 IsLuxuryPurchased</span>
+</div>
+<ul>
+<li><b>双礼包创建</b>：OnAddActivity 先建基础(giftId=activityId)，Pack2&gt;0 再建豪华(独立 giftId，IdGenerater)，都挂 activityId 索引；重登/重建按 activityId+cfgID 复用旧 giftId，<b>不丢 purchaseNum</b>。</li>
+<li><b>判档</b>：<code>IsLuxuryPurchased</code> = 找到豪华 giftId 且其购买次数&gt;0。<b>不新增 proto 字段</b>（购买态从 GiftMeta 现成数据推导）。</li>
+<li><b>退款</b>：豪华退款也能清 isPurchased（已修反查），堵「退款后继续领付费奖励」。</li>
+</ul>
+<p class="note">⚠️ 二选一<b>服务端硬拦截</b>（买了一档禁止再买另一档）本期走客户端表现（同世界杯，Pack BuyCount=1 限每档各 1 次）。如需服务端强约束，在购买校验处加「另一档已购则拒」——已标为可选硬化项，非阻塞。</p>
+
+<h2>5. 配置：新建独立活动（待执行 / 部分待数值）</h2>
+<div class="card">
+<span class="tag done">已完成</span> <code>ActvLoginPurchase</code> 加 <code>Pack2</code>(依赖 Pack 表) + <code>FinalReward</code>(依赖 Reward 表) 两列；老行 2701 留空 = 单档不变。<br>
+<span class="tag todo" style="margin-top:8px">待建</span> 新活动一套（独立 ID，照 <code>配置落地草稿_待开分支执行.md</code> + 下表执行）：
+</div>
+<table>
+<tr><th>表</th><th>新增</th><th>说明</th></tr>
+<tr><td>ActvOnline</td><td>新活动行（新 ActivityCfgId + 新 ContentID，ActvType=27）</td><td>MailID 必填(101109)；接 iGame 部署</td></tr>
+<tr><td>ActvLoginPurchase</td><td>新 ContentID 行：<code>Pack</code>=新基础 / <code>Group</code>=新基础组 / <code>Pack2</code>=新豪华 / <code>FinalReward</code>=满勤大奖 RewardID</td><td>核心一行</td></tr>
+<tr><td>Pack</td><td>新基础礼包(克隆220001，$29.99/点112) + 新豪华礼包(克隆，$49.99/<b>点116已存在</b>)；各 BuyCount=1</td><td>豪华原计划 220002 已被占用→用新空闲 id</td></tr>
+<tr><td>ActvLoginRewardGroup</td><td>新基础奖励组 30 行（克隆 Group100，day1–30）</td><td>豪华<b>不需</b>独立组（发奖×2）</td></tr>
+<tr><td>Reward</td><td>克隆基础 30 天 Reward 一套（新 RewardID 段） + <b class="k">满勤大奖 1 行</b></td><td>满勤大奖数值<span class="tag block">待策划案③</span></td></tr>
+</table>
+<p class="note">基础 30 天奖励真值（从 tsv 捞出，循环 5 项）：day1 信物52003×10 / day2 钻石7001×10 / day3 材料袋165905×100 / day4 火炮蓝图19003×50 / day5 165905×100 …… day30=165905×100。豪华 = 全部 ×2（运行时翻倍，配置不重复填）。</p>
+
+<h2>6. 客户端（需 Unity，设计已定）</h2>
+<div class="card">
+弹窗风格已定 <b class="hl">alt1</b>（<code>二选一弹窗_X3风格设计稿_v1_alt1.jpg</code>）。切图清单见 <code>切图交付_二选一弹窗_v1.md</code>：结构组件全复用真实 sprite，<b>仅 3 项新美术</b>（圆形书本档位 icon 金/金紫双态 + 豪华版角标丝带）。
+</div>
+<h3>UIActvLogin.cs / prefab 改动</h3>
+<ul>
+<li>读 <code>CActvLoginPurchase.I(contentId).Pack2</code>；豪华 giftId = 在本活动 gift 列表里按 cfgID==Pack2 找。</li>
+<li>主界面（第一界面）购买键<b>去价格</b>，点击 → 弹「二选一」窗；<b>弹窗（第二界面）内两个购买键要显价格</b>（$29.99 / $49.99，让玩家看价选档）。窗内选基础/豪华各自购买（同世界杯 RefreshSideState：买一档→另一档购买键 Hide）。</li>
+<li>豪华 tab 奖励轨 = 基础数量 <b>×2 客户端计算显示</b> + 末位「满勤大奖」格（读 FinalReward）。</li>
+<li>已购态：该档显「已购买」，弹窗一次性决策后不再可进入。</li>
+</ul>
+<p class="note">⚠️ 弹窗的购买按钮/奖励格是 prefab 上的 GameObject，须先在 Unity 里拼好 prefab（生成 Auto_*.cs 绑定字段），UIActvLogin.cs 逻辑才能引用——故客户端代码与 prefab 绑定，标记需 Unity。</p>
+
+<h2>7. 执行 &amp; 验证步骤</h2>
+<div class="flow">
+<span class="step">1 配置补全(§5)</span><span class="arrow">→</span>
+<span class="step">2 本地导表重生成 ActvLoginPurchase.cs(含Pack2/FinalReward)</span><span class="arrow">→</span>
+<span class="step">3 Unity 拼弹窗 prefab + UIActvLogin.cs</span><span class="arrow">→</span>
+<span class="step">4 编服+客户端</span><span class="arrow">→</span>
+<span class="step">5 本地服 GM 起活动实测</span><span class="arrow">→</span>
+<span class="step">6 i18n 补文案</span><span class="arrow">→</span>
+<span class="step">7 jolt_verify 导表</span>
+</div>
+<ul>
+<li><b>验证点</b>：买基础→只领 ×1；买豪华→每日 ×2 + 满勤大奖；买一档另一档购买键消失；豪华退款后不能再领；<b>老活动 2701 行为完全不变</b>（回归）。</li>
+<li>本地导表热更链路见 memory <code>reference_x3_tsv_export_migration.md</code>（packed 守卫坑）。</li>
+</ul>
+
+<h2>8. 待你拍 2 个决策（不阻塞已写代码）</h2>
+<table>
+<tr><th>#</th><th>决策</th><th>影响</th></tr>
+<tr><td>1</td><td><b>满勤封顶大奖具体数值</b>（建议 52003信物×30 + 高阶技能书等，纯复用现成道具）</td><td>配 Reward 满勤大奖 1 行 + 填 FinalReward 列</td></tr>
+<tr><td>2</td><td>弹窗底部「45级返还💎300」文案口径（养成手册无等级）→ 改「满勤返还」/ 或删该行</td><td>仅弹窗文案 + 是否做返还机制</td></tr>
+</table>
+
+<h2>9. 风险 &amp; 边界</h2>
+<ul>
+<li><span class="tag done">低风险</span> 服务端改动全部 <code>Pack2&gt;0</code> 闸门隔离，老活动/其它 PAY_SIGN 活动零影响。</li>
+<li><span class="tag todo">待验</span> 代码<b>未编译/未运行测试</b>（需 Unity + 编服）——本方案为「已写入分支、待构建验证」状态，勿当已上线。</li>
+<li><span class="tag block">可选硬化</span> 二选一服务端硬拦截未做（走客户端表现 + Pack 限购，同世界杯）。如要严格防双买，购买校验加一道。</li>
+<li>嵌入式 gdconfig 子模块被 hook 切到 dev（本地导表用），与标准配置仓 <code>C:\x3\gdconfig</code> 的功能分支独立，互不影响。</li>
+</ul>
+
+<p class="note" style="margin-top:30px">产物：本方案 HTML · 切图交付_二选一弹窗_v1.md · 配置落地草稿_待开分支执行.md · 二选一弹窗_X3风格设计稿_v1_alt1.jpg（定稿）。代码改动在两个 X3NEW-hero-handbook-deluxe 分支。</p>
+</div>

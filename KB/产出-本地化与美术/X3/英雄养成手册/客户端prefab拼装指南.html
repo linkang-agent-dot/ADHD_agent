@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>养成手册双版本 · prefab 拼装指南</title>
+<style>
+  :root{--bg:#15191f;--card:#1d232c;--card2:#232b36;--line:#313c4a;--txt:#d8dee7;--dim:#8a94a3;--gold:#e8b33a;--green:#5fbf77;--red:#e06c5f;--blue:#5aa3e8;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.75;font-size:15px}
+  .wrap{max-width:880px;margin:0 auto;padding:24px 20px 120px}
+  .topbar{position:sticky;top:0;z-index:10;background:rgba(21,25,31,.96);backdrop-filter:blur(4px);border-bottom:1px solid var(--line);padding:10px 20px}
+  .topbar .inner{max-width:880px;margin:0 auto;display:flex;align-items:center;gap:14px}
+  .topbar h1{font-size:15px;margin:0;color:var(--gold);white-space:nowrap}
+  .bar{flex:1;height:10px;background:var(--card2);border-radius:6px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#b8860b,var(--gold));transition:width .3s}
+  .pct{font-size:13px;color:var(--dim);white-space:nowrap;min-width:70px;text-align:right}
+  h2{font-size:20px;margin:42px 0 12px;color:var(--gold);border-left:4px solid var(--gold);padding-left:10px}
+  p{margin:8px 0}
+  .dim{color:var(--dim);font-size:13.5px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0}
+  .why{background:var(--card2);border-left:3px solid var(--blue);border-radius:6px;padding:8px 12px;margin:8px 0;font-size:13.5px;color:var(--dim)}
+  .why b{color:var(--blue)}
+  .warn{background:#2c2118;border-left:3px solid var(--red);border-radius:6px;padding:8px 12px;margin:8px 0;font-size:13.5px}
+  .warn b{color:var(--red)}
+  .tip{background:#1c2a20;border-left:3px solid var(--green);border-radius:6px;padding:8px 12px;margin:8px 0;font-size:13.5px}
+  .tip b{color:var(--green)}
+  code,kbd{background:#0e1217;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-family:Consolas,monospace;font-size:13px;color:#ffd479}
+  kbd{color:#9fe0a6}
+  pre{background:#0e1217;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font-size:13px;line-height:1.6;color:#cdd6e0}
+  label.ck{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;margin:6px 0;background:var(--card2);border:1px solid var(--line);border-radius:8px;cursor:pointer;transition:.15s}
+  label.ck:hover{border-color:var(--gold)}
+  label.ck input{margin-top:5px;width:16px;height:16px;accent-color:var(--gold);flex:none}
+  label.ck.done{opacity:.55;text-decoration:line-through}
+  label.ck .t{flex:1}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+  th{background:var(--card2);color:var(--gold);font-weight:600}
+  td code{white-space:nowrap}
+  .tree{font-family:Consolas,monospace;font-size:13px;line-height:1.9}
+  .tree .keep{color:var(--green)} .tree .del{color:var(--red)}
+  .reset{position:fixed;right:18px;bottom:18px;background:var(--card2);color:var(--dim);border:1px solid var(--line);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px}
+  .reset:hover{color:var(--red);border-color:var(--red)}
+  .num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#15191f;font-weight:700;font-size:14px;margin-right:8px;flex:none}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="inner">
+  <h1>📘 养成手册双版本 prefab 拼装</h1>
+  <div class="bar"><i id="barFill"></i></div>
+  <div class="pct" id="pctTxt">0 / 0</div>
+</div></div>
+
+<div class="wrap">
+
+<h2>〇 · 开工前 1 分钟</h2>
+<div class="card">
+  <p>一个界面 = <b style="color:var(--gold)">prefab（积木拼装图，你拼）</b> + <b style="color:var(--blue)">代码（已写完）</b>。代码运行时<b>按字段名</b>找零件。</p>
+  <div class="warn"><b>唯一翻车点：</b>prefab 绑定的<b>字段名</b>跟代码对不上 → 找不到 → 编译报错/空指针。本指南每个零件都标了「绑定字段名」，一字不差。</div>
+  <div class="tip"><b>保命心法：</b>不从零新建，全程「复制现成的 → 改名 → 换图」。<br>
+  <b>这次最爽的事：</b>二选一弹窗跟<b>世界杯竞猜界面几乎一模一样</b>（两栏 + 各自购买键 + 互斥已购态）——<b>直接复制世界杯那份 prefab 改，删掉竞猜专属，两栏改成"基础/豪华"</b>，90% 现成。</div>
+  <p class="dim">本期只有 2 项新美术（圆形书本档位 icon 金/金紫 + 豪华角标丝带），先放空占位，等美术。其余全复用现成 sprite。设计稿定稿 = <code>二选一弹窗_X3风格设计稿_v1_alt1.jpg</code>。</p>
+  <div class="why"><b>两件事：</b>① 新建 <code>UIActvLoginChoice.prefab</code>（二选一弹窗，本指南主体）；② 改现有 <code>UIActvLogin.prefab</code> 加一个"购买"按钮弹这个窗（第 7 步，老活动不受影响）。</div>
+</div>
+
+<h2><span class="num">1</span>复制模板（用世界杯弹窗起手）</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="a1"><span class="t">Unity 打开工程 <code>C:\x3-project\client</code></span></label>
+  <label class="ck"><input type="checkbox" data-k="a2"><span class="t">Project → <code>Assets/Res/UI/Prefab/Activity/</code> → 选 <code>UIActvWorldCupGuess.prefab</code> 按 <kbd>Ctrl+D</kbd>，副本 <kbd>F2</kbd> 改名 <code>UIActvLoginChoice</code></span></label>
+  <div class="why"><b>为什么用世界杯：</b>它本来就是「两栏 + 每栏 RewardList 道具格 + UIBtnPurchase 购买键 + txt_state 已购态 + 互斥」，跟二选一弹窗同构。复制它=白捡内脏，比从礼包模板搭快得多。</div>
+  <label class="ck"><input type="checkbox" data-k="a3"><span class="t"><b>双击</b>副本进编辑模式，Hierarchy 出现节点树</span></label>
+</div>
+
+<h2><span class="num">2</span>删掉竞猜专属（瘦身）</h2>
+<div class="card">
+  <p>世界杯有些节点养成手册用不上，删掉：</p>
+  <label class="ck"><input type="checkbox" data-k="b1"><span class="t">删 <code>Root/Animation/Match</code>（对阵 VS/TeamL/TeamR，养成手册没有对阵）</span></label>
+  <label class="ck"><input type="checkbox" data-k="b2"><span class="t">删 <code>Root/Animation/LockTips</code>（底部锁定条；二选一已购态用每栏 txt_state，不要这条；底部"45级返还"也<b>不要</b>）</span></label>
+  <label class="ck"><input type="checkbox" data-k="b3"><span class="t">两栏里删 <code>BonusTips</code>（猜对加送）、<code>ApprovalRating</code>（支持率）、装饰 <code>TicketHero / GiftBox / BonusBar / BonusIcon</code>（竞猜专属）</span></label>
+  <pre class="tree">删完保留骨架：
+Root
+├── Bg                         <span class="keep">留（暗色遮罩，换中性底即可）</span>
+└── Animation
+    ├── Top
+    │   ├── txt_title          <span class="keep">留 → 标题</span>
+    │   ├── txt_desc           <span class="keep">留 → 副标题</span>
+    │   └── Info               <span class="keep">留 → 第4步改成 btn_close</span>
+    └── Packs
+        ├── ColumnL            <span class="keep">留 → 第3步改名 ColBasic</span>
+        │   ├── RewardList     <span class="keep">留（道具格，内脏别动）</span>
+        │   ├── UIBtnPurchase  <span class="keep">留（购买键，内脏别动）</span>
+        │   └── txt_state      <span class="keep">留 → 已购买态</span>
+        └── ColumnR            <span class="keep">留 → 改名 ColLuxury（同构）</span></pre>
+  <div class="why"><b>RewardList / UIBtnPurchase 是"内脏"别动：</b>RewardList 内部有 LoopScrollRect+道具格模板（代码 <code>RefreshLoopReward</code> 的硬要求）；UIBtnPurchase 内含价格/支付/限购总成。删了就得去别的 prefab 偷，留着最省。</div>
+</div>
+
+<h2><span class="num">3</span>两栏改名 + 补档位字</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="c1"><span class="t"><code>ColumnL</code> 改名 <code>ColBasic</code>，<code>ColumnR</code> 改名 <code>ColLuxury</code></span></label>
+  <p>每栏补 3 个子节点（都从现成复制）：</p>
+  <table>
+    <tr><th>新节点</th><th>从哪复制</th><th>干嘛</th></tr>
+    <tr><td><code>txt_name</code></td><td>复制 <code>Top/txt_title</code> 改名</td><td>档位名「基础版/豪华版」</td></tr>
+    <tr><td><code>txt_desc</code></td><td>复制 <code>Top/txt_desc</code> 改名</td><td>档位副描述</td></tr>
+    <tr><td><code>BookIcon</code></td><td>复制任意干净 Image 节点改名（<b>新美术·先放空占位</b>）</td><td>圆形书本 icon（基础金/豪华金紫）</td></tr>
+  </table>
+  <label class="ck"><input type="checkbox" data-k="c2"><span class="t">ColBasic / ColLuxury 各补好 txt_name / txt_desc / BookIcon</span></label>
+  <div class="warn"><b>★Ctrl+D 复制栏后</b>：检查 ColLuxury 内部子节点名没被 Unity 自动加 <code>(1)</code> 后缀（RewardList(1) 这种会让代码找不到）。</div>
+</div>
+
+<h2><span class="num">4</span>顶部标题 + 关闭键</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="d1"><span class="t"><code>Top/txt_title</code> / <code>txt_desc</code> 保留（文案 key 见第 6 步表，代码填）</span></label>
+  <label class="ck"><input type="checkbox" data-k="d2"><span class="t">把 <code>Top/Info</code> 改名 <code>close</code>（<b>不是 btn_close</b>！），贴图换关闭键 <code>CommonNew/img_evaluate_icon_close</code></span></label>
+  <div class="why"><b>复用 Info：</b>它本来就带点击监听（世界杯规则按钮），改名+换图就成关闭键，不用新建。<br>
+  <b>★监听方法不用手打：</b>生成器按节点名自动生成 = <code>OnBtn{节点名}Trigger</code>。所以节点叫 <code>close</code> → 自动生成 <code>OnBtnCloseTrigger</code>（对上代码）；若叫 <code>btn_close</code> → 会生成 <code>OnBtnBtnCloseTrigger</code> 对不上。证据：世界杯 <code>Info</code>→<code>OnBtnInfoTrigger</code>、UIActvLogin <code>btn_info</code>→<code>OnBtnBtnInfoTrigger</code>。</div>
+</div>
+
+<h2><span class="num">5</span>购买键<b>保留价格</b>（弹窗要显价）</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="e1"><span class="t">两栏的 <code>UIBtnPurchase</code> <b>保持原样、显示价格</b>（$29.99 / $49.99）—— 第二界面（弹窗）就是让玩家<b>看价选档</b>，必须有价，别隐藏价格文本。</span></label>
+  <div class="why"><b>★去价格的是第一界面</b>（主界面那个"购买"开窗按钮 = 第 7 步的 <code>choice</code>，它只负责弹窗、不显价）；<b>弹窗内两个购买键要显价格</b>。代码 <code>btnPurchase.Show(giftId)</code> 自动带价，你啥都不用改。</div>
+</div>
+
+<h2><span class="num">6</span>★绑定字段名核对（最关键一步）</h2>
+<div class="card">
+  <p>跑 UI 生成器前，把每个节点的<b>绑定字段名</b>按下表设好（生成器据此产 <code>Auto_UIActvLoginChoice.cs</code>，必须和我写的逻辑代码字段名一字不差）：</p>
+  <table>
+    <tr><th>节点</th><th>绑定字段名</th><th>类型</th></tr>
+    <tr><td>Top/txt_title</td><td><code>mTextTitle</code></td><td>TFWText</td></tr>
+    <tr><td>Top/txt_desc</td><td><code>mTextDesc</code></td><td>TFWText</td></tr>
+    <tr><td>Top/close</td><td>监听 → <code>OnBtnCloseTrigger</code></td><td>Click</td></tr>
+    <tr><td>ColBasic/txt_name</td><td><code>mTextNameBasic</code></td><td>TFWText</td></tr>
+    <tr><td>ColBasic/txt_desc</td><td><code>mTextDescBasic</code></td><td>TFWText</td></tr>
+    <tr><td>ColBasic/RewardList</td><td><code>mGoRewardListBasic</code></td><td>GameObject</td></tr>
+    <tr><td>ColBasic/UIBtnPurchase</td><td><code>mGoUIBtnPurchaseBasic</code></td><td>GameObject</td></tr>
+    <tr><td>ColBasic/txt_state</td><td><code>mTextStateBasic</code></td><td>TFWText</td></tr>
+    <tr><td>ColLuxury/txt_name</td><td><code>mTextNameLuxury</code></td><td>TFWText</td></tr>
+    <tr><td>ColLuxury/txt_desc</td><td><code>mTextDescLuxury</code></td><td>TFWText</td></tr>
+    <tr><td>ColLuxury/RewardList</td><td><code>mGoRewardListLuxury</code></td><td>GameObject</td></tr>
+    <tr><td>ColLuxury/UIBtnPurchase</td><td><code>mGoUIBtnPurchaseLuxury</code></td><td>GameObject</td></tr>
+    <tr><td>ColLuxury/txt_state</td><td><code>mTextStateLuxury</code></td><td>TFWText</td></tr>
+  </table>
+  <div class="tip"><b>文案 key（代码已写死，prefab 不用填，跑 i18n 时入表）：</b>标题 <code>TXT_ActvLogin_Choice_Title</code>(英雄养成手册) / 副标 <code>TXT_ActvLogin_Choice_Desc</code> / 基础 <code>TXT_ActvLogin_Basic_Name</code>·<code>_Desc</code> / 豪华 <code>TXT_ActvLogin_Luxury_Name</code>·<code>_Desc</code> / 已购 <code>TXT_ActvLogin_Owned</code>。</div>
+</div>
+
+<h2><span class="num">7</span>改主界面 UIActvLogin.prefab（加 1 个按钮）</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="g1"><span class="t">双击打开 <code>Assets/Res/UI/Prefab/Activity/UIActvLogin.prefab</code></span></label>
+  <label class="ck"><input type="checkbox" data-k="g2"><span class="t">复制现有 <code>Root/Animation/Top/btn_info</code>（plain 按钮范式）→ 改名 <code>choice</code></span></label>
+  <label class="ck"><input type="checkbox" data-k="g3"><span class="t">贴图换金按钮 <code>CommonNew/img_cm_anniu1_gold</code>，文字「购买」（<b>不放价格</b>），摆原购买键位置</span></label>
+  <label class="ck"><input type="checkbox" data-k="g4"><span class="t">监听绑方法 <code>OnBtnChoiceTrigger</code>，绑定字段名 <code>mBtnChoice</code>（GameObject）</span></label>
+  <div class="why"><b>原 UIBtnPurchase 保留不动</b>：老单档活动还用它。新双档活动代码会自动隐藏它、改用 choice 弹二选一窗（按 Pack2 是否&gt;0 自动分流，老活动零影响）。</div>
+</div>
+
+<h2><span class="num">8</span>保存 + 编译（<b>不用跑生成器</b>）</h2>
+<div class="card">
+  <div class="tip"><b>★Auto 文件已由 KK 手写好</b>（<code>Auto_UIActvLoginChoice.cs</code> 新建 + <code>Auto_UIActvLogin.cs</code> 加了 mBtnChoice）——<b>你不用跑 UI 生成器</b>，只要 prefab 节点摆成第 9 步那些<b>确切路径</b>即可（Auto 就是按这些路径 Find 的，路径对不上=运行时找不到、不是编译错）。以后客户端正式跑生成器覆盖手写 Auto，无碍。</div>
+  <label class="ck"><input type="checkbox" data-k="h1"><span class="t"><kbd>Ctrl+S</kbd> 保存两个 prefab（确认弹窗存到 <code>Assets/Res/UI/Prefab/Activity/UIActvLoginChoice.prefab</code>）</span></label>
+  <label class="ck"><input type="checkbox" data-k="h3"><span class="t"><b>导表</b>（让 <code>CActvLoginPurchaseCfg</code> 生成 <code>Pack2</code>/<code>FinalReward</code> 属性——tsv 列我已加好；不导表代码里这俩属性不存在=编译报错）</span></label>
+  <label class="ck"><input type="checkbox" data-k="h4"><span class="t">退出编辑，等编译；Console <b>无红字</b></span></label>
+  <div class="warn"><b>编译红字「Pack2/FinalReward 找不到」：</b>= 还没导表，先导表。<b>运行时控件不显示/点不动：</b>= prefab 节点路径跟第 9 步对不上，按清单核对。</div>
+</div>
+
+<h2><span class="num">9</span>名字/字段终检（最后一道闸）</h2>
+<div class="card">
+  <p>对着 Hierarchy + 绑定配置逐行勾，大小写一字不差：</p>
+  <div id="pathlist"></div>
+</div>
+
+<h2><span class="num">10</span>联调最小配置（dev，新独立活动）+ GM 看效果</h2>
+<div class="card">
+  <table>
+    <tr><th>表</th><th>配法</th></tr>
+    <tr><td>ActvOnline</td><td>新行：ActvType=<b>27</b>，新 ContentID（建议 2702），TimeController 正常，<b>MailID=101109</b></td></tr>
+    <tr><td>ActvLoginPurchase</td><td>新 ContentID 行：<code>Pack</code>=新基础 / <code>Group</code>=新基础组 / <code>Pack2</code>=新豪华 / <code>FinalReward</code>=满勤大奖 RewardID</td></tr>
+    <tr><td>Pack ×2</td><td>基础(克隆220001·$29.99·BuyCount=1) + 豪华(克隆·$49.99/价格点116已存在·BuyCount=1)</td></tr>
+    <tr><td>ActvLoginRewardGroup</td><td>新基础组 30 行(克隆 Group100，指向新基础 Reward)</td></tr>
+    <tr><td>Reward</td><td>克隆基础 30 天一套 + 满勤大奖 1 行(52003×30+技能书)</td></tr>
+  </table>
+  <div class="why"><b>豪华日奖不用单独配</b>：服务端发奖翻倍=基础同 RewardID 再发一次(精确×2)；满勤最后一天自动追加 FinalReward。老活动 2701 Pack2/FinalReward 留空=单档不变。</div>
+  <p class="dim">配完导表→部署 dev→登号验：买基础每日×1；买豪华每日×2+满勤大奖；买一档另一档按钮消失且<b>服务端拦截再买另一档</b>；老活动单档照旧。</p>
+</div>
+
+<h2>🎨 文字规格（字号 + 渐变）</h2>
+<div class="card">
+  <div class="tip"><b>效果图 = alt1</b>（已放工程 <code>_RefMockup_TEMP.jpg</code> / KB <code>二选一弹窗_X3风格设计稿_v1_alt1.jpg</code>）——字体金字/深棕对比照它取即可。</div>
+
+  <h3>① 字号（Max Size，1080×1920 基准，±4 微调）</h3>
+  <table>
+    <tr><th>节点</th><th>内容</th><th>字号(Max Size)</th><th>渐变处理</th></tr>
+    <tr><td><code>Top/txt_title</code></td><td>英雄养成手册</td><td>40</td><td>保模板金渐变</td></tr>
+    <tr><td><code>Top/txt_desc</code></td><td>基础版与豪华版二选一购买…</td><td>26</td><td>保模板金渐变</td></tr>
+    <tr><td><code>Col*/txt_name</code> ×2</td><td>基础版 / 豪华版</td><td>34</td><td>★米色底→深棕渐变</td></tr>
+    <tr><td><code>Col*/txt_desc</code> ×2</td><td>每日登录… / 含基础版全部…</td><td>22</td><td>★深棕渐变</td></tr>
+    <tr><td><code>Col*/txt_state</code> ×2</td><td>已购买</td><td>30</td><td>★深棕，或绿 <code>#1A9C3A</code></td></tr>
+    <tr><td>道具格 ×数量</td><td>×N</td><td>模板自带</td><td>ItemUnit 模板，不动</td></tr>
+  </table>
+
+  <h3>② 渐变表现（X3 文字三件套）</h3>
+  <p>X3 文字 = <b>TFWText + BetterOutline(描边) + Gradient2(金渐变)</b>，全游戏统一风格，<b>默认整套保留、不删组件</b>。</p>
+  <ul>
+    <li><b>深色底上的字</b>（如弹窗框顶部 title/副标）→ <b>保模板金渐变，啥都不动</b>。</li>
+    <li><b>★米色/羊皮纸档位面板上的字</b>（本弹窗两栏的 txt_name/txt_desc/txt_state 大多在米色 <code>nourish_3</code> 底上，金字会发糊）→ 把 <code>Gradient2 → Effect Gradient</code> 两端改深棕：<br>
+    左端(0%) <code>7A4F1D</code> ／ 右端(100%) <code>5A3A12</code>；<b>描边(BetterOutline)保留</b>。</li>
+    <li>改法：选中文字节点 → Inspector 的 <code>Gradient2</code> → Effect Gradient 色带两端色标填上面 Hex。</li>
+  </ul>
+
+  <h3>③ Best Fit / 描边 注意</h3>
+  <ul>
+    <li>X3 文字基本都勾 <code>Best Fit</code>（多语言自适应保护，<b>别取消</b>）→ 勾着时 Font Size 失效，<b>字号填到 <code>Max Size</code></b> + 文本框 Width/Height 拉够装；<code>Min Size</code> 统一改 <b>20</b>。</li>
+    <li>加粗：Font Style → <b>Bold</b>。</li>
+    <li>描边：深色底白/金字保留描边；米色底改深棕渐变后描边也保留（别删组件，改 Gradient2 色值即可）。</li>
+  </ul>
+  <div class="warn"><b>心法（世界杯冻结版）：</b>界面风格锚是<b>游戏模板</b>不是效果图 —— <b>保模板金字，不删组件、不改平色</b>；唯一动作 = 米色面板上的字把 Gradient2 改深棕。其余照旧。</div>
+</div>
+
+<h2>⚠ 翻车点（照搬世界杯踩过的）</h2>
+<div class="card">
+  <p><b style="color:var(--red)">1. 绑定字段名对不上：</b>本指南第 6 步的字段名是和代码硬约定的，错一个字编译就挂。</p>
+  <p><b style="color:var(--red)">2. Ctrl+D 复制带 (1) 后缀：</b>复制 ColLuxury 后查内部 RewardList/UIBtnPurchase/txt_state 没被加 (1)。</p>
+  <p><b style="color:var(--red)">3. 组件类型：</b>填字要 TFWText、填图要 TFWImage → 全程复制现成节点不新建。</p>
+  <p><b style="color:var(--red)">4. 加图节点别复制 Root/Bg：</b>会带全屏缩放脚本(Rect Transform Scaler)，Scale 锁死/图全消失。复制干净 Image 节点当源。</p>
+  <p><b style="color:var(--red)">5. Play 模式(▶)期间改 prefab = 退出全蒸发：</b>动手前瞄一眼播放键。</p>
+</div>
+
+</div>
+
+<button class="reset" onclick="if(confirm('清空全部勾选进度？')){localStorage.removeItem(LS);location.reload()}">重置进度</button>
+
+<script>
+const LS='handbook_choice_prefab_guide_v1';
+const PATHS=[
+ 'UIActvLoginChoice: Root/Animation/Top/txt_title  → mTextTitle',
+ 'UIActvLoginChoice: Root/Animation/Top/txt_desc  → mTextDesc',
+ 'UIActvLoginChoice: Root/Animation/Top/close  → OnBtnCloseTrigger',
+ 'UIActvLoginChoice: Root/Animation/Packs/ColBasic/txt_name  → mTextNameBasic',
+ 'UIActvLoginChoice: Root/Animation/Packs/ColBasic/txt_desc  → mTextDescBasic',
+ 'UIActvLoginChoice: Root/Animation/Packs/ColBasic/RewardList  → mGoRewardListBasic',
+ 'UIActvLoginChoice: Root/Animation/Packs/ColBasic/UIBtnPurchase  → mGoUIBtnPurchaseBasic',
+ 'UIActvLoginChoice: Root/Animation/Packs/ColBasic/txt_state  → mTextStateBasic',
+ 'UIActvLoginChoice: Root/Animation/Packs/ColLuxury/txt_name  → mTextNameLuxury',
+ 'UIActvLoginChoice: Root/Animation/Packs/ColLuxury/txt_desc  → mTextDescLuxury',
+ 'UIActvLoginChoice: Root/Animation/Packs/ColLuxury/RewardList  → mGoRewardListLuxury',
+ 'UIActvLoginChoice: Root/Animation/Packs/ColLuxury/UIBtnPurchase  → mGoUIBtnPurchaseLuxury',
+ 'UIActvLoginChoice: Root/Animation/Packs/ColLuxury/txt_state  → mTextStateLuxury',
+ 'UIActvLogin: Root/Animation/Top/choice  → mBtnChoice + OnBtnChoiceTrigger',
+];
+const holder=document.getElementById('pathlist');
+PATHS.forEach((p,i)=>{
+  const l=document.createElement('label');l.className='ck';
+  l.innerHTML='<input type="checkbox" data-k="p'+i+'"><span class="t"><code>'+p+'</code></span>';
+  holder.appendChild(l);
+});
+const state=JSON.parse(localStorage.getItem(LS)||'{}');
+const boxes=[...document.querySelectorAll('input[type=checkbox]')];
+function refresh(){
+  let done=0;
+  boxes.forEach(b=>{
+    b.checked=!!state[b.dataset.k];
+    b.closest('label').classList.toggle('done',b.checked);
+    if(b.checked)done++;
+  });
+  document.getElementById('barFill').style.width=(done/boxes.length*100)+'%';
+  document.getElementById('pctTxt').textContent=done+' / '+boxes.length;
+}
+boxes.forEach(b=>b.addEventListener('change',()=>{
+  state[b.dataset.k]=b.checked;
+  localStorage.setItem(LS,JSON.stringify(state));
+  refresh();
+}));
+refresh();
+</script>
+</body>
+</html>
