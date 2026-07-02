@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>养成手册二选一弹窗 · UI强化拼装指南 v2</title>
+<style>
+  :root{--bg:#15191f;--card:#1d232c;--card2:#232b36;--line:#313c4a;--txt:#d8dee7;--dim:#8a94a3;--gold:#e8b33a;--green:#5fbf77;--red:#e06c5f;--blue:#5aa3e8;--purple:#b07fe8;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.75;font-size:15px}
+  .wrap{max-width:900px;margin:0 auto;padding:24px 20px 120px}
+  .topbar{position:sticky;top:0;z-index:10;background:rgba(21,25,31,.96);backdrop-filter:blur(4px);border-bottom:1px solid var(--line);padding:10px 20px}
+  .topbar .inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:14px}
+  .topbar h1{font-size:15px;margin:0;color:var(--gold);white-space:nowrap}
+  .bar{flex:1;height:10px;background:var(--card2);border-radius:6px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#b8860b,var(--gold));transition:width .3s}
+  .pct{font-size:13px;color:var(--dim);white-space:nowrap;min-width:70px;text-align:right}
+  h2{font-size:20px;margin:42px 0 12px;color:var(--gold);border-left:4px solid var(--gold);padding-left:10px}
+  h3{font-size:16px;margin:18px 0 8px;color:var(--purple)}
+  p{margin:8px 0}
+  .dim{color:var(--dim);font-size:13.5px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0}
+  .why{background:var(--card2);border-left:3px solid var(--blue);border-radius:6px;padding:8px 12px;margin:8px 0;font-size:13.5px;color:var(--dim)}
+  .why b{color:var(--blue)}
+  .warn{background:#2c2118;border-left:3px solid var(--red);border-radius:6px;padding:8px 12px;margin:8px 0;font-size:13.5px}
+  .warn b{color:var(--red)}
+  .tip{background:#1c2a20;border-left:3px solid var(--green);border-radius:6px;padding:8px 12px;margin:8px 0;font-size:13.5px}
+  .tip b{color:var(--green)}
+  code,kbd{background:#0e1217;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-family:Consolas,monospace;font-size:13px;color:#ffd479}
+  kbd{color:#9fe0a6}
+  label.ck{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;margin:6px 0;background:var(--card2);border:1px solid var(--line);border-radius:8px;cursor:pointer;transition:.15s}
+  label.ck:hover{border-color:var(--gold)}
+  label.ck input{margin-top:5px;width:16px;height:16px;accent-color:var(--gold);flex:none}
+  label.ck.done{opacity:.55;text-decoration:line-through}
+  label.ck .t{flex:1}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+  th{background:var(--card2);color:var(--gold);font-weight:600}
+  td code{white-space:nowrap}
+  .reset{position:fixed;right:18px;bottom:18px;background:var(--card2);color:var(--dim);border:1px solid var(--line);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px}
+  .reset:hover{color:var(--red);border-color:var(--red)}
+  .num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#15191f;font-weight:700;font-size:14px;margin-right:8px;flex:none}
+  .done-tag{display:inline-block;background:#1c2a20;color:var(--green);border:1px solid var(--green);border-radius:5px;padding:0 8px;font-size:12px;margin-left:6px}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="inner">
+  <h1>📘 二选一弹窗 UI强化 v2</h1>
+  <div class="bar"><i id="barFill"></i></div>
+  <div class="pct" id="pctTxt">0 / 0</div>
+</div></div>
+
+<div class="wrap">
+
+<h2>〇 · 这版跟 v1 的区别（先看 30 秒）</h2>
+<div class="card">
+  <p><b>v1 = 从零建弹窗</b>（复制世界杯模板→删竞猜→绑字段），<b>那些已经全部做完了</b><span class="done-tag">✅弹窗能跑</span>：prefab 建好、代码编译过、游戏里能开、奖励数量合并显示也修了。</p>
+  <p><b>v2 = 本轮 UI 强化</b>——用户拍板的方向：<b style="color:var(--purple)">豪华列跟基础列拉开代差 + 疯狂强化「2X」概念</b>。落到手上就 4 件事：</p>
+  <table>
+    <tr><th>#</th><th>事</th><th>素材</th><th>动代码?</th></tr>
+    <tr><td>1</td><td>换豪华 panel 背板（华丽版）</td><td><code>panel_luxury_v2.png</code></td><td>否</td></tr>
+    <tr><td>2</td><td>挂 ×2 BONUS 勋章</td><td><code>badge_x2_bonus.png</code></td><td>否</td></tr>
+    <tr><td>3</td><td>挂 -17% 折扣角标</td><td><code>tag_discount_-17.png</code></td><td>否</td></tr>
+    <tr><td>4</td><td>铺 2X 标语丝带+文字</td><td><code>tagline_ribbon_2x_luxury.png</code></td><td>最多一行</td></tr>
+  </table>
+  <div class="tip"><b>基础列一根手指都别碰</b>——朴素就是它的任务，反衬豪华。所有改动都在 <code>Root/Animation/Packs/ColLuxury</code> 底下。</div>
+</div>
+
+<h2>〇.5 · 当前环境（拼之前确认）</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="env1"><span class="t">client 仓在 <code>dev_festival</code> 分支（弹窗代码 <code>UIActvLoginChoice.cs</code> + Auto 都在）</span></label>
+  <label class="ck"><input type="checkbox" data-k="env2"><span class="t">ProtoGen 已带手册示例配置 102702（本地贴回版，2026-07-02 16:13 拷入；Unity 重载后弹窗有数据可渲染）</span></label>
+  <label class="ck"><input type="checkbox" data-k="env3"><span class="t">Unity <b>不在 Play 模式</b>（▶亮着改 prefab = 退出全蒸发）</span></label>
+  <div class="why"><b>示例配置是本地未提交改动</b>（gdconfig dev_festival 工作区：102702 行贴回 + TC 临时 2701）——只为拼界面预览，别 commit 别 push；线上 102702 仍是按"先不上线"删除状态。活动服务器开启这轮不管。</div>
+</div>
+
+<h2><span class="num">1</span>切图落库（4 张 PNG 进工程）</h2>
+<div class="card">
+  <p>源：<code>KB\产出-本地化与美术\X3\英雄养成手册\交付_切图_定稿\</code>（全透明底、grfal 抠、过透明验证）</p>
+  <label class="ck"><input type="checkbox" data-k="s1"><span class="t">4 张 PNG 拷到 <code>client/Assets/Res/UI/Spirits/ActvLoginChoice/</code>（目录没有就建）</span></label>
+  <label class="ck"><input type="checkbox" data-k="s2"><span class="t">Unity 选中 4 张 → Inspector → <b>Texture Type = Sprite (2D and UI)</b> → Apply</span></label>
+  <div class="warn"><b>panel_luxury_v2 用的是底边完整版</b>（源 <code>panels/panel_luxury_deluxe_v2.png</code>）；旧交付里那张底边被 rembg 裁了的作废，别拿错。</div>
+</div>
+
+<h2><span class="num">2</span>换豪华 panel 背板</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="p1"><span class="t">找 <code>ColLuxury</code> 的列背板 Image（当前指旧 <code>panel_luxury_final</code>）→ Source Image 换 <code>panel_luxury_v2</code></span></label>
+  <label class="ck"><input type="checkbox" data-k="p2"><span class="t">检查底边完整没被裁；若 Image Type=Sliced 记得配 border</span></label>
+  <div class="why"><b>代差策略：</b>基础版留朴素旧 panel，豪华版换深金紫+宝石+发光的 v2——两列并排时豪华一眼贵。这是「价值锚点法」的视觉半边（另半边是文案，见第 5 步）。</div>
+</div>
+
+<h2><span class="num">3</span>挂三件 2X 装饰（全静态、零代码）</h2>
+<div class="card">
+  <table>
+    <tr><th>新节点(ColLuxury 下)</th><th>Source Image</th><th>位置</th><th>尺寸</th></tr>
+    <tr><td><code>badge_x2</code></td><td><code>badge_x2_bonus</code></td><td>右上角，锚点右上，往外探一点压 panel 边角</td><td>~180×180</td></tr>
+    <tr><td><code>tag_discount</code></td><td><code>tag_discount_-17</code></td><td>豪华 <code>UIBtnPurchase</code>($49.99) 右端压右上角</td><td>~120×120</td></tr>
+    <tr><td><code>ribbon_tagline</code></td><td><code>tagline_ribbon_2x_luxury</code></td><td>奖励格上方空白横铺，宽度随列宽</td><td>拉伸</td></tr>
+  </table>
+  <label class="ck"><input type="checkbox" data-k="d1"><span class="t"><code>badge_x2</code> 建好挂图，位置照效果图</span></label>
+  <label class="ck"><input type="checkbox" data-k="d2"><span class="t"><code>tag_discount</code> 建好挂图</span></label>
+  <label class="ck"><input type="checkbox" data-k="d3"><span class="t"><code>ribbon_tagline</code> 建好挂图</span></label>
+  <label class="ck"><input type="checkbox" data-k="d4"><span class="t">三个节点 <b>Raycast Target 全取消勾</b>（别挡购买键点击）</span></label>
+  <div class="tip"><b>★复制源已查好 = <code>ColLuxury/BookIcon</code></b>（已核 prefab：只挂 RectTransform+CanvasRenderer+图片组件，零脚本零监听，就在 ColLuxury 里位置不用跨层挪）。三件全用它：<kbd>Ctrl+D</kbd> → F2 改名 → 换 Source Image → 挪位调尺寸。丝带的文字子节点复制 <code>ColLuxury/txt_name</code>（TFWText 三件套齐）拖进 ribbon_tagline 改名 <code>txt_tagline</code>。</div>
+  <div class="warn"><b>加图节点别复制 Root/Bg 当源</b>——会带全屏缩放脚本，Scale 锁死/图消失。Ctrl+D 后查没被加 <code>(1)</code> 后缀。</div>
+</div>
+
+<h2><span class="num">4</span>丝带文字（唯一可能动一行代码）</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="t1"><span class="t"><code>ribbon_tagline</code> 下加子节点 <b>TFWText</b>，命名 <code>txt_tagline</code>，居中，字色描边跟丝带协调</span></label>
+  <label class="ck"><input type="checkbox" data-k="t2"><span class="t">文本填 i18n key <code>TXT_ActvLogin_Luxury_Tagline</code>（cn=「每日奖励X2！」）</span></label>
+  <div class="tip"><b>能自动本地化就纯 prefab 收工</b>；若 TFWText 设 key 不自动翻 → <code>UIActvLoginChoice.cs</code> 的 <code>RefreshView()</code> 加一行 <code>mTextTagline.text = "TXT_ActvLogin_Luxury_Tagline";</code>（Auto 里绑 <code>mTextTagline</code>）。</div>
+  <div class="why"><b>i18n 12 key 全部译好待传</b>：<code>交付_切图_定稿\i18n_translation_staging.tsv</code>（11 个原 key 更新 + tagline 新增行，15 语，列序同 Text__Text.tsv）。传表是收尾活，不挡拼装。</div>
+</div>
+
+<h2><span class="num">5</span>2X 强化补充方向（拼完基础件后按需加码）</h2>
+<div class="card">
+  <p>用户拍板的四个强化点，头三个上面已覆盖，剩下的看拼完效果再决定加不加：</p>
+  <table>
+    <tr><th>方向</th><th>状态</th><th>做法</th></tr>
+    <tr><td>① 基础/豪华 panel 代差</td><td>✅第2步</td><td>基础朴素不动 + 豪华 v2</td></tr>
+    <tr><td>② 疯狂强化 2X 视觉</td><td>✅第3步起步</td><td>勋章+丝带已给；还想加码=豪华列每个奖励格右上叠小「×2」角标（复制道具格内现成小角标图，纯 prefab）</td></tr>
+    <tr><td>③ 2X 文案条填空白</td><td>⬜可选</td><td>panel 空白处再铺 1-2 条短文案（全部奖励×2 / 满勤专享大奖）；要新 i18n key 找我配</td></tr>
+    <tr><td>④ 价值锚点+默认推荐</td><td>⬜可选</td><td>参考世界杯至尊BP复盘（$19.99 选择率90.7%的打法）：豪华列默认高亮/放大 5%、基础列稍降饱和——显性锚点 &gt; 光加徽章</td></tr>
+  </table>
+  <div class="why"><b>为什么死磕 2X：</b>储蓄罐档2升级率只 20.6% vs 世界杯至尊BP 85.5%，差距=有没有显性价值锚点。这个弹窗就是把「豪华=双倍」砸到脸上。</div>
+</div>
+
+<h2><span class="num">6</span>效果图对照（拼一步瞄一眼）</h2>
+<div class="card">
+  <table>
+    <tr><th>图</th><th>用途</th></tr>
+    <tr><td><code>效果图\二选一弹窗_最终定稿效果图_竖版_a.png</code></td><td>最终目标全貌（竖版）</td></tr>
+    <tr><td><code>效果图\二选一弹窗_豪华强化2X版_a.png</code></td><td>豪华列强化后单列细节</td></tr>
+    <tr><td><code>效果图\二选一弹窗_真实界面精修版_v2.png</code></td><td>真实截图底子上的精修（位置最准）</td></tr>
+  </table>
+  <p class="dim">路径前缀 <code>KB\产出-本地化与美术\X3\英雄养成手册\</code>。字号/渐变规格沿用 v1 指南「🎨文字规格」章（米色底字 Gradient2 改深棕 7A4F1D→5A3A12，其余保模板金字）。</p>
+</div>
+
+<h2><span class="num">7</span>拼完自检</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="c1"><span class="t">4 张图都是 Sprite 类型、豪华 panel 底边完整</span></label>
+  <label class="ck"><input type="checkbox" data-k="c2"><span class="t">勋章/角标/丝带 Raycast Target 全关，购买键点击不被挡</span></label>
+  <label class="ck"><input type="checkbox" data-k="c3"><span class="t">丝带文字显示「每日奖励X2！」（key 生效或代码兜底）</span></label>
+  <label class="ck"><input type="checkbox" data-k="c4"><span class="t">基础列丝毫未动（对比 git diff prefab 只有 ColLuxury 段）</span></label>
+  <label class="ck"><input type="checkbox" data-k="c5"><span class="t">Editor 里跑一遍弹窗：两列并排豪华明显更贵、已购态/购买键正常</span></label>
+  <label class="ck"><input type="checkbox" data-k="c6"><span class="t"><kbd>Ctrl+S</kbd> 保存 prefab，Console 无红字</span></label>
+</div>
+
+<h2>⚠ 本轮翻车点</h2>
+<div class="card">
+  <p><b style="color:var(--red)">1. Play 模式改 prefab 全蒸发</b>——动手前看播放键。</p>
+  <p><b style="color:var(--red)">2. Raycast Target 忘关</b>——三件装饰都压在按钮/列上，不关就挡点击，测试时"按钮点不动"多半是它。</p>
+  <p><b style="color:var(--red)">3. 拿错 panel</b>——必须 v2 底边完整版；旧 final 版底边裁了。</p>
+  <p><b style="color:var(--red)">4. 别复制 Root/Bg 当图源</b>——带全屏缩放脚本。</p>
+  <p><b style="color:var(--red)">5. 改完想 push client</b>——手册分支纪律照旧：prefab/切图提交挂 <code>X3NEW-</code> 前缀，push 显式 <code>git push origin &lt;分支&gt;</code>（当前 upstream 误指 dev_festival，裸 push 会污染）。gdconfig 那两处本地示例改动<b>永远别提交</b>。</p>
+</div>
+
+</div>
+
+<button class="reset" onclick="if(confirm('清空全部勾选进度？')){localStorage.removeItem(LS);location.reload()}">重置进度</button>
+
+<script>
+const LS='handbook_choice_prefab_guide_v2';
+const state=JSON.parse(localStorage.getItem(LS)||'{}');
+const boxes=[...document.querySelectorAll('input[type=checkbox]')];
+function refresh(){
+  let done=0;
+  boxes.forEach(b=>{
+    b.checked=!!state[b.dataset.k];
+    b.closest('label').classList.toggle('done',b.checked);
+    if(b.checked)done++;
+  });
+  document.getElementById('barFill').style.width=(done/boxes.length*100)+'%';
+  document.getElementById('pctTxt').textContent=done+' / '+boxes.length;
+}
+boxes.forEach(b=>b.addEventListener('change',()=>{
+  state[b.dataset.k]=b.checked;
+  localStorage.setItem(LS,JSON.stringify(state));
+  refresh();
+}));
+refresh();
+</script>
+</body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>拓荒节 X2→X3 · 定位与分工策略</title>
+<style>
+  :root{
+    --paper:#f7f2e8;
+    --paper-deep:#efe6d4;
+    --ink:#2b241a;
+    --ink-soft:#6b5f4d;
+    --rust:#b4531d;        /* 拓荒赭 */
+    --rust-deep:#8c3c10;
+    --teal:#1d5f5a;        /* X3 青 */
+    --teal-soft:#e2ecea;
+    --gold:#c9a227;
+    --line:#d8cbb2;
+    --card:#fffdf8;
+    --danger:#a33327;
+    --ok:#3e7a46;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+    font-size:15px;line-height:1.75;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(180,83,29,.06), transparent),
+      radial-gradient(ellipse 60% 40% at 90% 0%, rgba(29,95,90,.05), transparent),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  }
+  .serif{font-family:Georgia,"Palatino Linotype","STZhongsong","SimSun",serif}
+
+  .wrap{max-width:1060px;margin:0 auto;padding:0 32px 120px}
+
+  /* ── hero ── */
+  header{position:relative;padding:88px 0 56px;border-bottom:3px double var(--line);overflow:hidden}
+  .hero-mark{
+    position:absolute;right:-30px;top:6px;
+    font-family:Georgia,"STZhongsong","SimSun",serif;
+    font-size:200px;line-height:.9;color:rgba(180,83,29,.07);
+    font-weight:700;letter-spacing:-8px;user-select:none;pointer-events:none;white-space:nowrap;
+  }
+  .kicker{display:inline-flex;align-items:center;gap:10px;font-size:12.5px;letter-spacing:.28em;color:var(--rust);font-weight:600;margin-bottom:18px}
+  .kicker::before{content:"";display:block;width:34px;height:1px;background:var(--rust)}
+  h1{font-family:Georgia,"STZhongsong","SimSun",serif;font-size:44px;line-height:1.25;font-weight:700;letter-spacing:.01em;max-width:760px}
+  h1 em{font-style:normal;color:var(--rust)}
+  .hero-sub{margin-top:20px;max-width:680px;color:var(--ink-soft);font-size:15.5px}
+  .hero-meta{margin-top:30px;display:flex;flex-wrap:wrap;gap:10px;font-size:12.5px}
+  .hero-meta span{border:1px solid var(--line);background:var(--card);padding:5px 14px;border-radius:999px;color:var(--ink-soft)}
+  .hero-meta b{color:var(--rust-deep)}
+
+  /* ── nav ── */
+  nav{position:sticky;top:0;z-index:50;background:rgba(247,242,232,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);margin:0 -32px;padding:0 32px}
+  nav ul{display:flex;gap:4px;list-style:none;overflow-x:auto;padding:10px 0}
+  nav a{display:block;padding:6px 14px;border-radius:6px;text-decoration:none;color:var(--ink-soft);font-size:13px;white-space:nowrap;transition:.15s}
+  nav a:hover{background:var(--paper-deep);color:var(--rust-deep)}
+  nav a b{color:var(--rust);margin-right:5px;font-family:Georgia,serif}
+
+  /* ── section scaffolding ── */
+  section{padding-top:72px}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:8px}
+  .sec-no{font-family:Georgia,serif;font-size:15px;color:var(--rust);letter-spacing:.1em;font-weight:700}
+  .sec-no::after{content:"";display:inline-block;width:26px;height:1px;background:var(--rust);vertical-align:middle;margin-left:12px}
+  h2{font-family:Georgia,"STZhongsong","SimSun",serif;font-size:29px;font-weight:700}
+  .sec-lede{color:var(--ink-soft);max-width:760px;margin:10px 0 30px;font-size:15px}
+  .sec-lede b{color:var(--ink)}
+  h3{font-size:16.5px;margin:34px 0 14px;display:flex;align-items:center;gap:10px}
+  h3::before{content:"";width:8px;height:8px;background:var(--rust);transform:rotate(45deg);flex:none}
+
+  /* ── positioning band ── */
+  .pos-band{display:grid;grid-template-columns:1fr 52px 1fr;gap:0;align-items:stretch;margin:26px 0 8px}
+  .pos-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px 26px}
+  .pos-cell.h1side{border-left:4px solid var(--ink-soft)}
+  .pos-cell.h2side{border-left:4px solid var(--rust)}
+  .pos-tag{font-size:11.5px;letter-spacing:.22em;font-weight:700;color:var(--ink-soft);margin-bottom:10px}
+  .h2side .pos-tag{color:var(--rust)}
+  .pos-cell h4{font-family:Georgia,"STZhongsong",serif;font-size:19px;margin-bottom:12px}
+  .pos-cell ul{list-style:none}
+  .pos-cell li{padding:7px 0 7px 20px;position:relative;font-size:14px;color:var(--ink-soft);border-top:1px dashed var(--line)}
+  .pos-cell li:first-child{border-top:none}
+  .pos-cell li::before{content:"·";position:absolute;left:4px;color:var(--rust);font-weight:700}
+  .pos-cell li b{color:var(--ink)}
+  .pos-arrow{display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--rust)}
+  .fourth-line{
+    margin-top:16px;background:linear-gradient(135deg,#fdf8ee,#f8ecd8);
+    border:1px solid #e3cf9e;border-left:4px solid var(--gold);border-radius:12px;padding:20px 26px;
+  }
+  .fourth-line b{color:var(--rust-deep)}
+  .fourth-line .pos-tag{color:#8f7413}
+
+  /* ── person cards ── */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:24px}
+  .person{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;position:relative}
+  .person .top{padding:20px 24px 14px;display:flex;justify-content:space-between;align-items:baseline}
+  .person.me .top{background:linear-gradient(120deg,rgba(180,83,29,.10),transparent)}
+  .person.mate .top{background:linear-gradient(120deg,rgba(29,95,90,.10),transparent)}
+  .person .name{font-family:Georgia,"STZhongsong",serif;font-size:20px;font-weight:700}
+  .person .role{font-size:12px;color:var(--ink-soft);letter-spacing:.06em}
+  .person .body{padding:6px 24px 22px}
+  .trait{display:flex;gap:12px;padding:11px 0;border-top:1px dashed var(--line);font-size:13.5px}
+  .trait .lab{flex:none;width:58px;font-weight:700;font-size:12px;padding-top:2px}
+  .lab.strong{color:var(--ok)}
+  .lab.weak{color:var(--danger)}
+  .lab.fix{color:var(--teal)}
+  .mirror-note{
+    margin-top:18px;text-align:center;padding:16px 20px;border-radius:12px;
+    background:var(--teal-soft);border:1px solid #c5d9d6;color:var(--teal);font-size:14.5px;
+  }
+  .mirror-note b{font-size:15.5px}
+
+  /* ── principle cards ── */
+  .principles{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
+  .prin{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--rust);border-radius:12px;padding:22px 22px 18px;position:relative}
+  .prin .no{font-family:Georgia,serif;font-size:30px;color:rgba(180,83,29,.22);font-weight:700;position:absolute;top:10px;right:16px}
+  .prin h4{font-size:16px;margin-bottom:10px}
+  .prin p{font-size:13.5px;color:var(--ink-soft)}
+  .prin p b{color:var(--ink)}
+
+  /* ── tables ── */
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13.5px;margin-top:18px}
+  thead th{background:#efe4cd;text-align:left;padding:11px 14px;font-size:12.5px;letter-spacing:.05em;color:var(--rust-deep);border-bottom:2px solid var(--line);white-space:nowrap}
+  tbody td{padding:11px 14px;border-top:1px solid #eee3cf;vertical-align:top}
+  tbody tr:hover{background:#fbf6ea}
+  .pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:11.5px;font-weight:600;white-space:nowrap}
+  .pill.cfg{background:#e5efe4;color:var(--ok)}
+  .pill.mod{background:#fdf0dc;color:#9a6a12}
+  .pill.dev{background:#fae3de;color:var(--danger)}
+  .pill.unknown{background:#e9e4da;color:var(--ink-soft)}
+  .pill.me{background:#f6e2d3;color:var(--rust-deep)}
+  .pill.mate{background:#dcebe9;color:var(--teal)}
+  .pill.pair{background:#f0e9d2;color:#8f7413}
+  .money{color:var(--danger);font-weight:700}
+  .note-cell{font-size:12.5px;color:var(--ink-soft)}
+
+  /* ── gate / card mech ── */
+  .mech{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:24px}
+  .mech-box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
+  .mech-box.gates{border-top:4px solid var(--teal)}
+  .mech-box.card{border-top:4px solid var(--rust)}
+  .mech-box h4{font-family:Georgia,"STZhongsong",serif;font-size:18px;margin-bottom:4px}
+  .mech-box .sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:16px}
+  .gate{display:flex;gap:14px;padding:12px 0;border-top:1px dashed var(--line)}
+  .gate .gn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;font-family:Georgia,serif}
+  .card .gate .gn{background:var(--rust)}
+  .gate p{font-size:13.5px;color:var(--ink-soft)}
+  .gate p b{color:var(--ink)}
+
+  /* ── four lines mapping ── */
+  .lines{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:24px}
+  .line-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;position:relative;overflow:hidden}
+  .line-card::before{content:attr(data-word);position:absolute;right:8px;bottom:-18px;font-family:Georgia,"STZhongsong",serif;font-size:78px;font-weight:700;color:rgba(43,36,26,.05)}
+  .line-card h4{font-size:16.5px;margin-bottom:4px}
+  .line-card h4 span{color:var(--rust);font-family:Georgia,serif;margin-right:8px}
+  .line-card .from{font-size:12px;color:var(--ink-soft);margin-bottom:12px}
+  .line-card ul{list-style:none}
+  .line-card li{font-size:13.5px;color:var(--ink-soft);padding:6px 0 6px 18px;position:relative}
+  .line-card li::before{content:"→";position:absolute;left:0;color:var(--rust);font-size:12px}
+  .line-card li b{color:var(--ink)}
+
+  /* ── timeline ── */
+  .timeline{margin-top:28px;position:relative;padding-left:34px}
+  .timeline::before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:repeating-linear-gradient(var(--rust) 0 6px,transparent 6px 12px)}
+  .tl-item{position:relative;padding:0 0 30px 12px}
+  .tl-item::before{content:"";position:absolute;left:-31px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:3px solid var(--rust)}
+  .tl-item.milestone::before{background:var(--rust)}
+  .tl-date{font-family:Georgia,serif;font-size:12.5px;font-weight:700;color:var(--rust);letter-spacing:.08em}
+  .tl-item h4{font-size:15.5px;margin:3px 0 5px}
+  .tl-item p{font-size:13.5px;color:var(--ink-soft);max-width:720px}
+  .tl-item p b{color:var(--ink)}
+
+  /* ── risks ── */
+  .risks{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:24px}
+  .risk{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;font-size:13.5px;color:var(--ink-soft)}
+  .risk b{display:block;color:var(--ink);font-size:14.5px;margin-bottom:6px}
+  .risk b::before{content:"⚠";color:var(--danger);margin-right:8px}
+
+  footer{margin-top:90px;padding-top:24px;border-top:3px double var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--ink-soft)}
+
+  .callout{margin-top:20px;padding:18px 22px;background:#fbf3e2;border:1px solid #e8d6ab;border-left:4px solid var(--gold);border-radius:10px;font-size:14px}
+  .callout b{color:var(--rust-deep)}
+
+  /* reveal animation */
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  header .kicker,header h1,header .hero-sub,header .hero-meta{animation:rise .7s cubic-bezier(.2,.7,.3,1) both}
+  header h1{animation-delay:.08s}
+  header .hero-sub{animation-delay:.16s}
+  header .hero-meta{animation-delay:.24s}
+
+  @media (max-width:820px){
+    .pos-band{grid-template-columns:1fr}
+    .pos-arrow{transform:rotate(90deg);padding:6px 0}
+    .duo,.mech,.lines,.risks,.principles{grid-template-columns:1fr}
+    h1{font-size:32px}
+    .hero-mark{font-size:120px}
+  }
+  @media print{
+    nav{display:none}
+    body{background:#fff}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="hero-mark">拓荒</div>
+  <div class="kicker">X3 · 2026 下半年首战 · 战略档</div>
+  <h1>拓荒节 X2→X3 搬运<br><em>职场定位</em> × <em>两人分工策略</em></h1>
+  <p class="hero-sub">上半年答完了「做得出、做得全」；这次拓荒节是下半年「做得深、做得稳、做得可接管」三条线的第一块试验田——外加一条新线：把一人产能复制成两人。</p>
+  <div class="hero-meta">
+    <span>成员：<b>林康</b>（数值/活动运营）＋ <b>组员</b>（原 X3 客户端程序）</span>
+    <span>方向：两人均转 <b>全栈内容</b></span>
+    <span>源：X2 2026 拓荒节</span>
+    <span>定稿 2026-07-02</span>
+  </div>
+</header>
+
+<nav><ul>
+  <li><a href="#s1"><b>01</b>定位</a></li>
+  <li><a href="#s2"><b>02</b>镜像卡点</a></li>
+  <li><a href="#s3"><b>03</b>分工三原则</a></li>
+  <li><a href="#s4"><b>04</b>搬运总表</a></li>
+  <li><a href="#s5"><b>05</b>把关机制</a></li>
+  <li><a href="#s6"><b>06</b>四条线落地</a></li>
+  <li><a href="#s7"><b>07</b>节奏</a></li>
+  <li><a href="#s8"><b>08</b>风险</a></li>
+</ul></nav>
+
+<!-- ════════ 01 定位 ════════ -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">01</span><h2>定位：这个节日在职业坐标里的位置</h2></div>
+  <p class="sec-lede">来自 2026 H1 绩效自评的定位结论：<b>交付广度已稳定</b>（一人并行三项目全链路、AI 用量部门第 1 / 公司第 8、20+ 自建 skill），差距集中在三个更高阶维度。拓荒节搬运不是又一次换皮，而是三个差距的<b>正面补课场</b>。</p>
+
+  <div class="pos-band">
+    <div class="pos-cell h1side">
+      <div class="pos-tag">H1 · 已经站稳的</div>
+      <h4 class="serif">做得出 · 做得全</h4>
+      <ul>
+        <li><b>一人三项目</b>：X3/X2/P2 节日全链路无延期开天窗</li>
+        <li><b>AI 杠杆</b>：单人产能放大到团队量级，重复劳动全 skill 化</li>
+        <li><b>知识库</b>：踩坑资产化，换皮多为 copy-and-swap</li>
+      </ul>
+    </div>
+    <div class="pos-arrow">➜</div>
+    <div class="pos-cell h2side">
+      <div class="pos-tag">H2 · 要补的三条线</div>
+      <h4 class="serif">做得深 · 做得稳 · 做得可接管</h4>
+      <ul>
+        <li><b>深</b>：depth/ARPPU 没拉起来——breadth 起了、高价档没跟上</li>
+        <li><b>稳</b>：上线前质量门不牢，H1 有 3 起补发级事故</li>
+        <li><b>可接管</b>：流程标准化偏事后补救，规范多在事故后才补</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fourth-line">
+    <div class="pos-tag">本次新增 · 第四条线</div>
+    <b>从「一人团队」到「产能 ×2」。</b>组员转全栈是这套 AI 工作流第一次复制给第二个人——H1 的定位是「部门里把 AI 用得最深的人」，H2 的自然升级是「把这套方法论输出给别人的人」。带出一个能独立跑模块的组员，本身就是比多做一个活动更硬的业绩。
+  </div>
+</section>
+
+<!-- ════════ 02 镜像卡点 ════════ -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">02</span><h2>团队盘点：两人的卡点互为镜像</h2></div>
+  <p class="sec-lede">分工策略的出发点不是「谁擅长什么就做什么」，而是先看清：<b>你的短板恰好是他的长板，他的短板恰好是你的长板</b>。</p>
+
+  <div class="duo">
+    <div class="person me">
+      <div class="top"><span class="name">林康</span><span class="role">数值策划 / 活动运营 → 全栈</span></div>
+      <div class="body">
+        <div class="trait"><span class="lab strong">长板</span><p>产品意图、数值 ROI、投放定位、数据复盘——「为什么做、做成什么样」的判断力</p></div>
+        <div class="trait"><span class="lab weak">卡点</span><p>AI 写的代码<b>能实现功能，但看不出合不合理、有没有隐藏坑</b>——缺代码判断力</p></div>
+        <div class="trait"><span class="lab fix">解法</span><p>不自己补课看代码——把代码审查权交给组员 + AI 审 + 端到端验证兜底（§05 三道闸）</p></div>
+      </div>
+    </div>
+    <div class="person mate">
+      <div class="top"><span class="name">组员</span><span class="role">X3 客户端程序 → 全栈</span></div>
+      <div class="body">
+        <div class="trait"><span class="lab strong">长板</span><p>代码判断力、客户端实现、工程直觉——「这么写行不行、坑在哪」一眼能看出</p></div>
+        <div class="trait"><span class="lab weak">卡点</span><p>不懂搬运的<b>目的</b>——投放、ROI、定位这些「搬过来其实要调」的产品判断没概念</p></div>
+        <div class="trait"><span class="lab fix">解法</span><p>不让他猜——每个模块开工前拿到一页「目的卡」，配 x3-numerical-design（专为 0 基础程序员写的 ROI 教程）自查</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mirror-note"><b>结论：最优策略不是各自补课（太慢），而是把审查权交叉</b>——他当你的代码守门员，你当他的意图守门员。</div>
+</section>
+
+<!-- ════════ 03 分工三原则 ════════ -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">03</span><h2>分工三原则</h2></div>
+  <p class="sec-lede">按「策划活 / 程序活」切是最差解：两人永远待在舒适区转不了全栈，而且互相等、串行最慢。</p>
+
+  <div class="principles">
+    <div class="prin"><span class="no">壹</span>
+      <h4>按模块切，端到端 owner</h4>
+      <p>每个模块一个 owner，从方案→配置→代码→测试→上线全程负责。<b>这才是真的转全栈</b>；也消灭了「我等你方案、你等我代码」的串行。</p>
+    </div>
+    <div class="prin"><span class="no">贰</span>
+      <h4>交叉把关，不等补课</h4>
+      <p>林康的代码 <b>MR 必经组员 review</b> 才能合；组员的模块<b>必先拿到目的卡</b>再动工、上线前由林康验收数值面。各守对方的短板。</p>
+    </div>
+    <div class="prin"><span class="no">叁</span>
+      <h4>先总表，后动手</h4>
+      <p>「不知道从哪搬、搬什么」的病根是逐个模块摸着走。先花 1–2 天把 8 个模块<b>一次性盘完</b>（§04），总表即本节日唯一入口文档。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 04 搬运总表 ════════ -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">04</span><h2>八模块搬运总表（初判版）</h2></div>
+  <p class="sec-lede">每个模块回答四个问题：X2 源头在哪 / X3 有没有现成载体 / 程序量哪一档 / 投放定位改不改。下表为初判，<b>❓ 项待逐个验证后转正式版</b>（正式版 = 对齐总览 HTML，仿深海节范式）。</p>
+
+  <table>
+    <thead><tr>
+      <th>模块</th><th>X3 现成载体（初判）</th><th>程序量</th><th>变现敏感</th><th>建议 Owner</th><th>备注</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><b>gacha</b></td><td>世界杯开箱 ActvCrafting(Type15) 或深海转盘</td><td><span class="pill cfg">纯配置概率大</span></td><td class="money">高（奖池 ROI）</td><td><span class="pill mate">组员</span>＋<span class="pill me">数值:林康</span></td><td class="note-cell">中转型产出，正中 H1 事故病根，入账验证硬项</td></tr>
+      <tr><td><b>七日任务</b></td><td>X3 任务/积分任务体系（TaskType440/444）</td><td><span class="pill cfg">纯配置概率大</span></td><td>低</td><td><span class="pill mate">组员</span></td><td class="note-cell">转全栈第一课候选，练配置链</td></tr>
+      <tr><td><b>掉落活动</b></td><td>夏日/尼罗/深海均跑过节日掉落+兑换</td><td><span class="pill cfg">纯配置</span></td><td>低（流量侧）</td><td><span class="pill pair">结对首模块</span></td><td class="note-cell">两人一起跑通，产出搬运 SOP checklist</td></tr>
+      <tr><td><b>掉落转付费-礼包</b></td><td>Pack + ActvOnline</td><td><span class="pill cfg">纯配置</span></td><td class="money">高（定价）</td><td><span class="pill me">林康</span></td><td class="note-cell">变现侧数值统一由林康出</td></tr>
+      <tr><td><b>掉落转付费-主活动</b></td><td>❓ 先弄清 X2 里它具体是什么玩法再对号</td><td><span class="pill unknown">❓</span></td><td>❓</td><td><span class="pill me">林康</span>（先调研）</td><td class="note-cell">总表阶段第一批要消掉的 ❓</td></tr>
+      <tr><td><b>限时抢购</b></td><td>❓ X3 记录里没见过现成同款</td><td><span class="pill dev">可能要新程序</span></td><td class="money">高</td><td><span class="pill pair">先结对评估</span></td><td class="note-cell">全清单唯一硬骨头候选，越早暴露越好；组员半天评程序量</td></tr>
+      <tr><td><b>BP 集结奖励（基金）</b></td><td>Type22 BATTLE_PASS_SCORE（Type11→22 迁移亲手做过）</td><td><span class="pill mod">有现成，改造</span></td><td class="money">高</td><td><span class="pill me">林康</span></td><td class="note-cell">林康最熟的载体，两档 BP 锚点经验直接用</td></tr>
+      <tr><td><b>强消耗</b></td><td>X3 积分活动 ActvScore（消耗计分）应该能套</td><td><span class="pill mod">待验证</span></td><td class="money">高</td><td><span class="pill mate">组员</span>＋<span class="pill me">数值:林康</span></td><td class="note-cell">若涉程序改造正好用组员长板</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout"><b>「怎么搬」在模块定档后就不再是玄学</b>：纯配置的走换皮流程；要程序的走「套现有类型改造」——英雄养成手册就是套世界杯竞猜的壳做出来的，范式直接复用。</div>
+</section>
+
+<!-- ════════ 05 把关机制 ════════ -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">05</span><h2>两个把关机制的落地细节</h2></div>
+  <p class="sec-lede">交叉把关不能停在口号，落成两个具体工件：<b>代码三道闸</b>（守林康的短板）和<b>目的卡</b>（守组员的短板）。</p>
+
+  <div class="mech">
+    <div class="mech-box gates">
+      <h4 class="serif">代码三道闸</h4>
+      <p class="sub">林康 AI 写的每一段代码，缺一不可 —— 「能实现功能」≠「合理没坑」，差距全靠这三道拦</p>
+      <div class="gate"><span class="gn">1</span><p><b>组员人审 MR（主力闸）</b>：合入前必经组员 review，工程合理性、隐藏坑由他判</p></div>
+      <div class="gate"><span class="gn">2</span><p><b>AI 独立审一遍</b>：sub-agent code review。储蓄罐 MR!525 就是「玩法测过 + AI 审过」才合的，实测有效</p></div>
+      <div class="gate"><span class="gn">3</span><p><b>测试环境端到端</b>：走真实入口触发、<b>验到道具真实入账</b>——不是「编译过 + 界面弹出来」就算完。H1 三起事故的共因就是验证停在中途</p></div>
+    </div>
+    <div class="mech-box card">
+      <h4 class="serif">目的卡 · 一页五行</h4>
+      <p class="sub">组员每个模块开工前拿到，动手前对齐 5 分钟，替代「做完才发现方向不对」的返工</p>
+      <div class="gate"><span class="gn">1</span><p><b>定位</b>：这模块在节日里拉付费率还是拉深度</p></div>
+      <div class="gate"><span class="gn">2</span><p><b>投放红线</b>：ROI 上限；变现侧数值绝对不动、流量侧可动</p></div>
+      <div class="gate"><span class="gn">3</span><p><b>搬过来要改什么</b>：附 X2 回归结论作依据（≠ 照抄）</p></div>
+      <div class="gate"><span class="gn">4</span><p><b>参考往期</b>：对标 X3 哪个已跑过的模块</p></div>
+      <div class="gate"><span class="gn">5</span><p><b>验收标准</b>：上线后看什么数据算成功</p></div>
+    </div>
+  </div>
+
+  <div class="callout">第一张目的卡的现成素材：<b>X2 拓荒 D10 复盘——双付费点拆成 7+7（前半 gacha / 后半大富翁）导致首周付费率轴丢失、深度未达预期</b>。X3 版必须修正节奏。这是「搬 ≠ 照抄」的头号实例，写进卡里组员立刻懂为什么要调。</div>
+</section>
+
+<!-- ════════ 06 四条线落地 ════════ -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">06</span><h2>四条线在这个节日里怎么兑现</h2></div>
+  <p class="sec-lede">把 §01 的定位逐条映射到 §03–§05 的具体动作——这样月底复盘时，每条线都有可检查的落点，而不是空口号。</p>
+
+  <div class="lines">
+    <div class="line-card" data-word="深">
+      <h4><span>Ⅰ</span>做得深</h4>
+      <div class="from">H1 差距：breadth 起了、depth/ARPPU 没跟上，增量堆在 $4.99–$9.99</div>
+      <ul>
+        <li>X2 D10 结论喂进设计：<b>修正 7+7 双付费点节奏</b>，别把付费率轴拆丢</li>
+        <li>变现侧模块（gacha/强消耗/抢购/基金）数值<b>统一由林康盘</b>，深度目标进方案</li>
+        <li>BP 基金直接套用两档 BP 锚点经验（至尊选择率 90% 的显性价值锚打法）</li>
+      </ul>
+    </div>
+    <div class="line-card" data-word="稳">
+      <h4><span>Ⅱ</span>做得稳</h4>
+      <div class="from">H1 差距：3 起补发级事故，验证停在「配置写对了」没到「玩家拿到的对不对」</div>
+      <ul>
+        <li>三道闸前置为<b>上线 gate</b>，不过不收工——不是事后补救</li>
+        <li>H1 三类漏点进强制 checklist：<b>中转型产出终点入账</b> / 换皮关联模块 / 边界场景</li>
+        <li>gacha·宝箱类 = 中转型产出重灾区，入账核对列为验收硬项</li>
+      </ul>
+    </div>
+    <div class="line-card" data-word="接">
+      <h4><span>Ⅲ</span>做得可接管</h4>
+      <div class="from">H1 差距：规范多是事故后才补的，知识偏流水账</div>
+      <ul>
+        <li>搬运总表 = <b>唯一入口文档</b>，冷启动即可接管</li>
+        <li>每模块沉淀「X3 载体对照 + 换皮清单 + 决策记录」三件套</li>
+        <li>X2→X3 换皮 skill 目前空白，<b>这次的 SOP 就是它的地基</b>——下个节日搬运变 copy-and-swap</li>
+      </ul>
+    </div>
+    <div class="line-card" data-word="人">
+      <h4><span>Ⅳ</span>产能 ×2（新增）</h4>
+      <div class="from">H1 定位：部门里把 AI 用得最深的人 → H2：把方法论复制给第二个人</div>
+      <ul>
+        <li>组员从「纯配置低风险模块」起步，<b>阶梯式上难度</b>（配置→改造→数值参与）</li>
+        <li>目的卡 + x3-numerical-design skill = 可复用的<b>带人工件</b>，不靠口头传帮带</li>
+        <li>验收标准：节日结束时组员能<b>独立端到端跑一个模块</b></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 07 节奏 ════════ -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">07</span><h2>节奏：按月度周期倒排</h2></div>
+  <p class="sec-lede">月度节日固定节奏 = 第 2 周周三部署 / 周四灰度 D0 / 周五全服。同期<b>深海节（7/3–7/12）运营与世界杯收口（至 7/19）仍在跑</b>，全程碎片化并行，靠总表和 owner 制降低切换成本。</p>
+
+  <div class="timeline">
+    <div class="tl-item milestone">
+      <div class="tl-date">现在 · 7 月上旬</div>
+      <h4>搬运总表 + 消 ❓（1–2 天集中盘）</h4>
+      <p>8 模块四问盘完；<b>限时抢购程序量评估（组员，半天）</b>与「掉落主活动玩法确认」是第一批要消掉的 ❓。总表定稿即出美需与文案需求——<b>美术出图和 18 语言翻译是最长外部线，当天就发出去</b>。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">7 月中</div>
+      <h4>结对首模块：掉落活动</h4>
+      <p>两人一起走完整链路（方案→配置→验证→checker），把 X2→X3 搬运 SOP 跑通并写成 checklist。<b>别一上来就分头</b>——两人各踩一遍同样的坑最亏。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">7 月中下旬</div>
+      <h4>拆开并行 + 数值盘</h4>
+      <p>按 §04 的 owner 分配并行开发；林康集中出变现侧数值盘 + 逐模块发目的卡；组员按「七日任务 → gacha → 强消耗」阶梯上难度。每模块完成即过三道闸。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">8 月初</div>
+      <h4>提测 + 上线前 gate</h4>
+      <p>提测→改 BUG（3 天）→验收（1 天）；换皮清单/i18n 扫描/端到端三件套全过，<b>入账核对硬项打勾才算完</b>。</p>
+    </div>
+    <div class="tl-item milestone">
+      <div class="tl-date">8 月第 2 周</div>
+      <h4>周三部署 → 周四灰度 D0 → 周五全服</h4>
+      <p>上线即启动日报监控（x3-festival-monitor 已自动化）；D10/D14 回归按 breadth vs depth 两条线拆，depth 不达标模块进下期 must-fix。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 08 风险 ════════ -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">08</span><h2>会撞上的四件事（提前接住）</h2></div>
+  <div class="risks">
+    <div class="risk"><b>两人并行的仓库冲突</b>同时改配置仓/代码仓会撞分支和 xlsx 锁。用 git worktree 隔离（坑已记录：worktree 刚建完别马上拆）；分支规范照旧——feature 分支 + MR，改前 <code>git branch --show-current</code>。</div>
+    <div class="risk"><b>测试验收没人认领</b>全栈分工最容易漏的就是「谁来验」。规则定死：owner 自测端到端 + 对方交叉验收自己擅长的那一面（他验技术面，你验数值和投放面）。</div>
+    <div class="risk"><b>外部依赖启动太晚</b>美术出图和翻译周期最长，总表盘完当天就发需求，别等模块做完才想起来。</div>
+    <div class="risk"><b>SOP 沉淀被赶工挤掉</b>这次每模块的换皮清单+决策记录不是额外负担，是下个节日的 copy-and-swap 地基和 X2→X3 skill 的原料——被挤掉就等于下次重付一遍学费。</div>
+  </div>
+</section>
+
+<footer>
+  <span>拓荒节 X2→X3 · 定位与分工策略 · 林康 × 组员</span>
+  <span>依据：2026 H1 绩效自评定位 + X2 拓荒 D10 复盘 + 深海节对齐范式 · 2026-07-02</span>
+</footer>
+
+</div>
+</body>
+</html>

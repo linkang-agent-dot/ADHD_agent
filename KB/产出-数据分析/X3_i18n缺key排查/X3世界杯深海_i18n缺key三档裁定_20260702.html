@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X3 「裸文本缺 i18n key」三档裁定 · 2026-07-02</title>
+<style>
+  :root{
+    --bg:#0f1420; --card:#181f2e; --card2:#1e2637; --line:#2b3548;
+    --txt:#e6ebf5; --sub:#9aa7bd; --accent:#4f9cff;
+    --t1:#ff5d6c; --t1bg:#2a1a1e; --t2:#ffb020; --t2bg:#2a2416; --t3:#4bd08b; --t3bg:#16261d;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.6 "Microsoft YaHei","Segoe UI",system-ui,sans-serif;padding:28px}
+  h1{font-size:22px;margin:0 0 4px}
+  h2{font-size:17px;margin:30px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
+  .meta{color:var(--sub);font-size:12.5px;margin-bottom:20px}
+  .cards{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0}
+  .card{flex:1;min-width:150px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card .n{font-size:30px;font-weight:700;line-height:1.1}
+  .card .l{color:var(--sub);font-size:12.5px;margin-top:4px}
+  .mech{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin:14px 0}
+  .mech b{color:var(--accent)}
+  .mech code{background:#0c101a;padding:1px 6px;border-radius:4px;color:#9fe0b0;font-size:12.5px}
+  .flow{font-family:Consolas,monospace;font-size:12.5px;color:#c7d2e6;background:#0c101a;padding:10px 14px;border-radius:8px;margin:10px 0;overflow-x:auto}
+  .tabs{display:flex;gap:8px;margin:16px 0 6px;flex-wrap:wrap}
+  .tab{cursor:pointer;padding:7px 15px;border-radius:20px;border:1px solid var(--line);background:var(--card);color:var(--sub);font-size:13px;user-select:none}
+  .tab.active{color:#fff;border-color:transparent}
+  .tab[data-t="all"].active{background:var(--accent)}
+  .tab[data-t="1"].active{background:var(--t1)}
+  .tab[data-t="2"].active{background:var(--t2);color:#1a1206}
+  .tab[data-t="3"].active{background:var(--t3);color:#0a1a10}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--sub);font-weight:600;font-size:12px;position:sticky;top:0;background:var(--bg)}
+  tr.t1 td:first-child{border-left:3px solid var(--t1)}
+  tr.t2 td:first-child{border-left:3px solid var(--t2)}
+  tr.t3 td:first-child{border-left:3px solid var(--t3)}
+  .badge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:11.5px;font-weight:600;white-space:nowrap}
+  .b1{background:var(--t1bg);color:var(--t1)}
+  .b2{background:var(--t2bg);color:var(--t2)}
+  .b3{background:var(--t3bg);color:var(--t3)}
+  .field{font-family:Consolas,monospace;color:#8fd0ff}
+  .ids{font-family:Consolas,monospace;font-size:12px;color:var(--sub)}
+  .cnt{color:var(--sub);font-size:12px}
+  .fix-yes{color:var(--t1);font-weight:600}
+  .fix-opt{color:var(--t2);font-weight:600}
+  .fix-no{color:var(--t3);font-weight:600}
+  .fix-chk{color:#e0c46a;font-weight:600}
+  .note{color:var(--sub);font-size:12px}
+  .ev{font-family:Consolas,monospace;font-size:11.5px;color:#7f8ca5}
+  footer{margin-top:34px;color:var(--sub);font-size:12px;border-top:1px solid var(--line);padding-top:14px}
+  .hl{color:var(--t2)}
+</style>
+</head>
+<body>
+<h1>X3 「裸文本缺 i18n key」三档裁定</h1>
+<div class="meta">
+  数据源：dev 分支（origin/dev HEAD <code style="color:#9fe0b0">811aaa3</code>）· Text 表 <code style="color:#9fe0b0">tsv/i18n/Text__Text.tsv</code> ·
+  共 <b>219</b> 条 flagged（世界杯 / 深海 / 通行证等）· 生成 2026-07-02 ·
+  结论经 <b>CfgProtoTextEx.cs + 4 路客户端 UI 消费扫描</b>实证
+</div>
+
+<div class="cards">
+  <div class="card"><div class="n">219</div><div class="l">flagged 总数</div></div>
+  <div class="card"><div class="n" style="color:var(--t1)">38</div><div class="l">① 真空白 · 必修</div></div>
+  <div class="card"><div class="n" style="color:var(--t2)">167</div><div class="l">② 内容静默丢失 · 取舍<br><span style="font-size:11px">(含营销角标 11 建议修)</span></div></div>
+  <div class="card"><div class="n" style="color:var(--t3)">14</div><div class="l">③ 误报 · 可忽略</div></div>
+  <div class="card"><div class="n" style="color:var(--accent)">~49</div><div class="l">有意义补建量<br><span style="font-size:11px">(①38 + 营销角标11)</span></div></div>
+</div>
+
+<div class="mech">
+  <b>机制纠正（关键）：缺 key 的表现是「空白」，不是「海外原样显示中文」</b><br>
+  配置文本列（Label/Name/Desc/Tag/RankName…）<b>在导表时被剥离，根本不进 client config bytes</b>——proto 生成类里没有这些字段的原始 string 成员（实证 <code>CActvExchangeCfg</code> 等只有 int/bool/数组）。文本的唯一访问器是 <code>CfgProtoTextEx.cs</code> 生成的 key-getter：
+  <div class="flow">getter → CfgHelper.CheckAndConvertCfgTxtToEmpty(key) → LocalizationMgr.Get(key) 为空 ? "" : key<br>UI: TFWText.text = getter结果  →  空串直接显空白，无全局兜底</div>
+  ∴ <b>key 没建 → getter 返回空串 → 该位置空白，且影响所有语言（含简中）</b>。单元格里的中文从不下发，谈不上"原样显示中文"。<br>
+  但"空白"还是"无害"取决于 <b>UI 有没有读这个 getter、空了会不会 SetActive(false) 隐藏或 fallback</b> —— 由此分三档。
+</div>
+
+<div class="mech" style="border-color:var(--t2)">
+  <span class="hl">⚠️「隐藏 ≠ 无害」</span>：② 档字段空值时 UI 会 <code>SetActive(false)</code> 隐藏该元素——意味着策划写在单元格、<b>想显示的角标/描述对全语言（含简中）都没显示出来</b>，是设计意图静默丢失。尤其 <b>营销角标（Pack.Tag「限定/120倍」、ActvExchange.Label「专属」）</b>是礼包价值钩子，缺 key = 角标对谁都不显示，变现上有损失，商业上应修。
+</div>
+
+<div class="mech" style="border-color:var(--t3)">
+  <b style="color:var(--t3)">✅ 最终执行结果（2026-07-02 收工回填，此段=实际干了啥，上面表是决策依据）</b><br>
+  经「CfgProtoTextEx.cs 代码验证 → 配置综合判断 → 产品拍板」后，实际补建 <b>104 个 i18n key</b>，3 个 commit 推 dev，导表全 SUCCESS：
+  <div class="flow">commit d8a6a78 主批94(#1510✅) | 91e9774 兑换所Label7(#1511✅) | 9f0e3b1 ChainPack链头3(#1514✅)</div>
+  <b>补了什么</b>：① 真空白全补（Item.Name4 / ItemObtain 3 / ActvScoreTask.TaskDesc3 / RankCfg×8 / Pack.Name16含免费礼包6 / Pack.Desc2 / PackTypeInfo.Name1）；② Item.Desc49(48国加油表情+珍珠) + Pack.Tag4 + Item.Subtitle1 + Item.ObtainTips仅3(1150/1202/1204，col8无ItemObtain引用者) + <b>ActvExchange.Label7（产品拍板"专属要加"）</b>；③ 追加 ChainPack.Name 3（677/678/701 链头"活动豪礼"，原scan漏了整个字段，扫覆盖率106行仅缺3）。<br>
+  <b>明确没补 + 为什么</b>：Item.ObtainTips 其余 <b>100 条跳过</b>（80300-80347头像框/15700-15747表情等 col8 都有 ItemObtain 引用→详情面板走 ItemObtain 显真实途径，ObtainTips 死路径不触发，补了不显示）；ActvLogin.Name <b>14 条误报</b>（客户端死字段，登录奖励显示的是奖励道具自身 CItem.Name）。<br>
+  <b>关键产品判断</b>：兑换所 Label 角标是<b>逐投放可选装饰</b>=第一层产品判断（不是完整性bug）；判"漏建疏忽 vs 有意省略"看<b>同容器内一致性</b>（三个兑换所内折扣标显示、专属外观标却掉=漏建）→ 用户拍板"专属要加"→补。211001-011「免费礼包」查证 ChainPack678 回退源也缺→现状空白→补=纯修bug无回退变更。<br>
+  <b>复用 vs 新翻</b>：复用现成兄弟译文为主（免费礼包/金币/专属/排名奖励/世界杯冠军抽奖券等通用词），48国表情按队名表 wc_country_table 拼，少量长句AI翻+术语对齐游戏内锚点。泄漏审计 EN/CJK/EMPTY 全0。
+</div>
+
+<h2>逐字段裁定表</h2>
+<div class="tabs">
+  <span class="tab active" data-t="all">全部 (219)</span>
+  <span class="tab" data-t="1">① 真空白 · 必修 (38)</span>
+  <span class="tab" data-t="2">② 内容丢失 · 取舍 (167)</span>
+  <span class="tab" data-t="3">③ 误报 · 忽略 (14)</span>
+</div>
+<table id="tbl">
+<thead><tr>
+  <th style="width:12%">档</th><th style="width:15%">表.字段</th><th style="width:16%">ID</th><th style="width:12%">母版样例</th>
+  <th style="width:15%">UI 位置</th><th style="width:15%">缺 key 表现</th><th style="width:8%">建议</th><th style="width:7%">条数</th>
+</tr></thead>
+<tbody>
+<!-- 档1 -->
+<tr class="t1" data-t="1"><td><span class="badge b1">① 真空白</span></td><td class="field">Item.Name</td><td class="ids">1150 / 245001 / 245002 / 245009</td><td>珍珠贝·金币·幸运宝箱</td><td>道具名（详情/tooltip ItemUnitView）</td><td>空白，无兜底</td><td class="fix-yes">必修</td><td class="cnt">4</td></tr>
+<tr class="t1" data-t="1"><td><span class="badge b1">① 真空白</span></td><td class="field">ItemObtain.ObtainName</td><td class="ids">100402 / 1200</td><td>世界杯冠军抽奖券·幸运大转盘</td><td>获取途径面板条目标题</td><td>空白，无兜底</td><td class="fix-yes">必修</td><td class="cnt">2</td></tr>
+<tr class="t1" data-t="1"><td><span class="badge b1">① 真空白</span></td><td class="field">ItemObtain.ObtainDesc</td><td class="ids">1200</td><td>通过幸运大转盘活动获取</td><td>获取途径条目描述</td><td>空白（功能未解锁分支会被覆盖）</td><td class="fix-yes">必修</td><td class="cnt">1</td></tr>
+<tr class="t1" data-t="1"><td><span class="badge b1">① 真空白</span></td><td class="field">ActvScoreTask.TaskDesc</td><td class="ids">2206–2208</td><td>累计登录·赏金任务·猎杀时刻</td><td>积分任务列表项标题</td><td>空白，无兜底且不走 TaskType 回退</td><td class="fix-yes">必修</td><td class="cnt">3</td></tr>
+<tr class="t1" data-t="1"><td><span class="badge b1">① 真空白</span></td><td class="field">RankCfg.RankName</td><td class="ids">1004 / 1005 / 1006</td><td>活动积分·世界排名·本服排名</td><td>榜标题/列表条目/KVK页签</td><td>空白（国王之路榜例外，用通用key）</td><td class="fix-yes">必修</td><td class="cnt">3</td></tr>
+<tr class="t1" data-t="1"><td><span class="badge b1">① 真空白</span></td><td class="field">RankCfg.RankRewardTitle</td><td class="ids">1004 / 1005 / 2000 / 2001</td><td>积分奖励·排名奖励</td><td>奖励弹窗标题（有奖励按钮才显）</td><td>空白（条件显示）</td><td class="fix-yes">必修</td><td class="cnt">4</td></tr>
+<tr class="t1" data-t="1"><td><span class="badge b1">① 真空白</span></td><td class="field">RankCfg.RankRewardTab</td><td class="ids">1004</td><td>排名奖励</td><td>奖励弹窗页签（多榜合一才显）</td><td>空白（条件显示）</td><td class="fix-yes">必修</td><td class="cnt">1</td></tr>
+<tr class="t1" data-t="1"><td><span class="badge b1">① 真空白</span></td><td class="field">Pack.Name</td><td class="ids">211001/003/005/007/009/011</td><td>免费礼包</td><td>礼包名</td><td class="note">⚠️阶梯类空时回退 ChainPack.Name，未必空白</td><td class="fix-chk">核查</td><td class="cnt">6</td></tr>
+<tr class="t1" data-t="1"><td><span class="badge b1">① 真空白</span></td><td class="field">Pack.Name</td><td class="ids">211012–211015</td><td>世界杯冠军抽奖券</td><td>礼包名</td><td>空白</td><td class="fix-yes">必修</td><td class="cnt">4</td></tr>
+<tr class="t1" data-t="1"><td><span class="badge b1">① 真空白</span></td><td class="field">Pack.Name</td><td class="ids">2026016 / 2026017</td><td>夺宝通行证·远征通行证</td><td>礼包名</td><td>空白</td><td class="fix-yes">必修</td><td class="cnt">2</td></tr>
+<tr class="t1" data-t="1"><td><span class="badge b1">① 真空白</span></td><td class="field">Pack.Name</td><td class="ids">13021–13024</td><td>女王恩典卷</td><td>礼包名</td><td>空白</td><td class="fix-yes">必修</td><td class="cnt">4</td></tr>
+<tr class="t1" data-t="1"><td><span class="badge b1">① 真空白</span></td><td class="field">Pack.Desc</td><td class="ids">2026016 / 2026017</td><td>通行证描述</td><td>礼包描述</td><td>空白（fallback 只是空串）</td><td class="fix-yes">必修</td><td class="cnt">2</td></tr>
+<tr class="t1" data-t="1"><td><span class="badge b1">① 真空白</span></td><td class="field">PackTypeInfo.Name</td><td class="ids">211016</td><td>深海装饰礼包</td><td>商城页签 / 弹窗标题</td><td>空白，无兜底</td><td class="fix-yes">必修</td><td class="cnt">1</td></tr>
+<!-- 档2 -->
+<tr class="t2" data-t="2"><td><span class="badge b2">② 内容丢失</span></td><td class="field">Pack.Tag</td><td class="ids">10009 / 10010 / 10011 / 211019</td><td>120倍·800倍·4000倍·限定</td><td>礼包价值角标</td><td>角标隐藏（营销钩子消失）</td><td class="fix-opt">建议修</td><td class="cnt">4</td></tr>
+<tr class="t2" data-t="2"><td><span class="badge b2">② 内容丢失</span></td><td class="field">ActvExchange.Label</td><td class="ids">210034–210036 / 134001-2 / 134101-2</td><td>50%每日刷新·专属</td><td>兑换项角标 GoodsTips</td><td>角标隐藏</td><td class="fix-opt">建议修</td><td class="cnt">7</td></tr>
+<tr class="t2" data-t="2"><td><span class="badge b2">② 内容丢失</span></td><td class="field">Item.Subtitle</td><td class="ids">82005</td><td>永久</td><td>道具副标题</td><td>控件隐藏</td><td class="fix-opt">可选</td><td class="cnt">1</td></tr>
+<tr class="t2" data-t="2"><td><span class="badge b2">② 内容丢失</span></td><td class="field">Item.Desc</td><td class="ids">15420–15467 / 1150 / 15087 / 15090 / 81092</td><td>48国加油表情·船只/皮肤描述</td><td>道具描述行</td><td>描述整行隐藏</td><td class="fix-opt">低优先</td><td class="cnt">52</td></tr>
+<tr class="t2" data-t="2"><td><span class="badge b2">② 内容丢失</span></td><td class="field">Item.ObtainTips</td><td class="ids">80300–80347 / 15700–15747 / 500341 / 5304001 / 1202 / 1204 / 1150 / 15090 / 81092</td><td>宝箱获取·大富翁获取·暂无渠道</td><td>无可用途径时的 toast（非获取面板源）</td><td>fallback 到通用「数量不足」文案</td><td class="fix-opt">低优先</td><td class="cnt">103</td></tr>
+<!-- 档3 -->
+<tr class="t3" data-t="3"><td><span class="badge b3">③ 误报</span></td><td class="field">ActvLogin.Name</td><td class="ids">448–461</td><td>世界杯冠军抽奖券·航海罗盘</td><td>登录奖励格（<b>死字段</b>，显示的是奖励道具自身 CItem.Name）</td><td>无影响</td><td class="fix-no">忽略</td><td class="cnt">14</td></tr>
+</tbody>
+</table>
+
+<h2>代码证据（file : line）</h2>
+<div class="mech">
+  <b>机制链</b>：<span class="ev">CfgProtoTextEx.cs（getter）· CfgHelper.cs:90-97（空则返回""）· LocalizationMgr.cs:141-185（TXT_查不到返回""）· TFWText.cs:312-340（空串直接显空、非空当key取译文）</span><br><br>
+  <b>① 真空白消费点</b>：<span class="ev">ItemUnitView.cs:466/204（Name，无保护）· UIItemObtain.ObtainEntry.cs:103-104（ObtainName/Desc）· UIActvScoreTask.UIActvScoreTaskSlotItem.cs:27（TaskDesc）· UIRank.cs:166 / UIRankReward.cs:70 / UIRankReward.UIRankRewardTabSlotItem.cs:24（Rank三字段）· UIRecharge.UIRechargeTab.cs:29-30 / UIHelper.Pay.cs:587（PackTypeInfo.Name）· UIGiftPack.cs:101（Pack.Name）· UITieredPack.cs:210 + UIMechaStaircasePack.cs:238（Pack.Name 阶梯回退 ChainPack.Name）</span><br><br>
+  <b>② 隐藏/fallback 证据</b>：<span class="ev">UIActvExchange.ExchangeItem.cs:85-86（Label：SetActive(!IsNullOrEmpty)）· UICombinationPack.PackWidget.cs:56-63 等（Pack.Tag：空则 SetActive(false)）· ItemUnitView SetDescLabel:216（Desc 隐藏）/ SetSubTitle:235（Subtitle 隐藏）· UIHelper.ItemObtain.cs:107-122（ObtainTips 空→通用 Text_Item_Not_Enough_Quantity）</span><br><br>
+  <b>③ 死字段</b>：<span class="ev">CActvLoginCfg.Name 全客户端零消费；登录奖励 UIActvLogin.UIActvLoginSlotItem.cs:31-32 走 EndowHelper 渲染奖励道具，读 CItem 不读 ActvLogin.Name</span>
+</div>
+
+<h2>建议</h2>
+<div class="mech">
+  <ol style="margin:0;padding-left:20px">
+    <li><b>① 全补（38 条）</b>——唯一会让玩家看到空白/空标题的，必修。其中 <b>Pack.Name 211001-211011「免费礼包」6 条先核 ChainPack.Name 是否已建</b>（阶梯首档会回退，已建则不空白，可免补）。</li>
+    <li><b>② 营销角标建议补（Pack.Tag 4 + ActvExchange.Label 7 = 11 条）</b>——价值钩子，缺 key = 角标对全语言都不显示，变现有损。</li>
+    <li><b>② 低价值文本（Item.Desc 52 + ObtainTips 103 + Subtitle 1 = 156 条）</b>——缺 key 只是隐藏/降级、不破损，按资源放最后或不补。</li>
+    <li><b>③ ActvLogin.Name（14 条）直接划掉</b>——死字段，客户端不消费。</li>
+  </ol>
+  补建走 <code>x3-translation-automatic</code>：重复通用词（免费礼包/女王恩典卷/排名奖励/世界杯冠军抽奖券/专属/永久…）复用现成 16 语译文，仅通行证描述等长句需新翻。
+</div>
+
+<footer>
+  X3 i18n 缺 key 三档裁定 · 唯一入口 memory：<code>reference_x3_i18n_workflow.md</code>「裸文本缺 key 判读法 + 三档真实影响」段 ·
+  归档：<code>KB\产出-数据分析\X3_i18n缺key排查\</code>
+</footer>
+
+<script>
+  const tabs=document.querySelectorAll('.tab');
+  const rows=document.querySelectorAll('#tbl tbody tr');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    const f=t.dataset.t;
+    rows.forEach(r=>{ r.style.display = (f==='all'||r.dataset.t===f)?'':'none'; });
+  }));
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>拓荒节 · 你的活（一页纸）</title>
+<style>
+  :root{
+    --ink:#23272e;
+    --dim:#6a7180;
+    --line:#e3e0d8;
+    --bg:#faf9f5;
+    --card:#ffffff;
+    --blue:#2563c9;
+    --green:#2e7d3e;
+    --red:#c0392b;
+    --amber:#9a6b0a;
+    --mono:Consolas,"Cascadia Code",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:"Segoe UI","Microsoft YaHei",sans-serif;font-size:15.5px;line-height:1.9}
+  .wrap{max-width:760px;margin:0 auto;padding:64px 28px 100px}
+  code{font-family:var(--mono);font-size:13px;background:#f0ede4;border-radius:4px;padding:1px 7px;color:#7a4a12}
+
+  h1{font-size:30px;line-height:1.4;margin-bottom:10px}
+  .sub{color:var(--dim);margin-bottom:8px}
+  .meta{font-size:12.5px;color:var(--dim);font-family:var(--mono)}
+
+  h2{font-size:19px;margin:52px 0 16px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+  h2 span{font-family:var(--mono);font-size:13px;color:var(--dim);font-weight:400;margin-left:10px}
+
+  .job{display:flex;gap:14px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-top:10px}
+  .job .no{font-family:var(--mono);font-weight:700;color:var(--blue);flex:none;width:20px}
+  .job .name{font-weight:700;flex:none}
+  .job .note{color:var(--dim);font-size:13.5px}
+  .job.hot{border-left:4px solid var(--amber)}
+
+  .rule{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin-top:10px}
+  .rule b{display:block;margin-bottom:2px}
+  .rule p{color:var(--dim);font-size:14px}
+
+  .redbox{background:#fdf3f2;border:1px solid #eccfcb;border-radius:10px;padding:16px 20px;margin-top:14px;font-size:14.5px}
+  .redbox b{color:var(--red)}
+
+  ul.plain{list-style:none;margin-top:6px}
+  ul.plain li{padding:8px 0 8px 22px;position:relative;border-bottom:1px dashed var(--line);font-size:14.5px}
+  ul.plain li:last-child{border-bottom:none}
+  ul.plain li::before{content:"·";position:absolute;left:6px;color:var(--blue);font-weight:700}
+  ul.plain b{color:var(--ink)}
+  ul.plain .dim{color:var(--dim)}
+
+  .final{margin-top:56px;background:#f0f6ef;border:1px solid #cfe0cd;border-radius:10px;padding:18px 22px;font-size:15px}
+  .final b{color:var(--green)}
+
+  footer{margin-top:60px;font-size:12px;color:var(--dim);font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>拓荒节：你的活，一页纸</h1>
+<p class="sub">咱俩把 X2 拓荒节搬到 X3。你带模块，我出数值和目的说明；你审我的代码，我验你的数值。</p>
+<p class="meta">X3 · 8月第2周上线 · 2026-07-02 · by 林康</p>
+
+<h2>① 你的模块，按这个顺序做 <span>// 由易到难</span></h2>
+<div class="job"><span class="no">1</span><span class="name">掉落活动</span><span class="note">咱俩一起做，跑通一遍全流程（7月中）</span></div>
+<div class="job"><span class="no">2</span><span class="name">七日任务</span><span class="note">你独立做，纯配置，错了不伤钱</span></div>
+<div class="job"><span class="no">3</span><span class="name">gacha</span><span class="note">数值我给，你落配置 + 验证</span></div>
+<div class="job"><span class="no">4</span><span class="name">强消耗</span><span class="note">可能要改代码，你的主场</span></div>
+<div class="job hot"><span class="no">＋</span><span class="name">插队半天</span><span class="note">评估「限时抢购」X3 要写多少程序——这个只有你能评，越早越好</span></div>
+
+<h2>② 三条规矩 <span>// 记住这三条就够</span></h2>
+<div class="rule"><b>1. 开工前找我拿「目的卡」，别猜。</b><p>一页纸写清：这模块干嘛的、哪些数值能动哪些不能动、搬过来要改什么、上线看什么数据。没拿到就问我要。</p></div>
+<div class="rule"><b>2. 我的代码 MR 必须你审，该打回就打回。</b><p>我的代码是 AI 写的，能跑但可能不合理——这块你是守门员，别客气。</p></div>
+<div class="rule"><b>3. 验到道具真实进背包才算做完。</b><p>配置写对了、动画播了、日志有了，都不算。历史上三次线上补发事故全是栽在这：宝箱开了东西没进包、换皮漏了兑换商店、首次登录/长离线没测。</p></div>
+
+<h2>③ 就一个概念要懂 <span>// 其他的边做边学</span></h2>
+<div class="redbox"><b>挣钱的数值不许动，拉人的数值随便调。</b><br>高档礼包、gacha 奖池、BP 付费档 = 挣钱的，数值我出你照抄，别顺手优化；免费掉落、小额入门包 = 拉人的，可以改。类比：前者是对外 API 签名，后者是内部实现。<br><span style="color:var(--dim);font-size:13.5px">另外「搬 ≠ 照抄」：X2 把付费点拆成前7天+后7天，结果两头都没做起来——每个模块要改什么，看目的卡就行。</span></div>
+
+<h2>④ 工具，五行 <span>// 细的结对时现场教</span></h2>
+<ul class="plain">
+  <li>改配置：真源是 <code>C:\x3\gdconfig\tsv\</code>，<b>直接改 tsv，别碰 xlsx</b></li>
+  <li>导表：push 后跑 <code>jolt_verify.py 分支名</code>，自动构建+报结果</li>
+  <li>代码：<code>C:\x3-project\</code>，feature 分支 + MR，commit 前缀 <code>X3NEW-</code></li>
+  <li>测试环境部署 / GM / 改时间：<code>test-env-prepare-x3</code>，一句话跑</li>
+  <li>AI 工作流（Claude Code + 一堆现成 skill）在我机器上，<span class="dim">第一周给你装一套</span></li>
+</ul>
+
+<h2>⑤ 时间点 <span>// 倒排</span></h2>
+<ul class="plain">
+  <li><b>7月上旬</b>：你评限时抢购（半天）；我出搬运总表</li>
+  <li><b>7月中</b>：咱俩结对做掉落活动</li>
+  <li><b>7月中下旬～8月初</b>：你按 ①的顺序往下推，做完一个验一个</li>
+  <li><b>8月第2周</b>：周三部署 → 周四灰度 → 周五全服</li>
+</ul>
+
+<div class="final"><b>目标就一条：</b>节日结束时，你能独立从头到尾跑一个模块（方案→配置→代码→测试→上线→看数据）。做到了，下个节日你就是带模块的人。</div>
+
+<footer>不懂的随时问，问比猜快。配套细节文档在同目录，需要再看。</footer>
+
+</div>
+</body>
+</html>

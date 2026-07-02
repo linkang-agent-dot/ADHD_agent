@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>拓荒节三模块策划案 · 给程序</title>
+<style>
+  :root{
+    --ink:#23272e; --dim:#6a7180; --line:#e3e0d8; --bg:#faf9f5; --card:#fff;
+    --blue:#2563c9; --green:#2e7d3e; --red:#c0392b; --amber:#9a6b0a; --purple:#6d4bb0;
+    --mono:Consolas,"Cascadia Code",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:"Segoe UI","Microsoft YaHei",sans-serif;font-size:15px;line-height:1.85}
+  .wrap{max-width:900px;margin:0 auto;padding:56px 28px 100px}
+  code{font-family:var(--mono);font-size:12.5px;background:#f0ede4;border-radius:4px;padding:1px 7px;color:#7a4a12}
+  a{color:var(--blue)}
+
+  h1{font-size:28px;line-height:1.4;margin-bottom:8px}
+  .sub{color:var(--dim);margin-bottom:6px}
+  .meta{font-size:12.5px;color:var(--dim);font-family:var(--mono)}
+
+  .toc{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 0}
+  .toc a{text-decoration:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 16px;font-size:13px;color:var(--ink)}
+  .toc a b{color:var(--blue);margin-right:6px}
+
+  h2{font-size:21px;margin:64px 0 4px;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:8px}
+  h2 .tag{font-size:12px;color:var(--dim);font-weight:400;margin-left:10px}
+  .src{font-size:12.5px;color:var(--dim);margin:8px 0 18px}
+
+  h3{font-size:15.5px;margin:26px 0 10px;color:var(--ink)}
+  h3::before{content:"▸ ";color:var(--blue)}
+
+  .oneliner{background:#eef3fb;border:1px solid #cdddf2;border-radius:8px;padding:14px 18px;margin:14px 0;font-size:14.5px}
+  .oneliner b{color:var(--blue)}
+
+  .chain{font-family:var(--mono);font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 18px;margin:10px 0;color:#444;overflow-x:auto;white-space:nowrap}
+  .chain .arr{color:var(--red);font-weight:700;padding:0 6px}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden;font-size:13px;margin:10px 0 4px}
+  thead th{background:#f2efe6;text-align:left;padding:8px 12px;font-size:12px;color:#6b6350;border-bottom:1px solid var(--line);white-space:nowrap}
+  tbody td{padding:7px 12px;border-top:1px solid #f0ece1;vertical-align:top}
+  tbody tr:hover{background:#fbf9f2}
+  .num{font-family:var(--mono);font-size:12.5px}
+  .cap{font-size:12px;color:var(--dim);margin-bottom:14px}
+
+  .devbox{background:#f0f6ef;border:1px solid #cfe0cd;border-radius:8px;padding:14px 18px;margin:20px 0 6px;font-size:14px}
+  .devbox b{color:var(--green)}
+  .devbox ul{list-style:none;margin-top:4px}
+  .devbox li{padding:4px 0 4px 18px;position:relative;font-size:13.5px}
+  .devbox li::before{content:"›";position:absolute;left:4px;color:var(--green);font-weight:700}
+
+  .warn{background:#fdf6ec;border:1px solid #ecd9b8;border-radius:8px;padding:10px 16px;margin:10px 0;font-size:13.5px;color:#7a5c1e}
+  .warn b{color:var(--amber)}
+
+  .json{font-family:var(--mono);font-size:11px;background:#23272e;color:#a5d6a7;border-radius:8px;padding:12px 16px;margin:8px 0;overflow-x:auto;white-space:pre;line-height:1.6}
+
+  details{margin:8px 0}
+  summary{cursor:pointer;font-size:13px;color:var(--blue);user-select:none}
+
+  footer{margin-top:70px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--dim);font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>拓荒节三模块策划案汇总</h1>
+<p class="sub">X2 原案整理，给程序做搬运前的玩法理解用。结构和链路是搬运的骨架；<b>变现侧数值（礼包定价 / 奖池概率）X3 版会重新盘</b>，先看懂"为什么这么设计"。</p>
+<p class="meta">源：X2 活动策划案总表（GSheet）· 整理 2026-07-02 · by 林康</p>
+
+<div class="toc">
+  <a href="#m1"><b>1</b>gacha 弹珠机</a>
+  <a href="#m2"><b>2</b>BP 集结奖励（基金）</a>
+  <a href="#m3"><b>3</b>掉落转付费</a>
+</div>
+
+<!-- ═══════════ 模块1 gacha ═══════════ -->
+<h2 id="m1">模块 1 · gacha（弹珠机）<span class="tag">26拓荒节弹珠</span></h2>
+<p class="src">原页签：<a href="https://docs.google.com/spreadsheets/d/1Z-cCaIuYFAIcdWFBRwIc3m4fI0hW9NvS1K4EsucSyhc/edit#gid=1410863662" target="_blank">gacha(26拓荒节弹珠)</a></p>
+
+<div class="oneliner"><b>一句话玩法</b>：付费弹珠机。$30 买 50 颗弹珠打普通关（掉普通券），累计打满 50 颗触发一次<b>福利关</b>（专属弹珠，掉高级券），高级券进高级商店换皮肤 / 养成道具。福利关是这版的新增设计。</div>
+
+<div class="chain">普通弹珠×50($30) <span class="arr">→</span> 触发福利关卡 <span class="arr">→</span> 获得50福利弹珠 <span class="arr">→</span> 打出高级兑换券 <span class="arr">→</span> 高级商店兑换</div>
+
+<h3>每一环为什么这么设计（原案原文）</h3>
+<table>
+  <thead><tr><th>模块</th><th>设计目的</th></tr></thead>
+  <tbody>
+    <tr><td>普通弹珠 50 个</td><td>触发门槛，$30 一次让超R有明确目标感，中低频率保持稀缺性</td></tr>
+    <tr><td>触发福利关卡</td><td><b>累计触发而非随机</b>，给玩家确定性预期</td></tr>
+    <tr><td>获得 50 福利弹珠</td><td>仪式感设计，专属弹珠+视觉效果，让玩家感知特别关卡</td></tr>
+    <tr><td>打出高级兑换券</td><td>价值载体，通过小件兑换建立价值锚点</td></tr>
+    <tr><td>高级商店兑换</td><td>核心奖励出口，三条路径：皮肤（情感）、养成（刚需）、普通币（兜底）</td></tr>
+  </tbody>
+</table>
+
+<h3>数值骨架</h3>
+<table>
+  <thead><tr><th>项</th><th>值</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>高级券单位价值</td><td class="num">$0.018/券</td><td>所有兑换定价的锚</td></tr>
+    <tr><td>普通关 ROI</td><td class="num">1.8</td><td>存量部分不动</td></tr>
+    <tr><td>福利关 ROI 增量</td><td class="num">+0.27（~27%）</td><td>叠加后总 ROI ≈ 2.07~2.11</td></tr>
+    <tr><td>单轮 $30 体验</td><td class="num">产出 ~$74</td><td>普通关 ~$54 + 福利关高级券~450张(~$8) + 里程碑宝箱期望</td></tr>
+  </tbody>
+</table>
+
+<h3>福利关洞口（7 洞，期望 9.22 券/球）</h3>
+<table>
+  <thead><tr><th>洞口</th><th>位置</th><th>掉高级券</th><th>命中概率</th></tr></thead>
+  <tbody>
+    <tr><td>1 / 7</td><td>边缘</td><td class="num">5 券</td><td class="num">17% ×2</td></tr>
+    <tr><td>2 / 6</td><td>次边</td><td class="num">8 券</td><td class="num">15% ×2</td></tr>
+    <tr><td>3 / 5</td><td>中间</td><td class="num">12 券</td><td class="num">13% ×2</td></tr>
+    <tr><td>4</td><td>中心</td><td class="num">20 券</td><td class="num">10%</td></tr>
+  </tbody>
+</table>
+<p class="cap">50 球一轮期望 ≈ 460 券（≈$7.4~8）</p>
+
+<h3>高级商店（三条出口）</h3>
+<table>
+  <thead><tr><th>类别</th><th>内容</th><th>定价</th><th>ROI 口径</th></tr></thead>
+  <tbody>
+    <tr><td rowspan="3">皮肤（情感）</td><td>S级 · 去年排行榜主城套装皮肤</td><td class="num">15,000 券（本体$1500）</td><td rowspan="3"><b>不计 ROI</b>，按道具本体价值定价，当额外福利</td></tr>
+    <tr><td>A级 · 排行榜特效/组件</td><td class="num">5,000 券（$500）</td></tr>
+    <tr><td>B级 · 初级皮肤</td><td class="num">2,000 券（$200）</td></tr>
+    <tr><td rowspan="2">养成（刚需）</td><td>英雄碎片（节日总投放800，商店占1/4）</td><td class="num">56 券/个（~$1）</td><td rowspan="2"><b>严格计 ROI，控制在 2.1 内</b></td></tr>
+    <tr><td>红色英雄专属技能养成道具（投放100，商店占25）</td><td class="num">278 券/个（~$5）</td></tr>
+    <tr><td>兜底</td><td>1 高级券→5 普通券 / 自选箱1000券限5 / 普通弹珠×10=100券锚点</td><td class="num">—</td><td>防券溢出</td></tr>
+  </tbody>
+</table>
+<div class="warn"><b>返场规则</b>：高级商店只返场 1 年以前的排行榜奖励——保住排行榜皮肤 1 年独占窗口。这条搬 X3 时原样保留。</div>
+
+<h3>里程碑宝箱（第二条累计线）</h3>
+<table>
+  <thead><tr><th>里程碑</th><th>福利关次数</th><th>对应消费</th></tr></thead>
+  <tbody>
+    <tr><td class="num">1 ~ 6</td><td class="num">3 / 8 / 18 / 35 / 55 / 80 次</td><td class="num">~$90 / $240 / $540 / $1050 / $1650 / $2400</td></tr>
+  </tbody>
+</table>
+<p class="cap">宝箱名义 $12/个，实际期望 $6.825（大头是保底弹珠，0.5% 出 $300 皮肤、0.001% 出 $1500 排行榜皮肤当彩票头奖）</p>
+<details><summary>宝箱 drop JSON（策划案自带，配置直接用这个格式）</summary>
+<div class="json">{"drop":{"typ":"single_random","num":1,"args":[
+ {"typ":"item","id":11112030,"num":1000,"wgt":19800},
+ {"typ":"item","id":11112030,"num":200,"wgt":120000},
+ {"typ":"item","id":11112030,"num":50,"wgt":200000},
+ {"typ":"item","id":111110233,"num":1,"wgt":100},
+ {"typ":"item","id":11112131,"num":1,"wgt":100},
+ {"typ":"item","id":11112030,"num":20,"wgt":400000},
+ {"typ":"item","id":11112030,"num":100,"wgt":200000},
+ {"typ":"item","id":11112030,"num":400,"wgt":60000}]}}</div>
+</details>
+
+<div class="devbox"><b>给程序的要点</b>
+<ul>
+  <li>本质是<b>三个计数器</b>：普通弹珠消耗数（触发福利关，累计非随机）、福利关次数（触发里程碑宝箱）、高级券余额（商店消耗）</li>
+  <li>宝箱/商店的 JSON 格式策划案里已经写好，配置照格式填</li>
+  <li>搬 X3 评估点：X3 有转盘/开箱现成载体，但<b>「打满 N 次触发一个特殊关」这层 X3 没有现成对应</b>——这是本模块唯一可能要动程序的地方，先评</li>
+</ul></div>
+
+<!-- ═══════════ 模块2 BP ═══════════ -->
+<h2 id="m2">模块 2 · BP 集结奖励（基金）<span class="tag">Battle Pass（拓荒节）-2026</span></h2>
+<p class="src">原页签：<a href="https://docs.google.com/spreadsheets/d/1Z-cCaIuYFAIcdWFBRwIc3m4fI0hW9NvS1K4EsucSyhc/edit#gid=2081745008" target="_blank">Battle Pass（拓荒节）-2026</a></p>
+
+<div class="oneliner"><b>一句话玩法</b>：三档通行证（免费 / $6.99 / $19.99）+ 40 级奖励轨道，攒「纪念钻头」升级。外挂一个<b>全服集结奖励</b>：全服购买通行证的人数每到一档（100/200/…/1000 人），全服发一波奖——「集结奖励 / 基金」这名字就是指这个全服解锁玩法。</div>
+
+<div class="chain">买礼包/做任务得纪念钻头($0.1/个) <span class="arr">→</span> BP升级40级·三档领奖 <span class="arr">→</span> 满级进循环宝箱 <span class="arr">∥</span> 全服购买人数达标 <span class="arr">→</span> 全服发奖</div>
+
+<h3>骨架参数</h3>
+<table>
+  <thead><tr><th>项</th><th>值</th></tr></thead>
+  <tbody>
+    <tr><td>档位</td><td>FREE / <span class="num">$6.99</span>（Purchase1）/ <span class="num">$19.99</span>（Purchase2），1 期 21 天</td></tr>
+    <tr><td>积分道具</td><td>纪念钻头 <code>11112150</code>，$0.1/个，1.75 经验/个</td></tr>
+    <tr><td>等级/经验</td><td>40 级 · 总经验 1200 · 需道具 686 个 · 按 150% 投放 ≈ 1029 个</td></tr>
+    <tr><td>付费档总价值</td><td class="num">P1 $86.9（名义ROI ~12.4）· P2 $274.9（~13.8）</td></tr>
+    <tr><td>满级循环</td><td>循环宝箱权重池（行军特效2%彩头 + 自选箱/金头/骰子/加速），15 次期望 ~$11.9</td></tr>
+    <tr><td>收尾</td><td>活动结束回收纪念钻头 → 粮食（回收 ROI 125%，防道具烂手里）</td></tr>
+  </tbody>
+</table>
+<p class="cap">40 级奖励轨道逐级明细（三档并排、含每级 JSON）在原页签 33~73 行，配置时照抄，这里不重复。</p>
+
+<h3>全服集结奖励（本模块的差异点）</h3>
+<table>
+  <thead><tr><th>解锁条件</th><th>免费侧（全员）</th><th>付费侧（购买者追加）</th></tr></thead>
+  <tbody>
+    <tr><td class="num">全服购买人数 100/200/…/1000（10 档）</td><td>30分训练加速 + 1w粮 + 1w钢（每档固定）</td><td>2h加速×2 + 自选宝箱$2×2（第300/600/900/1000档换橙色万能碎片）+ 拓荒节随机宝箱×2</td></tr>
+  </tbody>
+</table>
+<p class="cap">免费侧合计 $4.8 / 付费侧 $50（ROI 10）。设计意图：付费人数本身变成全服目标，社交压力拉购买率。</p>
+
+<h3>礼包体系（三层）</h3>
+<table>
+  <thead><tr><th>层</th><th>档位</th><th>内容</th><th>要点</th></tr></thead>
+  <tbody>
+    <tr><td>常规礼包</td><td class="num">4.99 / 9.99 / 19.99 / 49.99 / 99.99</td><td class="num">钻头 50 / 100 / 200 / 500 / 1000</td><td>低档限购1、高档限购10/99；<b>全场其他礼包里的 BP 道具也统一换成本节日钻头</b>（礼包联动）</td></tr>
+    <tr><td>随机礼包</td><td class="num">19.99 / 49.99 / 99.99（各限购1）</td><td>钻头数量按权重随机，如 19.99 档 200~400 颗</td><td>期望倍率 ≈ 1.10（比常规档多 10% 的赌性甜头）</td></tr>
+    <tr><td>触发礼包</td><td class="num">启程 2.99/4.99 · 终点 19.99/29.99</td><td>钻头 + 大富翁骰子</td><td>启程 ROI 5.0 / 终点 ROI 4.0，<b>和大富翁联动</b>（骰子）</td></tr>
+  </tbody>
+</table>
+
+<div class="devbox"><b>给程序的要点</b>
+<ul>
+  <li>X3 有现成载体：<b>Type22 BATTLE_PASS_SCORE</b>（林康亲手做过 Type11→22 迁移，坑都趟过）——40 级轨道 + 三档 + 满级循环都能直接套</li>
+  <li><b>「全服购买人数解锁奖励」X3 没有现成对应</b>——本模块唯一评估点。数据主体是全服而非玩家（类似服务器活动），先看 X3 服务器活动/跨服活动能不能承载</li>
+  <li>两档付费的档位锚点设计参考世界杯两档 BP 的经验（至尊档选择率 90%），X3 版档位由林康定</li>
+</ul></div>
+
+<!-- ═══════════ 模块3 掉落转付费 ═══════════ -->
+<h2 id="m3">模块 3 · 掉落转付费<span class="tag">通用模板（拓荒用的就是这份）</span></h2>
+<p class="src">原页签：<a href="https://docs.google.com/spreadsheets/d/1Z-cCaIuYFAIcdWFBRwIc3m4fI0hW9NvS1K4EsucSyhc/edit#gid=432257813" target="_blank">掉落转付费-通用</a>（没有拓荒专属页签，逐节日换投放道具复用这份）</p>
+
+<div class="oneliner"><b>一句话玩法</b>：把日常活跃（打野/采集）变成付费入口的一条链。你工作清单里的三件套对应关系：<b>掉落活动</b> = 打野掉十字镐；<b>主活动</b> = 捐献攒积分 + 阶段宝箱 + 兑换商店；<b>礼包</b> = 卖金色十字镐和付费代币。</div>
+
+<div class="chain">pve/gve/采集 <span class="arr">→</span> 掉探宝十字镐 <span class="arr">→</span> 捐献攒积分(+付费金镐加速) <span class="arr">→</span> 阶段宝箱 <span class="arr">→</span> 双币兑换商店 <span class="arr">←</span> 礼包(卖金镐+付费币)</div>
+
+<h3>定位与行为成本</h3>
+<table>
+  <thead><tr><th>项</th><th>值</th></tr></thead>
+  <tbody>
+    <tr><td>定位</td><td>活跃活动 · 核心人群<b>小中R</b> · 120h · 核心投放 = 行军表情 + 养成线材料</td></tr>
+    <tr><td>行为成本价值(cd)</td><td class="num">pve 16 · gve 56 · 采集10w 66.14 · 探宝十字镐 25 · 金色十字镐 250 · 纯净水晶 250</td></tr>
+  </tbody>
+</table>
+
+<h3>① 掉落活动（打野掉镐）</h3>
+<table>
+  <thead><tr><th>行为</th><th>掉什么</th><th>分层</th><th>上限</th></tr></thead>
+  <tbody>
+    <tr><td>pve</td><td>资源/加速 + 探宝十字镐 1~4 个（概率阶梯）</td><td rowspan="2">按主城等级三档：3-17 / 17-24 / 25-30 级，各档概率不同（高等级期望略降）</td><td rowspan="2" class="num">每日 400 次</td></tr>
+    <tr><td>gve</td><td>资源/加速 + 探宝十字镐 1~7 个（期望约为 pve 的 1.5 倍）</td></tr>
+    <tr><td>采集 10w</td><td>探宝十字镐 1~3 个</td><td>—</td><td class="num">每日 50 次</td></tr>
+  </tbody>
+</table>
+<p class="cap">掉落 ROI 426%~528%（活跃奖励口径，故意给得大方——这是流量侧）。逐档概率明细在原页签 48~110 行。</p>
+
+<h3>② 主活动（捐献 → 阶段宝箱 → 商店）</h3>
+<table>
+  <thead><tr><th>环节</th><th>数值</th></tr></thead>
+  <tbody>
+    <tr><td>捐献计分</td><td class="num">探宝十字镐 100 分/个 · 金色十字镐（付费）500 分/个</td></tr>
+    <tr><td>阶段宝箱门槛</td><td class="num">4000 分/箱 ≈ 40 普通镐 + 8~20 金镐</td></tr>
+    <tr><td>阶段宝箱期望</td><td class="num">$1.39/箱（头奖：橙色通用碎片 2% / 军备图纸 5% / 金镐×60 3%，其余填充）</td></tr>
+    <tr><td>兑换商店</td><td><b>双代币</b>：纯净水晶（付费币，$0.125，来源=金镐砸取+礼包）+ 粗糙晶岩（活跃币，来源=普通镐+阶段奖励）。付费币商店卖行军表情($5)/gacha券/橙碎/自选箱，活跃币商店卖 BP 道具/升星/加速；总坑：付费币 1430 · 活跃币 850</td></tr>
+  </tbody>
+</table>
+<details><summary>阶段宝箱 drop JSON（策划案自带）</summary>
+<div class="json">{"typ":"item","id":11116304,"num":1,"wgt":200},{"typ":"item","id":11119339,"num":60,"wgt":300},
+{"typ":"item","id":11117069,"num":3,"wgt":500},{"typ":"item","id":11117024,"num":1,"wgt":500},
+{"typ":"item","id":11116110,"num":1,"wgt":1000},{"typ":"item","id":11119339,"num":6,"wgt":1500},
+{"typ":"item","id":11111106,"num":1,"wgt":2000},{"typ":"item","id":11111156,"num":1,"wgt":2000},
+{"typ":"item","id":11119339,"num":3,"wgt":2000}</div>
+<p class="cap">商店坑位的 <code>serial_number</code> JSON 同样在原页签 177~188 行写好了。</p>
+</details>
+
+<h3>③ 礼包</h3>
+<p style="font-size:14px">卖<b>金色十字镐</b>（$0.30/个）和<b>纯净水晶</b>（付费币）。明细挂在另一张落地表（本次没访问到）；<b>X3 版礼包定价由林康重出</b>，程序只需要知道：礼包卖的是"加速积分的付费道具 + 付费币"这两样。</p>
+
+<div class="warn"><b>每月换皮点</b>（原案修改记录）：兑换商店里的「行军表情」和「gacha 券」逐节日更换成当期道具——搬 X3 时同理，这两个坑位换成 X3 拓荒节的当期投放。</div>
+
+<div class="devbox"><b>给程序的要点</b>
+<ul>
+  <li>三个独立子系统拼成一条链：<b>分层掉落</b>（按主城等级三档 + 每日上限）、<b>捐献计分+阶段宝箱</b>、<b>双代币商店</b>——搬的时候按子系统逐个对 X3 载体</li>
+  <li>X3 现成载体初判：掉落、兑换商店往期节日都有；「捐献攒分开箱」贴近 X3 积分活动（ActvScore）——三块可能都不用新写，重点是串起来</li>
+  <li>所有宝箱/商店 JSON 策划案直接给了格式，落配置照抄结构、换 X3 道具 ID</li>
+  <li>掉落是流量侧（ROI 4~5 倍故意大方）；宝箱概率和商店定价是变现侧——<b>前者可调，后者等林康的数值表</b></li>
+</ul></div>
+
+<footer>
+  源表：X2活动策划案总表 1Z-cCaIuY…Syhc（gacha gid=1410863662 · BP gid=2081745008 · 掉落转付费 gid=432257813）<br>
+  掉落转付费的礼包明细在挂链落地表（1OQ8UCyl…，本次无访问权限）· X3 载体初判待搬运总表确认 · 2026-07-02
+</footer>
+
+</div>
+</body>
+</html>

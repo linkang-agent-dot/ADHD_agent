@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>深海节 i18n 修复验收</title>
+<style>
+body{font-family:"Microsoft YaHei",sans-serif;background:#0d1b2a;color:#e0e6ed;margin:0;padding:24px;line-height:1.6}
+h1{color:#4dd0e1;border-bottom:2px solid #1b6ca8;padding-bottom:8px}
+h2{color:#7fdbff;margin-top:32px;border-left:4px solid #1b6ca8;padding-left:10px}
+.sum{display:flex;gap:16px;flex-wrap:wrap;margin:16px 0}
+.card{background:#152b40;border:1px solid #1b6ca8;border-radius:8px;padding:14px 20px;min-width:120px}
+.card b{font-size:26px;color:#4dd0e1;display:block}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13px}
+th,td{border:1px solid #234;padding:6px 9px;text-align:left;vertical-align:top}
+th{background:#1b3a52;color:#7fdbff}
+tr:nth-child(even){background:#122536}
+.ok{color:#2ecc71;font-weight:bold}.warn{color:#f1c40f}.no{color:#e74c3c}
+.tag{display:inline-block;background:#1b6ca8;color:#fff;border-radius:4px;padding:1px 7px;font-size:11px;margin-right:4px}
+code{background:#0a1420;padding:1px 5px;border-radius:3px;color:#4dd0e1;font-size:12px}
+.mini{color:#8aa;font-size:12px}
+.zh{color:#f7b731}
+</style></head><body>
+<h1>🌊 深海节 i18n 全量修复验收</h1>
+<p class="mini">生成 2026-07-01 · 分支 dev_festival · 提交 a3f9a4c→3283e61→3bcb74d · 全量体检脚本 audit_deepsea_i18n2.py</p>
+
+<div class="sum">
+<div class="card"><b>192</b>体检 key</div>
+<div class="card"><b class="ok">181</b>已 OK</div>
+<div class="card"><b class="ok">0</b>漏翻/泄漏</div>
+<div class="card"><b class="warn">11</b>剩余(老版·非深海)</div>
+</div>
+<p>深海节相关本地化<b class="ok">已全绿</b>。剩 11 条 = <code>Pack_Name_207201-211</code>，属深海<b>成就礼包版</b>（ChainPack 677「航海之路成就礼包版-活动豪礼」），<b class="warn">目前无 AO 挂载=staged 未上线</b>；名字是占位（免费礼包/航海罗盘礼包2-11），上线前需补 i18n（老航海之路本无成就礼包，非老版遗留）。</p>
+
+<h2>① 漏建描述 → 补 16 语（游戏内原本空白）</h2>
+<table>
+<tr><th>Key</th><th>是什么</th><th>中文</th><th>English</th><th>繁中/日</th><th></th></tr>
+<tr><td><code>ActvDesc_102802</code></td><td>大富翁活动描述</td><td>与霍普金斯踏上冒险之旅，即可兑换专属皮肤…（保留color/size标签+英雄名）</td><td>Adventure with Hopkins to redeem the exclusive skin…</td><td class="zh">與霍普金斯…/ホプキンスと…</td><td class="ok">✅</td></tr>
+<tr><td><code>ActvDesc_106103</code></td><td>装饰阶梯描述</td><td>限时装饰礼包，错过不再！</td><td>Limited-time decoration pack—don't miss out!</td><td class="zh">限時裝飾禮包/期間限定の装飾パック</td><td class="ok">✅</td></tr>
+<tr><td><code>Item_Desc_1200</code></td><td>深海藏宝图</td><td>深海藏宝图，投入罗盘即可探索深海，赢取珍稀奖励！</td><td>An Abyssal Treasure Map. Insert a compass to explore the deep…</td><td class="zh">深海藏寶圖/深海の宝の地図</td><td class="ok">✅</td></tr>
+<tr><td><code>Item_Desc_1201</code></td><td>深海宝珠</td><td>深海凝结的珍贵宝珠，可用于深海活动商店兑换…</td><td>A precious orb condensed from the deep…</td><td class="zh">深海凝結的珍貴寶珠/深海で凝結した宝珠</td><td class="ok">✅</td></tr>
+</table>
+
+<h2>② 英文泄漏修复（原 cn+en 已译、其余 14 语照抄英文=伪完整）</h2>
+<table>
+<tr><th>Key</th><th>是什么</th><th>中文</th><th>修前</th><th>修后(样例)</th><th></th></tr>
+<tr><td><code>Item_Name_82005</code></td><td>航者徽记（头衔）</td><td>航者徽记（头衔）</td><td class="no">14语=英文原文 Voyager's Crest</td><td class="zh">西:Emblema del Viajero / 韩:항해자의 문장 / 日:航海者の紋章</td><td class="ok">✅</td></tr>
+<tr><td><code>Item_Name_180080</code></td><td>远航之歌（纪念卡80）</td><td>远航之歌（纪念卡）</td><td class="no">14语照抄 Song of the Voyage</td><td class="zh">西:Canción de la Travesía / 日:遠航の歌</td><td class="ok">✅</td></tr>
+<tr><td><code>Item_Desc_180080</code></td><td>纪念卡描述</td><td>循着海风与星光，她驶过万顷深蓝…</td><td class="no">14语照抄英文</td><td class="zh">14语真译(西/法/日/韩…)</td><td class="ok">✅</td></tr>
+</table>
+
+<h2>③ 换皮残留（活动复用别节日规则，正文写着外节日名）</h2>
+<table>
+<tr><th>活动</th><th>原残留</th><th>处理</th><th></th></tr>
+<tr><td>累充 100598</td><td class="no">rt=15013 正文写「购买【世界杯】节日系列」</td><td>队友已建独立深海规则 <code>16041</code>「购买【深海】…」并 repoint；我误建的重复孤儿 15018 已清除</td><td class="ok">✅</td></tr>
+<tr><td>转盘 101025</td><td class="no">rt=16032 正文写「尼罗之辉：王后盛典」</td><td>队友已建独立 <code>16040</code>「深海罗盘：远洋启航」并 repoint；重复孤儿 15019 已清除</td><td class="ok">✅</td></tr>
+</table>
+<p class="mini">⚠️ 并发踩坑：我基于旧 worktree 视图（残留态）重复造了 15018/15019，实际 dev_festival 上队友已用 16040/16041 修好 → 已清孤儿，未破坏队友 repoint。</p>
+
+<h2>④ 队友规则补译（16040/16041/16042 原只有中文母版）</h2>
+<table>
+<tr><th>规则</th><th>用于</th><th>中文母版</th><th>补</th><th></th></tr>
+<tr><td><code>16040</code></td><td>深海转盘 101025</td><td>【深海罗盘：远洋启航】</td><td>标题「深海罗盘」+内容 16 语</td><td class="ok">✅</td></tr>
+<tr><td><code>16041</code></td><td>深海累充 100598</td><td>购买【深海】节日系列礼包…得充值积分…</td><td>内容 16 语</td><td class="ok">✅</td></tr>
+<tr><td><code>16042</code></td><td>拜访 105605</td><td>海滨假日装扮/深海邀请函/拜访酒馆…4条</td><td>内容 16 语</td><td class="ok">✅</td></tr>
+</table>
+
+<h2>⑤ 深海节 HUD 入口名（组 140）</h2>
+<table>
+<tr><th>Key</th><th>中文</th><th>English</th><th>繁中/日/韩</th><th></th></tr>
+<tr><td><code>ActvGroup_MainEntranceName_140</code></td><td>深海节</td><td>Abyssal Festival</td><td class="zh">深海節 / 深海祭 / 심해 축제</td><td class="ok">✅</td></tr>
+</table>
+<p class="mini">原本 key 完全缺失 → 深海节主入口名空白，现补齐 16 语。</p>
+
+<h2>⑥ 节日周卡（109101）改名 + 去占位 + 本地化</h2>
+<table>
+<tr><th>项</th><th>修前</th><th>修后</th><th></th></tr>
+<tr><td>活动名 109101</td><td>周卡活动</td><td class="zh">节日周卡 / Festival Weekly Pass / 節日週卡 / 祭り週間パス</td><td class="ok">✅</td></tr>
+<tr><td>档位描述 2026101-104</td><td class="no">母版「购买立得礼包（策划待填）」· i18n 缺</td><td class="zh">节日周卡·每日自选心仪好礼，连续领取7天！(16语)</td><td class="ok">✅</td></tr>
+</table>
+<p class="mini">周卡数值（奖池ROI 2.75x）本会话早前已配（commit f606b23，另见《深海自选周卡_数值方案.md》）。</p>
+
+<h2>📋 对照踩坑记录（3 类深海 i18n 坑全命中并修）</h2>
+<table>
+<tr><th>坑</th><th>本次实例</th><th>状态</th></tr>
+<tr><td>漏建 key（换皮新 id 没建→空白）</td><td>大富翁/装饰 desc、藏宝图/宝珠 desc、深海节名、周卡 desc</td><td class="ok">已补</td></tr>
+<tr><td>英文泄漏伪完整（cn+en 译、其余照抄英文）</td><td>航者徽记 82005、远航之歌纪念卡 180080</td><td class="ok">已补</td></tr>
+<tr><td>换皮残留（复用源活动带文本ID→写着源节日名）</td><td>累充→世界杯、转盘→尼罗</td><td class="ok">队友已修+清孤儿</td></tr>
+</table>
+
+<h2>⏭ 排除 / 未尽</h2>
+<ul>
+<li><span class="tag warn">待上线补</span> 深海成就礼包版 <code>Pack_Name_207201-211</code>（11条·ChainPack 677）——staged 未挂 AO，名字占位；<b>非老版</b>（老航海之路无成就礼包），deepsea 大富翁上线该 pack 前需补 i18n。</li>
+<li><span class="tag">已在dev</span> 大富翁独立规则 15015说明/15016神秘宝箱/15017珍珠贝进度 + 神秘宝箱换深海代币（本会话早前完成，已合 dev_festival）。</li>
+<li><span class="tag">待导表</span> 以上改动均已 commit dev_festival，未跑 jolt 导表 / 未部 3080——验收 OK 后触发。</li>
+</ul>
+<p class="mini">审计命令：<code>i18n_leak_audit.py --grep &lt;key&gt;</code>（逐条泄漏）+ <code>audit_deepsea_i18n2.py</code>（全量漏建/漏翻·母版门控）+ <code>--reskin-residue</code>（换皮残留）。</p>
+</body></html>

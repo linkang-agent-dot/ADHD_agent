@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>深海累充白名单 · 核对</title>
+<style>
+  :root{--bg:#0a1929;--card:#0f2942;--ink:#e8f4ff;--sub:#8fb3d1;--line:#1d4568;
+        --gold:#f5c869;--good:#2ecc71;--bad:#ff6b6b;--warn:#ffb347;--chip:#123a5c;}
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(160deg,#07131f,#0a1929 40%,#0c2136);
+       color:var(--ink);font:15px/1.6 "Segoe UI","Microsoft YaHei",sans-serif;padding:32px 20px 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  h1{font-size:26px;margin:0 0 4px;color:#fff;letter-spacing:.5px}
+  h1 .em{color:var(--gold)}
+  .lead{color:var(--sub);margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+        padding:20px 22px;margin:0 0 22px;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+  h2{font-size:18px;margin:0 0 14px;display:flex;align-items:center;gap:10px}
+  h2 .n{width:26px;height:26px;border-radius:8px;background:var(--gold);color:#08131e;
+        font-size:14px;font-weight:700;display:grid;place-items:center}
+  .prob{border-color:#5a2323;background:#1e1113}
+  .prob h2 .n{background:var(--bad)}
+  .ok{border-color:#1e4d33;background:#0d1f16}
+  .ok h2 .n{background:var(--good);color:#062012}
+  code{background:#08151f;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--gold);font-size:13px;word-break:break-all}
+  .mono{font-family:Consolas,monospace}
+  table{width:100%;border-collapse:collapse;margin:8px 0 4px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top}
+  th{color:var(--sub);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.4px}
+  tr:hover td{background:rgba(255,255,255,.02)}
+  .pid{color:var(--gold);font-family:Consolas,monospace;font-weight:600}
+  .usd{color:#7fd8a0;font-family:Consolas,monospace;white-space:nowrap}
+  .grp{background:#0b2035;color:var(--sub);font-weight:700;font-size:12.5px}
+  .tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:20px;background:var(--chip);color:var(--sub);border:1px solid var(--line)}
+  .tag.rec{background:#12351f;color:var(--good);border-color:#1e4d33}
+  .tag.gen{background:#2a2440;color:#b8a0ff;border-color:#43386b}
+  .tag.q{background:#3a2a12;color:var(--warn);border-color:#5a4020}
+  .whitebox{background:#08151f;border:1px dashed var(--gold);border-radius:10px;padding:14px 16px;margin:10px 0}
+  .whitebox .mono{color:#cfe6ff;font-size:12.5px;line-height:1.9;word-break:break-all}
+  ul{margin:8px 0;padding-left:22px}li{margin:4px 0}
+  .muted{color:var(--sub)}
+  .foot{color:var(--sub);font-size:13px;margin-top:26px;border-top:1px solid var(--line);padding-top:16px}
+  .kbd{background:#123a5c;border:1px solid var(--line);border-radius:5px;padding:1px 7px;font-family:Consolas,monospace;font-size:12.5px}
+  .count{color:var(--gold);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🌊 深海累充白名单 · <span class="em">核对</span></h1>
+  <p class="lead">活动 <span class="mono">AO100598 / 深海累充 / ContentID 598</span> —— 定「哪些礼包购买计入本节日累充」。<b>确认这张表 → worktree 里改 ActvOnline 100598 的 Pack 列 → push dev_festival → jolt。</b></p>
+
+  <!-- 问题 -->
+  <div class="card prob">
+    <h2><span class="n">!</span>问题：白名单不是空的，是照抄了世界杯</h2>
+    <p style="margin:6px 0">"礼包累充忘填"的真相 —— 克隆世界杯累充(100597)时，白名单整段照搬没换成深海自己的包。现值里全是世界杯的东西：</p>
+    <ul>
+      <li><code>211002 ~ 211015</code> = 世界杯特惠5档 + 抽奖券4档（<b>不是</b>深海的）</li>
+      <li><code>894011 ~ 894483</code> = 世界杯竞猜 48 国 ×3 档，共 144 个（深海根本没有竞猜）</li>
+      <li>只有 <code>130020|130021|1002001</code> 是通用/可留的</li>
+    </ul>
+    <p style="margin:6px 0" class="muted">后果：玩家买深海礼包 → 深海累充进度不涨（名单里没有深海包）；反而买世界杯残留包才涨 = 完全错位。</p>
+  </div>
+
+  <!-- ActvTask 侧 OK -->
+  <div class="card ok">
+    <h2><span class="n">✓</span>好消息：累充档位(ActvTask)侧是对的，不用动</h2>
+    <p style="margin:6px 0"><code>59811 ~ 59820</code> 共 10 档，TaskType=<b>902</b>、ContentID=<b>598</b>、Parameter1=<b>598</b> 全部正确。<b>唯一要改的就是 ActvOnline 100598 的白名单列。</b></p>
+  </div>
+
+  <!-- 完整清单 -->
+  <div class="card">
+    <h2><span class="n">📋</span>深海节全部付费礼包清单（<span class="count">36</span> 个，已逐模块反查引用链）</h2>
+    <table>
+      <thead><tr><th>Pack ID</th><th>所属模块</th><th>名称 / 备注</th><th>档位</th><th>建议</th></tr></thead>
+      <tbody>
+        <tr class="grp"><td colspan="5">— 转盘线（ActvGroup 140）—</td></tr>
+        <tr><td class="pid">800005~800009</td><td>03 怦然心动 · 每日礼包</td><td>每日礼包 第1~5日（ActvPack CID3002）</td><td class="usd">$4.99 ×5</td><td><span class="tag rec">推荐</span></td></tr>
+        <tr><td class="pid">211019</td><td>04 深海印记 · 头像框</td><td>深海-头像框礼包</td><td class="usd">$9.99</td><td><span class="tag rec">推荐</span></td></tr>
+        <tr><td class="pid">130046</td><td>02 远航日志 · BP</td><td>深海节-高级护航令</td><td class="usd">$9.99</td><td><span class="tag rec">推荐</span></td></tr>
+        <tr><td class="pid">130035</td><td>02 远航日志 · BP</td><td>深海节-至尊护航令</td><td class="usd">$19.99</td><td><span class="tag rec">推荐</span></td></tr>
+        <tr><td class="pid">211016~211018</td><td>06 深海居所 · 装饰阶梯</td><td>深海居所装饰特惠 ×3（ChainPack 700）</td><td class="usd">$19.99 ×3</td><td><span class="tag rec">推荐</span></td></tr>
+        <tr><td class="pid">211020</td><td>07 海滨之约 · 拜访</td><td>深海节-海滨门头礼包</td><td class="usd">$99.99</td><td><span class="tag rec">推荐</span></td></tr>
+        <tr><td class="pid">1002001</td><td>08 许愿池</td><td>许愿池许愿礼包</td><td class="usd">$4.99</td><td><span class="tag gen">通用</span></td></tr>
+        <tr><td class="pid">2026101~2026104</td><td>11 周卡特惠</td><td>活动周卡 1/2/3档 + 打包全购</td><td class="usd">$9.99/$19.99/$29.99/$49.99</td><td><span class="tag gen">通用</span></td></tr>
+        <tr class="grp"><td colspan="5">— 大富翁线（ActvGroup 141 · 深海航行）—</td></tr>
+        <tr><td class="pid">130036</td><td>航海通行证 · BP</td><td>航海通行证-高级护航令</td><td class="usd">$9.99</td><td><span class="tag rec">推荐</span></td></tr>
+        <tr><td class="pid">130037</td><td>航海通行证 · BP</td><td>航海通行证-至尊护航令</td><td class="usd">$19.99</td><td><span class="tag rec">推荐</span></td></tr>
+        <tr><td class="pid">207104,207106,<br>207108,207110,207112</td><td>大富翁 · 连锁礼包(活动豪礼)</td><td>付费2~6（ChainPack 463，与老航海之路共用）</td><td class="usd">$4.99/$9.99/$19.99/$49.99/$99.99</td><td><span class="tag rec">推荐</span></td></tr>
+        <tr><td class="pid">2801001~2801011</td><td>大富翁 · 成就礼包</td><td>成就礼包 第1~11档（10~200圈，AchievePack 104）</td><td class="usd">$1.99 → $99.99 ×11</td><td><span class="tag q">待确认</span></td></tr>
+        <tr><td class="pid">280001</td><td>大富翁 · 存钱罐</td><td>大富翁存钱罐礼包-<b>占位</b></td><td class="usd">$19.99</td><td><span class="tag q">待确认</span></td></tr>
+      </tbody>
+    </table>
+    <p class="muted" style="font-size:13px;margin-top:10px">图例：<span class="tag rec">推荐</span> 深海专属付费包，肯定要计入；<span class="tag gen">通用</span> 跨节日复用包（许愿池/周卡），随 precedent 一起加；<span class="tag q">待确认</span> 见下方边界项。免费档位（211016前的免费包/207101等）不计入，已排除。</p>
+  </div>
+
+  <!-- 推荐白名单 -->
+  <div class="card">
+    <h2><span class="n">✔</span>推荐白名单（全含 36 个，写进 ActvOnline 100598 Pack 列）</h2>
+    <div class="whitebox"><div class="mono">800005|800006|800007|800008|800009|211019|130046|130035|211016|211017|211018|211020|1002001|2026101|2026102|2026103|2026104|130036|130037|207104|207106|207108|207110|207112|2801001|2801002|2801003|2801004|2801005|2801006|2801007|2801008|2801009|2801010|2801011|280001</div></div>
+    <p class="muted" style="font-size:13px">设计口径：深海主打「付费深度」，所有深海期间的礼包消费都应计入本节日累充 → 默认全含。若某类不想计，勾掉即可（见下）。</p>
+  </div>
+
+  <!-- 待确认 -->
+  <div class="card">
+    <h2><span class="n">?</span>3 个要你拍板的边界项</h2>
+    <ul>
+      <li><b>成就礼包 2801001~2801011（11 个）</b> —— 大富翁"每 N 圈解锁"的阶梯付费包，$1.99→$99.99。含进去累充增量最大，但它跟老版航海之路成就礼包共用同一套 Pack。<span class="muted">默认：含。</span></li>
+      <li><b>存钱罐 280001</b> —— 名字带"<b>占位</b>"，怀疑数值/是否上线还没定死。<span class="muted">默认：含，但你确认下这包是不是最终稿。</span></li>
+      <li><b>通用包（许愿池 1002001 + 周卡 2026101~104）</b> —— 跨节日复用，不是深海专属；加进去 = 深海期间买它们也算深海充值（precedent 里 BP/许愿池就是这么处理的）。<span class="muted">默认：含。</span></li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    <b>确认后我会做的</b>：① 在 worktree（<span class="kbd">gdconfig-deepsea-recharge</span>）里，把 <span class="mono">ActvOnline__ActvOnline.tsv</span> 的 100598 行 Pack 列（col50）替换成上面白名单 → ② <span class="mono">git diff</span> 行级核对没串列 → ③ commit 前缀 <span class="mono">X3NEW-</span> → push <span class="mono">HEAD:dev_festival</span> → ④ <span class="mono">jolt_verify</span> 导表验证 SUCCESS。<br>
+    <span class="muted">全程只动 100598 一行、只碰 tsv 不碰 xlsx；ActvTask 侧不动。</span>
+  </div>
+</div>
+</body>
+</html>

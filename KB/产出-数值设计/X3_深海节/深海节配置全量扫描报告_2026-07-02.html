@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>X3 深海节配置全量扫描报告 · 2026-07-02</title>
+<style>
+:root { --ink:#1a2332; --sub:#5b6b7f; --line:#e3e8ef; --bg:#f6f8fb; --card:#fff;
+  --ok:#0e7a4f; --okbg:#e5f5ec; --warn:#9a6700; --warnbg:#fff3d6; --red:#b42318; --redbg:#fde8e6; --blue:#175cd3; --bluebg:#e7f0fe; }
+* { box-sizing:border-box; }
+body { margin:0; font:14px/1.65 "Segoe UI","Microsoft YaHei",system-ui,sans-serif; color:var(--ink); background:var(--bg); }
+.wrap { max-width:1180px; margin:0 auto; padding:28px 32px 80px; }
+h1 { font-size:23px; margin:0 0 4px; }
+h2 { font-size:17px; margin:36px 0 12px; padding-left:10px; border-left:4px solid var(--blue); }
+.meta { color:var(--sub); font-size:13px; margin-bottom:20px; }
+.banner { display:flex; gap:14px; flex-wrap:wrap; margin:18px 0 6px; }
+.stat { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 20px; min-width:150px; }
+.stat .n { font-size:26px; font-weight:700; }
+.stat .l { font-size:12.5px; color:var(--sub); }
+.chip { display:inline-block; padding:1px 9px; border-radius:20px; font-size:12px; font-weight:600; white-space:nowrap; }
+.chip.ok { background:var(--okbg); color:var(--ok); }
+.chip.warn { background:var(--warnbg); color:var(--warn); }
+.chip.bad { background:var(--redbg); color:var(--red); }
+.card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 20px; margin:12px 0; }
+.card.p1 { border-left:5px solid var(--warn); }
+.card.p2 { border-left:5px solid var(--blue); }
+.card h3 { margin:0 0 6px; font-size:15px; }
+.fix { background:var(--bluebg); border-radius:8px; padding:8px 12px; margin-top:8px; font-size:13px; }
+table { width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden; font-size:13px; }
+th { background:#eef2f7; text-align:left; padding:8px 10px; font-size:12.5px; color:var(--sub); white-space:nowrap; }
+td { padding:7px 10px; border-top:1px solid var(--line); vertical-align:top; }
+tr:hover td { background:#fafcff; }
+.mono { font-family:Consolas,monospace; font-size:12.5px; white-space:nowrap; }
+.small { font-size:12.5px; color:var(--sub); }
+.red { color:var(--red); }
+ul.compact li { margin:4px 0; }
+details { margin:10px 0; }
+summary { cursor:pointer; font-weight:600; color:var(--blue); }
+.footer { margin-top:40px; color:var(--sub); font-size:12px; border-top:1px solid var(--line); padding-top:14px; }
+</style>
+</head>
+<body><div class="wrap">
+<h1>🌊 X3 深海节配置全量扫描报告</h1>
+<div class="meta">扫描时间 2026-07-02 ·  真源 <span class="mono">C:\x3\gdconfig\tsv</span> · 分支 <b>dev</b>@<span class="mono">370a4d7</span> · 覆盖 16 个活动 / 57 个礼包 / 73 个奖励组 / 16 语 i18n</div>
+
+<div class="banner">
+  <div class="stat"><div class="n" style="color:var(--red)">0</div><div class="l">P0 阻断（吞奖励/白屏级）</div></div>
+  <div class="stat"><div class="n" style="color:var(--warn)">2</div><div class="l">P1 需处理（漏钱/空白名）</div></div>
+  <div class="stat"><div class="n" style="color:var(--blue)">2</div><div class="l">P2 观察项</div></div>
+  <div class="stat"><div class="n" style="color:var(--ok)">13</div><div class="l">历史修复复核全通过</div></div>
+</div>
+<p class="small">检查口径：① 全部 FK 引用存在性（TimeCycle/RuleTips/邮件模板/RankCfg/连锁包/礼包/奖励组/道具，按表头 FK 注释逐列校验）② Reward 组完整性（DropPara 必填、组内 ID 连续、DisplayOrder 唯一 = 仓库 pre-push 硬拦截同口径）③ 礼包深检（价格档位→PackPrice、内容→Reward 组非空）④ i18n key 存在 + 16 语覆盖 + 英文泄漏 ⑤ tsv 引号吞行 ⑥ 模块语义（档数/道具指向/已知坑复核）。</p>
+
+<h2>❗ 需处理（P1 × 2）</h2>
+
+<div class="card p1">
+<h3>1. 转盘连锁礼包付费 5 档不在累充白名单 —— 买了不涨深海累充</h3>
+<p>转盘 101025 挂的连锁 <b>ChainPack 701</b>（211021-031，免费/付费交替）中，付费档
+<span class="mono">211022($4.99) / 211024($9.99) / 211026($19.99) / 211028($49.99) / 211030($99.99)</span>
+全部<b>不在累充 100598 白名单</b>（当前 40 包）。玩家购买这 5 档不计深海累充积分。
+对照：大富翁连锁 463 的付费档（207104/06/08/10/12）、装饰连锁 700（211016-018）的付费档<b>全部在</b>白名单——同为深海付费包，此处大概率是 chain701 后挂上、白名单没跟上。</p>
+<div class="fix">🔧 修法：<span class="mono">ActvOnline__ActvOnline.tsv</span> 行 100598 白名单列（0-based c49，竖线分隔）追加
+<span class="mono">211022|211024|211026|211028|211030</span>（40→45 包）。若设计上转盘连锁本就不计累充，则请策划确认后忽略。</div>
+</div>
+
+<div class="card p1">
+<h3>2. 锚点礼包 13021-024 缺名字 i18n —— 界面与购买邮件显示空白</h3>
+<p>藏宝图锚点包 4 档（$4.99/$19.99/$49.99/$99.99，2026-06-30 新增）缺
+<span class="mono">TXT_Pack_Name_13021~13024</span>（16 语全缺，Desc 也缺）。
+服务端 key 缺失时返空 → 礼包名在售卖界面和购买邮件（模板 3000000 正文 {0}）显示<b>空白</b>。
+克隆源 210612-615（女王恩典卷）有完整 name key，克隆时漏了 i18n。</p>
+<div class="fix">🔧 修法：跑 <span class="mono">x3-translation-automatic</span> 为 4 个包补名（深海题材命名，参考「女王恩典卷」体例），16 语扩散后提交。</div>
+</div>
+
+<h2>👀 观察项（P2 × 2）</h2>
+
+<div class="card p2">
+<h3>ChainPack 463 被 102801（老航海之路）与 102802（深海）共挂</h3>
+<p>深海大富翁当前复用本体那条「罗盘+钻石+VIP」连锁（463）。背景：2026-06-30 曾在 463 vs 677（小骰子链）之间摇摆，<b>方向分歧未定论</b>——用户截图倾向 677 的设计但口头拍板 463。677 现为孤儿（无活动引用）。若最终要独立深海小骰子链，需改回 677 并逐档修 Price id（$0.5~1.6 亚美元档配不出来，只能落在 $0.99 起的现有档位）。<b>接手改这里前先跟负责人确认终版方向。</b></p>
+</div>
+
+<div class="card p2">
+<h3>ActvExchange 存量多行 cell 20 处（引号配对完整，数据不丢，编辑须知）</h3>
+<p>老活动兑换行（131300~133800、210034）的折扣标签/描述 cell 内含合法换行引号包裹。当前 42 个引号两两配对、<b>深海两店（1340=15 项、1341=13 项）数据完整</b>。风险在未来：用行级工具（awk/sed/裸 tsv_edit）碰这些行会破坏配对，复发「活动只剩第一行」事故（1341 曾中招）。改此表建议只动目标行且改完跑 csv==tab 行数比对。</p>
+</div>
+
+<details><summary>ℹ️ INFO 备忘（7 条，无功能影响）</summary>
+<ul class="compact small"><li><b>总览</b>：活动 1018091「美人鱼的梦境」重名但非深海节模块<span class='small'>（老航海之路102801的子拼图(schedule10002)）</span></li><li><b>总览</b>：活动 104801「远航战备」重名但非深海节模块<span class='small'>（常驻远航战备,TC4801自2025-11-09,重名巧合）</span></li><li><b>AO106103 深海居所装饰</b>：AO≠100000+CID（CID=700，Type=63）命名惯例偏离<span class='small'>（同类型其余 1 行中 1 行同样不符；ContentID 实链已验证存在，无功能影响）</span></li><li><b>AO109101 节日周卡</b>：AO≠100000+CID（CID=61001，Type=70）命名惯例偏离<span class='small'>（同类型其余 0 行中 0 行同样不符；ContentID 实链已验证存在，无功能影响）</span></li><li><b>AO105605 海滨之约</b>：AO≠100000+CID（CID=5606，Type=56）命名惯例偏离<span class='small'>（同类型其余 3 行中 1 行同样不符；ContentID 实链已验证存在，无功能影响）</span></li><li><b>AO10071704 远航酒馆</b>：AO≠100000+CID（CID=719，Type=7）命名惯例偏离<span class='small'>（同类型其余 6 行中 4 行同样不符；ContentID 实链已验证存在，无功能影响）</span></li><li><b>AO102993 每日礼包</b>：AO≠100000+CID（CID=3002，Type=29）命名惯例偏离<span class='small'>（同类型其余 2 行中 1 行同样不符；ContentID 实链已验证存在，无功能影响）</span></li>
+<li><b>格式</b>：BattlePassScore.tsv 每行被 padding 到 16385 列（全表统一等宽，功能无影响，仅文件冗余）。</li>
+<li><b>转盘 TC1830</b>：绝对时间占位 2020-01-01（已过期不会自触发），持续 13d23h59m59s；上线靠 iGame 部署设真实时间窗（7/3~7/12）。</li>
+<li><b>BP ScoreMode</b>：2244/2246 的 ScoreMode 均为空（=累加模式，Type22 原生行为），与直出模式(=1)二选一属设计决策，请确认与策划案一致。</li>
+</ul>
+</details>
+
+<h2>✅ 16 个活动体检总表</h2>
+<table>
+<tr><th>ActvOnline</th><th>模块</th><th>类型</th><th>ContentID</th><th>时间调度</th><th>邮件</th><th>内容链路校验摘要</th><th>结果</th></tr>
+<tr><td class="mono">101025</td><td><b>深海罗盘转盘</b></td><td>转盘(Type10)</td>
+    <td class="mono">1025</td><td class="small">1830·绝对时间占位(2020年,已过期)·需iGame部署设真实窗口</td><td class="mono">101109</td><td class="small">奖池10格+阶段奖7档；消耗藏宝图1200；RankCfg2000门槛1000✓；ItemObtain跳转✓</td><td><span class="chip warn">⚠ 白名单缺档</span></td></tr><tr><td class="mono">102244</td><td><b>远航日志BP</b></td><td>BP积分(Type22)</td>
+    <td class="mono">2244</td><td class="small">部署驱动</td><td class="mono">101109</td><td class="small">任务501-506+601-602✓；礼包130046/130035；奖励组142×20行✓</td><td><span class="chip ok">✓ 通过</span></td></tr><tr><td class="mono">102993</td><td><b>怦然心动·每日礼包</b></td><td>进度礼包(Type29)</td>
+    <td class="mono">3002</td><td class="small">160100·部署触发后计时7天</td><td class="mono">—</td><td class="small">5档800005-009($4.99×5)✓；买全大奖40600(藏宝图×100)✓</td><td><span class="chip ok">✓ 通过</span></td></tr><tr><td class="mono">100598</td><td><b>深海馈赠累充</b></td><td>累充(Type5)</td>
+    <td class="mono">598</td><td class="small">部署驱动</td><td class="mono">101109</td><td class="small">10档59811-820✓每档含罗盘✓；白名单40包全存在、无世界杯残留✓</td><td><span class="chip ok">✓ 通过</span></td></tr><tr><td class="mono">106103</td><td><b>深海居所装饰</b></td><td>链式装饰(Type63)</td>
+    <td class="mono">700</td><td class="small">部署驱动</td><td class="mono">—</td><td class="small">链700=211016-018($19.99×3)✓</td><td><span class="chip ok">✓ 通过</span></td></tr><tr><td class="mono">105605</td><td><b>海滨之约拜访</b></td><td>拜访(Type56)</td>
+    <td class="mono">5606</td><td class="small">部署驱动</td><td class="mono">—</td><td class="small">礼包211020($99.99)✓ 道具1151✓ 奖励2067✓</td><td><span class="chip ok">✓ 通过</span></td></tr><tr><td class="mono">105013</td><td><b>许愿池</b></td><td>许愿池(Type50)</td>
+    <td class="mono">5013</td><td class="small">部署驱动</td><td class="mono">101109</td><td class="small">奖池组105/103✓ 礼包1002001✓</td><td><span class="chip ok">✓ 通过</span></td></tr><tr><td class="mono">10071704</td><td><b>远航酒馆(跨服)</b></td><td>跨服酒馆(Type7)</td>
+    <td class="mono">719</td><td class="small">部署驱动</td><td class="mono">—</td><td class="small">7阶段(时长合计10天)✓ ScoreGroup28行✓ 奖励组786035-038✓ 阶段榜601-607✓</td><td><span class="chip ok">✓ 通过</span></td></tr><tr><td class="mono">102802</td><td><b>深海航行·大富翁</b></td><td>大富翁(Type28)</td>
+    <td class="mono">2802</td><td class="small">部署驱动</td><td class="mono">101109</td><td class="small">抽卡1057/1058不撞号✓ 宝箱1206→2063✓ 珍珠贝1204/棋盘4✓ 存钱罐280001✓ 阶段奖8档✓ 进度奖17档真奖励✓ 规则15015-17✓</td><td><span class="chip ok">✓ 通过</span></td></tr><tr><td class="mono">102246</td><td><b>航海通行证BP</b></td><td>BP积分(Type22)</td>
+    <td class="mono">2246</td><td class="small">部署驱动</td><td class="mono">101109</td><td class="small">任务同2244✓；礼包130036/130037；奖励组144×20行✓</td><td><span class="chip ok">✓ 通过</span></td></tr><tr><td class="mono">109101</td><td><b>节日周卡</b></td><td>自选周卡(Type70)</td>
+    <td class="mono">61001</td><td class="small">部署驱动</td><td class="mono">—</td><td class="small">周卡表61001✓ 4选1×7天；礼包2026101-104✓</td><td><span class="chip ok">✓ 通过</span></td></tr><tr><td class="mono">101406</td><td><b>深海签到</b></td><td>签到(Type14)</td>
+    <td class="mono">1406</td><td class="small">部署驱动</td><td class="mono">—</td><td class="small">7天455-461✓ 奖励59813(罗盘×3)/59814(×5)✓</td><td><span class="chip ok">✓ 通过</span></td></tr><tr><td class="mono">101828</td><td><b>大富翁拼图·美人鱼的梦境</b></td><td>拼图(Type18)</td>
+    <td class="mono">1828</td><td class="small">部署驱动</td><td class="mono">—</td><td class="small">任务组110×25格✓ 连线奖1100×11档✓ 挂102802子活动(schedule10005)✓</td><td><span class="chip ok">✓ 通过</span></td></tr><tr><td class="mono">101340</td><td><b>深海宝藏集市(兑换)</b></td><td>兑换(Type13)</td>
+    <td class="mono">1340</td><td class="small">部署驱动</td><td class="mono">—</td><td class="small">15项134000-014全在✓ 货币=深海宝珠1201</td><td><span class="chip ok">✓ 通过</span></td></tr><tr><td class="mono">101341</td><td><b>大富翁集市(兑换)</b></td><td>兑换(Type13)</td>
+    <td class="mono">1341</td><td class="small">部署驱动</td><td class="mono">—</td><td class="small">13项134100-112全在✓ 货币=深海代币1202；藏宝图排序996✓</td><td><span class="chip ok">✓ 通过</span></td></tr>
+</table>
+<p class="small">邮件列「—」的活动（兑换/签到/每日礼包/周卡/酒馆/装饰/拜访/拼图）：同类型老活动同样不配邮件模板（发奖走即领/背包路径），非漏配。</p>
+
+<h2>🔁 历史 BUG 修复复核（上线期 06-29 ~ 07-02 批次，逐条在 dev 上验证）</h2>
+<table>
+<tr><th style="width:220px">事项</th><th>当前 dev 状态</th><th style="width:110px">结论</th></tr>
+<tr><td><b>转盘海域排名门槛</b></td><td class='small'>RankCfg 2000 上榜条件 = 1000 分</td><td><span class="chip ok">✓ 已在 dev</span></td></tr><tr><td><b>大富翁按抽奖次数阶段奖二改</b></td><td class='small'>4200001-08：奇数档航海罗盘1057×20/60/120/200，偶数档海神罗盘1058；阈值20~700</td><td><span class="chip ok">✓ 已在 dev</span></td></tr><tr><td><b>锚点礼包 13021-024</b></td><td class='small'>Pack 存在、Reward 组 ItemType 全=1（06-30 误填2/3已修）、进累充白名单</td><td><span class="chip ok">✓ 已在 dev</span></td></tr><tr><td><b>藏宝图 1200 获取路径</b></td><td class='small'>ItemObtain 1200 → 跳转深海转盘 101025</td><td><span class="chip ok">✓ 已在 dev</span></td></tr><tr><td><b>每日礼包 ActvGroup</b></td><td class='small'>102993 挂组 140（深海节主hub）</td><td><span class="chip ok">✓ 已在 dev</span></td></tr><tr><td><b>兑换商店藏宝图排序</b></td><td class='small'>134111 排序=996（第4位）</td><td><span class="chip ok">✓ 已在 dev</span></td></tr><tr><td><b>累充白名单世界杯残留</b></td><td class='small'>40 包全为深海自有（BP=130035/36/37/46 非通用 130020/21）</td><td><span class="chip ok">✓ 已清</span></td></tr><tr><td><b>累充第10档漏罗盘</b></td><td class='small'>组 59859 = 藏宝图×800 + 罗盘1057×45，组内 ID 连续</td><td><span class="chip ok">✓ 已在 dev</span></td></tr><tr><td><b>大富翁精准抽卡撞号</b></td><td class='small'>2802 LotteryItemID1=1057 ≠ LotteryItemID2=1058</td><td><span class="chip ok">✓ 已在 dev</span></td></tr><tr><td><b>神秘宝箱独立化（记忆中为WIP）</b></td><td class='small'>TreasureItemID=1206→Reward2063（信物52003+深海代币1202+加速）；RuleTips 15015|15016|15017（岛屿升级15011已移除）；1206/15015-17 i18n 齐全；老版102801仍用1059/15010-12不受影响</td><td><span class="chip ok">✓ 实际已合入 dev</span></td></tr><tr><td><b>珍珠贝进度奖励占位（记忆中待定）</b></td><td class='small'>17 档已全部填真奖励：航海罗盘1057×5~14 递增（阈值1~108）</td><td><span class="chip ok">✓ 已解决</span></td></tr><tr><td><b>拼图子活动挂载</b></td><td class='small'>ActvGroupSchedule 10005：102802→101828</td><td><span class="chip ok">✓ 已在 dev</span></td></tr><tr><td><b>深海 i18n 全量修复</b></td><td class='small'>16 活动名/描述、核心道具 1057/1058/1059/1200/1201/1202/1204 名+描述、规则文案，16 语全齐（表后 8 列为无表头预留列非缺失）</td><td><span class="chip ok">✓ 已在 dev</span></td></tr>
+</table>
+<p class="small">注：「神秘宝箱独立化」「珍珠贝进度奖励」两项在项目记忆中还标着 WIP/占位，本次扫描确认<b>均已落地</b>，记忆已同步更新。</p>
+
+<h2>💰 深海礼包价目总表（57 包）</h2>
+<table>
+<tr><th>Pack</th><th>名称(cn)</th><th>价格档(PackPrice)</th><th>美元</th><th>内容(Reward组)</th><th>累充白名单</th></tr>
+<tr><td class="mono">13021</td><td><b class='red'>（无名字key）</b></td><td class="mono">105</td><td class="mono">4.99</td><td class="mono">13021</td><td style="text-align:center">✓</td></tr><tr><td class="mono">13022</td><td><b class='red'>（无名字key）</b></td><td class="mono">111</td><td class="mono">19.99</td><td class="mono">13022</td><td style="text-align:center">✓</td></tr><tr><td class="mono">13023</td><td><b class='red'>（无名字key）</b></td><td class="mono">116</td><td class="mono">49.99</td><td class="mono">13023</td><td style="text-align:center">✓</td></tr><tr><td class="mono">13024</td><td><b class='red'>（无名字key）</b></td><td class="mono">115</td><td class="mono">99.99</td><td class="mono">13024</td><td style="text-align:center">✓</td></tr><tr><td class="mono">130035</td><td>至尊护航令</td><td class="mono">111</td><td class="mono">19.99</td><td class="mono"></td><td style="text-align:center">✓</td></tr><tr><td class="mono">130036</td><td>高级护航令</td><td class="mono">107</td><td class="mono">9.99</td><td class="mono"></td><td style="text-align:center">✓</td></tr><tr><td class="mono">130037</td><td>至尊护航令</td><td class="mono">111</td><td class="mono">19.99</td><td class="mono"></td><td style="text-align:center">✓</td></tr><tr><td class="mono">130046</td><td>高级护航令</td><td class="mono">107</td><td class="mono">9.99</td><td class="mono"></td><td style="text-align:center">✓</td></tr><tr><td class="mono">207101</td><td>免费礼包</td><td class="mono">免费/非直售</td><td class="mono"></td><td class="mono">207101</td><td style="text-align:center">—</td></tr><tr><td class="mono">207104</td><td>航海罗盘礼包2</td><td class="mono">105</td><td class="mono">4.99</td><td class="mono">207104</td><td style="text-align:center">✓</td></tr><tr><td class="mono">207105</td><td>免费礼包</td><td class="mono">免费/非直售</td><td class="mono"></td><td class="mono">207105</td><td style="text-align:center">—</td></tr><tr><td class="mono">207106</td><td>航海罗盘礼包3</td><td class="mono">107</td><td class="mono">9.99</td><td class="mono">207106</td><td style="text-align:center">✓</td></tr><tr><td class="mono">207107</td><td>免费礼包</td><td class="mono">免费/非直售</td><td class="mono"></td><td class="mono">207107</td><td style="text-align:center">—</td></tr><tr><td class="mono">207108</td><td>航海罗盘礼包4</td><td class="mono">111</td><td class="mono">19.99</td><td class="mono">207108</td><td style="text-align:center">✓</td></tr><tr><td class="mono">207109</td><td>免费礼包</td><td class="mono">免费/非直售</td><td class="mono"></td><td class="mono">207109</td><td style="text-align:center">—</td></tr><tr><td class="mono">207110</td><td>航海罗盘礼包5</td><td class="mono">116</td><td class="mono">49.99</td><td class="mono">207110</td><td style="text-align:center">✓</td></tr><tr><td class="mono">207111</td><td>免费礼包</td><td class="mono">免费/非直售</td><td class="mono"></td><td class="mono">207111</td><td style="text-align:center">—</td></tr><tr><td class="mono">207112</td><td>航海罗盘礼包6</td><td class="mono">115</td><td class="mono">99.99</td><td class="mono">207112</td><td style="text-align:center">✓</td></tr><tr><td class="mono">207113</td><td>免费礼包</td><td class="mono">免费/非直售</td><td class="mono"></td><td class="mono">207113</td><td style="text-align:center">—</td></tr><tr><td class="mono">211016</td><td>深海居所特惠</td><td class="mono">111</td><td class="mono">19.99</td><td class="mono">211016</td><td style="text-align:center">✓</td></tr><tr><td class="mono">211017</td><td>深海居所特惠</td><td class="mono">111</td><td class="mono">19.99</td><td class="mono">211017</td><td style="text-align:center">✓</td></tr><tr><td class="mono">211018</td><td>深海居所特惠</td><td class="mono">111</td><td class="mono">19.99</td><td class="mono">211018</td><td style="text-align:center">✓</td></tr><tr><td class="mono">211019</td><td>深海头像框礼包</td><td class="mono">107</td><td class="mono">9.99</td><td class="mono">211019</td><td style="text-align:center">✓</td></tr><tr><td class="mono">211020</td><td>海滨之约</td><td class="mono">115</td><td class="mono">99.99</td><td class="mono">211020</td><td style="text-align:center">✓</td></tr><tr><td class="mono">211021</td><td>免费礼包</td><td class="mono">免费/非直售</td><td class="mono"></td><td class="mono">211021</td><td style="text-align:center">—</td></tr><tr><td class="mono">211022</td><td>深海礼包2</td><td class="mono">105</td><td class="mono">4.99</td><td class="mono">211022</td><td style="text-align:center"><b class='red'>✗</b></td></tr><tr><td class="mono">211023</td><td>免费礼包</td><td class="mono">免费/非直售</td><td class="mono"></td><td class="mono">211023</td><td style="text-align:center">—</td></tr><tr><td class="mono">211024</td><td>深海礼包3</td><td class="mono">107</td><td class="mono">9.99</td><td class="mono">211024</td><td style="text-align:center"><b class='red'>✗</b></td></tr><tr><td class="mono">211025</td><td>免费礼包</td><td class="mono">免费/非直售</td><td class="mono"></td><td class="mono">211025</td><td style="text-align:center">—</td></tr><tr><td class="mono">211026</td><td>深海礼包4</td><td class="mono">111</td><td class="mono">19.99</td><td class="mono">211026</td><td style="text-align:center"><b class='red'>✗</b></td></tr><tr><td class="mono">211027</td><td>免费礼包</td><td class="mono">免费/非直售</td><td class="mono"></td><td class="mono">211027</td><td style="text-align:center">—</td></tr><tr><td class="mono">211028</td><td>深海礼包5</td><td class="mono">116</td><td class="mono">49.99</td><td class="mono">211028</td><td style="text-align:center"><b class='red'>✗</b></td></tr><tr><td class="mono">211029</td><td>免费礼包</td><td class="mono">免费/非直售</td><td class="mono"></td><td class="mono">211029</td><td style="text-align:center">—</td></tr><tr><td class="mono">211030</td><td>深海礼包6</td><td class="mono">115</td><td class="mono">99.99</td><td class="mono">211030</td><td style="text-align:center"><b class='red'>✗</b></td></tr><tr><td class="mono">211031</td><td>免费礼包</td><td class="mono">免费/非直售</td><td class="mono"></td><td class="mono">211031</td><td style="text-align:center">—</td></tr><tr><td class="mono">280001</td><td>深海珍宝罐</td><td class="mono">111</td><td class="mono">19.99</td><td class="mono">1028027</td><td style="text-align:center">✓</td></tr><tr><td class="mono">800005</td><td>第1日礼包</td><td class="mono">105</td><td class="mono">$4.99</td><td class="mono">40500</td><td style="text-align:center">✓</td></tr><tr><td class="mono">800006</td><td>第2日礼包</td><td class="mono">105</td><td class="mono">$4.99</td><td class="mono">40500</td><td style="text-align:center">✓</td></tr><tr><td class="mono">800007</td><td>第3日礼包</td><td class="mono">105</td><td class="mono">$4.99</td><td class="mono">40500</td><td style="text-align:center">✓</td></tr><tr><td class="mono">800008</td><td>第4日礼包</td><td class="mono">105</td><td class="mono">$4.99</td><td class="mono">40500</td><td style="text-align:center">✓</td></tr><tr><td class="mono">800009</td><td>第5日礼包</td><td class="mono">105</td><td class="mono">$4.99</td><td class="mono">40500</td><td style="text-align:center">✓</td></tr><tr><td class="mono">1002001</td><td>许愿礼包</td><td class="mono">105</td><td class="mono">4.99</td><td class="mono">4024325</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2026101</td><td>基础周卡</td><td class="mono">107</td><td class="mono">9.99</td><td class="mono">826301</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2026102</td><td>进阶周卡</td><td class="mono">111</td><td class="mono">19.99</td><td class="mono">826302</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2026103</td><td>至尊周卡</td><td class="mono">112</td><td class="mono">29.99</td><td class="mono">826303</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2026104</td><td>周卡全包</td><td class="mono">116</td><td class="mono">49.99</td><td class="mono">826304</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2801001</td><td>深海寻宝礼包</td><td class="mono">102</td><td class="mono">$1.99</td><td class="mono">1028021</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2801002</td><td>深海寻宝礼包</td><td class="mono">105</td><td class="mono">$4.99</td><td class="mono">1028022</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2801003</td><td>深海寻宝礼包</td><td class="mono">107</td><td class="mono">$9.99</td><td class="mono">1028023</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2801004</td><td>深海寻宝礼包</td><td class="mono">111</td><td class="mono">$19.99</td><td class="mono">1028024</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2801005</td><td>深海珍藏礼包</td><td class="mono">116</td><td class="mono">$49.99</td><td class="mono">1028025</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2801006</td><td>深渊至宝礼包</td><td class="mono">115</td><td class="mono">$99.99</td><td class="mono">1028026</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2801007</td><td>深渊至宝礼包</td><td class="mono">115</td><td class="mono">$99.99</td><td class="mono">1028026</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2801008</td><td>深渊至宝礼包</td><td class="mono">115</td><td class="mono">$99.99</td><td class="mono">1028026</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2801009</td><td>深渊至宝礼包</td><td class="mono">115</td><td class="mono">$99.99</td><td class="mono">1028026</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2801010</td><td>深渊至宝礼包</td><td class="mono">115</td><td class="mono">$99.99</td><td class="mono">1028026</td><td style="text-align:center">✓</td></tr><tr><td class="mono">2801011</td><td>深渊至宝礼包</td><td class="mono">115</td><td class="mono">$99.99</td><td class="mono">1028026</td><td style="text-align:center">✓</td></tr>
+</table>
+<p class="small">白名单列：✓=已在累充 100598 白名单；<b class="red">✗</b>=付费包但不在白名单（即 P1-1 的 5 档）；—=免费/非直售包（不需要进白名单）。</p>
+
+<h2>📋 覆盖范围说明</h2>
+<ul class="compact small">
+<li>✅ 已扫：gdconfig tsv 配置仓（活动/礼包/奖励/道具/兑换/时间/规则/排行 全 FK 链）+ i18n Text 表 16 语。</li>
+<li>❌ 未扫（不在本仓）：客户端 DK/美术资源注册（Path_Activity/图标实体，在 x3-project client 仓）、iGame 部署态（活动时间窗/服务器范围）、数仓 dim_iap 主数据（深海 211016-031 此前记录为待补）、数值合理性（另见《深海节数值体系总览_投放感受》）。</li>
+<li>本报告由扫描脚本产出：<span class="mono">deepsea_scan.py</span>（六类检查、FK 按表头注释逐列校验），可复用于后续节日。</li>
+</ul>
+
+<div class="footer">X3 深海节 · 配置全量扫描 · 生成于 2026-07-02 · 分支 dev@370a4d7 · 扫描口径与仓库 pre-push 硬拦截一致</div>
+</div></body></html>
