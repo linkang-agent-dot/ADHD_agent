@@ -1,0 +1,24 @@
+{
+  "to": [
+    {"serverId": "2020", "playerId": "1819357", "assets": [{"assetType": "PROP", "id": "1146", "amount": 5}], "extension": ""},
+    {"serverId": "2070", "playerId": "1874487", "assets": [{"assetType": "PROP", "id": "1146", "amount": 6}], "extension": ""},
+    {"serverId": "2080", "playerId": "1883804", "assets": [{"assetType": "PROP", "id": "1146", "amount": 6}], "extension": ""},
+    {"serverId": "2150", "playerId": "1939549", "assets": [{"assetType": "PROP", "id": "1146", "amount": 6}], "extension": ""},
+    {"serverId": "2160", "playerId": "1961500", "assets": [{"assetType": "PROP", "id": "1146", "amount": 6}], "extension": ""},
+    {"serverId": "2190", "playerId": "1979720", "assets": [{"assetType": "PROP", "id": "1146", "amount": 1}], "extension": ""},
+    {"serverId": "2190", "playerId": "1982537", "assets": [{"assetType": "PROP", "id": "1146", "amount": 6}], "extension": ""},
+    {"serverId": "2200", "playerId": "1997623", "assets": [{"assetType": "PROP", "id": "1146", "amount": 6}], "extension": ""},
+    {"serverId": "2220", "playerId": "2026548", "assets": [{"assetType": "PROP", "id": "1146", "amount": 2}], "extension": ""},
+    {"serverId": "2240", "playerId": "2050219", "assets": [{"assetType": "PROP", "id": "1146", "amount": 5}], "extension": ""}
+  ],
+  "content": [
+    {"lang": "ru", "title": "Возврат билетов розыгрыша ЧМ", "body": "Дорогой лорд! Из-за системной ошибки ваши билеты чемпионского розыгрыша ЧМ были ошибочно изъяты. Мы вернули их полностью — проверьте вложение. Приносим извинения за неудобства!", "collectionId": -1},
+    {"lang": "en", "title": "World Cup Draw Ticket Reissue", "body": "Dear Lord, due to a system issue, your World Cup Champion Draw Tickets were mistakenly recycled. They have now been fully reissued — please check the attachment. We apologize for the inconvenience!", "collectionId": -1}
+  ],
+  "mailCategoryId": 1,
+  "sendType": -1,
+  "validPeriod": 1920,
+  "customParams": "",
+  "rewardVersion": "",
+  "remark": "世界杯奖券回收补发_余10人49张_20260703"
+}

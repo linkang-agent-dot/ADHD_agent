@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 """X3 深海节全量配置扫描（dev 分支 tsv 真源）
+🔴 复用前必读(2026-07-03教训)：本脚本直接读 C:/x3/gdconfig/tsv 工作树——主仓可能停在别的分支且带脏改动
+(当天=dev_festival)，会扫出陈旧数据误报。复用前先确认主仓在目标分支且干净(git branch --show-current +
+git status -sb)，否则开临时 worktree (git worktree add ../gdconfig-scan --detach origin/dev) 并把下方 TSV 常量指过去再扫。
 检查维度：
   A. ActvOnline 16 活动行的全部 FK 引用（TimeCycle/RuleTips/Mail/RankCfg/ChainPack/ActvGroup/白名单Pack）
   B. 各类型内容表存在性 + 内容表内 FK

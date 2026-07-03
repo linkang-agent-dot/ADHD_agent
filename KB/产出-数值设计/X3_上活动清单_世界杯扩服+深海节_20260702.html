@@ -1,0 +1,144 @@
+<style>
+  :root{--wc:#2b6cb0;--ds:#2c7a7b;--warn:#c05621;--ok:#2f855a;--bg:#f7fafc;--line:#e2e8f0;--ink:#1a202c;--mut:#718096}
+  *{box-sizing:border-box}
+  body,.wrap{margin:0}
+  .wrap{font-family:"Microsoft YaHei",system-ui,sans-serif;color:var(--ink);background:var(--bg);padding:22px;max-width:1180px;margin:0 auto;line-height:1.5}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{color:var(--mut);font-size:13px;margin-bottom:18px}
+  h2{font-size:18px;margin:26px 0 10px;padding-left:9px;border-left:5px solid var(--ink)}
+  h2.wc{border-color:var(--wc);color:var(--wc)} h2.ds{border-color:var(--ds);color:var(--ds)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px}
+  table{border-collapse:collapse;width:100%;font-size:13px}
+  th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:#edf2f7;font-weight:600}
+  code{background:#edf2f7;padding:1px 5px;border-radius:4px;font-size:12px;font-family:Consolas,monospace}
+  .tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:10px;color:#fff}
+  .t-wc{background:var(--wc)} .t-ds{background:var(--ds)} .t-free{background:#805ad5}
+  .warn{background:#fffaf0;border:1px solid #f6ad55;border-radius:8px;padding:10px 13px;margin:10px 0;font-size:13px}
+  .ok{color:var(--ok);font-weight:600}
+  .no{color:#c53030;font-weight:600}
+  /* gantt */
+  .gantt{overflow-x:auto}
+  .gantt table{min-width:820px}
+  .gantt td,.gantt th{text-align:center;padding:4px 2px;font-size:12px}
+  .bar{height:16px;border-radius:4px;display:block}
+  .b-wc{background:var(--wc)} .b-ds{background:var(--ds)} .b-wk{background:#805ad5}
+  .day-today{background:#fff5f5;font-weight:700;color:#c53030}
+  ul{margin:6px 0 6px 0;padding-left:20px} li{margin:3px 0;font-size:13px}
+  .small{font-size:12px;color:var(--mut)}
+</style>
+<div class="wrap">
+<h1>X3 上活动清单 · 世界杯扩服 + 深海节</h1>
+<div class="sub">生成 2026-07-02 ｜ 甘特视角 ｜ 两批并行：① 世界杯扩服到新服 1980–2250 ② 深海节 D35+ 服 7/3 全服铺开 ｜ 少数新服(1980–2010)两批都开</div>
+
+<!-- ===== 甘特总览 ===== -->
+<h2>① 时间线总览</h2>
+<div class="card gantt">
+<table>
+<tr><th style="text-align:left">批次 / 里程碑</th><th>7/2<br>今</th><th>7/3</th><th>7/4</th><th>7/5</th><th>7/6</th><th>7/7</th><th>7/8</th><th>7/9</th><th>7/10</th><th>7/11</th><th>7/12</th><th>…</th><th>7/19<br>决赛</th><th>7/21</th></tr>
+<tr><td style="text-align:left"><span class="tag t-wc">世界杯扩服</span> 1980–2250</td><td class="day-today">▶上</td><td colspan="12"><span class="bar b-wc"></span></td><td>止</td></tr>
+<tr><td style="text-align:left"><span class="tag t-ds">深海节</span> 主体 D1–D14</td><td></td><td>▶上</td><td colspan="9"><span class="bar b-ds"></span></td><td class="small"><span class="bar b-ds"></span>D14·7/16</td><td></td><td></td></tr>
+<tr><td style="text-align:left"><span class="tag t-wk">深海周卡 109101</span></td><td colspan="7" class="small">（等新客户端包）</td><td>▶随包</td><td colspan="3"><span class="bar b-wk"></span></td><td class="small"><span class="bar b-wk"></span>→7/16</td><td></td><td></td></tr>
+</table>
+<div class="small" style="margin-top:6px">关键锚点：<b>7/3</b> 深海全服（除周卡）+ 世界杯扩服同步铺开 ｜ 深海主体 <b>14 天（D1–D14 = 7/3–7/16）</b> ｜ <b>7/9</b> 深海周卡随新客户端包开（<b>不热更</b>）跑到 7/16 ｜ <b>签到 2 期</b>（7/3–7/9 + 7/9–7/16） ｜ <b>7/19</b> 世界杯决赛、<b>7/21</b> 世界杯止。<span class="no">⚠️深海拉到 7/16 会盖到世界杯半决赛(7/15)——之前"提前到 7/3 避半决"的理由被 14 天覆盖，确认可接受。</span></div>
+</div>
+
+<!-- ===== 世界杯扩服 ===== -->
+<h2 class="wc">② 世界杯扩服 — 上到新服 1980–2250（28 服）</h2>
+
+<div class="warn">
+<b>准入口径（用户定）</b>：<b>开服第 30 天（D30）落在 7/21 前</b>的服才可上 = 开服日 <code>≤ 2026-06-22</code>。
+<br>→ 过线 = <b>1980 ~ 2250 共 28 个服</b>（步进 10）；<b>2260 及更新的不上</b>（2260 开服 6/24、D30=7/23 超期）。
+<br><span class="small">口径根因：世界杯只发足球宝贝皮肤 5304001、<b>不发本体爱莉希雅</b>；本体只能招募（开服第 29–34 天首次 UP）。D30 卡线 = 保证新服玩家在世界杯期内能抽到本体，皮肤大奖才不白给。</span>
+</div>
+
+<div class="card">
+<b>过线服列表（28 服，逐服部署）</b>
+<div class="small" style="margin:6px 0">1980 · 1990 · 2000 · 2010 · 2020 · 2030 · 2040 · 2050 · 2060 · 2070 · 2080 · 2090 · 2100 · 2110 · 2120 · 2130 · 2140 · 2150 · 2160 · 2170 · 2180 · 2190 · 2200 · 2210 · 2220 · 2230 · 2240 · 2250</div>
+</div>
+
+<div class="card">
+<b>每服要上的世界杯模块（6 块）</b>
+<table>
+<tr><th>模块</th><th>ActvOnline ID</th><th>类型</th><th>部署方式</th><th>备注</th></tr>
+<tr><td>竞猜（当前在跑的场次）</td><td><code>102920–102992</code> 池</td><td>ActvType71/64 · customParam 驱动</td><td><code>deploy_wc.py &lt;场次&gt; prod --go</code>（servers 列表加这 28 服）</td><td>只上当前/后续开着的场，已过的场不补</td></tr>
+<tr><td>世界杯开箱（大奖=足球宝贝皮肤）</td><td><code>101516</code></td><td>ActvType15</td><td>iGame submit</td><td>抽奖券 1146 的唯一消耗口，必上</td></tr>
+<tr><td>荣耀兑换所</td><td><code>101339</code></td><td>ActvType13</td><td>iGame submit</td><td>荣耀金币 1147 消耗口</td></tr>
+<tr><td>世界杯通行证 BP</td><td><code>102243</code></td><td>ActvType22</td><td>iGame submit</td><td>竞猜加分靠 GM，每日结算随发</td></tr>
+<tr><td>累充</td><td><code>100597</code></td><td>ActvType5</td><td>iGame submit</td><td>白名单已含 WC 礼包</td></tr>
+<tr><td>签到</td><td><code>101403</code></td><td>ActvType14</td><td>iGame submit</td><td>TC=0 靠部署控时</td></tr>
+</table>
+</div>
+
+<div class="warn">
+<b>⚠️ 扩服前必须确认的 3 道版本门槛</b>（否则上了也是坏的）：
+<ul>
+<li>① <b>服务端</b>含 <code>X3NEW-1432</code>（认 ActvType 64/71，竞猜对阵才建得出）</li>
+<li>② <b>客户端资源包</b>含 <code>X3NEW-1441</code> + 世界杯 DK（视频皮肤/头像框/表情正常显示，否则视频皮肤 fallback 静态图）</li>
+<li>③ 这 28 服都是 D30 达标（本体可招募）——已由准入口径保证 ✅</li>
+</ul>
+</div>
+
+<!-- ===== 深海节 ===== -->
+<h2 class="ds">③ 深海节 — D50+ 老服，7/3 全服铺开</h2>
+
+<div class="card">
+<b>范围 / 节奏</b>
+<ul>
+<li>开启范围：<b>D35+ 服</b>（开服 ≤ 2026-05-30）= <b>59 个活跃服，范围 1170 ~ 2010</b>（2026-07-02 数仓拉·合掉的空 id 已剔·边界 2010 开服5/29在内 / 2020 开服5/31=D34出局）；<b>与世界杯扩服(1980–2250)重叠 4 服</b>：<b>1980 / 1990 / 2000 / 2010</b> 两批都开。</li>
+<li class="small" style="color:#4a5568">59 服完整列表（部署照这个走）：<br><code style="font-size:11px;white-space:normal">1170,1270,1310,1350,1390,1400,1420,1440,1460,1510,1530,1540,1550,1560,1570,1580,1590,1600,1610,1620,1630,1640,1650,1660,1670,1680,1690,1700,1710,1720,1730,1740,1750,1760,1770,1780,1790,1800,1810,1820,1830,1840,1850,1860,1870,1880,1890,1900,1910,1920,1930,1940,1950,1960,1970,1980,1990,2000,2010</code></li>
+<li>主体 <b>7/3 全服上线</b>，跑 <b>D1–D14（到 7/16，14 天）</b>；双周双核心名副其实（第一周转盘/排行铺广度，第二周大富翁/BP 攻付费深度）。</li>
+<li><b>签到 101406 → 2 期</b>：签到内部是 7 天一轮，14 天 = <b>2 期（期1 7/3–7/9 + 期2 7/9–7/16）</b>，部署两个实例即可（无需改配置）。</li>
+<li><b>周卡 109101 例外</b>：<b>7/9 随新客户端包一起开、不热更</b>（客户端读本地档位，热更会所见非所得），跑到 7/16。</li>
+</ul>
+</div>
+
+<div class="card">
+<b>16 个活动（全走 iGame 部署）</b>
+<table>
+<tr><th>#</th><th>模块</th><th>AO ID</th><th>类型</th><th>ActvGroup</th><th>时长约束</th><th>上线（14天 = 7/3–7/16）</th></tr>
+<tr><td>1</td><td>深海罗盘 转盘</td><td><code>101025</code></td><td>10 转盘</td><td>140</td><td>自由（按次数）</td><td>7/3–7/16</td></tr>
+<tr><td>2</td><td>累充</td><td><code>100598</code></td><td>5</td><td>140</td><td>自由</td><td>7/3–7/16</td></tr>
+<tr><td>3</td><td>BP 远航日志</td><td><code>102244</code></td><td>22</td><td>140</td><td>积分盘按 14 天（双周）</td><td>7/3–7/16</td></tr>
+<tr><td>4</td><td>BP 航海通行证</td><td><code>102246</code></td><td>22</td><td>140</td><td>积分盘按 14 天（双周）</td><td>7/3–7/16</td></tr>
+<tr><td>5</td><td>大富翁（航海之路成就版）</td><td><code>102802</code></td><td>28</td><td>141</td><td>次数型</td><td>7/3–7/16</td></tr>
+<tr><td>6</td><td>大富翁拼图</td><td><code>101828</code></td><td>18（102802 子活动）</td><td>141</td><td>≥5 天（14 天内 OK）</td><td>7/3–7/16</td></tr>
+<tr><td>7</td><td>每日礼包 怦然心动</td><td><code>102993</code></td><td>29</td><td>140</td><td>固定 7 天（5 档按第 N 日解锁）</td><td><b>7/3–7/9（只上前 7 天·用户定）</b></td></tr>
+<tr><td>8</td><td>签到</td><td><code>101406</code></td><td>14</td><td>140</td><td>7 天/期</td><td><b>2 期：7/3–7/9 + 7/9–7/16</b></td></tr>
+<tr><td>9</td><td>酒馆</td><td><code>10071704</code></td><td>7 多阶段</td><td>—</td><td>正好 10 天（阶段累计时长=活动时长）</td><td><b>7/3–7/12（只开 10 天·用户定·不改配置）</b></td></tr>
+<tr><td>10</td><td>装饰阶梯礼包</td><td><code>106103</code></td><td>ChainPack 装饰</td><td>140</td><td>自由</td><td>7/3–7/16</td></tr>
+<tr><td>11</td><td>深海珍宝集市（宝珠1201）</td><td><code>101340</code></td><td>13 兑换</td><td>140</td><td>零每日刷新·总量限购</td><td>7/3–7/16</td></tr>
+<tr><td>12</td><td>大富翁集市（代币1202）</td><td><code>101341</code></td><td>13 兑换</td><td>141</td><td>零每日刷新·总量限购</td><td>7/3–7/16</td></tr>
+<tr><td>13</td><td>拜访</td><td><code>105605</code></td><td>56</td><td>140</td><td>每日邀请函（14 天内每日）</td><td>7/3–7/16</td></tr>
+<tr><td>14</td><td>许愿池（跨服）</td><td><code>105013</code></td><td>50</td><td>—</td><td><b>跨服·须绝对时间各服对齐</b>（最不灵活，先定）</td><td>7/3–7/16</td></tr>
+<tr><td>15</td><td>节日周卡</td><td><code>109101</code></td><td>周卡</td><td>140</td><td>≥7 天</td><td><b class="no">7/9 随新包</b>–7/16</td></tr>
+</table>
+<div class="small">注：AO=100000+CID 铁律；ActvGroup 140=深海节主 hub / 141=深海航行（大富翁+拼图）。以上为 2026-07-02 dev@370a4d7 全量扫描结果（P0=0，P1 已修）。</div>
+</div>
+
+<div class="warn">
+<b>⚠️ 深海部署顺序坑 + 14 天改动待办</b>：
+<ul>
+<li><b>签到 101406 → 2 期</b>：部署两个实例（7/3–7/9 / 7/9–7/16），纯部署层、不改配置。</li>
+<li><b class="ok">✅ 每日礼包 102993</b>：<b>只上前 7 天（7/3–7/9）</b>（用户定）——不配 2 期、不改配置。</li>
+<li><b class="ok">✅ 酒馆 10071704</b>：<b>只开 10 天（7/3–7/12）</b>（用户定）——保持阶段配置不动，iGame 窗口按 10 天填。</li>
+<li><b>许愿池 105013 先定</b>——跨服 type50 必须绝对时间各服对齐，最不灵活，先排它再排其他（14 天窗口各服对齐）。</li>
+<li><b>周卡 109101 不跟 7/3</b>——等 7/9 新客户端包（热更会显示旧酒发新罗盘，两端必须同批），跑到 7/16。</li>
+</ul>
+</div>
+
+<!-- ===== 部署SOP ===== -->
+<h2>④ 部署方式 / SOP</h2>
+<div class="card">
+<ul>
+<li><b>世界杯竞猜</b>：<code>python ~/.claude/skills/igame-x3-activity-deploy/deploy_wc.py &lt;场次&gt; prod --go</code>，把 servers 列表加上这 28 个新服（内置查重防撞）。</li>
+<li><b>世界杯 5 个非竞猜模块 + 深海 16 活动</b>：走 iGame 批量部署（skill <code>igame-x3-activity-deploy</code> / <code>igame-actv</code> 从甘特读排期），prod 网关 <code>webgw-cn.tap4fun.com</code>，auth 走 <code>.igame-auth.json</code>（gameId=1090）。</li>
+<li><b>时间填法</b>：iGame 一律按 UTC 直填不换算；TC=0 的模块（世界杯全系列）完全靠 iGame 窗口控时。</li>
+<li><b>部署后复查</b>：<code>GET webgw-cn.tap4fun.com/ark/activity/list</code> 读回 customParam/时间/servers/status 核对；或客户端退登重进刷活动列表。</li>
+</ul>
+</div>
+
+<div class="small" style="margin-top:16px;color:#a0aec0">
+本清单事实源：世界杯扩服口径 = 本会话 datain 反查开服日（open≤6/22）；深海 16 活动 = 2026-07-02 dev@370a4d7 全量扫描报告；时长约束 = 深海各模块排期约束表。归档：<code>KB\产出-数值设计\X3_上活动清单_世界杯扩服+深海节_20260702.html</code>
+</div>
+</div>

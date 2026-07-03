@@ -86,16 +86,19 @@ def result_of(m):
 def bp_snowflakes():
     auth=json.loads((pathlib.Path.home()/".igame-auth.json").read_text(encoding="utf-8"))
     h={"accept":"*/*","authorization":f"Bearer {auth['token']}","clientid":auth['clientId'],"gameid":auth.get('gameId','1090'),"regionid":auth.get('regionId','201'),"origin":"https://igame.tap4fun.com","referer":"https://igame.tap4fun.com/"}
-    r=urllib.request.urlopen(urllib.request.Request("https://webgw-cn.tap4fun.com/ark/activity/list?pageIndex=1&pageSize=200",headers=h),timeout=90,context=ctx)
-    lst=json.loads(r.read().decode('utf-8',errors='replace')); lst=lst.get('data') if isinstance(lst,dict) else lst
     sv={}
-    for x in lst:
-        if str(x.get('activityConfigId'))==WCBP_CFG and x.get('status')==5:
-            for rr in (x.get('responses') or []):
-                try:
-                    for it in json.loads(rr.get('data','[]')):
-                        if it.get('activityId') and it.get('serverId'): sv[str(it['serverId'])]=str(it['activityId'])
-                except: pass
+    for pi in range(1,12):  # ★翻页兜底:活动数增多后老服BP(如13697)会落到后页,只读第1页会漏(2026-07-03扩服后踩坑)
+        r=urllib.request.urlopen(urllib.request.Request(f"https://webgw-cn.tap4fun.com/ark/activity/list?pageIndex={pi}&pageSize=100",headers=h),timeout=90,context=ctx)
+        lst=json.loads(r.read().decode('utf-8',errors='replace')); lst=lst.get('data') if isinstance(lst,dict) else lst
+        if not lst: break
+        for x in lst:
+            if str(x.get('activityConfigId'))==WCBP_CFG and x.get('status')==5:
+                for rr in (x.get('responses') or []):
+                    try:
+                        for it in json.loads(rr.get('data','[]')):
+                            if it.get('activityId') and it.get('serverId'): sv[str(it['serverId'])]=str(it['activityId'])
+                    except: pass
+        if len(lst)<100: break
     return sv
 def winners_of(win):  # 买赢队礼包的每一笔(不去重·买多档=多笔)
     packs=[base(win)+t for t in range(4)]; inl=",".join(f"'{p}'" for p in packs)

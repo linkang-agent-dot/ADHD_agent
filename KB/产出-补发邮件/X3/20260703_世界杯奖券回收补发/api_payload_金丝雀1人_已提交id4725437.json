@@ -1,0 +1,15 @@
+{
+  "to": [
+    {"serverId": "2080", "playerId": "1879472", "assets": [{"assetType": "PROP", "id": "1146", "amount": 1}], "extension": ""}
+  ],
+  "content": [
+    {"lang": "ru", "title": "Возврат билетов розыгрыша ЧМ", "body": "Дорогой лорд! Из-за системной ошибки ваши билеты чемпионского розыгрыша ЧМ были ошибочно изъяты. Мы вернули их полностью — проверьте вложение. Приносим извинения за неудобства!", "collectionId": -1},
+    {"lang": "en", "title": "World Cup Draw Ticket Reissue", "body": "Dear Lord, due to a system issue, your World Cup Champion Draw Tickets were mistakenly recycled. They have now been fully reissued — please check the attachment. We apologize for the inconvenience!", "collectionId": -1}
+  ],
+  "mailCategoryId": 1,
+  "sendType": -1,
+  "validPeriod": 1920,
+  "customParams": "",
+  "rewardVersion": "",
+  "remark": "世界杯奖券回收补发_金丝雀1人_20260703"
+}
