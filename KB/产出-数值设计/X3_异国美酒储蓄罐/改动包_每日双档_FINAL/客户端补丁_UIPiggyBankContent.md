@@ -1,5 +1,5 @@
 ---
-tags: [kind/产出, domain/配置换皮, proj/X3, year/2026]
+tags: [kind/产出, domain/配置换皮, proj/X3, year/2026-07]
 ---
 
 # 客户端改动 · UIPiggyBankContent 选档逻辑（每日双档 · 买完自动切下一档）

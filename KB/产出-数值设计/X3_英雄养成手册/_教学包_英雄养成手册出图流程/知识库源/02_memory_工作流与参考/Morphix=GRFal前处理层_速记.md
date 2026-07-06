@@ -1,5 +1,5 @@
 ---
-tags: [kind/交接, domain/配置换皮, proj/X3, year/2026]
+tags: [kind/交接, domain/配置换皮, proj/X3, year/2026-06]
 name: morphix-prompt
 description: 内部 Morphix 网页是 GRFal 前处理层，8 个换皮功能的 prompt 全文已逆向归档，做 UI 换皮/节日换皮/图标/拆图时可直接调
 metadata: 

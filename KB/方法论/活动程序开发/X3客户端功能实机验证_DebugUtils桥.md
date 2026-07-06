@@ -1,6 +1,6 @@
 ---
 aliases: [X3实机验证, DebugUtils实机验证, 客户端功能验证方法论]
-tags: [kind/方法论, proj/X3, type/实机验证, tool/DebugUtils]
+tags: [kind/方法论, proj/X3, type/实机验证, tool/DebugUtils, year/2026-06]
 created: 2026-06-24
 ---
 

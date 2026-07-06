@@ -1,5 +1,5 @@
 ---
-tags: [kind/交接, domain/配置换皮, proj/X3, year/2026]
+tags: [kind/交接, domain/配置换皮, proj/X3, year/2026-06]
 ---
 
 # 附录 A · 实操：GRFal 真实调用 + 拆组件全链路（能照着跑）

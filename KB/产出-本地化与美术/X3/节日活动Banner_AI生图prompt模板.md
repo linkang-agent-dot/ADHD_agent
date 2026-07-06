@@ -1,5 +1,5 @@
 ---
-tags: [kind/产出, domain/本地化, domain/美术媒体, proj/X3]
+tags: [kind/产出, domain/本地化, domain/美术媒体, proj/X3, year/2026-05]
 ---
 
 # X3 节日活动 Banner / 礼包主背景 — AI 生图 prompt 模板

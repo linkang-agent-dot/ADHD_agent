@@ -1,5 +1,5 @@
 ---
-tags: [kind/方法论, domain/美术媒体, proj/X3, year/2026]
+tags: [kind/方法论, domain/美术媒体, proj/X3, year/2026-06]
 ---
 
 # X3 英雄皮肤展示视频工作流：Spine → AI 视频（足球宝贝案沉淀）

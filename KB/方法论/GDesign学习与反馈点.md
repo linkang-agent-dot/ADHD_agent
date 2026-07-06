@@ -1,5 +1,5 @@
 ---
-tags: [kind/方法论, proj/通用]
+tags: [kind/方法论, proj/通用, year/2026-07]
 ---
 
 # GDesign（DesignDeck）学习 & 反馈点

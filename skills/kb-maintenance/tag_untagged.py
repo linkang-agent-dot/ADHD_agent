@@ -14,7 +14,7 @@ KIND_BY_TOP = {
     '工作计划': 'kind/计划',
 }
 DOMAIN_BY_TOP = {
-    '产出-数据分析': 'domain/数据复盘', '产出-节日复盘': 'domain/数据复盘',
+    '产出-数据分析': 'domain/数据分析', '产出-节日复盘': 'domain/数据复盘',
     '产出-数值设计': 'domain/配置换皮', '产出-配置换皮': 'domain/配置换皮',
     '产出-配置生成': 'domain/配置换皮', '产出-配置仓库': 'domain/配置换皮',
     '换皮档案': 'domain/配置换皮', '产出-排期部署': 'domain/活动部署',
@@ -111,6 +111,8 @@ for p, txt, tags in files:
     # domain
     if 'token周报' in hint:
         domain = 'domain/个人助理'
+    elif top == '产出-数据分析' and re.search(r'复盘|回归|评级|衰减', hint):
+        domain = 'domain/数据复盘'  # 数据分析≠数据复盘（2026-07-06 用户定）
     elif top in ('产出-本地化与美术', '方法论') and any(k in hint for k in LOC_KW):
         domain = 'domain/本地化'
     elif top == '产出-本地化与美术':
@@ -126,9 +128,12 @@ for p, txt, tags in files:
     else: proj = 'proj/通用'
     # fest
     fest = next((v for k, v in FEST_KW if k in hint), None)
-    # year
-    ym = re.search(r'(202[4-9])', rel)
-    year = f'year/{ym.group(1)}' if ym else f'year/{datetime.datetime.fromtimestamp(os.path.getmtime(p)).year}'
+    # year 月粒度 year/YYYY-MM（2026-07-06 用户定：裸年份太粗）
+    ym = re.search(r'(20\d{2})[-_年]?(0[1-9]|1[0-2])', rel)
+    if ym:
+        year = f'year/{ym.group(1)}-{ym.group(2)}'
+    else:
+        year = f'year/{datetime.datetime.fromtimestamp(os.path.getmtime(p)):%Y-%m}'
     new_tags = [kind, domain, proj] + ([fest] if fest else []) + [year]
     results.append((p, rel, txt, new_tags))
 

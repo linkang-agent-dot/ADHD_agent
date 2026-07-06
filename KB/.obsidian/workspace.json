@@ -49,7 +49,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#year/2026",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -70,7 +70,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -179,7 +180,7 @@
       "bases:新建数据库": false
     }
   },
-  "active": "d91e334d4a92d1c6",
+  "active": "a7e5ed4f57bf49dd",
   "lastOpenFiles": [
     "产出-本地化与美术/X3/英雄养成手册/panels/panel_basic_v5_warm.png",
     "产出-本地化与美术/X3/英雄养成手册/panels/panel_basic_v5_warm_nobg_2.png",

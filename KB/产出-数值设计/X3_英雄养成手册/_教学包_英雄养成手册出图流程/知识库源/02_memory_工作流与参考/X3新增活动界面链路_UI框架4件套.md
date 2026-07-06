@@ -1,5 +1,5 @@
 ---
-tags: [kind/交接, domain/配置换皮, proj/X3, year/2026]
+tags: [kind/交接, domain/配置换皮, proj/X3, year/2026-06]
 name: reference-x3-client-new-ui-workflow
 description: X3 客户端新增一个活动界面的完整链路（UI框架4件套/手写Auto绑定/路由分流点/可复用组件清单），做新界面或换皮界面前先读
 metadata: 

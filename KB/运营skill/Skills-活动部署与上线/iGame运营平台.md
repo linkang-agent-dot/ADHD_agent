@@ -1,6 +1,6 @@
 ---
 aliases: [igame-skill, iGame, 运营平台]
-tags: [kind/skill, domain/活动部署, proj/通用]
+tags: [kind/skill, domain/活动部署, proj/通用, year/2026-04]
 skill_path: ~/.agents/skills/igame-skill/
 trigger: 服务器、导量、开服、封号、发邮件、GM操作
 ---

@@ -1,5 +1,5 @@
 ---
-tags: [kind/产出, domain/配置换皮, proj/X3, fest/深海节, year/2026]
+tags: [kind/产出, domain/配置换皮, proj/X3, fest/深海节, year/2026-06]
 ---
 
 # 深海节 · 01 深海罗盘 转盘抽奖 — 配置备份表

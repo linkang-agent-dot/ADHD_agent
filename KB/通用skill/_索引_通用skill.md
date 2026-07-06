@@ -1,5 +1,5 @@
 ---
-tags: [kind/moc, proj/通用]
+tags: [kind/moc, proj/通用, year/2026-07]
 updated: 2026-07-06
 note: 自动生成的目录索引，别手改；重生成 python C:\ADHD_agent\skills\kb-maintenance\gen_moc.py
 ---

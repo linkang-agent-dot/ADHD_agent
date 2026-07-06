@@ -1,5 +1,5 @@
 ---
-tags: [kind/产出, domain/数据复盘, proj/X2, fest/夏日节, year/2026]
+tags: [kind/产出, domain/数据分析, proj/X2, fest/夏日节, year/2026-05]
 note: X2夏日节报告集Demo，含大富翁/强消耗/掉落/集卡/付费深度5个专项
 ---
 

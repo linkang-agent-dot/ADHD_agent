@@ -1,5 +1,5 @@
 ---
-tags: [kind/产出, domain/数据复盘, proj/P2, fest/圣诞节, year/2025]
+tags: [kind/产出, domain/数据复盘, proj/P2, fest/圣诞节, year/2026-02]
 created: 2026-02-09
 format: wiki
 note: Wiki发布版，与圣诞节复盘报告.md同数据，格式适配Wiki

@@ -1,5 +1,5 @@
 ---
-tags: [kind/产出, domain/数据复盘, proj/P2, fest/情人节, year/2026]
+tags: [kind/产出, domain/数据复盘, proj/P2, fest/情人节, year/2026-03]
 created: 2026-03-17
 format: wiki
 note: 2026情人节复盘Wiki版

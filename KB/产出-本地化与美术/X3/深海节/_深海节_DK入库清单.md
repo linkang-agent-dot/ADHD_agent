@@ -1,5 +1,5 @@
 ---
-tags: [kind/产出, domain/美术媒体, proj/X3, fest/深海节, year/2026]
+tags: [kind/产出, domain/美术媒体, proj/X3, fest/深海节, year/2026-06]
 ---
 
 # 深海节 · DK 入库总清单（待一波统一入库）

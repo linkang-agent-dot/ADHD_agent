@@ -1,5 +1,5 @@
 ---
-tags: [kind/交接, domain/配置换皮, proj/X3, year/2026]
+tags: [kind/交接, domain/配置换皮, proj/X3, year/2026-06]
 name: x3-grfal-banner
 description: 用 GRFal API 给 X3 节日活动 banner / 主背景出图全流程；含 cookie 取法、async polling、reference 注入、保存路径、DK 落地
 metadata: 

@@ -1,5 +1,5 @@
 ---
-tags: [kind/方法论, domain/前端, proj/X3]
+tags: [kind/方法论, domain/前端, proj/X3, year/2026-06]
 ---
 
 # X3 客户端 GUI 知识

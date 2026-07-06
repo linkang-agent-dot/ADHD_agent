@@ -1,5 +1,5 @@
 ---
-tags: [kind/产出, domain/美术媒体, proj/X3, fest/深海节, year/2026]
+tags: [kind/产出, domain/美术媒体, proj/X3, fest/深海节, year/2026-06]
 ---
 
 # 深海节 · 拼图(BINGO) 美术资源落地清单

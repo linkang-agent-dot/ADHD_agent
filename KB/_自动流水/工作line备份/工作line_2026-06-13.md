@@ -1,5 +1,5 @@
 ---
-tags: [kind/计划, proj/通用]
+tags: [kind/计划, proj/通用, year/2026-06]
 ---
 
 # 工作 Line（节日运营 SOP × 项目 timeline）

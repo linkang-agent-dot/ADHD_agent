@@ -1,5 +1,5 @@
 ---
-tags: [kind/交接, domain/配置换皮, proj/X3, year/2026]
+tags: [kind/交接, domain/配置换皮, proj/X3, year/2026-06]
 ---
 
 # 《护航令·至尊档（简易战令3档化）改造案》— 内容草稿

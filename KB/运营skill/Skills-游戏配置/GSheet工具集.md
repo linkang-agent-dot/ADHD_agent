@@ -1,6 +1,6 @@
 ---
 aliases: [google-workspace-cli, gws, gsheet-replace, branch-diff]
-tags: [kind/skill, domain/配置换皮, proj/通用]
+tags: [kind/skill, domain/配置换皮, proj/通用, year/2026-04]
 ---
 
 # GSheet 工具集

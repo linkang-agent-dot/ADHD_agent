@@ -1,5 +1,5 @@
 ---
-tags: [kind/产出, domain/美术媒体, proj/X3, year/2026]
+tags: [kind/产出, domain/美术媒体, proj/X3, year/2026-07]
 ---
 
 # UIActvLoginChoice.prefab · 新增/改动清单（切分支后照这个拼）

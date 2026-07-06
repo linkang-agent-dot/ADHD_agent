@@ -1,5 +1,5 @@
 ---
-tags: [kind/产出, domain/配置换皮, proj/X2, fest/占星节]
+tags: [kind/产出, domain/配置换皮, proj/X2, fest/占星节, year/2026-05]
 note: P2→X2换皮，3处道具替换总价值不变，7金蛋掉落配置+锤礼包，ROI 8.35倍
 ---
 

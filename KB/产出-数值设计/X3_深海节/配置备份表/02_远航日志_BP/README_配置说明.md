@@ -1,5 +1,5 @@
 ---
-tags: [kind/产出, domain/配置换皮, proj/X3, fest/深海节, year/2026]
+tags: [kind/产出, domain/配置换皮, proj/X3, fest/深海节, year/2026-06]
 ---
 
 # 深海节 · 02 远航日志（BP 通行证）— 配置备份表

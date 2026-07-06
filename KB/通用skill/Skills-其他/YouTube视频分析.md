@@ -1,6 +1,6 @@
 ---
 aliases: [youtube-analyzer, YouTube分析, 视频分析]
-tags: [kind/skill, domain/媒体分析, proj/通用]
+tags: [kind/skill, domain/媒体分析, proj/通用, year/2026-04]
 skill_path: .agents/skills/youtube-analyzer/
 trigger: analyze this youtube、分析这个视频
 ---

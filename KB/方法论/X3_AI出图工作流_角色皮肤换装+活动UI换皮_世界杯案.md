@@ -1,5 +1,5 @@
 ---
-tags: [kind/方法论, domain/美术媒体, proj/X3, fest/世界杯, year/2026]
+tags: [kind/方法论, domain/美术媒体, proj/X3, fest/世界杯, year/2026-06]
 ---
 
 # X3 AI 出图工作流：角色皮肤换装 + 活动UI换皮效果图（世界杯案全程沉淀）

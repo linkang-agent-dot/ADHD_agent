@@ -9,27 +9,45 @@
   "colorGroups": [
     {
       "query": "tag:#proj/P2",
-      "color": { "a": 1, "rgb": 5008885 }
+      "color": {
+        "a": 1,
+        "rgb": 5008885
+      }
     },
     {
       "query": "tag:#proj/X2",
-      "color": { "a": 1, "rgb": 4245591 }
+      "color": {
+        "a": 1,
+        "rgb": 4245591
+      }
     },
     {
       "query": "tag:#proj/X3",
-      "color": { "a": 1, "rgb": 16612884 }
+      "color": {
+        "a": 1,
+        "rgb": 16612884
+      }
     },
     {
       "query": "tag:#kind/skill",
-      "color": { "a": 1, "rgb": 12471259 }
+      "color": {
+        "a": 1,
+        "rgb": 12471259
+      }
     },
     {
       "query": "tag:#kind/方法论",
-      "color": { "a": 1, "rgb": 1420991 }
+      "color": {
+        "a": 1,
+        "rgb": 1420991
+      }
     },
     {
       "query": "tag:#kind/产出",
-      "color": { "a": 1, "rgb": 16429061 }
+      "color": {
+        "a": 1,
+        "rgb": 16429061
+      }
     }
   ],
   "collapse-display": true,
@@ -42,6 +60,6 @@
   "repelStrength": 10,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 0.25883865621816077,
+  "scale": 0.508761885579253,
   "close": true
 }

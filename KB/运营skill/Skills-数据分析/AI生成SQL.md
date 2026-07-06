@@ -1,6 +1,6 @@
 ---
 aliases: [ai-to-sql, Trino SQL, 写SQL]
-tags: [kind/skill, domain/数据复盘, proj/通用]
+tags: [kind/skill, domain/数据分析, proj/通用, year/2026-07]
 skill_path: .agents/skills/ai-to-sql/
 trigger: 写SQL、生成SQL、trino、玩家日志、wiki、业务定义
 ---

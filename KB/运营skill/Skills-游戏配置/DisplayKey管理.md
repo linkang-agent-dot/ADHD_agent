@@ -1,6 +1,6 @@
 ---
 aliases: [x2-dk-manager, DK, DisplayKey]
-tags: [kind/skill, domain/配置换皮, proj/X2]
+tags: [kind/skill, domain/配置换皮, proj/X2, year/2026-04]
 skill_path: .cursor/skills/x2-dk-manager/
 trigger: DK、display key、录入DK、ctrl+t搜不到
 ---

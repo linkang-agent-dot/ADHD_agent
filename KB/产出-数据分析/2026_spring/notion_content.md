@@ -1,5 +1,5 @@
 ---
-tags: [kind/产出, domain/数据复盘, proj/P2, fest/春节, year/2026]
+tags: [kind/产出, domain/数据复盘, proj/P2, fest/春节, year/2026-02]
 created: 2026-02-09
 format: notion
 note: 2026春节复盘Notion发布版，总营收$890,704，同比+77.4%

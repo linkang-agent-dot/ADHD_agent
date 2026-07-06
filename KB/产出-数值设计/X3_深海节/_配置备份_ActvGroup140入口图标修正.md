@@ -1,5 +1,5 @@
 ---
-tags: [kind/产出, domain/配置换皮, proj/X3, fest/深海节, year/2026]
+tags: [kind/产出, domain/配置换皮, proj/X3, fest/深海节, year/2026-06]
 ---
 
 # 深海节 ActvGroup 140 入口图标修正（✅ 已应用）

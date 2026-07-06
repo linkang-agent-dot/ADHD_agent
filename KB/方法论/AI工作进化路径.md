@@ -1,5 +1,5 @@
 ---
-tags: [kind/方法论, proj/通用]
+tags: [kind/方法论, proj/通用, year/2026-04]
 source: PPT "我怎么用AI工作的" (2026.04)
 ---
 

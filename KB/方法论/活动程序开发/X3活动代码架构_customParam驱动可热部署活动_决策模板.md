@@ -1,5 +1,5 @@
 ---
-tags: [kind/方法论, domain/前端, proj/X3, year/2026]
+tags: [kind/方法论, domain/前端, proj/X3, year/2026-06]
 title: X3 活动代码架构 · customParam 驱动「可热部署活动」决策模板
 kind: 方法论
 domain: 代码架构/服务端
