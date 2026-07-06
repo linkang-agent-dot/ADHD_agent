@@ -7,7 +7,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 KB = r'C:\ADHD_agent\KB'
 MIN_NOTES = 4          # 少于这个数的目录不建索引（首页直链）
-EXCLUDE_DIRS = {'.obsidian', '__pycache__', '_工作line备份', 'Token周报'}
+EXCLUDE_DIRS = {'.obsidian', '__pycache__', '_自动流水'}
 TODAY = datetime.date.today().isoformat()
 
 tops = [d for d in os.listdir(KB) if os.path.isdir(os.path.join(KB, d)) and d not in EXCLUDE_DIRS]
