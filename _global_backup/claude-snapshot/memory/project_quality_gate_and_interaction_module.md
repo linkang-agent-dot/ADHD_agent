@@ -25,9 +25,9 @@ metadata:
 
 ## x3-media 透明化「整机」（两条路子，均已可脱离 DesignDeck 跑）
 背景：DesignDeck 把"画mask/双底差分/去绿"这些本地图像运算埋在编译进 main.jsc 的主进程(jimp)里，靠 stdout 标记触发——所以原来只有零件没整机，CLI 跑不全。这次照"补 wrapper"思路补齐：
-- **双底差分**（**生成新透明资产**：技能/活动/资源/道具/小图标/英雄碎片图标、行军表情、道具相关 DK）→ `~/.claude/skills/x3-media/scripts/transparify_asset.py`（`--prompt` 全自动生白底+黑底+差分 / `--white --black` 只差分）；底层 `transparify_dual_bg.py`。已写进 x3-media SKILL.md「★透明化硬规则」设为这些类型**默认**，禁用 generate-transparent/removebg。
+- **生成新透明资产**（技能/活动/资源/道具/小图标/英雄碎片图标、行军表情、UI框/panel/丝带/角标、道具相关 DK）→ **⚠️2026-07-01 起默认 grfal `remove_background`**（用户拍板）：生图用**纯绿幕实底** → `call_grfal.py remove_background` 抠 → `verify_transparency.py` 验。**双底差分 `transparify_asset.py` 降级为兜底**（仅毛发/光晕/半透明软边 remove_background 吃边时才用）。x3-media SKILL.md「★透明化硬规则」已同步改。
 - **精细拆图**（**从现成图拆多层**，100% 对齐源图）→ `scripts/ui_extract_fine.py`（人工节点：看图写 `manifest_layers.json` 定层+bbox → `--preview` 画框确认 → 去掉 preview 开拆）；底层新补 `make_bbox_mask.py`(画反向mask) + `chroma_key.py`(去绿)，中间调 grfal `image_mask_edit`。
-- 区分：要"凭描述生成一个透明 icon" 用双底差分；要"把一张现成效果图拆成多个透明图层" 用精细拆图。
+- 区分：要"凭描述生成一个透明 icon" 用 grfal remove_background（软边兜底才双底差分）；要"把一张现成效果图拆成多个透明图层" 用精细拆图。
 
 ## GDesign 对外反馈（待集中反馈，未发）
 暂存在 `C:\ADHD_agent\KB\GDesign学习.md`：①前置gate"问全才开干"不适配迭代流程 ②工作流该分型、颗粒度下沉到子功能。讨论完再集中反馈给 GDesign 团队。

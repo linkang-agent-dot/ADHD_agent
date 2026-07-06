@@ -1,0 +1,27 @@
+---
+name: reference_x3_numerical_design_skill
+description: "X3 数值设计专属 skill（给礼包/BP/转盘等定 ROI 和投放数值），面向0基础程序员；问\"X3怎么定数值/数值skill在哪\"先读"
+metadata: 
+  node_type: memory
+  type: reference
+  originSessionId: 3fa9465c-e7a0-4613-9845-397593ae66fc
+---
+
+X3 活动数值设计的**专属 skill** = `x3-numerical-design`，位置 `C:\Users\linkang\.claude\skills\x3-numerical-design\`（Claude Code 已注册，触发词见其 description）。
+
+**它干嘛**：把一份 X3 策划案变成可落地的数值表（道具价值 + 礼包 ROI + 投放内容），面向**对数值零基础的程序员**——从头讲清 ROI 和道具价值，按玩法路由到往期参考，最后独立复查防投爆。是 [[x3]]（策划案模板）的下游、[[reference_x3_config]]（落配置）的上游。
+
+**5步主轴**（SKILL.md）：第0步读策划案拎5样(模块/玩法类型/价位档/投放定位/大奖) → 第1步定盘(道具价值+分模块ROI) → 第2步填数(按往期同模块投放定位) → 第3步落配置(交 `x3-config-export`) → 第4步复查(派 `task-checker` type=numerical 双维度)。
+
+**核心数值逻辑**（用户拍板）：核心=ROI+单个道具价值；**北极星=不投爆ROI**；同模块ROI一致($9.99给X/$19.99给2X线性)；**ROI无全局标准、只跟同模块往期比**(链式≈2.25x/周卡≈2.75x/皮肤档17~19x/抽奖整活动≈8x)；抽奖类(转盘/推币机/大富翁)走单独"整活动ROI"逻辑不是单礼包。
+
+**文件结构**：
+- `SKILL.md` 主编排 + 3护栏(价值查不到不许猜/抽奖≠礼包/空白玩法找策划)
+- `references/foundation.md` 0基础前置课(价值锚:券$0.25·宝石$0.002·1USD=500钻;ROI;**相对守恒法/数量翻倍=默认路径**=X3大部分场景同款道具按价格倍数同比放大量、ROI守恒、不用估值;**要绝对值才反查tsv实际钻石售价**=道具在钻石商店`Shop__ShopItemCfg`/直购/黑市/兑换里以钻石计价的售价÷500,反查不到=纯养成产出物无价→找策划不瞎编;X3无统一"道具→钻石价"列,价值表GSheet是人工聚合故填不全)
+- `references/past-references.md` **9类往期数值参考库**(每条带ROI+投放结构+文档路径+空白清单);真源散在 `KB\产出-数值设计\` 各节日子目录
+- `references/playbook-by-form.md` 玩法分叉(礼包类单礼包ROI / 抽奖类整活动ROI+加速器压平)
+- 复查清单 `C:\ADHD_agent\.claude\quality-gate\numerical-checklist.md`(type=numerical;维度A数值自洽+维度B兑现策划案);task-checker 已注册 numerical 类型
+
+**验证**（2026-06-29，护航令终极档BP加档案）：全新0基础agent靠skill独立走完5步，维度A数值自洽全过，3护栏全部命中实战(GSheet 401/养成线无估值→没瞎编，用相对守恒法绕开)；2个blocker都是策划案侧未决口子非数值算错。证明 skill 对0基础可用。
+
+**已知边界**：养成线付费价值地图 X3 仍缺(numerical-manual §6 TODO)——纯礼包/相对守恒够用，"换皮+深调养成绝对数值"才需要，撞到走空白清单找策划。

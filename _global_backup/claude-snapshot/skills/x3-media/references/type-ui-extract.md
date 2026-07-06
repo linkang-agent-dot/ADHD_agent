@@ -16,6 +16,14 @@
 - ⚠ 平铺是 AI 重画，造型/配色会有**微漂移**——这是为换"干净切割"有意接受的代价。**只重画独立小元素，不要重画整屏布局**；整块布局靠组件/原型还原。
 - ❌ 仍禁止：在 mockup 上叠坐标网格、肉眼估坐标手动 PIL 裁（必然错位）。
 
+#### 路径 B 变体 · 抠"空容器"（被内容物遮挡的框/展示位，2026-07-01 砰然心动展示框实证）
+需求="把效果图里某个**装了东西的展示框/槽位**抠成空框"（内腔被道具挡住，纯切必带出道具）——走路径 B 重画：
+1. **裁片当精确参考**：先 PIL 把框那块 bbox 裁出来（`_框区域_裁片ref.png`）+ 整图一起喂 generate_image（整图=上下文，裁片=精确目标）。
+2. **重画成"空框"+绿幕**：prompt 钉死「interior MUST stay EMPTY，show empty inner cavity，REMOVE the item inside，REMOVE the ×N badge，keep frame IDENTICAL to reference，isolated on solid chroma-green #00b140」。绿幕比白底更好抠（框本身多为暖金，白底易吃边）。
+3. **removebg + despill + 去透明区残绿**：removebg 后可见边缘 despill（清边残留应=0）；但**透明区(alpha=0)的 RGB 常仍是绿幕值**——预览器显绿吓人 + 双线性过滤会渗绿边。修法=**alpha-bleed**（用 opaque 邻域迭代往透明区染色，~28px 覆盖边缘足够防渗），远角够不到的纯透明残绿再统一刷中性暖灰（alpha=0 无害只为预览干净）。校验=可见像素(alpha>0)残绿必须 0%。
+4. **比例会漂**：AI 重画的框比例常和效果图里的原框不一致（实测重画偏高 0.74 vs 原框 0.65~1.0）。终稿按**效果图里原框的高度等比缩放**（别force-fit宽高=变形；别向下溢出压到下方 tab）。
+5. 交付=全尺寸 src（备查）+ 效果图占位尺寸的 `*_final.png`（透明底，程序运行时往空腔塞动态道具图标+数量）。
+
 ## 何时匹配
 
 用户说：切图、拆 UI、拆图素、提取 UI 素材、UI 元素拆解、UI 拆解、把界面元素拆出来、UI extract、extract UI elements 等。

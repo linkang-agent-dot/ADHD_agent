@@ -16,6 +16,17 @@ X3 新案子（2026-06-09 立项）：**英雄皮肤新皮肤走视频**。
 GSheet「X3 英雄皮肤 · 新皮肤视频化方案」：`15Iacryl-uRDzaFUsErqvTvppnqMG0MuA3U1yKLKHuTU`
 5页签：方案总览 / 规则说明(含▌界面交互+▌资源生产链路两小节) / 配置表 / 待确认事项 / 变更记录。已过 task-checker(design-doc) 10/10。
 
+## 📦 首个落地视频皮肤实例：足球宝贝·爱莉希雅（2026-07-01 核实·世界杯）
+问「某视频皮肤资源在哪」直接抄，别再 grep：
+- **皮肤 5304001**（`Hero__HeroSkin.tsv` 行 104001「节庆-世界杯 / 足球宝贝·爱莉希雅」，本体 Hero1040 爱莉希雅）。配置里 **Spine 列空** = 走视频，末列视频 DK=`DK_video_zuqiubaobei_sbs`。
+- 资源全在 `C:\x3-project\client\Assets\`：
+  - **展示视频(核心)** `Res\Video\VideoRes\HeroSkin\zuqiubaobei_sbs.mp4`（SBS，取代 Spine 循环立绘）
+  - 头图 `Res\UI\Spirits\Role\Character Portraits\Img_C_H_40_Skin01.png`（DK_Img_C_H_40_Skin01）
+  - 全身立绘 `Res\UI\Spirits\Role\FullLength\Role_F_40_Skin01.png`（DK_Role_F_40_Skin01）
+  - 卡面 `Res\UI\Spirits\Role\HeroCard\Role_C_40_Skin01.png`（DK_Role_C_40_Skin01）
+- **视频 DK 注册** = `Assets\Res\Config\DisplayKey\Path_Video.asset`（`DK_video_<名>_sbs`→objPath），编辑器侧 `Display_Video.asset`。→ **视频皮肤 DK 走 Path_Video.asset 这一个专表**（非各模块 Path_*）。
+- ⚠️只有 头图/立绘/卡面/视频 是皮肤专属；立体 model 仍沿用本体 `DK_Role_M_40`（没做皮肤专属 model）。皮肤属性配置链见 [[reference_x3_cosmetic_attribute_chains]]。
+
 ## 机制
 每皮肤一个视频字段开关：空=老行为(Spine/静态图)，非空=视频。新旧共存、逐皮肤切换、零回归。
 - 配置：HeroSkin 加 `DKVideo`，PackHeroPromotion 加 `AfterHeroVideo`（空=走原 Spine 字段）。

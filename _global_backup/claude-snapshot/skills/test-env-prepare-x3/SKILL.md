@@ -538,11 +538,20 @@ Jenkins 地址：`http://172.20.110.29:8080`，账号 `admin` / `Adminpwd99`
 
 **单独分支构建部署流程（非 dev/qa/master）：**
 
-1. 先导配置：触发 `X3导配置`，branch=目标分支，等成功
-2. 再构建：触发 `x3-server_rebuild`，branch=目标分支，等成功
-3. 最后部署：`kadmin deploy_app(name=[...], tag=目标分支)`
+1. 先导配置：触发 `X3导配置`，branch=目标分支，code_branch=目标分支，等成功（~3min）
+2. 再构建：触发 `x3-server_rebuild`，branch=目标分支，publish=Debug，等成功（~8-14min）
+3. 等镜像：rebuild 成功后 **还要等 GitLab CI 异步出镜像**（不是即时，下面有解释）
+4. 最后部署：`kadmin deploy_app(name=[...], tag=目标分支)`，带重试（镜像可能刚 push 完）
 
 dev、qa、master 分支有 CI 自动触发，不需要手动走这个流程。
+
+> ⚠️ **镜像产线真相（2026-06-29 查清）——这条决定 feature 分支能不能部 beta：**
+> - kadmin 部署 = 拉 docker 镜像 `t4f.io/x3/gameserver-new:<分支>`。
+> - **没有任何 Jenkins job 直接 docker build/push 这个镜像**（实测 `x3-server_rebuild` / `x3-server_local_rebuild` / `x3-server_rebuild_qamaster` / `x3-serverbuild2` 的控制台都没有 docker/buildx/gameserver-new 推送）。`x3-server_rebuild` 只做：编译 server bin → push 到 GitLab 仓 **`x3/deploy/game-server-bin`** 的同名分支 → 触发下游 `x3-server_local_rebuild`。
+> - **镜像实际由 `game-server-bin` 仓的 GitLab CI 构建**，CI 大概率只 gate dev/qa/master 分支 → feature 分支（如 `dev_festival`）push 进去也不一定建镜像 → kadmin 拉报 **`manifest for t4f.io/x3/gameserver-new:dev_festival not found`**。
+> - 旁证：下游 `x3-server_local_rebuild` 当前**卡死**（队列有等了 100+ 天的僵尸项，执行器空闲但项被阻塞），即便触发也不可靠。
+> - **所以"硬试构建 feature 分支镜像"是赌 game-server-bin 的 CI 会不会给非主干分支建镜像**。若构建后部署仍 `manifest not found`，即坐实 CI 不给 feature 分支建镜像 → **转本地服 3080 测**（feature/dev_festival 测试的稳妥路；见 memory `reference_x3_kadmin_deploy.md`）。
+> - 🔴 **本次实测结论（dev_festival·2026-06-29·硬试失败）**：X3导配置 #1370 SUCCESS → x3-server_rebuild **#26841 FAILURE**。失败点**不在 CI gating，而更早**——编译+commit 了 bin，但 `git push` 到 `game-server-bin` 仓被 **pre-receive hook 拒绝**：`GitLab: LFS objects are missing. Ensure LFS is properly set up or try "git lfs push --all"` → `! [remote rejected] dev_festival -> dev_festival (pre-receive hook declined)`。即 bin 没进 game-server-bin → 无镜像。Jenkins 的 push 步骤没跑 `git lfs push --all`，feature 分支这条路就断在这。**→ 硬试此路（至少 2026-06-29 状态）走不通，feature/dev_festival 老老实实用本地服 3080 测。** 部署步骤因 rebuild 失败自动跳过，220 未受影响（仍 master/Run）。
 
 ### 客户端打包
 

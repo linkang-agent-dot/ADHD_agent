@@ -28,4 +28,11 @@ metadata:
 ## 实例(2026-06-24 世界杯竞猜买礼包邮件名空)
 192个竞猜礼包名 `TXT_Pack_Name_894010~894483` 全在(独立行/10+语言齐, commit 34909e9 2026-06-17 已合dev)，邮件标题3000000 key也在(合并行)→配置无缺。空=测试服跑6/17前旧导出。
 
+## 实例(2026-06-29~30 深海居所装饰底部入口标签空白·已结案)
+HUD底部活动入口(沙滩椅图标)无文字=活动页签标签`TXT_ActvOnline_ActvName_106103`(深海居所装饰)空。该key 16语齐(繁中"深海居所裝飾")且commit `dfba14d` 进dev_festival→空=运行中的客户端/服务端读的是更新前的旧localization,没重载。
+- **★坑1(差点误判):繁中译文≠简体母版用词,不能当"旧导出"证据**。本例副标题`TXT_Pack_Desc_211016`游戏显繁中"深海瞬間…"而config简体母版是"深海馈赠…"——繁中翻译本就用了不同词,正常,**不是旧导出**。判旧导出真证据=「key在dev但客户端查不到」(尤其近期新加commit),不是「显示文案≠简体母版」。
+- **★坑2(本次结案关键):bytes 可能其实早导对了,真因是「没重载」+「manifest stale」**。本地重导后发现 client `i18n/zh.bytes` 的 md5 跟新导出**完全相同**(数据早就在盘上)→根因不是没导,是①运行中的Editor客户端/3080服在bytes更新前已把旧localization读进内存没重载 ②client manifest 的 **16个 i18n 语言行集体 stale**(某次导出更新了bytes却没更新manifest,md5对不上文件)。
+- **修(本地服→Editor链路·实测全过2026-06-30)**:① jolt导表失败时走本地 `cd Tools/table_exporter && python ExportTable.py`(产物在 `C:\x3\gdconfig\temp_dev\ProtoGen\`,含 `i18n/*.bytes`+`ActvOnline.bytes`+`AllTableDataMd5.txt`) ② cp 改的 bytes(尤其 `i18n/*.bytes`)→ `client/Assets/Res/Config/ProtoGen/` ③ **同步 manifest**=`python ~/.claude/skills/x3-config-export/scripts/sync_client_manifest.py i18n ActvOnline.bytes`(只更新这几张表的md5行·别整份覆盖;temp_dev用反斜杠path、client用正斜杠,脚本已归一) ④ `python ~/x3_gm.py "!gm ReloadGameServer"`→日志 `ReloadAllLoadedCfgByFilenames: i18n/cn..zh` + `16 tables reloaded`(没同步manifest会是 `0 tables reloaded`) ⑤ **标签是客户端i18n,服务端reload不影响运行中的Editor客户端**→最后必在Unity Editor对 `i18n/*.bytes` Reimport + 重进Play,客户端启动时重载localization才显示。
+- **★口径:页签/HUD入口标签=活动名 `TXT_ActvOnline_ActvName_{AO}`;大礼包标题=礼包名 `TXT_Pack_Name_{packId}`,两者不同源**(本例标签"深海居所裝飾"≠大标题"深海居所特惠",正确)。详见 [[workflow-x3-local-server-gm-telnet]] 本地导表→热更段。
+
 **How to apply:** 见到"自动文案空白"别急着判缺配置——先 grep(含合并行)确认 key 在不在 dev；在就转查服务端是否重载了最新导出。详见 [[reference_x3_i18n_workflow]] + [[reference_x3_config_library]] 自动key机制。

@@ -13,6 +13,12 @@ metadata:
 - Reward — `tsv/Reward__*.tsv`（RewardID 内容定义）
 - 改法：`x3-config-export` skill 的 `tsv_edit.py`（先 `show` 定位列再 `set`/`remove`）
 
+## ⚠️ X3 有两套 BP，别混（2026-06-29 查 Pack140001 实证）
+- **积分BP**：本表 `ActvScore`（ActvType=22，如深海 AO102244）。付费档=Pack（节日通用 130020/130021），奖励走 BattlePassScore。
+- **跨服赛季BP**：`ActvKVKBP__ActvKVKBP.tsv`（**ActvType=33**，如深海"魔海密藏"AO103301，ContentID=3302）。列结构：col0 ID(=关联ActvOnline的ContentID) / col2 `Pack`=**普通付费档** / col3 `PlackPlus`=**至尊付费档** / col4 `PlackPlusLv`=至尊额外等级数 / col5 `Reward`=奖励组 / col6 WeekTask / col9 SeasonTask。
+  - 实例：Pack **140000**=普通付费、**140001**($39.99「豪华至尊奖励」)=至尊付费、+10级。买至尊档=解锁至尊奖励线 + BP等级+10；Pack.Content/Reward 列空（奖励从 BP 轨道发，不在 Pack 里）。
+  - Pack 表里这种 BP 解锁包 col9 UI类型=113、tag 列(col39)=展示用价值%(如9500%，TXT_Pack_Tag_{id})。
+
 ## ActvScore.xlsx 三 sheet 结构
 
 | sheet | 用途 | 主键 |

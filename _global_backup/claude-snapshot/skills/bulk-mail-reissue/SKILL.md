@@ -1,6 +1,6 @@
 ---
 name: bulk-mail-reissue
-description: 批量补发邮件导入表生成。根据数据源 CSV（含 server_id、user_id、asset_id、amount 等列）生成 iGame 批量发邮件工具所需的导入 CSV（GBK 编码、逗号分隔、JSON 字段 CSV 转义）。触发条件：(1) 提到"补发"、"批量发邮件"、"批量导入邮件"、"回收补发"，(2) 用户提供源数据（玩家/服务器/道具/数量）并要求生成导入文件，(3) 提到"按模版生成附件导入表"。
+description: 批量补发邮件导入表生成（P2/X2 格式）+ X3 路由。根据数据源 CSV（含 server_id、user_id、asset_id、amount 等列）生成 iGame 批量发邮件工具所需的导入 CSV（GBK 编码、逗号分隔、JSON 字段 CSV 转义）。触发条件：(1) 提到"补发"、"批量发邮件"、"批量导入邮件"、"回收补发"，(2) 用户提供源数据（玩家/服务器/道具/数量）并要求生成导入文件，(3) 提到"按模版生成附件导入表"。⚠️ X3 项目格式不同且可 API 直发——见文末「X3 路由」。
 ---
 
 # Bulk Mail Reissue Skill
@@ -61,3 +61,11 @@ python ~/.claude/skills/bulk-mail-reissue/generate.py <源CSV路径> [--output <
 **场景 2：列名非标准**
 - 源列名是 `sid, uid, item_id, cnt`
 - 脚本会自动映射；映射不出来时脚本会 print 所有列名并退出，由 Claude 询问用户后用 `--map` 参数覆盖
+
+## ⚠️ X3 路由（本 skill 的 generate.py 是 P2/X2 专用，X3 别用）
+
+X3 的导入 CSV 格式不同（6 列、道具列 `[ID*数量]`，无 assetType JSON），且**已打通 API 直发、可不走 UI 上传**：
+- 格式与字段：memory `reference_x3_igame_mail_import.md`
+- 直发工具（CSV→payload→dry-run→发送→查状态一条龙）：`~/.claude/skills/igame-skill/scripts/igame_mail_send.py`，用法见 `igame-skill/SKILL.md`「X3 玩家邮件直发」节
+- 流程铁律：文案先经用户确认 → 先查数仓防重复补偿 → 金丝雀 1 人 → 用户在 iGame 后台放行审批 → 全量 → sentAt+数仓收口
+- 多语言邮件内容：直接塞 content 数组（本 skill 的 `multilang_mail.py` 转置 CSV 仅在走 UI 导入时才需要）

@@ -14,16 +14,18 @@ metadata:
 | 任务名 | 触发 | 干啥 | 脚本/prompt |
 |--------|------|------|------------|
 | **ClaudeMorningPriority** | ~~每天 09:00~~ **已停用** | 跨项目今日优先 top-3（长期产出失败，已并入 DailyPlan） | `.claude\scripts\morning_priority_scan.ps1` + `_prompt.txt`（保留未删，回退用） |
-| **ClaudeDailyPlan** | 每天 10:00 | **今日工作简报**（跨项目 top-3 + X2 节点 timeline+Jira+BUG）→ HTML 弹浏览器 | `.claude\scripts\daily_plan_scan.ps1`（2026-06-15 改：显式 `--model sonnet` + 预算 5→8）+ `daily_plan_prompt.txt` |
+| **ClaudeDailyPlan** | 每天 10:00 | **今日工作简报**（跨项目 top-3 + X2 节点 timeline+Jira+BUG）→ HTML 弹浏览器 | `.claude\scripts\daily_plan_scan.ps1`（2026-06-15 改：显式 `--model sonnet5` + 预算 5→8）+ `daily_plan_prompt.txt` |
 | **ClaudeBugScan** | 工作日(周一-五)每小时 09:23 起 | 扫 Jira 名下未解决 BUG 写 `_my_bugs_summary.txt` | bug-scan skill |
-| **ClaudeFestivalReportOpen** | 每天 09:20 | 自动打开节日日报 HTML（2026-06-22 起扫 `KB\产出-数据分析\节日日报_实时\`，不再扫 home） | `open_festival_report.ps1`（$scanDir） |
+| **ClaudeFestivalReportOpen** | 每天 09:20 | 自动打开节日日报 HTML（扫 `KB\产出-数据分析\节日日报_实时\`；**2026-07-06 修复：改为把当天更新过的每份 `*_latest.html` 逐一打开**——原"只开最新一份"在多节日并行时永远只弹最后刷新的那个，世界杯/深海曾连续4天没被弹出） | `open_festival_report.ps1`（$scanDir） |
 | **ClaudeDailyReport** | 每天 21:00 | 生成工作日报 txt + 回写 `工作line.md` 三/五节 | `_daily_report.py`（在 C--Windows-System32 项目目录） |
 | **ClaudeX3FestivalMonitor** | 全天每小时 | X3 节日收入监控（06-19 08:30 后转夏日节第三批 1910-1930） | [[x3]] x3-festival-monitor |
 | **ClaudeX3SwitchBatch3** | 一次性 2026-06-19 08:30 | 夏日节日报 批二(1880-1900)→批三(1910-1930) 自动切换，跑完自删 | `skills\x3-festival-monitor\_switch_batch3.py`，详见 [[x3]] |
 | **ClaudeX3WorldCupMonitor** | 全天每小时(:35) | X3 世界杯节日收入监控(D0=2026-06-26·全服1-98=server_id 1000-1970·累充100597·END 07-20)，产出 `KB\产出-数据分析\节日日报_实时\X3世界杯日报_latest.html`；决赛后(7/20+)删任务 | `skills\x3-festival-monitor\x3_worldcup_daily.py`(克隆夏日脚本仅改配置块)，详见 [[x3]] |
+| **ClaudeX3DeepSeaMonitor** | 全天每小时(:50) | X3 深海节收入监控(D0=2026-07-03·59服显式清单1170-2010·累充100598白名单45包·UTC日切·END 07-17北京08:00)，产出 `KB\产出-数据分析\节日日报_实时\X3深海节日报_latest.html`；7/17后删任务 | `skills\x3-festival-monitor\x3_deepsea_daily.py`(克隆世界杯脚本·配置读取改走git show origin/dev)，详见 [[x3]] |
 | ~~**ClaudeX2FestivalMonitor**~~ **已删除(2026-06-29 D17 收工)** | ~~全天每小时(:05)~~ | X2 拓荒节日报(2026-06-12 D0~06-29 D17)，产出 `~\X2拓荒节日报_latest.html`；节日结束用户确认停，已 Unregister | [[reference_x2_festival_monitor]] |
 | **ClaudeTokenWeeklyReport** | 每周五 17:00 | ①Token 用量周报 ②**本周归纳清单**(2026-06-15加挂)：扫7天KB/memory改动→`claude -p`按模块列「知识\|对应模块\|来源」→`~\归纳验收周报_latest.md`+气泡。两步独立fail-open | `token_weekly_scan.ps1`(末尾归纳段) + `token_weekly_report.py`/`_html.py`(token) + `handover_review_prompt.txt`(归纳) |
 | **WC-GuessDashboard-Daily12** | 每天 12:00(北京) | X3世界杯竞猜运营看板：拉iGame(prod)实时竞猜+赛程交叉分类→对阵总览/已上线/待上线/待发奖/已发奖 HTML | `KB\产出-数值设计\X3_世界杯\_gen_竞猜运营看板.py`(数据源 `wc_dashboard_data.json`:对阵确定加schedule、发完奖加settled);产出 `..\世界杯竞猜运营看板.html`;决赛后删任务。⚠️任务**直调python.exe+脚本路径**(非.bat·中文路径在cmd/.bat下Task环境编码崩→result1;直调python Unicode传参=result0) |
+| **ClaudeX3PiggyBankDaily** | 每天 10:30 | 异国美酒储蓄罐回归报告**每日图表更新**:拉datain日数据→重绘ARPPU/日流水折线+储蓄罐vs纯异国美酒礼包堆叠面积+大盘均值线→回写HTML(只更图表+数据截至日期;漏斗/表/KPI是上线窗快照不动)。**纯python直调**(非claude -p、非.bat) | `KB\产出-数值设计\X3_异国美酒储蓄罐\_daily_update.py`(import ai-to-sql的_datain_api.execute_sql,DATAIN_API_KEY走User环境变量,q()带3次重试抗datain抖动);产出 `..\异国美酒储蓄罐_增加档位分析.html` |
 | **ClaudeWeeklyBackup** | 每周一 12:00 | 周备份 | — |
 | **GameRadar-Daily** | 每天 09:00 | 策略游戏雷达(中/美/日)：App Store+Google Play+YouTube+Reddit 热门/飙升榜→HTML 弹浏览器；个人选游戏用 | `C:\Users\linkang\game-radar\run_daily.ps1`(纯 python，非 claude -p，无静默失败风险)，详见 [[reference_game_radar]] |
 | **ClaudeMorningPriority/X3Monitor 退出码偶发 1** | — | 退出码 1 不一定真失败（claude -p 退出码不可靠）；DailyPlan 有新鲜度闸门兜底，X3Monitor 看产出 HTML 是否当日刷新判断 | — |
@@ -69,7 +71,7 @@ metadata:
 
 - **现象**：06-13 DailyPlan exit 1，报 `There's an issue with the selected model (claude-fable-5). It may not exist or you may not have access to it.`
 - **根因**：脚本 `claude -p` **没指定 `--model`**，吃到 CLI 默认 model。本机默认漂到 `claude-fable-5`（已停服，本账号无权限，`.claude.json` 里残留 `claude-fable-5[1m]` 状态）→ 直接挂。注：settings.json 里 model 虽是 `opus[1m]`，但 `-p` 默认仍可能漂。
-- **修法（已落地，可复用到任何 claude -p 调度脚本）**：命令行**显式写死 `--model sonnet`**（日报/巡检这类轻结构化任务 sonnet 够用、肯定有权限、还省钱），别依赖默认 model。
+- **修法（已落地，可复用到任何 claude -p 调度脚本）**：命令行**显式写死 `--model sonnet5`**（日报/巡检这类轻结构化任务 sonnet5 够用、肯定有权限、还省钱），别依赖默认 model。
 - 同次把 DailyPlan 预算 `--max-budget-usd 5` → `8`（与 DailyReport 对齐），解决并存的「exit 0 但未刷新(预算耗尽没写盘)」。备份 `daily_plan_scan.ps1.bak.20260615`。
 - 🚫 **这些调度脚本绝不能加 `-NoProfile`**：脚本里的 `claude`/`ccr` 命令是 `C:\Users\linkang\Documents\WindowsPowerShell\profile.ps1` 里定义的函数（`function claude { & "...\claude.cmd" @args }`），加 `-NoProfile` 会让 `& claude` 直接找不到命令。任务 Action 当前是 `powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File ...`，保持不动。
 - ❓ **未解**：2026-06-15 手动 `Start-ScheduledTask` 触发时，powershell 进程卡在脚本启动阶段(连第8行"开始生成"日志都没写、无 claude 子进程)，挂 11 分钟后被手杀。profile 已排除(仅两行函数、不联网)，根因未定。可能是手动触发的偶发态。验证修复优先让次日 10:00 自动任务跑，别反复手动触发硬怼。

@@ -338,6 +338,23 @@ python C:\Users\linkang\.claude\skills\x3-translation-automatic\scripts\i18n_lea
 - 修法：从**同义已正确翻译的兄弟行**抄术语逐语言重译（如券名去 `ActvDesc` 摘【…】现成译名），en 保留。
 - 收工 Stop hook 的 quality-gate(type=i18n) 会用同一脚本兜底（见 `C:\ADHD_agent\.claude\quality-gate\i18n-checklist.md`），但**以自觉先跑为主**。
 
+#### 5.9b：换皮任务额外跑「残留语义检查」（2026-06-29 新增）
+
+> 上面三类只抓"没翻/翻一半"。**换皮 clone**（复用源活动的 RuleTips/Title/Content/Pack 等带文本ID）会出**译文完整但节日主题错**的洞——
+> 全语言都译好了，只是写的是源节日名（世界杯累充 15013 全16语言译好却写"尼罗"；开箱 16031 乌克兰语整段元旦残留）。
+> **EN/CJK/EMPTY 三类和肉眼都漏判**（非空、非泄漏、纯主题错）。换皮收尾必跑：
+
+```bash
+# 从尼罗换皮到世界杯, 扫所有复用ID的i18n是否残留尼罗名(内置 nile/newyear/spring/valentine/deepsea/summer)
+python ...\i18n_leak_audit.py --reskin-residue --src-festival nile --grep RuleTips
+# 自定义源节日多语言词:
+python ...\i18n_leak_audit.py --reskin-residue --source-terms "尼罗,尼羅,Nile,Nilo,니로,ナイル" --prefix TXT_RuleTips_
+```
+
+- 报 `RESIDUE` 即源节日名漏改 → 逐语言重写为目标节日（用目标节日各语言标准译法，从干净的兄弟 key 抄术语）。
+- **换皮先列全部复用的带文本ID**（RuleTips ID 看 ActvOnline col13；Pack 名看新 Pack ID 段），按这些范围 `--grep/--prefix` 限定扫。
+- 根因/范式见 memory `reference_x3_i18n_workflow`「换皮 clone i18n 多语言残留坑」+ `project_x3_worldcup_activity`「开箱规则文本换皮漏改」。
+
 ### 第6步：git 提交
 
 > ⚠️ 当前 X3 真源 = **tsv**（`tsv/i18n/Text__Text.tsv`，导入只认它；`data/i18n/*.xlsx` 已于 commit 68685d2 下线出 git，本地钩子自动 tsv→xlsx 同步即可）。下面的 `git add data/i18n/Text.xlsx` 是旧环境写法，**实际应 `git add tsv/i18n/Text__Text.tsv`**。

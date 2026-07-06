@@ -28,6 +28,22 @@ X3 iGame 批量发邮件/补发导入表格式（**与 P2 的 `{"assetType":"ite
 - 🔴**坑(2026-06-29实测):文件结尾不能有空行**——csv.writer 默认每行后加\r\n(含最后一行)→尾部多空行→iGame 把尾空行当多一行而**导入失败**。模板=4个\n(5行无尾换行)。修=写后去掉结尾\r\n。⚠️csv.reader 检查会自动忽略尾空行→审核脚本查不出,必须**字节级**(`open(rb).count(b'\n')`)核。
 - ✅**统一工具**:`~\.claude\skills\bulk-mail-reissue\multilang_mail.py` 的 `write_multilang_mail(path,{lang_code:(标题,正文)})`(已处理无尾换行+20列模板);任何补偿/发奖多语言文案都用它别手拼。emoji(🏆4字节)未确认兼容,导入仍报错先去emoji。
 
+## 🟢 API 直发（2026-07-03 打通，可不走 UI）
+- **端点**：POST `https://webgw-cn.tap4fun.com/ark/mails/send/players`（prod；与 UI 上传 CSV 完全等价——UI 只是前端把 `[1146*5]` 解析成 assets JSON）。鉴权同 gm-send：headers `Authorization: Bearer <token>` + `clientid/gameid/regionid`，读 `.igame-auth.json`（见 [[reference_igame_gm_send]]）。
+- **payload**：`{"to":[{"serverId":"2080","playerId":"1879472","assets":[{"assetType":"PROP","id":"1146","amount":1}],"extension":""}],"content":[{"lang":"ru","title":..,"body":..,"collectionId":-1},...多语言多条...],"mailCategoryId":1,"sendType":-1,"validPeriod":1920(小时=80天),"customParams":"","rewardVersion":"","remark":"..."}`。serverId/playerId/id 均**字符串**，amount 数字。多语言直接塞 content 数组，不用另导多语言 CSV。
+- **路由/查询工具**：`~\.claude\skills\igame-skill\`（`igame-routes.json`=1090 全接口路由表；`scripts\igame-query.js` 直打网关）。发件箱 `write "email/outbox/getMailList" '{"pageIndex":1,"pageSize":5}'`；详情 `read "email/outboxDetail/getMailDetail" '{"id":<mailId>}'`。
+
+## ★一条龙 CLI 直发工具（2026-07-03·发奖/补发统一走它）
+- **工具**=`~\.claude\skills\igame-skill\scripts\igame_mail_send.py`（一条龙:CSV+多语言JSON→自动建payload→缺省dry-run→`--send`真发）。用法：
+  - `python igame_mail_send.py --csv 奖励.csv --content content.json --remark "事由_人数_日期"`（dry-run，打收件数/道具合计/语言/remark）
+  - 加 `--send` 真发；`--status <mailId>`查状态(2=待审/3=派发中/1=已发)；`--outbox [N]`查发件箱
+- **`--csv`**=X3奖励CSV(GBK·6列`server,user,[1146*N],,,`·无表头)。**`--content`=多语言JSON `{lang码:{title,body}}`**(不是转置CSV)。**从生成器的`多语言邮件_{key}.csv`转JSON**=按表头`语言名-码`split取码+行1标题+行2正文(脚本见发奖工作流)。
+- **★发送流程铁律**：①`--send`后网关返`success:true`只是**登记**·status=2**卡审批** ②**必须有人去iGame后台放行**(status2→才真派发) ③放行后`--status <mailId>`看sentAt/to[].failReason确认真发出 ④最终数仓入账收口 ⑤**建议先发1人金丝雀验格式再发全量**。
+- **🔴两个已修bug(2026-07-03)**：①**`build_from_csv`原`rows[1:]`把无表头CSV首行当表头跳→每封漏发第1个玩家**。修=自动判表头(`start=1 if 首列非数字 else 0`)。②**发后盲取发件箱`data[0]`报mailId→抓到最顶别的草稿(误报"V2礼包"/同一id)**。修=**按刚设的remark精确匹配**发件箱找真实mailId。**接管教训:发后真实mailId永远按remark去发件箱查,别信盲取top**;每次remark设唯一(事由_人数_日期)才好匹配。
+- **✅首例实战(2026-07-03)**：世界杯竞猜3场发奖=mailId **4725589(西奥6687)/4725590(葡克6426)/4725591(瑞阿6459)**·全status2待审·remark`世界杯竞猜命中_{场}_{数}_20260703`。产出`KB\产出-数值设计\X3_世界杯\发奖csv\content_{key}.json`。
+- **⚠️ 审批流**：提交后 status=2 待审（需人在 iGame 后台放行，不自动过），网关 success 只是登记；判真发出看 detail 的 `sentAt/gsResponse/to[].status`，最终以数仓入账为准。**status 枚举（20260703 实测·两单对照修正版）**：workflow 流水 8=已提交 → **7=审批通过**（审批人必须是另一人，如龚亮；过审后 0=发送中 → 1=已发送，全程秒级）；**3=驳回/撤回（终态，不会再发！）**——提交人自己在 UI 操作自己的单容易点出 3。detail/列表 status：2=待审、1=已发送(sentAt回填)、3=驳回/撤回。⚠️别把 3 当"派发中"傻等（首日金丝雀单 4725437 就是这样卡的），卡住先拉 `getMailWorkflow` 对照流水。
+- **发送脚本范式**：payload 写 UTF-8 JSON 文件 + python urllib 读文件 POST（别把西里尔文塞命令行 argv）。已固化完整 CLI=`~\.claude\skills\igame-skill\scripts\igame_mail_send.py`（`--csv 导入.csv --content 多语言.json --remark ..` 一条龙构建，**缺省 dry-run、加 --send 才真发**；`--status <mailId>` 查单、`--outbox N` 查发件箱；用法见 igame-skill/SKILL.md「X3 玩家邮件直发」节，bulk-mail-reissue SKILL.md 文末有 X3 路由指回）。20260703 世界杯券补发首用（金丝雀1人→放行→全量；payload 范例存 `KB\产出-补发邮件\X3\20260703_世界杯奖券回收补发\api_payload_*.json`）。
+
 ## 关联
 - P2/X2 用 [[reference_bulk_mail_reissue]] 的 assetType JSON 格式；X3 用本格式。
 - 补发前核查是否已发，避免重复补偿（见 [[reference_bulk_mail_reissue]] reason 核查规则）。

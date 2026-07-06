@@ -80,3 +80,18 @@ node ~/.claude/skills/igame-skill/scripts/igame-query.js write "activity/.../sub
 | 玩家查询 | player/playerInfo/getPlayerInfo | GET |
 | 发送邮件 | email/sendEmail/send | POST |
 | 活动列表 | activity/activityList/getList | GET |
+
+## X3(1090) 玩家邮件直发（批量补发，不走 UI 上传）
+
+脚本：`scripts/igame_mail_send.py`（等价 UI「发玩家邮件」，POST `/ark/mails/send/players`，prod 网关 webgw-cn，读 `~/.igame-auth.json`）。
+
+```bash
+# 从 X3 导入 CSV(GBK 6列,道具列 [ID*数量]) + 多语言内容 构建 payload；缺省 dry-run
+python scripts/igame_mail_send.py --csv 补发.csv --content content.json --remark "事由_人数张数_日期"
+# content.json = {"ru":{"title":"..","body":".."},"en":{...}}  多语言塞 content 数组即可，不用另导多语言CSV
+# 确认无误后加 --send 真发（生产操作，先经用户确认）
+python scripts/igame_mail_send.py --status <mailId>   # 2=待审(须人到iGame后台放行) 1=已发送 3=驳回/撤回(终态不会再发,别当派发中傻等;workflow流水: 8提交→7审批通过(须他人)→0发送中→1已发送)
+python scripts/igame_mail_send.py --outbox 5          # 发件箱最近5单
+```
+
+铁律：①网关 success 只是登记，提交后 status=2 卡审批，**必须有人在 iGame 后台放行**；②判真发出看 `--status` 的 sentAt/to[].failReason；③最终以数仓入账收口；④建议先发 1 人金丝雀单核格式再发全量。字段/坑详见 memory `reference_x3_igame_mail_import.md`。首例实战：20260703 世界杯奖券回收补发（`KB\产出-补发邮件\X3\20260703_世界杯奖券回收补发\`）。

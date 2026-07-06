@@ -40,6 +40,7 @@ cd C:\x3\gdconfig ; git status -sb
 git worktree add ../gdconfig-<短名> -b feature/<短名> dev_festival
 ```
 **铁律**：之后 `tsv_edit.py` 每条带 `--repo C:\x3\gdconfig-<短名>`；commit/push 都 `cd` 进该 worktree；不碰主目录。漏了 `--repo` 会按默认值静默写回主目录，worktree 白开。
+⚠️ `--repo` 是**全局参数，必须放在子命令之前**：`tsv_edit.py --repo C:\x3\gdconfig-<短名> show --file ...`；放在 show/set 之后会报 unrecognized arguments（2026-07-02 实测）。
 
 ## 工作流（5 步）
 
@@ -96,6 +97,7 @@ python <skill>\scripts\jolt_verify.py <branch>
 - `python jolt_verify.py <branch>`：jolt 触发 → 轮询队列拿 build 号 → 轮询构建 → 报 SUCCESS/FAILURE + 分支 + 结尾行
 - 退出码 0=SUCCESS / 2=FAILURE / 3=超时或已有构建在跑 / 1=异常
 - 输出 `触发失败: 任务已在/正在执行` 时退回查 lastBuild（不算错误，已有构建会带上你的提交）
+- 「已加入队列排队+`等待 build 号超时`」退 exit 3 ≠ 失败也≠必然会跑：**队列项不保证成活**（2026-07-02 实测：77286 排上队后始终没变成 build，疑被 dedup/取消）。确认法=直查 Jenkins API `job/X3%E5%AF%BC%E9%85%8D%E7%BD%AE/api/json?tree=builds[number,result,building,actions[parameters[name,value]]]` 看该分支有没有**晚于你 push 时间**的 build；没有就再触发一次。构建取的是**build 启动时刻**的分支 tip（多笔连推只需最后一轮覆盖验证）
 
 ## 列位置速查表（本会话已验证）
 

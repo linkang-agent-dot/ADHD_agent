@@ -99,3 +99,10 @@ originSessionId: 7f1d10e6-76c8-46b3-b30d-957a641cda96
 - **道具图标走 Path_Item.asset**(不是Path_Activity)：两段(m_Keys列表 + key/objPath对)同序追加，**objPath直写png路径、不用GUID**。item 表 col20 填这个 DK 名。
 - **i18n**：客户端读 TXT_Item_Name_{ID}/TXT_Item_Desc_{ID}。⚠️Name 常在**多key合并行**(col0=`TXT_..._A|TXT_Item_Name_{ID}|TXT_Pack_...`)——别动合并行，**新建独立行** col0=TXT_Item_Name_{新ID}、col1=AI、col3起各语言列。Desc 多是独立行可克隆。
 - **坑**：上一会话口头说"已建item1146+图标+DK导表成功"全是假的，分支上 Item 表压根没有——**别信交接里"已完成"的说法，落地前 grep 真表确认**(`^ID\t` + 按名搜)。
+
+## ActvExchange 折扣标签游离引号→导表吞行 bug(2026-06-29 深海集市1341实战·复发)
+- **症状**:某兑换活动游戏内只显示**第1个**兑换项,其余全消失(深海珍宝集市AO101341 ContentID1341 只剩月心珍珠)。
+- **根因**:ActvExchange 折扣标签列(末列附近)历史遗留游离引号 `"<size=40>83%</size>`(**只开不闭**)。导表走 **csv 引号语义**(非纯tab切分),未闭合引号把后续物理行全吞成一个多行cell→该活动只剩首行。**全表这种引号是偶数时两两配对侥幸正常,落到全文件最后一个(无配对)就炸**。同坑2026-06前1340踩过(memory [[x3]]深海festival)。
+- **诊断法(可复用·定位被吞活动)**:对 tsv 同时跑 `csv.reader(delimiter='\t')` 和 纯 `line.split('\t')`,**逐 ContentID 比对行数**;`csv != tab` 的那个 CID 就是被引号吞了的。再 `txt.count('"')` 奇数=有未闭合。
+- **修**:删该行游离引号(`\t"<size=40>X%</size>` → `\t<size=40>X%</size>`,标签无分隔符不需引号)→重验 csv==tab 全表一致(注意CID=`1`是表头类型说明多行注释、本来就csv≠tab,忽略)。**只删炸的那一个即可**(改全表引号会动~20个老活动·脆弱配对·非必要别碰)。
+- 改在隔离 worktree(主仓有别人活跃worktree时X3隔离闸门会拦)。

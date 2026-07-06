@@ -17,10 +17,11 @@ metadata:
 
 ## 受保护分支规则
 
-| 仓库 | dev 是否受保护 | 直接 push dev |
-|------|--------------|--------------|
-| **x3-project** (代码+资源仓) | ✅ 受保护 | ❌ 失败：`pre-receive hook declined` |
-| **gdconfig** (配置 xlsx 仓) | ❌ 不受保护 | ✅ 可以直接 push |
+| 仓库 | 分支 | 是否受保护 | 直接 push |
+|------|------|-----------|----------|
+| **x3-project** (代码+资源仓) | dev | ✅ 受保护 | ❌ `pre-receive hook declined` |
+| **gdconfig** (配置仓) | dev / qa | ❌ 不受保护 | ✅ 可直推 |
+| **gdconfig** (配置仓) | **master** | ✅ 受保护(2026-07-02实证) | ❌ 被拒→cherry-pick→feature分支→MR(项目4454)→**API merge 自己有权限可自助**(MR!61实证:POST建MR用ASCII标题+PUT补中文+PUT /merge 一气呵成) |
 
 ## x3-project commit message 格式强制
 

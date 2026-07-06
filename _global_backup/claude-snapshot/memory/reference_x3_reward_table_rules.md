@@ -22,7 +22,13 @@ metadata:
 | 8 | DropType | int | ✅ | 1=单独概率（必掉）等 |
 | 9 | DropPara | int | ✅ | 概率参数，必掉时填 `10000` |
 
+| 15 | DisplayOrder | int | ✅ | **组内展示顺序,必填且组内唯一**——惯例=直接填 Col1 行编号(尼罗210612等模板都这么填)。**留空按0解析→组内多行全是0→reward_def 拦截 `DisplayOrder 重复: 0`导表FAILURE**(2026-07-02 深海锚点包13021-024踩坑,jolt #1495)。tsv_edit 0-indexed=col14 |
+
 ## 硬约束规则
+
+### 规则-1：★新增 Reward 行落笔后必须逐列 diff 克隆源模板（2026-07-02 连踩两坑的总教训）
+- 深海锚点包13021-024共12行，一次克隆连出两错、烧了两次导表构建：①DisplayOrder(col15)漏填→组内重复0 ②ItemType(col3)误当组内序号填2/3→钻石被当蓝图 depend 报错。
+- **收尾动作**：加完行，用 awk 把新行和克隆源模板行**同列并排打出来逐列比**（`awk -F'\t' '$2==<新组>||$2==<模板组>{...}'`），除 ItemID/Num/备注/DisplayOrder 这些"应当不同"的列外，**其余列必须一字不差**；有差就是错。别凭记忆填列。
 
 ### 规则0：★别把 ItemType(Col3/idx2) 当序号填递增！（2026-06-16 世界杯签到day7踩坑）
 - 「同 RewardID 内必须连续」的递增编号是 **Col1=行编号(idx0,全表唯一RowID)**，**不是 ItemType**。
@@ -125,6 +131,11 @@ for row in ws.iter_rows(min_row=7, values_only=True):
 - **裸 python 整组重写行(加/删行+重排ID)→ 翻车**：split('\n')/join 易破坏行尾→引入 CRLF(gate crlf≠0 拒)+round-trip 不稳(mismatch),手动 `--from-tsv`/`--from-xlsx` 反复同步只会越弄越糟(mismatch 0→3)。
 - 真要加/删行：能用单格替换达成目的就别加减行(如把第5物换成另一道具,而非删行重排)；非加行不可时，**改完用全仓 `python scripts/sync_xlsx_tsv.py` 验 mismatch=0 且 crlf=0 再提交**，崩了立刻 `git reset --hard origin/<branch>` 回纯净态别硬怼。
 
+## ⚠️备注列(Note·idx4/col5)是 stale 垃圾，判道具真身必须查 ItemID(2026-06-29 深海BP差点误改一片好奖励)
+- **Note 列(0-based idx4)= 纯人类备注·克隆行时不更新·与真实 ItemID 大面积对不上**。换皮/克隆来的 Reward 组，Note 留着源节日的旧名（如深海BP组142里 item154001 Note 写「争霸奖券」实际=自选家具木匣·item11004 Note「10 Vip点数」实际=1小时通用加速·一片 item 都挂着「一封情书」其实是钻石/加速/技能书）。
+- **铁律：判断某奖励格"是不是串味/外来道具"，一律 `awk -F'\t' '$1==<ItemID>{print $2}' Item__Item.tsv` 查真名，绝不信 Reward 的 Note 列**。我曾按 Note 列向用户 flag「BP里有GvG争霸奖券/情人节遗留」→用户授权全改→查真身才发现奖励其实全是正常通用资源(加速/技能书/钻石/信物)+深海藏宝图，**唯一真外来物是表情item15418**(客户端只读 ItemID 渲染·玩家游戏里看到的是真道具图标·Note 不进客户端)。险些把一套合理BP砸成清一色藏宝图。
+- **可选清理**：Note 全刷成真名脚本=遍历目标组行·`Note=Item[ItemID].name`·只改 idx4·字节安全(io utf-8 newline=''·split/join '\n')。纯可读性、不影响导表/发奖。深海BP组142(4034101-120/201-220/301-320共80行)已刷43处真名(commit abf25bb·jolt#1370 SUCCESS)。
+
 ## 🔁「整组复制翻倍」bug 识别 + 去重修法(2026-06-26 节日礼包翻倍事故·MR!43)
 master 上一批奖励组被同一 bug **整组复制**(组内所有行整块复制一份→玩家实得2倍),团队分轮修。识别+修法可复用：
 - **识别 signature(比"组内同道具≥2次"更稳)**：`组内每个道具都出现偶数次` → awk 按 RewardID 聚合,某组所有 ItemID 计数全偶=整组复制嫌疑。`{grp[$2]=grp[$2]" "$4;it[$2"|"$4]++} END{逐组判所有item计数%2==0}`。再按 id 段(节日=210xxx/211xxx)过滤。⚠️ "完全相同行(组+item+num+DropPara)重复"扫法**偏保守会漏**(非字节级复制的漏掉),实测 23 vs 团队基线法 106。
@@ -139,6 +150,16 @@ master 上一批奖励组被同一 bug **整组复制**(组内所有行整块复
 - **删行修法(不全局重排,省巨大diff)**：删组内部分行后若断号,**只把该组保留行 col0 重排回本组自己的连续低位**(如210632删后保留4行→25192-25195),其余全局留空洞=合规(表规则允许)。**别全局renumber**(会动几千行+可能破坏段位语义)。
 - **字节安全删行**：读 bytes→`split(b"\n")`→处理→`join(b"\n")`→写 bytes,**绝不 decode/re-encode 行尾**(防 CRLF)。删行+改col0 后必验:①各组组内连续 ②全局无重复 seq ③`grep -c $'\r'`=0。
 - **终极校验=本地 `cd Tools/table_exporter && python ExportTable.py`**(纯Python,跑真 reward_def),尾部 `protoc编译成功+bytes生成+MD5`=过。**当前仓 xlsx 已基本退役(git tracked xlsx仅2个,Reward.xlsx不在内)→ Reward 改动纯 tsv commit,无需同步 xlsx**。
+
+### ★最常见触发源=给「已有组」追加道具行时把新 id 追到文件末尾(2026-06-30 深海累充骰子事故)
+- **场景**：要给已存在的 reward 组补一种道具(如给累充档加骰子),图省事把新行**追到文件末尾取 全表max+1**→新行 id 落在远离原组其它行的号段→**组内 id 一下从 25488 跳到 15904123 = 断号** → `rewardID:X ID不连续`。
+- **正确姿势**：给已有组加行,新行 id **必须紧贴该组现有行(连续)**;原组号段没相邻空位就**整组重排到一段干净连续空号**(每组成连续块),别只图新行取 max+1。
+- **实例(深海累充 59850-59858)**：某 agent 给 9 个累充档(原各发 1200券·id 25488-496)追加 9 行骰子 1057(追到末尾 id 15904123-131·复用组号)→ 每组 2 行 id 断号 → 9 组全违规。修=18 行重排进 15904163-180·每组配连续对(commit X3NEW-·feature/reward-seq→dev_festival)。
+- **★jolt 绿 ≠ 安全(关键·别被骗)**：此校验在 origin 的 `reward_def.py` 里(commit 70e5013),但**Jenkins jolt 构建机的 exporter 快照可能旧、漏跑这条**——实测坏行在 dev_festival 上 jolt #1400 仍 SUCCESS,而本地 ExportTable(当前代码)必挂。**结论：配完 reward(尤其多道具组/追加行)别只看 jolt 绿,本地按"组内 max==min+count-1"自查或跑本地 ExportTable**。
+
+### 🔀 奖励展示顺序 = 组内行(seq col0)升序(2026-06-30 用户截图"顺序反了")
+- 客户端面板里多道具的**显示左右顺序 = 该 RewardID 组内行按 seq(col0) 升序**。要调展示顺序=**调组内两行的 seq 相对大小**(谁想排前给谁小 seq),**不改 item/数量**,seq 仍保持组内连续。
+- **多档活动新加档位必须对齐既有档位的 item 排列**:实例深海累充 59859(20000档)罗盘1057/券1200 顺序与其它9档(59850-858=券前罗盘后)相反→把券800排小seq(25496)、罗盘45排大seq(25497)对齐(commit a1cebce)。根因=累充agent加第10档时两行顺序填反。**接管累充/多档奖励改顺序先比对兄弟档,别孤立判断。**
 
 ## 🚪 master 受保护→走 MR(2026-06-26 实操路径)
 - worktree 隔离: `git worktree add ../gdconfig-<名> -b fix/<名> origin/master`(基于 master 不是 dev_festival);改完 commit(`X3NEW` 前缀)+`git push -u origin <分支>`;完事 `git worktree remove ../gdconfig-<名> --force`(改动已推送则安全),主仓 dev_festival 不受扰。

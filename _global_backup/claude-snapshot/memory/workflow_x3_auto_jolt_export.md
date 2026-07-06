@@ -50,6 +50,14 @@ cd C:/x3/gdconfig/Tools/table_exporter && python ExportTable.py
 
 **⚠️ 已有构建在跑时触发会失败(2026-06-17 世界杯实证)**：Jenkins 同时只跑一个 X3导配置 build。若上一次提交触发的 build 还在跑，`jolt_verify.py` 再触发会报 **`触发失败: 任务不存在: X3导配置`**（不只是"任务正在执行"那句）并退回显示 `lastBuild #N building=True`——这**不是真失败**，是被在跑的 build 占用。处理：**别反复硬触发**(撞同一报错)，等当前 build 跑完再触发一次即可（新触发会拉最新 HEAD，一次覆盖期间所有提交）。
 - 可复用脚本 `C:\Users\linkang\monitor_then_jolt.py`：匿名查 `http://172.20.110.29:8080/job/X3%E5%AF%BC%E9%85%8D%E7%BD%AE/lastBuild/api/json`(get_json无需鉴权)轮询当前 build 到 building=False→报结果→自动重触发 jolt_verify 验证 HEAD。盯构建/排队用它,别现写。
+- **build↔分支对账（2026-07-03 实证，多分支连推必用）**：连推 dev+qa 两分支后 jolt 都报"任务不存在"，别慌——push webhook 已各自排队。查 `{JOB}/<N>/api/json?tree=number,result,building,actions[parameters[name,value]]`，`actions.parameters` 里的 `branch` 值能把每个 build 对到分支（如 #1544=dev SUCCESS / #1545=qa），比只看 lastBuild 准。
+
+## ★导表 FAILURE：`push rejected(fetch first)` → 自动 `rebase origin/dev` 冲突 → exit128（2026-07-01 实证）
+**症状**：Jenkins 导表日志末尾一串 `CONFLICT (content): ...ProtoGen/i18n/{zh,en,jp...}.bytes` + `Item.bytes` + `ABTestSplit.*.meta(add/add)`，收尾 `Encountered N files that should have been pointers, but weren't`，最后 `git rebase origin/dev returned exit 128` → FAILURE。
+**根因 = 并发撞车，不是配置写错**：`checktsv.py` 的 `git_auto_commit → push_with_rebase_retry` 想把生成物 push 到 dev，但**导表期间别人先合了分支进 dev**（如本次 `dev_X3_1393_ABConfig`＝AB框架+黑金契约皮肤+首充三选一礼包）。push 被拒→脚本自动 `rebase origin/dev`→撞在**两边都重新生成的二进制 proto 产物**（i18n 逐语言 .bytes + Item.bytes）上。Git 合不了二进制 + 这些 .bytes 本该是 LFS 指针却被当真实内容提交 → rebase-retry 自动解不了 → 炸。
+**判据**：冲突文件全是 `ProtoGen/*.bytes`（导表自动产物）而非手写 tsv/xlsx → 撞车，不是你的错。冲突在 tsv/schema → 才是真配置问题。
+**处理**：`origin/dev` 已在日志里 fetch 到最新 → **直接重触发一次导表**（`jolt_verify.py <分支>`），无并发即顺过。**重触发仍撞同样二进制冲突** = 那波产物是真差异，须人工 rebase，机器人解不了别硬重试。
+**预防**：并发多 agent 改 X3 配置时错开 push、或走 worktree 隔离（见 [[workflow_x3_multiagent_worktree]]），避免同时重生成 i18n/Item proto。
 
 ## ★★导表后"什么生效、在哪生效"——热更边界(2026-06-17 世界杯实证,改配置前必判)
 **X3 热更只热服务端,不热客户端**。导表产出的配置分两份:客户端那份(`client\Assets\Res\Config\ProtoGen\{表}.bytes` + i18n逐语言 `cn/en/...bytes`语言包)是**客户端打包进app的资源**——每张表 `CfgProtos` 里写死 `AssetPath="Assets/Res/Config/ProtoGen/X.bytes"`,客户端从自己bundle读、**不是服务器运行时下发**;i18n 走 `LocalizationMgr` 客户端加载。

@@ -20,6 +20,14 @@ X3 一个 Pack 能不能在玩家端弹出来，**不只看 `Pack.IsOn` 和 `Ope
 
 ## 触发字段（Pack__Pack 自身）
 - `TriggerType=1` → `TriggerParameter` 填 **TimeCycle ID**（不是单独的 TimeCycleID 列）；其余 TriggerType 见表内说明行（2=等级 5=买指定包 9=获得英雄 12=任务计数…）。
+
+## ★TriggerType=1（timecycle推送）只看 TC 配置窗口，跟"活动在不在用这条TC"无关（2026-06-30 代码实证·深海头像框案）
+**结论：把礼包挂在某活动用的 TC 上，部署/触发那个活动 ≠ 能把礼包带出来**。礼包 `TriggerType=1` 是否推送 = `IsTimeCycleOpen(TC, now)` 是否 true，而它**只读 TimeCycle 表配置的 StartTime/Duration**，不看有没有 ServerActivity 实例在用这条 TC：
+- 链路：`GiftMeta.cs:2621`(取 TriggerParamVals[0]=TimeCycleID) → `TimePointCondition.cs:40/59`(`IsTimeCycleOpen`) → `TimeCycleMeta.cs:118-148` → `TimeCycleMgr.IsOpen`(`TimeCycleMgr.cs:92-110`：查 `mStartTimes/mEndTimes`，这俩**只由 TC 表配置算出**)。
+- 活动创建 `ActivityMeta.cs:1642-1643` 只是**读** TC 窗口给活动实例当 start/end，**不反写** TC 开放状态。
+- **深海头像框实证**：Pack 211019(TriggerType=1/TriggerParameter=1830·黑猫standalone·无ActvOnline) 挂 TC1830，而 TC1830 配置窗口=2020-01-01+14d(过期占位·备注"iGame部署带上")→ `IsTimeCycleOpen(1830)` 恒 false → **转盘101025(TimeController=1830)即便 iGame 部署上线，也带不出头像框**。"iGame部署带上"对 standalone 礼包是一厢情愿。
+- **要让 standalone(TriggerType=1)礼包出现**：必须让它的 TC **配置窗口真覆盖目标时间**（生产=新建/改 TC 填节日正式档期；本地测试=指永久 TC 6001 或把该 TC 窗口改到当前服钟）。**这类包没法跟 iGame 动态档期联动**——节日靠 iGame 控时(TC=0)的活动，standalone 包蹭不到。
+- **想"真跟活动一起上下线"只有一条路**：被活动引用（如 ChainPack 被 ActvType=63 活动挂，见本文 §四类机制 + 装饰106103/ChainPack700 案），代价=礼包变成那个活动 UI 里的一档，不再是独立弹窗。
 - `TimeCycleID` 列（col19）= 礼包自身**售卖循环窗口**，与 TriggerType 的推送是两回事。
 - ⚠️ **`Pack__Pack.tsv` 表头在 row5（英文字段名），数据 row6 起**——不是标准 7 行头！脚本定位列别套通用 row7。
 

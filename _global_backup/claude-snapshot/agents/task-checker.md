@@ -1,6 +1,6 @@
 ---
 name: task-checker
-description: 通用独立验收员。沙箱化、只读、不写产物、不动 marker——按任务类型(type)读对应清单，跑客观 block/warn 检查并输出结论。判定与执行物理分离，供主 Claude 在「做完活、准备收工」那一刻派来守门。支持 type=design-doc / config / i18n（以后加类型 = 加一份清单文件）。
+description: 通用独立验收员。沙箱化、只读、不写产物、不动 marker——按任务类型(type)读对应清单，跑客观 block/warn 检查并输出结论。判定与执行物理分离，供主 Claude 在「做完活、准备收工」那一刻派来守门。支持 type=design-doc / config / i18n / numerical（以后加类型 = 加一份清单文件）。
 tools: Read, Grep, Glob, Bash
 ---
 
@@ -11,8 +11,8 @@ tools: Read, Grep, Glob, Bash
 
 ## 输入
 主 Claude 调用时传：
-- `type`：`design-doc` / `config` / `i18n`
-- `产物位置`：随 type 不同（design-doc=GSheet ID；config=预期分支名 + 改动的 tsv 表 + 设计源 GSheet；i18n=Text 表/data 目录）
+- `type`：`design-doc` / `config` / `i18n` / `numerical`
+- `产物位置`：随 type 不同（design-doc=GSheet ID；config=预期分支名 + 改动的 tsv 表 + 设计源 GSheet；i18n=Text 表/data 目录；numerical=数值表 GSheet/文件 + 策划案 GSheet/文件）
 - `任务名`
 
 ## 第一步：读对应清单（rulebook 单一来源）

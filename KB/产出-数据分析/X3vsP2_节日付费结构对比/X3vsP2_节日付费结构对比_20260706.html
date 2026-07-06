@@ -1,0 +1,82 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<title>X3 vs P2 节日付费结构对比（2026-07-06）</title><style>
+body{background:#0f1420;color:#e2e8f0;font-family:'Segoe UI',system-ui,sans-serif;margin:0;padding:28px;max-width:1100px}
+h1{font-size:21px;margin:0 0 4px} h2{font-size:16px;color:#00d4aa;margin:26px 0 10px}
+.sub{color:#8892a4;font-size:12px;margin-bottom:16px}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13px}
+th,td{border:1px solid #232c42;padding:7px 10px;text-align:right}
+th{background:#161d2e;color:#a5b4cf} td:first-child,th:first-child{text-align:left}
+.kpis{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0}
+.kpi{background:#161d2e;border:1px solid #232c42;border-radius:10px;padding:12px 18px;min-width:150px}
+.k-label{font-size:12px;color:#8892a4}.k-val{font-size:22px;font-weight:700;margin:2px 0}.k-sub{font-size:11px;color:#8892a4}
+.hl{color:#00d4aa}.warn{color:#f59e0b}.bad{color:#ff6b6b}
+.card{background:#161d2e;border:1px solid #232c42;border-radius:10px;padding:16px 20px;margin:12px 0}
+li{margin:6px 0;line-height:1.6} .footer{color:#5c677d;font-size:11px;margin-top:20px}
+.bar{display:inline-block;height:10px;background:#38bdf8;border-radius:2px;vertical-align:middle}
+</style></head><body>
+<h1>X3 vs P2 <span class="hl">节日付费结构对比</span> — 差距在哪、10.5%→30% 怎么走</h1>
+<div class="sub">数据窗口 2026-05-07 ~ 07-06（近2个月）· P2=TRINO_AWS 全服 dim_iap节日类目 · X3=TRINO_HF（占比用成熟服段1-88服口径）· 生成 2026-07-06</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="k-label">P2 节日占大盘</div><div class="k-val hl">44.1%</div><div class="k-sub">$1,807,410 / $4,095,921</div></div>
+  <div class="kpi"><div class="k-label">X3 节日占大盘（成熟服段）</div><div class="k-val warn">16.0%</div><div class="k-sub">$49,917 / $311,363（自夏日D0 5/29起累计·修正前含无节日空窗为10.5%）</div></div>
+  <div class="kpi"><div class="k-label">目标</div><div class="k-val">≥30%</div><div class="k-sub">节日ARPPU需≈翻倍（16%→30% ≈ 深度差距1.79×正好补齐）</div></div>
+</div>
+
+<h2>〇、金标准：付费玩家 ARPU 对打（同题材深海节 · 同窗口 D0-D3 硬对齐）</h2>
+<table>
+<tr><th>指标（分母=窗口去重付费人数）</th><th>P2 深海节 D0-D3（全服）</th><th>X3 深海节 D0-D3（59服）</th><th>差距</th></tr>
+<tr><td>大盘 ARPPU</td><td>$83.9（$356,442 / 4,250人）</td><td>$72.0（$74,688 / 1,037人）</td><td>1.17×——<b>钱包体量相当</b></td></tr>
+<tr><td><b>节日 ARPPU</b>（节日流水/总付费人）</td><td class="hl"><b>$46.0</b></td><td class="warn"><b>$20.9</b></td><td class="bad"><b>2.2×——核心差距</b></td></tr>
+<tr><td>节日期内节日占比</td><td>54.9%</td><td>29.0%</td><td>1.9×</td></tr>
+<tr><td>节日渗透率（买过节日包的付费人占比）</td><td>55.8%（2,372/4,250）</td><td>45.1%（468/1,037）</td><td>1.24×</td></tr>
+<tr><td><b>节日买家人均节日消费</b></td><td class="hl"><b>$82.5</b></td><td class="warn"><b>$46.2</b></td><td class="bad"><b>1.79×——深度是主因</b></td></tr>
+<tr><td>（参考）P2 全窗22天节日买家人均</td><td colspan="3">$180.3（$753,353/4,178人）——长窗口下重复消耗持续掏深，X3 现结构跑不出这个复利</td></tr>
+</table>
+<div class="card"><b>金标准读法：</b>①两边付费玩家钱包体量几乎一样（大盘 ARPPU $84 vs $72），差的不是玩家质量，是<b>节日从每个付费玩家身上掏走的份额</b>；
+②节日 ARPPU 2.2× 差距拆开 = 渗透 1.24× × 深度 1.79×，<b>深度贡献了大头</b>——P2 靠"玩法即付费"让节日买家一节掏 $82（22天滚到 $180），X3 节日买家 4 天只掏 $46 且缺重复消耗点位难以持续加深；
+③X3 节日期内占比其实已有 29%——<b>两个月口径 10.5% 的稀释主要来自节日空窗天数</b>（5-6月大段无节日在线）+ 深度不足，两个问题要分开治。</div>
+
+<h2>一、同题材硬对齐：深海节 P2 vs X3（结构拆分）</h2>
+<table>
+<tr><th>模块（按语义对齐）</th><th>P2 深海节（6/10-7/01·22天全量）</th><th>占比</th><th>X3 深海节（7/3-7/6·D0-D3）</th><th>占比</th></tr>
+<tr><td><b>强消耗玩法付费</b>（P2:猜酒杯/钓鱼/弹珠GACHA/大富翁/挖矿关卡 · X3:转盘连锁/藏宝图锚点/罗盘连锁/许愿池/存钱罐）</td><td>~$450,000+</td><td class="hl"><b>~60%</b></td><td>$4,920</td><td class="bad"><b>22%</b></td></tr>
+<tr><td><b>外显直售</b>（节日皮肤/行军特效/装饰/头像框）</td><td>$173,280</td><td class="hl"><b>23%</b></td><td>$2,000</td><td class="bad"><b>9%</b></td></tr>
+<tr><td><b>BP/通行证</b></td><td>$54,237</td><td>7%</td><td>$9,465</td><td class="warn">43%</td></tr>
+<tr><td>礼包直售（每日礼包/限时抢购/团购/成就礼包/拜访）</td><td>~$75,000</td><td>10%</td><td>$5,487</td><td>25%</td></tr>
+<tr><td><b>节日合计</b></td><td><b>$753,354</b></td><td>—</td><td><b>$21,872</b>（D3，14天预估~$75k）</td><td>—</td></tr>
+</table>
+<div class="card">P2 深海节特惠 Top：猜酒杯 $126,858 · 钓鱼 $85,741 · 弹珠GACHA(随机+固定) $117,654 · 节日大富翁 $59,947 · 限时抢购 $45,325 · 挖矿关卡 $41,529——<b>前六名全是"边玩边买"的重复消耗玩法</b>。X3 深海对应位只有 $1.6k 转盘连锁 + $1k 罗盘连锁。</div>
+
+<h2>二、P2 节日结构的稳定规律（两节实证）</h2>
+<table>
+<tr><th>模块</th><th>拓荒节（$1,034,209）</th><th>深海节（$753,354）</th><th>规律</th></tr>
+<tr><td>节日特惠（玩法付费+抢购+礼包）</td><td>69%（4,536人）</td><td>68%（3,879人）</td><td>结构主引擎，占比恒定 ~68%</td></tr>
+<tr><td>节日皮肤（外显直售）</td><td>26%（1,379人）</td><td>23%（1,004人）</td><td>第二支柱，~1/4</td></tr>
+<tr><td>节日BP</td><td>4%（1,879人）</td><td>7%（1,898人）</td><td>参与人数最广、金额小</td></tr>
+<tr><td>挖矿小游戏</td><td>1%</td><td>2%</td><td>引流玩法</td></tr>
+</table>
+
+<h2>三、差距诊断（按贡献度排序）</h2>
+<div class="card"><ol>
+<li><b>强消耗玩法付费缺位（最大缺口）</b>：P2 节日 6 成收入来自"充值→直接参与玩法→再充值"的循环（猜酒杯/钓鱼/弹珠/大富翁都是付费本体）；X3 的转盘/大富翁玩法骨架已有，但付费入口是"礼包送券"（低频买断），玩法本体不吃直充。单模块对比：P2 猜酒杯一节 $127k ≈ X3 整个深海节预估收入的 1.7 倍。</li>
+<li><b>外显不卖钱</b>：P2 节日皮肤/行军特效直售一节 $17-27万（23-26%）；X3 外显主要当抽奖奖励投放（转盘出皮肤），直售位只有装饰礼包+头像框，一节 ~$2k。X3 已有英雄皮肤/岛屿皮肤/纪念卡体系，缺的是"节日直售货架"。</li>
+<li><b>X3 通行证占 43% 是结构倒挂的信号</b>：不是通行证太强（绝对值 $9.5k 只有 P2 BP 的 1/6），而是其它模块太弱把它衬成了大头。通行证是低价买断，靠它撑不起 30%。</li>
+<li><b>节内商品密度/长尾</b>：P2 深海节同期在售 15+ 模块，还叠了上届（2025深海节包 $55k）和跨节（科技节弹珠 $20k、周年庆预购 $12k）长尾；X3 节日商品一次性上齐后无滚动更新。</li>
+<li><b>节日日历</b>：P2 月月有节几乎无空窗（拓荒 5/12-6/02 → 深海 6/10-7/01 → 世界杯竞猜 7/02+）；X3 5-7月已经在追（夏日→尼罗→世界杯→深海并行），这条差距在收窄，继续保持。</li>
+</ol></div>
+
+<h2>四、10.5% → 30% 的路径拆解（成熟服段口径）</h2>
+<div class="card">
+目标 = 节日收入 ×3（$26k/月 → $75k/月）。按 P2 结构占比反推，三个杠杆各自要补多少：
+<table>
+<tr><th>杠杆</th><th>X3 现状/月</th><th>对标 P2 结构后目标/月</th><th>动作</th></tr>
+<tr><td>① 强消耗玩法付费</td><td>~$4k</td><td class="hl">~$40k（占节日5-6成）</td><td>转盘/大富翁/竞猜从"礼包送券"改"直充参与+连抽档位+保底进度"，节内滚动上新一期玩法（对标猜酒杯/钓鱼=每节一个新付费玩法）</td></tr>
+<tr><td>② 外显直售</td><td>~$1k</td><td class="hl">~$18k（占节日~25%）</td><td>节日皮肤/行军特效/装饰开直售货架（限时+限量+节日定制），复用现有皮肤生产线</td></tr>
+<tr><td>③ 礼包/BP/周卡基本盘</td><td>~$21k</td><td>~$25k</td><td>已接近够用，保持；重点别再往这里堆</td></tr>
+</table>
+一句话：<b>30% 的缺口几乎全部来自"玩法付费"和"外显直售"两个 P2 已验证的支柱，X3 现在一个只有对标的 1/10、一个不到 1/100。</b></div>
+
+<div class="footer">口径：P2=v1041.dl_user_order×dim_iap（混合-节日活动），X3=各节日累充白名单/静态谓词（详见 x3_cumulative_monitor.py / p2_cumulative_monitor.py）；
+X3 深海节仅 D0-D3 样本，14天预估 ~$75k 按日均外推；"强消耗玩法付费"为语义归组（P2 特惠中玩法类礼包 by 礼包名，X3=转盘连锁+锚点+罗盘连锁+许愿池+存钱罐）。</div>
+</body></html>

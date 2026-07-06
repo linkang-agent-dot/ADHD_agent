@@ -7,6 +7,10 @@ metadata:
   originSessionId: 9fa379f1-8095-4bed-9a37-401c299ba495
 ---
 
+## ⚠️【发版铁律·先于一切】festival→dev 只能走真 3-way merge，禁止线性怼（2026-06 装备排序事故）
+
+把节日分支合进 dev **必须产出 merge commit(2 parent)**：`git checkout dev` → `git merge --no-ff dev_festival`。**禁止**用 fast-forward / force-push / cherry-pick / rebase / squash 把 festival 的**线性历史**怼进 dev。线性操作**绕过 merge driver + 双向丢行审计**——分支点之后别人在 dev 上做的修复会被 festival 携带的旧值**静默回退**，且没有任何冲突/审计能拦。完整复盘 + 发版前 4 道门见 **§⑮**。
+
 ## 触发场景
 
 合并节日分支 → dev 后，怀疑某些字段被错误覆盖（dev 上原本对的值被节日分支的旧值替代）。2026-05-26 X3 dev-summer-love-song → dev MR!218 实战：
@@ -229,7 +233,114 @@ comm -23 <(git show HEAD:tsv/T.tsv|cut -f1|sort -u) <(git show MERGE_HEAD:tsv/T.
 
 > 通用教训：delete/modify 冲突先核 ID 的**业务身份(名字/含义)**，不是字段值；并行线复用 ID 是常态，删错就是删线上。
 
+## ⑫ dev→dev_festival 大合并：Reward 按 RewardID 集合确定性重建 + i18n 误删恢复 + BP 撞车重排(2026-06-30，62↑ vs 134↑)
+
+把最新 origin/dev 反合进 dev_festival(已分叉非超集)。driver 报 4 表真冲突:Text(141 bulk_row_delete)/Reward(340:cell_conflict112+row_add_conflict122+bulk_delete91+row_local_deleted_remote_modified15)/Pack(1)/BattlePassScoreReward(5)。merge commit `619fb11`。三个可复用打法:
+
+**A. Reward 别逐条解 340 冲突,改「按 RewardID 集合确定性重建」(最省力且可证完整)**:
+- 先验**纯 seq 撞车 vs 真 RewardID 撞车**:row_add_conflict 的 `local_row.RewardID ∩ remote_row.RewardID`。本次=**0** → 两分支从同一 base max 各自 `seq+1` 增长,撞 seq 号但 RewardID 不撞(引用走 RewardID,seq 随便重排)。cell_conflict 也一样:同一 seq 两边填了**不同 RewardID**(如 seq20374 fest 保留4200001改ItemID、dev 复用成5000000)。
+- 分类(gbiz=按业务列 tuple 比内容,RewardID=col1 第2列非col0 seq): 对每个 dev RewardID R: ①D==F→no-op(festival 副本已够); ②R 不在 festival→**append**(dev 独有,本次48个); ③R 在 festival 但 F!=D: 看 **D==base(dev没改,festival改)→保留 festival**(本次102个), **F==base(festival没动,dev改)→取 dev**(本次仅4个), **都改→真冲突**(本次0)。
+- **「取 dev」的少数(4个)必须人眼复核**:本次 8997/8998=dev 真重平衡(改MinNum+补名)→取dev; 291322/291323=dev 加**重复垃圾行**(同ItemID无名重复)→**保留 festival**。机械分类会把后者误判成 take-dev。
+- 重建 = **festival HEAD 全行 verbatim + 删 take-dev 的 festival 行 + append(dev 的 take-dev 组 + 48 dev 独有组),新 seq 从 festival max+1 起、按 RewardID 分组连续**。比修 driver 的 franken 输出稳。验证:`festival 全 RewardID 在 final 且内容不变(除 take-dev)` + `dev 全 RewardID 在 final` + `BP奖励引用全在`。本次 11618(fest)+48=11666 final,双向 0 丢。
+
+**B. i18n 新坑:festival 误删但实体仍存在 → 必须恢复(区别于 bulk_row_delete)**。双向审计 Text 报 dev_lost,过滤管道连写伪迹(多行引号单元格)后剩 8 个干净 key:`base有/festival删/dev留(==base)/final删`。这是 **festival 主动删 i18n、dev 被动,driver 标准 3 路把删除应用了**(非 bulk_row_delete,不在冲突列表)。但查 Pack 130002-130004/活动 101102/104/120 **在 final 仍存在** → 删 i18n=空白名。按 i18n 条目齐全铁律 + 风险不对称(缺译空白UI vs 多留无害孤儿)→ **从 MERGE_HEAD 整行恢复这 8 key**。教训:**i18n 双向审计 dev_lost 要查「实体还在不在」,在就恢复**。
+
+**C. BP 战令真 ID 撞车重排(festival深海 vs dev S6林若雪共用 Pack130034/RewardGroup143/BP14301-14305)**。摸清挂载:`BattlePassScore` 行的 `Pack`列+`RewardGroup`列(col4/col5),festival 2244(深海,Pack130034|130035,RG142)+2245(RG143);dev 2243(S6,Pack130034,RG143)。用户选「取dev、重排festival」的执行配方:① 找空号(Pack 1300xx 下一个空=130046; RewardGroup 两侧都空的=149,festival 已用到148; BP奖励 id 全局max14808→14809+) ② Pack:130034 取dev、festival 深海护航令复制到130046 ③ BattlePassScoreReward:14301-14305 改dev内容、festival 深海5行搬到 group149/id14809-14813 ④ BattlePassScore 改引用:2244 Pack 130034→130046、2245 RG143→149 ⑤ i18n:加 `TXT_Pack_Name_130046`(复用旧文案);被夺走的 `TXT_Pack_Name_130034` 留给 dev 补 S6翻译。**BattlePassScoreReward 的 col0 ID 不被外部引用**(BP 奖励按 Group+Level 查),可任意重排;引用走 RewardGroup。**merge_tsv_audit 会把这些有意重排报成「消失行」**(2244/2245/14301-05/130034)=假阳性,逐个确认内容在新位置即可。
+
+**通用:含 BP/Pack/RewardGroup 跨表撞车,先 `BattlePassScore` 的 Pack列+RewardGroup列摸全挂载关系再动手,空号两侧都要避开。验证三连同前(双向丢行0 + ExportTable exit0 + xref 无新增触及改动实体)。本次 ExportTable depend_keys exit0 是最强信号——它权威校验全表引用,过了=引用完整,xref 的 240 条 missing_sheet 是已知噪音不用管。**
+
+## ⑬ 行序坑：dev 整表重排被合并采纳 + 新行堆末尾（2026-06-30 用户硬要求修，文档原本没有）
+
+**现象**：合并后用户发现 ShopItemCfg/Item/Reward 等表「行被重排了、新行没插进去堆在末尾」。这是**机制性的、合并 skill 文档里没解**，必须自己后处理。
+
+**两个根因**：
+1. **driver 设计：新行 `row_add` 一律「追加到 sheet 末尾」**（`tsv_merge_pro.apply_tsv_changes` Phase2 + x3_skill_merge.md line107 明写）。dev 新增的行不会插到 ID 对应位、而是堆文件末尾。
+2. **festival==base 时 git 走 trivial merge 跳过 driver、整版取 dev**（driver 自身 fast-path `if bb==bl: 取 remote` 也一样）。若 dev 把某表**整体重排过**（即使行内容一字没改，只是顺序变了），合并结果会**采纳 dev 的整个行序**，festival(=base) 的原始行序被带跑。判定：`git show <base>:T | 行 == git show HEAD(festival):T 行` 但 dev 的同内容行在不同位置 → 内容相同纯重排。本次实测 Item 整表 981 行被 dev 重排、ShopItemCfg 597 行（推币机商店行从 pos26 被挪到 pos614）。
+
+**正解 = 合并后跑「行序后处理」**（只置换整行、内容零改动，带行集合一致性校验）。算法：以 **festival(HEAD) 行序为骨架**，dev 新增行按其在 **dev 上下文**的位置插入（找 dev_order 里该行前面、已落位的最近邻行，插其后）：
+```
+for each 改动的非冲突 tsv（按 col0 唯一键）:
+  merged=工作树行(内容已对); fest_order=HEAD行序; dev_order=MERGE_HEAD行序
+  out=[i for i in fest_order if i in merged]           # 共享行回 festival 位
+  for i in dev_order:                                  # dev 新增行按 dev 上下文插入
+    if i in merged and i not placed: 插到「dev里i前面、已在out的最近邻」之后
+  写回前断言: sorted(新行集) == sorted(老行集)          # 纯置换、不丢不增
+  out==原序 则跳过(幂等)
+```
+- **col0 空/重复的表**（ActvExchange/Mail/ActvWishingPool/ActvKvk：复合键或多行单元格）→ **跳过**别硬排；先验它们 dev 有没有重排（本次都没、只追加，安全不动）。
+- **Reward 特殊**（col0=seq 是新分配的、dev_order 里找不到）：festival 表**基本按 RewardID(col1) 升序**（实测仅 0.45% 倒置）。新组按 **RewardID 排序位插入**（找 festival 里 RewardID≤新组的最后一行，插其后），seq 用保留高位区(本次 15904181+，festival 自己的新组也用 1590xxxx 高位并插在 RewardID 位、不堆末尾)。**同一锚点多个新组要按 RewardID 升序排**（否则在同位置反复 `data[pos:pos]=grp` 会反序，6001-6004 会变 6002,6001…）。8997/8998 这种「取 dev 的共享组」=整块替换、保留 festival 原位+seq。
+
+**验证**：`merged 行集 == dev 行集`(festival==base 的纯重排表，内容应全等 dev、只顺序回 festival) + ExportTable exit0 + Reward 双向 RewardID 零丢。
+
+**踩的坑**：① `git merge --abort` 在**工作树已被解冲突脚本改过时会失败**(`Entry X not uptodate. Cannot merge`)→ 重做要用 `git reset --hard <pre-merge>` 强制清。② 解决脚本对「读工作树再写」的表(BPReward/Pack)**非幂等**，脏状态上重跑会双重应用→ 必须先 reset 干净再跑一次。
+
+## ⑭ cell 级合并污染：两侧把「同 col0 不同内容」的行换了序 → driver 把列搅在一起（2026-06-30，被 linkang 抓到）
+
+**最隐蔽的坑，ExportTable 查不出**。场景：推 dev_festival 被拒(他人 zhangli 并发推了 005bdbe 英雄手册迁移)，fetch 后 `merge origin/dev_festival`。RewardID `59859`(深海累充20000档,linkang 刚 a1cebce「奖励顺序对齐」过)在 seq25496/25497 两行：我的版(=base) `25496=罗盘券/800, 25497=罗盘/45`；zhangli 把两行**换了序** `25496=罗盘/45, 25497=罗盘券/800`。driver 按 col0(seq) 做 **cell 级 3 路合并**，每列独立选边 → 最终 `25496=ItemID1057+名字深海罗盘券+count45`（ItemID 取了 zhangli、名字取了我、count 取了 zhangli）= **ItemID/名字/数量三列错配的垃圾行**，两个 parent 哪个都不等。
+
+**为什么躲过所有验证**：① ExportTable depend_keys 只验 ID 存在(1057/1200 都在)，不验「这行的 ItemID 和它的 count 搭不搭」；② 双向丢行审计按 col0 比，行还在(25496/25497 都在)不报丢；③ 列结构/连续性都过。**纯语义污染，只有人肉看才发现**。
+
+**检测(合并后必跑,尤其对方改过同表)**：对「两个 parent 都有的同 col0 行」，找 `最终行 ≠ parent1 ≠ parent2 ≠ base` 的——这种「谁都不等」就是被 cell 合并搅出来的污染：
+```python
+for k,v in FINAL.items():
+    if k in P1 and k in P2 and v!=P1[k] and v!=P2[k] and v!=BASE.get(k): corrupt.append(k)
+```
+**修**：按业务意图取**正确一侧的整行**覆盖(不是 cell 合并)。本次取 linkang a1cebce 对齐版(`87bf386` 同)。**根因预防**：合并对方改过的表时，凡「同 RewardID 的多行被任一侧重排过」(行集合相同、顺序不同)，**别让 cell-merge 跑**——整组按权威侧 row-level 取。
+
+**附带教训(被用户当场纠正)**：① **别瞎归因人名**——我把并发提交说成"gongliang"(只看到 changelog 文件名 `*_gongliang.md`)，实际 author 是 **zhangli**(`git log --format='%an <%ae>'` 现查，别猜)。② 用户说"开始胡说了"=我连着用"对方故意删的"解释疑点、却没先核对方是否真改过那行——**先 `git show <对方commit>:表 | grep <id>` 拿事实，再下结论**。
+
+### dev_festival→dev 发版合并(2026-06-30 完成)的两个要点
+1. **dev_festival 已是 origin/dev 超集时,正向合并=快进式零冲突**(本次:之前反向合过,festival ⊇ dev)。流程:`checkout dev`→`reset --hard origin/dev`(本地 dev 落后/分叉就对齐;本地领先的 commit 先验内容是否已在 dev_festival,在就可弃——本次 `2479949` 深海居所106103 i18n 已在 dev_festival 同行,弃之无损)→`merge --no-ff --no-commit dev_festival`→应"Automatic merge went well"。**验收即使零冲突也跑**:`git diff dev_festival -- tsv/` 应**空**(树相同=直接拿到已验证绿的 dev_festival 状态);双向丢行审计的误报(Reward 按 col0 报丢=我重排过 seq、按 RewardID 才是真相 0;Text 报丢=多行引号单元格的`|`伪迹键、过滤后 0)。
+2. **★并发同向合并:push dev 被拒→fetch 发现别人已做了同一个 dev_festival→dev 合并**。本次 zhangli `e8812f8 Merge dev_festival into dev` 和我并发、他先推。**判定**:`git merge-base --is-ancestor <我的关键修复commit> origin/dev` + `git diff origin/dev dev_festival -- tsv/` 空 → origin/dev 已 == dev_festival(含我所有改动)→**我的合并冗余,别强推、别再合**,直接 `git reset --hard origin/dev` 弃冗余本地合并。教训:发版合并 push 被拒先看「拒我的那个 commit 是不是同一个合并」,是就对齐收工,不是才走 §⑩ 整合。
+- x3 隔离闸门:主仓有并行 agent 的 feature worktree 时拦改主仓;自动模式不让自建放行标记(安全),需用户授权或清理已合并 worktree。`git worktree remove` 只删工作目录、**分支+commit 保留**(未合并的活不丢);有未提交文件需 `--force`(只丢没存盘的)。判 worktree 是否可清:`git merge-base --is-ancestor feature/X dev_festival`。
+
+## ⑮ 线性操作绕过 driver = 静默回退 mainline 修复（2026-06 事故复盘，装备排序 7030001/7030003）
+
+**这是所有合并审计都拦不住的一类坑，因为它压根没走合并。** 上周（6-24~6-30）装备三件套排序回归 = 同一人同一套线性操作绕 driver 造成，深海累充 8 断点+9 劈断也是它。
+
+**事故事实**（已在 origin/dev 复现确认）：RewardID 7030001/7030003（黄金国度/深渊秘宝 IV 阶火炮）三件套排序，正确应「装备→钻→VIP」。
+| commit | col0(seq) | 7030001 首行 | 状态 |
+|--------|-----------|-------------|------|
+| af6441b(6-24 chenxiaoran) | 25428-25430 | 160218 装备 | ✓ 1287→dev 正确合并态 |
+| 608fe72(6-25 linkang) | 25198-25200 | 2022 VIP | ✗ dev_festival 旧 col0 覆盖 dev 主线 |
+| 290d6b7(6-29 linkang) | 25198-25200 | 2022 VIP | ✗ commit 声称「刷注真名·纯可读性不改道具」实则动了行序 |
+| origin/dev 现在 | 25198-25200 | 2022 VIP | ✗ 沿用错版（当前线上） |
+
+**根因**：608fe72→938cdb6 之间 **8 个 commit 全是单 parent 的 dev_festival 线性提交** → linkang 用 fast-forward/force-push/cherry-pick/squash 把 festival 线性怼进 dev，**没走 driver 3-way merge**。festival 的 merge-base 早于 af6441b，线性操作携带 festival 对每一行的旧值，chenxiaoran 在分支点之后做的 af6441b 修复被**静默覆盖**。**seq 从 25428 → 25198 回退，就是"拿的是旧分支版本、不是真合并"的铁证**（真 merge 只会保留新值 25428，不会把 seq 也退回旧号）。
+
+**为什么躲过一切审计**：不走 merge 就没有冲突、没跑 driver cell 级 union、没跑双向丢行审计（§⑥/§⑨/§⑩ 那套 `dev_lost=(dev-base)-merged`）。审计只在**真 merge 时**才拦得住这种回退；线性怼进去=审计根本没机会跑。
+
+**双重根因（追责二次分析，两层都要堵）**：
+- **层1·脚本层**：出事那台 clone **没装 tsv3way driver**（`git config --get merge.tsv3way.driver` 为空）→ git 退化成默认 line-merge，**同 RewardID 不同 col0 排序它不报冲突** → 操作者根本收不到冲突信号（装了 driver 就会报 col0 漂移冲突：25428 vs 25198）。**修=每台 clone 先 `python scripts/install_hooks.py` 注册 driver+hooks**；判据 `git config --get merge.tsv3way.driver` 非空。
+- **层2·人工层**：即便看到 diff，也用了错的**「保留 festival 侧行序」批量策略** = 等价于 `git checkout --ours` —— 这被 [[reference_x3_config]]/x3-gdconfig-use-official-skills 明确**禁用**（禁 `checkout --ours/--theirs`）。commit 标题「保留行序」+ 正文「festival 改过/dev 未改的奖励组：全保留 festival」就是直接写明的选边。**正解=driver 报 pending 冲突时按官方 8 优先级逐条决策，不许"保留 XX 侧"批量拍**。
+- **是惯犯不是偶发**：更早的 `59d43bf` line-merge 事故同一人同一台 clone（一直没装 driver）、同一模式「保留 festival/S6 侧」覆盖 dev 主线。→ 根治靠**强制这台 clone 装 driver + 禁批量选边**，光修单次没用。
+
+**发版前必做的 4 道门（加进合并检查，推 dev 前逐条过）**：
+1. **发版只走真 merge**：`git checkout dev` → `git merge --no-ff dev_festival`（产出 2-parent merge commit）。**禁止**对 festival 分支 rebase/squash/cherry-pick 后 force-push dev，禁止 `merge --ff-only` 把 festival 线性并进 dev。
+2. **推 dev 前验 merge commit 真的存在**：`git log --first-parent origin/dev --oneline | head` 应看到 festival 集成是一个 `Merge ... dev_festival` 提交；若集成表现为一串单 parent 线性提交 = **红灯，回退重做**。
+3. **对 origin/dev 现态跑双向丢行 + cell 回退审计（基准是分支点，不是"我以为的 base"）**：`dev_lost=(origin/dev 行 - merge-base 行) - 结果行` 必须=0。分支点之后别人（chenxiaoran 等）在 dev 上改过的业务键，若被 festival 旧值盖掉，这里报出来。**行还在但值/序被退**的（本案 seq 在、ItemType 顺序变）双向丢行审计按 col0 比会漏（行没丢），要用下面的**排序回退专扫**：
+   ```python
+   # 纯重排回退检测：以最新主线修复 commit 为黄金态(gold)，扫每个 RewardID 的 ItemID(第4列)序列
+   # 同多重集、顺序不同 = "保留 festival 旧行序覆盖"的指纹（道具没丢、只是序退回旧版）
+   import subprocess
+   def load(ref):
+       out=subprocess.run(['git','show',f'{ref}:tsv/Reward__Reward.tsv'],cwd=r'C:\x3\gdconfig',capture_output=True).stdout.decode('utf-8','replace')
+       d={}
+       for ln in out.split('\n'):
+           f=ln.split('\t')
+           if len(f)>=4 and f[1].isdigit(): d.setdefault(f[1],[]).append(f[3])  # RewardID->ItemID序列
+       return d
+   gold=load('11cdf54'); dev=load('origin/dev')   # gold=含全部主线修复的最新提交(本案11cdf54)
+   bad=[r for r in set(gold)&set(dev) if sorted(gold[r])==sorted(dev[r]) and gold[r]!=dev[r]]
+   print(len(bad), sorted(bad))   # 本案 2026-06 实测=14: 7030001/3 + 825275~825288
+   ```
+   非 Reward 表的值回退用 §⑭ 的「谁都不等/退回旧 parent」检测补刀（`now==pre-fix`=回退，`now!=fix&!=pre`=多半被后续合法覆盖或 schema 列重定位，非回退——本案 ActvExercise 801-812 就是 changxiaoyun「新列移至表尾」假阳性，别误报）。
+4. **别信 commit message 的"纯可读性/纯注释/不改道具"**：290d6b7 就这么写却动了行序。凡这类声明，**diff 验证实际行/cell 是否变**才算数——`git show <commit>^:tsv/Reward__Reward.tsv` 与 `git show <commit>:...` 比对同 RewardID 的 ItemType 序列，一致才叫"没改道具"。
+
+**修复本案**：找装了 driver 的 clone 重新 3-way merge dev_festival；或直接把 7030001/7030003 三件套排序改回「装备→钻→VIP」（160218 装备行提到组首）。
+
 ## 相关
 
 - 导入只认 tsv、改 tsv 不碰 xlsx：[[reference_x3_tsv_export_migration]]（旧 xlsx 公式缓存/CalculateFull 问题随 xlsx 弃用已不适用）
+- 发版方向与受保护分支/MR：[[workflow_x3_protected_branch_mr]]；分支策略：[[feedback_x3_branch_strategy]]
 - 任务完成必带知识库更新：[[feedback_proactive_knowledge_update]]
