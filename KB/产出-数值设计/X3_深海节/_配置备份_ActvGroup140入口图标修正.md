@@ -1,3 +1,7 @@
+---
+tags: [kind/产出, domain/配置换皮, proj/X3, fest/深海节, year/2026]
+---
+
 # 深海节 ActvGroup 140 入口图标修正（✅ 已应用）
 
 **状态**：✅ **已应用并提交+推送**（2026-06-23·**dev_festival** commit `6716183`·用户改口"就在dev_festival干不切feature"）。下方为留底，无需再重应用。

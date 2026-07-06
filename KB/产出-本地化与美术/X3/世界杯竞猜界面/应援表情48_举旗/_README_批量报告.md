@@ -1,4 +1,5 @@
 ---
+tags: [kind/产出, domain/美术媒体, proj/X3, fest/世界杯, year/2026]
 title: 世界杯48队应援表情 批量产出报告
 date: 2026-06-15（夜间自动跑完）
 ---

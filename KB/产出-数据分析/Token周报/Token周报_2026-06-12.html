@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token 用量周报 2026-06-12</title>
+<style>
+  :root{
+    --bg:#0f1117; --panel:#171a21; --panel2:#1e222b; --line:#2a2f3a;
+    --txt:#e6e8ee; --muted:#8a90a0; --accent:#5b9cff; --gold:#ffcf5c; --green:#4ec98a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:"Segoe UI","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+    line-height:1.55;padding:32px 20px 60px}
+  .wrap{max-width:920px;margin:0 auto}
+  h1{font-size:26px;margin:0 0 6px;font-weight:700;letter-spacing:.5px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:28px}
+  .meta b{color:var(--txt);font-weight:600}
+  h2{font-size:16px;margin:34px 0 14px;padding-left:10px;
+    border-left:3px solid var(--accent);font-weight:600}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .card-val{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;
+    font-family:"Consolas",ui-monospace,monospace}
+  .card-label{color:var(--muted);font-size:12px;margin-top:4px}
+  .card.hl{background:linear-gradient(135deg,#2a2310,#1e222b);border-color:#5a4a1e}
+  .card.hl .card-val{color:var(--gold)}
+  .daily-wrap{display:flex;flex-direction:column;gap:18px}
+  .chart{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
+  .chart-title{font-size:13px;color:var(--muted);margin-bottom:14px}
+  .bar-row{display:flex;align-items:center;gap:12px;margin:7px 0}
+  .bar-date{width:74px;font-size:13px;color:var(--muted);font-family:"Consolas",monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar-track{flex:1;background:var(--panel2);border-radius:5px;height:18px;overflow:hidden}
+  .bar-fill{height:100%;background:linear-gradient(90deg,#3a6fd0,var(--accent));border-radius:5px;min-width:2px}
+  .bar-val{width:96px;text-align:right;font-size:13px;color:var(--gold);
+    font-variant-numeric:tabular-nums;font-family:"Consolas",monospace}
+  table{width:100%;border-collapse:collapse;background:var(--panel);
+    border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:13.5px}
+  th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line)}
+  th{background:var(--panel2);color:var(--muted);font-weight:600;font-size:12px;
+    text-transform:uppercase;letter-spacing:.4px}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#1b1f28}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:"Consolas",monospace}
+  td:first-child{color:var(--txt)}
+  .footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:12px}
+</style>
+</head>
+<body><div class="wrap">
+<h1>Token 用量周报 2026-06-12</h1>
+<div class="meta">统计周期 <b>06/05 ~ 06/12</b> &nbsp;·&nbsp; 会话数 <b>101</b></div>
+<h2>汇总</h2>
+<div class="cards"><div class="card"><div class="card-val">4,563,147,538</div><div class="card-label">总 Token</div></div><div class="card"><div class="card-val">6,673,077</div><div class="card-label">Input</div></div><div class="card"><div class="card-val">27,697,992</div><div class="card-label">Output</div></div><div class="card"><div class="card-val">4,386,830,849</div><div class="card-label">Cache Read</div></div><div class="card"><div class="card-val">141,945,620</div><div class="card-label">Cache Write</div></div><div class="card hl"><div class="card-val">$2283.83</div><div class="card-label">估算费用</div></div></div>
+<h2>按天分布</h2>
+<div class="daily-wrap"><div class="chart"><div class="chart-title">每日花费分布</div><div class="bar-row"><div class="bar-date">06-05</div><div class="bar-track"><div class="bar-fill" style="width:12.2%"></div></div><div class="bar-val">$91.82</div></div><div class="bar-row"><div class="bar-date">06-08</div><div class="bar-track"><div class="bar-fill" style="width:55.4%"></div></div><div class="bar-val">$415.81</div></div><div class="bar-row"><div class="bar-date">06-09</div><div class="bar-track"><div class="bar-fill" style="width:56.7%"></div></div><div class="bar-val">$425.39</div></div><div class="bar-row"><div class="bar-date">06-10</div><div class="bar-track"><div class="bar-fill" style="width:78.0%"></div></div><div class="bar-val">$585.69</div></div><div class="bar-row"><div class="bar-date">06-11</div><div class="bar-track"><div class="bar-fill" style="width:2.0%"></div></div><div class="bar-val">$14.72</div></div><div class="bar-row"><div class="bar-date">06-12</div><div class="bar-track"><div class="bar-fill" style="width:100.0%"></div></div><div class="bar-val">$750.41</div></div></div><table><thead><tr><th>日期</th><th>Input</th><th>Output</th><th>Cache Read</th><th>费用</th><th>会话数</th></tr></thead><tbody><tr><td>06-05</td><td class="num">425,671</td><td class="num">1,451,617</td><td class="num">170,981,991</td><td class="num">$91.82</td><td class="num">7</td></tr><tr><td>06-08</td><td class="num">1,446,578</td><td class="num">7,036,830</td><td class="num">713,680,718</td><td class="num">$415.81</td><td class="num">22</td></tr><tr><td>06-09</td><td class="num">1,849,816</td><td class="num">5,494,480</td><td class="num">786,602,187</td><td class="num">$425.39</td><td class="num">28</td></tr><tr><td>06-10</td><td class="num">1,599,926</td><td class="num">7,086,379</td><td class="num">1,058,117,911</td><td class="num">$585.69</td><td class="num">22</td></tr><tr><td>06-11</td><td class="num">203,485</td><td class="num">199,824</td><td class="num">20,366,790</td><td class="num">$14.72</td><td class="num">7</td></tr><tr><td>06-12</td><td class="num">1,147,601</td><td class="num">6,428,862</td><td class="num">1,637,081,252</td><td class="num">$750.41</td><td class="num">15</td></tr></tbody></table></div>
+<h2>按模型分布</h2>
+<table><thead><tr><th>模型</th><th>Input</th><th>Output</th><th>费用</th></tr></thead><tbody><tr><td>Opus</td><td class="num">6,458,879</td><td class="num">25,739,854</td><td class="num">$2077.87</td></tr><tr><td>claude</td><td class="num">214,198</td><td class="num">1,958,138</td><td class="num">$205.97</td></tr></tbody></table>
+<h2>按工作类型（启发式分类）</h2>
+<div class="daily-wrap"><div class="chart"><div class="chart-title">各工作类型花费</div><div class="bar-row"><div class="bar-date">配置换皮</div><div class="bar-track"><div class="bar-fill" style="width:100.0%"></div></div><div class="bar-val">$730.87</div></div><div class="bar-row"><div class="bar-date">数据复盘</div><div class="bar-track"><div class="bar-fill" style="width:48.3%"></div></div><div class="bar-val">$353.37</div></div><div class="bar-row"><div class="bar-date">BUG排查</div><div class="bar-track"><div class="bar-fill" style="width:41.4%"></div></div><div class="bar-val">$302.93</div></div><div class="bar-row"><div class="bar-date">其他/未分类</div><div class="bar-track"><div class="bar-fill" style="width:41.4%"></div></div><div class="bar-val">$302.45</div></div><div class="bar-row"><div class="bar-date">本地化</div><div class="bar-track"><div class="bar-fill" style="width:35.3%"></div></div><div class="bar-val">$258.09</div></div><div class="bar-row"><div class="bar-date">美术媒体</div><div class="bar-track"><div class="bar-fill" style="width:34.5%"></div></div><div class="bar-val">$251.86</div></div><div class="bar-row"><div class="bar-date">工具流程</div><div class="bar-track"><div class="bar-fill" style="width:11.5%"></div></div><div class="bar-val">$84.26</div></div></div><table><thead><tr><th>类型</th><th>会话数</th><th>Input</th><th>Output</th><th>费用</th><th>占比</th></tr></thead><tbody><tr><td>配置换皮</td><td class="num">19</td><td class="num">1,504,436</td><td class="num">6,843,896</td><td class="num">$730.87</td><td class="num">32.0%</td></tr><tr><td>数据复盘</td><td class="num">15</td><td class="num">727,558</td><td class="num">4,193,808</td><td class="num">$353.37</td><td class="num">15.5%</td></tr><tr><td>BUG排查</td><td class="num">26</td><td class="num">1,763,436</td><td class="num">4,777,969</td><td class="num">$302.93</td><td class="num">13.3%</td></tr><tr><td>其他/未分类</td><td class="num">11</td><td class="num">775,673</td><td class="num">4,221,170</td><td class="num">$302.45</td><td class="num">13.2%</td></tr><tr><td>本地化</td><td class="num">5</td><td class="num">433,059</td><td class="num">2,649,273</td><td class="num">$258.09</td><td class="num">11.3%</td></tr><tr><td>美术媒体</td><td class="num">8</td><td class="num">656,045</td><td class="num">3,361,440</td><td class="num">$251.86</td><td class="num">11.0%</td></tr><tr><td>工具流程</td><td class="num">17</td><td class="num">812,870</td><td class="num">1,650,436</td><td class="num">$84.26</td><td class="num">3.7%</td></tr></tbody></table></div>
+<h2>Top 10 会话（按 token 量）</h2>
+<table><thead><tr><th>日期</th><th>模型</th><th>Input</th><th>Output</th><th>费用</th><th>主题</th></tr></thead><tbody><tr><td>06-12</td><td>Opus</td><td class="num">358,919</td><td class="num">2,347,883</td><td class="num">$374.75</td><td>我们现在准备写一个X3的世界杯活动系列策划案，还是侧重深度付费；整体形式以一个主…</td></tr><tr><td>06-09</td><td>Opus</td><td class="num">189,188</td><td class="num">2,006,845</td><td class="num">$223.33</td><td>我们准备讨论下X3第二轮的节日优化，你先弄弄知识库，这里是之前的会话记录C:\U…</td></tr><tr><td>06-10</td><td>Opus</td><td class="num">220,704</td><td class="num">1,689,696</td><td class="num">$200.53</td><td>X2继续改BUG，目前的装饰道具本地化、以及装饰本体和图片处理一下</td></tr><tr><td>06-12</td><td>claude</td><td class="num">114,073</td><td class="num">1,081,159</td><td class="num">$127.72</td><td>&lt;local-command-caveat&gt;Caveat: The messag…</td></tr><tr><td>06-12</td><td>Opus</td><td class="num">160,387</td><td class="num">1,012,191</td><td class="num">$97.29</td><td>21127352    合成小游戏活动-6月拓荒节版本-schema3；CAct…</td></tr><tr><td>06-08</td><td>Opus</td><td class="num">154,792</td><td class="num">1,744,520</td><td class="num">$86.43</td><td>&lt;local-command-caveat&gt;Caveat: The messag…</td></tr><tr><td>06-12</td><td>claude</td><td class="num">75,420</td><td class="num">636,459</td><td class="num">$59.15</td><td>你根据what&#x27;s new 写一份X2的通知玩家节日即将上线的邮件，我记得有sk…</td></tr><tr><td>06-08</td><td>Opus</td><td class="num">58,630</td><td class="num">862,582</td><td class="num">$59.12</td><td>file:///C:/Users/linkang/X3%E5%A4%8F%E6%…</td></tr><tr><td>06-10</td><td>Opus</td><td class="num">89,734</td><td class="num">607,789</td><td class="num">$55.78</td><td>X2导表 2121 全量导</td></tr><tr><td>06-10</td><td>Opus</td><td class="num">139,235</td><td class="num">669,611</td><td class="num">$56.59</td><td>https://jira.tap4fun.com/browse/X2-43081…</td></tr></tbody></table>
+<div class="footer">源：token-weekly-2026-06-12.md &nbsp;·&nbsp; 渲染于 2026-06-12 17:00 &nbsp;·&nbsp; 随周报每周自动更新</div>
+</div></body>
+</html>

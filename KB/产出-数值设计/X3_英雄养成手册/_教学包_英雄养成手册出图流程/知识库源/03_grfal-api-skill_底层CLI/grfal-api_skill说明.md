@@ -1,4 +1,5 @@
 ---
+tags: [kind/交接, domain/配置换皮, proj/X3, year/2026]
 name: grfal-api
 description: |
   GRFal AI media tools via direct HTTP API (no MCP needed).

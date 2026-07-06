@@ -1,4 +1,5 @@
 ---
+tags: [kind/交接, domain/配置换皮, proj/X3, year/2026]
 name: gdesign-designdeck-x3
 description: gdesign/.designdeck 是什么、在哪、全量素材库真实路径；文档里 E:\ 路径是旧的别信
 metadata: 

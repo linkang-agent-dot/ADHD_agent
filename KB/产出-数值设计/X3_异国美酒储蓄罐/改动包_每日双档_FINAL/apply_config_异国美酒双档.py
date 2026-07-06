@@ -7,7 +7,7 @@
   1) Pack__Pack.tsv      : 克隆 500031(档1 $9.99) → 新增 500032(档2 $19.99, Group 11)
   2) PiggyBank__PiggyBank.tsv : 新增行 ID 51 (PackID 500032, GroupId 261, MainBg _2)
   3) PiggyBank__Grade.tsv     : 新增组 261, Grade 3-35, Num 20 (行ID 736-768)
-注意：档1(500031) 完全不动。客户端选档另见 client_patch_UIPiggyBankContent.md。
+注意：档1(500031) 完全不动。客户端选档另见 客户端补丁_UIPiggyBankContent.md。
 ⚠️ xlsx-tsv 一致性闸门(2026-06-04起)：本脚本只改 tsv。若 jenkins gate 要求 xlsx 同步，
    需对应在 Pack.xlsx / PiggyBank.xlsx 加同样的行，或接受 gate 自动回灌 + 本次 build rc=24 重导。
 """

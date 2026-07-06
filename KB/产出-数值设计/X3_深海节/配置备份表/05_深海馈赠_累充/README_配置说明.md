@@ -1,3 +1,7 @@
+---
+tags: [kind/产出, domain/配置换皮, proj/X3, fest/深海节, year/2026]
+---
+
 # 深海节 · 05 深海馈赠（累充）— 配置备份表
 
 > KB 配置备份，非 live tsv。**复用换奖励·无程序**。分支 dev_festival。

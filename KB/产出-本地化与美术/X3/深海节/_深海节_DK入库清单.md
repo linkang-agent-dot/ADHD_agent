@@ -1,3 +1,7 @@
+---
+tags: [kind/产出, domain/美术媒体, proj/X3, fest/深海节, year/2026]
+---
+
 # 深海节 · DK 入库总清单（待一波统一入库）
 
 > 美术方向稿已出 / 待出的图，统一在此登记需入库的 DK。入库 = Unity 把 png 注册成 DK_xxx（GUID asset），push client 后配置表才能引用。

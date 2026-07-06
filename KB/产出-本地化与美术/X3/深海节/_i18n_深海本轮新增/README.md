@@ -1,1 +1,0 @@
-深海本轮新增模块(纪念卡80/累充/BP/头像框/铭牌82005)16语言翻译表+应用脚本。用法: python apply_deepsea_i18n.py <Text__Text.tsv>(默认作用备份副本)。fill: 覆写这些key的col4-18为16语译文+状态AI。解merge BUG后同步live跑此脚本即可。

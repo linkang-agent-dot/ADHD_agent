@@ -1,4 +1,5 @@
 ---
+tags: [kind/交接, domain/配置换皮, proj/X3, year/2026]
 name: x3-dk
 description: X3 client 仓里 .png/.prefab 实际位置，DK→GUID 注册的 asset 文件，tableResInfo.txt 名单陷阱，看图找 DK 的实操路径
 metadata: 

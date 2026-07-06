@@ -1,3 +1,7 @@
+---
+tags: [kind/交接, domain/配置换皮, proj/X3, year/2026]
+---
+
 # GRFal Tool Catalog - Detailed Parameters
 
 Complete parameter reference for all 39 GRFal API tools.

@@ -1,3 +1,7 @@
+---
+tags: [kind/产出, domain/配置换皮, proj/X3, fest/深海节, year/2026]
+---
+
 # 深海节 · 01 转盘 美术DK修正 + 排名奖励 — 配置备份（待应用到 feature/x3-deepsea-art）
 
 > 2026-06-23。这批是**我在 dev_festival 上验过、但按用户要求改到 feature/x3-deepsea-art 分支**（配置走 feature·别在 dev_festival 配）。

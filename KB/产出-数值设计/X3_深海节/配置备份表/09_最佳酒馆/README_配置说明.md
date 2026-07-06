@@ -1,3 +1,7 @@
+---
+tags: [kind/产出, domain/配置换皮, proj/X3, fest/深海节, year/2026]
+---
+
 # 深海节 · 09 最佳酒馆 — 配置备份表
 
 > KB 配置备份，非 live tsv。**纯配置·无程序·仅换背景**（玩法/数值/榜单全不变）。分支 dev_festival。

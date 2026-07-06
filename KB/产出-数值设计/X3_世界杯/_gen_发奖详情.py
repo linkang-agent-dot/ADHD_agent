@@ -57,7 +57,9 @@ def match_mail(a,b,win,score,pens):
         out[lang]=(f"{t} - {ta} vs {tb}", f"{c} {rl}")
     return out
 
-sched=json.loads((ROOT/"wc_dashboard_data.json").read_text(encoding="utf-8"))["schedule"]
+_dash=json.loads((ROOT/"wc_dashboard_data.json").read_text(encoding="utf-8"))
+sched=_dash["schedule"]
+SETTLE_FROM=_dash.get("settle_from","2026-06-26")  # ★下注时间窗起点:R32=6/26·R16=7/3(隔离R32老下注·礼包id跨轮复用必须按日期分)
 _cache={}
 def espn(ds):
     if ds in _cache: return _cache[ds]
@@ -102,19 +104,19 @@ def bp_snowflakes():
     return sv
 def winners_of(win):  # 买赢队礼包的每一笔(不去重·买多档=多笔)
     packs=[base(win)+t for t in range(4)]; inl=",".join(f"'{p}'" for p in packs)
-    sql=f"SELECT user_id, TRY_CAST(server_id AS INTEGER) sid, reason_sub_id pack FROM v1090.ods_user_asset WHERE asset_id='Item_1146' AND change_type='1' AND reason_id='buy_gift' AND reason_sub_id IN ({inl}) AND partition_date>='2026-06-26' GROUP BY 1,2,3"
+    sql=f"SELECT user_id, TRY_CAST(server_id AS INTEGER) sid, reason_sub_id pack FROM v1090.ods_user_asset WHERE asset_id='Item_1146' AND change_type='1' AND reason_id='buy_gift' AND reason_sub_id IN ({inl}) AND partition_date>='{SETTLE_FROM}' GROUP BY 1,2,3"
     r=DI.execute_sql(sql,'TRINO_HF'); rows=r if isinstance(r,list) else json.loads(r)
     return [{"uid":str(x['user_id']),"sid":str(x['sid']),"tier":int(x['pack'])%10} for x in rows]
 def participants_of(a,b):  # 竞猜总人数=买了本场任一队任一档的去重玩家
     packs=[base(a)+t for t in range(4)]+[base(b)+t for t in range(4)]; inl=",".join(f"'{p}'" for p in packs)
-    sql=f"SELECT count(distinct user_id||'_'||CAST(server_id AS VARCHAR)) n FROM v1090.ods_user_asset WHERE asset_id='Item_1146' AND change_type='1' AND reason_id='buy_gift' AND reason_sub_id IN ({inl}) AND partition_date>='2026-06-26'"
+    sql=f"SELECT count(distinct user_id||'_'||CAST(server_id AS VARCHAR)) n FROM v1090.ods_user_asset WHERE asset_id='Item_1146' AND change_type='1' AND reason_id='buy_gift' AND reason_sub_id IN ({inl}) AND partition_date>='{SETTLE_FROM}'"
     r=DI.execute_sql(sql,'TRINO_HF'); rows=r if isinstance(r,list) else json.loads(r)
     try: return int(rows[0]['n'])
     except: return 0
 WC_SERVERS="1170,1270,1310,1350,1390,1400,1420,1440,1460,1510,1530,1540,1550,1560,1570,1580,1590,1600,1610,1620,1630,1640,1650,1660,1670,1680,1690,1700,1710,1720,1730,1740,1750,1760,1770,1780,1790,1800,1810,1820,1830,1840,1850,1860,1870,1880,1890,1900,1910,1920,1930,1940,1950,1960,1970"
 def paid_reach():  # 付费玩家竞猜触达率=55服付费玩家中买过竞猜礼包的占比(口径见 reference_x3_datain_asset_query)
-    sql=f"""WITH paid AS (SELECT distinct user_id FROM v1090.ods_user_order WHERE pay_status=1 AND partition_date>='2026-06-26' AND TRY_CAST(server_id AS INTEGER) IN ({WC_SERVERS})),
-guess AS (SELECT distinct user_id FROM v1090.ods_user_asset WHERE asset_id='Item_1146' AND change_type='1' AND reason_id='buy_gift' AND reason_sub_id LIKE '894%' AND partition_date>='2026-06-26')
+    sql=f"""WITH paid AS (SELECT distinct user_id FROM v1090.ods_user_order WHERE pay_status=1 AND partition_date>='{SETTLE_FROM}' AND TRY_CAST(server_id AS INTEGER) IN ({WC_SERVERS})),
+guess AS (SELECT distinct user_id FROM v1090.ods_user_asset WHERE asset_id='Item_1146' AND change_type='1' AND reason_id='buy_gift' AND reason_sub_id LIKE '894%' AND partition_date>='{SETTLE_FROM}')
 SELECT (SELECT count(*) FROM paid) total, (SELECT count(*) FROM paid WHERE user_id IN (SELECT user_id FROM guess)) reached"""
     try:
         r=DI.execute_sql(sql,'TRINO_HF'); rows=r if isinstance(r,list) else json.loads(r)

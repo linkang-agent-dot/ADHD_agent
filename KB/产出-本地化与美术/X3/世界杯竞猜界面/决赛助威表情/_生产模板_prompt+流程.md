@@ -1,4 +1,5 @@
 ---
+tags: [kind/产出, domain/美术媒体, proj/X3, fest/世界杯, year/2026]
 title: X3世界杯 决赛助威动态表情 生产模板(prompt+流程)
 proj: X3 / 世界杯
 created: 2026-06-16

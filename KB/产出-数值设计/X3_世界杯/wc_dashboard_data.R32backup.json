@@ -1,0 +1,156 @@
+{
+  "_说明": "赛程时间已按ESPN权威修正(2026-06-28)。schedule随轮次更新;settled发完奖加key;env看板拉哪个iGame环境。时间UTC(ET=EDT=UTC-4→UTC+4)。结盘=开球-10min。",
+  "env": "prod",
+  "schedule": [
+    {
+      "key": "R32-RSAvCAN",
+      "round": "1/16",
+      "a_code": "RSA",
+      "b_code": "CAN",
+      "kickoff_utc": "2026-06-28 19:00",
+      "lock_utc": "2026-06-28 18:50",
+      "result": "加拿大 1-0 南非 · 加拿大胜(押加拿大者中)"
+    },
+    {
+      "key": "R32-BRAvJPN",
+      "round": "1/16",
+      "a_code": "BRA",
+      "b_code": "JPN",
+      "kickoff_utc": "2026-06-29 17:00",
+      "lock_utc": "2026-06-29 16:50",
+      "result": ""
+    },
+    {
+      "key": "R32-GERvPAR",
+      "round": "1/16",
+      "a_code": "GER",
+      "b_code": "PAR",
+      "kickoff_utc": "2026-06-29 20:30",
+      "lock_utc": "2026-06-29 20:20",
+      "result": ""
+    },
+    {
+      "key": "R32-NEDvMAR",
+      "round": "1/16",
+      "a_code": "NED",
+      "b_code": "MAR",
+      "kickoff_utc": "2026-06-30 01:00",
+      "lock_utc": "2026-06-30 00:50",
+      "result": ""
+    },
+    {
+      "key": "R32-CIVvNOR",
+      "round": "1/16",
+      "a_code": "CIV",
+      "b_code": "NOR",
+      "kickoff_utc": "2026-06-30 17:00",
+      "lock_utc": "2026-06-30 16:50",
+      "result": ""
+    },
+    {
+      "key": "R32-FRAvSWE",
+      "round": "1/16",
+      "a_code": "FRA",
+      "b_code": "SWE",
+      "kickoff_utc": "2026-06-30 21:00",
+      "lock_utc": "2026-06-30 20:50",
+      "result": ""
+    },
+    {
+      "key": "R32-MEXvECU",
+      "round": "1/16",
+      "a_code": "MEX",
+      "b_code": "ECU",
+      "kickoff_utc": "2026-07-01 01:00",
+      "lock_utc": "2026-07-01 00:50",
+      "result": ""
+    },
+    {
+      "key": "R32-ENGvCOD",
+      "round": "1/16",
+      "a_code": "ENG",
+      "b_code": "COD",
+      "kickoff_utc": "2026-07-01 16:00",
+      "lock_utc": "2026-07-01 15:50",
+      "result": ""
+    },
+    {
+      "key": "R32-BELvSEN",
+      "round": "1/16",
+      "a_code": "BEL",
+      "b_code": "SEN",
+      "kickoff_utc": "2026-07-01 20:00",
+      "lock_utc": "2026-07-01 19:50",
+      "result": ""
+    },
+    {
+      "key": "R32-USAvBIH",
+      "round": "1/16",
+      "a_code": "USA",
+      "b_code": "BIH",
+      "kickoff_utc": "2026-07-02 00:00",
+      "lock_utc": "2026-07-01 23:50",
+      "result": ""
+    },
+    {
+      "key": "R32-ESPvAUT",
+      "round": "1/16",
+      "a_code": "ESP",
+      "b_code": "AUT",
+      "kickoff_utc": "2026-07-02 19:00",
+      "lock_utc": "2026-07-02 18:50",
+      "result": ""
+    },
+    {
+      "key": "R32-PORvCRO",
+      "round": "1/16",
+      "a_code": "POR",
+      "b_code": "CRO",
+      "kickoff_utc": "2026-07-02 23:00",
+      "lock_utc": "2026-07-02 22:50",
+      "result": ""
+    },
+    {
+      "key": "R32-SUIvALG",
+      "round": "1/16",
+      "a_code": "SUI",
+      "b_code": "ALG",
+      "kickoff_utc": "2026-07-03 03:00",
+      "lock_utc": "2026-07-03 02:50",
+      "result": ""
+    },
+    {
+      "key": "R32-AUSvEGY",
+      "round": "1/16",
+      "a_code": "AUS",
+      "b_code": "EGY",
+      "kickoff_utc": "2026-07-03 18:00",
+      "lock_utc": "2026-07-03 17:50",
+      "result": ""
+    },
+    {
+      "key": "R32-ARGvCPV",
+      "round": "1/16",
+      "a_code": "ARG",
+      "b_code": "CPV",
+      "kickoff_utc": "2026-07-03 22:00",
+      "lock_utc": "2026-07-03 21:50",
+      "result": ""
+    },
+    {
+      "key": "R32-COLvGHA",
+      "round": "1/16",
+      "a_code": "COL",
+      "b_code": "GHA",
+      "kickoff_utc": "2026-07-04 01:30",
+      "lock_utc": "2026-07-04 01:20",
+      "result": ""
+    }
+  ],
+  "settled": [
+    "R32-BRAvJPN",
+    "R32-GERvPAR",
+    "R32-NEDvMAR",
+    "R32-RSAvCAN"
+  ]
+}

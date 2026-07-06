@@ -1,3 +1,7 @@
+---
+tags: [kind/产出, domain/配置换皮, proj/X3, fest/深海节, year/2026]
+---
+
 # 深海节 · 02 远航日志（BP 通行证）— 配置备份表
 
 > KB 配置备份，**非 live tsv**。分支 feature/x3-deepsea-art。**用户复核中（改备份表，等会看）。**

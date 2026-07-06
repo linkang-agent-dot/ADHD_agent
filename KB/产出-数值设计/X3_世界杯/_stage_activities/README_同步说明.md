@@ -1,3 +1,7 @@
+---
+tags: [kind/产出, domain/配置换皮, proj/X3, fest/世界杯, year/2026]
+---
+
 # 世界杯竞猜活动配置 — 56实例填真队伍版【已落 live】
 
 > 2026-06-16 落 dev_festival（commit 4783e4d）。生成器：`..\gen_wc_guess_filled.py`（随机种子2026,可复现）。

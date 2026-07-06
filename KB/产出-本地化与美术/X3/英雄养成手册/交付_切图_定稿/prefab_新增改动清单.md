@@ -1,3 +1,7 @@
+---
+tags: [kind/产出, domain/美术媒体, proj/X3, year/2026]
+---
+
 # UIActvLoginChoice.prefab · 新增/改动清单（切分支后照这个拼）
 
 > 目标 prefab：`client/Assets/Res/UI/Prefab/Activity/UIActvLoginChoice.prefab`

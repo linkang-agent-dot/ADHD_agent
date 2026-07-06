@@ -1,3 +1,7 @@
+---
+tags: [kind/产出, domain/配置换皮, proj/X3, year/2026]
+---
+
 # 异国美酒储蓄罐 · 每日双档改造 —— 改动包应用指南（FINAL）
 
 > 备份于 2026-06-18，**等切 dev feature 分支时应用**。本目录是即用改动包，不要在当前分支跑。
@@ -15,7 +19,7 @@
 | 档2 礼包 | `Pack__Pack.tsv` | 新增 1 行(克隆 500031) | ID **500032** / Price 111($19.99) / PackType 21 / ColdTime 24h / **Group 11** / PlayerLv 3 |
 | 档2 储蓄罐 | `PiggyBank__PiggyBank.tsv` | 新增 1 行(克隆行46) | ID **51** / ResourceID 7002 / PackID 500032 / **GroupId 261** / MainBg _2 |
 | 档2 产出 | `PiggyBank__Grade.tsv` | 新增组 261 | Grade 3-35 / Num **20** / 行ID 736-768 |
-| 选档逻辑 | `UIPiggyBankContent.cs`(客户端) | 改 2 处 | 见 `client_patch_UIPiggyBankContent.md` |
+| 选档逻辑 | `UIPiggyBankContent.cs`(客户端) | 改 2 处 | 见 `客户端补丁_UIPiggyBankContent.md` |
 
 > 档1(Pack 500031 / PiggyBank 行46 / Grade 组260) **完全不动**。
 
@@ -27,7 +31,7 @@
    python apply_config_异国美酒双档.py
    ```
    脚本纯追加、幂等(已存在则跳过)。跑完 `git diff` 复核**三张表只新增、未改现有行**。
-3. **客户端**：按 `client_patch_UIPiggyBankContent.md` 改 `C:\x3-project\client\...\UIPiggyBankContent.cs`（2 处）。
+3. **客户端**：按 `客户端补丁_UIPiggyBankContent.md` 改 `C:\x3-project\client\...\UIPiggyBankContent.cs`（2 处）。
 4. **导表**：`python C:\Users\linkang\.claude\skills\x3-config-export\scripts\jolt_verify.py <分支名>` 触发并验证构建。
 5. **本地服验证**：开异国美酒(item 7002) 道具获取面板 → 储蓄罐卡，自测「砸档1→自动切档2→砸档2→进CD→次日回档1」(见客户端 patch 自测表)。
 

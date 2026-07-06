@@ -1,3 +1,7 @@
+---
+tags: [kind/产出, domain/配置换皮, proj/X3, fest/深海节, year/2026]
+---
+
 # 深海大富翁 岛屿显示双 BUG — 修复记录 + 客户端交接单
 
 > 活动：航海之路 ActvVoyage（cfgID 2802 / AO 102802），深海换皮（IslandGroup2 / EventGroup 199-206）。

@@ -1,3 +1,7 @@
+---
+tags: [kind/产出, domain/美术媒体, proj/X3, fest/世界杯, year/2026]
+---
+
 # UIActvWorldCupGuess prefab 拼装规格（2026-06-11）
 
 代码侧已全部就位（分支 `dev_festival`），**Unity 里照本规格拼 prefab 即可跑通**。
