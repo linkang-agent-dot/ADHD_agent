@@ -151,7 +151,11 @@ for m in sched:
     with open(CSVDIR/f"奖励_{key}.csv","w",encoding="gbk",newline="",errors="replace") as f:
         csv.writer(f).writerows(rew)
     # 多语言邮件(本场一份): 通用贺词 + 「对阵+最终结果」(队名20语言翻译)
-    write_multilang_mail(CSVDIR/f"多语言邮件_{key}.csv", match_mail(a,b,win,score,pens))
+    _mm=match_mail(a,b,win,score,pens)
+    write_multilang_mail(CSVDIR/f"多语言邮件_{key}.csv", _mm)
+    # content json(igame_mail_send.py --content 直用格式: {lang:{title,body}})——根治"生成器不出content json要手转"坑(2026-07-07)
+    json.dump({k:{"title":v[0],"body":v[1]} for k,v in _mm.items()},
+              open(CSVDIR/f"content_{key}.json","w",encoding="utf-8"), ensure_ascii=False, indent=1)
     # GM csv(按笔): server,user,BP雪花,600
     gm=[[w['sid'],w['uid'],bp[w['sid']],600] for w in W if w['sid'] in bp]
     with open(CSVDIR/f"GM_{key}.csv","w",encoding="utf-8",newline="") as f:

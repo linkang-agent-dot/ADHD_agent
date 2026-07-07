@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>QA测试指引 · 英雄养成手册双版本</title>
+<style>
+  :root{--bg:#15191f;--card:#1d232c;--card2:#232b36;--line:#313c4a;--txt:#d8dee7;--dim:#8a94a3;--gold:#e8b33a;--green:#5fbf77;--red:#e06c5f;--blue:#5aa3e8;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.75;font-size:15px}
+  .wrap{max-width:920px;margin:0 auto;padding:24px 20px 120px}
+  h1{font-size:22px;color:var(--gold);margin:10px 0 4px}
+  h2{font-size:18px;margin:36px 0 10px;color:var(--gold);border-left:4px solid var(--gold);padding-left:10px}
+  .dim{color:var(--dim);font-size:13.5px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:12px 0}
+  .warn{background:#2c2118;border-left:3px solid var(--red);border-radius:6px;padding:8px 12px;margin:8px 0;font-size:13.5px}
+  .warn b{color:var(--red)}
+  .tip{background:#1c2a20;border-left:3px solid var(--green);border-radius:6px;padding:8px 12px;margin:8px 0;font-size:13.5px}
+  .tip b{color:var(--green)}
+  code{background:#0e1217;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-family:Consolas,monospace;font-size:13px;color:#ffd479}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+  th{background:var(--card2);color:var(--gold);font-weight:600;white-space:nowrap}
+  label.ck{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;margin:5px 0;background:var(--card2);border:1px solid var(--line);border-radius:8px;cursor:pointer}
+  label.ck:hover{border-color:var(--gold)}
+  label.ck input{margin-top:5px;width:15px;height:15px;accent-color:var(--gold);flex:none}
+  label.ck.done{opacity:.55;text-decoration:line-through}
+  .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--gold);color:#15191f;font-weight:700;font-size:13px;margin-right:8px}
+  .topbar{position:sticky;top:0;z-index:10;background:rgba(21,25,31,.96);border-bottom:1px solid var(--line);padding:10px 20px}
+  .topbar .inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:14px}
+  .topbar h1{font-size:15px;margin:0}
+  .bar{flex:1;height:10px;background:var(--card2);border-radius:6px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#b8860b,var(--gold))}
+  .pct{font-size:13px;color:var(--dim);min-width:70px;text-align:right}
+  .reset{position:fixed;right:18px;bottom:18px;background:var(--card2);color:var(--dim);border:1px solid var(--line);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="inner">
+  <h1>🧪 英雄养成手册双版本 · QA测试指引</h1>
+  <div class="bar"><i id="barFill"></i></div><div class="pct" id="pctTxt">0/0</div>
+</div></div>
+<div class="wrap">
+
+<h1>功能概述</h1>
+<div class="card">
+  <p><b>英雄养成手册双版本</b>：新独立活动 <code>102702</code>（ActvType=27，30天付费登录）。玩家在<b>基础版 $29.99 / 豪华版 $49.99 二选一</b>购买，购后每日登录领奖：</p>
+  <table>
+    <tr><th></th><th>基础版（Pack 220003）</th><th>豪华版（Pack 220004）</th></tr>
+    <tr><td>价格</td><td>$29.99（PackPrice 112）</td><td>$49.99（PackPrice 116）</td></tr>
+    <tr><td>每日奖励</td><td>1 份</td><td><b>2 份</b>（同 RewardID 发两次）</td></tr>
+    <tr><td>满勤大奖</td><td>无</td><td>第 30 天追加 Reward组 <code>4100231</code>（万能传奇信物×30 + 材料袋×100）</td></tr>
+    <tr><td>互斥</td><td colspan="2">买了任意一档，另一档<b>不可再买</b>（客户端隐藏 + 服务端硬拦截）</td></tr>
+  </table>
+  <p class="dim">老单档手册 102701 逻辑完全不变；新老活动配置层互斥（ExcludeActvIDs 双向），不会同屏。</p>
+</div>
+
+<h2>环境准备（GM 全部走 <code>!gm @&lt;uid&gt; xxx</code>）</h2>
+<div class="card">
+  <table>
+    <tr><th>操作</th><th>命令 / 说明</th></tr>
+    <tr><td>开活动</td><td><code>GMAddServerActivityByCfgId 102702 43200</code>（活动 TC=0，必须给显式分钟数；43200=30天）</td></tr>
+    <tr><td>过门禁</td><td><code>GMBypassActivityUnlock 102702</code> —— 活动可见门禁=<b>等级≥5 且 历史累充≥999</b>，新号/零充号看不到活动是<b>预期行为</b>不是 bug，用这条 GM 一键过</td></tr>
+    <tr><td>重置重测</td><td><code>GMRemoveServerActivityByCfgId 102702</code> → 玩家<b>重新登录</b>（活动自动重挂、礼包重建、购买次数归零）</td></tr>
+    <tr><td>跨天测领奖</td><td><code>GMGetServerTime</code> 读当前 → <code>GMSetServerTimeOffset yyyy-MM-dd/HH:mm:ss</code> 设次日同刻（须干净跨过0点）→ 重登</td></tr>
+  </table>
+  <div class="warn"><b>注意：</b>GMBypassActivityUnlock 会把该号累充数值真实充到 999 —— 其他按累充触发的活动/礼包会跟着出现，属于该 GM 的已知副作用，别当 bug 报。</div>
+</div>
+
+<h2><span class="num">1</span>活动可见性 & 门禁</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="a1"><span>零充值新号：活动入口<b>不可见</b>（累充门禁 999，预期）</span></label>
+  <label class="ck"><input type="checkbox" data-k="a2"><span>GMBypassActivityUnlock 后重登：入口出现</span></label>
+  <label class="ck"><input type="checkbox" data-k="a3"><span>等级 &lt;5 的号：入口不可见（等级门禁）</span></label>
+  <label class="ck"><input type="checkbox" data-k="a4"><span>新老互斥：102701 与 102702 同时开启时，玩家只能看到其中一个（后开的被 ExcludeActvIDs 拦）</span></label>
+</div>
+
+<h2><span class="num">2</span>主界面（UIActvLogin）</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="b1"><span>标题「英雄养成手册」、活动倒计时、30 天奖励轨正常显示</span></label>
+  <label class="ck"><input type="checkbox" data-k="b2"><span>宝箱右上角红色 ROI 标签常驻显示 <b>9600%</b>（购买前后都不变、不消失）</span></label>
+  <label class="ck"><input type="checkbox" data-k="b3"><span>未购买时显示「购买」按钮（无价格），点击弹出二选一弹窗</span></label>
+  <label class="ck"><input type="checkbox" data-k="b4"><span>买豪华后：每日奖励格显示<b>单图标·数量×2</b>（如信物×20）；买基础显示 ×1（如信物×10）</span></label>
+</div>
+
+<h2><span class="num">3</span>二选一弹窗（UIActvLoginChoice）</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="c1"><span>描述后半句「豪华版立享17%折扣！」为<b>金色</b>富文本</span></label>
+  <label class="ck"><input type="checkbox" data-k="c2"><span>豪华列：金丝带「每日奖励X2！」白金大字红描边、×2 BONUS 勋章、每格奖励数量为基础的 2 倍</span></label>
+  <label class="ck"><input type="checkbox" data-k="c3"><span>豪华列价格区：划线原价 <b>$59.98</b>（有删除线）+ 实价 $49.99 + 红色 -17% 角标（数学自洽：29.99×2=59.98，49.99/59.98≈-17%）</span></label>
+  <label class="ck"><input type="checkbox" data-k="c4"><span>两列价格按钮显示正确本地化货币（外币区抽查：划线价=当地货币基础价×2）</span></label>
+  <label class="ck"><input type="checkbox" data-k="c5"><span>购买任一档成功：弹窗自动关闭；再次打开时<b>-17% 角标和划线价隐藏</b>、已购档显示「已购买」、另一档购买键消失</span></label>
+</div>
+
+<h2><span class="num">4</span>购买与发奖（核心）</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="d1"><span>买基础：每日登录领 1 份（对表 Reward 4100201~4100230 各天内容）</span></label>
+  <label class="ck"><input type="checkbox" data-k="d2"><span>买豪华：每日领<b>双份</b>（后台日志 EndowReward gids 每个奖励组恰好出现 2 次；到账数量=配置×2）</span></label>
+  <label class="ck"><input type="checkbox" data-k="d3"><span>豪华第 30 天（满勤）：日奖双份之外追加满勤大奖（信物×30+材料袋×100）；基础第 30 天无大奖</span></label>
+  <label class="ck"><input type="checkbox" data-k="d4"><span><b>服务端硬拦截</b>：买了 A 档后，通过改包/协议尝试购买 B 档 → 服务端拒绝（CheckPaySignExclusive），不扣费不发货</span></label>
+  <label class="ck"><input type="checkbox" data-k="d5"><span>跨天连续领取：GM 连续+1天×3，每天都能领且数量正确、无重复领</span></label>
+  <label class="ck"><input type="checkbox" data-k="d6"><span>重登数据保持：买豪华后重登，购买状态/已领天数不丢（豪华 giftId 复用机制）</span></label>
+  <label class="ck"><input type="checkbox" data-k="d7"><span>老活动回归：102701（老单档手册）购买/领奖行为与线上一致，完全不受新版影响</span></label>
+</div>
+
+<h2><span class="num">5</span>i18n 多语言抽查</h2>
+<div class="card">
+  <label class="ck"><input type="checkbox" data-k="e1"><span>切英文：标题 Hero Cultivation Handbook / 档位 Basic·Deluxe / 丝带 Daily Rewards x2! / 描述含 "17% off with Deluxe" 金色段</span></label>
+  <label class="ck"><input type="checkbox" data-k="e2"><span>再抽 1-2 语种（日/韩）：弹窗无 key 裸奔（TXT_ 开头字符串）、无空白文本</span></label>
+  <label class="ck"><input type="checkbox" data-k="e3"><span>ROI 标签各语种均显示 9600%（数字标签全语种同值）</span></label>
+</div>
+
+<h2>已知边界 & 免报清单</h2>
+<div class="card">
+  <p>以下现象<b>不是 bug</b>，请勿提单：</p>
+  <p>① 新号/零充号看不到活动 = 累充/等级门禁设计（同老手册口径）；<br>
+  ② GMBypass 后其他付费向活动冒出来 = 该 GM 真实充值累充的副作用；<br>
+  ③ 划线价显示 $59.98 而非 $59.99 = 与 -17% 折扣数学自洽的正确锚点；<br>
+  ④ Editor/测试环境弹窗两列档位名占位相同 = 运行时由代码填正式名。</p>
+</div>
+
+</div>
+<button class="reset" onclick="if(confirm('清空勾选？')){localStorage.removeItem(LS);location.reload()}">重置进度</button>
+<script>
+const LS='handbook_qa_guide_v1';
+const state=JSON.parse(localStorage.getItem(LS)||'{}');
+const boxes=[...document.querySelectorAll('input[type=checkbox]')];
+function refresh(){let d=0;boxes.forEach(b=>{b.checked=!!state[b.dataset.k];b.closest('label').classList.toggle('done',b.checked);if(b.checked)d++});
+document.getElementById('barFill').style.width=(d/boxes.length*100)+'%';document.getElementById('pctTxt').textContent=d+'/'+boxes.length;}
+boxes.forEach(b=>b.addEventListener('change',()=>{state[b.dataset.k]=b.checked;localStorage.setItem(LS,JSON.stringify(state));refresh()}));
+refresh();
+</script>
+</body>
+</html>

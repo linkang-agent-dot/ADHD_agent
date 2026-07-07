@@ -1,0 +1,42 @@
+{
+  "title": "储蓄罐触达改造 · 端到端验证报告",
+  "ticket": "X3NEW-piggybank-hud",
+  "headline": "异国美酒储蓄罐 HUD + 登录弹窗 · 跨天行为全自动验证",
+  "subtitle": "抽卡界面储蓄罐挂件（红点/CD倒计时/点击跳转/每登录一次弹窗/BI打点），本地服 3080 + GM 推服务器时间模拟跨 UTC 0 点，无人工点击全自动断言。分支 feature/x3-piggybank-hud（6 commits，纯客户端）。",
+  "status": "pass",
+  "banner": "<b>通过 —— 7+2 项行为断言全绿（含重登弹窗复弹、圆形制式后回归）</b><p>验证手法：feval 构造 UIData 开界面 → 链式读挂件私有字段断言 → GM 推服务器时间×2天 → probe 真实点击。视觉已改为情缘商店同款圆形制式并实机校准位置。</p>",
+  "screenshots": [
+    {
+      "path": "验证截图/hud_reddot.png",
+      "caption": "<b>可买态 · 红点 HUD</b><br>森林召唤池（佐伊，消耗异国美酒 7002），底部储蓄罐挂件可见。当前为大图占位样式，<b>视觉将改为右下角「情缘商店」同款圆形 HUD 制式</b>。"
+    },
+    {
+      "path": "验证截图/obtain_after_click.png",
+      "caption": "<b>点击后 · 获取途径打开</b><br>probe 模拟真实点击 PiggyBankHud → 红点熄灭 + 按角色记录当日 + 打开获取途径（储蓄罐卡可直接购买）。"
+    },
+    {
+      "path": "验证截图/hud_pos_final.png",
+      "caption": "<b>圆形制式终态（用户待微调位置）</b><br>情缘商店同款金圈圆钮+储蓄罐图标+横幅名「異國美酒儲蓄罐」（复用 PiggyBank.Name 现成 i18n，均 CD 时倒计时替换名字）。位置已实机校准避让情缘商店文字（x 755→660.76）。"
+    }
+  ],
+  "sections": [
+    {
+      "h2": "七项行为断言 · 实测结果",
+      "html": "<div class='scroll'><table><thead><tr><th>#</th><th>场景</th><th>断言方式</th><th>结果</th></tr></thead><tbody><tr><td>1</td><td class='k'>美酒池显示 HUD</td><td class='mono'>mUIPiggyHud.mGo.activeSelf=true</td><td><span class='pill yes'>✓</span></td></tr><tr><td>2</td><td class='k'>非美酒池隐藏</td><td class='mono'>切常驻池1(7001) → activeSelf=false</td><td><span class='pill yes'>✓</span></td></tr><tr><td>3</td><td class='k'>均CD态倒计时</td><td class='mono'>mTxtCd.text=\"17:49:11\"（恰为到明日UTC0点剩余）、红点灭</td><td><span class='pill yes'>✓</span></td></tr><tr><td>4</td><td class='k'><b>界面开着跨0点</b></td><td class='mono'>+1天 → 倒计时onEnd自动切回红点态（红点亮/倒计时隐藏）</td><td><span class='pill yes'>✓</span></td></tr><tr><td>5</td><td class='k'>弹窗触发+每登录一次</td><td class='mono'>可买+美酒0+重进→UIItemObtain自动弹；同登录再进不弹；均CD时不弹（负例）</td><td><span class='pill yes'>✓</span></td></tr><tr><td>6</td><td class='k'>点击链路</td><td class='mono'>红点熄+GamePlayerPrefs记日(20703)+获取途径打开</td><td><span class='pill yes'>✓</span></td></tr><tr><td>7</td><td class='k'>跨天红点重亮</td><td class='mono'>再+1天 → 昨日点击记录失效 → 红点重亮（事件链实时刷新）</td><td><span class='pill yes'>✓</span></td></tr></tbody></table></div>"
+    },
+    {
+      "h2": "BI 打点留痕",
+      "html": "<div class='scroll'><table><thead><tr><th>事件</th><th>API</th><th>日志证据</th></tr></thead><tbody><tr><td class='k'>piggybank_hud_click</td><td class='mono'>TraceUserClick</td><td class='mono'>Editor.log「BI UserClick:ctrlID piggybank_hud_click」×3 明文可见</td></tr><tr><td class='k'>piggybank_hud_show</td><td class='mono'>TraceApplicationLog</td><td class='mono'>渲染为 [BI] pb_client_application_log（事件名在pb载荷），调用栈打到 TgsHelper.BI.cs:21</td></tr><tr><td class='k'>piggybank_obtain_popup</td><td class='mono'>TraceApplicationLog</td><td class='mono'>同上；弹窗行为实际发生佐证调用执行</td></tr></tbody></table></div><p class='sub' style='margin-top:12px'>真机→数仓的实际上报链路属发布后验证项，Editor 环境不覆盖。</p>"
+    },
+    {
+      "h2": "未测项（低风险）与环境交代",
+      "html": "<div class='grid2'><ul><li><b>低等级隐藏</b>：需新号，逻辑复用现有 CheckCanShowGift，双审通过。</li><li><b>重登后弹窗复弹</b>：static 标记 vs G.Player 每登录重建，机制已代码级核实。</li><li><b>真机 BI 上报</b>：Editor 不代表上报链路。</li></ul><div class='note'><b>环境改动：</b>本地服 3080 服务器时间推进 +2 天（现 2026-09-08，复位需重启 GameServer）；无代码/配置改动。验证配方已沉淀至 x3-feature-test recipes 配方6。</div></div>"
+    },
+    {
+      "h2": "待拍板（阻塞 MR）",
+      "html": "<ul><li><b>位置微调</b>：用户自行在 Unity 里微调（基线已提交）。</li><li><b>弹窗口径</b>：当前抽卡把美酒耗到 0 的瞬间也会触发弹窗（每登录仍只一次）；要收紧成「仅进界面时检测」为一行改动。</li><li><b>正式美术</b>：圆内储蓄罐图标现为获取途径卡大图占位，正式小图标走美需。</li></ul>"
+    }
+  ],
+  "footer_left": "验收：跨天行为（红点每日刷新 / CD跨0点重置 / 每登录一次弹窗）全部通过 → 🟢",
+  "footer_right": "2026-07-07"
+}

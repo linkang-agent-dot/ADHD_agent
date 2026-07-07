@@ -1,0 +1,30 @@
+{
+  "id": "77fbdb10-9b5a-4904-86c6-ba43d4bd6be9",
+  "enqueuedAt": 1776740669972,
+  "channel": "feishu",
+  "to": "ou_e48f6c4c0395f45b74b51525f348678b",
+  "payloads": [
+    {
+      "text": "📊 小红书旅游热度Top5（2026-04-21）\n\n1️⃣ 个人向•去过的自然景点排名\n👍 8673 | @wx不同名\n\n2️⃣ 为自己的旅途创造更多可能\n👍 5800 | @六月阿狸\n\n3️⃣ 简要锐评我心目中的国内Top10旅行地\n👍 4596 | @我家狗叫三傻\n\n4️⃣ 我心中的旅游城市排行榜\n👍 2521 | @不上班就开心\n\n5️⃣ 一半草原一半大海，这个福建海岛太犯规了\n👍 2388 | @Gx\n\n---每日11:00自动推送---",
+      "mediaUrl": "C:\\Users\\linkang\\.openclaw\\workspace\\uploads\\xhs_push_1.jpg",
+      "mediaUrls": [
+        "C:\\Users\\linkang\\.openclaw\\workspace\\uploads\\xhs_push_1.jpg"
+      ],
+      "replyToTag": false,
+      "replyToCurrent": false,
+      "audioAsVoice": false
+    }
+  ],
+  "gifPlayback": false,
+  "mirror": {
+    "sessionKey": "agent:main:main",
+    "agentId": "main",
+    "text": "📊 小红书旅游热度Top5（2026-04-21）\n\n1️⃣ 个人向•去过的自然景点排名\n👍 8673 | @wx不同名\n\n2️⃣ 为自己的旅途创造更多可能\n👍 5800 | @六月阿狸\n\n3️⃣ 简要锐评我心目中的国内Top10旅行地\n👍 4596 | @我家狗叫三傻\n\n4️⃣ 我心中的旅游城市排行榜\n👍 2521 | @不上班就开心\n\n5️⃣ 一半草原一半大海，这个福建海岛太犯规了\n👍 2388 | @Gx\n\n---每日11:00自动推送---",
+    "mediaUrls": [
+      "C:\\Users\\linkang\\.openclaw\\workspace\\uploads\\xhs_push_1.jpg"
+    ]
+  },
+  "retryCount": 5,
+  "lastAttemptAt": 1781231025428,
+  "lastError": "Feishu account \"default\" not configured"
+}

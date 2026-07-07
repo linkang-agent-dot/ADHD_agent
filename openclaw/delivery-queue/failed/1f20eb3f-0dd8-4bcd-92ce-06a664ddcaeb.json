@@ -1,0 +1,30 @@
+{
+  "id": "1f20eb3f-0dd8-4bcd-92ce-06a664ddcaeb",
+  "enqueuedAt": 1776481423842,
+  "channel": "feishu",
+  "to": "ou_e48f6c4c0395f45b74b51525f348678b",
+  "payloads": [
+    {
+      "text": "📊 小红书旅游热度Top5（2026-04-18）\n\n1️⃣ 我来到了地球上最神秘的岛屿，简直像外星\n👍 355443 | @Linksphotograph",
+      "mediaUrl": "C:\\ADHD_agent\\openclaw\\workspace\\uploads\\xhs_push_1.jpg",
+      "mediaUrls": [
+        "C:\\ADHD_agent\\openclaw\\workspace\\uploads\\xhs_push_1.jpg"
+      ],
+      "replyToTag": false,
+      "replyToCurrent": false,
+      "audioAsVoice": false
+    }
+  ],
+  "gifPlayback": false,
+  "mirror": {
+    "sessionKey": "agent:main:main",
+    "agentId": "main",
+    "text": "📊 小红书旅游热度Top5（2026-04-18）\n\n1️⃣ 我来到了地球上最神秘的岛屿，简直像外星\n👍 355443 | @Linksphotograph",
+    "mediaUrls": [
+      "C:\\ADHD_agent\\openclaw\\workspace\\uploads\\xhs_push_1.jpg"
+    ]
+  },
+  "retryCount": 5,
+  "lastAttemptAt": 1781231025418,
+  "lastError": "Feishu account \"default\" not configured"
+}
