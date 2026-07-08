@@ -1,0 +1,31 @@
+# cmd: gsheet_query.py row 2112 211200205
+[info] Table: 2112 → 1Z37Db-2Cy1h6Far_LBP... / 'activity_config_QA'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 1365:
+  [0] p2_title = 
+  [1] A_INT_id = 211200205
+  [2] S_STR_comment = 占星节-2025-强消耗-2025
+  [3] A_STR_constant = star_2025_strong_consume
+  [4] A_INT_index = 0
+  [5] S_INT_priority = 49990
+  [6] A_INT_base_activity_id = 21127141
+  [7] A_MAP_filter = {"op":"ge","typ":"building","id":111811,"val":6}
+  [8] A_MAP_text = {"label":"LC_EVENT_summer_2025_lucky_gacha_title","title":"LC_EVENT_summer_2025_lucky_gacha_title"}
+  [9] A_ARR_activity_components = [{"typ":"drop","id":21241913},{"typ":"drop","id":21241914},{"typ":"drop","id":21241915},{"typ":"drop","id":21241916},{"typ":"retake","id":21371226},{"typ":"retake","id":21371227},{"typ":"package","id":21353092},{"typ":"actv_show_rank","id":21215079},{"typ":"rank","id":21222097},{"typ":"task","id":211562039},{"typ":"task","id":211562040},{"typ":"task","id":211562041},{"typ":"task","id":211562042},{"typ":"task","id":211562043},{"typ":"task","id":211562044},{"typ":"task","id":211562045},{"typ":"task","id":211562046},{"typ":"task","id":211562047},{"typ":"task","id":211562048},{"typ":"task","id":211562049},{"typ":"task","id":211562050},{"typ":"task","id":211562051},{"typ":"task","id":211562052},{"typ":"package","id":21353093},{"typ":"package","id":21353094},{"typ":"package","id":21353095},{"typ":"package","id":21353096},{"typ":"package","id":21353097}]
+  [10] A_MAP_description = {"rule":"LC_EVENT_summer_2025_lucky_gacha_title_rule"}
+  [11] A_INT_ui_template = 21191251
+  [12] S_INT_rank_group = 1
+  [13] S_STR_banner_obj_url = ""
+  [14] S_STR_banner_url = assets/x2/operation/EventBanner/AstrologyChain_bg_Big.png
+  [15] S_STR_banner_version = 1
+  [16] A_INT_default_displaykey = 0
+  [17] A_INT_icon_displaykey = 1511018829
+  [18] A_INT_show_hud = 211200212
+  [19] A_INT_calendar = 0
+  [20] A_ARR_calendar_reward = []
+  [21] S_STR_calendar_banner_url = ""
+  [22] A_INT_dependent = 0
+  [23] C_INT_title_icon = 1511018829
+  [24] S_INT_merge_save = 1
+  [25] S_STR_mini_banner_url = ""
+  [26] A_INT_country_use_type = 0

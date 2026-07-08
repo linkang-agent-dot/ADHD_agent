@@ -365,8 +365,9 @@ H.append('<p class="d">3D 建筑模型皮肤，<b>带属性（战力 5万~10万 
          '<br>⚠️ 早前以为"外显里唯一带属性"是<b>误判</b>——下面 ③家具/④装饰/⑤行军皮肤同样带属性，只有航迹/头像框/表情才真零属性。</p>')
 H.append(pathbox([
     '本图用图(道具图标)：<code>Res/UI/Spirits/ItemIcons/icon_island_*.png</code>',
-    '建筑模型(本体)：<code>Res/Unit/City/Buildings/Building_&lt;itemid&gt;_Lock.prefab</code> / <code>_Unlock.prefab</code>',
-    '主城场景 3D 资产：<code>Res/Scene/City/EPIC_Fantasy_Town_Low_Poly_3D_Art/</code>',
+    '整岛模型(本体)：<code>Res/Unit/WorldMap/Homeland/Homeland_&lt;名&gt;.prefab</code> ＋ 资源目录 <code>Homeland_&lt;名&gt;/</code>(Fbx/Texture/Material)',
+    '标准构成：主体FBX + 512×512烘焙贴图 · 水波 ripple FBX + 256×128贴图 · 个别带 idle .anim；情人节特例=Spine(<code>Homeland_Spine_Valentine/daochu/lover.*</code>)',
+    'DK 注册：<code>Res/Config/DisplayKey/Path_Model.asset</code> 的 <code>DK_Homeland_*</code>（配置 <code>Skin__Skin.DK_Prefab</code>）',
 ]))
 H.append('<div class="grid">')
 for iid, name, fest, power, get, icon in city:

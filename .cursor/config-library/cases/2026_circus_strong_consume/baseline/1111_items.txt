@@ -1,0 +1,1054 @@
+# cmd: gsheet_query.py row 1111 111111314
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 2196:
+  [0] p2_title = 
+  [1] A_INT_id = 111111314
+  [2] S_STR_comment = 纪念钻头-拓荒节2026活动BP道具
+  [3] A_STR_class = battle_pass_exp
+  [4] A_INT_quest_class = 0
+  [5] C_INT_display_order = 405217
+  [6] C_INT_display_key = 1511094077
+  [7] C_INT_display_quality = 1511010122
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_EVENT_labor_2026_bp_EVENT_title"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_EVENT_labor_2026_bp_EVENT_title_desc"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 35
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_other"]
+  [17] A_ARR_use_labels = []
+  [18] A_MAP_category_param = {}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11740000
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 4
+  [25] C_INT_BgQuality = 1511010004
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11111154
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 136:
+  [0] p2_title = 
+  [1] A_INT_id = 11111154
+  [2] S_STR_comment = 15分钟训练加速
+  [3] A_STR_class = item_speedup
+  [4] A_INT_quest_class = 6
+  [5] C_INT_display_order = 22000035
+  [6] C_INT_display_key = 15112585
+  [7] C_INT_display_quality = 1511010120
+  [8] C_MAP_lc_upper_show = {"typ":"lc","txt":"LC_ITEM_time_min_upper_show","args":[{"typ":"int","val":15}]}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_speedup_training_name","args":[{"typ":"int","val":15}]}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_speedup_training_desc","args":[{"typ":"int","val":15}]}
+  [11] C_MAP_lc_usetip = {"typ":"lc","txt":"LC_ITEM_speedup_training_usedtip","args":[{"typ":"int","val":15}]}
+  [12] A_FLT_value = 35
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_speedup","speed_train"]
+  [17] A_ARR_use_labels = ["speed_train"]
+  [18] A_MAP_category_param = {"effect":[{"typ":"speedup","id":11241004,"val":900000}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741003
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 2
+  [25] C_INT_BgQuality = 1511010002
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11111124
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 106:
+  [0] p2_title = 
+  [1] A_INT_id = 11111124
+  [2] S_STR_comment = 15分钟建筑加速
+  [3] A_STR_class = item_speedup
+  [4] A_INT_quest_class = 4
+  [5] C_INT_display_order = 20000035
+  [6] C_INT_display_key = 15112570
+  [7] C_INT_display_quality = 1511010120
+  [8] C_MAP_lc_upper_show = {"typ":"lc","txt":"LC_ITEM_time_min_upper_show","args":[{"typ":"int","val":15}]}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_speedup_build_name","args":[{"typ":"int","val":15}]}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_speedup_build_desc","args":[{"typ":"int","val":15}]}
+  [11] C_MAP_lc_usetip = {"typ":"lc","txt":"LC_ITEM_speedup_build_usedtip","args":[{"typ":"int","val":15}]}
+  [12] A_FLT_value = 35
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_speedup","speed_build"]
+  [17] A_ARR_use_labels = ["speed_build"]
+  [18] A_MAP_category_param = {"effect":[{"typ":"speedup","id":11241002,"val":900000}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741003
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 2
+  [25] C_INT_BgQuality = 1511010002
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11111134
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 116:
+  [0] p2_title = 
+  [1] A_INT_id = 11111134
+  [2] S_STR_comment = 15分钟科研加速
+  [3] A_STR_class = item_speedup
+  [4] A_INT_quest_class = 5
+  [5] C_INT_display_order = 21000035
+  [6] C_INT_display_key = 15112583
+  [7] C_INT_display_quality = 1511010120
+  [8] C_MAP_lc_upper_show = {"typ":"lc","txt":"LC_ITEM_time_min_upper_show","args":[{"typ":"int","val":15}]}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_speedup_research_name","args":[{"typ":"int","val":15}]}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_speedup_research_desc","args":[{"typ":"int","val":15}]}
+  [11] C_MAP_lc_usetip = {"typ":"lc","txt":"LC_ITEM_speedup_research_usedtip","args":[{"typ":"int","val":15}]}
+  [12] A_FLT_value = 35
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_speedup","speed_research"]
+  [17] A_ARR_use_labels = ["speed_research"]
+  [18] A_MAP_category_param = {"effect":[{"typ":"speedup","id":11241003,"val":900000}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741003
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 2
+  [25] C_INT_BgQuality = 1511010002
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11111104
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 95:
+  [0] p2_title = 
+  [1] A_INT_id = 11111104
+  [2] S_STR_comment = 15分钟加速
+  [3] A_STR_class = item_speedup
+  [4] A_INT_quest_class = 3
+  [5] C_INT_display_order = 90000035
+  [6] C_INT_display_key = 15112573
+  [7] C_INT_display_quality = 1511010120
+  [8] C_MAP_lc_upper_show = {"typ":"lc","txt":"LC_ITEM_time_min_upper_show","args":[{"typ":"int","val":15}]}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_speedup_general_name","args":[{"typ":"int","val":15}]}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_speedup_general_desc","args":[{"typ":"int","val":15}]}
+  [11] C_MAP_lc_usetip = {"typ":"lc","txt":"LC_ITEM_speedup_general_usedtip","args":[{"typ":"int","val":15}]}
+  [12] A_FLT_value = 35
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_speedup","speed_build","speed_research","speed_train","speed_heal","speed_heroarmqueue","speed_mechaqueue","speed_shopfurniturequeue","speed_equipcraft","speed_adventure"]
+  [17] A_ARR_use_labels = ["speed_build","speed_research","speed_train","speed_heal","speed_heroarmqueue","speed_mechaqueue","speed_shopfurniturequeue","speed_equipcraft","speed_adventure","speed_shopareaqueue"]
+  [18] A_MAP_category_param = {"effect":[{"typ":"speedup","id":11241001,"val":900000}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741003
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 2
+  [25] C_INT_BgQuality = 1511010002
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11111002
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 8:
+  [0] p2_title = 
+  [1] A_INT_id = 11111002
+  [2] S_STR_comment = 50,000粮食
+  [3] A_STR_class = item_rss
+  [4] A_INT_quest_class = 1
+  [5] C_INT_display_order = 13100
+  [6] C_INT_display_key = 15112577
+  [7] C_INT_display_quality = 1511010120
+  [8] C_MAP_lc_upper_show = {"typ":"lc","txt":"LC_ITEM_rss_upper_show","args":[{"typ":"int_unit","val":50000}]}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_add_food_name","args":[{"typ":"int","val":50000}]}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_add_food_desc","args":[{"typ":"int","val":50000}]}
+  [11] C_MAP_lc_usetip = {"typ":"lc","txt":"LC_ITEM_add_food_usedtip","args":[{"typ":"int","val":50000}]}
+  [12] A_FLT_value = 100
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_asset","rss_food"]
+  [17] A_ARR_use_labels = ["bag","rss_food"]
+  [18] A_MAP_category_param = {"effect":[{"typ":"rss","id":11141001,"val":50000}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741001
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 2
+  [25] C_INT_BgQuality = 1511010002
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11111006
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 12:
+  [0] p2_title = 
+  [1] A_INT_id = 11111006
+  [2] S_STR_comment = 50,000钢铁
+  [3] A_STR_class = item_rss
+  [4] A_INT_quest_class = 2
+  [5] C_INT_display_order = 14100
+  [6] C_INT_display_key = 15112580
+  [7] C_INT_display_quality = 1511010120
+  [8] C_MAP_lc_upper_show = {"typ":"lc","txt":"LC_ITEM_rss_upper_show","args":[{"typ":"int_unit","val":50000}]}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_add_iron_name","args":[{"typ":"int","val":50000}]}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_add_iron_desc","args":[{"typ":"int","val":50000}]}
+  [11] C_MAP_lc_usetip = {"typ":"lc","txt":"LC_ITEM_add_iron_usedtip","args":[{"typ":"int","val":50000}]}
+  [12] A_FLT_value = 100
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_asset","rss_iron"]
+  [17] A_ARR_use_labels = ["bag","rss_iron"]
+  [18] A_MAP_category_param = {"effect":[{"typ":"rss","id":11141003,"val":50000}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741001
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 2
+  [25] C_INT_BgQuality = 1511010002
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11112498
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 601:
+  [0] p2_title = 
+  [1] A_INT_id = 11112498
+  [2] S_STR_comment = 漫游骰子-节日进度活动
+  [3] A_STR_class = event
+  [4] A_INT_quest_class = 0
+  [5] C_INT_display_order = 405226
+  [6] C_INT_display_key = 1511031036
+  [7] C_INT_display_quality = 1511010123
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_easter_monopoly_item_name"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_easter_monopoly_item_desc"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 700
+  [13] A_INT_max_own = 999999999
+  [14] A_INT_max_get = 999999999
+  [15] A_INT_max_use = 999999999
+  [16] C_ARR_display_labels = ["bag_other"]
+  [17] A_ARR_use_labels = []
+  [18] A_MAP_category_param = {"effect":[{"typ":"actv_open","arg2":[21127225]}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11740000
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 5
+  [25] C_INT_BgQuality = 1511010005
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11111048
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 54:
+  [0] p2_title = 
+  [1] A_INT_id = 11111048
+  [2] S_STR_comment = 金色卡牌技能书
+  [3] A_STR_class = 0
+  [4] A_INT_quest_class = 0
+  [5] C_INT_display_order = 24003
+  [6] C_INT_display_key = 1511010173
+  [7] C_INT_display_quality = 1511010123
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"lc_item_hero_skill_book_adventure_5_name"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"lc_item_hero_skill_book_adventure_5_desc"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 500
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 9999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_asset"]
+  [17] A_ARR_use_labels = []
+  [18] A_MAP_category_param = {}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741002
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 5
+  [25] C_INT_BgQuality = 1511010005
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11116007
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 769:
+  [0] p2_title = 
+  [1] A_INT_id = 11116007
+  [2] S_STR_comment = 英雄经验-50000
+  [3] A_STR_class = item_rss
+  [4] A_INT_quest_class = 28
+  [5] C_INT_display_order = 22300
+  [6] C_INT_display_key = 15112781
+  [7] C_INT_display_quality = 1511010122
+  [8] C_MAP_lc_upper_show = {"typ":"lc","txt":"LC_ITEM_rss_upper_show","args":[{"typ":"int","val":50000}]}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_hero_exp_name","args":[{"typ":"int","val":50000}]}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_hero_exp_desc","args":[{"typ":"int","val":50000}]}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 300
+  [13] A_INT_max_own = 9999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_asset"]
+  [17] A_ARR_use_labels = ["hero_level_exp"]
+  [18] A_MAP_category_param = {"effect":[{"typ":"rss","id":11144001,"val":50000}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 1
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741002
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 4
+  [25] C_INT_BgQuality = 1511010004
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11116604
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 850:
+  [0] p2_title = 
+  [1] A_INT_id = 11116604
+  [2] S_STR_comment = 收藏品-橙色升星道具-传说
+  [3] A_STR_class = collection_unit_universal
+  [4] A_INT_quest_class = 0
+  [5] C_INT_display_order = 424101
+  [6] C_INT_display_key = 15113451
+  [7] C_INT_display_quality = 1511010123
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_collection_legend_up_star_name"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_collection_legend_up_star_desc"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 250
+  [13] A_INT_max_own = 9999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_other"]
+  [17] A_ARR_use_labels = []
+  [18] A_MAP_category_param = {}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741002
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 5
+  [25] C_INT_BgQuality = 1511010005
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11118004
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 1403:
+  [0] p2_title = 
+  [1] A_INT_id = 11118004
+  [2] S_STR_comment = 机甲经验-50000
+  [3] A_STR_class = item_asset
+  [4] A_INT_quest_class = 30
+  [5] C_INT_display_order = 25300
+  [6] C_INT_display_key = 15116359
+  [7] C_INT_display_quality = 1511010122
+  [8] C_MAP_lc_upper_show = {"typ":"lc","txt":"LC_ITEM_rss_upper_show","args":[{"typ":"int","val":50000}]}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_mecha_exp_name","args":[{"typ":"int","val":50000}]}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_mecha_exp_desc","args":[{"typ":"int","val":50000}]}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 300
+  [13] A_INT_max_own = 9999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_asset"]
+  [17] A_ARR_use_labels = ["mecha_level_exp"]
+  [18] A_MAP_category_param = {"drop":{"typ":"single_all","num":1,"args":[{"typ":"item","id":111111043,"num":50000,"wgt":100}]}}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 1
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11740000
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 4
+  [25] C_INT_BgQuality = 1511010004
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11117068
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 923:
+  [0] p2_title = 
+  [1] A_INT_id = 11117068
+  [2] S_STR_comment = 军备零件箱
+  [3] A_STR_class = soldier_arms
+  [4] A_INT_quest_class = 0
+  [5] C_INT_display_order = 415302
+  [6] C_INT_display_key = 15114332
+  [7] C_INT_display_quality = 1511010121
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_SOLDIER_arms_material_1"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_SOLDIER_arms_material_desc_1"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 16
+  [13] A_INT_max_own = 9999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_other"]
+  [17] A_ARR_use_labels = ["item_arms_box"]
+  [18] A_MAP_category_param = {}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741004
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 3
+  [25] C_INT_BgQuality = 1511010003
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11116304
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 840:
+  [0] p2_title = 
+  [1] A_INT_id = 11116304
+  [2] S_STR_comment = 万能英雄碎片-橙色
+  [3] A_STR_class = hero_unit_universal
+  [4] A_INT_quest_class = 0
+  [5] C_INT_display_order = 411101
+  [6] C_INT_display_key = 15112813
+  [7] C_INT_display_quality = 1511010123
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_hero_universal_fragment_orange_name"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_hero_universal_fragment_orange_desc"}
+  [11] C_MAP_lc_usetip = {"typ":"lc","txt":"LC_ITEM_hero_universal_fragment_usedtip"}
+  [12] A_FLT_value = 1000
+  [13] A_INT_max_own = 9999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_other"]
+  [17] A_ARR_use_labels = ["exchange_orange"]
+  [18] A_MAP_category_param = {"effect":[{"typ":"item","id":11116206,"val":1,"arg1":1,"arg2":[19201052]},{"typ":"item","id":11116210,"val":1,"arg1":1,"arg2":[19201053]},{"typ":"item","id":11116211,"val":1,"arg1":1,"arg2":[19201054]},{"typ":"item","id":11116212,"val":1,"arg1":1,"arg2":[19201055]},{"typ":"item","id":11116213,"val":1,"arg1":1,"arg2":[19201056]},{"typ":"item","id":11116214,"val":1,"arg1":1,"arg2":[19201057]},{"typ":"item","id":11116215,"val":1,"arg1":1,"arg2":[19201058]},{"typ":"item","id":11116217,"val":1,"arg1":1,"arg2":[19201059]},{"typ":"item","id":11116218,"val":1,"arg1":1,"arg2":[19201060]},{"typ":"item","id":11116219,"val":1,"arg1":1,"arg2":[19201061]},{"typ":"item","id":11116220,"val":1,"arg1":1,"arg2":[19201062]},{"typ":"item","id":11116221,"val":1,"arg1":1,"arg2":[19201063]},{"typ":"item","id":11116222,"val":1,"arg1":1,"arg2":[19201064]},{"typ":"item","id":11116223,"val":1,"arg1":1,"arg2":[19201065]},{"typ":"item","id":11116224,"val":1,"arg1":1,"arg2":[19201066]},{"typ":"item","id":11116225,"val":1,"arg1":1,"arg2":[19201067]},{"typ":"item","id":11116226,"val":1,"arg1":1,"arg2":[19201068]},{"typ":"item","id":11116227,"val":1,"arg1":1,"arg2":[19201069]},{"typ":"item","id":11116228,"val":1,"arg1":1,"arg2":[19201070]},{"typ":"item","id":11116230,"val":1,"arg1":1,"arg2":[19201071]},{"typ":"item","id":11116231,"val":1,"arg1":1,"arg2":[19201072]},{"typ":"item","id":11116233,"val":1,"arg1":1,"arg2":[19201073]},{"typ":"item","id":11116235,"val":1,"arg1":1,"arg2":[19201074]},{"typ":"item","id":11116236,"val":1,"arg1":1,"arg2":[19201075]},{"typ":"item","id":11116240,"val":1,"arg1":1,"arg2":[19201076]},{"typ":"item","id":11116241,"val":1,"arg1":1,"arg2":[19201077]},{"typ":"item","id":11116242,"val":1,"arg1":1,"arg2":[19201078]},{"typ":"item","id":11116243,"val":1,"arg1":1,"arg2":[19201079]},{"typ":"item","id":11116249,"val":1,"arg1":1,"arg2":[19201080]}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741002
+  [23] A_INT_country_use_type = 1
+  [24] A_INT_Quality = 5
+  [25] C_INT_BgQuality = 1511010005
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11119278
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 1730:
+  [0] p2_title = 
+  [1] A_INT_id = 11119278
+  [2] S_STR_comment = 复活节强消耗扭蛋币
+  [3] A_STR_class = event
+  [4] A_INT_quest_class = 0
+  [5] C_INT_display_order = 0
+  [6] C_INT_display_key = 15119837
+  [7] C_INT_display_quality = 15112564
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_new_strong_consume_gacha_token1_name_hallo_2024"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_new_strong_consume_gacha_token1_desc_hallo_2024"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 250
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 9999
+  [16] C_ARR_display_labels = ["bag_other"]
+  [17] A_ARR_use_labels = []
+  [18] A_MAP_category_param = {}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11740000
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 4
+  [25] C_INT_BgQuality = 1511010004
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 100
+---
+# cmd: gsheet_query.py row 1111 11119279
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 1731:
+  [0] p2_title = 
+  [1] A_INT_id = 11119279
+  [2] S_STR_comment = 复活节强消耗抽奖券
+  [3] A_STR_class = event
+  [4] A_INT_quest_class = 0
+  [5] C_INT_display_order = 0
+  [6] C_INT_display_key = 15119836
+  [7] C_INT_display_quality = 15112564
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_new_strong_consume_gacha_token2_name"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_new_strong_consume_gacha_token2_desc"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 125
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 9999
+  [16] C_ARR_display_labels = ["bag_other"]
+  [17] A_ARR_use_labels = []
+  [18] A_MAP_category_param = {}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11740000
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 5
+  [25] C_INT_BgQuality = 1511010005
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 100
+---
+# cmd: gsheet_query.py row 1111 11114316
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 664:
+  [0] p2_title = 
+  [1] A_INT_id = 11114316
+  [2] S_STR_comment = 联盟礼物(触发)礼包2
+  [3] A_STR_class = item_union_gift
+  [4] A_INT_quest_class = 15
+  [5] C_INT_display_order = 0
+  [6] C_INT_display_key = 15113195
+  [7] C_INT_display_quality = 1511010120
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_alliance_shopping_gift_2_name"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_alliance_shopping_gift_2_desc"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 66
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 1
+  [16] C_ARR_display_labels = []
+  [17] A_ARR_use_labels = []
+  [18] A_MAP_category_param = {"effect":[{"typ":"union_gift_quality_drop","id":2,"val":1}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 1
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11740000
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 2
+  [25] C_INT_BgQuality = 1511010002
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11114317
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 665:
+  [0] p2_title = 
+  [1] A_INT_id = 11114317
+  [2] S_STR_comment = 联盟礼物(触发)礼包3
+  [3] A_STR_class = item_union_gift
+  [4] A_INT_quest_class = 15
+  [5] C_INT_display_order = 0
+  [6] C_INT_display_key = 15113196
+  [7] C_INT_display_quality = 1511010121
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_alliance_shopping_gift_3_name"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_alliance_shopping_gift_3_desc"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 66
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 1
+  [16] C_ARR_display_labels = []
+  [17] A_ARR_use_labels = []
+  [18] A_MAP_category_param = {"effect":[{"typ":"union_gift_quality_drop","id":3,"val":1}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 1
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11740000
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 3
+  [25] C_INT_BgQuality = 1511010003
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11114318
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 666:
+  [0] p2_title = 
+  [1] A_INT_id = 11114318
+  [2] S_STR_comment = 联盟礼物(触发)礼包4
+  [3] A_STR_class = item_union_gift
+  [4] A_INT_quest_class = 15
+  [5] C_INT_display_order = 0
+  [6] C_INT_display_key = 15113197
+  [7] C_INT_display_quality = 1511010121
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_alliance_shopping_gift_4_name"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_alliance_shopping_gift_4_desc"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 66
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 1
+  [16] C_ARR_display_labels = []
+  [17] A_ARR_use_labels = []
+  [18] A_MAP_category_param = {"effect":[{"typ":"union_gift_quality_drop","id":4,"val":1}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 1
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11740000
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 3
+  [25] C_INT_BgQuality = 1511010003
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11114319
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 667:
+  [0] p2_title = 
+  [1] A_INT_id = 11114319
+  [2] S_STR_comment = 联盟礼物(触发)礼包5
+  [3] A_STR_class = item_union_gift
+  [4] A_INT_quest_class = 15
+  [5] C_INT_display_order = 0
+  [6] C_INT_display_key = 15113198
+  [7] C_INT_display_quality = 1511010122
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_alliance_shopping_gift_5_name"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_alliance_shopping_gift_5_desc"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 66
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 1
+  [16] C_ARR_display_labels = []
+  [17] A_ARR_use_labels = []
+  [18] A_MAP_category_param = {"effect":[{"typ":"union_gift_quality_drop","id":5,"val":1}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 1
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11740000
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 4
+  [25] C_INT_BgQuality = 1511010004
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11114320
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 668:
+  [0] p2_title = 
+  [1] A_INT_id = 11114320
+  [2] S_STR_comment = 联盟礼物(触发)礼包6
+  [3] A_STR_class = item_union_gift
+  [4] A_INT_quest_class = 15
+  [5] C_INT_display_order = 0
+  [6] C_INT_display_key = 15113199
+  [7] C_INT_display_quality = 1511010123
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_alliance_shopping_gift_6_name"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_alliance_shopping_gift_6_desc"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 66
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 1
+  [16] C_ARR_display_labels = []
+  [17] A_ARR_use_labels = []
+  [18] A_MAP_category_param = {"effect":[{"typ":"union_gift_quality_drop","id":6,"val":1}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 1
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11740000
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 5
+  [25] C_INT_BgQuality = 1511010005
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11111001
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 7:
+  [0] p2_title = 
+  [1] A_INT_id = 11111001
+  [2] S_STR_comment = 10,000粮食
+  [3] A_STR_class = item_rss
+  [4] A_INT_quest_class = 1
+  [5] C_INT_display_order = 13025
+  [6] C_INT_display_key = 15112577
+  [7] C_INT_display_quality = 1511010120
+  [8] C_MAP_lc_upper_show = {"typ":"lc","txt":"LC_ITEM_rss_upper_show","args":[{"typ":"int_unit","val":10000}]}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_add_food_name","args":[{"typ":"int","val":10000}]}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_add_food_desc","args":[{"typ":"int","val":10000}]}
+  [11] C_MAP_lc_usetip = {"typ":"lc","txt":"LC_ITEM_add_food_usedtip","args":[{"typ":"int","val":10000}]}
+  [12] A_FLT_value = 25
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_asset","rss_food"]
+  [17] A_ARR_use_labels = ["bag","rss_food"]
+  [18] A_MAP_category_param = {"effect":[{"typ":"rss","id":11141001,"val":10000}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741001
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 2
+  [25] C_INT_BgQuality = 1511010002
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11111055
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 61:
+  [0] p2_title = 
+  [1] A_INT_id = 11111055
+  [2] S_STR_comment = 金色slg技能书
+  [3] A_STR_class = 0
+  [4] A_INT_quest_class = 0
+  [5] C_INT_display_order = 24004
+  [6] C_INT_display_key = 1511017501
+  [7] C_INT_display_quality = 1511010123
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"lc_item_hero_skill_book_slg_5_name"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"lc_item_hero_skill_book_slg_5_desc"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 500
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 9999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_asset"]
+  [17] A_ARR_use_labels = []
+  [18] A_MAP_category_param = {}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741002
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 5
+  [25] C_INT_BgQuality = 1511010005
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11117069
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 924:
+  [0] p2_title = 
+  [1] A_INT_id = 11117069
+  [2] S_STR_comment = 军备图纸
+  [3] A_STR_class = soldier_arms
+  [4] A_INT_quest_class = 0
+  [5] C_INT_display_order = 415101
+  [6] C_INT_display_key = 15114333
+  [7] C_INT_display_quality = 1511010123
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_SOLDIER_arms_material_2"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_SOLDIER_arms_material_desc_2"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 400
+  [13] A_INT_max_own = 9999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_other"]
+  [17] A_ARR_use_labels = ["item_arms_map"]
+  [18] A_MAP_category_param = {}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741004
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 5
+  [25] C_INT_BgQuality = 1511010005
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11118501
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 1424:
+  [0] p2_title = 
+  [1] A_INT_id = 11118501
+  [2] S_STR_comment = 传说机能核心（橙色机甲技能突破）
+  [3] A_STR_class = mecha
+  [4] A_INT_quest_class = 0
+  [5] C_INT_display_order = 417001
+  [6] C_INT_display_key = 15116356
+  [7] C_INT_display_quality = 1511010123
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_mecha_core_name"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_mecha_core_desc"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 2000
+  [13] A_INT_max_own = 9999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_other"]
+  [17] A_ARR_use_labels = []
+  [18] A_MAP_category_param = {}
+  [19] A_INT_fixed_use = 1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11740000
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 5
+  [25] C_INT_BgQuality = 1511010005
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 111110026
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 1925:
+  [0] p2_title = 
+  [1] A_INT_id = 111110026
+  [2] S_STR_comment = 金羽
+  [3] A_STR_class = shop_material
+  [4] A_INT_quest_class = 0
+  [5] C_INT_display_order = 50025
+  [6] C_INT_display_key = 1511017635
+  [7] C_INT_display_quality = 1511010123
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"lc_item_gold_feather_name"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"lc_item_gold_feather_desc"}
+  [11] C_MAP_lc_usetip = {}
+  [12] A_FLT_value = 125
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 1000
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_asset"]
+  [17] A_ARR_use_labels = []
+  [18] A_MAP_category_param = {}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11740000
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 5
+  [25] C_INT_BgQuality = 1511010004
+  [26] A_INT_ValueGold = 43000
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11111022  (from rank rewards group 271)
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 28:
+  [0] p2_title = 
+  [1] A_INT_id = 11111022
+  [2] S_STR_comment = 500CDs
+  [3] A_STR_class = item_rss
+  [4] A_INT_quest_class = 22
+  [5] C_INT_display_order = 10500
+  [6] C_INT_display_key = 15112582
+  [7] C_INT_display_quality = 1511010123
+  [8] C_MAP_lc_upper_show = {"typ":"lc","txt":"LC_ITEM_rss_upper_show","args":[{"typ":"int_unit","val":500}]}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_add_CD_name","args":[{"typ":"int","val":500}]}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_add_CD_desc","args":[{"typ":"int","val":500}]}
+  [11] C_MAP_lc_usetip = {"typ":"lc","txt":"LC_ITEM_add_CD_usedtip","args":[{"typ":"int","val":500}]}
+  [12] A_FLT_value = 500
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_asset"]
+  [17] A_ARR_use_labels = ["bag"]
+  [18] A_MAP_category_param = {"effect":[{"typ":"vm","id":11151001,"val":500}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741004
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 5
+  [25] C_INT_BgQuality = 1511010005
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 1
+---
+# cmd: gsheet_query.py row 1111 11111021  (from rank rewards group 271)
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 27:
+  [0] p2_title = 
+  [1] A_INT_id = 11111021
+  [2] S_STR_comment = 200CDs
+  [3] A_STR_class = item_rss
+  [4] A_INT_quest_class = 22
+  [5] C_INT_display_order = 10200
+  [6] C_INT_display_key = 15112582
+  [7] C_INT_display_quality = 1511010123
+  [8] C_MAP_lc_upper_show = {"typ":"lc","txt":"LC_ITEM_rss_upper_show","args":[{"typ":"int_unit","val":200}]}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_add_CD_name","args":[{"typ":"int","val":200}]}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_add_CD_desc","args":[{"typ":"int","val":200}]}
+  [11] C_MAP_lc_usetip = {"typ":"lc","txt":"LC_ITEM_add_CD_usedtip","args":[{"typ":"int","val":200}]}
+  [12] A_FLT_value = 200
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_asset"]
+  [17] A_ARR_use_labels = ["bag"]
+  [18] A_MAP_category_param = {"effect":[{"typ":"vm","id":11151001,"val":200}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741004
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 5
+  [25] C_INT_BgQuality = 1511010005
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 1
+---
+# cmd: gsheet_query.py row 1111 11111020  (from rank rewards group 271)
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 26:
+  [0] p2_title = 
+  [1] A_INT_id = 11111020
+  [2] S_STR_comment = 50CDs
+  [3] A_STR_class = item_rss
+  [4] A_INT_quest_class = 22
+  [5] C_INT_display_order = 10050
+  [6] C_INT_display_key = 15112582
+  [7] C_INT_display_quality = 1511010123
+  [8] C_MAP_lc_upper_show = {"typ":"lc","txt":"LC_ITEM_rss_upper_show","args":[{"typ":"int_unit","val":50}]}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_add_CD_name","args":[{"typ":"int","val":50}]}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_add_CD_desc","args":[{"typ":"int","val":50}]}
+  [11] C_MAP_lc_usetip = {"typ":"lc","txt":"LC_ITEM_add_CD_usedtip","args":[{"typ":"int","val":50}]}
+  [12] A_FLT_value = 50
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_asset"]
+  [17] A_ARR_use_labels = ["bag"]
+  [18] A_MAP_category_param = {"effect":[{"typ":"vm","id":11151001,"val":50}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741004
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 5
+  [25] C_INT_BgQuality = 1511010005
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 1
+---
+# cmd: gsheet_query.py row 1111 11114329  (from rank rewards group 271)
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 674:
+  [0] p2_title = 
+  [1] A_INT_id = 11114329
+  [2] S_STR_comment = 中级资源自选宝箱1w
+  [3] A_STR_class = item_select_box
+  [4] A_INT_quest_class = 19
+  [5] C_INT_display_order = 12502
+  [6] C_INT_display_key = 15113485
+  [7] C_INT_display_quality = 1511010122
+  [8] C_MAP_lc_upper_show = {}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_rss_optional_box_name2"}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_rss_optional_box_desc","args":[{"typ":"int","val":10000},{"typ":"int","val":10000}]}
+  [11] C_MAP_lc_usetip = {"typ":"lc","txt":"LC_ITEM_chest_from_atk_npc_usedtip"}
+  [12] A_FLT_value = 25
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_asset","rss_food","rss_iron"]
+  [17] A_ARR_use_labels = ["bag","rss_food","rss_iron"]
+  [18] A_MAP_category_param = {"select_box":[{"typ":"rss","id":11141001,"val":10000},{"typ":"rss","id":11141003,"val":10000}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11740000
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 4
+  [25] C_INT_BgQuality = 1511010004
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 0
+---
+# cmd: gsheet_query.py row 1111 11111019  (from rank rewards group 271)
+[info] Table: 1111 → 1pm0nztHsjpHmFBEmx-b... / 'item'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 25:
+  [0] p2_title = 
+  [1] A_INT_id = 11111019
+  [2] S_STR_comment = 10CDs
+  [3] A_STR_class = item_rss
+  [4] A_INT_quest_class = 22
+  [5] C_INT_display_order = 10010
+  [6] C_INT_display_key = 15112582
+  [7] C_INT_display_quality = 1511010123
+  [8] C_MAP_lc_upper_show = {"typ":"lc","txt":"LC_ITEM_rss_upper_show","args":[{"typ":"int_unit","val":10}]}
+  [9] A_MAP_lc_name = {"typ":"lc","txt":"LC_ITEM_add_CD_name","args":[{"typ":"int","val":10}]}
+  [10] C_MAP_lc_desc = {"typ":"lc","txt":"LC_ITEM_add_CD_desc","args":[{"typ":"int","val":10}]}
+  [11] C_MAP_lc_usetip = {"typ":"lc","txt":"LC_ITEM_add_CD_usedtip","args":[{"typ":"int","val":10}]}
+  [12] A_FLT_value = 10
+  [13] A_INT_max_own = 999999
+  [14] A_INT_max_get = 99999
+  [15] A_INT_max_use = 99999
+  [16] C_ARR_display_labels = ["bag_asset"]
+  [17] A_ARR_use_labels = ["bag"]
+  [18] A_MAP_category_param = {"effect":[{"typ":"vm","id":11151001,"val":10}]}
+  [19] A_INT_fixed_use = -1
+  [20] S_INT_use_now = 0
+  [21] C_ARR_drop_display = []
+  [22] A_INT_source = 11741004
+  [23] A_INT_country_use_type = 0
+  [24] A_INT_Quality = 3
+  [25] C_INT_BgQuality = 1511010003
+  [26] A_INT_ValueGold = 0
+  [27] A_INT_CraftCostReduceBp = 0
+  [28] C_INT_RedPoint = 1
+---

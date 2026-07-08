@@ -77,9 +77,11 @@
   <div class="tab active" data-t="arch">🏗 架构总览</div>
   <div class="tab" data-t="client">客户端层</div>
   <div class="tab" data-t="server">服务端 & 后端矩阵</div>
+  <div class="tab" data-t="video">🎬 视频工具矩阵</div>
   <div class="tab" data-t="prompt">内部 Prompt 清单</div>
   <div class="tab" data-t="pattern">Prompt 设计模式</div>
   <div class="tab" data-t="morphix">Morphix 应用层</div>
+  <div class="tab" data-t="grasp">🔍 掌握度盘点</div>
   <div class="tab" data-t="use">怎么用 / 接入</div>
 </nav>
 
@@ -203,6 +205,62 @@ python call_grfal.py --view-logs</pre></div></details>
   </table>
   <h3>本地后处理（不调外部模型）</h3>
   <p><span class="pill">video_compression ffmpeg H.265</span><span class="pill">extract_video_frames ffmpeg 抽帧</span><span class="pill">remove_background 本地色键/抠图</span><span class="pill">export_sbs_video SBS 透明导出</span><span class="pill">image_resize 透明 PNG 走本地 PIL</span><span class="pill">image_erase LaMa 兜底</span></p>
+</section>
+
+<!-- ============ VIDEO ============ -->
+<section class="panel" id="video">
+  <h2 class="sec"><span class="n">V</span> 视频工具矩阵（没有时间轴剪辑器，全是 AI 工具 + 本地 ffmpeg）</h2>
+  <div class="key ok">
+    GRFal <b>没有传统「拖拽切/拼时间轴」的剪辑器</b>。它的视频能力 = 一堆 <b>AI 视频工具</b>（外部模型）+ 少量 <b>本地 ffmpeg 处理</b>。杀手锏全在 <b>seadance 的多模态编辑/拼接/克隆</b> 和 <b>免画 mask 的擦除</b> 上——这几个是传统剪辑软件干不了、做皮肤视频/宣传片时最省人力的。视频类一律走异步 submit+poll（<code>--timeout 600~900</code>）。
+  </div>
+
+  <h3>🌟 特殊 / 独门功能（别处没有，或极省事）</h3>
+  <table>
+    <tr><th>工具 / 模式</th><th>特殊在哪</th><th>怎么调（要点）</th></tr>
+    <tr><td><code>seadance 视频编辑</code><br><span class="mut">generate_video · ref_types=参考视频+元素参考</span></td><td><b>只换物体、镜头运动全保留</b>。传统剪辑做不到。</td><td>源视频当「参考视频」+ 替换图当「元素参考」，prompt「把视频1里的X换成图片1的Y、运镜不变」</td></tr>
+    <tr><td><code>seadance 视频延展/拼接</code><br><span class="mut">generate_video · ref_types=参考视频×N</span></td><td>传 2-3 段 clip + 转场描述 → <b>AI 生成过渡帧缝成连续视频</b>（不是硬切）。</td><td>多段 mp4 都当「参考视频」，prompt 写转场「视频1结束后转场进室内接视频2」</td></tr>
+    <tr><td><code>seadance 音频参考克隆</code><br><span class="mut">ref_types 含 参考音频</span></td><td><b>克隆音色 / 旋律 / 对白</b>进新视频。单请求可混最多 9图+3视频+3音频。</td><td>传 .wav/.mp3（自动识别为参考音频，仅 seadance），prompt「音色参考音频1」</td></tr>
+    <tr><td><code>video_inpainting</code></td><td><b>免画 mask 擦移动物体</b>——LLM 看首帧定位「那个飘的话筒」，Bria eraser 逐帧擦。</td><td><code>--tool video_inpainting --params '{"mask_prompt":"the floating microphone"}' --file video_path=in.mp4</code></td></tr>
+    <tr><td><code>video_remove_watermark</code></td><td>同上思路，<b>LLM 自动检测首帧水印位置</b>再 Bria 擦，一句话不用。</td><td><code>--tool video_remove_watermark --file video_path=in.mp4</code></td></tr>
+    <tr><td><code>seedance_prompt_reverse</code></td><td>喂现成视频，<b>两遍分析(运镜+分镜)反推 Seedance 带时间戳 prompt</b> <code>[0-2s]…[2-5s]…</code>，可回喂重生成。</td><td><code>--tool seedance_prompt_reverse --file video_path=in.mp4</code> → 结果丢回 generate_video(seadance)</td></tr>
+    <tr><td><code>export_sbs_video</code> ⭐游戏链路</td><td><b>导出左右分屏透明视频给 Unity</b>（彩色半+alpha遮罩半）——我们皮肤视频链路的关键。</td><td><code>--tool export_sbs_video --file input_videos=in.mp4</code>（本地处理，不走外部模型）</td></tr>
+  </table>
+
+  <h3>🧑 数字人三件套（音频/视频驱动角色）</h3>
+  <table>
+    <tr><th>工具</th><th>干什么</th></tr>
+    <tr><td><code>video_avatar</code></td><td>音频驱动一张角色图「开口说话」（后台超长任务，返 task_id 手动 --check-task）</td></tr>
+    <tr><td><code>video_lipsync</code></td><td>视频对口型贴音频。<code>sync_mode=latentsync</code>=高质慢 / <code>lipsync</code>=快质稍低</td></tr>
+    <tr><td><code>video_portrait</code></td><td>视频驱动的动作 / 表情迁移（驱动视频 → 目标角色）</td></tr>
+  </table>
+
+  <h3>常规处理（有对应但不稀奇）</h3>
+  <p>
+    <span class="pill">video_upscale 2× 超分</span>
+    <span class="pill">video_modify 整片风格迁移 v2v(kling/wan/runway)</span>
+    <span class="pill">video_reframe 改横竖比</span>
+    <span class="pill">video_remove_background 去背景</span>
+    <span class="pill">video_speed 变速</span>
+    <span class="pill">video_to_audio 配音/配乐</span>
+  </p>
+
+  <h3>本地 ffmpeg（不走外部模型、快）</h3>
+  <table>
+    <tr><th>工具</th><th>说明 / 坑</th></tr>
+    <tr><td><code>video_compression</code></td><td>H.265/HEVC 压缩。<b class="tag-danger">⚠️ 进 X3 client 仓别用它</b>——出的是 H.265，被 pre-commit video gate（要 H.264）直接拒；进仓走官方 <code>compress_video.py</code>。参数名坑：真实参数是 <code>video_files</code>（复数）</td></tr>
+    <tr><td><code>extract_video_frames</code></td><td>抽首帧 / 尾帧 / I-frame 关键帧（<code>extract_first/last/keyframes</code>，<code>max_keyframes</code>）</td></tr>
+  </table>
+
+  <h3>视频生成入口 generate_video（6 种控制模式）</h3>
+  <p class="mut">同一入口靠 <code>ref_types</code> 切模式：文生视频 / 首帧(i2v) / 首尾帧(fflf) / 元素参考(把指定角色塞进视频) / fflf+元素(Kling) / 参考视频(v2v) / 参考音频(仅 seadance)。</p>
+  <table>
+    <tr><th>模型</th><th>定位</th></tr>
+    <tr><td><code>seadance</code>（即梦豆包2.0）</td><td>最全能：全模式 + 音频参考 + 多模态混（9图+3视频+3音频）+ 视频编辑/延展。视频默认带音频直出</td></tr>
+    <tr><td><code>happyhorse</code>（阿里百炼）</td><td>全模式（t2v/i2v/元素/video-edit），默认带音频，需控制台加白</td></tr>
+    <tr><td><code>kling</code></td><td>支持 fflf_element、video_reference 等高级模式</td></tr>
+    <tr><td><code>vidu / grok / veo3 / sora / wan / runway / hailuo</code></td><td>各有侧重（vidu 元素模式最多 7 图；grok 只做元素/参考模式）</td></tr>
+  </table>
+  <div class="key">SBS 皮肤视频专属风险：压缩太狠会让 alpha 边缘渗色/黑边→进游戏抠图不干净；质量吃紧回退。视频皮肤全链见 memory <code>project_x3_hero_skin_video</code> / <code>reference_grfal_implementation</code>（含 video_compression 实操踩坑锚点）。</div>
 </section>
 
 <!-- ============ PROMPT INVENTORY ============ -->
@@ -513,6 +571,57 @@ Output: a single high-quality image that follows the user's instructions above. 
   <div class="key ok"><b>当前可用路径（无需任何图库，今天就能跑）</b>：单次换皮直接喂 <code>reference_images=[图#1 布局, 图#2 你手头的风格图]</code> 走 buildReskinPrompt 即可。模版库只是省掉"你自己找风格图"这一步，<b>不是换皮的前置条件</b>。</div>
 
   <div class="key">逆向源（含 app.js 10016 行流程图等更细节）：<code>KB\方法论\Morphix换皮工具逆向_prompt库.html</code> + <code>Morphix_prompt中文注释版.html</code>。本页签已把 8 段 prompt 全文搬全，日常用本文档即可。</div>
+</section>
+
+<!-- ============ GRASP ============ -->
+<section class="panel" id="grasp">
+  <h2 class="sec"><span class="n">G</span> 掌握度盘点（我们逆向了啥 + 工具逻辑懂到哪一档）</h2>
+  <div class="key ok">
+    根子：我们只有<b>客户端 skill + <code>/api/tools</code> 的 schema</b>，<b>服务端 <code>@tool</code> 源码拿不到</b>（内网 gradio server）。所以「怎么调」100% 懂；「内部实现逻辑」靠<b>工具描述 + 观察输入输出 + 唯一暴露的 face_swap prompt</b> 推——分三档，从懂透到黑盒都有。
+  </div>
+
+  <h3>一、我们「逆向」了啥（只有 Morphix 网页算真逆向）</h3>
+  <div class="key">澄清：逆向的只有 <b>Morphix 那个网页</b>（前端明文 JS，直接读出来的，<b>非反编译</b>）；GRFal 本体不算逆向（客户端 skill 源码我们直接有，是读源码 + 探 API）。</div>
+  <table>
+    <tr><th>来源</th><th>拿到的东西</th><th>状态</th></tr>
+    <tr><td rowspan="6"><b>Morphix 网页</b><br>（真逆向）</td><td><b>8 段 build*Prompt 全文</b>：换皮/线框转效果图/图标换皮/横竖转换/元素拆分/主题转换/自由画布/局部修改</td><td><span class="pill tag-ok">✅ 全文</span></td></tr>
+    <tr><td>图标换皮 Step1 风格提取 prompt（describe_media 榨 ~80 词）</td><td><span class="pill tag-ok">✅ 全文</span></td></tr>
+    <tr><td>buildReskinPayload 的 5-pass selectRefs 逻辑（冲突解决点=screen 槽）</td><td><span class="pill tag-ok">✅ 逻辑</span></td></tr>
+    <tr><td>templates.js 配方注释（painterly 永久 BAN / L 形角包退化 / 配方原则）</td><td><span class="pill tag-ok">✅</span></td></tr>
+    <tr><td>调用契约（底层只调 GRFal 3 工具 generate_image/describe_media/remove_background；sync+async 一致）</td><td><span class="pill tag-ok">✅</span></td></tr>
+    <tr><td>多步流水编排（图标 2 步 / 元素拆分 5 步）+ app.js 主流程图</td><td><span class="pill tag-ok">✅ 流程</span></td></tr>
+    <tr><td rowspan="2"><b>GRFal 本体</b><br>（读源码/探 API，非逆向）</td><td>call_grfal.py 全部客户端逻辑 · tool_catalog ~53 工具/参数/模型矩阵 · face_swap 内置换头 prompt 全文</td><td><span class="pill tag-ok">✅</span></td></tr>
+    <tr><td>LLM 中间步骤的<b>行为</b>（auto 画幅 / 擦除定位 / prompt_reverse）</td><td><span class="pill tag-warn">△ 只知行为</span></td></tr>
+    <tr><td rowspan="3"><b>⚠️ 没拿到</b></td><td><b>分类参考图库</b>（X2/X16/X17/P2/X3 每组图）——在服务器上，只拿到 stylePrompt 文本</td><td><span class="pill tag-danger">✗ 走自建</span></td></tr>
+    <tr><td><b>creative_workflow 各管线 prompt 全文</b>（sprite_sheet/storyboard/p2_*_design，及 admin 的 comic_/drama_/cf_*）</td><td><span class="pill tag-danger">✗ 黑盒</span></td></tr>
+    <tr><td>服务端各工具内部完整 prompt 源码（只知行为，除 face_swap）</td><td><span class="pill tag-danger">✗</span></td></tr>
+  </table>
+
+  <h3>二、工具内部逻辑「懂到哪一档」</h3>
+  <table>
+    <tr><th>档</th><th>工具</th><th>懂到啥程度</th><th>能否自己复刻</th></tr>
+    <tr><td><span class="pill tag-ok">🟢 懂透</span><br>确定性本地活</td><td><code>video_compression</code>(ffmpeg H.265) · <code>extract_video_frames</code> · <code>export_sbs_video</code>(拼左右半) · <code>remove_background</code>(rembg/u2net) · <code>image_resize</code>(PIL) · <code>image_erase</code>(LaMa)</td><td>内部逻辑基本清楚，就是 ffmpeg/PIL/rembg 那点事</td><td><span class="tag-ok">✅ 家里照搬零损失</span></td></tr>
+    <tr><td><span class="pill tag-warn">🟡 灰盒</span><br>知骨架不知逐行</td><td><code>generate_image</code>/<code>generate_video</code>(模型矩阵/ref_types 6 模式/auto 画幅 LLM 前置) · <code>video_inpainting</code>+<code>video_remove_watermark</code>(LLM 首帧定位→Bria 擦) · <code>seedance_prompt_reverse</code>(两遍 LLM 合并) · <code>describe_media</code>/<code>screenshot_localization</code>/<code>pdf_enhancement</code></td><td>懂先干啥后干啥、选哪后端、有没有 LLM 前置；<b>服务端拼 prompt 的逐字代码、模型路由细节没有</b></td><td><span class="tag-warn">🟡 能重建骨架，LLM 那步自补一个 GPT/Gemini 调用</span></td></tr>
+    <tr><td><span class="pill tag-danger">🔴 黑盒</span><br>只知名字用途</td><td><code>creative_workflow</code> 各 tool_id：<code>sprite_sheet</code>/<code>storyboard_expand</code>/<code>p2_*_design</code>/<code>x2_hero_design</code>；admin 的 <code>comic_generation</code>/<code>drama_generation</code>/<code>cf_*</code></td><td>只知 tool_id 和产出啥，<b>内部多步精调 prompt 全文完全没拿到</b></td><td><span class="tag-danger">❌ 复刻"一键出精灵图/漫画"要从零调 prompt</span></td></tr>
+    <tr><td><span class="pill">⭐ 例外·懂全文</span></td><td><code>face_swap</code></td><td>缺省换头 prompt 全文都在 catalog</td><td><span class="tag-ok">✅</span></td></tr>
+    <tr><td><span class="pill">⭐ 例外·逆向补全</span></td><td><code>generate_image</code> 的换皮/线框/图标/主题等用法</td><td>Morphix 把这层编排 + 8 段 prompt 全逆向了</td><td><span class="tag-ok">✅ 有全文</span></td></tr>
+  </table>
+
+  <h3>三、对「走 A 直连 API」的实际结论</h3>
+  <div class="grid2">
+    <div class="card"><h3 style="margin-top:0" class="tag-ok">够用的</h3>
+      <p>走 A 要重搭的<b>薄编排层</b>靠这三块，恰好都在「懂/有全文」区间：</p>
+      <ul>
+        <li>🟢 本地后处理类（懂透 / 白送）</li>
+        <li>⭐ Morphix 8 段 prompt（有全文）</li>
+        <li>🟡 generate_image/video 的调用契约和模式</li>
+      </ul>
+    </div>
+    <div class="card"><h3 style="margin-top:0" class="tag-danger">不够的</h3>
+      <p><code>creative_workflow</code> 那批复杂多步管线（sprite_sheet / comic / drama）——<b>内部 prompt 是黑盒</b>，家里想复刻这类"一键出成品"只能自己从零调，没现成 prompt 可抄。</p>
+    </div>
+  </div>
+  <div class="key">一句话：<b>调用接口 100% 懂；本地后处理类懂到能复刻；生成/编辑类懂"流程骨架"不懂"逐字实现"；creative_workflow 那批复杂管线基本黑盒。</b> 走 A 真正要用的部分，恰好落在"懂"和"有全文"的区间里。要盘某个具体工具到底哪一档，现查 <code>/api/tools</code> schema + catalog 可把它输入输出/内部能确定的流程全列出来。</div>
 </section>
 
 <!-- ============ USE ============ -->

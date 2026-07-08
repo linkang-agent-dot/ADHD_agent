@@ -1,0 +1,234 @@
+cs		c	cs	cs	c	cs	c	c	cs	cs	cs	c	cs	cs	cs	cs	cs	cs
+int		string	int	int	string	int	string	string	bool	int	int	int	bool	int	int	int	int	int
+										MailTemplate		RuleTips			SpecialRewardSettlement.GroupId	MailTemplate	SpecialRewardSettlement.GroupId	MailTemplate
+"id：1~9999
+和程序对好定死
+900编号的id给英雄留着"			"1.公会排行
+2.个人荣誉排行榜
+3.公会荣誉排行榜
+4.黑市排行榜
+5.海兽陷阱伤害榜
+6.活动本服排行榜
+7.竞技场排行榜
+8.公会活动排行榜
+9.爬塔排行榜
+10.KVK个人排行榜
+11.KVK公会排行榜
+12.跨服排行榜
+13.单服赛季战力排行榜
+14.同组赛季服务器赛季战力排行榜
+15.大KVK公会排行榜
+16.活动期间联盟内部玩家排名
+17.英雄排名
+18.GVG排行榜
+19.巢穴公会排名
+20.海妖排行榜"	从小到达依次排序		最大排行榜个数							仅RankType=2、3生效	"个人积分达到指定值才可上榜，支持不填
+适用类型：
+6=活动排行榜
+8=公会活动排行榜
+12=跨服排行榜"	特殊奖励结算关联SpecialRewardSettlement		特殊奖励结算关联SpecialRewardSettlement	
+编号	备注	TXT_名字	排行榜类型	排序id	DK_图标	排行榜最大长度	TXT_奖励弹窗标题	TXT_奖励弹窗页签名	是否发送奖励	奖励邮件	奖励邮件排名数	说明	是否点赞	上榜条件	每日结算奖励分组	每日奖励邮件	每周结算奖励分组	每周奖励邮件
+ID		RankName	RankType	Sort	RankScoreIcon	MaxRankSize	RankRewardTitle	RankRewardTab	NeedSendMailReward	MailID	MailMaxRankNum	RuleTip	Upvate	RankCondition	DailyRewardGroup	DailyMailID	WeekRewardGroup	WeekMailID
+3	荣耀-个人	食谱精通	2	15	DK_img_cm_bg_icon_caidan1	999							1					
+4	荣耀-个人	钓鱼关卡	2	17	DK_img_cm_icon_fishing	999												
+5	公会	击杀榜	1	2	DK_img_cm_icon_kill	99												
+6	公会	声望榜	1	1	DK_img_cm_bg_icon_reputation	99												
+7	公会	每日贡献榜	1	3	DK_icon_global_guild_coin	99	排名奖励	每日贡献	1	1002011	3	6002						
+8	公会	每周贡献榜	1	4	DK_icon_global_guild_coin	99	排名奖励	每周贡献	1	1002010	3	6001						
+9	公会	总贡献榜	1	5	DK_icon_global_guild_coin	99												
+10	荣耀-个人	声望榜	2	10	DK_img_cm_bg_icon_reputation	999							1					
+12	荣耀-个人	击杀榜	2	12	DK_img_cm_icon_kill	999												
+14	荣耀-个人	净利润榜	2	14	DK_icon_global_gold	999												
+15	荣耀-个人	人气榜	2	16	DK_icon_global_energy	999												
+17	荣耀-公会	公会声望榜	3	19	DK_img_cm_bg_icon_reputation	999							1					
+18	荣耀-公会	公会击杀榜	3	20	DK_img_cm_icon_kill	999												
+19	黑市	黑市排行榜	4	99	DK_icon_global_gold	100	排名奖励		1	2003000	3							
+20	公会	陷阱伤害榜	5	99	DK_img_cm_icon_Damage	99												
+21	荣耀-个人	点赞榜	2	18	DK_img_dz_icon_dizan	999												
+22	荣耀-公会	旗舰战力榜	3	21	DK_img_cm_bg_icon_zhanli1	999												
+23	荣耀-活动-远征	本服赛季声望榜	13	3	DK_img_icon_property_57	99	赛季排名奖励	本服赛季声望	1	1001026	3	30017	1					
+24	荣耀-活动-远征	战区赛季声望榜	14	2	DK_img_icon_property_57	99	赛季排名奖励	战区赛季声望	1	1001028	3	30017	1				202	1001027
+25	荣耀-活动-远征	公会领地价值榜	15	1	DK_img_cm_icon_land	99	赛季排名奖励	公会领地价值	1	1000026	3	30018	1					
+102	活动-集结排名-怒海争锋	积分榜	6	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3			1000				
+103	活动-售卖排名-生意兴隆	积分榜	6	99	DK_icon_global_gold	100	排名奖励		1	1000018	3			5000				
+104	活动-新手声望-女仆嘉奖	积分榜	6	99	DK_img_cm_bg_icon_reputation	100	排名奖励		1	1000018	3			50000				
+109	活动-永恒之主	积分榜	6	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3			1000				
+110	活动-声望排名-运营大师	积分榜	6	99	DK_img_cm_bg_icon_reputation	100	排名奖励		1	1000018	3			3000				
+114	活动-巢穴争霸-赛季1-新	积分榜	8	99	DK_img_cm_icon_integral	10	排名奖励		1	1000026	3			100				
+115	活动-巢穴争霸-赛季2-新	积分榜	8	99	DK_img_cm_icon_integral	10	排名奖励		1	1000026	3			100				
+116	活动-巢穴争霸-赛季3-新	积分榜	8	99	DK_img_cm_icon_integral	10	排名奖励		1	1000026	3			100				
+119	活动-公会崛起	积分榜	8	99	DK_img_cm_icon_integral	10	排名奖励		1	1000026	3			1000				
+121	活动-船只改装强化	积分榜	6	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3			300				
+124	活动-通用跨服节庆抽奖排行榜	积分榜	12	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3							
+129	活动-秋酿大赛-积分排名	排名奖励	6	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3							
+130	活动-骑士荣光-抽奖	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3							
+131	活动-通用跨服节庆酒馆总排名	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	总排名奖励	1	1000018	3							
+132	活动-审判之光-抽奖-修女	积分榜	6	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3							
+133	活动-冬幕补给战-抽奖	积分榜	12	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3							
+134	活动-最佳酒馆-阶段榜7	最佳酒馆	6	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000040	3			1000				
+135	活动-最佳酒馆-阶段榜6	最佳酒馆	6	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000024	3			1000				
+136	活动-S1远征酒馆-W2-总榜	最佳酒馆	12	99	DK_img_cm_icon_integral	100	排名奖励	总排名奖励	1	1000018	3			5000				
+137	挑战活动	伤害排行榜	6	99	DK_img_cm_icon_Damage	100	排名奖励	伤害奖励	1	3001001	3		1					
+138	挑战活动-新手	伤害排行榜	6	99	DK_img_cm_icon_Damage	100	排名奖励	伤害奖励	1	3001003	3		1					
+139	挑战活动-炎龙苏醒	伤害排行榜	12	99	DK_img_cm_icon_Damage	100	排名奖励	伤害奖励	1	3001005	3		1					
+140	活动-魔女之夜-抽奖	积分榜	12	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3							
+141	活动-最佳酒馆-阶段榜1	最佳酒馆	6	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000019	3			1000				
+142	活动-最佳酒馆-阶段榜2	最佳酒馆	6	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000020	3			1000				
+143	活动-最佳酒馆-阶段榜3	最佳酒馆	6	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000021	3			1000				
+144	活动-最佳酒馆-阶段榜4	最佳酒馆	6	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000022	3			1000				
+145	活动-最佳酒馆-阶段榜5	最佳酒馆	6	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000023	3			1000				
+146	活动-最佳酒馆1-总榜	最佳酒馆	6	99	DK_img_cm_icon_integral	300	排名奖励	总排名奖励	1	1000018	3			5000				
+147	常-最佳酒馆-跨服周榜	最佳酒馆	12	99	DK_img_cm_icon_integral	300	排名奖励	总排名奖励	1	1000046	3			5000				
+180	常-最佳酒馆-阶段榜1-跨服	最佳酒馆	12	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000047	3			1000				
+181	常-最佳酒馆-阶段榜2-跨服	最佳酒馆	12	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000048	3			1000				
+182	常-最佳酒馆-阶段榜3-跨服	最佳酒馆	12	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000049	3			1000				
+183	常-最佳酒馆-阶段榜4-跨服	最佳酒馆	12	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000050	3			1000				
+184	常-最佳酒馆-阶段榜5-跨服	最佳酒馆	12	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000051	3			1000				
+185	常-最佳酒馆-阶段榜6-跨服	最佳酒馆	12	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000052	3			1000				
+150	活动-世界入侵	世界入侵	12	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3							
+151	钓鱼活动-海瑟	通关排名	6	99	DK_img_cm_icon_fishing	100	排名奖励	排名奖励	1	1000029	3							
+152	钓鱼活动-阿什顿	通关排名	6	99	DK_img_cm_icon_fishing	100	排名奖励	排名奖励	1	1000029	3							
+153	钓鱼活动-克里斯塔尔	通关排名	6	99	DK_img_cm_icon_fishing	100	排名奖励	排名奖励	1	1000029	3							
+154	钓鱼活动-夜玫瑰\爱莉希雅	通关排名	6	99	DK_img_cm_icon_fishing	100	排名奖励	排名奖励	1	1000029	3							
+155	钓鱼活动-阿迪娜	通关排名	6	99	DK_img_cm_icon_fishing	100	排名奖励	排名奖励	1	1000029	3							
+156	钓鱼活动-玛琳娜	通关排名	6	99	DK_img_cm_icon_fishing	100	排名奖励	排名奖励	1	1000029	3							
+160	活动-通用本服节庆酒馆总排名	排名奖励	6	99	DK_img_cm_icon_integral	100	排名奖励	总排名奖励	1	1000018	3			5000				
+161	凌霜挑战活动排行榜	评分排行榜	6	99	DK_img_cm_icon_Damage	100	排名奖励	排名奖励	1	3001007	3							
+162	活动-净化试炼排行榜	伤害排行榜	6	99	DK_img_cm_icon_integral	100	排名奖励		1	3001008	3							
+163	挑战活动排行榜	伤害排行榜	6	99	DK_img_cm_icon_Damage	100	排名奖励	排名奖励	1	3001009	3							
+164	远征-魔海探索活动排行榜	公会内部排名	16	99	DK_img_cm_icon_integral	100												
+165	活动-天下第一武道冠军挑战	排名奖励	6	99	DK_img_cm_bg_icon_zhanli1	10	排名奖励	排名奖励	1	3001011	3			8000				
+166	活动-圣诞庆典-积分排名	排名奖励	6	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3							
+167	活动-26元旦-积分排名	排名奖励	6	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3							
+168	活动-26元旦-挑战活动	伤害排行榜	12	99	DK_img_cm_icon_Damage	100	排名奖励	伤害奖励	1	3001005	3		1					
+169	活动-26尼罗之辉-本服积分排名	海域排名	6	98	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3							
+171	活动-26尼罗之辉-跨服积分排名	世界排名	12	99	DK_img_cm_icon_integral	50	排名奖励		1	1000018	3			2500				
+172	活动-26情人节-跨服积分排名	世界排名	12	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3			2500				
+173	巢穴-公会排名	公会积分	19	99	DK_img_research_wnated_icon8	100												
+174	巢穴-个人排名-LV2	战功	6	99	DK_img_research_wnated_icon8	100	巢穴战功排名奖励		1	1000018	3							
+175	巢穴-个人排名-LV3	战功	6	99	DK_img_research_wnated_icon8	100	巢穴战功排名奖励		1	1000018	3							
+176	活动-26春节-本服积分排名	海域排名	6	98	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3							
+177	活动-26春节-跨服积分排名	世界排名	12	99	DK_img_cm_icon_integral	50	排名奖励		1	1000018	3			2500				
+178	活动-26春节-挑战活动	伤害排行榜	12	99	DK_img_cm_icon_Damage	100	排名奖励	伤害奖励	1	3001012	3		1					
+201	竞技场排行榜-赛季	竞技场	7	99	DK_img_dz_icon_dizan	999	排名奖励	赛季奖励	1	4001001	3							
+202	竞技场排行榜-每日	竞技场	7	99	DK_img_dz_icon_dizan	999	排名奖励	每日奖励	1	4001002	3							
+301	黑市限时排行榜-黄金国度周-周四	黄金国度鉴宝会	4	99	DK_icon_global_gold	10	排名奖励	鉴宝会结算奖励	1	2003001								
+302	黑市限时排行榜-黄金国度周-周天	黄金国度鉴宝会	4	99	DK_icon_global_gold	10	排名奖励	鉴宝会结算奖励	1	2003001								
+303	黑市限时排行榜-屠龙部落周-周四	屠龙部落鉴宝会	4	99	DK_icon_global_gold	10	排名奖励	鉴宝会结算奖励	1	2003001								
+304	黑市限时排行榜-屠龙部落周-周天	屠龙部落鉴宝会	4	99	DK_icon_global_gold	10	排名奖励	鉴宝会结算奖励	1	2003001								
+305	黑市限时排行榜-深渊秘宝周-周四	深渊秘宝鉴宝会	4	99	DK_icon_global_gold	10	排名奖励	鉴宝会结算奖励	1	2003001								
+306	黑市限时排行榜-深渊秘宝周-周天	深渊秘宝鉴宝会	4	99	DK_icon_global_gold	10	排名奖励	鉴宝会结算奖励	1	2003001								
+307	黑市限时排行榜-海洋遗产周-周四	海洋遗产鉴宝会	4	99	DK_icon_global_gold	10	排名奖励	鉴宝会结算奖励	1	2003001								
+308	黑市限时排行榜-海洋遗产周-周天	海洋遗产鉴宝会	4	99	DK_icon_global_gold	10	排名奖励	鉴宝会结算奖励	1	2003001								
+401	爬塔-指挥官航线-猎人	指挥官航线-猎人	9	99	DK_img_cm_icon_integral	100												
+402	爬塔-指挥官航线-射手	指挥官航线-射手	9	99	DK_img_cm_icon_integral	100												
+403	爬塔-指挥官航线-斗士	指挥官航线-斗士	9	99	DK_img_cm_icon_integral	100												
+404	爬塔-鼓舞航线	鼓舞航线	9	99	DK_img_cm_icon_integral	100												
+405	爬塔-破浪航线-猎人	破浪航线-猎人	9	99	DK_img_cm_icon_integral	100												
+406	爬塔-破浪航线-射手	破浪航线-射手	9	99	DK_img_cm_icon_integral	100												
+407	爬塔-破浪航线-斗士	破浪航线-斗士	9	99	DK_img_cm_icon_integral	100												
+408	爬塔-伟大航线	伟大航线	9	99	DK_img_cm_icon_integral	100												
+501	活动-kvk-公会积分	公会积分	11	1	DK_img_research_wnated_icon8	10	排行榜	公会积分										
+502	活动-kvk-领主积分	领主积分	10	2	DK_img_cm_icon_integral	10	排行榜	领主积分										
+503	活动-kvk-个人积分	战功	10	3	DK_img_research_wnated_icon8	100	排行榜	战功	1	1000018	3							
+504	活动-大KVK丰碑争夺-公会积分	赛季公会排名	15	1	DK_img_cm_icon_integral	100												
+505	活动-kvk魔山-个人积分	战功	10	3	DK_img_cm_icon_integral	100	排行榜	战功	1	1000018	3							
+601	活动-跨服酒馆-阶段榜1	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000019	3			1000				
+602	活动-跨服酒馆-阶段榜2	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000020	3			1000				
+603	活动-跨服酒馆-阶段榜3	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000021	3			1000				
+604	活动-跨服酒馆-阶段榜4	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000022	3			1000				
+605	活动-跨服酒馆-阶段榜5	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000023	3			1000				
+606	活动-跨服酒馆-阶段榜6	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000024	3			1000				
+607	活动-跨服酒馆-阶段榜7	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000040	3			1000				
+610	活动-跨服酒馆-总榜-跨服	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	总排名奖励	1	1000018	3			5000				
+611	活动-跨服酒馆-总榜-KVK	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	总排名奖励	1	1000018	3			5000				
+612	活动-跨服-周年庆-盛宴筹备	排名奖励	12	99	DK_icon_global_anniversary_integral	300	排名奖励		1	1000018	3			1000				
+613	活动-S2远征酒馆-总榜-猫女	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	总排名奖励	1	1000018	3			5000				
+614	活动-S2决战前夕-总榜	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	总排名奖励	1	1000018	3			5000				
+615	活动-远航战备	排名奖励	12	99	DK_img_Activity_rank_icon01	999	排名奖励	总排名奖励										
+616	活动-S3远征酒馆-总榜-诺娃	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	总排名奖励	1	1000018	3			5000				
+617	活动-S4远征酒馆-总榜-绿精灵	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	总排名奖励	1	1000018	3			5000				
+618	活动-S5远征酒馆-总榜-红衣功夫妹	排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	总排名奖励	1	1000018	3			5000				
+701	活动-赛季kvk-悬赏令-公会内部玩家排名	悬赏排名	16	99	DK_img_research_wnated_icon8	50												
+901	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+902	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+903	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+904	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+905	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+906	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+907	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+908	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+909	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+910	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+911	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+912	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+913	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+914	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+915	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+916	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+917	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+918	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+919	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+920	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+921	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+922	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+923	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+924	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+925	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+926	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+927	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+928	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+929	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+930	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+931	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+932	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+933	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+934	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+935	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+936	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+937	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+938	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+939	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+940	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+941	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+942	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+943	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+944	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+945	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+946	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+947	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+948	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+949	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+950	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+951	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+955	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+956	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+957	争霸赛总排名	争霸赛总排名	18	99		50								1				
+958	争霸赛贡献排名	贡献排名	16	99		50								1				
+952	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+953	英雄排行榜	英雄排名	17	99	DK_img_cm_bg_icon_reputation	5												
+1001	海妖排行榜	海妖排名	20	99	DK_img_rank_siren	5												
+1002	海妖排行榜	海妖排名	20	99	DK_img_rank_siren	5												
+1003	海妖活动排行榜	海妖排名	6	99	DK_img_cm_icon_integral	100	排名奖励	排名奖励	1	3001013	3			100000				
+619	跨-夏日酒馆-夏日恋语-阶段榜1	活动积分	12	99	DK_img_cm_icon_integral	100	积分奖励	阶段积分奖励	1	1000019	3			1000				
+620	跨-夏日酒馆-夏日恋语-阶段榜2	活动积分	12	99	DK_img_cm_icon_integral	100	积分奖励	阶段积分奖励	1	1000020	3			1000				
+621	跨-夏日酒馆-夏日恋语-阶段榜3	活动积分	12	99	DK_img_cm_icon_integral	100	积分奖励	阶段积分奖励	1	1000021	3			1000				
+622	跨-夏日酒馆-夏日恋语-阶段榜4	活动积分	12	99	DK_img_cm_icon_integral	100	积分奖励	阶段积分奖励	1	1000022	3			1000				
+623	跨-夏日酒馆-夏日恋语-阶段榜5	活动积分	12	99	DK_img_cm_icon_integral	100	积分奖励	阶段积分奖励	1	1000023	3			1000				
+624	跨-夏日酒馆-夏日恋语-阶段榜6	活动积分	12	99	DK_img_cm_icon_integral	100	积分奖励	阶段积分奖励	1	1000024	3			1000				
+625	跨-夏日酒馆-夏日恋语-阶段榜7	活动积分	12	99	DK_img_cm_icon_integral	100	积分奖励	阶段积分奖励	1	1000040	3			1000				
+626	跨-夏日酒馆-夏日恋语-跨服总榜	活动积分	12	99	DK_img_cm_icon_integral	100	积分奖励	积分总奖励	1	1000018	3							
+179			6	179		100												
+1004	活动-世界杯-跨服积分排名	活动积分	12	99	DK_img_cm_icon_integral	100	积分奖励	排名奖励	1	1000018	3			4000				
+190		最佳酒馆	6	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000023	3			1000				
+186		最佳酒馆	6	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000019	3			1000				
+188		最佳酒馆	6	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000021	3			1000				
+148		最佳酒馆	6	99	DK_img_cm_icon_integral	300	排名奖励	总排名奖励	1	1000018	3			5000				
+189		最佳酒馆	6	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000022	3			1000				
+191		最佳酒馆	6	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000024	3			1000				
+187		最佳酒馆	6	99	DK_img_cm_icon_integral	100	排名奖励	阶段排名奖励	1	1000020	3			1000				
+1005		世界排名	12	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3			2500				
+2000	活动-26深海节-本服积分排名	海域排名	6	97	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3			1000				
+2001	活动-26深海节-全服积分排名	世界排名	12	97	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3			2500				
+1006	活动-世界杯-开箱-本服积分排名	本服排名	6	99	DK_img_cm_icon_integral	100	排名奖励		1	1000018	3			1000				
+627		排名奖励	12	99	DK_img_cm_icon_integral	100	排名奖励	总排名奖励	1	1000018	3			5000				

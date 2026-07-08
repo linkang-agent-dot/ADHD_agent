@@ -1,0 +1,159 @@
+cs	cs	cs	cs	cs	cs	cs	cs	c	
+int	int	int	int	int	int	int	bool	string	
+									
+			"1=奖励道具
+2=后退N格
+3=下格经验额外增加"	"1：道具ID
+2：后退格子数
+3：经验数"	道具数量				
+编号	BD_事件组ID	等级	事件类型	参数1	参数2	事件权重	是否大奖	DK_岛屿图片	
+ID	EventGroupID	Level	EventType	EventParameter1	EventParameter2	Weight	SuperReward	DK_Img	备注
+99001	99							DK_img_Activity_icon_island_4	起始岛
+100101	100	1	1	1002	500	10000		DK_img_Activity_icon_island_1_lv1	钻石岛
+100201	100	2	1	1002	1000	10000		DK_img_Activity_icon_island_2_lv2	
+100301	100	3	1	1002	1500	10000		DK_img_Activity_icon_island_2_lv3	
+100401	100	4	1	1002	2000	10000		DK_img_Activity_icon_island_2_lv4	
+100501	100	5	1	1002	3000	10000		DK_img_Activity_icon_island_2_lv5	
+101101	101	1	1	55101	4	200		DK_img_Activity_icon_island_1_lv1	幸运岛-船只改装
+101102	101	1	1	55101	2	800		DK_img_Activity_icon_island_1_lv1	
+101103	101	1	1	55100	4	2000		DK_img_Activity_icon_island_1_lv1	
+101104	101	1	1	55100	2	3000		DK_img_Activity_icon_island_1_lv1	
+101105	101	1	1	55100	1	4000		DK_img_Activity_icon_island_1_lv1	
+101201	101	2	1	55101	6	200		DK_img_Activity_icon_island_1_lv2	
+101202	101	2	1	55101	3	800		DK_img_Activity_icon_island_1_lv2	
+101203	101	2	1	55100	6	2000		DK_img_Activity_icon_island_1_lv2	
+101204	101	2	1	55100	3	3000		DK_img_Activity_icon_island_1_lv2	
+101205	101	2	1	55100	2	4000		DK_img_Activity_icon_island_1_lv2	
+101301	101	3	1	55101	8	200		DK_img_Activity_icon_island_1_lv3	
+101302	101	3	1	55101	4	800		DK_img_Activity_icon_island_1_lv3	
+101303	101	3	1	55100	8	2000		DK_img_Activity_icon_island_1_lv3	
+101304	101	3	1	55100	4	3000		DK_img_Activity_icon_island_1_lv3	
+101305	101	3	1	55100	3	4000		DK_img_Activity_icon_island_1_lv3	
+101401	101	4	1	55101	10	200	1	DK_img_Activity_icon_island_1_lv4	
+101402	101	4	1	55101	5	800		DK_img_Activity_icon_island_1_lv4	
+101403	101	4	1	55100	10	2000		DK_img_Activity_icon_island_1_lv4	
+101404	101	4	1	55100	5	3000		DK_img_Activity_icon_island_1_lv4	
+101405	101	4	1	55100	4	4000		DK_img_Activity_icon_island_1_lv4	
+101501	101	5	1	55101	12	200	1	DK_img_Activity_icon_island_1_lv5	
+101502	101	5	1	55101	6	800		DK_img_Activity_icon_island_1_lv5	
+101503	101	5	1	55100	12	2000		DK_img_Activity_icon_island_1_lv5	
+101504	101	5	1	55100	6	3000		DK_img_Activity_icon_island_1_lv5	
+101505	101	5	1	55100	5	4000		DK_img_Activity_icon_island_1_lv5	
+102101	102	1	1	11005	2	200		DK_img_Activity_icon_island_1_lv1	幸运岛-通用加速
+102102	102	1	1	11005	1	800		DK_img_Activity_icon_island_1_lv1	
+102103	102	1	1	11004	2	2000		DK_img_Activity_icon_island_1_lv1	
+102104	102	1	1	11004	1	3000		DK_img_Activity_icon_island_1_lv1	
+102105	102	1	1	11003	1	4000		DK_img_Activity_icon_island_1_lv1	
+102201	102	2	1	11005	3	200		DK_img_Activity_icon_island_1_lv2	
+102202	102	2	1	11005	2	800		DK_img_Activity_icon_island_1_lv2	
+102203	102	2	1	11004	3	2000		DK_img_Activity_icon_island_1_lv2	
+102204	102	2	1	11004	2	3000		DK_img_Activity_icon_island_1_lv2	
+102205	102	2	1	11003	2	4000		DK_img_Activity_icon_island_1_lv2	
+102301	102	3	1	11005	4	200		DK_img_Activity_icon_island_1_lv3	
+102302	102	3	1	11005	2	800		DK_img_Activity_icon_island_1_lv3	
+102303	102	3	1	11004	4	2000		DK_img_Activity_icon_island_1_lv3	
+102304	102	3	1	11004	2	3000		DK_img_Activity_icon_island_1_lv3	
+102305	102	3	1	11003	3	4000		DK_img_Activity_icon_island_1_lv3	
+102401	102	4	1	11005	5	200	1	DK_img_Activity_icon_island_1_lv4	
+102402	102	4	1	11005	3	800		DK_img_Activity_icon_island_1_lv4	
+102403	102	4	1	11004	5	2000		DK_img_Activity_icon_island_1_lv4	
+102404	102	4	1	11004	3	3000		DK_img_Activity_icon_island_1_lv4	
+102405	102	4	1	11003	4	4000		DK_img_Activity_icon_island_1_lv4	
+102501	102	5	1	11005	6	200	1	DK_img_Activity_icon_island_1_lv5	
+102502	102	5	1	11005	3	800		DK_img_Activity_icon_island_1_lv5	
+102503	102	5	1	11004	6	2000		DK_img_Activity_icon_island_1_lv5	
+102504	102	5	1	11004	3	3000		DK_img_Activity_icon_island_1_lv5	
+102505	102	5	1	11003	5	4000		DK_img_Activity_icon_island_1_lv5	
+103101	103	1	1	19003	5	200		DK_img_Activity_icon_island_1_lv1	幸运岛-英雄
+103102	103	1	1	19003	3	800		DK_img_Activity_icon_island_1_lv1	
+103103	103	1	1	165905	5	2000		DK_img_Activity_icon_island_1_lv1	
+103104	103	1	1	165905	2	3000		DK_img_Activity_icon_island_1_lv1	
+103105	103	1	1	165905	1	4000		DK_img_Activity_icon_island_1_lv1	
+103201	103	2	1	19003	7	200		DK_img_Activity_icon_island_1_lv2	
+103202	103	2	1	19003	4	800		DK_img_Activity_icon_island_1_lv2	
+103203	103	2	1	165905	7	2000		DK_img_Activity_icon_island_1_lv2	
+103204	103	2	1	165905	4	3000		DK_img_Activity_icon_island_1_lv2	
+103205	103	2	1	165905	2	4000		DK_img_Activity_icon_island_1_lv2	
+103301	103	3	1	19003	9	200		DK_img_Activity_icon_island_1_lv3	
+103302	103	3	1	19003	5	800		DK_img_Activity_icon_island_1_lv3	
+103303	103	3	1	165905	9	2000		DK_img_Activity_icon_island_1_lv3	
+103304	103	3	1	165905	5	3000		DK_img_Activity_icon_island_1_lv3	
+103305	103	3	1	165905	3	4000		DK_img_Activity_icon_island_1_lv3	
+103401	103	4	1	19003	12	200	1	DK_img_Activity_icon_island_1_lv4	
+103402	103	4	1	19003	7	800		DK_img_Activity_icon_island_1_lv4	
+103403	103	4	1	165905	12	2000		DK_img_Activity_icon_island_1_lv4	
+103404	103	4	1	165905	7	3000		DK_img_Activity_icon_island_1_lv4	
+103405	103	4	1	165905	4	4000		DK_img_Activity_icon_island_1_lv4	
+103501	103	5	1	19003	15	200	1	DK_img_Activity_icon_island_1_lv5	
+103502	103	5	1	19003	9	800		DK_img_Activity_icon_island_1_lv5	
+103503	103	5	1	165905	15	2000		DK_img_Activity_icon_island_1_lv5	
+103504	103	5	1	165905	9	3000		DK_img_Activity_icon_island_1_lv5	
+103505	103	5	1	165905	5	4000		DK_img_Activity_icon_island_1_lv5	
+104001	104		1	1060	3000	200	1	DK_img_Activity_icon_island_2	宝藏岛-大
+104002	104		1	1060	1500	800	1	DK_img_Activity_icon_island_2	
+104003	104		1	1060	600	2000	1	DK_img_Activity_icon_island_2	
+104004	104		1	1060	400	3000	1	DK_img_Activity_icon_island_2	
+104005	104		1	1060	200	4000		DK_img_Activity_icon_island_2	
+105001	105		1	1060	1200	200	1	DK_img_Activity_icon_island_2	宝藏岛-小
+105002	105		1	1060	600	800	1	DK_img_Activity_icon_island_2	
+105003	105		1	1060	240	2000		DK_img_Activity_icon_island_2	
+105004	105		1	1060	160	3000		DK_img_Activity_icon_island_2	
+105005	105		1	1060	80	4000		DK_img_Activity_icon_island_2	
+106001	106		1	1058	1	200	1	DK_img_Activity_icon_island_3	神秘岛
+106002	106		1	1060	2500	50	1	DK_img_Activity_icon_island_3	
+106003	106		1	1060	500	650	1	DK_img_Activity_icon_island_3	
+106004	106		1	1060	250	1800		DK_img_Activity_icon_island_3	
+106005	106		1	1060	50	2000		DK_img_Activity_icon_island_3	
+106006	106		2	1		200		DK_img_Activity_icon_island_3	
+106007	106		2	2		200		DK_img_Activity_icon_island_3	
+106008	106		2	3		200		DK_img_Activity_icon_island_3	
+106009	106		2	4		200		DK_img_Activity_icon_island_3	
+106010	106		3	1		4500		DK_img_Activity_icon_island_3	
+199001	199							DK_img_Activity_deepsea_island_start	起始岛
+200101	200	1	1	1002	500	10000		DK_img_Activity_deepsea_island_diamond	钻石岛
+201101	201	1	1	55101	4	200		DK_img_Activity_deepsea_island_lucky	幸运岛-船只改装
+201102	201	1	1	55101	2	800		DK_img_Activity_deepsea_island_lucky	
+201103	201	1	1	55100	4	2000		DK_img_Activity_deepsea_island_lucky	
+201104	201	1	1	55100	2	3000		DK_img_Activity_deepsea_island_lucky	
+201105	201	1	1	55100	1	4000		DK_img_Activity_deepsea_island_lucky	
+202101	202	1	1	11004	3	200		DK_img_Activity_deepsea_island_lucky	幸运岛-通用加速
+202102	202	1	1	11003	3	800		DK_img_Activity_deepsea_island_lucky	
+202103	202	1	1	11003	2	2000		DK_img_Activity_deepsea_island_lucky	
+202104	202	1	1	11003	1	3000		DK_img_Activity_deepsea_island_lucky	
+202105	202	1	1	11002	3	4000		DK_img_Activity_deepsea_island_lucky	
+203101	203	1	1	19003	5	200		DK_img_Activity_deepsea_island_lucky	幸运岛-英雄
+203102	203	1	1	19003	3	800		DK_img_Activity_deepsea_island_lucky	
+203103	203	1	1	165905	5	2000		DK_img_Activity_deepsea_island_lucky	
+203104	203	1	1	165905	2	3000		DK_img_Activity_deepsea_island_lucky	
+203105	203	1	1	165905	1	4000		DK_img_Activity_deepsea_island_lucky	
+200001	200		1	1002	500	10000		DK_img_Activity_deepsea_island_diamond	钻石岛
+201001	201		1	55101	4	200		DK_img_Activity_deepsea_island_lucky	幸运岛-船只改装
+201002	201		1	55101	2	800		DK_img_Activity_deepsea_island_lucky	
+201003	201		1	55100	4	2000		DK_img_Activity_deepsea_island_lucky	
+201004	201		1	55100	2	3000		DK_img_Activity_deepsea_island_lucky	
+201005	201		1	55100	1	4000		DK_img_Activity_deepsea_island_lucky	
+202001	202		1	11004	3	200		DK_img_Activity_deepsea_island_lucky	幸运岛-通用加速
+202002	202		1	11003	3	800		DK_img_Activity_deepsea_island_lucky	
+202003	202		1	11003	2	2000		DK_img_Activity_deepsea_island_lucky	
+202004	202		1	11003	1	3000		DK_img_Activity_deepsea_island_lucky	
+202005	202		1	11002	3	4000		DK_img_Activity_deepsea_island_lucky	
+203001	203		1	19003	5	200		DK_img_Activity_deepsea_island_lucky	幸运岛-英雄
+203002	203		1	19003	3	800		DK_img_Activity_deepsea_island_lucky	
+203003	203		1	165905	5	2000		DK_img_Activity_deepsea_island_lucky	
+203004	203		1	165905	2	3000		DK_img_Activity_deepsea_island_lucky	
+203005	203		1	165905	1	4000		DK_img_Activity_deepsea_island_lucky	
+204001	204		1	1202	1500	200	1	DK_img_Activity_deepsea_island_treasure	宝藏岛-大
+204002	204		1	1202	750	800	1	DK_img_Activity_deepsea_island_treasure	
+204003	204		1	1202	300	2000	1	DK_img_Activity_deepsea_island_treasure	
+204004	204		1	1202	200	3000	1	DK_img_Activity_deepsea_island_treasure	
+204005	204		1	1202	100	4000		DK_img_Activity_deepsea_island_treasure	
+205001	205		1	1202	600	200	1	DK_img_Activity_deepsea_island_treasure	宝藏岛-小
+205002	205		1	1202	300	800	1	DK_img_Activity_deepsea_island_treasure	
+205003	205		1	1202	120	2000		DK_img_Activity_deepsea_island_treasure	
+205004	205		1	1202	80	3000		DK_img_Activity_deepsea_island_treasure	
+205005	205		1	1202	40	4000		DK_img_Activity_deepsea_island_treasure	
+206001	206		1	1058	1	200	1	DK_img_Activity_deepsea_island_mystery	神秘岛
+206002	206		1	1202	2500	50	1	DK_img_Activity_deepsea_island_mystery	
+206003	206		1	1202	500	650	1	DK_img_Activity_deepsea_island_mystery	
+206004	206		1	1202	250	1800		DK_img_Activity_deepsea_island_mystery	
+206005	206		1	1202	50	2000		DK_img_Activity_deepsea_island_mystery	

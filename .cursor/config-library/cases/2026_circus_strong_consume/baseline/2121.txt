@@ -1,0 +1,20 @@
+# cmd: gsheet_query.py row 2121 21215079
+[info] Table: 2121 → 1i_rhQfUNhbDdL7GYeQV... / 'activity_special'
+[info] P2 table detected, auto-shifted --id-col to 1
+row 1481:
+  [0] p2_title = 
+  [1] A_INT_id = 21215079
+  [2] C_STR_comment = 展示排行榜-2024-强消耗-通用-schema3-5
+  [3] A_STR_type = actv_show_rank
+  [4] A_ARR_reward = []
+  [5] A_MAP_expr = {}
+  [6] A_INT_arg1 = 21222097
+  [7] A_INT_arg2 = 0
+  [8] A_INT_arg3 = 0
+  [9] A_ARR_reward_expr = []
+  [10] A_STR_desc = NULL
+  [11] A_ARR_array = []
+  [12] A_ARR_status = []
+  [13] S_MAP_condition = {}
+  [14] S_ARR_score_rule = []
+  [15] A_INT_country_use_type = 0

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>工作 Line 可视化</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --border:#30363d; --text:#e6edf3; --dim:#8b949e;
+    --grid:#1c2128;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--text); font-family:"Segoe UI","Microsoft YaHei",sans-serif; padding:24px;}
+  h1{font-size:20px; margin-bottom:4px;}
+  .meta{color:var(--dim); font-size:12px; margin-bottom:16px;}
+  .toolbar{margin-bottom:12px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;}
+  .toolbar button{background:var(--panel); color:var(--text); border:1px solid var(--border);
+    border-radius:6px; padding:4px 12px; cursor:pointer; font-size:12px;}
+  .toolbar button:hover{border-color:#58a6ff;}
+  .legend{display:flex; gap:14px; font-size:12px; color:var(--dim); margin-left:auto; flex-wrap:wrap;}
+  .legend i{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:4px; vertical-align:-1px;}
+  .chart{background:var(--panel); border:1px solid var(--border); border-radius:10px; overflow-x:auto;}
+  .inner{min-width:980px;}
+  .axis{display:flex; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--panel); z-index:5;}
+  .axis .label-col{flex:0 0 var(--lw); padding:6px 10px; font-size:12px; color:var(--dim); border-right:1px solid var(--border);}
+  .axis .tl-col{flex:1; position:relative; height:34px;}
+  .axis .tick{position:absolute; top:4px; font-size:10px; color:var(--dim); transform:translateX(-50%); white-space:nowrap;}
+  .axis .tick.mon{color:var(--text); font-weight:600;}
+  .row{display:flex; border-bottom:1px solid #21262d; align-items:stretch;}
+  .row:hover{background:#1b212a;}
+  .label-col{flex:0 0 var(--lw); padding:7px 10px; border-right:1px solid var(--border);
+    font-size:13px; display:flex; align-items:center; gap:6px; cursor:default; overflow:hidden;}
+  .has-kids .label-col{cursor:pointer;}
+  .caret{width:14px; flex:0 0 14px; color:var(--dim); font-size:10px; transition:transform .15s; text-align:center;}
+  .open > .row .caret{transform:rotate(90deg);}
+  .no-kids .caret{visibility:hidden;}
+  .lv0 > .row .label-col{font-weight:700; font-size:14px;}
+  .lv1 > .row .label-col{padding-left:28px;}
+  .lv2 > .row .label-col{padding-left:48px; color:#c9d1d9;}
+  .lv3 > .row .label-col{padding-left:68px; color:#c9d1d9;}
+  .name{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .tl-col{flex:1; position:relative; min-height:32px;
+    background-image:linear-gradient(to right, var(--grid) 1px, transparent 1px);
+    background-size:var(--dayw) 100%;}
+  .bar{position:absolute; top:50%; transform:translateY(-50%); height:14px; border-radius:7px;
+    min-width:6px; opacity:.95;}
+  .lv0 .bar{height:18px; border-radius:9px;}
+  .pt{position:absolute; top:50%; width:11px; height:11px; transform:translate(-50%,-50%) rotate(45deg);
+    border-radius:2px;}
+  .today-line{position:absolute; top:0; bottom:0; width:2px; background:#f8514966; z-index:3;}
+  .today-tag{position:absolute; top:18px; transform:translateX(-50%); font-size:10px; color:#f85149; white-space:nowrap;}
+  .st-done{background:#2ea043;} .st-done.bar{opacity:.45;}
+  .st-active{background:#1f6feb;}
+  .st-critical{background:#da3633; box-shadow:0 0 6px #da363388;}
+  .st-pending{background:#bb8009;}
+  .st-external{background:#8957e5;}
+  .st-auto{background:#6e7681;} .st-auto.bar{opacity:.4;}
+  .st-paused{background:#484f58;}
+  .children{display:none;}
+  .open > .children{display:block;}
+  .foot{color:var(--dim); font-size:11px; margin-top:10px;}
+</style>
+</head>
+<body>
+<h1>工作 Line 可视化（主工作流 → 分支 → 每件事）</h1>
+<div class="meta">数据更新：2026-07-08 ｜ 窗口：2026-06-26 ~ 2026-07-26 ｜ 单一事实源=工作line.md，本页由 工作line_tree.json 渲染</div>
+<div class="toolbar">
+  <button onclick="setAll(true)">全部展开</button>
+  <button onclick="setAll(false)">全部收起</button>
+  <span class="legend">
+    <span><i style="background:#da3633"></i>今日必做/硬时限</span>
+    <span><i style="background:#1f6feb"></i>进行中</span>
+    <span><i style="background:#bb8009"></i>待到期节点</span>
+    <span><i style="background:#8957e5"></i>等外部(放行/合并/图)</span>
+    <span><i style="background:#2ea043"></i>已完成</span>
+    <span><i style="background:#6e7681"></i>自动跑</span>
+  </span>
+</div>
+<div class="chart"><div class="inner" id="inner"></div></div>
+<div class="foot">点击带 ▶ 的行展开下一层。菱形=单日节点，条=时间段。红竖线=今天。悬停看备注。</div>
+<script>
+const DATA = {"updated": "2026-07-08", "range": {"start": "2026-06-26", "end": "2026-07-26"}, "workflows": [{"name": "X3 世界杯（6/27~7/21）", "status": "active", "start": "2026-06-27", "end": "2026-07-21", "children": [{"name": "竞猜运营（逐轮部署+结算）", "status": "active", "start": "2026-06-27", "end": "2026-07-21", "children": [{"name": "R32 全16场 部署+结算发奖", "status": "done", "start": "2026-06-27", "end": "2026-07-06"}, {"name": "R16 M1-M6 结算发奖（M5/M6 邮件+GM分待放行）", "status": "done", "start": "2026-07-06", "end": "2026-07-07", "note": "邮件4733593/4733594 status2待放行；GM加分3块待粘"}, {"name": "R16 M7/M8 结算发奖（24h硬时限）", "status": "critical", "date": "2026-07-08", "note": "阿根廷vs埃及 / 瑞士vs哥伦比亚，只发这两场别重发前6场"}, {"name": "QF 部署拍板（deploy_qf.py，cfg基号102952）", "status": "critical", "date": "2026-07-08", "note": "QF 对阵今天全定；QF1 明天开球，要上今天必须部"}, {"name": "QF1 法国vs摩洛哥 开球（结盘endTime核对）", "status": "pending", "date": "2026-07-09"}, {"name": "QF3 挪威vs英格兰 开球", "status": "pending", "date": "2026-07-11"}, {"name": "半决赛（SF竞猜部署+结算）", "status": "pending", "date": "2026-07-15"}, {"name": "决赛(7/19)→末轮结算发奖收尾", "status": "pending", "start": "2026-07-19", "end": "2026-07-21"}]}, {"name": "外显美术（荣耀之路头像框+里程碑款）", "status": "active", "start": "2026-07-04", "end": "2026-07-15", "children": [{"name": "六国框国家特色版定稿", "status": "done", "date": "2026-07-07", "note": "FRA洛可可/NOR维京/MAR zellige/ENG纹章盾/BEL霍塔/ESP巴洛克"}, {"name": "补 M7/M8 胜者 2 国框", "status": "critical", "date": "2026-07-08", "note": "改_批量框task生成器.py JOBS，圆窗顶80%，过verify_transparency"}, {"name": "里程碑款：晋级之路框80348+世界之巅框80349+表情15748", "status": "pending", "start": "2026-07-08", "end": "2026-07-12", "note": "风格锚=世界之巅铭牌FINAL"}, {"name": "Item/Frame/Emote 建行 + DK注册落地（半决赛前）", "status": "pending", "start": "2026-07-10", "end": "2026-07-14"}]}, {"name": "扩服 1980-2250（6模块+竞猜）", "status": "done", "start": "2026-07-02", "end": "2026-07-03"}, {"name": "自动监控：小时收入日报 + 竞猜看板（7/20后删任务）", "status": "auto", "start": "2026-06-27", "end": "2026-07-20"}]}, {"name": "X3 深海节（7/3~7/16）", "status": "active", "start": "2026-07-03", "end": "2026-07-17", "children": [{"name": "运营节点", "status": "active", "start": "2026-07-03", "end": "2026-07-17", "children": [{"name": "15+3 活动全量上线 59 服", "status": "done", "date": "2026-07-03"}, {"name": "每日礼包 102993 结束", "status": "pending", "date": "2026-07-09"}, {"name": "周卡 109101 随新客户端包重发（先确认包到位）", "status": "critical", "date": "2026-07-09", "note": "payload=deepsea_batch_0703.json 那条改 start=7/9，窗口到 7/16"}, {"name": "酒馆（10天）结束", "status": "pending", "date": "2026-07-12"}, {"name": "深海节主体结束", "status": "pending", "date": "2026-07-16"}, {"name": "D14 回归启动 + 删监控任务", "status": "pending", "date": "2026-07-17"}]}, {"name": "客诉/在途", "status": "active", "start": "2026-07-07", "end": "2026-07-10", "children": [{"name": "X3NEW-1829 补偿两邮件待他人放行（4733340/4733341）", "status": "external", "date": "2026-07-08", "note": "勿自审=驳回作废；放行后 --status 确认 sentAt"}, {"name": "7/9 活动结束后补扫终版名单→补发（对83人台账去重）", "status": "critical", "date": "2026-07-09", "note": "必须赶在转盘 7/16 结束前"}, {"name": "MR!659/!660（每日礼包HUD图标DK）待合", "status": "external", "start": "2026-07-07", "end": "2026-07-09", "note": "7/9 新客户端包若从 dev 线出会缺图，合并要赶在前面"}, {"name": "BP 满级 Count 调整口径待拍", "status": "external", "start": "2026-07-08", "end": "2026-07-10", "note": "选项：对齐世界杯6万 或按14天窗定制"}]}, {"name": "自动监控：小时收入日报（7/17后删）", "status": "auto", "start": "2026-07-03", "end": "2026-07-17"}]}, {"name": "X3 开发线（非节日）", "status": "active", "start": "2026-06-26", "end": "2026-07-26", "children": [{"name": "储蓄罐触达改造 MR!668 待合", "status": "external", "start": "2026-07-01", "end": "2026-07-12", "note": "催合即可"}, {"name": "英雄养成手册双版本（$49.99豪华版）开发中", "status": "active", "start": "2026-06-26", "end": "2026-07-20"}, {"name": "拓荒节 X2→X3 搬运", "status": "active", "start": "2026-06-26", "end": "2026-07-26", "note": "下期节日候选，唯一入口HTML见topic"}, {"name": "尼罗滚动回归（91-96服）", "status": "active", "start": "2026-06-26", "end": "2026-07-20"}, {"name": "KVK 风暴逐鹿 调研（ActvType20跨服需map服）", "status": "pending", "start": "2026-07-10", "end": "2026-07-26"}]}, {"name": "X2（收尾）", "status": "paused", "start": "2026-06-26", "end": "2026-07-16", "children": [{"name": "拓荒节 D17 收工（监控已删）", "status": "done", "date": "2026-06-29"}, {"name": "5 个装饰文案重写——等美术图", "status": "external", "start": "2026-06-26", "end": "2026-07-16", "note": "表坐标/key 已备好，图到即写"}]}, {"name": "P2 / 后台自动", "status": "auto", "start": "2026-06-26", "end": "2026-07-26", "children": [{"name": "拓荒节数据回归（做完即收）", "status": "pending", "start": "2026-07-08", "end": "2026-07-16"}, {"name": "大盘累计付费监控（每天09:12自动）", "status": "auto", "start": "2026-06-26", "end": "2026-07-26"}]}]};
+const MS = 86400000;
+const t0 = new Date(DATA.range.start + "T00:00:00");
+const t1 = new Date(DATA.range.end + "T00:00:00");
+const DAYS = Math.round((t1 - t0) / MS) + 1;
+document.documentElement.style.setProperty('--dayw', (100 / DAYS) + '%');
+document.documentElement.style.setProperty('--lw', '360px');
+const todayStr = new Date().toISOString().slice(0,10);
+function pct(dstr, endOfDay){
+  const d = new Date(dstr + "T00:00:00");
+  let days = (d - t0) / MS + (endOfDay ? 1 : 0);
+  return Math.max(0, Math.min(100, days / DAYS * 100));
+}
+function bar(node, lv){
+  const s = node.status || 'pending';
+  const tip = (node.name) + (node.start ? `\n${node.start} ~ ${node.end || node.start}` : (node.date ? "\n" + node.date : "")) + (node.note ? "\n" + node.note : "");
+  if (node.date && !node.start){
+    return `<div class="pt st-${s}" style="left:${pct(node.date) + 100/DAYS/2}%" title="${esc(tip)}"></div>`;
+  }
+  const l = pct(node.start), r = pct(node.end || node.start, true);
+  return `<div class="bar st-${s}" style="left:${l}%; width:${Math.max(r-l, .8)}%" title="${esc(tip)}"></div>`;
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+let uid = 0;
+function renderNode(node, lv){
+  const kids = node.children || [];
+  const id = 'n' + (uid++);
+  const icon = {critical:'🔴', done:'✅', external:'🟣', auto:'⚙️', paused:'⏸'}[node.status] || '';
+  let h = `<div class="node lv${lv} ${kids.length ? 'has-kids' : 'no-kids'}" id="${id}">`;
+  h += `<div class="row"><div class="label-col" ${kids.length ? `onclick="toggle('${id}')"` : ''}>` +
+       `<span class="caret">▶</span><span class="name" title="${esc(node.name + (node.note ? '\n' + node.note : ''))}">${icon} ${esc(node.name)}</span></div>` +
+       `<div class="tl-col">${todayMark()}${bar(node, lv)}</div></div>`;
+  if (kids.length){
+    h += `<div class="children">` + kids.map(k => renderNode(k, lv+1)).join('') + `</div>`;
+  }
+  return h + `</div>`;
+}
+function todayMark(){
+  const p = pct(todayStr) + 100/DAYS/2;
+  if (p <= 0 || p >= 100) return '';
+  return `<div class="today-line" style="left:${p}%"></div>`;
+}
+function axis(){
+  let ticks = '';
+  for (let i = 0; i < DAYS; i++){
+    const d = new Date(t0.getTime() + i*MS);
+    if (d.getDate() % 2 === 1){
+      const cls = d.getDate() === 1 ? 'tick mon' : 'tick';
+      ticks += `<div class="${cls}" style="left:${(i + .5) / DAYS * 100}%">${d.getMonth()+1}/${d.getDate()}</div>`;
+    }
+  }
+  const p = pct(todayStr) + 100/DAYS/2;
+  const todayTag = (p > 0 && p < 100) ? `<div class="today-line" style="left:${p}%"></div><div class="today-tag" style="left:${p}%">今天</div>` : '';
+  return `<div class="axis"><div class="label-col">工作流</div><div class="tl-col" style="background:none">${ticks}${todayTag}</div></div>`;
+}
+document.getElementById('inner').innerHTML = axis() + DATA.workflows.map(w => renderNode(w, 0)).join('');
+function toggle(id){ document.getElementById(id).classList.toggle('open'); }
+function setAll(open){ document.querySelectorAll('.has-kids').forEach(n => n.classList.toggle('open', open)); }
+</script>
+</body>
+</html>

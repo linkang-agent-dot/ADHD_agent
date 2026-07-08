@@ -1,0 +1,8 @@
+cs		cs	cs	cs	cs	cs	c	cs	cs	cs	cs	cs
+int		int	int	int	int	int	string	int	int	int	int	int
+		ActvVoyageIsland.IslandGroup	Item	Item	Item	ActvVoyageOtherReward.Group				Pack		
+												
+活动内容ID	备注	岛屿组ID	普通抽卡道具ID	精准抽卡道具ID	神秘宝藏道具ID	阶段奖励	DK_角色模型	存钱罐触发点数	存钱罐解锁次数	存钱罐礼包ID	珍珠贝道具ID	棋盘珍珠贝数量
+ID	列1	IslandGroup	LotteryItemID1	LotteryItemID2	TreasureItemID	OtherReward	DK_RoleMedel	PiggyBankTriggerStep	PiggyBankNeedCount	PiggyBankPackID	ProgressItemID	ProgressMax
+2801		1	1057	1058	1059	100	DK_Role_Bunny					
+2802		2	1057	1058	1206	100	DK_Role_Bunny	6	10	280001	1204	4

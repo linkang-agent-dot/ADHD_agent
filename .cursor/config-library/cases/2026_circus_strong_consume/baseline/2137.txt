@@ -1,0 +1,7 @@
+# cmd: gsheet_query.py idrange 2137 21371226 21371227
+[info] Table: 2137 → 1vSQa-CuzSyziwTV5ynP... / 'activity_asset_retake'
+[info] P2 table detected, auto-shifted --id-col to 1
+Found 2 rows with col[1] in [21371226, 21371227]
+HEADER: [0]p2_title	[1]A_INT_id	[2]C_STR_comment	[3]A_MAP_give_asset	[4]A_MAP_cost_asset
+row 168: 	21371226	2025复活节-强消耗扭蛋币	{"typ":"item","id":11111001,"val":1}	{"typ":"item","id":11119278,"val":1}
+row 169: 	21371227	2025复活节-强消耗抽奖券	{"typ":"item","id":11111104,"val":1}	{"typ":"item","id":11119279,"val":1}

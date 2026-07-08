@@ -1,0 +1,11 @@
+# cmd: gsheet_query.py idrange 2135 21353092 21353097
+[info] Table: 2135 → 1Agp8e-FfSz0ixLIVFwU... / 'activity_event_pkg（qa）'
+[info] P2 table detected, auto-shifted --id-col to 1
+Found 6 rows with col[1] in [21353092, 21353097]
+HEADER: [0]p2_title	[1]A_INT_id	[2]N_STR_comment	[3]A_INT_iap	[4]A_INT_free_pkg_condition	[5]A_MAP_cost	[6]A_ARR_get_items	[7]A_INT_cost_limit	[8]A_STR_banner_url	[9]A_STR_cd_cost_title	[10]A_STR_cd_cost_text	[11]S_MAP_filters	[12]A_INT_order	[13]C_INT_all_value	[14]C_STR_tab	[15]C_STR_group	[16]C_INT_show_pack	[17]S_INT_save_pack
+row 1972: 	21353092	礼包-复活节2025强消耗	2011360027	0	{}	[]	0	""	NULL	NULL	{}	1	0	NULL	NULL	0	0
+row 1973: 	21353093	2025复活节强消耗触发礼包1	2011360028	0	{}	[]	0	""	NULL	NULL	{}	999	0	NULL	NULL	0	0
+row 1974: 	21353094	2025复活节强消耗触发礼包2	2011360029	0	{}	[]	0	""	NULL	NULL	{}	999	0	NULL	NULL	0	0
+row 1975: 	21353095	2025复活节强消耗触发礼包3	2011360030	0	{}	[]	0	""	NULL	NULL	{}	999	0	NULL	NULL	0	0
+row 1976: 	21353096	2025复活节强消耗触发礼包4	2011360031	0	{}	[]	0	""	NULL	NULL	{}	999	0	NULL	NULL	0	0
+row 1977: 	21353097	2025复活节强消耗触发礼包5	2011360032	0	{}	[]	0	""	NULL	NULL	{}	999	0	NULL	NULL	0	0

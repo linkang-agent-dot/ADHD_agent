@@ -1,0 +1,22 @@
+cs	cs	cs	cs		cs									
+string	int	string	string		int									
+														
+	真实美金价格需要除100				充值获得的累计充值积分量									
+编号	美金价格	Google商城编号	IOS商场编号	备注	充值积分									
+Id	Dollar	Key	IOSKey		Points									
+101	99	com.gamename.gplay.0.99	com.gamename.ios.0.99	xxx付费包-0.99	10	101	99			0.99	101		101	201
+102	199	com.gamename.gplay.1.99	com.gamename.ios.1.99	xxx付费包-1.99	20	102	199			1.99	102		102	201
+103	299	com.gamename.gplay.2.99	com.gamename.ios.2.99	xxx付费包-2.99	30	103	299			2.99	103		103	201
+104	399	com.gamename.gplay.3.99	com.gamename.ios.3.99	xxx付费包-3.99	40	104	399			3.99	104		104	202
+105	499	com.gamename.gplay.4.99	com.gamename.ios.4.99	xxx付费包-4.99	50	105	499			4.99	105		105	202
+106	799	com.gamename.gplay.7.99	com.gamename.ios.7.99	xxx付费包-7.99	80	106	799			7.99	106		106	202
+107	999	com.gamename.gplay.9.99	com.gamename.ios.9.99	xxx付费包-9.99	100	107	999			9.99	107		107	203
+108	1299	com.gamename.gplay.12.99	com.gamename.ios.12.99	xxx付费包-12.99	130	108	1299			12.99	108		108	203
+109	1499	com.gamename.gplay.14.99	com.gamename.ios.14.99	xxx付费包-14.99	150	109	1499			14.99	109		109	203
+110	1799	com.gamename.gplay.17.99	com.gamename.ios.17.99	xxx付费包-17.99	180	110	1799			17.99	110		110	204
+111	1999	com.gamename.gplay.19.99	com.gamename.ios.19.99	xxx付费包-19.99	200	111	1999			19.99	111		111	204
+112	2999	com.gamename.gplay.29.99	com.gamename.ios.29.99	xxx付费包-29.99	300	112	2999			29.99	112		112	204
+113	3999	com.gamename.gplay.39.99	com.gamename.ios.39.99	xxx付费包-39.99	400	113	3999			39.99	113		113	205
+114	5999	com.gamename.gplay.59.99	com.gamename.ios.59.99	xxx付费包-59.99	600	114	5999			59.99	114		116	205
+115	9999	com.gamename.gplay.99.99	com.gamename.ios.99.99	xxx付费包-99.99	1000	115	9999			99.99	115		114	205
+116	4999	com.gamename.gplay.49.99	com.gamename.ios.49.99	xxx付费包-49.99	500	116	4999			49.99	116		115	205

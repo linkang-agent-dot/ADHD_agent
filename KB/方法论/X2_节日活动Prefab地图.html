@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X2 节日活动 Prefab 地图</title>
+<style>
+  :root{--bg:#f6f7fb;--card:#fff;--ink:#1f2430;--sub:#6b7280;--line:#e5e7eb;--accent:#2563eb;--tag:#eef2ff;--tagink:#3730a3;--warn:#b45309;--warnbg:#fffbeb;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px;}
+  h1{font-size:24px;margin:0 0 4px;}
+  .meta{color:var(--sub);font-size:13px;margin-bottom:18px;}
+  .meta code{background:#eef1f6;padding:1px 6px;border-radius:4px;font-size:12px;}
+  .toolbar{position:sticky;top:0;background:var(--bg);padding:10px 0 12px;z-index:5;}
+  #q{width:100%;padding:10px 14px;font-size:14px;border:1px solid var(--line);border-radius:8px;outline:none;}
+  #q:focus{border-color:var(--accent);}
+  .stats{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 22px;}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 16px;min-width:120px;}
+  .stat b{display:block;font-size:20px;}
+  .stat span{font-size:12px;color:var(--sub);}
+  .rules{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-bottom:22px;font-size:13.5px;}
+  .rules h2{font-size:15px;margin:0 0 8px;}
+  .rules table{border-collapse:collapse;width:100%;}
+  .rules td{padding:4px 8px;border-bottom:1px dashed var(--line);vertical-align:top;}
+  .rules td:first-child{white-space:nowrap;font-family:Consolas,monospace;color:var(--accent);}
+  section{background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:16px;overflow:hidden;}
+  section h2{font-size:16px;margin:0;padding:12px 18px;border-bottom:1px solid var(--line);background:#fafbfd;display:flex;align-items:center;gap:8px;}
+  section h2 .n{font-size:12px;color:var(--sub);font-weight:normal;}
+  .desc{padding:8px 18px 0;font-size:13px;color:var(--sub);}
+  table.list{border-collapse:collapse;width:100%;font-size:13px;}
+  table.list th{background:#fafbfd;text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);color:var(--sub);font-weight:600;white-space:nowrap;}
+  table.list td{padding:6px 10px;border-bottom:1px solid #f0f1f4;vertical-align:top;}
+  table.list tr:last-child td{border-bottom:none;}
+  td.p{font-family:Consolas,monospace;font-size:12px;word-break:break-all;}
+  td.sz,td.dt{white-space:nowrap;color:var(--sub);font-size:12px;}
+  .tag{display:inline-block;background:var(--tag);color:var(--tagink);border-radius:4px;padding:0 6px;font-size:11px;margin-left:6px;vertical-align:1px;}
+  .hot{color:#dc2626;font-weight:600;}
+  .note{background:var(--warnbg);color:var(--warn);border:1px solid #fde68a;border-radius:8px;padding:10px 14px;font-size:13px;margin:16px 0;}
+  .tblwrap{overflow-x:auto;}
+  footer{color:var(--sub);font-size:12px;margin-top:26px;}
+  mark{background:#fef08a;padding:0 1px;}
+  section.hidden{display:none;}
+  tr.hidden{display:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>X2 节日活动 Prefab 地图</h1>
+  <div class="meta">
+    工程根：<code>D:\UGit\x2client\client</code>　prefab 根目录：<code>Assets\x2\Res\UI\Prefab\Activity\</code>（下表路径均相对此目录）<br>
+    数据来源：目录全量扫描 + <code>ActivityRoot.cs</code>/<code>UIActivityFactoryRegister.cs</code> 模块注册表 + <code>CActivityUIModule.cs</code>/<code>CfgGenerated.Const.cs</code> 具名常量反查 · 生成日期 2026-07-07
+  </div>
+
+  <div class="toolbar"><input id="q" type="search" placeholder="搜索：prefab 名 / 模块ID / 中文说明（如 21201326、强消耗、FlashSale…）"></div>
+
+  <div class="stats">
+    <div class="stat"><b>15</b><span>节日模块分类</span></div>
+    <div class="stat"><b>~170</b><span>节日相关 prefab</span></div>
+    <div class="stat"><b>~250</b><span>Indexer 指针（未逐列）</span></div>
+    <div class="stat"><b>2026-06-10</b><span>最近一批改动（拓荒节）</span></div>
+  </div>
+
+  <div class="rules">
+    <h2>目录结构规律（先看这个再找文件）</h2>
+    <table>
+      <tr><td>（根目录）</td><td>具名大窗口：gacha 主界面、推币机、大富翁、抢购等，直接按英文名搜</td></tr>
+      <tr><td>Module\</td><td>活动<b>模块面板</b>，大多按 <b>UI 模块 ID（212013xx）</b>命名 → 类映射查 <code>RegisterModule&lt;类&gt;(ID)</code>；具名常量在 <code>CActivityUIModule.cs</code></td></tr>
+      <tr><td>Standalone\</td><td>独立活动窗口，按<b>活动配置 ID（2112xxxx）</b>命名 → 具名常量在 <code>CfgGenerated.Const.cs</code>（如 211200075=Summer2025StrongConsume）</td></tr>
+      <tr><td>Indexer\</td><td>~250 个 1.4KB 小指针 prefab（活动ID→模块跳转），换皮时一般不用动</td></tr>
+      <tr><td>Template\</td><td>奖励/任务条目模板（21191xxx）</td></tr>
+      <tr><td>CommonUI\ / CrossServer\</td><td>通用结算/排行组件、跨服窗口</td></tr>
+    </table>
+    <p style="margin:8px 0 0;font-size:13px;">按类名 glob 搜不到时：拿界面代码里的<b>节点名</b>（如 ContMachine）去 prefab YAML 里 grep 反查。界面代码在 <code>Assets\P2\GameScript\Activity\</code> 和 <code>...\GameScriptOther\UI\Activity\</code>。</p>
+  </div>
+
+  <!-- 1 GACHA -->
+  <section>
+    <h2>① GACHA 主活动 <span class="n">节日核心付费模块</span></h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">UIActivityAstrologyGacha.prefab</td><td class="sz">6.9 MB</td><td class="dt">05-22</td><td>占星节 gacha（2026 占星节现役皮）</td></tr>
+      <tr><td class="p">UIActivityLaborGacha.prefab</td><td class="sz">7.0 MB</td><td class="dt">06-10</td><td>劳动/拓荒系 gacha <span class="tag">最近改动</span></td></tr>
+      <tr><td class="p">UIActivitySummerGacha.prefab</td><td class="sz">6.9 MB</td><td class="dt">03-31</td><td>夏日节 gacha</td></tr>
+      <tr><td class="p">Module\21201386.prefab</td><td class="sz">1.1 MB</td><td class="dt">04-27</td><td>HalloweenGacha 万圣节 gacha 模块</td></tr>
+      <tr><td class="p">Module\21201331.prefab</td><td class="sz">18.5 MB</td><td class="dt">04-27</td><td>NewTurnTable 新转盘（超大，含全套美术）</td></tr>
+      <tr><td class="p">UiSkinGachaGift.prefab</td><td class="sz">17.0 MB</td><td class="dt">06-10</td><td>皮肤 gacha 礼包（UIActivitySkinGacha 系）</td></tr>
+      <tr><td class="p">UiSkinGachaGiftAward.prefab</td><td class="sz">486 KB</td><td class="dt">04-27</td><td>皮肤 gacha 奖励弹窗</td></tr>
+      <tr><td class="p">UiCollectionPayGacha.prefab</td><td class="sz">2.1 MB</td><td class="dt">04-27</td><td>集卡付费 gacha</td></tr>
+      <tr><td class="p">UIDailyGacha.prefab</td><td class="sz">389 KB</td><td class="dt">06-10</td><td>每日 gacha</td></tr>
+      <tr><td class="p">HeroTalentFloorGacha.prefab / …Choose.prefab</td><td class="sz">174/195 KB</td><td class="dt">05-15</td><td>英雄天赋爬楼 gacha</td></tr>
+      <tr><td class="p">Fx_Ui_BoxAnim_Rotate.prefab</td><td class="sz">714 KB</td><td class="dt">03-10</td><td>开箱旋转动画特效</td></tr>
+    </table></div>
+    <div class="desc" style="padding-bottom:10px;">代码里还注册了历代节日 gacha 类（Christmas/SciFestival/Moonfall/October/November/December/Dragon/2024May 等，ID 21201073~21201386），旧节日的 prefab 多已随版本替换，换皮时以上面现存文件为准。</div>
+  </section>
+
+  <!-- 2 强消耗 -->
+  <section>
+    <h2>② 强消耗（内部代号 JulyGacha） <span class="n">消耗攒积分+奖池抽球</span></h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">Module\21201326.prefab</td><td class="sz">456 KB</td><td class="dt">03-09</td><td class="hot">主界面（现役）— UIActivityJulyGacha</td></tr>
+      <tr><td class="p">Module\21201326_old.prefab</td><td class="sz">5.8 MB</td><td class="dt">03-03</td><td>旧版主界面（含旧美术）</td></tr>
+      <tr><td class="p">Module\211200075.prefab</td><td class="sz">5.3 MB</td><td class="dt">04-27</td><td>Summer2025StrongConsume 夏日2025强消耗版</td></tr>
+      <tr><td class="p">Module\JulyGachaTip.prefab</td><td class="sz">322 KB</td><td class="dt">04-27</td><td>气泡提示</td></tr>
+      <tr><td class="p">Module\UI1597ActivityConsumePop.prefab</td><td class="sz">277 KB</td><td class="dt">04-27</td><td>消耗确认弹窗</td></tr>
+      <tr><td class="p">UI2101~2105ActivityConsumePop / UI2102ActivityConsumeAward</td><td class="sz">71 KB~1.2 MB</td><td class="dt">04-27</td><td>消耗确认/奖励弹窗系列（5 套皮）</td></tr>
+      <tr><td class="p">UIActivitySummaryConsume.prefab</td><td class="sz">74 KB</td><td class="dt">04-27</td><td>活动汇总页消耗条目</td></tr>
+    </table></div>
+    <div class="desc" style="padding-bottom:10px;">界面代码 <code>Assets\P2\GameScript\Activity\UIActivityJulyGacha\</code>；逻辑 <code>GameLogic\Activity\Module\ActivityJulyGacha.cs</code>；埋点前缀 <code>UIActivity_new_strong_consume_*</code>。</div>
+  </section>
+
+  <!-- 3 大富翁/推币机 -->
+  <section>
+    <h2>③ 大富翁 / 推币机 <span class="n">骰子玩法 + CoinPusher</span></h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">MonopolyEvent.prefab</td><td class="sz">1.5 MB</td><td class="dt">06-10</td><td class="hot">大富翁主界面（现役）</td></tr>
+      <tr><td class="p">MonopolyEvent01~04.prefab</td><td class="sz">102~142 KB</td><td class="dt">03~05月</td><td>大富翁子面板（4 期皮）</td></tr>
+      <tr><td class="p">UI3101MonopolyPop.prefab</td><td class="sz">538 KB</td><td class="dt">04-27</td><td>大富翁弹窗</td></tr>
+      <tr><td class="p">DiceRoot.prefab / DiceRootRed.prefab</td><td class="sz">76/82 KB</td><td class="dt">03-25</td><td>骰子（普通/红色）</td></tr>
+      <tr><td class="p">CoinPusher.prefab / CoinPusherNew1.prefab</td><td class="sz">3.7/3.5 MB</td><td class="dt">04-27</td><td>推币机主界面（旧/新两版）</td></tr>
+      <tr><td class="p">CoinPusherAward(+New/Tips) / Details / End / RewardBox / HistoryReward / Lucky / ScorePop / ScoreReward / SpecialMode</td><td class="sz">32 KB~1.2 MB</td><td class="dt">03~04月</td><td>推币机全套子窗口（11 个）</td></tr>
+      <tr><td class="p">Standalone\UIActivityCoinPusher.prefab</td><td class="sz">1.2 MB</td><td class="dt">04-27</td><td>推币机独立入口窗口</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 4 挖矿 -->
+  <section>
+    <h2>④ 挖矿（Metro / BenchDig） <span class="n">节日小游戏</span></h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">Module\21201240.prefab</td><td class="sz">3.0 MB</td><td class="dt">06-10</td><td class="hot">MetroActvModuleNew 挖矿新版模块（现役）</td></tr>
+      <tr><td class="p">UIActivityMetro.prefab</td><td class="sz">24 KB</td><td class="dt">06-10</td><td>挖矿入口壳（UIActivityMetroModule 21201183）</td></tr>
+      <tr><td class="p">UIActivityBenchDig.prefab / …Shop.prefab</td><td class="sz">319/289 KB</td><td class="dt">05-15</td><td>台架挖掘玩法 + 兑换商店</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 5 BP -->
+  <section>
+    <h2>⑤ BP 通行证 / 基金 <span class="n">FestivalBp 左右面板体系</span></h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">UIActivityCommonBP.prefab</td><td class="sz">1.2 MB</td><td class="dt">06-10</td><td class="hot">通用节日 BP（现役）</td></tr>
+      <tr><td class="p">Module\21201241.prefab / 21201242.prefab</td><td class="sz">86/614 KB</td><td class="dt">03-03</td><td>FestivalBp 3D左面板 / 右面板</td></tr>
+      <tr><td class="p">Module\21201248.prefab / 21201249.prefab</td><td class="sz">619 KB/1.0 MB</td><td class="dt">04-27</td><td>FestivalBp 右/左面板（另一期）</td></tr>
+      <tr><td class="p">UIActivityAstrologyBP.prefab / UiAstrologyBP.prefab</td><td class="sz">1.7 MB/120 KB</td><td class="dt">04-27</td><td>占星节 BP 主界面/入口</td></tr>
+      <tr><td class="p">UIActivitySummerBP.prefab / UiSpingBP.prefab</td><td class="sz">56/121 KB</td><td class="dt">04-27</td><td>夏日/春季 BP 入口</td></tr>
+      <tr><td class="p">UIActivityBpWithQuest.prefab / …Pop.prefab</td><td class="sz">1.6 MB/90 KB</td><td class="dt">04-27</td><td>带任务 BP（集结奖励/基金类）</td></tr>
+      <tr><td class="p">UIActivityRadarBpMain.prefab / UIActivityRadarPop.prefab</td><td class="sz">742/72 KB</td><td class="dt">04-27</td><td>雷达 BP</td></tr>
+      <tr><td class="p">UICraftBookBPPop.prefab</td><td class="sz">102 KB</td><td class="dt">04-27</td><td>工艺书 BP 弹窗</td></tr>
+      <tr><td class="p">Standalone\UiBattlePassPackage / UiBattlepassLevelup / BattlePassTaskItem</td><td class="sz">45~232 KB</td><td class="dt">03~04月</td><td>BP 礼包/升级/任务条目</td></tr>
+      <tr><td class="p">Standalone\21121364.prefab / 21121384.prefab / 21121285.prefab / 21122068.prefab</td><td class="sz">88 KB~1.3 MB</td><td class="dt">04-27</td><td>BP130天 / KvK BP / 登录BP / 登录BP自选</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 6 七日 -->
+  <section>
+    <h2>⑥ 七日任务 / 签到 <span class="n">节日开局留存模块</span></h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">Module\21201404.prefab</td><td class="sz">1.0 MB</td><td class="dt">05-15</td><td class="hot">七日任务 UIActivity7DaysQuestsModule（现役）</td></tr>
+      <tr><td class="p">Module\21201369.prefab（+_back）</td><td class="sz">950/474 KB</td><td class="dt">04-27</td><td>NewDaysQuestList 新版日任务列表</td></tr>
+      <tr><td class="p">Module\21201370.prefab（+_back）</td><td class="sz">327/702 KB</td><td class="dt">03-03</td><td>NewDaysProgress 日任务进度</td></tr>
+      <tr><td class="p">SevenDaySign.prefab / SevenDaySignPop.prefab</td><td class="sz">323/342 KB</td><td class="dt">05-19</td><td>七日签到 + 弹窗</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 7 抢购 -->
+  <section>
+    <h2>⑦ 限时抢购（FlashSale）</h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">FlashSale.prefab</td><td class="sz">3.6 MB</td><td class="dt">06-10</td><td class="hot">抢购主界面（现役）</td></tr>
+      <tr><td class="p">FlashSaleItem.prefab / FlashSalePop.prefab / FlashSaleRewardGet.prefab</td><td class="sz">54~120 KB</td><td class="dt">03月</td><td>条目 / 弹窗 / 领奖</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 8 集卡/掉落转付费 -->
+  <section>
+    <h2>⑧ 集卡 / 掉落转付费（Collection） <span class="n">连锁礼包挂这里</span></h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">Module\21201292.prefab</td><td class="sz hot">23.0 MB</td><td class="dt">03-03</td><td>CollectionQuestModule 集卡任务（全工程最大 prefab）</td></tr>
+      <tr><td class="p">Module\21201293.prefab</td><td class="sz">173 KB</td><td class="dt">03-03</td><td>CollectionDisplay 集卡展示</td></tr>
+      <tr><td class="p">Module\21201230.prefab</td><td class="sz">193 KB</td><td class="dt">04-27</td><td>CollectionRank 集卡排行</td></tr>
+      <tr><td class="p">Module\CollectiblePack.prefab</td><td class="sz">313 KB</td><td class="dt">04-27</td><td>集卡礼包</td></tr>
+      <tr><td class="p">AstrologyChainPack.prefab / …Fall.prefab</td><td class="sz">801/95 KB</td><td class="dt">04-27</td><td>占星连锁礼包（掉落转付费链）</td></tr>
+      <tr><td class="p">Standalone\21121367.prefab / 21121396.prefab</td><td class="sz">1.2 MB/232 KB</td><td class="dt">04-27</td><td>TrailHittersCollection / Collection 预热</td></tr>
+      <tr><td class="p">UIActivityGorillaTop.prefab / Module\21201180.prefab</td><td class="sz">136 KB/1.6 MB</td><td class="dt">04~05月</td><td>巨猿排行 Top/Bottom 模块</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 9 累充 -->
+  <section>
+    <h2>⑨ 累充 / 充值营销</h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">Module\21201371.prefab / 21201372.prefab</td><td class="sz">131/219 KB</td><td class="dt">05-15/03-03</td><td>CustMechaRecharge 自选机甲累充（选择/奖励）</td></tr>
+      <tr><td class="p">Module\MechaRechargePkg.prefab</td><td class="sz">98 KB</td><td class="dt">05-22</td><td>机甲累充礼包（代码里引用节点 21201446）</td></tr>
+      <tr><td class="p">UIDailyProgressiveSpending.prefab</td><td class="sz">672 KB</td><td class="dt">04-27</td><td>每日递进消费</td></tr>
+      <tr><td class="p">WeeklyPayRatioEvent.prefab</td><td class="sz">379 KB</td><td class="dt">04-27</td><td>周付费返比活动</td></tr>
+      <tr><td class="p">Ui_MillionRewardGet.prefab / Ui_RewardGetHeroMedal.prefab</td><td class="sz">2.1/2.4 MB</td><td class="dt">03~04月</td><td>大奖/英雄勋章领取展示</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 10 周卡 -->
+  <section>
+    <h2>⑩ 周卡</h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">Module\UIWeeklyCardSelect.prefab</td><td class="sz">383 KB</td><td class="dt">05-15</td><td class="hot">节日自选周卡（现役）</td></tr>
+      <tr><td class="p">Module\UiWeekSelect.prefab</td><td class="sz">751 KB</td><td class="dt">03-23</td><td>周选择（旧版）</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 11 礼包 -->
+  <section>
+    <h2>⑪ 节日礼包（阶梯 / 装饰 / 破冰 / 金蛋…）</h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">Module\StaircaseGiftPackWindow.prefab</td><td class="sz">582 KB</td><td class="dt">04-27</td><td>阶梯礼包窗口</td></tr>
+      <tr><td class="p">Module\UIMechaStaircasePack.prefab</td><td class="sz">1.4 MB</td><td class="dt">04-27</td><td>机甲阶梯礼包（装饰阶梯礼包同系）</td></tr>
+      <tr><td class="p">Module\TieredGiftPack01.prefab / 02.prefab</td><td class="sz">315/195 KB</td><td class="dt">04-27</td><td>分档礼包两套皮</td></tr>
+      <tr><td class="p">Module\IcebreakerGearPack.prefab / UI7001IcebreakerGiftPack.prefab</td><td class="sz">315/346 KB</td><td class="dt">04-27</td><td>破冰礼包（模块/弹窗）</td></tr>
+      <tr><td class="p">Module\GoldEggsDetails.prefab / UiGoldEggsPackPop.prefab</td><td class="sz">136/138 KB</td><td class="dt">04-27/05-15</td><td>金蛋（巨猿砸蛋）详情/礼包弹窗</td></tr>
+      <tr><td class="p">Module\UIFortuneWheelPack.prefab / UILuckyFlipPack.prefab</td><td class="sz">202/201 KB</td><td class="dt">04-27</td><td>幸运转盘礼包 / 幸运翻牌礼包</td></tr>
+      <tr><td class="p">Module\SLGBoostPack.prefab / ArmamentsDevelopment.prefab</td><td class="sz">201/386 KB</td><td class="dt">04-27</td><td>SLG加速礼包 / 军备发展礼包</td></tr>
+      <tr><td class="p">Module\10001PackagePublicList.prefab（+PayWall）</td><td class="sz">230/316 KB</td><td class="dt">04-27</td><td>通用礼包公共列表（含付费墙版）</td></tr>
+      <tr><td class="p">Module\21201373.prefab / 21201383.prefab</td><td class="sz">210/825 KB</td><td class="dt">03-03/04-27</td><td>ActvDailyPackages 每日礼包 / OctoberMultiPack 多档礼包</td></tr>
+      <tr><td class="p">SCRBenefits.prefab</td><td class="sz">293 KB</td><td class="dt">04-27</td><td>SCR 福利页</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 12 行军表情 -->
+  <section>
+    <h2>⑫ 行军表情</h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">Module\21201350.prefab</td><td class="sz">145 KB</td><td class="dt">03-03</td><td>MarchEmojiPkg 行军表情礼包模块</td></tr>
+      <tr><td class="p">UIActivityMarchingEmoticonPack.prefab</td><td class="sz">35 KB</td><td class="dt">04-27</td><td>行军表情包窗口</td></tr>
+      <tr><td class="p">UI2601EmojiExposurePop.prefab</td><td class="sz">93 KB</td><td class="dt">03-03</td><td>表情曝光弹窗</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 13 机甲外显 -->
+  <section>
+    <h2>⑬ 机甲外显 / 涂装 <span class="n">节日付费外显</span></h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">UIActivityMechaPaid.prefab</td><td class="sz">8.2 MB</td><td class="dt">04-27</td><td>机甲付费活动主界面</td></tr>
+      <tr><td class="p">UiActivityMechaColourChangeList.prefab</td><td class="sz">121 KB</td><td class="dt">04-27</td><td>机甲染色列表</td></tr>
+      <tr><td class="p">Module\21201210.prefab / UIMechaTurnTableTips.prefab</td><td class="sz">545/158 KB</td><td class="dt">03-03/04-27</td><td>MechaWheel 机甲转盘 + 提示</td></tr>
+      <tr><td class="p">Module\21201250.prefab</td><td class="sz">128 KB</td><td class="dt">03-03</td><td>MechaProgressQuest 机甲进度任务</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 14 框架 -->
+  <section>
+    <h2>⑭ 节日框架 / 通用组件 <span class="n">换皮时通常复用不动</span></h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">Module\UIAstrologyFestival.prefab</td><td class="sz">80 KB</td><td class="dt">04-27</td><td>占星节主入口壳（节日主界面容器）</td></tr>
+      <tr><td class="p">Module\21201045.prefab</td><td class="sz">499 KB</td><td class="dt">03-03</td><td>Calendar 活动日历模块</td></tr>
+      <tr><td class="p">UiActivityTimelinePopup.prefab</td><td class="sz">145 KB</td><td class="dt">04-27</td><td>活动时间线弹窗</td></tr>
+      <tr><td class="p">UiActivityCommonRules.prefab</td><td class="sz">297 KB</td><td class="dt">04-27</td><td>通用规则窗口</td></tr>
+      <tr><td class="p">CommonUI\UiActivityResultPanel.prefab / UICommonActvRank.prefab</td><td class="sz">1.6 MB/866 KB</td><td class="dt">05-22/04-27</td><td>通用结算面板 / 通用活动排行</td></tr>
+      <tr><td class="p">UiHistoryRewards.prefab（+New）</td><td class="sz">2.1 MB/65 KB</td><td class="dt">04-27</td><td>历史奖励回顾</td></tr>
+      <tr><td class="p">UiActivityRank3.prefab / UiActivitySportsRankInfo.prefab</td><td class="sz">1.0 MB/420 KB</td><td class="dt">03-03/04-27</td><td>排行榜皮 / 排行说明</td></tr>
+      <tr><td class="p">Indexer\*.prefab（~250 个）</td><td class="sz">~1.4 KB/个</td><td class="dt">—</td><td>活动 ID→模块指针；节日上新时按活动 ID 新增，不承载 UI</td></tr>
+      <tr><td class="p">Template\21191xxx.prefab（17 个）</td><td class="sz">2~363 KB</td><td class="dt">—</td><td>奖励/任务条目模板</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 15 其他 -->
+  <section>
+    <h2>⑮ 其他节日玩法 / 杂项</h2>
+    <div class="tblwrap"><table class="list">
+      <tr><th>Prefab</th><th>大小</th><th>更新</th><th>说明</th></tr>
+      <tr><td class="p">FeatOfStrength.prefab</td><td class="sz">416 KB</td><td class="dt">05-15</td><td>大力士挑战玩法</td></tr>
+      <tr><td class="p">MechOfEchoes.prefab</td><td class="sz">785 KB</td><td class="dt">04-27</td><td>回响机甲玩法</td></tr>
+      <tr><td class="p">EmblemFragmentsInvest.prefab</td><td class="sz">1.3 MB</td><td class="dt">03-26</td><td>徽章碎片投资</td></tr>
+      <tr><td class="p">Standalone\21121555.prefab</td><td class="sz">1.1 MB</td><td class="dt">04-27</td><td>DragonBoatGachaReward2023 端午 gacha 奖励</td></tr>
+      <tr><td class="p">Standalone\UiActivityMonkeyAct.prefab</td><td class="sz">1.3 MB</td><td class="dt">04-27</td><td>巨猿行动</td></tr>
+      <tr><td class="p">Standalone\UiPubDriver / UiPubDriverGift / UiPubPop</td><td class="sz">101~237 KB</td><td class="dt">03~04月</td><td>酒馆系（老虎机/礼包/弹窗）</td></tr>
+      <tr><td class="p">Standalone\UiAnniversaryEntrance / UiAnniversaryReview</td><td class="sz">264/511 KB</td><td class="dt">03-03</td><td>周年庆入口/回顾</td></tr>
+      <tr><td class="p">Standalone\UiCollectionOpenDay.prefab</td><td class="sz">781 KB</td><td class="dt">04-27</td><td>开放日集卡</td></tr>
+      <tr><td class="p">UISocialmediaShare.prefab</td><td class="sz">198 KB</td><td class="dt">04-27</td><td>社媒分享（节日传播）</td></tr>
+      <tr><td class="p">NormalItemRecycle.prefab / EquBrick.prefab</td><td class="sz">16/45 KB</td><td class="dt">03-03</td><td>道具回收 / 装备砖</td></tr>
+    </table></div>
+  </section>
+
+  <div class="note">
+    <b>范围说明：</b>已剔除非节日的战争/联盟玩法 prefab（KVK 系列、AllianceCrossBattle 跨服对决、Arena、GVE、WorldBoss、WonderCross、GangSports、UW 等约 60 个）。它们同在 Activity 目录下，搜文件时注意别混进节日换皮范围。
+  </div>
+
+  <footer>
+    关键代码索引：模块注册 <code>Assets\P2\GameScript\Activity\ActivityRoot.cs</code> + <code>...\ActivityModules\UIActivityFactoryRegister.cs</code>；模块 ID 常量 <code>...\GameData\Config\Const\CActivityUIModule.cs</code>；活动 ID 常量 <code>Assets\P2\Config\Gen\game\cs\CfgGenerated.Const.cs</code>。<br>
+    归档：C:\ADHD_agent\KB\方法论\X2_节日活动Prefab地图.html · 配套 memory：reference_x2_strong_consume_client.md
+  </footer>
+</div>
+<script>
+(function(){
+  var q = document.getElementById('q');
+  q.addEventListener('input', function(){
+    var kw = q.value.trim().toLowerCase();
+    document.querySelectorAll('section').forEach(function(sec){
+      var rows = sec.querySelectorAll('table.list tr');
+      var any = false;
+      rows.forEach(function(tr, i){
+        if (i === 0) return;
+        var hit = !kw || tr.textContent.toLowerCase().indexOf(kw) >= 0;
+        tr.classList.toggle('hidden', !hit);
+        if (hit) any = true;
+      });
+      var titleHit = !kw || sec.querySelector('h2').textContent.toLowerCase().indexOf(kw) >= 0;
+      if (titleHit && kw) { rows.forEach(function(tr){ tr.classList.remove('hidden'); }); any = true; }
+      sec.classList.toggle('hidden', !any);
+    });
+  });
+})();
+</script>
+</body>
+</html>
