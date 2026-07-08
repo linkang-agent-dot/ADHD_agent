@@ -35,6 +35,18 @@
 - **适用**：所有"AI 生成/图生图的卡通角色贴纸"（应援表情/换皮角色表情等）。真人毛发/半透明边缘仍可保留双底差分。
 - 派 worker 时在 task params 写 `postprocess: single_pass_remove_bg_NO_dual_diff` + override_note 明示禁双底差分。
 
+## ★真实宠物/真人照片 → 走「图转表情 likeness-first」（2026-07-08 实证）
+
+用户拿**自家宠物/真人照片**要Q版表情时，**不要**用"描述式生成"（把照片当特征参考、prompt 里描述 a cute chibi Shiba Inu…）——产出是"通用同品种"，用户一眼觉得**不像自己的**。正确姿势：
+
+- prompt 主轴 = **"Convert this exact photo into …"** + **"CRITICAL: must look like the SAME individual dog/person as in the reference photo"**
+- **姿势/表情/头部角度/特征标记（眉纹、口鼻白斑、毛色分布）全部从照片来**，明确逐条写进 prompt；风格段只负责卡通化（chibi、cel shading 等），加 "Stylization only … simplified but recognizable"
+- 照片里成就神态的**关键道具保留**（如下巴搭的被子），写 "keep X as the only prop"
+- 参考图只传用户照片，**不传风格模板**（模板会把长相拉向通用模板脸）
+- 其余流程不变：绿幕实底 → remove_background → verify_transparency
+
+实证：2026-07-08 柴犬案，描述式两连败（用户："这个不像我给你的参考图"），改 likeness-first 后一次过，姿势/卷尾/眉纹全对上。
+
 ## 关键规则
 
 - `reference_images` 参数名必须是 `reference_images`，不是 `image_paths`
