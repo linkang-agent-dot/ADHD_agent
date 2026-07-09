@@ -1,80 +1,116 @@
 {
- "_说明": "赛程时间已按ESPN权威修正(2026-06-28)。schedule随轮次更新;settled发完奖加key;env看板拉哪个iGame环境。时间UTC(ET=EDT=UTC-4→UTC+4)。结盘=开球-10min。",
- "env": "prod",
- "schedule": [
-  {
-   "key": "R16-CANvMAR",
-   "round": "R16",
-   "a_code": "CAN",
-   "b_code": "MAR",
-   "kickoff_utc": "2026-07-04 17:00",
-   "lock_utc": "2026-07-04 16:50",
-   "result": null
-  },
-  {
-   "key": "R16-PARvFRA",
-   "round": "R16",
-   "a_code": "PAR",
-   "b_code": "FRA",
-   "kickoff_utc": "2026-07-04 21:00",
-   "lock_utc": "2026-07-04 20:50",
-   "result": null
-  },
-  {
-   "key": "R16-BRAvNOR",
-   "round": "R16",
-   "a_code": "BRA",
-   "b_code": "NOR",
-   "kickoff_utc": "2026-07-05 20:00",
-   "lock_utc": "2026-07-05 19:50",
-   "result": null
-  },
-  {
-   "key": "R16-MEXvENG",
-   "round": "R16",
-   "a_code": "MEX",
-   "b_code": "ENG",
-   "kickoff_utc": "2026-07-06 00:00",
-   "lock_utc": "2026-07-05 23:50",
-   "result": null
-  },
-  {
-   "key": "R16-PORvESP",
-   "round": "R16",
-   "a_code": "POR",
-   "b_code": "ESP",
-   "kickoff_utc": "2026-07-06 19:00",
-   "lock_utc": "2026-07-06 18:50",
-   "result": null
-  },
-  {
-   "key": "R16-USAvBEL",
-   "round": "R16",
-   "a_code": "USA",
-   "b_code": "BEL",
-   "kickoff_utc": "2026-07-07 00:00",
-   "lock_utc": "2026-07-06 23:50",
-   "result": null
-  },
-  {
-   "key": "R16-ARGvEGY",
-   "round": "R16",
-   "a_code": "ARG",
-   "b_code": "EGY",
-   "kickoff_utc": "2026-07-07 16:00",
-   "lock_utc": "2026-07-07 15:50",
-   "result": null
-  },
-  {
-   "key": "R16-SUIvCOL",
-   "round": "R16",
-   "a_code": "SUI",
-   "b_code": "COL",
-   "kickoff_utc": "2026-07-07 20:00",
-   "lock_utc": "2026-07-07 19:50",
-   "result": null
-  }
- ],
- "settled": [],
- "settle_from": "2026-07-03"
+  "_说明": "赛程时间已按ESPN权威修正(2026-06-28)。schedule随轮次更新;settled发完奖加key;env看板拉哪个iGame环境。时间UTC(ET=EDT=UTC-4→UTC+4)。结盘=开球-10min。",
+  "env": "prod",
+  "schedule": [
+    {
+      "key": "R16-CANvMAR",
+      "round": "R16",
+      "a_code": "CAN",
+      "b_code": "MAR",
+      "kickoff_utc": "2026-07-04 17:00",
+      "lock_utc": "2026-07-04 16:50",
+      "result": null
+    },
+    {
+      "key": "R16-PARvFRA",
+      "round": "R16",
+      "a_code": "PAR",
+      "b_code": "FRA",
+      "kickoff_utc": "2026-07-04 21:00",
+      "lock_utc": "2026-07-04 20:50",
+      "result": null
+    },
+    {
+      "key": "R16-BRAvNOR",
+      "round": "R16",
+      "a_code": "BRA",
+      "b_code": "NOR",
+      "kickoff_utc": "2026-07-05 20:00",
+      "lock_utc": "2026-07-05 19:50",
+      "result": null
+    },
+    {
+      "key": "R16-MEXvENG",
+      "round": "R16",
+      "a_code": "MEX",
+      "b_code": "ENG",
+      "kickoff_utc": "2026-07-06 00:00",
+      "lock_utc": "2026-07-05 23:50",
+      "result": null
+    },
+    {
+      "key": "R16-PORvESP",
+      "round": "R16",
+      "a_code": "POR",
+      "b_code": "ESP",
+      "kickoff_utc": "2026-07-06 19:00",
+      "lock_utc": "2026-07-06 18:50",
+      "result": null
+    },
+    {
+      "key": "R16-USAvBEL",
+      "round": "R16",
+      "a_code": "USA",
+      "b_code": "BEL",
+      "kickoff_utc": "2026-07-07 00:00",
+      "lock_utc": "2026-07-06 23:50",
+      "result": null
+    },
+    {
+      "key": "R16-ARGvEGY",
+      "round": "R16",
+      "a_code": "ARG",
+      "b_code": "EGY",
+      "kickoff_utc": "2026-07-07 16:00",
+      "lock_utc": "2026-07-07 15:50",
+      "result": null
+    },
+    {
+      "key": "R16-SUIvCOL",
+      "round": "R16",
+      "a_code": "SUI",
+      "b_code": "COL",
+      "kickoff_utc": "2026-07-07 20:00",
+      "lock_utc": "2026-07-07 19:50",
+      "result": null
+    },
+    {
+      "key": "QF-MARvFRA",
+      "round": "QF",
+      "a_code": "MAR",
+      "b_code": "FRA",
+      "kickoff_utc": "2026-07-09 20:00",
+      "lock_utc": "2026-07-09 19:50",
+      "result": null
+    },
+    {
+      "key": "QF-BELvESP",
+      "round": "QF",
+      "a_code": "BEL",
+      "b_code": "ESP",
+      "kickoff_utc": "2026-07-10 19:00",
+      "lock_utc": "2026-07-10 18:50",
+      "result": null
+    },
+    {
+      "key": "QF-ENGvNOR",
+      "round": "QF",
+      "a_code": "ENG",
+      "b_code": "NOR",
+      "kickoff_utc": "2026-07-11 21:00",
+      "lock_utc": "2026-07-11 20:50",
+      "result": null
+    },
+    {
+      "key": "QF-SUIvARG",
+      "round": "QF",
+      "a_code": "SUI",
+      "b_code": "ARG",
+      "kickoff_utc": "2026-07-12 01:00",
+      "lock_utc": "2026-07-12 00:50",
+      "result": null
+    }
+  ],
+  "settled": [],
+  "settle_from": "2026-07-03"
 }

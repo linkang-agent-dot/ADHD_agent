@@ -64,7 +64,7 @@ def mp4_to_gif(mp4, outdir):
     os.makedirs(outdir,exist_ok=True)
     gp=os.path.join(outdir,name+".gif")
     out_frames[0].save(gp,save_all=True,append_images=out_frames[1:],
-                       duration=DUR,loop=0,transparency=255,disposal=2,background=255,optimize=True)
+                       duration=DUR,loop=0,transparency=255,disposal=2,background=255,optimize=False)
     shutil.copyfile(gp, os.path.join(outdir,name+".bytes"))
     print(f"{name}: {os.path.getsize(gp)//1024}KB {len(out_frames)}帧 -> {gp}")
 

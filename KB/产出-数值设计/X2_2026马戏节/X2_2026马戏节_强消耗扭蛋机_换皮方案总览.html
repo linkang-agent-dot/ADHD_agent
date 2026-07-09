@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>X2 2026马戏节 · 强消耗扭蛋机换皮方案总览</title>
+<title>马戏节扭蛋机 X2→X3 搬运 · 交接总览</title>
 <style>
   :root{
     --bg:#14161c; --panel:#1d2029; --panel2:#232734; --line:#333949;
@@ -12,20 +12,22 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--tx);font-family:"Microsoft YaHei","PingFang SC",sans-serif;font-size:14px;line-height:1.65;padding:32px 16px 80px}
-  .wrap{max-width:1060px;margin:0 auto}
+  .wrap{max-width:1080px;margin:0 auto}
   header{border-left:4px solid var(--acc);padding:4px 0 4px 16px;margin-bottom:8px}
   h1{font-size:22px;letter-spacing:1px}
   h1 .tag{display:inline-block;font-size:12px;background:var(--acc);color:#fff;border-radius:4px;padding:1px 8px;vertical-align:middle;margin-left:10px;letter-spacing:2px}
   .sub{color:var(--tx2);font-size:13px;margin-top:4px}
+  .pivot{background:#2a2026;border:1px solid #5a3a3a;border-left:4px solid var(--acc);border-radius:8px;padding:10px 16px;margin:14px 0;font-size:13px}
   .snapshot{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 28px}
-  .snap{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 16px;flex:1;min-width:200px}
+  .snap{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 16px;flex:1;min-width:180px}
   .snap b{display:block;font-size:12px;color:var(--tx2);font-weight:normal;margin-bottom:2px}
   .snap span{font-size:15px;font-weight:bold}
   .snap.hot span{color:var(--acc2)}
+  .snap.ok span{color:var(--ok)}
   h2{font-size:17px;margin:36px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);letter-spacing:1px}
   h2 .n{display:inline-block;width:24px;height:24px;line-height:24px;text-align:center;background:var(--acc);color:#fff;border-radius:50%;font-size:13px;margin-right:8px}
   h3{font-size:14px;margin:18px 0 8px;color:var(--acc2)}
-  p{margin:6px 0;color:var(--tx)}
+  p{margin:6px 0}
   .dim{color:var(--tx2)}
   table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px;background:var(--panel);border-radius:8px;overflow:hidden}
   th{background:var(--panel2);text-align:left;padding:8px 12px;color:var(--tx2);font-weight:normal;border-bottom:1px solid var(--line);white-space:nowrap}
@@ -33,17 +35,8 @@
   tr:last-child td{border-bottom:none}
   code{font-family:var(--mono);font-size:12.5px;background:#2a2f3d;border-radius:4px;padding:1px 6px;color:#ffd479}
   .tablewrap{overflow-x:auto}
-  .cols{display:flex;gap:16px;flex-wrap:wrap}
-  .col{flex:1;min-width:320px}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:10px 0}
-  .card.keep{border-top:3px solid var(--ok)}
-  .card.fork{border-top:3px solid var(--acc)}
-  .card h3{margin-top:0}
-  .card.keep h3{color:var(--ok)} .card.fork h3{color:var(--acc)}
-  ul{padding-left:20px;margin:6px 0}
-  li{margin:4px 0}
   .flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin:14px 0}
-  .fnode{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 14px;text-align:center;min-width:130px;flex:1}
+  .fnode{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 14px;text-align:center;min-width:120px;flex:1}
   .fnode b{display:block;font-size:13px}
   .fnode i{font-style:normal;font-size:11.5px;color:var(--tx2)}
   .farrow{align-self:center;padding:0 8px;color:var(--acc2);font-size:18px}
@@ -55,8 +48,8 @@
   .step.done .no{background:var(--ok)}
   .step .bd{flex:1}
   .pill{display:inline-block;font-size:11px;border:1px solid var(--line);border-radius:20px;padding:0 8px;color:var(--tx2);margin-left:6px}
+  .docnav td:first-child{white-space:nowrap;color:var(--acc2)}
   footer{margin-top:48px;color:var(--tx2);font-size:12px;border-top:1px solid var(--line);padding-top:12px}
-  a{color:var(--info)}
   @media (max-width:720px){.farrow{display:none}.fnode{min-width:100%}}
 </style>
 </head>
@@ -64,120 +57,107 @@
 <div class="wrap">
 
 <header>
-  <h1>强消耗扭蛋机 · 马戏节换皮方案<span class="tag">草案 v1</span></h1>
-  <div class="sub">X2 · 2026马戏节 · 基于模块 21201326（JulyGacha）· 2026-07-08</div>
+  <h1>马戏节扭蛋机 X2→X3 搬运 · 交接总览<span class="tag">数值已定稿</span></h1>
+  <div class="sub">🎪 X3 · 2026马戏节 · 玩法源=X2 节日强消耗扭蛋机(JulyGacha 21201326) · 更新 2026-07-09</div>
 </header>
 
+<div class="pivot"><b>🛑 定位（先读）</b>：这是 <b>X2→X3 搬运</b>，不是 X2 内换皮——程序在 X3 按规格文档实现协议+配置结构，prefab 资产导入 X3 客户端，X2 占星2025 只作数值基准。早期版本里的"X2 新建 2112×1+2124×4 落表方案"已作废。</div>
+
 <div class="snapshot">
-  <div class="snap"><b>主题</b><span>🎪 马戏节（circus_2026）</span></div>
-  <div class="snap"><b>玩法</b><span>不变 · 积分→扭蛋币→双池抽奖</span></div>
-  <div class="snap"><b>代码 / prefab</b><span style="color:var(--ok)">零改动</span></div>
-  <div class="snap"><b>扭蛋机资源</b><span style="color:var(--ok)">全部沿用</span></div>
-  <div class="snap hot"><b>数值</b><span>走换皮 skill 另出</span></div>
-  <div class="snap"><b>排期</b><span>暂不定 · 配置 tc=0</span></div>
+  <div class="snap"><b>目标项目</b><span>X3 马戏节</span></div>
+  <div class="snap ok"><b>整活动 ROI</b><span>7.82x（8x锚下方·纯线性）</span></div>
+  <div class="snap ok"><b>独立验收</b><span>11/12 · 零 blocker</span></div>
+  <div class="snap"><b>新道具</b><span>1207 节日扭蛋币 / 1208 高级扭蛋券</span></div>
+  <div class="snap"><b>扭蛋机资源</b><span style="color:var(--ok)">沿用（X2 prefab 包导入）</span></div>
+  <div class="snap hot"><b>排期</b><span>未定 · 配置 tc=0</span></div>
 </div>
 
-<h2><span class="n">1</span>核心循环（骨，不动）</h2>
+<h2><span class="n">1</span>核心循环（玩法照搬 X2）</h2>
 <div class="flow">
-  <div class="fnode"><b>游戏行为</b><i>消耗类行为产出</i></div>
+  <div class="fnode"><b>游戏行为</b><i>消耗类行为计分</i></div>
   <div class="farrow">→</div>
-  <div class="fnode"><b>活动积分</b><i>rank 组件计分</i></div>
+  <div class="fnode"><b>活动积分</b><i>14 固定档共 430 币</i></div>
   <div class="farrow">→</div>
-  <div class="fnode"><b>领扭蛋币</b><i>13 固定档 + 1 循环档</i></div>
+  <div class="fnode"><b>节日扭蛋币</b><i>1207</i></div>
   <div class="farrow">→</div>
-  <div class="fnode"><b>免费抽</b><i>1 币/次 · 免费池 · 仅单抽</i></div>
+  <div class="fnode"><b>免费抽</b><i>1币/次 · 独立池 · 单抽</i></div>
   <div class="farrow">＋</div>
-  <div class="fnode"><b>付费抽</b><i>1 币 + 1 券 · 付费池 · 可10连</i></div>
+  <div class="fnode"><b>高级抽</b><i>1币+1券(1208) · 独立池 · 可10连</i></div>
   <div class="farrow">→</div>
-  <div class="fnode"><b>排行榜结算</b><i>按积分 · 邮件补发 + 道具回收</i></div>
+  <div class="fnode"><b>排行结算</b><i>邮件补发 + 道具回收</i></div>
 </div>
-<p class="dim">双池均分阶段：服务端按累计抽数切换 dropID，客户端无感知。抽奖券由活动礼包（package 组件）售卖 —— 付费点。</p>
+<p class="dim">🛑 v2.1（07-09 拍板）：**取消 X2 的分阶段机制，普通/高级两套固定概率池**——程序不用做 dropID 按抽数切换。券由礼包售卖=付费点；抽奖产出罗盘喂大富翁（马戏大富翁=深海 102802 承接）。</p>
 
-<h2><span class="n">2</span>骨 / 皮划分</h2>
-<div class="cols">
-  <div class="col"><div class="card keep">
-    <h3>✔ 完全不动</h3>
-    <ul>
-      <li>客户端代码全套（逻辑 / UI / 5 个弹窗）+ 协议（复用 <code>JulyGachaReq/Ack</code>，连模块都不新增）</li>
-      <li><code>21201326.prefab</code> + 全部弹窗 prefab、动画、音效</li>
-      <li><b>扭蛋机所有内置美术</b>（机器 A/B、扭蛋球、面板、按钮）</li>
-      <li>扭蛋币 / 抽奖券道具本体（<code>11119278 / 11119279</code>，历期跨节日复用，图标名字都不动）</li>
-      <li>免费抽上限 const（<code>10137130</code> = 1000）</li>
-      <li>prefab 内 15 个通用文案 key + 代码引用的 4 个 key 现有译文</li>
-    </ul>
-  </div></div>
-  <div class="col"><div class="card fork">
-    <h3>✂ 要 fork / 新做</h3>
-    <ul>
-      <li>2112 主活动新行 + 六类组件整套 fork（见 §3）</li>
-      <li>奖池内容与权重、档位积分、礼包、排行奖励（<b>数值 → 换皮 skill</b>）</li>
-      <li>马戏主题文案：标题 / 规则 / 循环任务描述 / 礼包名（见 §4）</li>
-      <li>外围美术 3 张：入口 banner / 购买弹窗 banner / 活动图标（见 §5）</li>
-    </ul>
-  </div></div>
-</div>
-
-<h2><span class="n">3</span>配置组装清单（copy 源 = 占星2025 <code>211200205</code>）</h2>
-<p class="dim">老版 2023 强消耗（<code>event_thanks_festival_strong_consume_2023</code>）是旧任务式、没有 drop 组件，<b>不能当模板</b>。所有新 id 执行时按各表全局 max+1 现分，SheetID 一律 <code>gsheet_query.py resolve</code> 现解。</p>
+<h2><span class="n">2</span>交付物导航（按角色取用）</h2>
 <div class="tablewrap">
-<table>
-  <tr><th>表</th><th>组件 / 内容</th><th>数量</th><th>喂协议字段</th><th>换皮要点</th></tr>
-  <tr><td><b>2112</b> activity_config</td><td>主活动行，constant=<code>circus_2026_strong_consume</code></td><td>1</td><td>—</td><td>Text 指新 LC key；<b>show_hud 挂马戏节 HUD 组</b>（取同节日其他活动的值）；banner 字段指新图；<b>时间相关 tc 先填 0</b></td></tr>
-  <tr><td><b>2124</b> activity_drop</td><td>drop 奖池（免费 / 付费 × 分阶段），Action 名 fork 为 <code>strong_consume_free/pay_N_2026_circus</code></td><td>4</td><td>dropIDList / costs / showRewards</td><td><code>Type=gacha</code>，<code>Drop.typ=single_random</code>，args 每项带 wgt；<b>DisplayDrop = 抽一次的消耗代币</b>（免费池 1 种 / 付费池 2 种），隐性约定别漏</td></tr>
-  <tr><td><b>2115</b> activity_task</td><td>积分档位任务（13 固定 + 1 循环）</td><td>14</td><td>questList</td><td>Fincond.arg.ids 指向<b>新</b> rank 组件 id；<b>循环档 task_desc 文案里嵌着数值</b>，数值定稿后 i18n 同步改</td></tr>
-  <tr><td><b>2122</b> rank + actv_show_rank</td><td>积分规则 + 排行榜展示</td><td>1+1</td><td>showRank / 积分来源</td><td>score_rule.ids 含本节日<b>全部</b> 2011 ID（每加一个礼包都要补）</td></tr>
-  <tr><td><b>2135→2011→2013</b> package</td><td>抽奖券礼包链</td><td>6 组</td><td>packages</td><td>三层全 fork；<code>2011.time_info.actv_id</code> 必指马戏节新活动；<code>2013.pop_banner_url</code>=购买弹窗 banner 真源（PackBanner 文件夹）</td></tr>
-  <tr><td><b>retake</b></td><td>结束回收扭蛋币 / 抽奖券</td><td>2</td><td>—</td><td>回收兑换目标随数值方案定</td></tr>
+<table class="docnav">
+  <tr><th>给谁</th><th>文档</th><th>说明</th></tr>
+  <tr><td>程序（协议/配置结构）</td><td><code>KB\方法论\活动程序开发\X2_强消耗扭蛋机_协议与配置规格.md</code></td><td>X2 侧 proto 字段/tag 全表 + 配置表 schema + 真实模板行，X3 实现蓝图（协议可等价重建，消息按类型名路由）</td></tr>
+  <tr><td>程序（客户端资产）</td><td><code>D:\newX2\Copy\UIactvfesstrong\</code></td><td>主 prefab+64图+动画+材质+shader+_manifest 清单+i18n key 表；X2 侧皮全在 prefab 静态引用、代码零主题分支</td></tr>
+  <tr><td>数值/策划（终稿）</td><td><code>KB\产出-数值设计\X2_2026马戏节\X3_马戏节扭蛋机_数值定稿.md</code></td><td>四池全表/EV推导/礼包10档/排行12档/积分/回收/12项告警——已过独立验收</td></tr>
+  <tr><td>数值（决策依据）</td><td>同目录 <code>X3_马戏节扭蛋机_道具映射方案.md</code> + <code>X2..._数值方案.md</code></td><td>X2→X3 映射决策（含用户拍板）+ X2 占星2025 基准</td></tr>
+  <tr><td>接管者</td><td><code>KB\换皮档案\X2\2026-07-08_马戏节.md</code></td><td>换皮档案=唯一入口：全部决策/进度/坑/遗留</td></tr>
+  <tr><td>原始数据</td><td><code>.cursor\config-library\cases\2026_circus_strong_consume\</code></td><td>baseline\（X2 全链 10 文件）+ x3_mapping_research\（X3 候选研究底稿）</td></tr>
 </table>
 </div>
 
-<h3>引用链自检（写完必反查）</h3>
+<h2><span class="n">3</span>数值核心（详表见定稿文档）</h2>
+<h3>高级池（付费抽，扣 1207×1 + 1208×1，全高亮，总权重 352）</h3>
+<div class="tablewrap">
+<table>
+  <tr><th>槽位</th><th>X3 道具</th><th>数量</th><th>权重</th><th>概率</th><th>说明</th></tr>
+  <tr><td>参与钩子</td><td>1057 航海罗盘（合并 X2 BP代币+骰子双槽）</td><td>×3</td><td>12</td><td>3.4%</td><td>$1.50/hit·期望$0.051；锚玩家全程≈44个=44次大富翁普抽</td></tr>
+  <tr><td>高价值</td><td>19003 传奇技能书</td><td>×1</td><td>30</td><td>8.5%</td><td>$2.00/hit·期望$0.170；X2 金书 1:1</td></tr>
+  <tr><td>养成A</td><td>1008 冒险阅历</td><td>3w点</td><td>100</td><td>28.4%</td><td>$1.80/hit·期望$0.511；X2 的 5w 会爆到 10.5x，校准至 8x</td></tr>
+  <tr><td>次级</td><td>52002 万能史诗信物</td><td>×1</td><td>50</td><td>14.2%</td><td>$2.00/hit·期望$0.284；X2 橙升星廉价物 ×3→×1 保层级</td></tr>
+  <tr><td>养成B</td><td>1142 驯养经验</td><td>3w点</td><td>100</td><td>28.4%</td><td>$1.80/hit·期望$0.511；与养成A等值等量（拍板②）</td></tr>
+  <tr><td>填充</td><td>160101 Ⅰ阶强化石</td><td>×5</td><td>50</td><td>14.2%</td><td>$1.00/hit·期望$0.142；⚠️X2 ×50 直抄爆池，缩至 ×5</td></tr>
+  <tr><td>稀有大奖</td><td>52003 万能传奇信物</td><td>×1</td><td>10</td><td>2.84%</td><td><b>$10.00/hit</b>·期望$0.284；池内最高单件</td></tr>
+</table>
+</div>
+<p><b>单抽期望 = 977钻 = $1.95（恒定），实付 1 券 $0.25 → 430 抽锚玩家整活动 <b>7.82x</b>，纯线性无"越抽越赚"。</b>结构：经验双槽占期望一半（$1.02）撑日常值感，传奇信物 $10 单 hit 撑惊喜感。</p>
+
+<h3>普通池（免费抽，扣 1207×1，参与感+喂大富翁定位，总权重 265）</h3>
+<div class="tablewrap">
+<table>
+  <tr><th>道具</th><th>数量</th><th>权重</th><th>概率</th></tr>
+  <tr><td>1057 航海罗盘</td><td>1</td><td>15</td><td><b>5.7%</b></td></tr>
+  <tr><td>11023 招募加速30m</td><td><b>1</b>(v2.2)</td><td>55</td><td>20.8%</td></tr>
+  <tr><td>11013 建造加速30m</td><td><b>1</b>(v2.2)</td><td>40</td><td>15.1%</td></tr>
+  <tr><td>11033 研究加速30m</td><td><b>1</b>(v2.2)</td><td>40</td><td>15.1%</td></tr>
+  <tr><td>11003 通用加速30m</td><td>1</td><td>15</td><td>5.7%</td></tr>
+  <tr><td>1025 啤酒</td><td>5w</td><td>50</td><td>18.9%</td></tr>
+  <tr><td>1015 硬木板</td><td>2w</td><td>50</td><td>18.9%</td></tr>
+</table>
+</div>
+<p class="dim">🛑 v2.2 下调：三方对比（P2 免付比≈11~18% / X2≈15~29% / X3原设计 45.5% 超标）→ 三专项加速 ×2→×1。普通池单抽期望 241钻*≈$0.48*，<b>免付比 24.6% 回 X2 带内</b>；每抽加速 17.0 分钟（相对价折算体感≈X2）；罗盘槽不动（F2P→大富翁漏斗保全，430 免费抽期望 24.3 个）。加速为内部口径带*，硬价部分仅罗盘——勿对外报绝对值。备用二段降（权重 35/25/25，比值到 16% P2 带）留在定稿 §v2.2。</p>
+
+<h3>礼包 10 档（全 4.0x = 深海锚点包 400% 复刻）</h3>
 <p class="dim" style="font-family:var(--mono);font-size:12.5px">
-2112.components → drop(2124) / task(2115→Fincond指rank) / rank(2122) / package(2135→2011→2013) / retake<br>
-2011.actv_id ↔ 2112 反指 · 2013.config_id → 2011 · 2122.score_rule.ids ⊇ 全部新 2011
+常驻(每日限购)：$4.99/9.99/19.99/49.99/99.99 → 券 20/40/80/200/400 + 钻石1:1 + VIP点2022×25~500 + GuildGift 201-205（99.99 档限购 10/天）<br>
+触发(各限1次)：$2.99/9.99/29.99/49.99/99.99 → 券 12/40/120/200/400；触发链=榜分3w → 榜分20w+① → 券耗100+② → 券耗200+③ → 券耗400+④
 </p>
 
-<h2><span class="n">4</span>文案清单（i18n 走 x2-localization-translator 直出 18 语言）</h2>
-<div class="tablewrap">
-<table>
-  <tr><th>Key（建议命名）</th><th>用途</th><th>中文占位（待定稿）</th></tr>
-  <tr><td><code>LC_EVENT_circus_2026_lucky_gacha_title</code></td><td>活动标题（2112.Text）</td><td>马戏团扭蛋机</td></tr>
-  <tr><td><code>LC_EVENT_circus_2026_strong_consume_rule</code></td><td>活动规则</td><td>沿用往期规则模板替换主题词</td></tr>
-  <tr><td><code>LC_EVENT_circus_2026_strong_consume_task_desc</code></td><td>循环任务描述</td><td>⚠ 含数值：“XX积分后，每获得XX积分奖励X个扭蛋币”——<b>等数值定稿再填</b></td></tr>
-  <tr><td><code>LC_IAP_circus_2026_gacha_pkg_*</code></td><td>礼包名 ×6 档</td><td>随礼包档位定</td></tr>
-</table>
-</div>
-<p class="dim">道具名（夏日扭蛋币/高级扭蛋券）：道具本体复用则名字不动；若要主题化改名会影响所有在跑活动，<b>默认不改</b>。</p>
+<h3>排行 12 档（拍板：加速+技能书+资源，无信物/纪念卡，零美术）</h3>
+<p class="dim">Top1=36,600钻（3h三件套×3 + 技能书15 + 资源袋20），梯度还原 X2、加速总量 321 个与深海榜完全一致；min_score=3000（待随积分尺度缩放）。回收：币→金币5w、券→5m通用加速×3。</p>
 
-<h2><span class="n">5</span>外围美术（仅 3 张，机器本体 0 张）</h2>
-<div class="tablewrap">
-<table>
-  <tr><th>#</th><th>资产</th><th>配置落点</th><th>路径规范</th></tr>
-  <tr><td>1</td><td>活动入口 / 日历 banner</td><td>2112.BannerUrl</td><td><code>assets/x2/operation/EventBanner/…</code></td></tr>
-  <tr><td>2</td><td>礼包购买弹窗 banner</td><td>2013.pop_banner_url</td><td><code>assets/x2/operation/PackBanner/GiftPack_bg_Circus….png</code>（⚠ 别写进 EventBanner）</td></tr>
-  <tr><td>3</td><td>活动图标 DK（可复用）</td><td>2112.IconDisplaykey</td><td>走 DK 录入（x2-dk-manager）</td></tr>
-</table>
-</div>
+<h2><span class="n">4</span>X3 落地清单（下一阶段，可并行）</h2>
+<div class="step done"><div class="no">✓</div><div class="bd"><b>已完成</b>：策划案吃透 / X2 代码链路+协议配置规格 / 基准数据 / X2→X3 映射（3 项用户拍板）/ 数值定稿+独立验收 / 新道具定名</div></div>
+<div class="step"><div class="no">1</div><div class="bd"><b>交程序</b>：规格文档+prefab 包+数值定稿打包；需程序回答：①扣费语义（币+券同扣 AND 还是 OR）②10连有无折扣 ③X3 侧配置表结构定稿（定了才能落配置和 i18n key）</div></div>
+<div class="step"><div class="no">2</div><div class="bd"><b>新道具×2</b>：1207 节日扭蛋币 / 1208 高级扭蛋券——克隆 1200 深海藏宝图整行（Type=1），⚠️勿占 1203/1205 跳号、勿复用愚人节马戏三件（1042-44 在役）</div></div>
+<div class="step"><div class="no">3</div><div class="bd"><b>文案 i18n</b>：活动名/规则/两道具名描述/循环任务文案——等 X3 key 命名方案定稿后走 <code>x3-translation-automatic</code>（16语）；⚠️X2 遗留坑：任务描述里嵌数值，积分尺度缩放后必须同步改</div></div>
+<div class="step"><div class="no">4</div><div class="bd"><b>美术</b>：入口 banner + 礼包弹窗 banner + 活动图标 DK ＋ 新道具图标×2（共 5 张外围图；机器本体 0 张）</div></div>
+<div class="step"><div class="no">5</div><div class="bd"><b>配置+部署</b>：X3 表结构定稿后落配置（tc=0），走 <code>x3-config-export</code>；测试重点见 §5</div></div>
 
-<h2><span class="n">6</span>风险位 checklist（执行时逐条勾）</h2>
-<div class="risk"><b>① 循环任务数值嵌在文案里</b> —— 2115 循环档数值改了，<code>task_desc</code> i18n 必须同步改，历期最容易漏的一条。</div>
-<div class="risk"><b>② 礼包链 actv_id 残留</b> —— 2011.time_info.actv_id 若复制后仍指旧节日，旧活动下线后礼包查不到 → 客户端各种“默认已购买/打不开”类 bug。</div>
-<div class="risk"><b>③ show_hud 不能填 0 / 抄旧节日</b> —— 不挂马戏节 HUD 组玩家找不到入口（拓荒 2026 实摔过）。</div>
-<div class="risk"><b>④ 排行榜点击硬编码</b> —— <code>UIActivityJulyGacha.cs:869</code> 写死感恩节常量 <code>21122047</code>；夏日/占星没改照样上线，<b>默认不动</b>，测试时看一眼排行榜表现即可。</div>
-<div class="risk"><b>⑤ 2013 行号陷阱</b> —— gsheet_query 报的 row ≠ （qa）页签真实行号，写 2013 前必须自己扫 id 列定位。</div>
-<div class="note"><b>部署前导表卫生</b>：逐表 <code>git log -1 -- fo/config/&lt;表&gt;.tsv</code> 确认时间戳 + grep 新行 id 在 tsv 里（整张漏导是历史高发）。</div>
-
-<h2><span class="n">7</span>执行路线</h2>
-<div class="step done"><div class="no">✓</div><div class="bd"><b>摸底</b> —— 策划案已读 / 代码链路已探明 / 协议与配置规格已归档<span class="pill">KB\方法论\活动程序开发\X2_强消耗扭蛋机_协议与配置规格.md</span></div></div>
-<div class="step"><div class="no">1</div><div class="bd"><b>数值方案</b> —— 走换皮 skill（p2-x2-reskin），以占星 2025（211200205）为基准出：4 奖池内容+权重 / 14 档位积分 / 6 礼包 / 排行奖励 / 回收兑换</div></div>
-<div class="step"><div class="no">2</div><div class="bd"><b>文案</b> —— 数值定稿后按 §4 清单出 18 语言（x2-localization-translator）</div></div>
-<div class="step"><div class="no">3</div><div class="bd"><b>配置落表</b> —— resolve 现解 SheetID → 各表 max+1 分配新 id → 按 §3 写入（qa）页签，<b>tc 全填 0</b> → 引用链反查 → 导表</div></div>
-<div class="step"><div class="no">4</div><div class="bd"><b>外围美术</b> —— §5 三张图（可与 1-3 并行）</div></div>
-<div class="step"><div class="no">5</div><div class="bd"><b>验收</b> —— §6 checklist 逐条 + 测试服拉起活动过一遍核心循环（注意先确认测试端客户端是最新版）</div></div>
+<h2><span class="n">5</span>遗留 human_review + 测试要点</h2>
+<div class="risk"><b>① 积分尺度三处联动</b>：14 档门槛 + 排行 min_score 3000 + 触发礼包榜分 3w/20w 必须<b>同一系数缩放</b>（等马戏节计分规则定稿），漏一处触发链就脱节。</div>
+<div class="risk"><b>② 信物投放量</b>：锚玩家期望 史诗×61+传奇×12（≈12万钻）——X3 升星线承载力请数值同学过目。</div>
+<div class="risk"><b>③ 币产出扩容影响已简化</b>：v2.1 取消分阶段后 EV 全程恒定、ROI 严格线性——若后续补循环档/币直购，整活动 ROI 不变（7.82x），只影响总量盘子，无需重压测斜率。</div>
+<div class="note"><b>测试 checklist</b>：触发链五级逐级验 / 10连与单抽 EV 一致性 / 免费上限逻辑 / 回收与邮件补发 / 大富翁罗盘入账（v2.1 已无阶段切换边界项）。</div>
 
 <footer>
-  依据：策划案 GSheet <code>13eHiIX48…</code> v66宝箱版本页签 · 代码仓 D:\UGit\x2client 两轮探索（file:line 出处见规格文档）· prefab 资产导出 D:\newX2\Copy\UIactvfesstrong<br>
-  配套文档：协议与配置规格（KB\方法论\活动程序开发\）· memory: reference_x2_strong_consume_client.md
+  数据链：X2 策划案(GSheet 13eHiIX48… v66宝箱版本) → 占星2025 基准(只读拉取) → 映射研究(X3 道具表+gdconfig origin/dev) → 数值定稿(EV模型) → task-checker 独立验收 11/12 零blocker（3 处统计勘误已修）<br>
+  唯一入口：KB\换皮档案\X2\2026-07-08_马戏节.md · 本页为交接快照，细节以各文档为准
 </footer>
 
 </div>

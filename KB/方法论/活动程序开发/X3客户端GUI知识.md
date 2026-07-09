@@ -84,3 +84,9 @@ tags: [kind/方法论, domain/前端, proj/X3, year/2026-06]
 ## 待补（这里随项目积累继续加控件模式）
 - 价格购买按钮 / 倒计时 / 道具格 等**业务级可复用组件**清单已在 memory `reference_x3_client_new_ui_workflow`。
 - 后续遇到新控件模式（弹窗 / 红点 / Tab 页签 / LoopScroll 大列表虚拟化 等）往本文「控件模式库」追加。
+
+## 控件模式：购买按钮点击热区比可见按钮大——先查子节点锚点错位，再考虑收缩透明层（2026-07-09 复盘修正）
+- **真根因（大哥定位·养成手册案）**：热区异常大多不是通用按钮固有结构，而是**实例内子节点锚点/中心错位**——本案 UIActvLogin 购买按钮下两个带 raycast 的子节点一个 stretch 锚定 anchoredPosition 飘到(-115,-390)、一个左上锚飘到(-83,-417)，可点区域跟着飘出可见按钮外。**修法=把错位子节点重新居中锚定(0.5,0.5锚+pos归零)**，dev_festival `8cb850ee390`。排查顺序：先解析实例内所有 raycastTarget=1 节点的实际世界矩形，找飘出可见区的，再谈别的。
+- 结构知识（仍有效）：`Prefab/Button/UIBtnPurchase.prefab` 根(默认296×100) > `UIBtnCurrency`(0×0拉伸铺满,click监听挂这,UIBtnPurchase.cs L34) > `bg`(0×0拉伸铺满,raycastTarget=1透明层) + `Integral/Bg`(可见金按钮234×68)。正常态热区=296×100 vs 可见234×68(宽26%高47%边距)——这是全游戏一致的设计余量,**别当BUG修**。
+- （已回退的临时方案备查）曾给实例 `UIBtnCurrency/bg`(fileID `3227258876961698653`,guid `025111334bf68a74193e621ab963db8a`)加 override sizeDelta(-62,-32)收缩到可见区——治标未中真因,已被居中修复取代(弹窗UIActvLoginChoice两键的同款override仍留在dev_festival,无害)。
+- ⚠️连带教训：`C:\x3-project` 是多会话共用仓,**commit前必须现查 `git branch --show-current`**（这次editing与commit间隔中分支被另一会话切到 feature/wc-sf-emote-chest-icon,提交落错分支,靠 `git reset --keep HEAD~1` 摘回+worktree移植）。
