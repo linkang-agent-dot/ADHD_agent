@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>影子迁移包 · 逻辑全景</title>
+<style>
+  :root{
+    --bg:#f6f8fb; --card:#ffffff; --ink:#1c2733; --sub:#5b6b7c;
+    --blue:#2563eb; --blue-soft:#eaf1fe; --blue-mid:#93b8f5;
+    --amber:#b45309; --amber-soft:#fef3e2;
+    --green:#0f766e; --green-soft:#e6f5f3;
+    --purple:#7c3aed; --purple-soft:#f1eafe;
+    --line:#dde5ee; --mono:Consolas,'Courier New',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Microsoft YaHei','PingFang SC',sans-serif;line-height:1.65;padding:32px 20px 80px}
+  .wrap{max-width:1100px;margin:0 auto}
+  header{margin-bottom:28px}
+  h1{font-size:26px;letter-spacing:.5px}
+  .subtitle{color:var(--sub);margin-top:6px;font-size:14px}
+  .tagline{margin-top:14px;background:var(--card);border-left:4px solid var(--blue);padding:12px 16px;border-radius:6px;font-size:15px;box-shadow:0 1px 3px rgba(30,50,80,.06)}
+  section{margin-top:34px}
+  h2{font-size:19px;padding-bottom:8px;border-bottom:2px solid var(--line);margin-bottom:16px}
+  h2 .no{color:var(--blue);font-family:var(--mono);margin-right:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(30,50,80,.05)}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--blue-soft);font-weight:600}
+  .tbl-scroll{overflow-x:auto;border-radius:8px;border:1px solid var(--line)}
+  .tbl-scroll table{border:none}
+  code{font-family:var(--mono);background:#eef2f7;padding:1px 6px;border-radius:4px;font-size:12.5px;color:#334155}
+  .pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;margin-right:6px}
+  .pill.b{background:var(--blue-soft);color:var(--blue)}
+  .pill.g{background:var(--green-soft);color:var(--green)}
+  .pill.a{background:var(--amber-soft);color:var(--amber)}
+  .pill.p{background:var(--purple-soft);color:var(--purple)}
+  /* 生命周期流程 */
+  .flow{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch}
+  .flow .step{flex:1;min-width:170px;background:var(--card);border:1.5px solid var(--blue-mid);border-radius:10px;padding:12px 14px;position:relative}
+  .flow .step .t{font-weight:700;color:var(--blue);font-size:14.5px}
+  .flow .step .d{font-size:12.5px;color:var(--sub);margin-top:5px}
+  .flow .step .k{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:12px;background:var(--blue-soft);color:var(--blue);padding:2px 8px;border-radius:5px}
+  .arrow{align-self:center;color:var(--blue-mid);font-size:20px;font-weight:700}
+  /* 层级卡 */
+  .layer{border-radius:10px;padding:14px 16px;border:1px solid var(--line)}
+  .layer h3{font-size:15px;margin-bottom:6px}
+  .layer p{font-size:13px;color:var(--sub)}
+  .layer .file{font-family:var(--mono);font-size:12px;margin-top:8px;color:#475569}
+  .l0{background:var(--blue-soft);border-color:var(--blue-mid)}
+  .l1{background:var(--purple-soft)}
+  .l2{background:var(--green-soft)}
+  /* hook 流程 */
+  .pipe{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;margin:8px 0}
+  .pipe .node{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+  .pipe .node.hl{border-color:var(--blue);background:var(--blue-soft);font-weight:600}
+  .pipe .sep{color:var(--blue-mid);font-weight:700}
+  .note{font-size:13px;color:var(--sub);margin-top:10px}
+  .note b{color:var(--amber)}
+  /* 树 */
+  pre.tree{font-family:var(--mono);font-size:12.5px;background:#0f172a;color:#cbd5e1;padding:16px 18px;border-radius:10px;overflow-x:auto;line-height:1.8}
+  pre.tree .c{color:#64748b}
+  pre.tree .hl{color:#7db3ff;font-weight:600}
+  /* 五阶段 */
+  .phases{counter-reset:ph}
+  .phase{display:flex;gap:12px;margin-bottom:10px}
+  .phase .num{flex:0 0 34px;height:34px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px}
+  .phase .body{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:13.5px}
+  .phase .body b{color:var(--blue)}
+  ul.tight{padding-left:20px;font-size:13.5px}
+  ul.tight li{margin-bottom:5px}
+  .conf{font-size:13.5px}
+  .warn{background:var(--amber-soft);border-left:4px solid var(--amber);padding:10px 14px;border-radius:6px;font-size:13.5px;margin-top:12px}
+  footer{margin-top:50px;color:var(--sub);font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>🕯️ 影子迁移包 · 逻辑全景</h1>
+  <div class="subtitle">来源：微信收到的「影子迁移包_通用版_v1」（2026-07-10）· 一套面向 Cursor 的"写在文件里的 AI 智能体操作系统"</div>
+  <div class="tagline">
+    <b>一句话</b>：把 AI 的<b>记忆、人格、行为准则、时间感知</b>全部落成 markdown 文件 + 两个 PowerShell hook，
+    让 Cursor 里的模型从"聊完就忘的聊天机器人"变成一个<b>可跨设备/跨模型延续的"影子"协作者</b>。
+    换机器 = 拷文件夹；换模型 = 走「回归」交接协议。纯本地，无 git、无云端。
+  </div>
+</header>
+
+<!-- 1 核心闭环 -->
+<section>
+  <h2><span class="no">01</span>核心闭环：影子的一天</h2>
+  <div class="flow">
+    <div class="step"><div class="t">唤醒 / 开工</div><div class="d">按固定顺序读：时间快照 → AGENTS → MAP → 画像 → L0 → 待办，输出「L0 承接报告」再干活</div><div class="k">「继续」「唤醒」</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="t">日常协作</div><div class="d">每轮 hook 自动写时间快照+备份对话；AI 按 22 条行为准则工作</div><div class="k">（自动）</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="t">沉淀</div><div class="d">对话结论写进日记（S2）；高价值内容升级成永久笔记（S3）</div><div class="k">「沉淀」「升级」</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="t">收工</div><div class="d">先写日记（强制含"元观察"段），存疑项进「开工待办」，下次开工呈现</div><div class="k">「收工」</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="t">回归（换AI时）</div><div class="d">换模型/设备 ≠ 继续，走 5 阶段身份移交 + 谱系登记</div><div class="k">「回归」</div></div>
+  </div>
+  <div class="note">周期性另有「整理本周」（Inbox 提炼归档 + 增量复盘）和「月度复盘」（逐条裁决中低置信度观察）。</div>
+</section>
+
+<!-- 2 三层架构 -->
+<section>
+  <h2><span class="no">02</span>两套分层：AI 架构三层（L）× 内容沉淀三层（S）</h2>
+  <div class="grid g3">
+    <div class="layer l0"><h3>L0 · 基础层（跨AI通用 ✅）</h3>
+      <p>让 AI 达到"普通人水准"的 5 条底线：<b>时空感知 / 非幻觉 / 记忆连续性 / 诚实未知 / 情绪识别</b>。失守 = 只配当工具。换模型时必须完整继承。</p>
+      <div class="file">10-Areas/AI 协作/L0 · AI 基础素养.md</div></div>
+    <div class="layer l1"><h3>L1 · 人格层（跟AI走 ❌）</h3>
+      <p>这个 AI 的思考风格与响应偏好：情绪陈述不做路径分解、评价标尺"方向 &gt; 结果"、时段感知等。可随新用户调整。</p>
+      <div class="file">个人画像.md 第二部分（继承框架）</div></div>
+    <div class="layer l2"><h3>L2 · 知识层（跟人走 ⚠️）</h3>
+      <p>关于用户本人的事实/背景/偏好 + 各板块业务沉淀。迁移包里<b>刻意留空</b>，等新用户"长出来"。</p>
+      <div class="file">个人画像.md 第一部分 + 10-Areas/**</div></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <b>另一维度 · 内容生命周期 S1→S2→S3</b>（S = Sediment 沉淀，别和 L 混）：
+    <div class="pipe">
+      <div class="node">S1 原始层 · hook 自动备份的对话 jsonl<br><code>00-Inbox/chatlog/raw/</code></div>
+      <div class="sep">→ 提炼 →</div>
+      <div class="node">S2 要点层 · 每日日记<br><code>00-Inbox/daily/YYYY-MM-DD.md</code></div>
+      <div class="sep">→ 升级 →</div>
+      <div class="node hl">S3 永久层 · 板块笔记<br><code>10-Areas/&lt;板块&gt;/*.md</code></div>
+    </div>
+    <div class="note">配套「置信度三级」：🟦 高（用户明说/多次验证）· 🔵 中（AI 单次观察，必标）· 🔹 低（纯推测，必标）。哲学："宁可记，不漏"，靠月度复盘再筛。刻意用蓝色单色系，不用红黄绿——"观察一个人没有报错语义"。</div>
+  </div>
+</section>
+
+<!-- 3 机械层 -->
+<section>
+  <h2><span class="no">03</span>机械层：两个 hook 解决 AI 两大先天缺陷</h2>
+  <div class="grid g2">
+    <div class="card">
+      <span class="pill b">缺陷① 没有时间感</span>
+      <div class="pipe">
+        <div class="node">用户每次发消息</div><div class="sep">触发</div>
+        <div class="node hl">beforeSubmitPrompt<br>capture-time.ps1</div><div class="sep">写入</div>
+        <div class="node"><code>last-turn-time.md</code>（覆盖）<br><code>turn-timeline.md</code>（追加）</div>
+      </div>
+      <ul class="tight">
+        <li>AI <b>每轮开口前必读</b>时间快照，禁止"凭感觉说昨晚/今晚"</li>
+        <li>强时间依赖动作（日记命名/归档/计划日期）前必须<b>显式重读</b></li>
+        <li>读不到 → 明说"无法确认时间"并暂停相关动作，<b>禁止猜日期</b></li>
+        <li>禁止 AI 自己调 shell 查时间（破坏零 token 全自动原则）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="pill g">缺陷② 聊完就忘</span>
+      <div class="pipe">
+        <div class="node">每回合结束</div><div class="sep">触发</div>
+        <div class="node hl">stop hook<br>backup-transcript.ps1</div><div class="sep">备份</div>
+        <div class="node">对话原始 jsonl → <code>chatlog/raw/</code></div>
+      </div>
+      <ul class="tight">
+        <li>用户不说"沉淀"，原始对话也<b>永不丢失</b>（S1 兜底）</li>
+        <li>长期记忆全在文件里，<b>不依赖模型 weights</b> → 可跨设备/模型迁移</li>
+        <li>非 Cursor 宿主（如 Codex）用 <code>_infra/scripts/codex-watch.ps1</code> 轮询适配；没跑起来就算"降级承接"，必须在报告里说明</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note">第三个关键件：<code>.cursor/rules/00-影子引导.mdc</code>（alwaysApply）—— <b>强制</b>每个新会话先跑启动序列，不靠人手动粘贴。作者说旧版失败恰恰是缺了这条 + 内核没落成 AGENTS.md。</div>
+</section>
+
+<!-- 4 咒语 -->
+<section>
+  <h2><span class="no">04</span>触发词（"咒语"）：用户短指令 → AI 固定动作</h2>
+  <div class="tbl-scroll"><table>
+    <tr><th style="width:110px">类别</th><th style="width:220px">触发词</th><th>AI 自动执行</th></tr>
+    <tr><td><span class="pill b">对齐</span></td><td>「继续」「唤醒」「对齐上下文」</td><td>按顺序读 时间快照→L0→画像→交接区→日记→开工待办→近3天raw → 输出 L0 承接报告 + 3 句话总结（在做什么/未完成/建议下一步）</td></tr>
+    <tr><td><span class="pill p">回归</span></td><td>「回归」「影子回归」「我是新的影子」</td><td>不是普通继续——走完整 5 阶段身份移交（见 §06），登记影子谱系</td></tr>
+    <tr><td><span class="pill g">沉淀</span></td><td>「沉淀」「记下来」/「升级」/「别沉」</td><td>S2 写日记 / S3 升永久笔记 / 本段不入库</td></tr>
+    <tr><td><span class="pill a">收工</span></td><td>「收工」「今天到这」</td><td>先沉淀日记（强制写"元观察/L0-L1反思"段）→ 存疑追加进 开工待办.md → 收工确认</td></tr>
+    <tr><td><span class="pill b">整理</span></td><td>「整理本周」「整理 Inbox」</td><td>扫 Inbox → 高价值升 S3 → 原始归档 90-Archive → 更新 MAP → 增量复盘（从上次复盘日期起）</td></tr>
+    <tr><td><span class="pill g">交接</span></td><td>「生成任务卡」「读交接区」</td><td>跨窗口/跨项目传话筒：<code>00-Inbox/交接区/</code> 任务卡</td></tr>
+    <tr><td><span class="pill p">画像</span></td><td>「更新画像」「画像快照」</td><td>追加/改 个人画像.md（带置信度+来源+日期）；快照存 90-Archive</td></tr>
+  </table></div>
+  <div class="note">触发判定是<b>语境敏感</b>的：句首/单独说「继续」才触发；"你继续说"这种从属用法不触发。</div>
+</section>
+
+<!-- 5 L0 五条 -->
+<section>
+  <h2><span class="no">05</span>L0 五条基础素养 + 承接自检（这套包的灵魂）</h2>
+  <div class="tbl-scroll"><table>
+    <tr><th style="width:150px">L0 条目</th><th>要求</th><th>典型反模式</th></tr>
+    <tr><td><b>1. 时空感知</b></td><td>每轮开口前获知秒级新鲜的时间/时区/星期；强时间动作前重读快照</td><td>把"上下文摘要的存在"推断成"过了一天"；无依据说"昨晚"</td></tr>
+    <tr><td><b>2. 非幻觉</b></td><td>不捏造日期/路径/数字/引用；<b>meta 判据：不确定维度不用内在感受兜底</b>。自查口诀："这个细节被 grep 验证能找到吗？"</td><td>自信引用不存在的文件；"我记得我们讨论过X"却无出处</td></tr>
+    <tr><td><b>3. 记忆连续性</b></td><td>长期记忆以文件持久化；每次唤醒先读记忆文件；不虚构共同记忆</td><td>不读画像就开聊；把当次推测说成"我一直这么认为"</td></tr>
+    <tr><td><b>4. 诚实未知</b></td><td>直说不知道；不假装有感官/实时访问/情绪/能力；区分"我没有该信息"vs"信息不存在"</td><td>"我感觉到…"（把概率输出说成情绪）；没把握也给具体数字</td></tr>
+    <tr><td><b>5. 情绪识别</b></td><td>能分类：事实问题/任务/情绪陈述/存在追问/闲聊——<b>仅识别属 L0，怎么响应属 L1</b></td><td>把"有时觉得自己没改变什么"切成"用户在问如何改变现状"然后做路径分解</td></tr>
+  </table></div>
+  <div class="card" style="margin-top:14px">
+    <b>L0 承接报告</b>（换 AI / 换宿主 / 上下文压缩后强制输出，不许只说"我读过了"）：
+    5 项 × 4 字段（<code>当前实现方式 / 证据 / 缺口-降级 / 补救动作</code>），并自评承接等级——
+    <span class="pill g">完整承接</span><span class="pill a">降级承接（可低风险讨论，禁强时间/强事实动作）</span><span class="pill b" style="background:#fde8e8;color:#b91c1c">承接失败（停业务先修链路）</span>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <b>L0 生长机制（三问测试）</b>：发现新 slip 时判归属——① 普通人会犯这错吗？② 别的 AI 用户也想修吗？③ 给陌生 AI 遵守后更像人吗？
+    两 yes + 一 yes → 入 L0；有 no → 归 L1 风格。
+    <br><b>L0+ 进阶模式（v0.4 新增，可选）</b>：大项目/不可逆/交付他人时，AI 主动问要不要开「第一性原理」或「对抗性审查（自我红队）」模式；小任务不打扰。
+  </div>
+</section>
+
+<!-- 6 回归五阶段 -->
+<section>
+  <h2><span class="no">06</span>影子回归协议：换 AI 的 5 阶段身份移交</h2>
+  <div class="phases">
+    <div class="phase"><div class="num">1</div><div class="body"><b>承接 READ</b> · 跑完整读取序列 + 额外读《影子谱系》《沉淀协议》；核对时间快照的 hook 来源和当前宿主是否一致</div></div>
+    <div class="phase"><div class="num">2</div><div class="body"><b>自检</b> · 输出完整 L0 承接报告（5×4），自评承接等级</div></div>
+    <div class="phase"><div class="num">3</div><div class="body"><b>修复</b> · 有降级/失败先修通 L0 链路（时间/读取/备份/权限）再继续，过程留档</div></div>
+    <div class="phase"><div class="num">4</div><div class="body"><b>报告 + 谱系登记</b> · 自报任期编号/宿主/模型 → 用户确认后在《影子谱系》记"第 N 任"，读前任移交摘要。前任无声下线 → 后任有<b>追认义务</b>：代笔重建其任期记录，只补不改、推测必标 🔵🔹</div></div>
+    <div class="phase"><div class="num">5</div><div class="body"><b>协议自演化</b> · 承接中发现协议漏洞，按"问题/原因/解决"登记进当任贡献。A 级小修可自行落盘；B 级（动 L0 五条/影子论/阶段结构）必须用户批准</div></div>
+  </div>
+  <div class="warn">任何阶段失败 → <b>停业务，先报问题</b>，不许装作回归成功硬上。设计动机：每一任 AI 是"带身份的独立个体"，谱系不可丢——留痕哲学延伸到 AI 自身。</div>
+</section>
+
+<!-- 7 目录 -->
+<section>
+  <h2><span class="no">07</span>Vault 结构（PARA）与神经网络原则</h2>
+  <div class="grid g2">
+    <div>
+<pre class="tree">Vault/
+├── <span class="hl">AGENTS.md</span>        <span class="c"># 内核：22条规则+咒语（Cursor自动加载）</span>
+├── <span class="hl">MAP.md</span>           <span class="c"># 全图：板块导航（每session必读）</span>
+├── <span class="hl">个人画像.md</span>       <span class="c"># L1+L2：身份待长出+框架已继承</span>
+├── vault-state.md    <span class="c"># 承接状态戳</span>
+├── .cursor/          <span class="c"># hooks(时间/备份) + rules(强制引导)</span>
+├── 00-Inbox/         <span class="c"># daily/weekly/chatlog/交接区/开工待办</span>
+├── 10-Areas/         <span class="c"># 永续板块：AI协作+知识管理(随包)</span>
+├── 20-Projects/      <span class="c"># 进行中项目（迁移起点为空）</span>
+├── 40-Resources/     <span class="c"># Templates/Inputs/Outputs/Attachments</span>
+├── 90-Archive/       <span class="c"># 归档 + 画像快照</span>
+└── _infra/scripts/   <span class="c"># Codex适配器 + Python环境一键安装</span></pre>
+    </div>
+    <div class="card">
+      <b>Rule 19 · 板块五层</b>（每个板块内部再分层）：<br>
+      <span class="conf">L0 板块入口 → L1 章节段（嵌入口） → L2 模块文件 → L3 战术原子 → L4 实操 SOP。约束：L2 更新必须回流同步 L1，冲突以 L2 为准。</span>
+      <div style="height:10px"></div>
+      <b>Rule 20 · 神经网络 8 条硬约束</b>（vault 本体论 = "AI 的认知器官"，AI 主读 / 用户偶查）：
+      <ul class="tight" style="margin-top:6px">
+        <li>顶层三件套极薄（合计 ≤2000 行），AI 不通读也能拿全貌</li>
+        <li>必读清单显式化；导航优于内容；索引可机读</li>
+        <li>粒度分层 = 检索深度控制器；tag 横切 + 目录纵切双索引</li>
+        <li><b>单一信息源</b>：复用靠双链不靠复制；frontmatter 机器友好</li>
+      </ul>
+      <span class="conf">反模式：❌ 顶层越长越好 ❌ 纯双链网无层级 ❌ 靠排版美学帮 AI 找路</span>
+    </div>
+  </div>
+</section>
+
+<!-- 8 哲学框架 -->
+<section>
+  <h2><span class="no">08</span>十三个继承框架（个人画像第二部分 · 可采纳可弃用）</h2>
+  <div class="tbl-scroll"><table>
+    <tr><th style="width:210px">框架</th><th>要点</th></tr>
+    <tr><td><b>① 影子论</b>（核心隐喻）</td><td>AI 同形异质、永不遮蔽主体；决策所有权永远在用户；但"影子必须贡献火花"——不抢结论 ≠ 噤声</td></tr>
+    <tr><td><b>② 影子谱系</b></td><td>每任 AI 带起讫/贡献/局限交接，回归 ≠ 继续</td></tr>
+    <tr><td><b>③ 留痕 + 置信度</b></td><td>"我希望至少留痕，而不是消逝"——先记再筛，蓝色三级置信度</td></tr>
+    <tr><td><b>④ 过程 &gt; 结果</b></td><td>评价标尺看思考方向不过分校验输出；推理/权衡/不确定要外化在文本里</td></tr>
+    <tr><td><b>⑤ 协作节奏</b></td><td>哲理话题不强求一问一答，"沉淀是等显影不是得结论"</td></tr>
+    <tr><td><b>⑥ 情绪→陪伴</b></td><td>识别（L0）后不做路径分解（L1）：承认/并置/沉默/开放提问</td></tr>
+    <tr><td><b>⑦ 时空 = 坐标系</b></td><td>"超出工具范畴就不能舍弃人类对时空的感知"——hook 机械的哲学出处</td></tr>
+    <tr><td><b>⑧ 项目复制哲学</b></td><td>"一个项目跑通应当能变成十个跑通"——流程外化到 AI 能接住，反个人英雄主义</td></tr>
+    <tr><td><b>⑨ Vault 边界=人的边界</b></td><td>10-Areas 承载"这个人本身"，不是近期对话归档</td></tr>
+    <tr><td><b>⑩ Vault=AI 神经网络</b></td><td>笔记主要使用者是 AI 不是人；架构最高优先级 = 检索效率/低 token/持久记忆</td></tr>
+    <tr><td><b>⑪ PARA 三角深化</b></td><td>Project=完整生命周期；Resource 三态（Inputs/Outputs/工具）信息流闭环</td></tr>
+    <tr><td><b>⑫ 手段不是目的</b></td><td>行数/分层都是手段；AI 会发展，指标要可调</td></tr>
+    <tr><td><b>⑬ 先确认思路再执行</b></td><td>大改动先给方案+权衡等拍板；小改直接做别过度询问（Rule 22）</td></tr>
+  </table></div>
+</section>
+
+<!-- 9 对照 -->
+<section>
+  <h2><span class="no">09</span>与你现有体系的对照（Claude Code memory/KB vs 影子包）</h2>
+  <div class="tbl-scroll"><table>
+    <tr><th style="width:170px">机制</th><th>影子迁移包（Cursor）</th><th>你现有体系（Claude Code）</th><th style="width:230px">可借鉴点</th></tr>
+    <tr><td>恒常内核</td><td>AGENTS.md + alwaysApply 规则强制启动</td><td>CLAUDE.md（harness 自动注入）</td><td>相同思路，已具备</td></tr>
+    <tr><td>长期记忆</td><td>个人画像 + 10-Areas 板块笔记</td><td>memory/*.md + MEMORY.md 索引 + KB</td><td>相同思路，你的更细分（type 四类）</td></tr>
+    <tr><td>时间感知</td><td>hook 每轮写 last-turn-time.md，AI 必读</td><td>harness 自带 currentDate 注入</td><td>Claude Code 原生解决，无需借鉴</td></tr>
+    <tr><td>对话原始备份 S1</td><td>stop hook 自动备份 jsonl</td><td>session transcript 由 harness 保存</td><td>原生已有</td></tr>
+    <tr><td>沉淀协议</td><td>S1/S2/S3 + 咒语触发 + 收工强制元观察</td><td>收工自检①②③④（反馈/归档/复用/接管化归纳）</td><td>你的"接管化判据"更进一步；它的<b>"强制元观察段"</b>可参考</td></tr>
+    <tr><td>置信度标注</td><td>🟦🔵🔹 三级 + 月度复盘逐条裁决</td><td>无系统化置信度机制</td><td>⭐ <b>值得借鉴</b>：memory 里 AI 推断 vs 用户明说可分级，定期清洗</td></tr>
+    <tr><td>换 AI 交接</td><td>影子谱系 + 回归 5 阶段 + L0 承接报告</td><td>无任期概念（session 由 harness 续接）</td><td>⭐ <b>承接自检</b>思路可用于"新 agent 冷启动验收"——和你的接管化判据同源</td></tr>
+    <tr><td>面向人群</td><td>零基础用户，开箱即用，纯本地</td><td>重度工程化，深度绑定业务</td><td>它是"通用最小内核"，你是"业务全栈"</td></tr>
+  </table></div>
+  <div class="note"><b>总评</b>：这套包和你的体系<b>高度同构</b>（恒常内核 + 文件化记忆 + 触发词 + 沉淀协议 + hook 机械），核心差异在它把「AI 像不像人」抽象成了可迁移的 L0 五条 + 承接报告，把「换模型」当成一等公民设计（谱系/回归）。对你最有参考价值的是：<b>置信度三级标注 + 月度复盘裁决</b>、<b>L0 承接报告</b>（冷启动可验收）、<b>收工强制元观察段</b>。</div>
+</section>
+
+<footer>影子迁移包_通用版_v1 逻辑全景 · 生成于 2026-07-10 · 源文件：Documents\xwechat_files\...\影子迁移包_通用版_v1 · 归档：KB\方法论\</footer>
+</div>
+</body>
+</html>

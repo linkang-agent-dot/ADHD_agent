@@ -134,8 +134,11 @@ def payout_bj(kutc):
 
 from collections import Counter
 rows_overview=[]; sections=[]; total_part=0
+_settled=set(_dash.get("settled",[]))  # ★已发奖场次跳过:不重查datain/不重生成csv(防错误settle_from覆盖存档·2026-07-10补,脚注设计一直没实现)
 for m in sched:
     a,b=m["a_code"],m["b_code"]; key=m["key"]; label=f"{ZH[a]} vs {ZH[b]}"
+    if key in _settled:
+        rows_overview.append((label,"—","—","—","—","—","已发奖·跳过")); continue
     comp,win,score,pens=result_of(m); payT=payout_bj(m["kickoff_utc"])
     if not comp:
         rows_overview.append((label,score,"—","—",payT,"—","待赛后")); continue

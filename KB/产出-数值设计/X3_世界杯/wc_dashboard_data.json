@@ -1,5 +1,5 @@
 {
-  "_说明": "赛程时间已按ESPN权威修正(2026-06-28)。schedule随轮次更新;settled发完奖加key;env看板拉哪个iGame环境。时间UTC(ET=EDT=UTC-4→UTC+4)。结盘=开球-10min。",
+  "_说明": "赛程时间已按ESPN权威修正(2026-06-28)。schedule随轮次更新;settled发完奖加key;env看板拉哪个iGame环境。时间UTC(ET=EDT=UTC-4→UTC+4)。结盘=开球-10min。 | 2026-07-10: settle_from切QF开盘日7/9(隔离R16老下注·礼包id跨轮复用); settled=R16八场(已发过·生成器跳过)",
   "env": "prod",
   "schedule": [
     {
@@ -111,6 +111,15 @@
       "result": null
     }
   ],
-  "settled": [],
-  "settle_from": "2026-07-03"
+  "settled": [
+    "R16-CANvMAR",
+    "R16-PARvFRA",
+    "R16-BRAvNOR",
+    "R16-MEXvENG",
+    "R16-PORvESP",
+    "R16-USAvBEL",
+    "R16-ARGvEGY",
+    "R16-SUIvCOL"
+  ],
+  "settle_from": "2026-07-09"
 }

@@ -11,14 +11,14 @@ GLB_DIR = os.path.join(SCRATCH, "glb")
 os.makedirs(GLB_DIR, exist_ok=True)
 FBX2GLTF = os.path.join(SCRATCH, "FBX2glTF.exe")
 
-GAPS = ['MonkeyKingSkin']
+GAPS = ['MachCitySkin2026']
 
 
 def all_fbx(skin_dir):
     out = []
     for dp, _, fns in os.walk(skin_dir):
         for f in fns:
-            if f.lower().endswith('.fbx') and '@' not in f:
+            if f.lower().endswith('.fbx') and '@' not in f and 'shadow' not in f.lower():
                 out.append(os.path.join(dp, f))
     def key(p):
         b = os.path.basename(p)

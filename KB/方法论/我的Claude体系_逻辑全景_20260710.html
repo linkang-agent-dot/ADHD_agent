@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的 Claude 体系 · 逻辑全景</title>
+<style>
+  :root{
+    --bg:#f7f8f6; --card:#ffffff; --ink:#1d2b20; --sub:#5c6b60;
+    --green:#15803d; --green-soft:#e9f5ec; --green-mid:#8fce9f;
+    --blue:#2563eb; --blue-soft:#eaf1fe;
+    --amber:#b45309; --amber-soft:#fef3e2;
+    --red:#b91c1c; --red-soft:#fdeaea;
+    --purple:#7c3aed; --purple-soft:#f1eafe;
+    --line:#dee6e0; --mono:Consolas,'Courier New',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Microsoft YaHei','PingFang SC',sans-serif;line-height:1.65;padding:32px 20px 80px}
+  .wrap{max-width:1100px;margin:0 auto}
+  header{margin-bottom:28px}
+  h1{font-size:26px;letter-spacing:.5px}
+  .subtitle{color:var(--sub);margin-top:6px;font-size:14px}
+  .tagline{margin-top:14px;background:var(--card);border-left:4px solid var(--green);padding:12px 16px;border-radius:6px;font-size:15px;box-shadow:0 1px 3px rgba(30,60,40,.06)}
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 18px;text-align:center;min-width:120px}
+  .stat .n{font-size:22px;font-weight:800;color:var(--green);font-family:var(--mono)}
+  .stat .l{font-size:12px;color:var(--sub)}
+  section{margin-top:34px}
+  h2{font-size:19px;padding-bottom:8px;border-bottom:2px solid var(--line);margin-bottom:16px}
+  h2 .no{color:var(--green);font-family:var(--mono);margin-right:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(30,60,40,.05)}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--green-soft);font-weight:600}
+  .tbl-scroll{overflow-x:auto;border-radius:8px;border:1px solid var(--line)}
+  .tbl-scroll table{border:none}
+  code{font-family:var(--mono);background:#eef2ef;padding:1px 6px;border-radius:4px;font-size:12.5px;color:#374b3e}
+  .pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;margin-right:6px}
+  .pill.g{background:var(--green-soft);color:var(--green)}
+  .pill.b{background:var(--blue-soft);color:var(--blue)}
+  .pill.a{background:var(--amber-soft);color:var(--amber)}
+  .pill.r{background:var(--red-soft);color:var(--red)}
+  .pill.p{background:var(--purple-soft);color:var(--purple)}
+  .flow{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch}
+  .flow .step{flex:1;min-width:160px;background:var(--card);border:1.5px solid var(--green-mid);border-radius:10px;padding:12px 14px}
+  .flow .step .t{font-weight:700;color:var(--green);font-size:14.5px}
+  .flow .step .d{font-size:12.5px;color:var(--sub);margin-top:5px}
+  .flow .step .k{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:11.5px;background:var(--green-soft);color:var(--green);padding:2px 8px;border-radius:5px}
+  .arrow{align-self:center;color:var(--green-mid);font-size:20px;font-weight:700}
+  .layer{border-radius:10px;padding:14px 16px;border:1px solid var(--line)}
+  .layer h3{font-size:15px;margin-bottom:6px}
+  .layer p{font-size:13px;color:var(--sub)}
+  .layer .file{font-family:var(--mono);font-size:12px;margin-top:8px;color:#4b5f52}
+  .t1{background:var(--green-soft);border-color:var(--green-mid)}
+  .t2{background:var(--blue-soft)}
+  .t3{background:var(--purple-soft)}
+  .pipe{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;margin:8px 0}
+  .pipe .node{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+  .pipe .node.hl{border-color:var(--green);background:var(--green-soft);font-weight:600}
+  .pipe .sep{color:var(--green-mid);font-weight:700}
+  .note{font-size:13px;color:var(--sub);margin-top:10px}
+  .note b{color:var(--amber)}
+  ul.tight{padding-left:20px;font-size:13.5px}
+  ul.tight li{margin-bottom:5px}
+  .warn{background:var(--amber-soft);border-left:4px solid var(--amber);padding:10px 14px;border-radius:6px;font-size:13.5px;margin-top:12px}
+  .defense{display:flex;gap:12px;flex-wrap:wrap}
+  .defense .col{flex:1;min-width:280px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .defense .col h3{font-size:14.5px;margin-bottom:8px}
+  .defense .col.pre h3{color:var(--blue)} .defense .col.pre{border-top:3px solid var(--blue)}
+  .defense .col.mid h3{color:var(--red)} .defense .col.mid{border-top:3px solid var(--red)}
+  .defense .col.post h3{color:var(--green)} .defense .col.post{border-top:3px solid var(--green)}
+  footer{margin-top:50px;color:var(--sub);font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>🌳 我的 Claude 体系 · 逻辑全景</h1>
+  <div class="subtitle">Claude Code + CLAUDE.md 内核 + 文件化 memory + Obsidian KB + skill 工具链 + hook 守门 · 截至 2026-07-10 · 与《影子迁移包_逻辑全景》同款结构，可对照阅读</div>
+  <div class="tagline">
+    <b>一句话</b>：一套<b>业务全栈的生产级 AI 工作系统</b>——三游戏（P2/X2/X3）的配置、数值、换皮、部署、数据分析全链路知识
+    沉淀成「薄索引 + 199 个事实文件 + KB 资产库」，固化成 50+ 可执行 skill，由三个 hook 和独立验收 agent 守门，
+    再由后台定时任务让它自己转。核心标准不是"记得住"，而是<b>「新 agent 冷启动能直接接管」</b>。
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="n">199</div><div class="l">memory 事实文件</div></div>
+    <div class="stat"><div class="n">50+</div><div class="l">自定义 skill</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">守门 hook</div></div>
+    <div class="stat"><div class="n">5类</div><div class="l">quality-gate 验收清单</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">游戏项目全链路</div></div>
+    <div class="stat"><div class="n">30+</div><div class="l">feedback 行为规则</div></div>
+  </div>
+</header>
+
+<!-- 1 核心闭环 -->
+<section>
+  <h2><span class="no">01</span>核心闭环：一个任务的一生</h2>
+  <div class="flow">
+    <div class="step"><div class="t">触发路由</div><div class="d">关键词命中 → 先读对应 KB/memory 再动手；操作词命中 → 先调对应 skill</div><div class="k">CLAUDE.md 路由表</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="t">操作前防线</div><div class="d">追引用链≥2层 / 查分支 / 删除先出清单 / SheetID 现解</div><div class="k">铁律</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="t">执行</div><div class="d">优先用固化 skill/脚本，不现写一次性代码；X3 配置隔离闸拦截误改</div><div class="k">PreToolUse hook</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="t">操作后收口</div><div class="d">端到端反查（GSheet+TSV+分支三层）/ jolt 自动验证 / 双向丢行审计</div><div class="k">验证闭环</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="t">收工自检 ①②③④</div><div class="d">反馈循环 → 归档 → 复用固化 → 接管化归纳（默认做不问）</div><div class="k">Stop hook 兜底</div></div>
+  </div>
+  <div class="note">周期兜底：<b>周五 17:00 周报</b>随 token 报告出「本周新增知识清单」（知识|模块|来源）给用户过目——逐次不打扰、每周一次把关。</div>
+</section>
+
+<!-- 2 记忆架构 -->
+<section>
+  <h2><span class="no">02</span>记忆三层：薄索引 → 事实文件 → 资产库</h2>
+  <div class="grid g3">
+    <div class="layer t1"><h3>第1层 · 常驻内核（每 session 注入）</h3>
+      <p><b>CLAUDE.md</b>：行为规范 + 项目路由表 + 铁律。<b>MEMORY.md</b>：199 条记忆的一行式索引（指针+钩子语，明细绝不进索引）。合计控制在"哈勃望远镜取景器"体量。</p>
+      <div class="file">~\CLAUDE.md + memory\MEMORY.md</div></div>
+    <div class="layer t2"><h3>第2层 · 事实文件（按需加载）</h3>
+      <p>199 个单主题 md，frontmatter 四类型：<b>reference</b>（链路/口径/坑）、<b>feedback</b>（行为纠偏，带 Why+How）、<b>project</b>（在途案子+唯一入口）、<b>workflow</b>（流程规范）。一文件一事实，双链互指。</p>
+      <div class="file">memory\*.md（type: user/feedback/project/reference）</div></div>
+    <div class="layer t3"><h3>第3层 · KB 资产库（Obsidian）</h3>
+      <p>产出归档地：数据分析报告、数值设计三件套、换皮档案、方法论、美术图库。5 维标签体系。<b>memory 记"怎么干"，KB 存"干出来的东西"</b>。</p>
+      <div class="file">C:\ADHD_agent\KB\（产出-*/方法论/换皮档案）</div></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <b>检索路径</b>：
+    <div class="pipe">
+      <div class="node hl">对话关键词<br><span style="font-size:11px">P2/X2/X3/节日/SQL/BUG…</span></div>
+      <div class="sep">路由</div>
+      <div class="node">CLAUDE.md 触发表 → 指定 memory/KB 文件</div>
+      <div class="sep">下钻</div>
+      <div class="node">事实文件内的双链 [[xxx]] + 唯一入口文档</div>
+      <div class="sep">落地</div>
+      <div class="node hl">skill / 脚本直接执行</div>
+    </div>
+    <div class="note">和影子包 Rule 20「顶层极薄+导航优于内容+单一信息源」同构，但在 199 文件规模上实跑过——索引一行一指针是硬规矩，明细进索引就是事故。</div>
+  </div>
+</section>
+
+<!-- 3 机械层 -->
+<section>
+  <h2><span class="no">03</span>机械层：3 个 hook + 后台自动任务</h2>
+  <div class="grid g3">
+    <div class="card">
+      <span class="pill b">SessionStart</span><b>check_flags.ps1</b>
+      <p class="note" style="margin-top:6px">开session 检查旗标/待办状态，把该带进上下文的提醒注入。</p>
+    </div>
+    <div class="card">
+      <span class="pill r">PreToolUse</span><b>x3_config_isolation_gate.py</b>
+      <p class="note" style="margin-top:6px">拦在 Edit/Write/Bash 前面的<b>物理闸门</b>：X3 配置仓隔离检查，防止多 agent / 错分支误写生产配置——不靠 AI 自觉，靠拦截。</p>
+    </div>
+    <div class="card">
+      <span class="pill g">Stop</span><b>pending_verify_gate.py</b>
+      <p class="note" style="margin-top:6px">收工时的质检门：待验收产物未过 checklist 就拦停。配 5 类清单：config / design-doc / design-merit / i18n / numerical。</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <b>后台自动任务</b>（Windows 计划任务 + 无头 claude CLI）：策略游戏雷达（每日）、竞品监控日报、BUG 巡检（工作日每小时）、token 周报+归纳清单（周五）、晨报/日报规划链路。
+    <span class="note">→ 影子包停在"AI 记得住"，这一层解决的是"<b>AI 自己转起来</b>"。清单见 memory <code>reference_background_scheduled_tasks</code>。</span>
+  </div>
+</section>
+
+<!-- 4 路由表 -->
+<section>
+  <h2><span class="no">04</span>触发路由：关键词 → 知识库 / 操作词 → skill</h2>
+  <div class="tbl-scroll"><table>
+    <tr><th style="width:100px">类别</th><th style="width:240px">触发词（节选）</th><th>先做什么</th></tr>
+    <tr><td><span class="pill g">P2</span></td><td>P2、机甲、P2养成、P2节日</td><td>读 P2 养成 KB + config library → skill：<code>p2-x2-reskin</code> / 本地化</td></tr>
+    <tr><td><span class="pill g">X2</span></td><td>X2、巨猿、X2配置、DK</td><td>读 X2 KB；🔒铁律：SheetID 必 <code>resolve</code> 现解禁硬抄 → skill：导表 / DK管理 / 本地化</td></tr>
+    <tr><td><span class="pill g">X3</span></td><td>X3、TimeCycle、改配置、合并、部署、测试环境</td><td>读 X3 KB → skill：<code>x3-config-export</code>（直改tsv）/ <code>test-env-prepare-x3</code> / 合并走官方 merge skill三铁律</td></tr>
+    <tr><td><span class="pill b">通用域</span></td><td>节日设计 / Jira / SQL / 补发邮件 / 前端GUI</td><td>各自 reference 知识库（活动形式39种图谱 / 数仓口径 / GUI控件模式库唯一归口）</td></tr>
+    <tr><td><span class="pill a">强制skill</span></td><td>改BUG / 活动检查 / 上活动</td><td>必先调 <code>systematic-debugging</code> / <code>activity-check</code> / <code>igame-actv</code>（最易漏调三件）</td></tr>
+  </table></div>
+  <div class="note">对应影子包的「咒语系统」——但它的咒语管<b>记忆生命周期</b>（继续/沉淀/收工），你的路由管<b>业务域装载</b>（防止拿错知识干错活，比如 P2 的 SheetID 喂给 X2 会静默返错数据）。</div>
+</section>
+
+<!-- 5 防线 -->
+<section>
+  <h2><span class="no">05</span>三段防线 + 独立验收（判定与执行物理分离）</h2>
+  <div class="defense">
+    <div class="col pre"><h3>⛔ 操作前</h3>
+      <ul class="tight">
+        <li>写配置前：先追<b>完整引用链≥2层</b></li>
+        <li>改 X3 / 提配置仓前：先 <code>git branch --show-current</code></li>
+        <li>删文件前：先出「保留/删除」清单等确认</li>
+        <li>合并开工先验 merge driver 非空（空=静默丢行）</li>
+        <li>大改动先给方案+影响范围等拍板</li>
+      </ul></div>
+    <div class="col mid"><h3>🔒 操作中（铁律）</h3>
+      <ul class="tight">
+        <li>X2 SheetID 一律 resolve 现解，<b>禁硬抄</b></li>
+        <li>X3 直改 tsv 不碰 xlsx；禁对已改表重跑生成</li>
+        <li>合并禁批量选边（--ours/--theirs）</li>
+        <li>PreToolUse 闸门物理拦截 X3 配置误写</li>
+        <li>生产操作先报再动；补偿文案先确认</li>
+      </ul></div>
+    <div class="col post"><h3>✅ 操作后</h3>
+      <ul class="tight">
+        <li>端到端反查：GSheet + 本地 TSV + 分支推送三层一致</li>
+        <li>push 后 <code>jolt_verify.py</code> 自动验证构建</li>
+        <li>合并必跑<b>双向丢行审计</b> + ExportTable exit0</li>
+        <li>配置写完反查上下游引用</li>
+      </ul></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <b>独立验收器</b>：<code>task-checker</code>（沙箱只读，按 type 读对应清单跑 block/warn 检查，不写产物不动 marker）+ <code>l1-game-ux-checker</code> + Stop hook quality-gate。
+    <span class="note">设计原则：<b>不信任执行者的自评</b>——干活的 agent 和判定的 agent 物理分离。对比影子包的「L0 承接报告」是自我声明，这里是第三方守门。</span>
+  </div>
+</section>
+
+<!-- 6 沉淀标准 -->
+<section>
+  <h2><span class="no">06</span>沉淀标准：接管化归纳（体系的灵魂）</h2>
+  <div class="card">
+    <b>收工自检四步（默认动作，不问用户）</b>：
+    <div class="pipe">
+      <div class="node">① 反馈循环<br><span style="font-size:11px">新规律/坑/方法论 → 当场进 memory</span></div>
+      <div class="sep">→</div>
+      <div class="node">② 归档<br><span style="font-size:11px">产物 → KB 固定路径</span></div>
+      <div class="sep">→</div>
+      <div class="node">③ 复用<br><span style="font-size:11px">工具固化进知识库，不留一次性脚本</span></div>
+      <div class="sep">→</div>
+      <div class="node hl">④ 接管化归纳<br><span style="font-size:11px">①②③兜"有没有沉淀"，④兜"能不能被接管"</span></div>
+    </div>
+    <div style="margin-top:10px;font-size:13.5px">
+      <b>判据</b>：一个新 agent 冷启动，能否在「<b>修BUG / 接管模块 / 换皮</b>」任一入口立刻拿到全部 keypoint——不能就当场归纳。<br>
+      <b>案子级三件套</b>：决策记录（按模块·为什么+被否决方案）/ 换皮清单（骨vs皮·copy-and-swap）/ 产物目录 FINAL·废弃标注，挂进该案子<b>唯一入口</b>文档。<br>
+      <span class="pill r">禁止</span>只留时间线流水账——"编年史给旁观者，不给接手人；理由埋在时间线里 = 做完就没了"。
+    </div>
+  </div>
+  <div class="warn"><b>与影子包 S3 的本质差</b>：它的永久层标准是"写成带双链的永久笔记"（记忆达标）；这里的标准是"陌生 agent 能凭它直接干活"（交接达标）。它的回归协议移交的是 AI 人格，这里移交的是整条业务。范式实例：<code>KB\产出-数值设计\X3_世界杯\</code>。</div>
+</section>
+
+<!-- 7 工具资产 -->
+<section>
+  <h2><span class="no">07</span>工具资产层：知识的最终形态是可执行</h2>
+  <div class="grid g2">
+    <div class="card">
+      <b>50+ skill 按域分布（节选）</b>
+      <ul class="tight" style="margin-top:8px">
+        <li><b>X3 链路</b>：config-export（改tsv+导表+验证一条龙）/ test-env-prepare（部署/GM/造数据）/ translation-automatic / numerical-design / x3-media / igame-x3-activity-deploy</li>
+        <li><b>X2/P2 链路</b>：p2-x2-reskin / x2-dk-manager / x2-kadmin / 双语本地化 / x2-art-requirement</li>
+        <li><b>运营平台</b>：igame-skill（32模块1090接口）/ igame-gm-send / bulk-mail-reissue</li>
+        <li><b>数据</b>：datain-skill（Trino SQL）/ data-analysis / chart-visualization</li>
+        <li><b>元能力</b>：systematic-debugging / quality-gate / skill-creator / html-deployer</li>
+      </ul>
+    </div>
+    <div class="card">
+      <b>固化脚本（"下次一条命令"）</b>
+      <ul class="tight" style="margin-top:8px">
+        <li><code>deploy_beta.py</code> — beta 部署同批+复查+重试一条命令</li>
+        <li><code>gm_combo.py open-activity</code> — 开活动自动换算服务器时间戳</li>
+        <li><code>jolt_verify.py</code> — 触发导表并自动验证构建</li>
+        <li><code>gsheet_query.py resolve</code> — SheetID 现解（铁律载体）</li>
+        <li>gsheet-toolkit / x3_gm.py / id_merge_3way.py …</li>
+      </ul>
+      <div class="note">沉淀终点不是"下次能读到"，是"下次不用想"。这层影子包完全没有（它只有 2 个 hook + 装环境脚本）。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 对照 -->
+<section>
+  <h2><span class="no">08</span>与影子迁移包对照 · 双向清单</h2>
+  <div class="tbl-scroll"><table>
+    <tr><th style="width:160px">维度</th><th>影子迁移包</th><th>本体系</th><th style="width:110px">谁强</th></tr>
+    <tr><td>定位</td><td>通用最小内核（哲学+人格），L2 留空待长</td><td>业务全栈生产系统，两年真实案例长成</td><td>不同物种</td></tr>
+    <tr><td>知识来源</td><td>框架预设，待用户涌现</td><td>199 条实证：每条铁律背后一次真实翻车</td><td><span class="pill g">本体系</span></td></tr>
+    <tr><td>知识形态</td><td>markdown 笔记（终点=能读到）</td><td>笔记 + 50+ skill + 固化脚本（终点=能执行）</td><td><span class="pill g">本体系</span></td></tr>
+    <tr><td>质量保障</td><td>AI 自评（承接报告是自我声明）</td><td>独立验收 agent + hook 物理闸门，判执分离</td><td><span class="pill g">本体系</span></td></tr>
+    <tr><td>沉淀标准</td><td>S3 永久笔记 + 双链</td><td>接管化判据 + 三件套 + 唯一入口 + 禁流水账</td><td><span class="pill g">本体系</span></td></tr>
+    <tr><td>自动化</td><td>单会话、纯本地、无后台</td><td>后台定时任务 / 无头 CLI / 多 agent worktree</td><td><span class="pill g">本体系</span></td></tr>
+    <tr><td>可分享性</td><td>中性化、开箱即用、可送人</td><td>深度绑定个人业务，不可迁移</td><td><span class="pill b">影子包</span></td></tr>
+    <tr><td>换 AI 交接仪式</td><td>回归 5 阶段 + 谱系 + L0 承接报告</td><td>无任期概念（harness 原生续接）</td><td><span class="pill b">影子包</span>（理念可借）</td></tr>
+    <tr><td>元观察沉淀</td><td>收工强制写"元观察/L0-L1反思"段</td><td>收工自检①有覆盖但非强制段落</td><td><span class="pill b">影子包</span>（微弱）</td></tr>
+    <tr><td>置信度分级</td><td>🟦🔵🔹 + 月度裁决（为"观察人"设计）</td><td>已裁决<b>不引入</b>：实证体系写入即高置信；真正的轴是时效性（已有"用前验证+错即删"）；仅保留"推断必标注未验证"习惯</td><td>—</td></tr>
+  </table></div>
+  <div class="note"><b>关系一句话</b>：影子包 ≈ 本体系的「可分享抽象版」——同构的内核（恒常规则+文件记忆+触发路由+hook机械+沉淀协议），砍掉业务、补上人格哲学。它要长到本体系的状态需再踩两年坑；本体系要变成它那样送人，需要做一次同样的"中性化抽取"。</div>
+</section>
+
+<footer>我的 Claude 体系 · 逻辑全景 · 生成于 2026-07-10 · 数据源：CLAUDE.md / MEMORY.md(199 memories) / settings.json hooks / quality-gate · 归档：KB\方法论\ · 姊妹篇：影子迁移包_逻辑全景_20260710.html</footer>
+</div>
+</body>
+</html>

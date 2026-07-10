@@ -15,11 +15,15 @@ blender.exe -b -P render_gaps.py                          # 失败款兜底（FB
 ```
 脚本内改 ROOT / EXCLUDE / GAPS 即可换项目。输出 `renders/<名字>.png`（512px 透明底）。
 
-## 四个必踩的坑（已在脚本里修好）
+## 五个必踩的坑（已在脚本里修好）
 1. **Unity 贴图 alpha 是遮罩不是透明**：Blender 载入 TGA 后必须 `img.alpha_mode='CHANNEL_PACKED'`，否则 RGB 被 alpha 预乘 → 渲出来全黑。
 2. **EEVEE 无头模式渲黑**：headless 没 GPU 上下文，灯光贴图全失效；必须用 `CYCLES` + `device='CPU'`（24 采样 512px 每个几秒，够快）。
 3. **ASCII FBX Blender 拒导**（老美术资源常见）：`FBX2glTF -b -i x.fbx -o x` 转 glb 再 `import_scene.gltf`。
 4. **带骨骼的 FBX 触发 Blender importer KeyError**（armature_setup bug）+ **`@aim` 后缀是动画文件不是模型**：跳过含 `@` 的 fbx，KeyError 的也走 glb 通道。
+5. **`*Shadow.fbx` 是阴影面片不是模型**：文件名含 shadow 的一律跳过，否则渲出一张平地毯。
+
+## 渲染前先查官方图标（map_dk_icons.py）——多数时候根本不用渲
+P2 每个外显都有官方道具 ICON，渲染只是兜底。反查链：`Res\DisplayKey\Path_Prefab.asset`（key→prefab路径，按路径归到资源文件夹）→ `Path_Icon.asset`（同 key→图标路径）。图标可能在资源目录 / `UI\Sprite\ItemIcon\<key>.png` / 各 Gacha 活动 UI 目录。中文官方名在 `Editor\DisplayKey\Display_Prefab.asset` desc（unicode-escape，`encode('latin-1').decode('unicode_escape')` 解）。
 
 ## 材质绑定策略
 FBX 导入后材质丢贴图引用，按名字匹配：材质名 → `{材质名}_Diffuse*.tga`（startswith → contains → 去 p2_ 前缀 → 全局第一张 Diffuse_High 兜底）。

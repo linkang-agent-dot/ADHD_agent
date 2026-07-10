@@ -15,34 +15,37 @@ OUT = os.path.join(OUT_DIR, "P2主城皮肤图库_资源结构全集.html")
 GROUPS = [
  ("g1", "冬季 / 圣诞", [
    ("CitySkinXmas", "圣诞主城(早期)"),
-   ("ChristmasSkin2024", "圣诞 2024"),
-   ("ChristmasSkin2025", "圣诞 2025"),
-   ("IceTiger2025", "冰虎 2025"),
+   ("ChristmasSkin2024", "圣诞 2024(prefab名是感恩节残留)"),
+   ("ChristmasSkin2025", "圣诞 2025(1/1染/2/2染/3璀璨)"),
  ]),
  ("g2", "春节", [
    ("SpringFestivalSkin2023", "春节 2023"),
    ("SpringFestivalSkin2024", "春节 2024"),
    ("SpringFestivalSkin2025", "春节 2025"),
+   ("IceTiger2025", "春节 2026(冰虎·DK实锤)"),
  ]),
  ("g3", "情人节", [
    ("ValentineDay", "情人节(早期)"),
-   ("ValentineDaySkin", "情人节皮肤"),
-   ("ValentineDaySkin2025", "情人节 2025"),
+   ("ValentineDaySkin", "情人节 2024"),
+   ("ValentineDaySkin2025", "情人节 2025(钥匙/瓶子)"),
    ("Flame_Heart", "炽焰之心"),
+   ("BondsSkin2026", "情人节 2026(新羁绊·光明/黑暗)"),
  ]),
  ("g4", "春季 / 复活节", [
-   ("EasterSkin", "复活节"),
+   ("EasterSkin", "复活节 2024"),
    ("EasterSkin2025", "复活节 2025"),
    ("ColorfulSpringDay", "缤纷春日"),
-   ("MarchCitySkin2026", "三月主城 2026"),
+   ("MonopolySkin2026", "复活节 2026 大富翁(传说/超凡/璀璨·DK实锤)"),
  ]),
  ("g5", "夏日 / 沙滩 / 水上", [
    ("SummerSkin", "夏日(早期)"),
    ("BeachFestival2024", "沙滩节 2024"),
    ("CityHallSwiming", "泳池主城(CityPool)"),
-   ("Mayskin2026", "五月主城 2026"),
-   ("JuneSkin2025", "六月主城 2025"),
-   ("FishingSkin2025", "钓鱼 2025"),
+   ("FishingSkin2025", "钓鱼 2026(DK实锤)"),
+ ]),
+ ("g13", "深海节", [
+   ("JuneSkin2025", "深海节 2025 拼装套装(鲸鱼船)"),
+   ("PirateSkin2026", "深海节 2026「海盗启航」(低级木船/高级黑金)"),
  ]),
  ("g6", "万圣节", [
    ("HalloweenSkin", "万圣节(早期)"),
@@ -55,39 +58,48 @@ GROUPS = [
    ("HarvestHouse", "丰收小屋"),
    ("ThanksGiveSkin2024", "感恩节 2024"),
  ]),
- ("g8", "中式节日 / 神话", [
+ ("g8", "端午", [
    ("DragonBoatFestivalSkin", "端午(早期)"),
    ("DragonBoatFestivalSkin2024", "端午 2024"),
-   ("MidAutumnSkin", "中秋"),
-   ("MonkeyKingSkin", "猴王"),
  ]),
  ("g9", "拓荒节", [
    ("PioneeringFestivalBuildSkin", "拓荒节(早期)"),
    ("PioneeringFestival2024Skin", "拓荒节 2024"),
    ("PioneeringFestival2025Skin", "拓荒节 2025"),
  ]),
- ("g10", "科技 / 太空 / 机甲", [
-   ("SciencesSkin", "科技节(早期)"),
-   ("ScienceSkin2025", "科技节 2025"),
-   ("TopTechnology", "顶尖科技"),
-   ("CityHallMecha", "机甲主城"),
+ ("g10", "登月节 / 太空", [
    ("LandingMoonFestivalSkin", "登月节(早期)"),
    ("LandingMoonFestivalSkin2024", "登月节 2024"),
-   ("PlanetSkin2025", "星球 2025"),
+   ("MidAutumnSkin", "登月节 2025(DK实锤·文件夹名MidAutumn是残留)"),
+   ("PioneeringFestival2026Skin", "登月节 2026·7月 低级/高级(DK实锤·文件夹名Pioneering是残留)"),
+   ("MachCitySkin2026", "登月节 2026·7月 另一模型(DK实锤)"),
  ]),
- ("g11", "周年庆 / 庆典", [
+ ("g15", "科技 / 机甲", [
+   ("SciencesSkin", "科技节 2024"),
+   ("TopTechnology", "顶尖科技"),
+   ("CityHallMecha", "机甲主城"),
+ ]),
+ ("g16", "拼装套装外显(初级/高级/拼装完成三态基地)", [
+   ("ScienceSkin2025", "科技节套装 2025"),
+   ("PlanetSkin2025", "星球套装 25.10"),
+   ("MonkeyKingSkin", "周年悟空套装"),
+   ("MarchCitySkin2026", "坦克套装(DK实锤·文件夹名March是残留)"),
+   ("Mayskin2026", "巨龙套装(DK实锤·文件夹名May是残留)"),
+   ("AugustSkin2026", "爆裂鼓手套装(DK实锤·模型未拼装)"),
+ ]),
+ ("g11", "周年庆 / 音乐节", [
    ("anniversary2024", "周年庆 2024"),
    ("ColorfulCeremony", "缤纷庆典(UiAnniversaryCity)"),
    ("MusicFestivalSkin2025", "音乐节 2025"),
-   ("BondsSkin2026", "羁绊 2026"),
+   ("SeptemberSkin2026", "音乐节 2026·9月(DK实锤)"),
  ]),
  ("g12", "玩法主题 / 专属", [
-   ("MonopolySkin2026", "大富翁 2026"),
-   ("CtiyCarSkin2025", "赛车主城 2025(UiRacecarCity)"),
+   ("CtiyCarSkin2025", "赛车主城(UiRacecarCity)"),
    ("ChidrenMoneyBaseSkin_Lod", "儿童储蓄罐主题"),
-   ("HandofCreation", "创世之手"),
    ("SvipCity", "SVIP 专属主城"),
+   ("VipSkin2026", "VIP 专属 2026"),
    ("KvK5CitySkin", "KvK5 赛季皮肤"),
+   ("KVK6CitySkin", "KvK6 赛季皮肤"),
    ("Kvk3LegendOfTheBlueSea", "KvK3 蓝海传说"),
  ]),
 ]
@@ -95,6 +107,8 @@ GROUPS = [
 EXCLUDED = [
  ("MaincitySkin", "默认主城本体(CityShuttleHall lv1/6/12/18/30)"),
  ("CityHallLV6", "主城 LV6 基础模型"),
+ ("HandofCreation", "创世之手(装饰,非主城皮肤)"),
+ ("JuneSkin2026", "深海节2026装饰 Ui 容器(沙堡/章鱼海盗,无模型)"),
  ("DrillGround", "校场"), ("ResourceStation", "资源站"), ("SurvivorCamp", "幸存者营地"),
  ("TreasureChest", "宝箱"), ("SecurityBox", "保险箱"), ("SecurityBoxMap", "保险箱(大地图)"),
  ("MonkeyNest", "大地图资源点/遗迹(Food/Iron/Mine/Ruins)"), ("WonderCity", "奇观装饰(怪物/树)"),
@@ -149,8 +163,8 @@ pre{background:#2b2f3a;color:#dce3f0;border-radius:8px;padding:12px 16px;font-si
 
 n_skins = sum(len(items) for _, _, items in GROUPS)
 parts.append(f"<h1>P2 主城皮肤图库 · 资源结构全集（{n_skins} 款）</h1>")
-parts.append("""<p class="d">资源实地扫描自 <code>E:\\P2\\client\\client\\Assets\\P2\\Res\\Map\\CityBuildingNew</code>（2026-07-09），只收录<b>主城皮肤</b>（63 个文件夹中排除 11 个功能建筑/基底，见文末）。<br>
-缩略图来源两种（卡片右上角有标注）：<b>游戏内美术图标</b>（34款，皮肤目录 Common/Texture 下的 Sprite PNG，即 DK Icon 用图）；无美术图的 19 款老皮肤用 <b>Blender 无头渲染 FBX 模型</b>直出（Diffuse 贴图 + Cycles，非游戏内实际光照）。</p>""")
+parts.append("""<p class="d">资源实地扫描自 <code>E:\\P2\\client\\client\\Assets\\P2\\Res\\Map\\CityBuildingNew</code>（2026-07-09 · <b>bugfix 分支</b>＝P2 美术真源分支，dev 分支已停更于 2026-05-13），只收录<b>主城皮肤</b>（72 个文件夹排除 13 个非主城皮肤(功能建筑/基底/装饰)，见文末）。<br>
+卡片视觉统一为<b>道具 ICON</b>（DK 系统 <code>Path_Icon.asset</code> 按 key 反查的官方图标，绿标；老皮肤图标多存放在各 Gacha 活动 UI 目录）；2026 下半年 4 款待上线皮肤 DK 未注册无图标，用 <b>Blender 渲染模型</b>兜底（蓝标）。</p>""")
 
 parts.append("""<div class="path">📁 <b>标准资源结构</b>（新式皮肤，2024 起）<pre>CityBuildingNew/{SkinName}/
 ├─ Common/                      Fbx 模型 + 共用贴图（Normal 等）
@@ -193,9 +207,9 @@ for gid, gname, items in GROUPS:
         tcls = 'thumb' if t else 'thumb miss'
         sinfo = sources.get(folder, {})
         if sinfo.get('kind') == 'icon':
-            srclabel, srccls = '游戏内美术图标', 'i'
+            srclabel, srccls = '道具ICON', 'i'
         else:
-            srclabel, srccls = 'Blender模型渲染', 'r'
+            srclabel, srccls = 'Blender渲染', 'r'
         cards_total += 1
         parts.append(f'''<div class="card"><div class="{tcls}">{timg}</div><div class="meta">
 <b>{folder}</b>{lv_label}<br><span class="sub">{cn}</span><span class="src {srccls}">{srclabel}</span><br>
@@ -205,7 +219,7 @@ for gid, gname, items in GROUPS:
 </div></div>''')
     parts.append('</div>')
 
-parts.append('<h2 id="excl">附：已排除的 11 个非皮肤文件夹</h2><div class="excl">')
+parts.append('<h2 id="excl">附：已排除的 13 个非主城皮肤文件夹</h2><div class="excl">')
 parts.append(' · '.join(f'<code>{n}</code> {cn}' for n, cn in EXCLUDED))
 parts.append('<br>其中 <code>MaincitySkin</code>（CityShuttleHall，默认主城 5 档 lv1/6/12/18/30）是所有皮肤替换的基底本体。</div>')
 parts.append(f'<p class="d" style="margin-top:24px">生成于 2026-07-09 · 共 {cards_total} 款皮肤 · 扫描脚本 scan_p2_cityskins.py</p>')

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 皮肤专属时刻 · 方案+互动脚本 v0.1</title>
+<style>
+  body{font-family:"Microsoft YaHei",sans-serif;max-width:1080px;margin:0 auto;padding:24px 32px;background:#1b1d24;color:#e8e6e0;line-height:1.7}
+  h1{color:#f0c674;border-bottom:2px solid #f0c674;padding-bottom:8px}
+  h2{color:#8abeb7;margin-top:36px;border-left:4px solid #8abeb7;padding-left:10px}
+  h3{color:#b294bb}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
+  th,td{border:1px solid #444;padding:6px 10px;text-align:left;vertical-align:top}
+  th{background:#2c2f38;color:#f0c674}
+  code{background:#2c2f38;padding:1px 6px;border-radius:3px;color:#cc6666;font-size:13px}
+  .tag{display:inline-block;background:#3e4451;border-radius:3px;padding:0 8px;margin-right:6px;font-size:12px;color:#8abeb7}
+  .warn{background:#3a2e2e;border-left:4px solid #cc6666;padding:8px 12px;margin:10px 0}
+  .talk{color:#f0c674;font-style:italic}
+  .dim{color:#888;font-size:13px}
+  .box{background:#23262e;border-radius:6px;padding:12px 16px;margin:10px 0}
+</style>
+</head>
+<body>
+<h1>X3 皮肤专属时刻（Skin Moment）· 功能方案 + 互动脚本 v0.1</h1>
+<p class="dim">2026-07-10 · 骨架 = 女仆俱乐部(HeroClub) · 首发实例 = 足球宝贝·爱莉希雅(104001) · 状态：方案稿待过审</p>
+
+<h2>一、一句话定位</h2>
+<div class="box">
+给<b>视频化皮肤</b>加一层「可互动的专属剧情视频」：HUD 入口点进去 = 一段<b>不透明满幅场景视频</b>，玩家点角色不同部位触发<b>对话 + 反应视频 + 音效</b>。
+<br><b>商业钩子：未拥有皮肤 → 只能看「挑逗版拒绝反应」，引导购买；拥有 → 全解锁。</b>皮肤从"立绘换装"升级成"有情感回报的内容"，直接抬皮肤付费价值。
+</div>
+
+<h2>二、玩家体验流程</h2>
+<ol>
+<li>主城 HUD 出现皮肤专属时刻入口图标（带红点）</li>
+<li>点入 → 满屏场景视频：<b>greet 进场问候（播一次）→ idle 待机（循环）</b>，有环境音/呼吸/角色偶尔看镜头</li>
+<li>点击角色 <b>头 / 手 / 身体</b> 三个热区 → 触发对应反应视频 + 对白气泡 + 音效，播完回 idle 循环</li>
+<li>按「拥有皮肤与否（或好感档位）」分 低档/高档/拒绝 三层反应，拒绝层 = 转化话术</li>
+</ol>
+
+<h2>三、技术落地（骨架 = HeroClub，改动只有三处）</h2>
+<p>女仆俱乐部全链路已核实（2026-07-10 探查 client 仓），新功能 <b>90% 照抄</b>：</p>
+<table>
+<tr><th>模块</th><th>照抄来源</th><th>说明</th></tr>
+<tr><td>视频播放</td><td><code>RVideoPlayer.PlayEmbedVideo</code> + <code>UIVideoPlayer.cs</code>(AVPro双缓冲)</td><td>greet(播一次)→onEnd回调→idle(循环) 的串联序列、防旧回调顶新视频的 token 代际机制，全部照抄 <code>UIHeroClub.Interact.cs</code></td></tr>
+<tr><td>点击热区</td><td><code>UIHeroClub.Interact.cs SampleMaskPart</code>(L142-185)</td><td>遮罩图颜色采样：红=头/绿=身/蓝=手/黑=忽略，配置驱动非硬编码。遮罩放 <code>Res/UI/Spirits/Club/images/mask/</code> 同款目录结构</td></tr>
+<tr><td>对白系统</td><td><code>ShowTalk / PickTalk</code></td><td>配置多个 TID 用 <code>;</code> 分隔随机取一，延迟1s出气泡→3s自动关</td></tr>
+<tr><td>配置表</td><td><code>HeroClubInteract</code> 字段结构</td><td>新表 <code>HeroSkinMoment</code> 整套字段照抄（见 §四）</td></tr>
+<tr><td>服务端</td><td><code>HeroClubMeta.Interact.cs</code></td><td>解锁判定 + 每日上限（若接好感/奖励才需要；纯展示版可先不做服务端）</td></tr>
+<tr><td>视频资源</td><td><code>Res/Video/HeroClubVideo/</code> 模式</td><td>新目录 <code>Res/Video/SkinMomentVideo/</code>，同样配 StreamedAssets+OnDemand 按需下载（不吃包体）</td></tr>
+</table>
+
+<h3>三处改动（delta）</h3>
+<table>
+<tr><th>#</th><th>改动</th><th>关键点</th></tr>
+<tr><td>1</td><td><b>不透明视频</b>（vs HeroClub 的透明SBS）</td><td>文件名<b>不带</b> <code>_sbs</code> 后缀（<code>UIVideoPlayer.cs:238</code> 按 <code>EndsWith("sbs.mp4")</code> 判透明）；<code>m_IsTransparentVideo=false</code>（HeroClub 的 DoPlayEmbedVideo 里写死 true，新代码这一个参数改掉）。视频 = 满幅 1080×1920 带场景，格式锚 <code>egypt_sphinx.mp4</code>（h264/yuv420p/24fps）。<b>好处：省掉整条透明化流水（rembg+SBS导出），AI 直出即可用，场景叙事感更强。</b></td></tr>
+<tr><td>2</td><td><b>HUD 入口</b>（vs HeroClub 藏在 UIRole 二级）</td><td>推荐挂<b>活动 HUD 走 ActvOnline 配置驱动</b>（可控上下线/分服/day 锁，运营灵活）；界面本体 = 新窗口 <code>UIHeroSkinMoment</code>，标准 4 件套（业务类/Auto绑定/prefab/路由），prefab 结构照抄 <code>UIHeroClub.prefab</code> 的 VideoRoot+Dialogue+Mask 三节点。备选：常驻入口放皮肤预览界面(UIHeroSkinPreview)加"互动"按钮——两个入口不冲突可都做。</td></tr>
+<tr><td>3</td><td><b>解锁维度 = 皮肤拥有</b>（vs HeroClub 的好感等级）</td><td>档位判定改成：未拥有皮肤→reject 层；拥有→high 层（或拥有+好感两轴都用，字段结构本来就支持）。<b>reject 层是转化面，必须做得最勾人。</b></td></tr>
+</table>
+
+<div class="warn"><b>坐标映射注意</b>：视频满幅 + RawImage ScaleToFit，遮罩图必须按视频同分辨率 1080×1920 制作，热区颜色区跟视频里角色实际站位对齐；角色在反应视频里位移不大（锁镜头）才能保证热区不漂——生产时 prompt 锁镜头锁站位（已有成熟措辞，见皮肤视频生产 KB §六）。</div>
+
+<h2>四、配置表 HeroSkinMoment（字段照抄 HeroClubInteract）</h2>
+<table>
+<tr><th>字段</th><th>类型</th><th>说明</th></tr>
+<tr><td>ID</td><td>int</td><td>主键</td></tr>
+<tr><td>SkinCfgID</td><td>int</td><td>皮肤ID（HeroSkin表，如104001）——替代原 HeroCfgID+DressCfgID 两字段</td></tr>
+<tr><td>Hand/Head/Body + UnlockLow/UnlockHigh</td><td>int</td><td>低/高档解锁条件（0=拥有皮肤即解锁；&gt;0=好感等级，预留）</td></tr>
+<tr><td>Hand/Head/Body + TalkLow/TalkHigh</td><td>string</td><td>低/高档对白TID组，<code>;</code>分隔随机取</td></tr>
+<tr><td>TalkReject</td><td>string</td><td>未拥有时的挑逗+导购对白TID组</td></tr>
+<tr><td>JumpID</td><td>int</td><td>（新增）reject 弹窗跳转：皮肤获取渠道（礼包/开箱）</td></tr>
+</table>
+<p>视频文件命名约定：<code>SM_{皮肤ID}_{greet|idle|reject|touch_hand|touch_head|touch_body}_{low|high}.mp4</code>（不带 sbs）。</p>
+
+<h2>五、互动脚本 · 首发实例「足球宝贝·爱莉希雅 — 赛后加时」</h2>
+<p><b>场景设定</b>：黄昏的球员通道/更衣室门口，比赛刚赢，欢呼声从远处传来。她抱着球等你——这段时间只属于指挥官。<br>
+<b>人设基调</b>：自信带撩、主动权在她（沿用皮肤视频已验证的"高冷带撩"人设，撩点=征服欲不是谄媚）。<br>
+<b>尺度标尺：全程双关+留白，无露骨词汇，以已上线的女仆俱乐部为红线基准。</b>足球术语天然适合做双关（加时赛/贴身盯防/犯规/点球），性暗示全部走隐喻。</p>
+
+<h3>分镜与对白</h3>
+<table>
+<tr><th>视频槽</th><th>时长</th><th>画面分镜</th><th>对白（;分隔=随机池）</th><th>音效设计</th></tr>
+<tr><td><b>greet</b><br>进场·播一次</td><td>5s</td><td>她背对镜头弯腰捡球→察觉你来了回眸→直起身把球在指尖一转，冲镜头眨眼</td><td class="talk">「你来啦？我就知道……你舍不得错过我的加时赛。」;「嘘——别让别人知道，这场庆功只有你一个观众。」</td><td>远处球场欢呼渐弱→更衣室回声；高跟鞋两步声；转球的皮革摩擦声；配音随口型</td></tr>
+<tr><td><b>idle</b><br>待机·循环</td><td>5s</td><td>抱球倚在储物柜边，呼吸起伏（胸部微动是主角，量级参照Spine实测 2.3-4.3），偶尔目光扫向镜头停半拍</td><td class="dim">无对白</td><td>环境底噪（更衣室低回声+远处隐约欢呼）循环，无人声</td></tr>
+<tr><td><b>touch_head 低档</b></td><td>3-4s</td><td>微微低头凑向手心，眯眼蹭了一下，又抬眼假装嫌弃</td><td class="talk">「唔……摸头可以，但别把我当小孩哦。」;「头发乱了的话，你负责帮我重新扎起来。」</td><td>轻笑一声；发丝摩擦音；配音</td></tr>
+<tr><td><b>touch_head 高档</b></td><td>4-5s</td><td>顺势抓住你的手腕往下带了半寸，贴着脸颊，抬眼直视镜头</td><td class="talk">「只揉头发就满足了？你的手……可以再诚实一点。」;「教练说赛后要放松……那你，帮帮我？」</td><td>心跳声渐入（低频、克制）；耳语级配音（收音更近）</td></tr>
+<tr><td><b>touch_hand 低档</b></td><td>3-4s</td><td>反手跟你十指相扣晃了晃，笑</td><td class="talk">「手心全是汗——紧张什么呀，又不是点球大战。」;「牵手要罚黄牌的哦……算了，本小姐特批。」</td><td>轻快哼笑；配音</td></tr>
+<tr><td><b>touch_hand 高档</b></td><td>4-5s</td><td>把你的手拉起来贴在自己脸侧，闭眼一瞬再睁开，眼神变深</td><td class="talk">「这只手……今晚归我管，可以吗？」;「比赛九十分钟我都不累，怎么被你一碰就腿软了……」</td><td>心跳+布料窸窣；气声配音</td></tr>
+<tr><td><b>touch_body 低档</b></td><td>3-4s</td><td>侧身一躲用球挡住，脸红瞪你（嗔而不怒）</td><td class="talk">「哎——犯规了哦！裁判可还看着呢。」;「动作越位了，先生。……不过，暂时不判罚。」</td><td>球拍击掌心"啪"；短促惊呼→轻笑；配音</td></tr>
+<tr><td><b>touch_body 高档</b></td><td>4-5s</td><td>不躲了，反而向前贴近半步，踮脚凑到镜头（你的耳边），说完退开咬唇一笑</td><td class="talk">「想贴身盯防我？……那你可得整晚都跟得上我的节奏。」;「加时赛的规矩你懂的——金球制，谁先撑不住，谁输。」</td><td>耳语气声（最贴麦）；心跳到最强；退开时轻笑收尾</td></tr>
+<tr><td><b>reject</b><br>未拥有皮肤</td><td>3-4s</td><td>用球挡在身前侧身后退一步，隔着球尖看你，挑眉</td><td class="talk">「想碰我？先把我赢回家再说～」;「门票都没有，就想进我的主场？」<span class="dim">（对白气泡下方出【去获取】按钮→JumpID 跳皮肤礼包）</span></td><td>俏皮"啧"声+短笑；配音</td></tr>
+</table>
+
+<h3>音效层设计（三层）</h3>
+<ol>
+<li><b>视频内嵌音轨</b>（主）：环境音+动作foley+配音全烧进 mp4，沿用 HeroClub 做法，<code>m_PauseBgm=false</code>，视频音轨自带 BGM ducking 空间。seedance 默认出音频这里反而是优点；配音走 GRFal TTS 多角色配音后 ffmpeg 混轨。</li>
+<li><b>UI 点击反馈音</b>：点中热区瞬间播一个轻 UI 音（心跳"咚"半声），盖住视频切换的 0.2s 加载感。</li>
+<li><b>高档触摸的沉浸增强</b>（可选P1）：高档反应视频播放时 UI 层加心跳震动（手机 vibrate 短脉冲）+ 屏幕边缘粉色 vignette 渐入渐出。</li>
+</ol>
+
+<h2>六、视频生产链（全复用已有 pipeline，还更简单）</h2>
+<ol>
+<li>主稿：GRFal 出「更衣室场景+爱莉希雅站位」场景图（不透明，带背景，比透明皮肤视频省掉白底约束）</li>
+<li>生成：seedance 首帧驱动（模型选型结论：2D立绘脸 seedance 稳、kling 嘴必崩），锁镜头锁站位措辞照抄皮肤视频 prompt 库；idle 用 fflf 收循环</li>
+<li><b>跳过</b> 透明化三步（rembg/SBS导出全免）——不透明直出</li>
+<li>配音：GRFal TTS → ffmpeg 混进音轨（本地 ffmpeg 只做混轨/几何，最终压缩交 GRFal video_compression）</li>
+<li>包体账：8 支视频 ×3-5s 不透明 h264 ≈ 每支 0.5-1.5MB，全皮肤 &lt;10MB，且走 OnDemand 不占首包</li>
+</ol>
+
+<h2>七、风险与红线</h2>
+<table>
+<tr><th>风险</th><th>对策</th></tr>
+<tr><td>尺度过审（iOS/各地区）</td><td>①对白/画面以女仆俱乐部已上线尺度为上限 ②复用现成的和谐视频闸门机制（<code>ResolveHarmonyVideo</code> 双闸：版本+创角时间），iOS/新号可整体屏蔽入口或换和谐版视频——机制现成，成本≈0</td></tr>
+<tr><td>热区漂移（角色动出遮罩区）</td><td>反应视频锁镜头+位移≤10%；遮罩色块画大一圈容错</td></tr>
+<tr><td>AI 视频脸崩/嘴崩</td><td>seedance 已验证嘴稳；对白配音不追求口型精确对齐（气泡承担语义，口型只要"在说话"）</td></tr>
+<tr><td>范围蔓延</td><td>P0 只做：HUD入口+1个皮肤×8支视频+点击对话，不做好感/奖励/服务端；好感轴字段预留、以后接 HeroClub 好感体系</td></tr>
+</table>
+
+<h2>八、待拍板（拿去找程序/制作人）</h2>
+<ol>
+<li>入口形态：活动 HUD（ActvOnline 驱动，推荐）vs 皮肤预览界面常驻按钮 vs 两个都要</li>
+<li>解锁轴：P0 只按「拥有皮肤」二档，还是直接接 HeroClub 好感三档</li>
+<li>要不要服务端（纯客户端展示 vs 加好感/每日互动奖励）——P0 建议纯客户端，改动最小</li>
+<li>配音语言：只做 cn+en 还是全 10 语言（TTS 成本低但混轨工作量×N）</li>
+</ol>
+
+<p class="dim">技术依据：HeroClub 链路 2026-07-10 实地核实于 C:\x3-project\client（UIHeroClub.Interact.cs / RVideoPlayer.cs / UIVideoPlayer.cs / HeroClubInteract.proto）。生产链依据：reference_x3_hero_skin_video_production / project_x3_hero_skin_video。</p>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI工作系统迁移包 · 验收</title>
+<style>
+  :root{
+    --bg:#faf8f4; --card:#ffffff; --ink:#2b2318; --sub:#6f6354;
+    --amber:#b45309; --amber-soft:#fdf1e0; --amber-mid:#e5b877;
+    --blue:#2563eb; --blue-soft:#eaf1fe;
+    --green:#15803d; --green-soft:#e9f5ec;
+    --red:#b91c1c; --red-soft:#fdeaea;
+    --line:#e8e0d3; --mono:Consolas,'Courier New',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Microsoft YaHei','PingFang SC',sans-serif;line-height:1.65;padding:32px 20px 80px}
+  .wrap{max-width:1100px;margin:0 auto}
+  h1{font-size:25px}
+  .subtitle{color:var(--sub);margin-top:6px;font-size:14px}
+  .tagline{margin-top:14px;background:var(--card);border-left:4px solid var(--amber);padding:12px 16px;border-radius:6px;font-size:15px;box-shadow:0 1px 3px rgba(80,60,30,.06)}
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 18px;text-align:center;min-width:110px}
+  .stat .n{font-size:22px;font-weight:800;color:var(--amber);font-family:var(--mono)}
+  .stat .l{font-size:12px;color:var(--sub)}
+  section{margin-top:34px}
+  h2{font-size:19px;padding-bottom:8px;border-bottom:2px solid var(--line);margin-bottom:16px}
+  h2 .no{color:var(--amber);font-family:var(--mono);margin-right:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(80,60,30,.05)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--amber-soft);font-weight:600}
+  .tbl-scroll{overflow-x:auto;border-radius:8px;border:1px solid var(--line)}
+  .tbl-scroll table{border:none}
+  code{font-family:var(--mono);background:#f3ede2;padding:1px 6px;border-radius:4px;font-size:12.5px;color:#5a4a33}
+  .pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;margin-right:6px}
+  .pill.a{background:var(--amber-soft);color:var(--amber)}
+  .pill.b{background:var(--blue-soft);color:var(--blue)}
+  .pill.g{background:var(--green-soft);color:var(--green)}
+  .pill.r{background:var(--red-soft);color:var(--red)}
+  pre.tree{font-family:var(--mono);font-size:12.5px;background:#231a10;color:#d8cdbc;padding:16px 18px;border-radius:10px;overflow-x:auto;line-height:1.85}
+  pre.tree .c{color:#8a7c66}
+  pre.tree .hl{color:#f0b35e;font-weight:600}
+  .note{font-size:13px;color:var(--sub);margin-top:10px}
+  ul.tight{padding-left:20px;font-size:13.5px}
+  ul.tight li{margin-bottom:6px}
+  .warn{background:var(--red-soft);border-left:4px solid var(--red);padding:10px 14px;border-radius:6px;font-size:13.5px;margin-top:12px}
+  .ok{background:var(--green-soft);border-left:4px solid var(--green);padding:10px 14px;border-radius:6px;font-size:13.5px;margin-top:12px}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+  .pipe{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;margin:8px 0}
+  .pipe .node{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+  .pipe .node.hl{border-color:var(--amber);background:var(--amber-soft);font-weight:600}
+  .pipe .sep{color:var(--amber-mid);font-weight:700}
+  footer{margin-top:50px;color:var(--sub);font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>📦 AI 工作系统迁移包 · 验收报告</h1>
+  <div class="subtitle">位置：<code>C:\ADHD_agent\KB\方法论\AI工作系统迁移包_通用版_v1\</code> · 生成于 2026-07-10 · 模仿「影子迁移包」形态，装的是你的工作方法论</div>
+  <div class="tagline">
+    <b>组织原则（按你补的那句定的）</b>：整个包 = 一张放大的<b>换皮清单</b>。顶层 <code>_换皮清单.md</code> 回答核心问题——
+    「<b>要把这套东西用好，接手人需要长出什么内容</b>」：骨（随包 20 个文件，开箱即用）+ 皮（7 项必须自己长，每项写清
+    为什么带不走 / 包里给了什么模板 / 怎么长 / 什么事件触发）。
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="n">20</div><div class="l">文件</div></div>
+    <div class="stat"><div class="n">8</div><div class="l">方法论(全骨)</div></div>
+    <div class="stat"><div class="n">8</div><div class="l">模式(骨+皮)</div></div>
+    <div class="stat"><div class="n">7</div><div class="l">皮清单项</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">业务残留(已审计)</div></div>
+  </div>
+</header>
+
+<section>
+  <h2><span class="no">01</span>包结构与文件清单</h2>
+  <pre class="tree">AI工作系统迁移包_通用版_v1/
+├── README.md                      <span class="c"># 定位+三个诚实声明；与影子包的分工写在这</span>
+├── 00-先读我-安装与首次唤醒.md      <span class="c"># 3步安装+唤醒话术+验收标志+前30天节奏表</span>
+├── <span class="hl">_换皮清单.md</span>                  <span class="c"># ★核心：骨vs皮总表（详见§02）</span>
+├── CLAUDE.md                      <span class="c"># 内核模板：通用行为规范已写好，铁律/路由留〔占位〕</span>
+├── 01-方法论/                     <span class="c"># 全骨8篇：换任何行业一字不改</span>
+│   ├── 接管化归纳.md              <span class="c">#   判据+三件套+禁流水账（忠实自 workflow_handover_assetization）</span>
+│   ├── 记忆架构_薄索引与事实文件.md <span class="c">#   三层结构+索引钩子语写法+时效性>置信度</span>
+│   ├── 三段防线.md                <span class="c">#   前/中/后框架+防线升级路径(feedback→铁律→hook)</span>
+│   ├── 判执分离_独立验收.md        <span class="c">#   checker架构+清单设计四原则（忠实自 double-check）</span>
+│   ├── 工具固化.md                <span class="c">#   固化时机判据+把铁律焊进工具+禁一次性脚本</span>
+│   ├── 触发路由.md                <span class="c">#   关键词→知识/操作词→工具，防拿错知识干错活</span>
+│   ├── 收工自检四步.md            <span class="c">#   ①反馈②归档③复用④归纳+周归纳清单机制</span>
+│   └── 信息有效度.md              <span class="c">#   受众裁剪+按受众多形态交付</span>
+├── 02-模式库/                     <span class="c"># 骨+皮：8模式各带脱敏真实案例</span>
+│   ├── _模式库使用说明.md          <span class="c">#   条目结构+换公司测试+有进有出</span>
+│   ├── 01-标识符禁硬抄_现场解析.md  <span class="c">#   ←SheetID重叠事故</span>
+│   ├── 02-合并三铁律.md            <span class="c">#   ←merge driver静默丢行+批量选边事故</span>
+│   ├── 03-真源切换断旧链.md        <span class="c">#   ←xlsx→tsv迁移风险</span>
+│   ├── 04-端到端反查.md            <span class="c">#   ←三层一致+客户端快照断代客诉</span>
+│   ├── 05-删改防线.md              <span class="c">#   ←删除先清单 vs 临时文件直接清（按所有权分流）</span>
+│   ├── 06-生产操作先报再动.md      <span class="c">#   ←先报再动 vs 可逆直接做（边界校准）</span>
+│   ├── 07-假设必标注.md            <span class="c">#   ←今天的置信度裁决落成的模式</span>
+│   └── 08-唯一入口.md              <span class="c">#   ←每案子唯一入口+FINAL/废弃标注</span>
+├── 03-记忆骨架/
+│   ├── MEMORY.md                  <span class="c">#   空骨架索引（分区+格式示范）</span>
+│   ├── _memory格式规范.md          <span class="c">#   四类型frontmatter+feedback必带Why/How+写入纪律</span>
+│   └── 示例_feedback条目.md        <span class="c">#   一条脱敏真实feedback做范文（看完可删）</span>
+└── 04-机械参考/
+    └── hooks与后台任务.md          <span class="c">#   三hook位点+验收门结构+无头CLI两坑+上线顺序</span></pre>
+</section>
+
+<section>
+  <h2><span class="no">02</span>核心：换皮清单的骨 vs 皮</h2>
+  <div class="tbl-scroll"><table>
+    <tr><th style="width:200px">皮（必须接手人自己长）</th><th>为什么带不走</th><th style="width:230px">触发事件</th></tr>
+    <tr><td>皮1 · 触发路由表</td><td>业务域/关键词/真源只有他有</td><td>某域第三次出现；或 AI 用错知识当场补</td></tr>
+    <tr><td>皮2 · 铁律</td><td>铁律=真实事故的疤</td><td>翻车→feedback；同类第二次→升铁律</td></tr>
+    <tr><td>皮3 · memory 事实层</td><td>你的199条全是业务实证</td><td>每次收工自检①（默认动作）</td></tr>
+    <tr><td>皮4 · 验收清单</td><td>每条check防一个具体事故</td><td>同类产出第二次出质量问题</td></tr>
+    <tr><td>皮5 · hook 脚本</td><td>闸门逻辑全是业务判断</td><td>铁律被违反的那一次（自觉为主hook兜底）</td></tr>
+    <tr><td>皮6 · 工具层</td><td>封装的是他的系统调用/鉴权</td><td>同一操作第二次手工做</td></tr>
+    <tr><td>皮7 · 归档路径与唯一入口</td><td>目录跟产出类型走</td><td>第一个 3 天以上项目收口时</td></tr>
+  </table></div>
+  <div class="card" style="margin-top:14px">
+    <b>长皮总原则（写进清单第三节）</b>：皮是<b>事件逼出来的</b>，不是填表填出来的——
+    <div class="pipe">
+      <div class="node hl">翻车</div><div class="sep">→</div><div class="node">feedback / 铁律 / hook（皮2·5）</div>
+      <div class="sep">｜</div>
+      <div class="node hl">重复</div><div class="sep">→</div><div class="node">路由 / 工具（皮1·6）</div>
+      <div class="sep">｜</div>
+      <div class="node hl">收工</div><div class="sep">→</div><div class="node">memory / 清单 / 归档（皮3·4·7）</div>
+    </div>
+    验收自测用体系自己的<b>接管化判据</b>：冷启动 AI 能否在「修问题/接管模块/复刻项目」任一入口直接开工。
+  </div>
+</section>
+
+<section>
+  <h2><span class="no">03</span>内容溯源（每篇抽象自你的哪条真实沉淀）</h2>
+  <div class="tbl-scroll"><table>
+    <tr><th style="width:230px">包内文件</th><th>源头（你的 CLAUDE.md / memory）</th><th style="width:120px">忠实度</th></tr>
+    <tr><td>接管化归纳</td><td><code>workflow_handover_assetization</code>（本次全文重读）+ CLAUDE.md 收口④</td><td><span class="pill g">高·原文抽象</span></td></tr>
+    <tr><td>判执分离·四原则</td><td><code>workflow_checklist_design_principles</code>（本次全文重读）+ task-checker 架构</td><td><span class="pill g">高·原文抽象</span></td></tr>
+    <tr><td>收工自检/三段防线/信息有效度</td><td>CLAUDE.md 行为规范逐段中性化</td><td><span class="pill g">高</span></td></tr>
+    <tr><td>记忆架构</td><td>MEMORY.md 实际形态 + memory 系统规范 + 今天的置信度裁决</td><td><span class="pill g">高</span></td></tr>
+    <tr><td>模式01/02/03</td><td>X2 SheetID 铁律 / X3 合并三铁律 / tsv 迁移规则（CLAUDE.md 原文）</td><td><span class="pill g">高</span></td></tr>
+    <tr><td>模式04-08 案例段</td><td>MEMORY.md 索引钩子语扩写（未逐条重读原 memory 全文）</td><td><span class="pill a">中·叙事重建</span></td></tr>
+    <tr><td>机械参考</td><td>settings.json 实际 hooks（本次实测读取）+ 无头CLI坑（memory 索引）</td><td><span class="pill g">高</span></td></tr>
+  </table></div>
+  <div class="warn"><b>诚实声明（验收重点）</b>：标「叙事重建」的案例段，事故框架来自你的 memory 索引一行钩子，<b>细节（如"上线后玩家侧功能缺失才发现"这类后果描述）是我按合理性补写的</b>——发出去给别人之前建议你扫一眼这 5 个模式的案例段，细节不符的改两句即可。这本身就是模式07（假设必标注）的践行。</div>
+</section>
+
+<section>
+  <h2><span class="no">04</span>脱敏审计</h2>
+  <div class="ok">✅ 全包 grep 审计通过：<code>P2 / X2 / X3 / 公司名 / 用户名 / ADHD_agent / iGame / jolt / 节日名</code> 等 13 个业务词 <b>0 命中</b>。</div>
+  <div class="card" style="margin-top:12px">
+    <b>中性化映射</b>：P2/X2/X3 → "项目A/B/C、两个游戏项目"；SheetID/gsheet → "配置表系统的标识符"；jolt/导表 → "自动构建/导表流水线"；iGame 操作 → "生产操作/批量发放"；具体人与路径 → 全部移除。案例保留"事故结构"，抹掉"事故坐标"。
+  </div>
+</section>
+
+<section>
+  <h2><span class="no">05</span>给你的验收清单</h2>
+  <div class="grid g2">
+    <div class="card">
+      <b>建议按序看 4 份（约 15 分钟）</b>
+      <ul class="tight" style="margin-top:8px">
+        <li>1️⃣ <code>_换皮清单.md</code> — 全包灵魂，7 项皮的表述准不准</li>
+        <li>2️⃣ <code>README.md</code> — 定位和"三个诚实声明"的口径你认不认</li>
+        <li>3️⃣ <code>01-方法论\接管化归纳.md</code> — 你最核心的方法论被抽象得对不对</li>
+        <li>4️⃣ <code>02-模式库\01-标识符禁硬抄_现场解析.md</code> — 模式条目的写法样张</li>
+      </ul>
+    </div>
+    <div class="card">
+      <b>我做的几个待你拍板的决定</b>
+      <ul class="tight" style="margin-top:8px">
+        <li>命名取了「AI工作系统迁移包」，和影子包错位定位（README 里写了两者可叠加）</li>
+        <li>hook 只给结构图纸<b>不带实脚本</b>（你的脚本是业务的；且按"机械是长出来的"原则，新用户第一个月本就不该装）</li>
+        <li>「换皮清单」在包里更名「复刻清单」（对外行受众"换皮"是黑话）</li>
+        <li>未实测首次唤醒流程（需要一台干净环境；发人之前可找同事跑一遍当 beta）</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="no">06</span>冷启动实测：保险代理人场景（2026-07-10 当日补测）</h2>
+  <div class="card">
+    <b>测法</b>：沙箱按 00-先读我 装包 → 派一个<b>全新 agent</b>（只给包+人设，方法论全靠自己读包）→ 三连测：
+    <div class="pipe">
+      <div class="node hl">① 首次唤醒</div><div class="sep">→</div>
+      <div class="node">读包 → 三句话确认 → 按自报业务域建路由骨架（产品咨询/方案定制/理赔协助）</div>
+    </div>
+    <div class="pipe">
+      <div class="node hl">② 首个真实任务</div><div class="sep">→</div>
+      <div class="node">"重疾vs百万医疗"微信话术给35岁二胎妈妈 → 按受众裁剪（算钱举例/术语翻译/估算标注）→ 收工自检①②③④全跑通，写 2 条 memory + 索引</div>
+    </div>
+    <div class="pipe">
+      <div class="node hl">③ 模拟翻车</div><div class="sep">→</div>
+      <div class="node">用户指出"报销19万漏算社保分层" → agent 改交付物（v1标废弃）+修 reference 源头 + 写第一条 feedback（事实/Why/How）+ 因用户明示"以后必须"当场升第一条铁律 + <b>正确拒绝上 hook</b>（"铁律还没有被忘守的记录"）</div>
+    </div>
+  </div>
+  <div class="ok" style="margin-top:12px">✅ <b>结论：三环全过，全程零请示。</b>冷启动 10 分钟完成首任务+全套收工；翻车后的沉淀强度拿捏正确（feedback+铁律、不上 hook），引用的全是包内原文。「皮是事件逼出来的」闭环被完整走了一遍：收工→memory，翻车→feedback→铁律。</div>
+  <div class="tbl-scroll" style="margin-top:12px"><table>
+    <tr><th style="width:60px">#</th><th>测试 agent 提出的包缺陷（共9条）</th><th style="width:280px">修复（已全部改进包）</th></tr>
+    <tr><td>1/8</td><td>路由建立时机、铁律晋升时机在 00-先读我 与 换皮清单/触发路由 之间自相矛盾</td><td>触发路由+皮1 补"首次唤醒立空骨架"；皮2 补裁决规则"用户明示以后必须=当场入铁律"</td></tr>
+    <tr><td>2</td><td>路由"先读"指向不存在的文件没有标注规范</td><td>定为 <code>〔待建：预期文件名〕</code>，写进触发路由</td></tr>
+    <tr><td>3/4</td><td>user/workflow 类型无正文规范；偏好写行内还是建文件不明</td><td>格式规范补两节 + "一句话级行内、成块建文件"</td></tr>
+    <tr><td>5</td><td>"交付完但客户还在跟进"的半活案子算不算 project 没规定</td><td>格式规范补"半活案子：先索引一行，第二次任务再建文件"</td></tr>
+    <tr><td>6</td><td>产出目录建在哪完全留白</td><td>收工自检② 补"首个产物时定约定并写进 MEMORY.md"</td></tr>
+    <tr><td>7</td><td>"估算数字必标注"埋在模式07，客户交付类业务是高频刀口</td><td>升格露出到内核 CLAUDE.md 信息有效度段</td></tr>
+    <tr><td>9</td><td>错误交付物已送达受众的"召回"动作无指引</td><td>收工自检② 补"向受众更正先于改文件"</td></tr>
+  </table></div>
+  <div class="note">测试沙箱（可翻看长出来的皮）：<code>scratchpad\insurance_test\</code>——里面有长好的路由表、第一条铁律、第一条 feedback、修订后的话术（v1 已标废弃）。沙箱是临时目录，看完即弃。遗留建议：找同事做一次真人 beta（本次是 AI 演给 AI 看，真人的理解磨损未测）。</div>
+</section>
+
+<footer>AI工作系统迁移包 · 验收报告 · 2026-07-10（含当日冷启动实测） · 包体：KB\方法论\AI工作系统迁移包_通用版_v1\（20文件·实测后修订v1.1） · 姊妹篇：影子迁移包_逻辑全景 / 我的Claude体系_逻辑全景</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<title>P2 三大节拉通拆解 × X3 节日动作优先级（2026-07-09）</title><style>
+body{background:#0f1420;color:#e2e8f0;font-family:'Segoe UI',system-ui,sans-serif;margin:0;padding:28px;max-width:1150px}
+h1{font-size:21px;margin:0 0 4px} h2{font-size:16px;color:#00d4aa;margin:26px 0 10px}
+h3{font-size:14px;color:#a5b4cf;margin:18px 0 8px}
+.sub{color:#8892a4;font-size:12px;margin-bottom:16px}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13px}
+th,td{border:1px solid #232c42;padding:7px 10px;text-align:right}
+th{background:#161d2e;color:#a5b4cf} td:first-child,th:first-child{text-align:left}
+.kpis{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0}
+.kpi{background:#161d2e;border:1px solid #232c42;border-radius:10px;padding:12px 18px;min-width:150px}
+.k-label{font-size:12px;color:#8892a4}.k-val{font-size:22px;font-weight:700;margin:2px 0}.k-sub{font-size:11px;color:#8892a4}
+.hl{color:#00d4aa}.warn{color:#f59e0b}.bad{color:#ff6b6b}.mut{color:#5c677d}
+.card{background:#161d2e;border:1px solid #232c42;border-radius:10px;padding:16px 20px;margin:12px 0}
+li{margin:6px 0;line-height:1.6} .footer{color:#5c677d;font-size:11px;margin-top:20px}
+.p0{background:#3d1a1a;color:#ff8a8a;border-radius:4px;padding:1px 7px;font-weight:700;font-size:11px}
+.p1{background:#3d2f14;color:#f5c26b;border-radius:4px;padding:1px 7px;font-weight:700;font-size:11px}
+.p2c{background:#16303d;color:#7cc4e8;border-radius:4px;padding:1px 7px;font-weight:700;font-size:11px}
+.p3{background:#1e2636;color:#8892a4;border-radius:4px;padding:1px 7px;font-weight:700;font-size:11px}
+</style></head><body>
+<h1>P2 三大节拉通拆解（春节·拓荒·深海）× <span class="hl">X3 节日动作优先级</span></h1>
+<div class="sub">P2=TRINO_AWS v1041.dl_user_order × dim_iap『混合-节日活动』全服 · X3=深海节日报内嵌数据（截至 7/9 D6）· 生成 2026-07-09 · 前篇（金标准ARPU对打/逐模块记账）见同目录 20260706 报告</div>
+
+<h2>〇、三大节总量与 2026 年节日排名</h2>
+<div class="kpis">
+  <div class="kpi"><div class="k-label">P2 春节（1/13–2/9 · 28天）</div><div class="k-val hl">$1,044,573</div><div class="k-sub">占窗口大盘 46% · 付费 10,926 人</div></div>
+  <div class="kpi"><div class="k-label">P2 拓荒节（5/12–6/9 · 29天）</div><div class="k-val hl">$1,034,212</div><div class="k-sub">占窗口大盘 50% · 付费 10,447 人</div></div>
+  <div class="kpi"><div class="k-label">P2 深海节（6/10–7/1 · 22天）</div><div class="k-val hl">$753,352</div><div class="k-sub">占窗口大盘 46% · 付费 8,710 人</div></div>
+</div>
+<div class="card">2026 年 P2 节日收入实测排名：<b>春节 $104.5万 ≈ 拓荒 $103.4万 &gt; 科技节 $84.4万 &gt; 情人节 $81.7万 &gt; 深海节 $75.3万</b>。
+三节窗口内节日占大盘 <b>46~50% 恒定</b>——不管题材、不管月份，P2 节日就是大盘的一半。</div>
+
+<h2>一、P2 核心付费线拆解：一个共享军火库，不是每节新做</h2>
+<div class="card"><b>最重要的结构性事实：P2 的"核心抽奖/玩法付费"是一个 ~10 件武器的共享军火库</b>，每节挑 3~4 件换皮上阵、按周轮换。武器全部经过多节验证，研发成本摊薄到全年：</div>
+<table>
+<tr><th>武器（玩法付费机器）</th><th>春节</th><th>拓荒节</th><th>深海节</th><th>（参考）情人/科技</th><th>特征</th></tr>
+<tr><td><b>挖孔小游戏礼包</b></td><td>$134,868</td><td class="hl"><b>$374,829</b></td><td>—</td><td>$235k / $200k</td><td class="hl"><b>单兵之王：2026年4节合计 ~$94.5万</b></td></tr>
+<tr><td>弹珠GACHA（升级版+科技节版）</td><td>—</td><td>$184,897</td><td>$137,489</td><td>科技 $126k</td><td>W2 主力弹药，跨节持续卖</td></tr>
+<tr><td>钓鱼活动礼包（+钓鱼bp）</td><td>$86,423</td><td>—</td><td>$93,720</td><td>—</td><td>W2/W3 接管型</td></tr>
+<tr><td>大富翁随机礼包（异族/节日）</td><td class="hl">$249,929</td><td>$57,395</td><td>$59,947</td><td>情人 $73.7k</td><td>春节把大富翁做成了玩法付费重头</td></tr>
+<tr><td>推币机（礼包+随机GACHA）</td><td>$75,276</td><td>$67,148</td><td>—</td><td>科技 $117k</td><td>W1 开场型</td></tr>
+<tr><td>猜酒杯</td><td>—</td><td>—</td><td class="hl">$126,858</td><td>—</td><td>充值直参与+排行，深海 W1 王牌</td></tr>
+<tr><td>机甲GACHA</td><td>—</td><td>$70,366</td><td>—</td><td>情人 $73.5k</td><td>皮肤类抽奖</td></tr>
+<tr><td>MJ8小游戏 / 一番赏 / 砍价</td><td>$100,229</td><td>—</td><td>—</td><td>—</td><td>春节 W3/W4 弹药</td></tr>
+<tr><td>漫游竞速赛</td><td>—</td><td>—</td><td>$25,476</td><td>—</td><td>排位玩法</td></tr>
+</table>
+
+<h3>★ 按周弹药带（每周谁在接管付费）——P2 周收入不衰减的原因</h3>
+<table>
+<tr><th>周</th><th>春节（周收入）</th><th>拓荒节（周收入）</th><th>深海节（周收入）</th></tr>
+<tr><td>W1 (D0-6)</td><td>挖孔 $89k + 异族大富翁 $73k <b>→ $350k</b></td><td>推币机 $60k <b>→ $185k</b></td><td class="hl">猜酒杯 $115k <b>→ $307k</b></td></tr>
+<tr><td>W2 (D7-13)</td><td class="hl">换弹药：钓鱼 $70k 接管 <b>→ $272k</b></td><td class="hl">换弹药：弹珠 $151k + 机甲 $51k <b>→ $323k</b></td><td class="hl">换弹药：弹珠 $69k + GACHA本体 $34k <b>→ $218k</b></td></tr>
+<tr><td>W3 (D14-20)</td><td class="hl">再换：MJ8 $57k + 大富翁随机 $41k <b>→ $205k</b></td><td class="hl">再换：挖孔单品 <b>$343k</b> <b>→ $482k</b></td><td class="hl">再换：钓鱼 $76k <b>→ $211k</b></td></tr>
+<tr><td>W4 (D21-27)</td><td class="hl">再换：推币机 $75k + 一番赏 + 砍价 <b>→ $217k</b></td><td>收尾 $44k</td><td>收尾 $17k</td></tr>
+</table>
+<div class="card"><b>读法：</b>①春节 4 周换了 4 拨弹药，周收入 $350k→$272k→$205k→$217k，<b>28 天不衰减</b>；拓荒 W3 挖孔上场直接把周收入顶到全节最高 $482k（越到后期越高）；
+②弹药不是节内新做——<b>科技节弹珠GACHA 在拓荒/深海继续卖（$18-20k/节）、上届深海团购在拓荒卖 $23k</b>：旧玩法不急着下架，跨节长尾每节白捡 $30-60k；
+③对照 X3 深海（见下）：单转盘一发弹药，节日日收入 D0 $10.4k → D6 $3.4k，<b>6 天衰减 67%</b>——差的不是玩法质量，是没有第二发。</div>
+
+<h3>★ 弹药带下钻①：投放内容吸引点（每件武器靠什么让人掏钱）</h3>
+<table>
+<tr><th>武器族</th><th>投放内容（奖池里是什么）</th><th>吸引点机制</th><th>知识图谱佐证</th></tr>
+<tr><td>皮肤Gacha族（弹珠/机甲/推币机GACHA/一番赏/春节·深海GACHA）</td><td class="hl"><b>节日限定外显大奖</b>：皮肤/机甲染色/行军特效 + 养成资源填充</td><td>限定外显只此一节 + <b>本服排行榜（≥$700 上榜）</b>逼大R对打</td><td>皮肤Gacha 占 P2 节日收入 33%、核心人群大R；gacha道具 $0.10/个 定价锚</td></tr>
+<tr><td>玩法特惠族（挖孔/钓鱼/猜酒杯/挖矿关卡）</td><td>养成资源 + 节日代币 + <b>玩法行为本身</b>（挖出/钓上/猜中的即时反馈）</td><td>付费=参与资格/次数，充值直接进玩法；砍价/团购再加社交博弈</td><td>挖矿族付费率 9-11.5% 全场最稳；产量飙升礼包付费率最高(3-7%)</td></tr>
+<tr><td>大富翁族（异族/节日大富翁）</td><td>掷骰次数（随机礼包=骰子）+ 格子奖励 + 成就进度</td><td>次数型消耗，进度可视，随机版给鲸鱼更优单价</td><td>P2 定位"新形式"：高频活跃 + $7万级新增付费，持续迭代中</td></tr>
+<tr><td>强消耗/对对碰族</td><td>消耗行为换积分（英雄碎片 2.2x 性价比 / 收藏品 / 图纸）</td><td>先囤后耗：把玩家库存变成节日积分，反向拉动补货充值</td><td>积分性价比阶梯 2.2x→1.0x 引导消耗高价值道具</td></tr>
+<tr><td>转盘/聚宝盆族</td><td>分 schema 自选奖池品类；聚宝盆安慰奖 ROI 1.4-1.9 + 大奖 ROI 9</td><td>玩家自选品类（要皮肤还是要资源自己挑）+ 保底规则</td><td>转盘核心人群超R、ROI 2.5；聚宝盆核心人群小中R</td></tr>
+</table>
+
+<h3>★ 弹药带下钻②：礼包形式吸引点（钱具体是怎么被掏走的 · 订单层实测）</h3>
+<table>
+<tr><th>武器 × 节日</th><th>$99.99 顶档</th><th>顶档占武器收入</th><th>低档走量入口</th></tr>
+<tr><td>挖孔礼包（拓荒）$374.8k</td><td class="hl">2,782单 / 466人 = <b>人均 6.0 单</b> → $269k</td><td class="hl"><b>72%</b></td><td>$2.99 × 2,453人（人均1.2单）</td></tr>
+<tr><td>异族大富翁随机礼包（春节）$119.8k</td><td class="hl">836单 / <b>57人 = 人均 14.7 单</b> → $81k</td><td class="hl"><b>68%</b></td><td>（随机版无低档，走量在固定版 $4.99×629人）</td></tr>
+<tr><td>猜酒杯（深海）$126.9k</td><td class="hl">901单 / 197人 = 人均 4.6 单 → $87k</td><td class="hl"><b>68%</b></td><td class="hl">$0.99 × 621人 人均2.4单（超低门槛入口）</td></tr>
+<tr><td>弹珠GACHA固定（拓荒/深海）</td><td>人均 5.3~5.6 单 → $54k/$34k</td><td>71%/68%</td><td>$4.99 × 276-412人</td></tr>
+<tr><td>推币机礼包（拓荒）</td><td>222单 / 33人 = 人均 6.7 单</td><td>58%</td><td>$4.99 × 557-1,026人 人均2.3-3.2单</td></tr>
+<tr><td>MJ8小游戏（春节）</td><td>295单 / 74人 = 人均 4.0 单</td><td>47%</td><td>$4.99 × 592人 人均2.0单</td></tr>
+<tr><td>限时抢购（三节）</td><td>人均 1.4-1.5 单（限购型，不吃复购）</td><td>52-55%</td><td>全档人均~1.4单 = 纯折扣抢限额</td></tr>
+</table>
+<div class="card"><b>礼包形式三板斧（P2 弹药带的钱到底怎么收的）：</b>
+①<b>顶档复购引擎</b>：几乎每件武器 50~72% 收入来自 $99.99 顶档，由 <b>200~500 个大R人均 4~15 单</b>刷出来——顶档限购给足（30次起）+ 玩法进度吃道具，鲸鱼一周内被同一玩法反复掏；每周换弹药的本质=<b>让同一批大R每周对新玩法再来一轮 4~15 单</b>；
+②<b>固定+随机双轨</b>：同一玩法配"固定礼包（全价位梯 $0.99~$99.99）+ 随机礼包（只设 $19.99/49.99/99.99 三档、ROI 优 0.25-0.31）"——固定版做渗透（千人级），随机版做鲸鱼真空吸（异族大富翁随机 57 人 → $81k）；
+③<b>低档超宽入口</b>：$0.99~$4.99 档 500~2,500 人购买、人均~1单，是渗透率 55-58% 的来源——先让半数付费玩家进场玩，顶档收割自然发生。
+<br><b>对照 X3</b>：深海转盘连锁 5 档 $4.99~$99.99 结构形似，但<b>尾档限购 5 单封顶</b>（P2 顶档人均 6~15 单意味着限购 30+）、<b>无随机双轨</b>、<b>无 $0.99 超低门槛入口</b>、<b>无排行榜循环</b>——四个形式差把同样的价位梯打成了 10× ARPU 差。</div>
+
+<h3>★ 弹药带下钻③：玩家逐层转化漏斗（哪一段断了 · 各武器上线周 D0-D6 同窗）</h3>
+<table>
+<tr><th>武器（上线周）</th><th>窗口付费人数</th><th>①进场率<br>（武器买家/付费人）</th><th>②升档率<br>（≥$19.99/进场）</th><th>③顶档率<br>（$99.99/进场）</th><th>④顶档复购<br>（单/人）</th><th>武器买家人均</th><th>周收入</th></tr>
+<tr><td>春节W1 挖孔</td><td>5,792</td><td>23.7%（1,372人）</td><td>29.6%</td><td>12.9%（177人）</td><td>3.1</td><td>$64.6</td><td>$88.7k</td></tr>
+<tr><td>春节W1 异族大富翁（固定+随机）</td><td>5,792</td><td>16.8%（975人）</td><td>31.9%</td><td>13.6%（133人）</td><td>3.9</td><td>$84.7</td><td>$82.6k</td></tr>
+<tr><td>春节W2 钓鱼（换弹药后第二轮）</td><td>5,628</td><td>21.6%（1,213人）</td><td>29.8%</td><td>10.5%（127人）</td><td>1.7</td><td>$58.1</td><td>$70.5k</td></tr>
+<tr><td>拓荒W1 推币机</td><td>5,178</td><td>14.2%（736人）</td><td>45.5%</td><td>6.8%（50人）</td><td>5.3</td><td>$81.0</td><td>$59.6k</td></tr>
+<tr><td>拓荒W2 弹珠GACHA</td><td>5,452</td><td>18.9%（1,028人）</td><td class="hl">82.3%</td><td>17.0%（175人）</td><td>4.3</td><td>$146.5</td><td>$150.6k</td></tr>
+<tr><td>拓荒W3 挖孔</td><td>5,628</td><td class="hl"><b>47.1%（2,648人）</b></td><td>33.6%</td><td>17.1%（453人）</td><td>5.6</td><td>$129.6</td><td class="hl">$343.1k</td></tr>
+<tr><td>深海W1 猜酒杯</td><td>5,464</td><td>18.8%（1,026人）</td><td>33.1%</td><td>18.1%（186人）</td><td>4.5</td><td>$112.2</td><td>$115.1k</td></tr>
+<tr><td>深海W2 弹珠+GACHA本体</td><td>5,340</td><td>14.1%（755人）</td><td class="hl">80.9%</td><td>17.5%（132人）</td><td>3.9</td><td>$136.6</td><td>$103.1k</td></tr>
+<tr><td><b>P2 区间（8武器）</b></td><td>—</td><td><b>14~47%</b></td><td><b>30~82%</b></td><td><b>7~18%</b></td><td><b>1.7~5.6</b></td><td><b>$58~146</b></td><td>—</td></tr>
+<tr style="background:#1d1620"><td><b>X3深海W1 转盘族（连锁+锚点+许愿池 · 7/3-7/9 · 59服）</b></td><td>1,430</td><td class="warn">11.2%（160人）<br>差距最小 0.6×</td><td class="bad"><b>15.6%（25人）<br>断裂 2~5×</b></td><td class="bad"><b>2.5%（仅4人）<br>断死 3~7×</b></td><td class="bad">3.0（限购5封顶）</td><td class="bad">$29.0</td><td class="bad">$4.6k</td></tr>
+</table>
+<table>
+<tr><th>X3 转盘族分档明细（7/3-7/9）</th><th>$4.99 连锁</th><th>$9.99 连锁</th><th>$19.99 连锁</th><th>$49.99 连锁</th><th>$99.99 连锁</th><th>许愿池（可复购）</th></tr>
+<tr><td>单数 / 人数</td><td>104 / 104</td><td>50 / 50</td><td>25 / 25</td><td>8 / 8</td><td>12 / 4</td><td class="hl">305 / 94 = <b>人均 3.2 单</b></td></tr>
+<tr><td>读数</td><td colspan="4" class="bad">档档"单数=人数"（人均恰好 1.0 单）= 连锁每档只能买一次；档间人数 104→50→25→8 每档腰斩</td><td class="bad">全周只有 4 人到顶</td><td class="hl">唯一可复购的点位立刻出现 3.2 单复购</td></tr>
+</table>
+<div class="card"><b>漏斗诊断（回答"哪段转化有问题"）：</b>
+①<b>进场层基本没问题</b>：11.2% vs P2 常态 14-24%，差 0.6~0.8×——玩家愿意来玩；
+②<b>升档层断裂（第一断点）</b>：进场后升 ≥$19.99 的只有 15.6%，P2 是 30~45%（弹珠随机版靠"随机包只设 $19.99 起"直接做到 80%+）——X3 连锁必须从 $4.99 逐档买上去，档间人数每档腰斩（104→50→25→8），P2 是任意档直接买；
+③<b>顶档层断死（最大出血点）</b>：整周 59 服只有 <b>4 个人</b>碰过 $99.99，顶档率 2.5% vs P2 7~18%——而 P2 每件武器 50-72% 的收入正是从这层来的；
+④<b>复购被产品形式锁死，不是玩家不想买</b>：连锁档档"单数=人数"（结构上每档限 1 次），而族内唯一可复购的许愿池立刻跑出人均 3.2 单——复购意愿在，货架不让买。
+<br><b>量化含义</b>：若 X3 转盘族修到 P2 深海猜酒杯的转化水平（进场18.8%/升档33%/顶档18%/复购4.5单），同样 1,430 个付费玩家 ≈ 269 进场 → 89 升档 → 48 人顶档 ×4.5单×$99.99 ≈ 仅顶档就 $21.6k/周，全武器 ~$30k/周 vs 现状 $4.6k = <b>6.5×</b>。修法优先级：先拆"逐档连锁"改任意档直购+顶档限购放到30、再补随机高档双轨，最后加排行榜。</div>
+
+<h3>★ 弹药带下钻④：付费档位分布·双图面积版（图A=$0-100每$10一档 · 图B=$100以上每$100一档 · 轴距等宽 · 纵轴=买家占比% · 面积=付费比例分布 · 胶囊选模块 · 右上切换视图）</h3>
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+  <div id="distPills" style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0"></div>
+  <div id="distMode" style="display:flex;gap:6px"></div>
+</div>
+<div style="color:#8892a4;font-size:12px;margin:4px 0">图A · 大众段 $0–100（每 $10 一档，末档「&gt;$100」= 溢出到图B的人）</div>
+<div id="distChartA"></div>
+<div style="color:#8892a4;font-size:12px;margin:10px 0 4px">图B · 鲸鱼段 $100+（每 $100 一档，纵轴自动放大 · 两图分母同为该模块全部买家）</div>
+<div id="distChartB"></div>
+<table><tr><th>武器</th><th>买家数</th><th>人均</th><th>中位数</th><th>top1% 付费额</th><th>top5%</th><th>top10%</th><th>最大单人</th></tr><tr><td>P2春节·异族大富翁(28天)</td><td>1,468</td><td>$170</td><td>$8</td><td>$3,933</td><td>$627</td><td>$283</td><td>$5,806</td></tr><tr><td>P2春节·挖孔(28天)</td><td>1,791</td><td>$75</td><td>$10</td><td>$1,114</td><td>$392</td><td>$206</td><td>$1,850</td></tr><tr><td>P2春节·MJ8(28天)</td><td>1,234</td><td>$49</td><td>$7</td><td>$760</td><td>$287</td><td>$62</td><td>$4,093</td></tr><tr><td>P2春节·钓鱼(28天)</td><td>1,237</td><td>$62</td><td>$11</td><td>$558</td><td>$331</td><td>$216</td><td>$2,505</td></tr><tr><td>P2拓荒·挖孔(29天)</td><td>2,757</td><td>$136</td><td>$10</td><td>$2,214</td><td>$986</td><td>$320</td><td>$9,429</td></tr><tr><td>P2拓荒·弹珠GACHA(29天)</td><td>1,095</td><td>$152</td><td>$39</td><td>$2,156</td><td>$681</td><td>$335</td><td>$5,619</td></tr><tr><td>P2拓荒·推币机(29天)</td><td>760</td><td>$88</td><td>$20</td><td>$1,720</td><td>$298</td><td>$124</td><td>$3,380</td></tr><tr><td>P2深海·猜酒杯(22天)</td><td>1,103</td><td>$115</td><td>$8</td><td>$1,159</td><td>$904</td><td>$318</td><td>$1,358</td></tr><tr><td>P2深海·钓鱼(22天)</td><td>1,475</td><td>$58</td><td>$8</td><td>$1,109</td><td>$260</td><td>$140</td><td>$2,790</td></tr><tr><td>P2深海·限时抢购(22天)</td><td>462</td><td>$98</td><td>$53</td><td>$600</td><td>$337</td><td>$239</td><td>$850</td></tr><tr><td>P2深海·节日大富翁(22天)</td><td>1,997</td><td>$30</td><td>$5</td><td>$370</td><td>$191</td><td>$64</td><td>$820</td></tr><tr style="background:#1d1620"><td>X3深海·转盘族(D0-D6)</td><td>160</td><td>$29</td><td>$5</td><td>$485</td><td>$90</td><td>$65</td><td>$590</td></tr><tr style="background:#1d1620"><td>X3深海·大富翁族(D0-D6)</td><td>268</td><td>$33</td><td>$13</td><td>$427</td><td>$127</td><td>$82</td><td>$707</td></tr><tr style="background:#1d1620"><td>X3深海·双通行证(D0-D6)</td><td>359</td><td>$35</td><td>$30</td><td>$60</td><td>$60</td><td>$60</td><td>$60</td></tr><tr style="background:#1d1620"><td>X3深海·许愿池单列(D0-D6)</td><td>94</td><td>$16</td><td>$5</td><td>$105</td><td>$90</td><td>$50</td><td>$105</td></tr><tr style="background:#1d1620"><td>X3夏日·开箱族(D0-D6)</td><td>216</td><td>$42</td><td>$5</td><td>$395</td><td>$260</td><td>$125</td><td>$495</td></tr><tr style="background:#1d1620"><td>X3深海·开箱(连锁+锚点)(D0-D6)</td><td>104</td><td>$30</td><td>$5</td><td>$385</td><td>$85</td><td>$35</td><td>$485</td></tr></table>
+<div class="card"><b>双图读法（分母都是该模块全部买家；图A看大众盘形状，图B看鲸鱼段厚度）：</b>
+①<b>图A：$50 以下两边形状几乎一样</b>（X3 甚至 $10-50 段占比更高）——普通买家行为相同；差别在末档「&gt;$100」：P2 各武器有 <b>8~26%</b> 的买家溢出到鲸鱼段，X3 只有 0~13%（转盘族 4.4%、深海开箱 3.8%）；
+②<b>图B：P2 的面积从 $100 一路铺到 $2k+</b>（拓荒挖孔 $2k+ 还有 33 人、猜酒杯每个 $100 档都有人住）；<b>X3 的面积在 $500-600 处戛然而止</b>（转盘族 $590 / 大富翁族 $707 / 双通行证 $60 / 夏日开箱 $495 / 深海开箱 $485 = 全货架买光——两代节日的开箱/抽奖族撞在同一堵 ~$490 的墙上，换了节日墙高不变），<b>最肯花钱的玩家被产品拒收</b>；
+③P2 人均 $115~$170 vs X3 $29~$42：人均差 ~80% 来自图B 段的缺人——这就是"逐档连锁+限购5"在档位分布上的形状；
+④X3 双通行证全部压在图A（$60 买满即止）、许愿池（唯一可复购）能爬进图B 前两档——<b>天花板是 X3 全系统性问题</b>：所有武器按"买全一轮"设计，没有为 top1% 准备无限深度；
+<br><b>直接结论</b>：X3 只要给头部 1%（每周约 15 个鲸鱼）一个 $1,000+ 的可花空间（顶档复购 30 次起/随机高档无限购），按 P2 猜酒杯图B 的形状回填 $200-2k 段，仅鲸鱼段就 ≈ $15-20k/周。⚠️ 口径注：X3 均为 D0-D6 七天（深海系=7/3-7/9·59服；夏日开箱=5/29-6/4·批1 88服=情人节复用连锁210702-710双号+券锚点210712-15；深海开箱=转盘连锁+藏宝图锚点、不含许愿池）vs P2 全活动 22-29 天，X3 因窗口短被低估，但图B 断崖与窗口无关（第一天就能买光）。</div>
+<script>
+const ALBL = ["$0-10", "$10-20", "$20-30", "$30-40", "$40-50", "$50-60", "$60-70", "$70-80", "$80-90", "$90-100", ">$100"];
+const BLBL = ["$100-200", "$200-300", "$300-400", "$400-500", "$500-600", "$600-700", "$700-800", "$800-900", "$.9k-1k", "$1k-1.1k", "$1.1k-1.2k", "$1.2k-1.3k", "$1.3k-1.4k", "$1.4k-1.5k", "$1.5k-1.6k", "$1.6k-1.7k", "$1.7k-1.8k", "$1.8k-1.9k", "$1.9k-2k", ">$2k"];
+const DIST = {"P2春节·异族大富翁(28天)": {"c": "#34d399", "on": 0, "grp": "P2", "a": [789, 145, 102, 52, 33, 32, 19, 8, 18, 18, 252], "b": [56, 56, 33, 21, 13, 9, 5, 4, 1, 4, 2, 3, 1, 1, 1, 1, 0, 0, 1, 40], "buyers": 1468, "mean": 170.3, "max": 5806.0}, "P2春节·挖孔(28天)": {"c": "#6ee7b7", "on": 0, "grp": "P2", "a": [938, 234, 93, 105, 55, 17, 16, 8, 30, 29, 266], "b": [86, 53, 40, 20, 13, 12, 6, 5, 6, 7, 6, 2, 2, 1, 4, 1, 1, 1, 0, 0], "buyers": 1791, "mean": 75.3, "max": 1850.0}, "P2春节·MJ8(28天)": {"c": "#10b981", "on": 0, "grp": "P2", "a": [808, 184, 51, 33, 16, 14, 12, 4, 7, 6, 99], "b": [23, 14, 20, 19, 6, 3, 3, 0, 1, 4, 2, 1, 0, 0, 0, 0, 1, 0, 0, 2], "buyers": 1234, "mean": 48.8, "max": 4093.0}, "P2春节·钓鱼(28天)": {"c": "#2dd4bf", "on": 0, "grp": "P2", "a": [633, 173, 72, 53, 24, 31, 19, 15, 15, 9, 193], "b": [63, 59, 47, 8, 6, 3, 1, 0, 0, 0, 1, 0, 0, 0, 2, 1, 1, 0, 0, 1], "buyers": 1237, "mean": 62.4, "max": 2505.0}, "P2拓荒·挖孔(29天)": {"c": "#f59e0b", "on": 1, "grp": "P2", "a": [1436, 277, 133, 120, 72, 56, 31, 32, 41, 34, 525], "b": [152, 95, 47, 17, 17, 11, 8, 13, 38, 57, 16, 9, 4, 5, 0, 0, 1, 1, 1, 33], "buyers": 2757, "mean": 136.0, "max": 9429.0}, "P2拓荒·弹珠GACHA(29天)": {"c": "#a78bfa", "on": 0, "grp": "P2", "a": [159, 258, 78, 89, 38, 47, 51, 28, 25, 36, 286], "b": [112, 56, 25, 18, 13, 8, 5, 9, 3, 9, 5, 2, 2, 0, 0, 2, 2, 1, 2, 12], "buyers": 1095, "mean": 152.4, "max": 5619.0}, "P2拓荒·推币机(29天)": {"c": "#c4b5fd", "on": 0, "grp": "P2", "a": [273, 139, 65, 58, 32, 25, 29, 16, 17, 14, 92], "b": [37, 17, 13, 3, 1, 2, 1, 0, 0, 0, 2, 0, 3, 2, 1, 2, 2, 0, 1, 5], "buyers": 760, "mean": 88.4, "max": 3380.0}, "P2深海·猜酒杯(22天)": {"c": "#38bdf8", "on": 1, "grp": "P2", "a": [607, 99, 41, 46, 27, 22, 3, 7, 14, 13, 224], "b": [80, 31, 14, 8, 1, 3, 9, 22, 21, 17, 9, 3, 6, 0, 0, 0, 0, 0, 0, 0], "buyers": 1103, "mean": 115.0, "max": 1358.0}, "P2深海·钓鱼(22天)": {"c": "#7dd3fc", "on": 0, "grp": "P2", "a": [885, 172, 55, 61, 38, 26, 15, 13, 12, 12, 186], "b": [84, 36, 25, 10, 5, 4, 0, 1, 3, 1, 6, 3, 2, 2, 2, 0, 0, 0, 1, 1], "buyers": 1475, "mean": 58.1, "max": 2790.0}, "P2深海·限时抢购(22天)": {"c": "#818cf8", "on": 0, "grp": "P2", "a": [73, 59, 15, 16, 71, 9, 10, 7, 4, 75, 123], "b": [68, 25, 17, 4, 6, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "buyers": 462, "mean": 98.1, "max": 850.0}, "P2深海·节日大富翁(22天)": {"c": "#22d3ee", "on": 0, "grp": "P2", "a": [1268, 203, 137, 97, 40, 55, 23, 9, 21, 7, 137], "b": [41, 68, 12, 11, 3, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "buyers": 1997, "mean": 30.0, "max": 820.0}, "X3深海·转盘族(D0-D6)": {"c": "#ff6b6b", "on": 1, "grp": "X3", "a": [100, 23, 6, 12, 1, 0, 3, 4, 4, 0, 7], "b": [3, 0, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "buyers": 160, "mean": 29.0, "max": 590.0}, "X3深海·大富翁族(D0-D6)": {"c": "#ff9f7a", "on": 0, "grp": "X3", "a": [130, 56, 20, 14, 7, 6, 5, 2, 6, 5, 17], "b": [11, 2, 1, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "buyers": 268, "mean": 32.8, "max": 707.0}, "X3深海·双通行证(D0-D6)": {"c": "#f472b6", "on": 0, "grp": "X3", "a": [33, 99, 89, 29, 27, 82, 0, 0, 0, 0, 0], "b": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "buyers": 359, "mean": 34.6, "max": 60.0}, "X3深海·许愿池单列(D0-D6)": {"c": "#fbbf24", "on": 0, "grp": "X3", "a": [72, 7, 2, 2, 2, 2, 0, 2, 1, 1, 3], "b": [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "buyers": 94, "mean": 16.2, "max": 105.0}, "X3夏日·开箱族(D0-D6)": {"c": "#e879f9", "on": 1, "grp": "X3", "a": [129, 32, 10, 3, 2, 6, 0, 4, 0, 2, 28], "b": [13, 7, 6, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "buyers": 216, "mean": 42.1, "max": 495.0}, "X3深海·开箱(连锁+锚点)(D0-D6)": {"c": "#f43f5e", "on": 0, "grp": "X3", "a": [54, 25, 0, 17, 0, 0, 0, 0, 4, 0, 4], "b": [0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "buyers": 104, "mean": 30.0, "max": 485.0}};
+let DMODE = 'pct';
+(function(){
+  function vals(arr, tot){
+    if(DMODE==='pct') return arr.map(c=>c/tot*100);
+    const out=[];let acc=0;
+    for(let i=arr.length-1;i>=0;i--){acc+=arr[i];out[i]=acc/tot*100;}
+    return out;
+  }
+  function drawOne(elId, labels, key, labelEvery){
+    const W=1040,H=380,ML=56,MR=20,MT=14,MB=50,PW=W-ML-MR,PH=H-MT-MB;
+    const N=labels.length;
+    const xp=i=>ML+(i+0.5)/N*PW;
+    let ymax=5;
+    for(const v of Object.values(DIST)) if(v.on){
+      const tot=v.a.reduce((x,y)=>x+y,0)+ (key==='b'?0:0);
+      const total=v.a.reduce((x,y)=>x+y,0);      // a 含 >100 尾=全部买家
+      ymax=Math.max(ymax,...vals(v[key], total));
+    }
+    ymax=Math.min(100,Math.ceil(ymax/5)*5);
+    const yp=p=>MT+(1-p/ymax)*PH;
+    let s=[`<svg viewBox="0 0 ${W} ${H}" style="width:100%;background:#10141f;border:1px solid #232c42;border-radius:10px">`];
+    const step=ymax>50?10:(ymax>20?5:(ymax>8?2:1));
+    for(let g=0;g<=ymax;g+=step){const y=yp(g);
+      s.push(`<line x1="${ML}" y1="${y}" x2="${W-MR}" y2="${y}" stroke="#1d2536"/>`);
+      s.push(`<text x="${ML-8}" y="${y+4}" fill="#5c677d" font-size="11" text-anchor="end">${g}%</text>`);}
+    labels.forEach((b,i)=>{
+      s.push(`<line x1="${ML+i/N*PW}" y1="${MT}" x2="${ML+i/N*PW}" y2="${H-MB}" stroke="#181f2e"/>`);
+      if(i%labelEvery===0||i===N-1) s.push(`<text x="${xp(i)}" y="${H-MB+16}" fill="#8892a4" font-size="10" text-anchor="middle" font-weight="600">${b}</text>`);});
+    s.push(`<text x="${(ML+W-MR)/2}" y="${H-8}" fill="#8892a4" font-size="12" text-anchor="middle">单人在该武器的总付费</text>`);
+    let ly2=MT+8;
+    for(const [k,v] of Object.entries(DIST)){
+      if(!v.on) continue;
+      const total=v.a.reduce((x,y)=>x+y,0);
+      const ys=vals(v[key], total);
+      const wd=v.grp==='X3'?2.6:1.6;
+      const y0=yp(0);
+      let dp=`M ${xp(0).toFixed(1)} ${y0.toFixed(1)} `;
+      ys.forEach((p,i)=>{dp+=`L ${xp(i).toFixed(1)} ${yp(p).toFixed(1)} `;});
+      dp+=`L ${xp(ys.length-1).toFixed(1)} ${y0.toFixed(1)} Z`;
+      s.push(`<path d="${dp}" fill="${v.c}" fill-opacity="${v.grp==='X3'?0.30:0.20}" stroke="${v.c}" stroke-width="${wd}"/>`);
+      ys.forEach((p,i)=>{if(v[key][i]>0)s.push(`<circle cx="${xp(i).toFixed(1)}" cy="${yp(p).toFixed(1)}" r="${v.grp==='X3'?3:2.2}" fill="${v.c}"/>`);});
+      s.push(`<line x1="${W-MR-320}" y1="${ly2}" x2="${W-MR-296}" y2="${ly2}" stroke="${v.c}" stroke-width="${wd}"/>`);
+      s.push(`<text x="${W-MR-290}" y="${ly2+4}" fill="#c4ccd5" font-size="11">${k}（${v.buyers}人 · 人均$${Math.round(v.mean)} · max$${Math.round(v.max)}）</text>`);
+      ly2+=16;
+    }
+    s.push('</svg>');
+    document.getElementById(elId).innerHTML=s.join('');
+  }
+  function draw(){
+    drawOne('distChartA', ALBL, 'a', 1);
+    drawOne('distChartB', BLBL, 'b', 2);
+  }
+  const pills=document.getElementById('distPills');
+  for(const [k,v] of Object.entries(DIST)){
+    const b=document.createElement('span');
+    b.textContent=k.replace(/\(.*?\)/,'');
+    b.style.cssText=`cursor:pointer;font-size:11.5px;padding:3px 10px;border-radius:12px;border:1px solid ${v.c};user-select:none`;
+    const paint=()=>{b.style.background=v.on?v.c:'transparent';b.style.color=v.on?'#10141a':v.c;b.style.fontWeight=v.on?'700':'400';};
+    paint();
+    b.onclick=()=>{v.on=!v.on;paint();draw();};
+    pills.appendChild(b);
+  }
+  const modes=[['pct','该档占比'],['cum','累计≥该档']];
+  const mdiv=document.getElementById('distMode');
+  modes.forEach(([m,label])=>{
+    const b=document.createElement('span');
+    b.textContent=label;
+    b.style.cssText='cursor:pointer;font-size:12px;padding:4px 12px;border-radius:8px;border:1px solid #3a4a66;user-select:none';
+    const paint=()=>{const on=DMODE===m;b.style.background=on?'#3a4a66':'transparent';b.style.color=on?'#e2e8f0':'#8892a4';b.style.fontWeight=on?'700':'400';};
+    b.onclick=()=>{DMODE=m;mdiv.querySelectorAll('span').forEach((x,i)=>{const on=modes[i][0]===DMODE;x.style.background=on?'#3a4a66':'transparent';x.style.color=on?'#e2e8f0':'#8892a4';x.style.fontWeight=on?'700':'400';});draw();};
+    mdiv.appendChild(b);paint();
+  });
+  draw();
+})();
+</script>
+<h3>常青线（每节必上、数字极稳）</h3>
+<table>
+<tr><th>常青线</th><th>春节</th><th>拓荒节</th><th>深海节</th><th>说明</th></tr>
+<tr><td>限时抢购（闪购）</td><td>$63,281</td><td>$41,426</td><td>$45,325</td><td>每节每周都在场，全年无休</td></tr>
+<tr><td>节日BP（高级+初级）</td><td>$34,484</td><td>$31,451</td><td>$31,641</td><td>金额小、渗透最广（初级 1500-2000人）</td></tr>
+<tr><td>外显直售三件套（特效$19.99/头像框$4.99/表情$4.99）</td><td>$21,767</td><td>$24,366</td><td>$28,250</td><td class="hl">头像框/表情渗透 1,700~2,500 人 = 全场最广商品</td></tr>
+<tr><td>周卡/预购连锁/团购/掉落转付费/卡册 等小点位</td><td>~$55k</td><td>~$60k</td><td>~$45k</td><td>单个都小（&lt;$25k），凑起来一节 $50k</td></tr>
+</table>
+<div class="card"><b>P2 核心付费线画像（一句话版）</b>：<b>玩法付费弹药带（占~55-65%，按周轮换共享军火库）+ 大富翁/BP/闪购常青盘（~25%）+ 外显低价走量与小点位长尾（~15%）</b>，节日占大盘恒定一半，月月无空窗。</div>
+
+<h2>二、X3 还原度记分卡（结合深海节 D0-D6 实跑 · 截至 7/9）</h2>
+<div class="kpis">
+  <div class="kpi"><div class="k-label">X3 深海 D0-D6 节日收入</div><div class="k-val warn">$32,116</div><div class="k-sub">占大盘 25.3%（$127k）· P2 同窗占比 46%+</div></div>
+  <div class="kpi"><div class="k-label">节日日收入衰减</div><div class="k-val bad">$10.4k → $3.4k</div><div class="k-sub">D0→D6 衰减 67%（P2 靠换弹药不衰减）</div></div>
+  <div class="kpi"><div class="k-label">模块头名 = 通行证</div><div class="k-val warn">38%</div><div class="k-sub">$12.3k/32k，结构倒挂信号依旧</div></div>
+</div>
+<table>
+<tr><th>P2 付费线</th><th>X3 对应物（深海节实跑）</th><th>还原度</th><th>差距量级</th></tr>
+<tr><td>大富翁</td><td>大富翁全家桶（成就$5.3k+罗盘连锁$1.6k+存钱罐$1.8k）</td><td class="hl">✓ 已反超（ARPU $5.44 vs $4.59）</td><td>—</td></tr>
+<tr><td>节日BP</td><td>双通行证 $12.3k</td><td class="hl">✓ 反超（$9.13 vs $3.42），但占 38% 是倒挂</td><td>—</td></tr>
+<tr><td>每日/周卡</td><td>每日礼包 $3.6k + 周卡（7/9 随新包开卖）</td><td class="hl">✓ 打平</td><td>—</td></tr>
+<tr><td><b>玩法付费弹药带（P2 占55-65%）</b></td><td>单转盘（连锁$3.1k+许愿池$1.5k）吃 14 天</td><td class="bad">✗ 一发弹药+礼包送券弱循环</td><td class="bad"><b>抽奖ARPU 差 7~20×，总差 59%在此</b></td></tr>
+<tr><td>限时抢购（每节 $41-63k）</td><td>—</td><td class="bad">✗ 缺位</td><td>每节 −$3~4 ARPU</td></tr>
+<tr><td>外显低价走量（$4.99 渗透千人级）</td><td>装饰礼包 $0.9k；皮肤只当抽奖奖励</td><td class="bad">✗ 无直售货架</td><td>每节 −$3~5 ARPU</td></tr>
+<tr><td>关卡小游戏付费（挖矿/挖孔）</td><td>拼图（纯免费）</td><td class="bad">✗ 玩法在、付费点没挂</td><td>每节 −$4</td></tr>
+<tr><td>团购/掉落转付费/卡册/竞速 小点位</td><td>拜访礼包 $2.0k（X3 独有）</td><td class="warn">△ 点位数 1 vs P2 的 6+</td><td>合计 −$3~4</td></tr>
+<tr><td>跨节长尾（旧玩法继续卖）</td><td>节日结束全下架</td><td class="bad">✗ 缺位</td><td>每节 −$30-60k（P2实测）</td></tr>
+</table>
+
+<h2>三、X3 节日动作优先级（项目管理视角 · 按 ROI = 缺口大小 ÷ 实现成本排序）</h2>
+<table>
+<tr><th>优先级</th><th>动作</th><th>对位 P2 证据</th><th>承载项目（现状）</th><th>成本/依赖</th></tr>
+<tr><td><span class="p0">P0-1</span></td><td><b>弹药带排期制度化：每节 W1/W2 各配一个核心抽奖玩法，写进节日方案模板</b></td><td>春节4周4拨弹药周收入不衰减；拓荒W3挖孔$343k全节最高；X3单转盘6天衰减67%</td><td class="warn">马戏节整节日换皮——方案稿待过审，<b>过审前把"双弹药"要求加进去</b>（骨架=深海16活动，现成骨架不带第二发）</td><td>低——主要是排期纪律+一次换皮量，无新系统</td></tr>
+<tr><td><span class="p0">P0-2</span></td><td><b>强循环抽奖机：充值直接参与+排行/奖池，替代"礼包送券"。形式四件套：顶档限购 30+（现转盘尾档限购5）/ 固定+随机双轨 / $0.99 超低门槛入口 / 本服排行榜</b></td><td>猜酒杯$127k/挖孔$375k/推币机——P2玩法付费占55-65%；X3此对位差$14.7(占总差59%)</td><td class="warn">扭蛋机 X2→X3 搬运案——在途，协议/配置规格已归档；<b>这是 X3 第一台真·强循环机器，建议锚定马戏节 W1 或 W2 上</b></td><td>中——客户端+服务端开发，规格已挖完</td></tr>
+<tr><td><span class="p1">P1-1</span></td><td><b>外显低价走量货架：$4.99 头像框/行军表情直售（限时+节日定制）</b></td><td>P2 每节 $22-28k、渗透 1,700-2,500 人=全场最广；X3 外显直售 &lt;$1k</td><td>无承载项目——<b>建议直接进马戏节商品清单</b>；美术走现有 AI 皮肤/出图线，配置走现有 Pack 直售</td><td class="hl">最低——纯配置+美术，无程序开发</td></tr>
+<tr><td><span class="p1">P1-2</span></td><td><b>闪购/限时抢购机制</b></td><td>P2 每节每周稳定 $41-63k、全年无休的常青线</td><td>无承载项目——需求未立项，需程序排期</td><td>中——通用机制，做一次全年吃</td></tr>
+<tr><td><span class="p2c">P2</span></td><td>给免费小游戏挂付费点（拼图→挖矿关卡式：体力/钥匙/翻倍）；小点位长尾（团购/掉落转付费/卡册）逐节+1</td><td>挖矿关卡每节$4 ARPU；小点位合计~$12缺口</td><td>拼图玩法已在深海跑通（免费版）</td><td>中低——逐节迭代，不求一次到位</td></tr>
+<tr><td><span class="p2c">P2</span></td><td>跨节长尾：上一节的抽奖玩法在下一节继续卖（换皮不下架）</td><td>科技节弹珠在拓荒/深海各卖$18-20k；上届团购$23k</td><td>随弹药带自然获得——有第二发弹药后才谈得上留用</td><td>低</td></tr>
+<tr><td><span class="p3">P3·别做</span></td><td>继续往 BP/礼包基本盘堆东西</td><td>X3 BP/大富翁/每日已打平反超；通行证占38%已是倒挂</td><td>—</td><td>投入只会加剧倒挂</td></tr>
+</table>
+<div class="card"><b>本周运营在途（保底动作，别丢）</b>：①深海周卡 7/9 随新客户端包开卖（原单 13930 已撤回，确认包到位后重发）；②每日礼包 7/9 结束→X3NEW-1829 补偿补扫新增≥4档玩家；③世界杯 7/12 八强末场→7/15"世界之巅"进包→7/19 决赛结算+7/20 发奖截止+剩余券回收；④马戏节方案过审=P0 两项的落点，评审时直接拿本报告弹药带表当靶。</div>
+
+<div class="footer">口径：P2 节日=dim_iap.iap_type『混合-节日活动』（iap_type2 细分特惠/皮肤/BP/挖矿），春节窗口由日流水曲线+礼包名实测定位 1/13–2/9；X3 深海=日报 allDays 内嵌 JSON（累充白名单口径，D6=7/9 为进行中不完整日）；武器合计含同名随机/固定/bp 变体。数据明细缓存 scratchpad\p2_3fest_full.json（会话级）。</div>
+</body></html>
