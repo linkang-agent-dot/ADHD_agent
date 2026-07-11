@@ -18,7 +18,9 @@ d.ellipse([530, 70, 770, 380], fill=(255, 0, 0))
 d.ellipse([290, 820, 510, 1080], fill=(0, 0, 255))
 d.ellipse([700, 650, 900, 890], fill=(0, 0, 255))
 
-out = r'C:\x3-project\client\Assets\Res\UI\Spirits\SkinMoment\SM_104001_mask.png'
+# ★必须输出到 Club/images/mask/ 白名单目录：贴图后处理器只对该目录保留 isReadable，别的目录会被强制改 0（点击采样失效）
+out = r'C:\x3-project\client\Assets\Res\UI\Spirits\Club\images\mask\SM_104001_mask.png'
 os.makedirs(os.path.dirname(out), exist_ok=True)
 img.save(out)
 print('mask v2 saved:', out, '(meta 不动，沿用已生成的 guid)')
+

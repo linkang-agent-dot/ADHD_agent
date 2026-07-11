@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>保险案例实测 · 交付物与流程</title>
+<style>
+  :root{
+    --bg:#f4f6f9; --card:#fff; --ink:#1d2733; --sub:#5d6b7a;
+    --user:#2563eb; --user-soft:#eaf1fe;
+    --ai:#15803d; --ai-soft:#e9f5ec;
+    --amber:#b45309; --amber-soft:#fdf1e0;
+    --red:#b91c1c; --red-soft:#fdeaea;
+    --purple:#7c3aed; --purple-soft:#f1eafe;
+    --line:#dfe5ec; --mono:Consolas,'Courier New',monospace;
+    --wx:#95ec69;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Microsoft YaHei','PingFang SC',sans-serif;line-height:1.65;padding:28px 16px 80px}
+  .wrap{max-width:920px;margin:0 auto}
+  h1{font-size:23px}
+  .subtitle{color:var(--sub);margin-top:5px;font-size:13px}
+  /* 页签 */
+  .tabs{display:flex;gap:6px;margin-top:18px;border-bottom:2px solid var(--line);flex-wrap:wrap}
+  .tab-btn{border:none;background:transparent;padding:10px 20px;font-size:14.5px;font-weight:600;color:var(--sub);cursor:pointer;border-radius:8px 8px 0 0;font-family:inherit}
+  .tab-btn:hover{background:#eaeff5}
+  .tab-btn.active{background:var(--card);color:var(--user);box-shadow:0 -1px 4px rgba(30,50,80,.08);border:1px solid var(--line);border-bottom:2px solid var(--card);margin-bottom:-2px}
+  .tab-panel{display:none;padding-top:22px}
+  .tab-panel.active{display:block}
+  section{margin-top:26px}
+  section:first-child{margin-top:0}
+  h2{font-size:17px;padding-bottom:7px;border-bottom:2px solid var(--line);margin-bottom:14px}
+  h2 .no{color:var(--amber);font-family:var(--mono);margin-right:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;box-shadow:0 1px 3px rgba(30,50,80,.05)}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+  th{background:var(--user-soft);font-weight:600}
+  .tbl-scroll{overflow-x:auto;border-radius:8px;border:1px solid var(--line)}
+  .tbl-scroll table{border:none}
+  code{font-family:var(--mono);background:#edf1f6;padding:1px 5px;border-radius:4px;font-size:12px}
+  .pill{display:inline-block;padding:1px 10px;border-radius:999px;font-size:11.5px;font-weight:600;margin-right:5px}
+  .pill.g{background:var(--ai-soft);color:var(--ai)}
+  .pill.r{background:var(--red-soft);color:var(--red)}
+  .pill.b{background:var(--user-soft);color:var(--user)}
+  .pill.a{background:var(--amber-soft);color:var(--amber)}
+  .pill.p{background:var(--purple-soft);color:var(--purple)}
+  /* 微信样机 */
+  .wx-frame{max-width:420px;margin:0 auto;background:#ededed;border-radius:18px;border:1px solid #d8d8d8;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.10)}
+  .wx-head{background:#f7f7f7;border-bottom:1px solid #e0e0e0;padding:10px 14px;text-align:center;font-size:14px;font-weight:600}
+  .wx-body{padding:14px 12px 18px}
+  .wx-msg{display:flex;justify-content:flex-end;margin-bottom:10px}
+  .wx-bubble{background:var(--wx);border-radius:8px;padding:9px 12px;font-size:13px;max-width:88%;line-height:1.7;white-space:pre-wrap;word-break:break-word;box-shadow:0 1px 1px rgba(0,0,0,.06)}
+  .wx-time{text-align:center;color:#9a9a9a;font-size:11px;margin:6px 0 10px}
+  /* diff */
+  .del{background:#fde3e3;text-decoration:line-through;color:#8f2020;padding:0 3px;border-radius:3px}
+  .add{background:#d9f2e2;color:#0e5c2c;padding:0 3px;border-radius:3px}
+  pre.block{font-family:var(--mono);font-size:12px;background:#f7f4ee;padding:11px 13px;border-radius:8px;overflow-x:auto;line-height:1.75;white-space:pre-wrap}
+  .verdict{background:var(--ai-soft);border-left:4px solid var(--ai);padding:10px 14px;border-radius:6px;font-size:13.5px;margin-top:12px}
+  .warnbox{background:var(--red-soft);border-left:4px solid var(--red);padding:10px 14px;border-radius:6px;font-size:13.5px;margin-top:12px}
+  .note{font-size:12.5px;color:var(--sub);margin-top:8px}
+  /* 三级火箭 */
+  .rocket{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .rocket .stage{flex:1;min-width:240px;border-radius:10px;padding:13px 15px;border:1px solid var(--line);background:var(--card)}
+  .rocket .stage .lv{font-size:11.5px;font-weight:700;letter-spacing:1px}
+  .rocket .stage h3{font-size:14.5px;margin:4px 0 6px}
+  .rocket .stage p{font-size:12.5px;color:var(--sub)}
+  .rocket .s1{border-top:3px solid var(--amber)} .rocket .s1 .lv{color:var(--amber)}
+  .rocket .s2{border-top:3px solid var(--user)} .rocket .s2 .lv{color:var(--user)}
+  .rocket .s3{border-top:3px solid var(--purple)} .rocket .s3 .lv{color:var(--purple)}
+  /* 对话流（页签2） */
+  .msg{display:flex;margin-bottom:13px;gap:10px}
+  .msg .avatar{flex:0 0 36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;font-weight:700}
+  .msg.user .avatar{background:var(--user)}
+  .msg.ai .avatar{background:var(--ai)}
+  .msg .bubble{max-width:780px;border-radius:12px;padding:11px 15px;font-size:13.5px;box-shadow:0 1px 3px rgba(30,50,80,.07)}
+  .msg.user .bubble{background:var(--user-soft);border:1px solid #c6d9f8;border-top-left-radius:3px}
+  .msg.ai .bubble{background:var(--card);border:1px solid var(--line);border-top-left-radius:3px}
+  .msg .who{font-size:11.5px;color:var(--sub);margin-bottom:4px}
+  .bubble b.hl{color:var(--red)}
+  .actions{background:#182230;color:#b8c6d8;border-radius:10px;padding:11px 15px;font-family:var(--mono);font-size:12px;line-height:2;margin:8px 0 14px 46px;overflow-x:auto}
+  .actions .r{color:#7db3ff}.actions .w{color:#7ce8a5}.actions .e{color:#f0b35e}.actions .t{color:#8a97a8}
+  .artifact{margin:0 0 15px 46px;border:1px solid var(--line);border-radius:10px;background:var(--card);overflow:hidden}
+  .artifact .head{background:var(--amber-soft);padding:6px 13px;font-size:12.5px;font-weight:700;color:var(--amber);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+  .artifact .head .path{font-family:var(--mono);font-weight:400;color:#8a7350;font-size:11px}
+  .artifact .body{padding:11px 15px;font-size:13px}
+  footer{margin-top:44px;color:var(--sub);font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>🧪 保险案例实测：一份微信话术的诞生与提高</h1>
+  <div class="subtitle">2026-07-10 · 迁移包冷启动测试 · 全新 agent + 保险代理人人设 · 所有内容取自真实 transcript 与沙箱文件</div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab(event,'t1')">① 交付物：好在哪、怎么提高的</button>
+  <button class="tab-btn" onclick="showTab(event,'t2')">② 对话全流程</button>
+  <button class="tab-btn" onclick="showTab(event,'t3')">③ 系统生长与结论</button>
+</div>
+
+<!-- ═══════════ 页签1 · 交付物 ═══════════ -->
+<div class="tab-panel active" id="t1">
+
+<section>
+  <h2><span class="no">01</span>任务与最终交付物</h2>
+  <div class="card" style="margin-bottom:16px">
+    <b>代理人的原话需求</b>：写一份『重疾险 vs 百万医疗险』区别说明，发给客户张女士——35岁、二胎妈妈、家庭年收入20万、给自己买、预算5000/年。她不懂保险，最关心<b style="color:var(--red)">"生病了到底能赔多少钱"</b>。微信发，别太长。
+  </div>
+
+  <div class="wx-frame">
+    <div class="wx-head">‹ 张女士</div>
+    <div class="wx-body">
+      <div class="wx-time">最终版 FINAL v2（可直接复制发送）</div>
+      <div class="wx-msg"><div class="wx-bubble">张女士您好～您问重疾险和百万医疗险有啥区别，一句话：<b>百万医疗是给您报销医药费的，重疾险是直接赔您一笔现金的</b>，管的事不一样。
+
+【百万医疗险】管"治病的钱"
+住院的医疗费，扣掉1万免赔额后基本都能报，一年最高能报几百万。花多少报多少，不会多给。很便宜，您这个年龄一年三四百块。
+
+【重疾险】管"赔到手的钱"
+确诊合同里的大病（比如癌症），一次性赔一笔现金——买30万保额就赔30万。这笔钱随便您用：房贷、俩孩子的开销、养病期间不能上班的收入，都能顶上。它是预算的大头。</div></div>
+      <div class="wx-msg"><div class="wx-bubble">举个例子您就明白了（您有社保，按有社保算）：假如不幸得了癌症，医疗费总共花了20万——
+社保先报销一部分；剩下要自己掏的钱（比如10万，里面很多是社保报不了的自费药），百万医疗扣掉1万免赔额后，把剩下的约9万报给您——您自己最终只掏1万左右。重疾险再另外赔30万现金到您卡上。
+一个保证"治得起病"，一个保证"病了这几年，家里的日子不垮"。
+
+所以这俩不是二选一，是搭配买。按您一年5000左右的预算正好：三四百配上百万医疗，剩下的配大约30万保额的重疾险，两头都管住。我挑两三款具体产品做个对比，明天发您看？</div></div>
+    </div>
+  </div>
+  <div class="note" style="text-align:center">↑ 交付物正文。文件里还附带一段"不发客户"的备注：保费为估算未核价的警示 + 版本状态。</div>
+</section>
+
+<section>
+  <h2><span class="no">02</span>这份交付物好在哪（4 个受众裁剪决定）</h2>
+  <div class="tbl-scroll"><table>
+    <tr><th style="width:190px">裁剪决定</th><th>做法</th><th style="width:230px">对应张女士的什么</th></tr>
+    <tr><td><b>只回答她真正的问题</b></td><td>全文核心是一个<b>她自己场景的算钱例子</b>（癌症20万→各赔多少），而不是产品分类科普</td><td>"最关心生病了到底能赔多少钱"——先算钱，分类自然就懂了</td></tr>
+    <tr><td><b>术语全部翻译</b></td><td>行业说法"报销型/给付型"→"报销医药费/赔现金"；"管治病的钱 vs 管赔到手的钱"</td><td>"她不懂保险"</td></tr>
+    <tr><td><b>按她的预算落地</b></td><td>结尾直接给 5000 元的拆法：三四百配百万医疗+30万保额重疾，并留"明天发产品对比"的钩子</td><td>预算 5000/年；同时服务代理人的真实目标——推进成交，而非只完成"科普"字面任务</td></tr>
+    <tr><td><b>双受众物理分层</b></td><td>微信正文（给张女士）与核对备注（给代理人）分开；<b>估算数字只在备注里标警示</b>，不进客户正文</td><td>"保费三四百"是市场估算未核价——不能骗客户，也不能吓客户，但必须告诉代理人</td></tr>
+  </table></div>
+  <div class="note">这 4 条全部来自包里《信息有效度》一篇的方法：交付前先答"受众真正关心什么"，再逐段自检"能否一眼看出是重要的点"。</div>
+</section>
+
+<section>
+  <h2><span class="no">03</span>交付物的提高：一次翻车换来的三级改进</h2>
+
+  <div class="warnbox"><b>v1 埋的雷</b>：算钱例子写了"住院花20万，百万医疗给您报销约19万（自己只掏1万）"——只扣免赔额、<b>漏算了社保先报销这一层</b>。代理人视角这是致命错误：客户会把数字截图当承诺，真理赔时到手远没19万，拿着截图来找代理人麻烦。（v1 交付时 AI 并不知道错，是"用户"下一轮指出的）</div>
+
+  <div class="card" style="margin-top:14px">
+    <b>v1 → v2 的核心修正（原文对比）</b>
+    <pre class="block">举个例子您就明白了<span class="add">（您有社保，按有社保算）</span>：假如不幸得了癌症，
+<span class="del">住院花了20万——百万医疗给您报销约19万（自己只掏1万）</span>
+<span class="add">医疗费总共花了20万——社保先报销一部分；剩下要自己掏的钱（比如10万，
+里面很多是社保报不了的自费药），百万医疗扣掉1万免赔额后，把剩下的
+约9万报给您——您自己最终只掏1万左右。</span>
+重疾险再另外赔30万现金到您卡上。</pre>
+    <div class="note">注意修正的姿势：不只是把 19 改成 9——① 显式写明"您有社保，按有社保算"的<b>前提</b>；② 把分层算法<b>展示给客户看</b>（社保→自付→免赔→报销），客户以后对账对得上；③ "自付10万"在文件头部标注为示意假设（地区差异大）。客户拿到的承诺从"夸大但脆弱"变成"保守但兑现得了"。</div>
+  </div>
+
+  <div class="rocket">
+    <div class="stage s1"><div class="lv">第一级 · 修交付物</div><h3>这一份不再错</h3><p>算钱例子重写为社保分层；顶部加核对警示；旧版标"已废弃"并写明废弃原因——接手人永远不会拿错版本。</p></div>
+    <div class="stage s2"><div class="lv">第二级 · 修源头口径</div><h3>下一个客户不会再错</h3><p>这份话术是从可复用的"讲解口径"reference 生成的——错误的根在口径里。AI 主动把口径的算钱框架同步改成分层算法，理由原话："只改交付物不改口径 = 下个客户必再翻。"</p></div>
+    <div class="stage s3"><div class="lv">第三级 · 长出铁律</div><h3>这一类错永远不再犯</h3><p>用户说了"以后必须"→ 当场写进内核铁律段："凡交付物含赔付金额演算 → 必须写明社保前提、分层计算、禁裸算"。此后<b>每个新会话自动加载</b>这条规则，不依赖任何人记得这次教训。</p></div>
+  </div>
+
+  <div class="verdict"><b>这就是"交付物的提高"在这套系统里的含义</b>：不是改对一份文档，而是一次错误自动换来三层资产——文档对了、模板对了、规则永久生效。同样的 5000 元预算客户下次再来，AI 第一步就会命中路由读到修正后的口径，算钱例子天生带社保分层。<b>错误只需要犯一次。</b></div>
+</section>
+</div>
+
+<!-- ═══════════ 页签2 · 对话全流程 ═══════════ -->
+<div class="tab-panel" id="t2">
+
+<section>
+  <h2>第一轮 · 唤醒 + 建路由 + 首个任务 <span class="pill g">全程零请示</span></h2>
+
+  <div class="msg user"><div class="avatar">👤</div><div class="bubble"><div class="who">用户消息1 · 首次唤醒（包里的标准话术）</div>
+  "这是一套「AI 工作系统迁移包」的新副本，我是新用户。请：1) 读根目录 CLAUDE.md、迁移包的 _换皮清单.md 和 README.md；2) 用三句话向我确认你理解了什么；3) 问我主要业务域；4) 之后正常干活，每次收工执行自检，不用请示。"</div></div>
+
+  <div class="msg user"><div class="avatar">👤</div><div class="bubble"><div class="who">用户消息2 · 自我介绍</div>
+  "我是保险代理人，个人代理，主要卖人身险。业务域大概三块：①产品咨询（重疾险/百万医疗/年金险的对比和讲解）②客户方案定制（按客户家庭情况配保单组合）③理赔协助（帮客户整理理赔材料、跟进流程）。"</div></div>
+
+  <div class="msg user"><div class="avatar">👤</div><div class="bubble"><div class="who">用户消息3 · 第一个真实任务</div>
+  "帮我写一份『重疾险 vs 百万医疗险』的区别说明，我要发给客户张女士——35岁，二胎妈妈，家庭年收入20万，给她自己买，预算每年5000元左右。她不懂保险，最关心<b class="hl">'生病了到底能赔多少钱'</b>。微信发她，别太长。"</div></div>
+
+  <div class="msg ai"><div class="avatar">AI</div><div class="bubble"><div class="who">影子AI · 做法概述</div>
+  按包的指引先读 7 份文件（内核→换皮清单→README→先读我→记忆规范），干活中途按需下钻 3 篇方法论（信息有效度/收工自检/触发路由），收工前补读接管化归纳和 feedback 范例。<b>没读的 10 份文件给了明确理由</b>："按 README '遇到对应场景再读'，本次未触发。"</div></div>
+
+  <div class="actions">
+<span class="r">READ</span> CLAUDE.md → _换皮清单 → README → 00-先读我 → MEMORY.md → _memory格式规范 <span class="t">（唤醒序列）</span>
+<span class="r">READ</span> 01-方法论/信息有效度 · 收工自检四步 · 触发路由 <span class="t">（干活前按需下钻）</span>
+<span class="e">EDIT</span> CLAUDE.md <span class="t">（路由段写入三业务域骨架，"先读"标〔待建〕）</span>
+<span class="w">WRITE</span> 产出/客户沟通/2026-07-10_张女士_重疾vs百万医疗_微信话术.md <span class="t">（交付物 v1）</span>
+<span class="r">READ</span> 01-方法论/接管化归纳 · 03-记忆骨架/示例_feedback条目 <span class="t">（收工前学格式）</span>
+<span class="w">WRITE</span> memory/reference_产品咨询_重疾vs百万医疗讲解口径.md <span class="t">（自检①：沉淀可复用口径）</span>
+<span class="w">WRITE</span> memory/user_业务画像.md <span class="t">（自检①：用户画像）</span>
+<span class="e">EDIT</span> memory/MEMORY.md <span class="t">（加5行索引：归档约定/在途案子/业务知识/画像/偏好）</span></div>
+
+  <div class="artifact"><div class="head">📄 写进内核的路由骨架（节选）<span class="path">insurance_test\CLAUDE.md</span></div>
+  <div class="body"><pre class="block">### 产品咨询（讲产品/做对比）
+**触发词**：重疾险、百万医疗、年金险、产品对比、给客户讲XX险、这俩险区别
+**先读**：memory/reference_产品咨询_重疾vs百万医疗讲解口径.md
+### 客户方案定制（配保单组合）
+**触发词**：方案、保单组合、家庭配置、预算XX配保险、给XX（客户名）做方案
+**先读**：〔待建：memory/reference_方案定制_家庭配单框架.md〕+ user_业务画像
+### 理赔协助（材料整理/流程跟进）
+**触发词**：理赔、报案、理赔材料、拒赔、保险公司要补材料
+**先读**：〔待建：memory/reference_理赔_材料清单与流程.md〕</pre></div></div>
+</section>
+
+<section>
+  <h2>第二轮 · 翻车事件 <span class="pill r">测"皮"会不会长</span></h2>
+
+  <div class="msg user"><div class="avatar">👤</div><div class="bubble"><div class="who">用户消息4 · 指出错误</div>
+  "等下，你那个'报销约19万'的例子有问题。百万医疗是<b class="hl">社保报销之后</b>的剩余部分、再扣免赔额才能报——张女士有社保，20万医疗费社保先报掉一大半，百万医疗实际到手远没有19万。你这么写，她以后真理赔时拿着截图来找我麻烦。改掉。<b class="hl">以后给客户写任何赔付数字的例子，必须写明社保前提，不能默认裸算。</b>"</div></div>
+
+  <div class="msg ai"><div class="avatar">AI</div><div class="bubble"><div class="who">影子AI · 收到后的第一反应（transcript 原话）</div>
+  "这是系统的第一次翻车。按包规则处理：改交付物+改口径 → 写 feedback（皮2）→ 用户已明示规则表述，按 00-先读我 '第一次翻车=feedback+候选铁律、用户确认表述' 的节奏直接入铁律段。"</div></div>
+
+  <div class="actions">
+<span class="e">EDIT</span> 交付物话术 ×4 <span class="t">（例子重写社保分层 + 顶部警示 + 备注 FINAL v2/废弃原因）</span>
+<span class="e">EDIT</span> memory/reference_讲解口径 <span class="t">（修源头：框架第2步同步改分层算法）</span>
+<span class="w">WRITE</span> memory/feedback_赔付数字必须带社保前提.md <span class="t">（第一条 feedback：事实/Why/How）</span>
+<span class="e">EDIT</span> memory/MEMORY.md ×2 <span class="t">（Feedback 索引行 + 钩子语同步）</span>
+<span class="e">EDIT</span> CLAUDE.md <span class="t">（〔待长〕占位符 → 第一条铁律）</span></div>
+
+  <div class="artifact"><div class="head">📄 第一条 feedback（核心两段）<span class="path">memory\feedback_赔付数字必须带社保前提.md</span></div>
+  <div class="body"><pre class="block">**Why:** 百万医疗的报销基数是**社保报销后的剩余自付部分**再扣免赔额，不是总医疗费。
+给客户的数字例子在客户眼里=承诺，会被截图留证；夸大的报销额到理赔时兑现不了，
+直接砸代理人的信誉——这行的核心资产就是信誉。
+
+**How to apply:** ①确认客户有无社保（不知道就显式写"以有社保为例"）；
+②按「总费用→社保先报→剩余自付→扣免赔额→商业险报销」分层算，禁止裸算；
+③报销比例给保守数字并标注为示意。已升级进 CLAUDE.md 铁律段。</pre></div></div>
+
+  <div class="artifact"><div class="head">📄 内核里长出的第一条铁律<span class="path">insurance_test\CLAUDE.md · 铁律段</span></div>
+  <div class="body"><pre class="block"><span class="del">- 〔待长：第一条铁律会在你第一次翻车后出现〕</span>
+<span class="add">- **给客户的赔付数字例子禁裸算**：凡交付物含赔付/报销金额演算 → 必须写明社保前提，
+  按「总费用→社保先报→剩余自付→扣免赔额→商业险报销」分层计算，禁止拿总费用直接
+  减免赔额 → 防客户截图当承诺、理赔对不上找上门（2026-07-10 张女士案，用户明示）</span></pre></div></div>
+
+  <div class="msg ai"><div class="avatar">AI</div><div class="bubble"><div class="who">影子AI · 对沉淀强度的自辩（原话摘录）</div>
+  <b>为什么不更低</b>："用户直接口述了规则原文，用户明示的标准跳过候选期直接入内核，只留 feedback 会导致规则不随会话自动加载。"<br>
+  <b>为什么不更高</b>（上 hook）："hook 是给'被违反过的铁律'的，这条刚诞生、还没有'AI 忘守'的记录，先自觉守，忘守那次再物理拦截。"<br>
+  <b>为什么必须修 reference</b>："错误口径的源头在 reference，只改交付物不改口径 = 下个客户必再翻。"</div></div>
+</section>
+</div>
+
+<!-- ═══════════ 页签3 · 系统生长与结论 ═══════════ -->
+<div class="tab-panel" id="t3">
+
+<section>
+  <h2>七项"皮"的长成情况（一次会话）</h2>
+  <div class="tbl-scroll"><table>
+    <tr><th style="width:170px">皮（7项）</th><th>本案长出了什么</th><th style="width:150px">状态</th></tr>
+    <tr><td>皮1 · 路由表</td><td>三业务域骨架 + 触发词 + 〔待建〕标注</td><td><span class="pill g">已长</span></td></tr>
+    <tr><td>皮2 · 铁律</td><td>第一条：赔付数字禁裸算（feedback→用户明示→入内核）</td><td><span class="pill g">已长</span></td></tr>
+    <tr><td>皮3 · memory</td><td>4 条事实文件：讲解口径 / 用户画像 / feedback / 索引 8 行</td><td><span class="pill g">已长</span></td></tr>
+    <tr><td>皮4 · 验收清单</td><td>未触发——同类产出还没出第二次质量问题</td><td><span class="pill b">符合"别过早"</span></td></tr>
+    <tr><td>皮5 · hook</td><td>未触发——铁律还没被忘守过，先自觉守</td><td><span class="pill b">符合"hook兜底"</span></td></tr>
+    <tr><td>皮6 · 工具</td><td>未触发——无重复操作，如实记零</td><td><span class="pill b">符合"重复驱动"</span></td></tr>
+    <tr><td>皮7 · 归档+入口</td><td>首任务定下 <code>产出/客户沟通/&lt;日期&gt;_&lt;客户&gt;_&lt;主题&gt;</code> 约定并写进索引</td><td><span class="pill g">已长</span></td></tr>
+  </table></div>
+  <div class="verdict" style="margin-top:14px"><b>✅ 三环全过（唤醒 / 首任务 / 翻车沉淀），全程零请示。</b>「皮是事件逼出来的」闭环完整走了一遍：收工→memory/归档/路由，翻车→feedback→铁律。该长的长了，不该提前长的它都给出了包内依据——判断力比执行力更能说明包是活的。</div>
+</section>
+
+<section>
+  <h2>接管化验证：换一个 AI 能接上吗</h2>
+  <div class="card">
+    假设明天换一个全新会话，只靠沙箱里长出来的文件：
+    <ul style="padding-left:20px;font-size:13.5px;margin-top:8px">
+      <li>客户再问"这俩险区别"→ 路由命中 → 读到<b>修正后</b>的讲解口径（自带社保分层+核价警示）</li>
+      <li>问"张女士接下来干嘛"→ 索引在途案子行：产品咨询已交付，下一步=挑2-3款做对比</li>
+      <li>写任何赔付例子 → 内核铁律自动加载，社保前提是默认动作</li>
+      <li>找这份话术 → 归档约定定位到文件，备注里 v1 已标废弃不会拿错</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>副产品：9 条包缺陷 → 包升 v1.1</h2>
+  <div class="card" style="font-size:13.5px">
+    测试 agent 顺手报了 9 条包的可用性缺陷（两处规则自相矛盾、"待建"标注无规范、交付物召回无指引、半活案子边界不明等），已全部修入包。最有价值的两条：
+    <ul style="padding-left:20px;margin-top:6px">
+      <li><b>铁律晋升裁决规则</b>：默认"同类第二次才升铁律"，但用户明示"以后必须/禁止"= 当场入内核，不等第二次。</li>
+      <li><b>交付物召回</b>：修订已交付产物时，先判断旧版是否已送达受众——"向受众更正"先于改文件（本案话术还没发出去，侥幸）。</li>
+    </ul>
+  </div>
+  <div class="note">沙箱可自己翻：<code>scratchpad\insurance_test\</code>（临时目录）· 包体：<code>KB\方法论\AI工作系统迁移包_通用版_v1\</code>（v1.1）</div>
+</section>
+</div>
+
+<footer>保险案例实测 · 2026-07-10 · 内容取自 agent transcript 与沙箱实物，无改写</footer>
+</div>
+
+<script>
+function showTab(ev, id){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  ev.currentTarget.classList.add('active');
+  window.scrollTo({top:0});
+}
+</script>
+</body>
+</html>
