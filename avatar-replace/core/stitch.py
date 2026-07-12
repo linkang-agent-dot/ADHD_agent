@@ -8,8 +8,11 @@ def stitch(segs: list[dict], original: Path, workdir: Path, drift_pct: float = 2
     fixed = []
     for i, s in enumerate(segs):
         expect = s["end"] - s["start"]
+        if s["mode"] != "replace" or expect <= 0:  # keep 段不校时长；零长守卫防除零
+            fixed.append(Path(s["path"]))
+            continue
         actual = media.probe(s["path"]).duration
-        if s["mode"] == "replace" and abs(actual - expect) / expect * 100 > drift_pct:
+        if abs(actual - expect) / expect * 100 > drift_pct:
             adj = workdir / f"retime_{i:03d}.mp4"
             media.retime(s["path"], adj, factor=expect / actual)
             fixed.append(adj)

@@ -18,6 +18,7 @@ def test_stitch_full_length(sample_video, tmp_path):
     info = media.probe(final)
     assert abs(info.duration - 20.0) < 0.5
     assert info.has_audio
+    assert not list(tmp_path.glob("retime_*.mp4"))  # 漂移<2%不应触发retime
 
 
 def test_stitch_retimes_drifted_segment(sample_video, tmp_path):
