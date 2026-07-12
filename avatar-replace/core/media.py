@@ -43,6 +43,8 @@ def probe(path: Path | str) -> MediaInfo:
 
 def extract_frames(path: Path | str, out_dir: Path, interval: float = 1.0) -> list[Frame]:
     out_dir.mkdir(parents=True, exist_ok=True)
+    for stale in out_dir.glob("f_*.jpg"):  # 续跑复用目录时残留旧帧会污染帧列表
+        stale.unlink()
     _run(["ffmpeg", "-y", "-i", str(path), "-vf", f"fps=1/{interval}",
           "-q:v", "3", str(out_dir / "f_%05d.jpg")])
     frames = sorted(out_dir.glob("f_*.jpg"))
@@ -53,7 +55,10 @@ def scene_cuts(path: Path | str, threshold: float = 0.3) -> list[float]:
     r = subprocess.run(
         ["ffmpeg", "-i", str(path), "-vf", f"select='gt(scene,{threshold})',showinfo",
          "-f", "null", "-"], capture_output=True, text=True, encoding="utf-8", errors="replace")
-    return [float(m) for m in re.findall(r"pts_time:([\d.]+)", r.stderr)]
+    cuts = [float(m) for m in re.findall(r"pts_time:([\d.]+)", r.stderr)]
+    if r.returncode != 0 and not cuts:  # 无切点是正常结果，但坏输入不能静默当"无切点"
+        raise RuntimeError(f"scene_cuts failed on {path}\n{r.stderr[-1000:]}")
+    return cuts
 
 
 def cut_clip(src: Path | str, dst: Path, start: float, end: float) -> None:
