@@ -37,7 +37,10 @@ def _parse_hits(text: str) -> list[int]:
     if not m:
         return []
     try:
-        return [int(i) for i in json.loads(m.group())["hits"]]
+        hits = json.loads(m.group())["hits"]
+        if not isinstance(hits, list):  # 防 "hits":"12" 被逐字符迭代成 [1,2]
+            return []
+        return [int(i) for i in hits]
     except Exception:
         return []
 

@@ -28,3 +28,12 @@ def test_annotate_two_pass(sample_video, tmp_path):
     # timeline.json 落盘
     saved = json.loads((tmp_path / "timeline.json").read_text(encoding="utf-8"))
     assert saved == tl
+
+
+def test_annotate_no_hits(sample_video, tmp_path):
+    # 零命中是真实素材最常见路径：不发细化调用、返回空、落盘空数组
+    fake = FakeProvider(vision_responses=[json.dumps({"hits": []})] * 3)
+    tl = annotate(sample_video, tmp_path, provider=fake, interval=1.0)
+    assert tl == []
+    assert len(fake.vision_calls) == 3  # 只有 3 批粗扫，无细化
+    assert json.loads((tmp_path / "timeline.json").read_text(encoding="utf-8")) == []
