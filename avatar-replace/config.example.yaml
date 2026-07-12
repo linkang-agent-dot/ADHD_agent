@@ -1,0 +1,14 @@
+# 复制为 config.yaml 后填写。API key 不放这里，放 .env / 环境变量 ARK_API_KEY
+ark:
+  base_url: "https://ark.cn-beijing.volces.com/api/v3"
+  vlm_model: "doubao-1-5-vision-pro-32k"      # Task 11 按官方文档核对最新模型ID
+  video_model: "doubao-seedance-pro"           # Task 11 按官方文档核对（需支持参考视频+元素参考）
+pipeline:
+  frame_interval: 1.0        # 打轴抽帧间隔（秒）
+  segment_max: 15.0          # Seedance 参考视频上限
+  buffer: 0.5                # 命中时段外扩缓冲
+  scene_align_tolerance: 2.0 # 镜头切点对齐搜索半径（秒）
+  duration_drift_pct: 2.0    # 替换段时长偏差超此百分比则变速对齐
+limits:
+  max_video_seconds: 60
+  max_video_mb: 200
