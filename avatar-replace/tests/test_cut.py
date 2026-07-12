@@ -59,3 +59,22 @@ def test_execute_cut(sample_video, tmp_path):
     assert len(out) == 3
     assert abs(media.probe(out[1]["path"]).duration - 5.0) < 0.3
     assert out[0]["path"].name == "000_keep.mp4"
+
+
+def test_plan_snaps_outward_only():
+    # 起点向前吸到 1.0，终点向后吸到 6.0；向内切点 3.0 绝不参与
+    tl = [{"start": 2.0, "end": 5.0, "person_desc": "x", "confirmed": True}]
+    segs = plan_segments(tl, duration=20.0, scene_cuts=[1.0, 3.0, 6.0],
+                         buffer=0.0, tolerance=2.0, segment_max=15.0)
+    rep = [s for s in segs if s["mode"] == "replace"][0]
+    assert rep["start"] == 1.0 and rep["end"] == 6.0
+
+
+def test_desc_dedup_no_substring_swallow():
+    # "红衣男孩"与"男孩"是两个人，短描述不能被子串包含吞掉
+    tl = [{"start": 2.0, "end": 4.0, "person_desc": "红衣男孩", "confirmed": True},
+          {"start": 4.0, "end": 6.0, "person_desc": "男孩", "confirmed": True}]
+    segs = plan_segments(tl, duration=20.0, scene_cuts=[], buffer=0.5,
+                         tolerance=0.0, segment_max=15.0)
+    rep = [s for s in segs if s["mode"] == "replace"][0]
+    assert rep["desc"] == "红衣男孩；男孩"

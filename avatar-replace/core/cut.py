@@ -7,6 +7,8 @@ from pathlib import Path
 from core import media
 
 _EPS = 1e-6
+# 段间合并容差：ffmpeg 切割用毫秒精度（%.3f），亚 10ms 的间隙切不出有意义的 keep 段
+_MERGE_EPS = 0.01
 
 
 def _snap_out(t: float, cuts: list[float], tolerance: float, direction: int) -> float:
@@ -45,9 +47,10 @@ def plan_segments(timeline: list[dict], duration: float, scene_cuts: list[float]
     # 2) 重叠/相接合并（desc 去重拼接）
     merged: list[list] = []
     for s, e, d in spans:
-        if merged and s <= merged[-1][1] + _EPS:
+        if merged and s <= merged[-1][1] + _MERGE_EPS:
             merged[-1][1] = max(merged[-1][1], e)
-            if d not in merged[-1][2]:
+            # 按分号切分后判等去重：子串包含判定会把"男孩"误吞进"红衣男孩"
+            if d not in merged[-1][2].split("；"):
                 merged[-1][2] = merged[-1][2] + "；" + d
         else:
             merged.append([s, e, d])
