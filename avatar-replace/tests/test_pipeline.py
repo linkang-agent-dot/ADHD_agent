@@ -60,3 +60,12 @@ def test_create_rejects_overlong_video(sample_video, tmp_path):
     cfg.limits.max_video_seconds = 10   # sample 是 20s
     with pytest.raises(ValueError):
         Job.create(sample_video, jobs_root=tmp_path, cfg=cfg)
+
+
+def test_run_requires_confirmed_state(sample_video, tmp_path):
+    # 未 confirm 直接 run 必须拒绝——否则会静默产出"零替换"成片
+    job = Job.create(sample_video, jobs_root=tmp_path, cfg=_cfg())
+    job.annotate(_fake())
+    import pytest
+    with pytest.raises(ValueError, match="不可 run"):
+        job.run(FakeProvider(), avatar_refs=[])

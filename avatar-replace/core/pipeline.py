@@ -6,6 +6,7 @@
 stitch 每次 run 都重跑一遍（幂等，覆盖 final.mp4），保证中断后终态一致。
 """
 import json
+import os
 import shutil
 import time
 import uuid
@@ -35,8 +36,11 @@ class Job:
         return self._meta["timeline"]
 
     def _save(self) -> None:
-        (self.dir / "job.json").write_text(
+        # 原子写：半途崩不能留下损坏的 job.json（断点续跑全靠它）
+        tmp = self.dir / "job.json.tmp"
+        tmp.write_text(
             json.dumps(self._meta, ensure_ascii=False, indent=2), encoding="utf-8")
+        os.replace(tmp, self.dir / "job.json")
 
     @classmethod
     def create(cls, video: Path, jobs_root: Path, cfg: Config) -> "Job":
@@ -50,7 +54,8 @@ class Job:
         shutil.copy(video, jdir / "source.mp4")
         (jdir / "job.json").write_text(json.dumps({
             "id": jid, "state": "created", "duration": info.duration,
-            "timeline": [], "segments": []}, ensure_ascii=False), encoding="utf-8")
+            "timeline": [], "segments": []}, ensure_ascii=False, indent=2),
+            encoding="utf-8")
         return cls(jdir, cfg)
 
     @classmethod
@@ -71,6 +76,10 @@ class Job:
         self._save()
 
     def run(self, provider: Provider, avatar_refs: list[Path]) -> None:
+        # 状态机不变量：未经人工确认不得进入替换——否则会静默产出
+        # "未替换任何人但标记完成"的成片，是本业务最坏的失败形态
+        if self.state not in ("confirmed", "cut", "done"):
+            raise ValueError(f"job 状态 {self.state} 不可 run，先 annotate+confirm")
         p = self.cfg.pipeline
         src = self.dir / "source.mp4"
         # 切段只做一次：segments 非空说明已切过（续跑直接复用）
