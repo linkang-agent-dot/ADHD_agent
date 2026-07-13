@@ -61,21 +61,27 @@ def plan_segments(timeline: list[dict], duration: float, scene_cuts: list[float]
     # 3) 铺全片：间隙补 keep，replace 超长 n 等分
     segs: list[dict] = []
     cursor = 0.0
+    _INNER_MARGIN = 0.75  # 离边太近的切点不切，避免产出碎段
     for s, e, d, a, o in merged:
         if s > cursor + _EPS:
             segs.append({"start": cursor, "end": s, "mode": "keep"})
         else:
             s = cursor  # 与上一段贴合，防负长/微缝
-        n = 1
-        while (e - s) / n > segment_max:
-            n += 1
-        step = (e - s) / n
-        for i in range(n):
-            # 末份终点直接取 e，避免 s+n*step 浮点漂移在 e 处留缝
-            seg_end = e if i == n - 1 else s + (i + 1) * step
-            segs.append({"start": s + i * step, "end": seg_end,
-                         "mode": "replace", "desc": d,
-                         "action": a, "orient": o})
+        # 替换区内部先按镜头切点分割——一段混两个镜头会让分镜/生成画面穿帮
+        # （2026-07-13 实锤：跨切点段被 Seedream 画成多宫格）
+        inner = sorted(c for c in scene_cuts if s + _INNER_MARGIN < c < e - _INNER_MARGIN)
+        bounds = [s] + inner + [e]
+        for shot_s, shot_e in zip(bounds, bounds[1:]):
+            n = 1
+            while (shot_e - shot_s) / n > segment_max:
+                n += 1
+            step = (shot_e - shot_s) / n
+            for i in range(n):
+                # 末份终点直接取 shot_e，避免浮点漂移留缝
+                seg_end = shot_e if i == n - 1 else shot_s + (i + 1) * step
+                segs.append({"start": shot_s + i * step, "end": seg_end,
+                             "mode": "replace", "desc": d,
+                             "action": a, "orient": o})
         cursor = e
 
     # 4) 收尾：补片尾 keep；已到片尾则把浮点残差归到最后一段。显式防空列表。

@@ -17,6 +17,7 @@ from core import cut as cutmod
 from core import media
 from core import replace as repmod
 from core import stitch as stitchmod
+from core import storyboard as sbmod
 from core import subtitles as submod
 from core import wardrobe as warmod
 from core.config import Config
@@ -80,6 +81,9 @@ class Job:
             raise ValueError("没有已确认的时段")
         # 重新确认使已有切段作废——否则改动会被"segments 非空则不重切"静默吞掉
         self._meta["segments"] = []
+        # 关键帧按段名幂等缓存，段界变了必须一并作废，否则复用错段的旧帧
+        if (self.dir / "kf").exists():
+            shutil.rmtree(self.dir / "kf")
         self._meta["state"] = "confirmed"
         self._save()
 
@@ -120,10 +124,24 @@ class Job:
         for s in self._meta["segments"]:
             if s["mode"] != "replace" or s["status"] == "done":
                 continue
+            # 分镜复刻：每段先读原片帧出分镜（缓存进 job.json），
+            # 再用换装数字人图出首尾场景关键帧，i2v 双锚点生成
+            if not s.get("storyboard"):
+                s["storyboard"] = sbmod.describe_segment(
+                    provider, self.dir / "frames", s["start"], s["end"],
+                    interval=self.cfg.pipeline.frame_interval)
+                self._save()
+            kf_a = kf_b = None
+            if avatar_refs:
+                base = next((r for r in avatar_refs
+                             if r.stem.lower().startswith("front")),
+                            avatar_refs[0])
+                kf_a, kf_b = sbmod.build_keyframes(
+                    provider, base, s["storyboard"], self.dir / "kf",
+                    Path(s["path"]).stem)
             out = repmod.replace_segment(
-                provider, Path(s["path"]), s.get("action", ""),
-                s.get("orient", ""), avatar_refs, self.dir / "out",
-                expect_dur=s["end"] - s["start"])
+                provider, Path(s["path"]), s["storyboard"], kf_a, kf_b,
+                self.dir / "out", expect_dur=s["end"] - s["start"])
             s["path"] = str(out)
             s["status"] = "done"
             self._save()  # 段级落盘：每替换完一段立即持久化，中断后从下一段续

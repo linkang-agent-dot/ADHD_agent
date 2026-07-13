@@ -67,31 +67,55 @@ class VolcProvider(Provider):
                 "watermark": self.cfg.watermark}
         return self._submit_and_poll(body, out_path)
 
-    def generate_clip(self, prompt, first_frame, out_path: Path) -> Path:
-        """i2v 主路径（2026-07-13 实测通）：数字人图作首帧 + 文本。
+    def generate_clip(self, prompt, first_frame, out_path: Path,
+                      last_frame=None) -> Path:
+        """i2v 主路径（2026-07-13 实测通）：场景关键帧作首帧（可选尾帧双锚点）+ 文本。
 
         ⚠️ mini 系列不接受 duration 参数（传了报 InvalidParameter）——不传，
-        产出约 5s/24fps，时长裁齐在 replace 层做；ratio=adaptive 跟随首帧画幅。"""
+        产出约 5s/24fps，时长裁齐在 replace 层做；ratio=adaptive 跟随首帧画幅。
+        尾帧 role=last_frame 若被当前模型拒（4xx），自动降级为仅首帧重提一次。"""
         if first_frame is None:
             raise ValueError("generate_clip 需要首帧参考图（avatars/<名>/front|back）")
-        content = [{"type": "text", "text": prompt},
-                   {"type": "image_url", "image_url": {"url": self._data_url(first_frame)},
-                    "role": "first_frame"}]
-        body = {"model": self.cfg.video_model, "content": content,
-                "resolution": self.cfg.video_resolution,
-                "ratio": self.cfg.video_ratio,
-                "generate_audio": self.cfg.generate_audio,
-                "watermark": self.cfg.watermark}
-        return self._submit_and_poll(body, out_path)
+
+        def _body(with_last: bool) -> dict:
+            content = [{"type": "text", "text": prompt},
+                       {"type": "image_url",
+                        "image_url": {"url": self._data_url(first_frame)},
+                        "role": "first_frame"}]
+            if with_last:
+                content.append({"type": "image_url",
+                                "image_url": {"url": self._data_url(last_frame)},
+                                "role": "last_frame"})
+            return {"model": self.cfg.video_model, "content": content,
+                    "resolution": self.cfg.video_resolution,
+                    "ratio": self.cfg.video_ratio,
+                    "generate_audio": self.cfg.generate_audio,
+                    "watermark": self.cfg.watermark}
+
+        if last_frame is not None:
+            try:
+                return self._submit_and_poll(_body(True), out_path)
+            except requests.HTTPError as e:
+                if e.response is None or not 400 <= e.response.status_code < 500:
+                    raise
+        return self._submit_and_poll(_body(False), out_path)
+
+    EDIT_RETRIES = 3
+    EDIT_BACKOFF = 10  # 秒；连续打 /images/generations 会偶发瞬时 400/限流（2026-07-13 实测）
 
     def edit_image(self, prompt, image_path, out_path: Path) -> Path:
         """Seedream 图生图（2026-07-13 已实测通路径：POST /images/generations + image 字段）。"""
         body = {"model": self.cfg.image_model, "prompt": prompt,
                 "image": self._data_url(image_path),
                 "response_format": "url", "watermark": False}
-        r = requests.post(f"{self.cfg.base_url}/images/generations",
-                          headers=self.headers, json=body, timeout=300)
-        r.raise_for_status()
+        for attempt in range(self.EDIT_RETRIES):
+            r = requests.post(f"{self.cfg.base_url}/images/generations",
+                              headers=self.headers, json=body, timeout=300)
+            if r.status_code < 400:
+                break
+            if attempt == self.EDIT_RETRIES - 1:
+                r.raise_for_status()
+            time.sleep(self.EDIT_BACKOFF * (attempt + 1))
         url = r.json()["data"][0]["url"]
         out_path.write_bytes(requests.get(url, timeout=300).content)
         return out_path

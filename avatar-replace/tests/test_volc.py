@@ -86,6 +86,45 @@ def test_generate_clip_i2v_contract(monkeypatch, tmp_path):
     assert body["generate_audio"] is False
 
 
+def test_generate_clip_dual_anchor_last_frame(monkeypatch, tmp_path):
+    ref = tmp_path / "a.jpg"; ref.write_bytes(b"\xff\xd8a")
+    ref2 = tmp_path / "b.jpg"; ref2.write_bytes(b"\xff\xd8b")
+    sent = {}
+    monkeypatch.setattr("requests.post", lambda url, json=None, headers=None, timeout=None:
+                        (sent.update(json=json), FakeResp({"id": "t"}))[1])
+    monkeypatch.setattr("requests.get", lambda *a, **k: FakeResp(
+        {"status": "succeeded", "content": {"video_url": "http://cdn/o.mp4"}}))
+    monkeypatch.setattr("time.sleep", lambda s: None)
+    p = VolcProvider(ArkCfg(base_url="http://ark", vlm_model="vlm", video_model="vid", api_key="sk"))
+    p.generate_clip("转身", ref, tmp_path / "o.mp4", last_frame=ref2)
+    roles = [c.get("role") for c in sent["json"]["content"]]
+    assert roles == [None, "first_frame", "last_frame"]
+
+
+def test_generate_clip_falls_back_when_last_frame_rejected(monkeypatch, tmp_path):
+    # 当前模型若拒 last_frame（4xx），必须自动降级为仅首帧重提
+    ref = tmp_path / "a.jpg"; ref.write_bytes(b"\xff\xd8a")
+    ref2 = tmp_path / "b.jpg"; ref2.write_bytes(b"\xff\xd8b")
+    import requests as _rq
+    bodies = []
+    def fake_post(url, json=None, headers=None, timeout=None):
+        bodies.append(json)
+        if any(c.get("role") == "last_frame" for c in json["content"]):
+            resp = FakeResp({"error": "InvalidParameter"}, status=400)
+            err = _rq.HTTPError("400"); err.response = type(
+                "R", (), {"status_code": 400})()
+            raise err
+        return FakeResp({"id": "t"})
+    monkeypatch.setattr("requests.post", fake_post)
+    monkeypatch.setattr("requests.get", lambda *a, **k: FakeResp(
+        {"status": "succeeded", "content": {"video_url": "http://cdn/o.mp4"}}))
+    monkeypatch.setattr("time.sleep", lambda s: None)
+    p = VolcProvider(ArkCfg(base_url="http://ark", vlm_model="vlm", video_model="vid", api_key="sk"))
+    out = p.generate_clip("转身", ref, tmp_path / "o.mp4", last_frame=ref2)
+    assert out.read_bytes() == b"fakevideo"
+    assert len(bodies) == 2  # 第一次带尾帧被拒，第二次仅首帧
+
+
 def test_generate_clip_requires_first_frame(tmp_path):
     p = VolcProvider(ArkCfg(base_url="http://ark", vlm_model="vlm", video_model="vid", api_key="sk"))
     import pytest

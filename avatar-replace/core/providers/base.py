@@ -17,8 +17,8 @@ class Provider(ABC):
 
     @abstractmethod
     def generate_clip(self, prompt: str, first_frame: Path | None,
-                      out_path: Path) -> Path:
-        """i2v：数字人形象图作首帧 + 动作/运镜文本 → 生成视频段（2026-07-13 定版架构）。
+                      out_path: Path, last_frame: Path | None = None) -> Path:
+        """i2v：场景关键帧作首帧（可选尾帧双锚点）+ 分镜文本 → 生成视频段。
 
         输入只有 CG 图与文本，天然过真人风控；产出段由 replace 裁齐时长。"""
 
@@ -49,7 +49,7 @@ class FakeProvider(Provider):
         shutil.copy(video_path, out_path)
         return out_path
 
-    def generate_clip(self, prompt, first_frame, out_path):
+    def generate_clip(self, prompt, first_frame, out_path, last_frame=None):
         self.clip_calls.append(prompt)
         import subprocess
         subprocess.run(
