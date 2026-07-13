@@ -339,6 +339,20 @@ for k,v in FINAL.items():
 
 **修复本案**：找装了 driver 的 clone 重新 3-way merge dev_festival；或直接把 7030001/7030003 三件套排序改回「装备→钻→VIP」（160218 装备行提到组首）。
 
+## ⑯ dev→dev_festival 2026-07-09 实战：i18n 管道并行删单行 + 「已校对」标丢失 + 尾空列假阳性（merge `77c5ff9`）
+
+三个新决策分支，下次直接套用：
+
+**A. bulk_row_delete 新分支：key 被 dev「并入管道复用行」→ 跟随删除单行（三.1 第二层之外的新情形）**。本次 8 个单行 key（TXT_Item_Name_1008/52003/70103/180012、TXT_Pack_Tag_10511/11050、Text_Invasion_server_assistance_desc、LC_ui_free）按老规则查「实体还在」会误判成保留 Local；但 dev 是把这些 key **合并进了管道连写行**（如 `TXT_Item_Name_1008|TXT_ActvLogin_Name_462`），合并结果里两行并存 = **重复 key**。判据：`grep` 该 key 是否出现在结果文件的**其他行的 col0 管道串里**——在，就删单行跟随 dev；不在，才走老的「实体在→保留」。
+
+**B. driver 丢「已校对」标 = §⑨ 静默清列的 i18n 变体**。33 行 dev 打了校对标（末列 col25/26=已校对）、festival 侧同行也动过 → driver cell 合并取了 festival 的空值。双向审计报 dev_lost、逐行 diff 只差那一列 → 整行取 dev 版恢复。**「只差校对标列」= 可机械恢复，不用人工裁决**。
+
+**C. 双向审计新假阳性类：行尾空 tab 数不同**。RuleTips 16042/9202 报 dev_lost，实为 dev 行比 worktree 少 8 个尾空列、正文逐字一致 → 忽略。判法：`row.rstrip('\t')` 后相等即假阳性。
+
+**D. Reward seq 撞车但对侧已含节日内容的收敛法**：festival 在 seq 15905083-098 放世界杯头像框/表情(291203/291204)，dev 同 seq 放了别的组、且已把 291203/291204 原样搬到 15920278-293（此前 WC-only 确定性合并带过去的）。→ 撞车 seq 直接取 dev，节日内容零丢失且顺带去重（合并前 worktree 曾同组 16 行重复）。判据仍是 RewardID 集合，不是 seq。
+
+**E. 环境坑**：主仓 fetch dev 会被拒（dev checked out 在 `C:/X3/gdconfig-wt-dev-wcpack` worktree）→ 去那个 worktree 里 `git pull --ff-only origin dev`。另外 pull dev_festival 时 post-merge 钩子会自动把各 feature worktree 合到最新，**有冲突的它自动 abort**（本次 deepsea-recharge / turntable 被跳过）——不算错误，但那些 worktree 停在旧基线，用时需手合。
+
 ## 相关
 
 - 导入只认 tsv、改 tsv 不碰 xlsx：[[reference_x3_tsv_export_migration]]（旧 xlsx 公式缓存/CalculateFull 问题随 xlsx 弃用已不适用）

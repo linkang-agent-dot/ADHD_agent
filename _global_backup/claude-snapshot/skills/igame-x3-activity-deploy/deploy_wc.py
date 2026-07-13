@@ -17,7 +17,7 @@ ENVCFG={"prod":("https://webgw-cn.tap4fun.com","https://igame.tap4fun.com",".iga
         "dev":("https://ms-inner-gateway-dev.tap4fun.com","https://igame-dev.tap4fun.com",".igame-auth-dev.json")}
 ZH={"ALG":"阿尔及利亚","ARG":"阿根廷","AUS":"澳大利亚","AUT":"奥地利","BEL":"比利时","BIH":"波黑","BRA":"巴西","CAN":"加拿大","CIV":"科特迪瓦","COD":"刚果金","COL":"哥伦比亚","CPV":"佛得角","CRO":"克罗地亚","CUW":"库拉索","CZE":"捷克","ECU":"厄瓜多尔","EGY":"埃及","ENG":"英格兰","ESP":"西班牙","FRA":"法国","GER":"德国","GHA":"加纳","HAI":"海地","IRN":"伊朗","IRQ":"伊拉克","JOR":"约旦","JPN":"日本","KOR":"韩国","KSA":"沙特","MAR":"摩洛哥","MEX":"墨西哥","NED":"荷兰","NOR":"挪威","NZL":"新西兰","PAN":"巴拿马","PAR":"巴拉圭","POR":"葡萄牙","QAT":"卡塔尔","RSA":"南非","SCO":"苏格兰","SEN":"塞内加尔","SUI":"瑞士","SWE":"瑞典","TUN":"突尼斯","TUR":"土耳其","URU":"乌拉圭","USA":"美国","UZB":"乌兹别克斯坦"}
 CODES=sorted(ZH.keys())
-SERVERS=["1170","1270","1310","1350","1390","1400","1420","1440","1460","1510","1530","1540","1550","1560","1570","1580","1590","1600","1610","1620","1630","1640","1650","1660","1670","1680","1690","1700","1710","1720","1730","1740","1750","1760","1770","1780","1790","1800","1810","1820","1830","1840","1850","1860","1870","1880","1890","1900","1910","1920","1930","1940","1950","1960","1970"]
+SERVERS=["1170","1270","1310","1350","1390","1400","1420","1440","1460","1510","1530","1540","1550","1560","1570","1580","1590","1600","1610","1620","1630","1640","1650","1660","1670","1680","1690","1700","1710","1720","1730","1740","1750","1760","1770","1780","1790","1800","1810","1820","1830","1840","1850","1860","1870","1880","1890","1900","1910","1920","1930","1940","1950","1960","1970"]+[str(s) for s in range(1980,2251,10)]  # 55旧+28新(1980-2250)=83服·对齐deploy_r16真实服集
 TIER=["免费","$4.99","$9.99","$19.99"]
 def base(c): return 894000+(CODES.index(c)+1)*10
 def utc(s): return calendar.timegm(datetime.datetime.strptime(s,"%Y-%m-%d %H:%M").timetuple())*1000
@@ -41,11 +41,12 @@ now=int(time.time()); OPEN=(now-3600)*1000
 payload=[]
 for n in seqs:
     m=sched[n]; A,B=m["a_code"],m["b_code"]; en=utc(m["lock_utc"]); c0=102920+(n-1)*4
+    rl={"R32":"32强","R16":"16强","QF":"8强","SF":"半决赛","3RD":"季军","FINAL":"决赛"}.get(m.get("round",""),"32强")
     if en<=now*1000: print(f"⚠️跳过 场{n} {ZH[A]}vs{ZH[B]} 结盘{m['lock_utc']}已过"); continue
     for t in range(4):
         payload.append({"activityConfigId":str(c0+t),"customParam":json.dumps({"packIdA":base(A)+t,"packIdB":base(B)+t}),
           "previewTime":0,"endShowTime":0,"startTime":OPEN,"endTime":en,"acrossServer":0,"acrossServerRank":0,
-          "name":f"胜负预言·32强_{ZH[A]}vs{ZH[B]}_{TIER[t]}","servers":[SERVERS]})
+          "name":f"胜负预言·{rl}_{ZH[A]}vs{ZH[B]}_{TIER[t]}","servers":[SERVERS]})
 print(f"[{env}] 场次{seqs} → {len(payload)}实例, 开启立即, {len(SERVERS)}服{'  [DRY-RUN]' if not GO else ''}")
 for p in payload: print(f"  cfg={p['activityConfigId']} {p['name']} cp={p['customParam']} end={datetime.datetime.utcfromtimestamp(p['endTime']/1000).strftime('%m-%d %H:%M')}UTC")
 # double-check

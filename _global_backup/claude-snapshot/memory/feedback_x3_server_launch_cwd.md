@@ -34,6 +34,7 @@ metadata:
 `start_local_server.bat` 用 `start "title" dotnet run`（行53/56）开**新控制台窗口**跑服，外加结尾 `pause`。在 Claude Code 的无窗口站后台环境里：① Bash 工具里 `echo. | cmd /c "...bat skip-link"` 的 `echo.` 不是 bash 命令（`command not found`），pause 喂不进去；② 即便喂进去，`start` 开的新窗口在 headless 下存活不了。实测后果：bat 秒退（根本没跑 ~40s 的 dotnet build）、两个服直接挂掉、端口不监听。
 
 **✅ 一键脚本（2026-06-17 沉淀，下次"重新部署/接入最新配置"直接用，别再手敲）**：`pwsh C:\Users\linkang\x3_redeploy.ps1 [-Sid 3080] [-CenterId 61] [-ForceBuild]` —— 自动跑完下面整条链路：查 gdconfig 新旧 → mtime 预检(config .bytes vs dll, 新就重编) → `stop_gs` → 按需重编双 Hotfix → `Start-Process` 起 Game+Map → 轮询端口 + 验日志 `PlayService started` 无 protobuf 异常。不清库、GM 活动(MongoDB)重启保留。**用 `run_in_background` 跑**(含 dotnet build ~2-3min + 轮询)，完成看输出尾部 `[OK]`/`[FAIL]`。
+- ⚠️**pull 刚完立即跑 redeploy，Hotfix 编译可能偶发报错（2026-07-08 撞过一次）**：mtime 显示 CfgProtos *.cs 生成时刻=pull 完成前后 1 秒内，疑似生成竞态；症状=build 1 错且脚本已把服停了（stop 在 build 前）→**服停着**。处置：直接重跑同一条 `x3_redeploy.ps1`（本例重编 0 错通过），别当真编译错去改代码。redeploy 失败后必查服是否被停在半路。
 
 **headless 可靠链路（脚本背后的手动步骤，排障时参考）**：
 1. 先把两个 Hotfix build 出来（`dotnet build` 在 server 目录，~40s+35s）：

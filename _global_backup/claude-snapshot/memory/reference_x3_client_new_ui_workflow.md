@@ -38,6 +38,14 @@ X3 = 纯 UGUI + prefab + 代码生成绑定（**无** UI Toolkit/UI Builder/Fair
 
 ## 关键暗坑
 
+- **WndMgr 命名空间=`UI`**（文件在 TFWCore 但不是 TFW.UI）；`WndMgr.Show<T>` 按 Type 直连，UITypeAutoRegisterGen 静态字典只服务按 ID 跳转，新窗口不进注册表也能 Show（2026-07-10 皮肤专属时刻 demo 实证）
+- **新增 .cs 离线编译检查（不打扰开着的 Editor）**：Unity 自带 Roslyn `Data\NetCoreRuntime\dotnet.exe Data\DotNetSdkRoslyn\csc.dll @rsp`，引用集=ScriptAssemblies\*.dll + Managed\UnityEngine\*.dll + UnityReferenceAssemblies\unity-4.8-api\*.dll+Facades；⚠️别加 netstandard/UnityEditor 伞形 dll（假错 CS0012/CS0433）。细节见 [[project-x3-skin-moment-interactive]]
+- **Play Mode 中 Unity 挂起脚本重编译**：新脚本 .meta 生成了但菜单/类不出现 → 退 Play + Ctrl+R
+- **★窗口 prefab 根必须带 Canvas（+框架组件），从零拼根节点必炸**：WndMgr.Show 实例化后要取根 Canvas 调层级，裸 RectTransform 根报 MissingComponent"add a Canvas"。程序化拼新窗口的正确姿势=**整体 Object.Instantiate 一个现有窗口 prefab（根组件全保留）→ 不要的模块 SetActive(false)（别删，根上动画/Feedbacks 可能引用）→ SaveAsPrefabAsset**（2026-07-10 皮肤专属时刻 demo 实证）
+- **★编辑器工具/MenuItem 必须放 `Assets\GameMainLogicEditor\`**（GameMainLogic.Editor 程序集，引用了 GameMainLogic 热更程序集）；放裸 `Assets\Editor\` 引用 UI.* 必 CS0234（HybridCLR 热更程序集非自动引用）。编译错误诊断=grep `%LOCALAPPDATA%\Unity\Editor\Editor.log`
+
+- **★遮罩颜色采样做点击热区（无碰撞体，配置驱动，2026-07 皮肤互动 demo 验证）**：想让一张图上不同区域触发不同逻辑又不想摆一堆碰撞体 → 用一张**颜色编码遮罩图**(红/绿/蓝各代表一个区)覆盖，加载后设 `alpha=0` 但保 `raycastTarget=true`(不可见只接点击)，点击时屏幕坐标→`RectTransformUtility.ScreenPointToLocalPointInRectangle`→归一化→`mMaskTex.GetPixel(x,y)` 判颜色定区域。骨架=女仆俱乐部 `UIHeroClub.Interact.cs SampleMaskPart`。⚠️**遮罩图必须放贴图后处理器白名单目录**(如 `Res/UI/Spirits/Club/images/mask/`,`CustomizeAssetPostprocessor.Texture.cs` 的 `MaskImageDir` 只对它保 `isReadable:1`)——其他 UI 目录导入时强制 `isReadable:0`(手写 meta 也被覆盖)→`GetPixel` 失效=点击没反应。要新目录得改后处理器加白名单
+- **★运行时代码创建 UI 糊，给美术 prefab 规格更好（2026-07 皮肤互动 demo 实证）**：想快速验证逻辑可运行时 `new GameObject`+`Image` 拼 UI(不依赖 prefab/Auto 绑定,编译即用),但**效果糙**(圆形靠 Knob mask 出来是方卡片、位置乱)。正解=**逻辑代码写成「驱动 prefab 里拼好的模板」**：Auto 绑定容器+模板节点,代码 `Instantiate` 模板 N 份填数据/绑点击,美术在 Unity 里拼样式。给美术**明确的节点路径+命名规格+现成素材清单**(项目 `Res/UI/Spirits/Common` 有 Round_frame 金圆环/Round_di 圆底/Round_mask 裁圆遮罩/Round_light 高亮/common_lock_1 锁等,别 AI 生成风格不统一)。分工=逻辑我接、样式美术拼
 - **X3 背景自适应用自研 `RectTransformScaler` 脚本**（不是 Unity 原生 AspectRatioFitter）：挂在全屏 Bg 节点上持续接管 localScale（Match Mode=Expand 按父级撑满，会把 Scale 压到 0.26 之类）。**复制 Bg 当装饰节点（徽章/面板）会把它带过去**→Scale 怎么改都被弹回；修法=装饰件上 Remove Component + Scale 归 1，仅 Bg 本体保留。另：模板 `Animation` 节点挂入场动画也会接管 Scale——UI 调大小一律改 Width/Height 不碰 Scale。"改了就还原"通用诊断：找接管该属性的组件（动画/Scaler/Layout），改它的参数而不是硬掰。
 - **TFWText 默认勾 Best Fit（多语言自适应）**：勾着时 Font Size 字段失效，实际字号=框内能塞下的最大值、封顶 Max Size——调字大小=改 Max Size+拉大文本框，别取消勾（10语言长文案防爆框）；Min Size 默认 2 太极端建议设 20。
 - **X3 标题金字=TFWText+BetterOutline(描边投影)+Gradient2(黄色Multiply渐变) 三件套**：复制 txt_title 出来的文字全带这俩组件——`Gradient2 不删则 Color 改了也不生效`（被渐变盖染成金）；正文要平色就把两组件 Remove（米色底删双件，深底白字留 Outline 删 Gradient2）。

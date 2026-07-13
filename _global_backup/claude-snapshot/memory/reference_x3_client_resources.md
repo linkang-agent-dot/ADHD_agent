@@ -170,6 +170,11 @@ grep -rn "DK_img_Activity_summer_bg_1" C:/x3-project/client/Assets/Editor/Config
 - **tableResInfo.txt 看起来缺图时**：去 ActivityImg/ActivityImg_Download 目录用 `find -iname` 真实搜，名单可能是过期版本
 - **跨节日复用 DK 是 BUG 信号**：节日活动用了别节日前缀的 DK（如夏日活动用 `VD_*`），90% 是没换图，需要确认美术
 
+## ★「DK not found」标准诊断法 = 按分支拉四格矩阵（2026-07-07 深海schedule_icon实证）
+报 `DK_xxx not found` 别先怀疑缓存/AB，**先对 dev 与 dev_festival 各查四格**：①配置引用（gdconfig `git grep <DK> origin/<br> -- tsv/`，读远端别读工作树）②Path_Activity 注册 ③Display_Activity 注册 ④png 是否在树上（`git ls-tree`）。四格矩阵一摆，脱节在哪层秒见。
+- **新病型：上线期配置同步 dev、client 资源没跟**——gdconfig 上线期规矩是改 dev+qa，但 client 仓的 DK 注册+png 常只在 dev_festival（各自独立提交，没人管同步）→ dev 基底客户端读到线上活动配置就报 not found。修=把入库 commit cherry-pick 到 dev（client dev 受保护走 MR）。实证：深海每日礼包102993 的 `DK_img_Activity_deepsea_schedule_icon`（入库 47fe47b0124 仅在 dev_festival；深海其余 HUD 图标都合到了 dev，唯独这笔漏了）。
+- 推论：**gdconfig 跨线同步配置时，凡带 DK_ 新引用的行，必须连带核对 client 仓该 DK 在目标线的注册+png**（换线自查点+1）。
+
 ## ⚠️ 踩坑：Unity 全量重导出 Path_*.asset 静默删掉别人手工注册的 DK（2026-06-05）
 
 **现象**：合并/上传美术后，一批节日资源「掉了」——背景/ICON/HUD 入口图标空白，且**跨多个节日**（夏日 + 尼罗同时掉）。
@@ -202,7 +207,7 @@ git show <commit>^:.../Path_Activity.asset | grep -A1 "key: DK_xxx$"   # 取回 
 - ✅ 安全做法：**把 N 个 `key` 追加到 keys 段末尾（`values:` 行之前）+ N 个 `key/objPath` 追加到 values 段末尾（EOF 前），两段同序**。这样既保住 index 对应（老条目 0..n-1 不动、新条目 n..n+N-1 在两段同位），diff 又小又好审。下次谁 Unity 重导出会自动重排，无副作用。
 - 取 objPath：`git show <删除提交>^:.../Path_Activity.asset | grep -A1 "key: DK_xxx$"`。png 在仓库就只补注册行，不动美术。
 - 坑：文件里可能有**历史损坏条目**（如 `DK_img_Activity_underwear_icon33` 的 objPath 被拆成两行 `...icon33` + `        1.png`），解析 values 时按"只匹配 `- key:` 行定位"绕过它，**别去修**（不是你的活）。
-- client 仓 protected dev → feature branch + MR（[[workflow_x3_protected_branch_mr]]，注意 MR title 用 ASCII 否则 500）。提交只 `git add` 目标 .asset，别带进工作区里别人的 prefab WIP。
+- client 仓 protected dev → feature branch + MR（[[workflow_x3_protected_branch_mr]]，MR 中文 title 可用=UTF-8 bytes body+charset头，编码没把握时 ASCII 保底）。提交只 `git add` 目标 .asset，别带进工作区里别人的 prefab WIP。
 
 **预防**：禁止「XX美术上传」式整文件全量重导出 Path_*.asset；新增 DK 应只追加自己那几条 key+value，或重导出前先 `git pull` 同步最新注册。关联 [[workflow_x3_merge_conflict_audit]] 同属「整文件覆盖丢别人改动」家族。
 

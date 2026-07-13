@@ -1,0 +1,4 @@
+{
+  "success": false,
+  "error": "HTTP 403: {\"success\": false, \"error\": \"\\u6743\\u9650\\u4e0d\\u8db3\\uff0c\\u9700\\u8981 scope: grfal:logs:read\"} | Scope hint: token may be expired. Try re-authorizing via device flow (re-run in interactive terminal) or --auth-bootstrap to re-bootstrap. Check GRFAL_AGENT_SCOPES and permissions for this operation."
+}

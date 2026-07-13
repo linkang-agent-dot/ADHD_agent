@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 皮肤互动 · 需求梳理与现状总览 v2</title>
+<style>
+  body{font-family:"Microsoft YaHei",sans-serif;max-width:1120px;margin:0 auto;padding:24px 32px;background:#1b1d24;color:#e8e6e0;line-height:1.75}
+  h1{color:#f0c674;border-bottom:2px solid #f0c674;padding-bottom:8px}
+  h2{color:#8abeb7;margin-top:38px;border-left:4px solid #8abeb7;padding-left:10px}
+  h3{color:#b294bb;margin-top:22px}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
+  th,td{border:1px solid #444;padding:7px 10px;text-align:left;vertical-align:top}
+  th{background:#2c2f38;color:#f0c674}
+  code{background:#2c2f38;padding:1px 6px;border-radius:3px;color:#cc6666;font-size:13px}
+  .done{color:#8ac887;font-weight:bold}
+  .todo{color:#e0a458;font-weight:bold}
+  .q{color:#cc6666;font-weight:bold}
+  .box{background:#23262e;border-radius:6px;padding:12px 18px;margin:12px 0}
+  .hl{background:#2e2a1e;border-left:4px solid #f0c674;padding:10px 14px;margin:10px 0}
+  .dim{color:#8a8a8a;font-size:13px}
+  ul{margin:6px 0}
+  .tag{display:inline-block;background:#3e4451;border-radius:3px;padding:0 8px;margin-right:6px;font-size:12px;color:#8abeb7}
+</style>
+</head>
+<body>
+<h1>X3 皮肤互动 · 需求梳理与现状总览 v2</h1>
+<p class="dim">2026-07-13 · 本案从「单皮肤互动 demo」演进到「两档皮肤商业体系」 · 供继续聊需求的底稿</p>
+
+<div class="hl">
+<b>一句话现状</b>：技术 demo 已跑通并落地客户端（9 支真片 + 两个入口 + 首次引导，能玩）。产品侧周末想清楚了一套<b>两档皮肤体系</b>（基础皮肤标配互动 / 高级皮肤多场景溢价），下一步是把商业结构定死→更新方案→按新结构改造。本文 = 现状快照 + 设计构想 + 待决策清单。
+</div>
+
+<h2>一、已落地现状（技术 demo，能跑）</h2>
+<table>
+<tr><th>模块</th><th>状态</th><th>说明</th></tr>
+<tr><td>技术骨架</td><td class="done">✅ 完成</td><td>照抄女仆俱乐部(HeroClub)：不透明满幅场景视频 + 遮罩颜色采样点击热区(红头/绿身/蓝手) + 对白气泡 + 视频内嵌音轨。全新增文件，零改现有逻辑</td></tr>
+<tr><td>互动视频</td><td class="done">✅ 9 支真片</td><td>足球宝贝·爱莉希雅·更衣室：进场 / idle循环 / 拒绝 / 头·手·身 各低高档。seadance 生成，工程 compress_video 压缩，每支&lt;1MB</td></tr>
+<tr><td>两个入口</td><td class="done">✅ 已加</td><td>①英雄详情皮肤页(立绘右上「特殊互动」按钮) ②世界杯开箱界面。代码动态挂按钮，白名单 gate（现只对足球宝贝+世界杯开箱101516显示）</td></tr>
+<tr><td>首次引导</td><td class="done">✅ 已加</td><td>首次进入显示常驻引导气泡「点我的头、手或身体…」，首次点击即关+记住(按皮肤 PlayerPrefs)</td></tr>
+<tr><td>档位判定</td><td class="done">✅ 去demo化</td><td>真实拥有判定：拥有皮肤→全解锁 / 未拥有→reject。编辑器保留切档调试按钮</td></tr>
+<tr><td>正式化收尾</td><td class="todo">◻ 未做</td><td>配置表化 / 多语言对白 / 视频转OnDemand / 弹窗队列屏蔽 / iOS和谐闸门 / 入口进prefab / 提交MR。均待方案定型后一起做</td></tr>
+</table>
+<p class="dim">环境：Editor 连 beta（trick.json 已过版本闸）。代码全在 client 仓 circus-homeland-port 工作区未提交，不干扰在途工作。</p>
+
+<h2>二、产品设计构想 ★继续聊的核心</h2>
+
+<h3>2.1 商业结构（已聊定的三条）</h3>
+<div class="box">
+<ul>
+<li><b>本体皮肤互动 = 随皮肤解锁</b>：作为皮肤高级卖点，抬皮肤价值，驱动<b>首购</b></li>
+<li><b>换装本质就是皮肤</b>：不同服装 = 不同皮肤 SKU，各自带互动，驱动<b>复购</b>（不做成皮肤之外的独立商品）</li>
+<li><b>互动分基础 / 高级两档</b>（见 2.2）</li>
+</ul>
+</div>
+
+<h3>2.2 两档皮肤体系（周末想清楚的核心设计）</h3>
+<table>
+<tr><th></th><th>基础皮肤（节日标配）</th><th>高级皮肤（溢价款）</th></tr>
+<tr><td><b>互动</b></td><td>1 个特殊互动，<b>不换场景</b></td><td><b>多场景</b>，每场景互动形式不同（更衣室 / 球场…）</td></tr>
+<tr><td><b>未拥有时</b></td><td>直接可玩（作为标配卖点直接看到）</td><td>高级互动位只显示<b>静态图</b>预览</td></tr>
+<tr><td><b>解锁后</b></td><td>——</td><td>视频 + 互动全开</td></tr>
+<tr><td><b>解锁方式</b></td><td>随皮肤</td><td>解锁（购买）皮肤</td></tr>
+<tr><td><b>作用</b></td><td>让「互动」成为所有节日皮肤标配，抬整体皮肤价值</td><td>高价溢价款，鲸鱼向复购</td></tr>
+</table>
+
+<h3>2.3 可见性 / 解锁逻辑</h3>
+<div class="box">
+基础互动 → <b>直接看到能玩</b>（节日皮肤标配）<br>
+高级互动 → 未解锁<b>只能看到静态图</b>（预览勾引）→ 想要视频&互动 → <b>解锁皮肤</b>才能看
+</div>
+
+<h3>2.4 为什么这套设计跟我们技术优势完美咬合（省成本关键）</h3>
+<div class="hl">
+<ol>
+<li><b>静态预览图 = 白捡的</b>：高级互动未解锁显示的静态图，就是 AI 出视频时的<b>首帧场景图</b>（更衣室那张我们已经有了）。预览图零额外成本，出视频顺带就有。</li>
+<li><b>换场景 = 换背景，AI 几乎白送</b>：玩家感知里「更衣室→球场」是实打实高级内容，对我们只是抠人物换背景重生成，同一套热区/对白结构照搬。<b>玩家觉得贵，我们做着便宜</b>——正是溢价款该有的成本结构。</li>
+<li><b>代码扩展小</b>：现在路径 <code>SM_{皮肤}_{slot}</code> → 扩成 <code>SM_{皮肤}_{场景}_{slot}</code> 就支持多场景，改动很小。</li>
+</ol>
+</div>
+
+<h3>2.5 映射到现有 demo</h3>
+<p>我们做的<b>足球宝贝·更衣室这一整套</b>= 高级皮肤的<b>「一个场景」样本</b>。<br>
+→ 再加个「球场场景」(换背景 + 一套 idle/act) = 完整高级皮肤；<br>
+→ 砍成单场景 = 基础皮肤。</p>
+
+<h3>2.6 ★简化：一场景 = 一互动 = 一视频（2026-07-13 定）</h3>
+<div class="hl">
+三部位×低高档是<b>过度设计</b>——玩家点头/手/身感知不到差异，反把"点一下有惊喜"的爽感稀释，还让产能翻 3 倍。改为 <b>一个场景 = 一个互动 = 一段完整撩人演出</b>。
+</div>
+<table>
+<tr><th>每场景仅 2 支核心</th><th>作用</th></tr>
+<tr><td><code>idle</code> 待机循环</td><td>角色"活"着看着你，进界面就播（钩子）</td></tr>
+<tr><td><code>act</code> 互动视频</td><td>点角色 → 播一段完整撩人演出 → 回 idle</td></tr>
+</table>
+<p><b>命名规范</b>（清晰）：<code>SM_{皮肤ID}_{场景}_{idle|act|preview}</code>，场景用英文语义词。<code>preview.png</code>=act首帧(未解锁显示的静态图，白捡)。</p>
+<div class="box">
+<span class="tag">例</span> <code>SM_104001_lockerroom_idle.mp4</code> / <code>_lockerroom_act.mp4</code> / <code>_lockerroom_preview.png</code> · <code>SM_104001_field_idle.mp4</code> …<br>
+<b>reject 砍掉</b>（静态图预览接管转化）。<b>现有 9 支归置</b>：留 idle + 挑最撩的 touch_body_high 当 act，其余 7 支退役 → 更衣室即成简化版完整场景，不用重做。
+</div>
+
+<h3>2.7 圆形场景选择器（设计中）</h3>
+<div class="box">
+互动界面视频下方一排<b>圆形按钮</b>（原英雄详情底部 tab 位思路），圆内 = 场景 preview 裁圆：
+<pre style="color:#8abeb7">   ( ● )  ( ○ )  ( 🔒 )
+   更衣室  球场   ???  </pre>
+默认选中皮肤默认场景(高亮描边)→进界面播它 idle；点其他圆切场景；<b>未解锁场景显 🔒 → 点它弹静态大图 + 解锁引导（不播视频）</b>。静态图预览机制正好挂这里。
+</div>
+
+<h2>三、可解锁互动场景池（储备清单，未来扩展方向）</h2>
+<table>
+<tr><th>维度</th><th>内容</th><th>卖点</th><th>我们成本</th><th>推荐</th></tr>
+<tr><td>换装(=皮肤)</td><td>同角色不同服装各一套互动</td><td>独立皮肤SKU复购</td><td>低</td><td>★★★ 已定</td></tr>
+<tr><td>场景切换</td><td>换背景：更衣室→球场→…</td><td>高级皮肤的多场景卖点</td><td>极低(只换背景)</td><td>★★★ 已进核心设计</td></tr>
+<tr><td>好感递进</td><td>接养成，好感越高解锁越亲密的档</td><td>付费+留存双驱动</td><td>低</td><td>★★★ 二期</td></tr>
+<tr><td>主城看板</td><td>解锁后可把 idle 视频设为主城常驻展示位</td><td>外显炫耀(对标二次元看板娘)</td><td>中</td><td>★★</td></tr>
+<tr><td>节日限定</td><td>情人节/生日专属场景+对白</td><td>限时限定</td><td>低</td><td>★★</td></tr>
+<tr><td>送礼触发</td><td>送花/戒指→触发专属反应视频</td><td>道具付费</td><td>低</td><td>★★</td></tr>
+<tr><td>隐藏剧情</td><td>单条高价值剧情(告白/生日惊喜)</td><td>高价单品/集齐解锁</td><td>低</td><td>★</td></tr>
+</table>
+
+<h2>四、待决策清单 ★继续聊要定的</h2>
+<table>
+<tr><th>#</th><th>待定项</th><th>影响</th><th>我的初步建议</th></tr>
+<tr><td>1</td><td class="q">高级皮肤起步几个场景？</td><td>产能 vs 高级感</td><td>2-3 个（太多产能跟不上，太少不够"高级"）</td></tr>
+<tr><td>2</td><td class="q">基础 vs 高级的体验落差多大？基础互动做多深？</td><td>撑不撑得起差价</td><td>基础=进场+1~2个触摸；高级=多场景×完整三部位。落差要肉眼可见</td></tr>
+<tr><td>3</td><td class="q">静态图预览要不要加锁标+"解锁皮肤查看完整"引导？</td><td>转化力</td><td>要，锁标+价格+跳皮肤礼包</td></tr>
+<tr><td>4</td><td class="q">静态图预览 vs 试看3s，还是都要？</td><td>钩子强度</td><td>点静态图→播3s→卡付费（比纯静态更勾）；静态图做常态展示，3s做点击后的进阶钩子</td></tr>
+<tr><td>5</td><td class="q">基础互动要不要回补到已有的节日皮肤？</td><td>工作量</td><td>只从新皮肤起，老皮肤择优回补（挑卖得好的）</td></tr>
+<tr><td>6</td><td class="q">接不接好感体系？</td><td>要不要动服务端</td><td>首版纯客户端(拥有=全解锁)，二期再接好感做递进解锁</td></tr>
+<tr><td>7</td><td class="q">正式化深度 & 提交方式</td><td>上线</td><td>配置表化+多语言必做；单独 feature 分支+X3NEW 单，不混马戏节</td></tr>
+</table>
+
+<h2>五、下一步（定完设计就能推）</h2>
+<div class="box">
+<ol>
+<li>你定 #1、#2（场景数 + 基础互动深度）→ 商业结构落死</li>
+<li>我更新<b>正式方案文档</b>（把两档体系+静态图预览+商业结构补进去，过审用）</li>
+<li>代码按「多场景 + 静态图预览 + 锁标引导」改造（路径扩 <code>_{场景}_</code>、加静态图预览层）</li>
+<li>出第二个场景（球场）验证多场景管线 → 配置表化 → 正式化收尾 → 提交 MR</li>
+</ol>
+</div>
+
+<p class="dim">关联：demo 技术锚点见 memory project_x3_skin_moment_interactive；初版方案+互动脚本见同目录 X3_皮肤专属时刻_方案+互动脚本_20260710.html</p>
+</body>
+</html>

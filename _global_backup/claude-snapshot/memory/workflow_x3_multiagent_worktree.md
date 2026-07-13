@@ -98,15 +98,19 @@ x3-project（`C:\x3-project\`，代码+资源，**dev 受保护**）。worktree 
 
 **① 合并回看目标分支，MR 不是必须。**（权限实测：linkang=项目2859 **Developer(30)**；Developer 对非保护分支全权、对保护 dev 只能开 MR 不能点合并。）
 - **合进 `dev_festival`（非保护工作分支，日常）**：跟 gdconfig 一样**自助、不用 MR**——push feature → 在 dev_festival 整合 → push dev_festival，不用等任何人。
-- **`dev_festival` → `dev`（受保护，发版）**：才需要 MR，且 Developer **只能开单、Maintainer 才能合**（"你开单大哥合"）。GitLab API 建 MR 时 **title/desc 纯 ASCII 否则 500**。
+- **`dev_festival` → `dev`（受保护，发版）**：才需要 MR，且 Developer **只能开单、Maintainer 才能合**（"你开单大哥合"）。GitLab API 建 MR 中文可用：UTF-8 bytes body + `charset=utf-8` 头（2026-07-07 推翻"必须ASCII"，姿势见 [[workflow_x3_protected_branch_mr]]）。
   - ⚠️ **这条只对 x3-project 成立；gdconfig 的 dev MR linkang 自己能合**（2026-06-30 实证：`POST .../merge_requests` 建 MR→`PUT .../merge_requests/<iid>/merge`→直接 `state=merged`）。即 gdconfig 上 linkang 对 dev 有合并权（Developer 级也放行 / 或更高权）。建 MR 前 `GET .../merge_requests?state=opened&source_branch=dev_festival&target_branch=dev` 查重；建完看返回 `merge_status=can_be_merged` 再合（GitLab 服务端不跑 tsv driver，撞了它会标 cannot_be_merged，那就得本地 driver 合好再推）。注意 `protected_branches` 列表 API 对 Developer 返 403，别拿它判 dev 受不受保护——能不能直推/自合靠实操试。
 - **不论目标，x3-project 跨分叉的二进制 merge 都是雷区**（ProtoGen `.bytes` 冲突 + LFS pointer + `git clean` 误删合法 Unity 目录，见 [[reference_x3_project_repo]] 末节）：本地只做干净 ff，**跨分叉合并交给远端/MR/大哥**，别本地硬合。
+
+**①.4 worktree→主仓交接两坑（2026-07-13 扭蛋机切分支实证）**：①**同一分支不能同时挂主仓和 worktree**（`fatal: already used by worktree`）——要在主仓 checkout 某 feature，先 `worktree remove` 释放；②remove 报 `Directory not empty`（junction/编译产物残留）时**注册其实已解除、分支已释放**，主仓可直接 checkout；残留目录**必须用 `cmd /c rd /s /q` 清**（cmd rd 不跟 junction；PS `Remove-Item -Recurse` 有跟进 junction 误删主仓真身的风险），清完 `git worktree prune`。
+
+**①.5 sparse worktree 编译实证（2026-07-10 扭蛋机阶段1）**：sparse-checkout 只铺 server/ 不够编译——需补铺 TFWCore/Script/Common 等 4 个依赖路径；服务端 MakeLink 符号链接在**无管理员权限**下失败 → 用**目录 junction**（`New-Item -ItemType Junction`）替代即可让 dotnet build 三 Hotfix 全过。X3 新增玩法 ActvType 注册五件套+编号避撞位（ActivityItem tag64 双分支撞车/ActvType/ErrCode 段）见 `KB\方法论\活动程序开发\X3_马戏节扭蛋机_实现方案.md`。
 
 **② worktree 成本高（与 gdconfig 相反）。** client 多 GB + 58GB LFS，建一个 worktree=再铺一份完整工作树（磁盘+checkout+LFS smudge，`du client` 直接超时）。所以：x3-project 的 worktree **要长寿、按 feature 用，别随建随拆**；只改代码（server/*.cs）不碰资源时用 **sparse worktree**（`git worktree add --no-checkout ../x3p-<名> -b feature/<名> dev` → `cd` 进去 `git sparse-checkout set server/` → `git checkout`）只铺需要的子树，省几 GB；注意磁盘别铺满。
 
 **③ 内嵌 gdconfig + 子模块。** gdconfig 不是标准 submodule（`.gitmodules` 无映射），靠仓 hook 在 pull/merge 时自动 ff，新 worktree 不一定自动 populate；但本地服 config 读 `client/.../ProtoGen/*.bytes`（在主工作树内随 checkout 走）不读内嵌 gdconfig → 纯代码/资源 worktree 通常不受影响。
 
-**④ 提交规则不变**：X3NEW-/X3- 前缀；提交前内嵌 gdconfig 子模块必须干净（脏则 stash）；大文件先 `git lfs push`；MR title/desc 纯 ASCII。
+**④ 提交规则不变**：X3NEW-/X3- 前缀；提交前内嵌 gdconfig 子模块必须干净（脏则 stash）；大文件先 `git lfs push`；MR title/desc 中文要走 UTF-8 bytes 姿势（见 [[workflow_x3_protected_branch_mr]]）。
 
 **两仓对照速查**：
 | | gdconfig（配置） | x3-project（代码/资源） |
@@ -120,3 +124,12 @@ x3-project（`C:\x3-project\`，代码+资源，**dev 受保护**）。worktree 
 **隔离 hook 现状**：`x3_config_isolation_gate.py` 只管 gdconfig 主仓。x3-project 的等价规则=「**别在受保护 dev 上直接改，先开 feature 分支/worktree**」，语义不同（这里没有"干净就在主仓干"），需要时另做一道（暂未建）。
 
 关联：[[reference_x3_gdconfig_repo]] [[reference_x3_project_repo]] [[workflow_x3_protected_branch_mr]] [[feedback_x3_branch_strategy]] [[workflow_x3_merge_conflict_audit]]
+
+## 主仓 `git pull` 会自动尝试合入其他在途 worktree，冲突会自愈别慌(2026-07-08 实证)
+- 场景：主仓 `C:\X3\gdconfig` 在 dev_festival，为隔离改动另开了临时 worktree(`../gdconfig-i18n-wcsf`) 推完后，回主仓 `git pull` 同步本地 dev_festival 引用 → post-merge 钩子自动尝试把新提交传播合入其它同机在途 worktree(如 `gdconfig-deepsea-recharge`、`gdconfig-turntable`)，屏幕打出一串吓人的 `CONFLICT (content): Merge conflict in tsv/xxx.tsv` + `Automatic merge failed`。
+- **验证结论：这是钩子的正常自愈行为，没有造成损坏**——冲突后钩子自己 `merge --abort`，两个别人的 worktree 事后检查都是 `working tree clean`、`git rev-parse MERGE_HEAD` 报错(不存在)、reflog 顶端还是同一个 commit（只多一条 "pull: updating HEAD" 记录），HEAD 未变、没有遗留冲突标记。**别去手动碰那两个 worktree 修复**——钩子已经把状态收干净了，冲突提示只是"告诉这些 feature 分支还没手动合上 dev_festival 最新变动"，不是当场需要处理的错误。
+- 收尾 SOP：主仓 pull 后如果看到别的 worktree 报 conflict/abort，跑 `cd <该worktree> && git status --short` + `git rev-parse --verify MERGE_HEAD`（应报错=无残留）确认清白即可，不用额外操作。
+
+## 闸门误拦姿势(2026-07-06)
+- x3_config_isolation_gate.py 按命令文本识别 --repo；tsv_edit 调用被包进 `python -c` 内层 subprocess 时闸门看不见 --repo → 主仓脏就误拦。确认所有写入确实进 worktree 后，按提示建会话放行标记（`New-Item -ItemType File "~/.claude/.x3_gate/<sessionId>.ok" -Force`）重试即可（标记只放行本会话）。
+- 批量修 Pack 主数据用固化扫描器：`python <skill x3-config-export>/scripts/pack_masterdata_scan.py --repo <仓>`（4类判据：TXT_key当名/名字空格/列5缺/列5≠档位USD），修复仍走 tsv_edit set 断言。

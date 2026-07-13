@@ -30,6 +30,8 @@ description: |
 
 # GRFal API - Direct HTTP Tool Calling
 
+> ⚠️ **X3/X2 项目的生成/修图/生视频任务别在主会话直调本 skill** —— 优先走 `x3-media`（强制派 `media-worker` 后台子 agent，主会话只收结果，不污染上下文）。本 skill 直调仅用于：查任务状态、非项目临时需求、media-worker 内部调用（2026-07-06 token 审计：直调曾单会话烧 17-22 次调用）。
+
 Call ~50 GRFal AI tools via HTTP POST. The full schema (~78 tools, including admin-only pipelines) is at `GET /api/tools`.
 
 ## Quick Start

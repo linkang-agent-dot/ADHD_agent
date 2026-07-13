@@ -18,6 +18,7 @@ dev/beta 某**服务器级活动**（数据主体≠玩家）莫名出现「2个
 3. **代码**：服务端走 `ActivityMgr` 服务器路径，不是 `ActivityMeta`(玩家个人)。
 
 ## 根因（真因 = 两条创建路径去重不一致 + beta 反复拨钟/热重载）
+> **2026-07-06 更新（1910服客诉案）**：①`HandleSingleServerTimeStartEvent` 去重缺口**仍未修**（ActivityMgr.cs:503-521，line 520 无条件 CreateNewServerActivity，checkout 93f801ee6be）。②发现**第三条重复路径：iGame/ark 部署无去重**——`OnDeployArkActivityReq`（ActivityMgr.Ark.cs:192）直接 CreateNewServerActivity，`CheckCanDeployArkActivity`（同文件:212-250）只校验 JSON/cfg存在/endTime<now，**没有"同 cfgId 已在线"检查**；同 cfgId 部两次=2条实例。玩家侧按雪花 id 逐实例同步进 `Data.activityDict`（ActivityMeta.cs:1359,1495-1516）→ **2条实例=客户端出现2个一样的活动入口**（线上不拨钟也能复现，重复部署即可）。诊断仍用下面 Mongo 法，看同 cfgId 是否多条 + 各自 arkActivityId。
 - **启服路径** `ActivityMgr.InitSingleServerActivities`(ActivityMgr.cs:397-421)：**有去重**——建前查 `mCid2Ids` + `ServerActivity.Equals(originSeaArea,endTime)`(ServerActivity.cs:265 单服时就是 `Data.endTime==endTime`)，已存在就跳过。
 - **运行时到点路径** `OnTimeStartEvent → HandleSingleServerTimeStartEvent`(ActivityMgr.cs:503-521)：**无去重**——直接 `CreateNewServerActivity`，TimeCycle 开始事件每 fire 一次就建一条。
 - `OnTimeStartEvent` 订阅 `TimeCycleMgr.OnTimeStartEvent`，**服务器游戏时钟每越过一次 TimeCycle 开始时间就 fire**。beta/本地服为测节日反复拨钟(220 钟常在未来)，时钟第二次越过绝对开始时间(或 TimeCycle 热重载重新入队)→start 事件再触发→走无去重路径→多建一条。

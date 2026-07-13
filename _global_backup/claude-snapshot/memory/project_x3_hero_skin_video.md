@@ -74,5 +74,15 @@ GSheet「X3 英雄皮肤 · 新皮肤视频化方案」：`15Iacryl-uRDzaFUsErqv
 - **皮肤2D三件套规格（格式锚=本体同名件，全透明底）**：头像 `Img_C_H_{N}_Skin01` 256×256(★圆形徽章,见上条) / 英雄卡 `Role_C_{N}_Skin01` 306×418(头顶到腰胯半身) / 立绘 `Role_F_{N}_Skin01` 1024×1536(全身,人物占高~97%)，路径 `Res/UI/Spirits/Role/{Character Portraits|HeroCard|FullLength}/`。**道具icon直接复用皮肤头像DK**(参5303901)，典藏标签/边框用通用件(title4限定/bg3)不新出；行军3D模型可复用本体(105601先例)。三件套可从主稿纯加工(rembg+裁切)不必重生成，脚本 `KB/.../足球宝贝爱莉希雅/2D套件/gen_2d_suite.py` 可复用。
 - **皮肤列表显示规则**（UIHeroInfo.Skin.cs:97-103）：列表=该英雄group全部HeroSkin行，只过滤 `IsHide`，**不要求拥有/ObtainItemID**——配置进客户端就显示(锁定态)。「推完配置看不到皮肤」先查看的那个客户端有没有 pull（配置bytes/代码/视频三样都走 client 仓 dev_festival，编辑器落后几百提交很常见）。
 
+## ✅和谐(审核)立绘视频已全量进 dev(2026-07-10 核实)
+- `feature/x3-harmony-video` 相对 origin/dev **0 个独有提交**（MR 112dae871c4 已合），35 个和谐视频/DK 注册/代码接入/取景+白边修复/FTE重播修复全在 dev。
+- 当年"harmony-video WIP"stash（现 stash@{5}）和工作树里的 35 个 HeroHarmony `.meta` 改动**全是 Unity 重导空格噪音**（`userData:` 行尾加空格），无实质内容，可 drop/checkout 丢弃。
+
+## 🔑客户端进「和谐视频可见模式」的开法(2026-07-10 沉淀,用户问过两次)
+和谐视频闸门 = `UIHelper.Hero.cs ResolveHarmonyVideo`：非 iOS 平台要 `DisplayKeyIosImageSwitchPolicy.ShouldPreferIosImage()`=true → **双闸**：①版本 > `0.9.647`（Editor 里 Application.version 只有 `0.9`，默认过不了）②登录账号创角时间 ≥ 2026-05-18 UTC（新号才和谐，老号保持原版）。
+- **那个"文件" = `%USERPROFILE%\AppData\LocalLow\hyperion\TavernLegend\trick\trick.json`**（`Application.persistentDataPath/trick/trick.json`，`TrickConfig.cs`）。加 `"client_version":"0.9.999"` 即覆写 `AppInfos.Version` 过版本闸（Editor/真机通吃；该文件里 `env_name` 控环境别乱动）。改完重进 Play 生效，Editor 下决策不缓存。
+- 视频 DK（`DK_video_harmony_*`）注册在主组 Path_Video，**不需要**切 iOS DK 组。想连静态绿图一起看 → Editor 菜单 `Tools/DisplayKey/使用iOS资源`（EditorPrefs `DisplayKey_UseIOSAssets`，DisplayKeyChecker.cs）。
+- 35 角色白名单硬编码在 `UIHelper.Hero.cs sHarmonyVideoSpineKeys`；派生规则 `DK_Role_Spine_X → DK_video_harmony_X`。
+
 ## 首个落地消费方(2026-06-11)
 世界杯「足球宝贝·爱莉希雅」皮肤已定全部走视频(制作人拍板),世界杯案v0.23已对齐本方案(2D套件+DKVideo,主稿当原画,AI五步产链)——**本案客户端改造成为世界杯皮肤上线的前置依赖**,优先级提升;待确认事项需尽快跟程序拍板。见 project_x3_worldcup_activity。

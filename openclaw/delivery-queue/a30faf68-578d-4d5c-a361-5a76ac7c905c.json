@@ -1,0 +1,30 @@
+{
+  "id": "a30faf68-578d-4d5c-a361-5a76ac7c905c",
+  "enqueuedAt": 1783912281694,
+  "channel": "feishu",
+  "to": "ou_e48f6c4c0395f45b74b51525f348678b",
+  "payloads": [
+    {
+      "text": "✈️ 成都出发国际机票日报（07-13）\n\n📅 1-2个月内（08.12-09.11）低价 Top5：\n   暂无数据\n\n📅 2-3个月内（09.11-10.11）低价 Top5：\n   暂无数据\n\n✈️ 以上为直飞采样低价（日历栏可能含更低转机）\n---每日11:30自动推送",
+      "mediaUrl": "C:\\ADHD_agent\\openclaw\\workspace\\uploads\\flight_trend.png",
+      "mediaUrls": [
+        "C:\\ADHD_agent\\openclaw\\workspace\\uploads\\flight_trend.png"
+      ],
+      "replyToTag": false,
+      "replyToCurrent": false,
+      "audioAsVoice": false
+    }
+  ],
+  "gifPlayback": false,
+  "mirror": {
+    "sessionKey": "agent:main:main",
+    "agentId": "main",
+    "text": "✈️ 成都出发国际机票日报（07-13）\n\n📅 1-2个月内（08.12-09.11）低价 Top5：\n   暂无数据\n\n📅 2-3个月内（09.11-10.11）低价 Top5：\n   暂无数据\n\n✈️ 以上为直飞采样低价（日历栏可能含更低转机）\n---每日11:30自动推送",
+    "mediaUrls": [
+      "C:\\ADHD_agent\\openclaw\\workspace\\uploads\\flight_trend.png"
+    ]
+  },
+  "retryCount": 1,
+  "lastAttemptAt": 1783912281698,
+  "lastError": "Feishu account \"default\" not configured"
+}

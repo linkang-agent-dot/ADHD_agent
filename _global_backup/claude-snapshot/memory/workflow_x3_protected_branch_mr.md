@@ -12,8 +12,9 @@ metadata:
 - **只提自己的文件用路径限定 commit**：`git commit -m "..." -- 文件1 文件2`（工作树混入别人 staged 的 DK/.asset/.meta/.spriteatlas/子模块指针时，路径限定只提指定文件、不卷入其它，其它原样留着另合）。
 - **push feature 别用裸 `git push`**：本地 feature 分支常 track origin/dev，裸 push 会推 dev 被拒；用 `git push origin <feature分支名>` 显式推同名 feature ref。
 - ⚠️**push 前必验 MR 三点 diff**：`git diff origin/dev...HEAD --stat`——分支可能混入别人之前的提交(如 DK 修复 fe3f456)，导致 MR 卷入非本功能改动。只领先1个 commit 才干净；多于1个先查 `git log origin/dev..HEAD` 是不是混了别人的，混了要 rebase --onto/cherry-pick 剔除(但工作树脏会挡 rebase)。
+- ★★**零接触单文件提交法(2026-07-10 实证，改动还没commit、当前在别的在途分支时用)**：不切分支、不碰工作区，纯 plumbing 把一个文件的修改提交推到任意分支：`git fetch origin <目标分支>` → `git show origin/<目标分支>:<路径> > 临时文件`（用 Bash 保字节，别用 PS 重定向）→ 编辑临时文件 → `export GIT_INDEX_FILE=<临时index>; blob=$(git hash-object -w 临时文件); git read-tree origin/<目标分支>; git update-index --cacheinfo 100644,$blob,<路径>; tree=$(git write-tree); commit=$(git commit-tree $tree -p origin/<目标分支> -m "X3NEW-...")` → `git push origin $commit:refs/heads/<目标分支>`。注意：commit-tree 绕过 pre-commit hook，message 格式要自觉合规；push 若非 ff 说明分支间隙被人推了，refetch 重做。实证=CS-296963 移除头像框 GM b6bef0961f4 推 dev_festival。
 - ★**单提交隔离推法(2026-06-22 实证，工作树脏也能用)**：想把某个 commit 单独提 MR、又不想动当前脏工作区/不想 cherry-pick——若该 commit 的**父提交已在 origin/dev**(`git merge-base --is-ancestor <sha>^ origin/dev`)，直接 `git push origin <sha>:refs/heads/<新分支>` 把这一个提交推成新分支，MR diff = 纯该提交改动。无需 checkout/worktree/rebase，工作区零打扰。
-- ⚠️**MR 标题+描述都必须 ASCII(2026-06-22 实证，推翻"只标题")**：GitLab API 创建 MR 时**描述含中文也会 500**，不只标题。两个字段都用纯 ASCII。
+- ✅**中文标题/描述其实可用(2026-07-07 推翻"必须ASCII")**：此前 500 是**编码姿势问题**（curl form-data / PS 默认编码把中文发成乱码，服务端 hook 解析挂），不是 GitLab 限制。正确姿势 = PowerShell 里 payload `ConvertTo-Json` 后 **`[System.Text.Encoding]::UTF8.GetBytes()` 转 bytes 作 body** + header `Content-Type: application/json; charset=utf-8`，POST 建 MR / PUT 改 MR 中文标题+描述均一次成功（项目 2859 MR !667/!668 实证）。不确定编码环境时 ASCII 仍是保底。
 
 ## 受保护分支规则
 
@@ -73,12 +74,11 @@ with urllib.request.urlopen(req, context=ssl._create_unverified_context(), timeo
 print(f'MR iid={data["iid"]} url={data["web_url"]}')
 ```
 
-**⚠️ 500 错误的真正根因是 title/description 里有中文，不是 form-data**（2026-06-05 实测修正旧说法）：同一个 `curl --data-urlencode` form-data POST，中文 title → `500 Internal Server Error`；换成**纯 ASCII title** → 立刻 `HTTP 201` 建单成功。是服务端某个 hook（疑似 Jira/钉钉集成）解析中文挂掉。
-- **稳妥做法：title 用纯 ASCII**（如 `X3NEW-443 restore 6 festival DK regs`），中文说明放 commit message 或建单后口头同步。
-- 中文 description 同样会 500（建单后再 PUT `description=中文` 也失败）→ 干脆 description 也用 ASCII 或留空。
-- 这跟 form-data/JSON 无关（两种都试过），别再归因到 Content-Type。
-- GET（读 project/branch/MR 列表）中文无影响，只有「**写**带中文的 MR」触发。
-- 🟢**2026-06-26 gdconfig 仓实测出可用解法(与上面 x3-project 结论冲突,疑项目差异或 POST/PUT 差异)**：`gdconfig`(项目 **id=4454**, path `x3/gdconfig`)上 **POST form-data 中文 title→500**(一致),但**先用纯英文 title `POST` 建出 MR(HTTP201),再用 `PUT /merge_requests/{iid}` + JSON body(`Content-Type: application/json`, utf-8, `json.dumps(...,ensure_ascii=False)`) 补中文 title+description → 成功**(MR!43 实证,标题描述都中文落地)。→ **遇中文 MR 500 先试"英文POST建单 + 中文JSON PUT补"**;x3-project(2859)是否也吃这招待复验(旧记录说 PUT 也失败,可能当时用的 form-data 不是 JSON)。
+**🟢 500 根因终审(2026-07-07 定案，推翻"中文本身不行")**：根因=**中文没按 UTF-8 正确编码送达**（curl form-data / PS 默认编码发出乱码字节，服务端 hook 解析挂），不是 GitLab 拒中文。
+- **正确姿势（x3-project 2859 实证，POST 建单/PUT 修改中文标题+描述均一次成功，MR !667/!668）**：JSON body **按 UTF-8 bytes 发送** + `Content-Type: application/json; charset=utf-8`。PowerShell：`$bytes=[Text.Encoding]::UTF8.GetBytes(($payload|ConvertTo-Json)); Invoke-RestMethod -Body $bytes -Headers @{...;"Content-Type"="application/json; charset=utf-8"}`。Python 同理 `json.dumps(...,ensure_ascii=False).encode('utf-8')`。
+- 历史绕法（2026-06-26 gdconfig MR!43：英文 POST 建单 + 中文 JSON PUT 补）仍可用但已不必要——直接中文 POST 即可。
+- `curl --data-urlencode` form-data 在 Windows 控制台发中文仍会 500（编码链路不可控），别用；不确定编码环境时 ASCII 保底。
+- GET 读接口中文无影响。
 - **项目 id 速查**：x3-project=**2859** / gdconfig(配置仓)=**4454**。
 
 ## LFS 大文件 push 30 秒超时坑

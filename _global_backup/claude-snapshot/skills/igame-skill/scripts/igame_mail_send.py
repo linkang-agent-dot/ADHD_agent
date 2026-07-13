@@ -18,6 +18,13 @@
 """
 import argparse, csv, json, re, sys, urllib.request
 
+# Windows GBK 控制台打不出非 GBK 字符(如法语«»)会让 dry-run 崩溃——强制 stdout/stderr UTF-8
+for _s in (sys.stdout, sys.stderr):
+    try:
+        _s.reconfigure(encoding='utf-8', errors='replace')
+    except AttributeError:
+        pass
+
 GATEWAY = 'https://webgw-cn.tap4fun.com'
 AUTH_FILE = r'C:\Users\linkang\.igame-auth.json'
 

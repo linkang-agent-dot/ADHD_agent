@@ -4,8 +4,7 @@ ark:
   # 视觉理解（打轴）：填方舟 Model ID（带版本日期）或推理接入点 ep-xxx
   #   推荐 doubao-seed-1-6-vision-250815（256k 上下文，图/视频理解）
   #   低配可选 doubao-1-5-vision-pro-32k-250115
-  vlm_model: "doubao-seed-1-6-vision-250815"
-  # 视频生成：仅 doubao-seedance-2.0 系列支持"参考视频+参考图"多模态输入（1.x 不支持）
+  vlm_model: "doubao-seed-2-0-mini-260428"  # 2026-07-13 经 GET /models 实测存在(text,image,video,audio)
   #   标准版 doubao-seedance-2-0-260128（支持 1080p）
   #   极速版 doubao-seedance-2-0-fast-260128（≤720p，便宜~20%）
   #   轻量版 doubao-seedance-2-0-mini-260615（最省，先用它冒烟）

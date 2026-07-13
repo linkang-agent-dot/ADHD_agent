@@ -15,15 +15,17 @@ metadata:
 |--------|------|------|------------|
 | **ClaudeMorningPriority** | ~~每天 09:00~~ **已停用** | 跨项目今日优先 top-3（长期产出失败，已并入 DailyPlan） | `.claude\scripts\morning_priority_scan.ps1` + `_prompt.txt`（保留未删，回退用） |
 | **ClaudeDailyPlan** | 每天 10:00 | **今日工作简报**（跨项目 top-3 + X2 节点 timeline+Jira+BUG）→ HTML 弹浏览器 | `.claude\scripts\daily_plan_scan.ps1`（2026-06-15 改：显式 `--model sonnet5` + 预算 5→8）+ `daily_plan_prompt.txt` |
-| **ClaudeBugScan** | 工作日(周一-五)每小时 09:23 起 | 扫 Jira 名下未解决 BUG 写 `_my_bugs_summary.txt` | bug-scan skill |
-| **ClaudeFestivalReportOpen** | 每天 09:20 | 自动打开节日日报 HTML（扫 `KB\产出-数据分析\节日日报_实时\`；**2026-07-06 修复：改为把当天更新过的每份 `*_latest.html` 逐一打开**——原"只开最新一份"在多节日并行时永远只弹最后刷新的那个，世界杯/深海曾连续4天没被弹出） | `open_festival_report.ps1`（$scanDir） |
+| **ClaudeBugScan** | ~~工作日每小时~~ **已停用(2026-07-06)** | 扫 Jira 名下未解决 BUG 写 `_my_bugs_summary.txt`；因当前无 QA、且 30 天烧掉约 $1649 名义 token 成本，用户要求停。任务保留未删，QA 回归后 `Enable-ScheduledTask ClaudeBugScan` 即恢复 | bug-scan skill |
+| **ClaudeFestivalReportOpen** | 每天 09:20 | 自动打开节日日报 HTML（扫 `KB\产出-数据分析\节日日报_实时\`；**2026-07-06 修复：改为把当天更新过的每份 `*_latest.html` 逐一打开**——原"只开最新一份"在多节日并行时永远只弹最后刷新的那个，世界杯/深海曾连续4天没被弹出。同日改：**脚本 -Prefix 改可选，默认循环 X3/X2/P2**，任务只调一次脚本） | `open_festival_report.ps1`（$scanDir）。⚠️改此任务两坑：schtasks `/tr` 有**261字符上限**(塞不下多次调用→让脚本自己循环)；`schtasks /change` 会**交互式要密码卡死**→改任务动作用 `Set-ScheduledTask -Action` |
+| **ClaudeP2CumRevMonitor** | 每天 09:12 | P2 大盘累计付费监控(近2个月滚动·全服·北京日切)：三张折线=日流水/累计/ARPU。节日=dim_iap.iap_type『混合-节日活动』(P2 dim表干净自带标记·无需白名单)，归属按日期窗切(拓荒节5/12-6/09→深海节6/10-7/01→世界杯竞猜7/02+·窗口由日流水曲线实测)。产出 `KB\产出-数据分析\节日日报_实时\P2累计付费日报_latest.html`。**P2节日占大盘44% vs X3仅6-10%**(2026-07-06首跑)。新节日=FEST_WINDOWS头部加一项 | `skills\p2-festival-monitor\p2_cumulative_monitor.py`(克隆X3版·TRINO_AWS/v1041.dl_user_order/pay_price无pay_status列) |
 | **ClaudeDailyReport** | 每天 21:00 | 生成工作日报 txt + 回写 `工作line.md` 三/五节 | `_daily_report.py`（在 C--Windows-System32 项目目录） |
 | **ClaudeX3FestivalMonitor** | 全天每小时 | X3 节日收入监控（06-19 08:30 后转夏日节第三批 1910-1930） | [[x3]] x3-festival-monitor |
 | **ClaudeX3SwitchBatch3** | 一次性 2026-06-19 08:30 | 夏日节日报 批二(1880-1900)→批三(1910-1930) 自动切换，跑完自删 | `skills\x3-festival-monitor\_switch_batch3.py`，详见 [[x3]] |
 | **ClaudeX3WorldCupMonitor** | 全天每小时(:35) | X3 世界杯节日收入监控(D0=2026-06-26·全服1-98=server_id 1000-1970·累充100597·END 07-20)，产出 `KB\产出-数据分析\节日日报_实时\X3世界杯日报_latest.html`；决赛后(7/20+)删任务 | `skills\x3-festival-monitor\x3_worldcup_daily.py`(克隆夏日脚本仅改配置块)，详见 [[x3]] |
 | **ClaudeX3DeepSeaMonitor** | 全天每小时(:50) | X3 深海节收入监控(D0=2026-07-03·59服显式清单1170-2010·累充100598白名单45包·UTC日切·END 07-17北京08:00)，产出 `KB\产出-数据分析\节日日报_实时\X3深海节日报_latest.html`；7/17后删任务 | `skills\x3-festival-monitor\x3_deepsea_daily.py`(克隆世界杯脚本·配置读取改走git show origin/dev)，详见 [[x3]] |
+| **ClaudeX3CumRevMonitor** | 每天 09:10 | X3 大盘累计付费监控(近2个月滚动·北京日切)：**4个服段页签**(全服/世界杯1-98服/深海59服/总效果1-88服=成熟服基本盘·看节日净拉动认它·节日收入均已按服段过滤)×三张折线图(日流水/累计付费/ARPU)，总付费 vs 各节日(尼罗滚动/夏日/世界杯/深海·CASE链每单只归一个节日·复用包130020/021/1002001按时间窗归属)，**图上竖线标注各节日上线时间点**(含夏日批二/批三)；ARPU分母=当日总付费人数。产出 `KB\产出-数据分析\节日日报_实时\X3累计付费日报_latest.html`(文件名带"日报_latest"→09:20 FestivalReportOpen 会自动弹)。**新节日上线=FESTIVALS头部加一项(谓词+窗口+颜色+d0)，需要就SEGMENTS加服段页签** | `skills\x3-festival-monitor\x3_cumulative_monitor.py` |
 | ~~**ClaudeX2FestivalMonitor**~~ **已删除(2026-06-29 D17 收工)** | ~~全天每小时(:05)~~ | X2 拓荒节日报(2026-06-12 D0~06-29 D17)，产出 `~\X2拓荒节日报_latest.html`；节日结束用户确认停，已 Unregister | [[reference_x2_festival_monitor]] |
-| **ClaudeTokenWeeklyReport** | 每周五 17:00 | ①Token 用量周报 ②**本周归纳清单**(2026-06-15加挂)：扫7天KB/memory改动→`claude -p`按模块列「知识\|对应模块\|来源」→`~\归纳验收周报_latest.md`+气泡。两步独立fail-open | `token_weekly_scan.ps1`(末尾归纳段) + `token_weekly_report.py`/`_html.py`(token) + `handover_review_prompt.txt`(归纳) |
+| **ClaudeTokenWeeklyReport** | 每周五 17:00 | ①Token 用量周报 ②**本周归纳清单**(2026-06-15加挂)：扫7天KB/memory改动→`claude -p`按模块列「知识\|对应模块\|来源」→`~\归纳验收周报_latest.md`+气泡。两步独立fail-open。**产出已迁中文名+流水归档(2026-07-06)**：`KB\_自动流水\Token周报\Token周报_{date}.md/html`+`Token周报_latest.html`，两个 py 已同步改路径/文件名；工作line每日备份同步迁 `KB\_自动流水\工作line备份\`（daily_report_scan.ps1 $bakDir 已改，带BOM保存） | `token_weekly_scan.ps1`(末尾归纳段) + `token_weekly_report.py`/`_html.py`(token) + `handover_review_prompt.txt`(归纳) |
 | **WC-GuessDashboard-Daily12** | 每天 12:00(北京) | X3世界杯竞猜运营看板：拉iGame(prod)实时竞猜+赛程交叉分类→对阵总览/已上线/待上线/待发奖/已发奖 HTML | `KB\产出-数值设计\X3_世界杯\_gen_竞猜运营看板.py`(数据源 `wc_dashboard_data.json`:对阵确定加schedule、发完奖加settled);产出 `..\世界杯竞猜运营看板.html`;决赛后删任务。⚠️任务**直调python.exe+脚本路径**(非.bat·中文路径在cmd/.bat下Task环境编码崩→result1;直调python Unicode传参=result0) |
 | **ClaudeX3PiggyBankDaily** | 每天 10:30 | 异国美酒储蓄罐回归报告**每日图表更新**:拉datain日数据→重绘ARPPU/日流水折线+储蓄罐vs纯异国美酒礼包堆叠面积+大盘均值线→回写HTML(只更图表+数据截至日期;漏斗/表/KPI是上线窗快照不动)。**纯python直调**(非claude -p、非.bat) | `KB\产出-数值设计\X3_异国美酒储蓄罐\_daily_update.py`(import ai-to-sql的_datain_api.execute_sql,DATAIN_API_KEY走User环境变量,q()带3次重试抗datain抖动);产出 `..\异国美酒储蓄罐_增加档位分析.html` |
 | **ClaudeWeeklyBackup** | 每周一 12:00 | 周备份 | — |
@@ -66,6 +68,23 @@ metadata:
 - **为什么之前查不出/手动跑能成**：① 手动跑 cwd=`C:\Users\linkang` → 加载 linkang memory（无此坑）→ 听 prompt 写对 KB ✅；② 脚本成功路径不记 $result，直到 06-18 加了 `_daily_report_attempts.txt` 才抓到 claude 自报"日报已生成：C:\Users\linkang\工作日报_2026-06-24.txt"——一眼看穿写错路径。**之前"瞬时态/socket/provider"全是误判**（socket 那次 06-16 是真插曲，但不是连续失败主因）。
 - **修法（2026-06-25 落地，治本+兜底）**：① 改 `C--Windows-System32\memory\daily-report-from-transcripts.md`+`daily-report-format-prefs.md`，顶部钉死输出路径=KB `每日日报\{date}.txt`+`_latest.txt`、首行须含今日日期；② `daily_report_scan.ps1` 加路径漂移保险：闸门没过但 home 有今日 `工作日报_{today}.txt` 就自动搬到 KB 救活。
 - **通用教训**：调度任务 cwd 决定 `claude -p` 加载哪个项目 memory；System32 cwd 的任务（DailyReport/BugScan）吃 `C--Windows-System32` memory，别以为是 linkang 的。改这类任务行为先看它的 cwd→对应 memory 目录。
+
+## 🔁 晨报/日报合并升级：晨报改跨项目任务规划版 + 工作line 回写强化（2026-07-08）
+
+- **背景**：工作line.md 三/五节自 06-24 起断档半个月没自动刷新。两个根因：① 21:00 prompt 把回写(6b)排在"预算护栏"之后，预算紧就被跳过；② "今日无变化就不动文件"被宽松判定——日期自然推进（倒排表过期）没被当成变化。07-07 的 API 断连只是叠加事故。
+- **改法（已落地）**：
+  - `daily_plan_prompt.txt`（10:00 晨报）**重写（07-08 当天用户二次收敛为极简两节版）**：只输出 ①Deadline 倒排表(14天内·算剩N天) ②"今天可以做"清单(≤6条·必做在前)。不拆细、无 top-3/挂起/X2周期等独立节；Jira 全项目查询保留但只当输入不单独成节。数据源=工作line 五节；开头带"工作line 超 3 天没更新就顶部报警"自检；首行闸门格式 `# 今日工作简报 {today}` 未动。
+  - `daily_report_prompt.txt`（21:00 日报）6b 回写强化：明确回写=第二优先级不许因预算跳过；"无变化"须过三关（无过期日期/无实际推进/无新决定）才成立，**日期自然推进本身就是变化**；动了文件必须同步改「最后更新」为今天。6b(1) 改成固定节【今日 timeline 完成情况】：逐条对照当天早上 `_daily_plan.txt` 的"今天可以做"清单标 ✅/🔄/❌(没动的写滚明天)，简报缺失则对照工作line 五节今天到期项，全节≤8行。
+- **验证口径**：次日早看 `_daily_plan.txt` 是否新格式；晚看工作line「最后更新」是否=当天。工作line 内容 2026-07-08 已手动刷新到位（世界杯R16收尾/深海节运营期），回写从当晚起接手。
+- **工作line 可视化（2026-07-08 同日加）**：`KB\工作计划\工作line_tree.json`（层级数据：主工作流→分支→每件事）+ `_render_workline_html.py`（渲染器）→ `工作line_可视化.html`（可折叠甘特，本地直开）。21:00 日报 prompt 6b(3) 会在工作line 有变化时同步 json+重渲（fail-open）。手动刷新=改 json 后跑一次渲染器。status 枚举：done/active/critical/pending/external/auto/paused。
+
+## ⚠️ DailyReport 新鲜度闸门被 10:00 早版打穿（2026-07-08 修）
+
+- **现象**：07-07 21:00 claude -p 第 1 次就 API 断连（exit 1, `Connection closed mid-response`），但 3 次重试一次没触发——直接判失败收场，当天只剩 10:00 早版（半天内容），HTML 没刷新、没弹窗。
+- **根因**：自从加了工作日 10:00 早版（也写 `_latest.txt`，首行含当日日期），21:00 的新鲜度闸门"首行含今日日期"**在跑之前就恒为真**——闸门形同虚设：失败被误判 fresh 跳出重试循环，最终又因 exit≠0 判失败，重试机制整个失效。
+- **修法（已落地）**：① 闸门加 mtime 校验——`_latest.txt` 必须在**本次尝试开始之后**被写过才算 fresh；② 最终成功判据从 `exit 0 且 fresh` 改成只看 fresh（claude -p 退出码不可靠，写完盘才断连不该白扔）。备份 `daily_report_scan.ps1.bak.20260708`。
+- **通用教训**：新鲜度闸门若只查"内容像今天的"，任何**同日更早的写入方**（早版/别的任务）都会打穿它；正确判据 = 内容新鲜 **且** 本次运行期间写的（mtime > 尝试起点）。DailyPlan 等同架构链路如加早版也要照搬。
+- 07-07 当天日报已于 07-08 手工补齐全天版（`每日日报\2026-07-07.txt` 重写 + 2026-07-07.html）。
 
 ## ⚠️ 调度脚本 `claude -p` 不带 `--model` 会漂移到停服模型（2026-06-15 DailyPlan 中招）
 

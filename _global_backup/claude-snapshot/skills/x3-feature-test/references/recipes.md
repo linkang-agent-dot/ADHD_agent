@@ -186,3 +186,74 @@ client.py invoke --type UI.WndMgr --member Hide --kind call --args '"UIActvSeven
 ### 坑
 - `probe.py windows/click` 走 feval(9999)，本环境 feval CLI 不在 PATH → 用不了；UI 状态一律走 HTTP/MCP `GetByTypeName` + 字段实读，截图走 `ScreenCapture.CaptureScreenshot`。
 - 切分支后 Unity 在跑 reload，HTTP 桥会短暂 connection refused，等几秒重 ping 即恢复；务必 `editor_reload.py reload` 强制重编译确保跑的是分支代码（实测编译 1.61s）。
+
+---
+
+## 配方 5 · 英雄养成手册双版本 102702（ActvType=27 付费登录，双档二选一）
+> 2026-07-06 本地服 3080 端到端跑通（QA 指引 23 项自动化 18 项）。功能：二选一购买 基础220003($29.99)/豪华220004($49.99)，购后每日登录领奖；豪华=日奖×2+第30天满勤大奖4100231；双向互斥（客户端隐藏+服务端 CheckPaySignExclusive 硬拦截）。
+
+### 关键配置（运行时实读锚点）
+- `CActvOnline.I(102702)`: ActvType=27, RechargeAmount=999(累充门禁,分), PlayerLv=[5,99], ContentID=2702, ExcludeActvIDs=[102701]（102701 反向=[102702]，双向互斥）
+- `CActvLoginPurchase.I(2702)`: Pack=220003, Pack2=220004, FinalReward=4100231, Group=101；老单档 `I(2701).Pack2=0` → 新代码全旁路
+- `CPack.I(220003).Price="112"`($29.99) / `I(220004).Price="116"`($49.99)
+- giftId 规则：基础 giftId==activityId；豪华 giftId **按玩家实例化**，`GiftMeta.GetGiftIdByPackCfgId(activityId, 220004)` 反查（别拿别人的豪华 giftId 发包，服务器直接忽略）
+
+### 复现步骤（纯 GM/eval）
+```
+# 开活动（玩家域 Meta GM，TC=0 必须给分钟数）
+SendGmCmd("gmaddserveractivitybycfgid","gmaddserveractivitybycfgid 102702 43200",0)
+# 过门禁：⚠️ GMBypassActivityUnlock 只补 RequireFunction/FinshTask/RechargeAmount，不补等级！新号还要 gmaddlevel
+SendGmCmd("gmbypassactivityunlock","gmbypassactivityunlock 102702",0)   # 累充真实充到999（副作用：其他累充向活动会开）
+SendGmCmd("gmaddlevel","gmaddlevel 6",0)                                # 升级事件即触发活动重评估，无需重登
+# 购买（Editor 假支付直发 BuyGiftReq）
+Logic.G.Player.GetMeta("gift").ReqBuyGift(<giftId>L, null)
+# 领奖（=点日奖格，一键领全部可领天）
+Logic.G.Player.GetMeta("activity").ReceiveActivityAllReward(<activityId>L)
+# 跨天：gmsetservertimebydhms 1 0 0 0 1（前进式）→ 直接再领，无需重登
+```
+
+### 验证点（服务端日志 game-<sid>.<date>.log 一行定论）
+- 豪华双份：`EndowReward gids: 4100201,4100201,4100202,4100202,...` 每组恰好2次
+- 满勤：day30 全领时 gids 末尾追加 `4100231` 恰好1次；基础买家 30 组各1次且无 4100231
+- 互斥硬拦截：持一档买另一档 → `BuyGiftAck errCode=1010005`(ErrCodeGiftBuyLimit)，不扣费
+- 门禁：新号(Lv1/pay0) `GetActivityIdsByCfgID(102702)==[]`；配置互斥：开 102701 时持 102702 玩家日志 `OnSeaAreaActivityCreate blocked: cfgId=102701`
+- 弹窗已购态（代码锚点 UIActvLoginChoice.RefreshPurchaseState）：已购档 Owned、另一档购买键隐藏、-17%角标+划线价 showPromo=false 一并隐藏
+- 豪华列预览数值 = 基础×2 + 满勤大奖内容（150=60×2+30、2500=1200×2+100），**有意设计**（UIActvLoginChoice.cs:20 注释），别当 bug
+
+### UI 驱动
+- 开主界面：`UI.UIHelper.OpenActivityPanel(<activityId>L, false)`；购买按钮路径 `UIRoot/UIActvMainPanel [state:...]/Panel/Pages/UIActvLogin [state:...]/Root/Animation/Top/choice`（probe.py click）
+- 二选一弹窗带 UIData，桥反射开法：feval `new UI.UIActivityData()` + 赋 ActivityId/CfgId + `UI.WndMgr.Show(typeof(UI.UIActvLoginChoice), __d, false, null, null, "qa","qa",0)`（Show(type,null,...) 会静默不显示）
+- 找按钮全路径：feval `UnityEditor.AnimationUtility.CalculateTransformPath(go.transform, null)`
+
+### 坑（本次踩过）
+- **别用 GMDebug 的"随机新建账号"**：它换 UDID+清 fast-login，本地环境新 TGS 账号默认选服 3010（本地没有）→ 断线循环，且 robot 账号被 `ErrCodeRobotLoginForbidden(1001017)` 禁登。恢复：PlayerPrefs 清 `universal_udid_key`/`udid_suffix_key`/`LoginFlag` 后重进 Play。
+- **正确建新号**：登录页 feval 构造 `UICreateRoleServerData{ServerId=3080}` → `WndMgr.Show(typeof(UI.UICreateRoleTips),...)` → probe 点 `Root/btn_confirm` → 真实建号流入本地服（Lv1/pay0 干净号）。
+- 服务器时间被本配方推进 +26 天且不可回退；重置需重启 GameServer 进程。
+- 清理：玩家域 `gmremoveserveractivitybycfgid` 只删"玩家持有的"活动；玩家没拿到的服务器活动用 telnet(26080) `!gm ForceRemoveServerActivity <activityId>`。
+
+### 补充（2026-07-07）：gmaddserveractivitybycfgid 适用面
+- 对 **ActvType=29 进度礼包（触发式玩家活动）同样有效**（实测深海节每日礼包 102993：CreateNewServerActivity + AddNewActivityIds 直接下发给发 GM 的玩家，无需重登）——此前只在 ActvType=27 上验证过。
+- 活动自带 TimeCycle（TC≠0）时 duration 分钟参数照给不冲突（102993 TC=160100 部署起算 7d，给 10080 正常开出 9/1-9/8）。
+- 速查锚点：深海节每日礼包 = ActvOnline **102993**（备注"深海进度礼包"，入口组 140=深海节 Abyssal Festival，ContentID=3002，每日免费奖励 16205）。
+- 102993 的界面 = **UIActvSchedulePack**（ActvType=29 进度礼包通用页，prefab `Assets/Res/UI/Prefab/Activity/UIActvSchedulePack.prefab`，嵌 UIActvMainPanel/Panel/Pages 下；partial: DayTab/LineItem）。**待确认**：部署第 6 天时页签停在 Day4 且 Day5 锁——Day 解锁像是"购买推进"而非纯天数推进，未买任何档，未验证。
+
+---
+
+## 配方 6 · 储蓄罐HUD挂件跨天行为验证（UIWidget挂件/UTC自然日CD类通用）
+> 2026-07-07 本地服 3080 全自动跑通（无人工点击）。功能：UIHeroLottery 内 UIPiggyBankHudEntry 挂件（美酒池显示/红点/CD倒计时/登录弹窗/BI）。
+
+### 关键手法（同类"跨UTC日重置"功能全适用）
+1. **跨天 = `gmsetservertimebydhms 1 0 0 0 1`**（前进式,+1天;客户端GameTime跟服务器走,倒计时/UTC日判定立即联动）。⚠️跳天会触发登录弹窗队列(UIActvSevenLogin等)抢焦点挡住后续Show——跳完先 `ClearPushes`+`Hide(bareName)`。
+2. **开 UIHeroLottery（带UIData的UI）**：feval 三条命令（lint禁分号,拆开;同一 run 会话变量共享）：
+   `var __d = new UI.UIHeroLotteryData()` / `__d.selectedDrawCardID = <池id>` / `UI.WndMgr.Show(typeof(UI.UIHeroLottery), __d, false, null, null, "qa", "qa", 0)`
+3. **读挂件状态（不靠截图定论）**：client.py eval 链式读私有 `UI.WndMgr.GetByTypeName("UIHeroLottery").mUIPiggyHud.mGoRedPoint.activeSelf` / `.mTxtCd.text` / `.mGo.activeSelf`。⚠️GetByTypeName 对 Hidden 实例可能返 null,读之前确保 Shown。
+4. **模拟点击**：`probe.py click --path "PiggyBankHud"`——**节点激活时裸名就行**（GameObject.Find 全局搜），不用拼全路径（窗口GO名带动态"[state:...]"后缀拼不了）。
+5. **BI 断言看日志**：`%LOCALAPPDATA%/Unity/Editor/Editor.log`——TraceUserClick 渲染为 `BI UserClick:ctrlID <id>`（明文可 grep）；TraceApplicationLog 渲染为 `[BI] pb_client_application_log`+调用栈（事件名在pb载荷不外显，靠栈行 attribution）。
+6. **编译核验**：`System.Type.GetType("UI.<新类>, GameMainLogic")`——Assets/Scripts 下的类在 **GameMainLogic** 程序集，不是 Assembly-CSharp（查错程序集永远 null 假阴性）。命令行 commit 后 Editor 不自动编译，先 `editor_reload.py reload`（hasErrors:false 即真编译过）。
+
+### 实测结果（2026-07-07,7项）
+美酒池HUD显示✓ / 非美酒池隐藏(池1,7001)✓ / 均CD态=倒计时17:49:11到明日UTC0点+红点灭✓ / **界面开着跨0点:倒计时onEnd自动切回红点态✓** / 弹窗(可买+美酒0+每登录一次:重进弹一次、再进不弹)✓+均CD时不弹(负例)✓ / 点击(红点熄+GamePlayerPrefs记日20703+跳获取途径)✓ / 跨天红点重亮✓ / BI三事件留痕✓。未测：低等级隐藏(需新号,逻辑复用CheckCanShowGift)、重登弹窗复弹(static标记,双审过)、真机BI上报。
+
+### 配方6补充：feval 表达式两坑（2026-07-07 实测）
+- **float 后缀 `120f` 不吃**（`Syntax Error: unexpected token 'f'`）→ 写整数 `120`，隐式转换。
+- **运行时校准 UI 位置的手法**：feval `GameObject.Find("<激活节点名>").transform.localPosition = new UnityEngine.Vector3(x, y, 0)` 挪 → 截图裁底部 3x 放大看效果 → 收敛后把**磁盘 prefab 里的 m_AnchoredPosition** 按同 Δ 改掉再 commit（⚠️别直接抄运行时 anchored 值——先 grep prefab 确认磁盘当前值，按增量改；本案磁盘值 755,94 与子代理报告的 81,260 不一致，盲信报告会改错）。

@@ -109,6 +109,24 @@
       "kickoff_utc": "2026-07-12 01:00",
       "lock_utc": "2026-07-12 00:50",
       "result": null
+    },
+    {
+      "key": "SF-ESPvFRA",
+      "round": "SF",
+      "a_code": "ESP",
+      "b_code": "FRA",
+      "kickoff_utc": "2026-07-14 19:00",
+      "lock_utc": "2026-07-14 18:50",
+      "result": null
+    },
+    {
+      "key": "SF-ARGvENG",
+      "round": "SF",
+      "a_code": "ARG",
+      "b_code": "ENG",
+      "kickoff_utc": "2026-07-15 19:00",
+      "lock_utc": "2026-07-15 18:50",
+      "result": null
     }
   ],
   "settled": [
@@ -121,7 +139,9 @@
     "R16-ARGvEGY",
     "R16-SUIvCOL",
     "QF-MARvFRA",
-    "QF-BELvESP"
+    "QF-BELvESP",
+    "QF-ENGvNOR",
+    "QF-SUIvARG"
   ],
   "settle_from": "2026-07-09"
 }

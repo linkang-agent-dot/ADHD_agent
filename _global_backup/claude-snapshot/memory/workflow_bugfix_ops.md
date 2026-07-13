@@ -26,7 +26,7 @@ originSessionId: 1bbe1da0-274c-4eb5-a1f4-56404b87cb28
    - 新发现的表编号/SheetID、活动 ID、道具 ID、display_key
    - 新的配置追踪链/字段含义
 2. **更新运维文档** `C:\ADHD_agent\docs\ops_auto_bugfix.md`
-   - 历史记录追加一行（BUG ID + 操作 + 状态）
+   - ~~历史记录追加一行~~（2026-07-13 起废止：ops 文档明确 BUG 历史不在文档累积，权威源=Jira评论+git log+巡检日志，别再往文档里加历史行）
    - 新踩坑点 → 加进 Review 问题记录
 
 **Why:** 同类 BUG 下次能秒查，避免重复搜索。沉淀是自动化的前提。

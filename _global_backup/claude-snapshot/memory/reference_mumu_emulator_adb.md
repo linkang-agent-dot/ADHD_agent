@@ -19,6 +19,15 @@ metadata:
 
 查端口的稳妥法（不靠猜）：`Get-NetTCPConnection -State Listen | ? LocalPort -ge 7555` 看 `MuMuVMMHeadless` 占的端口。
 
+## 查模拟器有没有挂代理（2026-07-09 实战）
+
+三层都查才算数，只查系统代理会漏掉 VPN 模式：
+1. **系统代理**：`settings get global http_proxy`（null=没设）+ `dumpsys wifi | grep -i proxy`
+2. **VPN/TUN 模式代理**（Clash 等 app 走这层，系统代理查不到）：`ip addr show tun0` 有 UP = 隧道开着；`pm list packages | grep -iE 'proxy|vpn|clash|v2ray'` 找 app；`ps -A | grep clash` 确认在跑
+3. **确认流量真走隧道**：`ip rule` 看 uidrange 2001-99999 是否 lookup tun0（是=所有普通 app 流量都过代理）。注意 `ip route get` 在 adb shell 里跑是 uid 2000（shell），会显示走 wlan0，是豁免 uid，不代表 app 直连。
+
+本机实况（07-09）：装了 Clash Meta（`com.github.metacubex.clash.meta`），TUN 模式常开，模拟器内 app 流量默认全走它。
+
 ## 安卓启动不了的排查链路（2026-07-02 实战）
 
 日志两层：服务层 `C:\Users\linkang\.MUMUVMM\MuMuVMMSVC.log`（只看到 Launched VM 不代表成功），**真死因看 VM 层** `C:\Program Files\Netease\MuMu\vms\MuMuPlayer-12.0-0\Logs\VBox.log` 的尾部。日志短时间内连滚多个 `.1/.2/.3` = 启动崩溃循环。

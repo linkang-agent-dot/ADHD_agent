@@ -5,11 +5,11 @@ type: reference
 originSessionId: f6f8a545-b15c-4f6e-a240-0fc5532e47ae
 ---
 ## Skill 路径
-`C:\ADHD_agent\.claude\skills\ai-to-sql\`
+`C:\ADHD_agent\.agents\skills\ai-to-sql\`（2026-07-08 实测：已迁到 `.agents\skills`，旧路径 `.claude\skills\ai-to-sql` 与 `~\.claude\skills\ai-to-sql` 均不存在）
 
 ## 核心脚本
 ```
-C:\ADHD_agent\.claude\skills\ai-to-sql\scripts\
+C:\ADHD_agent\.agents\skills\ai-to-sql\scripts\
   get_game_info.py    # 获取游戏列表+表权限（每次会话先执行）
   search_tables.py    # 搜索表名 --keyword "xxx"
   rag_search.py       # 检索指标参考 SQL + wiki 文档

@@ -4,7 +4,8 @@ description: >
   X3 配置修改 + 导表一条龙（2026-05-29 起导表读 tsv 缓存，直接改 tsv 不改 xlsx）。
   覆盖：定位字段 → 安全改 tsv → 提交 → 触发 Jenkins 导表 → 自动验证构建结果。
   触发词：改X3配置、屏蔽礼包/下架礼包、改timecycle、改X3数值、改tsv、导X3配置、导表(X3)、
-  X3配置生效、夏日/尼罗礼包屏蔽、ActvOnline改、Pack改。
+  X3配置生效、夏日/尼罗礼包屏蔽、ActvOnline改、Pack改、
+  查X3活动配置、查一下XX活动、actvonline是啥、活动配置速查（用 scripts/actv_lookup.py）。
   不含 i18n 翻译扫描（那走 x3-translation-automatic）。
 ---
 
@@ -69,6 +70,8 @@ python <skill>\scripts\jolt_verify.py <branch>
 
 ## 换皮档案（批量 / 多活动换皮时必建，换人不丢信息）
 
+> ★ **换皮/克隆活动开工前，先过一遍 `C:\ADHD_agent\.cursor\x3-config-library\must-check.md`（X3 克隆换皮正序自查清单）**——2026 世界杯/夏日/深海三节日 30+ 实战坑按环节收编（配置克隆/i18n/美术DK/数值/部署/结算/分支）。本 SKILL 下文的坑条目是"报错倒查"视角；must-check 是"开工正查"视角，两边互补。头号复发坑=c33/c44 展示道具残留（深海撞 4 次）。
+
 多活动 / 整轮换皮开工前，复制模板 `C:\ADHD_agent\KB\换皮档案\_模板_换皮档案.md` 到
 `C:\ADHD_agent\KB\换皮档案\X3\{日期}.md`，按活动模块分节。三步铁律：
 
@@ -92,6 +95,12 @@ python <skill>\scripts\jolt_verify.py <branch>
 - `add    --file <tsv> --id <行ID> --cols 49,50 --ids 210917,210918,210919 --after 210921 [--dry-run]`
   往管道列表锚点ID后插入（`remove` 逆操作，解屏蔽/恢复用）；断言锚点存在、ID未重复
 - 默认 repo `C:\x3\gdconfig`；--file 相对该目录；写盘保 LF（不被 Windows 翻 CRLF）
+
+### actv_lookup.py — 活动配置速查（「查一下XX活动配置/actvonline是啥」先用它，别现场 grep）
+- `python <skill>\scripts\actv_lookup.py 102993`：按 ID 查 ActvOnline 行，全部非空字段带列号+字段名+中文名打印，并**自动跟一层外键**（TimeCycle 触发方式/时长、ActvGroup 入口、Reward 组内容、悬空引用直接标出）
+- `python <skill>\scripts\actv_lookup.py 酒馆`：按关键词搜（备注/活动名/任意单元格）
+- `--table Pack` 查其他表；`--repo <worktree路径>` worktree 下查；`--no-follow` 只看本行
+- Reward 自动按 col1(RewardID) 匹配（col0 是 seq，防拿错行）
 
 ### jolt_verify.py — 触发导表 + 验证
 - `python jolt_verify.py <branch>`：jolt 触发 → 轮询队列拿 build 号 → 轮询构建 → 报 SUCCESS/FAILURE + 分支 + 结尾行
