@@ -81,6 +81,23 @@ def replace_audio(video: Path, audio_src: Path, dst: Path) -> None:
           "-shortest", str(dst)])
 
 
+def normalize(src: Path, dst: Path, width: int, height: int, fps: float,
+              retime_factor: float = 1.0) -> None:
+    """把外来段（模型产出）重编码为与本地切段一致的参数。
+
+    concat -c copy 要求各段编码参数完全一致；Seedance 产出段的分辨率/fps/
+    编码参数与 cut_clip 不同，直接拼会花屏/时间戳错乱。统一 -an 去音轨
+    （最终 replace_audio 会整条铺回原片音轨）。retime_factor≠1 时顺带变速对齐时长。
+    ratio=adaptive 下模型输出应保持源画幅，scale 到源宽高不会形变；若真形变属模型问题。
+    """
+    vf = f"scale={width}:{height},fps={fps}"
+    if abs(retime_factor - 1.0) > 1e-9:
+        vf = f"setpts={retime_factor}*PTS," + vf
+    _run(["ffmpeg", "-y", "-i", str(src), "-vf", vf, "-an",
+          "-c:v", "libx264", "-crf", "18", "-preset", "fast",
+          "-pix_fmt", "yuv420p", str(dst)])
+
+
 def retime(src: Path, dst: Path, factor: float) -> None:
     """factor>1 拉长。仅动视频 PTS 后重编码（无音轨段用）"""
     _run(["ffmpeg", "-y", "-i", str(src), "-vf", f"setpts={factor}*PTS", "-an",

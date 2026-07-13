@@ -33,7 +33,7 @@ pip install -r requirements.txt      # 另需 ffmpeg 在 PATH
 
 ```bash
 python -m core.cli annotate 素材.mp4        # 打轴：VLM 找人，输出 job_id + timeline
-# 人工看 timeline（workdir/<job>/job.json）：时段和 person_desc 对不对
+# 人工看 timeline（jobs/<job>/job.json）：时段和 person_desc 对不对
 python -m core.cli confirm <job_id> --all   # 或 --spans 0,2 只确认部分
 python -m core.cli run <job_id> --avatar <形象目录名>   # 切段→逐段替换→拼回
 python -m core.cli status <job_id>
@@ -65,9 +65,15 @@ python -m core.cli status <job_id>
 - [ ] ③ 段长下限 2s：`cut.py` 未做最短段约束，命中时段极短（<1s）时可能切出 <2s 的替换段被 API 拒——遇到就把该时段外扩 buffer 调大或手动合并。
 - [ ] ④ **真人人脸限制**：有文档标注参考图"不允许真实人脸"（Real human faces are not allowed）。数字人形象图应该没事，但若形象图偏写实被风控拒绝，需换更卡通/风格化的形象图。源视频含真人（未成年人）是否触发内容审核也要实测。
 - [ ] ⑤ `duration: -1`（模型自适应）在"参考视频编辑"场景的实际输出时长是否≈输入段长；漂移大就改成显式整数秒（4-15）。
-- [ ] ⑥ VLM 单请求图片张数上限：官方未明示（受上下文 token 限制），`frame_interval=1.0` + 60s 素材 = 60 帧一批，若报超限，`annotate.py` 需要分批。
+- [ ] ⑥ VLM 单请求图片张数上限：官方未明示（受上下文 token 限制）。`annotate.py` 已按 8 帧/批分批发送（BATCH=8），正常不会超限；若仍报超限就调小 BATCH。
+- [ ] ⑨ 拼接处画质/无跳变：替换段已内置归一化（重编码回源片分辨率/fps，见 `core/stitch.py`），冒烟时肉眼检查替换段与原段拼接处是否有画质突变/跳帧。
 - [ ] ⑦ 并发/QPS：官方未公布具体数值（429=限流）。当前管线串行逐段生成，冒烟不会踩；将来并行化再实测。
 - [ ] ⑧ 模型 ID 时效：`doubao-seedance-2-0-mini-260615` / `doubao-seed-1-6-vision-250815` 以控制台"模型广场"当日展示的 Model ID 为准（方舟模型 ID 带版本日期，会更新）。
+
+## 7. P1 未做、设计文档里提过的能力（别当成已有）
+
+- 段级**并发**生成与自动**重试**：当前串行、失败即停（断点续跑可从失败段继续）。P2 做。
+- confirm 前**成本预估展示**（段数×单价）：P2 Web 确认页做；CLI 阶段自己数 timeline 段数估。
 
 ## 附：契约核对结论（2026-07-13）
 

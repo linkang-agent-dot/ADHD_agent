@@ -29,3 +29,19 @@ def test_stitch_retimes_drifted_segment(sample_video, tmp_path):
     segs[1]["path"] = drift
     final = stitch(segs, original=sample_video, workdir=tmp_path, drift_pct=2.0)
     assert abs(media.probe(final).duration - 20.0) < 0.5
+
+
+def test_stitch_normalizes_foreign_replace_segment(sample_video, tmp_path):
+    # 模拟 Seedance 产出：不同分辨率/fps/无音轨——不归一化 concat -c copy 会出坏片
+    segs = _make_segs(sample_video, tmp_path)
+    foreign = tmp_path / "foreign.mp4"
+    media._run(["ffmpeg", "-y", "-i", str(segs[1]["path"]),
+                "-vf", "scale=1280:720,fps=30", "-an",
+                "-c:v", "libx264", "-crf", "28", "-preset", "fast",
+                "-pix_fmt", "yuv420p", str(foreign)])
+    segs[1]["path"] = foreign
+    final = stitch(segs, original=sample_video, workdir=tmp_path, drift_pct=2.0)
+    info = media.probe(final)
+    assert abs(info.duration - 20.0) < 0.5
+    assert info.width == 640 and info.height == 360  # 归一回源片参数
+    assert info.has_audio

@@ -51,7 +51,10 @@ def main(argv=None):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     args = build_parser().parse_args(argv)
-    cfg = load_config(ROOT / "config.yaml",
+    cfg_path = ROOT / "config.yaml"
+    if not cfg_path.exists():
+        sys.exit("缺少 config.yaml：先 cp config.example.yaml config.yaml 并填写模型 ID")
+    cfg = load_config(cfg_path,
                       require_key=(args.cmd in ("annotate", "run")))
     if args.cmd == "annotate":
         job = Job.create(Path(args.video), JOBS, cfg)
@@ -67,7 +70,10 @@ def main(argv=None):
             sys.exit(f"--spans 需为逗号分隔整数，收到: {args.spans}")
         for i, t in enumerate(job.timeline):
             t["confirmed"] = i in picks
-        job.confirm()
+        try:
+            job.confirm()
+        except ValueError as e:
+            sys.exit(str(e))
         print(f"confirmed: {sorted(picks)}")
     elif args.cmd == "run":
         job = _load_job(args.job_id, cfg)
@@ -75,7 +81,10 @@ def main(argv=None):
         refs = sorted(avatar_dir.glob("*.png")) + sorted(avatar_dir.glob("*.jpg"))
         if not refs:
             sys.exit(f"形象 {args.avatar} 无参考图（avatars/{args.avatar}/*.png|jpg）")
-        job.run(_provider(cfg), avatar_refs=refs)
+        try:
+            job.run(_provider(cfg), avatar_refs=refs)
+        except ValueError as e:
+            sys.exit(str(e))
         print(f"done: {job._meta['final']}")
     elif args.cmd == "status":
         job = _load_job(args.job_id, cfg)

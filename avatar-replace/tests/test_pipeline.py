@@ -69,3 +69,17 @@ def test_run_requires_confirmed_state(sample_video, tmp_path):
     import pytest
     with pytest.raises(ValueError, match="不可 run"):
         job.run(FakeProvider(), avatar_refs=[])
+
+
+def test_reconfirm_invalidates_segments(sample_video, tmp_path):
+    # run 过后重新 confirm 不同选择 → 旧切段作废，再 run 会重切重替换
+    job = Job.create(sample_video, jobs_root=tmp_path, cfg=_cfg())
+    job.annotate(_fake())
+    for item in job.timeline: item["confirmed"] = True
+    job.confirm()
+    job.run(_fake(), avatar_refs=[])
+    job.confirm()  # 重新确认（同样全选）
+    assert job._meta["segments"] == []
+    fake2 = FakeProvider()
+    job.run(fake2, avatar_refs=[])
+    assert len(fake2.edit_calls) == 1  # 重切后重新替换

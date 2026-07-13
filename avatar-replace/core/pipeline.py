@@ -48,6 +48,10 @@ class Job:
         if info.duration > cfg.limits.max_video_seconds:
             raise ValueError(
                 f"视频 {info.duration:.0f}s 超上限 {cfg.limits.max_video_seconds}s")
+        size_mb = Path(video).stat().st_size / 1024 / 1024
+        if size_mb > cfg.limits.max_video_mb:
+            raise ValueError(
+                f"视频 {size_mb:.0f}MB 超上限 {cfg.limits.max_video_mb}MB")
         jid = time.strftime("%Y%m%d-%H%M%S") + "-" + uuid.uuid4().hex[:6]
         jdir = Path(jobs_root) / jid
         jdir.mkdir(parents=True)
@@ -72,6 +76,8 @@ class Job:
     def confirm(self) -> None:
         if not any(t.get("confirmed") for t in self._meta["timeline"]):
             raise ValueError("没有已确认的时段")
+        # 重新确认使已有切段作废——否则改动会被"segments 非空则不重切"静默吞掉
+        self._meta["segments"] = []
         self._meta["state"] = "confirmed"
         self._save()
 

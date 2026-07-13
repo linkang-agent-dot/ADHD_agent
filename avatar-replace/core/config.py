@@ -39,7 +39,8 @@ def load_config(path: Path | str = "config.yaml", require_key: bool = False) -> 
     raw = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
     key = os.environ.get("ARK_API_KEY", "")
     if require_key and not key:
-        raise RuntimeError("缺少 ARK_API_KEY 环境变量（.env）")
+        raise RuntimeError(
+            "缺少 ARK_API_KEY 环境变量（CLI 不自动读 .env，需先 set/export）")
     return Config(
         ark=ArkCfg(api_key=key, **raw["ark"]),
         pipeline=PipelineCfg(**raw.get("pipeline", {})),

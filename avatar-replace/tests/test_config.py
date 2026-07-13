@@ -21,3 +21,13 @@ def test_missing_key_raises(tmp_path, monkeypatch):
     import pytest
     with pytest.raises(RuntimeError, match="ARK_API_KEY"):
         load_config(cfg_file, require_key=True)
+
+
+def test_example_yaml_matches_dataclasses(monkeypatch):
+    # 防 config.example.yaml 与 dataclass 字段漂移：example 必须能直接加载
+    from pathlib import Path
+    monkeypatch.setenv("ARK_API_KEY", "sk-test")
+    root = Path(__file__).resolve().parent.parent
+    cfg = load_config(root / "config.example.yaml")
+    assert cfg.ark.vlm_model and cfg.ark.video_model
+    assert cfg.pipeline.segment_max == 15.0
