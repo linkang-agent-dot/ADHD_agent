@@ -9,6 +9,7 @@ class ArkCfg:
     vlm_model: str
     video_model: str
     api_key: str = ""
+    image_model: str = ""            # Seedream 图生图（换装/调体态），空=禁用 wardrobe
     # 视频生成 body 顶层参数（Seedance 2.0 契约，Task 11 核对）
     video_resolution: str = "720p"   # 480p/720p/1080p（1080p 仅标准版）
     video_ratio: str = "adaptive"    # adaptive=跟随输入比例

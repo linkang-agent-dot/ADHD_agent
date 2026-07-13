@@ -21,8 +21,9 @@ class Frame:
     path: Path
 
 
-def _run(cmd: list[str]) -> subprocess.CompletedProcess:
-    r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
+def _run(cmd: list[str], cwd: Path | None = None) -> subprocess.CompletedProcess:
+    r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8",
+                       errors="replace", cwd=cwd)
     if r.returncode != 0:
         raise RuntimeError(f"ffmpeg failed: {' '.join(cmd)}\n{r.stderr[-2000:]}")
     return r

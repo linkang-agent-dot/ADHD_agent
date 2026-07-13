@@ -30,4 +30,5 @@ def test_example_yaml_matches_dataclasses(monkeypatch):
     root = Path(__file__).resolve().parent.parent
     cfg = load_config(root / "config.example.yaml")
     assert cfg.ark.vlm_model and cfg.ark.video_model
-    assert cfg.pipeline.segment_max == 15.0
+    assert cfg.ark.image_model  # wardrobe 换装依赖
+    assert cfg.pipeline.segment_max == 5.0  # i2v 产出约5s，只裁不拉

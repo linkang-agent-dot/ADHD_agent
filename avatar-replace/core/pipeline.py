@@ -17,6 +17,8 @@ from core import cut as cutmod
 from core import media
 from core import replace as repmod
 from core import stitch as stitchmod
+from core import subtitles as submod
+from core import wardrobe as warmod
 from core.config import Config
 from core.providers.base import Provider
 
@@ -99,6 +101,22 @@ class Job:
                  "path": str(s["path"]), "status": "pending"} for s in cut_out]
             self._meta["state"] = "cut"
             self._save()
+        # 换装：数字人穿上与原片一致的服装+弱化肌肉感（2026-07-13 用户反馈）。
+        # job 级形象图落在 jobs/<id>/avatar/，幂等续跑不重复生成。
+        pending = [s for s in self._meta["segments"]
+                   if s["mode"] == "replace" and s["status"] != "done"]
+        if pending and avatar_refs:
+            if not self._meta.get("garment"):
+                sample = next((t["sample_frame"] for t in self._meta["timeline"]
+                               if t.get("confirmed")), None)
+                if sample:
+                    self._meta["garment"] = warmod.describe_garment(
+                        provider, Path(sample))
+                    self._save()
+            if self._meta.get("garment"):
+                avatar_refs = warmod.dress_avatar(
+                    provider, avatar_refs, self._meta["garment"],
+                    self.dir / "avatar")
         for s in self._meta["segments"]:
             if s["mode"] != "replace" or s["status"] == "done":
                 continue
@@ -112,6 +130,38 @@ class Job:
         final = stitchmod.stitch(
             [{**s, "path": Path(s["path"])} for s in self._meta["segments"]],
             original=src, workdir=self.dir, drift_pct=p.duration_drift_pct)
+        final = self._burn_subtitles(provider, final)
         self._meta["state"] = "done"
         self._meta["final"] = str(final)
         self._save()
+
+    def _burn_subtitles(self, provider: Provider, final: Path) -> Path:
+        """替换段丢失的原片硬字幕重烧回去。OCR 结果缓存 captions.json（续跑不重复花钱）；
+        相邻 replace 段合并成整时段处理（超长命中区被 segment_max 切开只是生成粒度）。"""
+        spans: list[list[float]] = []
+        for s in self._meta["segments"]:
+            if s["mode"] != "replace":
+                continue
+            if spans and abs(s["start"] - spans[-1][1]) < 0.02:
+                spans[-1][1] = s["end"]
+            else:
+                spans.append([s["start"], s["end"]])
+        if not spans:
+            return final
+        spans_t = [(a, b) for a, b in spans]
+        cache = self.dir / "captions.json"
+        if cache.exists():
+            ocr = json.loads(cache.read_text(encoding="utf-8"))
+            ocr["captions"] = [tuple(c) for c in ocr.get("captions", [])]
+        else:
+            ocr = submod.ocr_spans(provider, self.dir / "frames", spans_t,
+                                   interval=self.cfg.pipeline.frame_interval)
+            cache.write_text(json.dumps(
+                {"captions": [list(c) for c in ocr["captions"]],
+                 "bottom": ocr["bottom"]}, ensure_ascii=False, indent=2),
+                encoding="utf-8")
+        if not ocr["captions"] and not ocr.get("bottom"):
+            return final
+        out = self.dir / "final_sub.mp4"
+        submod.burn(final, out, ocr, spans_t, self.dir / "sub")
+        return out

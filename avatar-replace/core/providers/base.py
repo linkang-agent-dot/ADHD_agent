@@ -22,6 +22,10 @@ class Provider(ABC):
 
         输入只有 CG 图与文本，天然过真人风控；产出段由 replace 裁齐时长。"""
 
+    @abstractmethod
+    def edit_image(self, prompt: str, image_path: Path, out_path: Path) -> Path:
+        """图生图（Seedream i2i）：给数字人形象图换装/调体态，输入仅 CG 图。"""
+
 
 class FakeProvider(Provider):
     """零 API 假实现：chat_vision 按预置脚本回答；video_edit 原样拷贝输入段；
@@ -33,6 +37,7 @@ class FakeProvider(Provider):
         self.vision_calls: list[str] = []
         self.edit_calls: list[str] = []
         self.clip_calls: list[str] = []
+        self.image_calls: list[str] = []
 
     def chat_vision(self, prompt, image_paths):
         self.vision_calls.append(prompt)
@@ -51,4 +56,10 @@ class FakeProvider(Provider):
             ["ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=white:s=320x240:r=24:d=5",
              "-c:v", "libx264", "-pix_fmt", "yuv420p", str(out_path)],
             check=True, capture_output=True)
+        return out_path
+
+    def edit_image(self, prompt, image_path, out_path):
+        self.image_calls.append(prompt)
+        import shutil
+        shutil.copy(image_path, out_path)
         return out_path

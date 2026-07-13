@@ -9,6 +9,7 @@ ark:
   #   极速版 doubao-seedance-2-0-fast-260128（≤720p，便宜~20%）
   #   轻量版 doubao-seedance-2-0-mini-260615（最省，先用它冒烟）
   video_model: "doubao-seedance-2-0-mini-260615"
+  image_model: "doubao-seedream-4-5-251128"  # 图生图换装/调体态
   video_resolution: "720p"   # 480p / 720p / 1080p(仅标准版)
   video_ratio: "adaptive"    # 跟随输入比例
   video_duration: -1         # -1=模型自适应(4-15s)；固定秒数填整数

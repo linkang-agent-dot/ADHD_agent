@@ -84,6 +84,18 @@ class VolcProvider(Provider):
                 "watermark": self.cfg.watermark}
         return self._submit_and_poll(body, out_path)
 
+    def edit_image(self, prompt, image_path, out_path: Path) -> Path:
+        """Seedream 图生图（2026-07-13 已实测通路径：POST /images/generations + image 字段）。"""
+        body = {"model": self.cfg.image_model, "prompt": prompt,
+                "image": self._data_url(image_path),
+                "response_format": "url", "watermark": False}
+        r = requests.post(f"{self.cfg.base_url}/images/generations",
+                          headers=self.headers, json=body, timeout=300)
+        r.raise_for_status()
+        url = r.json()["data"][0]["url"]
+        out_path.write_bytes(requests.get(url, timeout=300).content)
+        return out_path
+
     def _submit_and_poll(self, body: dict, out_path: Path) -> Path:
         r = requests.post(f"{self.cfg.base_url}/contents/generations/tasks",
                           headers=self.headers, json=body, timeout=120)
