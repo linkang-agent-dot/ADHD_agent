@@ -69,9 +69,19 @@ def cut_clip(src: Path | str, dst: Path, start: float, end: float) -> None:
 
 
 def concat(parts: list[Path], dst: Path) -> None:
+    # concat demuxer 相对路径是相对 list 文件目录解析的——list 与被拼文件不同目录时
+    # 会拼错路径（2026-07-13 demo 实锤），一律转绝对路径
     lst = dst.with_suffix(".txt")
-    lst.write_text("".join(f"file '{p.as_posix()}'\n" for p in parts), encoding="utf-8")
+    lst.write_text("".join(f"file '{Path(p).resolve().as_posix()}'\n" for p in parts),
+                   encoding="utf-8")
     _run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy", str(dst)])
+
+
+def trim(src: Path, dst: Path, duration: float) -> None:
+    """截取开头 duration 秒（重编码保精确；-an：音轨最终整条铺回原片）"""
+    _run(["ffmpeg", "-y", "-i", str(src), "-t", f"{duration:.3f}", "-an",
+          "-c:v", "libx264", "-crf", "18", "-preset", "fast",
+          "-pix_fmt", "yuv420p", str(dst)])
 
 
 def replace_audio(video: Path, audio_src: Path, dst: Path) -> None:

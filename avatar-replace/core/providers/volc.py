@@ -52,7 +52,8 @@ class VolcProvider(Provider):
         return r.json()["choices"][0]["message"]["content"]
 
     def video_edit(self, prompt, video_path, ref_images, out_path: Path) -> Path:
-        # prompt 中用"视频1/图片1"按 content 顺序指代素材（replace.PROMPT_TMPL 已按此写）
+        # ⚠️ 死路存档：真人视频输入必撞 InputVideoSensitiveContentDetected（2026-07-13 实测），
+        # 管线走 generate_clip。prompt 中用"视频1/图片1"按 content 顺序指代素材。
         content = [{"type": "text", "text": prompt},
                    {"type": "video_url", "video_url": {"url": self._data_url(video_path)},
                     "role": "reference_video"}] + [
@@ -64,6 +65,26 @@ class VolcProvider(Provider):
                 "duration": self.cfg.video_duration,    # -1=模型自适应（4-15s）
                 "generate_audio": self.cfg.generate_audio,  # 拼回时原片音轨整条铺回，默认不生成省费
                 "watermark": self.cfg.watermark}
+        return self._submit_and_poll(body, out_path)
+
+    def generate_clip(self, prompt, first_frame, out_path: Path) -> Path:
+        """i2v 主路径（2026-07-13 实测通）：数字人图作首帧 + 文本。
+
+        ⚠️ mini 系列不接受 duration 参数（传了报 InvalidParameter）——不传，
+        产出约 5s/24fps，时长裁齐在 replace 层做；ratio=adaptive 跟随首帧画幅。"""
+        if first_frame is None:
+            raise ValueError("generate_clip 需要首帧参考图（avatars/<名>/front|back）")
+        content = [{"type": "text", "text": prompt},
+                   {"type": "image_url", "image_url": {"url": self._data_url(first_frame)},
+                    "role": "first_frame"}]
+        body = {"model": self.cfg.video_model, "content": content,
+                "resolution": self.cfg.video_resolution,
+                "ratio": self.cfg.video_ratio,
+                "generate_audio": self.cfg.generate_audio,
+                "watermark": self.cfg.watermark}
+        return self._submit_and_poll(body, out_path)
+
+    def _submit_and_poll(self, body: dict, out_path: Path) -> Path:
         r = requests.post(f"{self.cfg.base_url}/contents/generations/tasks",
                           headers=self.headers, json=body, timeout=120)
         r.raise_for_status()

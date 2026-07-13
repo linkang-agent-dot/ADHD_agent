@@ -64,6 +64,35 @@ def test_video_edit_submits_polls_downloads(monkeypatch, tmp_path):
     assert body["watermark"] is False
 
 
+def test_generate_clip_i2v_contract(monkeypatch, tmp_path):
+    ref = tmp_path / "front.jpg"; ref.write_bytes(b"\xff\xd8fake")
+    sent = {}
+    def fake_post(url, json=None, headers=None, timeout=None):
+        sent.update(json=json)
+        return FakeResp({"id": "task-3"})
+    monkeypatch.setattr("requests.post", fake_post)
+    monkeypatch.setattr("requests.get", lambda *a, **k: FakeResp(
+        {"status": "succeeded", "content": {"video_url": "http://cdn/o.mp4"}}))
+    monkeypatch.setattr("time.sleep", lambda s: None)
+    p = VolcProvider(ArkCfg(base_url="http://ark", vlm_model="vlm", video_model="vid", api_key="sk"))
+    out = p.generate_clip("数字人挥手", ref, tmp_path / "o.mp4")
+    assert out.read_bytes() == b"fakevideo"
+    body = sent["json"]
+    # i2v 契约（2026-07-13 实测）：首帧 role=first_frame，不传视频，
+    # mini 不接受 duration 参数——body 里绝不能出现
+    assert [c["type"] for c in body["content"]] == ["text", "image_url"]
+    assert body["content"][1]["role"] == "first_frame"
+    assert "duration" not in body
+    assert body["generate_audio"] is False
+
+
+def test_generate_clip_requires_first_frame(tmp_path):
+    p = VolcProvider(ArkCfg(base_url="http://ark", vlm_model="vlm", video_model="vid", api_key="sk"))
+    import pytest
+    with pytest.raises(ValueError):
+        p.generate_clip("x", None, tmp_path / "o.mp4")
+
+
 def test_video_edit_expired_status_raises(monkeypatch, tmp_path):
     vid = tmp_path / "seg.mp4"; vid.write_bytes(b"v")
     monkeypatch.setattr("requests.post", lambda *a, **k: FakeResp({"id": "task-2"}))

@@ -15,7 +15,8 @@ def _cfg():
 def _fake():
     return FakeProvider(vision_responses=[
         json.dumps({"hits": [6, 7]}), json.dumps({"hits": []}), json.dumps({"hits": []}),
-        "红色T恤男孩",
+        json.dumps({"person": "红色T恤男孩", "action": "站立挥手，镜头固定",
+                    "orientation": "正面"}),
     ])
 
 
@@ -47,11 +48,11 @@ def test_resume_skips_done_segments(sample_video, tmp_path):
         item["confirmed"] = True
     job.confirm()
     job.run(_fake(), avatar_refs=[])
-    # 重新加载同一 job，再 run：不应产生新的 video_edit 调用
+    # 重新加载同一 job，再 run：不应产生新的生成调用
     fake2 = FakeProvider()
     job2 = Job.load(job.dir, cfg=_cfg())
     job2.run(fake2, avatar_refs=[])
-    assert fake2.edit_calls == []
+    assert fake2.clip_calls == []
     assert job2.state == "done"
 
 
@@ -82,4 +83,4 @@ def test_reconfirm_invalidates_segments(sample_video, tmp_path):
     assert job._meta["segments"] == []
     fake2 = FakeProvider()
     job.run(fake2, avatar_refs=[])
-    assert len(fake2.edit_calls) == 1  # 重切后重新替换
+    assert len(fake2.clip_calls) == 1  # 重切后重新替换

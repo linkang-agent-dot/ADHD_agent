@@ -16,7 +16,7 @@ ark:
   watermark: false
 pipeline:
   frame_interval: 1.0        # 打轴抽帧间隔（秒）
-  segment_max: 15.0          # Seedance 参考视频单段上限 15s（官方下限 2s，见 SMOKE.md）
+  segment_max: 5.0           # i2v 产出约5s且不受duration控制，段≤5s只裁不拉伸
   buffer: 0.5                # 命中时段外扩缓冲
   scene_align_tolerance: 2.0 # 镜头切点对齐搜索半径（秒）
   duration_drift_pct: 2.0    # 替换段时长偏差超此百分比则变速对齐

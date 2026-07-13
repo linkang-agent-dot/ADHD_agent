@@ -41,24 +41,27 @@ def plan_segments(timeline: list[dict], duration: float, scene_cuts: list[float]
         e = min(e, duration)
         if e - s <= _EPS:  # 退化时段（零长/负长）不产生零长 replace 段
             continue
-        spans.append([s, e, item["person_desc"]])
+        spans.append([s, e, item["person_desc"],
+                      item.get("action_desc", ""), item.get("orientation", "")])
     spans.sort()
 
-    # 2) 重叠/相接合并（desc 去重拼接）
+    # 2) 重叠/相接合并（desc/action 去重拼接，orientation 取先出现的）
     merged: list[list] = []
-    for s, e, d in spans:
+    for s, e, d, a, o in spans:
         if merged and s <= merged[-1][1] + _MERGE_EPS:
             merged[-1][1] = max(merged[-1][1], e)
             # 按分号切分后判等去重：子串包含判定会把"男孩"误吞进"红衣男孩"
             if d not in merged[-1][2].split("；"):
                 merged[-1][2] = merged[-1][2] + "；" + d
+            if a and a not in merged[-1][3].split("；"):
+                merged[-1][3] = (merged[-1][3] + "；" + a) if merged[-1][3] else a
         else:
-            merged.append([s, e, d])
+            merged.append([s, e, d, a, o])
 
     # 3) 铺全片：间隙补 keep，replace 超长 n 等分
     segs: list[dict] = []
     cursor = 0.0
-    for s, e, d in merged:
+    for s, e, d, a, o in merged:
         if s > cursor + _EPS:
             segs.append({"start": cursor, "end": s, "mode": "keep"})
         else:
@@ -71,7 +74,8 @@ def plan_segments(timeline: list[dict], duration: float, scene_cuts: list[float]
             # 末份终点直接取 e，避免 s+n*step 浮点漂移在 e 处留缝
             seg_end = e if i == n - 1 else s + (i + 1) * step
             segs.append({"start": s + i * step, "end": seg_end,
-                         "mode": "replace", "desc": d})
+                         "mode": "replace", "desc": d,
+                         "action": a, "orient": o})
         cursor = e
 
     # 4) 收尾：补片尾 keep；已到片尾则把浮点残差归到最后一段。显式防空列表。

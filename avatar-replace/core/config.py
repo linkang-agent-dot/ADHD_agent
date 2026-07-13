@@ -19,7 +19,7 @@ class ArkCfg:
 @dataclass
 class PipelineCfg:
     frame_interval: float = 1.0
-    segment_max: float = 15.0
+    segment_max: float = 5.0   # i2v 产出约 5s，段≤5s 只裁不拉伸
     buffer: float = 0.5
     scene_align_tolerance: float = 2.0
     duration_drift_pct: float = 2.0

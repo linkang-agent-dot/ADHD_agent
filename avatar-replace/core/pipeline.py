@@ -103,8 +103,9 @@ class Job:
             if s["mode"] != "replace" or s["status"] == "done":
                 continue
             out = repmod.replace_segment(
-                provider, Path(s["path"]), s.get("desc", ""), avatar_refs,
-                self.dir / "out")
+                provider, Path(s["path"]), s.get("action", ""),
+                s.get("orient", ""), avatar_refs, self.dir / "out",
+                expect_dur=s["end"] - s["start"])
             s["path"] = str(out)
             s["status"] = "done"
             self._save()  # 段级落盘：每替换完一段立即持久化，中断后从下一段续
