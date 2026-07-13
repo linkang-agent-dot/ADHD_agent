@@ -39,9 +39,17 @@ def _provider(cfg):
     return VolcProvider(cfg.ark)
 
 
+def _load_job(job_id: str, cfg) -> Job:
+    jdir = JOBS / job_id
+    if not (jdir / "job.json").exists():
+        sys.exit(f"job {job_id} 不存在（jobs/ 下无此目录）")
+    return Job.load(jdir, cfg)
+
+
 def main(argv=None):
     # Windows 控制台可能是 GBK，中文 JSON 直接 print 会 UnicodeEncodeError
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     args = build_parser().parse_args(argv)
     cfg = load_config(ROOT / "config.yaml",
                       require_key=(args.cmd in ("annotate", "run")))
@@ -51,15 +59,18 @@ def main(argv=None):
         print(f"job: {job.dir.name}")
         print(json.dumps(job.timeline, ensure_ascii=False, indent=2))
     elif args.cmd == "confirm":
-        job = Job.load(JOBS / args.job_id, cfg)
-        picks = set(range(len(job.timeline))) if args.all else \
-                {int(i) for i in args.spans.split(",") if i.strip()}
+        job = _load_job(args.job_id, cfg)
+        try:
+            picks = set(range(len(job.timeline))) if args.all else \
+                    {int(i) for i in args.spans.split(",") if i.strip()}
+        except ValueError:
+            sys.exit(f"--spans 需为逗号分隔整数，收到: {args.spans}")
         for i, t in enumerate(job.timeline):
             t["confirmed"] = i in picks
         job.confirm()
         print(f"confirmed: {sorted(picks)}")
     elif args.cmd == "run":
-        job = Job.load(JOBS / args.job_id, cfg)
+        job = _load_job(args.job_id, cfg)
         avatar_dir = ROOT / "avatars" / args.avatar
         refs = sorted(avatar_dir.glob("*.png")) + sorted(avatar_dir.glob("*.jpg"))
         if not refs:
@@ -67,7 +78,7 @@ def main(argv=None):
         job.run(_provider(cfg), avatar_refs=refs)
         print(f"done: {job._meta['final']}")
     elif args.cmd == "status":
-        job = Job.load(JOBS / args.job_id, cfg)
+        job = _load_job(args.job_id, cfg)
         print(json.dumps(
             {k: job._meta[k] for k in ("id", "state")} |
             {"segments": [(s["mode"], s["status"]) for s in job._meta["segments"]]},
