@@ -52,4 +52,24 @@ def test_video_edit_submits_polls_downloads(monkeypatch, tmp_path):
     p = VolcProvider(ArkCfg(base_url="http://ark", vlm_model="vlm", video_model="vid", api_key="sk"))
     out = p.video_edit("换人", vid, [ref], tmp_path / "out.mp4")
     assert out.read_bytes() == b"fakevideo"
-    assert [c["type"] for c in sent["json"]["content"]] == ["text", "video_url", "image_url"]
+    body = sent["json"]
+    assert [c["type"] for c in body["content"]] == ["text", "video_url", "image_url"]
+    # Seedance 2.0 契约：素材元素带 role，生成参数为 body 顶层字段（Task 11 核对）
+    assert body["content"][1]["role"] == "reference_video"
+    assert body["content"][2]["role"] == "reference_image"
+    assert body["resolution"] == "720p"
+    assert body["ratio"] == "adaptive"
+    assert body["duration"] == -1
+    assert body["generate_audio"] is False
+    assert body["watermark"] is False
+
+
+def test_video_edit_expired_status_raises(monkeypatch, tmp_path):
+    vid = tmp_path / "seg.mp4"; vid.write_bytes(b"v")
+    monkeypatch.setattr("requests.post", lambda *a, **k: FakeResp({"id": "task-2"}))
+    monkeypatch.setattr("requests.get", lambda *a, **k: FakeResp({"status": "expired"}))
+    monkeypatch.setattr("time.sleep", lambda s: None)
+    p = VolcProvider(ArkCfg(base_url="http://ark", vlm_model="vlm", video_model="vid", api_key="sk"))
+    import pytest
+    with pytest.raises(RuntimeError):
+        p.video_edit("换人", vid, [], tmp_path / "out.mp4")

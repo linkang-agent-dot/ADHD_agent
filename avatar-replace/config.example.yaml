@@ -1,11 +1,23 @@
 # 复制为 config.yaml 后填写。API key 不放这里，放 .env / 环境变量 ARK_API_KEY
 ark:
   base_url: "https://ark.cn-beijing.volces.com/api/v3"
-  vlm_model: "doubao-1-5-vision-pro-32k"      # Task 11 按官方文档核对最新模型ID
-  video_model: "doubao-seedance-pro"           # Task 11 按官方文档核对（需支持参考视频+元素参考）
+  # 视觉理解（打轴）：填方舟 Model ID（带版本日期）或推理接入点 ep-xxx
+  #   推荐 doubao-seed-1-6-vision-250815（256k 上下文，图/视频理解）
+  #   低配可选 doubao-1-5-vision-pro-32k-250115
+  vlm_model: "doubao-seed-1-6-vision-250815"
+  # 视频生成：仅 doubao-seedance-2.0 系列支持"参考视频+参考图"多模态输入（1.x 不支持）
+  #   标准版 doubao-seedance-2-0-260128（支持 1080p）
+  #   极速版 doubao-seedance-2-0-fast-260128（≤720p，便宜~20%）
+  #   轻量版 doubao-seedance-2-0-mini-260615（最省，先用它冒烟）
+  video_model: "doubao-seedance-2-0-mini-260615"
+  video_resolution: "720p"   # 480p / 720p / 1080p(仅标准版)
+  video_ratio: "adaptive"    # 跟随输入比例
+  video_duration: -1         # -1=模型自适应(4-15s)；固定秒数填整数
+  generate_audio: false      # 管线拼回时原片音轨整条铺回，生成音频会被丢弃 → 关掉省费
+  watermark: false
 pipeline:
   frame_interval: 1.0        # 打轴抽帧间隔（秒）
-  segment_max: 15.0          # Seedance 参考视频上限
+  segment_max: 15.0          # Seedance 参考视频单段上限 15s（官方下限 2s，见 SMOKE.md）
   buffer: 0.5                # 命中时段外扩缓冲
   scene_align_tolerance: 2.0 # 镜头切点对齐搜索半径（秒）
   duration_drift_pct: 2.0    # 替换段时长偏差超此百分比则变速对齐

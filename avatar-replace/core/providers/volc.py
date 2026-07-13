@@ -10,7 +10,25 @@ from core.providers.base import Provider
 
 
 class VolcProvider(Provider):
-    """火山方舟。⚠️ 端点/字段以 Task 11 核对的官方文档为准，本实现按方舟 v3 通用契约编写。"""
+    """火山方舟 v3。契约已核对（2026-07-13，官方 volcengine-python-sdk arkruntime 源码 + Seedance 2.0 文档）：
+
+    - VLM 视觉理解：POST {base}/chat/completions，OpenAI 兼容；
+      图片支持 data URL base64（data:image/<fmt>;base64,...，fmt 小写）。
+    - 视频生成：POST {base}/contents/generations/tasks；
+      content 元素需带 role（参考视频=reference_video / 参考图=reference_image，
+      另有 first_frame/last_frame，与参考模式互斥）；
+      resolution/ratio/duration/generate_audio/watermark 为 body 顶层字段（非 prompt 内文本命令）；
+      GET {base}/contents/generations/tasks/{id} 轮询，
+      status ∈ queued/running/succeeded/failed/cancelled/expired，
+      成功取 content.video_url（签名直链，约 24h 有效）。
+    - 仅 doubao-seedance-2.0 系列支持参考视频输入（1.x 只有文生/图生）。
+
+    ⚠️ 待冒烟验证（docs/SMOKE.md）：官方文档标注参考视频仅支持公网 URL
+      （mp4/mov，单段 2-15s，≤50MB，≤3 段），"不支持 base64"；图片 base64 明确支持。
+      本地管线无上传基建，视频暂以 data URL 传入作为最合理假设——真实 key 冒烟若报
+      InvalidParameter，需改走 TOS/公网 URL（方舟另有 POST /files 素材上传 API 可选）。
+      请求体总大小 ≤64MB（segment_max=15s 的 720p 段一般不超）。
+    """
     POLL_INTERVAL = 5
     POLL_TIMEOUT = 900
 
@@ -34,12 +52,20 @@ class VolcProvider(Provider):
         return r.json()["choices"][0]["message"]["content"]
 
     def video_edit(self, prompt, video_path, ref_images, out_path: Path) -> Path:
+        # prompt 中用"视频1/图片1"按 content 顺序指代素材（replace.PROMPT_TMPL 已按此写）
         content = [{"type": "text", "text": prompt},
-                   {"type": "video_url", "video_url": {"url": self._data_url(video_path)}}] + [
-                   {"type": "image_url", "image_url": {"url": self._data_url(p)}} for p in ref_images]
+                   {"type": "video_url", "video_url": {"url": self._data_url(video_path)},
+                    "role": "reference_video"}] + [
+                   {"type": "image_url", "image_url": {"url": self._data_url(p)},
+                    "role": "reference_image"} for p in ref_images]
+        body = {"model": self.cfg.video_model, "content": content,
+                "resolution": self.cfg.video_resolution,
+                "ratio": self.cfg.video_ratio,          # adaptive=跟随输入
+                "duration": self.cfg.video_duration,    # -1=模型自适应（4-15s）
+                "generate_audio": self.cfg.generate_audio,  # 拼回时原片音轨整条铺回，默认不生成省费
+                "watermark": self.cfg.watermark}
         r = requests.post(f"{self.cfg.base_url}/contents/generations/tasks",
-                          headers=self.headers,
-                          json={"model": self.cfg.video_model, "content": content}, timeout=120)
+                          headers=self.headers, json=body, timeout=120)
         r.raise_for_status()
         task_id = r.json()["id"]
         deadline = time.time() + self.POLL_TIMEOUT
@@ -53,7 +79,7 @@ class VolcProvider(Provider):
             if d["status"] == "succeeded":
                 url = d["content"]["video_url"]
                 break
-            if d["status"] in ("failed", "cancelled"):
+            if d["status"] in ("failed", "cancelled", "expired"):
                 raise RuntimeError(f"video task {task_id} 失败: {d}")
             time.sleep(self.POLL_INTERVAL)
         out_path.write_bytes(requests.get(url, timeout=300).content)

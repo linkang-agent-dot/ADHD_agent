@@ -9,6 +9,12 @@ class ArkCfg:
     vlm_model: str
     video_model: str
     api_key: str = ""
+    # 视频生成 body 顶层参数（Seedance 2.0 契约，Task 11 核对）
+    video_resolution: str = "720p"   # 480p/720p/1080p（1080p 仅标准版）
+    video_ratio: str = "adaptive"    # adaptive=跟随输入比例
+    video_duration: int = -1         # -1=模型自适应（4-15s）
+    generate_audio: bool = False     # 拼回用原片音轨，生成音频会被丢弃，默认关省费
+    watermark: bool = False
 
 @dataclass
 class PipelineCfg:
