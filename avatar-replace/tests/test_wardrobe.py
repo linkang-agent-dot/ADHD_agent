@@ -1,5 +1,19 @@
-from core.wardrobe import describe_garment, dress_avatar, GARMENT_PROMPT
+from core.wardrobe import (describe_garment, dress_avatar, stylize_avatar,
+                           CARTOON_TMPL, GARMENT_PROMPT)
 from core.providers.base import FakeProvider
+
+
+def test_stylize_avatar_in_place_keeps_garment():
+    # 卡通化必须保服装与姿势不变（只换渲染风格），且原地覆盖 job 级形象图
+    assert "服装款式与颜色" in CARTOON_TMPL and "卡通" in CARTOON_TMPL
+
+
+def test_stylize_avatar_overwrites(tmp_path):
+    front = tmp_path / "front.jpg"; front.write_bytes(b"f")
+    fake = FakeProvider()
+    outs = stylize_avatar(fake, [front])
+    assert outs == [front] and front.exists()
+    assert "卡通" in fake.image_calls[0]
 
 
 def test_garment_prompt_neutral_wording():

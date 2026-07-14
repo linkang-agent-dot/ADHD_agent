@@ -1,6 +1,13 @@
 from core import media
 
 
+def test_closest_ratio():
+    assert media.closest_ratio(1080, 1920) == "9:16"
+    assert media.closest_ratio(1920, 1080) == "16:9"
+    assert media.closest_ratio(960, 960) == "1:1"
+    assert media.closest_ratio(834, 1112) == "3:4"
+
+
 def test_probe(sample_video):
     info = media.probe(sample_video)
     assert 19.5 < info.duration < 20.5

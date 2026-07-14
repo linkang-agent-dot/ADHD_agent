@@ -69,6 +69,26 @@ def _kf_prompt(sb: dict, pose: str) -> str:
                           others_clause=others)
 
 
+SCENE_TMPL = (
+    "空镜头场景参考图，画面中没有任何人物：{scene}。"
+    "竖版视频画幅，写实CG渲染质感，光影自然。"
+)
+SCENE_SIZE = "1440x2560"  # 9:16 竖版，供 ratio=adaptive 跟随
+
+
+def build_scene_ref(provider: Provider, sb: dict, ref_dir: Path,
+                    name: str) -> Path | None:
+    """按分镜场景描述文生一张无人空镜头参考图（幂等）。场景描述缺失则不出图。"""
+    if not sb.get("scene"):
+        return None
+    ref_dir.mkdir(parents=True, exist_ok=True)
+    out = ref_dir / f"{name}_scene.jpg"
+    if not out.exists():
+        provider.generate_image(SCENE_TMPL.format(scene=sb["scene"]), out,
+                                size=SCENE_SIZE)
+    return out
+
+
 def build_keyframes(provider: Provider, base_img: Path, sb: dict,
                     kf_dir: Path, name: str) -> tuple[Path, Path | None]:
     """起始/结束两张场景关键帧（幂等）。end_pose 缺失或与起始相同则不出尾帧。"""

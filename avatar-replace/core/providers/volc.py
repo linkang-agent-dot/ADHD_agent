@@ -103,27 +103,62 @@ class VolcProvider(Provider):
     EDIT_RETRIES = 3
     EDIT_BACKOFF = 10  # 秒；连续打 /images/generations 会偶发瞬时 400/限流（2026-07-13 实测）
 
-    def edit_image(self, prompt, image_path, out_path: Path) -> Path:
-        """Seedream 图生图（2026-07-13 已实测通路径：POST /images/generations + image 字段）。"""
-        body = {"model": self.cfg.image_model, "prompt": prompt,
-                "image": self._data_url(image_path),
-                "response_format": "url", "watermark": False}
+    def _images(self, body: dict, out_path: Path) -> Path:
         for attempt in range(self.EDIT_RETRIES):
             r = requests.post(f"{self.cfg.base_url}/images/generations",
                               headers=self.headers, json=body, timeout=300)
             if r.status_code < 400:
                 break
             if attempt == self.EDIT_RETRIES - 1:
-                r.raise_for_status()
+                raise RuntimeError(
+                    f"images/generations {r.status_code}: {r.text[:500]}")
             time.sleep(self.EDIT_BACKOFF * (attempt + 1))
         url = r.json()["data"][0]["url"]
         out_path.write_bytes(requests.get(url, timeout=300).content)
         return out_path
 
+    def edit_image(self, prompt, image_path, out_path: Path) -> Path:
+        """Seedream 图生图（2026-07-13 已实测通路径：POST /images/generations + image 字段）。"""
+        return self._images({"model": self.cfg.image_model, "prompt": prompt,
+                             "image": self._data_url(image_path),
+                             "response_format": "url", "watermark": False}, out_path)
+
+    def generate_image(self, prompt, out_path: Path, size: str | None = None) -> Path:
+        """Seedream 文生图（不带 image 字段即 t2i），用于空镜头场景参考图。"""
+        body = {"model": self.cfg.image_model, "prompt": prompt,
+                "response_format": "url", "watermark": False}
+        if size:
+            body["size"] = size
+        return self._images(body, out_path)
+
+    def generate_ref_clip(self, prompt, ref_images, out_path: Path,
+                          ratio: str | None = None) -> Path:
+        """多参考图生视频（2026-07-14 定版主路径）：content 全部 role=reference_image，
+        Seedance 按脚本自主成镜。与首尾帧模式互斥（官方契约）。
+        ⚠️ 此模式 ratio=adaptive 不跟随参考图（实测出 1:1），调用方必须传源片 ratio。"""
+        if not ref_images:
+            raise ValueError("generate_ref_clip 需要至少一张参考图")
+        content = [{"type": "text", "text": prompt}] + [
+            {"type": "image_url", "image_url": {"url": self._data_url(p)},
+             "role": "reference_image"} for p in ref_images]
+        body = {"model": self.cfg.video_model, "content": content,
+                "resolution": self.cfg.video_resolution,
+                "ratio": ratio or self.cfg.video_ratio,
+                "generate_audio": self.cfg.generate_audio,
+                "watermark": self.cfg.watermark}
+        return self._submit_and_poll(body, out_path)
+
     def _submit_and_poll(self, body: dict, out_path: Path) -> Path:
         r = requests.post(f"{self.cfg.base_url}/contents/generations/tasks",
                           headers=self.headers, json=body, timeout=120)
-        r.raise_for_status()
+        if r.status_code >= 400:
+            try:
+                r.raise_for_status()
+            except requests.HTTPError as e:
+                # 保留 HTTPError 类型（上层降级逻辑依赖），但把响应体带出来便于分辨
+                # 风控 / 模式不支持 / 参数错误
+                e.args = (f"{e.args[0]} | body: {r.text[:400]}",)
+                raise
         task_id = r.json()["id"]
         deadline = time.time() + self.POLL_TIMEOUT
         while True:

@@ -18,6 +18,7 @@ ark:
 pipeline:
   frame_interval: 1.0        # 打轴抽帧间隔（秒）
   segment_max: 5.0           # i2v 产出约5s且不受duration控制，段≤5s只裁不拉伸
+  gen_mode: refs             # refs=多参考图自主成镜(人物图+场景图+脚本,2026-07-14主路径) / keyframes=首尾帧锚点(备选)
   buffer: 0.5                # 命中时段外扩缓冲
   scene_align_tolerance: 2.0 # 镜头切点对齐搜索半径（秒）
   duration_drift_pct: 2.0    # 替换段时长偏差超此百分比则变速对齐

@@ -44,6 +44,19 @@ def test_build_keyframes_dual_anchor_idempotent(tmp_path):
     assert len(fake.image_calls) == 2
 
 
+def test_build_scene_ref_idempotent_and_no_person(tmp_path):
+    from core.storyboard import build_scene_ref, SCENE_TMPL
+    assert "没有任何人物" in SCENE_TMPL  # 场景参考必须是空镜头
+    fake = FakeProvider()
+    out = build_scene_ref(fake, SB, tmp_path / "refs", "001_replace")
+    assert out is not None and out.exists()
+    assert "浅色卧室" in fake.image_calls[0]
+    build_scene_ref(fake, SB, tmp_path / "refs", "001_replace")
+    assert len(fake.image_calls) == 1  # 幂等
+    # 场景描述缺失不出图
+    assert build_scene_ref(fake, dict(SB, scene=""), tmp_path / "refs", "x") is None
+
+
 def test_build_keyframes_skips_last_when_pose_same(tmp_path):
     base = tmp_path / "front.jpg"; base.write_bytes(b"f")
     sb = dict(SB, end_pose=SB["start_pose"])

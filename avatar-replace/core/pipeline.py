@@ -131,17 +131,45 @@ class Job:
                     provider, self.dir / "frames", s["start"], s["end"],
                     interval=self.cfg.pipeline.frame_interval)
                 self._save()
-            kf_a = kf_b = None
-            if avatar_refs:
-                base = next((r for r in avatar_refs
-                             if r.stem.lower().startswith("front")),
-                            avatar_refs[0])
-                kf_a, kf_b = sbmod.build_keyframes(
-                    provider, base, s["storyboard"], self.dir / "kf",
+            expect = s["end"] - s["start"]
+            if p.gen_mode == "refs":
+                # 多参考图模式（主路径）：人物形象图+空镜头场景图+脚本，模型自主成镜
+                scene_ref = sbmod.build_scene_ref(
+                    provider, s["storyboard"], self.dir / "kf",
                     Path(s["path"]).stem)
-            out = repmod.replace_segment(
-                provider, Path(s["path"]), s["storyboard"], kf_a, kf_b,
-                self.dir / "out", expect_dur=s["end"] - s["start"])
+                src_info = media.probe(src)
+                ratio = media.closest_ratio(src_info.width, src_info.height)
+                try:
+                    out = repmod.replace_segment_refs(
+                        provider, Path(s["path"]), s["storyboard"],
+                        avatar_refs, scene_ref, self.dir / "out",
+                        expect_dur=expect, ratio=ratio)
+                except Exception as e:
+                    # 形象图太写实被判"疑似真人"→ 卡通化一次后重试（每 job 只做一次）
+                    if ("InputImageSensitiveContentDetected" not in str(e)
+                            or self._meta.get("avatar_stylized")
+                            or not avatar_refs):
+                        raise
+                    warmod.stylize_avatar(provider, avatar_refs)
+                    self._meta["avatar_stylized"] = True
+                    self._save()
+                    out = repmod.replace_segment_refs(
+                        provider, Path(s["path"]), s["storyboard"],
+                        avatar_refs, scene_ref, self.dir / "out",
+                        expect_dur=expect, ratio=ratio)
+            else:
+                # 首尾帧锚点模式（备选）：关键帧钉死起止构图
+                kf_a = kf_b = None
+                if avatar_refs:
+                    base = next((r for r in avatar_refs
+                                 if r.stem.lower().startswith("front")),
+                                avatar_refs[0])
+                    kf_a, kf_b = sbmod.build_keyframes(
+                        provider, base, s["storyboard"], self.dir / "kf",
+                        Path(s["path"]).stem)
+                out = repmod.replace_segment(
+                    provider, Path(s["path"]), s["storyboard"], kf_a, kf_b,
+                    self.dir / "out", expect_dur=expect)
             s["path"] = str(out)
             s["status"] = "done"
             self._save()  # 段级落盘：每替换完一段立即持久化，中断后从下一段续

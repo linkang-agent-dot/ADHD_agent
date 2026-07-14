@@ -125,6 +125,27 @@ def test_generate_clip_falls_back_when_last_frame_rejected(monkeypatch, tmp_path
     assert len(bodies) == 2  # 第一次带尾帧被拒，第二次仅首帧
 
 
+def test_generate_ref_clip_contract(monkeypatch, tmp_path):
+    a = tmp_path / "front.jpg"; a.write_bytes(b"\xff\xd8a")
+    b = tmp_path / "back.jpg"; b.write_bytes(b"\xff\xd8b")
+    c = tmp_path / "scene.jpg"; c.write_bytes(b"\xff\xd8c")
+    sent = {}
+    monkeypatch.setattr("requests.post", lambda url, json=None, headers=None, timeout=None:
+                        (sent.update(json=json), FakeResp({"id": "t"}))[1])
+    monkeypatch.setattr("requests.get", lambda *a2, **k: FakeResp(
+        {"status": "succeeded", "content": {"video_url": "http://cdn/o.mp4"}}))
+    monkeypatch.setattr("time.sleep", lambda s: None)
+    p = VolcProvider(ArkCfg(base_url="http://ark", vlm_model="vlm", video_model="vid", api_key="sk"))
+    p.generate_ref_clip("按脚本成镜", [a, b, c], tmp_path / "o.mp4", ratio="9:16")
+    body = sent["json"]
+    # 多参考图契约：全部 role=reference_image，与首尾帧模式互斥，不传 duration；
+    # ratio 必须显式传（adaptive 在此模式实测出 1:1）
+    assert [c2.get("role") for c2 in body["content"]] == \
+        [None, "reference_image", "reference_image", "reference_image"]
+    assert "duration" not in body
+    assert body["ratio"] == "9:16"
+
+
 def test_generate_clip_requires_first_frame(tmp_path):
     p = VolcProvider(ArkCfg(base_url="http://ark", vlm_model="vlm", video_model="vid", api_key="sk"))
     import pytest

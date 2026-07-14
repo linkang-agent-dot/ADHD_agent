@@ -21,6 +21,7 @@ class ArkCfg:
 class PipelineCfg:
     frame_interval: float = 1.0
     segment_max: float = 5.0   # i2v 产出约 5s，段≤5s 只裁不拉伸
+    gen_mode: str = "refs"     # refs=多参考图自主成镜(2026-07-14主路径) / keyframes=首尾帧锚点(备选)
     buffer: float = 0.5
     scene_align_tolerance: float = 2.0
     duration_drift_pct: float = 2.0

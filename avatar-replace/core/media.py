@@ -78,6 +78,16 @@ def concat(parts: list[Path], dst: Path) -> None:
     _run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy", str(dst)])
 
 
+def closest_ratio(width: int, height: int) -> str:
+    """源片宽高比 → Seedance 合法 ratio 档位。多参考图模式 adaptive 不跟随参考图
+    （2026-07-14 实锤出 960x960），必须显式传。"""
+    import math
+    options = {"16:9": 16 / 9, "4:3": 4 / 3, "1:1": 1.0,
+               "3:4": 3 / 4, "9:16": 9 / 16}
+    target = width / height
+    return min(options, key=lambda k: abs(math.log(options[k] / target)))
+
+
 def trim(src: Path, dst: Path, duration: float) -> None:
     """截取开头 duration 秒（重编码保精确；-an：音轨最终整条铺回原片）"""
     _run(["ffmpeg", "-y", "-i", str(src), "-t", f"{duration:.3f}", "-an",

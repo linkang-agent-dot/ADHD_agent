@@ -23,8 +23,18 @@ class Provider(ABC):
         输入只有 CG 图与文本，天然过真人风控；产出段由 replace 裁齐时长。"""
 
     @abstractmethod
+    def generate_ref_clip(self, prompt: str, ref_images: list[Path],
+                          out_path: Path, ratio: str | None = None) -> Path:
+        """多参考图生视频（2026-07-14 定版主路径）：人物形象图+场景图作
+        reference_image + 分镜脚本，Seedance 自主成镜。输入仅 CG 图与中性文本。"""
+
+    @abstractmethod
     def edit_image(self, prompt: str, image_path: Path, out_path: Path) -> Path:
         """图生图（Seedream i2i）：给数字人形象图换装/调体态，输入仅 CG 图。"""
+
+    @abstractmethod
+    def generate_image(self, prompt: str, out_path: Path) -> Path:
+        """文生图（Seedream t2i）：生成空镜头场景参考图等，无图片输入。"""
 
 
 class FakeProvider(Provider):
@@ -38,6 +48,7 @@ class FakeProvider(Provider):
         self.edit_calls: list[str] = []
         self.clip_calls: list[str] = []
         self.image_calls: list[str] = []
+        self.ref_counts: list[int] = []
 
     def chat_vision(self, prompt, image_paths):
         self.vision_calls.append(prompt)
@@ -61,5 +72,23 @@ class FakeProvider(Provider):
     def edit_image(self, prompt, image_path, out_path):
         self.image_calls.append(prompt)
         import shutil
-        shutil.copy(image_path, out_path)
+        from pathlib import Path as _P
+        if _P(image_path).resolve() != _P(out_path).resolve():  # 卡通化是原地覆盖
+            shutil.copy(image_path, out_path)
+        return out_path
+
+    def generate_image(self, prompt, out_path, size=None):
+        self.image_calls.append(prompt)
+        out_path.write_bytes(b"\xff\xd8fake-scene")
+        return out_path
+
+    def generate_ref_clip(self, prompt, ref_images, out_path, ratio=None):
+        self.clip_calls.append(prompt)
+        self.ref_counts.append(len(ref_images))
+        self.ratios = getattr(self, "ratios", []) + [ratio]
+        import subprocess
+        subprocess.run(
+            ["ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=white:s=320x240:r=24:d=5",
+             "-c:v", "libx264", "-pix_fmt", "yuv420p", str(out_path)],
+            check=True, capture_output=True)
         return out_path
