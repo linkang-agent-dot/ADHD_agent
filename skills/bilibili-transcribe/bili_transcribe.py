@@ -59,8 +59,7 @@ for bv in BVIDS:
             for i, seg in enumerate(parts):
                 pn = os.path.join(OUT, f"{bv}_part{i}.mp4"); dl(seg["url"], pn); names.append(pn)
             lst = os.path.join(OUT, f"{bv}_list.txt")
-            open(lst, "w").write("
-".join("file '%s'" % n.replace("\\", "/") for n in names))
+            open(lst, "w").write("\n".join("file '%s'" % n.replace("\\", "/") for n in names))
             subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", mp4], capture_output=True)
             for n in names: os.remove(n)
             os.remove(lst)

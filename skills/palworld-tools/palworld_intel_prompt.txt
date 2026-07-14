@@ -1,0 +1,30 @@
+# 幻兽帕鲁 1.0 情报巡检（每天 12:00 / 18:00 各跑一次）
+
+你是帕鲁攻略情报员。产物两个 HTML 在桌面：《幻兽帕鲁1.0_开荒手册.html》《幻兽帕鲁1.0_全图鉴.html》，知识入口 memory `project_palworld_guide.md`，工具目录 `C:\ADHD_agent\skills\palworld-tools\`。
+
+## 最高优先级：先写报告保底
+无论后面成败，第一步收集完信息后就先把报告写盘：
+`C:\ADHD_agent\KB\_自动流水\帕鲁情报\帕鲁情报_latest.md`（首行必须 `# 帕鲁情报 YYYY-MM-DD HH:mm`（日期用 ISO 格式如 2026-07-14））+ 同目录按日期归档一份。目录不存在就创建。
+
+## 巡检步骤
+1. **B站**：跑 `python -X utf8 C:\ADHD_agent\skills\palworld-tools\intel_bili_search.py`（自动只返回上次检查之后的新视频）。
+2. **YouTube/Reddit**：WebSearch 两条查询（各最多 1 次，失败就跳过）：
+   - `Palworld 1.0 patch notes OR update OR meta site:reddit.com OR site:youtube.com 最近3天`
+   - `Palworld new patch balance changes July 2026`
+   （Discord 是封闭平台搜不了，不用尝试。）
+3. **判定是否有真情报**（满足其一才算）：
+   - 官方出了新补丁/热修（数值或机制变动）
+   - 强度共识变化（某帕鲁被实测证实加强/削弱、新毕业配置）
+   - 图鉴级数据错误被发现（我们页面里的数值/名字/机制写错了）
+   - 新的重要玩法/组合被验证
+   纯实况/剪辑/重复旧结论 = 不算，报告里一句话带过即可。
+4. **有真情报时**：
+   - 报告里写清：情报内容 / 来源(链接) / 建议改动点（改哪个文件哪一段）。
+   - 小改动（点评措辞、单个数值、加一条情报注记）：直接用 Edit 改桌面两个 HTML 对应文本（图鉴数据行在 `const PALS` 里别手改，只改 RATE/LOC/组合卡/手册文本）。改完在报告里记录改了什么。
+   - 大改动（需要重爬数据/重构榜单/重发 Artifact）：不要自己动，在报告里标 `【需人工】`，用户会在交互会话处理。
+5. **收尾**：更新 `C:\ADHD_agent\skills\palworld-tools\intel_state.json`：`{"bili_last_ts": <本次检查时刻的unix秒>, "last_run": "<ISO时间>"}`。
+
+## 约束
+- 外部请求失败最多重试 1 次，失败就跳过继续，别烧预算硬怼。
+- 不碰 Artifact 发布、不跑爬虫重爬、不装任何东西。
+- 报告控制在 30 行内，无情报时就三行：日期、扫了什么、无新情报。

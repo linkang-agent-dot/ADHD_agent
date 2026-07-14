@@ -90,3 +90,18 @@ tags: [kind/方法论, domain/前端, proj/X3, year/2026-06]
 - 结构知识（仍有效）：`Prefab/Button/UIBtnPurchase.prefab` 根(默认296×100) > `UIBtnCurrency`(0×0拉伸铺满,click监听挂这,UIBtnPurchase.cs L34) > `bg`(0×0拉伸铺满,raycastTarget=1透明层) + `Integral/Bg`(可见金按钮234×68)。正常态热区=296×100 vs 可见234×68(宽26%高47%边距)——这是全游戏一致的设计余量,**别当BUG修**。
 - （已回退的临时方案备查）曾给实例 `UIBtnCurrency/bg`(fileID `3227258876961698653`,guid `025111334bf68a74193e621ab963db8a`)加 override sizeDelta(-62,-32)收缩到可见区——治标未中真因,已被居中修复取代(弹窗UIActvLoginChoice两键的同款override仍留在dev_festival,无害)。
 - ⚠️连带教训：`C:\x3-project` 是多会话共用仓,**commit前必须现查 `git branch --show-current`**（这次editing与commit间隔中分支被另一会话切到 feature/wc-sf-emote-chest-icon,提交落错分支,靠 `git reset --keep HEAD~1` 摘回+worktree移植）。
+
+### X3 活动入口路由三级机制（2026-07-14 手册推广案沉淀·纯配置定入口）
+活动「出现在哪个 HUD」由 ActvOnline 两个字段决定，**不用改客户端代码**：
+1. **默认（c15 MainEntrance 空/0 + c38 GroupId 空）**：只进酒馆活动队列（UIActivityNewQueue）。
+2. **c15 MainEntrance=1/2**：主城左侧独立入口（UIMainLeftPart.cs:579-599）。1=进入口列表（有红点才显示项）；2=常驻入口（要求活动可打开，如武道挑战 104401/许愿池 102601）。
+3. **c38 GroupId=组号**：聚合进 ActvGroup 组入口（表 `ActvOnline__ActvGroup.tsv`：组名 TXT_ActvGroup_MainEntranceName_{ID} + 入口图标 + 顶底边框/页签/退出键全套 DK，现有 100 酒馆福利~143 马戏巡游 40+ 组）——组内活动成页签，一个主城图标承载多活动。
+- 选型经验：常驻单活动→MainEntrance=2；同主题多活动→挂现成组或建新组（建组=一行配置+一套 DK）；组入口在「任一组内活动开启」期间显示。
+- ⚠️ 冒烟点：非常见 ActvType 首次走 MainEntrance=2 或新组，dev 起服点一次验路由（type27+MainEntrance=2 无先例）。
+
+### 共享 prefab 多主题换皮 = 视觉件 DK 化 + 空值 fallback（2026-07-14 手册家族案）
+一个活动类型多期/多主题共用同一 prefab 时（如 ActvType27 三本养成手册共用 UIActvLogin），别复制 prefab——把**主题视觉件改成运行时读 ActvOnline 的 DK 字段**：
+- 排查法：grep 界面 .cs 有无 `SetImageWithDisplayKey`/DK 读取——全无 = 视觉件 prefab 焊死，共用必撞脸（UIActvLogin 实例：banner/面板/宝箱/日历格全焊死）。
+- 改法：能复用现成字段先复用（c22 ActvImg=背景、c21 ActvIcon=页签图标、c30 CalendarBg），缺的加新 DK 列（proto 尾部加 tag，Pack2/FinalReward 先例）；OnShown 里 `SetImageWithDisplayKey(img, cfg.XXX)`，**空值 fallback 保留 prefab 原 sprite**（老活动不配新字段=零回归）。
+- 取舍：中性小件（日历格/按钮）不换省美术；只 DK 化「定调三大件」（banner/主面板/主视觉）。
+- 收益：代码只写一次替换逻辑，之后每期新主题=纯配置填 DK key。

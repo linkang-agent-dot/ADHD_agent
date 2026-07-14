@@ -10,6 +10,14 @@ SECS = [
     ("活动背景（v1 QA过筛+v2 道具锚重做·待终选）", "活动背景", None),
 ]
 NOTES = {
+    "img_card_image_81.png": "纪念卡卡面·欢乐颂歌(补漏)",
+    "icon_global_circustitle.png": "头衔道具图标(补漏)",
+    "circus_icon_title.png": "铭牌大图(补漏)",
+    "Img_Player_AvatarFrame_circus.png": "头像框·欢庆之环(补漏·配置已修BP残留)",
+    "img_Activity_circus_tavern_icon.png": "酒馆HUD图标(反查补)",
+    "img_Activity_circus_exchange_icon.png": "兑换HUD图标(反查补)",
+    "icon_global_circus_invitation.png": "邀请函道具图标(反查补)",
+    "img_Activity_circus_wishpool_bg.png": "许愿池活动bg(反查补)",
     "img_Activity_circus_schedule_bg.png": "v1 ❌藏宝图残留→已被 v2 替代", "img_Activity_circus_schedule_bg_v2.png": "v2 道具锚重做 ✔候选",
     "img_Activity_circus_bp_bg.png": "v1 ❌罗盘残留→已被 v2 替代", "img_Activity_circus_bp_bg_cand1.png": "v1备选 ❌罗盘",
     "img_Activity_circus_bp_bg_v2.png": "v2 道具锚重做 ✔候选",

@@ -1,7 +1,7 @@
 {
   "agent:main:main": {
-    "sessionId": "554b92f3-75f5-4195-a688-39d1669663d2",
-    "updatedAt": 1783936135772,
+    "sessionId": "4bbff5d1-2f1e-44a2-9182-04dbbf63a27b",
+    "updatedAt": 1784021900831,
     "deliveryContext": {
       "to": "user:ou_e48f6c4c0395f45b74b51525f348678b"
     },
@@ -565,14 +565,14 @@
       ],
       "version": 0
     },
-    "sessionFile": "C:\\ADHD_agent\\openclaw\\agents\\main\\sessions\\554b92f3-75f5-4195-a688-39d1669663d2.jsonl",
+    "sessionFile": "C:\\ADHD_agent\\openclaw\\agents\\main\\sessions\\4bbff5d1-2f1e-44a2-9182-04dbbf63a27b.jsonl",
     "modelProvider": "minimax",
     "model": "MiniMax-M2.7",
     "abortedLastRun": false,
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1783936128265,
-      "sessionId": "554b92f3-75f5-4195-a688-39d1669663d2",
+      "generatedAt": 1784021894469,
+      "sessionId": "4bbff5d1-2f1e-44a2-9182-04dbbf63a27b",
       "sessionKey": "agent:main:main",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -591,9 +591,9 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 50753,
+        "chars": 50729,
         "projectContextChars": 16826,
-        "nonProjectContextChars": 33927
+        "nonProjectContextChars": 33903
       },
       "injectedWorkspaceFiles": [
         {
@@ -1092,10 +1092,7 @@
       "label": "user:ou_e48f6c4c0395f45b74b51525f348678b",
       "provider": "heartbeat",
       "from": "user:ou_e48f6c4c0395f45b74b51525f348678b",
-      "to": "user:ou_e48f6c4c0395f45b74b51525f348678b",
-      "surface": "feishu",
-      "chatType": "direct",
-      "accountId": "main"
+      "to": "user:ou_e48f6c4c0395f45b74b51525f348678b"
     },
     "totalTokensFresh": false,
     "compactionCount": 0,
@@ -7879,8 +7876,8 @@
     "contextTokens": 131072
   },
   "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810": {
-    "sessionId": "d0a150b8-73be-4b0f-a8b1-3dbce1d6f2db",
-    "updatedAt": 1783912738247,
+    "sessionId": "22e0a76a-b9c7-4b0e-a5bd-750a9b2f7f38",
+    "updatedAt": 1783998000017,
     "systemSent": true,
     "label": "Cron: 旅游攻略汇总推送",
     "skillsSnapshot": {
@@ -8287,8 +8284,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1783912727878,
-      "sessionId": "d0a150b8-73be-4b0f-a8b1-3dbce1d6f2db",
+      "generatedAt": 1783998000126,
+      "sessionId": "22e0a76a-b9c7-4b0e-a5bd-750a9b2f7f38",
       "sessionKey": "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -8307,9 +8304,9 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 37741,
-        "projectContextChars": 12947,
-        "nonProjectContextChars": 24794
+        "chars": 37615,
+        "projectContextChars": 12920,
+        "nonProjectContextChars": 24695
       },
       "injectedWorkspaceFiles": [
         {
@@ -8499,8 +8496,8 @@
         ]
       },
       "tools": {
-        "listChars": 3799,
-        "schemaChars": 24693,
+        "listChars": 4259,
+        "schemaChars": 27668,
         "entries": [
           {
             "name": "read",
@@ -8545,9 +8542,21 @@
             "propertiesCount": 18
           },
           {
+            "name": "nodes",
+            "summaryChars": 122,
+            "schemaChars": 1800,
+            "propertiesCount": 37
+          },
+          {
+            "name": "cron",
+            "summaryChars": 2689,
+            "schemaChars": 690,
+            "propertiesCount": 13
+          },
+          {
             "name": "message",
             "summaryChars": 130,
-            "schemaChars": 5025,
+            "schemaChars": 5013,
             "propertiesCount": 94
           },
           {
@@ -8555,6 +8564,12 @@
             "summaryChars": 152,
             "schemaChars": 223,
             "propertiesCount": 2
+          },
+          {
+            "name": "gateway",
+            "summaryChars": 464,
+            "schemaChars": 497,
+            "propertiesCount": 12
           },
           {
             "name": "agents_list",
@@ -8735,15 +8750,11 @@
     "inputTokens": 43984,
     "outputTokens": 1255,
     "cacheRead": 305747,
-    "cacheWrite": 0,
-    "deliveryContext": {
-      "to": "heartbeat"
-    },
-    "lastTo": "heartbeat"
+    "cacheWrite": 0
   },
   "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc": {
-    "sessionId": "0b7132c8-ea89-49f9-8ae9-1a18dfd74302",
-    "updatedAt": 1783912200232,
+    "sessionId": "5c0f9664-8bd3-44bd-b4c7-99fb6e116660",
+    "updatedAt": 1783998603594,
     "systemSent": true,
     "label": "Cron: 国际机票推送",
     "skillsSnapshot": {
@@ -9161,8 +9172,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1783912200306,
-      "sessionId": "0b7132c8-ea89-49f9-8ae9-1a18dfd74302",
+      "generatedAt": 1783998603694,
+      "sessionId": "5c0f9664-8bd3-44bd-b4c7-99fb6e116660",
       "sessionKey": "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -9181,8 +9192,8 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 37894,
-        "projectContextChars": 12944,
+        "chars": 37870,
+        "projectContextChars": 12920,
         "nonProjectContextChars": 24950
       },
       "injectedWorkspaceFiles": [
@@ -9635,8 +9646,8 @@
     "totalTokens": 23013
   },
   "agent:main:cron:rules-refresh-daily": {
-    "sessionId": "4a502d5b-fb28-4616-8f58-23ea238b80c2",
-    "updatedAt": 1783904400028,
+    "sessionId": "ca9e4122-366a-4e97-9c56-89a889bc87cb",
+    "updatedAt": 1783990800030,
     "systemSent": true,
     "label": "Cron: Cursor协作规则刷新",
     "skillsSnapshot": {
@@ -10098,8 +10109,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1783904400114,
-      "sessionId": "4a502d5b-fb28-4616-8f58-23ea238b80c2",
+      "generatedAt": 1783990800107,
+      "sessionId": "ca9e4122-366a-4e97-9c56-89a889bc87cb",
       "sessionKey": "agent:main:cron:rules-refresh-daily",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -10118,8 +10129,8 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 39645,
-        "projectContextChars": 12944,
+        "chars": 39621,
+        "projectContextChars": 12920,
         "nonProjectContextChars": 26701
       },
       "injectedWorkspaceFiles": [
@@ -10578,9 +10589,9 @@
     "cacheRead": 0,
     "cacheWrite": 0
   },
-  "agent:main:cron:rules-refresh-daily:run:4a502d5b-fb28-4616-8f58-23ea238b80c2": {
-    "sessionId": "4a502d5b-fb28-4616-8f58-23ea238b80c2",
-    "updatedAt": 1783904400028,
+  "agent:main:cron:rules-refresh-daily:run:ca9e4122-366a-4e97-9c56-89a889bc87cb": {
+    "sessionId": "ca9e4122-366a-4e97-9c56-89a889bc87cb",
+    "updatedAt": 1783990800030,
     "systemSent": true,
     "label": "Cron: Cursor协作规则刷新",
     "skillsSnapshot": {
@@ -11042,8 +11053,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1783904400114,
-      "sessionId": "4a502d5b-fb28-4616-8f58-23ea238b80c2",
+      "generatedAt": 1783990800107,
+      "sessionId": "ca9e4122-366a-4e97-9c56-89a889bc87cb",
       "sessionKey": "agent:main:cron:rules-refresh-daily",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -11062,8 +11073,8 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 39645,
-        "projectContextChars": 12944,
+        "chars": 39621,
+        "projectContextChars": 12920,
         "nonProjectContextChars": 26701
       },
       "injectedWorkspaceFiles": [
@@ -11522,9 +11533,9 @@
     "cacheRead": 0,
     "cacheWrite": 0
   },
-  "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810:run:d0a150b8-73be-4b0f-a8b1-3dbce1d6f2db": {
-    "sessionId": "d0a150b8-73be-4b0f-a8b1-3dbce1d6f2db",
-    "updatedAt": 1783911600017,
+  "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810:run:22e0a76a-b9c7-4b0e-a5bd-750a9b2f7f38": {
+    "sessionId": "22e0a76a-b9c7-4b0e-a5bd-750a9b2f7f38",
+    "updatedAt": 1783998000017,
     "systemSent": true,
     "label": "Cron: 旅游攻略汇总推送",
     "skillsSnapshot": {
@@ -11931,8 +11942,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1783911600100,
-      "sessionId": "d0a150b8-73be-4b0f-a8b1-3dbce1d6f2db",
+      "generatedAt": 1783998000126,
+      "sessionId": "22e0a76a-b9c7-4b0e-a5bd-750a9b2f7f38",
       "sessionKey": "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -11951,8 +11962,8 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 37639,
-        "projectContextChars": 12944,
+        "chars": 37615,
+        "projectContextChars": 12920,
         "nonProjectContextChars": 24695
       },
       "injectedWorkspaceFiles": [
@@ -12399,9 +12410,9 @@
     "cacheRead": 305747,
     "cacheWrite": 0
   },
-  "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc:run:0b7132c8-ea89-49f9-8ae9-1a18dfd74302": {
-    "sessionId": "0b7132c8-ea89-49f9-8ae9-1a18dfd74302",
-    "updatedAt": 1783912200232,
+  "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc:run:5c0f9664-8bd3-44bd-b4c7-99fb6e116660": {
+    "sessionId": "5c0f9664-8bd3-44bd-b4c7-99fb6e116660",
+    "updatedAt": 1783998603594,
     "systemSent": true,
     "label": "Cron: 国际机票推送",
     "skillsSnapshot": {
@@ -12819,8 +12830,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1783912200306,
-      "sessionId": "0b7132c8-ea89-49f9-8ae9-1a18dfd74302",
+      "generatedAt": 1783998603694,
+      "sessionId": "5c0f9664-8bd3-44bd-b4c7-99fb6e116660",
       "sessionKey": "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -12839,8 +12850,8 @@
         "sandboxed": false
       },
       "systemPrompt": {
-        "chars": 37894,
-        "projectContextChars": 12944,
+        "chars": 37870,
+        "projectContextChars": 12920,
         "nonProjectContextChars": 24950
       },
       "injectedWorkspaceFiles": [
