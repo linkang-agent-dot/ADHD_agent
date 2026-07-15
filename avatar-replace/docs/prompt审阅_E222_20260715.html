@@ -1,0 +1,217 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>E222 t2v Prompt 审阅</title>
+<style>
+:root{--bg:#f6f7f9;--fg:#1c2127;--card:#fff;--line:#e3e6ea;--muted:#8b95a1;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.7 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif;padding:24px;max-width:1000px;margin:0 auto}
+h1{font-size:22px;margin:0 0 4px}
+.sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+.meta{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+.meta h2{font-size:14px;margin:0 0 8px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.kv{margin:6px 0}.kv b{color:var(--muted);font-weight:600;margin-right:6px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;margin:10px 0 0}
+.legend span{padding:2px 8px;border-radius:5px}
+.pfx-b{background:#eef4ff;color:#3a63b8}.body-b{background:#eafaf0;color:#1f8a4c}
+.sfx-b{background:#fff4e6;color:#b5701c}.extra-b{background:#fdeaf0;color:#c1417a}
+table{border-collapse:collapse;width:100%;font-size:13px;margin-top:8px}
+td{border:1px solid var(--line);padding:6px 9px;vertical-align:top}
+td:first-child{color:var(--muted);white-space:nowrap;font-weight:600}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:12px;border-left:4px solid var(--line)}
+.card.redo{border-left-color:#d9822b}.card.keep{border-left-color:#8b95a1}.card.ok{border-left-color:#2e9e5b}
+.chead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.cid{font-size:20px;font-weight:800;background:#1c2127;color:#fff;width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.dur{font-size:13px;color:var(--muted);font-weight:600}
+.ctag{font-size:13px;font-weight:600}
+.cstat{font-size:12px;color:#fff;padding:2px 9px;border-radius:20px;font-weight:600}
+.charlen{margin-left:auto;font-size:12px;color:var(--muted)}
+.prompt{font-size:14.5px;line-height:1.85}
+.seg{border-radius:3px;padding:1px 2px}
+.seg.pfx{background:#eef4ff}.seg.body{background:#eafaf0}.seg.sfx{background:#fff4e6}.seg.extra{background:#fdeaf0;font-weight:600}
+</style></head><body>
+<h1>E222 t2v Prompt 审阅（16 条）</h1>
+<div class="sub">生成时间 2026-07-15 · 来源 prompts/t2v_E222.json · 展示的是实际发给 Seedance 的完整 prompt（prefix+分镜+suffix+extra）</div>
+
+<div class="meta">
+  <h2>全局参数（每条都带）</h2>
+  <div class="kv"><b>模型</b>doubao-seedance-2-0-mini · 720p · 9:16 · generate_audio 同步语音 · duration 按原片 clamp[4,15]</div>
+  <div class="kv"><b>参考图</b>refs/product_bra_front.png（正）+ product_bra_back.png（背），role=reference_image</div>
+  <div class="kv"><b>prefix</b><span class="pfx-b">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span></div>
+  <div class="kv"><b>suffix</b><span class="sfx-b">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span></div>
+  <div class="legend"><span class="pfx-b">prefix 全局前缀</span><span class="body-b">分镜台词（逐条）</span><span class="sfx-b">suffix 全局造型/肩带</span><span class="extra-b">extra 逐条覆盖（主体色）</span></div>
+</div>
+
+<div class="meta">
+  <h2>颜色映射（对着原片扫定·权威色卡）</h2>
+  <table><tr><td>说明</td><td>原片内衣本体=粉底肤色(裸肤贴肤色),绝无浅绿;浅绿是t2v的AI漂色bug只在14出现。细肩带一律粉底肤色(隐形卖点,全局suffix已定)。主体色逐条不同,别一刀切:</td></tr><tr><td>粉底肤色主体(直接露出内衣)</td><td>03/05/09/11/15 → clip.extra 覆盖为粉底肤色</td></tr><tr><td>米白/白主体(不同款)</td><td>14(象牙白透薄款,禁绿)/16(偏白隐形) → 用suffix默认米白</td></tr><tr><td>内衣被外衣盖只露肩带</td><td>06/08/12 → 本体不展示,肩带贴肤色即可</td></tr><tr><td>产品盒/手持粉色产品</td><td>10手持粉色内衣产品/07字幕粉底 → 人物着装照原片,不改本体</td></tr><tr><td>无内衣本体(keeper)</td><td>01(仅第4秒肩带)/02/04/13</td></tr></table>
+</div>
+
+<div class="meta">
+  <h2>图例</h2>
+  <div class="kv"><b>待重出</b>主体色/肩带上版没对上，需重跑（橙）：03 / 05 / 14 / 15</div>
+  <div class="kv"><b>上版已OK</b>抽帧验过匹配（绿）</div>
+  <div class="kv"><b>keeper</b>无内衣本体展示，不受影响不重出（灰）</div>
+</div>
+
+
+    <div class="card keep">
+      <div class="chead">
+        <span class="cid">01</span>
+        <span class="dur">11s</span>
+        <span class="ctag">keeper·仅第4秒肤色肩带</span>
+        <span class="cstat" style="background:#8b95a1">keeper·不重出</span>
+        <span class="charlen">489字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：教室（绿色黑板、墙上挂红色锦旗、浅木色课桌、桌上粉色保温杯）。人物：两个女生同桌，均穿白色紧身短袖T恤，一个高丸子头配蓝白校服运动裤、一个披发配灰色百褶裙。分镜与台词：开头两人并排坐课桌前（侧后方机位），披发女生凑近另一人耳边捂嘴小声说「你的内衣都露出来了，你妈妈没给你买粉底液内衣吗」；第4秒左右镜头给到丸子头女生的肩部特写，她白色T恤的肩线处露出一条粉底肤色（贴近肤色）细肩带；中段两人面对面，另一人疑惑反问「啥是粉底液内衣啊」；结尾说话女生伸手拉了拉自己肩头衣领展示，说「就是像我这种啊，你看，穿在衣服里面一点痕迹都没有」。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span></div>
+    </div>
+    <div class="card keep">
+      <div class="chead">
+        <span class="cid">02</span>
+        <span class="dur">5s</span>
+        <span class="ctag">keeper·妈妈+产品空镜</span>
+        <span class="cstat" style="background:#8b95a1">keeper·不重出</span>
+        <span class="charlen">410字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：现代公寓客厅（黑色皮沙发、木饰面墙、米色地毯）。人物：一位女性（妈妈人设，长发+黑色发箍+珍珠耳环，白色泡泡袖蕾丝上衣+黑色阔腿裤）。分镜与台词：开头她坐在黑色沙发上手拿一件白色内衣产品对镜头讲解，说「你看你女儿身上闷的全是汗，你怎么不给你女儿买这种超薄的」；中段镜头转产品上身背面展示；结尾切棚拍产品空镜——一只手提金色衣架、挂着米白色吊带背心式内衣，背景米色懒人沙发。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span></div>
+    </div>
+    <div class="card redo">
+      <div class="chead">
+        <span class="cid">03</span>
+        <span class="dur">4s</span>
+        <span class="ctag">粉底肤色（裸肤无痕）</span>
+        <span class="cstat" style="background:#d9822b">待重出</span>
+        <span class="charlen">437字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：奶白色居家房间（墙挂卡通挂画、桌上泰迪熊和菠萝抱枕、蓝色罐子）。人物：一个高马尾女生，穿粉底肤色（贴近肤色的裸色）无痕背心式内衣配灰色百褶裙，背对镜头。分镜与台词：她背对镜头站立，先单手别到背后在后背处比划按压，随后双手叉腰，配画外音女声「这是让女儿体育课都焊在身上的内衣」。固定机位近景。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span><span class="seg extra">特别说明：本条内衣整体为粉底肤色（贴近肤色的裸色、与皮肤几乎融为一体的无痕款），覆盖前述米白色描述、以粉底肤色为准；细肩带同为粉底肤色。</span></div>
+    </div>
+    <div class="card keep">
+      <div class="chead">
+        <span class="cid">04</span>
+        <span class="dur">8s</span>
+        <span class="ctag">keeper·长袖</span>
+        <span class="cstat" style="background:#8b95a1">keeper·不重出</span>
+        <span class="charlen">433字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：前段衣帽间（金边玻璃门衣柜）、后段窗帘房间。人物：一个双麻花辫女生（粉色发绳）+一位女性（妈妈人设，长发+珍珠项链+金黄色缎面短袖连衣裙）。分镜与台词：开头女生穿米白色星星碎花长袖上衣+白色草莓纱裙正面对镜头摆姿势、转身；中段切窗帘房，女生换白色娃娃领连衣裙背对镜头，妈妈面向镜头翻开她后领口展示领标，说「我还是头一回给女儿买了这么隐形的内衣」；结尾镜头推近后背，妈妈手指点按后背面料，说「你找得到一点内衣的痕迹吗」。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span></div>
+    </div>
+    <div class="card redo">
+      <div class="chead">
+        <span class="cid">05</span>
+        <span class="dur">4s</span>
+        <span class="ctag">粉底肤色（裸肤无痕）</span>
+        <span class="cstat" style="background:#d9822b">待重出</span>
+        <span class="charlen">450字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：高层公寓落地窗前（窗外城市俯瞰景）+粉色瑜伽垫。人物：一个高马尾女生，穿粉底肤色（贴近肤色的裸色）无痕背心式内衣配藏青色运动短裤（白色侧条纹），背对镜头。分镜与台词：她背对镜头盘坐在粉色瑜伽垫上做拉伸操——双手抱后颈、双臂高举过头、双臂向两侧平展，配画外音女声「这是让女儿体育课都焊在身上的内衣」。固定机位背面全景。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span><span class="seg extra">特别说明：本条内衣整体为粉底肤色（贴近肤色的裸色、与皮肤几乎融为一体的无痕款），覆盖前述米白色描述、以粉底肤色为准；细肩带同为粉底肤色。</span></div>
+    </div>
+    <div class="card ok">
+      <div class="chead">
+        <span class="cid">06</span>
+        <span class="dur">7s</span>
+        <span class="ctag">内衣被裙盖·肤色肩带</span>
+        <span class="cstat" style="background:#2e9e5b">上版已OK</span>
+        <span class="charlen">413字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：豪车副驾（红色真皮内饰、保时捷头枕、白色鳄鱼纹手提包）。人物：一个长发女生（头顶架白色墨镜，浅蓝白条纹吊带连衣裙）+驾驶座一位女性（妈妈人设，短发+珍珠项链+粉色泡泡袖连衣裙）。分镜与台词：开头女生坐副驾对镜头说「你给我买的内衣好隐形，好凉快啊」；中段她抬手碰肩带位置，说「穿裙子露出来都不会尴尬了」；结尾镜头切到驾驶座女性，双手捧粉色产品盒对镜头说「是吧，妈妈又给你买两件」。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span></div>
+    </div>
+    <div class="card ok">
+      <div class="chead">
+        <span class="cid">07</span>
+        <span class="dur">13s</span>
+        <span class="ctag">白色运动背心（照原片）</span>
+        <span class="cstat" style="background:#2e9e5b">上版已OK</span>
+        <span class="charlen">433字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：室内羽毛球馆（蓝色场地、羽毛球网、后景多人打球）。人物：两个女生各持羽毛球拍，均梳麻花辫，右边配粉色发绳；左边白色运动背心+黑边+白色运动短裤，右边白色运动背心+粉色运动短裤。分镜与台词：开头右边女生转向镜头说「哎同学，你们现在都不穿内衣的吗」；中段两人并排对话，另一女生说「我们穿了呀，我们穿的是吊带也能穿的细肩带内衣」；结尾镜头推近右边女生，她说「冰冰凉凉的可舒服了呢，还是粉底液的颜色，不用担心会有内衣痕迹哦」。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span></div>
+    </div>
+    <div class="card ok">
+      <div class="chead">
+        <span class="cid">08</span>
+        <span class="dur">8s</span>
+        <span class="ctag">内衣被裙盖·肤色肩带</span>
+        <span class="cstat" style="background:#2e9e5b">上版已OK</span>
+        <span class="charlen">385字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：商场室内热气球美陈打卡区（人造草坪+彩色热气球装置、后景逛街人群）。人物：一个双麻花辫女生，穿白色荷叶边镂空吊带连衣裙。分镜与台词：开头她正面对镜头抬手比划，说「你出门逛街都不穿内衣啊」；中段近景回应「我穿了呀，我穿的是这种，穿吊带也能穿的细肩带内衣」，抬手拉吊带肩部；结尾双手在肩部两侧比划，说「你们看，是不是很隐形」。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span></div>
+    </div>
+    <div class="card ok">
+      <div class="chead">
+        <span class="cid">09</span>
+        <span class="dur">5s</span>
+        <span class="ctag">粉底肤色</span>
+        <span class="cstat" style="background:#2e9e5b">上版已OK</span>
+        <span class="charlen">420字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：欧式白色玻璃门门口（门外砖墙庭院/绿植）。人物：一个高马尾女生，穿白色镂空钩花长袖罩衫（流苏下摆）+深灰色短裙，内搭内衣。分镜与台词：开头她侧身站门边手扶门把、转头看镜头说「哎，出去玩怎么不穿内衣啊」；中段转正面说「我穿了呀，超薄凉感隐形内衣」；结尾她双手掀起镂空罩衫下摆、露出内搭内衣自证穿了。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span><span class="seg extra">特别说明：本条中该内衣整体颜色为粉底肤色（贴近肤色的裸色），覆盖前述米白色描述、以粉底肤色为准。</span></div>
+    </div>
+    <div class="card ok">
+      <div class="chead">
+        <span class="cid">10</span>
+        <span class="dur">11s</span>
+        <span class="ctag">着装+手持粉色产品</span>
+        <span class="cstat" style="background:#2e9e5b">上版已OK</span>
+        <span class="charlen">408字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：商场中庭喷泉/青花瓷风格花艺美陈（有人手持毛球采访话筒做街采）。人物：一个女生，穿米白色吊带娃娃衫、戴项链和白色手表，手持一件粉色内衣产品。分镜与台词：开头她举着粉色内衣对镜头说「我们舞蹈班同学早就不穿这种粗肩带的小背心了」；中段近景讲解「吊带裙也可以穿的细肩带粉底液内衣」；结尾镜头切她背面走动展示上身背部，说「一点内衣痕迹都没有」，再切回正面说「夏天穿可舒服了」。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span></div>
+    </div>
+    <div class="card ok">
+      <div class="chead">
+        <span class="cid">11</span>
+        <span class="dur">4s</span>
+        <span class="ctag">粉底肤色</span>
+        <span class="cstat" style="background:#2e9e5b">上版已OK</span>
+        <span class="charlen">412字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：明亮阳台/落地窗前（舞蹈把杆、白窗帘、绿植）。人物：左边一位女性（妈妈人设，白色青蛙印花T恤+粉色裤）+右边一个高马尾女生（米白色镂空罩衫+白色纱裙，内搭内衣）。分镜与台词：妈妈站着抬手指向右侧，女生双手掀起罩衫下摆露出内搭内衣，妈妈说「同学再也不会笑话她了」。单一固定镜头近景。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span><span class="seg extra">特别说明：本条中该内衣整体颜色为粉底肤色（贴近肤色的裸色），覆盖前述米白色描述、以粉底肤色为准。</span></div>
+    </div>
+    <div class="card ok">
+      <div class="chead">
+        <span class="cid">12</span>
+        <span class="dur">6s</span>
+        <span class="ctag">内衣被纱裙盖·肤色肩带</span>
+        <span class="cstat" style="background:#2e9e5b">上版已OK</span>
+        <span class="charlen">386字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：豪车副驾（红色真皮内饰、保时捷、白色鳄鱼纹手提包、粉色产品盒）。人物：一个高马尾女生（米白色吊带纱裙）+驾驶座一位女性（妈妈人设，黑色上衣）。分镜与台词：开头女生坐副驾转头看镜头说「你给我买的内衣好隐形」；中段她抬手碰肩带位置说「穿吊带也不会露出来」；结尾镜头切驾驶座女性拿起粉色产品盒对镜头说「是吧，妈妈又给你买了两件」。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span></div>
+    </div>
+    <div class="card keep">
+      <div class="chead">
+        <span class="cid">13</span>
+        <span class="dur">11s</span>
+        <span class="ctag">keeper·妈妈</span>
+        <span class="cstat" style="background:#8b95a1">keeper·不重出</span>
+        <span class="charlen">426字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：现代大平层客厅（水磨石地面、灰色沙发、熊猫抱枕、书架墙）。人物：一位女性（妈妈人设，长发+美甲，黑色背心+黑色阔腿裤）。分镜与台词：开头她站着手拿一件旧款内衣翻看，说「你自己看看这天气预报，你怎么还给闺女穿这种，又热又难看」；中段镜头推近肩部特写展示旧款粗肩带勒肩，随后她坐沙发拿起新款米白色内衣对镜头说「你看我给她买的这个」；结尾产品杯垫特写——手指按压展示透气孔，说「就连这杯垫上都是满满的透气孔」。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span></div>
+    </div>
+    <div class="card redo">
+      <div class="chead">
+        <span class="cid">14</span>
+        <span class="dur">7s</span>
+        <span class="ctag">米白（象牙白透薄款）·严禁绿色</span>
+        <span class="cstat" style="background:#d9822b">待重出</span>
+        <span class="charlen">528字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：明亮居家（木质衣柜、银色暴力熊摆件、老花坐墩）。人物：两位女性（一位蓝白条纹泡泡袖衬衫、一位黑色蕾丝发箍）+结尾一个高马尾女生（背对镜头，米白色无痕内衣配藏青色运动短裤，内衣的细肩带为粉底肤色）。分镜与台词：开头一位女性双手撑开一件米白色内衣对镜头展示轻薄透光，说「像纸一样薄」；中段另一位拎着产品抖动展示轻盈，说「像蒲公英一样轻」；结尾切内衣上身背面演示（高马尾女生背对镜头单手在后背比划、清晰露出后背两条粉底肤色细肩带与金属调节扣），配画外音「这跟没穿有什么区别」。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span><span class="seg extra">特别说明：本条内衣罩杯与身面为米白色、细肩带为粉底肤色（贴近肤色的裸色）；严禁出现薄荷绿、浅绿或任何绿色调，肩带务必是贴肤的裸色而非白色。</span></div>
+    </div>
+    <div class="card redo">
+      <div class="chead">
+        <span class="cid">15</span>
+        <span class="dur">15s</span>
+        <span class="ctag">粉底肤色+掀衣露出</span>
+        <span class="cstat" style="background:#d9822b">待重出</span>
+        <span class="charlen">540字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：前段欧式客厅（碎花沙发、木质酒柜）、后段玄关（红色木门）。人物：一个双麻花辫女生（花发夹）+一位女性（妈妈人设，米色针织短袖+发髻+苹果手表）。分镜与台词：开头女生穿白色透视镂空长袖上衣+牛仔短裤正面对镜头比划展示上衣轻薄、并掀起上衣下摆一角清晰露出里面那件粉底肤色（贴近肤色的裸色）无痕内衣、转身；中段切玄关，女生戴红色波点头巾+白色吊带娃娃衫+红波点裙、抱牛皮纸购物袋，妈妈拎纸袋上下打量说「怎么内衣都不穿呀」，女生答「妈妈我穿了呀」；结尾妈妈帮她理肩部、露出肩部那条粉底肤色细肩带，女生说「你看是不是很隐形，还给我买了这么多呢」。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span><span class="seg extra">特别说明：本条中该内衣整体颜色为粉底肤色（贴近肤色的裸色），覆盖前述米白色描述、以粉底肤色为准。</span></div>
+    </div>
+    <div class="card ok">
+      <div class="chead">
+        <span class="cid">16</span>
+        <span class="dur">9s</span>
+        <span class="ctag">米白（偏白隐形·suffix默认）</span>
+        <span class="cstat" style="background:#2e9e5b">上版已OK</span>
+        <span class="charlen">432字</span>
+      </div>
+      <div class="prompt"><span class="seg pfx">这是一个数字人带货视频，竖屏 9:16，真人实拍质感、自然光，出镜均为女性。画面中不出现任何字幕、标题或贴片文字，人物自然开口说话、配同步中文语音。</span><span class="seg body">场景：室内排球训练馆（蓝色场地、白色球网、后景多人训练打球）。人物：两个梳麻花辫的女生，右边高个白色运动背心+荧光绿撞色边+粉色短裙，左边矮个白色运动背心+粉色运动短裤。分镜与台词：开头两人背对镜头站球网前看场内，右边高个转身面向镜头说「你那个肩带都露出来了」；中段她面对镜头说「我穿内衣都穿习惯了，她不穿内衣我可不习惯」，边走边指着矮个女生；结尾镜头转到矮个女生，她拉了拉背心肩带位置说「我穿的是吊带也能穿的隐形内衣」。</span><span class="seg sfx">内衣款式统一为参考图那款细肩带背心式无痕内衣（罩杯与网面为米白色、V型压纹罩杯、透气网面；细肩带为粉底肤色即贴近肤色的裸色、带金属调节扣）；参考图1为该内衣正面款式、参考图2为背面款式，正反造型都以参考图为准。凡露肩、吊带或无袖的场景，人物肩部都要可见这条粉底肤色细肩带（贴近肤色、若隐若现）。</span></div>
+    </div>
+</body></html>

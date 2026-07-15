@@ -10,6 +10,39 @@ SECS = [
     ("活动背景（v1 QA过筛+v2 道具锚重做·待终选）", "活动背景", None),
 ]
 NOTES = {
+    "img_Activity_circus_island_start.png": "大富翁地块·巡游大门（起点格）",
+    "img_Activity_circus_island_lucky.png": "大富翁地块·彩球摊（幸运格）",
+    "img_Activity_circus_island_mystery.png": "大富翁地块·小丑迷阵（神秘格）",
+    "img_Activity_circus_island_treasure.png": "大富翁地块·魔术宝箱（宝藏格）",
+    "img_Activity_circus_island_diamond.png": "大富翁地块·钻石格",
+    "img_Activity_circus_hud_icon.png": "主hub入口图标（142马戏节）",
+    "img_Activity_icon_Monopoly_circus.png": "第二hub入口图标（143马戏巡游）",
+    "img_Activity_circus_box_icon.png": "福箱活动HUD图标",
+    "img_Activity_circus_fund_icon.png": "累充活动HUD图标",
+    "img_Activity_circus_bp_icon.png": "BP活动HUD图标（双BP共用）",
+    "img_Activity_circus_schedule_icon.png": "每日礼包活动HUD图标",
+    "img_Activity_circus_visit_icon.png": "拜访活动HUD图标",
+    "img_Activity_circus_wishpool_icon.png": "许愿池活动HUD图标",
+    "img_Activity_circus_puzzle.png": "拼图封面·小丑的梦境（切5x5）",
+    "img_Activity_circus_icon_decor.png": "装饰礼包页签图标",
+    "icon_island_Circus.png": "主城皮肤·梦幻旋转木马 2D头像图标",
+    "img_Activity_circus_visit_bg.png": "拜访活动bg·主图",
+    "img_Activity_circus_weekcard_bg.png": "周卡活动bg",
+    "img_Activity_circus_tavern_bg_1.png": "酒馆活动bg·候选1（QA视觉推荐）",
+    "img_Activity_circus_exchange_bg.png": "兑换商店bg（两集市共用）",
+    "img_Activity_circus_monopoly_bg_alt.png": "大富翁地图bg·alt（QA推荐）",
+    "img_Activity_circus_bp_bg_v2.png": "BP活动bg·v2（通行证+勋章中心物件）",
+    "img_Activity_circus_schedule_bg_v2.png": "每日礼包bg·v2（门票礼盒中心物件）",
+    "img_Activity_circus_box_bg.png": "福箱活动bg（替代原转盘bg）",
+    "img_Activity_circus_wishpool_bg.png": "许愿池活动bg（喷泉件另出）",
+    "img_Activity_circus_wishpool_fountain.png": "许愿池喷泉件·主图（⚠️贝壳纹）",
+    "img_Activity_circus_wishpool_fountain_alt.png": "许愿池喷泉件·alt（QA推荐）",
+    "img_Activity_circus_fund_bg.png": "累充活动bg·主图",
+    "img_Activity_circus_fund_bg_alt.png": "累充活动bg·alt（下方留白大）",
+    "img_Activity_circus_tavern_bg.png": "酒馆活动bg·主图（压字多选这张）",
+    "img_Activity_circus_monopoly_bg.png": "大富翁地图bg·主图（⚠️疑似潜艇→建议alt）",
+    "img_Activity_circus_visit_bg_cand1.png": "拜访活动bg·候选1",
+    "img_Activity_circus_visit_bg_cand2.png": "拜访活动bg·候选2（QA推荐）",
     "img_card_image_81.png": "纪念卡卡面·欢乐颂歌(补漏)",
     "icon_global_circustitle.png": "头衔道具图标(补漏)",
     "circus_icon_title.png": "铭牌大图(补漏)",
@@ -37,7 +70,8 @@ for title, sub, fixed in SECS:
     cells = []
     for f in files:
         note = (fixed or {}).get(f) or NOTES.get(f, "")
-        cells.append('<figure><img src="%s/%s" loading="lazy"><figcaption>%s<br><small>%s</small></figcaption></figure>' % (sub, f, html.escape(note or "—"), html.escape(f)))
+        note = note or "（未标注·按文件名对照美术清单）"
+        cells.append('<figure><img src="%s/%s" loading="lazy"><figcaption>%s<br><small>%s</small></figcaption></figure>' % (sub, f, html.escape(note), html.escape(f)))
         total += 1
     parts.append('<h2>%s <small>%d 张</small></h2><div class="grid">%s</div>' % (html.escape(title), len(files), "".join(cells)))
 page = ('<!doctype html><meta charset="utf-8"><title>马戏节美术总评审</title><style>'

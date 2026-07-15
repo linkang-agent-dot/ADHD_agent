@@ -187,6 +187,7 @@ add("外显交付（大奖/纪念卡/铭牌）", "—", [
     ("跨服榜大奖: 梦幻旋转木马 Skin1017/Item81152(DK_Homeland_Circus已注册)", sk is not None and sk[7] == "DK_Homeland_Circus"),
     ("本服榜: 纪念卡81欢乐颂歌/Item180081", row("MemorialCard__MemorialCard.tsv", 81) is not None),
     ("铭牌106欢庆之星/Item82006(跨服榜Top)", row("PlayerTitle__PlayerTitle.tsv", 106) is not None),
+    ("头像框: 欢庆之环 框cfg10089/Item80116(BP巡游轨道已换指·深海之冠残留已修)", row("Personalize__PersonalizeAvatarFrameCfg.tsv", 10089) is not None and row("Item__Item.tsv", 80116) is not None),
     ("皮肤立绘/头像/卡面DK(_20_Skin01族)+主城皮头图标=待美术", None),
     ("皮肤展示视频DKVideo=待视频化管线", None),
 ], "07-10 全定案；主稿出图中")

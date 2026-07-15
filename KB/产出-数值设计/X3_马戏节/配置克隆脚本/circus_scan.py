@@ -65,6 +65,19 @@ for k, cn in keys.items():
         if k.endswith(tag) and ("深海" in cn or "藏宝图" in cn or "宝珠" in cn or "夏日" in cn):
             issues.append("key残留:" + k + "=" + cn[:25])
             break
+
+# 5b. 马戏 Pack 名 key 残留扫(深海/夏日/尼罗词)
+PACKNAME_KEYS = [k for k in keys if k.startswith("TXT_Pack_Name_") and any(k.endswith("_%d" % x) for x in list(range(211032, 211047)) + list(range(13025, 13029)) + list(range(800010, 800015)) + [130044, 130045, 130047, 130048] + list(range(2801012, 2801023)))]
+for k in PACKNAME_KEYS:
+    cn = keys[k]
+    if any(w in cn for w in ("深海", "夏日", "尼罗", "海滨")):
+        issues.append("Pack名残留:" + k + "=" + cn[:20])
+# 5c. 拜访/装饰 Reward 组内深海门头/家具件残留
+LEGACY_DECOR = {"152017", "152018", "152019", "151043"}
+for ln in rd("Reward__Reward.tsv"):
+    fl = ln.split("	")
+    if len(fl) > 4 and fl[1] in ("211046", "211032", "211033", "211034") and fl[3] in LEGACY_DECOR:
+        issues.append("门头/家具残留: 组" + fl[1] + "|" + fl[3])
 print("== 马戏节收口扫描 ==")
 if not issues:
     print("全绿 0 issue")

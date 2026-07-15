@@ -98,10 +98,25 @@ tags: [kind/方法论, domain/前端, proj/X3, year/2026-06]
 3. **c38 GroupId=组号**：聚合进 ActvGroup 组入口（表 `ActvOnline__ActvGroup.tsv`：组名 TXT_ActvGroup_MainEntranceName_{ID} + 入口图标 + 顶底边框/页签/退出键全套 DK，现有 100 酒馆福利~143 马戏巡游 40+ 组）——组内活动成页签，一个主城图标承载多活动。
 - 选型经验：常驻单活动→MainEntrance=2；同主题多活动→挂现成组或建新组（建组=一行配置+一套 DK）；组入口在「任一组内活动开启」期间显示。
 - ⚠️ 冒烟点：非常见 ActvType 首次走 MainEntrance=2 或新组，dev 起服点一次验路由（type27+MainEntrance=2 无先例）。
+- ⚠️挂新活动进**现有组**前，先查组内活动的生命周期：若组内全是一次性/限时活动（组图标随之消失=设计意图），常驻新活动进组会让组图标复活——老玩家进来看到一堆「已结束」死入口；且专属界面（如 UIMechaActiEntrance）入口 resolve 严格锁 cfgId 不回退，循环替代版活动（如 106005 老服循环转盘,不挂组）不会出现在界面里。评估=①要不要给死入口加循环版 cfgId 备选 ②知会原活动策划（2026-07-14 手册挂海妖猎场组 137 实案）。
 
 ### 共享 prefab 多主题换皮 = 视觉件 DK 化 + 空值 fallback（2026-07-14 手册家族案）
 一个活动类型多期/多主题共用同一 prefab 时（如 ActvType27 三本养成手册共用 UIActvLogin），别复制 prefab——把**主题视觉件改成运行时读 ActvOnline 的 DK 字段**：
 - 排查法：grep 界面 .cs 有无 `SetImageWithDisplayKey`/DK 读取——全无 = 视觉件 prefab 焊死，共用必撞脸（UIActvLogin 实例：banner/面板/宝箱/日历格全焊死）。
 - 改法：能复用现成字段先复用（c22 ActvImg=背景、c21 ActvIcon=页签图标、c30 CalendarBg），缺的加新 DK 列（proto 尾部加 tag，Pack2/FinalReward 先例）；OnShown 里 `SetImageWithDisplayKey(img, cfg.XXX)`，**空值 fallback 保留 prefab 原 sprite**（老活动不配新字段=零回归）。
 - 取舍：中性小件（日历格/按钮）不换省美术；只 DK 化「定调三大件」（banner/主面板/主视觉）。
+- ⚠️接线取组件前先看 prefab 该节点挂的是 TFWImage 还是原生 Image（YAML 里 m_Script guid：`fe87c0e1cc204ed48ad3b37840f39efc`=UGUI 内置 Image）——`GetComponent<TFWImage>` 对原生 Image 节点返回 null **静默跳过**（2026-07-14 手册面板实踩：同界面宝箱 TFWImage 生效、面板原生 Image 哑火）；SetImageWithDisplayKey 收 Image 基类，按实际类型取即可。
+- ⚠️换图前查目标 Image 的 `m_Type`（prefab YAML）：**1=Sliced 九宫格**——新图必须满幅正置且 meta `spriteBorder` 与图匹配；复制模板 meta 的 border 套在异构图（斜置/大透明边）上=中心切到透明区,渲染成"底板消失"（2026-07-14 手册面板实踩）。快修=trim+resize 满幅+border 清零（等效 Simple 拉伸）；正解=按原图构图出正置满幅新图。
+- 换皮件需要**独立于子件调尺寸**时（如底板放大但奖励格不动）：别动共享节点 rect（锚点拉伸的子件会连坐）——**运行时插独立背板节点**：`new GameObject(名,RectTransform,Image)` 挂原节点下 `SetAsFirstSibling()`（画在子件后面），锚满四角+sizeDelta 外扩定尺寸，`raycastTarget=false`，原 Image `enabled=false`；按名字 Find 防重入。零 prefab 改动（2026-07-14 手册面板实用）。
+- **🔴运行时换 sprite 的界面若多活动复用同一实例，必须写"还原默认"分支**：只写"有 DK 就换"=切到无 DK 活动时残留上一个活动的皮（2026-07-14 实踩：开过海妖手册再开老英雄手册，宝箱串成深渊皮）。范式=首次进时缓存原 sprite 到字段；`cfg.DK 非空→换新皮`，`空→sprite=缓存原图 + 附加节点 SetActive(false) + 原 Image enabled=true`。DK 化换皮三分支缺一不可：换新/还原/防重入。
+- **换皮件美术必须与被替换节点同构（否则多分辨率翻车）**：底板/面板类被 `m_Type=Sliced` 拉伸填 rect，新图若做成「满出血重装饰框」，不同宽高比机型一拉伸=装饰超框/偏移（2026-07-14 手册面板连翻三版）。正解=**照被换图（如 nourish_3 羊皮纸）img2img,保持形状/边距/浅色中心区不变,只换配色+角落纹样**（中性浅底最百搭,跟深色 banner 对比也清楚）；别自造满幅重框。代码侧对应=直接换原节点 sprite（rect 是美术调好的多分辨率安全值），别用"独立背板节点+外扩"去救格式不对的图——那是给错图打补丁,越补越歪。
 - 收益：代码只写一次替换逻辑，之后每期新主题=纯配置填 DK key。
+
+### 纯 YAML 克隆 prefab 大子树（无 Unity·2026-07-14 猎场 BtnHandbook 案·97+4 块实证）
+给现有界面复制一个同构入口/卡片（如克隆 BtnGrowth→BtnHandbook），比储蓄罐挂件案深一档的做法：
+1. **收集子树全部 fileID**：从根 GO 的 transform 递归（transform→GO→m_Component 列表→children），本案 97 个。
+2. **fileID 重映射**：全部生成新随机 int64（`random.getrandbits(63)`，查重全文件），复制块文本后正则替换 `fileID: 旧`→新；映射表外的引用天然保留（父 transform、sprite guid 外部资产）。
+3. **挂载**：新根 transform 的 m_Father 不动（指向同一父）；父 transform 的 m_Children 列表追加新根；改新根 m_Name 与 m_AnchoredPosition。
+4. **⚠️三连坑（本案全踩全解）**：①块头有 `stripped` 后缀与**负数 fileID**，解析正则要 `&(-?\d+)( stripped)?`；②子树内**嵌套子 prefab**（如 RedPointTips 红点）= stripped transform/GO + !u!1001 PrefabInstance 三件套，须整套克隆（PI 的 m_TransformParent 换成映射后的新父），否则新节点 children 引用原实例=双父冲突；③嵌套实例上的 **addedObject**（m_AddedGameObjects/Components 里的 MonoBehaviour）也要克隆一份重指向新 stripped GO，否则两 PI 共享同一附加组件。
+5. **完整性校验（收敛判据）**：收集新增块内全部 fileID 引用，悬空集=不在本文件块集∧不带 guid（带 guid=外部资产合法）∧非0——必须为空；外部引用应只剩挂载父 transform。
+6. Unity 首开该 prefab 目检一次无 broken（git 可回退）。
