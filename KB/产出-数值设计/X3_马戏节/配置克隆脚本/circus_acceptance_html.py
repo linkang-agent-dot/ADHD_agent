@@ -65,7 +65,7 @@ wl = r[49].split("|") if r else []
 add("马戏累充", "AO 100599", [
     ("ActvTask 59911-20 十档(100..20000)", all(row("ActvTask__ActvTask.tsv", x) for x in range(59911, 59921))),
     ("奖励组59950-59(门票+罗盘)", grp_count("Reward__Reward.tsv", 59950) > 0),
-    ("白名单=39包全量", len(wl) == 39),
+    ("白名单=37包(BP①两包已移出,同学BP落地后补回)", len(wl) == 37),
     ("c33=1209|1057 / hub142", r and r[33] == "1209|1057" and r[38] == "142"),
     ("RuleTips 16044 独立", row("RuleTips__RuleTips.tsv", 16044) is not None),
 ], "克隆源=深海100598")
@@ -75,12 +75,7 @@ r1, r2 = a(102250), a(102251)
 bp1 = grp_count("ActvBattlePassScore__BattlePassScoreReward.tsv", 148)
 bp2 = grp_count("ActvBattlePassScore__BattlePassScoreReward.tsv", 149)
 c3000 = all(fl[3] == "3000" for fl in (ln.split("\t") for ln in rd("ActvBattlePassScore__BattlePassScoreReward.tsv")) if len(fl) > 3 and fl[1] in ("148", "149"))
-add("马戏通行证（BP①）", "AO 102250", [
-    ("等级组148=20级 / 满级重算3000/级=6万", bp1 == 20 and c3000),
-    ("付费包130044高级/130045至尊", all(row("Pack__Pack.tsv", x) for x in (130044, 130045))),
-    ("轨道Reward=4036段专属块(非共享)", grp_count("Reward__Reward.tsv", 4036101) > 0),
-    ("c33=1209|1210 / hub142", r1 and r1[33] == "1209|1210" and r1[38] == "142"),
-], "克隆源=深海102244；名=马戏通行证(07-10改)")
+add("马戏通行证（BP①）", "另一同学负责", [("本线批次4版本已整套拆除让位(07-16)——等同学配置落地后收口批补进白名单+验收", None)], "口径=用户07-16")
 add("巡游通行证（BP②）", "AO 102251", [
     ("等级组149=20级 / 3000/级", bp2 == 20),
     ("付费包130047/130048", all(row("Pack__Pack.tsv", x) for x in (130047, 130048))),
@@ -200,9 +195,9 @@ add("hub 与基础道具", "ActvGroup 142/143", [
 ], "批次1；扭蛋机(另一agent)挂142")
 
 # i18n 抽查
-miss = i18n_keys("TXT_ActvOnline_ActvName_101026", "TXT_ActvOnline_ActvName_102250", "TXT_Skin_Name_1017", "TXT_HeroSkin_Name_102001", "TXT_Item_Name_1209")
+miss = i18n_keys("TXT_ActvOnline_ActvName_101026", "TXT_ActvOnline_ActvName_102251", "TXT_Skin_Name_1017", "TXT_HeroSkin_Name_102001", "TXT_Item_Name_1209")
 add("i18n 抽查", "Text.tsv", [
-    ("核心名 key 5/5 存在(福箱/BP/两皮肤/门票)", not miss),
+    ("核心名 key 5/5 存在(福箱/巡游BP/两皮肤/门票)", not miss),
     ("长文本(RuleTips正文/ActvDesc等)=仅cn+en, 14语收口时跑翻译skill", None),
 ], "全量审计=收口批 i18n_leak_audit")
 

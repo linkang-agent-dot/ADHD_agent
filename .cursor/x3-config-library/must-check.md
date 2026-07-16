@@ -23,6 +23,7 @@
 - [ ] **自选池/奖池道具审计五件套**：存在性 + i18n + 图标 + 全表流通度 + 功能出口。骨架照抄≠内容合理。（深海酒馆照抄夏日骨架带出「红宝石之血」「英雄之证」两个零联动死道具）
 - [ ] **装饰/门头类投放物先翻外显图库找现成同主题资产**（`KB\产出-本地化与美术\X3\外显图库_表情头像框铭牌\X3节日外显图库_8大模块全集.html`）：克隆源的家具/门头件是源节日的，别照抄——本节日主题的老资产可能早就有（马戏节实证 07-14：装饰应该用 25 愚人节滑稽宝箱/画像而非深海椰风椅；门头地板 152001 马戏团愚人节就有，只需补横梁+墙纸两件）。门头三件套结构=横梁 152x+地板+墙纸。
 - [ ] **进度礼包/FinalReward 类必配 MailID(c17) 兜底**：手动领+活动结束零兜底=终奖无人领事故。（深海 102993 → X3NEW-1829 客诉，83 人补偿）
+- [ ] **大富翁/航海(ActvType=28)"成就礼包版"换皮必查独立 `Pack__AchievePack` 表**（2026-07-16 航海之路常驻版实证漏整块）：成就礼包**≠存钱罐**(主表 PiggyBankPackID)**≠珍珠贝进度**(ProgressReward)，是**独立 AchievePack 表按圈数(laps)解锁**，靠 **col9 TriggerParameter=活动cfgID** 关联(不在 ActvVoyage 主表里)。只搬 ActvVoyage 主表系列(主表/Island/Event/OtherReward/Level/ProgressReward)会**漏掉整个成就礼包模块**→圈数解锁匹配不上活动→成就礼包永远出不来。克隆清单=① AchievePack 组(改 col5 Target/col9 TriggerParameter=新活动cfgID + col4 PackList 换新档位礼包ID) ② 档位礼包 Pack(克隆源节日 2801xxx→新ID,名去节日词,content 奖励组多为通用道具航海罗盘/钻石/VIP/纪念卡可直接复用不用新建) ③ i18n(组名+各档礼包名)。服务端逻辑=`GiftMeta.AchievePack.cs:CheckAchievementPackUnlockByVoyageLap` + `ActivityMeta.Voyage.cs`(完成一圈调用)。**"成就礼包版"三件套=主表 PiggyBank/ProgressReward + 独立 AchievePack,克隆一个都不能漏**。
 - [ ] **cfg 行乱序补在表末尾时，回查所有按线性/顺序假设引用它的下游**。（世界杯 4 队框补表尾→线性公式指错框，「解锁错框」隐蔽 bug）
 
 ## 二、i18n（换皮独立一步，导表不校验）

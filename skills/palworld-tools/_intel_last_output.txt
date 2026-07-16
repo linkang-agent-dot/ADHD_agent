@@ -1,7 +1,0 @@
-﻿claude.cmd : Error: Invalid JSON provided to --settings
-所在位置 C:\ADHD_agent\skills\palworld-tools\palworld_intel_scan.ps1:21 字符: 9
-+         & $claude -p --output-format text --model sonnet --max-budget ...
-+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (Error: Invalid ...d to --settings:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
- 

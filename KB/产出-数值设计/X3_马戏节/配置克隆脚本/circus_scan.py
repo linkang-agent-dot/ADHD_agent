@@ -10,7 +10,7 @@ def rd(p):
 issues = []
 # 1. 马戏 13 个 AO 的 c33/c38
 ao = {ln.split("\t")[0]: ln.split("\t") for ln in rd("ActvOnline__ActvOnline.tsv") if ln.split("\t")[0].isdigit()}
-CIRCUS = {"101026": ("1209|5302001", "142"), "100599": ("1209|1057", "142"), "102250": ("1209|1210", "142"),
+CIRCUS = {"101026": ("1209|5302001", "142"), "100599": ("1209|1057", "142"), 
           "102251": ("1057|1202", "143"), "102803": ("1057|1202", "143"), "101829": ("1057|1202", "143"),
           "102994": ("", "142"), "10071705": ("1209|1210", "142"), "106104": ("", "142"),
           "101343": ("1209|1210", "142"), "101344": ("1057|1202", "143"), "105606": ("1209|1057", "142"),
@@ -28,7 +28,7 @@ for aid, (c33, hub) in CIRCUS.items():
 rw_groups = set(ln.split("\t")[1] for ln in rd("Reward__Reward.tsv") if len(ln.split("\t")) > 1)
 packs = {ln.split("\t")[0]: ln.split("\t") for ln in rd("Pack__Pack.tsv") if ln.split("\t")[0].isdigit()}
 check_packs = ["211035", "211045", "13025", "13028", "800010", "800014", "211032", "211046",
-               "130044", "130045", "130047", "130048", "280002"] + [str(x) for x in range(2801012, 2801023)]
+               "130047", "130048", "280002"] + [str(x) for x in range(2801012, 2801023)]
 for pid in check_packs:
     if pid not in packs:
         issues.append("Pack缺失:" + pid)
@@ -67,7 +67,7 @@ for k, cn in keys.items():
             break
 
 # 5b. 马戏 Pack 名 key 残留扫(深海/夏日/尼罗词)
-PACKNAME_KEYS = [k for k in keys if k.startswith("TXT_Pack_Name_") and any(k.endswith("_%d" % x) for x in list(range(211032, 211047)) + list(range(13025, 13029)) + list(range(800010, 800015)) + [130044, 130045, 130047, 130048] + list(range(2801012, 2801023)))]
+PACKNAME_KEYS = [k for k in keys if k.startswith("TXT_Pack_Name_") and any(k.endswith("_%d" % x) for x in list(range(211032, 211047)) + list(range(13025, 13029)) + list(range(800010, 800015)) + [130047, 130048] + list(range(2801012, 2801023)))]
 for k in PACKNAME_KEYS:
     cn = keys[k]
     if any(w in cn for w in ("深海", "夏日", "尼罗", "海滨")):

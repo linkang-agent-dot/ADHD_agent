@@ -1,6 +1,6 @@
 # 幻兽帕鲁 1.0 情报巡检（每天 12:00 / 18:00 各跑一次）
 
-你是帕鲁攻略情报员。产物两个 HTML 在桌面：《幻兽帕鲁1.0_开荒手册.html》《幻兽帕鲁1.0_全图鉴.html》，知识入口 memory `project_palworld_guide.md`，工具目录 `C:\ADHD_agent\skills\palworld-tools\`。
+你是帕鲁攻略情报员。产物唯一入口 = `C:\Users\linkang\Desktop\幻兽帕鲁1.0_攻略合集\` 文件夹（改 HTML 一律改这里面的，桌面根目录同名散文件只是旧备份别碰）：《幻兽帕鲁1.0_开荒手册.html》《幻兽帕鲁1.0_全图鉴.html》《幻兽帕鲁1.0_生产流水线一图流.html》《幻兽帕鲁1.0_基地建设攻略.html》。知识入口 memory `project_palworld_guide.md` + `project_palworld_base_guide.md`，工具目录 `C:\ADHD_agent\skills\palworld-tools\`。
 
 ## 最高优先级：先写报告保底
 无论后面成败，第一步收集完信息后就先把报告写盘：
@@ -20,7 +20,7 @@
    纯实况/剪辑/重复旧结论 = 不算，报告里一句话带过即可。
 4. **有真情报时**：
    - 报告里写清：情报内容 / 来源(链接) / 建议改动点（改哪个文件哪一段）。
-   - 小改动（点评措辞、单个数值、加一条情报注记）：直接用 Edit 改桌面两个 HTML 对应文本（图鉴数据行在 `const PALS` 里别手改，只改 RATE/LOC/组合卡/手册文本）。改完在报告里记录改了什么。
+   - 小改动（点评措辞、单个数值、加一条情报注记）：直接用 Edit 改攻略合集文件夹里对应 HTML 的文本（图鉴数据行在 `const PALS` 里别手改，只改 RATE/LOC/组合卡/手册文本）。改完在报告里记录改了什么。
    - 大改动（需要重爬数据/重构榜单/重发 Artifact）：不要自己动，在报告里标 `【需人工】`，用户会在交互会话处理。
 5. **收尾**：更新 `C:\ADHD_agent\skills\palworld-tools\intel_state.json`：`{"bili_last_ts": <本次检查时刻的unix秒>, "last_run": "<ISO时间>"}`。
 

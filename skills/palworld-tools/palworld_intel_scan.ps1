@@ -17,9 +17,10 @@ $ok = $false
 foreach ($d in $delays) {
     if ($d -gt 0) { Start-Sleep -Seconds $d }
     $attemptStart = Get-Date
+    # --settings 传文件路径（内联JSON经PS→cmd→CRT三层引号剥离必坏，见 reference_headless_claude_cli）
     Get-Content $promptFile -Raw -Encoding UTF8 |
         & $claude -p --output-format text --model sonnet --max-budget-usd 6 `
-          --dangerously-skip-permissions --settings '{"hooks":{"Stop":[]}}' 2>&1 |
+          --dangerously-skip-permissions --settings (Join-Path $toolDir "_intel_settings.json") 2>&1 |
         Out-File (Join-Path $toolDir "_intel_last_output.txt") -Encoding utf8
     # 新鲜度闸门：报告须在本次尝试开始后写过，且首行含今日日期
     if (Test-Path $report) {
