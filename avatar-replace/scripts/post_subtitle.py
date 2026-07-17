@@ -100,8 +100,34 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     for ln, st, en in timed:
         if en <= st:
             en = st + 0.8
-        lines.append(f"Dialogue: 0,{to_ass_time(st)},{to_ass_time(en)},Def,,0,0,0,,{ln}")
+        lines.append(f"Dialogue: 0,{to_ass_time(st)},{to_ass_time(en)},Def,,0,0,0,,{_wrap_cjk(ln)}")
     out_ass.write_text("\n".join(lines), encoding="utf-8")
+
+
+def _wrap_cjk(text: str, max_chars: int = 13) -> str:
+    # libass 对无空格中文不自动换行，手动按 max_chars 折行（优先在标点后断），\N 硬换行
+    if len(text) <= max_chars:
+        return text
+    puncts = "，。！？、；：,.!?;: "
+    out, cur = [], ""
+    for ch in text:
+        cur += ch
+        if len(cur) >= max_chars:
+            # 回找最近标点断行（避免标点悬挂行首）
+            cut = -1
+            for i in range(len(cur) - 1, max(0, len(cur) - 7), -1):
+                if cur[i] in puncts:
+                    cut = i + 1
+                    break
+            if cut > 0 and cut < len(cur):
+                out.append(cur[:cut])
+                cur = cur[cut:]
+            else:
+                out.append(cur)
+                cur = ""
+    if cur:
+        out.append(cur)
+    return "\\N".join(s.strip() for s in out if s.strip())
 
 
 def main():

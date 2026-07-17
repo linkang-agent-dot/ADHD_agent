@@ -8,6 +8,9 @@
 | `inject_data.py` | 把 `pals_full.json`（需在 cwd）精简注入图鉴 HTML 的 `const PALS` 行，可重复执行 |
 | `pals_full.json` | 2026-07-14 快照，299 只（已去重+技能补全，唯枯星龙官网500无数据） |
 | `paldb_pals.html` | 列表页快照（1.28MB，SSR 含全量卡片） |
+| `breed_crawl.py` | 配种表爬虫：paldb `/api/breed?type=parents&result=<slug>` ×299 → `breed_map.json`（44,850 对全量，断点续爬；⚠API 返回是 gzip，读法见脚本） |
+| `breed_build_html.py` | 从 breed_map.json 生成桌面《配种图鉴.html》（三角矩阵 base36 编码 102KB 自包含；游戏出补丁后先跑 crawl 再跑 build 即刷新） |
+| `breed_map.json` | 2026-07-17 快照，299×299 配种全表 + 2 对性别特殊组合 |
 
 **刷新流程**（游戏出平衡补丁后）：
 1. 重新下载列表页：`python -c "import urllib.request;open('paldb_pals.html','w',encoding='utf-8').write(urllib.request.urlopen(urllib.request.Request('https://paldb.cn/pals',headers={'User-Agent':'Mozilla/5.0'})).read().decode())"`

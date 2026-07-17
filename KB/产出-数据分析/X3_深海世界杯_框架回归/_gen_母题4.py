@@ -22,6 +22,10 @@ G_VT = K3['情人节开箱(致她的信)']; G_SM = K3['夏日开箱(复用情人
 KD = json.load(open(os.path.join(HERE, '_kaixiang_deep.json'), encoding='utf-8'))  # 四代分桶/分位/逐服
 KG = KD['gens']; PS = KD['perserver']
 AN = json.load(open(os.path.join(HERE, '_anchor.json'), encoding='utf-8'))         # 锚点四代+WC按档
+JC = json.load(open(os.path.join(HERE, '_jingcai.json'), encoding='utf-8'))         # 竞猜参与(逐日+按轮)
+JP = json.load(open(os.path.join(HERE, '_jingcai_pay.json'), encoding='utf-8'))     # 竞猜/通行证 完整付费指标
+PR = json.load(open(os.path.join(HERE, '_kx_payrate.json'), encoding='utf-8'))      # 开箱付费率下钻(逐服+档位)
+TKS = json.load(open(os.path.join(HERE, '_ticket_summer.json'), encoding='utf-8'))  # 券供给对比
 GEN_COL = {'元旦开箱': '#4691e8', '情人节开箱': '#8b949e', '夏日开箱': '#2ea856', '世界杯开箱': '#c08a17'}
 now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
 
@@ -36,14 +40,14 @@ WC_ROWS = [
   '<b>史上最宽入口、但不是收钱模块</b>——全程参与 ' + f'{CANYU:,}' + ' 人（=窗口总付费人数的 3.2 倍），付费档全程仅 {} / {}人（付费转化 1.2%）',
   f"付费 {fmt(wm['竞猜礼包全档']['rev'])} · 买家 {wm['竞猜礼包全档']['buyers']} · 复购 {wm['竞猜礼包全档']['opb']:.1f}单", 'mid'),
  ('W2', '锚点礼包升级<br><span class="dim">07-13曾归因"改可复购"——已证伪，见02章③</span>',
-  '<b>锚点买家 ×2.8、长成 $4.99 小额复购位</b>——四代锚点买家 48/53/55 → 153 人（占开箱买家 20-22%→40%），95% 集中在 $4.99 档；⚠️归因修正：配置 diff 证实限购列与前代完全一致（情人锚点 max $910=历来可复购），「可复购」是伪归因，真实变化=W4 补钻VIP + 竞猜引流',
-  f"锚点 {fmt(wm['开箱券锚点(可复购)']['rev'])} · 153人 · $4.99档 145人", 'ok'),
+  '<b>无净效果证据——买家增长主要是服基数效应</b>——锚点买家 48/53/55 → 153 人的增长与开服扩量同步（世界杯口径含 28 扩服+年轻服），95% 集中 $4.99 档 = 正常小额位表现；「可复购」经配置 diff 证伪（限购配置与前代完全一致、情人锚点 max $910 历来可复购）',
+  f"锚点 {fmt(wm['开箱券锚点(可复购)']['rev'])} · 153人 · $4.99档 145人", 'mid'),
  ('W3', '外显进付费档<br><span class="dim">$9.99框宝箱 / $19.99表情宝箱 · 开箱大奖=皮肤</span>',
   '<b>外显是付费主力</b>——竞猜侧外显两档卖 {}（占竞猜付费 81%，是纯券档的 4.3 倍）；开箱侧 max <b>$1,415</b>=六代第一次破 $707 买光墙',
   f"框档 {fmt(wm['竞猜$9.99框档(尾2)']['rev'])} + 表情档 {fmt(wm['竞猜$19.99表情档(尾3)']['rev'])} · 开箱max {fmt(wm['开箱福箱连锁']['max'])}", 'ok'),
  ('W4', '全节日锚点礼包补钻石+VIP<br><span class="dim">B线纯券→对齐A线（6/24 v0.41）</span>',
-  '<b>锚点买家 ×2.8 的最可能归因</b>——"可复购"证伪后（02章③），钻VIP价值感提升是 WC 锚点与前代唯一的实质配置差异；与竞猜引流不可完全分离，老节日锚点的后续表现下届可当对照',
-  '与 W2 同一效果的归因侧', 'mid'),
+  '归因悬置——锚点买家增长被判为基数效应后，补钻VIP 的独立效果无从评估；老节日锚点下届表现可当对照',
+  '—', 'wait'),
  ('W5', '开箱新增本服排行榜<br><span class="dim">皮肤→纪念卡降级奖励 · 活动全程拉通累计</span>',
   '<b>效果未显现（拉通口径）</b>——窗口近 2 倍长，每服 top1 中位 $60 反而低于夏日 $75，服均 $261 仅持平（$240）：榜没把各服头部拉起来；⚠️该榜配置时标注"双Tab露出需程序联调·占位性质"，先确认客户端是否真露出了本服Tab——若未露出是"没上"而非"无效"（详见 02 章④）',
   '逐服对比见 02 章', 'mid'),
@@ -197,6 +201,8 @@ def kx_dist_chart(bucket_key, buckets_n, bucket_w, xlab_fn, tail_lab, title):
         s.append(f'<line x1="{L}" y1="{Y(gv):.1f}" x2="{W-R}" y2="{Y(gv):.1f}" stroke="{COLB.get("grid","#21262d") if False else "#21262d"}"/>')
         s.append(f'<text x="{L-6}" y="{Y(gv)+4:.1f}" fill="#484f58" font-size="10" text-anchor="end">{gv}%</text>')
     for i in range(cols):
+        if cols > 15 and i % 2 == 1 and i < buckets_n:
+            continue
         lab = xlab_fn(i) if i < buckets_n else tail_lab
         s.append(f'<text x="{X(i):.1f}" y="{H-46}" fill="#8b949e" font-size="9" text-anchor="middle">{lab}</text>')
     for gen, vals in series:
@@ -266,7 +272,229 @@ def anchor_card():
         a = AN[t]
         tr.append(f"<tr><td class='l'><b>{t.replace('WC档','')}</b></td><td>{fmt(a['rev'])}</td><td>{a['buyers']}</td><td>${a['arppu']:.1f}</td><td>{a['opb']:.1f}</td><td>{fmt(a['max'])}</td></tr>")
     tr.append('</table>')
-    tr.append("<div class='dim' style='margin-top:6px'>*本卡四代统一不加服过滤（各代全部部署服），与上方三代对打表（按服段筛选）绝对值不同；占开箱买家分母=同口径开箱族买家。</div>")
+    tr.append("<div class='dim' style='margin-top:6px'>*本卡四代统一不加服过滤（各代全部部署服），与上方历史数据对比表（按服段筛选）绝对值不同；占开箱买家分母=同口径开箱族买家。</div>")
+    return ''.join(tr)
+
+# ---- 竞猜整体：参与逐日 + 按轮参与vs付费 + 档位结构 ----
+ROUND_BANDS = [('R32','2026-06-26','2026-07-02','#4691e8'), ('R16','2026-07-03','2026-07-08','#2ea856'),
+               ('QF','2026-07-09','2026-07-12','#c08a17'), ('SF','2026-07-13','2026-07-15','#bc6bd9')]
+def jc_daily_chart():
+    import datetime as _dt
+    d0 = _dt.date(2026,6,26); dN = _dt.date.fromisoformat(END)
+    ds = [(d0 + _dt.timedelta(days=i)).isoformat() for i in range((dN-d0).days+1)]
+    vals = [JC['daily'].get(d, 0) for d in ds]
+    W, H, L, R, T, B = 1160, 300, 56, 14, 40, 50
+    pw, ph = W-L-R, H-T-B
+    n = len(ds); bw = pw/n
+    vmax = max(vals)*1.12
+    s = [f'<svg viewBox="0 0 {W} {H}" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px">']
+    for a, b_, c in [(x[1], x[2], x[3]) for x in ROUND_BANDS]:
+        i0 = ds.index(a) if a in ds else 0; i1 = ds.index(b_) if b_ in ds else n-1
+        s.append(f'<rect x="{L+i0*bw:.1f}" y="{T}" width="{(i1-i0+1)*bw:.1f}" height="{ph}" fill="{c}" fill-opacity="0.07"/>')
+    for lab, a, b_, c in ROUND_BANDS:
+        i0 = ds.index(a) if a in ds else 0; i1 = ds.index(b_) if b_ in ds else n-1
+        s.append(f'<text x="{L+(i0+(i1-i0+1)/2)*bw:.1f}" y="{T-8}" fill="{c}" font-size="11" font-weight="700" text-anchor="middle">{lab}·参与 {JC["rounds"][lab]["users"]:,} 人</text>')
+    for gv in range(0, int(vmax)+1, 2000):
+        y = T + ph*(1-gv/vmax)
+        s.append(f'<line x1="{L}" y1="{y:.1f}" x2="{W-R}" y2="{y:.1f}" stroke="#21262d"/>')
+        s.append(f'<text x="{L-6}" y="{y+4:.1f}" fill="#484f58" font-size="10" text-anchor="end">{gv//1000}k</text>')
+    for i, (d, v) in enumerate(zip(ds, vals)):
+        if v <= 0: continue
+        x = L + i*bw + 2; hgt = ph*v/vmax
+        s.append(f'<rect x="{x:.1f}" y="{T+ph-hgt:.1f}" width="{bw-4:.1f}" height="{hgt:.1f}" fill="#c08a17" fill-opacity="0.85" rx="2"><title>{d} 参与 {v:,} 人</title></rect>')
+    for i, d in enumerate(ds):
+        if i % 2 == 0:
+            s.append(f'<text x="{L+(i+0.5)*bw:.1f}" y="{H-32}" fill="#8b949e" font-size="9" text-anchor="middle">{d[5:]}</text>')
+    s.append(f'<text x="{L}" y="{H-12}" fill="#484f58" font-size="10">日参与=当日有竞猜礼包领取/下注记录的去重人数（asset 894% 口径）· 峰谷随比赛日</text>')
+    s.append('</svg>')
+    return ''.join(s)
+
+def jc_rounds_chart():
+    import datetime as _dt
+    W, PW, PH, T, B, L = 1160, 560, 170, 40, 44, 64
+    s = [f'<svg viewBox="0 0 {W} {T+PH+B}" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px">']
+    panels = [
+      ('按轮参与人数（稳中有升 · 不随缩圈衰减）', [(lab, JC['rounds'][lab]['users'], c) for lab, _, __, c in ROUND_BANDS], '{:,}'),
+      ('按轮付费日均（逐轮衰减）', [(lab, RD[lab]['rev']/max(1,(_dt.date.fromisoformat(RD[lab]['win'][11:])-_dt.date.fromisoformat(RD[lab]['win'][:10])).days+1), c) for lab, _, __, c in ROUND_BANDS], '${:,.0f}/日'),
+    ]
+    for pi, (title, items, fv) in enumerate(panels):
+        ox = pi*(PW+30)
+        vmax = max(v for _, v, _ in items)*1.18
+        bw = (PW-L-10)/4
+        s.append(f'<text x="{ox+L}" y="{T-14}" fill="#f0f6fc" font-size="12" font-weight="700">{title}</text>')
+        for gi, (lab, v, c) in enumerate(items):
+            x = ox + L + gi*bw + 8
+            y = T + PH*(1-v/vmax)
+            s.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{bw-16:.1f}" height="{T+PH-y:.1f}" fill="{c}" rx="4"><title>{lab} {fv.format(v)}</title></rect>')
+            s.append(f'<text x="{x+(bw-16)/2:.1f}" y="{y-6:.1f}" fill="#f0f6fc" font-size="11" font-weight="700" text-anchor="middle">{fv.format(v)}</text>')
+            s.append(f'<text x="{x+(bw-16)/2:.1f}" y="{T+PH+16}" fill="#8b949e" font-size="10.5" text-anchor="middle">{lab}</text>')
+    s.append(f'<text x="{L}" y="{T+PH+36}" fill="#484f58" font-size="10">SF 在途（{JC["rounds"]["SF"]["win"]}）· 付费=竞猜894礼包订单 · 参与=asset 894% 去重</text>')
+    s.append('</svg>')
+    return ''.join(s)
+
+T20 = json.load(open(os.path.join(HERE, '_kx_top20.json'), encoding='utf-8'))       # 开箱Top20阶梯
+
+def kx_top20_chart():
+    """Top20 付费额度阶梯：夏日老服 vs 世界杯老服 vs 世界杯全服"""
+    series = [('夏日·老服', [v['tot'] for v in T20['夏日_老服top20']], '#2ea856'),
+              ('世界杯·老服', [v['tot'] for v in T20['世界杯_老服top20']], '#c08a17'),
+              ('世界杯·全服', [v['tot'] for v in T20['世界杯_全服top20']], '#8b949e'),
+              ('深海·转盘族', [v['tot'] for v in T20['深海_转盘top20']], '#4691e8')]
+    W, H, L, R, T, B = 1160, 300, 56, 16, 34, 54
+    pw, ph = W-L-R, H-T-B
+    vmax = max(max(v) for _, v, _ in series)*1.1
+    def X(i): return L + pw*i/19
+    def Y(v): return T + ph*(1-v/vmax)
+    s = [f'<svg viewBox="0 0 {W} {H}" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px">']
+    for gv in range(0, int(vmax), 250):
+        s.append(f'<line x1="{L}" y1="{Y(gv):.1f}" x2="{W-R}" y2="{Y(gv):.1f}" stroke="#21262d"/>')
+        s.append(f'<text x="{L-6}" y="{Y(gv)+4:.1f}" fill="#484f58" font-size="10" text-anchor="end">${gv}</text>')
+    for i in range(20):
+        s.append(f'<text x="{X(i):.1f}" y="{H-36}" fill="#8b949e" font-size="9.5" text-anchor="middle">{i+1}</text>')
+    s.append(f'<text x="{L+pw/2:.1f}" y="{H-20}" fill="#8b949e" font-size="10.5" text-anchor="middle">开箱付费额排名（第1~20名）</text>')
+    for nm, vals, c in series:
+        wgt = 2.4 if '世界杯·老服' in nm else 1.7
+        pts = ' L '.join(f'{X(i):.1f} {Y(v):.1f}' for i, v in enumerate(vals))
+        s.append(f'<path d="M {pts}" fill="none" stroke="{c}" stroke-width="{wgt}"/>')
+        for i, v in enumerate(vals):
+            s.append(f'<circle cx="{X(i):.1f}" cy="{Y(v):.1f}" r="3" fill="{c}"><title>{nm} 第{i+1}名 ${v:,.0f}</title></circle>')
+    lx = L
+    for nm, vals, c in series:
+        lab = f"{nm}（top20合计 ${sum(vals):,.0f}）"
+        s.append(f'<line x1="{lx}" y1="{T-14}" x2="{lx+18}" y2="{T-14}" stroke="{c}" stroke-width="2.4"/>')
+        s.append(f'<text x="{lx+23}" y="{T-10}" fill="#c9d1d9" font-size="10.5">{lab}</text>')
+        lx += 23 + len(lab)*10.5 + 26
+    s.append('</svg>')
+    return ''.join(s)
+
+A64 = json.load(open(os.path.join(HERE, '_top20_assets.json'), encoding='utf-8'))    # 核心投放缩略图
+
+def top20_notes():
+    """Top20 各代核心投放注释条（带图）"""
+    cards = [
+      ('#2ea856', '夏日/情人开箱 · 核心投放', None,
+       '<b>无外显大奖</b>——奖池顶配=传奇技能书/玫瑰花瓣（配置实证：组113无超级大奖行），纯养成向奖池。渗透 20.1% 靠的是券稀缺，不是大奖吸引力。'),
+      ('#c08a17', '世界杯开箱 · 超级大奖', A64['soccer'],
+       '<b>足球宝贝·爱莉希雅皮肤 5304001</b>（首个挂皮肤超级大奖的开箱）——中层没被拉动（$100-500 占比反降），钩子在、坑位浅。'),
+      ('#c08a17', '世界杯跨服榜 1-5 名 · 头衔', A64['title'],
+       '<b>世界之巅头衔 82004</b>（组30581-84）——点燃塔尖 $1,415/$1,330 两人=头衔竞争付费力的直接证据；第 3 名起回落，缺向下分层。'),
+      ('#4691e8', '深海转盘 · 核心大奖', A64['sub'],
+       '<b>深海猎手·潜艇行军皮 15065</b>（奖池组321超级大奖）——外显钩子在，但逐档限购 $585 买光墙把深度锁死，Top3 齐顶封顶值。'),
+    ]
+    h = ['<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px">']
+    for c, t, img, txt in cards:
+        imghtml = (f'<img src="{img}" style="height:96px;max-width:100%;object-fit:contain;border-radius:4px;display:block;margin:0 auto 8px">'
+                   if img else '<div style="height:96px;display:flex;align-items:center;justify-content:center;color:#484f58;font-size:22px;margin-bottom:8px">—</div>')
+        h.append(f'<div style="background:#0d1117;border:1px solid #30363d;border-top:3px solid {c};border-radius:6px;padding:12px">'
+                 f'<div style="font-size:10.5px;font-weight:700;color:{c};letter-spacing:.5px;margin-bottom:8px">{t}</div>'
+                 f'{imghtml}<div style="font-size:11px;line-height:1.7;color:#8b949e">{txt}</div></div>')
+    h.append('</div>')
+    return ''.join(h)
+
+def payrate_drill():
+    """开箱付费率下钻：同服段对齐 + 券供给对比 + 档位买家梯子"""
+    ps_rev = {'夏日': {r['sid']: r for r in PS['夏日开箱']}, '世界杯': {r['sid']: r for r in PS['世界杯开箱']}}
+    def agg(label, lo, hi):
+        P = PR[f"{label}_payers"]; K = PR[f"{label}_kxbuyers"]; RV = ps_rev[label]
+        pay = sum(v for k, v in P.items() if lo <= int(k) <= hi)
+        kb = sum(v for k, v in K.items() if lo <= int(k) <= hi)
+        rev = sum(r['rev'] for sid, r in RV.items() if lo <= int(sid) <= hi)
+        return dict(kb=kb, pay=pay, pr=kb/pay*100 if pay else 0, rev=rev, arppu=rev/kb if kb else 0)
+    rows_a = [('夏日 · 老服成熟段 1000-1870（同段基准）', agg('夏日', 1000, 1870), '#2ea856'),
+              ('世界杯 · 老服成熟段 1000-1870', agg('世界杯', 1000, 1870), '#c08a17'),
+              ('世界杯 · 年轻老服 1880-1970', agg('世界杯', 1880, 1970), '#c08a17'),
+              ('世界杯 · 扩服新服 1980-2250', agg('世界杯', 1980, 2250), '#c08a17')]
+    t = ['<table><tr><th class="l">新老服拆分（同段对齐）</th><th>收入</th><th>开箱买家</th><th>该段总付费人数</th><th>付费玩家付费率</th><th>ARPPU</th></tr>']
+    for name, m, c in rows_a:
+        hl = ' class="row-a"' if '世界杯 · 老服成熟段' in name else ''
+        bar = f'<div style="height:8px;width:{m["pr"]*10:.0f}px;max-width:220px;background:{c};border-radius:4px;display:inline-block;margin-right:8px;vertical-align:middle"></div>'
+        t.append(f"<tr{hl}><td class='l'><b>{name}</b></td><td>{fmt(m['rev'])}</td><td>{m['kb']}</td><td>{m['pay']:,}</td>"
+                 f"<td class='l'>{bar}<b>{m['pr']:.1f}%</b></td><td>${m['arppu']:.0f}</td></tr>")
+    t.append('</table>')
+
+    wc_free = 210976; wc_free_u = 13315
+    sm_u, sm_q = TKS['summer_total']['u'], TKS['summer_total']['qty']
+    wc_u, wc_q = TKS['wc_total']['u'], float(TKS['wc_total']['qty'])
+    t.append('<div style="height:12px"></div><table><tr><th class="l">开箱券供给对比（获取侧 asset 全量）</th><th>券触达人数</th><th>总发放量</th><th>人均</th></tr>')
+    t.append(f"<tr><td class='l'><b>夏日券 1134</b>（无大众免费水管）</td><td>{sm_u:,}</td><td>{sm_q:,.0f}</td><td>{sm_q/sm_u:.0f} 张</td></tr>")
+    t.append(f"<tr class='row-a'><td class='l'><b>世界杯券 1146</b>（竞猜免费档+中奖邮件两条大水管）</td><td>{wc_u:,}<span class='dim'>（×{wc_u/sm_u:.1f}）</span></td><td>{wc_q:,.0f}<span class='dim'>（×{wc_q/sm_q:.1f}）</span></td><td>{wc_q/wc_u:.0f} 张</td></tr>")
+    t.append(f"<tr><td class='l'>└ 其中：竞猜免费档直发</td><td>{wc_free_u:,}</td><td>{wc_free:,}</td><td class='dim'>另有中奖邮件加送（百万级）</td></tr>")
+    t.append('</table>')
+
+    sm_t = {x['iap']: x['buyers'] for x in PR['夏日_tiers']}
+    wc_t = {x['iap']: x['buyers'] for x in PR['世界杯_tiers']}
+    t.append('<div style="height:12px"></div><table><tr><th class="l">档位买家梯子（连锁5档 + 锚点首档）</th><th>$4.99</th><th>$9.99</th><th>$19.99</th><th>$49.99</th><th>$99.99</th><th>锚点$4.99</th></tr>')
+    t.append(f"<tr><td class='l'><b>夏日</b></td><td><b>{sm_t.get('210702',0)}</b></td><td>{sm_t.get('210704',0)}</td><td>{sm_t.get('210706',0)}</td><td>{sm_t.get('210708',0)}</td><td>{sm_t.get('210710',0)}</td><td>{sm_t.get('210712',0)}</td></tr>")
+    t.append(f"<tr><td class='l'><b>世界杯（全服）</b></td><td><b>{wc_t.get('211002',0)}</b></td><td>{wc_t.get('211004',0)}</td><td>{wc_t.get('211006',0)}</td><td>{wc_t.get('211008',0)}</td><td>{wc_t.get('211010',0)}</td><td>{wc_t.get('211012',0)}</td></tr>")
+    t.append('</table>')
+    return ''.join(t)
+
+JSRV = json.load(open(os.path.join(HERE, '_jingcai_srv.json'), encoding='utf-8'))   # 竞猜逐服(付费+参与)
+
+def jc_srv_table():
+    """竞猜新老服拆分：参与/转化/付费率/ARPPU 按服段"""
+    P = PR['世界杯_payers']
+    segs = [('老服成熟段 1000-1870', 1000, 1870), ('年轻老服 1880-1970', 1880, 1970), ('扩服新服 1980-2250', 1980, 2250)]
+    t = ['<table><tr><th class="l">服段</th><th>参与人数</th><th>付费买家</th><th>参与→付费转化</th><th>收入</th><th>该段总付费人数</th><th>付费玩家付费率</th><th>ARPPU</th></tr>']
+    for name, lo, hi in segs:
+        part = sum(v for k, v in JSRV['part'].items() if lo <= int(k) <= hi)
+        b = sum(v['b'] for k, v in JSRV['pay'].items() if lo <= int(k) <= hi)
+        rev = sum(v['rev'] for k, v in JSRV['pay'].items() if lo <= int(k) <= hi)
+        pay = sum(v for k, v in P.items() if lo <= int(k) <= hi)
+        t.append(f"<tr><td class='l'><b>{name}</b></td><td>{part:,}<span class='dim'>（{part/13315*100:.0f}%）</span></td><td>{b}</td>"
+                 f"<td>{b/part*100 if part else 0:.1f}%</td><td>{fmt(rev)}</td><td>{pay:,}</td>"
+                 f"<td>{b/pay*100 if pay else 0:.1f}%</td><td>${rev/b if b else 0:.0f}</td></tr>")
+    t.append('</table>')
+    return ''.join(t)
+
+def jc_pay_table():
+    """竞猜基本付费分析：完整指标行 + 开箱/通行证同窗参照（列序对齐开箱历史数据对比表）"""
+    g = KG['世界杯开箱']
+    kb = g['buyers']
+    over100 = g['bucketA'].get('10', 0)/kb*100
+    over500 = sum(v for k, v in g['bucketB'].items() if int(k) >= 5)/kb*100
+    rows = [
+      ('竞猜（894全档）', True, JP['竞猜894全档'], None),
+      ('参照 · 世界杯开箱', False,
+       dict(rev=g['rev'], buyers=kb, payrate=g['payrate'], total_payers=g['total_payers'],
+            p50=g['p50'], p90=g['p90'], over100=over100, over500=over500, max=g['max']), G_WC['合并']['opb']),
+      ('参照 · 通行证 130020/21', False, JP['通行证'], None),
+    ]
+    tr = ['<table><tr><th class="l">模块（6/26-' + END[5:] + ' 同窗）</th><th>收入</th><th>买家</th><th>付费玩家付费率*</th><th>付费玩家ARPU*</th><th>ARPPU</th><th>复购</th><th>p50</th><th>p90</th><th>$100+占比</th><th>$500+占比</th><th>max</th></tr>']
+    for name, hl, m, opb_override in rows:
+        opb = opb_override if opb_override is not None else (m.get('orders', 0)/m['buyers'] if m['buyers'] else 0)
+        cls = ' class="row-a"' if hl else ''
+        tr.append(f"<tr{cls}><td class='l'><b>{name}</b></td><td>{fmt(m['rev'])}</td><td>{m['buyers']}</td>"
+                  f"<td>{m['payrate']:.1f}%<span class='dim'>／{m['total_payers']:,}</span></td>"
+                  f"<td>${m['rev']/m['total_payers']:.2f}</td>"
+                  f"<td>${m['rev']/m['buyers']:.0f}</td><td>{opb:.1f}</td><td>${m['p50']:.0f}</td><td>${m['p90']:.0f}</td>"
+                  f"<td>{m['over100']:.1f}%</td><td>{m['over500']:.1f}%</td><td>{fmt(m['max'])}</td></tr>")
+    tr.append('</table>')
+    tr.append("<div class='dim' style='margin-top:6px'>*付费玩家付费率 = 模块买家 ÷ 有该模块流水的服上同窗总付费人数（竞猜 3,605 / 开箱 4,047 / 通行证 4,240）；付费玩家ARPU = 模块收入 ÷ 同一分母。</div>")
+    return ''.join(tr)
+
+def jc_tier_table():
+    """档位表：含付费玩家付费率（分母=世界杯窗口全服总付费人数）与 ARPU（同分母）"""
+    P = WC['payers']
+    def row(name, key):
+        m = wm[key]
+        return (name, fmt(m['rev']), str(m['buyers']), f"{m['buyers']/P*100:.1f}%",
+                f"${m['rev']/P:.2f}", f"${m['arppu']:.1f}", f"{m['opb']:.1f}", fmt(m['max']))
+    g = wm['竞猜礼包全档']
+    rows = [
+      ('<b>竞猜整体（894全档）</b>', fmt(g['rev']), str(g['buyers']), f"<b>{g['buyers']/P*100:.1f}%</b>",
+       f"${g['rev']/P:.2f}", f"${g['arppu']:.1f}", f"{g['opb']:.1f}", fmt(g['max'])),
+      ('免费预测档（尾0）', '—', f"{CANYU:,} 人参与", '—', '—', '—', '—', '—'),
+      row('$4.99 券档（尾1）', '竞猜$4.99档(尾1)'),
+      row('$9.99 框档（尾2·外显）', '竞猜$9.99框档(尾2)'),
+      row('$19.99 表情档（尾3·外显）', '竞猜$19.99表情档(尾3)'),
+    ]
+    tr = ['<table><tr><th class="l">档位</th><th>收入</th><th>买家/参与</th><th>付费玩家付费率*</th><th>ARPU</th><th>ARPPU</th><th>复购</th><th>max</th></tr>']
+    for i, (name, rev, b, pr, arpu, ar, op, mx) in enumerate(rows):
+        hl = ' class="row-a"' if i == 0 else ''
+        tr.append(f"<tr{hl}><td class='l'>{name}</td><td>{rev}</td><td>{b}</td><td>{pr}</td><td>{arpu}</td><td>{ar}</td><td>{op}</td><td>{mx}</td></tr>")
+    tr.append('</table>')
+    tr.append(f"<div class='dim' style='margin-top:6px'>*付费玩家付费率 = 该档买家 ÷ 世界杯窗口全服总付费人数（{P:,}）；ARPU 同分母。参考：开箱族付费率 {KX['buyers']/P*100:.1f}% · 通行证 {wm['通行证(130020/21)']['buyers']/P*100:.1f}%。</div>")
     return ''.join(tr)
 
 # ---- ③ 本服排行榜效果（逐服）----
@@ -378,6 +606,13 @@ td{{padding:9px 10px;border-bottom:1px solid #21262d;text-align:center;vertical-
 tr:hover td{{background:#161b2299}}
 .dim{{color:#484f58;font-size:11px}}
 .row-a{{background:#21262d!important}} .row-a td{{color:var(--head);font-weight:700}}
+.bigcon{{background:linear-gradient(135deg,#1b2436,#161b22);border:1px solid var(--border);border-left:4px solid var(--yellow);border-radius:8px;padding:16px 20px;font-size:14.5px;line-height:2;color:var(--text);margin-bottom:14px}} .bigcon b{{color:var(--head)}}
+.chips{{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}}
+.chip{{padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:#161b22;color:#8b949e;font-size:12.5px;font-weight:600;cursor:pointer}}
+.chip:hover{{color:var(--head)}}
+.chip.on{{background:#1f6feb;border-color:#1f6feb;color:#fff}}
+.view{{display:none}} .view.on{{display:block}}
+.vc{{background:#0d2137;border-left:4px solid var(--accent);border-radius:6px;padding:12px 18px;font-size:14px;font-weight:700;color:var(--head);line-height:1.9;margin-bottom:10px}}
 td b{{color:var(--head)}}
 .cb{{border-radius:6px;padding:10px 14px;margin:10px 0 0;font-size:12px;line-height:1.7}}
 .cb-info{{background:#0d2137;border-left:3px solid var(--accent)}} .cb b{{color:var(--head)}}
@@ -391,8 +626,9 @@ td b{{color:var(--head)}}
     <a class="sb-item" href="#verdict">结论先行</a>
     <a class="sb-item" href="#sec0">01 · 世界杯模块全景 vs 预期</a>
     <a class="sb-item" href="#seckx">02 · 世界杯开箱效果分析</a>
-    <a class="sb-item" href="#sec1">03 · 世界杯 8 条改动</a>
-    <a class="sb-item" href="#sec2">04 · 深海节 9 条（待聊）</a>
+    <a class="sb-item" href="#secjc">03 · 世界杯竞猜回归（整体）</a>
+    <a class="sb-item" href="#sec1">04 · 世界杯 8 条改动</a>
+    <a class="sb-item" href="#sec2">05 · 深海节 9 条（待聊）</a>
   </div>
 </nav>
 
@@ -404,17 +640,17 @@ td b{{color:var(--head)}}
 
 <div class="verdict" id="verdict">
   <div class="vl">VERDICT · 结论先行</div>
-  <p><b>① 最硬的两条正结论：锚点可复购（W2）+ 外显进付费档（W3）</b>——锚点买家 ×2.8（48-55→153 人，占开箱买家 40%，长成 $4.99 小额复购位；「可复购」经配置 diff 证伪，真实归因=补钻VIP+竞猜引流）；max $1,415 六代第一次凿穿 $707 买光墙；竞猜侧外显两档占付费 81%。但要说清边界：<b>开箱人均三代横盘 $48-54，改动打开的是渗透和头部、不是中层</b>（详见 02 章）。
+  <p><b>① 世界杯开箱 = 正常发挥、未被双节叠开和竞猜礼包挤压（本体效果接近夏日，可以继续开）。唯一结构性正信号 = 外显进付费档（W3）</b>——竞猜侧外显两档占付费 81%、开箱侧出现 $1,415 首个破墙极值；锚点买家 ×2.8 主要来自服基数扩大（扩服+年轻服），不计入改动效果；开箱人均三代横盘 $48-54（详见 02 章）。
   <b>② 最大的两条证伪：转盘连锁形式（D2，判退役坐实+锚点零购买）和双周节奏（D1，部署同开=没有弹药带）。</b>
   <b>③ 竞猜是拉人神器不是收钱模块</b>——参与 {CANYU:,} 人（=窗口总付费人数的 3.2 倍）vs 付费 {fmt(wm['竞猜礼包全档']['rev'])}/160人（转化 1.2%），价值在触达和活跃，变现靠外显档；奖励逐轮升级（W6）没能逆转付费档衰减。</p>
 </div>
 
 <div class="page">
 <div class="kpi-row">
-  <div class="kpi g"><div class="kpi-val">{N_OK} 条</div><div class="kpi-lbl">验证有效</div><div class="kpi-sub">W2锚点复购 · W3外显进档 · W7扩服 · W8免费下调 · D3大富翁 · D5每日礼包 · D7存钱罐</div></div>
+  <div class="kpi g"><div class="kpi-val">{N_OK} 条</div><div class="kpi-lbl">验证有效</div><div class="kpi-sub">W3外显进档 · W7扩服 · W8免费下调 · D3大富翁 · D5每日礼包 · D7存钱罐</div></div>
   <div class="kpi r"><div class="kpi-val">{N_BAD} 条</div><div class="kpi-lbl">证伪</div><div class="kpi-sub">D1双周节奏（同开无错峰）· D2转盘形式（判退役）</div></div>
-  <div class="kpi y"><div class="kpi-val">{N_MID} 条</div><div class="kpi-lbl">部分有效/存疑</div><div class="kpi-sub">W1竞猜（触达强变现弱）· W4锚点归因 · W5本服榜 · W6逐轮升级 · D4双BP · D6周卡</div></div>
-  <div class="kpi"><div class="kpi-val">{N_WAIT} 条</div><div class="kpi-lbl">待查</div><div class="kpi-sub">D8删折扣券 · D9珍珠贝</div></div>
+  <div class="kpi y"><div class="kpi-val">{N_MID} 条</div><div class="kpi-lbl">部分有效/存疑</div><div class="kpi-sub">W1竞猜 · W2锚点（基数效应）· W5本服榜 · W6逐轮升级 · D4双BP · D6周卡</div></div>
+  <div class="kpi"><div class="kpi-val">{N_WAIT} 条</div><div class="kpi-lbl">待查</div><div class="kpi-sub">W4补钻VIP（无从分离）· D8删折扣券 · D9珍珠贝</div></div>
 </div>
 
 <div class="sec" id="sec0"><div class="sec-head"><div class="sec-num">01</div><div class="sec-title">世界杯模块全景：各模块收入 × 是否符合该活动类型的预期（6/26-{END[5:]} · 全服 · 总付费 {WC['payers']:,} 人）</div></div>
@@ -426,58 +662,137 @@ td b{{color:var(--head)}}
 <div class="cb cb-info"><b>结论：世界杯四个收入模块两级分化——开箱族超预期（六代最高+首次破墙），BP 符合预期（形式没动就没变化），竞猜触达超预期但变现远不达预期。</b>收入结构 = 开箱 {fmt(KX['rev'])} &gt; BP {fmt(wm['通行证(130020/21)']['rev'])} &gt; 竞猜 {fmt(wm['竞猜礼包全档']['rev'])}；参与结构完全倒过来 = 竞猜 {CANYU:,} 人 &gt; 兑换 {DH['users']:,} 人 &gt; BP 550 人 &gt; 开箱 387 人——<b>世界杯用竞猜聚人、用开箱收钱，两头都成立，缺的是把 13k 参与者往付费漏斗里送的中间层</b>（$0.99-4.99 宽入口缺位，P2 三板斧的第三板）。</div>
 </div></div>
 
-<div class="sec" id="seckx"><div class="sec-head"><div class="sec-num">02</div><div class="sec-title">世界杯开箱效果分析：对打夏日开箱 × 情人节开箱（同方法·各自窗口）</div></div>
-<div class="cb cb-warn" style="margin:0 0 14px"><b>本章判定：世界杯开箱本体付费效果接近夏日，没有受到双节叠开和竞猜礼包的挤压，效果稳定——可以继续开；本服排行榜目前效果比较有限，需要调整投放提升吸引力。</b>（分项证据见下 ①-④）</div>
-<div class="card"><div class="ct">三代开箱对打 · 绝对值受服数/窗口影响，看比率（ARPPU/复购/占比/max）</div>
-{kx_table()}
-{kx_panels()}
-<div class="cb cb-info"><b>结论：世界杯开箱的提升在"规模"和"头部"，不在"人均"。</b>
-① <b>人均横盘</b>——三代 ARPPU $54 → $48 → $52、复购 4.8/4.2/4.5、p50 $5-9，大众段付费结构基本没动（此前"+35%人均爬升"是 D0-D10 同窗口径，全窗被长尾稀释后不成立）。
-② <b>锚点买家 ×2.8、集中在 $4.99 档</b>——统一口径四代锚点买家 48/53/55 → 153 人（占开箱买家 20-22% → 40%），做成了低门槛复购位；代价是锚点 ARPPU 走低（$24-56 → $19），拉渗透不拉深度。⚠️归因修正见 ③：「可复购」是伪归因，真实变化=补钻VIP+竞猜引流。
-③ <b>天花板打开一条缝</b>——max $555/$550 → $1,415，六代首次有人花过 $707 买光墙；但 $100+ 占比 16%→14%→12% 反而略降：<b>被打开的只是极个别头部，中层（$100-500）没有被加深</b>。
-④ 收入 $4.7k → $11.8k → $20.1k 的放大主要来自服基数和 20 天长窗，不能直接归功于形式改动。</div>
+<div class="sec" id="seckx"><div class="sec-head"><div class="sec-num">02</div><div class="sec-title">世界杯开箱效果分析：对比夏日开箱 × 情人节开箱</div></div>
+<div class="bigcon">大结论：<b>世界杯开箱本体付费效果接近夏日，没有受到双节叠开和竞猜礼包的挤压，效果稳定——可以继续开。</b><br>
+<span style="font-size:13px;line-height:2.1">
+① <b>头衔+排行榜有效</b>——仅限玩家对深度有需求的排行（跨服榜 1-5 名头衔点燃塔尖 $1,415/$1,330）；<br>
+② <b>本服排行榜：需增加有效投放</b>（当前投放吸引力不足，每服 top1 中位 $60 未超夏日）；<br>
+③ <b>特殊形式礼包加付费深度：有效</b>——没有挤压到原有的活动付费（开箱本体稳定的前提下多出竞猜/外显档增量）；<br>
+④ <b>世界杯皮肤转视频基本不影响收入</b>（Top20 稳定）——可以考虑拓展皮肤投放量、提升皮肤品质，做出<b>双层排行榜需求</b>（类似 P2 主城皮肤的高低档分层）；<br>
+⑤ <b>锚点礼包加 VIP 点数：无影响</b>（买家增长为服基数效应，改动本身无净效果）。
+</span></div>
+<div class="chips">
+  <button class="chip on" data-v="kx1">历史数据对比</button>
+  <button class="chip" data-v="kx2">转化率·大众段</button>
+  <button class="chip" data-v="kx3">转化率·$100以上</button>
+  <button class="chip" data-v="kx4">皮肤/头衔 · Top20</button>
+  <button class="chip" data-v="kx5">锚点礼包</button>
+  <button class="chip" data-v="kx6">本服排行榜</button>
+  <button class="chip" data-v="kx7">付费率下钻·新老服</button>
 </div>
 
-<div class="card"><div class="ct">① 转化率分析 · 四代开箱付费分布（含元旦 · 纵轴=买家占比 · 分段等宽桶双图）</div>
-{kx_dist_chart('bucketA', 10, 10, lambda i: f'${i*10}-{i*10+10}', '>$100', '图A · 大众段 $0-100（每$10一档）')}
-<div style="height:10px"></div>
-{kx_dist_chart('bucketB', 19, 100, lambda i: (f'${(i+1)*100}' if i < 9 else f'${(i+1)/10:.1f}k'), '>$2k', '图B · 鲸鱼段 $100+（每$100一档 · 分母同为该代全部买家）')}
-<div class="cb cb-info"><b>结论：四代开箱的付费分布形状高度重合——大众段（$0-100）四条线几乎叠在一起，$100+ 段世界杯的中层（$100-500）占比不高于前三代，唯一差别是尾巴延伸到 $1.4k。</b>分布图直观印证 02 章判断：形式改动没有改变开箱的付费结构，只在最右端开了一条缝。</div>
-</div>
-
-<div class="card"><div class="ct">② 皮肤付费效果 · 四代分位数对打（世界杯=首代把皮肤放进开箱大奖+排行榜）</div>
-{kx_quantile_chart()}
-<div class="cb cb-info"><b>结论：皮肤进大奖没有系统性拉高头部付费——p95（$302 vs 元旦$260/夏日$325）、p99（$460 vs 元旦$610/情人$555）都在历代区间内甚至偏低，头部群体没有因为皮肤而加深，唯一变化是 1 个 $1,415 极值。</b>对照 P2 圣诞排行皮肤（上榜线 $1,444 / 上榜者中位 $2,529）：X3 的跨服榜没有形成头部竞争——皮肤作为大奖"有钩没梯"，从 p99 $460 到上榜线之间缺可花钱的台阶（P2 的做法是排行皮肤+染色分层让 Top30 互相咬）。</div>
-</div>
-
-<div class="card"><div class="ct">③ 锚点礼包四代对比 + 世界杯锚点按档拆分</div>
-{anchor_card()}
-<div class="cb cb-info"><b>结论：锚点买家 ×2.8（48-55 → 153 人），几乎全部集中在 $4.99 档（145/153 人，复购 1.8）——锚点实际长成了"$4.99 小额复购位"。归因修正：「锚点可复购」是伪归因</b>——配置 diff 显示 211012-15 与情人 210712-15 的限购列完全一致（差异仅 id/备注/奖励组），且情人锚点 max $910 证明前代本来就能复购；WC 锚点增长的真实归因 = 补钻石+VIP（6/24 v0.41，价值感提升）+ 竞猜带来的流量。高档基本无人（$49.99 两人/$99.99 三人）＝锚点当不了深度工具，符合价格锚+小额位的定位。</div>
-</div>
-
-<div class="card"><div class="ct">④ 本服排行榜效果 · 逐服开箱付费对比（榜=活动全程拉通累计）</div>
-{perserver_card()}
-<div class="cb cb-info"><b>结论：本服排行榜（6/24 新增）效果未显现——拉通口径下世界杯窗口近 2 倍长，每服 top1 中位 $60 反而低于夏日 $75，服均收入 $261 仅持平（$240），top1≥$100 的服占比也没抬升：榜没把各服头部的开箱付费拉起来。</b>⚠️判定前置条件待确认：该榜配置时明确标注"客户端同时显示跨服+本服两 Tab 需程序联调、占位性质"——需先确认线上客户端是否真露出了本服 Tab；若未露出，这条是"没上线"而非"无效"，下届补露出后再验一次。</div>
+<div class="view on" id="kx1"><div class="vc">人均三代横盘（$54 → $48 → $52）、复购持平——本体效果 = 正常水平；规模（买家 387）与 max 极值（$1,415）的增长主要来自服基数和 20 天长窗。</div>
+<div class="card"><div class="ct">历史数据对比（情人节/夏日/世界杯） · 绝对值受服数/窗口影响，看比率 · 付费率分母见表下注</div>
+{kx_table()}<div style="height:10px"></div>{kx_panels()}
 </div></div>
 
-<div class="sec" id="sec1"><div class="sec-head"><div class="sec-num">03</div><div class="sec-title">世界杯 8 条改动逐条效果</div></div>
+<div class="view" id="kx2"><div class="vc">大众段（$0-100）四代分布几乎完全重合——形式改动没有改变大众付费结构。</div>
+<div class="card"><div class="ct">四代开箱付费分布 · 大众段（含元旦 · 纵轴=买家占比）</div>
+{kx_dist_chart('bucketA', 10, 10, lambda i: f'${{i*10}}-{{i*10+10}}', '>$100', '图A · 大众段 $0-100（每$10一档）')}
+</div></div>
+
+<div class="view" id="kx3"><div class="vc">中层（$100-500）没有加深，世界杯只在最右端开了一条缝（max $1,415，六代首次过 $707）。</div>
+<div class="card"><div class="ct">四代开箱付费分布 · $100 以上（分母同为该代全部买家）</div>
+{kx_dist_chart('bucketB', 19, 100, lambda i: (f'${{(i+1)*100}}-{{(i+2)*100}}' if i < 9 else f'${{(i+1)/10:.1f}}k-{{(i+2)/10:.1f}}k'), '>$2k', '图B · $100 以上（每$100一档 · 横轴=单人付费区间）')}
+</div></div>
+
+<div class="view" id="kx4"><div class="vc">头衔在塔尖有效、但只传导到前 2 名——跨服榜第 1-5 名挂"世界之巅"头衔（配置实证），全服 Top2 的 $1,415/$1,330 极值就是争头衔的塔尖竞争；但第 3 名起立刻回落到 $535，Top20 群体、分位数 p95/p99 都没被拉起——头衔证明了外显竞争的付费力，缺的是向下分层的梯子（P2 式 top3 染色/top30 分层让更多人咬）。老服 ARPPU $48→$52 的"深度提高"主要是构成效应（免费券替代低档买家后的均值抬升），不是群体加深。</div>
+<div class="card"><div class="ct">Top20 付费额度阶梯 · 悬停看每名次金额 · 下方=各代核心投放注释</div>
+{kx_top20_chart()}
+{top20_notes()}
+<div class="cb cb-info">读法对照 P2 圣诞（上榜线 $1,444/上榜者中位 $2,529，排行皮肤+染色分层让 Top30 互相咬）：X3 头衔只有 1 档、皮肤 top20+ 人人一样，没有分层就没有梯队——世界杯全服 Top2 与第 3 名之间 $800 的断崖就是"缺梯子"的形状。</div>
+</div></div>
+
+<div class="view" id="kx5"><div class="vc">锚点 = 正常的 $4.99 小额位；买家 153 人的增长主要是服基数效应（扩服 28+年轻服），不是改动的正向效果；「可复购」是伪归因（配置与前代完全一致）。</div>
+<div class="card"><div class="ct">锚点礼包四代对比 + 世界杯锚点按档拆分</div>
+{anchor_card()}
+<div class="cb cb-info">配置 diff：211012-15 与情人 210712-15 限购列完全一致（差异仅 id/备注/奖励组），情人锚点 max $910 证明前代本来就能复购。95% 买家集中 $4.99 档、高档无人（$49.99 两人 / $99.99 三人）= 价格锚+小额位定位的正常发挥。</div>
+</div></div>
+
+<div class="view" id="kx6"><div class="vc">本服排行榜效果有限——窗口近 2 倍长，每服 top1 中位 $60 反而低于夏日 $75，服均仅持平；需要调整投放提升吸引力（并先确认客户端本服 Tab 是否真露出）。</div>
+<div class="card"><div class="ct">逐服开箱付费对比 · 榜=活动全程拉通累计</div>
+{perserver_card()}
+<div class="cb cb-info">⚠️判定前置：该榜配置时标注"客户端双 Tab 露出需程序联调、占位性质"——若未露出，这条是"没上线"而非"无效"，下届补露出后再验一次。</div>
+</div></div>
+
+<div class="view" id="kx7"><div class="vc">付费率差距两层：①新服稀释——扩服段只有 7.7%，把全口径拉到 9.6%；②老服成熟段真实下降 20.1% → 13.2%（买家 245 → 133 近腰斩），主因是券供给结构变了：世界杯把开箱券做成竞猜大众奖励，券触达 ×3.9（5,629 → 21,878 人），免费供给替代了 $4.99 入场档的购买动机。夏日付费率的"强点"= 券稀缺、想抽就得买。ARPPU 反而更高（$52 vs $48）——竞猜抢走的不是开箱的钱，是开箱的低档买家。</div>
+<div class="card"><div class="ct">新老服拆分 · 券供给对比 · 档位买家梯子</div>
+{payrate_drill()}
+<div class="cb cb-info">口径注：①窗口机械效应已排除——世界杯 20 天成熟段总付费人数（1,008）反而少于夏日 11 天（1,217），分母没有被长窗撑大；②券来源按 reason 前缀分类有少量污染，但两代总供给/触达对比与免费竞猜档直发数（894尾0=13,315 人/21.1 万张）干净；③中奖邮件加送券为"其他"桶主体（百万级）。</div>
+</div></div>
+</div>
+
+<div class="sec" id="secjc"><div class="sec-head"><div class="sec-num">03</div><div class="sec-title">世界杯竞猜回归 · 整体（6/26-{END[5:]} · 全服）</div></div>
+<div class="bigcon">大结论：<b>竞猜是 X3 史上最宽的活动入口（参与 {CANYU:,} 人 = 窗口总付费人数的 3.2 倍），且参与不随淘汰赛缩圈衰减；但它不是收钱模块——付费 {fmt(wm['竞猜礼包全档']['rev'])}/160 人（转化 1.2%）且逐轮衰减，付费主力是搭售的外显两档（81%）。定性 = 拉人和活跃的模块，变现靠外显搭售。</b><br>
+<span style="font-size:12.5px">整体指标：付费玩家付费率 <b>{wm['竞猜礼包全档']['buyers']/WC['payers']*100:.1f}%</b>（对照 开箱族 {KX['buyers']/WC['payers']*100:.1f}% · 通行证 {wm['通行证(130020/21)']['buyers']/WC['payers']*100:.1f}%）｜ ARPU <b>${wm['竞猜礼包全档']['rev']/WC['payers']:.2f}</b> ｜ ARPPU <b>${wm['竞猜礼包全档']['arppu']:.1f}</b> ｜ 复购 {wm['竞猜礼包全档']['opb']:.1f} 单 ｜ max {fmt(wm['竞猜礼包全档']['max'])}</span></div>
+<div class="chips">
+  <button class="chip on" data-v="jc0">基本付费分析</button>
+  <button class="chip" data-v="jc1">参与逐日</button>
+  <button class="chip" data-v="jc2">按轮：参与 vs 付费</button>
+  <button class="chip" data-v="jc3">档位结构</button>
+  <button class="chip" data-v="jc4">新老服拆分</button>
+</div>
+
+<div class="view on" id="jc0"><div class="vc">买了的人花得不少（ARPPU $44 与开箱 $52 同级、复购 4.1 全场最高），但付费玩家付费率只有 4.4%——不到开箱（9.6%）的一半、通行证（13.0%）的三分之一；p90 $100、$500+ 仅 1.2%，头部薄。竞猜缺的不是客单，是把 1.3 万参与者转成买家的那一步。</div>
+<div class="card"><div class="ct">竞猜基本付费指标 · 开箱/通行证同窗参照</div>
+{jc_pay_table()}
+</div></div>
+
+<div class="view" id="jc1"><div class="vc">参与由比赛日驱动、20 天全程有脉冲无衰减——按轮 7.3k → 10.8k → 8.7k → 8.2k，淘汰赛缩圈不缩人。作为拉活跃入口，生命力贯穿全程。</div>
+<div class="card"><div class="ct">参与逐日曲线 · 轮次色带 · 悬停看数</div>
+{jc_daily_chart()}
+</div></div>
+
+<div class="view" id="jc2"><div class="vc">参与和付费背离：人越聚越多，付费日均 $410 → $158 逐轮走低——奖励逐轮升级没能逆转（见 04 章 W6）。</div>
+<div class="card"><div class="ct">按轮对比 · 同轮次窗口</div>
+{jc_rounds_chart()}
+</div></div>
+
+<div class="view" id="jc3"><div class="vc">付费主力是外显两档（$5,696 · 占 81%），纯券档只卖 $1,332——竞猜本体被玩家当免费玩法，13,315 参与者是全场最大的未转化流量池。</div>
+<div class="card"><div class="ct">档位结构 · 付费率分母=世界杯窗口全服总付费人数</div>
+{jc_tier_table()}
+<div class="cb cb-info">改造方向 = P2 猜酒杯形式（充值即参与 + 排行强循环），量级参考 07-10 漏斗推算（修到猜酒杯转化水平 ≈ 6.5×）。</div>
+</div></div>
+
+<div class="view" id="jc4"><div class="vc">参与近一半来自扩服新服（6,493 人·49%）——新服玩家最爱玩竞猜、白嫖盘最大；但参与→付费转化三段均匀地低（老服 1.3% / 年轻服 1.6% / 新服 1.0%）——付费弱不是人群问题，是形式问题（哪个段都不买"加成券"）；年轻老服客单最高（ARPPU $67）。</div>
+<div class="card"><div class="ct">竞猜新老服拆分 · 参与 / 转化 / 付费率 / ARPPU</div>
+{jc_srv_table()}
+<div class="cb cb-info">口径：竞猜部署 83 服（55 老服 1170-1970 + 28 扩服）；参与=asset 894% 去重、付费=894 订单；付费率分母=该段窗口总付费人数。</div>
+</div></div>
+</div>
+
+<div class="sec" id="sec1"><div class="sec-head"><div class="sec-num">04</div><div class="sec-title">世界杯 8 条改动逐条效果</div></div>
 <div class="card">
 {table(WC_ROWS)}
 <div style="margin-top:14px">{round_bar()}</div>
-<div class="cb cb-info"><b>结论：世界杯的钱在开箱（{fmt(wm['开箱福箱连锁']['rev'] + wm['开箱券锚点(可复购)']['rev'])}）和通行证（{fmt(wm['通行证(130020/21)']['rev'])}），竞猜的价值在人（13,315 参与）。</b>两条形式改动（锚点可复购+外显进档）的实际战果=锚点买家×2.8 + 头部破墙，人均横盘——马戏节照抄这两条起步，但中层加深要靠别的手段（阶段奖励宝箱/随机双轨）。</div>
+<div class="cb cb-info"><b>结论：世界杯的钱在开箱（{fmt(wm['开箱福箱连锁']['rev'] + wm['开箱券锚点(可复购)']['rev'])}）和通行证（{fmt(wm['通行证(130020/21)']['rev'])}），竞猜的价值在人（13,315 参与）。</b>开箱 = 正常发挥未被挤压；外显进付费档是唯一结构性正信号（马戏节照抄）；中层加深要靠别的手段（阶段奖励宝箱/随机双轨）。</div>
 </div></div>
 
-<div class="sec" id="sec2"><div class="sec-head"><div class="sec-num">03</div><div class="sec-title">深海节 9 条改动（7/3-{END[5:]} · 59服 · 总付费 {DS['payers']:,} 人）——待聊，先过完世界杯</div></div>
+<div class="sec" id="sec2"><div class="sec-head"><div class="sec-num">05</div><div class="sec-title">深海节 9 条改动（7/3-{END[5:]} · 59服 · 总付费 {DS['payers']:,} 人）——待聊，先过完世界杯</div></div>
 <div class="card"><div class="ct">模块收入底图 · 悬停看 渗透/ARPPU/复购/max</div>
 {module_bar(dm, DS_ORDER)}
 </div>
 <div class="card">
 {table(DS_ROWS)}
-<div class="cb cb-info"><b>结论：深海的结构是"大富翁族压舱（$21.7k）+ BP 铺渗透（630 买家）+ 送达层首次成型（每日礼包 290 人）"，输在转盘（形式老化）和节奏（同开无错峰）。</b>两个零销售要记住：藏宝图锚点 $0（纯价格锚）、头像框 211019 $0（外显单卖 $9.99 无人买——对比外显进抽奖档卖爆，<b>外显要进玩法不要单摆货架</b>）。</div>
+<div class="cb cb-info"><b>结论：深海的结构是"大富翁族压舱（$21.7k）+ BP 铺渗透（630 买家）+ 送达层首次成型（每日礼包 290 人）"，输在转盘（形式老化）和节奏（同开无错峰）。</b>零销售注：藏宝图锚点 $0（纯价格锚）；头像框 211019 $0 = <b>实际未上架</b>（该外显改进了 BP 奖励发放），不构成直售反例。</div>
 </div></div>
 
 <div class="footer">X3 双节框架回归 · 母题4 改动效果清单 · 数据源=Trino v1090 全口径（_l1_refresh.py → _l1_m4.json） · 生成 {now}</div>
 </div></div>
+<script>
+document.querySelectorAll('.chips').forEach(function(g){{
+  var sec = g.parentElement;
+  g.querySelectorAll('.chip').forEach(function(btn){{
+    btn.addEventListener('click', function(){{
+      g.querySelectorAll('.chip').forEach(function(b){{ b.classList.remove('on'); }});
+      btn.classList.add('on');
+      sec.querySelectorAll('.view').forEach(function(v){{ v.classList.remove('on'); }});
+      var t = sec.querySelector('#' + btn.dataset.v);
+      if (t) t.classList.add('on');
+    }});
+  }});
+}});
+</script>
 </body></html>"""
 
 open(OUT, 'w', encoding='utf-8').write(page)

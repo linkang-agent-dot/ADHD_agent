@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X3 异国美酒储蓄罐 · 触达改造首周回归（2026-07-10~16）</title>
+<style>
+:root{color-scheme:dark;
+  --page:#0d0d0d; --surface:#1a1a19; --ink:#ffffff; --ink2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,.10);
+  --s1:#3987e5; --s2:#008300; --s3:#d55181;
+  --o1:#9ec5f4; --o2:#5598e7; --o3:#2a78d6; --o4:#184f95; --gray:#4a4a47;
+  --good:#0ca30c; --warn:#fab219;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--page);color:var(--ink2);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65;padding:28px 16px 60px}
+.wrap{max-width:1080px;margin:0 auto}
+h1{color:var(--ink);font-size:22px;margin-bottom:6px}
+h2{color:var(--ink);font-size:17px;margin:34px 0 4px}
+h2 .no{color:var(--muted);font-weight:600;margin-right:8px}
+.sub{color:var(--muted);font-size:13px;margin-bottom:14px}
+.lead{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--s1);border-radius:8px;padding:14px 18px;margin:16px 0 8px;font-size:14.5px}
+.lead b{color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:10px;margin:18px 0 6px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
+.kpi .v{color:var(--ink);font-size:24px;font-weight:700}
+.kpi .v small{font-size:13px;font-weight:600;color:var(--good);margin-left:4px}
+.kpi .l{color:var(--muted);font-size:12px;margin-top:2px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin:10px 0}
+.note{font-size:13px;color:var(--muted);margin-top:8px}
+.note b,.card p b{color:var(--ink)}
+.card p{font-size:14px;margin:6px 0}
+ul{margin:6px 0 6px 20px;font-size:14px}
+li{margin:4px 0}
+li b{color:var(--ink)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink2);margin:2px 0 8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+svg{width:100%;height:auto;display:block}
+svg text{font-family:inherit}
+.tip{position:fixed;pointer-events:none;background:#26262b;border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:12.5px;color:var(--ink);display:none;z-index:9;box-shadow:0 4px 14px rgba(0,0,0,.5);white-space:nowrap}
+.tip .t{color:var(--muted)}
+details{margin-top:10px;font-size:13px}
+summary{cursor:pointer;color:var(--muted)}
+table{border-collapse:collapse;margin-top:8px;font-variant-numeric:tabular-nums;font-size:12.5px}
+th,td{border:1px solid var(--grid);padding:4px 10px;text-align:right}
+th{color:var(--muted);font-weight:600}
+td:first-child,th:first-child{text-align:left}
+.tablewrap{overflow-x:auto}
+.foot{margin-top:36px;padding-top:14px;border-top:1px solid var(--grid);font-size:12.5px;color:var(--muted)}
+.warn-ico{color:var(--warn);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap viz-root">
+
+<h1>X3 异国美酒储蓄罐 · 触达改造首周回归</h1>
+<div class="sub">窗口 2026-07-10 ~ 07-16（UTC 日切，7 个完整 UTC 日）· 拉数 2026-07-17 · 对照前周 07-03 ~ 09</div>
+
+<div class="lead">
+<b>结论：HUD 挂件 + 登录弹窗（MR!668）7/9 灰度、7/10 全量上线，储蓄罐周流水应声翻倍（+95%）。</b>
+<ul>
+<li><b>全为净增、零蚕食</b>：美酒直售大盘（储蓄罐+纯美酒礼包）日均 $1,857 → $3,054（<b>+64%</b>），纯美酒礼包自身持平微涨。</li>
+<li><b>触达面</b>：每天约 <b>41% DAU</b> 看到 HUD、<b>35%</b> 被登录弹窗触达、<b>26%</b> 点击进获取途径；本周买家 <b>98.7%</b> 被触达过。</li>
+<li><b>广度拉新</b>：买家中首购新客占 <b>49%</b>、其中 79% 为中小R —— 与 6 月加档的"深度"改造（ARPPU +42%）互补。</li>
+<li><b>主要增长点 = 付费率</b>：ARPPU $14.9 → $14.8 不变，模块 ARPU <b>+67%</b>（$0.037 → $0.061/DAU），增长几乎全部来自付费率 <b>5.7% → 11.3%</b>（买家÷当日付费玩家）——触达改造拉人头、不动客单，<b>符合预期</b>。</li>
+</ul>
+</div>
+
+<div class="kpis">
+<div class="kpi"><div class="v">$16,418<small>+95%</small></div><div class="l">周流水（前周 $8,404）</div></div>
+<div class="kpi"><div class="v">159<small>×2.0</small></div><div class="l">日均买家（前周 80）</div></div>
+<div class="kpi"><div class="v">$14.8</div><div class="l">日均 ARPPU（前周 $14.9，持平未被拉新稀释）</div></div>
+<div class="kpi"><div class="v">11.3%<small>×2.0</small></div><div class="l">付费玩家渗透率（买家÷当日付费玩家，前周 5.7%）</div></div>
+<div class="kpi"><div class="v">41%</div><div class="l">HUD 曝光触达率 / 日（曝光÷DAU）</div></div>
+<div class="kpi"><div class="v">35%</div><div class="l">登录弹窗触达率 / 日</div></div>
+<div class="kpi"><div class="v">90.4%</div><div class="l">全游戏周付费玩家被 HUD 触达</div></div>
+<div class="kpi"><div class="v">2.4%</div><div class="l">周点击 → 购买转化</div></div>
+<div class="kpi"><div class="v">$3,054<small>+64%</small></div><div class="l">美酒直售大盘日均（储蓄罐+纯美酒礼包）</div></div>
+</div>
+
+<h2><span class="no">01</span>流水：7/10 起台阶式跳变</h2>
+<div class="sub">日流水（档1 $9.99 + 档2 $19.99 堆叠，UTC 日）· 虚线 = 周均参考</div>
+<div class="card">
+<div class="legend"><span><i style="background:var(--s1)"></i>档1 $9.99</span><span><i style="background:var(--s2)"></i>档2 $19.99</span></div>
+<div id="revChart"></div>
+<p class="note">归因三层验证：① 时点——BI 埋点 <b>7/9 首现、7/10 全量</b>，跳变同日；② 大盘对照——全游戏流水同期仅 <b>+3.6%</b>、付费人数持平，非大盘事件；③ 需求侧——美酒消耗人数 +8%/量 +12%，远配不上销量翻倍。增量 $8,014/周中 <b>32% 来自新开服</b>（2420-2490 七服）、<b>68% 是 68 个老服面状普涨</b>（收入比中位 ×1.53）——"全服统一加入口"的典型指纹。</p>
+</div>
+
+<h2><span class="no">02</span>触达漏斗（周级）</h2>
+<div class="sub">2026-07-10 ~ 16，独立用户数 · 括号内为占上一级比例</div>
+<div class="card">
+<div id="funnelChart"></div>
+<p class="note">另一路触达：登录弹窗 <b>34,494 人/周</b>（占周活 21.6%，与 HUD 高度重叠）。周活 159,561 被新服导量的短留存用户稀释，<b>日触达率（约 41%）更能代表老玩家的真实体感</b>——HUD 挂在限定英雄抽卡界面内，曝光即"当天进过美酒卡池"。
+买家侧覆盖：本周 766 名买家中 <b>曝光 98.7% / 点击 97.4% / 弹窗 93.9%</b>；全游戏 4,786 名周付费玩家中 <b>90.4% 被曝光、84.7% 点过</b>（对照：6 月世界杯竞猜触达付费玩家仅 63%）。</p>
+</div>
+
+<h2><span class="no">03</span>日级触达率：稳定且缓升</h2>
+<div class="sub">各触点独立用户 ÷ 当日 DAU（UTC 日）</div>
+<div class="card">
+<div class="legend"><span><i style="background:var(--s1)"></i>HUD 曝光/DAU</span><span><i style="background:var(--s2)"></i>登录弹窗/DAU</span><span><i style="background:var(--s3)"></i>HUD 点击/DAU</span></div>
+<div id="reachChart"></div>
+<p class="note">曝光率 36.5%→42.3% 一周内缓升（新服玩家逐步解锁限定池），点击率稳定在 25% 上下。曝光者中每天约 <b>62%</b> 会点 HUD 进获取途径——入口位置（抽卡界面内、缺酒场景强相关）选得准。</p>
+</div>
+
+<h2><span class="no">04</span>买家构成：新客一半，中小R 为主</h2>
+<div class="sub">本周 766 名买家 · 按首购时间 × R级（R级快照 07-15）</div>
+<div class="card">
+<div class="legend"><span><i style="background:var(--o1)"></i>超R</span><span><i style="background:var(--o2)"></i>大R</span><span><i style="background:var(--o3)"></i>中R</span><span><i style="background:var(--o4)"></i>小R</span><span><i style="background:var(--gray)"></i>未分级</span></div>
+<div id="buyerChart"></div>
+<p class="note"><b>新客（首购在本周）379 人，占 49%</b>，其中中R+小R 占 79% —— HUD 把 SKU 推给了以前不知道它存在的人群；老客 387 人偏中R + 大超R。结构指标同步走高：档2 收入占比 31%→<b>37.9%</b>、档2 选择率 24.3%→<b>30.8%</b>、档1→档2 同周共购 <b>25.8%</b>（6 月 20.6%）；周复购 档1 28% / 档2 22% / 任一 38%。</p>
+</div>
+
+<h2><span class="no">05</span>零蚕食：美酒直售大盘整体抬升</h2>
+<div class="sub">储蓄罐 + 纯美酒礼包（11600 系，只发 Item7002 的真替代品）合计日流水 · UTC 日</div>
+<div class="card">
+<div class="legend"><span><i style="background:var(--s3)"></i>纯美酒礼包（11600 系）</span><span><i style="background:var(--s1)"></i>储蓄罐（两档合计）</span></div>
+<div id="totalChart"></div>
+<p class="note"><b>储蓄罐的增量没有一分钱是从纯美酒礼包嘴里抢的</b>：纯美酒礼包 $657 → $708/天（+8%，持平微涨），储蓄罐 +$1,145/天全是净增——美酒直售大盘日均 <b>$1,857 → $3,054（+64%）</b>。口径沿用 6 月 D4 回归结论：只有"纯美酒礼包"（11600 系）算真替代品；美酒好礼（掺钻石/VIP）、英雄豪礼、19xxx 英雄挑战（绑信物）按各自生命周期波动，不可比、不计蚕食。</p>
+</div>
+
+<details><summary>明细数据表（日级）</summary>
+<div class="tablewrap"><table id="dataTable"></table></div>
+</details>
+
+<div class="foot">
+口径：UTC 日切 = created_at（北京时间）− 8h；收入 = usd→actual_charge，其余→pay_price；储蓄罐 iap 500031/500032，纯美酒礼包 11600/11601/11602。
+触达埋点：曝光 piggybank_hud_show、点击 piggybank_hud_click（ods_pb_user_click）、弹窗 piggybank_obtain_popup（ods_pb_client_application_log），均 07-09 首现。
+数据源 Datain v1090（TRINO_HF）· 生成 2026-07-17 · 归档 KB\产出-数值设计\X3_异国美酒储蓄罐\
+</div>
+</div>
+
+<div class="tip" id="tip"></div>
+
+<script>
+var D=['6/25','6/26','6/27','6/28','6/29','6/30','7/1','7/2','7/3','7/4','7/5','7/6','7/7','7/8','7/9','7/10','7/11','7/12','7/13','7/14','7/15','7/16'];
+var T1=[809.2,759.2,639.4,699.3,539.5,709.3,809.2,689.3,689.3,819.2,629.4,739.3,659.3,849.2,759.2,1768.2,1428.6,1648.4,1248.8,1508.5,1338.7,1258.7];
+var T2=[219.9,339.8,479.8,359.8,259.9,379.8,359.8,379.8,479.8,399.8,479.8,439.8,439.8,559.7,459.8,1139.4,899.6,899.6,619.7,859.6,979.5,819.6];
+var PURE=[1219.5,359.8,619.8,819.7,459.8,899.7,479.8,579.8,919.6,619.8,419.8,539.7,399.8,959.6,739.7,399.8,1099.7,599.7,799.6,659.7,619.7,779.8];
+var HUD_I=15; // 7/10
+var RD=['7/10','7/11','7/12','7/13','7/14','7/15','7/16'];
+var DAU=[36081,39233,39766,35317,39457,40118,39087];
+var SHOW=[13154,14809,15905,15787,16140,16424,16542];
+var POP=[11485,12938,14010,13817,14129,14325,14463];
+var CLK=[9583,10341,10904,10094,10030,9800,9695];
+var BUY=[194,155,179,130,162,149,143];
+var CSS=getComputedStyle(document.documentElement);
+function cv(n){return CSS.getPropertyValue(n).trim()}
+var tip=document.getElementById('tip');
+function showTip(html,ev){tip.innerHTML=html;tip.style.display='block';var x=ev.clientX+14,y=ev.clientY+12;if(x+tip.offsetWidth>innerWidth-8)x=ev.clientX-tip.offsetWidth-10;tip.style.left=x+'px';tip.style.top=y+'px'}
+function hideTip(){tip.style.display='none'}
+var fmt=function(n){return n.toLocaleString('en-US')};
+
+/* ---- 01 stacked daily revenue ---- */
+(function(){
+var W=1000,H=360,pl=56,pr=16,pt=26,pb=34,ymax=3000;
+var n=D.length,iw=(W-pl-pr)/n,bw=iw*0.68;
+var X=function(i){return pl+iw*i+iw/2},Y=function(v){return pt+(H-pt-pb)*(1-v/ymax)};
+var g=['<svg viewBox="0 0 '+W+' '+H+'">'];
+for(var v=0;v<=ymax;v+=600){g.push('<line x1="'+pl+'" y1="'+Y(v)+'" x2="'+(W-pr)+'" y2="'+Y(v)+'" stroke="'+cv('--grid')+'"/>');
+g.push('<text x="'+(pl-8)+'" y="'+(Y(v)+4)+'" fill="'+cv('--muted')+'" font-size="11" text-anchor="end">$'+fmt(v)+'</text>')}
+for(var i=0;i<n;i++){if(i%2===0||i===n-1)g.push('<text x="'+X(i)+'" y="'+(H-pb+18)+'" fill="'+cv('--muted')+'" font-size="11" text-anchor="middle">'+D[i]+'</text>')}
+for(var i=0;i<n;i++){
+ var x=X(i)-bw/2,y1=Y(T1[i]),y2=Y(T1[i]+T2[i]),base=Y(0);
+ var tot=Math.round(T1[i]+T2[i]);
+ g.push('<g class="bar" data-i="'+i+'">');
+ g.push('<path d="M'+x+' '+base+' L'+x+' '+y1+' L'+(x+bw)+' '+y1+' L'+(x+bw)+' '+base+' Z" fill="'+cv('--s1')+'"/>');
+ g.push('<path d="M'+x+' '+(y1-2)+' L'+x+' '+(y2+4>y1-2?y1-2:y2+4)+' Q'+x+' '+y2+' '+(x+4)+' '+y2+' L'+(x+bw-4)+' '+y2+' Q'+(x+bw)+' '+y2+' '+(x+bw)+' '+(y2+4>y1-2?y1-2:y2+4)+' L'+(x+bw)+' '+(y1-2)+' Z" fill="'+cv('--s2')+'"/>');
+ g.push('<rect x="'+(x-2)+'" y="'+pt+'" width="'+(bw+4)+'" height="'+(H-pt-pb)+'" fill="transparent"/>');
+ g.push('</g>');
+}
+var lx=X(HUD_I)-iw/2-1;
+g.push('<line x1="'+lx+'" y1="'+pt+'" x2="'+lx+'" y2="'+(H-pb)+'" stroke="'+cv('--warn')+'" stroke-width="1.5" stroke-dasharray="4 4"/>');
+g.push('<text x="'+(lx+5)+'" y="'+(pt+2)+'" fill="'+cv('--warn')+'" font-size="11.5">▲ 7/10 HUD+弹窗全量</text>');
+g.push('<line x1="'+(X(8)-bw/2)+'" y1="'+Y(1200)+'" x2="'+(X(14)+bw/2)+'" y2="'+Y(1200)+'" stroke="'+cv('--ink2')+'" stroke-width="1.5" stroke-dasharray="6 4"/>');
+g.push('<text x="'+X(11)+'" y="'+(Y(1200)-7)+'" fill="'+cv('--ink2')+'" font-size="11.5" text-anchor="middle">前周均 $1,200</text>');
+g.push('<line x1="'+(X(15)-bw/2)+'" y1="'+Y(2345)+'" x2="'+(X(21)+bw/2)+'" y2="'+Y(2345)+'" stroke="'+cv('--ink2')+'" stroke-width="1.5" stroke-dasharray="6 4"/>');
+g.push('<text x="'+X(18)+'" y="'+(Y(2345)-7)+'" fill="'+cv('--ink')+'" font-size="11.5" font-weight="700" text-anchor="middle">本周均 $2,345（+95%）</text>');
+g.push('</svg>');
+var el=document.getElementById('revChart');el.innerHTML=g.join('');
+el.querySelectorAll('.bar').forEach(function(b){
+ b.addEventListener('mousemove',function(ev){var i=+b.dataset.i;
+  showTip('<span class="t">'+D[i]+'</span><br>档1 $'+fmt(Math.round(T1[i]))+' · 档2 $'+fmt(Math.round(T2[i]))+'<br><b>合计 $'+fmt(Math.round(T1[i]+T2[i]))+'</b>',ev)});
+ b.addEventListener('mouseleave',hideTip);
+});
+})();
+
+/* ---- 02 weekly funnel ---- */
+(function(){
+var rows=[
+ {l:'周活跃（登录）',v:159561,c:cv('--o1'),p:''},
+ {l:'HUD 曝光',v:37899,c:cv('--o2'),p:'23.8% of 周活'},
+ {l:'HUD 点击',v:31806,c:cv('--o3'),p:'83.9% of 曝光'},
+ {l:'购买储蓄罐',v:766,c:cv('--o4'),p:'2.4% of 点击'}
+];
+var W=1000,rh=44,gap=14,pl=118,pr=170,H=rows.length*(rh+gap)+6;
+var max=rows[0].v,bwMax=W-pl-pr;
+var g=['<svg viewBox="0 0 '+W+' '+H+'">'];
+rows.forEach(function(r,i){
+ var y=i*(rh+gap)+3,bw=Math.max(r.v/max*bwMax,6);
+ g.push('<g class="fr" data-i="'+i+'">');
+ g.push('<text x="'+(pl-10)+'" y="'+(y+rh/2+4)+'" fill="'+cv('--ink2')+'" font-size="13" text-anchor="end">'+r.l+'</text>');
+ g.push('<path d="M'+pl+' '+y+' L'+(pl+bw-4)+' '+y+' Q'+(pl+bw)+' '+y+' '+(pl+bw)+' '+(y+4)+' L'+(pl+bw)+' '+(y+rh-4)+' Q'+(pl+bw)+' '+(y+rh)+' '+(pl+bw-4)+' '+(y+rh)+' L'+pl+' '+(y+rh)+' Z" fill="'+r.c+'"/>');
+ g.push('<text x="'+(pl+bw+10)+'" y="'+(y+rh/2-3)+'" fill="'+cv('--ink')+'" font-size="14" font-weight="700">'+fmt(r.v)+'</text>');
+ if(r.p)g.push('<text x="'+(pl+bw+10)+'" y="'+(y+rh/2+14)+'" fill="'+cv('--muted')+'" font-size="11.5">'+r.p+'</text>');
+ g.push('</g>');
+});
+g.push('</svg>');
+document.getElementById('funnelChart').innerHTML=g.join('');
+})();
+
+/* ---- 03 daily reach-rate lines ---- */
+(function(){
+var series=[
+ {n:'HUD 曝光/DAU',d:SHOW,c:cv('--s1')},
+ {n:'登录弹窗/DAU',d:POP,c:cv('--s2')},
+ {n:'HUD 点击/DAU',d:CLK,c:cv('--s3')}
+];
+var W=1000,H=320,pl=56,pr=120,pt=18,pb=32,ymax=0.5,n=RD.length;
+var X=function(i){return pl+(W-pl-pr)*i/(n-1)},Y=function(v){return pt+(H-pt-pb)*(1-v/ymax)};
+var g=['<svg viewBox="0 0 '+W+' '+H+'">'];
+for(var v=0;v<=ymax+1e-9;v+=0.1){g.push('<line x1="'+pl+'" y1="'+Y(v)+'" x2="'+(W-pr)+'" y2="'+Y(v)+'" stroke="'+cv('--grid')+'"/>');
+g.push('<text x="'+(pl-8)+'" y="'+(Y(v)+4)+'" fill="'+cv('--muted')+'" font-size="11" text-anchor="end">'+Math.round(v*100)+'%</text>')}
+for(var i=0;i<n;i++)g.push('<text x="'+X(i)+'" y="'+(H-pb+18)+'" fill="'+cv('--muted')+'" font-size="11" text-anchor="middle">'+RD[i]+'</text>');
+series.forEach(function(s){
+ var pts=s.d.map(function(v,i){return X(i)+','+Y(v/DAU[i])}).join(' ');
+ g.push('<polyline points="'+pts+'" fill="none" stroke="'+s.c+'" stroke-width="2"/>');
+ s.d.forEach(function(v,i){g.push('<circle cx="'+X(i)+'" cy="'+Y(v/DAU[i])+'" r="3.5" fill="'+s.c+'" stroke="'+cv('--surface')+'" stroke-width="2"/>')});
+ var last=s.d[n-1]/DAU[n-1];
+ g.push('<text x="'+(X(n-1)+10)+'" y="'+(Y(last)+4)+'" fill="'+s.c+'" font-size="12" font-weight="600">'+(last*100).toFixed(1)+'% '+s.n.split('/')[0]+'</text>');
+});
+g.push('<rect id="rcHit" x="'+pl+'" y="'+pt+'" width="'+(W-pl-pr)+'" height="'+(H-pt-pb)+'" fill="transparent"/>');
+g.push('<line id="rcX" x1="0" y1="'+pt+'" x2="0" y2="'+(H-pb)+'" stroke="'+cv('--axis')+'" stroke-width="1" style="display:none"/>');
+g.push('</svg>');
+var el=document.getElementById('reachChart');el.innerHTML=g.join('');
+var svg=el.querySelector('svg'),hit=el.querySelector('#rcHit'),cx=el.querySelector('#rcX');
+hit.addEventListener('mousemove',function(ev){
+ var r=svg.getBoundingClientRect(),sx=(ev.clientX-r.left)*W/r.width;
+ var i=Math.max(0,Math.min(n-1,Math.round((sx-pl)/((W-pl-pr)/(n-1)))));
+ cx.setAttribute('x1',X(i));cx.setAttribute('x2',X(i));cx.style.display='';
+ showTip('<span class="t">'+RD[i]+' · DAU '+fmt(DAU[i])+'</span><br>'+
+  '曝光 '+fmt(SHOW[i])+'（'+(SHOW[i]/DAU[i]*100).toFixed(1)+'%）<br>'+
+  '弹窗 '+fmt(POP[i])+'（'+(POP[i]/DAU[i]*100).toFixed(1)+'%）<br>'+
+  '点击 '+fmt(CLK[i])+'（'+(CLK[i]/DAU[i]*100).toFixed(1)+'%）<br>'+
+  '<b>买家 '+BUY[i]+'</b>',ev);
+});
+hit.addEventListener('mouseleave',function(){cx.style.display='none';hideTip()});
+})();
+
+/* ---- 04 buyer composition ---- */
+(function(){
+var LV=['超R','大R','中R','小R','未分级'];
+var COLS=[cv('--o1'),cv('--o2'),cv('--o3'),cv('--o4'),cv('--gray')];
+var rows=[{l:'新客（首购本周）',t:379,d:[22,40,186,114,17]},
+          {l:'老客（首购更早）',t:387,d:[44,77,224,34,8]}];
+var W=1000,rh=46,gap=18,pl=150,pr=90,H=rows.length*(rh+gap)+2;
+var max=400,bwMax=W-pl-pr;
+var g=['<svg viewBox="0 0 '+W+' '+H+'">'];
+rows.forEach(function(r,ri){
+ var y=ri*(rh+gap)+2,x=pl;
+ g.push('<text x="'+(pl-10)+'" y="'+(y+rh/2-3)+'" fill="'+cv('--ink2')+'" font-size="13" text-anchor="end">'+r.l+'</text>');
+ g.push('<text x="'+(pl-10)+'" y="'+(y+rh/2+14)+'" fill="'+cv('--muted')+'" font-size="11.5" text-anchor="end">'+r.t+' 人</text>');
+ r.d.forEach(function(v,i){
+  var w=v/max*bwMax;
+  g.push('<g class="seg" data-r="'+ri+'" data-i="'+i+'"><rect x="'+x+'" y="'+y+'" width="'+Math.max(w-2,1)+'" height="'+rh+'" rx="2" fill="'+COLS[i]+'"/>');
+  if(v/r.t>=0.08)g.push('<text x="'+(x+Math.max(w-2,1)/2)+'" y="'+(y+rh/2+4)+'" fill="'+(i<2?'#0b0b0b':'#ffffff')+'" font-size="11.5" font-weight="600" text-anchor="middle">'+Math.round(v/r.t*100)+'%</text>');
+  g.push('</g>');
+  x+=w;
+ });
+});
+g.push('</svg>');
+var el=document.getElementById('buyerChart');el.innerHTML=g.join('');
+el.querySelectorAll('.seg').forEach(function(s){
+ s.addEventListener('mousemove',function(ev){var r=rows[+s.dataset.r],i=+s.dataset.i;
+  showTip('<span class="t">'+r.l+'</span><br><b>'+LV[i]+'</b>：'+r.d[i]+' 人（'+Math.round(r.d[i]/r.t*100)+'%）',ev)});
+ s.addEventListener('mouseleave',hideTip);
+});
+})();
+
+/* ---- 05 wine-pack total (pure packs + piggy stacked) ---- */
+(function(){
+var W=1000,H=360,pl=56,pr=16,pt=26,pb=34,ymax=3600;
+var n=D.length,iw=(W-pl-pr)/n,bw=iw*0.68;
+var X=function(i){return pl+iw*i+iw/2},Y=function(v){return pt+(H-pt-pb)*(1-v/ymax)};
+var g=['<svg viewBox="0 0 '+W+' '+H+'">'];
+for(var v=0;v<=ymax;v+=600){g.push('<line x1="'+pl+'" y1="'+Y(v)+'" x2="'+(W-pr)+'" y2="'+Y(v)+'" stroke="'+cv('--grid')+'"/>');
+g.push('<text x="'+(pl-8)+'" y="'+(Y(v)+4)+'" fill="'+cv('--muted')+'" font-size="11" text-anchor="end">$'+fmt(v)+'</text>')}
+for(var i=0;i<n;i++){if(i%2===0||i===n-1)g.push('<text x="'+X(i)+'" y="'+(H-pb+18)+'" fill="'+cv('--muted')+'" font-size="11" text-anchor="middle">'+D[i]+'</text>')}
+for(var i=0;i<n;i++){
+ var pig=T1[i]+T2[i];
+ var x=X(i)-bw/2,y1=Y(PURE[i]),y2=Y(PURE[i]+pig),base=Y(0);
+ g.push('<g class="tbar" data-i="'+i+'">');
+ g.push('<path d="M'+x+' '+base+' L'+x+' '+y1+' L'+(x+bw)+' '+y1+' L'+(x+bw)+' '+base+' Z" fill="'+cv('--s3')+'"/>');
+ g.push('<path d="M'+x+' '+(y1-2)+' L'+x+' '+(y2+4>y1-2?y1-2:y2+4)+' Q'+x+' '+y2+' '+(x+4)+' '+y2+' L'+(x+bw-4)+' '+y2+' Q'+(x+bw)+' '+y2+' '+(x+bw)+' '+(y2+4>y1-2?y1-2:y2+4)+' L'+(x+bw)+' '+(y1-2)+' Z" fill="'+cv('--s1')+'"/>');
+ g.push('<rect x="'+(x-2)+'" y="'+pt+'" width="'+(bw+4)+'" height="'+(H-pt-pb)+'" fill="transparent"/>');
+ g.push('</g>');
+}
+var lx=X(HUD_I)-iw/2-1;
+g.push('<line x1="'+lx+'" y1="'+pt+'" x2="'+lx+'" y2="'+(H-pb)+'" stroke="'+cv('--warn')+'" stroke-width="1.5" stroke-dasharray="4 4"/>');
+g.push('<text x="'+(lx+5)+'" y="'+(pt+2)+'" fill="'+cv('--warn')+'" font-size="11.5">▲ 7/10 HUD+弹窗全量</text>');
+g.push('<line x1="'+(X(8)-bw/2)+'" y1="'+Y(1857)+'" x2="'+(X(14)+bw/2)+'" y2="'+Y(1857)+'" stroke="'+cv('--ink2')+'" stroke-width="1.5" stroke-dasharray="6 4"/>');
+g.push('<text x="'+X(11)+'" y="'+(Y(1857)-7)+'" fill="'+cv('--ink2')+'" font-size="11.5" text-anchor="middle">前周均 $1,857</text>');
+g.push('<line x1="'+(X(15)-bw/2)+'" y1="'+Y(3054)+'" x2="'+(X(21)+bw/2)+'" y2="'+Y(3054)+'" stroke="'+cv('--ink2')+'" stroke-width="1.5" stroke-dasharray="6 4"/>');
+g.push('<text x="'+X(18)+'" y="'+(Y(3054)-7)+'" fill="'+cv('--ink')+'" font-size="11.5" font-weight="700" text-anchor="middle">本周均 $3,054（+64%）</text>');
+g.push('</svg>');
+var el=document.getElementById('totalChart');el.innerHTML=g.join('');
+el.querySelectorAll('.tbar').forEach(function(b){
+ b.addEventListener('mousemove',function(ev){var i=+b.dataset.i;var pig=T1[i]+T2[i];
+  showTip('<span class="t">'+D[i]+'</span><br>纯美酒礼包 $'+fmt(Math.round(PURE[i]))+'<br>储蓄罐 $'+fmt(Math.round(pig))+'<br><b>大盘合计 $'+fmt(Math.round(PURE[i]+pig))+'</b>',ev)});
+ b.addEventListener('mouseleave',hideTip);
+});
+})();
+
+/* ---- data table ---- */
+(function(){
+var h=['<tr><th>UTC日</th><th>档1 $</th><th>档2 $</th><th>储蓄罐 $</th><th>纯美酒礼包 $</th><th>美酒盘合计 $</th><th>买家</th><th>DAU</th><th>HUD曝光</th><th>弹窗</th><th>HUD点击</th><th>曝光率</th><th>点击率</th></tr>'];
+for(var i=0;i<D.length;i++){
+ var ri=D[i].replace('7/','07-').replace('6/','06-');
+ var j=RD.indexOf(D[i]);
+ h.push('<tr><td>'+D[i]+'</td><td>'+fmt(Math.round(T1[i]))+'</td><td>'+fmt(Math.round(T2[i]))+'</td><td>'+fmt(Math.round(T1[i]+T2[i]))+'</td><td>'+fmt(Math.round(PURE[i]))+'</td><td>'+fmt(Math.round(T1[i]+T2[i]+PURE[i]))+'</td>'+
+  (j>=0?'<td>'+BUY[j]+'</td><td>'+fmt(DAU[j])+'</td><td>'+fmt(SHOW[j])+'</td><td>'+fmt(POP[j])+'</td><td>'+fmt(CLK[j])+'</td><td>'+(SHOW[j]/DAU[j]*100).toFixed(1)+'%</td><td>'+(CLK[j]/DAU[j]*100).toFixed(1)+'%</td>'
+       :'<td colspan="7" style="color:var(--muted)">—（HUD 未上线）</td>')+'</tr>');
+}
+document.getElementById('dataTable').innerHTML=h.join('');
+})();
+</script>
+</body>
+</html>

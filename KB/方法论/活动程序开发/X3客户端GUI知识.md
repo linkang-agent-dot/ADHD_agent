@@ -120,3 +120,10 @@ tags: [kind/方法论, domain/前端, proj/X3, year/2026-06]
 4. **⚠️三连坑（本案全踩全解）**：①块头有 `stripped` 后缀与**负数 fileID**，解析正则要 `&(-?\d+)( stripped)?`；②子树内**嵌套子 prefab**（如 RedPointTips 红点）= stripped transform/GO + !u!1001 PrefabInstance 三件套，须整套克隆（PI 的 m_TransformParent 换成映射后的新父），否则新节点 children 引用原实例=双父冲突；③嵌套实例上的 **addedObject**（m_AddedGameObjects/Components 里的 MonoBehaviour）也要克隆一份重指向新 stripped GO，否则两 PI 共享同一附加组件。
 5. **完整性校验（收敛判据）**：收集新增块内全部 fileID 引用，悬空集=不在本文件块集∧不带 guid（带 guid=外部资产合法）∧非0——必须为空；外部引用应只剩挂载父 transform。
 6. Unity 首开该 prefab 目检一次无 broken（git 可回退）。
+
+## 克隆整套活动界面（UIActvLaborGacha→UIActvCircusGacha 实证，2026-07-17）
+- **X3 UI 框架 prefab 不挂 MonoBehaviour**：UI 类运行时 FindByFullPath 按路径绑节点 → 克隆界面 prefab **无需脚本 guid 重映射**（prefab 里没有业务脚本引用），只需：克隆 prefab+meta（新 guid）+根节点 m_Name 改新类名。
+- 五件套=主 cs + Item 子类 cs + Auto_ 生成 cs×2（只改类名，字段/节点路径保留=prefab 节点名不动）+ prefab。
+- **Identifier 属性值 = CRC32(类名)&0x7FFFFFFF**（生成脚本 Tools/x2-to-x3-migration/scripts/add_identifier_attr.py）；UITypeAutoRegisterGen.cs 不用手加——Editor 反射扫描，真机 build 自动重生成。
+- 活动入口显示开关 = Condition 的 GetActivityUIType() 返回 UI 类型（null=hub 不渲染入口）。
+- 配套 Entity 层四件：ActivityMeta.<Actv>.cs（Req/Ack/Check/红点）+ TEventType.Activity.cs 事件 + RedPointConfig 枚举 + RedPointEventConfig handler。

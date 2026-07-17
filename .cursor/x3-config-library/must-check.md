@@ -80,3 +80,15 @@
 
 ---
 案例索引：世界杯=`KB\产出-数值设计\X3_世界杯\_世界杯_换皮清单.md`+交接总文档§4；深海=memory `project_x3_deepsea_festival.md`；夏日=`KB\产出-数值设计\X3_夏日恋语\_夏日恋语_换皮清单与复用说明.md`（唯一入口）；三节日全景审计=`KB\换皮档案\X3\_X3三节日换皮全景与坑梳理_20260709.md`。
+
+- **克隆源 CID 界面资源残留（c33/c44 姊妹坑，2026-07-17 马戏福箱实证）**：克隆活动内容表（ActvCrafting 等）时，CID 行里的**界面 bg/特效 DK 字段**可能挂着克隆源自己都没换干净的历史残留（世界杯开箱 1516 的界面 bg = 新年 `NewYear_bg_5` 540×364，FullBg 全屏拉 3.6 倍糊成条纹）。换皮时对 CID 行**每个 DK_ 字段逐个问一遍「这是谁的图、尺寸配不配全屏用法」**，别默认克隆源自身是干净的。
+
+- **美术DK落地有现成整套脚本别现写（2026-07-17 马戏节固化）**：`KB\产出-数值设计\X3_马戏节\配置克隆脚本\circus_dk_land.py`（规格化图→client：按锚点同目录拷图+克隆锚点meta换guid+Display/Path双注册，幂等）+ `circus_dk_swap.py`（gdconfig 占位DK行级断言换名，**换前先验新DK已在client Path注册**防换成白图）。换节日=改 MAPPING/SWAPS 表即可；锚点映射可从 x3-media task json 的 ref[0] 批量提取。
+
+- **🔴Path_*.asset 是 keys/values 平行字典，DK注册必须两侧成对追加（2026-07-17 错位血案）**：`Res\Config\DisplayKey\Path_*.asset` 的 paths 字段=`keys:`(光杆DK名单)+`values:`(key+objPath成对)**按下标配对**。只往 keys 插行=从插入点起全部 DK 错位（主城图标全乱、感叹号满天飞）。正确姿势=keys 末尾+values 末尾同时追加（land脚本已修）；错位急救=`circus_dk_path_realign.py`（按 values 重建 keys+孤儿补对）。另：文件内含 YAML 折行（带空格文件名），逐行解析要做续行拼接。Display_*.asset 是自包含块列表，无此坑。
+
+- **拜访活动(ActvType56)克隆三查（2026-07-17 马戏节实证）**：①VisitPack 表 DK_PackIcon=**每期专属门头陈列大图**（圣诞/埃及/新春各一张），克隆必残留上期图=「外显全错」观感头号来源；②DailyRewardDesc 列(TXT_注释)的自动 key `TXT_ActvVisitPack_DailyRewardDesc_<CID>` 必须进 Text 表，漏=界面中部说明整段空白；③装扮名一致性：RuleTips 规则文、邀请函 Item.Desc、VisitPack 说明三处的【装扮名】必须同名（马戏节撞过：规则写马戏庆典/邀请函写樱花）。另注意 Text 表存在**合并key行**（col0 多 key 用 | 串联共享一行译文）——新活动的 Title 类 key 若单独成行须自行填全语言，别指望蹭合并行。
+
+- **新活动占号必查三处最新占用（2026-07-17 ActvType 号段撞车实证）**：并行 feature 分支各自注册新 ActvType 必撞（张力 BpFund 与扭蛋机同抢 82，合并才炸）。占号前对 **dev_festival 最新** 查三处：①`ActivityConst.TRIGGER_TYPE_*`（CSShared）②导表 `def/actvonline_def.py`+`PostProcessData.py` ③proto 的 ActivityItem tag。让号原则=后合者让。另：**proto 生成物（activity.cs 等）merge 冲突禁 regex 文本拼**——用 diff3 看结构，双方完整插入段=ours+theirs 逐行状态机解（cspb 与 client 两份是 MakeCopy 镜像，修一份 cmp 校验另一份）。
+
+- **大富翁(ActvType28)地块图挂点+占位扫描盲区（2026-07-17 实证）**：地块图不在 Island 表（无美术列）也不在 AO 行，在 **ActvVoyageEvent.DKImg**（EventGroup×Level 给图，克隆节日=整组 DKImg 全是上期残留，马戏 48 行全中）。占位 DK 扫描别只按「行 ID ∈ 已知 ID 集」匹配——Event 类表行 ID=组号x1000+序号（207 组→207001），按**组列**过滤才扫得全。角色模型=主表 DKRoleMedel（3D 件，无新模型就沿用）。

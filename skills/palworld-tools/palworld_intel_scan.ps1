@@ -1,5 +1,8 @@
 ﻿# 帕鲁情报巡检调度脚本（12:00/18:00）— 架构照搬 daily_report_scan.ps1 精简版
 $ErrorActionPreference = "Continue"
+# 管道喂 stdin 给 claude.cmd 前必须显式设 UTF8，否则中文 prompt 按系统 codepage 编码传出会乱码
+# （2026-07-17 帕鲁情报巡检实测踩到：prompt 中文全变问号，靠上下文文件反查才恢复；见 reference_headless_claude_cli）
+$OutputEncoding = [System.Text.Encoding]::UTF8
 $toolDir  = "C:\ADHD_agent\skills\palworld-tools"
 $logFile  = Join-Path $toolDir "_intel_log.txt"
 $report   = "C:\ADHD_agent\KB\_自动流水\帕鲁情报\帕鲁情报_latest.md"
