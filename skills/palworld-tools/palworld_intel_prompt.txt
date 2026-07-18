@@ -7,7 +7,7 @@
 `C:\ADHD_agent\KB\_自动流水\帕鲁情报\帕鲁情报_latest.md`（首行必须 `# 帕鲁情报 YYYY-MM-DD HH:mm`（日期用 ISO 格式如 2026-07-14））+ 同目录按日期归档一份。目录不存在就创建。
 
 ## 巡检步骤
-1. **B站**：跑 `python -X utf8 C:\ADHD_agent\skills\palworld-tools\intel_bili_search.py`（自动只返回上次检查之后的新视频）。
+1. **B站**：跑 `python -X utf8 "C:/ADHD_agent/skills/palworld-tools/intel_bili_search.py"`（⚠️必须用正斜杠，Bash工具是Git Bash/POSIX sh会吃掉Windows反斜杠路径导致File Not Found，2026-07-17实测踩过）（自动只返回上次检查之后的新视频）。
 2. **YouTube/Reddit**：WebSearch 两条查询（各最多 1 次，失败就跳过）：
    - `Palworld 1.0 patch notes OR update OR meta site:reddit.com OR site:youtube.com 最近3天`
    - `Palworld new patch balance changes July 2026`

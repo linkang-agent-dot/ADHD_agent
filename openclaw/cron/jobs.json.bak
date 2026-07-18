@@ -6,7 +6,7 @@
       "name": "旅游攻略汇总推送",
       "enabled": true,
       "createdAtMs": 1774323335662,
-      "updatedAtMs": 1784171403988,
+      "updatedAtMs": 1784257804725,
       "schedule": {
         "kind": "cron",
         "expr": "0 11 * * *",
@@ -24,14 +24,14 @@
         "target": "user:ou_e48f6c4c0395f45b74b51525f348678b"
       },
       "state": {
-        "nextRunAtMs": 1784257200000,
-        "lastRunAtMs": 1784170800024,
+        "nextRunAtMs": 1784343600000,
+        "lastRunAtMs": 1784257200039,
         "lastRunStatus": "error",
         "lastStatus": "error",
-        "lastDurationMs": 603964,
+        "lastDurationMs": 604686,
         "lastDeliveryStatus": "unknown",
-        "consecutiveErrors": 106,
-        "runningAtMs": 1784257200019
+        "consecutiveErrors": 107,
+        "runningAtMs": 1784346110947
       }
     },
     {
@@ -39,7 +39,7 @@
       "name": "国际机票推送",
       "enabled": true,
       "createdAtMs": 1774326644918,
-      "updatedAtMs": 1784171487755,
+      "updatedAtMs": 1784258141082,
       "schedule": {
         "kind": "cron",
         "expr": "0 11 * * *",
@@ -57,14 +57,14 @@
         "target": "user:ou_e48f6c4c0395f45b74b51525f348678b"
       },
       "state": {
-        "nextRunAtMs": 1784257200000,
-        "lastRunAtMs": 1784171403988,
+        "nextRunAtMs": 1784343600000,
+        "lastRunAtMs": 1784257804725,
         "lastRunStatus": "error",
         "lastStatus": "error",
-        "lastDurationMs": 83767,
+        "lastDurationMs": 336357,
         "lastDeliveryStatus": "unknown",
-        "consecutiveErrors": 90,
-        "runningAtMs": 1784257200019
+        "consecutiveErrors": 91,
+        "runningAtMs": 1784346110947
       }
     },
     {
@@ -97,7 +97,7 @@
         "lastStatus": "error",
         "lastDurationMs": 5723,
         "lastDeliveryStatus": "unknown",
-        "lastError": "Delivering to Feishu requires target <chatId|user:openId|chat:chatId>"
+        "runningAtMs": 1784346110947
       }
     }
   ]

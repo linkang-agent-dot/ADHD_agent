@@ -50,6 +50,14 @@ for c in data["clips"]:
         f'<span class="seg sfx">{esc(suffix)}</span>'
         + (f'<span class="seg extra">{esc(extra)}</span>' if extra else "")
     )
+    sp = c.get("卖点", {})
+    sp_html = ""
+    if sp:
+        rows = "".join(
+            f'<div class="sprow"><span class="spk">{esc(k)}</span><span class="spv">{esc(str(v))}</span></div>'
+            for k, v in sp.items()
+        )
+        sp_html = f'<div class="spcard"><div class="sptitle">🎯 卖点确认卡（需求方确认后才开跑）</div>{rows}</div>'
     cards.append(f'''
     <div class="card {cstat}">
       <div class="chead">
@@ -59,6 +67,7 @@ for c in data["clips"]:
         <span class="cstat" style="background:{STATUS_COLOR[cstat]}">{STATUS_LABEL[cstat]}</span>
         <span class="charlen">{len(full)}字</span>
       </div>
+      {sp_html}
       <div class="prompt">{seg}</div>
     </div>''')
 
