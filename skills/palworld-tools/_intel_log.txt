@@ -30,3 +30,9 @@
 2026-07-18 12:00:03 start
 2026-07-18 12:02:32 OK
 2026-07-18 18:00:03 start
+2026-07-18 18:02:23 OK
+2026-07-19 12:00:03 start
+2026-07-19 12:00:09 attempt not fresh, retrying
+2026-07-19 12:02:12 attempt not fresh, retrying
+2026-07-19 12:02:12 FAILED after retries
+2026-07-19 18:00:03 start
