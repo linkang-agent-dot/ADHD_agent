@@ -71,7 +71,9 @@ def gen_one(p: VolcProvider, model: str, prefix: str, suffix: str,
     # garment_mode: hidden=内衣藏在正常外衣里(用 suffix_hidden、不挂内衣参考图，防 Seedance 把内衣当外衣穿)
     #               reveal/缺省=直接展示内衣(用 suffix + 内衣参考图)
     mode = clip.get("garment_mode", "reveal")
-    use_suffix = suffix_hidden if mode == "hidden" else suffix
+    # hidden: 正常外衣下默认完全隐形，不挂产品图，避免模型主动把内搭画出来
+    # product: 只展示手持/空镜产品，挂产品图但不追加上身肩带规则
+    use_suffix = suffix_hidden if mode == "hidden" else ("" if mode == "product" else suffix)
     use_refs = [] if mode == "hidden" else ref_images
     # clip.extra 拼在 suffix 之后（后置=覆盖前述冲突项，如内衣主体色 09/11/15 覆盖为粉底肤色）
     full_prompt = prefix + clip["prompt"] + use_suffix + clip.get("extra", "")

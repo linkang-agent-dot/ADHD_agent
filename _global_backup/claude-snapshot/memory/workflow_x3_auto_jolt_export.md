@@ -13,6 +13,7 @@ metadata:
 
 ### ★默认自动 jolt·不问用户(2026-06-23 用户定·强化)
 **改完配置 → 本地 ExportTable → 只要本地导表成功，就直接 `jolt_verify.py <分支>` 触发，不再逐次问用户。** 只在**本地导表失败**时才停下报告。即：本地导表成功 = jolt 的放行条件，成功即放行、自动触发。（分支随当前活跃分支，如 dev_festival / feature/x3-deepsea-art；jolt 要 gdconfig 分支名==client 分支名。）
+**⚠️ feature 分支必先给 client 仓建同名分支再 jolt**（2026-07-14 航海之路案实撞）：job 后半段要把 bytes 推进 x3-project 同名分支，缺=`client remote branch does not exist: xxx` exit -1 FAILURE（gdconfig 侧 gate 全过也照样 FAIL）。修法一条 API：`POST https://git.tap4fun.com/api/v4/projects/2859/repository/branches?branch=feature%2F<名>&ref=dev`（PRIVATE-TOKEN 头），再重跑 jolt_verify。
 
 ### ★标准节奏(2026-06-16 用户定)：每次传表 = 本地导表自测 → 修干净 → push → jolt 触发
 **push 前必先本地导表自测**(不依赖 Jenkins、不撞并发 push、不烧构建,跟 Jenkins 同一套 def 检查)：

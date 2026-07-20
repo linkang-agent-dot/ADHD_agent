@@ -25,4 +25,4 @@ metadata:
 - 管道测试载荷里 Windows 路径写 `C:\\Users` 经 echo 会变非法 JSON 转义（`\U`）→ 测试 payload 的 cwd 用正斜杠。
 - 本机实测（2026-07-13）：改 settings.json 后 hook **当场生效无需重启**（settings watcher 在看）；但仍应实弹验证（发一条含特征串的无害命令看被不被拦），别只信管道测试。
 
-首例应用见 [[project_avatar_replace]]（GRFal 禁令）。
+首例应用=GRFal 禁令（会话/项目内禁调某工具）；第二例=同一 hook 直接加 cwd 关键词 + 会话ID进名单，零新代码复用成功（2026-07-14）。

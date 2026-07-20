@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>马戏扭蛋机·一体版 UX 验收图（对图拼界面 checklist）</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Microsoft YaHei",sans-serif; background:#1a1a2e; color:#e8e3d5; padding:24px; }
+  h1 { font-size:22px; margin-bottom:4px; color:#ffd166; }
+  .sub { color:#9a94a8; font-size:13px; margin-bottom:20px; }
+  h2 { font-size:17px; margin:26px 0 10px; color:#7ecbff; border-left:4px solid #7ecbff; padding-left:8px; }
+  .wrap { display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; }
+  /* ===== wireframe ===== */
+  .phone { width:360px; background:#2b2340; border:2px solid #555; border-radius:12px; padding:8px; flex-shrink:0; }
+  .zone { border:2px dashed; border-radius:6px; margin:6px 0; padding:6px 8px; font-size:12px; position:relative; }
+  .zone .tag { position:absolute; top:-10px; left:8px; font-weight:bold; font-size:12px; padding:0 6px; border-radius:4px; color:#111; }
+  .zA { border-color:#ffd166; } .zA .tag { background:#ffd166; }
+  .zB { border-color:#8ecae6; } .zB .tag { background:#8ecae6; }
+  .zC { border-color:#f4a261; } .zC .tag { background:#f4a261; }
+  .zD { border-color:#90ee90; } .zD .tag { background:#90ee90; }
+  .el { background:#3a3153; margin:4px 0; padding:3px 6px; border-radius:4px; font-size:11px; display:flex; justify-content:space-between; }
+  .el b { color:#ffd166; font-weight:normal; }
+  .ok::after   { content:"✅"; } .fix::after  { content:"🔧"; } .miss::after { content:"❌"; } .na::after { content:"➖"; }
+  .machines { display:flex; gap:6px; }
+  .machine { flex:1; border:1px solid #6a5d8f; border-radius:6px; padding:4px; }
+  /* ===== 轨道解剖 ===== */
+  .track { display:flex; align-items:center; margin:12px 0; }
+  .seg { display:flex; align-items:center; }
+  .dot { width:22px; height:22px; border-radius:50%; border:2px solid #999; display:flex; align-items:center; justify-content:center; font-size:9px; }
+  .dot.en { background:#43aa8b; border-color:#43aa8b; color:#fff; }
+  .line { width:56px; height:8px; background:#444; position:relative; }
+  .line .fill { position:absolute; left:0; top:0; bottom:0; background:#43aa8b; }
+  .ball { width:34px; height:34px; border-radius:50%; background:#8659c9; margin-left:-4px; display:flex; align-items:center; justify-content:center; font-size:9px; color:#fff; border:2px solid #b28dff; }
+  /* ===== 表格 ===== */
+  table { border-collapse:collapse; width:100%; font-size:12px; margin:8px 0 4px; }
+  th { background:#3a3153; color:#ffd166; padding:5px 8px; text-align:left; white-space:nowrap; }
+  td { border-bottom:1px solid #3a3153; padding:5px 8px; vertical-align:top; }
+  td.c { text-align:center; white-space:nowrap; }
+  code { background:#0f0f1a; color:#8ecae6; padding:1px 5px; border-radius:3px; font-size:11px; }
+  .kx { color:#ef476f; } .kv { color:#43aa8b; } .kw { color:#f4a261; }
+  .note { background:#26203a; border-left:3px solid #f4a261; padding:8px 12px; font-size:12px; margin:8px 0; border-radius:0 6px 6px 0; }
+</style>
+</head>
+<body>
+<h1>🎪 马戏扭蛋机·一体版 UX 验收图</h1>
+<div class="sub">用法：拼界面前后对本图逐项过 checklist。图例：✅已接好 ｜ 🔧待修（本轮）｜ ❌缺失待拍板 ｜ ➖X2 残留已隐/无碍 ｜ 2026-07-20</div>
+
+<div class="wrap">
+<div class="phone">
+  <div class="zone zA"><span class="tag">A 顶部信息（X3标准Top组）</span>
+    <div class="el ok"><span>标题 <b>Top/txt_title</b> ← cfg.ActvName</span></div>
+    <div class="el ok"><span>倒计时 <b>Top/Time/txt</b> ← 活动end自动计时</span></div>
+    <div class="el ok"><span>描述 <b>Top/ActvDesc</b> ← cfg.ActvDesc</span></div>
+    <div class="el ok"><span>规则? <b>Top/btn_info</b> → ShowActivityRuleInfo</span></div>
+  </div>
+  <div class="zone zB"><span class="tag">B 双扭蛋机（X2真皮）</span>
+    <div class="machines">
+      <div class="machine">
+        <div class="el ok"><span>奖励预览+? <b>Title</b></span></div>
+        <div class="el ok"><span>普通奖励名 <b>Name</b></span></div>
+        <div class="el ok"><span>奖池格×N ← 82011</span></div>
+        <div class="el ok"><span>抽钮×2 立即開啟 x1/x10</span></div>
+        <div class="el ok"><span>消耗位 1211 icon+数量</span></div>
+      </div>
+      <div class="machine">
+        <div class="el ok"><span>抽奖概率+? <b>ProbabilityTitle</b></span></div>
+        <div class="el ok"><span>高级奖励名 <b>Name</b></span></div>
+        <div class="el ok"><span>奖池格×N ← 82012</span></div>
+        <div class="el fix"><span>抽钮文案「升級獎勵」语义待定</span></div>
+        <div class="el ok"><span>消耗位 1211+1212 双扣</span></div>
+      </div>
+    </div>
+    <div class="el ok"><span>跳过动画 Toggle <b>AutoTrain</b> ← 服务端持久化</span></div>
+  </div>
+  <div class="zone zC"><span class="tag">C 底部积分轨道（一体版核心）</span>
+    <div class="el fix"><span>「总积分」标签 <b>Cont/Txt</b>：挂X2 key被我隐了→应换X3 key 显示</span></div>
+    <div class="el ok"><span>当前积分 <b>Cont/NumBk/Num</b> ← stageItems[1].progress</span></div>
+    <div class="el ok"><span>计分说明蓝钮 <b>Cont/BtnBlue</b> → ShowActivityScoreTask</span></div>
+    <div class="el fix"><span>14档节点轨道 <b>ScrollView</b>：分段填充没驱动（见下方解剖）</span></div>
+    <div class="el fix"><span>积分浮标 <b>Reward/OwnFront</b>(TFWText)：没人驱动,显示X2残值→隐藏或驱动</span></div>
+  </div>
+  <div class="zone zD"><span class="tag">D 常隐区（X2未接/二期）</span>
+    <div class="el na"><span>排行奖励+入口 <b>ContReward</b>（二期）</span></div>
+    <div class="el na"><span>获取跳转弹窗 <b>GotoPop</b>（X3走ItemObtain替代）</span></div>
+    <div class="el na"><span>X2版顶栏 <b>Cont/Top</b>（被X3 Top组替代）</span></div>
+  </div>
+</div>
+
+<div style="flex:1; min-width:520px;">
+<h2 style="margin-top:0;">进度条解剖：为什么现在是"一节节"</h2>
+<div class="note">X2 原设计=<b>分段轨道</b>：每档节点自带一段连线（BlackSlider），段内 <code>Img1/Img2</code> 按进度比例做锚点拉伸填充，段两端 <code>LastRoot/NextRoot</code> 圆点切 Enough/NotEnough——填充+圆点全驱动后视觉上连成一根长条。当前只驱动了 NextRoot，Img 填充=0，所以看着是断开的一节节。</div>
+<div class="track">
+  <div class="seg"><div class="dot en">✓</div><div class="line"><div class="fill" style="width:100%"></div></div><div class="ball">T1<br>3币</div></div>
+  <div class="seg"><div class="line"><div class="fill" style="width:60%"></div></div><div class="ball">T2<br>3币</div></div>
+  <div class="seg"><div class="line"></div><div class="ball" style="background:#555;border-color:#777;">T3<br>10币</div></div>
+</div>
+<table>
+<tr><th>驱动件</th><th>数据公式</th><th>状态</th></tr>
+<tr><td><code>BlackSlider/Img1·Img2</code> 段内填充</td><td>ratio = clamp((progress − 上一档门槛) ÷ (本档门槛 − 上一档门槛), 0, 1) → 锚点拉伸</td><td class="c">🔧本轮修</td></tr>
+<tr><td><code>LastRoot</code> Enough/NotEnough（段左端）</td><td>= 上一档 finished（首段恒 Enough）</td><td class="c">🔧本轮修</td></tr>
+<tr><td><code>NextRoot</code> Enough/NotEnough（段右端）</td><td>= 本档 finished</td><td class="c">✅已驱动</td></tr>
+<tr><td><code>ContItem</code> 奖励球（红点/勾/图标/数量）</td><td>finished&&!received→红点｜received→勾｜奖励=Reward组预览</td><td class="c">✅已驱动</td></tr>
+<tr><td><code>OwnFront</code> 当前积分浮标</td><td>X2=跟随进度头显示玩家分；14份克隆会重复 → <b>建议隐藏</b>（NumBk已显示）</td><td class="c">🔧本轮修</td></tr>
+</table>
+
+<h2>本地化 checklist（激活态全量扫描 vs X3 Text表）</h2>
+<table>
+<tr><th>#</th><th>节点</th><th>languageKey</th><th>X3表</th><th>处置</th></tr>
+<tr><td>1</td><td><code>Cont/Txt</code> 总积分标签</td><td class="kx">LC_EVENT_2023beach_strong_consume_integral</td><td class="c">✗</td><td>🔧 落新 key <code>TXT_ActvCircusGacha_TotalScore</code>（总积分/Total Score/總積分）+prefab 换 key+取消隐藏</td></tr>
+<tr><td>2</td><td><code>Reward/OwnFront</code></td><td>（无key·X2残值"61,298"）</td><td class="c">—</td><td>🔧 代码隐藏</td></tr>
+<tr><td>3</td><td><code>Top/txt_title · ActvDesc</code></td><td class="kx">Text_HeroUpRoute_Title / Text_LingShuang_Pack_Desc</td><td class="c">✗</td><td>➖ 运行时被 SetActivityBaseInfo 覆盖；prefab 顺手清 key 更干净（低优先）</td></tr>
+<tr><td>4</td><td><code>ContMachine×2/Layout*/Cont*/Num</code> ×6</td><td class="kw">"1"（垃圾key）</td><td class="c">✗</td><td>➖ 代码 SetCostSlot 覆盖，无害</td></tr>
+<tr><td>5</td><td>7个界面key（Draw/PayDraw/SkipAnim/双池名/预览/概率）</td><td class="kv">TXT_ActvCircusGacha_*</td><td class="c">✓</td><td>✅ cn/en/zh 全有</td></tr>
+<tr><td>6</td><td>活动名/描述 <code>ActvName/ActvDesc_101027</code>+积分活动3key</td><td class="kv">TXT_ActvOnline_* / StageName_7211</td><td class="c">✓</td><td>✅ 已补zh并进产线</td></tr>
+<tr><td>7</td><td>D区常隐件内部 key（排行/GotoPop/BP标签等）</td><td class="kw">LC_EVENT_*（X2系）</td><td class="c">✗</td><td>➖ 区块常隐不渲染；二期接排行时再落</td></tr>
+</table>
+
+<h2>数据链路总览（接管备查）</h2>
+<table>
+<tr><th>区</th><th>数据源</th><th>协议/配置</th></tr>
+<tr><td>A 顶部</td><td>AO 101027（扭蛋机）</td><td>UIHelper.SetActivityBaseInfo</td></tr>
+<tr><td>B 抽奖</td><td>ActvCircusGacha 8201 + 奖池 82011/82012</td><td>DoCircusGachaReq(gachaTyp 0免/2付, count 1|10)</td></tr>
+<tr><td>C 轨道</td><td>旁挂积分活动 AO 101028（type7 单阶段）：ScoreMulti 7211 → ScoreGroup 7211×14档 → Reward 30970-83 发1211</td><td>积分=stageItems[1].progress｜领奖=ReceiveStageActivityReward(id,1,subId)｜刷新=OnRefreshSubActivityUI｜说明=ShowActivityScoreTask(TaskID)</td></tr>
+<tr><td>付费</td><td>券包 Pack 13029-13033（$4.99-99.99, 券1212+钻+VIP点, ROI 4.0x）</td><td>ItemObtain 1211→101028 / 1212→101027</td></tr>
+</table>
+<div class="note">待拍板尾巴：①触发礼包5档（榜分5w/80w+券消耗触发链，X3触发条件表达待验证）②排行榜入口（ContReward 二期）③8201 的触发抽数/礼包ID 空置 ④付费机按钮文案「升級獎勵」是否改「立即開啟」。</div>
+</div>
+</div>
+</body>
+</html>

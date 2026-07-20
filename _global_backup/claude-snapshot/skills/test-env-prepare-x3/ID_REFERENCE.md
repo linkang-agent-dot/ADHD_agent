@@ -140,3 +140,20 @@
 | 63 | 310, 320, 330 | beta-qa-003 |
 | 65 | 500, 510 | beta-qa-002 |
 | 61 | 110, 120 | beta-001 |
+
+## beta 330 现存玩家ID（2026-07-14 实测，SKILL.md 示例里的 14122 已失效/清服）
+- 14450 / 14451 / 14474（mongo ServerPlayer 实捞；再失效就重捞：mongo_query.py 或 get_db(330)['ServerPlayer'].find 前几个 _id）
+
+## 传奇战令(ActvType=22) 各期 ActvOnline ID（2026-07-14 查录）
+- S1尼西斯=103009 / S2艾娃=300210 / S4红发=300403 / S5艾娃=300503 / **S6=300603(最新)** / 阿什顿=102237 / 30留BP=102227
+- 开法：`gm_combo.py open-activity --actv 300603 --days 14`（已在 beta330 实测 OK）
+
+## ⚠️ config_query.py 已废（gdconfig xlsx 2026-07 删库,脚本找不到 data/*.xlsx 必崩）
+- 查活动/道具 ID 改用：`python ~\.claude\skills\x3-config-export\scripts\actv_lookup.py <关键词|ID> [--no-follow]`（读 tsv,带外键跟随）
+
+## 英雄/皮肤（2026-07-16 兵种术语验证案录入）
+| ID | 说明 |
+|----|------|
+| 1034 | 英雄·霍普金斯 Hopkins（兔女郎），晋升变体 10341/10342… |
+| 103405 | 英雄皮肤·黑金契约·霍普金斯（HeroSkin 表，皮肤技能=9037） |
+| 9037 | 技能·黑金清算（HeroSkillInfo；⚠️是皮肤技能不挂英雄本体，加了英雄没皮肤技能页不显示，先 `unlockheroskin 103405`） |

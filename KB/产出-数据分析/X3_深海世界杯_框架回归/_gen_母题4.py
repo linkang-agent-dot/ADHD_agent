@@ -52,8 +52,8 @@ WC_ROWS = [
   '<b>效果未显现（拉通口径）</b>——窗口近 2 倍长，每服 top1 中位 $60 反而低于夏日 $75，服均 $261 仅持平（$240）：榜没把各服头部拉起来；⚠️该榜配置时标注"双Tab露出需程序联调·占位性质"，先确认客户端是否真露出了本服Tab——若未露出是"没上"而非"无效"（详见 02 章④）',
   '逐服对比见 02 章', 'mid'),
  ('W6', '竞猜奖励逐轮升级<br><span class="dim">8强按国直给→4强自选宝箱→决赛冠军框+头衔</span>',
-  '<b>升级没有逆转付费衰减</b>——付费档日均 R32 $410 → R16 $456 → QF $237 → SF $158，免费参与却稳定（QF 场均仍 4k~8.4k）：奖励加码补不了"可押队减半"的结构性衰减；决赛（7/19）终验',
-  f"按轮: {' → '.join(f'{k} {fmt(v[chr(114)+chr(101)+chr(118)])}' for k, v in RD.items())}", 'mid'),
+  '<b>有效（单场口径·07-17用户改判）</b>——日均下降是可押场次 16→8→4→2 的结构必然；按单场算：单场收入升到 R32 基线的 1.3-1.9 倍、单买家单场产出 $2.1→$5.0→$5.8→$10.1 持续走高、外显档占比 80%→85%（明细见竞猜独立页 03 章）',
+  f"按轮: {' → '.join(f'{k} {fmt(v[chr(114)+chr(101)+chr(118)])}' for k, v in RD.items())}", 'ok'),
  ('W7', '扩服 28 新服（1980-2250）<br><span class="dim">D30 口径卡线</span>',
   '<b>贡献世界杯总收入的 37%</b>（$16.1k / 全口径 $43.0k）——年轻服节日弹性显著高于成熟服，扩服是本届最划算的动作之一',
   '来源=母题1 服段拆分', 'ok'),
@@ -412,7 +412,9 @@ def payrate_drill():
                  f"<td class='l'>{bar}<b>{m['pr']:.1f}%</b></td><td>${m['arppu']:.0f}</td></tr>")
     t.append('</table>')
 
-    wc_free = 210976; wc_free_u = 13315
+    _tsrc = json.load(open(os.path.join(HERE, '_ticket_sources.json'), encoding='utf-8'))
+    _free = next(x for x in _tsrc if x['src'] == '免费竞猜档')
+    wc_free = int(float(_free['qty'])); wc_free_u = _free['u']
     sm_u, sm_q = TKS['summer_total']['u'], TKS['summer_total']['qty']
     wc_u, wc_q = TKS['wc_total']['u'], float(TKS['wc_total']['qty'])
     t.append('<div style="height:12px"></div><table><tr><th class="l">开箱券供给对比（获取侧 asset 全量）</th><th>券触达人数</th><th>总发放量</th><th>人均</th></tr>')
@@ -441,7 +443,7 @@ def jc_srv_table():
         b = sum(v['b'] for k, v in JSRV['pay'].items() if lo <= int(k) <= hi)
         rev = sum(v['rev'] for k, v in JSRV['pay'].items() if lo <= int(k) <= hi)
         pay = sum(v for k, v in P.items() if lo <= int(k) <= hi)
-        t.append(f"<tr><td class='l'><b>{name}</b></td><td>{part:,}<span class='dim'>（{part/13315*100:.0f}%）</span></td><td>{b}</td>"
+        t.append(f"<tr><td class='l'><b>{name}</b></td><td>{part:,}<span class='dim'>（{part/CANYU*100:.0f}%）</span></td><td>{b}</td>"
                  f"<td>{b/part*100 if part else 0:.1f}%</td><td>{fmt(rev)}</td><td>{pay:,}</td>"
                  f"<td>{b/pay*100 if pay else 0:.1f}%</td><td>${rev/b if b else 0:.0f}</td></tr>")
     t.append('</table>')
@@ -470,7 +472,7 @@ def jc_pay_table():
                   f"<td>${m['rev']/m['buyers']:.0f}</td><td>{opb:.1f}</td><td>${m['p50']:.0f}</td><td>${m['p90']:.0f}</td>"
                   f"<td>{m['over100']:.1f}%</td><td>{m['over500']:.1f}%</td><td>{fmt(m['max'])}</td></tr>")
     tr.append('</table>')
-    tr.append("<div class='dim' style='margin-top:6px'>*付费玩家付费率 = 模块买家 ÷ 有该模块流水的服上同窗总付费人数（竞猜 3,605 / 开箱 4,047 / 通行证 4,240）；付费玩家ARPU = 模块收入 ÷ 同一分母。</div>")
+    tr.append(f"<div class='dim' style='margin-top:6px'>*付费玩家付费率 = 模块买家 ÷ 有该模块流水的服上同窗总付费人数（竞猜 {JP['竞猜894全档']['total_payers']:,} / 开箱 {KG['世界杯开箱']['total_payers']:,} / 通行证 {JP['通行证']['total_payers']:,}）；付费玩家ARPU = 模块收入 ÷ 同一分母。</div>")
     return ''.join(tr)
 
 def jc_tier_table():
@@ -489,12 +491,319 @@ def jc_tier_table():
       row('$9.99 框档（尾2·外显）', '竞猜$9.99框档(尾2)'),
       row('$19.99 表情档（尾3·外显）', '竞猜$19.99表情档(尾3)'),
     ]
-    tr = ['<table><tr><th class="l">档位</th><th>收入</th><th>买家/参与</th><th>付费玩家付费率*</th><th>ARPU</th><th>ARPPU</th><th>复购</th><th>max</th></tr>']
+    STRUCT = ["—",
+          "券1 + 钻 + 金币500 + 加速 + 资源袋 <span class='dim'>（参与奖）</span>",
+          "券20 + 钻2500 + VIP25　<b>纯资源 · 无外显</b>",
+          "券40 + 钻5000 + VIP50 + <b>荣耀之路头像框</b> <span class='dim'>（8强按国直给 / 4强自选宝箱）</span>",
+          "券80 + 钻1万 + VIP100 + <b>角色助威表情</b> <span class='dim'>（8强按国直给 / 4强自选宝箱）</span>"]
+    tr = ['<table><tr><th class="l">档位</th><th>收入</th><th>买家/参与</th><th>付费玩家付费率*</th><th>ARPU</th><th>ARPPU</th><th>复购</th><th>max</th><th class="l">礼包结构（奖励构成）</th></tr>']
     for i, (name, rev, b, pr, arpu, ar, op, mx) in enumerate(rows):
         hl = ' class="row-a"' if i == 0 else ''
-        tr.append(f"<tr{hl}><td class='l'>{name}</td><td>{rev}</td><td>{b}</td><td>{pr}</td><td>{arpu}</td><td>{ar}</td><td>{op}</td><td>{mx}</td></tr>")
+        tr.append(f"<tr{hl}><td class='l'>{name}</td><td>{rev}</td><td>{b}</td><td>{pr}</td><td>{arpu}</td><td>{ar}</td><td>{op}</td><td>{mx}</td><td class='l' style='font-size:11px'>{STRUCT[i]}</td></tr>")
     tr.append('</table>')
     tr.append(f"<div class='dim' style='margin-top:6px'>*付费玩家付费率 = 该档买家 ÷ 世界杯窗口全服总付费人数（{P:,}）；ARPU 同分母。参考：开箱族付费率 {KX['buyers']/P*100:.1f}% · 通行证 {wm['通行证(130020/21)']['buyers']/P*100:.1f}%。</div>")
+    return ''.join(tr)
+
+def jc_form_table():
+    """竞猜 vs 同期各礼包售卖形式（同窗对打·设计目的验证）"""
+    PW, PD = WC['payers'], DS['payers']
+    def r(form, name, m, P, hl=''):
+        return (f"<tr{hl}><td class='l'><b>{form}</b></td><td class='l'>{name}</td><td>{fmt(m['rev'])}</td><td>{m['buyers']}</td>"
+                f"<td>{m['buyers']/P*100:.1f}%</td><td class='y' style='font-size:13px'><b>${m['rev']/P:.2f}</b></td><td>${m['arppu']:.1f}</td>"
+                f"<td>{m['opb']:.1f}</td><td>{fmt(m['max'])}</td></tr>")
+    tr = ['<table><tr><th class="l">售卖形式</th><th class="l">模块</th><th>收入</th><th>买家</th><th>付费玩家付费率*</th><th>付费玩家ARPU ★</th><th>ARPPU</th><th>复购</th><th>max</th></tr>']
+    tr.append('<tr><td colspan=9 class="l" style="background:#21262d;color:#8b949e;font-size:11px">世界杯窗 6/26-' + END[5:] + f' · 全服 · 分母 {PW:,}</td></tr>')
+    tr.append(r('竞猜下注（按国+赛果·事件绑定）', '竞猜礼包 894 全档', wm['竞猜礼包全档'], PW, ' class="row-a"'))
+    tr.append(r('连锁直购（逐档解锁）', '开箱福箱连锁', wm['开箱福箱连锁'], PW))
+    tr.append(r('锚点直购（道具再获取入口）', '开箱券锚点', wm['开箱券锚点(可复购)'], PW))
+    tr.append(r('BP 进度（买断+任务）', '通行证 130020/21', wm['通行证(130020/21)'], PW))
+    tr.append('<tr><td colspan=9 class="l" style="background:#21262d;color:#8b949e;font-size:11px">深海窗 7/3-' + END[5:] + f' · 59服 · 分母 {PD:,}（口径不同，比比率不比绝对值）</td></tr>')
+    for form, key in [('按日解锁（送达层）','每日礼包'), ('玩法成就（一次性阶梯）','大富翁成就礼包'),
+                      ('连锁直购（逐档解锁）','转盘连锁5档'), ('BP 进度（买断+任务）','BP大富翁线(130036/37)'),
+                      ('周卡（买断+日领）','节日周卡'), ('存钱罐（一次性买断）','存钱罐')]:
+        tr.append(r(form, key, dm[key], PD))
+    P2B = json.load(open(os.path.join(HERE, '_p2_wc_bet.json'), encoding='utf-8'))
+    tr.append(f'<tr><td colspan=9 class="l" style="background:#21262d;color:#8b949e;font-size:11px">同题对照：P2 世界杯竞猜 7/3-{END[5:]} · 分母 {P2B["total_payers"]:,}（v1041·比比率）</td></tr>')
+    tr.append(f"<tr class='row-a'><td class='l'><b>充值即下注（P2式·无免费档·$4.99/9.99/19.99 无限复购）</b></td><td class='l'>2026世界杯竞猜</td><td>{fmt(P2B['rev'])}</td><td>{P2B['buyers']}</td>"
+              f"<td>{P2B['payrate']:.1f}%</td><td class='y' style='font-size:13px'><b>${P2B['arpu']:.2f}</b></td><td>${P2B['arppu']:.1f}</td><td>{P2B['opb']:.1f}</td><td>{fmt(P2B['max'])}</td></tr>")
+    tr.append('</table>')
+    tr.append("<div class='dim' style='margin-top:6px'>*三段分母不同（全服 / 59服 / P2全服窗口总付费人数），跨段只比比率；同段内绝对值可比。P2 免费预测入口是否存在未见于订单表，此行口径=付费竞猜包。</div>")
+    return ''.join(tr)
+
+DSM = json.load(open(os.path.join(HERE, '_ds_monopoly_dist.json'), encoding='utf-8'))  # 深海大富翁分布
+
+def ds_monopoly_chart():
+    P2M = json.load(open(os.path.join(HERE, '_p2_monopoly_may.json'), encoding='utf-8'))
+    TH = [10,20,50,100,200,300,500,1000]
+    ds_v = [DSM['surv'][str(t)] for t in TH]
+    kx_v = []
+    g = KG['世界杯开箱']
+    bA = {int(k): v for k, v in g['bucketA'].items()}
+    bB = {int(k): v for k, v in g['bucketB'].items()}
+    for t in TH:
+        kx_v.append(sum(v for k, v in bA.items() if k >= t//10) if t < 100 else sum(v for k, v in bB.items() if k >= t//100))
+    p2_v = [P2M['surv'][str(t)] for t in TH]
+    ds_n, kx_n, p2_n = DSM['buyers'], g['buyers'], P2M['buyers']
+    series = [
+      (f"深海大富翁族（{ds_n}买家·max {fmt(DSM['max'])}）", [v/ds_n*100 for v in ds_v], ds_v, ds_n, '#4691e8'),
+      (f"世界杯开箱（{kx_n}买家·max {fmt(g['max'])}）", [v/kx_n*100 for v in kx_v], kx_v, kx_n, '#c08a17'),
+      (f"P2节日大富翁·5月拓荒窗（{p2_n:,}买家·max {fmt(P2M['max'])}）", [v/p2_n*100 for v in p2_v], p2_v, p2_n, '#8b949e'),
+    ]
+    W, H, L, R, T, B = 1160, 330, 64, 24, 44, 56
+    pw, ph = W-L-R, H-T-B
+    vmax = max(max(v) for _, v, _, _, _ in series)*1.12
+    def X(i): return L + pw*i/(len(TH)-1)
+    def Y(v): return T + ph*(1-v/vmax)
+    sv = [f'<svg viewBox="0 0 {W} {H}" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px">']
+    sv.append(f'<text x="{L}" y="24" fill="#f0f6fc" font-size="13" font-weight="700">大富翁 × 开箱 × P2节日大富翁 · 花到 ≥$X 的买家占比（÷该模块全部买家）</text>')
+    for gv in range(0, int(vmax)+1, 10):
+        sv.append(f'<line x1="{L}" y1="{Y(gv):.0f}" x2="{W-R}" y2="{Y(gv):.0f}" stroke="#21262d"/>')
+        sv.append(f'<text x="{L-6}" y="{Y(gv)+4:.0f}" fill="#484f58" font-size="10" text-anchor="end">{gv}%</text>')
+    for i, t in enumerate(TH):
+        sv.append(f'<text x="{X(i):.0f}" y="{H-36}" fill="#8b949e" font-size="10.5" text-anchor="middle">≥${t:,}</text>')
+    ia, ib = TH.index(50), TH.index(200)
+    sv.append(f'<rect x="{X(ia):.0f}" y="{T}" width="{X(ib)-X(ia):.0f}" height="{ph}" fill="#d29922" fill-opacity="0.07"/>')
+    sv.append(f'<text x="{(X(ia)+X(ib))/2:.0f}" y="{T+16}" fill="#d29922" font-size="11" font-weight="700" text-anchor="middle">中段：深海大富翁 -47%/-55%/-57% vs P2 -35%/-21%/-50%（复购位差）</text>')
+    for nm, pcts, cnts, n, c in series:
+        wgt = 2.4 if '深海' in nm else 1.8
+        pts = ' L '.join(f'{X(i):.0f} {Y(v):.0f}' for i, v in enumerate(pcts))
+        sv.append(f'<path d="M {pts}" fill="none" stroke="{c}" stroke-width="{wgt}"/>')
+        for i, v in enumerate(pcts):
+            sv.append(f'<circle cx="{X(i):.0f}" cy="{Y(v):.0f}" r="3" fill="{c}"><title>{nm} ≥${TH[i]:,}: {v:.1f}%（{cnts[i]}人）</title></circle>')
+    # 斜率标注：深海(上)与P2(下)——斜率=人数比,与占比同值
+    _ds_p = [v/ds_n*100 for v in ds_v]; _p2_p = [v/p2_n*100 for v in p2_v]
+    for pcts, vals, c, dy in [(_ds_p, ds_v, '#4691e8', -14), (_p2_p, p2_v, '#8b949e', 16)]:
+        for i in range(len(vals)-1):
+            if vals[i] <= 0: continue
+            drop = (vals[i+1]/vals[i]-1)*100
+            cc = '#f85149' if drop <= -60 else c
+            sv.append(f'<text x="{(X(i)+X(i+1))/2:.0f}" y="{(Y(pcts[i])+Y(pcts[i+1]))/2+dy:.0f}" fill="{cc}" font-size="9.5" font-weight="600" text-anchor="middle">{drop:+.0f}%</text>')
+    lx = L
+    for nm, pcts, cnts, n, c in series:
+        sv.append(f'<line x1="{lx}" y1="{H-16}" x2="{lx+16}" y2="{H-16}" stroke="{c}" stroke-width="2.2"/>')
+        sv.append(f'<text x="{lx+21}" y="{H-12}" fill="#c9d1d9" font-size="10.5">{nm}</text>')
+        lx += 21 + len(nm)*10.5 + 24
+    sv.append('</svg>')
+    return ''.join(sv)
+
+def ds_decay_table():
+    P2M = json.load(open(os.path.join(HERE, '_p2_monopoly_may.json'), encoding='utf-8'))
+    TH = [10,20,50,100,200,300,500,1000]
+    g = KG['世界杯开箱']
+    bA = {int(k): v for k, v in g['bucketA'].items()}
+    bB = {int(k): v for k, v in g['bucketB'].items()}
+    kx_v = [(sum(v for k, v in bA.items() if k >= t//10) if t < 100 else sum(v for k, v in bB.items() if k >= t//100)) for t in TH]
+    cols = {'深海大富翁族': [DSM['surv'][str(t)] for t in TH],
+            '世界杯开箱': kx_v,
+            'P2节日大富翁(5月)': [P2M['surv'][str(t)] for t in TH]}
+    tr = ['<table style="margin-top:10px"><tr><th class="l">段</th>' + ''.join(f'<th>{k}</th>' for k in cols) + '<th class="l">参照</th></tr>']
+    for i in range(len(TH)-1):
+        seg = f"≥${TH[i]:,} → ≥${TH[i+1]:,}"
+        cells = []
+        for k, vals in cols.items():
+            if vals[i] <= 0:
+                cells.append('<td>—</td>'); continue
+            d = (vals[i+1]/vals[i]-1)*100
+            cls = ' class="r"' if d <= -60 else (' class="g"' if d >= -40 else '')
+            cells.append(f'<td{cls}>{d:+.0f}%<span class="dim">（{vals[i]}→{vals[i+1]}人）</span></td>')
+        ref = '自然常数带 -30~40%' if i == 0 else ''
+        tr.append(f'<tr><td class="l"><b>{seg}</b></td>' + ''.join(cells) + f'<td class="l dim">{ref}</td></tr>')
+    tr.append('</table>')
+    tr.append('<div class="dim" style="margin-top:6px">绿=在自然常数带内（≥-40%）；红=塌方（≤-60%）；括号内为人数。</div>')
+    return ''.join(tr)
+
+# ==== 深海大富翁族 深度下钻（_monopoly_deep.json）====
+MD = json.load(open(os.path.join(HERE, '_monopoly_deep.json'), encoding='utf-8'))
+
+def dice_survival_chart():
+    """进度停留曲线：累计掷骰次数≥N 的玩家数（三线：全量/白嫖/族付费）"""
+    TH = [1,20,50,100,150,250,350,500,700]
+    allv  = [MD['survival']['all'][str(t)] for t in TH]
+    freev = [MD['survival']['free'][str(t)] for t in TH]
+    payv  = [MD['survival']['payer'][str(t)] for t in TH]
+    series = [
+      (f"全量掷骰玩家", allv,  '#4691e8', 2.4),
+      (f"白嫖玩家",     freev, '#8b949e', 1.9),
+      (f"族付费玩家",   payv,  '#c08a17', 2.2),
+    ]
+    W,H,L,R,T,B = 1160,344,58,132,46,56
+    pw,ph = W-L-R, H-T-B
+    vmax = max(allv)*1.1
+    def X(i): return L+pw*i/(len(TH)-1)
+    def Y(v): return T+ph*(1-v/vmax)
+    sv=[f'<svg viewBox="0 0 {W} {H}" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px">']
+    sv.append(f'<text x="{L}" y="24" fill="#f0f6fc" font-size="13" font-weight="700">大富翁进度停留 · 累计掷骰次数 ≥N 的玩家数（横轴=阶段奖档 抽20/50/…/700）</text>')
+    for gv in range(0,int(vmax)+1,1000):
+        sv.append(f'<line x1="{L}" y1="{Y(gv):.0f}" x2="{W-R}" y2="{Y(gv):.0f}" stroke="#21262d"/>')
+        sv.append(f'<text x="{L-6}" y="{Y(gv)+4:.0f}" fill="#484f58" font-size="10" text-anchor="end">{gv//1000 if gv else 0}k</text>')
+    ia,ib = TH.index(350), TH.index(500)
+    sv.append(f'<rect x="{X(ia):.0f}" y="{T}" width="{X(ib)-X(ia):.0f}" height="{ph}" fill="#f85149" fill-opacity="0.09"/>')
+    dropf = (freev[ib]/freev[ia]-1)*100
+    sv.append(f'<text x="{(X(ia)+X(ib))/2:.0f}" y="{T+15}" fill="#f85149" font-size="11" font-weight="700" text-anchor="middle">免费墙</text>')
+    sv.append(f'<text x="{(X(ia)+X(ib))/2:.0f}" y="{T+30}" fill="#f85149" font-size="10" text-anchor="middle">白嫖 {freev[ia]:,}→{freev[ib]:,} ({dropf:.0f}%)</text>')
+    for i,t in enumerate(TH):
+        sv.append(f'<text x="{X(i):.0f}" y="{H-36}" fill="#8b949e" font-size="10.5" text-anchor="middle">≥{t}</text>')
+    for nm,vals,c,wgt in series:
+        pts=' L '.join(f'{X(i):.0f} {Y(v):.0f}' for i,v in enumerate(vals))
+        sv.append(f'<path d="M {pts}" fill="none" stroke="{c}" stroke-width="{wgt}"/>')
+        for i,v in enumerate(vals):
+            sv.append(f'<circle cx="{X(i):.0f}" cy="{Y(v):.0f}" r="3" fill="{c}"><title>{nm} ≥{TH[i]}次: {v:,}人</title></circle>')
+    ly=T+8
+    labels=[(f"全量 {MD['dice_total_players']:,}人",'#4691e8'),(f"白嫖 {MD['dice_free']:,}人",'#8b949e'),(f"族付费 {MD['dice_payers']}人",'#c08a17')]
+    for nm,c in labels:
+        sv.append(f'<line x1="{W-R+8}" y1="{ly}" x2="{W-R+24}" y2="{ly}" stroke="{c}" stroke-width="2.6"/>')
+        sv.append(f'<text x="{W-R+28}" y="{ly+4}" fill="#c9d1d9" font-size="10">{nm}</text>')
+        ly+=20
+    sv.append('</svg>')
+    return ''.join(sv)
+
+def dice_decay_table():
+    TH=[1,20,50,100,150,250,350,500,700]
+    cols={'全量':[MD['survival']['all'][str(t)] for t in TH],
+          '白嫖':[MD['survival']['free'][str(t)] for t in TH],
+          '族付费':[MD['survival']['payer'][str(t)] for t in TH]}
+    tr=['<table style="margin-top:10px"><tr><th class="l">档间</th>'+''.join(f'<th>{k}</th>' for k in cols)+'<th class="l">读法</th></tr>']
+    notes={('350','500'):'免费骰子耗尽墙：白嫖塌方、付费不掉'}
+    for i in range(len(TH)-1):
+        seg=f"≥{TH[i]} → ≥{TH[i+1]}"
+        cells=[]
+        for k,vals in cols.items():
+            d=(vals[i+1]/vals[i]-1)*100
+            cls=' class="r"' if d<=-60 else (' class="g"' if d>=-40 else '')
+            cells.append(f'<td{cls}>{d:+.0f}%<span class="dim">（{vals[i]:,}→{vals[i+1]:,}）</span></td>')
+        note=notes.get((str(TH[i]),str(TH[i+1])),'')
+        tr.append(f'<tr><td class="l"><b>{seg}</b></td>'+''.join(cells)+f'<td class="l dim">{note}</td></tr>')
+    tr.append('</table>')
+    tr.append(f'<div class="dim" style="margin-top:6px">分位：全量 p50={MD["dice_pct_all"]["p50"]:.0f}次 / p99={MD["dice_pct_all"]["p99"]:.0f}；族付费 p50={MD["dice_pct_payer"]["p50"]:.0f}次 / p99={MD["dice_pct_payer"]["p99"]:.0f} / max={MD["dice_pct_payer"]["mx"]:.0f}。红=塌方≤-60%，绿=常数带≥-40%。</div>')
+    return ''.join(tr)
+
+def family_dissect_card():
+    order=['成就礼包','BP大富翁线','存钱罐','罗盘连锁']
+    form={'成就礼包':'阶梯买断','BP大富翁线':'通行证 · 硬封顶$30','存钱罐':'单笔买断','罗盘连锁':'连锁 · 可复购'}
+    comp=MD['deepsea_components']; tot=sum(comp[k]['rev'] for k in order)
+    tr=['<table><tr><th class="l">族内件</th><th>收入</th><th>买家</th><th>ARPPU</th><th>复购</th><th>max</th><th class="l">付费形态</th></tr>']
+    for k in order:
+        m=comp[k]; hl=' class="row-a"' if k=='罗盘连锁' else ''
+        tr.append(f"<tr{hl}><td class='l'><b>{k}</b></td><td>{fmt(m['rev'])}</td><td>{m['buyers']}</td><td>${m['arppu']:.1f}</td><td>{m['opb']:.1f}单</td><td>{fmt(m['max'])}</td><td class='l dim'>{form[k]}</td></tr>")
+    tr.append(f"<tr><td class='l'><b>族合计</b></td><td><b>{fmt(tot)}</b></td><td class='l dim' colspan='5'>四件里三件是买断制（复购 1-2 单、硬封顶 $20-687）；唯一可复购的罗盘连锁（3.1 单/max $255）只覆盖 138 人</td></tr>")
+    tr.append('</table>')
+    return ''.join(tr)
+
+def server_seg_card():
+    seg=MD['server_seg']; names={'mature':'成熟老服 1170-1870','young':'年轻服 1880-2010'}
+    tr=['<table><tr><th class="l">服段</th><th>大富翁族买家</th><th>收入</th><th>付费玩家付费率*</th><th>ARPPU</th></tr>']
+    for s in ['mature','young']:
+        m=seg[s]
+        tr.append(f"<tr><td class='l'><b>{names[s]}</b></td><td>{m['buyers']}</td><td>{fmt(m['rev'])}</td><td>{m['payrate']:.1f}%<span class='dim'>（分母{m['payers']:,}）</span></td><td>${m['arppu']:.1f}</td></tr>")
+    tr.append('</table>')
+    tr.append('<div class="dim" style="margin-top:6px">*付费玩家付费率=该服段大富翁族买家÷该服段窗口总付费人数。两段付费率(34.2%/33.0%)与 ARPPU($44.8/$43.2)几乎完全对称=新老服通吃的稳定压舱石。</div>')
+    return ''.join(tr)
+
+def family_expansion_chart():
+    months=MD['chain_by_month']; comp=MD['deepsea_components']
+    ds_tot=sum(comp[k]['rev'] for k in comp)
+    bars=[(m['m'][5:]+'月\n连锁', m['rev'], '#3a4150') for m in months]
+    bars.append(('深海\n四件套', ds_tot, '#4691e8'))
+    W,H,L,R,T,B=1160,300,56,20,64,54
+    pw,ph=W-L-R,H-T-B
+    vmax=max(b[1] for b in bars)*1.14
+    n=len(bars); bw=pw/n*0.6
+    sv=[f'<svg viewBox="0 0 {W} {H}" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px">']
+    sv.append(f'<text x="{L}" y="24" fill="#f0f6fc" font-size="13" font-weight="700">大富翁族扩张 · 老版航海之路(纯连锁 207xxx)月度 vs 深海四件套(窗口收入)</text>')
+    sv.append(f'<text x="{L}" y="43" fill="#8b949e" font-size="11">连锁本身月度 $3-6k 随服基数缓涨；深海把盘子做到 {fmt(ds_tot)} 全靠新增件（成就礼包+BP大富翁线+存钱罐）</text>')
+    for i,(nm,v,c) in enumerate(bars):
+        x=L+pw*i/n+(pw/n-bw)/2; y=T+ph*(1-v/vmax)
+        sv.append(f'<rect x="{x:.0f}" y="{y:.0f}" width="{bw:.0f}" height="{T+ph-y:.0f}" fill="{c}" rx="3"><title>{nm} {fmt(v)}</title></rect>')
+        sv.append(f'<text x="{x+bw/2:.0f}" y="{y-6:.0f}" fill="#f0f6fc" font-size="10" font-weight="700" text-anchor="middle">{fmt(v)}</text>')
+        for li,seg in enumerate(nm.split("\n")):
+            sv.append(f'<text x="{x+bw/2:.0f}" y="{H-32+li*13}" fill="#8b949e" font-size="9.5" text-anchor="middle">{seg}</text>')
+    sv.append('</svg>')
+    return ''.join(sv)
+
+# ---- P2 三节「节日大富翁」同形式参照（_p2_monopoly_fests.json·07-20 用户定：春节异族形式不同不可比）----
+P2F = json.load(open(os.path.join(HERE, '_p2_monopoly_fests.json'), encoding='utf-8'))
+
+def p2fests_chart():
+    """深海大富翁族 vs P2情人/科技/拓荒「节日大富翁」同形式 · 占比 survival（跨游戏口径）"""
+    TH = [10, 20, 50, 100, 200, 300, 500, 1000]
+    ds_v = [DSM['surv'][str(t)] for t in TH]
+    ds_n = DSM['buyers']
+    series = [
+      (f"深海大富翁族（{ds_n}买家·max {fmt(DSM['max'])}·14天）", [v/ds_n*100 for v in ds_v], ds_v, '#4691e8'),
+    ]
+    for fest, c in [('情人节', '#d2699e'), ('科技节', '#a371f7'), ('拓荒节', '#2ea856')]:
+        w = P2F['windows'][fest]
+        vv = [w['surv'][str(t)] for t in TH]
+        series.append((f"P2{fest}·节日大富翁族（{w['buyers']:,}买家·max {fmt(w['max'])}）", [v/w['buyers']*100 for v in vv], vv, c))
+    W, H, L, R, T, B = 1160, 340, 64, 24, 44, 72
+    pw, ph = W-L-R, H-T-B
+    vmax = max(max(v) for _, v, _, _ in series)*1.12
+    def X(i): return L + pw*i/(len(TH)-1)
+    def Y(v): return T + ph*(1-v/vmax)
+    sv = [f'<svg viewBox="0 0 {W} {H}" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px">']
+    sv.append(f'<text x="{L}" y="24" fill="#f0f6fc" font-size="13" font-weight="700">同形式参照 · P2 三节「节日大富翁」族 vs X3 深海大富翁族 · 花到 ≥$X 的买家占比（÷该模块全部买家）</text>')
+    for gv in range(0, int(vmax)+1, 10):
+        sv.append(f'<line x1="{L}" y1="{Y(gv):.0f}" x2="{W-R}" y2="{Y(gv):.0f}" stroke="#21262d"/>')
+        sv.append(f'<text x="{L-6}" y="{Y(gv)+4:.0f}" fill="#484f58" font-size="10" text-anchor="end">{gv}%</text>')
+    for i, t in enumerate(TH):
+        sv.append(f'<text x="{X(i):.0f}" y="{H-52}" fill="#8b949e" font-size="10.5" text-anchor="middle">≥${t:,}</text>')
+    ia = TH.index(300)
+    sv.append(f'<rect x="{X(ia):.0f}" y="{T}" width="{X(len(TH)-1)-X(ia):.0f}" height="{ph}" fill="#d29922" fill-opacity="0.07"/>')
+    sv.append(f'<text x="{(X(ia)+X(len(TH)-1))/2:.0f}" y="{T+16}" fill="#d29922" font-size="11" font-weight="700" text-anchor="middle">同形式共同天花板：$300→500 P2 三节全部 -90%+ 塌方、≥$500≈0 —— P2 也没把大富翁做深</text>')
+    for nm, pcts, cnts, c in series:
+        wgt = 2.4 if '深海' in nm else 1.7
+        pts = ' L '.join(f'{X(i):.0f} {Y(v):.0f}' for i, v in enumerate(pcts))
+        sv.append(f'<path d="M {pts}" fill="none" stroke="{c}" stroke-width="{wgt}"/>')
+        for i, v in enumerate(pcts):
+            sv.append(f'<circle cx="{X(i):.0f}" cy="{Y(v):.0f}" r="3" fill="{c}"><title>{nm} ≥${TH[i]:,}: {v:.1f}%（{cnts[i]:,}人）</title></circle>')
+    ly = H-30
+    lx = L
+    for nm, pcts, cnts, c in series:
+        sv.append(f'<line x1="{lx}" y1="{ly}" x2="{lx+16}" y2="{ly}" stroke="{c}" stroke-width="2.2"/>')
+        sv.append(f'<text x="{lx+21}" y="{ly+4}" fill="#c9d1d9" font-size="10.5">{nm}</text>')
+        lx += 21 + len(nm)*9.2 + 20
+        if lx > W-320: lx = L; ly += 18
+    sv.append('</svg>')
+    return ''.join(sv)
+
+def p2fests_decay_table():
+    TH = [10, 20, 50, 100, 200, 300, 500, 1000]
+    cols = {'深海大富翁族': [DSM['surv'][str(t)] for t in TH]}
+    for fest in ['情人节', '科技节', '拓荒节']:
+        cols[f'P2{fest}'] = [P2F['windows'][fest]['surv'][str(t)] for t in TH]
+    tr = ['<table style="margin-top:10px"><tr><th class="l">段</th>' + ''.join(f'<th>{k}</th>' for k in cols) + '<th class="l">参照</th></tr>']
+    for i in range(len(TH)-1):
+        seg = f"≥${TH[i]:,} → ≥${TH[i+1]:,}"
+        cells = []
+        for k, vals in cols.items():
+            if vals[i] <= 0:
+                cells.append('<td>—</td>'); continue
+            d = (vals[i+1]/vals[i]-1)*100
+            cls = ' class="r"' if d <= -60 else (' class="g"' if d >= -40 else '')
+            cells.append(f'<td{cls}>{d:+.0f}%<span class="dim">（{vals[i]:,}→{vals[i+1]:,}）</span></td>')
+        ref = '自然常数带 -30~40%' if i == 0 else ('同形式共同天花板' if TH[i] == 300 else '')
+        tr.append(f'<tr><td class="l"><b>{seg}</b></td>' + ''.join(cells) + f'<td class="l dim">{ref}</td></tr>')
+    tr.append('</table>')
+    tr.append('<div class="dim" style="margin-top:6px">绿=常数带内（≥-40%）；红=塌方（≤-60%）。X3 中段（$50→$200）-55%/-57% 仍比 P2（-30~-53%）偏陡，但 $300→$500 段反而是 P2 三节全塌（-90%+）、X3 -60%——同形式深水区两边都没有货架。</div>')
+    return ''.join(tr)
+
+def p2fests_shelf_card():
+    """P2 分层货架解剖（科技窗为代表·情人/拓荒同构）+ 占节日盘份额"""
+    w = P2F['windows']['科技节']; c = w['components']
+    layer = [
+      ('节日大富翁', '宽入口件', '$0.99-4.99 小额进人，两千人级、复购 1.1 单——X3 无对应件（族内最低入口=BP $9.99）'),
+      ('2025复活节大富翁礼包', '中段可复购件', '复购 3.2 单铺给 1,542 人——X3 对应件=罗盘连锁（复购 3.1 单）但只覆盖 138 人'),
+      ('节日大富翁组队礼包', '社交件', '组队解锁小额档——X3 无对应件'),
+      ('节日大富翁礼包', '深度件', 'ARPPU $181 只卖 163 人，max $447 收口——X3 对应件=成就礼包（max $687 但 ARPPU $36=没分层）'),
+    ]
+    tr = ['<table><tr><th class="l">P2 件（科技窗）</th><th>收入</th><th>买家</th><th>ARPPU</th><th>复购</th><th>max</th><th class="l">层位 · 与 X3 对照</th></tr>']
+    for nm, lay, note in layer:
+        m = c[nm]
+        tr.append(f"<tr><td class='l'><b>{nm}</b></td><td>{fmt(m['rev'])}</td><td>{m['buyers']:,}</td><td>${m['arppu']:.1f}</td><td>{m['opb']:.1f}单</td><td>{fmt(m['max'])}</td><td class='l dim'><b>{lay}</b>：{note}</td></tr>")
+    f3 = [(f, P2F['windows'][f]) for f in ['情人节', '科技节', '拓荒节']]
+    sums = ' · '.join(f"{f} {fmt(v['rev'])}/{v['buyers']:,}人/max {fmt(v['max'])}" for f, v in f3)
+    tr.append(f"<tr><td class='l'><b>三节合计参照</b></td><td class='l dim' colspan='6'>{sums}——ARPPU $27-40、max 全部 $550-780，<b>P2 同形式也是宽入口浅盘</b>（情人窗单件即全族，科技/拓荒四件分层）。</td></tr>")
+    tr.append('</table>')
     return ''.join(tr)
 
 # ---- ③ 本服排行榜效果（逐服）----
@@ -628,7 +937,8 @@ td b{{color:var(--head)}}
     <a class="sb-item" href="#seckx">02 · 世界杯开箱效果分析</a>
     <a class="sb-item" href="#secjc">03 · 世界杯竞猜回归（整体）</a>
     <a class="sb-item" href="#sec1">04 · 世界杯 8 条改动</a>
-    <a class="sb-item" href="#sec2">05 · 深海节 9 条（待聊）</a>
+    <a class="sb-item" href="#sec2">05 · 深海节 9 条改动</a>
+    <a class="sb-item" href="#secds">D3 · 大富翁族深度解剖</a>
   </div>
 </nav>
 
@@ -722,44 +1032,8 @@ td b{{color:var(--head)}}
 </div></div>
 </div>
 
-<div class="sec" id="secjc"><div class="sec-head"><div class="sec-num">03</div><div class="sec-title">世界杯竞猜回归 · 整体（6/26-{END[5:]} · 全服）</div></div>
-<div class="bigcon">大结论：<b>竞猜是 X3 史上最宽的活动入口（参与 {CANYU:,} 人 = 窗口总付费人数的 3.2 倍），且参与不随淘汰赛缩圈衰减；但它不是收钱模块——付费 {fmt(wm['竞猜礼包全档']['rev'])}/160 人（转化 1.2%）且逐轮衰减，付费主力是搭售的外显两档（81%）。定性 = 拉人和活跃的模块，变现靠外显搭售。</b><br>
-<span style="font-size:12.5px">整体指标：付费玩家付费率 <b>{wm['竞猜礼包全档']['buyers']/WC['payers']*100:.1f}%</b>（对照 开箱族 {KX['buyers']/WC['payers']*100:.1f}% · 通行证 {wm['通行证(130020/21)']['buyers']/WC['payers']*100:.1f}%）｜ ARPU <b>${wm['竞猜礼包全档']['rev']/WC['payers']:.2f}</b> ｜ ARPPU <b>${wm['竞猜礼包全档']['arppu']:.1f}</b> ｜ 复购 {wm['竞猜礼包全档']['opb']:.1f} 单 ｜ max {fmt(wm['竞猜礼包全档']['max'])}</span></div>
-<div class="chips">
-  <button class="chip on" data-v="jc0">基本付费分析</button>
-  <button class="chip" data-v="jc1">参与逐日</button>
-  <button class="chip" data-v="jc2">按轮：参与 vs 付费</button>
-  <button class="chip" data-v="jc3">档位结构</button>
-  <button class="chip" data-v="jc4">新老服拆分</button>
-</div>
-
-<div class="view on" id="jc0"><div class="vc">买了的人花得不少（ARPPU $44 与开箱 $52 同级、复购 4.1 全场最高），但付费玩家付费率只有 4.4%——不到开箱（9.6%）的一半、通行证（13.0%）的三分之一；p90 $100、$500+ 仅 1.2%，头部薄。竞猜缺的不是客单，是把 1.3 万参与者转成买家的那一步。</div>
-<div class="card"><div class="ct">竞猜基本付费指标 · 开箱/通行证同窗参照</div>
-{jc_pay_table()}
-</div></div>
-
-<div class="view" id="jc1"><div class="vc">参与由比赛日驱动、20 天全程有脉冲无衰减——按轮 7.3k → 10.8k → 8.7k → 8.2k，淘汰赛缩圈不缩人。作为拉活跃入口，生命力贯穿全程。</div>
-<div class="card"><div class="ct">参与逐日曲线 · 轮次色带 · 悬停看数</div>
-{jc_daily_chart()}
-</div></div>
-
-<div class="view" id="jc2"><div class="vc">参与和付费背离：人越聚越多，付费日均 $410 → $158 逐轮走低——奖励逐轮升级没能逆转（见 04 章 W6）。</div>
-<div class="card"><div class="ct">按轮对比 · 同轮次窗口</div>
-{jc_rounds_chart()}
-</div></div>
-
-<div class="view" id="jc3"><div class="vc">付费主力是外显两档（$5,696 · 占 81%），纯券档只卖 $1,332——竞猜本体被玩家当免费玩法，13,315 参与者是全场最大的未转化流量池。</div>
-<div class="card"><div class="ct">档位结构 · 付费率分母=世界杯窗口全服总付费人数</div>
-{jc_tier_table()}
-<div class="cb cb-info">改造方向 = P2 猜酒杯形式（充值即参与 + 排行强循环），量级参考 07-10 漏斗推算（修到猜酒杯转化水平 ≈ 6.5×）。</div>
-</div></div>
-
-<div class="view" id="jc4"><div class="vc">参与近一半来自扩服新服（6,493 人·49%）——新服玩家最爱玩竞猜、白嫖盘最大；但参与→付费转化三段均匀地低（老服 1.3% / 年轻服 1.6% / 新服 1.0%）——付费弱不是人群问题，是形式问题（哪个段都不买"加成券"）；年轻老服客单最高（ARPPU $67）。</div>
-<div class="card"><div class="ct">竞猜新老服拆分 · 参与 / 转化 / 付费率 / ARPPU</div>
-{jc_srv_table()}
-<div class="cb cb-info">口径：竞猜部署 83 服（55 老服 1170-1970 + 28 扩服）；参与=asset 894% 去重、付费=894 订单；付费率分母=该段窗口总付费人数。</div>
-</div></div>
-</div>
+<div class="sec" id="secjc"><div class="sec-head"><div class="sec-num">03</div><div class="sec-title">世界杯竞猜回归——已独立成页</div></div>
+<div class="cb cb-info" style="margin:0 0 14px"><b>竞猜回归已摘出单独报告：<a href="世界杯竞猜回归_{END.replace('-','')}.html" style="color:var(--accent)">世界杯竞猜回归_{END.replace('-','')}.html</a></b>（基本付费分析 / 参与逐日 / 按轮参与vs付费 / 档位SKU结构 / 新老服拆分 / 形式对比·P2同题对照，六视图）。本页只留入口。</div>
 
 <div class="sec" id="sec1"><div class="sec-head"><div class="sec-num">04</div><div class="sec-title">世界杯 8 条改动逐条效果</div></div>
 <div class="card">
@@ -768,7 +1042,7 @@ td b{{color:var(--head)}}
 <div class="cb cb-info"><b>结论：世界杯的钱在开箱（{fmt(wm['开箱福箱连锁']['rev'] + wm['开箱券锚点(可复购)']['rev'])}）和通行证（{fmt(wm['通行证(130020/21)']['rev'])}），竞猜的价值在人（13,315 参与）。</b>开箱 = 正常发挥未被挤压；外显进付费档是唯一结构性正信号（马戏节照抄）；中层加深要靠别的手段（阶段奖励宝箱/随机双轨）。</div>
 </div></div>
 
-<div class="sec" id="sec2"><div class="sec-head"><div class="sec-num">05</div><div class="sec-title">深海节 9 条改动（7/3-{END[5:]} · 59服 · 总付费 {DS['payers']:,} 人）——待聊，先过完世界杯</div></div>
+<div class="sec" id="sec2"><div class="sec-head"><div class="sec-num">05</div><div class="sec-title">深海节 9 条改动（7/3-{END[5:]} · 59服 · 总付费 {DS['payers']:,} 人）</div></div>
 <div class="card"><div class="ct">模块收入底图 · 悬停看 渗透/ARPPU/复购/max</div>
 {module_bar(dm, DS_ORDER)}
 </div>
@@ -776,6 +1050,18 @@ td b{{color:var(--head)}}
 {table(DS_ROWS)}
 <div class="cb cb-info"><b>结论：深海的结构是"大富翁族压舱（$21.7k）+ BP 铺渗透（630 买家）+ 送达层首次成型（每日礼包 290 人）"，输在转盘（形式老化）和节奏（同开无错峰）。</b>零销售注：藏宝图锚点 $0（纯价格锚）；头像框 211019 $0 = <b>实际未上架</b>（该外显改进了 BP 奖励发放），不构成直售反例。</div>
 </div></div>
+
+<div class="sec" id="secds"><div class="sec-head"><div class="sec-num">D3</div><div class="sec-title">深海大富翁族回归 · 压舱石的深度解剖</div></div>
+<div class="bigcon">大结论：<b>大富翁族是深海最成功的改动——$27k 压舱、付费率 34% 新老服通吃、免费活跃盘 7,069 人；但它的"深度"是堆买断件堆出来的，不是把单件做深。</b><br>
+<span style="font-size:13px;line-height:2.1">
+① <b>盘子做对了</b>——从老版"纯连锁 $3-6k/月"扩成"成就+连锁+存钱罐+BP 四件套 $27k"，付费率 34% 是深海最高的收入模块（开箱 9.6% / 竞猜 4.4%）；<br>
+② <b>但深度靠堆件不靠做深</b>——四件里三件是买断制（复购 1-2 单、硬封顶 $20-687），唯一可复购的罗盘连锁只覆盖 138 人；<br>
+③ <b>进度停留证明瓶颈在"续骰位"缺失</b>——白嫖玩家一路玩到 350 次（免费活跃充足），撞到 350→500 免费墙时集体阵亡（-98%），能继续的 92% 是掏钱买骰子的人：断点是<b>供给侧（免费骰子耗尽）而非驱动力</b>，缺的是墙前一个可复购的低价续骰位；<br>
+④ <b>下一步深度增量</b>=在中段客单（$50-200 / 掷 350-500 次墙）补可复购的低价续骰位——正是皮肤开箱优化方案里模块 A 随机礼包的位置；<br>
+⑤ <b>同形式参照（P2 情人/科技/拓荒「节日大富翁」）</b>——P2 也没把大富翁做深（三节 max $550-780、≥$500≈0，X3 max $792 不落后），P2 赢在分层货架（宽入口件两千人+中段可复购件千人+深度件 $180×150 人，X3 四件全挤 $20-36 中段）；且 X3 大富翁族已占深海收入 ~40%（P2 同形式仅占节日盘 6-11%）——<b>大富翁在 X3 已超载，深度增量本来就不该指望它，该指望的是盘内其他弹药（模块 A 位置）</b>。
+</span></div>
+<div class="cb cb-info" style="margin:0 0 14px"><b>大富翁族回归已摘出单独报告：<a href="深海大富翁回归_{END.replace('-','')}.html" style="color:var(--accent)">深海大富翁回归_{END.replace('-','')}.html</a></b>（族分件解剖 / 进度停留曲线·免费墙 / 付费深度分布 / P2 同形式参照·情人科技拓荒 / 新老服拆分 / 族扩张历史坐标 / 结论与动作，七章线性）。本页只留入口。</div>
+</div>
 
 <div class="footer">X3 双节框架回归 · 母题4 改动效果清单 · 数据源=Trino v1090 全口径（_l1_refresh.py → _l1_m4.json） · 生成 {now}</div>
 </div></div>

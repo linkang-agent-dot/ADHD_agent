@@ -257,3 +257,20 @@ Logic.G.Player.GetMeta("activity").ReceiveActivityAllReward(<activityId>L)
 ### 配方6补充：feval 表达式两坑（2026-07-07 实测）
 - **float 后缀 `120f` 不吃**（`Syntax Error: unexpected token 'f'`）→ 写整数 `120`，隐式转换。
 - **运行时校准 UI 位置的手法**：feval `GameObject.Find("<激活节点名>").transform.localPosition = new UnityEngine.Vector3(x, y, 0)` 挪 → 截图裁底部 3x 放大看效果 → 收敛后把**磁盘 prefab 里的 m_AnchoredPosition** 按同 Δ 改掉再 commit（⚠️别直接抄运行时 anchored 值——先 grep prefab 确认磁盘当前值，按增量改；本案磁盘值 755,94 与子代理报告的 81,260 不一致，盲信报告会改错）。
+
+---
+
+## 配方 13 · 争霸转盘(GvG)奖励配置生效验证（ActvGvG / GvGLuckyWheel）
+> 2026-07-16 验证 gdconfig d3fda805（1006格 52003×5→19003×25）沉淀。纯配置生效验证，套用"配置生效闭环"即可，本条只记 GvG 转盘特有锚点。
+
+- 配置类：`GameCommon.Cfg.CGvGLuckyWheel.I(1001)`（争霸转盘主表，Consume=1133争霸奖券、`RewardGroup`、`Hero`——注意字段叫 **`Hero` 不是 HeroID**）；奖励格 `CGvGLuckyWheelReward.I(<ID>)`：ItemID/ItemNum/Weight/Order，Group=主表 RewardGroup（101）。
+- tsv 源：`gdconfig/tsv/ActvGvG__GvGLuckyWheelReward.tsv`；bytes：`client/Assets/Res/Config/ProtoGen/GvGLuckyWheelReward.bytes`（412B 小表）。
+- bytes 手解定位行：`\x08`+varint(格ID)（1006=`08 ee 07`）；ItemID=field3 tag `0x18`、ItemNum=field4 tag `0x20`、Weight=field5 tag `0x28`。
+- UI 类（要截图时）：`UIActvGuildLuckyWheel`（ActvGuildContest 目录），非 UIActvLuckyWheel。
+- 验证断言三层：① 新导 bytes protobuf 手解=新值 ② 运行时 `CGvGLuckyWheelReward.I(x).ItemID/ItemNum`=新值 ③ 相邻格抽查未误伤。改前先读一次旧值做基线（证明 Editor 确实吃的是 stale bytes）。
+
+### 配方13补充 · UI 层验证 + 活动部署（2026-07-17 实测）
+- **⭐ 按活动ID打开任意活动主面板的真实入口（重大新链路）**：`UI.UIHelper.OpenActivityPanel(<活动实例id>L)`——public static，eval 一行即开，数据装配走游戏自己的链路，**绕开"带数据UI桥开不了"的坑**（lesson 3 的悲观结论对活动面板场景不再成立）。转盘等子窗口=主面板私有 handler（如 `UIActvGuildContest.OnBtnWheelTrigger`）或真人点开。
+- HTTP 桥 eval **不支持泛型 `<`**（ExpressionParser Tokenize 直接报错）和 `new`+初始化器——所以 `WndMgr.Show<T>(new UIData...)` 走不了，必须用上面的 helper 或真人点击。
+- **GVG 105301 是跨服型活动**：单服 GM `deployserveractivity` 会报 `cross activity not supported by this GM, use Ark or Center`（errCode 10），且 `gm_combo.py open-activity` 对此打 `[OK]`（**假阳性**，它只看提交成功不看 returnInfo）。正解=igame_activity.py 提交（单服也走它）：`create --cfg-id 105301 --servers 330 --start/--end <服务器逻辑时钟ms>`，下发到客户端秒级（`GetActivityIdsByCfgID(105301)` 立即非空，无需重登）。
+- 时移过的服（beta 330 曾推到 8月）：活动起止时间必须用**服务器逻辑时钟**（先 getservertime），不能用真实时间。

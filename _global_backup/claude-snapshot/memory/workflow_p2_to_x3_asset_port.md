@@ -51,9 +51,16 @@ Blender 无头 probe 两边 FBX 包围盒（skills\blender-fbx-render\probe_boun
 
 ## ⚠️ 三号坑：P2 shader 全家不可搬 + 贴图必选 Low 档（2026-07-13 实锤）
 P2 建筑资源分 **High/Low 双档**（High=PBR 三贴图 `3D_PBR_Building_New`；Low=unlit 双贴图 `3D_Unlit_Building`+烘焙阴影片）。两个关键结论：
-1. **P2 shader（High/Low/Shadow 全部）依赖 C# 全局日夜 uniform**（`_GlobalDayNightColor`/`_ToneMappingMin/Max`/`_LightIntensity`/雾参数），X3 没脚本喂值→全局默认 0→`col.rgb *= _GlobalDayNightColor` **乘成全黑**。别搬 shader，用 X3 `X3_World_City.shader`（guid 0e3b6aad...，unlit `_MainTex*_Color`）。
+1. **P2 shader（High/Low/Shadow 全部）依赖全局日夜 uniform**（`_GlobalDayNightColor`/`_ToneMappingMin/Max` 等，经 `DayNightSystemShaderHelper.hlsl`）。~~X3 没人喂值必黑~~**（07-13 纠偏）X3 同为 TFW 引擎系，自带同名 helper（`client/Assets/Res/Shader/Include/DayNightSystemShaderHelper.hlsl`）且运行时在喂**（X3 自家 FX_AddBlend_Particle 等 shader 线上就在乘这些全局）——P2 shader 可搬，两种姿势：①include 改指 X3 的 helper ②把日夜/ToneMapping 行全注释（客户端同事 07-13 实测法，commit 1a2f25cb7fa）。图省事仍可用 X3 `X3_World_City.shader`（guid 0e3b6aad...，unlit `_MainTex*_Color`）+烘焙图。坑：P2 include 路径带 `Assets/P2/` 前缀，X3 没有，原样搬必编译错。
 2. **diffuse 必须用 Low 档**：High 档 diffuse 是给 PBR 管线的原始 albedo（平、艳，unlit 下没质感）；Low 档 diffuse 光影/AO 全烘进颜色（两图 87% 像素不同、分辨率相同 2048）——配 X3 unlit shader 正好是 P2 低端机在游戏里的最终画面。马戏案修正 commit `43b1f96db15`。
 3. 阴影片不搬：X3 原生岛=岛体+水波两件套、无阴影片惯例，且其 shader 同样依赖全局 uniform。
+
+## ⚠️ 四号坑：特效走 assetPath 字符串动态加载 = guid 扫描盲区（2026-07-13 同事验收抓漏）
+P2 建筑皮肤的特效**不在 prefab 依赖树里**：prefab 上 10+ 个挂点 MonoBehaviour 用 `assetPath: Assets/P2/Res/Effect/Prefab/.../Fx_*.prefab` 字符串运行时加载——`grep guid` 列搬运清单**永远扫不到**。凡搬 P2/X2 建筑类 prefab，必须额外 `grep assetPath:` 一遍。特效搬运手法（马戏案 commit df53c2e567d，81 资产）：
+- 特效真身可能不在 assetPath 写的路径（写 Scene/ 实际在 Prefab/CityBuilding/<主题>/Common/），按文件名 find 定位；依赖树三层：fx prefab→材质(30个全用同一个 P2 万用特效 shader `FX_AddBlend_DistortionDissolve_Flow_New`，**自包含零全局依赖可直搬**)→贴图(公共库 `Res/Effect/Textures/{glow,mask,trail,...}`)；有材质藏 MiniGames 目录（rg 全仓 alternation 一把解）。
+- X3 侧不用 P2 加载脚本：**挂点节点跟 prefab 一起搬过来了**（同名空节点），直接在搬过来的 prefab 里给每个挂点追加嵌套 PrefabInstance（m_Children 加 stripped id + 文件尾 1001 块，pos/rot 归零即可，scale 不写=继承源值）静挂常驻。
+- 粒子 `scalingMode: 0`(Hierarchy) 会跟父级缩放走，模型整体缩放不用管粒子；fx prefab 同样有 Layer19 残留要刷 0；纯粒子无脚本可整搬。
+- 脚本范式 `scratchpad/build_fx_port.py`（2026-07-13 会话）。
 
 ## 姿态/精度排查两法（实战沉淀）
 - **贴图糊**：先查两处——烘焙 PNG 有没有被降采样（别自作聪明降 2048→1024，主城视角建筑满屏，直接用源图全分辨率）+ png.meta `maxTextureSize`/平台 override 上限。纯换 PNG 内容（同 guid/meta）零配置改动。
@@ -76,3 +83,10 @@ P2 建筑资源分 **High/Low 双档**（High=PBR 三贴图 `3D_PBR_Building_New
 ⚠️ 绿幕 removebg 的图 alpha=0 像素 RGB 仍是绿色，双线性采样会渗绿边——落盘前做**边缘色外扩**（alpha 加权模糊迭代填充透明区 RGB，PIL 十几行，见 2026-07-13 会话）再进 Unity；verify_transparency 查不出这个（它只看 alpha）。
 
 脚本范式：`scratchpad/build_port.py`（本次会话，含全部 YAML 手术+校验断言）；worktree 在 `C:\x3\client-circus`（分支 circus-homeland-port）。岛座卡片版脚本=`build_base_card.py`（2026-07-13 会话 scratchpad，同款断言风格）。
+
+## X2→X3 UI prefab 迁移必补：根节点组件套装（2026-07-20 扭蛋机实证）
+X2 界面 prefab 根节点没有 X3 UIBase 要求的组件——运行时 `UIBase.InitCanvas`（UIBase.cs:681）直接设 `canvas.renderMode`，根无 Canvas = 打开即 `MissingComponentException`（Editor.log 栈顶 `WndMgr show <UI名> ... MissingComponentException: There is no 'Canvas'`）。**迁移完必对照任一 X3 正常界面（如 UIActvLaborGacha）核根组件五件套**：RectTransform + UIConfig(e8f4194e9ed83794da496c6236ff0d7f，遮罩/防连点) + Canvas(SortingOrder=11) + CanvasScaler(0cd44c1031e1…，1080×1920) + GraphicRaycaster(dc42784cf147…)。四块全自包含（只指 m_GameObject），可从 LaborGacha 照抄换新 fileID 手术进 YAML；验证=根组件列表同构 + component 引用无悬空。找真根=`m_Father: {fileID: 0}` 的 RectTransform（文件首块不一定是根）。
+
+## X2→X3 UI 迁移第二坑：缺 X3 节日基本模块（标题/描述/倒计时，2026-07-20 扭蛋机实证）
+X2 界面没有 X3 节日活动页标配的顶部信息区。接法（优先复用别重建）：X2 prefab 里常自带顶部骨架（扭蛋机=`Cont/Top`：ContTop/LayoutTitle=标题条+BtnInfo、Layout/ContDes=描述+LayoutTime 倒计时），多半被 active=0 关着或被"未接区块"整体 SetActive(false)——**开骨架、关积分残留子件（ContTop/Icon+Num、Cont 下 Bk/ScrollView/BtnBlue/NumBk/Txt），代码一行接 X3 标准 `UIHelper.SetActivityBaseInfo(activityId, title, desc, time, goTime:)`**（UIHelper.Activity.cs:202，title=cfg.ActvName 自动 key/desc=ActvDesc/time 自动倒计时+到期隐藏）。父容器整体 SetActive(false) 的"未接区块"若含要用的子树，改成逐个隐子件。
+配套坑：新写活动行的 TXT_ActvOnline_ActvName/ActvDesc 只填 cn+en 时，繁中客户端 tab 显英文——克隆行 16 语全带 vs 新写行只有 cn/en，收口时至少补 zh。

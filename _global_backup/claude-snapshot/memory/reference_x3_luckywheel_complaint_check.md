@@ -57,7 +57,7 @@ metadata:
 ## 案例4：X3NEW-1906 指针停大奖格但没中（2026-07-13 已定性=纯显示BUG）
 - **根因**：客户端跳过动画路径不摆指针——`ActivityMeta.LuckyWheel.cs:58-61`(客户端) isSKipAnim开着或>10连(100连强制)时直接弹结算不进动画链；指针滞留 `UIActvLuckyWheel.cs:329 ResetTurntableArrow` 的初始0度；**0度格=奖励组内Order=0第一格=核心大奖**（深海组321第一行32100潜艇皮权重1/98401）→ 开跳过的玩家指针永远"指着大奖"，与结果零关联。次要变体：转动中点遮罩 `OnBtnTurntableMaskTrigger:483 ResetToEnd()` 停在中间奖励格。
 - **无漏发**：发奖在服务端ack前完成(AddItemList)，结算弹窗cardIds=真实入账；数仓核查一致。
-- **修法**：skip分支弹结算前按 cardIds 最后一个奖励补摆指针角度 `-(360/格数)×index`；遮罩路径同理；或初始角改两格中间的中性角。防御：MoveNextReward:381 IndexOf 未处理-1。
+- **修法已落地(2026-07-13, dev_festival commit 82296fffe25 待版本测试; 进dev MR !724 feature/x3new-1906-wheel-arrow)**：实体层ack跳过分支暂存 `LastSkipLuckyWheelActivityId/CardIds`(正常动画分支清空)，UI 在 `OnRefreshLuckyWheelUI`(跳不跳过都发的现成事件,不加新事件)里 `SetArrowToSkippedReward` 按最后一个奖励补摆 `-(360/格数)×index`。**遮罩跳过次要变体未修**——ResetToEnd会触发OnFinished→MoveNextReward继续转的tween连锁,风险面不同,留给客户端研发评估。防御项未动：MoveNextReward:381 IndexOf 未处理-1。
 - **QA必现**：开"跳过动画"开关→任意抽→秒弹结算盘不转、指针恒指顶格大奖；或直接100连(强制跳过)。
 - **isSKipAnim 冷知识**：跳过开关是**服务端持久化**的(OnSkipLuckyWheelAnimReq存玩家luckyWheelData)，跨登录生效——玩家"从来没见转盘转过"是正常态。
 - **通用规律**：转盘奖励组第一行(Order=0)习惯放核心大奖=指针初始位，任何"不播动画"路径都会天然表现为"指针指着大奖"——同类客诉直接按此定性，先让客服问玩家是否开了跳过动画。

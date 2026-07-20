@@ -27,9 +27,13 @@ metadata:
 - **whisper `base` 模型现下失败** → 本机 HF 不通，用已缓存的 `small`（转写4分钟视频约1-2分钟）
 - 控制台中文乱码 → GBK 问题，加 `-X utf8` 并把结果写文件再 Read
 
-## 批量扫描扩展
+## 批量扫描扩展（07-13 实测）
 
-- UP主视频列表：`x/space/wbi/arc/search`（需 wbi 签名）；搜索：`x/web-interface/search/type`
+- **搜索 API 可用**：`x/web-interface/search/type?search_type=video|article&keyword=<urlencode>`，带 buvid cookie（spi 接口现领）即通，返回 bvid/title/play/duration/pubdate
+- **批量转写工具（已固化）**：`C:\ADHD_agent\skills\bilibili-transcribe\bili_transcribe.py <BV号...>` = view→html5 playurl→ffmpeg→whisper 一条龙，断点续传（已有 transcript 跳过），后台 Bash 跑；⚠️ **view 接口连续请求会限流超时，脚本已带重试(4次递增)**
+- **B站专栏(cv号)正文抓取难**：桌面页纯 JS 渲染(无 SSR)、Jina 只拿到壳；**移动页 `bilibili.com/read/mobile?id=<cv号>` 短文可拿全文**，长文被"展开阅读全文"截断 → 专栏不作为主力源
+- UP主视频列表：`x/space/wbi/arc/search`（需 wbi 签名）
 - 评论：`x/v2/reply?type=1&oid=<aid>`；弹幕：`x/v1/dm/list.so?oid=<cid>`（protobuf 新版 `x/v2/dm/web/seg.so`）
+- 小红书笔记正文游客抓不到（Google 不索引+登录墙），需用户给 cookie 才能补这个源
 
-相关：[[project_gentongping_remix_pipeline]]（同款 whisper+ffmpeg 链路）、`youtube-analyzer` skill（仅 YouTube）、`url-reader` skill（只能抓页面壳，拿不到B站视频正文/字幕）
+相关：`youtube-analyzer` skill（仅 YouTube）、`url-reader` skill（只能抓页面壳，拿不到B站视频正文/字幕）

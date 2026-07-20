@@ -28,5 +28,12 @@ X3 客户端的**商品列表/价格/余额校验全读本机配置**（`UIActvE
 3. 待线上确认：玩家客户端资源版本号、背包道具真实数量、该渠道热更 manifest 是否还在推新。
 4. 话术：告知服务端真实价格 + 引导更新客户端。
 
+## ✅ 直接解码客户端 ProtoGen .bytes 验证配置到没到客户端（2026-07-15，修女礼包案）
+不启动 Unity、不靠时间戳猜——直接读二进制确认某配置改动是否已进客户端 build。比 git 断代更硬（断代是推理，解码是实读）。
+- **场景**：改了 gdconfig 的 Reward 表（如 7002 美酒→52003 万能信物），客户端展示还是旧的。展示由**客户端本机 ProtoGen 字节**画（`Assets/Res/Config/ProtoGen/Reward.bytes`），要新内容必须 导表→提交进 x3-project→客户端拉取+Unity 重导入。拉之前客户端落后=看到旧配置（本案真因，一 `git pull` 即修）。
+- **工具**：`~/.claude/skills/x3-config-export/scripts/decode_protogen_reward.py <Reward.bytes> <RewardID...>`（2026-07-15 固化）。原理=把目标ID编 varint→正则找 `\x10`+varint(RewardID) co-occurrence→顺序解字段。Reward 行 protobuf 字段：field1(0x08)=行ID / field2(0x10)=RewardID / field4(0x20)=ItemID / count 在 field9(0x4a)。一个 RewardID 多行=四格每格一行。同法改字段号可解其它 ProtoGen 表。
+- **实测**：pack 19048(RewardID 15900502)解出 51028×10 + **52003×6** + 1002钻石 + 2022VIP，无 7002 → 客户端配置已对。三档 15900502/03/04 全对。
+- **配套服务端验证（免真买）**：`endowreward <RewardID>` 投放奖励到测试号 + `additem <item>,1` 探针读 curCount 反推奖励发了几个（详见 [[reference_x3_kadmin_deploy]]「展示 vs 到账」段）。两侧都实读=硬闭环。
+
 ## 关联
-[[reference_x3_server_activity_duplicate]] · [[reference_x3_config]] · [[workflow_bugfix_ops]]
+[[reference_x3_server_activity_duplicate]] · [[reference_x3_config]] · [[workflow_bugfix_ops]] · [[reference_x3_kadmin_deploy]]（服务端 endowreward 验到账 + 热更打断GM网关坑）

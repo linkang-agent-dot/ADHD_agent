@@ -125,6 +125,16 @@ x3-project（`C:\x3-project\`，代码+资源，**dev 受保护**）。worktree 
 
 关联：[[reference_x3_gdconfig_repo]] [[reference_x3_project_repo]] [[workflow_x3_protected_branch_mr]] [[feedback_x3_branch_strategy]] [[workflow_x3_merge_conflict_audit]]
 
+## 🔴 reset/重写过的分支 force-push 被 pre-push hook 误拦(2026-07-16 航海之路重做实证)
+- **场景**：feature 分支 `git reset --hard origin/dev` 基于最新 dev 重做后，`git push --force-with-lease` 被 gdconfig 的 pre-push hook 拒，报某个**你根本没改的文件**硬新增冲突（实例：`ConstConfig__ConstCfg.tsv` 的 key 未追加到末尾——那是 dev 自己某 commit 干的）。
+- **根因**：pre-push hook 拿**远端旧 feature tip 当 base 比较**（日志里 `base=<老sha>` = 你 reset 前那次 push 的 tip）。reset 后本地 feature = dev tip，但远端 feature 还 stale 在老 base → hook 把 `老base..dev` 这几百个 commit 的**全部 dev 演进**都算成"你的 diff"，撞上 dev 自身的硬新增冲突，误扣到你头上。
+- **判断**：`git diff --name-only origin/dev...HEAD` 看真实 diff；hook 报的文件不在这列表里 = base 错位误报，不是你的问题。
+- **解法**：`git push origin --delete <分支>` 删远端 stale 分支 → `git push -u origin <分支>` 重建。远端没旧 tip 后 hook 以 dev 为隐含 base，只比你真实那几张表，放行。**别用 `--no-verify` 硬绕**（那会跳过对你真实改动的 i18n/末尾追加检查）。
+- 通用：任何 reset/rebase 重写过历史的分支 force-push 到 gdconfig 都可能撞（hook base 选 remote-tracking tip）；删远端重建是最干净解。
+- **同源姊妹坑：Jenkins 导表 tsv-schema-gate 也按分支名存快照（2026-07-16 同案实证）**。该分支**上次成功导表**的列 schema 被 gate 记为 base；分支 reset 重做后列结构跳变（尤其继承了 dev 的列改造），gate 拿分支旧快照比 → 报 `exported TSV column order changed; blocker: xxx (added columns inserted before existing exported columns)` FAIL。实例：feature/voyage-remake 旧版本(ActvOnline 53列含 ExcludeActvIDs)导表成功#1789 存了53列快照；reset 到 dev(56列·dev 已把 ExcludeActvIDs→BaseActvID **拆两步 commit**「先删 ExcludeActvIDs、再末尾追加 BaseActvID/ForbidRestartOpen」逐步过 gate) 后，gate 拿分支旧53列快照比、把 dev 的列改造算成我一步非法插列 → FAIL。**dev 主线导表全 SUCCESS**(快照连续跟进)，只被 reset 的 feature 撞。
+  - **判断**：Jenkins build 报 schema-gate blocker 的表**不是你改列的表**(你只加数据行)+dev 主线导表 SUCCESS = 分支旧快照污染，非你的错。
+  - **解法**：换一个**全新分支名**重推(gate 无该名旧快照→fallback dev 基线56列→你的 unchanged 过)；旧分支名的快照清不掉。或直接以"本地 ExportTable 通过=配置正确"验收，上线合 dev 时走正常导表(dev 快照连续)自然无此问题。**别 --no-verify 或改列去迁就 gate**——列改造是 dev 的既成事实，不该在 feature 动它。
+
 ## 主仓 `git pull` 会自动尝试合入其他在途 worktree，冲突会自愈别慌(2026-07-08 实证)
 - 场景：主仓 `C:\X3\gdconfig` 在 dev_festival，为隔离改动另开了临时 worktree(`../gdconfig-i18n-wcsf`) 推完后，回主仓 `git pull` 同步本地 dev_festival 引用 → post-merge 钩子自动尝试把新提交传播合入其它同机在途 worktree(如 `gdconfig-deepsea-recharge`、`gdconfig-turntable`)，屏幕打出一串吓人的 `CONFLICT (content): Merge conflict in tsv/xxx.tsv` + `Automatic merge failed`。
 - **验证结论：这是钩子的正常自愈行为，没有造成损坏**——冲突后钩子自己 `merge --abort`，两个别人的 worktree 事后检查都是 `working tree clean`、`git rev-parse MERGE_HEAD` 报错(不存在)、reflog 顶端还是同一个 commit（只多一条 "pull: updating HEAD" 记录），HEAD 未变、没有遗留冲突标记。**别去手动碰那两个 worktree 修复**——钩子已经把状态收干净了，冲突提示只是"告诉这些 feature 分支还没手动合上 dev_festival 最新变动"，不是当场需要处理的错误。

@@ -24,6 +24,16 @@ metadata:
 | **gdconfig** (配置仓) | dev / qa | ❌ 不受保护 | ✅ 可直推 |
 | **gdconfig** (配置仓) | **master** | ✅ 受保护(2026-07-02实证) | ❌ 被拒→cherry-pick→feature分支→MR(项目4454)→**API merge 自己有权限可自助**(MR!61实证:POST建MR用ASCII标题+PUT补中文+PUT /merge 一气呵成) |
 
+## ★gdconfig 单改动传播 dev→qa→master 标准配方（2026-07-16 船只手册D7 MR!113 全链实证）
+
+用户说「改X然后传dev、合qa、再到master」时，**先判断是发全量还是单改动**：`git rev-list --count origin/qa..origin/dev` 看 dev 在途提交数——多（如31个）且用户主题是单个改动 → **走单提交传播，别按合并skill字面走 dev→qa→master 全量发版**（会把全部在途改动带上线）。配方：
+1. **dev**：正常改 tsv → commit → push → `jolt_verify.py dev`。
+2. **qa**（不受保护）：`git checkout qa && git pull --ff-only` → `git cherry-pick <dev提交>`（tsv3way driver 自动 cell 级合并，通常零冲突）→ 本地 `ExportTable.py` exit0 → `git push origin qa`（pre-push 钩子自动跑双向丢行审计）→ `jolt_verify.py qa`。
+3. **master**（受保护）：**不用再 cherry-pick**——qa 上那个提交的父=qa tip，若 `git merge-base --is-ancestor origin/qa origin/master` 成立（qa 是 master 祖先，常态），直接 `git push origin <qa上的提交>:refs/heads/feature/<名>` → MR diff 天然纯净只含该提交 → API 建 MR（target=master）→ 轮 `detailed_merge_status`（可能一直 None，直接 PUT /merge 也能成）→ PUT `/merge_requests/<iid>/merge`。
+   - 🔴**自助 merge 已失效(2026-07-16 晚实测)**：MR!113(20:10)还能 PUT /merge 自助合，MR!119(22:00) 同 token 401、`user.can_merge=false`——**master 合并权限当晚被收紧**。现在的终点=建好 MR（零冲突+本地 ExportTable exit0）后**找有 master 合并权限的人（配置仓管理员）点 merge**，API 只能到建单为止。MR!61 的自助配方作废。
+4. 合并后验证：`git diff <合并前master>..origin/master --stat` 应只含本改动文件；master 独有 hotfix 若与改动同表，先 `git show <hotfix> -- <表>` 确认不撞同行同列。
+5. `jolt_verify.py master` 收尾。三分支各自导表 SUCCESS 才算完。
+
 ## x3-project commit message 格式强制
 
 pre-commit hook 检查 `git commit -m "..."` 必须匹配：

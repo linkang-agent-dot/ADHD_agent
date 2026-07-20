@@ -16,6 +16,11 @@ metadata:
 3. **看日志三件套**（都在 `<项目>\Logs\` + `%LOCALAPPDATA%\Unity\Editor\Editor.log`）：按 LastWriteTime 排序找最近在写的；`shadercompiler-*.log` 末尾 `Cmd: shutdown` = shader 编译已正常收工；**Editor.log 长时间（>10min）零写入 + 主线程满转 = 卡死在无日志的循环里**，基本不会自己好。
 4. **识别退出流程**：Editor.log 出现 `SaveDefaultWindowPreferences` / `Killing ADB server` / `Input System Shutdown` / `Licensing channel disconnected` = 编辑器在执行退出。卡在这之后 = 卡在 quit 收尾；此时强杀风险较小（布局已保存、ADB 已关），最坏 Library 部分重导。
 
+5b. **Editor.log 的 error CS 可能是上一轮编译的旧错误残留**：文件已修但 Unity 没获焦点没 Refresh 就不会重编，log 尾仍是旧错。判法=先核盘上文件是否已修（grep 报错行现值），已修→让用户切回 Unity 窗口重编（必要时 Ctrl+R），别照旧日志重复改代码（2026-07-17 扭蛋机实证）。
+5. **「卡编译」可能根本不是卡**：主线程 CPU 0 增量 + Editor.log 见 `All compiler errors have to be fixed before you can enter playmode!`/`ShowCompileErrorNotification` = 编译错误挡 Play 非卡死——`Select-String Editor.log -Pattern "error CS"` 直接拿错误清单（2026-07-17 集结基金幽灵列实证）。
+
+6. **「卡进度条 75%」可能是游戏内 loading 非编译**：Editor.log 秒级持续在写且内容是 TGS SDK 心跳/`Connect gateway` = 已进 Play，卡的是登录连服。反复 `Connect gateway <ip> <port>` 重连循环 = 网关不通。判共享服务挂 vs 本机网络/Clash：**同一台目标机多端口对比测**（如 151 的 Mongo:27017 通而 etcd:2379 不通 = 那边服务挂，非本机问题；ping 通 TCP 不通不足以定性）。etcd 挂 → 本地服 `InitDiscoveryAsync` gRPC DeadlineExceeded 起不来 → 找管共享基建的同事，本机无解（2026-07-18 实证：共享 Gate 172.20.90.171:10011 + etcd 172.20.90.151:2379 同时宕）。
+
 **坑**：X3 环境有 `UnityAutoQuitter` 伴生进程，会向编辑器发退出指令——用户没点关闭但编辑器进了退出流程时，先怀疑它。
 
 关联：[[reference_x3_unity_mcp]]

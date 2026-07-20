@@ -3,7 +3,7 @@
 
 生效条件（满足任一才检查，否则直接放行，不影响日常会话用 grfal）：
   1. 会话 ID 出现在 grfal_ban_sessions.txt（一行一个 session_id，# 开头为注释）
-  2. 会话 cwd 路径包含 "avatar-replace"（该项目全程禁用公司 GRFal）
+  2. 会话 cwd 路径包含 "avatar-replace" 或 "shiba-pet"（个人项目全程禁用公司 GRFal）
 
 拦截范围（对 tool_input 整体序列化后做模式匹配，宁可误杀不可放过）：
   - call_grfal / grfal-api / grfal.tap4fun.com / 172.20.90.45 / 裸词 grfal
@@ -43,7 +43,7 @@ def is_guarded(payload: dict) -> bool:
     if payload.get("session_id", "") in banned_sessions():
         return True
     cwd = str(payload.get("cwd", "")).lower().replace("\\", "/")
-    return "avatar-replace" in cwd
+    return "avatar-replace" in cwd or "shiba-pet" in cwd
 
 
 def find_violation(payload: dict) -> str:

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>每日日报 2026-07-17</title>
+<style>
+:root{--bg:#0f1115;--card:#171a21;--line:#262b36;--fg:#e6e9ef;--mut:#9aa3b2;--acc:#5b9dff;--acc2:#7c5bff;--hot:#ff7a59;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);
+ font:15px/1.7 "Segoe UI","Microsoft YaHei",system-ui,sans-serif;}
+.wrap{max-width:860px;margin:0 auto;padding:32px 22px 64px;}
+h1{font-size:24px;margin:0 0 6px;letter-spacing:.3px;}
+.meta{color:var(--mut);font-size:13px;margin-bottom:24px;}
+h2{font-size:17px;margin:30px 0 12px;padding-left:11px;
+ border-left:3px solid var(--acc);}
+h2.sec{border-left-color:var(--acc2);}
+h2.hot{border-left-color:var(--hot);color:#ffb199;font-size:19px;}
+h3{font-size:15px;color:var(--mut);margin:18px 0 8px;}
+hr{border:none;border-top:1px solid var(--line);margin:26px 0;}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.btn{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--fg);
+ font:inherit;font-size:13px;padding:7px 14px;border-radius:8px;white-space:nowrap;}
+.btn:hover{border-color:var(--acc);color:var(--acc);}
+.card{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);
+ border-radius:10px;padding:13px 16px;margin:10px 0;}
+.card.hot{border-color:var(--hot);background:#1f1813;}
+.num{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--acc);
+ color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;
+ justify-content:center;margin-top:1px;}
+.num.hot{background:var(--hot);}
+.card-body{flex:1;min-width:0;}
+.card-t{font-weight:600;margin-bottom:4px;}
+.card-d{color:var(--mut);font-size:14px;}
+ul{margin:8px 0;padding-left:22px;}
+li{margin:5px 0;}
+p{margin:9px 0;}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px;}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;}
+th{background:#1d212b;color:var(--fg);}
+td{color:var(--mut);}
+code{background:#1d212b;padding:1px 6px;border-radius:5px;font-size:13px;}
+strong{color:var(--fg);}
+.foot{margin-top:40px;color:#5a6373;font-size:12px;text-align:center;}
+</style></head><body><div class="wrap">
+<div class="bar"><h1>每日日报 2026-07-17</h1><button id="copybtn" class="btn" onclick="copyReport()">📋 复制日报</button></div>
+<div class="meta">每日工作日报 · 2026-07-17（周五）</div>
+<p>（补写版：07-17 当晚 21:00 日报任务未产出，本报告于 07-18 中午按全天 transcript 补写，共 81 条指令）</p>
+<h2 class="sec">一句话版本</h2>
+<ul>
+<li>世界杯：半决赛奖励发放 + 决赛竞猜上线 prod（西 vs 阿，锁盘 7/19）</li>
+<li>世界杯累充卡点 → 皮肤付费梯子方案三轮收敛定稿（累充新增 $500 档）</li>
+<li>异国美酒储蓄罐首周回归报告定稿（零蚕食、大盘 +64%、付费率翻倍）</li>
+<li>马戏节扭蛋机：X2 换皮真皮 prefab 迁入 X3 完成，全链就绪待 Unity 实测</li>
+<li>马戏节测试分支复看：拜访外显纠错重出图 / 大富翁岛屿资源 / 扭蛋机搬错骨架纠偏</li>
+<li>船只/海妖养成手册：TC5921 还原 MR!121 + 首批收入日志（$379.92）</li>
+<li>330 测试服公会争霸转盘奖池改配验证通过</li>
+<li>卡册：「外显直售有先例」拍板记录入档</li>
+<li>C 盘清理（Temp + Docker 迁 E + pagefile 迁 E，重启后约释放 83GB）</li>
+<li>后台例行（竞品选品、帕鲁情报巡检、10:00 工作安排调度）</li>
+</ul>
+<h2 class="sec">详细版本</h2>
+<ul>
+<li>世界杯：半决赛发奖 + 决赛竞猜上线（X3）</li>
+<li>半决赛 SF1/SF2 一轮奖励已发出；用户拍板：季军赛不上竞猜。</li>
+<li>决赛竞猜已上 prod 83 服：西班牙 vs 阿根廷（7/19 19:00 UTC 开球），cfg 102976-979 / ark 单号 14241-14244，锁盘 7/19 18:50 UTC，dry-run+查重干净、路由全对，status2 会自动激活。</li>
+<li>礼包结构：免费/$4.99=券档；$9.99=国家冠军框（西 291370/阿 291371）；$19.99=大力神金框 291373（无头衔，master 侧奖励链核过是干净的）。</li>
+<li>两个遗留提醒：①决赛结算（7/19 锁盘后）settle_from 必须改 2026-07-17 隔离半决赛老下注；②决赛框 14 语 i18n 还在 dev 未同步 master，框是买就发，决赛窗口内应同步。</li>
+</ul>
+<ul>
+<li>世界杯累充卡点 → 皮肤付费梯子方案定稿（X3）</li>
+<li>起点是回归数据里的转化率卡点：$500 节点只剩前 3 人（拿到核心奖励即失去动力）、$300→$500 衰减 -85% 远超自然常数带（-30~40%/级）。</li>
+<li>方案三轮收敛（三层皮肤梯子 → 双层+中间站 → 最终砍掉花活）：终稿=一期只做一件事，累充新增 $500 档（5000 积分）直投老行军皮肤自选宝箱（存量皮 N 选 1、零新美术、走 WC 1153/1154 现成自选宝箱形式）。</li>
+<li>明确不做：本服榜静态皮层、跨界面进度条、新皮/升级版双档。试点验证指标=看 $300→$500 衰减斜率能否回到 -40% 自然常数带，成立则二期再改 $700/$1,000 纯券档。</li>
+<li>待拍板剩三条：宿主活动、外显直售美术量、自选宝箱皮池清单（挑 4-6 款老皮）。</li>
+</ul>
+<ul>
+<li>储蓄罐触达改造首周回归定稿（X3）</li>
+<li>报告 HTML 多轮改版后定稿，结论四条：①全为净增、零蚕食——储蓄罐+纯美酒礼包大盘日均 $1,857→$3,054（+64%），老礼包一分没瘪；②触达面 41% DAU 曝光/35% 弹窗/26% 点击，买家 98.7% 被触达；③广度拉新——新客占 49%、79% 中小R，与 6 月深度改造互补；④主要增长点=付费率 5.7%→11.3% 翻倍，ARPPU $14.9→$14.8 不变、模块 ARPU +67%，触达改造拉人头不动客单，符合预期。</li>
+<li>产物：KB 储蓄罐目录《储蓄罐触达改造_首周回归_20260717.html》+ 数据结论沉淀。曝光率历史对比不做（改造前无埋点，正是立项理由）。</li>
+</ul>
+<ul>
+<li>马戏节扭蛋机：X2 真皮迁入 X3 完成（X3 开发主线）</li>
+<li>白天先走了「克隆拓荒者之城扭蛋 UI」的临时骨架路线，用户指出应该用已在 X2 换皮完成的 prefab 导出包，随即纠偏改走迁移线。</li>
+<li>迁移完成：机身双机位（普通机+高级机）、投币动画、机身晃动、扭蛋球物理、跳过动画开关全套照 X2 原逻辑迁入；审计 0 FAIL/0 WARN，prefab 保原 GUID，95 个依赖资产逐一对账（68 个公共件早期已导，本次合规化 27 个马戏专属件）。</li>
+<li>7 个界面文案 key 从 X2 包 18 语直迁落表（仅乌克兰语待翻），jolt SUCCESS，当日马戏节全部改动 Jenkins 产线全绿。</li>
+<li>下一步在用户侧：Unity 重编译进 Play 实测（测试号双币已发好）。已知不挡测试小项：扭蛋球物理层穿遮罩待实机看、奖励预览/概率暂弹通用规则窗、暂无音效。</li>
+</ul>
+<ul>
+<li>马戏节测试分支复看（X3）</li>
+<li>切测试分支复看这轮复用活动，扫出多处问题：拜访活动外显全错、本地化缺中间部分 → 重新按樱花元素批量出图（x3-media 多子代理并行）；大富翁岛屿没出新资源；期间还排掉一次客户端卡编译。</li>
+</ul>
+<ul>
+<li>船只/海妖养成手册（X3）</li>
+<li>TC5921 还原：按用户要求部分还原 revert 0b59ecab——只把 TimeCycle 5921 行（注册+7天开、30天循环）加回，ActvOnline 不动；MR!121 已建、本地导表 exit 0、diff 纯净单行，等有 master 权限的管理员合并（07-16 起 master 自助 merge 已收权）。</li>
+<li>首批收入日志（7/16 傍晚起）：8 单/5 买家/$379.92。信号：豪华版通吃（船只基础版 0 单）；5 买家中 3 人 1 分钟内船+妖豪华双开 $100（VIP7-10 中高V冲全套）；出单集中在 1890-2310 新服，符合注册 D7/D13 开的节奏，增量看新开服滚动。</li>
+</ul>
+<ul>
+<li>330 测试服争霸转盘验证（X3）</li>
+<li>330 服部署公会争霸赛 105301（iGame 活动 ID 10613，Ark 提交，按服务器逻辑时钟跑 12 天），转盘奖池改配验证通过：1006 格已由「万能传奇信物 ×5」换成「金色传奇技能书 ×25」，全盘格子与配置一一对应。顺带沉淀了 OpenActivityPanel 一行打开活动面板的真实入口等测试配方。</li>
+</ul>
+<ul>
+<li>卡册：外显直售先例记录</li>
+<li>用户拍板「世界杯外显都是直售的，直售有先例」——已记入卡册重构草案决策区+MEMORY 索引，为后续重启直售线（老卡返场/单卡定价）留弹药，不改变 v3.3 当前方案。</li>
+</ul>
+<ul>
+<li>C 盘清理（本机运维）</li>
+<li>清 Temp 1.4GB + Docker 迁 E 盘 26.4GB（已生效）+ pagefile 迁 E 盘约 55GB（已改设置，重启后生效）；C 盘当前 29.8GB 空闲，重启后约 85GB。根因：32GB 内存扛 Unity+Docker+模拟器长期高压，pagefile 只扩不缩，迁 E 后一劳永逸。</li>
+</ul>
+<ul>
+<li>后台例行</li>
+<li>09:01 竞品选品：Whiteout Survival 判必看（1.32.8 新增联盟要塞战 Winter Siege + 新英雄 Gareth，可对标联盟对抗活动骨架与养成付费点）。</li>
+<li>帕鲁情报巡检 12:00/18:00 两轮均无新情报（仍是 7-15 的 1.0.1 热修）；顺手修了巡检脚本两个系统性坑（PowerShell 管道喂 stdin 中文转码坏、prompt 内反斜杠路径被 Bash 吃掉）。</li>
+<li>10:00 今日工作安排调度正常产出。</li>
+</ul>
+<h2 class="sec">今日 timeline 完成情况】（对照工作line 07-17 行）</h2>
+<ul>
+<li>世界杯 P0 尾巴：🔄 半决赛 SF1/SF2 发奖✅当日发出；QF3/QF4、QF2 邮件放行+GM、QF1 核对、酒馆收口——当日仍无执行记录 → 连滚第五天，决赛 7/19 前必须清</li>
+<li>深海 D14 回归启动 + 删深海监控：❌ 没动 → 滚</li>
+<li>航海之路 r2 传 dev：❌ 没动 → 滚</li>
+<li>船只手册 330 新号 D0 排查收口：❌ 没动（超额做了 TC5921 还原 MR!121）</li>
+<li>TimeCycle e13db23 合 master：❌ 没动（master 已收权，需走 MR 等管理员）</li>
+<li>超额完成：决赛竞猜提前上线、储蓄罐首周回归定稿、扭蛋机真皮迁移完成、累充 $500 档方案定稿、手册首批收入拉数</li>
+<li>⚠️ 新增硬点：7/19 决赛结算 settle_from 切 07-17；决赛框 i18n dev→master 待同步</li>
+</ul>
+<div class="foot">自动生成 · 2026-07-18 11:51</div>
+</div>
+<pre id="copysrc" style="display:none">每日工作日报 · 2026-07-17（周五）
+（补写版：07-17 当晚 21:00 日报任务未产出，本报告于 07-18 中午按全天 transcript 补写，共 81 条指令）
+
+【一句话版本】
+1. 世界杯：半决赛奖励发放 + 决赛竞猜上线 prod（西 vs 阿，锁盘 7/19）
+2. 世界杯累充卡点 → 皮肤付费梯子方案三轮收敛定稿（累充新增 $500 档）
+3. 异国美酒储蓄罐首周回归报告定稿（零蚕食、大盘 +64%、付费率翻倍）
+4. 马戏节扭蛋机：X2 换皮真皮 prefab 迁入 X3 完成，全链就绪待 Unity 实测
+5. 马戏节测试分支复看：拜访外显纠错重出图 / 大富翁岛屿资源 / 扭蛋机搬错骨架纠偏
+6. 船只/海妖养成手册：TC5921 还原 MR!121 + 首批收入日志（$379.92）
+7. 330 测试服公会争霸转盘奖池改配验证通过
+8. 卡册：「外显直售有先例」拍板记录入档
+9. C 盘清理（Temp + Docker 迁 E + pagefile 迁 E，重启后约释放 83GB）
+10. 后台例行（竞品选品、帕鲁情报巡检、10:00 工作安排调度）
+
+【详细版本】
+
+1. 世界杯：半决赛发奖 + 决赛竞猜上线（X3）
+- 半决赛 SF1/SF2 一轮奖励已发出；用户拍板：季军赛不上竞猜。
+- 决赛竞猜已上 prod 83 服：西班牙 vs 阿根廷（7/19 19:00 UTC 开球），cfg 102976-979 / ark 单号 14241-14244，锁盘 7/19 18:50 UTC，dry-run+查重干净、路由全对，status2 会自动激活。
+- 礼包结构：免费/$4.99=券档；$9.99=国家冠军框（西 291370/阿 291371）；$19.99=大力神金框 291373（无头衔，master 侧奖励链核过是干净的）。
+- 两个遗留提醒：①决赛结算（7/19 锁盘后）settle_from 必须改 2026-07-17 隔离半决赛老下注；②决赛框 14 语 i18n 还在 dev 未同步 master，框是买就发，决赛窗口内应同步。
+
+2. 世界杯累充卡点 → 皮肤付费梯子方案定稿（X3）
+- 起点是回归数据里的转化率卡点：$500 节点只剩前 3 人（拿到核心奖励即失去动力）、$300→$500 衰减 -85% 远超自然常数带（-30~40%/级）。
+- 方案三轮收敛（三层皮肤梯子 → 双层+中间站 → 最终砍掉花活）：终稿=一期只做一件事，累充新增 $500 档（5000 积分）直投老行军皮肤自选宝箱（存量皮 N 选 1、零新美术、走 WC 1153/1154 现成自选宝箱形式）。
+- 明确不做：本服榜静态皮层、跨界面进度条、新皮/升级版双档。试点验证指标=看 $300→$500 衰减斜率能否回到 -40% 自然常数带，成立则二期再改 $700/$1,000 纯券档。
+- 待拍板剩三条：宿主活动、外显直售美术量、自选宝箱皮池清单（挑 4-6 款老皮）。
+
+3. 储蓄罐触达改造首周回归定稿（X3）
+- 报告 HTML 多轮改版后定稿，结论四条：①全为净增、零蚕食——储蓄罐+纯美酒礼包大盘日均 $1,857→$3,054（+64%），老礼包一分没瘪；②触达面 41% DAU 曝光/35% 弹窗/26% 点击，买家 98.7% 被触达；③广度拉新——新客占 49%、79% 中小R，与 6 月深度改造互补；④主要增长点=付费率 5.7%→11.3% 翻倍，ARPPU $14.9→$14.8 不变、模块 ARPU +67%，触达改造拉人头不动客单，符合预期。
+- 产物：KB 储蓄罐目录《储蓄罐触达改造_首周回归_20260717.html》+ 数据结论沉淀。曝光率历史对比不做（改造前无埋点，正是立项理由）。
+
+4. 马戏节扭蛋机：X2 真皮迁入 X3 完成（X3 开发主线）
+- 白天先走了「克隆拓荒者之城扭蛋 UI」的临时骨架路线，用户指出应该用已在 X2 换皮完成的 prefab 导出包，随即纠偏改走迁移线。
+- 迁移完成：机身双机位（普通机+高级机）、投币动画、机身晃动、扭蛋球物理、跳过动画开关全套照 X2 原逻辑迁入；审计 0 FAIL/0 WARN，prefab 保原 GUID，95 个依赖资产逐一对账（68 个公共件早期已导，本次合规化 27 个马戏专属件）。
+- 7 个界面文案 key 从 X2 包 18 语直迁落表（仅乌克兰语待翻），jolt SUCCESS，当日马戏节全部改动 Jenkins 产线全绿。
+- 下一步在用户侧：Unity 重编译进 Play 实测（测试号双币已发好）。已知不挡测试小项：扭蛋球物理层穿遮罩待实机看、奖励预览/概率暂弹通用规则窗、暂无音效。
+
+5. 马戏节测试分支复看（X3）
+- 切测试分支复看这轮复用活动，扫出多处问题：拜访活动外显全错、本地化缺中间部分 → 重新按樱花元素批量出图（x3-media 多子代理并行）；大富翁岛屿没出新资源；期间还排掉一次客户端卡编译。
+
+6. 船只/海妖养成手册（X3）
+- TC5921 还原：按用户要求部分还原 revert 0b59ecab——只把 TimeCycle 5921 行（注册+7天开、30天循环）加回，ActvOnline 不动；MR!121 已建、本地导表 exit 0、diff 纯净单行，等有 master 权限的管理员合并（07-16 起 master 自助 merge 已收权）。
+- 首批收入日志（7/16 傍晚起）：8 单/5 买家/$379.92。信号：豪华版通吃（船只基础版 0 单）；5 买家中 3 人 1 分钟内船+妖豪华双开 $100（VIP7-10 中高V冲全套）；出单集中在 1890-2310 新服，符合注册 D7/D13 开的节奏，增量看新开服滚动。
+
+7. 330 测试服争霸转盘验证（X3）
+- 330 服部署公会争霸赛 105301（iGame 活动 ID 10613，Ark 提交，按服务器逻辑时钟跑 12 天），转盘奖池改配验证通过：1006 格已由「万能传奇信物 ×5」换成「金色传奇技能书 ×25」，全盘格子与配置一一对应。顺带沉淀了 OpenActivityPanel 一行打开活动面板的真实入口等测试配方。
+
+8. 卡册：外显直售先例记录
+- 用户拍板「世界杯外显都是直售的，直售有先例」——已记入卡册重构草案决策区+MEMORY 索引，为后续重启直售线（老卡返场/单卡定价）留弹药，不改变 v3.3 当前方案。
+
+9. C 盘清理（本机运维）
+- 清 Temp 1.4GB + Docker 迁 E 盘 26.4GB（已生效）+ pagefile 迁 E 盘约 55GB（已改设置，重启后生效）；C 盘当前 29.8GB 空闲，重启后约 85GB。根因：32GB 内存扛 Unity+Docker+模拟器长期高压，pagefile 只扩不缩，迁 E 后一劳永逸。
+
+10. 后台例行
+- 09:01 竞品选品：Whiteout Survival 判必看（1.32.8 新增联盟要塞战 Winter Siege + 新英雄 Gareth，可对标联盟对抗活动骨架与养成付费点）。
+- 帕鲁情报巡检 12:00/18:00 两轮均无新情报（仍是 7-15 的 1.0.1 热修）；顺手修了巡检脚本两个系统性坑（PowerShell 管道喂 stdin 中文转码坏、prompt 内反斜杠路径被 Bash 吃掉）。
+- 10:00 今日工作安排调度正常产出。
+
+【今日 timeline 完成情况】（对照工作line 07-17 行）
+- 世界杯 P0 尾巴：🔄 半决赛 SF1/SF2 发奖✅当日发出；QF3/QF4、QF2 邮件放行+GM、QF1 核对、酒馆收口——当日仍无执行记录 → 连滚第五天，决赛 7/19 前必须清
+- 深海 D14 回归启动 + 删深海监控：❌ 没动 → 滚
+- 航海之路 r2 传 dev：❌ 没动 → 滚
+- 船只手册 330 新号 D0 排查收口：❌ 没动（超额做了 TC5921 还原 MR!121）
+- TimeCycle e13db23 合 master：❌ 没动（master 已收权，需走 MR 等管理员）
+- 超额完成：决赛竞猜提前上线、储蓄罐首周回归定稿、扭蛋机真皮迁移完成、累充 $500 档方案定稿、手册首批收入拉数
+- ⚠️ 新增硬点：7/19 决赛结算 settle_from 切 07-17；决赛框 i18n dev→master 待同步
+</pre>
+<script>function copyReport(){var t=document.getElementById('copysrc').textContent;var b=document.getElementById('copybtn');function done(){var o=b.textContent;b.textContent='\u2713 \u5df2\u590d\u5236';setTimeout(function(){b.textContent=o;},1500);}function fb(){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){alert('\u590d\u5236\u5931\u8d25\uff0c\u8bf7\u624b\u52a8\u9009\u62e9');}document.body.removeChild(ta);}if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done,fb);}else{fb();}}</script>
+</body></html>

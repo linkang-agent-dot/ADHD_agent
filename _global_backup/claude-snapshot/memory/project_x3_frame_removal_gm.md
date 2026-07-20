@@ -15,7 +15,7 @@ metadata:
 - 道具→头像框映射（Item 表 use 参数）：80091→框 **10015**（永久-1）；80061→框 10012。
 
 ## 已做（2026-07-10）
-- x3-project `dev_festival` 新增 GM `[角色_信息]移除指定头像框(含永久,参数=头像框配置ID)`，commit `b6bef0961f4`（单文件 +28 行，`server\GameServer.Hotfix\PlayerMeta\BasicMeta.Personal.cs`，在「加速头像框过期」GM 后面）。
+- x3-project `dev_festival` 新增 GM `[角色_信息]移除指定头像框(含永久,参数=头像框配置ID)`，commit `b6bef0961f4`；**进正式线 MR !723**(feature/cs296963-remove-frame-gm→dev, 2026-07-13开, 基于origin/dev干净cherry-pick)（单文件 +28 行，`server\GameServer.Hotfix\PlayerMeta\BasicMeta.Personal.cs`，在「加速头像框过期」GM 后面）。
 - 逻辑对齐过期删除路径：`unlockFrameTimes.Remove` + `UpdateFrameNumeric`（回收词缀属性+战力上限）+ 佩戴中则重置默认框并 ntf；**不发过期邮件**（客服自己发补偿邮件）；**不把被移除框塞进 ntf.unlockFrameCfgIds**（客户端会当新解锁弹"获得头像框"UI，见 client `BasicMeta.Personal.cs OnUnlockHeadFrameNtf`）；未佩戴时客户端缓存等重登对齐。
 
 ## 待办（版本上线后）

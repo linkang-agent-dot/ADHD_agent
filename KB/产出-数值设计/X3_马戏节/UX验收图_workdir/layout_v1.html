@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:540px; height:960px; overflow:hidden; position:relative; background:#5a3b22;
+         font-family:"Microsoft YaHei",sans-serif; }
+  /* 底：整列游戏截图拉满（含 hub 顶条 + 双机 + tab 栏） */
+  #game { position:absolute; left:0; top:0; width:540px; height:952px; }
+  /* ===== 顶部：X3 标准节日信息区（标题/倒计时/描述，位置=左上贴 hub 条下方） ===== */
+  #top { position:absolute; left:10px; top:52px; width:400px; color:#fff; text-shadow:0 1px 3px #000; }
+  #top .title { font-size:22px; font-weight:bold; }
+  #top .time { font-size:14px; color:#8fe27a; margin-top:2px; display:flex; align-items:center; gap:4px; }
+  #top .clock { width:14px; height:14px; border:2px solid #8fe27a; border-radius:50%; display:inline-block; position:relative; }
+  #top .desc { font-size:12px; color:#e8e3d5; margin-top:3px; width:360px; line-height:1.4; }
+  #top .info { position:absolute; right:-28px; top:2px; width:20px; height:20px; border-radius:50%;
+               background:#d9b45c; color:#5a3b22; text-align:center; line-height:20px; font-weight:bold; font-size:14px; }
+  /* ===== 底部：积分轨道（覆盖掉截图里的旧橙框区） ===== */
+  #trackzone { position:absolute; left:0px; bottom:88px; width:540px; height:120px;
+               background:linear-gradient(#7a4a26,#5e3517); border-top:3px solid #c9963f; border-bottom:3px solid #c9963f;
+               display:flex; align-items:center; padding:0 8px; }
+  #trackleft { width:120px; flex-shrink:0; text-align:center; }
+  #trackleft .lbl { color:#ffd166; font-size:13px; font-weight:bold; }
+  #trackleft .score { background:#3a2410; border:1px solid #c9963f; border-radius:10px; color:#fff;
+                      font-size:15px; padding:2px 10px; margin-top:4px; display:inline-block; }
+  #trackleft .taskbtn { width:34px; height:34px; border-radius:50%; background:radial-gradient(#6db3e8,#2a6db3);
+                        color:#fff; font-weight:bold; line-height:34px; margin:6px auto 0; font-size:16px;
+                        border:2px solid #a8d8ff; }
+  #track { flex:1; display:flex; align-items:center; overflow:hidden; padding-top:14px; }
+  .seg { display:flex; align-items:center; flex-shrink:0; }
+  .rail { width:52px; height:10px; background:#2e1c0c; position:relative; border-radius:5px; }
+  .rail .fill { position:absolute; left:0; top:0; bottom:0; background:linear-gradient(#ffe28a,#e8a33d); border-radius:5px; }
+  .node { width:56px; height:56px; margin:0 -4px; position:relative; flex-shrink:0; }
+  .node .ball { width:56px; height:56px; border-radius:10px; background:radial-gradient(#8a5a2e,#5e3517);
+                border:2px solid #c9963f; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .node img { width:34px; height:34px; }
+  .node .num { color:#fff; font-size:11px; font-weight:bold; text-shadow:0 1px 2px #000; margin-top:-2px; }
+  .node .thr { position:absolute; bottom:-16px; width:100%; text-align:center; color:#d9c9a8; font-size:10px; }
+  .node.done .ball { filter:saturate(.4) brightness(.8); }
+  .node.done::after { content:"✓"; position:absolute; right:-2px; top:-4px; width:20px; height:20px; background:#43aa8b;
+                      border-radius:50%; color:#fff; text-align:center; line-height:20px; font-size:13px; font-weight:bold; }
+  .node.avail .ball { box-shadow:0 0 14px 4px #ffd166; border-color:#ffe28a; }
+  .node.avail::after { content:""; position:absolute; right:-2px; top:-4px; width:16px; height:16px; background:#ef476f;
+                       border-radius:50%; border:2px solid #fff; }
+  .node.locked .ball { filter:grayscale(.55) brightness(.65); }
+</style>
+</head>
+<body>
+  <img id="game" src="_assets/game_col.png">
+
+  <div id="top">
+    <div class="title">馬戲扭蛋機<span class="info">?</span></div>
+    <div class="time"><span class="clock"></span>29D 23:59:59</div>
+    <div class="desc">投入扭蛋幣，轉動扭蛋機贏取豪華獎勵！</div>
+  </div>
+
+  <div id="trackzone">
+    <div id="trackleft">
+      <div class="lbl">總積分</div>
+      <div class="score">61,298</div>
+      <div class="taskbtn">?</div>
+    </div>
+    <div id="track">
+      <!-- T1 已领 -->
+      <div class="seg"><div class="rail"><div class="fill" style="width:100%"></div></div>
+        <div class="node done"><div class="ball"><img src="_assets/coin.png"><div class="num">x3</div></div><div class="thr">40,000</div></div></div>
+      <!-- T2 可领（发光+红点） -->
+      <div class="seg"><div class="rail"><div class="fill" style="width:100%"></div></div>
+        <div class="node avail"><div class="ball"><img src="_assets/coin.png"><div class="num">x3</div></div><div class="thr">80,000</div></div></div>
+      <!-- T3 进行中（填充 40%） -->
+      <div class="seg"><div class="rail"><div class="fill" style="width:40%"></div></div>
+        <div class="node locked"><div class="ball"><img src="_assets/coin.png"><div class="num">x10</div></div><div class="thr">280,000</div></div></div>
+      <!-- T4 未达 -->
+      <div class="seg"><div class="rail"></div>
+        <div class="node locked"><div class="ball"><img src="_assets/coin.png"><div class="num">x14</div></div><div class="thr">400,000</div></div></div>
+      <!-- T5 未达（露半个示意可滚动） -->
+      <div class="seg"><div class="rail"></div>
+        <div class="node locked"><div class="ball"><img src="_assets/coin.png"><div class="num">x16</div></div><div class="thr">540,000</div></div></div>
+    </div>
+  </div>
+</body>
+</html>

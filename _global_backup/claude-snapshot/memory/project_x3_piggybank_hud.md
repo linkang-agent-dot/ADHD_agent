@@ -29,7 +29,8 @@ metadata:
 - **✅弹窗口径已拍板(2026-07-07用户)**："抽卡耗到0也弹+每登录一次"=现实现原样,零改动定案。
 - **✅MR已开(2026-07-07)**：**!668** → dev（can_be_merged无冲突,remove_source_branch）。!667 已关（其版本有BUG）。分支 13 commits,tip=`1c00a8260cd`。
 - **BUG复盘(用户测出,修复=1c00a8260cd)**：切非美酒卡池时未清 `mVisiblePackIDs` + 未取消已排的延时弹窗 → 1s门控窗口内可能用过期档位/旧mCostNum在错误卡池弹美酒获取途径。修复=切池分支清列表+取消未弹延时窗。教训：**带延时/门控的弹窗,宿主状态切换(切池/OnHide)每个出口都要取消pending并清缓存**。后续新增 commit：37c862fdd2e 弹窗1s节拍门控避让抽卡动画(MMF/UIHeroLotteryShow/UIHero10LotteryEnd在播则再等+弹前重验)+prefab横幅Btn/Icon图集引用；afb0fa92523 补StreamedAssetsRollback.cs.meta。
-- **待办**：①等MR !668 review合并 ②美需正式小图标替占位(合并后换prefab单个sprite引用即可)。
+- **✅已上线+效果实锤(2026-07-17周回归)**：MR!668 于 07-08 01:38 UTC 合dev，BI埋点`piggybank_hud_click` 07-09首现、07-10全量（日点击8.5k~10k人≈DAU 25%）。**首周(07-10~16 UTC)储蓄罐流水翻倍：日均$1,200→$2,345(+95%)，周$16,418**；转化率(买家/美酒消耗者)2.6%→4.8%；新客占买家49%且79%为中小R=广度拉新；纯美酒礼包持平零蚕食。归因三层验证+完整数据见KB `X3_异国美酒储蓄罐\_数据结论沉淀.md`「触达改造首周回归」节。
+- **待办**：美需正式小图标替占位(换prefab单个sprite引用即可)。
 - **MR姿势更正**：Chinese标题/描述 API 可用——UTF8 bytes body + `charset=utf-8` header 即可（此前"必须ASCII"是编码姿势问题,不是GitLab限制）。
 - **feval坑两条(改运行时时用)**：不吃`120f`float后缀(写120);lint禁分号(多语句拆多条--command,同run会话变量共享)。
 - **新知**：①UIWidget(TFWCore/Script/UIBase/UIWidget.cs)非MonoBehaviour,挂件=WidgetContainer.AddSingle运行时挂,prefab不引用脚本GUID,但.cs仍需.meta(手写=抄同目录meta换uuid4 guid) ②TimeUpdateText被禁用不停表(OnDisable只置mText null,FrameUpdateRegistry继续跑到endTime)→挂件必须OnHide兜底StopTiming ③G.Player每登录重建(ClientPlayer.InitFromData赋值/OnDestroy置null),static引用ReferenceEquals可判"每登录一次" ④UIWidget事件只在Shown态注册,Refresh首行要Show()。
@@ -39,7 +40,7 @@ HUD挂抽卡界面内部下方（非主城）；非CD态=红点(每日刷新)；
 
 ## 线上BUG（2026-07-13实锤，玩家2137817/2330服，周日"显示可买点击弹等待存钱罐复原中"）
 **根因=6-25日重置改造漏改客户端购买前置校验**：`client\Assets\Scripts\Entity\Player\Gift\GiftMeta.cs:900-909` CheckCanBuyGift 的 CD 判定仍是通用滚动 ColdTime(24h)，没加 7002 UTC日重置特例；而显示层 `UIPiggyBankContent.cs:179-191` 和服务端 `server GiftMeta.cs:1644-1652` 都有特例。→ 凡"距上次购买<24h但已跨UTC0"时段：按钮亮但点击被本地拦（请求根本没发服务端，IAP 未拉起），弹 `ErrCodeBuyingGiftInCd`(1010027)→`Text_ErrCodeBuyingGiftInCd`=「等待存钱罐复原中」(Text__Text.tsv:4211)。链路：UIBtnPurchase.cs:384/399 DoBuy→ReqBuyGift(GiftMeta.cs:102):104本地校验→:207-210 PopTips。影响=压制每日复购收入（买得越晚次日被拦越久），06-25 起带病在线。教训：**改限购口径要三处同步——显示层/客户端前置校验/服务端校验，客户端 CheckCanBuyGift 是镜像服务端的独立副本，最易漏**。
-**修复已落地=MR !718**（2026-07-13，feature/x3-piggybank-daily-cd-fix→dev，can_be_merged）：没改校验逻辑，改**共享层写入口径**——CSShared `GiftData.ChangeGiftBuyInfo` 里 7002 每日储蓄罐的购买时间戳取整写 UTC 当日 0 点，通用滚动 24h 校验数学上恰好等价于"次日 UTC0 解锁"，三层口径一次对齐；老客户端不用发版即被修（buyingTimes 是服务端权威数据重登同步）。⚠️部署：GiftData 经 `server/GameServer/CSSharedGame@` 软链编进 **GameServer 主程序集，须随服务端完整发布，不能只热部 Hotfix dll**。已核实 Pack Group 8/11 两档独占无跨礼包影响；本地 dotnet build GameServer 0 错误。手法沉淀：零接触 plumbing 提交（工作树在 feature/skin-moment 脏着没动）。
+**修复已落地=MR !718，✅已合入dev并部到beta330**（合并2026-07-13 11:18；Jenkins #26956 编译 dev@93037a64 已含合并提交(git merge-base验过)；beta 330/331 于 16:55 刷新 dev 镜像 Run。**✅功能级验证已过(07-13,Editor真买实测)**：330服玩家14474两档都买（buyGiftCfgIDs=[500031,500032]，Pack 500031=Group8折扣/500032=Group11标准，PiggyBank表行46/51）→Mongo gift.groupBuyingTimes[8]=[11]=1785369600000=UTC 2026-07-30 00:00:00整(%86400000==0)，取整行为实锤=次日UTC0解锁。验证手法：无模拟购买GM只能客户端真买；**在线玩家Mongo数据滞后→GM `trysaveanddestroy` 强制刷盘再查**（存盘先行销毁有守卫,在线号安全）；GMResetGift 可重置购买次数复测。线上生效还需随服务端完整发布主程序集）：没改校验逻辑，改**共享层写入口径**——CSShared `GiftData.ChangeGiftBuyInfo` 里 7002 每日储蓄罐的购买时间戳取整写 UTC 当日 0 点，通用滚动 24h 校验数学上恰好等价于"次日 UTC0 解锁"，三层口径一次对齐；老客户端不用发版即被修（buyingTimes 是服务端权威数据重登同步）。⚠️部署：GiftData 经 `server/GameServer/CSSharedGame@` 软链编进 **GameServer 主程序集，须随服务端完整发布，不能只热部 Hotfix dll**。已核实 Pack Group 8/11 两档独占无跨礼包影响；本地 dotnet build GameServer 0 错误。手法沉淀：零接触 plumbing 提交（工作树在 feature/skin-moment 脏着没动）。
 
 ## 关联
 - [[reference_x3_client_new_ui_workflow]]（UIPart/prefab四件套）· 储蓄逻辑=KB `X3_异国美酒储蓄罐\异国美酒储蓄罐_可重复购买改造_策划案.md` ⚠️实装差异节

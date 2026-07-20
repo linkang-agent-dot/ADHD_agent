@@ -336,6 +336,7 @@ GET /ark/game_info/<userId>/basic?serverId=<serverId>
 | `没有权限` (ark_error_10018) | token 没有 X3 权限，需在 igame 申请 |
 | `returnInfo: []` 且无报错 | igame 没把 playerIds 正确传到服务端（检查字段名） |
 | `itemCfgID: xxx not existed` | 道具配置 ID 不存在 |
+| `cross activity not supported by this GM, use Ark or Center` (errCode 10) | 该活动是跨服型（如 GVG 105301），`deployserveractivity` 开不了；⚠️ `gm_combo.py open-activity` 对此仍打 `[OK]`（只看提交不看 returnInfo，假阳性）。改走 `igame_activity.py create`（单服也用它），时移服的起止时间用服务器逻辑时钟 |
 
 ## Kadmin 操作
 
