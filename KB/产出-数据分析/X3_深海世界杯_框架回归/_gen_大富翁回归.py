@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-X3 深海大富翁族回归 · 独立报告生成器（07-20 用户定：单独开页，线性编号章节不用小页签）
+X3 深海大富翁模块回归 · 独立报告生成器（07-20 用户定：单独开页，线性编号章节不用小页签）
 07-21 v2：加「01 设计回溯·逐件归因」「03 堆件解剖·买家重叠与双周曲线」两章 + 五点大结论带章节跳转 + SKU 档位表。
 数据源 = _monopoly_deep.json / _monopoly_design.json / _ds_monopoly_dist.json / _p2_monopoly_may.json
        / _p2_monopoly_fests.json + _kaixiang_deep.json（世界杯开箱对照桶） + _l1_m4.json（深海L1）
@@ -43,11 +43,11 @@ def family_dissect_card():
     order=['成就礼包','BP大富翁线','存钱罐','罗盘连锁']
     form={'成就礼包':'阶梯买断','BP大富翁线':'通行证 · 硬封顶$30','存钱罐':'单笔买断','罗盘连锁':'连锁 · 可复购'}
     comp=MD['deepsea_components']; tot=sum(comp[k]['rev'] for k in order)
-    tr=['<table><tr><th class="l">族内件</th><th>收入</th><th>买家</th><th>ARPPU</th><th>复购</th><th>max</th><th class="l">付费形态</th></tr>']
+    tr=['<table><tr><th class="l">模块内礼包</th><th>收入</th><th>买家</th><th>ARPPU</th><th>复购</th><th>max</th><th class="l">付费形态</th></tr>']
     for k in order:
         m=comp[k]; hl=' class="row-a"' if k=='罗盘连锁' else ''
         tr.append(f"<tr{hl}><td class='l'><b>{k}</b></td><td>{fmt(m['rev'])}</td><td>{m['buyers']}</td><td>${m['arppu']:.1f}</td><td>{m['opb']:.1f}单</td><td>{fmt(m['max'])}</td><td class='l dim'>{form[k]}</td></tr>")
-    tr.append(f"<tr><td class='l'><b>族合计</b></td><td><b>{fmt(tot)}</b></td><td class='l dim' colspan='5'>四件里三件是买断制（复购 1-2 单、硬封顶 $20-687）；唯一可复购的罗盘连锁（3.1 单/max $255）只覆盖 138 人</td></tr>")
+    tr.append(f"<tr><td class='l'><b>模块合计</b></td><td><b>{fmt(tot)}</b></td><td class='l dim' colspan='5'>四件里三件是买断制（复购 1-2 单、硬封顶 $20-687）；唯一可复购的罗盘连锁（3.1 单/max $255）只覆盖 138 人</td></tr>")
     tr.append('</table>')
     return ''.join(tr)
 
@@ -105,8 +105,8 @@ def design_mindmap():
       ('礼包设计（四件的使命对账）', '#4691e8', [
         ('成就礼包', 'mid', '购买率 U 型（付费基底）：墙前 11%→3% 正常递减、跳档+墙同点断崖 1%、墙后回升到 30%——深处的人肯买，缺的是走到深处的供给。', '#achfunnel', 'SKU 漏斗表'),
         ('罗盘连锁', 'mid', '复购全在 $4.99 档、$99.99 尾档零购买——高档坑没人跳，钱流向成就阶梯。', '#sec2', 'SKU 档位表'),
-        ('BP大富翁线', 'ok', '渗透王 431 人 / max $30 封顶——使命完成，但占族收入 39% 易误读成"能收钱"。', '#sec2', '分件解剖'),
-        ('存钱罐', 'mid', '88% 买家是族内老面孔——送达层落空，成了深度玩家的顺手加购。', '#sec3', '重叠表'),
+        ('BP大富翁线', 'ok', '渗透王 431 人 / max $30 封顶——使命完成，但占模块收入 39% 易误读成"能收钱"。', '#sec2', '分件解剖'),
+        ('存钱罐', 'mid', '88% 买家是模块内老面孔——送达层落空，成了深度玩家的顺手加购。', '#sec3', '重叠表'),
       ]),
       ('流程体验（触达 → 跑圈 → 道具 → 墙）', '#2ea856', [
         ('触达漏斗（全路径）', 'ok', f"活跃 {fn['active']:,} → 领罗盘 59% → 掷骰 40% → 进店兑换 22%；掷骰的付费玩家 1,718 人中 610 买族（36%）——触达宽、付费基底转化也不低。", '#sec4', '停留曲线'),
@@ -118,11 +118,11 @@ def design_mindmap():
         ('免费投放量', 'ok', '塌方点精确落在设计的 350 次；人均投放 214 把 ≈ <b>$60 名义/人</b>（$0.28/把·罗盘=250钻等换），玩满免费盘（350 次墙）≈ $98/人——高名义补贴，付费买的是进度不是面值。', '#sec4', '免费墙图'),
         ('兑换商店（宝珠 1202）', 'mid', f"回收率 {recyc:.0f}%、四成货币沉淀、43% 产出者没兑过——出口可用但吸引力不足。", '', ''),
         ('价位带', 'mid', '$49.99→$99.99 转化 -60% 断崖 + $29.99/59.99 空档——两条预警全应验。', '#sec2', 'SKU 档位表'),
-        ('同价互踩', 'mid', '成就与连锁在 $99.99 同价同族，连锁零购买——同价位只留一件。', '#sec2', 'SKU 档位表'),
+        ('同价互踩', 'mid', '成就与连锁在 $99.99 同价同模块，连锁零购买——同价位只留一件。', '#sec2', 'SKU 档位表'),
       ]),
     ]
     s = ['<div class="mm">',
-         '<div class="mm-root">深海大富翁族<br>设计回溯</div>',
+         '<div class="mm-root">深海大富翁模块<br>设计回溯</div>',
          '<div class="mm-stem"></div>',
          '<div class="mm-row">']
     for title, c, leaves in branches:
@@ -144,7 +144,7 @@ def piece_chart():
               ('单人最高 max $', lambda r: r['mx'], '${:,.0f}', max(r['mx'] for r in pcs)*1.2)]
     PW = (W - 80) / 3
     sv = [f'<svg viewBox="0 0 {W} {H}" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px">']
-    sv.append(f'<text x="{L_}" y="24" fill="#f0f6fc" font-size="13" font-weight="700">堆件阶梯 · 按"买了族内几件"分组（{ALL_B} 买家）——深度不是单件做深，是横向集件叠出来的</text>')
+    sv.append(f'<text x="{L_}" y="24" fill="#f0f6fc" font-size="13" font-weight="700">堆件阶梯 · 按"买了模块内几个礼包"分组（{ALL_B} 买家）——深度不是单件做深，是横向集件叠出来的</text>')
     for pi, (title, f, fv, vmax) in enumerate(panels):
         ox = 20 + pi*(PW+20)
         sv.append(f'<text x="{ox+30}" y="{T-10}" fill="#8b949e" font-size="11.5" font-weight="700">{title}</text>')
@@ -162,20 +162,20 @@ def piece_chart():
     return ''.join(sv)
 
 def overlap_table():
-    tr = ['<table style="margin-top:10px"><tr><th class="l">件</th><th>买家</th><th>同时买了族内其他件</th><th>重叠率</th><th class="l">角色判读</th></tr>']
-    roles = {'BP大富翁线': '半数是"只买 BP"的轻付费——族的进人口',
+    tr = ['<table style="margin-top:10px"><tr><th class="l">件</th><th>买家</th><th>同时买了模块内其他礼包</th><th>重叠率</th><th class="l">角色判读</th></tr>']
+    roles = {'BP大富翁线': '半数是"只买 BP"的轻付费——模块的进人口',
              '成就礼包': '2/3 与其他件重叠——深度玩家主坑',
              '罗盘连锁': '8 成重叠——深度玩家的加购件而非独立入口',
              '存钱罐': '9 成重叠——送达层设计落空，实际是深度玩家顺手件'}
     for name in ['BP大富翁线', '成就礼包', '罗盘连锁', '存钱罐']:
         o = DZ['overlap'][name]
         tr.append(f"<tr><td class='l'><b>{name}</b></td><td>{o['buyers']}</td><td>{o['with_other']}</td><td>{o['pct']:.0f}%</td><td class='l dim'>{roles[name]}</td></tr>")
-    tr.append(f"<tr><td class='l'><b>合计</b></td><td class='l dim' colspan='4'>买 2 件以上 {MULTI_B} 人（{MULTI_B/ALL_B*100:.0f}% 买家）贡献 {fmt(MULTI_R)}（{MULTI_R/FAM_TOT*100:.0f}% 收入）——族的钱来自「集件」，单件天花板都很矮（1件党 max 仅 $50）</td></tr>")
+    tr.append(f"<tr><td class='l'><b>合计</b></td><td class='l dim' colspan='4'>买 2 件以上 {MULTI_B} 人（{MULTI_B/ALL_B*100:.0f}% 买家）贡献 {fmt(MULTI_R)}（{MULTI_R/FAM_TOT*100:.0f}% 收入）——模块的钱来自「集件」，单件天花板都很矮（1件党 max 仅 $50）</td></tr>")
     tr.append('</table>')
     return ''.join(tr)
 
 def daily_chart():
-    """族各件逐日收入 · 堆叠柱 + W1/W2 分界"""
+    """模块各礼包逐日收入 · 堆叠柱 + W1/W2 分界"""
     days = sorted(DZ['daily'])
     comps = ['成就礼包', 'BP大富翁线', '存钱罐', '罗盘连锁']
     cols = {'成就礼包': '#4691e8', 'BP大富翁线': '#c08a17', '存钱罐': '#2ea856', '罗盘连锁': '#a371f7'}
@@ -185,7 +185,7 @@ def daily_chart():
     vmax = max(totals)*1.15
     n = len(days); bw = pw/n*0.66
     sv = [f'<svg viewBox="0 0 {W} {H}" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px">']
-    sv.append(f'<text x="{L_}" y="24" fill="#f0f6fc" font-size="13" font-weight="700">族各件逐日收入 · 前半程 {fmt(W1_REV)}（{W1_REV/(W1_REV+W2_REV)*100:.0f}%）/ 后半程 {fmt(W2_REV)}（{W2_REV/(W1_REV+W2_REV)*100:.0f}%）——买断件收钱前置</text>')
+    sv.append(f'<text x="{L_}" y="24" fill="#f0f6fc" font-size="13" font-weight="700">模块各礼包逐日收入 · 前半程 {fmt(W1_REV)}（{W1_REV/(W1_REV+W2_REV)*100:.0f}%）/ 后半程 {fmt(W2_REV)}（{W2_REV/(W1_REV+W2_REV)*100:.0f}%）——买断件收钱前置</text>')
     # W2 区底色
     x_w2 = L_ + pw*days.index('2026-07-10')/n
     sv.append(f'<rect x="{x_w2:.0f}" y="{T}" width="{L_+pw-x_w2:.0f}" height="{ph}" fill="#d29922" fill-opacity="0.06"/>')
@@ -220,7 +220,7 @@ def dice_survival_chart():
     series = [
       (f"全量掷骰玩家", allv,  '#4691e8', 2.4),
       (f"白嫖玩家",     freev, '#8b949e', 1.9),
-      (f"族付费玩家",   payv,  '#c08a17', 2.2),
+      (f"大富翁付费玩家",   payv,  '#c08a17', 2.2),
     ]
     W,H,L_,R,T,B = 1160,344,58,132,46,56
     pw,ph = W-L_-R, H-T-B
@@ -245,7 +245,7 @@ def dice_survival_chart():
         for i,v in enumerate(vals):
             sv.append(f'<circle cx="{X(i):.0f}" cy="{Y(v):.0f}" r="3" fill="{c}"><title>{nm} ≥{TH[i]}次: {v:,}人</title></circle>')
     ly=T+8
-    labels=[(f"全量 {MD['dice_total_players']:,}人",'#4691e8'),(f"白嫖 {MD['dice_free']:,}人",'#8b949e'),(f"族付费 {MD['dice_payers']}人",'#c08a17')]
+    labels=[(f"全量 {MD['dice_total_players']:,}人",'#4691e8'),(f"白嫖 {MD['dice_free']:,}人",'#8b949e'),(f"大富翁付费 {MD['dice_payers']}人",'#c08a17')]
     for nm,c in labels:
         sv.append(f'<line x1="{W-R+8}" y1="{ly}" x2="{W-R+24}" y2="{ly}" stroke="{c}" stroke-width="2.6"/>')
         sv.append(f'<text x="{W-R+28}" y="{ly+4}" fill="#c9d1d9" font-size="10">{nm}</text>')
@@ -253,11 +253,56 @@ def dice_survival_chart():
     sv.append('</svg>')
     return ''.join(sv)
 
+def payer_survival_chart():
+    """付费玩家单独放大图：大富翁付费 vs 非大富翁付费玩家（付了别的钱没买大富翁）掷骰 survival"""
+    PS = DZ['payer_survival']
+    TH = PS['thresh']
+    famv = [PS['fam'][str(t)] for t in TH]
+    nonv = [PS['nonfam'][str(t)] for t in TH]
+    series = [
+      ('大富翁付费玩家（买了大富翁包）', famv, '#c08a17', 2.4),
+      ('非大富翁付费玩家（付了别的钱、没买大富翁）', nonv, '#f0883e', 2.4),
+    ]
+    W, H, L_, R, T, B = 1160, 360, 58, 300, 52, 56
+    pw, ph = W-L_-R, H-T-B
+    vmax = max(max(famv), max(nonv))*1.12
+    def X(i): return L_+pw*i/(len(TH)-1)
+    def Y(v): return T+ph*(1-v/vmax)
+    sv = [f'<svg viewBox="0 0 {W} {H}" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px">']
+    sv.append(f'<text x="{L_}" y="24" fill="#f0f6fc" font-size="13" font-weight="700">付费玩家单独放大 · 累计掷骰次数 ≥N 的付费玩家数（纵轴不再被 6千白嫖压扁）</text>')
+    sv.append(f'<text x="{L_}" y="42" fill="#8b949e" font-size="11">大富翁付费一路买骰子平滑下探到 max；非大富翁付费玩家撞同一堵免费墙——350→500 次从 {nonv[TH.index(350)]:,} 塌到 {nonv[TH.index(500)]}（{(nonv[TH.index(500)]/nonv[TH.index(350)]-1)*100:.0f}%）</text>')
+    step = 200
+    for gv in range(0, int(vmax)+1, step):
+        sv.append(f'<line x1="{L_}" y1="{Y(gv):.0f}" x2="{W-R}" y2="{Y(gv):.0f}" stroke="#21262d"/>')
+        sv.append(f'<text x="{L_-6}" y="{Y(gv)+4:.0f}" fill="#484f58" font-size="10" text-anchor="end">{gv:,}</text>')
+    ia, ib = TH.index(350), TH.index(500)
+    sv.append(f'<rect x="{X(ia):.0f}" y="{T}" width="{X(ib)-X(ia):.0f}" height="{ph}" fill="#f85149" fill-opacity="0.10"/>')
+    sv.append(f'<text x="{(X(ia)+X(ib))/2:.0f}" y="{T+14}" fill="#f85149" font-size="10.5" font-weight="700" text-anchor="middle">免费墙</text>')
+    for i, t in enumerate(TH):
+        sv.append(f'<text x="{X(i):.0f}" y="{H-36}" fill="#8b949e" font-size="9.5" text-anchor="middle">≥{t:,}</text>')
+    for nm, vals, c, wgt in series:
+        pts = ' L '.join(f'{X(i):.0f} {Y(v):.0f}' for i, v in enumerate(vals))
+        sv.append(f'<path d="M {pts}" fill="none" stroke="{c}" stroke-width="{wgt}"/>')
+        for i, v in enumerate(vals):
+            sv.append(f'<circle cx="{X(i):.0f}" cy="{Y(v):.0f}" r="3" fill="{c}"><title>{nm} ≥{TH[i]:,}次: {v:,}人</title></circle>')
+    ly = T+8
+    for nm, vals, c, wgt in series:
+        sv.append(f'<line x1="{W-R+8}" y1="{ly}" x2="{W-R+24}" y2="{ly}" stroke="{c}" stroke-width="2.6"/>')
+        sv.append(f'<text x="{W-R+28}" y="{ly+4}" fill="#c9d1d9" font-size="10.5">{nm}</text>')
+        ly += 22
+    # 续骰位客群标注：非大富翁付费墙前人数
+    reach350 = nonv[TH.index(350)]
+    sv.append(f'<text x="{W-R+28}" y="{ly+10}" fill="#f0883e" font-size="10.5" font-weight="700">↑ 墙前 {reach350:,} 人</text>')
+    sv.append(f'<text x="{W-R+28}" y="{ly+26}" fill="#8b949e" font-size="10">已付费·玩到 350 次·撞墙即走</text>')
+    sv.append(f'<text x="{W-R+28}" y="{ly+42}" fill="#8b949e" font-size="10">=续骰位最现成的客群</text>')
+    sv.append('</svg>')
+    return ''.join(sv)
+
 def dice_decay_table():
     TH=[1,20,50,100,150,250,350,500,700]
     cols={'全量':[MD['survival']['all'][str(t)] for t in TH],
           '白嫖':[MD['survival']['free'][str(t)] for t in TH],
-          '族付费':[MD['survival']['payer'][str(t)] for t in TH]}
+          '大富翁付费':[MD['survival']['payer'][str(t)] for t in TH]}
     tr=['<table style="margin-top:10px"><tr><th class="l">档间</th>'+''.join(f'<th>{k}</th>' for k in cols)+'<th class="l">读法</th></tr>']
     notes={('350','500'):'免费骰子耗尽墙：白嫖塌方、付费不掉'}
     for i in range(len(TH)-1):
@@ -270,7 +315,7 @@ def dice_decay_table():
         note=notes.get((str(TH[i]),str(TH[i+1])),'')
         tr.append(f'<tr><td class="l"><b>{seg}</b></td>'+''.join(cells)+f'<td class="l dim">{note}</td></tr>')
     tr.append('</table>')
-    tr.append(f'<div class="dim" style="margin-top:6px">分位：全量 p50={MD["dice_pct_all"]["p50"]:.0f}次 / p99={MD["dice_pct_all"]["p99"]:.0f}；族付费 p50={MD["dice_pct_payer"]["p50"]:.0f}次 / p99={MD["dice_pct_payer"]["p99"]:.0f} / max={MD["dice_pct_payer"]["mx"]:.0f}。红=塌方≤-60%，绿=常数带≥-40%。</div>')
+    tr.append(f'<div class="dim" style="margin-top:6px">分位：全量 p50={MD["dice_pct_all"]["p50"]:.0f}次 / p99={MD["dice_pct_all"]["p99"]:.0f}；大富翁付费 p50={MD["dice_pct_payer"]["p50"]:.0f}次 / p99={MD["dice_pct_payer"]["p99"]:.0f} / max={MD["dice_pct_payer"]["mx"]:.0f}。红=塌方≤-60%，绿=常数带≥-40%。</div>')
     return ''.join(tr)
 
 def ds_monopoly_chart():
@@ -285,7 +330,7 @@ def ds_monopoly_chart():
     p2_v = [P2M['surv'][str(t)] for t in TH]
     ds_n, kx_n, p2_n = DSM['buyers'], g['buyers'], P2M['buyers']
     series = [
-      (f"深海大富翁族（{ds_n}买家·max {fmt(DSM['max'])}）", [v/ds_n*100 for v in ds_v], ds_v, ds_n, '#4691e8'),
+      (f"深海大富翁模块（{ds_n}买家·max {fmt(DSM['max'])}）", [v/ds_n*100 for v in ds_v], ds_v, ds_n, '#4691e8'),
       (f"世界杯开箱（{kx_n}买家·max {fmt(g['max'])}）", [v/kx_n*100 for v in kx_v], kx_v, kx_n, '#c08a17'),
       (f"P2节日大富翁·5月拓荒窗（{p2_n:,}买家·max {fmt(P2M['max'])}）", [v/p2_n*100 for v in p2_v], p2_v, p2_n, '#8b949e'),
     ]
@@ -331,7 +376,7 @@ def ds_decay_table():
     bA = {int(k): v for k, v in g['bucketA'].items()}
     bB = {int(k): v for k, v in g['bucketB'].items()}
     kx_v = [(sum(v for k, v in bA.items() if k >= t//10) if t < 100 else sum(v for k, v in bB.items() if k >= t//100)) for t in TH]
-    cols = {'深海大富翁族': [DSM['surv'][str(t)] for t in TH],
+    cols = {'深海大富翁模块': [DSM['surv'][str(t)] for t in TH],
             '世界杯开箱': kx_v,
             'P2节日大富翁(5月)': [P2M['surv'][str(t)] for t in TH]}
     tr = ['<table style="margin-top:10px"><tr><th class="l">段</th>' + ''.join(f'<th>{k}</th>' for k in cols) + '<th class="l">参照</th></tr>']
@@ -355,19 +400,19 @@ def p2fests_chart():
     ds_v = [DSM['surv'][str(t)] for t in TH]
     ds_n = DSM['buyers']
     series = [
-      (f"深海大富翁族（{ds_n}买家·max {fmt(DSM['max'])}·14天）", [v/ds_n*100 for v in ds_v], ds_v, '#4691e8'),
+      (f"深海大富翁模块（{ds_n}买家·max {fmt(DSM['max'])}·14天）", [v/ds_n*100 for v in ds_v], ds_v, '#4691e8'),
     ]
     for fest, c in [('情人节', '#d2699e'), ('科技节', '#a371f7'), ('拓荒节', '#2ea856')]:
         w = P2F['windows'][fest]
         vv = [w['surv'][str(t)] for t in TH]
-        series.append((f"P2{fest}·节日大富翁族（{w['buyers']:,}买家·max {fmt(w['max'])}）", [v/w['buyers']*100 for v in vv], vv, c))
+        series.append((f"P2{fest}·节日大富翁模块（{w['buyers']:,}买家·max {fmt(w['max'])}）", [v/w['buyers']*100 for v in vv], vv, c))
     W, H, L_, R, T, B = 1160, 340, 64, 24, 44, 72
     pw, ph = W-L_-R, H-T-B
     vmax = max(max(v) for _, v, _, _ in series)*1.12
     def X(i): return L_ + pw*i/(len(TH)-1)
     def Y(v): return T + ph*(1-v/vmax)
     sv = [f'<svg viewBox="0 0 {W} {H}" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px">']
-    sv.append(f'<text x="{L_}" y="24" fill="#f0f6fc" font-size="13" font-weight="700">同形式参照 · P2 三节「节日大富翁」族 vs X3 深海大富翁族 · 花到 ≥$X 的买家占比（÷该模块全部买家）</text>')
+    sv.append(f'<text x="{L_}" y="24" fill="#f0f6fc" font-size="13" font-weight="700">同形式参照 · P2 三节「节日大富翁」族 vs X3 深海大富翁模块 · 花到 ≥$X 的买家占比（÷该模块全部买家）</text>')
     for gv in range(0, int(vmax)+1, 10):
         sv.append(f'<line x1="{L_}" y1="{Y(gv):.0f}" x2="{W-R}" y2="{Y(gv):.0f}" stroke="#21262d"/>')
         sv.append(f'<text x="{L_-6}" y="{Y(gv)+4:.0f}" fill="#484f58" font-size="10" text-anchor="end">{gv}%</text>')
@@ -394,7 +439,7 @@ def p2fests_chart():
 
 def p2fests_decay_table():
     TH = [10, 20, 50, 100, 200, 300, 500, 1000]
-    cols = {'深海大富翁族': [DSM['surv'][str(t)] for t in TH]}
+    cols = {'深海大富翁模块': [DSM['surv'][str(t)] for t in TH]}
     for fest in ['情人节', '科技节', '拓荒节']:
         cols[f'P2{fest}'] = [P2F['windows'][fest]['surv'][str(t)] for t in TH]
     tr = ['<table style="margin-top:10px"><tr><th class="l">段</th>' + ''.join(f'<th>{k}</th>' for k in cols) + '<th class="l">参照</th></tr>']
@@ -416,7 +461,7 @@ def p2fests_decay_table():
 def p2fests_shelf_card():
     w = P2F['windows']['科技节']; c = w['components']
     layer = [
-      ('节日大富翁', '宽入口件', '$0.99-4.99 小额进人，两千人级、复购 1.1 单——X3 无对应件（族内最低入口=BP $9.99）'),
+      ('节日大富翁', '宽入口件', '$0.99-4.99 小额进人，两千人级、复购 1.1 单——X3 无对应件（模块内最低入口=BP $9.99）'),
       ('2025复活节大富翁礼包', '中段可复购件', '复购 3.2 单铺给 1,542 人——X3 对应件=罗盘连锁（复购 3.1 单）但只覆盖 138 人'),
       ('节日大富翁组队礼包', '社交件', '组队解锁小额档——X3 无对应件'),
       ('节日大富翁礼包', '深度件', 'ARPPU $181 只卖 163 人，max $447 收口——X3 对应件=成就礼包（max $687 但 ARPPU $36=没分层）'),
@@ -427,18 +472,18 @@ def p2fests_shelf_card():
         tr.append(f"<tr><td class='l'><b>{nm}</b></td><td>{fmt(m['rev'])}</td><td>{m['buyers']:,}</td><td>${m['arppu']:.1f}</td><td>{m['opb']:.1f}单</td><td>{fmt(m['max'])}</td><td class='l dim'><b>{lay}</b>：{note}</td></tr>")
     f3 = [(f, P2F['windows'][f]) for f in ['情人节', '科技节', '拓荒节']]
     sums = ' · '.join(f"{f} {fmt(v['rev'])}/{v['buyers']:,}人/max {fmt(v['max'])}" for f, v in f3)
-    tr.append(f"<tr><td class='l'><b>三节合计参照</b></td><td class='l dim' colspan='6'>{sums}——ARPPU $27-40、max 全部 $550-780，<b>P2 同形式也是宽入口浅盘</b>（情人窗单件即全族，科技/拓荒四件分层）。</td></tr>")
+    tr.append(f"<tr><td class='l'><b>三节合计参照</b></td><td class='l dim' colspan='6'>{sums}——ARPPU $27-40、max 全部 $550-780，<b>P2 同形式也是宽入口浅盘</b>（情人窗单件即全模块，科技/拓荒四件分层）。</td></tr>")
     tr.append('</table>')
     return ''.join(tr)
 
 def server_seg_card():
     seg=MD['server_seg']; names={'mature':'成熟老服 1170-1870','young':'年轻服 1880-2010'}
-    tr=['<table><tr><th class="l">服段</th><th>大富翁族买家</th><th>收入</th><th>付费玩家付费率*</th><th>ARPPU</th></tr>']
+    tr=['<table><tr><th class="l">服段</th><th>大富翁模块买家</th><th>收入</th><th>付费玩家付费率*</th><th>ARPPU</th></tr>']
     for s in ['mature','young']:
         m=seg[s]
         tr.append(f"<tr><td class='l'><b>{names[s]}</b></td><td>{m['buyers']}</td><td>{fmt(m['rev'])}</td><td>{m['payrate']:.1f}%<span class='dim'>（分母{m['payers']:,}）</span></td><td>${m['arppu']:.1f}</td></tr>")
     tr.append('</table>')
-    tr.append('<div class="dim" style="margin-top:6px">*付费玩家付费率=该服段大富翁族买家÷该服段窗口总付费人数。两段付费率(34.2%/33.0%)与 ARPPU($44.8/$43.2)几乎完全对称=新老服通吃的稳定压舱石。</div>')
+    tr.append('<div class="dim" style="margin-top:6px">*付费玩家付费率=该服段大富翁模块买家÷该服段窗口总付费人数。两段付费率(34.2%/33.0%)与 ARPPU($44.8/$43.2)几乎完全对称=新老服通吃的稳定压舱石。</div>')
     return ''.join(tr)
 
 def family_expansion_chart():
@@ -451,7 +496,7 @@ def family_expansion_chart():
     vmax=max(b[1] for b in bars)*1.14
     n=len(bars); bw=pw/n*0.6
     sv=[f'<svg viewBox="0 0 {W} {H}" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px">']
-    sv.append(f'<text x="{L_}" y="24" fill="#f0f6fc" font-size="13" font-weight="700">大富翁族扩张 · 老版航海之路(纯连锁 207xxx)月度 vs 深海四件套(窗口收入)</text>')
+    sv.append(f'<text x="{L_}" y="24" fill="#f0f6fc" font-size="13" font-weight="700">大富翁模块扩张 · 老版航海之路(纯连锁 207xxx)月度 vs 深海四件套(窗口收入)</text>')
     sv.append(f'<text x="{L_}" y="43" fill="#8b949e" font-size="11">连锁本身月度 $3-6k 随服基数缓涨；深海把盘子做到 {fmt(ds_tot)} 全靠新增件（成就礼包+BP大富翁线+存钱罐）</text>')
     for i,(nm,v,c) in enumerate(bars):
         x=L_+pw*i/n+(pw/n-bw)/2; y=T+ph*(1-v/vmax)
@@ -467,7 +512,7 @@ BACKTOP = '<div style="text-align:right;margin:-6px 0 8px"><a href="#sec0" style
 # ============ page ============
 page = f"""<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8">
-<title>X3 深海大富翁族回归 — tap4fun</title>
+<title>X3 深海大富翁模块回归 — tap4fun</title>
 <style>
 :root{{--dark:#0d1117;--card:#161b22;--border:#30363d;--text:#c9d1d9;--head:#f0f6fc;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--yellow:#d29922}}
 *{{box-sizing:border-box;margin:0;padding:0}}
@@ -527,16 +572,16 @@ td b{{color:var(--head)}}
 <nav class="sidebar">
   <div class="sb-logo"><div class="brand">tap<span>4</span>fun</div><div class="sub">DEEPSEA MONOPOLY REGRESSION</div></div>
   <div class="sb-nav">
-    <div class="sb-label">深海大富翁族回归</div>
+    <div class="sb-label">深海大富翁模块回归</div>
     <a class="sb-item" href="#sec0">结论先行</a>
     <a class="sb-item" href="#sec1">01 · 设计回溯 · 逐件归因</a>
-    <a class="sb-item" href="#sec2">02 · 族基本盘 · 分件与SKU档位</a>
+    <a class="sb-item" href="#sec2">02 · 模块基本盘 · 分件与SKU档位</a>
     <a class="sb-item" href="#sec3">03 · 堆件解剖 · 重叠与双周曲线</a>
     <a class="sb-item" href="#sec4">04 · 进度停留 · 免费墙</a>
     <a class="sb-item" href="#sec5">05 · 付费深度分布</a>
     <a class="sb-item" href="#sec6">06 · P2 同形式参照</a>
     <a class="sb-item" href="#sec7">07 · 新老服拆分</a>
-    <a class="sb-item" href="#sec8">08 · 族扩张 · 历史坐标</a>
+    <a class="sb-item" href="#sec8">08 · 模块扩张 · 历史坐标</a>
     <a class="sb-item" href="#sec9">09 · 结论与动作</a>
     <a class="sb-item" href="母题4_改动效果清单_{END.replace('-','')}.html">← 返回双节回归总页</a>
   </div>
@@ -544,19 +589,19 @@ td b{{color:var(--head)}}
 
 <div class="content">
 <div class="hero-bar">
-  <h1>X3 深海大富翁族回归<br><em>压舱石实锤 · 深度=横向集件不是单件做深 · 下一步补分层货架</em></h1>
+  <h1>X3 深海大富翁模块回归<br><em>压舱石实锤 · 深度=横向集件不是单件做深 · 下一步补分层货架</em></h1>
   <div class="meta">窗口 <b>7/3-7/16 · 59服</b>（深海 7/16 收官=终版数据） · 数据 <b>Trino v1090/v1041 订单+资产</b> · 生成 {now}</div>
 </div>
 
 <div class="page">
 <div class="sec" id="sec0"><div class="sec-head"><div class="sec-num">00</div><div class="sec-title">结论先行</div></div>
 <div class="kpi-row">
-  <div class="kpi g"><div class="kpi-val">{fmt(FAM_TOT)}</div><div class="kpi-lbl">族收入 · 深海最大玩法族</div><div class="kpi-sub">成就 $10.1k + BP线 $10.4k + 罗盘链 $3.3k + 存钱罐 $3.1k（窗口重算口径；L1 归因口径 $21.7k）</div></div>
+  <div class="kpi g"><div class="kpi-val">{fmt(FAM_TOT)}</div><div class="kpi-lbl">模块收入 · 深海最大玩法模块</div><div class="kpi-sub">成就 $10.1k + BP线 $10.4k + 罗盘链 $3.3k + 存钱罐 $3.1k（窗口重算口径；L1 归因口径 $21.7k）</div></div>
   <div class="kpi g"><div class="kpi-val">34.2% / 33.0%</div><div class="kpi-lbl">付费玩家付费率 · 新老服通吃</div><div class="kpi-sub">深海收入模块最高（开箱 9.6% / 竞猜 4.4%），两段几乎完全对称</div></div>
   <div class="kpi y"><div class="kpi-val">$17 → $205</div><div class="kpi-lbl">堆件阶梯 · 1件党 vs 4件全买 ARPPU</div><div class="kpi-sub">买2件+的 {MULTI_B} 人（{MULTI_B/ALL_B*100:.0f}%买家）贡献 {MULTI_R/FAM_TOT*100:.0f}% 收入——深度全靠横向集件</div></div>
   <div class="kpi r"><div class="kpi-val">-98%</div><div class="kpi-lbl">免费墙 · 掷骰 350→500 次白嫖塌方</div><div class="kpi-sub">2,258→42 人；能过墙的 93% 是买骰子的人</div></div>
 </div>
-<div class="bigcon">大结论：<b>大富翁族是深海最成功的改动——{fmt(FAM_TOT)} 压舱、付费率 34% 新老服通吃、免费活跃盘 7,069 人；但它的"深度"是玩家横向集件叠出来的，不是把单件做深。</b><br>
+<div class="bigcon">大结论：<b>大富翁模块是深海最成功的改动——{fmt(FAM_TOT)} 压舱、付费率 34% 新老服通吃、免费活跃盘 7,069 人；但它的"深度"是玩家横向集件叠出来的，不是把单件做深。</b><br>
 <span style="font-size:13px;line-height:2.1">
 ① <b>盘子做对了</b>——从老版"纯连锁 $3-6k/月"扩成四件套 {fmt(FAM_TOT)}，付费率 34% 深海最高；但四件的设计使命各有落差（BP 渗透达成 / 存钱罐送达落空 / 连锁高档死 / 成就深档只 17 人走到）<a class="cl" href="#sec1">→ 01 逐件归因</a><a class="cl" href="#sec8">→ 08 历史坐标</a>；<br>
 ② <b>深度=横向集件</b>——1件党 363 人 ARPPU $17 / max 仅 $50，4件全买 33 人 ARPPU $205 / max $822：每多集一件 ARPPU 翻一倍+，买 2 件以上的 {MULTI_B/ALL_B*100:.0f}% 买家贡献 {MULTI_R/FAM_TOT*100:.0f}% 收入——玩家想多花钱只能"换个坑再买断"，没有纵向加深通道<a class="cl" href="#sec3">→ 03 堆件解剖</a>；<br>
@@ -574,15 +619,15 @@ td b{{color:var(--head)}}
 <div class="cb cb-info">设计文档溯源：核心路线="提高付费深度"（夏日验证 breadth 成功 depth 没起来）；免产骰对标 X2 保守量、覆盖阶段奖前 6 档；成就礼包价位带 $1.99→$99.99×6（数值总览 06-25 已预警"后 6 档 $99.99 重复"与"$29.99/$59.99 价位带断层"）；BP 满级线 16,400=世界杯的 27%（满级 1.8% 事故根因之一）。</div>
 </div></div>
 
-<div class="sec" id="sec2"><div class="sec-head"><div class="sec-num">02</div><div class="sec-title">族基本盘 · 分件与 SKU 档位</div></div>
+<div class="sec" id="sec2"><div class="sec-head"><div class="sec-num">02</div><div class="sec-title">模块基本盘 · 分件与 SKU 档位</div></div>
 {BACKTOP}
-<div class="vlin"><div class="vc">族收入 {fmt(FAM_TOT)} 由成就礼包($10.1k)与 BP大富翁线($10.4k)两大件扛起，但四件里三件是买断制、硬封顶 $20-687；唯一有复购形态的罗盘连锁（复购 3.1 单、max $255）盘子最小只 138 人——整个族的深度被买断制天花板锁死。</div>
-<div class="card"><div class="ct">大富翁族四件解剖 · 收入/买家/ARPPU/复购/max/付费形态</div>
+<div class="vlin"><div class="vc">模块收入 {fmt(FAM_TOT)} 由成就礼包($10.1k)与 BP大富翁线($10.4k)两大件扛起，但四件里三件是买断制、硬封顶 $20-687；唯一有复购形态的罗盘连锁（复购 3.1 单、max $255）盘子最小只 138 人——整个模块的深度被买断制天花板锁死。</div>
+<div class="card"><div class="ct">大富翁模块四件解剖 · 收入/买家/ARPPU/复购/max/付费形态</div>
 {family_dissect_card()}
 </div>
 <div class="card"><div class="ct">SKU 档位结构 · 四件 × 档位（买家/单数/人均/收入）</div>
 {tiers_table()}
-<div class="cb cb-info"><b>档位层的三个结构问题：</b>①成就阶梯 $49.99→$99.99 段转化 -60% 断崖（前四段都在 -20~-48%）——$50-100 之间没有台阶（数值总览预警的"价位带断层"应验）；②唯一人均>1 单的深档（成就 6 连 $99.99）只有 17 人到达——深度设计的服务面太窄；③罗盘连锁 $99.99 尾档限购 5 从未被买过 1 次——同价位钱都流向成就阶梯（同族两件在 $99.99 互相打架，连锁输）。</div>
+<div class="cb cb-info"><b>档位层的三个结构问题：</b>①成就阶梯 $49.99→$99.99 段转化 -60% 断崖（前四段都在 -20~-48%）——$50-100 之间没有台阶（数值总览预警的"价位带断层"应验）；②唯一人均>1 单的深档（成就 6 连 $99.99）只有 17 人到达——深度设计的服务面太窄；③罗盘连锁 $99.99 尾档限购 5 从未被买过 1 次——同价位钱都流向成就阶梯（同模块两件在 $99.99 互相打架，连锁输）。</div>
 </div>
 <div class="vlin"><div class="vc">成就礼包 SKU 漏斗（付费玩家基底）：购买率是一条 <b>U 型曲线</b>——墙前 11%→3% 是正常价格递减，$99.99 跳档+免费墙同点断崖到 <b>1%（全场最低）</b>，墙后随深度回升 2%→9%→<b>30%</b>。另一个关键发现：<b>免费墙拦住的不只白嫖——到达的付费玩家也从 1,356 被腰斩到 642</b>，这 700+ 没骰子的已付费玩家就是续骰位的现成客群。</div>
 <div class="card" id="achfunnel"><div class="ct">成就礼包 11 档 SKU 漏斗 · 解锁圈数（AchievePack 组104）× 到达人数（掷骰 survival 换算）× 实际购买率（÷到达的付费玩家）</div>
@@ -593,23 +638,29 @@ td b{{color:var(--head)}}
 <div class="sec" id="sec3"><div class="sec-head"><div class="sec-num">03</div><div class="sec-title">堆件解剖 · 买家重叠与双周曲线</div></div>
 {BACKTOP}
 <div class="vlin"><div class="vc">"堆买断件做大盘子"的微观机制：<b>件数就是深度阶梯</b>——1件党 363 人（60%）ARPPU $17、max 仅 $50；集齐 4 件的 33 人 ARPPU $205、max $822。买 2 件以上的 {MULTI_B} 人（{MULTI_B/ALL_B*100:.0f}%）贡献 {fmt(MULTI_R)}（{MULTI_R/FAM_TOT*100:.0f}%）。玩家不是不肯花，是每个坑 $20-99 就见底，只能横着跳下一个坑。</div>
-<div class="card"><div class="ct">按"买了族内几件"分组 · 买家数 / ARPPU / max</div>
+<div class="card"><div class="ct">按"买了模块内几个礼包"分组 · 买家数 / ARPPU / max</div>
 {piece_chart()}
 {overlap_table()}
 </div>
 <div class="vlin"><div class="vc">逐日曲线：买断件的钱天然前置——开门三日 $3.1k/$4.3k/$2.5k 收走脉冲后转入 $1.1-1.6k 平台缓降，尾日收官反弹 $2.3k；前半程收走 {W1_REV/(W1_REV+W2_REV)*100:.0f}%、后半程 {W2_REV/(W1_REV+W2_REV)*100:.0f}%。</div>
-<div class="card"><div class="ct">族各件逐日收入（悬停看分件金额）</div>
+<div class="card"><div class="ct">模块各礼包逐日收入（悬停看分件金额）</div>
 {daily_chart()}
-<div class="cb cb-info"><b>归因：</b>成就阶梯/BP/存钱罐都是"上来就买完"型，钱天然集中在前半程（BP 大富翁线开门两日即收走大半）；族里缺一个随进度持续吐钱的复购件——这正是续骰位的位置。<b>大富翁全程贯穿的排期没问题（已定方向）</b>，后半程曲线要靠复购件撑，不靠排期调整。</div>
+<div class="cb cb-info"><b>归因：</b>成就阶梯/BP/存钱罐都是"上来就买完"型，钱天然集中在前半程（BP 大富翁线开门两日即收走大半）；模块里缺一个随进度持续吐钱的复购件——这正是续骰位的位置。<b>大富翁全程贯穿的排期没问题（已定方向）</b>，后半程曲线要靠复购件撑，不靠排期调整。</div>
 </div></div>
 
 <div class="sec" id="sec4"><div class="sec-head"><div class="sec-num">04</div><div class="sec-title">进度停留曲线 · 免费墙</div></div>
 {BACKTOP}
-<div class="vlin"><div class="vc">白嫖玩家掷骰一路走到 350 次都还有 2,258 人（免费活跃盘充足、驱动力不缺），但 350→500 次白嫖塌方 -98%（2,258→42）——这是免费骰子耗尽的硬墙；能跨过墙走到 700 次的 483 人里 93% 是族付费玩家（买骰子的人一路走到 max 3,105 次）。断点归因=供给侧（免费投放到 350 次断供），不是需求侧（想不想玩）。</div>
-<div class="card"><div class="ct">进度停留 · 累计掷骰次数 survival（全量 / 白嫖 / 族付费三线 · 悬停看人数）</div>
+<div class="vlin"><div class="vc">白嫖玩家掷骰一路走到 350 次都还有 2,258 人（免费活跃盘充足、驱动力不缺），但 350→500 次白嫖塌方 -98%（2,258→42）——这是免费骰子耗尽的硬墙；能跨过墙走到 700 次的 483 人里 93% 是大富翁付费玩家（买骰子的人一路走到 max 3,105 次）。断点归因=供给侧（免费投放到 350 次断供），不是需求侧（想不想玩）。</div>
+<div class="card"><div class="ct">进度停留 · 累计掷骰次数 survival（全量 / 白嫖 / 大富翁付费三线 · 悬停看人数）</div>
 {dice_survival_chart()}
 {dice_decay_table()}
-<div class="cb cb-info">口径：掷骰次数=航海罗盘 Item_1057(普通)+海神罗盘 Item_1058(精准) change_type=2 消耗次数，对齐阶段奖 OtherReward 组 100 的档位（抽 20/50/100/150/250/350/500/700）。白嫖=掷过骰但未买任何大富翁族包的玩家。<b>免费墙 = 设计意图（免产骰子对标 X2 保守量、覆盖前 6 档，深档靠付费）；问题不在墙本身，在墙前缺一个"$0.99-4.99 再买一把骰子接着走"的低价续骰位</b>——白嫖玩家撞墙时唯一的付费选项是成就礼包一次性阶梯买断，跨度太大接不住。</div>
+<div class="cb cb-info">口径：掷骰次数=航海罗盘 Item_1057(普通)+海神罗盘 Item_1058(精准) change_type=2 消耗次数，对齐阶段奖 OtherReward 组 100 的档位（抽 20/50/100/150/250/350/500/700）。白嫖=掷过骰但未买任何大富翁模块包的玩家。<b>免费墙 = 设计意图（免产骰子对标 X2 保守量、覆盖前 6 档，深档靠付费）；问题不在墙本身，在墙前缺一个"$0.99-4.99 再买一把骰子接着走"的低价续骰位</b>——白嫖玩家撞墙时唯一的付费选项是成就礼包一次性阶梯买断，跨度太大接不住。</div>
+</div>
+<div class="vlin"><div class="vc">付费玩家单独放大（把 6 千白嫖拿掉、纵轴放大）：<b>大富翁付费玩家</b>因为一路买骰子平滑下探（500 次仍 489 人 → max 2,000+ 次）；但<b>非大富翁付费玩家</b>（付了别的钱、没碰大富翁包的 1,108 人）撞的是<b>同一堵免费墙</b>——350→500 次从 778 人塌到 39（-95%），和白嫖同步阵亡。<b>这 778 个"已经愿意付费、也愿意把大富翁玩到 350 次"的人，就是低价续骰位最现成的客群</b>——他们撞墙即走，不是不肯花，是没有一个"顺手买把骰子"的档接住（现有唯一付费选项=成就一次性阶梯，跨度太大）。</div>
+<div class="card"><div class="ct">付费玩家单独 survival · 大富翁付费 vs 非大富翁付费玩家（悬停看人数）</div>
+{payer_survival_chart()}
+<div class="cb cb-info">口径：分母=窗口内有过任意付费的玩家（掷骰 7,069 人里 1,718 付费玩家：大富翁付费 610 + 非大富翁付费 1,108）。<b>大富翁付费玩家的曲线证明续骰位有效需求真实存在</b>（489 人愿意一路买到 500+ 次）；<b>非大富翁付费玩家的墙证明客群规模</b>（778 个已付费玩家卡在墙前）——两条线合起来=续骰位既有需求验证、又有现成客群，是本页对"补低价续骰位"最直接的量化支撑。</div>
+</div></div>
 </div></div>
 
 <div class="sec" id="sec5"><div class="sec-head"><div class="sec-num">05</div><div class="sec-title">付费深度分布（÷该模块全部买家 · 对照世界杯开箱 / P2五月浅盘）</div></div>
@@ -623,30 +674,30 @@ td b{{color:var(--head)}}
 
 <div class="sec" id="sec6"><div class="sec-head"><div class="sec-num">06</div><div class="sec-title">P2 同形式参照（情人 / 科技 / 拓荒「节日大富翁」族 · 春节异族形式不同已排除）</div></div>
 {BACKTOP}
-<div class="vlin"><div class="vc">P2 三节的「节日大富翁」族（与 X3 同形式）：三节 $60.8k-92.8k / 1,841-2,410 买家 / <b>max 全部 $550-780、≥$500≈0——P2 也没把大富翁做深，X3 max $792 单人深度并不落后</b>。P2 赢在两处：①分层货架（$4-6 宽入口件两千人 + $21-30 中段可复购件千人级 + $180 深度件只卖 ~150 人，X3 四件 ARPPU 全挤 $20-36）；②它只让大富翁当浅盘（占节日盘 6-11%），深度交给挖孔/GACHA——X3 大富翁族占深海收入 ~40% 已经超载。</div>
+<div class="vlin"><div class="vc">P2 三节的「节日大富翁」族（与 X3 同形式）：三节 $60.8k-92.8k / 1,841-2,410 买家 / <b>max 全部 $550-780、≥$500≈0——P2 也没把大富翁做深，X3 max $792 单人深度并不落后</b>。P2 赢在两处：①分层货架（$4-6 宽入口件两千人 + $21-30 中段可复购件千人级 + $180 深度件只卖 ~150 人，X3 四件 ARPPU 全挤 $20-36）；②它只让大富翁当浅盘（占节日盘 6-11%），深度交给挖孔/GACHA——X3 大富翁模块占深海收入 ~40% 已经超载。</div>
 <div class="card"><div class="ct">同形式参照 · X3 深海 vs P2 情人/科技/拓荒（占比口径 · 窗口 14 vs 28 天、服基数不同，只比形状）</div>
 {p2fests_chart()}
 {p2fests_decay_table()}
 </div>
-<div class="card"><div class="ct">P2 分层货架解剖（科技窗为代表 · 情人窗单件全族 / 拓荒窗同构）</div>
+<div class="card"><div class="ct">P2 分层货架解剖（科技窗为代表 · 情人窗单件全模块 / 拓荒窗同构）</div>
 {p2fests_shelf_card()}
 <div class="cb cb-info"><b>启示：</b>①<b>续骰位定位="宽入口+中段续命件"</b>——P2 同形式的钱主要来自宽入口件（两千人小额）和中段可复购件（复购 ~3 单铺给千人级），X3 缺的正是这两件；续骰位直接收入千元级/节（2,258 撞墙白嫖 × 转化 5-10% × $0.99-4.99），价值在接人进漏斗。②<b>大富翁本体不承担深度增量</b>——同形式在 P2 三节的天花板就是 $500-800，深度增量归盘内其他弹药（模块 A 随机礼包位置）。⚠️口径注：跨游戏只比占比与形状；P2 收入=pay_price（v1041 名字匹配）；「2025复活节大富翁礼包」为历史复用名，实际是科技/拓荒窗在售的大富翁阶梯礼包；春节异族大富翁（$250k/随机轨）为春节特有形式，不作同形式参照。</div>
 </div></div>
 
 <div class="sec" id="sec7"><div class="sec-head"><div class="sec-num">07</div><div class="sec-title">新老服拆分</div></div>
 {BACKTOP}
-<div class="vlin"><div class="vc">大富翁族在成熟老服(1170-1870)与年轻服(1880-2010)几乎完全对称：买家 313 vs 297、付费率 34.2% vs 33.0%、ARPPU $44.8 vs $43.2——不像竞猜偏新服、开箱付费率被新服稀释，大富翁族是新老服通吃的稳定压舱石。</div>
-<div class="card"><div class="ct">大富翁族 · 新老服拆分（付费率分母=该段窗口总付费人数）</div>
+<div class="vlin"><div class="vc">大富翁模块在成熟老服(1170-1870)与年轻服(1880-2010)几乎完全对称：买家 313 vs 297、付费率 34.2% vs 33.0%、ARPPU $44.8 vs $43.2——不像竞猜偏新服、开箱付费率被新服稀释，大富翁模块是新老服通吃的稳定压舱石。</div>
+<div class="card"><div class="ct">大富翁模块 · 新老服拆分（付费率分母=该段窗口总付费人数）</div>
 {server_seg_card()}
-<div class="cb cb-info">对照：世界杯开箱付费率被扩服稀释到 9.6%（成熟段 13.2%）、竞猜 4.4% 且参与近半来自新服。大富翁族两段付费率都在 33-34%=玩法本身黏性强、不靠新服白嫖盘撑数——这是"压舱石"判定的直接证据，也说明改造对新老服都适用。</div>
+<div class="cb cb-info">对照：世界杯开箱付费率被扩服稀释到 9.6%（成熟段 13.2%）、竞猜 4.4% 且参与近半来自新服。大富翁模块两段付费率都在 33-34%=玩法本身黏性强、不靠新服白嫖盘撑数——这是"压舱石"判定的直接证据，也说明改造对新老服都适用。</div>
 </div></div>
 
-<div class="sec" id="sec8"><div class="sec-head"><div class="sec-num">08</div><div class="sec-title">族扩张 · 历史坐标</div></div>
+<div class="sec" id="sec8"><div class="sec-head"><div class="sec-num">08</div><div class="sec-title">模块扩张 · 历史坐标</div></div>
 {BACKTOP}
 <div class="vlin"><div class="vc">老版航海之路（纯连锁 207xxx）月度收入 $1.4k→$6.2k 随服基数缓涨；深海把大富翁盘子做到 {fmt(FAM_TOT)}，扩张全部来自新增件（成就礼包 $10.1k + BP大富翁线 $10.4k + 存钱罐 $3.1k），连锁本身 $3.3k 与历史月度持平——改动正确地做大了盘子，但做大的方式是"加买断件"，没有做深单件。</div>
-<div class="card"><div class="ct">大富翁族扩张 · 老版纯连锁月度 vs 深海四件套</div>
+<div class="card"><div class="ct">大富翁模块扩张 · 老版纯连锁月度 vs 深海四件套</div>
 {family_expansion_chart()}
-<div class="cb cb-info">历史坐标读法：深海大富翁的成功=把一个月 $3-6k 的连锁小玩法，通过挂成就礼包+双 BP+存钱罐，扩成 {fmt(FAM_TOT)} 的节日压舱族——这条"堆件做大盘子"的路径马戏节可直接复用（承接深海骨架）。</div>
+<div class="cb cb-info">历史坐标读法：深海大富翁的成功=把一个月 $3-6k 的连锁小玩法，通过挂成就礼包+双 BP+存钱罐，扩成 {fmt(FAM_TOT)} 的节日压舱模块——这条"堆件做大盘子"的路径马戏节可直接复用（承接深海骨架）。</div>
 </div></div>
 
 <div class="sec" id="sec9"><div class="sec-head"><div class="sec-num">09</div><div class="sec-title">结论与动作</div></div>
@@ -658,18 +709,18 @@ td b{{color:var(--head)}}
 <td class="l">04 章免费墙（2,258 白嫖撞墙、断点在供给侧）+ 02 章成就 SKU 漏斗（U 型：墙后购买率回升至 30%；<b>到达付费玩家被墙从 1,356 腰斩到 642=续骰位现成客群</b>）+ 06 章 P2 分层货架 + 02 章连锁复购全在 $4.99 档的实证</td>
 <td class="l">直接收入千元级/节（2,258 × 转化 5-10% × 低客单）；价值在把最投入的白嫖玩家接进付费漏斗，并给族一个"随进度吐钱"的 W2 点火件</td></tr>
 <tr><td class="l"><b>2. 深度增量不放大富翁</b><br><span class="dim">归模块 A（随机礼包）位置</span></td>
-<td class="l">大富翁维持浅盘定位；$100+ 深度承接交给皮肤开箱优化方案模块 A；同族内清理 $99.99 打架（连锁尾档零购买可撤，成就深档独占 $99.99 位）</td>
+<td class="l">大富翁维持浅盘定位；$100+ 深度承接交给皮肤开箱优化方案模块 A；同模块内清理 $99.99 打架（连锁尾档零购买可撤，成就深档独占 $99.99 位）</td>
 <td class="l">06 章：P2 同形式天花板 $500-800、P2 大富翁只占节日盘 6-11%（深度交挖孔/GACHA）；03 章：深度=集件不是单件；02 章：$99.99 两件互踩</td>
 <td class="l">与模块 A 分工互补，不再是二选一</td></tr>
 <tr><td class="l"><b>3. 马戏节承接</b><br><span class="dim">复用"堆件做大盘子"路径 + 修两个错位</span></td>
 <td class="l">承接深海骨架（成就+连锁+存钱罐+BP 四件套），<b>大富翁全程贯穿（已定方向）</b>；后半程曲线靠复购件撑（03 章：买断件收钱前置）；存钱罐若继续做，把入口铺到非族玩家（88% 重叠=送达落空）</td>
-<td class="l">08 章族扩张（堆件路径已验证）+ 07 章新老服通吃（形式普适）+ 01/03 章设计错位清单</td>
-<td class="l">深海族 {fmt(FAM_TOT)} 为基线</td></tr>
+<td class="l">08 章模块扩张（堆件路径已验证）+ 07 章新老服通吃（形式普适）+ 01/03 章设计错位清单</td>
+<td class="l">深海大富翁模块 {fmt(FAM_TOT)} 为基线</td></tr>
 </table>
 <div class="cb cb-info">⏳ 待裁决：续骰位落地宿主——放大富翁本体（骰子红包/低价骰子包）还是并进模块 A 随机礼包统一做。按 06 章分工看两者不冲突：续骰位=本体宽入口件，模块 A=盘内深度承接。</div>
 </div></div>
 
-<div class="footer">X3 深海大富翁族回归 · 窗口 7/3-7/16（深海收官终版） · 数据源=Trino v1090/v1041（_monopoly_deep.py / _monopoly_design.py / _p2_monopoly_fests.py） · 生成 {now}</div>
+<div class="footer">X3 深海大富翁模块回归 · 窗口 7/3-7/16（深海收官终版） · 数据源=Trino v1090/v1041（_monopoly_deep.py / _monopoly_design.py / _p2_monopoly_fests.py） · 生成 {now}</div>
 </div>
 </div>
 </body></html>"""

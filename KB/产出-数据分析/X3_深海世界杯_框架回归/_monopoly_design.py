@@ -119,6 +119,23 @@ for r in out["achieve_funnel"]:
     rate = r["buyers"]/r["reach_payer"]*100 if r["reach_payer"] else 0
     print(f"   {r['pack']} ${r['price']:>6.2f} @{r['laps']:>3}圈(≈{r['rolls']:>4}次): 到达{r['reach']:>5}(付费{r['reach_payer']:>5}) 购买{r['buyers']:>4} 购买率(÷到达付费){rate:.0f}%")
 
+# ⑦ 付费玩家单独 survival（族付费 vs 非族付费玩家，同掷骰阈值）——付费玩家放大图用
+FAM_CTE = f"""SELECT DISTINCT user_id FROM v1090.ods_user_order
+  WHERE pay_status=1 AND partition_date BETWEEN '{S}' AND '{E}'
+    AND server_id IN ({SRV59}) AND iap_id IN ({ALL_IDS})"""
+THRESH7 = [1, 20, 50, 100, 150, 250, 350, 500, 700, 1000, 1500, 2000]
+sel7 = ",".join(f"count_if(rolls>={t} AND f.user_id IS NOT NULL) f{t},"
+                f"count_if(rolls>={t} AND f.user_id IS NULL AND p.user_id IS NOT NULL) n{t}"
+                for t in THRESH7)
+r7 = q(f"""WITH d AS ({dice_cte}), p AS ({payer_all_cte}), f AS ({FAM_CTE})
+  SELECT {sel7} FROM d LEFT JOIN p ON d.user_id=p.user_id LEFT JOIN f ON d.user_id=f.user_id""")[0]
+out["payer_survival"] = {"thresh": THRESH7,
+                         "fam": {str(t): r7[f"f{t}"] for t in THRESH7},
+                         "nonfam": {str(t): r7[f"n{t}"] for t in THRESH7}}
+print("\n⑦ 付费玩家掷骰 survival（族付费 / 非族付费玩家）:")
+for t in THRESH7:
+    print(f"   ≥{t:>5}次: 族付费{r7[f'f{t}']:>5} 非族付费{r7[f'n{t}']:>5}")
+
 # ⑤ 触达漏斗 + 道具使用漏斗
 # 顶=59服窗口活跃；触达=领到过罗盘(1057/1058产出)；参与=掷过骰(消耗)；付费=族买家
 act = q(f"""SELECT count(distinct user_id) u FROM v1090.ods_user_login

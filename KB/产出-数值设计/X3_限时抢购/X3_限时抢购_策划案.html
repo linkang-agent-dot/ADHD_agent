@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X3 限时抢购 策划案（马戏节第17活动·X2→X3搬运）</title>
+<style>
+  :root{--ink:#1f2328;--sub:#57606a;--line:#d8dee4;--brand:#2f7d4f;--band:#eaf3ec;
+        --pink:#ffe3ef;--beige:#fbf3dd;--blue:#e8f0fb;--warn:#fff4e5;--warnbd:#f0b429;}
+  *{box-sizing:border-box}
+  body{font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;color:var(--ink);
+       max-width:980px;margin:0 auto;padding:32px 28px 80px;line-height:1.65;font-size:14px;background:#fff}
+  h1{font-size:23px;border-bottom:3px solid var(--brand);padding-bottom:10px;margin-bottom:6px}
+  h2{font-size:17px;color:#fff;background:var(--brand);padding:6px 12px;border-radius:5px;margin:30px 0 12px}
+  h3{font-size:15px;color:var(--brand);border-left:4px solid var(--brand);padding-left:9px;margin:20px 0 8px}
+  h4{font-size:14px;margin:14px 0 5px;color:#333}
+  .meta{color:var(--sub);font-size:13px;margin-bottom:4px}
+  .tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:10px;margin-right:6px}
+  .t-port{background:#ffe9d6;color:#9a4b00}.t-ver{background:var(--blue);color:#1a4f8f}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13px}
+  th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:#eef2f5;font-weight:600}
+  tr:nth-child(even) td{background:#fafbfc}
+  code{background:#f2f4f6;padding:1px 5px;border-radius:3px;font-size:12.5px;color:#a3306e}
+  .band{background:var(--band);border-radius:6px;padding:10px 14px;margin:10px 0}
+  .todo{background:var(--warn);border:1px solid var(--warnbd);border-radius:6px;padding:9px 13px;margin:9px 0}
+  .todo b{color:#9a6a00}
+  .cli{background:var(--pink)} .cfg{background:var(--beige)}
+  .pill{font-size:11.5px;padding:1px 6px;border-radius:4px;margin-left:4px}
+  ol{margin:6px 0 6px 4px;padding-left:22px}ol ol{margin:3px 0}
+  li{margin:3px 0}
+  .k{color:var(--sub);font-size:12.5px}
+  .rec{color:#2f7d4f;font-weight:600}
+  .note{color:var(--sub);font-size:12.5px;font-style:italic}
+  .flow{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+  .flow span{background:#fff;border:1px solid var(--brand);color:var(--brand);border-radius:16px;padding:2px 12px;font-size:12.5px}
+  .flow i{align-self:center;color:var(--sub)}
+</style>
+</head>
+<body>
+
+<h1>限时抢购 · 策划案</h1>
+<div class="meta"><span class="tag t-port">X2→X3 搬运（A方向）</span><span class="tag t-ver">马戏节 第17活动 · 7.29版本</span> 负责人：林康 ｜ 单玩法案 ｜ 草稿 v0.1（2026-07-22）</div>
+<div class="band" style="margin-top:12px">
+<b>本案性质：</b>把 X2「限时抢购」玩法整套搬到 X3（X3 无原生此玩法 → 程序需在 X3 侧实现协议+配置结构，同扭蛋机套路）。
+<b>骨重皮薄</b>：玩法一整套是骨；皮只有 7 张专属图（靠背景 banner 换主题）。<br>
+<span class="k">唯一入口档案：<code>KB\换皮档案\X3\2026-07-22_限时抢购(X2搬运).md</code> ｜ 数值/玩法真源：老案子 GSheet <code>1ceogA…ICDY</code> ｜ prefab 验收包：<code>D:\newX2\Copy\FlashSale\</code></span>
+</div>
+
+<div class="todo"><b>🔧 全案 4 个待拍板决策点（草稿已带建议值，请在评审时确认）</b> → 见文末 <b>§九</b>；其余内容基于老案子 + X2 历史坑，均可开工。</div>
+
+<!-- ============ 包装层 ============ -->
+<h2>〇、包装层（皮 · 马戏节主题）</h2>
+<table>
+<tr><th style="width:130px">槽位</th><th>内容（🔧=待定，其余为建议成品文案）</th></tr>
+<tr><td>活动名称</td><td><b>马戏狂欢 · 限时抢购</b>（沿玩法名 + 马戏主题前缀）</td></tr>
+<tr><td>主标题</td><td>限时限量 · 全服抢购</td></tr>
+<tr><td>副标 / 说明</td><td>每日三场开抢，手慢无！分享助力再得免费抽奖机会</td></tr>
+<tr><td>按钮文案</td><td>立即抢购 / 分享助力 / 免费抽奖（剩 N 次）</td></tr>
+<tr><td>主题视觉关键词</td><td>马戏帐篷、彩旗、聚光灯、礼盒堆叠、暖金红调（与马戏节整节日视觉统一）</td></tr>
+</table>
+
+<!-- ============ 设计目的 ============ -->
+<h2>一、设计目的</h2>
+<ol>
+<li><b>核心目的</b>：用「限时+限量+全服抢购」的稀缺感替换重复的常规礼包体验，稳定节日投放。</li>
+<li><b>付费点</b>：8 档阶梯礼包（100钻档破冰 → 99.99 鲸鱼档）；全服限量制造抢购紧迫感。</li>
+<li><b>目标人群</b>：全 R 级覆盖（RO 破冰 / R1-R2 中坚 / R3-R4 大额）。</li>
+<li><b>破冰设计</b>：分享→助力→差一次购买即可免费抽奖 → 拉动首次付费（社交裂变兼拉新曝光）。</li>
+<li><b>最终大奖</b>：皮肤随机宝箱产出池含稀有外显钩子（🔧待定，见 §九-3）。</li>
+</ol>
+
+<!-- ============ 玩法说明 ============ -->
+<h2>二、玩法说明（核心循环）</h2>
+<div class="band">
+活动分<b>预告期 / 抢购期</b>：预告期只能看礼包+分享；每日 3 个抢购期（兼容时区）里礼包才可买，且<b>全服限量+单人每包限购1次</b>。玩家<b>分享</b>活动首次得奖励 → 被他人<b>助力</b>达标得助力奖 → <b>被助力+买过礼包</b>即解锁<b>免费抽奖</b>（从 8 个礼包里抽一个白嫖）。
+</div>
+<div class="flow"><span>分享(首次奖)</span><i>→</i><span>他人助力</span><i>→</i><span>助力达标(助力奖)</span><i>→</i><span>+买过礼包</span><i>→</i><span>免费抽奖</span><i>→</i><span>付费破冰</span></div>
+
+<!-- ============ 规则说明 ============ -->
+<h2>三、规则说明</h2>
+
+<h3>1 基础设定</h3>
+<ol>
+<li>新增活动类型：<code>限时抢购</code>（X3 ActvType 🔧待程序确认；X3 无原生此类型，需新建）<span class="pill cfg">配置</span></li>
+<li>活动开启/排期：随马戏节 7.29 版本；开启时间 & 每场时长<b>均配置读取</b>，当前 TC 填 0 待排期定档。<span class="pill cfg">配置</span></li>
+<li>功能入口：马戏节主活动 hub（与扭蛋机同挂点，🔧确认挂载位）。</li>
+</ol>
+
+<h3>2 限时机制</h3>
+<ol>
+<li><b>预告期</b>（非抢购期均为预告期）：可查看礼包信息（无购买按钮）、可分享。</li>
+<li><b>抢购期</b>：每日 3 场，分别 <b>UTC 2:00 / 10:00 / 18:00</b> 开启（兼容不同时区）；场内礼包出现购买按钮、可购买、可分享。<span class="k">（X2 对应 flash_sale_buy_opentime=[7200,36000,64800]，flash_sale_buy_duration 每场时长，单位秒，配置读取）</span></li>
+<li>倒计时两态：预告期显示「距抢购开始」；抢购期显示「距抢购结束」。</li>
+</ol>
+
+<h3>3 抢购机制</h3>
+<ol>
+<li><b>全服限量</b>：活动开启范围内所有服<b>共用一个抢购数量</b>（如某礼包全服限购 100，则最多 100 个玩家买到）。<span class="pill cfg">配置</span></li>
+<li><b>单人限次</b>：每期活动、每玩家、每礼包<b>仅限购 1 次</b>（三场算一期，对应三个抢购期）。<span class="pill cfg">配置</span></li>
+<li>每期共 <b>8 个礼包</b>，玩家可在抢购期内全部购买。</li>
+</ol>
+
+<h3>4 购买</h3>
+<ol>
+<li>支付方式：<b>货币</b>（游戏代币 / 礼包支付=IAP直购）或 <b>唱片</b>。<span class="k">→ X3 货币映射 🔧待定，见 §九-1</span></li>
+<li>购买内容：见 §五 数值设计（8 档礼包）。</li>
+</ol>
+
+<h3>5 社交破冰（分享 / 助力 / 抽奖）</h3>
+<ol>
+<li><b>分享</b>：抢购期&预告期均可；
+  <ol>
+  <li>路径1-分享：分享到指定频道，<b>首次分享得首次分享奖</b>。</li>
+  <li>路径2-被助力：他人通过分享链接为我助力；<b>被助力达指定次数得助力奖</b>（3 档，见 §五）。</li>
+  </ol></li>
+<li><b>抽奖</b>（抢购期&预告期均可，满足条件后）：
+  <ol>
+  <li>条件：<b>被助力次数达标 + 购买过礼包</b>。</li>
+  <li>范围：<b>本次活动的 8 个礼包</b>（主抽奖=从 8 个货架礼包里抽 1 个整包）；抽中免费获得。<b>抽奖中礼包限购不生效</b>（此前买过、抽中可重复得）。</li>
+  <li>活动结束未用的抽奖次数<b>清除</b>。</li>
+  </ol></li>
+</ol>
+<div class="band"><b>注意：主抽奖 ≠ 皮肤随机宝箱。</b>本节「抽奖」= 从 8 个货架礼包抽 1 包（服务端从奖池抽，奖池 fork 见 §五雷1）。而 §四「皮肤随机宝箱产出池」是<b>另一条独立流程</b>：49.99 档礼包里送的「皮肤随机宝箱」(道具 11119550) 开箱开出的 5 项奖品（含 0.02% 外显钩），走道具 use → category_param.drop 发奖，与主抽奖按钮无关。</div>
+
+<h3>6 其他通用功能</h3>
+<ol>
+<li>需支持活动通用：活动名称/描述/时间、背景、英雄 spine、链式礼包、活动 buff、道具回收（带邮件id）、大奖跑马灯（可选）。</li>
+</ol>
+
+<!-- ============ 数值设计 ============ -->
+<h2>四、数值设计</h2>
+<p class="note">基准 = 老案子沙滩节钻石版（总 ROI 3.13）。🔧数值口径待定（§九-4）：是否按 X3 节日口径重定 / 是否保留唱片版。下表为<b>钻石版建议 8 档</b>。</p>
+<table>
+<tr><th>档</th><th>价格</th><th>限购(全服)</th><th>人群</th><th>ROI</th><th>主要内容（示意，X3 道具待映射）</th></tr>
+<tr><td>1</td><td>100钻</td><td>2000</td><td>RO</td><td>3.44</td><td>60分钟加速×2 + 粮食 + 钢铁（破冰包）</td></tr>
+<tr><td>2</td><td>$9.99</td><td>1000</td><td>R1</td><td>3.75</td><td>万能英雄碎片×10 + 英雄粉尘 + 高级抽奖券</td></tr>
+<tr><td>3</td><td>$19.99</td><td>800</td><td>R1</td><td>3.00</td><td>大富翁骰子 + 军备图纸 + 升星道具</td></tr>
+<tr><td>4</td><td>$19.99</td><td>500</td><td>R2</td><td>3.00</td><td>节日BP道具 + 节日GACHA道具 + 天赋道具</td></tr>
+<tr><td>5</td><td>$49.99</td><td>300</td><td>R3</td><td>2.92</td><td>金羽 + 高级精炼石 + <b>皮肤随机宝箱×50</b></td></tr>
+<tr><td>6</td><td>$49.99</td><td>300</td><td>R3</td><td>3.02</td><td>多成长线自选 + 机甲经验 + 传说机能核心</td></tr>
+<tr><td>7</td><td>$99.99</td><td>200</td><td>R4</td><td>3.05</td><td>万能英雄碎片×65 + 英雄粉尘 + 英雄经验</td></tr>
+<tr><td>8</td><td>$99.99</td><td>200</td><td>R4</td><td>2.95</td><td>节日BP道具 + 节日GACHA道具 + 纹章碎片</td></tr>
+</table>
+
+<h4>分享奖 & 助力奖</h4>
+<table>
+<tr><th>类型</th><th>触发</th><th>奖励（示意）</th></tr>
+<tr><td>首次分享奖</td><td>首次分享到指定频道</td><td>总价值≈1.12（加速+资源+行动力）</td></tr>
+<tr><td>助力奖·第1次</td><td>被助力 1 次</td><td>10CDs + 机甲/英雄经验 + 高级抽奖券×1</td></tr>
+<tr><td>助力奖·第2次</td><td>被助力达标2</td><td>50CDs + 经验 + 高级抽奖券×2</td></tr>
+<tr><td>助力奖·第3次</td><td>被助力达标3</td><td>100CDs + 经验 + 高级抽奖券×3</td></tr>
+</table>
+
+<h4>皮肤随机宝箱产出池（5 项，权重）</h4>
+<p class="note">= 49.99 档礼包送的「皮肤随机宝箱」(11119550) 开箱产出，非主抽奖。0.02% 外显是这个池的钩。<span class="k">（宝箱→本池的引用归属待老案子/程序确认）</span></p>
+<table>
+<tr><th>奖品</th><th>数量</th><th>权重</th><th>期望占比</th></tr>
+<tr><td><b>稀有外显（0.02% 保底钩，🔧待定 §九-3）</b></td><td>1</td><td>1</td><td>0.02%</td></tr>
+<tr><td>万能英雄碎片</td><td>1</td><td>1000</td><td>15.62%</td></tr>
+<tr><td>高级抽奖券</td><td>2</td><td>1900</td><td>29.68%</td></tr>
+<tr><td>成长线自选宝箱</td><td>2</td><td>1500</td><td>23.43%</td></tr>
+<tr><td>2小时加速</td><td>3</td><td>2000</td><td>31.25%</td></tr>
+</table>
+
+<h4>机制道具（X3 需新建）</h4>
+<table>
+<tr><th>X2 道具</th><th>X2 id</th><th>作用</th><th>X3 处理</th></tr>
+<tr><td>限时抢购-抽奖道具</td><td>11119549</td><td>抽奖券/HUD累计货币</td><td>新建 Item，🔧定名（建议「马戏抽奖券」）</td></tr>
+<tr><td>限时抢购-皮肤随机宝箱</td><td>11119550</td><td>class=flash_sale_reward_box，开出皮肤</td><td>新建 Item，🔧定名（建议「马戏惊喜宝箱」）</td></tr>
+</table>
+
+<!-- ============ 配置表结构 ============ -->
+<h2>五、配置表结构 & 已知雷</h2>
+<p class="note">X2 结构如下，X3 侧对应表由程序落地后回填 schema（4行：类型/引用/中文/英文）。</p>
+<h4>X2 → X3 组件映射（供程序参考）</h4>
+<table>
+<tr><th>X2 组件（activity_special）</th><th>作用</th></tr>
+<tr><td>flash_sale_buy_opentime / _buy_duration</td><td>每场开启时刻 / 每场时长（秒）</td></tr>
+<tr><td>flash_sale_gacha（主）</td><td>货架集 + reward(累计货币) + arg1(助力task) + arg2(皮肤宝箱)</td></tr>
+<tr><td>flash_sale_raffle</td><td>status 指向抽奖奖池（间接引用！）</td></tr>
+<tr><td>flash_sale_popup</td><td>弹窗</td></tr>
+<tr><td>货架包 / IAP / 虚拟货 / 抽奖池表</td><td>礼包内容 / 价格限购 / 售卖节奏 / 开箱产出</td></tr>
+</table>
+<div class="todo">
+<b>⚠️ 换皮必对齐三雷（X2-43094 血泪，见档案 §四）：</b>
+<ol style="margin-bottom:0">
+<li><b>抽奖奖池必 fork</b>：藏在 flash_sale_raffle.status 的间接引用，不 fork → 去开旧节日包（下线取不到）→「开不了箱」。</li>
+<li><b>累计道具连 IAP 一起换</b>：只改组件没用，发累计道具的 IAP 礼包也得把机制道具换成本节日专属 → 否则「抽不了奖」。</li>
+<li><b>push≠生效</b>：改完必须构建+部署+<b>重开活动</b>才重读奖池；占位数据（限购2222/价555）多是「服跑旧配置」。</li>
+</ol></div>
+
+<!-- ============ 界面交互 ============ -->
+<h2>六、界面交互</h2>
+<p class="note">复用 X2 四件套 prefab（已打包 <code>D:\newX2\Copy\FlashSale\</code>），<b>需横屏→竖屏改造</b>。皮=换 7 张专属图；结构/元素复用。</p>
+<table>
+<tr><th>prefab</th><th>作用</th><th>关键元素</th><th>换皮点</th></tr>
+<tr><td><code>FlashSale.prefab</code></td><td>主界面</td><td>标题栏(标题/倒计时/FAQ/剩余抽奖次数/退出) + 抢购倒计时 + 8货架格 + 分享/助力入口</td><td>FlashSale_Bg / _Bg_Banner / _Bg_Cupboard / _Light</td></tr>
+<tr><td><code>FlashSaleItem.prefab</code></td><td>货架格（礼包）</td><td>盒子开合动画 + 内容 + 价格/限购 + 购买按钮</td><td>_Bg_Box1 / _Bg_BoxClose1</td></tr>
+<tr><td><code>FlashSalePop.prefab</code></td><td>弹窗</td><td>礼包详情 / 提示</td><td>复用公共</td></tr>
+<tr><td><code>FlashSaleRewardGet.prefab</code></td><td>领奖 / 抽奖结果</td><td>抽中奖励展示</td><td>_icon_SpecialBox</td></tr>
+</table>
+<p class="note">Text key 逐元素清单在 §八 本地化；具体元素 [显示/状态机/点击/读配置/Textkey] 待竖屏改造后逐 prefab 回填（程序迁 prefab 时对齐）。</p>
+
+<!-- ============ 美术 ============ -->
+<h2>七、美术需求（皮 · 7 张专属图）</h2>
+<div class="band">主题：马戏节。<b>"节日主题主要靠背景 banner 凸显，换 banner 即可"</b>（老案子美术需求原文）→ 工作量集中在背景/banner。</div>
+<table>
+<tr><th>资源名（X2 源）</th><th>用途</th><th>需求</th></tr>
+<tr><td>FlashSale_Bg</td><td>主界面全屏底图</td><td>马戏主题背景</td></tr>
+<tr><td>FlashSale_Bg_Banner</td><td>顶部标题 banner</td><td>马戏彩旗/帐篷横幅</td></tr>
+<tr><td>FlashSale_Bg_Cupboard</td><td>货架/柜台底</td><td>马戏摊位风</td></tr>
+<tr><td>FlashSale_Bg_Box1 / _Bg_BoxClose1</td><td>礼盒开/关</td><td>马戏礼盒开合两态</td></tr>
+<tr><td>FlashSale_Light</td><td>聚光/光效</td><td>马戏聚光灯</td></tr>
+<tr><td>FlashSale_icon_SpecialBox</td><td>特殊宝箱图标</td><td>惊喜宝箱图标</td></tr>
+</table>
+<p class="note">另需：2 个机制道具图标（马戏抽奖券 / 马戏惊喜宝箱）。</p>
+
+<!-- ============ 本地化 ============ -->
+<h2>八、本地化</h2>
+<p class="note">Text key 清单待竖屏改造后随 prefab 元素确定；老案子本地化页签基本为空（新做）。至少覆盖：活动名/主副标题/按钮/规则FAQ/抢购时间点说明/分享助力提示/抽奖提示。多语翻译走 x3-translation-automatic。</p>
+
+<!-- ============ 决策点 ============ -->
+<h2>九、待拍板决策点（请评审时确认）</h2>
+<table>
+<tr><th style="width:24px">#</th><th>决策</th><th>建议值 <span class="rec">（推荐）</span></th></tr>
+<tr><td>1</td><td><b>货币映射</b>：X2「游戏代币/礼包支付/唱片」→ X3 对应？</td><td class="rec">钻石 + IAP直购两种支付；唱片版建议先不做（X3 无对应软货币），只做钻石+美元档</td></tr>
+<tr><td>2</td><td><b>两机制道具定名</b>（抽奖道具 / 皮肤随机宝箱）</td><td class="rec">「马戏抽奖券」/「马戏惊喜宝箱」</td></tr>
+<tr><td>3</td><td><b>抽奖池 0.02% 大奖外显</b>（X2 是占星皮肤）</td><td class="rec">复用马戏节现有外显：主城皮肤「梦幻旋转木马」(Skin1017) 或 阿米娜「猛兽驯服者」英雄皮肤(102001)</td></tr>
+<tr><td>4</td><td><b>数值口径</b>：钻石版(ROI3.13)/唱片版(5.80)/X3重定？</td><td class="rec">用钻石版 ROI 3.13 作基准，按 X3 节日免付比口径微调（走 x3-numerical-design 复查）</td></tr>
+</table>
+
+<!-- ============ 待办 ============ -->
+<h2>十、待办 / 排期</h2>
+<ol>
+<li>✅ 建档案 + prefab bundle 验收 + 本策划案草稿</li>
+<li>⬜ <b>本草稿评审</b>（拍 4 个决策点）→ 誊入 GSheet 正式策划案（配套页签：开发配置需求/数值/本地化/美术/打点/日志/验收）</li>
+<li>⬜ 交程序：规格 + prefab bundle + 数值基准 → 程序在 X3 建协议+配置结构</li>
+<li>⬜ 数值定稿（x3-numerical-design + task-checker）→ 新建机制道具</li>
+<li>⬜ 配置落地（活动/组件/货架包/IAP/<b>奖池 fork</b>/累计道具同步换）→ 分批推 dev_festival + jolt_verify</li>
+<li>⬜ 客户端 prefab 迁 X3（横→竖改造 + DK 注册）</li>
+<li>⬜ 文案 i18n + 美术 7 图 + Jira 建单树 + 测试（抽奖/开箱触发链 + 奖池 fork 验证）</li>
+<li>⬜ 收口接管化（决策记录/换皮清单/目录说明挂档案）</li>
+</ol>
+
+<p class="note" style="margin-top:30px;border-top:1px solid var(--line);padding-top:12px">
+草稿 v0.1 · 2026-07-22 · 数值/玩法源=老案子 GSheet 1ceogA…ICDY · 已知雷源=memory feedback_x2_flashsale_placeholder_data（X2-43094）
+</p>
+
+</body>
+</html>

@@ -1,0 +1,238 @@
+{
+ "payer_base": {
+  "深海全窗7/3-16": {
+   "payers": 1815,
+   "total": 249252.0
+  },
+  "每日礼包7/3-9": {
+   "payers": 1430,
+   "total": 136968.0
+  },
+  "周卡7/9-16": {
+   "payers": 1293,
+   "total": 128834.0
+  },
+  "装饰7/6-16": {
+   "payers": 1582,
+   "total": 179587.0
+  }
+ },
+ "daily_by_iap": [
+  {
+   "iap": "800000",
+   "buyers": 16,
+   "orders": 16,
+   "rev": 16.0
+  },
+  {
+   "iap": "800001",
+   "buyers": 11,
+   "orders": 11,
+   "rev": 11.0
+  },
+  {
+   "iap": "800002",
+   "buyers": 8,
+   "orders": 8,
+   "rev": 8.0
+  },
+  {
+   "iap": "800003",
+   "buyers": 9,
+   "orders": 9,
+   "rev": 9.0
+  },
+  {
+   "iap": "800004",
+   "buyers": 7,
+   "orders": 7,
+   "rev": 21.0
+  },
+  {
+   "iap": "800005",
+   "buyers": 253,
+   "orders": 253,
+   "rev": 1262.0
+  },
+  {
+   "iap": "800006",
+   "buyers": 140,
+   "orders": 140,
+   "rev": 699.0
+  },
+  {
+   "iap": "800007",
+   "buyers": 118,
+   "orders": 118,
+   "rev": 589.0
+  },
+  {
+   "iap": "800008",
+   "buyers": 109,
+   "orders": 109,
+   "rev": 544.0
+  },
+  {
+   "iap": "800009",
+   "buyers": 102,
+   "orders": 102,
+   "rev": 509.0
+  }
+ ],
+ "daily_tier_count_dist": [
+  {
+   "n_tiers": 1,
+   "users": 123
+  },
+  {
+   "n_tiers": 2,
+   "users": 26
+  },
+  {
+   "n_tiers": 3,
+   "users": 13
+  },
+  {
+   "n_tiers": 4,
+   "users": 12
+  },
+  {
+   "n_tiers": 5,
+   "users": 101
+  },
+  {
+   "n_tiers": 6,
+   "users": 1
+  }
+ ],
+ "weekly_by_iap": [
+  {
+   "iap": "2026101",
+   "buyers": 34,
+   "orders": 34,
+   "rev": 340.0
+  },
+  {
+   "iap": "2026102",
+   "buyers": 13,
+   "orders": 13,
+   "rev": 260.0
+  },
+  {
+   "iap": "2026103",
+   "buyers": 15,
+   "orders": 15,
+   "rev": 450.0
+  },
+  {
+   "iap": "2026104",
+   "buyers": 23,
+   "orders": 26,
+   "rev": 1300.0
+  }
+ ],
+ "weekly_top_spenders": [
+  {
+   "orders": 7,
+   "spend": 260.0
+  },
+  {
+   "orders": 3,
+   "spend": 60.0
+  },
+  {
+   "orders": 3,
+   "spend": 60.0
+  },
+  {
+   "orders": 3,
+   "spend": 60.0
+  },
+  {
+   "orders": 3,
+   "spend": 60.0
+  },
+  {
+   "orders": 3,
+   "spend": 60.0
+  },
+  {
+   "orders": 1,
+   "spend": 50.0
+  },
+  {
+   "orders": 1,
+   "spend": 50.0
+  },
+  {
+   "orders": 1,
+   "spend": 50.0
+  },
+  {
+   "orders": 1,
+   "spend": 50.0
+  },
+  {
+   "orders": 1,
+   "spend": 50.0
+  },
+  {
+   "orders": 1,
+   "spend": 50.0
+  },
+  {
+   "orders": 1,
+   "spend": 50.0
+  },
+  {
+   "orders": 1,
+   "spend": 50.0
+  },
+  {
+   "orders": 1,
+   "spend": 50.0
+  }
+ ],
+ "decor_by_iap": [
+  {
+   "iap": "211016",
+   "buyers": 46,
+   "orders": 46,
+   "rev": 920.0
+  },
+  {
+   "iap": "211017",
+   "buyers": 22,
+   "orders": 22,
+   "rev": 440.0
+  },
+  {
+   "iap": "211018",
+   "buyers": 13,
+   "orders": 13,
+   "rev": 260.0
+  }
+ ],
+ "decor_tier_count_dist": [
+  {
+   "n_tiers": 1,
+   "users": 24
+  },
+  {
+   "n_tiers": 2,
+   "users": 9
+  },
+  {
+   "n_tiers": 3,
+   "users": 13
+  }
+ ],
+ "visit": [
+  {
+   "iap": "211020",
+   "buyers": 28,
+   "orders": 28,
+   "rev": 2800.0
+  }
+ ]
+}

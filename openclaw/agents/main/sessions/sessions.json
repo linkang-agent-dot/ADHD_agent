@@ -1,7 +1,7 @@
 {
   "agent:main:main": {
-    "sessionId": "87a64f0a-807c-457a-8795-3da17427b2ae",
-    "updatedAt": 1784626436120,
+    "sessionId": "3d32a928-d933-42dd-9513-a22cfda5c4a1",
+    "updatedAt": 1784713022228,
     "deliveryContext": {
       "to": "user:ou_e48f6c4c0395f45b74b51525f348678b"
     },
@@ -752,14 +752,14 @@
       ],
       "version": 0
     },
-    "sessionFile": "C:\\ADHD_agent\\openclaw\\agents\\main\\sessions\\87a64f0a-807c-457a-8795-3da17427b2ae.jsonl",
+    "sessionFile": "C:\\ADHD_agent\\openclaw\\agents\\main\\sessions\\3d32a928-d933-42dd-9513-a22cfda5c4a1.jsonl",
     "modelProvider": "minimax",
     "model": "MiniMax-M2.7",
     "abortedLastRun": false,
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1784626430488,
-      "sessionId": "87a64f0a-807c-457a-8795-3da17427b2ae",
+      "generatedAt": 1784713008668,
+      "sessionId": "3d32a928-d933-42dd-9513-a22cfda5c4a1",
       "sessionKey": "agent:main:main",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -8107,8 +8107,8 @@
     "contextTokens": 131072
   },
   "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810": {
-    "sessionId": "9899e954-12aa-442d-bcab-086b7c521249",
-    "updatedAt": 1784602800032,
+    "sessionId": "e6d99719-ecd3-4642-b839-03b26bcb65c3",
+    "updatedAt": 1784689200020,
     "systemSent": true,
     "label": "Cron: 旅游攻略汇总推送",
     "skillsSnapshot": {
@@ -8515,8 +8515,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1784602800427,
-      "sessionId": "9899e954-12aa-442d-bcab-086b7c521249",
+      "generatedAt": 1784689200132,
+      "sessionId": "e6d99719-ecd3-4642-b839-03b26bcb65c3",
       "sessionKey": "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -8984,8 +8984,8 @@
     "cacheWrite": 0
   },
   "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc": {
-    "sessionId": "eccc2e34-1bfe-4943-b6ae-36a4979d8d46",
-    "updatedAt": 1784603014490,
+    "sessionId": "403b28e5-7034-49b4-b321-eaa93940fa25",
+    "updatedAt": 1784689804063,
     "systemSent": true,
     "label": "Cron: 国际机票推送",
     "skillsSnapshot": {
@@ -9403,8 +9403,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1784603014673,
-      "sessionId": "eccc2e34-1bfe-4943-b6ae-36a4979d8d46",
+      "generatedAt": 1784689804418,
+      "sessionId": "403b28e5-7034-49b4-b321-eaa93940fa25",
       "sessionKey": "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -9877,8 +9877,8 @@
     "totalTokens": 23013
   },
   "agent:main:cron:rules-refresh-daily": {
-    "sessionId": "37800a73-3f4a-44bd-96cd-56c4d036e907",
-    "updatedAt": 1784595600032,
+    "sessionId": "eba29a75-0a59-43ac-927f-dc040adb0c83",
+    "updatedAt": 1784682000017,
     "systemSent": true,
     "label": "Cron: Cursor协作规则刷新",
     "skillsSnapshot": {
@@ -10340,8 +10340,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1784595600141,
-      "sessionId": "37800a73-3f4a-44bd-96cd-56c4d036e907",
+      "generatedAt": 1784682000148,
+      "sessionId": "eba29a75-0a59-43ac-927f-dc040adb0c83",
       "sessionKey": "agent:main:cron:rules-refresh-daily",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -10820,9 +10820,9 @@
     "cacheRead": 0,
     "cacheWrite": 0
   },
-  "agent:main:cron:rules-refresh-daily:run:37800a73-3f4a-44bd-96cd-56c4d036e907": {
-    "sessionId": "37800a73-3f4a-44bd-96cd-56c4d036e907",
-    "updatedAt": 1784595600032,
+  "agent:main:cron:rules-refresh-daily:run:eba29a75-0a59-43ac-927f-dc040adb0c83": {
+    "sessionId": "eba29a75-0a59-43ac-927f-dc040adb0c83",
+    "updatedAt": 1784682000017,
     "systemSent": true,
     "label": "Cron: Cursor协作规则刷新",
     "skillsSnapshot": {
@@ -11284,8 +11284,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1784595600141,
-      "sessionId": "37800a73-3f4a-44bd-96cd-56c4d036e907",
+      "generatedAt": 1784682000148,
+      "sessionId": "eba29a75-0a59-43ac-927f-dc040adb0c83",
       "sessionKey": "agent:main:cron:rules-refresh-daily",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -11764,9 +11764,9 @@
     "cacheRead": 0,
     "cacheWrite": 0
   },
-  "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810:run:9899e954-12aa-442d-bcab-086b7c521249": {
-    "sessionId": "9899e954-12aa-442d-bcab-086b7c521249",
-    "updatedAt": 1784602800032,
+  "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810:run:e6d99719-ecd3-4642-b839-03b26bcb65c3": {
+    "sessionId": "e6d99719-ecd3-4642-b839-03b26bcb65c3",
+    "updatedAt": 1784689200020,
     "systemSent": true,
     "label": "Cron: 旅游攻略汇总推送",
     "skillsSnapshot": {
@@ -12173,8 +12173,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1784602800427,
-      "sessionId": "9899e954-12aa-442d-bcab-086b7c521249",
+      "generatedAt": 1784689200132,
+      "sessionId": "e6d99719-ecd3-4642-b839-03b26bcb65c3",
       "sessionKey": "agent:main:cron:aa7a03fc-d3f3-4670-a745-c28e1c28d810",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
@@ -12641,9 +12641,9 @@
     "cacheRead": 305747,
     "cacheWrite": 0
   },
-  "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc:run:eccc2e34-1bfe-4943-b6ae-36a4979d8d46": {
-    "sessionId": "eccc2e34-1bfe-4943-b6ae-36a4979d8d46",
-    "updatedAt": 1784603014490,
+  "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc:run:403b28e5-7034-49b4-b321-eaa93940fa25": {
+    "sessionId": "403b28e5-7034-49b4-b321-eaa93940fa25",
+    "updatedAt": 1784689804063,
     "systemSent": true,
     "label": "Cron: 国际机票推送",
     "skillsSnapshot": {
@@ -13061,8 +13061,8 @@
     "model": "MiniMax-M2.7",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1784603014673,
-      "sessionId": "eccc2e34-1bfe-4943-b6ae-36a4979d8d46",
+      "generatedAt": 1784689804418,
+      "sessionId": "403b28e5-7034-49b4-b321-eaa93940fa25",
       "sessionKey": "agent:main:cron:ed08c32f-6c5c-4300-b0fd-e1cd974735fc",
       "provider": "minimax",
       "model": "MiniMax-M2.7",
