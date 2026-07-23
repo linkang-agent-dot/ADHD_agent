@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>X3下期优化 · 执行派活清单</title>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2330;--line:#2a3441;--tx:#e6edf3;--tx2:#9aa7b4;--tx3:#6b7684;--bad:#e5534b;--warn:#d9a441;--good:#3fb950;--deep:#4691e8;}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.65;padding:32px 40px 100px;max-width:1080px;margin:0 auto;}
+h1{font-size:24px;margin:0 0 4px}.sub{color:var(--tx2);font-size:14px;margin:0 0 18px}
+.pgroup{font-size:13px;font-weight:700;letter-spacing:.5px;margin:26px 0 10px;padding:5px 10px;border-radius:6px;display:inline-block}
+.p0{background:#3a1c1c;color:#ff8a80}.p1{background:#3a2f14;color:#e0b45a}.pw{background:#1c2330;color:#9aa7b4}.pfix{background:#1a2b1f;color:#7ee0a0}
+.pkg{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--deep);border-radius:10px;padding:16px 20px;margin-bottom:16px}
+.pkg.red{border-left-color:var(--bad)}.pkg.yellow{border-left-color:var(--warn)}.pkg.fix{border-left-color:var(--good)}.pkg.hold{border-left-color:var(--tx3);opacity:.75}
+.pkg h2{font-size:17px;margin:0 0 3px}
+.pkg .goal{font-size:13.5px;color:var(--tx2);margin:0 0 12px}
+.step{font-size:13px;margin:7px 0;padding-left:14px;border-left:2px solid var(--line)}
+.step b{color:var(--tx)}
+.tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:12px;margin-right:6px;font-weight:700}
+.t-num{background:#1e3a5f;color:#8fc4ff}.t-cfg{background:#3a2a1e;color:#e0b45a}.t-art{background:#3a1e33;color:#e79ad6}.t-code{background:#1e3a2a;color:#8fe0a8}.t-plan{background:#2a2a3a;color:#b0b0e0}
+.dep{font-size:12px;color:var(--tx3);margin-top:3px}
+.brief{background:var(--panel2);border-radius:6px;padding:9px 12px;margin-top:10px;font-size:12.5px;color:var(--tx2)}
+.brief b{color:var(--good)}
+.fixitem{font-size:13px;margin:5px 0}
+code{background:#20283a;padding:1px 5px;border-radius:4px;font-size:12px}
+</style></head><body>
+
+<h1>X3 下期节日优化 · 执行派活清单</h1>
+<p class="sub">每个「工作包」可独立派给一个 agent；带 <span class="tag t-num">数值</span><span class="tag t-cfg">配置</span><span class="tag t-art">美术</span><span class="tag t-code">程序</span> 分步标签、依据文档、建议 skill。总览/详情见同目录 <code>X3下期节日优化清单.html</code>。</p>
+
+<div class="pgroup p0">P0 · 马上开始（🔴 要调整）</div>
+
+<div class="pkg red">
+  <h2>工作包 1 · 大富翁 · 纪念卡改造</h2>
+  <p class="goal">老卡贬值 + 2 张新卡（基础卡=进度反馈 / 高级大富翁主题卡=完成全目标直接满级）+ 成就价位带穿插 + 集市 HUD 曝光。可拆 2-3 个 agent 并行。</p>
+  <div class="step"><span class="tag t-num">数值</span><b>纪念卡投放数值终表</b>：单卡 $5、升级曲线 1/3/6/12/20/20（62张满级）已定；需定 <b>每付费节点给几张 / 老卡自选宝箱选卡池 / 成就礼包搭发量 / 350累计节点发卡×1</b>。<span class="dep">skill=x3-numerical-design｜依据=清单「大富翁」+ 纪念卡现状调研 + 皮肤开箱方案v1</span></div>
+  <div class="step"><span class="tag t-cfg">配置</span><b>落表</b>：MemorialCardLevel 升级曲线改 62 张；成就礼包 $49.99→卡×1；<b>成就中间穿插 $29.99/$49.99 档</b>（修价位带断层）；350 累计节点→纪念卡×1；老卡自选宝箱（ActvExchange）。<span class="dep">skill=x3-config-export｜依赖上一步数值表</span></div>
+  <div class="step"><span class="tag t-art">美术</span><b>2 张新纪念卡卡面 + 铭牌</b>（基础卡 / 高级大富翁主题卡）。<span class="dep">skill=x3-media</span></div>
+  <div class="step"><span class="tag t-code">程序</span><b>大富翁主界面新增商店 HUD 入口 + 红点逻辑</b>（可兑换即亮红点，引导进集市）。<span class="dep">提需求单给程序/客户端</span></div>
+  <div class="brief"><b>可直接派：</b>"接 X3 大富翁纪念卡改造——先出数值终表（单卡$5/升级1-3-6-12-20-20 已定，定每节点给几张+老卡宝箱池+成就搭发+350节点发卡），再落配置。依据看 KB\产出-数值设计\X3_下期节日优化清单\ 清单大富翁模块 + 纪念卡现状调研。"</div>
+</div>
+
+<div class="pkg red">
+  <h2>工作包 2 · 转盘退役 → 外圈内圈</h2>
+  <p class="goal">干掉转盘，换「外圈内圈」抽奖 + 新增主城皮肤大奖；海域排名（本服榜）删；锚点 13021-24 / BP 转盘线随退役删；行军特效暂不动。</p>
+  <div class="step"><span class="tag t-plan">设计</span><span class="tag t-num">数值</span><b>外圈内圈方案</b>：照 P2 2024 圣诞 GACHA（外圈随机 $19.99 走量入口 + 内圈固定 $99.99 收鲸·溢出率 25%），主城皮肤当大奖载体。<span class="dep">skill=brainstorming + x3-numerical-design｜依据=清单「转盘」+ reference_x3_festival_monitor 外圈内圈模板</span></div>
+  <div class="step"><span class="tag t-cfg">配置</span><b>转盘退役 + 新活动落表</b>：转盘 TC=0/下线，锚点 13021-24、BP 转盘线、海域排名一并删；外圈内圈新活动配置。<span class="dep">skill=x3-config-export</span></div>
+  <div class="step"><span class="tag t-art">美术</span><b>新增主城皮肤（岛屿皮肤）</b>作外圈内圈皮肤大奖。<span class="dep">skill=x3-media</span></div>
+  <div class="brief"><b>可直接派：</b>"接 X3 转盘退役换外圈内圈——转盘直接干掉（含海域排名/锚点13021-24/BP转盘线），换 P2 圣诞式外圈内圈抽奖（外圈随机$19.99走量+内圈固定$99.99收鲸），新增主城皮肤当大奖。先出方案+数值再配置。"</div>
+</div>
+
+<div class="pkg red">
+  <h2>工作包 3 · 开箱 · 补 $500 梯子</h2>
+  <p class="goal">$500 累计档投行军皮肤自选宝箱（修 $500 断崖）+ 随机礼包双轨 + 外显直售 + 本服榜投放。方案 v1 = <code>KB\产出-数值设计\X3_皮肤开箱优化\</code>。</p>
+  <div class="step"><span class="tag t-cfg">配置</span><b>★核心：开箱累计新增 $500 档 → 行军皮肤自选宝箱</b>（存量老行军皮 N 选 4-6 款，如深海猎手潜艇 15065·新美术零）。验证=$300→$500 斜率 -85%→-40%。<span class="dep">skill=x3-config-export</span></div>
+  <div class="step"><span class="tag t-num">数值</span><span class="tag t-cfg">配置</span><b>模块A 随机礼包双轨</b>（$19.99/49.99/99.99 每日限购）——<b>等马戏节扭蛋机 X2→X3 搬运合入后调用</b>。<span class="dep">依赖 project_x2_circus_strong_consume_reskin</span></div>
+  <div class="step"><span class="tag t-cfg">配置</span><b>模块B 外显直售</b>（头像框 $9.99 + 表情 $19.99·通用零开发）。</div>
+  <div class="step"><span class="tag t-plan">投放</span><b>本服榜调整</b>：榜奖吸引力 / 门槛 / 皮肤分层（跟双层排行榜一起）。</div>
+  <div class="brief"><b>可直接派：</b>"接 X3 开箱补$500梯——先做核心：开箱累计加$500档，投行军皮肤自选宝箱（存量老行军皮N选4-6款如深海猎手潜艇15065）。方案全文 KB\产出-数值设计\X3_皮肤开箱优化\皮肤开箱优化方案_v1_20260716.html。"</div>
+</div>
+
+<div class="pgroup p1">P1 · 次优先（🟡）</div>
+<div class="pkg yellow">
+  <h2>工作包 4 · 装饰阶梯</h2>
+  <p class="goal">断档是形式常态、盘子天生小，靠内容不靠机制。</p>
+  <div class="step"><span class="tag t-art">美术</span><b>短期：每档做不同装饰</b>（照夏日多款家具，别三档同一件椰风椅）。</div>
+  <div class="step"><span class="tag t-plan">设计</span><b>长期：装饰升级系统</b>（逐档解锁升级款外显，把"买3份资源"变"升1件外显"）。</div>
+</div>
+
+<div class="pgroup pw">待定 · 不派</div>
+<div class="pkg hold">
+  <h2>累充 · 高档换独占外显</h2>
+  <p class="goal">🕒 次级杠杆先放——主矛盾在核心付费活动冲击力（工作包1/2/3）。待核心冲击力提上来再回看。<b>例外</b>：开箱的 $500 档（行军皮肤自选宝箱）落在累充$500位置，属工作包3、要做。</p>
+</div>
+
+<div class="pgroup pfix">给 leader 前 · 清单本身必修（review 发现·约 30 分钟）</div>
+<div class="pkg fix">
+  <h2>工作包 0 · 清单校对（发 leader 前先清）</h2>
+  <div class="fixitem">① 清 <b>"族"黑话</b>（总览目录卡 / 转盘×3 / 大富翁 SVG）→ 换"这批SKU/该模块合计"人话</div>
+  <div class="fixitem">② 统一 <b>开箱总额口径</b>：清单 $20,108（本体）↔ 源报告 $20,662（族）——二选一或标口径</div>
+  <div class="fixitem">③ 修 <b>竞猜同屏数字打架</b>：161/160 人、13,348/13,315 参与统一成一套；4.4% 与 1.2% 各标分母</div>
+  <div class="fixitem">④ 收 <b>大富翁纪念卡数值 altitude</b>：deck 折成一句"数值已定（见附件）"，明细回方案正文</div>
+  <div class="fixitem">⑤ 核对 <b>母题1「覆盖14天 vs 源报告20天」</b>：若重叠期写"重叠14天（总窗20天）"</div>
+  <div class="fixitem">⑥（可选）实机图裁 Unity 编辑器边框 / 关调试浮层 / 擦 wc_gacha 残留水印</div>
+  <p class="brief"><b>注：</b>这条我（主 Claude）可以直接做，不用派 agent——你说一声就清。</p>
+</div>
+
+</body></html>

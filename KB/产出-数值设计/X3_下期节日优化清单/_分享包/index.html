@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<script>
+(function () {
+  var VERIFY = "https://demo.tap4fun.com/demo-auth/verify";
+  var LOGIN  = "https://demo.tap4fun.com/demo-auth/login";
+  fetch(VERIFY, { credentials: "include" })
+    .then(function (r) { return r.json(); })
+    .then(function (info) { if (!info.loggedIn) { window.location.href = LOGIN + "?returnUrl=" + encodeURIComponent(window.location.href); } })
+    .catch(function () { window.location.href = LOGIN + "?returnUrl=" + encodeURIComponent(window.location.href); });
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X3 下期节日优化清单</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --line:#2a3441;
+    --tx:#e6edf3; --tx2:#9aa7b4; --tx3:#6b7684;
+    --deep:#4691e8; --wc:#c08a17; --frame:#a06be8;
+    --bad:#e5534b; --warn:#d9a441; --good:#3fb950;
+    --solbg:#132b1c;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--tx);
+    font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.65;}
+  .wrap{display:flex;max-width:1180px;margin:0 auto;}
+  nav{position:sticky;top:0;align-self:flex-start;width:200px;height:100vh;
+    padding:26px 14px;border-right:1px solid var(--line);overflow-y:auto;flex:0 0 200px;}
+  nav .navtitle{font-size:12px;color:var(--tx3);letter-spacing:.5px;margin:0 0 14px;text-transform:uppercase;}
+  nav a{display:block;color:var(--tx2);text-decoration:none;font-size:13.5px;
+    padding:7px 10px;border-radius:6px;margin-bottom:3px;}
+  nav a:hover{background:var(--panel2);color:var(--tx);}
+  nav a .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;vertical-align:middle;}
+  main{flex:1;min-width:0;padding:40px 46px 120px;}
+  header h1{font-size:27px;margin:0 0 6px;font-weight:700;}
+  header .sub{color:var(--tx2);font-size:15px;margin:0 0 4px;}
+  header .meta{color:var(--tx3);font-size:12.5px;margin-top:10px;}
+  .legend{margin:20px 0 0;padding:14px 16px;background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;font-size:13px;color:var(--tx2);}
+  .legend b{color:var(--tx);}
+  .module{margin-top:52px;}
+  .module > .mod-head{display:flex;align-items:center;gap:12px;padding-bottom:12px;
+    border-bottom:2px solid var(--line);margin-bottom:8px;}
+  .mod-head .tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;color:#0d1117;}
+  .mod-head h2{font-size:21px;margin:0;flex:1;}
+  .mod-head .verdict{font-size:12.5px;color:var(--tx2);}
+  .mod-note{font-size:13px;color:var(--tx3);margin:10px 0 4px;}
+  .mod-note b{color:var(--tx2);}
+  .prob{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:22px 24px;margin-top:22px;}
+  .prob .pnum{display:inline-block;font-size:12px;font-weight:700;color:#0d1117;
+    background:var(--bad);padding:2px 10px;border-radius:20px;margin-bottom:10px;}
+  .prob h3{font-size:17px;margin:0 0 4px;color:var(--tx);}
+  .prob .oneline{font-size:14.5px;color:var(--tx);margin:0 0 18px;
+    padding:10px 14px;background:var(--panel2);border-left:3px solid var(--bad);border-radius:0 8px 8px 0;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start;}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .figbox{margin:0;}
+  .figbox .lbl{font-size:11.5px;color:var(--tx3);margin-bottom:6px;letter-spacing:.3px;
+    display:flex;align-items:center;gap:6px;}
+  .figbox .lbl .pill{font-size:10px;padding:1px 6px;border-radius:10px;font-weight:700;}
+  .figbox .pill.real{background:#233; color:#9ad;}
+  .figbox .pill.data{background:#242; color:#9d9;}
+  .figbox img{width:100%;border:1px solid var(--line);border-radius:8px;display:block;background:#000;max-height:420px;object-fit:contain;}
+  .figbox figcaption{font-size:12px;color:var(--tx3);margin-top:7px;text-align:center;}
+  .chart{width:100%;border:1px solid var(--line);border-radius:8px;background:var(--panel2);padding:10px 8px 4px;}
+  .chart text{font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;}
+  .todo-fig{width:100%;border:1px dashed #6b5;border-radius:8px;background:#1a2016;
+    color:#9d9;font-size:12.5px;text-align:center;padding:30px 14px;}
+  .detail{margin-top:16px;}
+  .detail .lbl{font-size:11.5px;color:var(--tx3);margin-bottom:6px;letter-spacing:.3px;}
+  .detail p{font-size:13.5px;color:var(--tx2);margin:0 0 8px;}
+  .detail .data{font-size:12.5px;color:var(--tx3);background:var(--panel2);
+    border-radius:8px;padding:10px 13px;margin-top:6px;}
+  .detail .data b{color:var(--deep);}
+  .sol{margin-top:18px;background:var(--solbg);border:1px solid #1f5130;border-radius:10px;padding:15px 18px;}
+  .sol .lbl{font-size:12px;font-weight:700;color:var(--good);margin-bottom:7px;display:flex;align-items:center;gap:7px;}
+  .sol .lbl::before{content:"✔";}
+  .sol p{margin:0;font-size:14px;color:var(--tx);}
+  .sol .side{color:var(--tx3);font-size:12.5px;}
+  .dropped{opacity:.55;font-size:12.5px;color:var(--tx3);border-top:1px dashed var(--line);
+    margin-top:26px;padding-top:14px;}
+  .dropped b{color:var(--tx2);}
+  .dropped .x{color:var(--bad);font-weight:700;}
+  /* overview */
+  .overview{margin:26px 0 10px;padding:20px 22px;background:var(--panel);border:1px solid var(--line);border-radius:12px;}
+  .overview h2{font-size:18px;margin:0 0 4px;}
+  .ov-legend{font-size:12.5px;color:var(--tx2);margin-bottom:6px;}
+  .ov-legend b{color:var(--tx);}
+  .ov-group{font-size:12px;color:var(--tx3);letter-spacing:.5px;margin:16px 0 8px;font-weight:700;}
+  .ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;}
+  .ov-card{display:block;text-decoration:none;padding:11px 13px;border-radius:8px;background:var(--panel2);border-left:4px solid var(--tx3);transition:background .15s;}
+  .ov-card:hover{background:#232c3a;}
+  .ov-card .ov-name{font-size:14px;font-weight:700;color:var(--tx);}
+  .ov-card .ov-issue{display:block;font-size:12px;color:var(--tx2);margin-top:3px;}
+  .ov-card.red{border-left-color:var(--bad);}
+  .ov-card.yellow{border-left-color:var(--warn);}
+  .ov-card.green{border-left-color:var(--good);}
+  .ov-card.data{border-left-color:var(--deep);}
+  .ov-card .ov-map{display:block;font-size:11px;color:var(--tx3);margin-top:2px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <p class="navtitle">优化清单</p>
+    <a href="#monopoly"><span class="dot" style="background:var(--deep)"></span>大富翁模块</a>
+    <a href="#wheel"><span class="dot" style="background:var(--deep)"></span>转盘模块</a>
+    <a href="#decoration"><span class="dot" style="background:var(--deep)"></span>装饰阶梯礼包</a>
+    <a href="#recharge"><span class="dot" style="background:var(--deep)"></span>累充</a>
+    <a href="#ds-keep"><span class="dot" style="background:var(--deep)"></span>保持/观察类</a>
+    <a href="#gacha"><span class="dot" style="background:var(--wc)"></span>开箱模块</a>
+    <a href="#bet"><span class="dot" style="background:var(--wc)"></span>竞猜模块</a>
+  </nav>
+
+  <main>
+    <header>
+      <h1>X3 下期节日优化清单</h1>
+      <p class="sub">基于「深海节 × 世界杯」双节回归结论</p>
+      <p class="meta">2026-07-23 · 只列有问题的模块 · 模块内多问题拆开逐条</p>
+      <div class="legend">
+        <b>每条问题结构：</b>问题一句话 → <b>实机图 + 数据图</b> → 详细说明 → ✔ 解决方案（用户口述）。
+        标 <span style="color:var(--bad);font-weight:700">删除</span> 的是复盘中提出、经确认不成立的问题，留档说明为何砍。
+      </div>
+    </header>
+
+    <!-- ============ 模块总览 ============ -->
+    <section class="overview">
+      <h2>模块总览 · 点击跳转</h2>
+      <div class="ov-legend"><b>🔴 要调整</b> ｜ <b>🟡 保持观察 / 待定</b> ｜ <b>🟢 目前 OK</b> — 模块内问题几字概括，方案见各模块</div>
+      <div class="ov-group">深海节</div>
+      <div class="ov-grid">
+        <a class="ov-card red" href="#monopoly"><span class="ov-name">🔴 大富翁</span><span class="ov-issue">累计目标断 / 价位带断层 / 集市缺曝光</span></a>
+        <a class="ov-card red" href="#wheel"><span class="ov-name">🔴 转盘</span><span class="ov-issue">需求真空 → 判退役换外圈内圈</span></a>
+        <a class="ov-card yellow" href="#decoration"><span class="ov-name">🟡 装饰阶梯</span><span class="ov-issue">阶梯断档（形式常态·非缺陷）</span></a>
+        <a class="ov-card yellow" href="#recharge"><span class="ov-name">🟡 累充</span><span class="ov-issue">有档无钩（待定·次级杠杆）</span></a>
+        <a class="ov-card green" href="#ds-keep"><span class="ov-name">🟢 每日礼包</span><span class="ov-issue">健康·低价入口（保留）</span></a>
+        <a class="ov-card yellow" href="#ds-keep"><span class="ov-name">🟡 周卡</span><span class="ov-issue">晚开·不具代表性（下节评估）</span></a>
+        <a class="ov-card green" href="#ds-keep"><span class="ov-name">🟢 拜访</span><span class="ov-issue">高价外显·预期内（保持）</span></a>
+        <a class="ov-card green" href="#ds-keep"><span class="ov-name">🟢 签到/酒馆</span><span class="ov-issue">功能健康·免费向</span></a>
+      </div>
+      <div class="ov-group">世界杯</div>
+      <div class="ov-grid">
+        <a class="ov-card red" href="#gacha"><span class="ov-name">🔴 开箱</span><span class="ov-issue">有钩没梯 · $500 断崖</span></a>
+        <a class="ov-card green" href="#bet"><span class="ov-name">🟢 竞猜</span><span class="ov-issue">转化低（流量形式·符合预期）</span></a>
+      </div>
+      <p class="ov-legend" style="margin-top:16px;margin-bottom:0;">注：付费深度（$500-800 买光墙·鲸鱼盘）与外显投放（进玩法·双层排行榜·皮肤分层）不单列——已分散落进 <b>大富翁（纪念卡）/ 转盘（外圈内圈主城皮）/ 开箱（$500档破墙+双层榜+外显直售）/ 累充</b> 各模块方案里。</p>
+    </section>
+
+    <!-- ============ 数据回归报告目录 ============ -->
+    <section class="overview">
+      <h2>数据回归报告目录 · 点击打开</h2>
+      <div class="ov-legend">本清单的数据来源 ——「深海 × 世界杯」双节回归（2026-07 终版 0716）；点击卡片打开对应回归报告</div>
+      <div class="ov-group">框架级（全局）</div>
+      <div class="ov-grid">
+        <a class="ov-card data" href="reports/m1-daipan.html"><span class="ov-name">📊 母题1 · 大盘增量</span><span class="ov-issue">双节 $97.9k＝夏日 2.23× · 占比 30% · 深海覆盖 14 天</span><span class="ov-map">→ 全局锚定</span></a>
+      </div>
+      <div class="ov-group">深海模块</div>
+      <div class="ov-grid">
+        <a class="ov-card data" href="reports/monopoly.html"><span class="ov-name">📊 深海大富翁回归</span><span class="ov-issue">大富翁 $27k 压舱 · 堆件解剖 · 免费墙 · 成就SKU漏斗</span><span class="ov-map">→ 大富翁</span></a>
+        <a class="ov-card data" href="reports/wheel.html"><span class="ov-name">📊 深海转盘回归</span><span class="ov-issue">判退役 · 买光墙 $585 · 锚点零购买</span><span class="ov-map">→ 转盘</span></a>
+        <a class="ov-card data" href="reports/giftpacks.html"><span class="ov-name">📊 深海礼包模块回归</span><span class="ov-issue">每日 / 周卡 / 拜访 / 装饰 四模块</span><span class="ov-map">→ 装饰·每日·周卡·拜访</span></a>
+        <a class="ov-card data" href="reports/func.html"><span class="ov-name">📊 深海功能模块回归</span><span class="ov-issue">累充转化 · 签到 · 酒馆任务</span><span class="ov-map">→ 累充·签到酒馆</span></a>
+      </div>
+      <div class="ov-group">世界杯模块</div>
+      <div class="ov-grid">
+        <a class="ov-card data" href="reports/gacha.html"><span class="ov-name">📊 世界杯开箱回归</span><span class="ov-issue">本体稳 · 有钩没梯 · $500 断崖 · 本服榜</span><span class="ov-map">→ 开箱</span></a>
+        <a class="ov-card data" href="reports/betting.html"><span class="ov-name">📊 世界杯竞猜回归</span><span class="ov-issue">流量形式 · 份额 7.2% · 漏斗 · SKU</span><span class="ov-map">→ 竞猜</span></a>
+      </div>
+    </section>
+
+    <!-- ============ 大富翁 ============ -->
+    <section class="module" id="monopoly">
+      <div class="mod-head">
+        <span class="tag" style="background:var(--deep)">深海</span>
+        <h2>大富翁模块</h2>
+        <span class="verdict">深海最成功改动（$27k 压舱 · 付费率 34% 新老服通吃）</span>
+      </div>
+      <p class="mod-note"><b>定位：</b>盘子已做大，下一步把<b>已经在花钱的人</b>留得更久、花得更多——聚焦付费玩家持续目标与货架体验，不动本体玩法。</p>
+
+      <!-- 问题1 -->
+      <article class="prob">
+        <span class="pnum">问题 1</span>
+        <h3>付费玩家在累计奖励走完后失去目标</h3>
+        <p class="oneline">付费玩家真实衰减不在免费骰子墙，而在<b>累计模块（成就里程碑）走完最后一档后失去继续付费的目标</b>。</p>
+        <div class="grid">
+          <figure class="figbox">
+            <div class="lbl"><span class="pill real">实机图</span>航海之路主界面 · 底部「額外獎勵」累计条</div>
+            <img src="assets/board_main.png" alt="航海之路主界面 累计奖励条">
+            <figcaption>累计条封顶 700 次（成就里程碑至 300 圈）</figcaption>
+          </figure>
+          <figure class="figbox">
+            <div class="lbl"><span class="pill data">数据图</span>付费玩家掷骰 survival</div>
+            <svg class="chart" viewBox="0 0 420 240" role="img">
+              <!-- axes -->
+              <line x1="44" y1="20" x2="44" y2="200" stroke="#3a4657" stroke-width="1"/>
+              <line x1="44" y1="200" x2="408" y2="200" stroke="#3a4657" stroke-width="1"/>
+              <!-- y ticks -->
+              <text x="40" y="24" fill="#6b7684" font-size="9" text-anchor="end">610</text>
+              <text x="40" y="114" fill="#6b7684" font-size="9" text-anchor="end">305</text>
+              <text x="40" y="204" fill="#6b7684" font-size="9" text-anchor="end">0</text>
+              <line x1="44" y1="110" x2="408" y2="110" stroke="#232c38" stroke-width="1" stroke-dasharray="3 3"/>
+              <!-- 300圈 cap line at n=2070 -> x=278 -->
+              <line x1="278" y1="20" x2="278" y2="200" stroke="#e5534b" stroke-width="1.2" stroke-dasharray="4 3"/>
+              <text x="274" y="34" fill="#e5534b" font-size="9.5" text-anchor="end">成就里程碑封顶</text>
+              <text x="274" y="46" fill="#e5534b" font-size="9.5" text-anchor="end">≈300 圈</text>
+              <!-- survival line (族付费 610) anchors: (0,610)(500,489)(982,305)(2070,~90)(3105,5) -->
+              <polyline points="44,20 100,56 155,110 278,173 394,199"
+                fill="none" stroke="#4691e8" stroke-width="2.2"/>
+              <!-- real anchor dots -->
+              <circle cx="100" cy="56" r="3.2" fill="#4691e8"/>
+              <circle cx="155" cy="110" r="3.6" fill="#fff" stroke="#4691e8" stroke-width="2"/>
+              <circle cx="394" cy="199" r="3.2" fill="#4691e8"/>
+              <text x="104" y="50" fill="#9aa7b4" font-size="9">500次·489人</text>
+              <text x="158" y="106" fill="#e6edf3" font-size="9">p50=982次(142圈)</text>
+              <text x="392" y="192" fill="#9aa7b4" font-size="9" text-anchor="end">max 3105次(450圈)</text>
+              <!-- x label -->
+              <text x="226" y="222" fill="#6b7684" font-size="9.5" text-anchor="middle">掷骰次数 →（付费玩家 1,718 人：大富翁付费 610 + 其他付费 1,108）</text>
+              <text x="226" y="235" fill="#3fb950" font-size="9.5" text-anchor="middle">最深付费玩家玩到 450 圈 &gt; 封顶 300 圈：肯花钱却没目标可追</text>
+            </svg>
+            <figcaption>大富翁付费玩家愿意一路买骰子下探，累计奖励却在 300 圈断供</figcaption>
+          </figure>
+        </div>
+        <div class="detail">
+          <div class="lbl">详细说明</div>
+          <p>成就里程碑阶梯 = 3/5/10/20/30/50/70/100/150/200/<b>300 圈</b>封顶。付费玩家买骰子一路往前，最肯花钱的一批走完最后一档就没目标了——断点在<b>目标供给</b>不在骰子供给。</p>
+        </div>
+        <div class="detail" style="background:var(--panel2);border-radius:10px;padding:15px 18px;margin-top:18px;">
+          <div class="lbl" style="color:#d9a441;font-weight:700;font-size:12px;">卡现状诊断 · 需求分层（兑换率看出来）</div>
+          <p style="margin:7px 0 0;">① <b>大多数玩家有需求</b>——远航之歌 861 人兑（<b>93.5% 走转盘集市免费兑</b>）、美人鱼梦境 1,715 人兑，兑换率高、是抢手兑换品；② <b>深度需求只有超R跟进（追 BUFF）</b>——10+张几乎全是付费玩家（27人）且靠刷集市；③ <b style="color:#d9a441">中间档位需求空缺</b>——中R 没有匹配的收集 / 深度目标。</p>
+        </div>
+          <!-- 方案依据 数据图 -->
+          <div style="margin-top:14px;">
+            <div style="font-size:11.5px;color:var(--tx3);margin-bottom:4px;">依据① 需求分层 · 纪念卡直售收入 × R 级（现状调研 2026-05）——中R是收入主力、超R渗透最高、中间档位待接</div>
+            <svg viewBox="0 0 420 190" role="img" style="width:100%;background:#12241a;border:1px solid #1f5130;border-radius:8px;">
+              <line x1="44" y1="18" x2="44" y2="150" stroke="#2a4636" stroke-width="1"/>
+              <line x1="44" y1="150" x2="410" y2="150" stroke="#2a4636" stroke-width="1"/>
+              <!-- 分层背景 -->
+              <rect x="96" y="18" width="146" height="132" fill="#1a3324" opacity="0.5"/>
+              <rect x="242" y="18" width="146" height="132" fill="#221a33" opacity="0.5"/>
+              <text x="169" y="30" fill="#7ee0a0" font-size="10" text-anchor="middle" font-weight="700">基础卡/老卡宝箱（小中R广度）</text>
+              <text x="315" y="30" fill="#c9a3f0" font-size="10" text-anchor="middle" font-weight="700">高级大富翁卡（超R深度）</text>
+              <!-- bars: base y=150, h=inc/21424*120 -->
+              <rect x="59" y="140" width="46" height="10" fill="#3a4150"/>
+              <rect x="132" y="126" width="46" height="24" fill="#3fb950"/>
+              <rect x="205" y="30" width="46" height="120" fill="#3fb950"/>
+              <rect x="278" y="89" width="46" height="61" fill="#a06be8"/>
+              <rect x="351" y="136" width="46" height="14" fill="#a06be8"/>
+              <!-- income labels -->
+              <text x="82" y="135" fill="#9aa7b4" font-size="8.5" text-anchor="middle">$1.8k</text>
+              <text x="155" y="121" fill="#9aa7b4" font-size="8.5" text-anchor="middle">$4.3k</text>
+              <text x="228" y="25" fill="#7ee0a0" font-size="9" text-anchor="middle" font-weight="700">$21.4k</text>
+              <text x="301" y="84" fill="#c9a3f0" font-size="8.5" text-anchor="middle">$10.8k</text>
+              <text x="374" y="131" fill="#9aa7b4" font-size="8.5" text-anchor="middle">$2.5k</text>
+              <!-- R labels + 渗透 -->
+              <text x="82" y="162" fill="#6b7684" font-size="8.5" text-anchor="middle">R0</text>
+              <text x="155" y="162" fill="#9aa7b4" font-size="8.5" text-anchor="middle">小R</text>
+              <text x="228" y="162" fill="#e6edf3" font-size="8.5" text-anchor="middle">中R</text>
+              <text x="301" y="162" fill="#e6edf3" font-size="8.5" text-anchor="middle">大R</text>
+              <text x="374" y="162" fill="#9aa7b4" font-size="8.5" text-anchor="middle">超R</text>
+              <text x="228" y="174" fill="#7ee0a0" font-size="8" text-anchor="middle">渗透19% · 人均$69 · 主力</text>
+              <text x="337" y="174" fill="#c9a3f0" font-size="8" text-anchor="middle">渗透45–48% · 人均$127–144</text>
+            </svg>
+          </div>
+          <!-- 方案依据2 兑卡张数分布 -->
+          <div style="margin-top:14px;">
+            <div style="font-size:11.5px;color:var(--tx3);margin-bottom:4px;">方案依据2 · 远航之歌兑卡张数分布（横轴=兑到几张，纵轴=人数占比）——付费玩家明显偏多张</div>
+            <svg viewBox="0 0 440 220" role="img" style="width:100%;background:#12241a;border:1px solid #1f5130;border-radius:8px;">
+              <!-- legend -->
+              <line x1="150" y1="13" x2="168" y2="13" stroke="#4691e8" stroke-width="2.5"/><text x="172" y="17" fill="#9aa7b4" font-size="9">全量兑卡玩家(861)</text>
+              <line x1="285" y1="13" x2="303" y2="13" stroke="#d9a441" stroke-width="2.5"/><text x="307" y="17" fill="#9aa7b4" font-size="9">付费兑卡玩家(265)</text>
+              <!-- axes -->
+              <line x1="44" y1="20" x2="44" y2="180" stroke="#2a4636" stroke-width="1"/>
+              <line x1="44" y1="180" x2="424" y2="180" stroke="#2a4636" stroke-width="1"/>
+              <text x="40" y="24" fill="#6b7684" font-size="8.5" text-anchor="end">75%</text>
+              <text x="40" y="77" fill="#6b7684" font-size="8.5" text-anchor="end">50%</text>
+              <text x="40" y="130" fill="#6b7684" font-size="8.5" text-anchor="end">25%</text>
+              <text x="40" y="183" fill="#6b7684" font-size="8.5" text-anchor="end">0</text>
+              <line x1="44" y1="126.7" x2="424" y2="126.7" stroke="#1c3327" stroke-width="1" stroke-dasharray="3 3"/>
+              <line x1="44" y1="73.3" x2="424" y2="73.3" stroke="#1c3327" stroke-width="1" stroke-dasharray="3 3"/>
+              <!-- 全量 line -->
+              <polyline points="54,45.2 94,147.1 134,159.7 174,175.9 214,176.9 254,176.8 294,176.4 334,178.7 374,178.7 414,173.4" fill="none" stroke="#4691e8" stroke-width="2.2"/>
+              <!-- 付费 line -->
+              <polyline points="54,86.6 94,147.8 134,155 174,175.1 214,169.5 254,173.6 294,167.8 334,176.8 374,176 414,158.2" fill="none" stroke="#d9a441" stroke-width="2.2"/>
+              <!-- markers 1张 & 10+ -->
+              <circle cx="54" cy="45.2" r="3" fill="#4691e8"/><circle cx="54" cy="86.6" r="3" fill="#d9a441"/>
+              <circle cx="414" cy="173.4" r="3" fill="#4691e8"/><circle cx="414" cy="158.2" r="3" fill="#d9a441"/>
+              <text x="60" y="42" fill="#4691e8" font-size="9">63%</text>
+              <text x="60" y="92" fill="#d9a441" font-size="9">44%</text>
+              <text x="410" y="152" fill="#d9a441" font-size="9" text-anchor="end">10+张 10.2%</text>
+              <!-- x labels -->
+              <text x="54" y="193" fill="#6b7684" font-size="8.5" text-anchor="middle">1</text>
+              <text x="94" y="193" fill="#6b7684" font-size="8.5" text-anchor="middle">2</text>
+              <text x="134" y="193" fill="#6b7684" font-size="8.5" text-anchor="middle">3</text>
+              <text x="174" y="193" fill="#6b7684" font-size="8.5" text-anchor="middle">4</text>
+              <text x="214" y="193" fill="#6b7684" font-size="8.5" text-anchor="middle">5</text>
+              <text x="254" y="193" fill="#6b7684" font-size="8.5" text-anchor="middle">6</text>
+              <text x="294" y="193" fill="#6b7684" font-size="8.5" text-anchor="middle">7</text>
+              <text x="334" y="193" fill="#6b7684" font-size="8.5" text-anchor="middle">8</text>
+              <text x="374" y="193" fill="#6b7684" font-size="8.5" text-anchor="middle">9</text>
+              <text x="414" y="193" fill="#6b7684" font-size="8.5" text-anchor="middle">10+</text>
+              <text x="234" y="210" fill="#7ee0a0" font-size="9.5" text-anchor="middle">免费玩家 72% 只兑 1 张、7 张以上归零；付费玩家仅 44% 停在 1 张、10+张占 10%</text>
+            </svg>
+          </div>
+          <div class="sol">
+            <div class="lbl">解决方案 · 定位拆 3 模块（新卡 2 张 + 老卡贬值）</div>
+            <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:6px;">
+              <div style="background:#221a12;border-left:3px solid #d9a441;border-radius:0 8px 8px 0;padding:10px 13px;">
+                <div style="font-size:13px;font-weight:700;color:#e0b45a;margin-bottom:3px;">① 老卡贬值 · 卡片自选宝箱 <span style="font-weight:400;color:var(--tx3);font-size:11px;">→ 接「中间档位空缺」</span></div>
+                <div style="font-size:13px;color:var(--tx2);">每期<b>大富翁 + 开箱各限量卖 1 个「卡片自选宝箱」</b>，主要给小/中/大R——每个节日版本给一个<b>老卡收集目标</b>，把老数值体系的卡消化 / 贬值掉。<br><span style="color:var(--tx3);font-size:12px;">集市其余高价外显（月心珍珠 50000代币·13人 / 霍普金斯 30000代币·86人）→ <b style="color:var(--tx2)">保持原投放、转常驻观察，本期不动</b>。</span></div>
+              </div>
+              <div style="background:#0f1f14;border-left:3px solid #3fb950;border-radius:0 8px 8px 0;padding:10px 13px;">
+                <div style="font-size:13px;font-weight:700;color:#7ee0a0;margin-bottom:3px;">② 新 · 基础卡 <span style="font-weight:400;color:var(--tx3);font-size:11px;">→ 接「大多数玩家进度反馈」</span></div>
+                <div style="font-size:13px;color:var(--tx2);">主要填玩家<b>进度反馈</b>，定位 &amp; 投放<b>同当前节日卡不变</b>（＝远航之歌那种，覆盖大多数玩家的收藏需求）。</div>
+              </div>
+              <div style="background:#1a1420;border-left:3px solid #a06be8;border-radius:0 8px 8px 0;padding:10px 13px;">
+                <div style="font-size:13px;font-weight:700;color:#c9a3f0;margin-bottom:3px;">③ 新 · 高级大富翁主题卡 <span style="font-weight:400;color:var(--tx3);font-size:11px;">→ 接「深度需求·超R追BUFF」</span></div>
+                <div style="font-size:13px;color:var(--tx2);">完成本期大富翁<b>全部目标 → 直接升满级</b>；<b>属性 ROI 不变</b>；升级体验改为<b>缩减卡数量、单次 BUFF 反馈提高</b>（告别 180 张慢刷：少量卡、每张 BUFF 跳更大、完成即满级）。</div>
+              </div>
+            </div>
+            <div style="margin-top:12px;background:#12241a;border:1px solid #1f5130;border-radius:8px;padding:11px 14px;">
+              <div style="font-size:12px;font-weight:700;color:#7ee0a0;margin-bottom:6px;">纪念卡数值（用户 2026-07-23 定）</div>
+              <div style="font-size:13px;color:var(--tx2);line-height:1.85;">
+                · <b>单卡定价 $5/张</b>（现状免费兑 $1.3、设计计价 $10 之间取中）<br>
+                · <b>升级曲线（每级需张数）= 1 / 3 / 6 / 12 / 20 / 20</b>（6 级，累计 1/4/10/22/42/<b>62 张满级</b> ≈ $310）——比现状 30 级 180+ 张大幅缩减，单次升级 BUFF 反馈更强<br>
+                · <b>累计节点</b>：大富翁 350 累计道具节点 → 改发 <b>纪念卡 ×1</b>（＝问题 1「累计模块奖励」落地）<br>
+                · <b>成就礼包搭发</b>：$49.99 起含卡（$49.99→×1、$99.99→×2）
+              </div>
+            </div>
+            <p class="side" style="margin-top:10px;">⚠️ 配套动作：现状远航之歌 <b style="color:var(--tx2)">93.5% 靠转盘集市免费宝珠兑（$1.3/张）</b>——高级卡要当付费深度反馈，须收紧 / 隔离免费兑换通道，否则升级仍被免费刷稀释。依据：<code>X3纪念卡现状调研.md</code>。</p>
+          </div>
+      </article>
+
+      <!-- 问题2 -->
+      <article class="prob">
+        <span class="pnum">问题 2</span>
+        <h3>成就礼包价位带断层</h3>
+        <p class="oneline">成就礼包 $49.99 → $99.99 跳档处购买率断崖 -67%，此后 6 档全 $99.99、起步只 1%。</p>
+        <div class="grid">
+          <figure class="figbox">
+            <div class="lbl"><span class="pill real">实机图</span>成就礼包货架（达到指定圈数解锁）</div>
+            <img src="assets/monopoly_achievepack.png" alt="成就礼包货架">
+            <figcaption>100/150/200/300 圈全 $99.99（后 6 档同价）；每档含纪念卡 ×2</figcaption>
+          </figure>
+          <figure class="figbox">
+            <div class="lbl"><span class="pill data">数据图</span>成就礼包各档购买率（U 型）</div>
+            <svg class="chart" viewBox="0 0 420 240" role="img">
+              <line x1="44" y1="20" x2="44" y2="200" stroke="#3a4657" stroke-width="1"/>
+              <line x1="44" y1="200" x2="410" y2="200" stroke="#3a4657" stroke-width="1"/>
+              <text x="40" y="24" fill="#6b7684" font-size="9" text-anchor="end">30%</text>
+              <text x="40" y="114" fill="#6b7684" font-size="9" text-anchor="end">15%</text>
+              <text x="40" y="204" fill="#6b7684" font-size="9" text-anchor="end">0</text>
+              <!-- bars: y=200 - pct*6 ; barW 26 -->
+              <!-- 前5档 blue -->
+              <rect x="46" y="134" width="26" height="66" fill="#4691e8"/>
+              <rect x="79" y="146" width="26" height="54" fill="#4691e8"/>
+              <rect x="112" y="164" width="26" height="36" fill="#4691e8"/>
+              <rect x="145" y="182" width="26" height="18" fill="#4691e8"/>
+              <rect x="178" y="182" width="26" height="18" fill="#4691e8"/>
+              <!-- 断崖档 red -->
+              <rect x="211" y="194" width="26" height="6" fill="#e5534b"/>
+              <!-- 后档 green 回升 -->
+              <rect x="244" y="188" width="26" height="12" fill="#3fb950"/>
+              <rect x="277" y="188" width="26" height="12" fill="#3fb950"/>
+              <rect x="310" y="182" width="26" height="18" fill="#3fb950"/>
+              <rect x="343" y="146" width="26" height="54" fill="#3fb950"/>
+              <rect x="376" y="20" width="26" height="180" fill="#3fb950"/>
+              <!-- pct labels -->
+              <text x="59" y="130" fill="#9aa7b4" font-size="8.5" text-anchor="middle">11%</text>
+              <text x="92" y="142" fill="#9aa7b4" font-size="8.5" text-anchor="middle">9%</text>
+              <text x="125" y="160" fill="#9aa7b4" font-size="8.5" text-anchor="middle">6%</text>
+              <text x="158" y="178" fill="#9aa7b4" font-size="8.5" text-anchor="middle">3%</text>
+              <text x="191" y="178" fill="#9aa7b4" font-size="8.5" text-anchor="middle">3%</text>
+              <text x="224" y="190" fill="#e5534b" font-size="8.5" text-anchor="middle">1%</text>
+              <text x="389" y="16" fill="#3fb950" font-size="8.5" text-anchor="middle">30%</text>
+              <!-- x labels 圈数 -->
+              <text x="59" y="212" fill="#6b7684" font-size="8" text-anchor="middle">3</text>
+              <text x="92" y="212" fill="#6b7684" font-size="8" text-anchor="middle">5</text>
+              <text x="125" y="212" fill="#6b7684" font-size="8" text-anchor="middle">10</text>
+              <text x="158" y="212" fill="#6b7684" font-size="8" text-anchor="middle">20</text>
+              <text x="191" y="212" fill="#6b7684" font-size="8" text-anchor="middle">30</text>
+              <text x="224" y="212" fill="#6b7684" font-size="8" text-anchor="middle">50</text>
+              <text x="257" y="212" fill="#6b7684" font-size="8" text-anchor="middle">70</text>
+              <text x="290" y="212" fill="#6b7684" font-size="8" text-anchor="middle">100</text>
+              <text x="323" y="212" fill="#6b7684" font-size="8" text-anchor="middle">150</text>
+              <text x="356" y="212" fill="#6b7684" font-size="8" text-anchor="middle">200</text>
+              <text x="389" y="212" fill="#6b7684" font-size="8" text-anchor="middle">300</text>
+              <text x="226" y="234" fill="#6b7684" font-size="9" text-anchor="middle">里程碑圈数 →｜前 5 档 $1.99–49.99，后 6 档均 $99.99</text>
+              <!-- 断崖标注 -->
+              <path d="M 191 168 Q 205 158 218 184" fill="none" stroke="#e5534b" stroke-width="1.2" stroke-dasharray="3 2"/>
+              <text x="205" y="152" fill="#e5534b" font-size="9" text-anchor="middle">$49.99→$99.99</text>
+              <text x="205" y="163" fill="#e5534b" font-size="9" text-anchor="middle">跳档 −67%</text>
+            </svg>
+            <figcaption>墙前正常递减 → $99.99 跳档断崖 → 深处的人肯买（最深 30%）</figcaption>
+          </figure>
+        </div>
+        <div class="detail">
+          <div class="lbl">详细说明</div>
+          <p>购买率呈 U 型：墙前 11%→9%→6%→3% 属正常价格递减，一步从 $49.99 跳到 $99.99 太陡、断崖到 1%，此后 6 档都 $99.99；墙后随深度回升到最深 30%。<b>深处的人肯买，缺的是平滑的价位台阶</b>。</p>
+          <div class="data">购买率分母 = 到达该里程碑的窗口付费玩家（免费玩家稀释无意义）。</div>
+        </div>
+        <div class="sol">
+          <div class="lbl">解决方案</div>
+          <p>在 $49.99→$99.99 中间<b>多穿插 $29.99 / $49.99 档位</b>，把价位带填平，付费玩家每次加一点就能买下一档。</p>
+        </div>
+      </article>
+
+      <!-- 问题3 -->
+      <article class="prob">
+        <span class="pnum">问题 3</span>
+        <h3>兑换集市缺曝光，货币大量沉淀</h3>
+        <p class="oneline">大富翁集市藏在底部 tab、主界面无入口 → 宝珠回收率仅 59%、43% 产出者一次都没兑换过。</p>
+        <div class="grid">
+          <figure class="figbox">
+            <div class="lbl"><span class="pill real">实机图</span>主界面无商店入口 → 集市藏在底部 tab</div>
+            <img src="assets/board_shop.png" alt="金海浮市 集市界面">
+            <figcaption>集市（金海浮市）道具已带「兑換提醒」，但玩家进不来</figcaption>
+          </figure>
+          <figure class="figbox">
+            <div class="lbl"><span class="pill data">数据图</span>宝珠产出 → 兑换 回收漏斗</div>
+            <svg class="chart" viewBox="0 0 420 200" role="img">
+              <!-- 产出 bar -->
+              <text x="100" y="59" fill="#9aa7b4" font-size="10" text-anchor="end">产出玩家</text>
+              <rect x="110" y="44" width="290" height="30" rx="4" fill="#4691e8"/>
+              <text x="255" y="64" fill="#fff" font-size="11" text-anchor="middle" font-weight="700">6,945 人</text>
+              <!-- 兑换 bar (57%) -->
+              <text x="100" y="119" fill="#9aa7b4" font-size="10" text-anchor="end">兑换玩家</text>
+              <rect x="110" y="104" width="290" height="30" rx="4" fill="#1f2b22" stroke="#2a3441" stroke-dasharray="4 3"/>
+              <rect x="110" y="104" width="165" height="30" rx="4" fill="#3fb950"/>
+              <text x="192" y="124" fill="#0d1117" font-size="11" text-anchor="middle" font-weight="700">3,937 人 (57%)</text>
+              <text x="338" y="123" fill="#e5534b" font-size="10" text-anchor="middle">43% 没兑过</text>
+              <!-- 回收率 callout -->
+              <text x="110" y="170" fill="#9aa7b4" font-size="11">货币回收率</text>
+              <text x="205" y="171" fill="#d9a441" font-size="15" font-weight="700">59%</text>
+              <text x="245" y="170" fill="#6b7684" font-size="10">（产出 5,375 万 → 消耗 3,189 万，四成沉淀）</text>
+            </svg>
+            <figcaption>攒了货币的人近一半从没进店花过——出口没触达到人</figcaption>
+          </figure>
+        </div>
+        <div class="detail">
+          <div class="lbl">详细说明</div>
+          <p>集市本身道具已带「兑換提醒」勾选，问题不在红点开关，而在<b>入口深、缺曝光</b>——玩家在主界面掷骰，根本不会主动切到底部 tab 去看集市。</p>
+        </div>
+        <div class="sol">
+          <div class="lbl">解决方案</div>
+          <p>在<b>大富翁主界面新增一个商店 HUD 入口</b>，挂上<b>红点逻辑</b>（可兑换即亮红点）引导玩家进集市兑换。<span class="side">（商品吸引力另议：放老卡/外显类提回收率）</span></p>
+        </div>
+      </article>
+
+      <div class="dropped">
+        <p><span class="x">删除 ·</span> <b>无纵向通道（堆买断件）</b>：罗盘连锁每天刷新，横向能拉动付费就行，没纵向做深不算问题。</p>
+        <p><span class="x">删除 ·</span> <b>同价互踩（罗盘 $99.99 vs 成就 $99.99）</b>：无视。</p>
+        <p><span class="x">删除 ·</span> <b>收钱前置、缺随进度吐钱的复购件</b>：已通过成就礼包实现，设计已存在。</p>
+      </div>
+    </section>
+
+    <!-- ============ 转盘 ============ -->
+    <section class="module" id="wheel">
+      <div class="mod-head">
+        <span class="tag" style="background:var(--deep)">深海</span>
+        <h2>转盘模块</h2>
+        <span class="verdict" style="color:var(--bad);font-weight:700">🔴 判退役 · 直接干掉</span>
+      </div>
+      <p class="mod-note"><b>定位：</b>抽奖形式在深海已用太多（转盘 + 开箱连锁 + 大富翁罗盘连锁三套），转盘需求真空、六代换皮原地踏步——不改造，直接换形式。</p>
+
+      <article class="prob">
+        <span class="pnum" style="background:var(--bad)">核心问题</span>
+        <h3>需求真空：封顶后无人买、零 BUG 反馈</h3>
+        <p class="oneline">最变态的一点——<b>逐档买光封顶后没人继续买、也没人提 BUG</b>：不是买光墙拦住需求，是<b>连"想多抽"的需求都没有了</b>；抽奖形式用太多、审美疲劳。</p>
+        <div class="grid">
+          <figure class="figbox">
+            <div class="lbl"><span class="pill real">实机图</span>深海罗盘主界面（8宫格轮盘 + 额外奖励累计 + 双榜）</div>
+            <img src="assets/wheel_main.png" alt="深海罗盘转盘主界面">
+            <figcaption>大奖 = 深海猎手潜艇行军皮（15065）</figcaption>
+          </figure>
+          <figure class="figbox">
+            <div class="lbl"><span class="pill data">数据图</span>转盘三件全部封顶 / 零购买（占深海仅 23%）</div>
+            <svg viewBox="0 0 440 175" role="img" style="width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;">
+              <text x="80" y="46" fill="#9aa7b4" font-size="10" text-anchor="end">连锁</text>
+              <rect x="88" y="32" width="320" height="24" rx="3" fill="#4691e8"/>
+              <text x="95" y="48" fill="#fff" font-size="9.5">$6,442 · 137人 · 复购2.1 · Top 封顶$585</text>
+              <text x="80" y="86" fill="#9aa7b4" font-size="10" text-anchor="end">BP线</text>
+              <rect x="88" y="72" width="304" height="24" rx="3" fill="#4691e8" opacity="0.75"/>
+              <text x="95" y="88" fill="#fff" font-size="9.5">$6,116 · 239人 · max$30 硬封顶</text>
+              <text x="80" y="126" fill="#9aa7b4" font-size="10" text-anchor="end">锚点</text>
+              <rect x="88" y="112" width="4" height="24" rx="1" fill="#e5534b"/>
+              <text x="98" y="128" fill="#e5534b" font-size="9.5">$0 · 13 天零购买</text>
+              <text x="88" y="160" fill="#d9a441" font-size="11" font-weight="700">转盘合计 $12.6k = 深海付费 23%</text>
+              <text x="292" y="160" fill="#6b7684" font-size="9.5">（大富翁 50%）· 六代抽奖横盘 $33–48</text>
+            </svg>
+            <figcaption>连锁撞 $585 墙 / BP 封 $30 / 锚点零购买——三条路全堵死</figcaption>
+          </figure>
+        </div>
+        <div class="detail">
+          <div class="lbl">详细说明</div>
+          <p>六代抽奖人均 ARPPU 横盘 <b>$33–48</b>（尼罗转盘 $33 / 深海转盘 $44），换皮六代形式没变、指标原地踏步；转盘只占深海付费 23%（大富翁 50%）。<b>判退役坐实。</b></p>
+        </div>
+        <div class="sol">
+          <div class="lbl">解决方案 · 干掉转盘，换「外圈内圈」</div>
+          <p><b>直接干掉转盘</b>，替换为<b>「外圈内圈」抽奖形式，新增主城皮肤（岛屿皮肤）版本</b>作大奖载体；<b>行军特效暂不动</b>（现潜艇行军皮保留观察）；<b>海域排名（本服榜）暂时删掉</b>。</p>
+          <div style="margin-top:12px;background:#12241a;border:1px solid #1f5130;border-radius:8px;padding:11px 14px;">
+            <div style="font-size:12px;font-weight:700;color:#7ee0a0;margin-bottom:5px;">外圈内圈依据 · P2 2024 圣诞 GACHA 模板</div>
+            <div style="font-size:13px;color:var(--tx2);line-height:1.8;">1,447 买家 / 人均 $153.6 / max $8,219 / 溢出率 25.4%；<b>外圈随机 $19.99 走量入口 + 内圈固定 $99.99 收鲸</b>——比转盘"逐档限购封顶"多一条<b>可复购的深度通道</b>（封顶不再拦鲸鱼），主城皮肤当外圈内圈的皮肤大奖。</div>
+          </div>
+        </div>
+      </article>
+
+      <div class="dropped">
+        <p><b>配套（并入退役一起删）：</b><span class="x">删除 ·</span> 藏宝图锚点 13021-24 十三天零购买（纯价格锚）；<span class="x">删除 ·</span> 转盘 BP 线 max$30 硬封顶（有广度无深度）——两者随转盘形式一起退役。</p>
+      </div>
+    </section>
+
+    <!-- ============ 装饰 ============ -->
+    <section class="module" id="decoration">
+      <div class="mod-head">
+        <span class="tag" style="background:var(--deep)">深海</span>
+        <h2>装饰阶梯礼包</h2>
+        <span class="verdict">🟡 断档是形式常态 · 非深海缺陷</span>
+      </div>
+      <p class="mod-note"><b>定位：</b>深海「宽度货架」层，盘子天生小；提升靠外显内容更"想要"，不靠调机制 / 降价。</p>
+
+      <article class="prob">
+        <span class="pnum" style="background:var(--warn);color:#0d1117">问题</span>
+        <h3>阶梯断档，但差的是产品不是机制</h3>
+        <p class="oneline">$19.99×3 阶梯，档2/档3 掉到 48%/28%——<b>断档是所有同价阶梯链的常态</b>（深海不比同行差）；真正差距是<b>产品定位</b>：同样 $19.99×3，海妖破冰 2,463 人 vs 深海装饰 46 人（53×）。</p>
+        <div class="grid">
+          <figure class="figbox">
+            <div class="lbl"><span class="pill real">实机图</span>深海居所特惠 · 三档 $19.99 阶梯</div>
+            <img src="assets/decoration.png" alt="深海居所特惠 装饰阶梯礼包">
+            <figcaption>档1/2/3 各 $19.99（阶梯解锁）</figcaption>
+          </figure>
+          <figure class="figbox">
+            <div class="lbl"><span class="pill data">数据图</span>四条同价 $19.99×3 链留存对标（深海在中间）</div>
+            <svg viewBox="0 0 440 205" role="img" style="width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;">
+              <!-- legend -->
+              <rect x="150" y="10" width="10" height="9" fill="#6aa9e8"/><text x="164" y="18" fill="#9aa7b4" font-size="9">档2留存</text>
+              <rect x="235" y="10" width="10" height="9" fill="#2f6fc0"/><text x="249" y="18" fill="#9aa7b4" font-size="9">档3留存</text>
+              <line x1="40" y1="170" x2="420" y2="170" stroke="#2a3441" stroke-width="1"/>
+              <text x="36" y="60" fill="#6b7684" font-size="8.5" text-anchor="end">60%</text>
+              <text x="36" y="120" fill="#6b7684" font-size="8.5" text-anchor="end">30%</text>
+              <text x="36" y="173" fill="#6b7684" font-size="8.5" text-anchor="end">0</text>
+              <!-- 夏日 54/42 -->
+              <rect x="62" y="44" width="20" height="126" fill="#6aa9e8"/><rect x="84" y="72" width="20" height="98" fill="#2f6fc0"/>
+              <text x="73" y="40" fill="#9aa7b4" font-size="8.5" text-anchor="middle">54</text><text x="95" y="68" fill="#9aa7b4" font-size="8.5" text-anchor="middle">42</text>
+              <!-- 尼罗 40/33 -->
+              <rect x="152" y="77" width="20" height="93" fill="#6aa9e8"/><rect x="174" y="93" width="20" height="77" fill="#2f6fc0"/>
+              <text x="163" y="73" fill="#9aa7b4" font-size="8.5" text-anchor="middle">40</text><text x="185" y="89" fill="#9aa7b4" font-size="8.5" text-anchor="middle">33</text>
+              <!-- 深海 48/28 高亮 -->
+              <rect x="242" y="58" width="20" height="112" fill="#d9a441"/><rect x="264" y="105" width="20" height="65" fill="#a8791f"/>
+              <text x="253" y="54" fill="#e0b45a" font-size="8.5" text-anchor="middle">48</text><text x="275" y="101" fill="#e0b45a" font-size="8.5" text-anchor="middle">28</text>
+              <!-- 海妖破冰 38/28 -->
+              <rect x="332" y="81" width="20" height="89" fill="#6aa9e8"/><rect x="354" y="105" width="20" height="65" fill="#2f6fc0"/>
+              <text x="343" y="77" fill="#9aa7b4" font-size="8.5" text-anchor="middle">38</text><text x="365" y="101" fill="#9aa7b4" font-size="8.5" text-anchor="middle">28</text>
+              <!-- x labels -->
+              <text x="83" y="184" fill="#9aa7b4" font-size="9" text-anchor="middle">夏日装饰</text>
+              <text x="173" y="184" fill="#9aa7b4" font-size="9" text-anchor="middle">尼罗装饰</text>
+              <text x="263" y="184" fill="#e0b45a" font-size="9" text-anchor="middle" font-weight="700">深海装饰</text>
+              <text x="353" y="184" fill="#9aa7b4" font-size="9" text-anchor="middle">海妖破冰</text>
+              <text x="230" y="200" fill="#7ee0a0" font-size="9.5" text-anchor="middle">深海坐中间=机制没毛病；海妖破冰同价却 2,463人 vs 深海46人(53×)=差产品不差机制</text>
+            </svg>
+            <figcaption>断档是四链通病；人数 53× 差距来自"卖养成刚需 vs 卖锦上添花外显"</figcaption>
+          </figure>
+        </div>
+        <div class="detail">
+          <div class="lbl">详细说明</div>
+          <p>四条同价 $19.99×3 链档2/档3 留存：夏日 54%/42%、尼罗 40%/33%、深海 48%/28%、海妖破冰 38%/28%——深海坐在中间，<b>机制没问题</b>。海妖破冰同机制却 53× 人数，因它卖<b>英雄养成刚需</b>；装饰是<b>锦上添花外显</b>，盘子小是产品天性。</p>
+        </div>
+        <div class="sol">
+          <div class="lbl">解决方案（用户 2026-07-22 定）</div>
+          <p>· <b>短期：每档做不同装饰</b>——照夏日（夏日多款家具、留存 54/42% &gt; 深海 48/28%；深海三档同一件椰风椅是留存低的原因之一）<br>· <b>长期：做装饰升级系统</b>——逐档解锁升级款外显，把阶梯从"买 3 份资源"变成"升 1 件外显"，让买下一档有外显获得感。</p>
+          <p class="side" style="margin-top:8px;">放量靠内容更想要，别指望调机制 / 降价。⚠️别拿海妖递进连锁（604·$2.99起）当对标（混了价格 + 产品两个变量）。</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============ 累充 ============ -->
+    <section class="module" id="recharge">
+      <div class="mod-head">
+        <span class="tag" style="background:var(--deep)">深海</span>
+        <h2>累充</h2>
+        <span class="verdict" style="color:var(--warn);font-weight:700">🕒 待定（次级杠杆·先放）</span>
+      </div>
+      <p class="mod-note"><b>定位：</b>累计充值送奖的长线钩子，但高档奖励全是纯资源返利、没有独占目标，深档没人够得着。</p>
+
+      <article class="prob">
+        <span class="pnum">问题</span>
+        <h3>高档"有档无钩"，深档无人到达</h3>
+        <p class="oneline">$1 = 10 积分，档位一路铺到 $2000，但<b>高档奖励全是纯资源（珍珠贝 + 罗盘）、无独占外显钩子</b>——到 $700 档仅 12 人，<b>≥$1000 顶 4 档 0 购买</b>。</p>
+        <div class="grid">
+          <figure class="figbox">
+            <div class="lbl"><span class="pill real">实机图</span>深海累充 · 各档奖励全是珍珠贝+罗盘</div>
+            <img src="assets/ds_recharge.png" alt="深海累充">
+            <figcaption>100/400/1000/2000/4000… 积分档，奖励纯资源</figcaption>
+          </figure>
+          <figure class="figbox">
+            <div class="lbl"><span class="pill data">数据图</span>累充到达各档人数（768 人参与）</div>
+            <svg viewBox="0 0 420 185" role="img" style="width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;">
+              <line x1="40" y1="150" x2="410" y2="150" stroke="#2a3441" stroke-width="1"/>
+              <!-- bars max74, h=persons*1.62, base150 -->
+              <rect x="58" y="30" width="46" height="120" fill="#4691e8"/><text x="81" y="24" fill="#9aa7b4" font-size="9" text-anchor="middle">74</text>
+              <rect x="128" y="82" width="46" height="68" fill="#4691e8"/><text x="151" y="76" fill="#9aa7b4" font-size="9" text-anchor="middle">42</text>
+              <rect x="198" y="110" width="46" height="40" fill="#4691e8"/><text x="221" y="104" fill="#9aa7b4" font-size="9" text-anchor="middle">25</text>
+              <rect x="268" y="140" width="46" height="10" fill="#d9a441"/><text x="291" y="134" fill="#d9a441" font-size="9" text-anchor="middle">6</text>
+              <rect x="338" y="147" width="46" height="3" fill="#e5534b"/><text x="361" y="141" fill="#e5534b" font-size="9" text-anchor="middle">0</text>
+              <text x="81" y="163" fill="#6b7684" font-size="8.5" text-anchor="middle">$100</text>
+              <text x="151" y="163" fill="#6b7684" font-size="8.5" text-anchor="middle">$200</text>
+              <text x="221" y="163" fill="#6b7684" font-size="8.5" text-anchor="middle">$400</text>
+              <text x="291" y="163" fill="#d9a441" font-size="8.5" text-anchor="middle">$700</text>
+              <text x="361" y="163" fill="#e5534b" font-size="8.5" text-anchor="middle">≥$1000</text>
+              <text x="291" y="128" fill="#d9a441" font-size="8" text-anchor="middle">-76%塌</text>
+              <text x="361" y="128" fill="#e5534b" font-size="8" text-anchor="middle">顶4档全0</text>
+              <text x="225" y="180" fill="#7ee0a0" font-size="9.5" text-anchor="middle">档位铺到$2000，但$700后没人来——铺了档位没铺"想要的东西"</text>
+            </svg>
+            <figcaption>到达人数 $100:74→$200:42→$400:25→$700:6→≥$1000:0</figcaption>
+          </figure>
+        </div>
+        <div class="detail">
+          <div class="lbl">详细说明</div>
+          <p>卡点缺的是<b>独占目标</b>不是资源返利——档位一路铺到 $2000，奖励却全是珍珠贝/罗盘纯返利，深充玩家没有够得着的"想要的东西"。</p>
+        </div>
+        <div class="sol" style="background:#221a12;border-color:#4a3a1a;">
+          <div class="lbl" style="color:var(--warn);">解决方案 · 🕒 先待定</div>
+          <p><b>累充暂不动。</b>"高档换独占外显"是可选优化，但<b>主矛盾不在累充这种次级返利杠杆，在核心付费活动本身冲击力不够</b>（大富翁 / 开箱 / 新形式的吸引力）——核心活动的冲击力提上来、深充玩家有真正想买的东西之后，累充高档再回看。<span class="side">（备选方案留档：$700/$1000/$1600/$2000 档纯资源换该档独占外显。）</span></p>
+          <p class="side" style="margin-top:6px;">✅ 例外：开箱 $500 断崖修复的 <b style="color:var(--tx2)">$500 档 → 行军皮肤自选宝箱</b> 恰落在累充 $500 档位置，但属<b style="color:var(--tx2)">开箱核心动作、要做</b>（见 <a href="#gacha" style="color:var(--warn)">开箱模块</a>）；此处待定的仅是累充自身高档纯返利优化。</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============ 深海·保持/观察类 ============ -->
+    <section class="module" id="ds-keep">
+      <div class="mod-head">
+        <span class="tag" style="background:var(--deep)">深海</span>
+        <h2>保持 / 观察类</h2>
+        <span class="verdict">🟢🟡⚪ 不改造，保持或下节再评估</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;">
+        <!-- 每日礼包 -->
+        <div class="prob" style="margin-top:0;border-left:3px solid var(--good);">
+          <div style="font-size:15px;font-weight:700;color:var(--good);margin-bottom:8px;">🟢 每日礼包 · 保留</div>
+          <img src="assets/ds_daily.png" alt="每日礼包" style="width:100%;border:1px solid var(--line);border-radius:6px;max-height:260px;object-fit:contain;background:#000;">
+          <p style="font-size:12.5px;color:var(--tx2);margin:9px 0 0;"><b>最健康形态，继续保留</b>——$4.99×5 低价入口，256 买家、自窗付费率 18%（全场最好），40% 走到第 5 日、99 人买全。买全终奖 BUG（X3NEW-1829）已修，正常发放。</p>
+        </div>
+        <!-- 周卡 -->
+        <div class="prob" style="margin-top:0;border-left:3px solid var(--warn);">
+          <div style="font-size:15px;font-weight:700;color:var(--warn);margin-bottom:8px;">🟡 周卡 · 下节再评估</div>
+          <img src="assets/ds_weekcard.png" alt="周卡" style="width:100%;border:1px solid var(--line);border-radius:6px;max-height:260px;object-fit:contain;background:#000;">
+          <p style="font-size:12.5px;color:var(--tx2);margin:9px 0 0;"><b>本次不具代表性</b>——晚开 6 天（随客户端包）、无新内容，自窗付费率 5.1%、$49.99 全包吃 55% 收入。<b>下个节日跟第二个主要模块一起上线再评估</b>，本届仅观察。</p>
+        </div>
+        <!-- 拜访 -->
+        <div class="prob" style="margin-top:0;border-left:3px solid var(--tx3);">
+          <div style="font-size:15px;font-weight:700;color:var(--tx2);margin-bottom:8px;">⚪ 拜访 · 保持</div>
+          <img src="assets/ds_visit.png" alt="拜访" style="width:100%;border:1px solid var(--line);border-radius:6px;max-height:260px;object-fit:contain;background:#000;">
+          <p style="font-size:12.5px;color:var(--tx2);margin:9px 0 0;"><b>这个形式就这样保持</b>——$99.99 门头三件套是高价外显单档固有形态，28 大R 买断＝预期内（非缺陷）；免费拜访玩法拉活跃，各司其职。</p>
+        </div>
+      </div>
+      <p class="mod-note" style="margin-top:16px;"><b>签到 / 酒馆任务（一句带过·均功能健康免费向）：</b>签到 D0 1.8万（≈付费 10×）、两期结构 7/10 回弹；酒馆任务跨服每阶段 4-6k 人、7 阶段完成率均值 70%——都是拉活跃的免费盘，设计健康，不列优化。</p>
+    </section>
+
+    <!-- ============ 开箱 ============ -->
+    <section class="module" id="gacha">
+      <div class="mod-head">
+        <span class="tag" style="background:var(--wc)">世界杯</span>
+        <h2>开箱模块</h2>
+        <span class="verdict">🟡 本体稳 · 有钩没梯（核心付费·冲击力不足）</span>
+      </div>
+      <p class="mod-note"><b>定位：</b>世界杯<b>核心付费活动</b>，本体超预期稳（开箱合并·连锁+锚点：$20,662 / 393人 / 复购4.5 / max$1,415）；但头部深度不够——<b>"有钩没梯"正是"核心付费活动冲击力不足"的核心体现</b>。</p>
+
+      <article class="prob">
+        <span class="pnum" style="background:var(--warn);color:#0d1117">问题 1</span>
+        <h3>有钩没梯：皮肤大奖有钩子，$500 后没阶梯</h3>
+        <p class="oneline">首次把皮肤大奖挂进开箱奖池（钩子有了），但<b>没有付费阶梯</b>——玩家走到 $300 还有 5.2%、<b>$500 骤降 0.8%</b>，头部只 1 个 $1,415 极值，货架在 $500 断了。</p>
+        <div class="grid">
+          <figure class="figbox">
+            <div class="lbl"><span class="pill real">实机图</span>World Cup Chest（皮肤大奖 + 排行榜 + 累计条）</div>
+            <img src="assets/wc_gacha.png" alt="世界杯开箱">
+            <figcaption>皮肤大奖=足球宝贝 Alicia（首进开箱奖池）</figcaption>
+          </figure>
+          <figure class="figbox">
+            <div class="lbl"><span class="pill data">数据图</span>付费转化率 X3开箱 vs P2圣诞（$500 断崖）</div>
+            <svg viewBox="0 0 420 200" role="img" style="width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;">
+              <line x1="150" y1="12" x2="168" y2="12" stroke="#c08a17" stroke-width="2.5"/><text x="172" y="16" fill="#9aa7b4" font-size="9">X3 开箱</text>
+              <line x1="255" y1="12" x2="273" y2="12" stroke="#a06be8" stroke-width="2.5"/><text x="277" y="16" fill="#9aa7b4" font-size="9">P2 圣诞外圈内圈</text>
+              <line x1="44" y1="30" x2="44" y2="170" stroke="#2a3441" stroke-width="1"/>
+              <line x1="44" y1="170" x2="405" y2="170" stroke="#2a3441" stroke-width="1"/>
+              <text x="40" y="34" fill="#6b7684" font-size="8.5" text-anchor="end">16%</text>
+              <text x="40" y="103" fill="#6b7684" font-size="8.5" text-anchor="end">8%</text>
+              <text x="40" y="173" fill="#6b7684" font-size="8.5" text-anchor="end">0</text>
+              <!-- X3: 200:8.0 300:5.2 500:0.8 -->
+              <polyline points="90,100 230,125 370,163" fill="none" stroke="#c08a17" stroke-width="2.4"/>
+              <circle cx="90" cy="100" r="3" fill="#c08a17"/><circle cx="230" cy="125" r="3" fill="#c08a17"/><circle cx="370" cy="163" r="3.5" fill="#c08a17"/>
+              <text x="90" y="94" fill="#c08a17" font-size="9" text-anchor="middle">8.0%</text>
+              <text x="230" y="119" fill="#c08a17" font-size="9" text-anchor="middle">5.2%</text>
+              <text x="374" y="158" fill="#e5534b" font-size="9">0.8%</text>
+              <!-- P2: 200:15.3 300:9.5 500:4.6 -->
+              <polyline points="90,36 230,87 370,130" fill="none" stroke="#a06be8" stroke-width="2.4"/>
+              <circle cx="90" cy="36" r="3" fill="#a06be8"/><circle cx="230" cy="87" r="3" fill="#a06be8"/><circle cx="370" cy="130" r="3" fill="#a06be8"/>
+              <text x="90" y="31" fill="#a06be8" font-size="9" text-anchor="middle">15.3%</text>
+              <text x="370" y="124" fill="#a06be8" font-size="9" text-anchor="middle">4.6%</text>
+              <text x="90" y="184" fill="#6b7684" font-size="9" text-anchor="middle">≥$200</text>
+              <text x="230" y="184" fill="#6b7684" font-size="9" text-anchor="middle">≥$300</text>
+              <text x="370" y="184" fill="#6b7684" font-size="9" text-anchor="middle">≥$500</text>
+              <text x="300" y="150" fill="#e5534b" font-size="9" font-weight="700">$300→$500</text>
+              <text x="300" y="161" fill="#e5534b" font-size="8.5">X3 -85%塌 / P2 -52%</text>
+            </svg>
+            <figcaption>玩家走得到 $200-300、走不过 $500——不是不肯花，是没目标（P2 有梯子就平滑对折）</figcaption>
+          </figure>
+        </div>
+        <div class="detail">
+          <div class="lbl">详细说明</div>
+          <p>三代开箱 ARPPU 横盘（$54/48/52）、分布形状高度重合、$100+ 中层 WC 不高于前代；皮肤大奖只产生 1 个 $1,415 极值，p99 到 P2 上榜线（$1,444）之间<b>缺台阶</b>。本体没被竞猜挤压、可继续开，但<b>头部冲击力＝有钩没梯</b>。</p>
+        </div>
+        <div class="sol">
+          <div class="lbl">解决方案 · 补 $500 梯子（皮肤开箱优化方案 v1 · 模块C 一期）</div>
+          <p><b>★核心动作（促玩家往后转化）：累计新增 $500 档位（5000 积分＝$500，$1=10积分）→ 投「行军皮肤自选宝箱」</b>——存量老行军皮 N 选 1，高辨识度 4-6 款（如深海猎手潜艇 15065），<b>新美术零</b>。</p>
+          <p style="margin-top:6px;">机制：现状走到 $500 的人<b>已拿到开箱皮肤大奖＝终点</b>、没动力继续（累充$400/$700档发的是纯券·有档无钩）；$500 档皮肤把"拿到皮肤"从<b>终点变中间站</b>，接住 $300→$500 断崖。<b>验证指标＝$300→$500 斜率从 -85% 回归 -40% 常数带</b>；预期 $500 档 ~25 人起步 →（二期）$700/$1000 换外显后 15/10 人（现状 6/2 人，翻 2-5 倍）。</p>
+          <div style="margin-top:10px;background:#221a12;border:1px solid #4a3a1a;border-radius:8px;padding:10px 13px;font-size:12.5px;color:var(--tx2);">
+            <b style="color:var(--warn)">配套（同期/后续）：</b>模块A 随机礼包双轨（$19.99/49.99/99.99 每日限购·接 $200-500 流失带）；模块B 外显直售（头像框$9.99+表情$19.99·通用零开发）；本服榜加有效投放。皮肤<b>照旧一节一款、不做降级</b>；一期只做 $500 档，二期＝$700/$1000 纯券也换配套外显（行军特效/头像框）。
+          </div>
+          <p class="side" style="margin-top:8px;">⚠️ 与"累充待定"的区分：这个 $500 档是 <b>开箱 $500 断崖的核心冲击力动作</b>（恰好落在累充 $500 档位置），<b>要做</b>；待定的是累充<b>自身</b>高档纯返利换外显的泛优化。MVP 待定项＝自选宝箱行军皮池子（N 选几款）。方案 v1 全文＝<code>KB\产出-数值设计\X3_皮肤开箱优化\</code>。</p>
+        </div>
+      </article>
+
+      <article class="prob">
+        <span class="pnum" style="background:var(--warn);color:#0d1117">问题 2</span>
+        <h3>本服排行榜效果有限</h3>
+        <p class="oneline">本服排行榜（海域榜）有露出但<b>投放吸引力不足</b>——窗口 2 倍长，每服 top1 中位仅 $60 &lt; 夏日 $75、服均持平。</p>
+        <div class="detail" style="margin-top:14px;">
+          <div class="lbl">详细说明 + 方向</div>
+          <p>前置已解除（客户端本服 Tab 确有露出），是投放吸引力问题非"没上线"。方向＝<b>调整投放</b>（榜奖吸引力 / 门槛 / 皮肤分层），与模块C双层排行榜一起做。</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============ 竞猜 ============ -->
+    <section class="module" id="bet">
+      <div class="mod-head">
+        <span class="tag" style="background:var(--wc)">世界杯</span>
+        <h2>竞猜模块</h2>
+        <span class="verdict" style="color:var(--good)">✅ 符合预期 · 流量形式非售卖形式</span>
+      </div>
+      <p class="mod-note"><b>定位：</b>拉人 / 活跃模块，不是售卖形式；节日盘内份额 7.2% ≈ P2 ~7%（收入占比口径·及格）。变现转化低是<b>形式天性、非缺陷</b>。</p>
+
+      <article class="prob">
+        <span class="pnum" style="background:var(--warn);color:#0d1117">问题（非缺陷）</span>
+        <h3>变现转化断层：13,348 人参与只 1.2% 付费</h3>
+        <p class="oneline">竞猜把 <b>13,348 人拉进赛事循环</b>（触达超预期），但<b>参与→付费只 1.2%（161 人）</b>——缺"参与→付费"的中间层；这是流量形式的天性。</p>
+        <div class="grid">
+          <figure class="figbox">
+            <div class="lbl"><span class="pill real">实机图</span>免费预测（猜对赢券）+ 付费档 $9.99（8强·加送60券）</div>
+            <img src="assets/bet_free.png" alt="世界杯竞猜免费预测">
+            <figcaption>免费下注钩子 + 可选付费加成包（$4.99/9.99/19.99）</figcaption>
+          </figure>
+          <figure class="figbox">
+            <div class="lbl"><span class="pill data">数据图</span>竞猜漏斗（曝光 → 参与 → 付费）</div>
+            <svg viewBox="0 0 420 165" role="img" style="width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;">
+              <text x="100" y="42" fill="#9aa7b4" font-size="10" text-anchor="end">曝光</text>
+              <rect x="108" y="28" width="292" height="26" rx="3" fill="#c08a17"/>
+              <text x="254" y="46" fill="#0d1117" font-size="10" text-anchor="middle" font-weight="700">43,179 · 100%</text>
+              <text x="100" y="86" fill="#9aa7b4" font-size="10" text-anchor="end">参与</text>
+              <rect x="108" y="72" width="91" height="26" rx="3" fill="#e0b45a"/>
+              <text x="205" y="90" fill="#9aa7b4" font-size="10">13,348 · 31%</text>
+              <text x="100" y="130" fill="#9aa7b4" font-size="10" text-anchor="end">付费</text>
+              <rect x="108" y="116" width="6" height="26" rx="2" fill="#e5534b"/>
+              <text x="120" y="134" fill="#e5534b" font-size="10">161 · 1.2%</text>
+              <text x="230" y="158" fill="#7ee0a0" font-size="9.5" text-anchor="middle">断层在参与→付费（31%→1.2%）；免费券 21万张≈付费收入 7.5 倍（ROI 偏高）</text>
+            </svg>
+            <figcaption>付费率 4.4%（÷窗口付费玩家）/ ARPPU $44 / 复购 4.1（全场最高）/ 外显两档吃 81%</figcaption>
+          </figure>
+        </div>
+        <div class="detail">
+          <div class="lbl">详细说明</div>
+          <p>竞猜 $7,028 / 161 人 vs 参与 13,348 人（3.2 倍）＝<b>触达超预期、变现不达</b>；复购 4.1 全场最高（事件驱动天然多次）、外显档占 81%。定位＝<b>把人拉进赛事循环</b>，变现靠外显搭售，13k 参与者是全场最大未转化流量池。</p>
+        </div>
+        <div class="sol">
+          <div class="lbl">结论 / 方向（用户钉版·符合预期不大改）</div>
+          <p>① <b>免费档保留，但 ROI 拉到最低</b>（本次偏高 7.5×）——免费供给够玩整届即可，别过量<br>② <b>正向 SKU 三要素＝通用元素 + 限定感强 + ROI 高</b>（冠军外显＝通用+强限定实证；$4.99 入门档＝低价高确定性）；<b>国家定制头像框基本无用</b>（付费跟"奖励/ROI"走，不跟国家换皮走）<br>③ <b>竞猜＝世界杯限定，不可常态复用</b>——这块"还能挖的额外付费空间"后续<b>换其他形式承接</b>（限时抢购 / 扭蛋机 / 皮肤开箱三模块）</p>
+          <p class="side" style="margin-top:8px;">人群无足球狂热（参与结构≈活跃基线）、RU 有所排斥（没进世界杯）、付费向英语区；参与追热闹、付费追确定性（悬殊局集中，决赛光环例外）。⚠️ P2 只比收入占比（人群不同），跨人群倍率不作结论。</p>
+        </div>
+      </article>
+    </section>
+
+
+  </main>
+</div>
+</body>
+</html>

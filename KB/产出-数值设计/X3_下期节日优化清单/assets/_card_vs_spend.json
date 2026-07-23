@@ -1,0 +1,72 @@
+[
+ {
+  "bkt": "a (0,10]",
+  "users": 158,
+  "tot_spend": 939.0,
+  "avg_spend": 5.9,
+  "tot_paid_cards": 0,
+  "avg_paid_cards": 0.0,
+  "tot_got_cards": 58,
+  "avg_got_cards": 0.37
+ },
+ {
+  "bkt": "b (10,30]",
+  "users": 256,
+  "tot_spend": 5990.0,
+  "avg_spend": 23.4,
+  "tot_paid_cards": 0,
+  "avg_paid_cards": 0.0,
+  "tot_got_cards": 348,
+  "avg_got_cards": 1.36
+ },
+ {
+  "bkt": "c (30,50]",
+  "users": 77,
+  "tot_spend": 3343.0,
+  "avg_spend": 43.4,
+  "tot_paid_cards": 3,
+  "avg_paid_cards": 0.04,
+  "tot_got_cards": 177,
+  "avg_got_cards": 2.3
+ },
+ {
+  "bkt": "d (50,100]",
+  "users": 70,
+  "tot_spend": 4929.0,
+  "avg_spend": 70.4,
+  "tot_paid_cards": 8,
+  "avg_paid_cards": 0.11,
+  "tot_got_cards": 205,
+  "avg_got_cards": 2.93
+ },
+ {
+  "bkt": "e (100,200]",
+  "users": 31,
+  "tot_spend": 4109.0,
+  "avg_spend": 132.6,
+  "tot_paid_cards": 25,
+  "avg_paid_cards": 0.81,
+  "tot_got_cards": 144,
+  "avg_got_cards": 4.65
+ },
+ {
+  "bkt": "f (200,500]",
+  "users": 14,
+  "tot_spend": 4726.0,
+  "avg_spend": 337.6,
+  "tot_paid_cards": 53,
+  "avg_paid_cards": 3.79,
+  "tot_got_cards": 213,
+  "avg_got_cards": 15.21
+ },
+ {
+  "bkt": "g (500+)",
+  "users": 4,
+  "tot_spend": 2830.0,
+  "avg_spend": 707.6,
+  "tot_paid_cards": 48,
+  "avg_paid_cards": 12.0,
+  "tot_got_cards": 85,
+  "avg_got_cards": 21.25
+ }
+]

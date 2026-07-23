@@ -1,0 +1,87 @@
+{
+ "all": 861,
+ "pay": 265,
+ "free": 596,
+ "dist": [
+  {
+   "k": "1",
+   "all_u": 544,
+   "all_pct": 63.2,
+   "pay_u": 116,
+   "pay_pct": 43.8,
+   "free_pct": 71.8
+  },
+  {
+   "k": "2",
+   "all_u": 133,
+   "all_pct": 15.4,
+   "pay_u": 40,
+   "pay_pct": 15.1,
+   "free_pct": 15.6
+  },
+  {
+   "k": "3",
+   "all_u": 82,
+   "all_pct": 9.5,
+   "pay_u": 31,
+   "pay_pct": 11.7,
+   "free_pct": 8.6
+  },
+  {
+   "k": "4",
+   "all_u": 16,
+   "all_pct": 1.9,
+   "pay_u": 6,
+   "pay_pct": 2.3,
+   "free_pct": 1.7
+  },
+  {
+   "k": "5",
+   "all_u": 21,
+   "all_pct": 2.4,
+   "pay_u": 13,
+   "pay_pct": 4.9,
+   "free_pct": 1.3
+  },
+  {
+   "k": "6",
+   "all_u": 13,
+   "all_pct": 1.5,
+   "pay_u": 8,
+   "pay_pct": 3.0,
+   "free_pct": 0.8
+  },
+  {
+   "k": "7",
+   "all_u": 15,
+   "all_pct": 1.7,
+   "pay_u": 15,
+   "pay_pct": 5.7,
+   "free_pct": 0.0
+  },
+  {
+   "k": "8",
+   "all_u": 5,
+   "all_pct": 0.6,
+   "pay_u": 4,
+   "pay_pct": 1.5,
+   "free_pct": 0.2
+  },
+  {
+   "k": "9",
+   "all_u": 5,
+   "all_pct": 0.6,
+   "pay_u": 5,
+   "pay_pct": 1.9,
+   "free_pct": 0.0
+  },
+  {
+   "k": "10+",
+   "all_u": 27,
+   "all_pct": 3.1,
+   "pay_u": 27,
+   "pay_pct": 10.2,
+   "free_pct": 0.0
+  }
+ ]
+}
