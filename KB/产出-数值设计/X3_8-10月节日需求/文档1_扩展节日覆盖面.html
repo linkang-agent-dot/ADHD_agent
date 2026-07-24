@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>文档1 · 核心付费形式规划与排期</title>
+<style>
+  :root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2330;--line:#2a3441;
+    --tx:#e6edf3;--tx2:#9aa7b4;--tx3:#6b7684;--deep:#4691e8;--wc:#c08a17;--frame:#a06be8;
+    --bad:#e5534b;--warn:#d9a441;--good:#3fb950;--solbg:#132b1c;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.7;}
+  main{max-width:1040px;margin:0 auto;padding:34px 46px 120px;}
+  .docnav{max-width:1040px;margin:0 auto;padding:16px 46px 0;font-size:12.5px;color:var(--tx3);}
+  .docnav a{color:var(--tx2);text-decoration:none;margin-right:14px;}
+  .docnav a.cur{color:var(--deep);font-weight:700;}
+  h1{font-size:25px;margin:6px 0 4px;}
+  .sub{color:var(--tx2);font-size:14.5px;margin:0;}
+  .meta{color:var(--tx3);font-size:12.5px;margin-top:8px;}
+  h2{font-size:19px;margin:42px 0 8px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+  h2 .n{color:var(--deep);}
+  p{font-size:14px;color:var(--tx2);margin:0 0 10px;}
+  p b,li b,td b{color:var(--tx);}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;}
+  th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top;}
+  th{background:var(--panel2);color:var(--tx);font-weight:700;}
+  td{color:var(--tx2);}
+  .ev-good{color:var(--good);font-weight:700;} .ev-warn{color:var(--warn);font-weight:700;} .ev-bad{color:var(--bad);font-weight:700;}
+  .src{font-size:11px;color:var(--tx3);}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;color:#0d1117;margin-right:4px;}
+  .t-aug{background:var(--tx3);color:#0d1117;} .t-sep{background:var(--frame);} .t-oct{background:var(--warn);}
+  .new{display:inline-block;font-size:10.5px;font-weight:700;background:var(--good);color:#0d1117;padding:1px 7px;border-radius:10px;}
+  .hold{display:inline-block;font-size:10.5px;font-weight:700;background:var(--warn);color:#0d1117;padding:1px 7px;border-radius:10px;}
+  .core{display:inline-block;font-size:10.5px;font-weight:700;background:var(--wc);color:#0d1117;padding:1px 7px;border-radius:10px;margin-right:5px;}
+  .monthcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 20px 16px;margin:16px 0;}
+  .monthcard h3{font-size:16px;margin:16px 0 4px;}
+  ul{margin:6px 0;padding-left:20px;} li{font-size:13.5px;color:var(--tx2);margin:5px 0;}
+  li .why{color:var(--tx3);font-size:12.5px;}
+  /* gantt */
+  .gantt{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:10px 0 4px;font-size:12.5px;}
+  .gantt .row{display:grid;grid-template-columns:230px repeat(4,1fr);border-bottom:1px solid var(--line);}
+  .gantt .row:last-child{border-bottom:none;}
+  .gantt .row.head{background:var(--panel2);font-weight:700;color:var(--tx);}
+  .gantt .lbl{padding:7px 10px;border-right:1px solid var(--line);color:var(--tx2);}
+  .gantt .wk{border-right:1px solid #202834;position:relative;min-height:30px;}
+  .gantt .wk:last-child{border-right:none;}
+  .gantt .head .wk{padding:7px 10px;color:var(--tx3);font-weight:700;}
+  .bar{position:absolute;top:6px;bottom:6px;left:4px;right:4px;border-radius:5px;}
+  .b-blue{background:#274a72;border:1px solid #3a6ba3;}
+  .b-new{background:#1f5130;border:1px solid #3fb950;}
+  .b-hold{background:#3a2f14;border:1px dashed #d9a441;}
+  .b-core{background:#4a3a12;border:1px solid var(--wc);}
+  .b-supp{background:#232c38;border:1px solid #3a4657;}
+  .grp{font-size:11px;color:var(--tx3);letter-spacing:.5px;margin:14px 0 4px;font-weight:700;}
+  .legend{font-size:12px;color:var(--tx2);margin:6px 0 0;}
+  .legend span{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:middle;margin:0 4px 0 12px;}
+  .note{font-size:12px;color:var(--tx3);margin-top:6px;}
+  .ref{font-size:12px;color:var(--tx3);border-top:1px dashed var(--line);margin-top:40px;padding-top:14px;}
+  .ref a{color:var(--deep);text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="docnav">
+  <a class="cur">1·核心付费形式</a><a>2·外显拉坑深</a><a>3·增形式</a><a>4·四大外显系统</a>
+  <span style="float:right">系列 1/4</span>
+</div>
+<main>
+  <header>
+    <h1>文档1 · 核心付费形式：现状 → 规划 → 排期</h1>
+    <p class="sub">扩展节日覆盖面（新增核心付费形式 + 对应外显）· 8/9/10 月</p>
+    <p class="meta">基于「深海 × 世界杯」双节回归 · 2026-07-24 · 系列 1/4</p>
+  </header>
+
+  <!-- ===== 现状 ===== -->
+  <h2><span class="n">一、</span>现状：核心付费模块只有 3 个</h2>
+  <p><b>目前能独立扛节日收入的核心付费模块只有开箱、大富翁、转盘这 3 个</b>；其余（竞猜/BP/累充/纪念卡/装饰/每日/周卡/拜访）是辅助货架、流量或外显层。<b>扩覆盖面 = 在这 3 个之外再加能独立扛收入的新核心模块</b>（内外墙抽奖 / 挖孔）。</p>
+  <table>
+    <tr><th style="width:22%">核心付费模块</th><th style="width:46%">评价（回归结论）</th><th>一句话处理</th></tr>
+    <tr><td><b>开箱</b>（连锁+锚点）<div class="src">世界杯</div></td><td><span class="ev-warn">本体超预期稳</span>，但"有钩没梯"——皮肤大奖有钩子，$500 后无阶梯、断崖 -85%</td><td>补 <b>$500 档→行军皮肤自选宝箱</b> 接断崖（文档2）</td></tr>
+    <tr><td><b>大富翁</b>（罗盘连锁+成就+BP+存钱罐）<div class="src">深海</div></td><td><span class="ev-good">最成功 $27k 压舱</span>、付费率 34% 新老服通吃，但堆买断件、付费玩家走完成就失去目标</td><td><b>纪念卡3模块</b>接目标 + 价位带填平 + 集市加曝光（文档2/4）</td></tr>
+    <tr><td><b>转盘</b>（连锁+锚点+BP线）<div class="src">深海</div></td><td><span class="ev-bad">需求真空判退役</span>——买光封顶后无人买、零 BUG 反馈，六代横盘 $33–48</td><td><b>干掉，换"内外墙抽奖"</b>（本文档二）</td></tr>
+  </table>
+  <p class="note">其余形式（竞猜/BP/累充/纪念卡/装饰/每日/周卡/拜访、签到·酒馆）为辅助货架/流量/免费向，不属核心付费模块、此表不列。</p>
+
+  <div class="grp">现状排布 · 最近节日（深海 × 世界杯双节，双周）</div>
+  <div class="gantt">
+    <div class="row head"><div class="lbl">形式 / 活动</div><div class="wk">第1周</div><div class="wk">第2周</div><div class="wk">第3周</div><div class="wk">第4周</div></div>
+    <div class="row"><div class="lbl"><span class="core">★</span>大富翁（深海·贯穿全场）</div><div class="wk"><div class="bar b-core"></div></div><div class="wk"><div class="bar b-core"></div></div><div class="wk"></div><div class="wk"></div></div>
+    <div class="row"><div class="lbl"><span class="core">★</span>开箱（世界杯）</div><div class="wk"><div class="bar b-core"></div></div><div class="wk"></div><div class="wk"></div><div class="wk"></div></div>
+    <div class="row"><div class="lbl"><span class="core">★</span>转盘（深海·将退役）</div><div class="wk"></div><div class="wk"><div class="bar b-core"></div></div><div class="wk"></div><div class="wk"></div></div>
+    <div class="row"><div class="lbl">竞猜（流量）</div><div class="wk"><div class="bar b-supp"></div></div><div class="wk"><div class="bar b-supp"></div></div><div class="wk"></div><div class="wk"></div></div>
+    <div class="row"><div class="lbl">通行证 BP（双节各一条）</div><div class="wk"><div class="bar b-supp"></div></div><div class="wk"><div class="bar b-supp"></div></div><div class="wk"></div><div class="wk"></div></div>
+    <div class="row"><div class="lbl">累充 / 纪念卡（集市兑）</div><div class="wk"><div class="bar b-supp"></div></div><div class="wk"><div class="bar b-supp"></div></div><div class="wk"></div><div class="wk"></div></div>
+    <div class="row"><div class="lbl">礼包层（每日/装饰/周卡/拜访）</div><div class="wk"><div class="bar b-supp"></div></div><div class="wk"><div class="bar b-supp"></div></div><div class="wk"></div><div class="wk"></div></div>
+  </div>
+  <p class="legend"><span class="b-core" style="border:1px solid var(--wc)"></span>核心付费模块（仅 3 个）<span class="b-supp" style="border:1px solid #3a4657"></span>辅助 · 货架 · 流量层</p>
+  <p class="note">现状只有 3 个核心付费模块扛收入，其中转盘还判退役——这就是"扩覆盖面"要新加核心模块的起点。</p>
+
+  <!-- ===== 即将上线 ===== -->
+  <h2><span class="n">二、</span>即将规划上线的核心付费形式</h2>
+
+  <div class="monthcard">
+    <h3><span class="tag t-aug">8月 马戏节</span></h3>
+    <ul>
+      <li><span class="new">新增</span> <b>P2 超凡主城 + 内外墙抽奖</b>（搬运）<br>
+        <span class="why">＝外圈内圈抽奖形式：外圈随机 $19.99 走量拉中小R、内圈固定 $99.99 可复购收鲸（模板 P2 2024 圣诞 GACHA：人均 $153.6/max $8,219/溢出 25.4%）；<b>P2 超凡主城皮肤当大奖载体</b>。这是主城皮肤 + 内外墙形式的<b>首次投放，8 月作效果验证</b>，替掉需求真空的转盘。→ 扩覆盖面①</span></li>
+    </ul>
+  </div>
+
+  <div class="monthcard">
+    <h3><span class="tag t-sep">9月 周年狂欢</span></h3>
+    <ul>
+      <li><span class="new">新增</span> <b>P2 挖孔第一版本（形式）+ P2 行军特效</b>（搬运）<br>
+        <span class="why">挖孔＝P2 最强付费单品（单节 $94.5 万级 / 渗透 44% / 顶档人均多单），掉落转付费 + 顶档复购的深度引擎；行军特效＝航迹拖尾外显搬运，成套配挖孔/抽奖大奖。→ 增形式③ + 拉坑深②</span></li>
+      <li><span class="new">新增</span> <b>海妖皮肤系统 &amp; 海妖皮肤抽奖</b>（新内容 + 新系统 + 新皮肤）<br>
+        <span class="why">X3 自研海妖 IP：搭一套海妖皮肤系统 + 专属皮肤抽奖，作周年的新外显深度载体（非搬运，纯新增）。→ 四大系统④ + 拉坑深②</span></li>
+    </ul>
+  </div>
+
+  <div class="monthcard">
+    <h3><span class="tag t-oct">10月 万圣节</span> · 后续待定</h3>
+    <ul>
+      <li><span class="hold">待定</span> <b>P2 弹珠 + 主城皮肤套装系统 + 周年主城</b><br>
+        <span class="why">待 <b>8 月超凡主城 + 内外墙效果验证</b> 后再定：验证成立则弹珠（P2 抽奖形式）扩形式、主城皮肤升级为"套装系统"、补周年主城皮肤。→ ①③④</span></li>
+      <li><span class="hold">待定</span> <b>二游英雄皮肤系统深度优化</b>（皮肤分品质 + 定价拉深度）<br>
+        <span class="why">参考二次元游戏英雄皮肤打法：皮肤分品质分层、按品质定价，把英雄皮肤从"一节一款"做成有深度的付费梯队。→ 拉坑深② + 四大系统④</span></li>
+    </ul>
+  </div>
+
+  <!-- ===== 排期甘特 ===== -->
+  <h2><span class="n">三、</span>排期甘特（新增部分标注）</h2>
+  <p class="legend"><span class="b-blue" style="border:1px solid #3a6ba3"></span>沿用核心形式<span class="b-new" style="border:1px solid #3fb950"></span>本期新增<span class="b-hold" style="border:1px dashed #d9a441"></span>待定（待验证）<span class="b-supp" style="border:1px solid #3a4657"></span>辅助货架层</p>
+  <p class="note">⚠️ 周窗为示意，具体日历日期待排期确认。<b>弹药带节奏</b>：<b>大富翁唯一贯穿全场</b>，其余核心付费<b>一周一个模块</b>轮替上场（每周配套一套外显）；辅助货架层（BP/礼包/累充等）全程常驻。</p>
+
+  <div class="grp">9 月 · 周年狂欢</div>
+  <div class="gantt">
+    <div class="row head"><div class="lbl">形式 / 活动</div><div class="wk">第1周</div><div class="wk">第2周</div><div class="wk">第3周</div><div class="wk">第4周</div></div>
+    <div class="row"><div class="lbl"><span class="core">★</span>大富翁 + 纪念卡3模块（唯一贯穿全场）</div><div class="wk"><div class="bar b-blue"></div></div><div class="wk"><div class="bar b-blue"></div></div><div class="wk"><div class="bar b-blue"></div></div><div class="wk"><div class="bar b-blue"></div></div></div>
+    <div class="row"><div class="lbl">内外墙抽奖（主城皮）</div><div class="wk"><div class="bar b-blue"></div></div><div class="wk"></div><div class="wk"></div><div class="wk"></div></div>
+    <div class="row"><div class="lbl">开箱（$500档→行军皮宝箱）</div><div class="wk"></div><div class="wk"><div class="bar b-blue"></div></div><div class="wk"></div><div class="wk"></div></div>
+    <div class="row"><div class="lbl"><span class="new">新增</span> 挖孔 v1（配行军特效外显）</div><div class="wk"></div><div class="wk"></div><div class="wk"><div class="bar b-new"></div></div><div class="wk"></div></div>
+    <div class="row"><div class="lbl"><span class="new">新增</span> 海妖皮肤抽奖（海妖皮肤系统）</div><div class="wk"></div><div class="wk"></div><div class="wk"></div><div class="wk"><div class="bar b-new"></div></div></div>
+    <div class="row"><div class="lbl">辅助货架层（BP/每日/装饰/累充/周卡/拜访）</div><div class="wk"><div class="bar b-supp"></div></div><div class="wk"><div class="bar b-supp"></div></div><div class="wk"><div class="bar b-supp"></div></div><div class="wk"><div class="bar b-supp"></div></div></div>
+  </div>
+
+  <div class="grp">10 月 · 万圣节</div>
+  <div class="gantt">
+    <div class="row head"><div class="lbl">形式 / 活动</div><div class="wk">第1周</div><div class="wk">第2周</div><div class="wk">第3周</div><div class="wk">第4周</div></div>
+    <div class="row"><div class="lbl"><span class="core">★</span>大富翁 + 纪念卡（唯一贯穿全场）</div><div class="wk"><div class="bar b-blue"></div></div><div class="wk"><div class="bar b-blue"></div></div><div class="wk"><div class="bar b-blue"></div></div><div class="wk"><div class="bar b-blue"></div></div></div>
+    <div class="row"><div class="lbl">内外墙抽奖（主城皮）</div><div class="wk"><div class="bar b-blue"></div></div><div class="wk"></div><div class="wk"></div><div class="wk"></div></div>
+    <div class="row"><div class="lbl">开箱</div><div class="wk"></div><div class="wk"><div class="bar b-blue"></div></div><div class="wk"></div><div class="wk"></div></div>
+    <div class="row"><div class="lbl"><span class="new">新增</span> 挖孔（延续）+ 主城套装1</div><div class="wk"></div><div class="wk"></div><div class="wk"><div class="bar b-new"></div></div><div class="wk"></div></div>
+    <div class="row"><div class="lbl"><span class="new">新增</span> 弹珠（新形式）+ 主城套装2</div><div class="wk"></div><div class="wk"></div><div class="wk"></div><div class="wk"><div class="bar b-new"></div></div></div>
+    <div class="row"><div class="lbl"><span class="hold">待定</span> 二游英雄皮肤深度优化（分品质+定价）</div><div class="wk"><div class="bar b-hold"></div></div><div class="wk"><div class="bar b-hold"></div></div><div class="wk"><div class="bar b-hold"></div></div><div class="wk"><div class="bar b-hold"></div></div></div>
+    <div class="row"><div class="lbl">辅助货架层（BP/每日/装饰/累充/周卡/拜访）</div><div class="wk"><div class="bar b-supp"></div></div><div class="wk"><div class="bar b-supp"></div></div><div class="wk"><div class="bar b-supp"></div></div><div class="wk"><div class="bar b-supp"></div></div></div>
+  </div>
+  <p class="note">10 月新增/升级项全部<b>待 8 月超凡主城 + 内外墙效果验证</b>后拍板；验证不成立则回退沿用核心形式。</p>
+
+  <div class="ref">
+    数据依据：<a href="../../产出-数据分析/X3_深海世界杯_框架回归/深海转盘回归_20260716.html">深海转盘回归（判退役）</a> ·
+    <a href="../../产出-数据分析/X3_深海世界杯_框架回归/世界杯开箱回归_20260716.html">开箱回归（$500断崖）</a> ·
+    <a href="../X3_下期节日优化清单/X3下期节日优化清单.html">下期节日优化清单</a>。
+    P2 弹药参照见 <a href="../../产出-数据分析/X3vsP2_节日付费结构对比/">X3vsP2 付费结构对比</a>（挖孔/内外墙/弹珠弹药库）。<br>
+    关联：文档2（开箱$500梯子/纪念卡高级卡/双层榜）· 文档3（挖孔/弹珠/扭蛋机形式）· 文档4（主城皮肤/海妖皮肤/英雄皮肤/行军皮肤系统）。
+  </div>
+</main>
+</body>
+</html>
