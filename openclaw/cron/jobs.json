@@ -6,7 +6,7 @@
       "name": "旅游攻略汇总推送",
       "enabled": true,
       "createdAtMs": 1774323335662,
-      "updatedAtMs": 1784862630344,
+      "updatedAtMs": 1784948533942,
       "schedule": {
         "kind": "cron",
         "expr": "0 11 * * *",
@@ -24,13 +24,13 @@
         "target": "user:ou_e48f6c4c0395f45b74b51525f348678b"
       },
       "state": {
-        "nextRunAtMs": 1784948400000,
-        "lastRunAtMs": 1784862000017,
+        "nextRunAtMs": 1785034800000,
+        "lastRunAtMs": 1784948400010,
         "lastRunStatus": "error",
         "lastStatus": "error",
-        "lastDurationMs": 630327,
+        "lastDurationMs": 133932,
         "lastDeliveryStatus": "unknown",
-        "consecutiveErrors": 114,
+        "consecutiveErrors": 115,
         "lastError": "Delivering to Feishu requires target <chatId|user:openId|chat:chatId>"
       }
     },
@@ -39,7 +39,7 @@
       "name": "国际机票推送",
       "enabled": true,
       "createdAtMs": 1774326644918,
-      "updatedAtMs": 1784862750979,
+      "updatedAtMs": 1784948620238,
       "schedule": {
         "kind": "cron",
         "expr": "0 11 * * *",
@@ -57,13 +57,13 @@
         "target": "user:ou_e48f6c4c0395f45b74b51525f348678b"
       },
       "state": {
-        "nextRunAtMs": 1784948400000,
-        "lastRunAtMs": 1784862630344,
+        "nextRunAtMs": 1785034800000,
+        "lastRunAtMs": 1784948533942,
         "lastRunStatus": "error",
         "lastStatus": "error",
-        "lastDurationMs": 120635,
+        "lastDurationMs": 86296,
         "lastDeliveryStatus": "unknown",
-        "consecutiveErrors": 98,
+        "consecutiveErrors": 99,
         "lastError": "Delivering to Feishu requires target <chatId|user:openId|chat:chatId>"
       }
     },
@@ -72,7 +72,7 @@
       "name": "Cursor协作规则刷新",
       "enabled": true,
       "createdAtMs": 1774862400000,
-      "updatedAtMs": 1784854806679,
+      "updatedAtMs": 1784941204784,
       "schedule": {
         "kind": "cron",
         "expr": "0 9 * * *",
@@ -90,12 +90,12 @@
         "target": "user:ou_e48f6c4c0395f45b74b51525f348678b"
       },
       "state": {
-        "consecutiveErrors": 21,
-        "nextRunAtMs": 1784941200000,
-        "lastRunAtMs": 1784854800015,
+        "consecutiveErrors": 22,
+        "nextRunAtMs": 1785027600000,
+        "lastRunAtMs": 1784941200030,
         "lastRunStatus": "error",
         "lastStatus": "error",
-        "lastDurationMs": 6664,
+        "lastDurationMs": 4754,
         "lastDeliveryStatus": "unknown",
         "lastError": "Delivering to Feishu requires target <chatId|user:openId|chat:chatId>"
       }

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X3 限时抢购 · 开搞前总览</title>
+<style>
+  :root{--bg:#0f1216;--panel:#171b21;--panel2:#1c2129;--line:#2a313c;
+    --txt:#e6e9ee;--mut:#9aa4b2;--accent:#4ea1ff;--good:#37c98b;--warn:#f5b544;--hot:#ff7a7a;--chip:#232a34;}
+  @media (prefers-color-scheme: light){:root{--bg:#f5f7fa;--panel:#fff;--panel2:#f0f3f7;--line:#dfe4ea;
+    --txt:#1a1f27;--mut:#5b6673;--accent:#1f6fd6;--good:#1a9d68;--warn:#c98a12;--hot:#d64545;--chip:#eef1f5;}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.65 -apple-system,"Segoe UI",Roboto,"Microsoft YaHei",sans-serif;padding:28px}
+  .wrap{max-width:1080px;margin:0 auto}
+  h1{font-size:24px;margin:0 0 4px}
+  h2{font-size:17px;margin:30px 0 10px;border-left:3px solid var(--accent);padding-left:10px}
+  .sub{color:var(--mut);margin:0 0 16px;font-size:13px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .card .k{color:var(--mut);font-size:12px}
+  .card .v{font-size:18px;font-weight:700;margin-top:2px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
+  th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--mut);font-weight:600;font-size:12px}
+  tr:last-child td{border-bottom:none}
+  .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap}
+  .b-good{background:rgba(55,201,139,.16);color:var(--good)}
+  .b-warn{background:rgba(245,181,68,.16);color:var(--warn)}
+  .b-hot{background:rgba(255,122,122,.16);color:var(--hot)}
+  .b-mut{background:var(--chip);color:var(--mut)}
+  .chip{display:inline-block;background:var(--chip);border:1px solid var(--line);border-radius:20px;padding:3px 10px;margin:3px 4px 3px 0;font-size:12px}
+  .chip b{color:var(--accent)}
+  code{background:var(--chip);padding:1px 5px;border-radius:4px;font-size:12px}
+  .flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+  .flow .step{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:12px}
+  .flow .arr{color:var(--mut)}
+  ul{margin:6px 0;padding-left:20px}
+  li{margin:3px 0}
+  .foot{color:var(--mut);font-size:12px;margin-top:26px;border-top:1px solid var(--line);padding-top:12px}
+  .ok{color:var(--good);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>X3 限时抢购 · 开搞前总览</h1>
+  <p class="sub">马戏节第 17 活动 · X2→X3 搬运（非克隆）· 7.29 版本 · 负责人 林康 · 2026-07-24<br>
+    单一真源 = <code>KB\换皮档案\X3\2026-07-22_限时抢购(X2搬运).md</code></p>
+
+  <div class="grid">
+    <div class="card"><div class="k">活动类型</div><div class="v">ActvType 84</div></div>
+    <div class="card"><div class="k">proto tag</div><div class="v">67 · ActivityItem</div></div>
+    <div class="card"><div class="k">机制道具</div><div class="v">1214 券 / 1215 皮肤箱</div></div>
+    <div class="card"><div class="k">分支</div><div class="v">dev_festival</div></div>
+    <div class="card"><div class="k">库存/限购</div><div class="v">单服 · 按场</div></div>
+  </div>
+
+  <h2>① 一句话定性</h2>
+  <div class="panel">
+    <p style="margin:0">把 X2「限时抢购」整套玩法搬到 X3（X3 无原生）。<b>骨很重、皮很薄</b>：玩法一整套（预告+抢购三场 + 单服限量+每场限购 + 分享→助力→抽奖破冰 + 8礼包/期）是骨；皮只有 <b>7 张专属图</b>（背景/banner/盒子/宝箱图标，"节日靠 banner 凸显"）。prefab 四件套已打包 <code>D:\newX2\Copy\FlashSale\</code>，无动态加载盲区。</p>
+  </div>
+
+  <h2>② 玩法规格（程序口径）</h2>
+  <div class="panel">
+    <p style="margin:0 0 6px"><b>时段</b>：预告期（可看/可分享·无购买按钮）→ 每日 3 场抢购（UTC 2/10/18，偏移 <code>[7200,36000,64800]</code>s，各 60min，全配置读取）。</p>
+    <p style="margin:0 0 6px"><b>两把锁</b>：① <b>单服限量</b>（每服各自余量，本服抢完即无，不动 CenterServer）② <b>每场限购 1 次</b>（三场各独立、每场重置，玩家每天每包最多买 3 次）。</p>
+    <p style="margin:0 0 6px"><b>破冰链</b>（单服内任意玩家）：</p>
+    <div class="flow">
+      <span class="step">分享（首次分享奖）</span><span class="arr">→</span>
+      <span class="step">被助力（累计次数）</span><span class="arr">→</span>
+      <span class="step">达标 3 档助力奖（含券）</span><span class="arr">→</span>
+      <span class="step">买过礼包 + 达标 → <b>免费抽 1 次</b></span>
+    </div>
+    <p class="mut" style="margin:6px 0 0">抽奖=达标免费抽（非付费抽），抽中免费到手、不占限量/限次。8 礼包/期可全买。</p>
+  </div>
+
+  <h2>③ 决策点（全部已拍板）</h2>
+  <div class="panel">
+    <table>
+      <tr><th>#</th><th>决策</th><th>结论</th></tr>
+      <tr><td>P1</td><td>全服限量作用域</td><td><span class="badge b-good">单服/schema 组</span> 不动 CenterServer</td></tr>
+      <tr><td>P2</td><td>ActvType + proto tag</td><td><span class="badge b-good">84 + 67</span> 双分支都空（扭蛋机实为83）</td></tr>
+      <tr><td>P3</td><td>机制道具 ID</td><td><span class="badge b-good">1214 高级抽奖券 / 1215 皮肤随机宝箱</span></td></tr>
+      <tr><td>P4</td><td>货币映射</td><td><span class="badge b-good">唱片CD并入钻石</span>；钻石线花钻/直购线IAP</td></tr>
+      <tr><td>P5</td><td>抽奖大奖外显</td><td><span class="badge b-warn">马戏节主题皮肤</span> 款待美术选型（先占位）</td></tr>
+      <tr><td>P6</td><td>助力作用域</td><td><span class="badge b-good">单服内任意玩家</span> 自建破冰状态机（免跨服RPC）</td></tr>
+      <tr><td>P7</td><td>数值版本</td><td><span class="badge b-good">钻石线 ROI2 / 直购线 ROI7</span></td></tr>
+      <tr><td>P8</td><td>限购期边界</td><td><span class="badge b-good">按场</span>（三场各独立、每场重置）</td></tr>
+      <tr><td>P11</td><td>目标分支</td><td><span class="badge b-good">dev_festival</span></td></tr>
+      <tr><td>P9/P10</td><td>customParam叠加 / 抽奖池表实现</td><td><span class="badge b-mut">程序落地时定，不阻塞</span></td></tr>
+    </table>
+  </div>
+
+  <h2>④ 程序落地清单（照扭蛋机套路）</h2>
+  <div class="panel">
+    <b>新 ActvType 五件套</b>：<code>ActivityConst.cs</code> 加 84 + 登记 <code>SingleServerActivityTypes</code> / 新 <code>ActivityFlashSaleCondition.cs</code> / <code>ActivityMeta</code> switch +case / 导表 <code>actvonline_def.py</code> / proto <code>activity.proto</code> 加 message + <code>ActivityItem</code> tag 67。
+    <table style="margin-top:10px">
+      <tr><th>模块</th><th>要点</th></tr>
+      <tr><td>协议</td><td>FlashSaleBuy/Raffle/Share/Assist 各 Req/Ack + 主数据 ActivityFlashSaleData（走类型名路由）</td></tr>
+      <tr><td>配置表</td><td>ActvOnline 主行 + 新表 ActvFlashSale（三场/包列表/抽奖池/限量/限次/分享助力奖）+ 抽奖池 fork + 货架 Pack/Reward + 2 机制道具 Item</td></tr>
+      <tr><td>客户端</td><td>4 件套 prefab（主界面/货架格/弹窗/领奖）横→竖改造 + 7 张图 DK 注册 + 货币显示改钻石；35 脚本按 X3 重写</td></tr>
+      <tr><td>破冰链</td><td>自建状态机（被助力集合+计数+阈值+已发奖）；同服直接投递；达标发奖挂 EventTaskType；新做分享触点（X3无现成）</td></tr>
+    </table>
+    <p class="mut" style="margin:8px 0 0">取证/schema/file:line 全在 <code>X3_限时抢购_代码方案.md</code> §七/§八，程序可直接照抄开工。</p>
+  </div>
+
+  <h2>⑤ ⚠️ 4 条已知雷 → 硬约束（X2-43094 血泪，必落实现）</h2>
+  <div class="panel">
+    <ul>
+      <li><b>抽奖池必 fork</b>：每节日独立池 id，绝不指旧节日池（否则"开不了箱"）。OnAddActivity 校验池属本期。</li>
+      <li><b>累计道具连 IAP 一起换</b>：货架/助力奖发的抽奖券 id 必须 = 主表 RaffleTicketItemId（=1214），否则玩家攒不到券"抽不了奖"。</li>
+      <li><b>push≠生效</b>：改配置必须 jolt_verify 导表成功 + 部署 + iGame 重开活动才重读奖池/库存。占位数据(限购2222/价555)=服跑旧配置。</li>
+      <li><b>换皮残留清零</b>：iap 描述/recharge_actv/raffle 底座 全按本节日 fork 改名。</li>
+    </ul>
+  </div>
+
+  <h2>⑥ 数值框架（走换皮守恒法 · task-checker 10/10 过）</h2>
+  <div class="panel">
+    <p style="margin:0 0 8px">详见 <code>X3_限时抢购_数值框架_review.html</code>。两线各 4 档：</p>
+    <ul>
+      <li><b>钻石线 ROI 2.0</b>（引流）：500/2500/5000/10000 钻，加速+金币填满，精确核验 2.00。</li>
+      <li><b>直购线 ROI 7.0</b>（冲付费）：$9.99/$19.99/$49.99/$99.99，<b>照抄对标 X2 档投放结构×k(=7÷ROI_x2)</b>，ROI 由构造守住、无需道具绝对钻值。</li>
+      <li><b>抽奖池 5 项</b>：保 X2 权重换道具+大奖外显；加速槽下调（7200→800钻）保克制。</li>
+    </ul>
+    <p class="mut" style="margin:8px 0 0">道具层：游戏系统道具沿用映射 / 大富翁骰子(玩法专属)换 ID / 1214-1215 机制新建。落配置过流通度审计。</p>
+  </div>
+
+  <h2>⑦ 待办阶段</h2>
+  <div class="panel">
+    <table>
+      <tr><th>阶段</th><th>状态</th></tr>
+      <tr><td>1. 建档 + prefab bundle 验收</td><td><span class="badge b-good">✅ 完成</span></td></tr>
+      <tr><td>2. 交程序：玩法规格 + 代码方案（决策全清）</td><td><span class="badge b-good">✅ 方案定稿</span></td></tr>
+      <tr><td>3. 数值定稿（换皮守恒 + task-checker）</td><td><span class="badge b-good">✅ 通过</span></td></tr>
+      <tr><td>4-5. 建 Item + 配置落地（活动/组件/货架/IAP/奖池fork）</td><td><span class="badge b-mut">待开搞</span></td></tr>
+      <tr><td>6. 客户端 prefab 迁 X3（横→竖 + DK）</td><td><span class="badge b-mut">待开搞·可并行</span></td></tr>
+      <tr><td>7-8. 文案 i18n + 美术 7 张图换马戏主题</td><td><span class="badge b-mut">待开搞</span></td></tr>
+      <tr><td>9-10. Jira 单树 + 测试（抽奖/开箱链 + 奖池fork验证）</td><td><span class="badge b-mut">待开搞</span></td></tr>
+    </table>
+  </div>
+
+  <h2>⑧ 开搞前你确认 / 后续留意</h2>
+  <div class="panel">
+    <ul>
+      <li><b>ROI7 量级</b>：你拍板的硬约束（限量限次对价，高于 X2 唱片版 5.80）——总览过一眼认不认。</li>
+      <li><b>抽奖大奖皮肤款</b>：待美术选型，选型后回看撑不撑得起顶奖（现占位不阻塞开搞）。</li>
+      <li><b>购-2 大富翁骰子换 ID</b>：落配置时若马戏节替换物单价≠骰子，按值重算数量守恒。</li>
+      <li><b>下一步动作</b>：建 Jira 单树把程序活派下去 / 客户端 prefab 迁入（可并行）/ 配置落地。你定先推哪条。</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    产出目录 <code>KB\产出-数值设计\X3_限时抢购\</code>：总览(本页) / 代码方案.md / 数值映射.md / 数值框架_review.html　·
+    换皮档案(唯一入口) <code>KB\换皮档案\X3\2026-07-22_限时抢购(X2搬运).md</code>
+  </div>
+
+</div>
+</body>
+</html>

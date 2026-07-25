@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X3 限时抢购 · 数值框架 Review</title>
+<style>
+  :root{
+    --bg:#0f1216; --panel:#171b21; --panel2:#1c2129; --line:#2a313c;
+    --txt:#e6e9ee; --mut:#9aa4b2; --accent:#4ea1ff; --good:#37c98b;
+    --warn:#f5b544; --hot:#ff7a7a; --chip:#232a34;
+  }
+  @media (prefers-color-scheme: light){
+    :root{ --bg:#f5f7fa; --panel:#fff; --panel2:#f0f3f7; --line:#dfe4ea;
+      --txt:#1a1f27; --mut:#5b6673; --accent:#1f6fd6; --good:#1a9d68;
+      --warn:#c98a12; --hot:#d64545; --chip:#eef1f5; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font:14px/1.6 -apple-system,"Segoe UI",Roboto,"Microsoft YaHei",sans-serif;padding:28px}
+  .wrap{max-width:1080px;margin:0 auto}
+  h1{font-size:24px;margin:0 0 4px}
+  h2{font-size:17px;margin:30px 0 10px;border-left:3px solid var(--accent);padding-left:10px}
+  .sub{color:var(--mut);margin:0 0 18px;font-size:13px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .card .k{color:var(--mut);font-size:12px}
+  .card .v{font-size:20px;font-weight:700;margin-top:2px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
+  th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line)}
+  th{color:var(--mut);font-weight:600;font-size:12px;text-transform:none}
+  tr:last-child td{border-bottom:none}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  .tot td{font-weight:700;background:var(--panel2)}
+  .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:12px;font-weight:600}
+  .b-good{background:rgba(55,201,139,.16);color:var(--good)}
+  .b-warn{background:rgba(245,181,68,.16);color:var(--warn)}
+  .b-hot{background:rgba(255,122,122,.16);color:var(--hot)}
+  .chip{display:inline-block;background:var(--chip);border:1px solid var(--line);
+    border-radius:20px;padding:3px 10px;margin:3px 4px 3px 0;font-size:12px}
+  .chip b{color:var(--accent)}
+  .hl{background:linear-gradient(90deg,rgba(78,161,255,.10),transparent);
+    border:1px solid var(--accent);border-radius:12px;padding:16px 18px;margin:16px 0}
+  .hl h2{border:none;padding:0;margin:0 0 8px}
+  .var{color:var(--warn);font-weight:700}
+  .mut{color:var(--mut)}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.row2{grid-template-columns:1fr}}
+  code{background:var(--chip);padding:1px 5px;border-radius:4px;font-size:12px}
+  .foot{color:var(--mut);font-size:12px;margin-top:26px;border-top:1px solid var(--line);padding-top:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>X3 限时抢购 · 数值框架 Review</h1>
+  <p class="sub">马戏节第17活动 · X2→X3 搬运 · 2026-07-24 · 负责人 林康　｜　单一真源=换皮档案 2026-07-22　｜　尺子：1 USD = 500 钻</p>
+
+  <div class="grid">
+    <div class="card"><div class="k">钻石线 ROI</div><div class="v">2.0<span class="mut" style="font-size:13px">x · 引流</span></div></div>
+    <div class="card"><div class="k">直购线 ROI</div><div class="v">7.0<span class="mut" style="font-size:13px">x · 冲付费</span></div></div>
+    <div class="card"><div class="k">礼包结构</div><div class="v">4+4<span class="mut" style="font-size:13px"> 档/期</span></div></div>
+    <div class="card"><div class="k">抽奖池</div><div class="v">5<span class="mut" style="font-size:13px"> 项·达标免费抽</span></div></div>
+    <div class="card"><div class="k">限购口径</div><div class="v">按场<span class="mut" style="font-size:13px"> ·每场重置</span></div></div>
+  </div>
+
+  <div class="panel">
+    <b>关键决策（全部已拍板）</b><br>
+    <span class="chip">P1 全服限量 → <b>单服/schema组</b></span>
+    <span class="chip">P4 唱片CD → <b>并入钻石</b></span>
+    <span class="chip">P6 助力 → <b>单服内任意玩家</b></span>
+    <span class="chip">P8 限购 → <b>按场（三场各独立）</b></span>
+    <span class="chip">机制道具 → <b>1214 抽奖券 / 1215 皮肤宝箱</b></span>
+    <span class="chip">ActvType <b>84</b> / proto tag <b>67</b> / 分支 <b>dev_festival</b></span>
+  </div>
+
+  <div class="hl">
+    <h2>✅ 换皮相对守恒法（无待拍绝对值）</h2>
+    <p style="margin:6px 0">直购线不手搓凑盘子——<b>照抄对标 X2 档的投放结构（道具比例不动），按 k=7÷ROI_x2 同比放大数量</b>。数学上 <code>ROI_new = k × ROI_x2 = 7</code>，由构造精确守住，<b>不需要任何道具绝对钻值</b>（皮肤随机宝箱/成长自选等无估值容器天然不用定价）。</p>
+    <p class="mut" style="margin:6px 0 0">档位映射：购-1←X2#2(k1.87) / 购-2←X2#3(k2.33) / 购-3←X2#5(k2.40) / 购-4←X2#7(k2.30)。剩配置层活：X2 道具 ID→X3 对应养成线映射 + 流通度审计。</p>
+  </div>
+
+  <h2>① 道具层判定（换皮框架：沿用 vs 换 ID）</h2>
+  <div class="panel">
+    <table>
+      <tr><th>道具</th><th>层级</th><th>操作</th></tr>
+      <tr><td>万能碎片/英雄粉尘/军备图纸/升星/金羽/精炼石/英雄经验</td><td>游戏系统养成道具</td><td><span class="badge b-good">沿用映射 X3 对应</span></td></tr>
+      <tr><td>大富翁骰子（X2 玩法专属）</td><td>节日品牌/玩法道具</td><td><span class="badge b-warn">换马戏节对应 or 换养成料</span></td></tr>
+      <tr><td>高级抽奖券 / 皮肤随机宝箱</td><td>机制道具</td><td><span class="badge b-hot">本节日新建 1214 / 1215</span></td></tr>
+    </table>
+    <p class="mut" style="margin:8px 0 0">旁证单价（想核绝对价值时用，守恒法不需要）：X2 养成线手册 <code>x2-numerical-design\养成线深度手册.md</code>——万能碎片$2/军备图纸$1/金羽$0.17/技能书$1/收藏品升星$0.5。</p>
+  </div>
+
+  <h2>② 钻石线（花钻石 · ROI 2.0 · 引流广度）</h2>
+  <div class="panel">
+    <table>
+      <tr><th>档</th><th class="num">钻石定价</th><th>投放内容</th><th class="num">总价值(钻)</th><th>ROI</th></tr>
+      <tr><td>钻-1</td><td class="num">500</td><td>1h通用加速×1 + 金币×5,000</td><td class="num">1,000</td><td><span class="badge b-good">2.00</span></td></tr>
+      <tr><td>钻-2</td><td class="num">2,500</td><td>3h通用加速×2 + 金币×5,000</td><td class="num">5,000</td><td><span class="badge b-good">2.00</span></td></tr>
+      <tr><td>钻-3</td><td class="num">5,000</td><td>8h加速×1 + 3h加速×1 + 30min加速×2 + 金币×10,000</td><td class="num">10,000</td><td><span class="badge b-good">2.00</span></td></tr>
+      <tr><td>钻-4</td><td class="num">10,000</td><td>8h通用加速×3 + 金币×20,000</td><td class="num">20,000</td><td><span class="badge b-good">2.00</span></td></tr>
+    </table>
+    <p class="mut" style="margin:8px 0 0">全用已估值加速+金币填满，ROI 精确可核。策划可把部分加速换马戏主题养成钩子（换后按守恒保盘子）。</p>
+  </div>
+
+  <h2>③ 直购线（换皮守恒：X2 投放结构 × k，ROI 恒=7）</h2>
+  <div class="panel">
+    <p class="mut" style="margin:0 0 10px">道具比例照抄对标 X2 档，数量×k 同比放大 → ROI=7 由构造守住。两把锁压住高 ROI：①单服本场限量 ②每场每包限购1次（P8）。</p>
+
+    <table>
+      <tr><th>购-1 · $9.99 ← X2#2 ×1.87</th><th class="num">X2量</th><th class="num">×1.87</th><th>X3 道具映射</th></tr>
+      <tr><td>万能英雄碎片</td><td class="num">10</td><td class="num">19</td><td>万能碎片-橙（沿用映射）</td></tr>
+      <tr><td>英雄粉尘</td><td class="num">10</td><td class="num">19</td><td>X3 英雄粉尘（沿用映射）</td></tr>
+      <tr><td>高级抽奖券</td><td class="num">5</td><td class="num">9</td><td>Item 1214（机制新建）</td></tr>
+      <tr class="tot"><td colspan="3">ROI = 1.87 × 3.75</td><td><span class="badge b-good">7.00</span></td></tr>
+    </table>
+
+    <table style="margin-top:14px">
+      <tr><th>购-2 · $19.99 ← X2#3 ×2.33</th><th class="num">X2量</th><th class="num">×2.33</th><th>X3 道具映射</th></tr>
+      <tr><td>大富翁骰子</td><td class="num">30</td><td class="num">70</td><td><span class="var">换马戏节对应/养成料</span></td></tr>
+      <tr><td>军备图纸</td><td class="num">30</td><td class="num">70</td><td>军备图纸（沿用映射）</td></tr>
+      <tr><td>升星道具</td><td class="num">30</td><td class="num">70</td><td>X3 升星料（沿用映射）</td></tr>
+      <tr class="tot"><td colspan="3">ROI = 2.33 × 3.00</td><td><span class="badge b-good">7.00</span></td></tr>
+    </table>
+
+    <table style="margin-top:14px">
+      <tr><th>购-3 · $49.99 ← X2#5 ×2.40</th><th class="num">X2量</th><th class="num">×2.40</th><th>X3 道具映射</th></tr>
+      <tr><td>金羽</td><td class="num">240</td><td class="num">576</td><td>金羽（沿用映射）</td></tr>
+      <tr><td>高级精炼石</td><td class="num">300</td><td class="num">720</td><td>X3 精炼料（沿用映射）</td></tr>
+      <tr><td>皮肤随机宝箱</td><td class="num">50</td><td class="num">120</td><td>Item 1215（机制新建）</td></tr>
+      <tr class="tot"><td colspan="3">ROI = 2.40 × 2.92</td><td><span class="badge b-good">7.00</span></td></tr>
+    </table>
+
+    <table style="margin-top:14px">
+      <tr><th>购-4 · $99.99 ← X2#7 ×2.30</th><th class="num">X2量</th><th class="num">×2.30</th><th>X3 道具映射</th></tr>
+      <tr><td>万能英雄碎片</td><td class="num">65</td><td class="num">149</td><td>万能碎片-橙（沿用映射）</td></tr>
+      <tr><td>英雄粉尘</td><td class="num">40</td><td class="num">92</td><td>X3 英雄粉尘（沿用映射）</td></tr>
+      <tr><td>英雄经验</td><td class="num">50</td><td class="num">115</td><td>X3 英雄经验（沿用映射）</td></tr>
+      <tr class="tot"><td colspan="3">ROI = 2.30 × 3.05</td><td><span class="badge b-good">7.00</span></td></tr>
+    </table>
+    <p class="mut" style="margin:10px 0 0">无待拍绝对值——守恒缩放下皮肤宝箱/成长自选等容器天然不用定价。落配置时把 X2 道具 ID 映射到 X3 对应养成线道具 + 过流通度审计。</p>
+  </div>
+
+  <h2>④ 抽奖池（换皮：保 X2 权重+数量，换道具种类+大奖外显）</h2>
+  <div class="panel">
+    <table>
+      <tr><th>奖项</th><th class="num">概率</th><th class="num">X2数量</th><th>X3 换皮</th></tr>
+      <tr><td>保底钩（占星皮肤→马戏节皮肤）</td><td class="num">0.02%</td><td class="num">×1</td><td>马戏节主题皮肤（外显·大奖）</td></tr>
+      <tr><td>万能英雄碎片</td><td class="num">15.62%</td><td class="num">×1</td><td>万能碎片-橙（沿用映射）</td></tr>
+      <tr><td>高级抽奖券</td><td class="num">29.68%</td><td class="num">×2</td><td>Item 1214（机制）</td></tr>
+      <tr><td>成长线自选宝箱</td><td class="num">23.43%</td><td class="num">×2</td><td>X3 成长自选容器（沿用映射）</td></tr>
+      <tr><td>加速（下调）</td><td class="num">31.25%</td><td class="num">×1</td><td>1h通用加速（原×3 下调，砍89%）</td></tr>
+    </table>
+    <p class="mut" style="margin:10px 0 0">概率结构直接沿用 X2 权重不动；换皮=换道具种类+大奖外显，<b>无需给皮肤/成长自选定绝对价即可落地</b>。唯一主动改动=加速槽下调（策划拍板，X2 加速×3=7,200钻 → 1h×1=800钻）。可核旁证期望（券+加速+万能碎片三项已定值）≈480钻。</p>
+  </div>
+
+  <h2>⑤ 分享奖 / 3档助力奖（破冰链，CD 已并入钻石）</h2>
+  <div class="row2">
+    <div class="panel">
+      <b>首次分享奖</b><span class="mut">（小额破冰门票）</span>
+      <table style="margin-top:8px;min-width:0">
+        <tr><td>5min通用加速 ×2</td><td class="num">~133</td></tr>
+        <tr><td>行动力 ×1 + 资源填充</td><td class="num mut">填充</td></tr>
+      </table>
+    </div>
+    <div class="panel">
+      <b>3档助力奖</b><span class="mut">（券递增，推破冰抽奖）</span>
+      <table style="margin-top:8px;min-width:0">
+        <tr><th>档</th><th>高级券</th><th class="num">钻石</th></tr>
+        <tr><td>助力-1（第1次被助力）</td><td>×1</td><td class="num">500</td></tr>
+        <tr><td>助力-2（第2次）</td><td>×2</td><td class="num">2,500</td></tr>
+        <tr><td>助力-3（第3次）</td><td>×3</td><td class="num">5,000</td></tr>
+      </table>
+    </div>
+  </div>
+  <p class="mut" style="margin:8px 0 0">铁律：助力奖发的高级抽奖券必须=本节日机制道具 <b>1214</b>，否则玩家攒不到券→抽不了奖（X2-43094 血泪）。</p>
+
+  <div class="foot">
+    产出归档：<code>KB\产出-数值设计\X3_限时抢购\</code>（数值映射.md / 代码方案.md / 本review.html）　·
+    数值映射真源见 <code>X3_限时抢购_数值映射.md</code>　·
+    数值层已闭合（换皮守恒，无待拍绝对值）→ 派 task-checker(numerical) 独立复查 ROI自洽+兑现真源，通过即数值定死。
+  </div>
+
+</div>
+</body>
+</html>
