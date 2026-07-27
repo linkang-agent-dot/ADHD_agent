@@ -149,3 +149,13 @@ ark/activity/submit 提交体每个活动项加字段 **`customParam`**(JSON **�
 - **依赖序**（若确认没人修需自己拉）：etcd → nats/redis → Gate_1 → Door_51 → Center/Play/Map。Gate 在 etcd 未起时 deploy 会起了就退（状态回 Down），先起 etcd。
 - **实战陷阱（2026-07-20）**：运维修一早上没通=漏拉 nats（lastDeploy 停在 2025 年=从没被碰）——上层 Gate/Play/Door 反复拉反复退。**排查全 Down 恢复卡住时，先按依赖序核每个底层组件的 lastDeploy 新鲜度**，谁没被动过谁就是漏项。另：CC auto 权限闸会拦 kadmin restart 远程操作，需用户授权或用户在 kadmin 界面点。**恢复实操已全程验证（07-20）**：`/api/application-key/restart` 一次可批量传多个 name（Gate/Door/Center 一把全拉、25s 后全 Run）；nats 起后上层应用重拉即活，全链路当场恢复。
 - 客户端连本地服 3080 也要过共享 Gate+etcd（本地服注册共享 etcd、Gate 路由），所以共享基建挂 = 本地服链路也全断。
+
+## beta330 热更配置workflow不可靠, 需config时优先走全量重构建+重部署（2026-07-21 实证，X3NEW-792验证期间）
+- **现象**：`beta-330-热更配置+代码`(workflow id=1250)多次报`success`，但GMAdd探针仍返回`config not found`——跑success≠配置真的进了330的运行态。且如果紧接着又做一次`deploy_beta.py`容器重启，两个操作前后顺序不同会让状态在"能用"和"config not found"之间反复翻转（怀疑热更workflow的"同步配置"步骤读的source ref跟容器重启后resource mount实际生效的source不是同一路径/时序）。
+- **可靠路径（本次两次验证都成功）**：① kadmin对`x3-server_rebuild` job `enable`→`buildWithParameters branch=dev`触发编译（job默认disabled，用完记得disable还原）② 等~5-6分钟GitLab CI基于新bin出`t4f.io/x3/gameserver-new:dev`镜像 ③ `deploy_beta.py --server <sid> --tag dev`重部署(不要再跑热更workflow，跑了反而可能把刚生效的config状态搞乱) ④ GMAdd探针复验。
+- **判据**：拿一个跟改动无关的老活动（如酒馆10071704）做探针对照——若它返回`1017012`(config在只是没实例)而目标活动返回`1017001`(config not found)，说明不是全局配置加载崩了，是目标改动没被这条路径带进来，该走上面的重构建流程。
+
+## GM时间跳跃：单步大跳规避双开、但可能不触发结算tick（2026-07-21 X3NEW-792验证实证）
+- **两步跳（23:59:00→次日00:05:00）在跨"活动开启边界"时，短时长(如24h)TC比长时长(7天)TC更容易双开**：同样两步法，7天TC的活动跨界后count=1，24h TC的活动跨界后count=2(两个实例窗口完全相同)。判定为引擎对短窗口TC创建缺去重的已知限制(同类precedent见7-15)，不是配置bug。
+- **改用单步原子跳（一条命令直跳到边界之后）确实避免了开启双开**，但代价是可能不触发`OnDayUpdate`结算tick(ServerActivity.lastDayUpdateTime不更新，结算/发奖没跑)——这与更早记录的"大跳不逐日触发结算"是同一现象在不同尺度上的复现。
+- **结论/建议顺序**：①测"活动开启"选单步大跳（防双开）②测"活动结算/发奖"仍需额外补一次贴近午夜的小步跨天(前一天23:59→次日00:05)才能确保触发tick，即使已经身处"边界之后"很久了，光是时间数字过了不代表tick被触发过。

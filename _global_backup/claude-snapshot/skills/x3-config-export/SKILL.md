@@ -94,6 +94,8 @@ python <skill>\scripts\jolt_verify.py <branch>
   从管道列表 `a|b|c` 里移除若干ID，每列实删数必须等于ID数
 - `add    --file <tsv> --id <行ID> --cols 49,50 --ids 210917,210918,210919 --after 210921 [--dry-run]`
   往管道列表锚点ID后插入（`remove` 逆操作，解屏蔽/恢复用）；断言锚点存在、ID未重复
+- `delrow --file <tsv> --id 133403,133413 [--dry-run]`
+  整行删除（下架兑换条目等，2026-07-21 尼罗删圣甲虫实操固化）；断言每个ID恰好命中1行
 - 默认 repo `C:\x3\gdconfig`；--file 相对该目录；写盘保 LF（不被 Windows 翻 CRLF）
 
 ### actv_lookup.py — 活动配置速查（「查一下XX活动配置/actvonline是啥」先用它，别现场 grep）

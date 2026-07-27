@@ -106,3 +106,12 @@ originSessionId: 7f1d10e6-76c8-46b3-b30d-957a641cda96
 - **诊断法(可复用·定位被吞活动)**:对 tsv 同时跑 `csv.reader(delimiter='\t')` 和 纯 `line.split('\t')`,**逐 ContentID 比对行数**;`csv != tab` 的那个 CID 就是被引号吞了的。再 `txt.count('"')` 奇数=有未闭合。
 - **修**:删该行游离引号(`\t"<size=40>X%</size>` → `\t<size=40>X%</size>`,标签无分隔符不需引号)→重验 csv==tab 全表一致(注意CID=`1`是表头类型说明多行注释、本来就csv≠tab,忽略)。**只删炸的那一个即可**(改全表引号会动~20个老活动·脆弱配对·非必要别碰)。
 - 改在隔离 worktree(主仓有别人活跃worktree时X3隔离闸门会拦)。
+
+## 改tsv禁止裸"\t".join(r)+"\n".join(rows)重写全表——多行cell字段会被写坏（2026-07-21 实证，ActvOnline表事故）
+- **现象**：自写`set_field`/`append_rows`脚本用`csv.reader`读（安全,能正确还原带内嵌\n的多行cell为一个逻辑行）→ 但写回用裸`"\t".join(r)`拼字符串+`"\n".join(rows)`落盘（不安全,没做CSV转义/quoting）。若表里有字段本身含`\n`（如ActvOnline的某些说明/描述列是历史遗留多行cell），裸join会把该字段内的`\n`当成新行边界写出去，物理行数暴涨、后续行全部错位。故障现象=ExportTable报`could not convert string to float: '3=<乱码>'`这种看似无关的类型转换错误，plus用Python读`rows[4]`(header)算出`width=1`——本质是文件被打散成碎行。
+- **判据**：改完用`git diff --stat`看是不是只有预期的少量行变化(±1/±2)；如果一个只改1个字段的操作显示"大段重写/行数暴涨"，说明写回逻辑把整表打散重排了，先别提交，回滚重查。
+- **修复/预防**：
+  1. **改单个已存在字段** → 用`x3-config-export`skill的`tsv_edit.py set`(逐行断言替换，天然只动目标行不重排全表)，别自己写reader+writer。
+  2. **纯追加新行** → 只读全文件raw text，assert以`\n`结尾，直接把新行字符串拼在末尾写回；**绝不要把已有rows`csv.reader`出来再`"\t".join`写回**——哪怕只改一行也可能因为别的行含多行cell而写坏全表。
+  3. 判"这张表是否有多行cell雷"：`open(path,encoding='utf-8').readlines()`数出的物理行数 vs `csv.reader`数出的逻辑行数，两者不等=表里有雷，任何"重写全表"式的脚本都不能碰它。
+- 关联：已有的`feedback_config_chain_first`/`reference_x3_config`记过"awk/grep按物理行读多行cell会错"，但没记过"写回同样会坏"——这条补上"读安全≠写安全"这半句。

@@ -358,3 +358,24 @@ for k,v in FINAL.items():
 - 导入只认 tsv、改 tsv 不碰 xlsx：[[reference_x3_tsv_export_migration]]（旧 xlsx 公式缓存/CalculateFull 问题随 xlsx 弃用已不适用）
 - 发版方向与受保护分支/MR：[[workflow_x3_protected_branch_mr]]；分支策略：[[feedback_x3_branch_strategy]]
 - 任务完成必带知识库更新：[[feedback_proactive_knowledge_update]]
+
+## ⑰ dev→dev_festival 2026-07-27 大合并（774 vs 88，merge 3ce560b3）：让号引用链四类漏网点
+
+让号（renumber）后找引用，精确匹配单元格值远远不够，本次 ExportTable/审计逐个抓回四类漏网，下次让号直接按此清单扫：
+
+1. **多值管道 FK**：Item.ObtainID 可以是 `100362|100414|100412` 管道串——精确匹配 `==100414` 扫不到。让号后必须按 **token 级正则** `(?<![0-9])OLD(?![0-9])` 扫全 tsv，再逐个三方判归属侧（festival 行才改，dev 行引用 dev 自己的实体必须保留）。
+2. **积分活动榜单链走 ActvScoreMulti 不走 ActvOnline.RankID**：ActvType=7 的活动（如马戏庆功宴 101028）榜单挂在 `ActvScoreMulti.RankID`（按 ContentID 关联），改了 ActvOnline.RankID 还会在导表 `multi RankID 榜单类型不匹配` 处炸。RankCfg 让号要扫全部含 RankID/RankType 列的表。
+3. **i18n key 藏在管道行里**：festival 给旧 ID 建的 `TXT_ItemObtain_ObtainName_100414` 混在 `TXT_ActvOnline_ActvName_100599|...` 管道行里，单 key 精确查漏掉 → 和 dev 的同名 key 形成**重复 key**。让号后必须做**拆管道后的全表重复 key 审计**（与两个 parent 的 dup 基线对比，只看新增 dup）。判归属侧：整行 col0 是否在 HEAD/MERGE_HEAD 原文里。
+4. **共享 RewardID 被节日侧篡改**（§⑪ 变体）：4200100/4200101 是 102801-102804 大富翁全系共享的 ItemRecycle 回收奖励，festival 拓荒者之城直接改了共享内容（会波及线上常驻 102804）→ 恢复 dev 版 + festival 内容让号新 RewardID + 改 ActvOnline.ItemRecycle（格式 `item,reward|item,reward`）。**判据：改既有 RewardID 内容前先 grep 谁在引用它。**
+
+另两个新观测：
+- **driver 对尾部未命名列（无字段名/无类型）的 remote 单侧改动可能整批不应用**（本次 Item 列35 共 16 行）——严格三方 cell 校验（`l==b且r!=b → wt必须==r`）能抓到，值得每次合并都跑。
+- **双侧独立做过同一个修复会产生双份 i18n 行**（奇观排期 101206-13 两侧各自跑过 i18n，行内容全等但 driver 视为两行都保留）→ 重复 key 审计兜底，全等删一侧即可。
+
+**工具已固化**：以上 cell 级三方校验 + Text 拆管道重复key/丢key 审计 = `python ~/.claude/skills/x3-config-export/scripts/merge_strict_cell_audit.py [merge_sha]`（不带参数=未提交合并态；与 merge_tsv_audit.py 整行审计互补，一个抓行一个抓 cell）。让号后 token 级引用扫描仍照 §⑰-1 现写正则（各次让号 ID 不同）。
+
+本次让号总表：RankCfg 2002/2004→2006/2007、ChainPack 702/704→706/707、AchievePack 105→106、MemorialCard 81→83、Item 180081→180083、ItemObtain 100412-14→100507-09、AvatarFrame 10089→10093、Reward 4200100/4200101(festival版)→4200110/4200111；TimeCycle 冠军之路统一用 dev 的 625（festival 624 弃）。
+
+**⑰-补：ConstCfg 行序门在大分叉合并必撞**（2026-07-27 实测）：x3_skill_merge 说「driver 锚点法正常路径下满足 ConstCfg 新key必须在末尾」——但**双侧都在 base 之后加过 key 时不成立**：dev 新 key 按 remote 锚点插到 festival 自己新增 key 之前 = 相对 origin/<本分支> 变成中间插入，pre-push 硬门拦 push。修法固定三步：① 取 `git show origin/<分支>:tsv/ConstConfig__ConstCfg.tsv` 的 key 集，工作树里不在该集的行整体移到文件末尾（保持相对顺序）② 重跑 ExportTable 到 exit0 ③ 单独 fix commit 再 push。合并后 push 前可预检：新增 key 不全在尾部就先移。
+
+本次合并终态：merge 3ce560b3 + ConstCfg fix de3d4587 已推 origin/dev_festival，jolt #2131 SUCCESS（#2130 撞列gate属§⑧预期，skip_check放行），独立 sub-agent 7项复查全 PASS。让号实体若旧 key 本就无译文（如 ObtainName_100508/ChainPack_707），新 key 缺译=存量未译非回归，下次 x3-translation-automatic 自动补。

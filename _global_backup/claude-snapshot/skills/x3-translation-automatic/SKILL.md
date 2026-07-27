@@ -76,6 +76,16 @@ gen_i18n_imp.updateFile = lambda path: ('', '')
 - **处理**：跳过，保留 status="新增" 不动，提示用户由 LC 负责人补
 - **严禁**：把 JSON 翻成"雾落隔离区广播1"之类的文本，会破坏配置
 
+### 陷阱 3.5：worktree 里跑 i18n_leak_audit 必须带 --tsv（2026-07-21 实测）
+
+`scripts/i18n_leak_audit.py` 的 `--changed` 默认盯死 `C:\x3\gdconfig`（DEFAULT_TSV 写死），**不跟 cwd 走**。在 git worktree 里改的 tsv，直接跑会报「改动 0 行 → ✅ 无泄漏」的**假绿灯**。必须显式指路径：
+
+```bash
+python .../i18n_leak_audit.py --tsv <worktree>\tsv\i18n\Text__Text.tsv --changed
+```
+
+判别信号：输出第一行「git diff HEAD 改动行: 0 行」但你明明改了 → 就是路径没对上。
+
 ### 陷阱 3：gws 命令在 Windows 受 cmd.exe 8K 限制
 
 写 Google Sheets 时如果一次 append 行数多（约 > 15 行，取决于内容长度），命令行会超 cmd.exe 8K 限制报"命令行太长"。解决方案二选一：

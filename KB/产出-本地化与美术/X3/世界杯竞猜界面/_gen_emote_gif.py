@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-"""把静态啦啦队表情做成微动态循环GIF(欢呼轻跳+微摆+花球区轻晃)。
-程序批量,不逐队AI。输出透明GIF + 同内容.bytes(游戏用)。"""
+"""⚠️已废弃(2026-07-27 用户裁决): GIF 一律=先出视频再切帧,静态图假动效路线打回。
+正路见 x3-media/references/video-model-routing.md §3.5。本脚本仅留档勿再用。"""
 import os, math, sys, glob, shutil
 from PIL import Image
 
@@ -36,12 +36,14 @@ def make_gif(code, src_png):
         a = f.split()[3]
         mask = a.point(lambda p: 255 if p>=128 else 0)
         p = f.convert("RGB").convert("P", palette=Image.ADAPTIVE, colors=255)
+        # 透明铁律修复(2026-07-27): 透明调色板项设白,防解码器 bg 填充黑边渗色
+        pal = p.getpalette(); pal[255*3:255*3+3] = [255,255,255]; p.putpalette(pal)
         # 把透明区设为调色板索引255
         p.paste(255, mask.point(lambda v:255-v).convert("1"))
         out_frames.append(p)
     gif_path = os.path.join(OUT, f"{code}.gif")
     out_frames[0].save(gif_path, save_all=True, append_images=out_frames[1:],
-                       duration=DUR, loop=0, transparency=255, disposal=2, optimize=True)
+                       duration=DUR, loop=0, transparency=255, background=255, disposal=2, optimize=False)  # background==transparency 铁律(UniGifDecoder), optimize=False 防调色板重排破坏索引对齐
     # .bytes = gif字节副本(游戏运行时加载)
     shutil.cop2 = shutil.copyfile
     shutil.copyfile(gif_path, os.path.join(OUT, f"{code}.bytes"))

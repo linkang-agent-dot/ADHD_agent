@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: bc47406f-de36-414c-b81a-a24b401015f1
+  modified: 2026-07-27T02:28:15.565Z
 ---
 
 X3 **本地服**（`-e local`，`Tools/start_local_server.bat`）发 GM 命令、调服务器时间走 telnet。helper 脚本：`C:\Users\linkang\x3_gm.py`（`python x3_gm.py "!gm @<uid> <cmd args>" ...`）。
@@ -24,7 +25,9 @@ X3 **本地服**（`-e local`，`Tools/start_local_server.bat`）发 GM 命令�
 4. 复验 `GMGetServerTime` 看 passDay。
 
 **限制**：时间只能前进，`delta<0` 被拒（`ErrorCodePlayerDisallowRewindTime`）。要回退得 `GMClearServerTimeOffset`(下次重启生效) 或重启清库。
+- 🪤**`GMClearServerTimeOffset` 清offset不可靠(2026-07-22 实测)**：从 D68 清一次成功回真实时间；但从 D34 清offset连做两次+`trysaveanddestroy`存盘，重启后仍停在原offset(offset持续drift说明还活着)。疑似offset存服务级记录、player域GM+存盘没覆盖到。**要可靠复位服龄回真实时间=`drop_db`**(会丢号,重登重建)，别只靠 ClearServerTimeOffset。
 
+（2026-07-21 奇观案细化：**单个过期活动的 OnActivityTimeEnd/排名结算在"大跳落地"那一刻就会触发，不必等跨午夜**——实测 100608 在 SetOffset 到 23:50 时立即 OnHandlerActivityEnd+SendRankRewards；下面这条"必须小步跨午夜"适用的是**日界驱动的批量结算/DayUpdate 系**，两种机制并存，先大跳观察、没触发再补跨午夜。）
 ⚠️**测「活动到期结算」(排行榜发奖/道具回收)：直接跳时间过活动end 不一定触发结算**（2026-06-24 用户实测：`GMSetServerTimeOffset` 一把跳到活动窗口外，发奖没跑）。原因：很多结算/发奖挂在**跨天事件(OnNewDay/每日0点 tick)**上，`SetServerTimeOffset` 是**直接跳**目标时刻、不逐日触发跨天，所以日界驱动的结算逻辑没跑。**测发奖的正确姿势（2026-06-24 已实测验证）**：① 先 `GMSetServerTimeOffset` 跳到活动 **end 之后、但下一个午夜之前**（如活动 end=9/26 06:00 → 跳到 `9/26 23:59`）——此时活动已过 end **但仍 `count=1` 没结算**（实证：GMPrint 还在）；② 再 `GMSetServerTimeOffset` **小步跨过一个午夜**（跳到 `9/27 00:05`）——日志立刻出 `DayUpdateNtf` + `ServerRank ... SendRankRewards` + `SendMailImp`（发奖邮件），结算触发。**关键=最后那一下必须干净跨过 00:00**；一把大跳直接到窗口外不会逐日触发跨天=不发奖（用户实测"感觉少了"的根因）。GM 里 daily 系（`GMDailyTaskRefresh`/`GMUpdateAllActivityDailyActivityPlayer`@`ServerActivityDailyRankMeta.cs`）印证日系统 tick/事件驱动。⚠️注意 `ServerRank` 结算行会打印 `sendMailReward: True/False`——**False 的榜不发邮件奖**（排查"某榜没发奖"先看这个标志，可能是该 RankCfg 本就 NeedSendMailReward=0，非 bug）。
 
 实例（2026-06-05）：3080 开服 2026-05-27 09:31:06，D8 → set 2026-06-26/09:31:06 → passDay 30。
@@ -33,7 +36,7 @@ X3 **本地服**（`-e local`，`Tools/start_local_server.bat`）发 GM 命令�
 工具 `Tools/reset_local_server.bat`（停→drop_db→重编→起），但有 `pause`+`dotnet test` 卡非交互。**手动版**（cwd=`C:\x3-project\server`，比普通重启多一步清库）：
 1. 停：`python Tools/stop_gs.py --server_id 3080 --grace 10`
 2. **清库**：`python Tools/drop_db.py --server_id 3080`（⚠️**2026-06-24 实测：必须用 `--server_id` 旗标，位置参数 `drop_db.py 3080` 会报 usage error**）— 删 MongoDB `gs_game_3080`(172.20.90.151:27017)整库 + 清 Common.CrossServerActivity 含该 sid 记录；**无交互确认直接删**。控制台输出是 GBK 乱码但能认出「已删除数据库」「完成」。sid<100(Center)才额外清 PrefsInfo 时间偏移；sid≥100(3080)清库=玩家库删→**服务器时间回真实当天**(实测 D30/7-08 回 6-16)。不碰 Center(61)。
-3. 重编：`dotnet build GameServer.Hotfix/GameServer.Hotfix.csproj -c Debug` + `MapServer.Hotfix/...`（cascade 主工程；跳 reset.bat 的 dotnet test 省时）
+3. 重编：`dotnet build GameServer.Hotfix/GameServer.Hotfix.csproj -c Debug` + `MapServer.Hotfix/...`（cascade 主工程；跳 reset.bat 的 dotnet test 省时）。🔴🔴**这步绝不能跳/别图快用 --no-build 起（2026-07-23 我栽过一次）**：本会话多次 `git checkout origin -- ProtoGen/` 把 config 拉到 robot 最新导出，本地服二进制却是旧的→`--no-build` 起服 preload 全表时 `StartPreloadData → InvalidProtocolBufferException: String is invalid UTF-8` → `Server Start Failed`（wait_server_info 干等 600s 因为 ServerInfo 根本没写）。**判据**：reset ProtoGen+`git lfs pull` 后仍崩 = 不是 bytes 损坏是 schema 不匹配 = 必须重编；重编后 preload 立刻过（`All Table Data cost XXXms` 无异常）。⚠️**reload(热更/部分表)不崩不代表 fresh 启动不崩**——reload 只载改动表 schema 对得上，fresh 启动 preload 全表，某张没 reload 过的表 schema 不匹配才暴露。
 4. 起：**先 Game，再 `python Tools/wait_server_info.py 3080 600` 等 ServerInfo 写入，最后才起 Map**（见下条铁律）。
 5. 验：日志 `PlayService started`/`MapService started` + 游戏时间回真实日期 + 6 进程。
 - 🔴**清库后起 Map 必须先 `wait_server_info.py`，不能背靠背起（2026-06-29 实证踩坑）**：drop_db 把 `gs_game_3080` 整库删了→**ServerInfo 记录也没了**；MapServer 启动时 `ServerInfoMgr.OnInit` 查 `ServerInfo._id==sid` 查无→`ServerInfo not found! 3080`→`Module ServerInfoMgr init error`→**Server Start Failed**。**ServerInfo 由 GameServer 在空库上自己写,但要等几分钟**(本次 GameServer `PlayService started` 后 DB 仍 0 集合,~5min 后才写出 ServerInfo;可能卡在外部平台服 auth2/guidLost 超时重试后才落)。所以**普通重启(不清库)ServerInfo 已存在→Game/Map 背靠背起 OK**(start_local_server.bat 就这么干);**但清库后必须**起 Game→`python Tools/wait_server_info.py <sid> 600`(轮询 ServerInfo,最多10min)→ServerInfo ready 后再起 Map(canonical `reset_local_server.bat` 正是这个时序)。我用固定 6s gap 起 Map=必失败。Map 失败不影响 Game(Game 照常 PlayService started),补等 ServerInfo 后单独起 Map 即可,不用重起 Game。
@@ -54,6 +57,9 @@ Start-Process dotnet -ArgumentList 'run --no-build --project MapServer  -- -sid 
 **✅ GMSetServerTimeOffset 真的持久化**：重启后服务器**直接从 D30 起**（日志游戏时间戳 `[2026-06-26 ...]`），不用再 set；也 set 不了（已是 D30，再 set 同一秒=rewind 被拒）。
 
 **❗大坑：导表后裸 --no-build 重启会崩**。本地服 config 读 `server\Resource\Assets\Res\Config\ProtoGen\*.bytes`；这目录被 config 导出/同步覆盖后（一批 .bytes + `AllTableDataMd5.txt` 同一时刻刷新），若 server 二进制没跟着重编 → 启动期 config 预载抛 `InvalidProtocolBufferException: input ended unexpectedly`（栈：`CfgHelper.StartPreloadData → CConstCfg.get_Instance`），日志 `Server Start Failed`。**现象很迷惑**：telnet 端口照常起（crash 在端口之后），连得上、脚本引擎也 ready，但所有 `!gm`/`!dump` 只回显不返结果（游戏逻辑没起来）。老进程没事只因 config 在内存里，一重启就暴露。
+## 🔴 checkout ProtoGen 后 reload 报 `ConstCfg invalid UTF-8` = LFS blob 陈旧（2026-07-22 实测）
+`client/*.bytes` 是 **Git LFS 跟踪**（`.gitattributes: *.bytes filter=lfs`）。`git checkout origin/<分支> -- Assets/Res/Config/ProtoGen/` 后，若本地 LFS 缓存没有目标 blob，工作树可能是**陈旧/半更新的 .bytes** → `!gm ReloadGameServer` 抛 `InvalidProtocolBufferException: String is invalid UTF-8`（栈在 `CConstCfg.Reload → CfgHelper.CreateCfgType`，报在 ConstCfg 但根因是 LFS 未拉齐，未必是 ConstCfg 本身）。**修复**：`cd client && git lfs pull --include="Assets/Res/Config/ProtoGen/*"` 拉齐真 blob，再 reload。**判定**：`git cat-file -s origin:.../X.bytes` 返 ~129（=LFS指针大小）是正常的（git 只存指针），要比的是**本地文件 MD5 vs manifest(AllTableDataMd5.txt)里该表的 MD5**——一致=blob 对，reload 就过。**热更本地服标准链路补一步**：checkout ProtoGen → **`git lfs pull` ProtoGen** → ReloadGameServer。reload 失败不杀进程（旧配置留内存），从容拉齐重试即可。
+
 ## ★「GM 部署某节日整套活动」先怎么找全 AO id（2026-06-23 深海/夏日实测）
 要开一个节日的全部活动，**别按行名搜**（`ActvOnline` col1 备注名多是历史复用残留，如夏日恋语活动行名全叫"26情人节-xxx"，按名搜只命中个别行）。**靠节日入口分组 ActvGroup 枚举**：
 1. `ActvOnline__ActvGroup.tsv` 找节日组 id（col0=id, col2=节日名）。已知：**138=夏日恋语 / 140=深海节**（97 排序那批）。
@@ -125,11 +131,24 @@ GM 在 `GameServer.Hotfix\PlayerMeta\Activity\ActivityMeta.Gm.cs`，全是 playe
 - ⚠️**切 x3-project 分支几乎必被「Unity 本地重导噪音」挡住（2026-07-08 一天撞 3 次）**：本机 Unity 开过工程就会重写一批 .meta（HeroHarmony 视频 meta 的 `userData:` 行尾空格、Club mask 贴图 `textureFormat` 29/50→4、spriteatlas 等），checkout 报 would be overwritten。**固定处理**：①先 `git diff` 抽一个确认是噪音（空格/importer 重写、非人工改动）②`git stash push -u -m "<分支>上Unity重导噪音(<内容>)"` 收起再切（-u 连带未跟踪 meta）③噪音 stash 攒多了征得用户同意后 `git stash clear`。别 checkout -- 直接丢（万一混着真改动），可逆操作直接做不用问。
 - **切节日分支标准流程（2026-06-24 实操）**：① 摊 WIP 清单给用户确认处置（在途仓铁律）② 丢 WIP 用精确 rm（见上 clean 禁令）③ `git checkout dev_festival`④ 本地分支若与 origin 分叉且本地那笔是用户自己的 commit→`git pull --rebase`（autostash 会自动 stash 脏文件、replay 用户 commit 到 origin tip 之上，别 `reset --hard` 丢用户 commit）⑤ 切分支=代码变=**必重编 Hotfix**（`dotnet build GameServer.Hotfix.csproj` + `MapServer.Hotfix.csproj`，看 `0 个错误`再起；dev_festival 早上的 GiftMeta CS 错到晚上 origin tip 已修）⑥ 重编前先 `stop_gs.py` 解 dll 锁 ⑦ `--no-build` 起。
 
+🔴**大跨度切分支(dev↔dev_festival 差 6485 文件+LFS)必须 `run_in_background` 跑，别前台 Bash（2026-07-27 血泪）**：前台 `git checkout` 会撞 Bash **2min 超时被杀** → 留下**残留 `.git/index.lock` + 半切换工作树**（HEAD 还在旧分支、5051 文件已半写向新分支、`git status` 报一堆改动）。慢的大头=LFS smudge 拉新分支的大资产。**恢复**：① 判残留锁：`tasklist|grep -iE "^git\.exe|git-lfs"` 无真 git 进程 + `stat -c%y .git/index.lock` mtime 旧 = 残留（⚠️**`UGit.exe` 是用户的 Electron Git GUI 客户端·crashpad/gpu/renderer/network 子进程一堆·不是 git 进程别误判成"checkout还在跑"**）② `rm -f .git/index.lock` ③ `git checkout -f dev_festival`(run_in_background，`-f` 强制完成半切换+盖 Unity 噪音)。**stash pop 必须在目标分支上做**：在错的分支 pop=ProtoGen bytes(LFS)+代码 UU/DU 冲突（`should have been pointers, but weren't`），pop 会 kept 不丢，`git reset --hard`(stash 不受影响)清掉半应用后回正确分支重来。
+
 ## 本地服开/推礼包（Pack，≠活动，player-scope）
 
 礼包不走活动 GM，走 `GameServer.Hotfix\PlayerMeta\Gift\GiftMeta.cs` 的 `GMOpenGiftNtf <packCfgID>`：取当前服务器时间为 start，若 `TriggerType=时间点(TIME_POINT)` 则 endTime 按 `TriggerParamVals[0]`(=触发 TimeCycle ID)算，再 `TriggerNewGiftOpenNtf` 把开包推送给玩家。**player-scope** → `!gm @<uid> GMOpenGiftNtf <packID>`，**只推给那一个玩家**（换账号测要对该 uid 再推一次）。要求 packType ∈ `GiftConst.TriggerPackTypes`。
 实例(2026-06-09)：210516/210517 两个 26元旦礼包(触发 TimeCycle=1824) → `!gm @27065 GMOpenGiftNtf 210516`/`210517`，errCode=0。
 其余礼包 GM：`GMTriggerChainPack`(链式)、`GMResetGiftPurchaseNum`(重置购买次数)、`GMTriggerRecommendGift`(推荐礼包)。礼包按什么机制开看 [[reference_x3_pack_open_mechanisms]]。
+
+## ❗GM 重开活动后「礼包点了闪退/不存在」——链式 gift 只在完整登录建（2026-07-22 马戏扭蛋机实测）
+链式礼包 gift 实例只在 **`ActivityMeta.OnPostInit`（完整登录/OnLogin）** 创建（遍历 activityDict 给 ChainPackID>0 且 !HasGift 的补建 `CreateChainGift`）。**`OnReconnected`（重连）不建 gift**。所以：
+- GM `GMAddServerActivityByCfgId` 造的活动是**新实例、无 gift**；玩家若只是**重连**（断线重连/Editor Play 重开/客户端重启但会话恢复）→ 走 OnReconnected → **gift 仍 null**。
+- 客户端点礼包入口 → `UIChainPackFullScreen/UICombinationPack.RefreshView` 里 `GetGiftInfoByID(activityID)` 取 null → `CloseSelf()`（`UIChainPackFullScreen.cs:87`）→ **弹窗一开就关=看着像闪退**（非硬崩，日志 `WndMgr show ... res:False valid_operation:False` + StringBuilderCache warn）。
+- **判定**：服务端日志 grep 该号，看是 `OnReconnected`（gift:1ms，重连）还是完整登录；`GMFixGiftCycleData` 修不了（它只修已有循环礼包，fix count 0）；没有"建链式 gift"的 GM。
+- **修复**：让玩家**完整退出账号、回登录界面、重新登入**（触发 OnPostInit），不是重连。⚠️GM 反复 remove/add 活动会让实例状态 thrash（remove 报 1017012 无实例、随即 print 又 count=1，客户端 sync 自动重建），别 churn；还可能留坏记录（`GetPersistentData <id> NullReferenceException`）。
+- **测试期铁律**：GM 造完活动测礼包=完整重登一次再测；别边测边反复 GM 重开同一活动。
+
+## ★UIChainPackFullScreen 独立弹（WndMgr.Show）无先例、慎用
+链式礼包各显示 UI（UIChainPackFullScreen/UIMultiTierPack）本是 `IRechargeContextUI`（UIRecharge 商城子页 ShowSub）。UICombinationPack 有 `WndMgr.Show` 独立弹先例（OpenChainPackByGiftID），**UIChainPackFullScreen 没有独立弹先例**——要 3 档竖排全显示又不进商城，直 `WndMgr.Show<UIChainPackFullScreen>` 目前实测会因 gift-null 立即 CloseSelf（gift 修好后是否稳定待验）；稳妥选 UICombinationPack（3列、已验证独立弹）。详见 [[reference_x3_pack_open_mechanisms]] 界面类映射。
 
 ## ❗GM 开了活动但客户端看不见——根因链（2026-06-09 排查）
 

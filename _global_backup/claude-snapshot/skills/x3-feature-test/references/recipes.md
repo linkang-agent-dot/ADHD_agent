@@ -274,3 +274,43 @@ Logic.G.Player.GetMeta("activity").ReceiveActivityAllReward(<activityId>L)
 - HTTP 桥 eval **不支持泛型 `<`**（ExpressionParser Tokenize 直接报错）和 `new`+初始化器——所以 `WndMgr.Show<T>(new UIData...)` 走不了，必须用上面的 helper 或真人点击。
 - **GVG 105301 是跨服型活动**：单服 GM `deployserveractivity` 会报 `cross activity not supported by this GM, use Ark or Center`（errCode 10），且 `gm_combo.py open-activity` 对此打 `[OK]`（**假阳性**，它只看提交成功不看 returnInfo）。正解=igame_activity.py 提交（单服也走它）：`create --cfg-id 105301 --servers 330 --start/--end <服务器逻辑时钟ms>`，下发到客户端秒级（`GetActivityIdsByCfgID(105301)` 立即非空，无需重登）。
 - 时移过的服（beta 330 曾推到 8月）：活动起止时间必须用**服务器逻辑时钟**（先 getservertime），不能用真实时间。
+
+## 配方 · 服务器活动排期/结算端到端验证（2026-07-21 奇观排期案跑通）
+- **触发条件**：改了 TimeCycle/ActvOnline 排期或排名结算相关配置，要验"到点开窗/到点结算/不乱发奖"。
+- **构造**：① 配置进本地服（jolt robot bytes → 手术式 checkout ProtoGen → ReloadGameServer 看 N tables reloaded）② `!gm @<被测号> GMAddServerActivityByCfgId <id> <分钟>` 开即时实例验功能面 ③ 排期相位验证走跳时：`GMSetServerTimeOffset` 跳到目标日前 5-10 分钟，再小步跨整点/午夜。
+- **验证点（全走服务端日志，无需客户端）**：
+  - 活动同步到客户端 = grep `GetActivityProgressScoresAck` 含实例 id；玩家真打开过某榜 = `GetSelfRankSlotAck rankType:<N>`。
+  - 到期结算 = `OnHandlerActivityEnd`/`OnActivityTimeEnd` + `ServerRank ... SendRankRewards cfgID:<AO> sendMailReward: False→True`。**⚠️ 过期活动结算在大跳落地时即触发（不等午夜）；日界驱动的批量榜结算才需要小步跨午夜**。
+  - 空榜不发奖 = 结算后 `SendRankRewardMails` 零条（守卫 rankNum>0）；有分的榜同窗对照会有带 SlotDatas 的 mail 行。
+  - 奇观状态机（MapServer log）＝ `WonderComp.StateChange`（SignUp/Battle/Protected）+ `OnTimeStartEvent cfgID:<TC>`，时间戳应整点命中排期。
+  - 文案键 = eval `TFW.Localization.LocalizationMgr.Get("TXT_...")`（无泛型，桥可直调）。
+- **坑**：TT=6"第N周周X"按日历周（第1周=开服当周）；已下线活动（IsOn=0）的 TC 行仍会 fire 但不建活动=正常；商店档位/展示窗（DailyPack/ShowTimecycleID）是懒计算窗口，服务端无事件日志，只能配置层+客户端肉眼验。
+
+---
+
+## 配方 · FunctionUnlock 时间门功能验证（"按服龄N天解锁"通用，天赋觉醒延后35天案 2026-07-22 跑通）
+> 适用：任何"功能/入口延后到开服满N天才出现"的改动 = FunctionUnlock门(隐藏功能) + TimeCycle(TT=2开服时间,`Nd 00:00:00`) + 服务端生成门控 + 客户端显隐门控。
+
+### 配置识别
+- `FunctionUnlock <fid>`（隐藏，挂 `TimeCycleID=<tc>`）+ `TimeCycle <tc>`（TriggerType=2 开服时间，TriggerTime=`Nd 00:00:00`）。
+- **解锁边界 = 开服日+N天的那天零点(UTC)，不是开服时刻+N天**。别猜，实读：`GetMeta("timecycle").GetStartTime(<tc>)` 返回精确解锁时间戳(ms UTC)；`IsTimeCycleOpen(<tc>)` 直接给开/关。
+
+### 前置（配置生效，坑）
+- **committed 的 ProtoGen bytes 常缺新增的 FunctionUnlock/TimeCycle 行**（配置作者只改 tsv 没重导）→ 代码 `IsXxxGateOpen()` 走 **fail-open**（`CFunctionUnlock.I(fid)==null` 时返回放开=门不启用=功能照常显示）。这是保险不是bug。**必须** `cd gdconfig/Tools/table_exporter && python ExportTable.py` 重导 → `cp temp_dev/ProtoGen/{FunctionUnlock,TimeCycle}.bytes + AllTableDataMd5.txt` 到 client ProtoGen（顶层bytes差异实测=0说明其他表本就一致，只这两张变），本地服走symlink读同一份。验：`protobuf 手解 find(b'\x08'+varint(id))` 或 `CFunctionUnlock.I(fid)!=null`。
+- 服务端代码改了(生成门控)→必重编 GameServer.Hotfix + MapServer.Hotfix(0错误)+重启，光导表不够。
+
+### 门状态断言（客户端，权威）
+- `GetMeta("hero").IsHeroTalentAwakenGateOpen()`（各功能有自己的同名方法）；`GetMeta("functionunlock")` 的 key 名可能不对，直接用功能自己的门方法。
+- 三入口(本案)：酒馆气泡=`HeroTalentTrailSystem`(GSHome场景系统,泛型GetSystem桥取不到→靠截图对比)、英雄页按钮=`WndMgr.GetByTypeName("UIHeroInfo").mBtnHeroTalentTrail.activeSelf`(带data的UI用feval `new UIHeroInfoData{heroCfgID=x}`+`WndMgr.Show(typeof,...)`打开)、红点=`CheckCanShowHeroTalentTrailRedPoint(heroCfgID)`。
+
+### ③ 跨界测法（时间只能前进，顺序锁死：门关①④ → 在线跨界 → 门开② → 离线跨界）
+- **在线实时(不重登)**：`GMSetServerTimeOffset <解锁午夜前1-2min>`(玩家在线,确认门=false)→ 等几秒 → `GMSetServerTimeOffset <解锁午夜后3-5min>`(小步跨午夜)→ 门实时 false→true、入口UI实时出现，**无需重登**。链路=expire队列到点fire→CheckUnlockFunction→FireEvent(FunctionStateChange,fid,true)→服务端GenerateXxx+客户端System.OnFunctionStateChange刷新。截跨前/跨后对比图。
+- **离线跨界**：门开态首次登录→服务端`OnLogin()→GenerateXxx`兜底(OnPostInit阶段FunctionUnlock不发事件)→门=true/入口齐。
+
+### 已知边界（非bug）
+- 老号存档已有的东西(本案:trail的情报任务,`IntelligenceData`持久化存Mongo)门关时**不清理**(有意保留)——门控只防"门关时重建",不删已持久化的。客户端入口UI仍由门正确隐藏。
+- 已完成的东西(本案:已觉醒天赋`unlockTalentIDs`)属性效果走**未改门的独立路径**(如`HeroMeta.cs`属性应用/`HeroUtils.Affix.cs`)→门关不受影响(代码层可证:确认这些文件不在本次diff内)。
+
+### 坑
+- 🪤**`GMClearServerTimeOffset` 清offset不可靠**：本案第一次(从D68)清成功、第二次(从D34)连清两次+trysaveanddestroy 重启后仍停在原offset。**要可靠复位服龄回真实时间用 `drop_db`(会丢号,重登重建)**，别指望ClearServerTimeOffset。
+- 报告用 `scripts/make_html_report.py <spec.json>`(截图base64内联),归档KB。范例见本案 `KB\产出-数值设计\X3_天赋觉醒延后35天\spec.json`。

@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 392dacb5-9dc0-4a3b-aa91-dda965852581
+  modified: 2026-07-24T07:55:15.341Z
 ---
 
 iGame 后台发 GM 指令走 skill `igame-gm-send`，脚本 `C:\Users\linkang\.claude\skills\igame-gm-send\scripts\send_gm.py`。
@@ -35,6 +36,32 @@ iGame 后台发 GM 指令走 skill `igame-gm-send`，脚本 `C:\Users\linkang\.c
 **🔴🔴 玩家 GM 必须带 `playerIds` 字段(2026-06-25 实证·send_gm.py 原 bug)**：服务端 `ArkGMModel.cs:6` 把玩家字段 `uids` 绑定 JSON 属性 **`playerIds`(逗号分隔字符串)**;`ArkModule.Gm.cs` 只有 `gmModel.uids` 非空才走 `foreach uid → HandlePlayerGMAsync(player,...)` 按玩家执行,空了就走服务器级分支、**玩家 GM 根本不落到玩家身上(静默不执行,网关仍 success)**。原 `send_gm.py` 只发 `players`(int数组)、不发 `playerIds` → `uids` 永远空 → **所有"给玩家"的 GM 实际都没作用到玩家**。判定法:游戏内 GM 能加分/生效、但 iGame 同命令不生效 = 玩家没绑上。**修=gm_line 同时带 `playerIds`(字符串,服务端真读)+`players`(兼容网关)**(已改脚本)。`server_ids` 供网关路由、`cmd`/`args` 服务端读、`playerIds` 服务端绑玩家——四个都要对。
 
 **🐛 尾随 `；` bug(2026-06-25 修)**：旧脚本/旧 SKILL.md 在 gm JSON 末尾强补全角 `；`。服务端 `ArkModule.Gm.cs:20` 用 `JsonConvert.DeserializeObject` 严格解析整条 body，遇尾随 `；` 抛 `Additional text encountered after finished reading JSON content: ；` → **GM 静默不执行，但网关仍返回 `success:true`**(网关只登记不校验游戏侧解析)。已删 `send_gm.py` 补尾逻辑 + 纠正 SKILL.md。**通用教训**：iGame 网关 `success:true` 只代表「已登记」，真执行结果/报错**异步回 iGame 后台**，下发后必须查后台 GM 结果/登号/查数仓核实，别凭网关 success 判生效。GM 给玩家加积分的完整链路+雪花id两步法+时间窗gate见 [[reference_x3_score_activity]] 「GM 给玩家加 BP/活动积分」段。
+
+**🔴 prod GM 走审批队列（2026-07-24 实证，别当"没执行/没路由"）**：prod webgw-cn 的 `gm-operate/add`(operateType=3)提交后 `success:true`+返 op id，但 **detail 的 serverId/playerId/returnInfo 一开始全 null**——**不是路由失败，是 prod GM 要人审批**（status2待审→审批→执行）。审批+执行后再查 detail，returnInfo 才出真结果（实测等一阵后 3731 returnInfo 出 `errCode0`+活动信息）。**判定**：prod GM 提交后 returnInfo null≠失败，先等审批放行再复查 detail；别像 dev/beta(ms-inner-gateway 即时执行)那样立刻判死。
+
+**🔴 下线「服务器活动」两条 GM 的选择（2026-07-24 冠军之路案）**：
+- `GMRemoveServerActivityByCfgId <cfgId>`(按配置号)：内部先 `CActvOnline.I(cfgId)`——**cfg 为 null(即 IsOn=0 被导表过滤)时直接返 "config not found" 啥也不删**。所以**下 IsOn=0 活动的残留实例它无效**（"下活动GM没生效"的真因之一）。
+- `ForceRemoveServerActivity <activityId>`(按**运行时雪花 id** 强删,GMForceRemoveServerActivity@ActivityMgr.Ark.cs:366)：`DeleteActivity(activityId)`+entity 兜底，**绕过 cfg 查找**→ IsOn=0/cfg=null 的残留实例也能删。操作对象=服务器(不带 playerIds)。**下已 IsOn=0 的活动残留必用它**。
+- **拿雪花 activityId**：`GMPrintServerActivityByCfgId <cfgId>` 的 returnInfo（读 `mCid2Ids[cfgId]`，**不查 cfg→IsOn=0 也能列出实例雪花 id**；输出 `cfgId=,count=N` + `id:<雪花> cfg: start: end:`）。⚠️**每服雪花不同**，要逐服 GMPrint(各自审批)。**数仓消耗日志拿不到雪花**(2026-07-24 全字段实证:ods_user_asset 只有 `reason_sub_id={contentId}_{option}` 如"3_1"、asset/change_count，**无 activity 实例 id 字段**)；雪花只能 GMPrint 或 prod Mongo ServerActivity._id。
+
+**🟢 GMReduceItems 批量扣道具/资源（res+item 通吃·2026-07-24 冠军之路案实证）**：
+- **一条命令扣多资产**：`GMReduceItems(string itemInfoStr)`@`StorageMeta.cs:1592`，args=**单个字符串** `"cfgid,量;cfgid,量;..."`（逗号分隔 id/量、分号分隔多资产）。iGame operateType=3 时 **cmd=`reduceitems`（无需gm前缀，服务端补）、args 数组必须是单元素 `[itemInfoStr]`**（含逗号分号不能被拆散——send_gm.py 的 `--args` 按逗号拆会毁掉它，故批量扣走专用脚本）。
+- **res 和 item 都能扣**：内部 `ReduceItem`@`StorageMeta.cs:1099` 对 `IsResType(cfg.Type)` 走 `ResMeta.TryUseRes`、否则走 storage——所以钻石1002/金币1001/阅历1008/金属55101/行动57003（res）+ 美酒7001（item）用**同一条 GMReduceItems + 各自 item cfgid** 一把扣。判 cfg 存在只看 `CItem.I(cfgid)!=null`（能邮件发的道具都在 CItem 里）。
+- **仍 floor 到 0 扣不到负数**（`Math.Min(num,余额)`），缺口写掉——要欠账仍走 DebtRecycle。**GM vs DebtRecycle 的取舍=能否接受写掉缺口**：冠军之路 554 人扣回，实扣≈93%、写掉 813,318 钻值≈$1,627（123 人扣不满）→ 用户选 GM 接受写掉（换掉 DebtRecycle 导表热更 + 本地 appliedCount=0 的不确定性）。
+- 🔴**GM+DebtRecycle 混合兜底时,DebtRecycle 缺口必须用「GM 实扣量」重算,不能用快照余额(2026-07-24 冠军之路实证)**：混合方案=GM扣主体+DebtRecycle兜GM扣不满的缺口。缺口若按**下发前快照余额**算(缺口=应扣−快照余额)会失准——快照到GM执行之间玩家余额变了(多数人涨),GM实扣≠快照预测(如钻石快照预测实扣4.74M、实际扣4.85M)→按快照缺口(396,195)热更DebtRecycle会**比真实剩余(应扣−实扣=291,550)多扣~10万钻/超出玩家实际消耗**。**正确=GM执行完后,从 `gm-operate/detail` 逐玩家逐资产解析实扣量,真实缺口=应扣−GM实扣,据此重生成DebtRecycle**(GM实扣是定值→顺序无关、精确)。教训:任何"先A扣一部分、B兜剩余"的两段扣,B的量要用A的**实际结果**倒推,不能用A执行前的预估。
+- 🔧**已固化批量工具**=`~/.claude/skills/igame-gm-send/scripts/batch_reduce_items.py`（`--batch <[{server,uid,args}]json> --env prod`，默认 dry-run/`--send` 真发/`--limit 1` 金丝雀/`--opout` 存 op id 供 detail 复查）。扣回批次生成=解析**已发补偿 CSV**（`[cfgid*量]`→`cfgid,量;`）当权威扣回源（扣回严格=发出去的，别重算数仓）；floor 账（gross/实扣/写掉）用余额快照 `dl_active_user_asset_balance_d` 逐资产算。
+- ⚠️**prod GM 每条一个待审单**：554 人=554 个 op 各自待审、要人在 iGame 放行——审批量大时这是 GM 相对 DebtRecycle（一次导表零审批单）的主要成本，批量扣回前先确认放行方式。
+- ✅**核验真扣**：放行执行后 `gm-operate/detail?id=<opid>` 的 `returnInfo[0].gmResult` 直接给每资产 `itemCfgID:X oldCount:N -> curCount:M`（扣了 N-M）或 `oldCount:0 -> removeNum:0`（无货可扣=floor,缺口留 DebtRecycle 兜）；`errCode:0`+curCount<oldCount=真扣成功。冠军之路 554 抽样全 errCode0(如金币18,292,619→17,842,619)=**GM 已执行完、玩家余额已扣**。全量核验脚本 `scratchpad/sweep_detail.py`(遍历 reclaim_ops.json 的opid,解析gmResult汇总实扣;554条prod detail顺序查很慢需后台跑)。
+
+**🔴 批量扣回玩家道具（错发追回/bug回收）用 DebtRecycle 配置表 or GM（2026-07-24 冠军之路案）**：
+- **GM `GMReduceItems`/`additem负数`扣不到负数**（`Math.Min(num,现有)`停0），已花掉的追不回。**要追回（含扣成负数/欠账）走配置表 `gdconfig/tsv/DebtRecycle__DebtRecycle.tsv`**（专门"客服/运营批量扣回道具事故处理表"）；能接受写掉缺口则直接 GM 批量（见上条，省掉导表热更）。
+- **表结构**（5列）：`ID(从1391001递增避开现有段) / PlayerID(玩家UID) / ServerID(必填) / AssetList(CEffect[]) / VersionID(全workbook全局递增·同批一致)`。**AssetList 格式** = `[{"ID":cfgid,"Val":扣量,"Arg1":品质0}]`（多道具塞数组；tsv 里 JSON cell 走 CSV 标准引号=整体`"`包+内部`"`翻倍，csv.writer QUOTE_MINIMAL 自动处理，参照 CoinPusher 表紧凑无空格 JSON）。
+- **触发（自动·无需服务器手动指令）**：玩家登录 `DebtRecycleMeta.OnLogin→ApplyConfig`——抽本玩家 (PlayerID,ServerID) 匹配且 `VersionID>lastAppliedVersion` 的行，AssetList 累加进 `debts` 欠账、水印推进，**幂等**（已应用 VersionID 跳过）；够扣即扣、不够记欠账从未来同道具获得里抵扣=能"扣成负数"。
+- **流程**：改 tsv 追加行(X3 就单文件 `DebtRecycle__DebtRecycle.tsv`,非每批建 tab)→commit→导表→dev→qa→master→prod 热更→玩家下次登录自动扣。注释里"新建tab/@服务器同学执行指令"是 P2/XLSX 时代或"(允许负数)"特殊变体,X3 默认 OnLogin 自动。
+- **X3 首用批次=VersionID 1**(2026-07-24 前表空)。
+- **欠账代码路径**(`DebtRecycleMeta.cs`)：`ApplyConfig`→`AddDebts`→立即 `TryRecycleFromExistingAssets`(扫当前库存,资源走 `resMeta.TryUseRes`/物品走 `ReduceItemByID`,扣 `Math.Min(现有,欠)`,余额→0)→扣不完余额留 `Data.debts`(嵌 ServerPlayer.debtRecycle 字段)→未来玩家获得同道具时 `Deduct/DeductFromIncoming` 抵扣。品质 Arg1:资源类(IsResType)itemId=cfgId 忽略品质;有品质槽位类走 `NewItemID(cfgId,quality)`。
+- **判「GM 还是 DebtRecycle 扣」= 查玩家当前余额 vs 要扣量（2026-07-24 实测法）**：`ods_user_asset` 每条带 `balance`（变动后余额），取每人每资产 `row_number() OVER(PARTITION BY server,user,asset ORDER BY created_at DESC)=1` 的最新一条=当前余额；跟要扣量比。**多数人 balance<要扣量（已花掉）→ GM 扣到 0 为止追不回、缺口大 → 必须走 DebtRecycle 欠账**；绝大多数人余额充足才用 GM。冠军之路案实测:钻石263/391、金币305/486、阅历255/378 都是「不足」(6-7成已花)→定用 DebtRecycle。
+- **测试/核账 GM(player-scope `!gm @uid`,本地服直接可用)**：`GMApplyConfig`(**强制重读配置应用,不用等客户端登录**·测试神器) / `GMQueryDebt`(查当前欠账+lastAppliedVersion) / `GMAddDebt cfgId num [品质]`(手动加欠账,不经配置,测debt机制) / `GMClearDebt [itemId=0全清]`。本地 3080 实测 GMQueryDebt 可用=代码含 DebtRecycle。
 
 **🌐 iGame 环境↔网关↔auth 映射（2026-06-27 用于活动部署 igame-activity-deploy）**：
 - **dev**：UI `igame-dev.tap4fun.com` / 网关 `ms-inner-gateway-dev.tap4fun.com` / auth=`.igame-auth.json`（igame-activity-deploy 默认）。`activity/submit` 实测通(推 102920→1970 返单号)。

@@ -5,7 +5,11 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 8c95a774-9d05-4760-9550-0dc41ff62e68
+  modified: 2026-07-22T06:24:20.797Z
 ---
+
+## 提交客户端改动时的暂存区排雷（2026-07-22 实测）
+提交 x3-project 客户端改动前 `git status` 常混入两类**不该提交的**：① `client/Assets/Res/Config/ProtoGen/*.bytes`（robot 导表管，我若跑过 `git checkout origin -- ProtoGen/` 拉配置会把它们暂存进来）② `.claude/skills/*/memory/*.jsonl`（skill 运行时记忆，无关）。做法：**只 `git add` 明确的业务文件**（列全路径），若 ProtoGen 被顺带暂存了用 `git reset HEAD -- ProtoGen/` 踢掉。push 被拒(远端robot领先)→rebase 前工作区必须干净：ProtoGen 用 `git checkout -- ProtoGen/` 丢弃(pull带回最新)、无关脏文件 `git stash push -- <file>` 收起，rebase+push 后 `stash pop`。日志出现 `[gdconfig] fast-forwarded ... left superproject gdconfig pointer unstaged` 是钩子正常行为(gdconfig gitlink 跟分支不跟 pin)，别 reset。
 
 ## X3 代码仓库
 

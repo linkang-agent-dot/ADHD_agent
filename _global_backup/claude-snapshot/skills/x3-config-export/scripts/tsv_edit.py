@@ -156,6 +156,29 @@ def cmd_add(args, repo):
     print(f"[OK] {path.name} 行{rid} 已插入")
 
 
+def cmd_delrow(args, repo):
+    """整行删除（如下架兑换条目）。断言每个ID恰好命中1行，先 --dry-run 看清。"""
+    path = resolve(repo, args.file)
+    kill = args.id.split(",")
+    lines = load(path)
+    hits = {k: [] for k in kill}
+    for i, ln in enumerate(lines):
+        first = ln.split("\t", 1)[0]
+        if first in hits:
+            hits[first].append(i)
+    bad = {k: len(v) for k, v in hits.items() if len(v) != 1}
+    if bad:
+        sys.exit(f"[断言失败] 这些ID命中数≠1: {bad}（未写盘）")
+    drop = {v[0] for v in hits.values()}
+    for i in sorted(drop):
+        print(f"  删行: {lines[i][:120]}")
+    if args.dry_run:
+        print(f"[dry-run] 将删{len(drop)}行，未写盘")
+        return
+    save(path, [ln for i, ln in enumerate(lines) if i not in drop])
+    print(f"[OK] {path.name} 删了{len(drop)}行")
+
+
 def main():
     ap = argparse.ArgumentParser(description="X3 tsv 安全编辑器")
     ap.add_argument("--repo", default=str(DEFAULT_REPO))

@@ -4,16 +4,18 @@
 
 ## 复盘报告 / 方法论
 - [AI工作系统迁移包(可分享通用版v1.1)](../../../../ADHD_agent/KB/方法论/AI工作系统迁移包_通用版_v1/README.md) — 我方工作法的中性化迁移包(20文件,骨vs皮组织,0业务残留);已过保险代理人场景冷启动实测(三环:唤醒/首任务/翻车沉淀全过,9缺陷已修);验收HTML同目录;模式04-08案例段为叙事重建外发前需过目
-- [X3vsP2节日付费结构对比+16%→30%路径](reference_x3_festival_monitor.md) — 金标准ARPPU对打/结构差距见"基线锚点"段,报告在KB\产出-数据分析\X3vsP2_节日付费结构对比\；07-09新增三大节拉通(弹药带下钻:顶档复购50-72%/随机双轨/宽入口+X3优先级),复用脚本=skills\p2-festival-monitor\p2_fest_deepdive+packform.py；**07-13总纲=同目录X3节日核心付费模块回归优化_20260713.html(结论先行+模块L1-L3+优化动作,逐模块深聊入口)**,L1脚本=skills\p2-festival-monitor\x3_l1_metrics.py+报告生成器x3_regression_report_gen.py
-- X3卡册获取回归·深海+世界杯(07-13) — 获卡者人均$307-344=最准鲸鱼钩但直售仅$5.85k/39人;实际获取成本$9-13/张;100%到手即升级=养成非收藏;P2对照$15.5k/900买家($9.99集卡BP 682人);建议=上$9.99集卡BP+直售收敛$10-20/张;**★四节拉通两附图(07-14)**:获卡分布四节同构(1张党72-79%/3张塌方/10+尾≈0)+付费盘触达随发放机制塌方(有送达层春节53%/夏日77%→纯兑换世界杯29%/深海20%=触达是机制问题非意愿问题,$9.99BP即买回送达层)+**单卡等级分布(附图3·07-14修正版,⚠️组口径Lv16结论作废)**:升级=吃**同名卡**复数张(MemorialCardLevel.Num注释"相同卡片",等级挂单卡非属性组!)——30级设计全服最高仅**Lv8(1人)/Lv5+仅154人**;升级规模∝重复投放次数三级梯度:**钓鱼循环卡万人级(兔宝宝河边垂钓Lv3-4 6,776人/浪漫烟花3,168)>返场卡百人级(我对你的誓言462)>单期节日卡几十人(新春特辑18)**→重复投放(返场/循环)=激活单卡等级的唯一开关(老卡进下节兑换/集卡BP奖池);另发现直录源=ods_user_event的MemorialCardLevelUp事件(日4.7万条,要精确等级时用它校准,消耗反推已够用);**单卡投放饱和度(附表)**:按卡名算=人均获取÷该卡满级需求(399/465),全卡<1%、最深玩家6%(兔宝宝夜钓28张)——供给放大10倍碰不到顶,瓶颈=78个卡名摊薄投放,循环卡人均2.7-2.9张vs单期卡1.3-1.5张;属性组只决定属性曲线(465/399两种),卡道具ID=180000+配置ID;⚠️排行卡奖7/15后结算须补查;报告=KB\产出-数值设计\X3_卡册优化\X3卡册获取回归_深海世界杯_20260713.md+同名.html(tap4fun壳可直发demo;5月体系调研同目录)；**重构框架草案(07-14,同目录卡册重构数值框架_草案)**:**v3用户定曲线(07-14终)**:10级前轻后重=1/2/6/10/15+20×5,累计134张/满坑$600/有效价$4.5;Lv5=34张$150前半毕业点(千人级),皮肤玩家自然落点Lv7-8留2-3级钩子;**供给v3.3用户定=不做BP+双卡独立+大富翁卡送达层放Bingo拼图**(行/列/全图完成送~4张=回归元旦/春节拼图终格送卡的历史形态,大富翁阶段奖变纯付费坡):开箱/大富翁**各一张卡**,每卡由本模块阶段奖(~90张)+成就礼包(~44张)卖完134张/$600;双卡全满$1,200/节=鲸鱼目标,中R双卡前半$300,皮肤玩家主模块Lv7-8;兑换商店400币改**自选老卡宝箱**定价不变(=返场落地);免费达前2-3阶段节点=送达层;**节点校准=实测达成率曲线(报告附图4)**:悬崖位=免费弹药边界(开箱150→200次34%→6%/大富翁300→500圈29%→6%,免费供给差2-3倍双卡节点不同构),付费坡压悬崖后铺;达成率目标口径=送达≥55%/Lv5毕业25-30%(2千人)/满坑尾0.4-0.6%(30-45鲸);查法=模块消耗道具change_type2人均累计的survival曲线;卡坑=模块深度进度条不另开SKU;满级属性=老Lv5弱反馈;v1/v2作废;⚠️MemorialCardLevel全局表改曲线需定老玩家兼容口径(建议累计重算=白赚等级当回馈);**外显直售有先例(用户07-17拍板:世界杯外显都是直售),直售线形态可行性不用再论证**
-- X3成熟服养成线付费意愿排名(07-13) — 英雄养成收入第一/船只改装ARPPU$92鲸鱼线/纯外显复购2.1单倒数第二,**含道具ID明细**(单ID Top5=传奇技能书19003$18.2k>争霸奖券1133>冒险阅历1008>永生玫瑰1022>情书券1134;万能信物52003=最强信物;低档技能书销量0),皮肤分层/奖池选品直接照抄,报告=KB\产出-数据分析\X3_成熟服养成线付费意愿排名_20260713.md
+- [X3vsP2节日付费结构对比+16%→30%路径](reference_x3_festival_monitor.md) — 金标准ARPPU对打/结构差距见"基线锚点"段;总纲=KB\产出-数据分析\X3vsP2_节日付费结构对比\X3节日核心付费模块回归优化_20260713.html;复用脚本=skills\p2-festival-monitor\（p2_fest_deepdive/packform/x3_l1_metrics/x3_regression_report_gen）
+- X3卡册获取回归+重构框架(07-13/14) — 明细全在报告 KB\产出-数值设计\X3_卡册优化\（X3卡册获取回归_深海世界杯_20260713.md+卡册重构数值框架_草案）;要点=升级吃同名卡复数张(等级挂单卡非属性组)/重复投放是激活单卡等级唯一开关/v3曲线134张满坑$600·Lv5毕业$150/达成率口径送达≥55%·满坑尾0.4-0.6%/外显直售已有先例(07-17拍板)
+- X3成熟服养成线付费意愿排名(07-13) — 报告=KB\产出-数据分析\X3_成熟服养成线付费意愿排名_20260713.md;要点=英雄养成收入第一/船改ARPPU$92鲸线/纯外显复购倒数;含道具ID明细(传奇技能书19003$18.2k居首;万能信物52003最强);皮肤分层/奖池选品照抄
 - [Token用量工作流审计+优化案](project_token_workflow_optimization.md) — Top7工作流占比/4项已落地优化/扫描器位置，问"哪个工作流烧钱"先读
-- [X2 2026占星节模块回归报告](project_x2_star_festival_2026_report.md)
-- [X2 两节日开局窗口收入对比方法论](reference_x2_festival_compare_method.md) — 两节日对比先读
+- [X2 2026占星节模块回归](project_x2_star_festival_2026_report.md) · [X2 两节日开局窗口收入对比方法论](reference_x2_festival_compare_method.md)(两节日对比先读)
 
-## 进行中案子- [X3 皮肤专属时刻(皮肤互动视频,骨架=女仆俱乐部)](project_x3_skin_moment_interactive.md) — **进行中**:足球宝贝双场景demo(更衣室免费/球场需皮肤解锁),代码全就绪编译过在 feature/skin-moment,只差用户拼prefab圆选择器+实机验证;冷启动看topic顶部「🚀接管摘要」;唯一入口=KB\产出-数值设计\X3_皮肤互动视频
+## 进行中案子
+- [X3 8-10月节日需求细化(马戏节/周年/万圣)](project_x3_festival_8_10_requirements.md) — 4文档=回归4优化点;唯一入口=KB\产出-数值设计\X3_8-10月节日需求\;硬决策=核心付费模块仅3个(开箱/大富翁/转盘)·转盘退役换内外墙·8月马戏节框架不变;文档1成稿·2-4待出
+- [X3 奇观排期错配(巢穴研究全员第一名)](project_x3_wonder_schedule_mismatch.md) — X3NEW-792把岛挪D30但D23锚配套没跟→空跑结算全员并列第1;07-21已双线修完(dev fd69ae8d+festival f6709852);⚠️07-23合master后暴露下游二次事故=冠军之路105501→105502排期迁移致**跨服龄双开**(老关前已跑过的服+新窗口覆盖同批服),受影响服2240–2350,处置GMTakedown 105502;审计HTML+报告生成器=KB\产出-数值设计\X3_奇观排期错配\- [X3 皮肤专属时刻(皮肤互动视频,骨架=女仆俱乐部)](project_x3_skin_moment_interactive.md) — **进行中**:足球宝贝双场景demo(更衣室免费/球场需皮肤解锁),代码全就绪编译过在 feature/skin-moment,只差用户拼prefab圆选择器+实机验证;冷启动看topic顶部「🚀接管摘要」;唯一入口=KB\产出-数值设计\X3_皮肤互动视频
 - [CS-296963 永久头像框扣除GM(dev_festival待上线)](project_x3_frame_removal_gm.md) — 上线后对1890192@2090执行GM参数10015+客服补发80061;头像框系统代码锚点在此
 - [马戏节扭蛋机 X2→X3 搬运](project_x2_circus_strong_consume_reskin.md) — ⚠️目标=X3不是X2内换皮;大富翁=深海承接;唯一入口=换皮档案2026-07-08_马戏节;协议配置规格已归档别重挖
+- [马戏节限时抢购 X2→X3 搬运](project_x3_flashsale_reskin.md) — 马戏节第17活动(7.29);唯一入口=换皮档案2026-07-22_限时抢购;**07-24晚代码+配置全落dev_festival**(三commit+c43303f7,jolt#2126 SUCCESS;CID8202/AO101029);周末验收:Unity编译未验+prefab待拼+IAP/奖池占位;新增ActvType手册=[[reference_x3_new_actvtype_playbook]]
 - [X3 马戏节整节日换皮(骨架=深海16活动)](project_x3_circus_festival.md) — 方案稿待过审;头号决策点=货币架构;唯一入口=KB\产出-数值设计\X3_马戏节\换皮清单;⚠️与扭蛋机案是两案交圈别混
 - [X3 储蓄罐触达改造(HUD+弹窗)](project_x3_piggybank_hud.md) — **HUD已上线(07-09/10),首周储蓄罐流水翻倍(+95%,周$16.4k,广度拉新中小R,零蚕食)**,回归数据=KB储蓄罐目录_数据结论沉淀.md;每日CD修复MR!718已合dev待随服务端完整发布禁只热更Hotfix;代码锚点全在topic别重挖- [X3 拓荒节(X2→X3搬运)](project_x3_pioneer_festival_porting.md) — 唯一入口HTML见topic
 - [7月并行排期甘特(世界杯×深海节)](project_x3_july_gantt.md) — 动7月排期先读
@@ -22,14 +24,13 @@
 - [X3 英雄养成手册双版本](project_x3_hero_handbook.md) — $49.99豪华版;进度见topic
 - [X3 船只+海妖养成手册(英雄手册推广)](project_x3_ship_siren_handbook.md) — 船只D7终版=程序兼容方案:老102703 TC=0+新102705克隆(TC5921注册7天,BaseActvID互斥,共用ContentID2703);dev/qa已上,**master MR!114建好未合等用户令**;三手册=英雄D0/船只D7/海妖D13;活动改开启时机的标准迁移范式(老TC=0+BaseActvID自指+新活动互斥)在此;海妖猎场组137按钮不消失=测试服旧配置重部署即解;MR!774建议不合;master的jolt本来就挂在bi_upload(与改动无关);master单改动传播配方见[受保护分支+MR流程](workflow_x3_protected_branch_mr.md)
 - [X3 异国美酒储蓄罐改造](../../../../ADHD_agent/KB/产出-数值设计/X3_异国美酒储蓄罐/异国美酒储蓄罐_可重复购买改造_策划案.md) — 已闭环06-25上线;数据结论=KB同目录`_数据结论沉淀.md`
-- [X3 双节框架回归(深海×世界杯,进行中)](project_x3_dual_festival_regression.md) — 4母题框架已定/母题1成稿/母题2-4待做;用户裁决记录+日报tooltip累计线口径坑都在topic;7/21跑`_gen_母题1.py 2026-07-20`刷终版
+- [X3 双节框架回归(深海×世界杯,进行中)](project_x3_dual_festival_regression.md) — 4母题框架已定/母题1成稿/母题2-4待做;用户裁决记录+日报tooltip累计线口径坑都在topic;7/21跑`_gen_母题1.py 2026-07-20`刷终版;**口径唯一入口=KB\产出-数据分析\深海节&世界杯回归\数据口径统一.md**(服段/分母/铁律,各回归开工先读)
 - [X3 深海节活动](project_x3_deepsea_festival.md) — 唯一入口=对齐总览HTML见topic
 - [X3 航海之路常驻版换血(102801→102804)](project_x3_voyage_permanent_remake.md) — feature/voyage-remake待合dev;唯一入口=换皮档案2026-07-14;⚠️Jenkins导表job要求client仓同名分支
 
 ## 后台自动任务
 - [后台计划任务清单](reference_background_scheduled_tasks.md) — 问后台任务/增改停先读；工作line可视化+晨报/日报规划链路(07-08合并版)也在此
-- [策略游戏雷达](reference_game_radar.md) — 每日雷达HTML
-- [无头调claude CLI固定姿势](reference_headless_claude_cli.md) — 脚本`claude -p`必关Stop hook
+- [策略游戏雷达](reference_game_radar.md)(每日雷达HTML) · [无头调claude CLI](reference_headless_claude_cli.md)(`claude -p`必关Stop hook)
 
 ## Key Directories
 - `C:\ADHD_agent\` 主工作仓 · `C:\ADHD_agent\KB\` Obsidian知识库 · `KB\产出-数据分析\` 数据分析报告
@@ -38,22 +39,11 @@
 - [工作/个人 CC 配置隔离](reference_cc_config_partition.md) — 工作号`claude`(默认纯净)/个人号`claude-personal`；问"怎么切工作个人""claude-personal"先读
 
 ## 平台 / 工具入口
-- [2026-07-13 C/D盘搬迁E记录+后续腾空间地图](reference_disk_migration_20260713.md) — 搬走的东西在E哪、主目录.git已删(不再是git仓)、下次腾空间先读这个
-- [MuMu 模拟器 ADB 地址+启动失败排查+查代理三层法](reference_mumu_emulator_adb.md) — ADB=`127.0.0.1:16384`;本机Clash Meta TUN常开
-- [Unity Editor一直读条诊断链路](reference_unity_editor_stuck_diagnosis.md) — CPU增量+日志三件套定位卡点;UnityAutoQuitter坑
-- [GRFal 工具实现+内部Prompt逻辑](reference_grfal_implementation.md) — grfal/Morphix先读
-- [LoL全英雄技能数值数据源](reference_lol_champion_data_sources.md) — DataDragon伤害字段清零,补数值走CommunityDragon
-- **GWS CLI**: [GWS CLI用法+401重授权](reference_gws_cli.md)
-- **GSheet读写统一工具**: [gsheet-toolkit](reference_gsheet_toolkit.md) — 先import别现写
-- **Event Review Skill**: 入口 `.cursor\skills\event-review-overall\SKILL.md`,脚本 `skills\generate_event_review\`
-- **x3-media skill 位置**: [x3-media skill位置与版本控制](reference_x3_media_skill_location.md) — 周一ClaudeWeeklyBackup自动镜像兜底;memory/skills全局备份机制也记在[后台计划任务清单](reference_background_scheduled_tasks.md)
-- **Notion MCP**: 已配项目级 `https://mcp.notion.com/mcp`
-- [npx skills add 装skill姿势](reference_npx_skills_install.md) — 装/更新skill、公司skill仓前缀
-- [B站视频内容分析链路(复刻Sider)](reference_bilibili_video_analysis.md) — 无cookie拿流关键=html5 playurl接口(绕412);whisper必须local_files_only;批量工具已固化skills\bilibili-transcribe
-- [小红书抓取链路](reference_xhs_scraper.md) — 扫码登录已通(持久profile);⚠️headless必被风控(300012)须headed;正文抓取selector未验完- **Jira API**: [Jira API Access](reference_jira.md)
-- **X3 测试环境(部署/GM/构建/数据)**: [X3 测试环境部署链路](reference_x3_kadmin_deploy.md)
-- **iGame GM 下发**: [igame-gm-send 链路+鉴权](reference_igame_gm_send.md)
-- **2026情人节复盘**: GSheet `1ATIM20rsvf0sft78fLxeNiUK4CIUm4aabqfYO8ZnYNc`;产出 `KB\产出-数据分析\2026情人节\`
+- [C/D盘搬迁E记录+腾空间地图](reference_disk_migration_20260713.md)(主目录.git已删) · [MuMu模拟器ADB+查代理](reference_mumu_emulator_adb.md)(ADB=127.0.0.1:16384) · [Unity Editor读条卡死诊断](reference_unity_editor_stuck_diagnosis.md)
+- [GRFal实现+Prompt逻辑](reference_grfal_implementation.md)(grfal/Morphix先读) · [LoL全英雄技能数值源](reference_lol_champion_data_sources.md)(伤害走CommunityDragon) · [npx skills add装skill](reference_npx_skills_install.md)
+- **GWS CLI**: [用法+401重授权](reference_gws_cli.md) · **GSheet读写**: [gsheet-toolkit](reference_gsheet_toolkit.md)(先import别现写) · **Event Review**: `.cursor\skills\event-review-overall\SKILL.md` · **Notion MCP**: 项目级`mcp.notion.com/mcp`
+- **x3-media skill位置**: [位置与版本控制](reference_x3_media_skill_location.md)(周一自动镜像) · [B站视频分析](reference_bilibili_video_analysis.md)(html5 playurl绕412;skills\bilibili-transcribe) · [小红书抓取](reference_xhs_scraper.md)(headless必风控须headed)
+- **Jira API**: [Access](reference_jira.md) · **X3测试环境**: [部署/GM/构建/数据](reference_x3_kadmin_deploy.md) · **iGame GM下发**: [链路+鉴权](reference_igame_gm_send.md) · **2026情人节复盘**: GSheet`1ATIM20rsvf0sft78fLxeNiUK4CIUm4aabqfYO8ZnYNc`;产出`KB\产出-数据分析\2026情人节\`
 
 ## X2 客户端 / 美术链路
 - [P2 主城皮肤资源结构+61款图库](reference_p2_city_skin_assets.md) — ⚠️P2活跃真源=bugfix分支(dev已死);道具ICON用Path_Icon按key反查;图库HTML在KB\产出-本地化与美术\P2;Unity FBX无头渲染管线=`C:\ADHD_agent\skills\blender-fbx-render\`
@@ -72,44 +62,42 @@
 - [P2 养成线知识体系](reference_p2_progression_kb.md) · [X2 养成线付费价值手册](reference_x2_progression_kb.md) · [P2 付费深度经验(X3借鉴)](reference_p2_depth_lessons_for_x3.md)
 - [X2 服务器schema查法](reference_x2_server_schema_lookup.md) · [X2 挖矿小游戏掉落链路](reference_x2_metro_minigame_rock_drop.md)
 - **X3 仓库/导表**: [X3 gdconfig仓](reference_x3_gdconfig_repo.md) · [X3 代码仓](reference_x3_project_repo.md) · [X3 导表迁移TSV缓存](reference_x3_tsv_export_migration.md)(⚠️两边同改) · [X3 unity-mcp现状起法](reference_x3_unity_mcp.md) · [xlsx git差异对比脚本](reference_xlsx_git_diff_tool.md)
-- **X3 排行榜**: [X3 排行榜配置链+ContainsKey排查](reference_x3_rank_config_chain.md)
-- **X3 数值设计**: [X3 数值设计 skill](reference_x3_numerical_design_skill.md)(0基础可用)
+- **X3 新增ActvType手册**: [权威落地手册](reference_x3_new_actvtype_playbook.md) — 加新活动类型先读;模板=扭蛋机commit b68261ca+3ca446c;msgid=BKDR-131;生成C#手写照样式;sparse worktree姿势;单服共享状态落ServerActivityMetaBase
+- **X3 排行榜**: [配置链+ContainsKey排查](reference_x3_rank_config_chain.md) · **X3 数值设计**: [skill](reference_x3_numerical_design_skill.md)(0基础可用)
 - **X3 BP加档/迁移**: [X3 BP Type迁移落地知识](reference_x3_battlepass_type_migration.md) — 含3活动通行证付费监控口径(包映射/SQL/同窗基线),复查BP收入先读
-- **X3 服务器活动重复**: [X3服务器活动重复2条根因+诊断](reference_x3_server_activity_duplicate.md)
-- **X3 客户端配置脱节客诉**: [客户端旧配置快照断代诊断法](reference_x3_client_stale_config_diagnosis.md) — 玩家见旧价格/缺商品报资源不足→用gdconfig git断代
-- **X3 活动类型**: [X3 ActvType权威枚举](reference_x3_actvtype_enum.md)
-- **X3 推币机**: [推币机配置全景+HUD显隐判定链](reference_x3_coinpusher_config.md) — HUD出现=服务器真开了活动;单服循环版106504挂每周六自动TC不走iGame
-- **X3 拼图活动**: [X3 拼图活动(ActvType=18)配置链+换皮法](reference_x3_puzzle_activity.md)
-- **X3 配置/字段**: [X3 配置知识库](reference_x3_config.md) · [X3 TimeCycle](reference_x3_timecycle.md)(openpyxl坑) · [X3 Reward表写入规则](reference_x3_reward_table_rules.md) · [X3 累充隔离机制](reference_x3_recharge_isolation.md) · [X3 积分活动配置体系](reference_x3_score_activity.md)(ScoreID=603陷阱) · [X3 customParam驱动可热部署活动](reference_x3_customparam_activity_pattern.md)
-- **X3 数仓主数据**: [X3 dim.iap 节日礼包添加](reference_x3_dim_iap_master.md)
+- **X3 圈服绕行雷**: [OpenServerList/CloseServerList含已合并服→导表整体abort](reference_x3_actvonline_serverlist_merged_gate.md)(圈服快照必扣Server.MergedServers;schema门PASS≠能导表;含本地导表产物验证通用姿势) · **X3 服务器活动重复**: [2条根因+诊断](reference_x3_server_activity_duplicate.md) · **X3 客户端配置脱节客诉**: [旧配置快照断代诊断](reference_x3_client_stale_config_diagnosis.md)(见旧价格/缺商品→gdconfig git断代) · **X3 活动类型**: [ActvType权威枚举](reference_x3_actvtype_enum.md)
+- **X3 大富翁存钱罐**: [Voyage存钱罐机制+复购化实现](reference_x3_voyage_piggybank.md) — 与美酒储蓄罐两套系统;**代码已落地** feature/voyage-piggybank-tiers(worktree=x3-wt-piggybank);待配置/prefab/端到端;CSShared改动须随完整发版
+- **X3 推币机**: [配置全景+HUD显隐判定链](reference_x3_coinpusher_config.md)(HUD出现=真开活动;单服循环106504每周六自动TC) · **X3 拼图活动**: [ActvType=18配置链+换皮](reference_x3_puzzle_activity.md)
+- **X3 大转盘/累充**: [大转盘硬性10格+累充插档安全法+Reward名字列假标签](reference_x3_luckywheel_recharge_config.md) — 转盘加奖励只能换格;充值点10点/$1;尼罗投放全景(佩特拉=转盘0.01%+榜169前3/猫女仆=兑换10000币/圣甲虫已删)
+- **X3 配置/字段**: [配置知识库](reference_x3_config.md) · [TimeCycle](reference_x3_timecycle.md)(openpyxl坑) · [Reward表写入规则](reference_x3_reward_table_rules.md) · [累充隔离机制](reference_x3_recharge_isolation.md) · [积分活动配置](reference_x3_score_activity.md)(ScoreID=603陷阱) · [customParam热部署活动](reference_x3_customparam_activity_pattern.md) · **数仓主数据**: [dim.iap节日礼包](reference_x3_dim_iap_master.md)
 - **X3 礼包/弹窗**: [X3 礼包开启机制速查](reference_x3_pack_open_mechanisms.md)(表头row5坑) · [X3 礼包弹窗背景渲染优先级](reference_x3_pack_panel_rendering.md) · [X3 装饰阶梯礼包tab图来源](reference_x3_pack_tab_icon.md) · [X3 付费机制速查](reference_x3_monetization_mechanics.md)
-- **X3 转盘客诉**: [X3 转盘中奖未到账客诉核查口径](reference_x3_luckywheel_complaint_check.md)
-- **X3 文案排查**: [X3 自动文案/邮件名字空白排查](reference_x3_autotext_empty_debug.md)
+- **X3 转盘客诉**: [中奖未到账核查口径](reference_x3_luckywheel_complaint_check.md) · **X3 文案排查**: [自动文案/邮件名字空白](reference_x3_autotext_empty_debug.md)
 - **X3 客户端/界面**: [X3 i18n本地化工作流](reference_x3_i18n_workflow.md)(backup污染坑) · [X3 i18n改动运行时验证姿势](reference_x3_i18n_runtime_verify.md)(不重启Play热重载断言;客户端bytes新时间戳≠新内容) · [X3 客户端资源位置&DK注册](reference_x3_client_resources.md) · [X3 新增活动界面链路](reference_x3_client_new_ui_workflow.md)(day锁坑) · [X3 航海之路地块美术链路](reference_x3_voyage_art_chain.md) · [X3 进度礼包心形展示位](reference_x3_schedulepack_heart_display.md)(黑心坑)
 - **X3 外显**: [X3 八大外显模块→资源路径总表](reference_x3_cosmetic_resource_paths.md) · [X3 纪念卡/英雄皮肤属性配置链路](reference_x3_cosmetic_attribute_chains.md)
+- **X3 深海纪念卡(远航之歌)**: [两集市/两货币/两卡+卡价四口径+3模块设计](reference_x3_deepsea_memorial_card.md) — 查纪念卡定价/兑换/设计先读防混(转盘集市1340宝珠1201=远航之歌 vs 大富翁集市1341代币1202=美人鱼梦境);93.5%走免费兑;下期优化3模块(老卡贬值宝箱/基础卡/高级大富翁主题卡)
 - [X3配置知识库交接文档](reference_x3_config_handover_doc.md)
 
 ## 数据查询 / 数仓
 - [AI-to-SQL Skill](reference_ai_to_sql.md) — Datain数仓Trino SQL
 - [X3 数仓外显/道具拥有率查法](reference_x3_datain_asset_query.md)(asset_id前缀坑) · [X2 数仓资产流水/被回收名单查法](reference_x2_datain_asset_query.md)(裸数字无前缀) · [P2数仓时区](feedback_p2_datain_timezone.md)(北京时间不转UTC)
 - **X3节日数据**: [X3 节日收入日监控+日报](reference_x3_festival_monitor.md) · [X3 节日基线月环比分析法](reference_x3_baseline_mom_compare.md) · [X3 节日日报模板完整说明](reference_x3_festival_report_template.md) · [X3 节日上线服龄覆盖+DAU查法](reference_x3_server_coverage_query.md) · [X3 节日付费表现](reference_x3_festival_performance.md)
-- **X2节日数据**: [X2 节日收入日监控](reference_x2_festival_monitor.md)
-- [X2 周卡「没领到7次」工单数仓核查口径](reference_x2_weekly_card_datain_query.md)
-- [挖矿回归漏斗模板](reference_mining_funnel_template.md) · [BINGO卡包日志查询](reference_bingo_asset_logging.md)(用任务ID查)
+- **X2节日数据**: [收入日监控](reference_x2_festival_monitor.md) · [周卡没领到7次工单核查](reference_x2_weekly_card_datain_query.md) · [挖矿回归漏斗模板](reference_mining_funnel_template.md) · [BINGO卡包日志查询](reference_bingo_asset_logging.md)(任务ID查)
 
 ## 产出路径 / 生产
 - [全链路产出路径](reference_output_paths.md) — 四环节+美术归档固定路径
 - [X3英雄皮肤视频生产知识库](reference_x3_hero_skin_video_production.md) — 替代Spine展示视频
 - [X3 AI出图工作流(角色换装+UI换皮)](../../../../ADHD_agent/KB/方法论/X3_AI出图工作流_角色皮肤换装+活动UI换皮_世界杯案.md) — §8出图流程/§12界面改造五步法
-- [X2 美需生成 skill](../../../.claude/skills/x2-art-requirement/SKILL.md) · [X3 美术资源规范](reference_x3_art_resource_spec.md) · [gdesign(.designdeck)位置与陷阱](reference_gdesign_designdeck.md)
-- [透明资源必须差分法验真透明](feedback_transparent_asset_diff_check.md)
+- [X2 美需生成 skill](../../../.claude/skills/x2-art-requirement/SKILL.md) · [X3 美术资源规范](reference_x3_art_resource_spec.md) · [gdesign(.designdeck)位置与陷阱](reference_gdesign_designdeck.md) · [透明资源必须差分法验真透明](feedback_transparent_asset_diff_check.md)
 
 ## 待办 / 周期
 - [X2拓荒节装饰文案重写(等图)](project_x2_pioneer_decoration_copy_todo.md) — 5装饰,含表坐标/key
-- [节日开发月度周期](project_festival_dev_cycle.md) · [X3 下期节日优化待办](project_x3_nile_next_phase.md) · [X3 英雄皮肤投放调整](project_x3_skin_deployment_adjustments.md)
-- [播客下载+转文字链路](reference_podcast_download_transcribe.md) · [API Provider切换记录](project_api_provider_switch.md)
+- [节日开发月度周期](project_festival_dev_cycle.md) · [X3 下期节日优化待办](project_x3_nile_next_phase.md) · [X3 英雄皮肤投放调整](project_x3_skin_deployment_adjustments.md) · [播客下载+转文字链路](reference_podcast_download_transcribe.md) · [API Provider切换记录](project_api_provider_switch.md)
 
 ## 工作流
+- **数据分析三件套(回归=模块装配:先建框架→选模块→套规则)**:
+  - [开工必过清单(浓缩版)](workflow_data_analysis_must_check.md) — **开工先扫**;先建框架定模块清单/逐模块套规则卡/三件套/结论=图+一句话;收工派task-checker type=data-analysis
+  - [★模块库(设计动作→靶映射)](reference_data_analysis_module_registry.md) — **模块=一个设计动作,回答"有没有达到目的";目的定靶指标,靶倒推口径**(排行榜→头部付费/阶段奖励→节点转化);每卡=验证意图/靶/口径/踩坑;根治"范围瞎搞"=问题决定口径非自选;库里没有=现建卡
+  - [完整方法论手册](reference_data_analysis_playbook.md) — 认知/标准/流程/踩坑四层+框架装配三步,P2+X2+X3三游戏30+回归提炼标复现度;冷启动接管入口,通用新规律归口此文件+模块库,案子专属进各案「口径统一.md」
 - [项目收口接管化归纳范式](workflow_handover_assetization.md) — 接管化判据+三件套
 - [配置改动备份规范](workflow_config_backup_kb.md) · [配置BUG工作流(双Agent)](workflow_config_bug_fix.md) · [BUG修复运维规范](workflow_bugfix_ops.md)(改BUG前必读)
 - [quality-gate验收系统+交互模块](project_quality_gate_and_interaction_module.md) · [验收清单/double-check设计四原则](workflow_checklist_design_principles.md) · [策划案设计质量验收(design-merit)](workflow_design_merit_critique.md) · [交互原型素材化工作流](workflow_interaction_prototype_assetization.md)
@@ -138,7 +126,7 @@
 - [改sheet/策划案过审提速少返工](feedback_sheet_edit_review_efficiency.md) · [配置前先追完整链路](feedback_config_chain_first.md) · [配置校验必须端到端](feedback_verification_end_to_end.md) · [改配置前先确认真源与落地路径](feedback_confirm_source_of_truth_before_edit.md) · [配置写完必须反查验证](feedback_plan_index_must_be_fixed.md) · [DK资源层工作流](feedback_dk_resource_workflow.md)
 - [X3 写配置前必须确认分支](feedback_x3_branch_check.md) · [X3 分支策略](feedback_x3_branch_strategy.md) · [X3 ActvOnline.MailID必填](feedback_x3_actv_mailid_check.md) · [X3 主城皮肤=岛屿皮肤](feedback_x3_island_skin_terminology.md)
 - [模块数据必带付费玩家付费率](feedback_module_metrics_payrate.md) — 付费率/ARPU/ARPPU三件套缺一不可,档位表逐档带
-- [节日ARPU分母用当日总付费人数](feedback_x3_festival_arpu_denominator.md) · [X3 TOKEN actual_charge单位坑](feedback_x3_token_actual_charge_unit.md)(代币=USD×100) · [数据回归必须先问设计方案](feedback_data_regression_ask_design_first.md) · [数据回归分析方法论](feedback_data_regression_methodology.md) · [随机礼包期望值调整原则](feedback_numerical_design_random_pkg.md)
+- [节日ARPU分母用当日总付费人数](feedback_x3_festival_arpu_denominator.md) · [X3 TOKEN actual_charge单位坑](feedback_x3_token_actual_charge_unit.md)(代币=USD×100) · [数据回归必须先问设计方案](feedback_data_regression_ask_design_first.md) · [数据回归分析方法论](feedback_data_regression_methodology.md) · [随机礼包期望值调整原则](feedback_numerical_design_random_pkg.md) · [X2→X3换皮数值走相对守恒缩放别手搓凑盘子](feedback_x3_progression_price_from_x2_handbook.md)(照抄X2投放结构×k=目标ROI÷ROI_x2;养成手册单价仅旁证;收工必派task-checker)
 - **GSheet**: [写入兼容性陷阱](feedback_gsheet_write.md) · [append行顺序陷阱](feedback_gsheet_append_order.md) · [配置表写入前置清单](feedback_gsheet_config_write_checklist.md) · [写入安全规范](feedback_gsheet_write_safety.md)(例外[1011本地化表不备份](feedback_x2_i18n_table_no_backup.md)) · [策划案格式规范](feedback_gsheet_design_doc_format.md)
 
 ## Feedback（换皮 / 环境 / 脚本坑）

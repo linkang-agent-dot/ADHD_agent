@@ -3,6 +3,7 @@ name: X3 TimeCycle 配置知识
 description: X3 项目里 TimeCycle 表与 ActvOnline 的绑定机制、活动不触发的常见原因
 type: reference
 originSessionId: f6f8a545-b15c-4f6e-a240-0fc5532e47ae
+modified: 2026-07-23T09:52:31.468Z
 ---
 ## 配置表位置（2026-05-25 迁移到 Git）
 - **新仓库**：`C:\x3\gdconfig\`（remote `https://git.tap4fun.com/x3/gdconfig`）
@@ -16,6 +17,15 @@ originSessionId: f6f8a545-b15c-4f6e-a240-0fc5532e47ae
   from openpyxl.descriptors.base import String
   tbl_mod.Table.ref = String(allow_none=False)
   ```
+
+## 🔴 铁律：下线/迁移活动用 `TC=0` 保配置，别用 `IsOn=0`（IsOn=0 会清实例=丢数据）
+（2026-07-23 冠军之路排期迁移事故坐实，详见 [[project-x3-wonder-schedule-mismatch]]）
+- **`IsOn` 是 ActvOnline 的导表过滤列**（tsv col7=bool；生成的运行时 `client/.../CfgProtos/ActvOnline.cs` 里**没有这个字段**）→ IsOn=0 的行**不导入配置** → 运行时 `CActvOnline.I(cfgId)` **返回 null**。
+- 后果：`ActivityMgr.OnLoadActivity`（ActivityMgr.cs:963-967，**服启动全量 load 实例时**）遇 `cfg==null` 就把该 ServerActivity `DeleteActivity`（日志「cfgId is off, remove activityId」）→ **跑过/在跑该活动的服一重启，实例被删、玩家进度/名次/结算奖励丢失**。purge **只在重启触发，配置热更不触发**（其它 cfg==null 处只 continue/return 不删）→ 没重启的服实例还在、可救。
+- **正确姿势**：要停一个还在跑/已产生玩家数据的活动 → **`IsOn=1` 保留 + `TimeController(TC)=0`**（配置行在=实例不被清+照常结算；TC=0=无触发不再开新实例）。=船只手册迁移范式「老TC=0+新活动互斥」。
+- ⚠️**TC=0 会被导表校验拦，必须同时改导表器放行（2026-07-23 实测）**：`gdconfig/Tools/table_exporter/PostProcessData.py:1804 deal_actv_online_data` 对 IsOn=1 的行强制 `TimeController≠0`，报「活动ID:X 时间控制器ID:0 不能是0」。豁免三口（line 1668/1802）：①`SKIP_TIMECYCLE_CHECK_ACTIVITY_TYPE`（按 ActvType，已含 MULTI_STAGE_RANK/WONDER_SCORE/WC_GUESS 等榜类）②`kvkSeasonActivityCfgId` ③`ScheduleActvIDSSet`=表 `ActvGroupSchedule.ActvIDS`（但那是"子活动随主活动开"表，塞进去会改成子活动语义，别用）。**正解=把该活动 ActvType 加进 `SKIP_TIMECYCLE_CHECK_ACTIVITY_TYPE`**（冠军之路 case 已加 `ACTV_TYPE_HERO_CHAMPION_ROAD`=55）。**这条导表器改动必须随 tsv 一起提交 gdconfig 并传到 qa/master**，否则只推 tsv、jolt 导表必挂 line 1804。⚠️另 line 1695 `if not item.IsOn: continue`=IsOn=0 行整行不导出的铁证（跨表通用，ActvGroupSchedule 表头注释也写「IsOn 0/空=不导出」）。
+- **例外**：`IsOn=0` 只适合「彻底废弃、且确认没有在途实例/玩家数据」的活动（等于顺带清库）。凡「迁移开启时机 / 换排期 / 临时停」都用 TC=0。
+- 迁移开启时机时**两件事一起查**：①本铁律（下线姿势 IsOn vs TC）②服龄带交集双开（老关前已开过的服 + 新窗口覆盖同批 → 双开，见 [[project-x3-wonder-schedule-mismatch]]）。
 
 ## 活动→TimeCycle 绑定机制
 活动的时间调度**不看**子活动表（ActvLuckyWheel / ActvExchange 等）或 TimeCycle 编号是否等于 ContentID，而是看：

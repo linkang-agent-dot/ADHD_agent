@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: b2f737cc-3f63-4bec-a64b-fe41d0162e6e
+  modified: 2026-07-24T10:17:17.510Z
 ---
 
 X3 客户端 Unity 工程可用 **unity-mcp**（CoplayDev）做 Unity Editor 自动化，做 X3 客户端 GUI / prefab / 资源类活时可考虑走它。
@@ -51,6 +52,28 @@ python "../.claude/skills/DebugUtils/scripts/client.py" eval --code "1+1"   # �
 
 **⚠️ Edit 模式自测的硬天花板(2026-06-26 派子agent自测220实测)**：DebugUtils 桥能连 Editor、反射求值正常(`Application.isPlaying`/`Time.frameCount` 等只读静态都读得到),但 **Editor 没进 Play 模式时**：①**无运行时**→`NetManager`(`Singleton<NetManager>`)单例**未实例化**,`Instance/RawInstance` 反射 "Member not found"→**读不到客户端连的环境(dev/beta)和 serverId**(连接信息只在运行时 `NetManager._address/_port`);②**无 Game View 渲染**→`ScreenCapture.CaptureScreenshot` 调用返回 ok 但 **PNG 永不落盘**(即便 tick 多帧),截图取证全废;③进不到任何 UI/界面→活动/礼包/奖励类**运行时验证一概够不到**。**结论:要做"某服运行时/界面/奖励"自测,必须先让 Editor 进 Play 并用测试账号登录到目标服(会改现场,需先确认)。光连桥+Edit模式只能验"桥通+是哪个工程",验不了任何服务端/运行时的东西。** 另:eval 表达式解析器**不认算术运算符 `+` 等**(报 FormatException),只能成员访问/属性读/静态方法调用,别写 `1+1`。继承自泛型基类 `Singleton<T>` 的静态 `Instance` 也解析不了(需 invoke-chain 或具体实例字段)。
 
-**✅ Play 模式下 eval 查「连的哪个服/哪个玩家」固定姿势（2026-07-13 实测）**：`Logic.G.Player.ServerID`（int 服号）+ `Logic.G.Player.ID`（玩家ID，定义在基类 `ClientEntity.ID`，**不是** PlayerID/Uid/EntityID——这些成员都不存在）。G 类必须带 `Logic.` 全限定（裸 `G.Player` 报"无法解析类型起点"）。本会话不在 x3-project 目录起也能用——DebugUtils 桥走 Bash 调 client.py，不依赖 MCP local scope。
+**✅ Play 模式下 eval 查「连的哪个服/哪个玩家」固定姿势（2026-07-22 源码复核）**：优先读 `Logic.G.ServerID`（当前登录服，`G.cs` 的静态属性）+ `Logic.G.PlayerID`（当前玩家 ID）；先断言 `Logic.G.PlayerID > 0`，否则只代表 Editor/桥在线、玩家尚未登录。G 类必须带 `Logic.` 全限定（裸 `G.Player` 报"无法解析类型起点"）。本会话不在 x3-project 目录起也能用——DebugUtils 桥走 client.py，不依赖 MCP local scope。
 
-相关：[[reference_x3_project_repo]] [[reference_x3_client_new_ui_workflow]]
+**✅ DebugUtils 桥 `recompile` 验代码改动能否编译（不进 Play，2026-07-24 士兵装备服龄门 T2 实测）**：验"某处代码/生成码改动 Unity 整体编译过不过"不用进 Play、不用开第二个 editor——`python "../.claude/skills/DebugUtils/scripts/client.py" recompile --timeout 180` 会触发脚本重编译并等完成，返回 `{success:bool, hasErrors:bool, compilationTime:秒, message}`。手法：把改动落到 .cs（如往 `FunctionType.cs` 插一个枚举成员）→ recompile → 看 `hasErrors:false` = 编译过 → `git checkout` 还原 → 再 recompile 回基线。CSSharedHotfix 这类 hotfix 程序集重编译 ~120s（会超单次 120s 前台超时，跑进后台等通知即可）。纯加法且无引用的枚举成员编译必过,是低风险可逆验证。
+
+**⚠️⚠️ 验"配置分支的运行时/T4"必须对齐基线:开着的 client editor 基线常≠配置分支基线（2026-07-24 血泪）**：X3 配置分支多基于 gdconfig `dev`,但手头开着的 client 工程常在 `dev_festival`（节日线）。二者**分叉极大**——实测 client `dev` vs `dev_festival` **6485 文件不同(5972 在 Assets)** → 把开着的 dev_festival editor 切到 dev 基线 = 近 6000 资源重导入,不现实；且 gdconfig `dev` vs `dev_festival` 的 ActvOnline 差 **391/399 行**,基于 dev 导的 bytes 硬盖 dev_festival 会破坏其节日活动。**结论:dev 基线的配置分支,其运行时/Play-mode(T4)必须在 dev 基线的 client 上跑,不能借用 dev_festival 的 editor**。先例 `talent-awaken-gate-35d`(35天门)的 client 同名分支就是**基于 client `dev`** 建的——这是"配置分支→client 同名分支带配置制品"的标准模式,新配置分支照建。**怎么建+填充(2026-07-24 士兵装备实操)**:① `cd x3-project && git branch <name> origin/dev && git push origin <name>`(只建 ref+push,不 checkout,不碰当前分支/WIP;client 的 ProtoGen .bytes 走 **Git LFS**,别手动塞 bytes) ② 跑 `jolt_verify.py <name>`——它传 `branch=<name> code_branch=<name>` 给 Jenkins「X3导配置」job,**导表会把生成配置(ActvOnline/FunctionUnlock/TimeCycle/i18n×18语 bytes + AllTableDataMd5 + FunctionType.cs)push 到 client 同名分支**(实测 build SUCCESS→client 分支 tip 前进+22文件配置提交)。这一步的 Jenkins SUCCESS 也是导表产物层最权威的 T1 确认(比本地导表硬)。之后 dev 基线出包该 client 分支即可跑 Play-mode/T4。**导表产物层(bytes/枚举/i18n)的验证不受此限**(那是纯数据校验,基线无关,走本地导表+python 解 bytes,见 [[reference_x3_actvonline_serverlist_merged_gate]])。
+
+**✅ Play 模式验「活动/功能门」显隐的实战手法（2026-07-24 士兵装备60天门 T4 实测，一整套跑通）**：
+- **进/退 Play**：`client.py invoke --type UnityEditor.EditorApplication --member EnterPlaymode/ExitPlaymode --kind call`。进 Play 触发域重载，桥短暂"连接被拒"，游戏 GameBoot 引导~75s 后自动登录（清库后建新号）。登录成功判据=`Logic.G.PlayerID`>0（服务器日志 `UID[x] OnLogin`+`LoginAck errCode:0`）。
+- **🔴 eval/invoke 解析器硬限（踩了一圈）**：①**不支持 `typeof`**（"无法解析字面量 typeof"）②**不支持泛型**（`GetMeta<T>()` 调不了）③**重载歧义**（`GetComponent(Type)` vs `GetComponent(String)` 报"请提供 argTypes"，但 eval 表达式和 invoke-chain 的 step 都没法带 argTypes）④**invoke 返回对象是整体序列化、无实例句柄**（拿不到 instanceId 去 `--target-instance-id` 链式）⑤ Singleton<T>.Instance 解不了。**逃生门=找【静态方法/静态扩展方法】直接调**——玩家 meta 的实例方法够不到时，翻 `UIHelper.*` 等静态包装。
+- **✅ 查功能门解锁状态的确定性姿势**：`client.py invoke --type "UI.UIHelper" --member IsUnlock --kind call --args <functionID> false --arg-types "GameCommon.Const.FunctionType" "System.Boolean"` → 返 true/false。`UIHelper.IsUnlock(this FunctionType,bool)` 是**静态扩展方法**（`UI/Tools/UIHelper.FunctionUnlock.cs:8`），绕开了取玩家 FunctionUnlockMeta 实例的所有障碍。这是验 FunctionUnlock 门（如服龄门 RequireFunction→FunctionUnlock→TimeCycle）最干脆的一招。
+- **活动渲染位置判定**：`ActvOnline.MainEntrance=空 + Calendar=1` → 活动在**活动日历**（`UIActvMainPanel`/`UIActvCalendar`）里显示，**不在主城 HUD 悬浮**。所以某活动"主城看不到"未必是门关，先查 MainEntrance/Calendar 列判断它本该在哪显示。打开活动中心=静态 `UI.UIHelper.OpenActivityPanel(long activityId, bool)`。日历过滤用 `ActivityMeta.CheckActivityIsUnlock/CheckCanShowActivityErr(cfgId)`（`ActivityMeta.cs:447`，含 RequireFunction→FunctionUnlock 门）。
+- **GM 造门测试态**：本地服 GM（`x3_gm.py "!gm @<uid> ..."`）`GMAddServerActivityByCfgId <cfg> <分钟>` 开活动 → `GMSetServerTimeOffset <开服日+N天>` 推服龄过门（**只能前进不能退**；跳时间后原活动窗口若被跨过要 Remove+重开）→ **退登重进** Play 让客户端重新评估门 → `UIHelper.IsUnlock` + 截图取证。dev 基线配置分支的完整实机链=切分支(6000资源重导~90s)→重编 Hotfix→drop_db 清库→起 Game→wait_server_info→起 Map→Play 登号→GM 造态，见 [[workflow_x3_local_server_gm_telnet]]。
+
+相关：[[reference_x3_project_repo]] [[reference_x3_client_new_ui_workflow]] [[reference_x3_actvonline_serverlist_merged_gate]] [[workflow_x3_local_server_gm_telnet]]
+
+## Unity 官方 CLI：X3 当前定位（2026-07-22 实测）
+
+- 本机已安装官方实验版 `unity.exe 1.0.0-beta.2`：`C:\Users\linkang\AppData\Local\Unity\bin\unity.exe`，用户 PATH 已写入。
+- `unity editors -i --format json` 可识别本机三套 Unity 2022.3；X3 工程版本为 `2022.3.61f1c1`。
+- CLI 本体可用于编辑器/模块管理、打开项目、批处理 `run`、`build`、EditMode/PlayMode `test`、日志与诊断。
+- 官方 `com.unity.pipeline`、`unity command`、`unity status` 连接、官方 `unity mcp` 和实时 C# eval 依赖 Unity 6.0 LTS+；**X3 当前禁止尝试安装 Pipeline**。CLI 帮助里出现这些命令，不代表 Unity 2022 项目侧可用。
+- X3 已有构建入口：`TFWEditor.X3Builder.BuildAndroid`、`BuildAndroidAAB`、`BuildExeChoice`。CLI 只负责批处理启动，SDK/签名/资源/HybridCLR/产物路径仍由 X3 构建链负责。
+- Codex 托管 PowerShell 可能缺 `ALLUSERSPROFILE`，CLI 会报 `Unable to resolve config folder`；仅对当前进程补 `$env:ALLUSERSPROFILE='C:\ProgramData'`，不要为此改系统级配置。
+
+**固定路由**：编辑器外层生命周期/批处理 → Unity CLI；场景/Prefab/当前 Editor → CoplayDev Unity MCP；Play Mode 玩家状态/截图/运行时取证 → DebugUtils；官方 Pipeline/eval → 仅 Unity 6+。详细执行门见 `C:\Users\linkang\.agents\skills\x3-feature-test\references\unity-cli-routing.md`。

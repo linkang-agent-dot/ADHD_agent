@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 8472eced-268e-4dc5-8a24-08559cc68e5c
+  modified: 2026-07-20T12:52:33.045Z
 ---
 
 X3 世界杯活动系列策划案，2026-06-09 立项。侧重**深度付费**。
@@ -31,6 +32,12 @@ X3 世界杯活动系列策划案，2026-06-09 立项。侧重**深度付费**�
 > ⑤**新加client资源(png/DK)在游戏里"没生效"·纯AB没重建**:Unity Play/打包客户端读**AB包**,新merge的asset(如表情宝箱`WC_SF_EmoteChest.png`·MR!684)+改的item图标config(1154 c21→新DK)**没烘进旧AB**→显示旧图/回退。**症状=只新加的那个不对、老的(已在AB)都正常**。**判据**:DK桥验解析对(`client.py invoke TFW.DisplayKeyExtension.ToDisplayKeyAssetPath`)+ProtoGen `Item.bytes` grep到新DK字符串→数据全对,就是AB没重建。**修**:①合dev走正式构建出包(AB自动含) ②本地`Tools/Project Builder/AssetBundle/Build Asset Bundles`重打 ③切直读模式(开关没搜到)。**别再翻配置/DK**(那层没问题)。⚠️改ProtoGen `.bytes`文件+Refresh不够,Play模式配置开局载入内存·要stop/play重进才重载·且若读AB还得重打AB。
 > **✅ 表情 client 已落地(2026-07-08·commit 1aedacf4822·origin/dev_festival已验)**:每国2个DK——动图`DK_WC_SF_{码}`→`client/Assets/Res/UI/Gif/WC_SF_{码}.bytes`(160透明GIF·非LFS)+静态icon`DK_icon_global_WC_SF_{码}`→`client/Assets/Res/UI/Spirits/Emoticons/Icon/icon_global_WC_SF_{码}.png`(256 sprite·LFS)。Display_Emoticons追加16(去DK_前缀·guid读meta·exportCode0)+Path_Emoticons 140→156(整体str.lower重排防两交替家族DK_WC_SF/DK_icon_global非单调被编辑器静默丢·KB铁律)。落地脚本`scratchpad/land_emote_dk.py`。⚠️提交时只add自己34文件,client仓当时有一大批`RoleF*_mask.png.meta`的guid churn(切分支带出·别提交见KB)。
 > **✅ 客户端头像框 DK 已确认完整(2026-07-08 复核·此前误报已澄清)**:8国框 Display_Personalise=1/Path_Personalise=3(key+value.key+objPath)/png在树上——**全部注册正确**。⚠️**教训**:先前"框DK=0条缺口"是**误报**,根因=用 `git show <ref>:file | grep <DK>` 查 .asset **不可靠**(连确定存在的 DK_WC_ARG 都返回0·疑编码/pager),错判成缺。**查client DK真实状态必用 `git grep -c "<DK>" <ref> -- <file>`**(KB `reference_x3_client_resources` line173 四格矩阵法),别用 git show|grep。
+
+## 🔴 跨服排行榜1004被推币机占用·世界杯被挪到1005且有残留BUG(2026-07-20查实·master=dev同状态)
+- **现状(master)**:RankCfg **1004=推币机跨服榜的实体**(奖励槽100401-407→825320-26推币机奖励·上榜条件4000)但**名字却写着"活动-世界杯-跨服积分排名"**;**1005=世界杯跨服榜实体**(槽1005005-8+100413-15→30581-87)但**名字空白**。运行时引用:ActvOnline 101516世界杯福箱→c21=**1005**;106502疯狂夺宝总动员(推币机)→c21=**1004**。
+- **两个实质BUG**:①**槽1005004(51-100名→30588世界杯奖励)挂错在1004下**——世界杯榜1005缺51-100名奖励(51-100名玩家结算拿不到)·推币机榜1004的51-100名双槽重叠(825326+30588);②1004/1005名字互换错乱(客户端世界杯榜标题空白·推币机榜显示世界杯名)。
+- **演变链(冲突合并连环车祸)**:6/16 linkang cfe8253f 世界杯克隆情人节跨服榜占1004(槽100401-408→30581-88)→推币机分支(hehaofei)同期也占1004+同槽号(825320-26·经6faf7736重编号)~6/17进dev→**6/22 linkang合dev进dev_festival(ac2e54f1)冲突处理:世界杯1-50名挪去1005·但51-100名槽100408漏挪留在1004(=BUG诞生点)**→6/24 zengcheng11合dev进dev_x3_800_IPO(2351017a):IPO持股榜又占1005001-3槽号·把世界杯槽重编成1005004-8(1005004仍挂1004没修)→名字字段在后续多个合并(864b6c46/87bf3864/d7130690)反复翻转成现在的互换态。
+- **教训**:跨服榜ID是稀缺命名空间·多分支并行开发抢同ID(1004被世界杯/推币机、1005被世界杯/IPO两度撞)·冲突全靠合并时手工重编号=必留残留;与[[workflow_x3_merge_conflict_audit]]的丢行审计互补(这类"行还在但挂错爹"审计查不出)。世界杯已7/15结算·51-100名是否漏发需补查。
 
 ## 🏆 16强竞猜准备(2026-07-03·待用户拍档位/排期)
 - **清单HTML**=`KB\产出-数值设计\X3_世界杯\世界杯16强竞猜_部署清单.html`(生成器`_gen_16强清单.py`可复跑·队伍/时间变改它重跑)。**ESPN真实R16对阵(8场)**：M1加拿大vs摩洛哥7/4 17:00Z/M2巴拉圭vs法国7/4 21:00Z/M3巴西vs挪威7/5 20:00Z/M4墨西哥vs英格兰7/6 00:00Z/M5葡萄牙vs西班牙7/6 19:00Z/M6美国vs比利时7/7 00:00Z/**M7澳埃胜vs哥加胜(TBD)**7/7 16:00Z/**M8瑞士vs阿佛胜(TBD)**7/7 20:00Z(后2场等R32 seq14-16·7/4打完定队)。
@@ -673,3 +680,8 @@ ESPN QF 4场·因R16 M1-4已打→**2场已定对阵未部署**:QF1**法国vs摩
 - **决赛=西班牙1-0阿根廷·西班牙夺冠**(ESPN)。总竞猜6697人·猜中**3749笔/3738人**·命中率55.8%·**mailId 4756774**(status2待放行)。GM加分`发奖csv\GM纯命令_FINAL-ESPvARG.txt`(426KB单块<490K无需切)待粘。settled已含FINAL-ESPvARG。
 - **settle_from=2026-07-17(决赛开盘日)隔离生效**:决赛ESP赢家3738 vs SF-ESPvFRA的ESP赢家3233·SF独有1861被正确剔除(没重复发)·交集1372(两轮都押ESP)。**再次验证每轮结算必改settle_from=本轮开盘日**。
 - **世界杯竞猜全流程收官**:R32→R16→QF→SF→FINAL全部结算发奖完毕(季军赛不上竞猜)。决赛外显ESP/ARG框已随$9.99/$19.99礼包在下注时发放。
+
+## ★世界杯落幕庆典邮件(2026-07-20) — 案子闭环
+- **全参与者庆典邮件已发**:标题「世界杯落幕·庆典抽奖券相赠」·收件**13665名世界杯参与者**(买过竞猜礼包894%·1170-2250全83服·去重服+人)·奖励**世界杯抽奖券1146×3**(合计40995)·**20语言**·**mailId 4756794**(status2待放行)。内容=致谢+券×3+**足球宝贝限定皮肤7/22 00:00 UTC下架·冲榜提醒**。
+- **★发全服庆典/参与者邮件手法(可复用)**:①收件名单=datain查`ods_user_asset asset_id='Item_1146' reason_id='buy_gift' reason_sub_id LIKE '894%'`去重(server_id,user_id)·`TRY_CAST(server_id AS INTEGER) BETWEEN 1170 AND 2250`·TRINO_HF·无settle_from(全周期participant)→写GBK 6列CSV(col3=`[1146*3]`)。②内容JSON=20语言`{lang:{title,body}}`(翻译子agent出)·**铁律:title/body无换行\n、无emoji(否则iGame导入失败)**。③发=`igame_mail_send.py --csv X --content Y --remark Z --send`(走send/players不用广播接口·用户明确"不用广播")。产物`发奖csv\庆典_全参与者_1146x3.csv`+`content_庆典.json`。
+- **★世界杯竞猜案·完整闭环**:R32→R16→8强→半决赛→决赛(西班牙1-0阿根廷夺冠)全部结算发奖·季军赛不上竞猜·决赛外显ESP/ARG框随礼包发放·收官全参与者庆典邮件。全程踩坑教训(settle_from隔离/datain集群/GMPrint不可靠/扩服83/礼包跨轮复用)见本topic各段。

@@ -87,6 +87,9 @@ P2 建筑皮肤的特效**不在 prefab 依赖树里**：prefab 上 10+ 个挂�
 ## X2→X3 UI prefab 迁移必补：根节点组件套装（2026-07-20 扭蛋机实证）
 X2 界面 prefab 根节点没有 X3 UIBase 要求的组件——运行时 `UIBase.InitCanvas`（UIBase.cs:681）直接设 `canvas.renderMode`，根无 Canvas = 打开即 `MissingComponentException`（Editor.log 栈顶 `WndMgr show <UI名> ... MissingComponentException: There is no 'Canvas'`）。**迁移完必对照任一 X3 正常界面（如 UIActvLaborGacha）核根组件五件套**：RectTransform + UIConfig(e8f4194e9ed83794da496c6236ff0d7f，遮罩/防连点) + Canvas(SortingOrder=11) + CanvasScaler(0cd44c1031e1…，1080×1920) + GraphicRaycaster(dc42784cf147…)。四块全自包含（只指 m_GameObject），可从 LaborGacha 照抄换新 fileID 手术进 YAML；验证=根组件列表同构 + component 引用无悬空。找真根=`m_Father: {fileID: 0}` 的 RectTransform（文件首块不一定是根）。
 
-## X2→X3 UI 迁移第二坑：缺 X3 节日基本模块（标题/描述/倒计时，2026-07-20 扭蛋机实证）
-X2 界面没有 X3 节日活动页标配的顶部信息区。接法（优先复用别重建）：X2 prefab 里常自带顶部骨架（扭蛋机=`Cont/Top`：ContTop/LayoutTitle=标题条+BtnInfo、Layout/ContDes=描述+LayoutTime 倒计时），多半被 active=0 关着或被"未接区块"整体 SetActive(false)——**开骨架、关积分残留子件（ContTop/Icon+Num、Cont 下 Bk/ScrollView/BtnBlue/NumBk/Txt），代码一行接 X3 标准 `UIHelper.SetActivityBaseInfo(activityId, title, desc, time, goTime:)`**（UIHelper.Activity.cs:202，title=cfg.ActvName 自动 key/desc=ActvDesc/time 自动倒计时+到期隐藏）。父容器整体 SetActive(false) 的"未接区块"若含要用的子树，改成逐个隐子件。
+## X2→X3 UI 迁移第二坑：缺 X3 节日基本模块（标题/描述/倒计时，2026-07-20 扭蛋机实证·两轮定稿）
+X2 界面没有 X3 节日活动页标配的左上角信息区（标题+时钟倒计时+描述小字，样式见任一 X3 节日 tab 页）。
+- ❌**别复用 X2 自带的顶部骨架**（扭蛋机 `Cont/Top` 那种）——第一轮这么干被用户打回：X2 那套位置在底部居中+橙框样式，和 X3 左上角标准完全不符，"能挂字"≠"样式对"。
+- ✅**正解=从 X3 标准界面整棵移植 Top 组**：`UIActvLaborGacha.prefab` 的 `CentreOther/Animation/Top`（仅 9 节点：txt_title / Time(bg+Icon+txt) / btn_info(bg) / ActvDesc），YAML 手术=BFS 收集子树全部块（GameObject/RectTransform/组件）→ 新 fileID 全量重映射（内部引用 remap、m_Script/sprite 等外部 guid 原样保留、遇 !u!1001 PrefabInstance 中止）→ 顶层 tf 的 m_Father 指到目标根 + 根 m_Children 追加（放最后=渲染最上层）→ 验证=路径树 + component/children 引用无悬空（⚠️验证正则块尾要 `(?=\n--- |\Z)` 含 \Z，否则文件尾块漏解析误报丢节点）。
+- 代码：Auto_ 引用 `Top/txt_title`、`Top/ActvDesc`、`Top/Time/txt`、`Top/Time`，btn_info 加监听；主 cs 一行 `UIHelper.SetActivityBaseInfo(activityId, title, desc, time, goTime:, ruleInfo:)`（UIHelper.Activity.cs:202，title=cfg.ActvName/desc=ActvDesc/time 自动倒计时+到期隐藏/ruleInfo 按 ActvRule 配置显隐）。X2 骨架容器照旧整体 SetActive(false)。
 配套坑：新写活动行的 TXT_ActvOnline_ActvName/ActvDesc 只填 cn+en 时，繁中客户端 tab 显英文——克隆行 16 语全带 vs 新写行只有 cn/en，收口时至少补 zh。

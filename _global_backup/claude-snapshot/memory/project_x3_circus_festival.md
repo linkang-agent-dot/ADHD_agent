@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 7f62bc78-a352-4bc4-a781-fbebf7babf20
+  modified: 2026-07-23T07:07:51.366Z
 ---
 
 # X3 2026 马戏节整节日换皮（2026-07-09 开案·方案稿待过审）
@@ -22,5 +23,6 @@ metadata:
 - **✅大奖外显全定案（07-10 终态·配置侧零待定项）**：开箱大奖=**阿米娜「猛兽驯服者」皮肤**（HeroSkin 102001/Item 5302001·批次12 commit 61d42e8·奖池116+c33钩子已接线·主稿出图中）；跨服榜大奖=主城皮肤**梦幻旋转木马**（Skin 1017/Item 81152·批次11 commit 7c6e68d·gdconfig 侧"剩余接线"已闭环，2D头图标仍占位待出）。选人依据=D35 渠道开放判据（27英雄合格清单+SQL查法在档案）；设计依据=`X3_马戏节\_马戏节_英雄皮肤设计brief_庆典x性张力.md`（尘白+碧蓝研究合成）。剩美术生产+上线前尾巴（见待办①③④⑤⑥，②已闭环）。
 - **📅版本锚定（07-14 用户口径）**：**7.29 版本，本批全部内容随版本收口**；扭蛋机本周开发完成、**新增第 17 活动=限时抢购（下周开始开发，也是林康）**。给 PM 需求单=`KB\产出-数值设计\X3_马戏节\_马戏节_活动需求单_给PM.html`（17 活动+负责人全林康+7.29 锚）。上线前尾巴的"排期定了配 TC"现在有日期锚=7.29 版本定档后配。
 - 工作区=worktree `C:\x3\gdconfig-circus`（feature/circus-festival，push 用 `HEAD:dev_festival`）。
+- **✅本地服全套开活动清单（2026-07-23 实测·接管用）**：马戏 AO 实际落在 **ActvGroup 144「马戏节」**（不是清单原规划的 142/143；142/143 只各挂 1 个）。枚举法=`ActvOnline__ActvOnline.tsv` col38∈{142,143,144}。**16 个 AO**：大富翁102803/拼图101829(随大富翁自动开)/装饰阶梯106104/兑换1 101343/兑换2 101344/开箱101026/拜访105606/进度礼包102994/酒馆10071705/累充100599/通行证BP102251/扭蛋机101027(type83)/扭蛋庆功积分101028/拓荒者之城103101(type81)/108201(type82,自动开)/许愿池105014(type50跨服·本地开不了)。本地开=`!gm @<uid> GMAddServerActivityByCfgId <AO> 43200`（TC=0 给显式时长），除许愿池外 15 个全可开、客户端在线收到。⚠️ActvOnline 备注名仍是"深海xxx"换皮残留（真实展示走 TXT_ key，别被名字误导）。⚠️注：清单原规划的主 BP 102250 当前 tsv 无（只有通行证 BP 102251），双BP结构以实际为准。
 - **✅特效补搬（07-13 同事验收抓漏"特效少了"）**：P2 皮肤特效走 assetPath 字符串加载=当初 guid 扫描盲区（教训进 [[workflow_p2_to_x3_asset_port]] 四号坑）。10 个 Fx prefab+81 资产（材质30/贴图32/网格6/自包含特效shader1）已静挂回同名挂点节点，commit `df53c2e567d` @dev_festival。**评审分支 circus-homeland-port 上客户端同事在实验 P2 unlit shader 路线**（1a2f25cb7fa：搬 3D_Unlit_Building 注释日夜行+直用 P2 Low TGA+删 missing scripts）——已把 dev_festival 特效 merge 进评审分支（69ee989d46e，零冲突，两边成果共存）；**shader 定稿路线待同事拍板**（他的 P2 shader 版 vs 我的 X3_World_City+烘焙版，最终进 dev_festival 的以他验收为准）。X3 实际有同名日夜全局在喂（纠偏：P2 shader 可搬）。
 - **🚫岛座卡片已取消（07-14 用户口径：程序同学做了适配，方案不用了）**——`island_base_card` 节点仍在 dev_festival 上（commit `1f594a9b428`），**待确认是否撤销**（若程序适配和卡片叠加显示则必撤）。原记录留档：（2026-07-13 已推 dev_festival，commit `1f594a9b428`）：用户反馈皮肤漂海上怪→根因=原生岛屿全是 2.5D 卡片岛座画在图里（实锤+解法见 [[workflow-p2-to-x3-asset-port]] 新段）。落地=Homeland_Circus 补 `island_base_card` Quad 节点（初值 scale5.8/y-2.8 **待用户 Unity 可视调**）+ `Homeland_Circus_Base.png`（AI 空岛座：岩石托盘+空草坪+马戏三角旗，1024 已去绿边，guid c1a5b0d2e6f3479a8b4c5d6e7f80a1b2）+ 材质克隆 homeland_1 卡片材质（X3_World_City 透明双面，guid d2b6c1e3f70458ab9c5d6e7f80a1b2c3）。worktree 已清理；用户主工程在 feature/skin-moment，预览=fetch 后 `git checkout FETCH_HEAD -- ...Homeland/Homeland_Circus*` 三路径（看完 restore），或切回 dev_festival 自见。此为过渡方案，正式岛座整合在八月庆典美需单里美术出；若要重出图，x3-media 任务 `20260713-101115-d1c9` 的 prompt 可复用。

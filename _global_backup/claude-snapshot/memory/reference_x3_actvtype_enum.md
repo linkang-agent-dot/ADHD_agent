@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 33fe5727-08d6-48d3-80a0-91952eddfd74
+  modified: 2026-07-21T11:41:52.895Z
 ---
 
 ## 权威枚举位置（查 ActvType 数字含义先看这里）
@@ -15,6 +16,7 @@ metadata:
 部分关键值（节日付费类）：
 | ActvType | const | 玩法 |
 |---|---|---|
+| **15** | **CRAFTING** | **开箱抽奖（节日开箱：元旦101513/情人节101514/春节101515/世界杯101516）——⚠️名实不符大坑：const 叫"制作活动"是历史名，搜 Box/Chest/开箱全落空；客户端类=UIActvCrafting** |
 | 60 | MECHA_WHEEL | 双圈机甲转盘 |
 | 61 | NEW_QUEUE | 新兵排队充值 |
 | 63 | CHAIN_PACK | 链式礼包（阶梯礼包，如装饰阶梯礼包 106101/106103） |

@@ -66,3 +66,7 @@ cd C:/x3/gdconfig/Tools/table_exporter && python ExportTable.py
 - **服务端热更只覆盖服务端权威逻辑**:活动上线时间/调度、礼包购买&限购、发奖/积分(ActvScore/BP结算)、累充白名单等——这些服务端读,改server config热更即生效。
 - **判据**:问"这字段谁读"——客户端UI/显示读→客户端侧(热更够不到);服务端逻辑读→服务端侧(可热更)。同一张表里字段可能分属两边(如Pack:价格/限购=服务端权威, DK图标/Name=客户端显示)。
 - **设计启示**:要让某个"会变的数据"能靠热服务端运营,就别让客户端直接读客户端配置,改成**客户端读服务端下发的值**(服务端从它自己可热更的配置读+下发)。世界杯竞猜换对阵就靠这个思路落地,见 [[project_x3_worldcup_activity]]。
+
+## robot 回写两坑（2026-07-21 奇观排期案实证）
+- **「没有可提交的导表改动，跳过上传」≠ 失败**：连推场景下（多人/多会话接连 push），前一班 build 在拉 gdconfig tip 时可能已包含你的提交 → robot 提交挂着**别人的 commit message**，你自己 build 的上传步骤自然无 diff 可交。判 robot 回写落没落地：**解码 ProtoGen bytes 验内容**（`decode_protogen_timecycle.py` 等），别死等带自己 message/-robot 号的提交（会误判成"回写没跑"）。
+- **`git show <branch>:client/.../ProtoGen/X.bytes` 拿到的是 LFS 指针（~130 字节），解码必空**：ProtoGen .bytes 是 LFS 跟踪的，验内容要用**工作树里 smudge 过的真文件**（先 `git checkout origin/<branch> -- .../ProtoGen/` 再解码），或 `git lfs smudge`。

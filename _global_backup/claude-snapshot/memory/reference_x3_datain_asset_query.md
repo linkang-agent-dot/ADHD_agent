@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 490ce72b-3baa-4614-9fe0-430f6331e079
+  modified: 2026-07-24T06:15:32.942Z
 ---
 
 X3 Datain（TRINO_HF, v1090）查外显/道具的**拥有率、R级分布、付费额**。脚本走 `C:\ADHD_agent\skills\ai-to-sql\scripts\_datain_api.py` 的 `execute_sql(sql,'TRINO_HF')`。
@@ -64,8 +65,17 @@ join `ods_user_order`（pay_status=1；USD: `currency_type IN ('usd','TOKEN') ? 
 ## 养成线缺口/饱和度三件套查法（2026-07-14 手册推广案实测，源自尼罗回归饱和度法）
 问"某养成线还有多少付费空间"用三个数拼：①**需求宽度**=近30天 `change_type='2'` distinct 消耗人数；②**需求强度**=消化率(消耗量/获取量，数量列=`change_count` 需 TRY_CAST，80%+=供不应求)；③**库存薄度**=`dl_active_user_asset_balance_d` 最新分区 `approx_percentile(balance,0.5)` 中位余额 ÷ 人均日耗 = runway 天数（≤2天=到手即耗=缺口敞开）。⚠️两坑：balance 快照**无 server_id**（不分服段，只能全局）；`reason_id='buy_gift'` **含免费礼包**（付费供给要交叉订单表口径，别直接当付费量）。X3 核心养成材料 asset_id 速查：美酒7002/万能信物52001-3/传奇技能书19003/阅历1008/木板55100/金属55101/屏障55004/秘币1143/**海妖驯养经验1142**/海妖碎片220002-3/装备袋165905（全带 `Item_` 前缀）。海妖线付费货架=2009招募链式/2014秘币弹窗/2810驯养链式/30009经验周卡；秘币100%付费无免费渠道。**消耗者等级分布查法**：`ods_user_asset` 事件行自带 `player_level` 列(事件时点等级),按 change_type='2' 分桶即得"哪个等级段在耗这条养成线"(2026-07-14实测:改装/海妖消耗量89%/84%在20级后)。**系统解锁点真源**=gdconfig `FunctionUnlock__FunctionUnlock.tsv`(c8玩家等级/c7开服时间闸门);⚠️命名映射:海妖=机甲(枚举SirenMecha,机甲转盘mecha_wheel_reward发的就是驯养经验1142)。实测结果见 [[project_x3_hero_handbook]] 缺口段。
 
+## 查「某活动玩家消耗了什么资产」（2026-07-23 冠军之路补偿案，通用）
+活动内消耗（付费选项/买次数/开抽等）在 `ods_user_asset` 里带**活动专属 reason_id**，`change_type='2'`=消耗。**按 reason_id 一过滤就把该活动消耗从所有货币消耗里精确摘出**（不用愁金币/钻石消耗太泛无法归因）。
+- reason_id 命名规律 = 服务端 `SysOpReason` 枚举小写：冠军之路(type55)=**`item_op_activity_hero_champion_road_item_cost`**（服务端 `ActivityMeta.HeroChampionRoad.cs` ReduceItem 打的 reason，reason_sub_id=`{contentId}_{option}`）。**不知道确切串就探**：`SELECT reason_id,count(*) FROM ods_user_asset WHERE change_type='2' AND server_id IN(..) AND lower(reason_id) LIKE '%<活动关键词>%' GROUP BY 1`。
+- 消耗明细：`SELECT server_id,asset_id,count(distinct user_id) u,sum(TRY_CAST(change_count AS bigint)) total FROM ods_user_asset WHERE reason_id='<串>' AND change_type='2' AND server_id IN(..) AND partition_date>='..' GROUP BY 1,2`。asset_id 带 `Item_` 前缀；量列 `change_count` 需 `TRY_CAST`。
+- 冠军之路消耗道具速查：`Item_1001`金币 / `Item_1008`**冒险阅历(=英雄经验,提升英雄等级,已核实dim_asset+Item表)** / `Item_1002`钻石 / `Item_55101`金属 / `Item_7001`/`Item_57003`(零星)。**补偿口径=按 user_id 逐人退实际消耗**(别用人均一刀切,鲸鱼会亏)。
+
+## 🔴 查「玩家当前余额」用快照表,别用 ods_user_asset 的 balance 字段(2026-07-24 冠军之路回收案踩坑)
+`ods_user_asset` 有 `balance` 列(变动后余额),但**稀疏**——不是每条事件都写 balance,取 `row_number() ORDER BY created_at DESC =1`(最新一条)常落到 balance 为空的事件→大量假"无记录/余额不足"(实测宽窗口反而更多空,坏数据)。**当前余额权威源=`dl_active_user_asset_balance_d` 每日余额快照**(取 `partition_date=max`),asset_id 带 `Item_` 前缀,**无 server_id 但 user_id 全局唯一可直接按 user_id 查**。实测冠军之路回收:用流水balance误判468/554不足,用快照表实际仅123不足(三大货币90-99%够)。判"扣道具用GM还是DebtRecycle"必用快照表算够扣/不足。
+
 ## 其他表
-- `dl_active_user_asset_balance_d`：活跃用户资产**余额快照**（无 server_id，要 join 用户→服）。注意：皮肤"用后解锁"余额可能为0，拥有看 ods_user_asset 的 change_type='1' 流水更准。
+- `dl_active_user_asset_balance_d`：活跃用户资产**余额快照**（无 server_id，user_id 全局唯一可直接查）。**查当前余额的正源(见上)**。注意：皮肤"用后解锁"余额可能为0，拥有看 ods_user_asset 的 change_type='1' 流水更准。
 
 ## 工具选择
 - **按道具ID查拥有/付费明细 → 用 ai-to-sql（Trino 明细查询）**，不要用 `datain-skill`（那是聚合指标 DNU/留存/付费，查不了单道具拥有）。
