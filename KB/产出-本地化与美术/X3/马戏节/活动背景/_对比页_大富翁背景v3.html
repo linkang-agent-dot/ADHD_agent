@@ -1,0 +1,180 @@
+<meta charset="utf-8">
+<title>马戏节 大富翁背景 v4 对比</title>
+<style>
+  :root{ --bg:#14161b; --fg:#e8e6e3; --dim:#9aa0a6; --line:#2a2f38; --accent:#e0a341; }
+  *{box-sizing:border-box}
+  body{margin:0;padding:26px 22px 60px;background:var(--bg);color:var(--fg);
+       font:15px/1.6 "Microsoft YaHei","Segoe UI",sans-serif}
+  h1{font-size:22px;margin:0 0 4px}
+  h2{font-size:15px;margin:34px 0 14px;padding-bottom:7px;border-bottom:1px solid var(--line);color:var(--dim);font-weight:600}
+  .sub{color:var(--dim);font-size:13px;margin-bottom:18px}
+  .why{background:#1b1f27;border:1px solid var(--line);border-left:3px solid var(--accent);
+       border-radius:6px;padding:14px 17px;margin-bottom:20px;max-width:1180px;font-size:13.5px;color:#c9ced6}
+  .why b{color:var(--fg)}
+  .why .law{margin-top:9px}
+  .bar{display:flex;gap:16px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:9;
+       padding:11px 14px;background:#1b1f27;border:1px solid var(--line);border-radius:8px;margin-bottom:8px}
+  .bar label{display:flex;gap:6px;align-items:center;cursor:pointer;font-size:13px;color:var(--dim)}
+  .bar input{accent-color:var(--accent)}
+  .row{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+  .cap{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+  .cap b{font-size:15px}
+  .cap span{font-size:12px;color:var(--dim)}
+  .tag{font-size:11px;padding:1px 7px;border-radius:99px;border:1px solid;white-space:nowrap}
+  .bad{color:#ff8b7a;border-color:#5c2a24}
+  .good{color:#7fd6a0;border-color:#245038}
+  .neu{color:#9ab6e0;border-color:#28405c}
+  .stage{position:relative;width:540px;height:960px;border:1px solid var(--line);
+         border-radius:6px;overflow:hidden;background:#000}
+  .stage img.bg{width:540px;height:960px;display:block}
+  .board{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .18s}
+  .show .board{opacity:1}
+  .board img{position:absolute;width:74px;height:90px;transform:translate(-50%,-50%);
+             filter:drop-shadow(0 3px 5px rgba(0,0,0,.5))}
+  .zone{position:absolute;left:0;right:0;top:30%;height:40%;pointer-events:none;opacity:0;
+        border-top:1px dashed rgba(224,163,65,.8);border-bottom:1px dashed rgba(224,163,65,.8);
+        background:rgba(224,163,65,.07);transition:opacity .18s}
+  .zone::after{content:"棋盘区 · 必须留空";position:absolute;right:6px;top:4px;
+        font-size:11px;color:#e0a341;background:rgba(0,0,0,.55);padding:1px 6px;border-radius:3px}
+  .showzone .zone{opacity:1}
+  .grade{margin-top:9px;font-size:12.5px;color:var(--dim);max-width:540px;line-height:1.55}
+  .pend{display:flex;align-items:center;justify-content:center;height:100%;
+        color:var(--dim);font-size:13px;border:1px dashed #4a5160;border-radius:5px}
+  .old .stage{filter:saturate(.75) brightness(.9)}
+</style>
+
+<h1>马戏节 · 大富翁背景 v4</h1>
+<div class="sub">客户端实际尺寸 540×960 · 棋盘叠加按实机比例铺满宽度 · 2026-07-28</div>
+
+<div class="why">
+  <b>三轮才收敛，两条铁律缺一不可：</b>
+  <div class="law"><b>① 留空方向要跟前景形状对齐 → 细节走「四角裁切 + 上下横带」，不是左右竖带。</b>
+    棋盘<b>横向铺满、纵向只占中段</b>；上方是标题倒计时区、下方是奖励条按钮区，本来就不放地块 —— 所以能塞细节的是上下。
+    第一轮把深海参考读成"边上要有细节"做成左右竖带，正好压在棋盘最宽处。</div>
+  <div class="law"><b>② 边缘装饰的母题不能和棋子同款。</b>
+    深海边上是珊瑚、地块是岛屿，母题不同才不打架；马戏边上摆红白帐篷、地块也是红白帐篷 → 边上被读成「更多地块」。</div>
+  <div class="law"><b>③ 棋子靠明度差 / 色相差跳出来，不是靠背景压暗。</b>
+    深海的暖色岛屿之所以一眼跳，一半功劳是<b>蓝底</b>（冷背景 vs 暖前景）；马戏一直是暖底配暖棋子，没色相差可用。
+    提亮时<b>亮度只推给棋子不落的区域</b>（天空、上下带的彩旗灯道具），中央棋盘区保持干净。</div>
+  <div class="law" style="color:#e0a341">三条缺一不可：只换母题不换方位＝帷幕仍压棋盘边；只换方位不换母题＝上下带又冒出像地块的帐篷；
+    方位母题都对但明度贴死＝地块和地面糊在一起（v4b 就是，对比只有 −6）。</div>
+</div>
+
+<div class="why" style="border-left-color:#7fd6a0">
+  <b>棋盘区明度实测</b>（地块 sprite 平均明度 ≈110/255，差值越大越跳）：
+  <div style="margin-top:6px;font-family:Consolas,monospace;font-size:12.5px;line-height:1.9">
+    v2a 现版 <b style="color:#ff8b7a">−12</b> ｜ v4b <b style="color:#ff8b7a">−6</b> ｜
+    v5a <b style="color:#7fd6a0">+73</b> ｜ v5b <b style="color:#7fd6a0">+102</b> ｜ v5b-alt <b style="color:#7fd6a0">+107</b>
+  </div>
+</div>
+
+<div class="bar">
+  <label><input type="checkbox" id="tog" checked> 叠加真实棋盘地块</label>
+  <label><input type="checkbox" id="zone" checked> 标出「棋盘区必须留空」横带</label>
+  <label><input type="checkbox" id="edge"> 只看左右边缘</label>
+</div>
+
+<h2>候选（v5 提亮轮 · 布局锁死 v4b，只改光色）</h2>
+<div class="row">
+
+  <div class="card">
+    <div class="cap"><b>v5b</b><span>蓝天庆典</span><span class="tag good">对比 +102</span></div>
+    <div class="stage"><img class="bg" src="_cmp/v5b_540.png"><div class="zone"></div><div class="board" data-board></div></div>
+    <div class="grade">蓝天白云 + 五彩气球彩旗 + 满地彩色纸屑。<b>冷天空衬暖红金棋盘＝深海那套互补色原理</b>，
+      最亮也最跳。<span style="color:#e0a341">⚠️左右中段各有一簇气球探进棋盘区</span>——气球不撞地块母题不会误读，
+      但会碰到最外圈棋格，勾「叠加棋盘」自己判。</div>
+  </div>
+
+  <div class="card">
+    <div class="cap"><b>v5b-alt</b><span>蓝天庆典·备选</span><span class="tag good">对比 +107</span></div>
+    <div class="stage"><img class="bg" src="_cmp/v5b_alt1_540.png"><div class="zone"></div><div class="board" data-board></div></div>
+    <div class="grade">同 v5b，天空云更多更透、地面纸屑分布更匀。气球同样在左右中段。1152×2048 满分辨率。</div>
+  </div>
+
+  <div class="card">
+    <div class="cap"><b>v5a</b><span>暖阳庆典</span><span class="tag good">对比 +73</span></div>
+    <div class="stage"><img class="bg" src="_cmp/v5a_540.png"><div class="zone"></div><div class="board" data-board></div></div>
+    <div class="grade">同样提亮但走暖金调，地面偏暖偏实。<b>左右中段完全干净</b>（没有气球探入）。
+      庆典感够，但与红金棋盘同色系，靠明度差撑（+73，仍充裕）。</div>
+  </div>
+
+</div>
+
+<h2>对照（v4：布局定稿但偏暗）</h2>
+<div class="row">
+
+  <div class="card old">
+    <div class="cap"><b>v4b</b><span>布局基准</span><span class="tag bad">对比 −6</span></div>
+    <div class="stage"><img class="bg" src="_cmp/v4b_540.png"><div class="zone"></div><div class="board" data-board></div></div>
+    <div class="grade">布局是对的（v5 就锁的它），但棋盘区明度 104 与地块 110 几乎相同 →
+      <b>地块和地面糊在一起</b>。这就是"要提亮"的量化依据。</div>
+  </div>
+
+  <div class="card old">
+    <div class="cap"><b>v4b-alt</b><span>上下更满</span><span class="tag neu">941×1672</span></div>
+    <div class="stage"><img class="bg" src="_cmp/v4b_alt1_540.png"><div class="zone"></div><div class="board" data-board></div></div>
+    <div class="grade">顶部多摩天轮+篷车戏台。同样偏暗，且原图分辨率小一档。</div>
+  </div>
+
+  <div class="card old">
+    <div class="cap"><b>v4a</b><span>保留帷幕</span><span class="tag neu">帷幕吃宽度</span></div>
+    <div class="stage"><img class="bg" src="_cmp/v4a_540.png"><div class="zone"></div><div class="board" data-board></div></div>
+    <div class="grade">帷幕+金边吃掉约 13%/侧，最外圈棋格压在帷幕上。上下已撑住画面，帷幕多余。</div>
+  </div>
+
+</div>
+
+<h2>对照（上一轮，已被 v4 取代）</h2>
+<div class="row">
+
+  <div class="card old">
+    <div class="cap"><b>v2a</b><span>当前线上版</span><span class="tag bad">被打回</span></div>
+    <div class="stage"><img class="bg" src="_cmp/v2a_540.png"><div class="zone"></div><div class="board" data-board></div></div>
+    <div class="grade">左右竖带挂红白帐篷+气球 —— 方位错（压棋盘最宽处）+ 母题撞（被读成更多地块），两条铁律都犯。</div>
+  </div>
+
+  <div class="card old">
+    <div class="cap"><b>v3b-alt</b><span>窄帷幕</span><span class="tag neu">只解决了母题</span></div>
+    <div class="stage"><img class="bg" src="_cmp/v3b_alt1_540.png"><div class="zone"></div><div class="board" data-board></div></div>
+    <div class="grade">帷幕不会被当成地块（铁律②过），但方位仍是左右竖带（铁律①没过），且上下空。</div>
+  </div>
+
+  <div class="card old">
+    <div class="cap"><b>v3a</b><span>全空场</span><span class="tag bad">丢辨识度</span></div>
+    <div class="stage"><img class="bg" src="_cmp/v3a_540.png"><div class="zone"></div><div class="board" data-board></div></div>
+    <div class="grade">冲突是没了，但整张认不出是马戏节 —— 把节日包装一起清掉了。</div>
+  </div>
+
+</div>
+
+<script>
+  const TILES = ['start','treasure','diamond','lucky','mystery'];
+  const POS = [
+    [50,26],[31,29],[69,29],
+    [17,36],[83,36],
+    [10,47],[90,47],
+    [10,59],[90,59],
+    [17,69],[83,69],
+    [31,76],[69,76],[50,79]
+  ];
+  document.querySelectorAll('[data-board]').forEach(b=>{
+    POS.forEach((p,i)=>{
+      const im=document.createElement('img');
+      im.src='_cmp/img_Activity_circus_island_'+TILES[i%TILES.length]+'.png';
+      im.style.left=p[0]+'%'; im.style.top=p[1]+'%';
+      b.appendChild(im);
+    });
+  });
+  const tog=document.getElementById('tog'), zone=document.getElementById('zone'), edge=document.getElementById('edge');
+  function sync(){
+    document.querySelectorAll('.stage').forEach(s=>{
+      s.classList.toggle('show',tog.checked);
+      s.classList.toggle('showzone',zone.checked);
+      const img=s.querySelector('img.bg');
+      if(img) img.style.clipPath = edge.checked
+        ? 'polygon(0 0,22% 0,22% 100%,0 100%,0 0,78% 0,100% 0,100% 100%,78% 100%,78% 0)'
+        : 'none';
+    });
+  }
+  [tog,zone,edge].forEach(el=>el.addEventListener('change',sync)); sync();
+</script>

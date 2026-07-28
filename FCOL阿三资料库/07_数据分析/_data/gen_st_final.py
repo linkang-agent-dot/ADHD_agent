@@ -2,11 +2,11 @@
 """永恒中锋评价·定稿版页面
 公式(用户逐档裁定,2026-07-27):
   终分 = [Σ(属性档位分×档位权重) + 最优特训增益] × 逆足系数
-  档位分: 显示值>=165→3 / >=155→2 / >=145→1 / <145→0
+  档位分: 显示值>=165→4(07-28上调) / >=155→2 / >=145→1 / <145→0
   权重: 双速x5 | 射术·射门力量·弧线·灵活·控球·平衡x3 | 强壮·反应·远射·头球x2
         | 体力·弹跳·凌空·短传·站位·冷静·盘带x1 | 传中·视野x0.5 | 其余x0
   特训: 全卡+5点/单项<=2点, 背包求最大档位增益
-  逆足: 5逆x1.0 / 4逆x0.95 / 3逆x0.85
+  逆足: 5逆x1.0 / 4逆x0.90 / 3逆x0.75（07-27按位置差异化）
   口径: 接口裸值 +3显示 +8卡强化15 +球员等级4(假设待确证) +队套6 = +28
 全员(66人非门将)都算中锋分, >=80进榜; 身高体重模型仅参考不计分。
 """
@@ -28,7 +28,7 @@ TIERS = {5: ['sprintspeed', 'acceleration'],
          1: ['stamina', 'jumping', 'volleys', 'shortpassing', 'positioning', 'composure', 'dribbling'],
          0.5: ['vision', 'crossing']}
 W = {k: w for w, ks in TIERS.items() for k in ks}
-MAXS = sum(W.values()) * 3
+MAXS = sum(W.values()) * 4
 CN = {'sprintspeed': '速度', 'acceleration': '加速', 'finishing': '射术', 'shotpower': '射门力量', 'longshots': '远射',
       'positioning': '站位', 'volleys': '凌空', 'shortpassing': '短传', 'vision': '视野', 'curve': '弧线',
       'dribbling': '盘带', 'ballcontrol': '控球', 'agility': '灵活', 'balance': '平衡', 'reactions': '反应',
@@ -93,7 +93,8 @@ COMMENT = {
  '吉鲁': '全模型唯一双速交白卷(145不到)的中锋，纯桥头堡',
 }
 def tier(v):
-    return 3 if v >= 165 else 2 if v >= 155 else 1 if v >= 145 else 0
+    # 07-28: 165档3分->4分(145/155不变)
+    return 4 if v >= 165 else 2 if v >= 155 else 1 if v >= 145 else 0
 def best_patch(vals):
     items = []
     for k, v in vals.items():
@@ -102,7 +103,7 @@ def best_patch(vals):
             continue
         for th in (145, 155, 165):
             if v < th <= v + 2:
-                items.append((th - v, w, CN[k], th))
+                items.append((th - v, w * (2 if th == 165 else 1), CN[k], th))
                 break
     best = (0, [])
     for r in range(1, len(items) + 1):
@@ -112,7 +113,7 @@ def best_patch(vals):
                 if g > best[0]:
                     best = (g, list(comb))
     return best
-PEN = {5: 1.0, 4: 0.95, 3: 0.85, 2: 0.75}
+PEN = {5: 1.0, 4: 0.90, 3: 0.75, 2: 0.65}
 rows = []
 detail = {}
 for p in el_list:
@@ -127,13 +128,15 @@ for p in el_list:
     fin = (base + g) * PEN.get(w5, 1.0)
     plan = '+'.join('%s%d点→%d' % (cn, c, th) for c, w, cn, th in alloc)
     rows.append((n, p['pos1'], w5, base, g, fin, fin / MAXS * 100, h, wt, bt, plan, int(el['salary'])))
+    trained = {cn2: th2 for c2, w2, cn2, th2 in alloc}
     items = []
     for k in list(W) + list(CN0):
         if k not in el['attr']:
             continue
         v = int(el['attr'][k]['value']) + B
         w = W.get(k, 0)
-        items.append([CN_ALL[k], v, tier(v), w, round(w * tier(v), 1)])
+        tv = trained.get(CN_ALL[k], 0)
+        items.append([CN_ALL[k], v, tier(v), w, round(w * tier(v), 1), tv, tier(tv) if tv else 0])
     items.sort(key=lambda x: (-x[3], -x[4], -x[1]))
     detail[NAME_CN.get(n, n)] = {'items': items, 'base': base, 'gain': g, 'plan': plan or '无可训项',
                                  'w5': w5, 'pen': PEN.get(w5, 1.0), 'fin': round(fin, 1),
@@ -160,10 +163,23 @@ for i, (n, pos, w5, base, g, fin, pct, h, wt, bt, plan, sal) in enumerate(rows, 
             '<td>%d</td><td %s>%+.1f</td>'
             '<td class="ph">%dcm/%dkg·%s</td><td class="pl">%s</td><td class="cm">%s</td></tr>'
             % (cross, low, cn, i, cn, n, pos, w5, fin, pct, base, g, sal, rcls, res, h, wt, bt, plan or '—', COMMENT.get(cn, '')))
-# ===== vs 时刻 模块（四档制135/145/155/165=1/2/3/4，两卡同权重同特训同逆足） =====
-TH4 = (135, 145, 155, 165)
+# ===== vs 时刻 模块（与主榜同三档制145/155/165，两卡同权重同特训同逆足；含时刻独有卡） =====
+TH4 = (145, 155, 165)  # 07-27用户裁定:时刻计分与永恒一致,135档作废
+TMONLY_CN = {'Pelé': '贝利', 'D. Maradona': '马拉多纳', 'F. Beckenbauer': '贝肯鲍尔', 'J. Cruyff': '克鲁伊夫',
+ 'G. Müller': '盖德·穆勒', 'L. Matthäus': '马特乌斯', 'Garrincha': '加林查', 'Ronaldinho': '小罗',
+ 'Jairzinho': '雅伊尔济尼奥', 'P. Maldini': '马尔蒂尼', 'Zico': '济科', 'F. Baresi': '巴雷西', 'R. Gullit': '古利特',
+ 'G. Best': '乔治·贝斯特', 'B. Charlton': '博比·查尔顿', 'Cafu': '卡福', 'D. Bergkamp': '博格坎普',
+ 'Luís Figo': '菲戈', 'A. Pirlo': '皮尔洛', 'M. Ballack': '巴拉克', 'Carlos Alberto': '卡洛斯·阿尔贝托',
+ 'R. Koeman': '科曼', 'I. Rush': '拉什', 'A. Del Piero': '皮耶罗', 'P. Lahm': '拉姆', 'Xabi Alonso': '哈维·阿隆索',
+ 'K. Dalglish': '达格利什', 'P. Scholes': '斯科尔斯', 'M. Klose': '克洛泽', 'C. Puyol': '普约尔',
+ 'B. Moore': '博比·摩尔', 'Dunga': '邓加', 'C. Seedorf': '西多夫', 'C. Makélélé': '马克莱莱',
+ 'D. Trezeguet': '特雷泽盖', 'Park Ji Sung': '朴智星', 'R. Keane': '罗伊·基恩', 'M. Desailly': '德塞利',
+ 'H. Stoichkov': '斯托伊奇科夫', 'H. Crespo': '克雷斯波', 'F. Ribéry': '里贝里', 'G. Hagi': '哈吉',
+ 'Butragueño': '布特拉格诺', 'G. Lineker': '莱因克尔', 'M. Laudrup': '大劳德鲁普', 'L. Blanc': '布兰克',
+ 'G. Bale': '贝尔', 'G. Zambrotta': '赞布罗塔'}
 def tier4(v):
-    return sum(1 for t in TH4 if v >= t)
+    n = sum(1 for t in TH4 if v >= t)
+    return 4 if n == 3 else n
 def best_patch4(vals):
     items = []
     for k, v in vals.items():
@@ -172,43 +188,81 @@ def best_patch4(vals):
             continue
         for t in TH4:
             if v < t <= v + 2:
-                items.append((t - v, w))
+                items.append((t - v, w * (2 if t == 165 else 1), CN_ALL.get(k, k), t))
                 break
-    best = 0
+    best = (0, [])
     for r in range(1, len(items) + 1):
         for comb in itertools.combinations(items, r):
             if sum(i[0] for i in comb) <= 5:
-                best = max(best, sum(i[1] for i in comb))
+                g = sum(i[1] for i in comb)
+                if g > best[0]:
+                    best = (g, list(comb))
     return best
 def score4(attrs, Bx, w5):
     vals = {k: int(attrs[k]['value']) + Bx for k in W if k in attrs}
     base = sum(W[k] * tier4(v) for k, v in vals.items())
-    return (base + best_patch4(vals)) * PEN.get(w5, 1.0)
+    g, alloc = best_patch4(vals)
+    return (base + g) * PEN.get(w5, 1.0), base, g, alloc, vals
+def tm_detail(attrs, Bx):
+    its = []
+    for k in list(W) + [k2 for k2 in CN_ALL if k2 not in W]:
+        if k not in attrs:
+            continue
+        v = int(attrs[k]['value']) + Bx
+        w = W.get(k, 0)
+        its.append([CN_ALL[k], v, tier4(v), w, round(w * tier4(v), 1)])
+    its.sort(key=lambda x: (-x[3], -x[4], -x[1]))
+    return its
 tm_rows = []
+dtl = {}
 for p in el_list:
     n = p['name']
     rec = full[n]
     if not rec.get('TM') or p['pos1'] == 'GK':
         continue
     w5 = info.get(n, (5, 0, 0, ''))[0]
-    t8 = score4(rec['TM']['attr'], 28, w5)
-    e6 = score4(rec['EL']['attr'], 21, w5)   # 永恒6卡=+3+8+4+6
-    e8 = score4(rec['EL']['attr'], 28, w5)
+    t8, tb, tg, talloc, _ = score4(rec['TM']['attr'], 28, w5)
+    e6 = score4(rec['EL']['attr'], 21, w5)[0]   # 永恒6卡=+3+8+4+6
+    e8 = score4(rec['EL']['attr'], 28, w5)[0]
     tsal = int(rec['TM'].get('salary') or 0)
     esal = int(rec['EL']['salary'])
-    tm_rows.append((n, p['pos1'], t8, e6, e8, e8 - t8, tsal, esal))
-tm_rows.sort(key=lambda r: -r[2])
+    cnm = NAME_CN.get(n, n)
+    tm_rows.append((n, cnm, p['pos1'], t8, e6, e8, e8 - t8, tsal, esal, w5))
+    dtl[cnm] = {'items': tm_detail(rec['TM']['attr'], 28), 'base': tb, 'gain': tg,
+                'plan': '+'.join('%s%d点→%d' % (c2, c1, t2) for c1, w2, c2, t2 in talloc) or '无可训项',
+                'w5': w5, 'pen': PEN.get(w5, 1.0), 'fin': round(t8, 1),
+                'phy': '%scm / %skg' % (rec['TM'].get('height', '?'), rec['TM'].get('weight', '?'))}
+TMONLY_PATH = os.path.join(SP, 'tm_only_attrs.json')
+if os.path.exists(TMONLY_PATH):
+    for n, rec in json.load(open(TMONLY_PATH, encoding='utf-8')).items():
+        if rec.get('pos1') == 'GK':
+            continue
+        w5 = int(rec.get('db', {}).get('foot_weak') or 5)
+        t8, tb, tg, talloc, _ = score4(rec['attr'], 28, w5)
+        tsal = int(rec.get('salary') or 0)
+        cnm = TMONLY_CN.get(n, n)
+        tm_rows.append((n, cnm, rec.get('pos1', '?'), t8, None, None, None, tsal, None, w5))
+        dtl[cnm] = {'items': tm_detail(rec['attr'], 28), 'base': tb, 'gain': tg,
+                    'plan': '+'.join('%s%d点→%d' % (c2, c1, t2) for c1, w2, c2, t2 in talloc) or '无可训项',
+                    'w5': w5, 'pen': PEN.get(w5, 1.0), 'fin': round(t8, 1),
+                    'phy': '%scm / %skg · 时刻独有(无永恒版)' % (rec.get('height', '?'), rec.get('weight', '?'))}
+tm_rows.sort(key=lambda r: -r[3])
 tm_trs = ''
-for i, (n, pos, t8, e6, e8, d, tsal, esal) in enumerate(tm_rows, 1):
-    cn = NAME_CN.get(n, n)
-    dcls = ' style="color:#ff7b7b;font-weight:bold"' if d < 35 else (' style="color:#5cff8f"' if d >= 50 else '')
+for i, (n, cn, pos, t8, e6, e8, d, tsal, esal, w5) in enumerate(tm_rows, 1):
     tq = t8 / tsal if tsal else 0
+    if e8 is None:
+        tm_trs += ('<tr class="tmo" onclick="popT(\'%s\')"><td>%d</td><td class="nm">%s<span class="en">%s</span></td><td>%s</td>'
+                   '<td>%.1f</td><td>%d</td><td>%.2f</td>'
+                   '<td>—</td><td>—</td><td>—</td><td>—</td><td style="color:#8b93a7">无永恒</td></tr>'
+                   % (cn, i, cn, n, pos, t8, tsal, tq))
+        continue
+    dcls = ' style="color:#ff7b7b;font-weight:bold"' if d < 35 else (' style="color:#5cff8f"' if d >= 50 else '')
     eq = e8 / esal if esal else 0
     qcls = ' style="color:#5cff8f;font-weight:bold"' if tq > eq else ''
-    tm_trs += ('<tr><td>%d</td><td class="nm">%s<span class="en">%s</span></td><td>%s</td>'
+    tm_trs += ('<tr onclick="popT(\'%s\')"><td>%d</td><td class="nm">%s<span class="en">%s</span></td><td>%s</td>'
                '<td>%.1f</td><td>%d</td><td%s>%.2f</td>'
                '<td>%.1f</td><td>%.1f</td><td>%d</td><td>%.2f</td><td%s>%+.1f</td></tr>'
-               % (i, cn, n, pos, t8, tsal, qcls, tq, e6, e8, esal, eq, dcls, d))
+               % (cn, i, cn, n, pos, t8, tsal, qcls, tq, e6, e8, esal, eq, dcls, d))
 html = ('<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
 '<title>永恒中锋评价·定稿版</title><style>'
 'body{font-family:"Microsoft YaHei";background:#0f1420;color:#dde3ee;margin:0;line-height:1.55}'
@@ -235,7 +289,8 @@ html = ('<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="
 '#md h3{color:#ffd35c;margin:0 0 4px;font-size:17px}'
 '#md .sub{color:#8b93a7;font-size:12px;margin-bottom:10px}'
 '#md table{font-size:12.3px}#md td,#md th{padding:2px 8px}'
-'#md .t3{color:#5cff8f;font-weight:bold}#md .t2{color:#dde3ee}#md .t1{color:#c9a44a}#md .t0{color:#ff7b7b}'
+'#md .t3{color:#5cff8f;font-weight:bold}#md .t4{color:#4dffc6;font-weight:bold}#md .t2{color:#dde3ee}#md .t1{color:#c9a44a}#md .t0{color:#ff7b7b}'
+'tr.tmo td.nm{color:#e8b4ff}'
 '#md .w0{opacity:.45}'
 '#md .sum{margin-top:10px;background:#1d2740;border-radius:7px;padding:9px 13px;font-size:13px;line-height:1.9}'
 '#md .sum b{color:#5cff8f}'
@@ -243,12 +298,12 @@ html = ('<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="
 '</style></head><body><div class="wrap">'
 '<h1>永恒中锋评价 · 定稿版（2026-07-27，用户逐档裁定权重）</h1>'
 '<div class="note"><b>终分 = [ Σ(属性档位分 × 档位权重) + 最优特训增益 ] × 逆足系数</b><br>'
-'档位分：显示值≥165→3 / ≥155→2 / ≥145→1 / ＜145→0（阈值机制：突破档位才算数，档内堆点无效）<br>'
+'档位分：显示值≥165→<b>4</b>（07-28上调） / ≥155→2 / ≥145→1 / ＜145→0（阈值机制：突破档位才算数，档内堆点无效）<br>'
 '权重：<b>双速×5</b>（占比22.7%）｜<b>射术·射门力量·弧线·灵活·控球·平衡×3</b>（40.9%）｜<b>强壮·反应·远射·头球×2</b>（18.2%）｜'
 '<b>体力·弹跳·凌空·短传·站位·冷静·盘带×1</b>（15.9%）｜<b>传中·视野×0.5</b>（2.3%）｜其余×0<br>'
 '特训：全卡共+5点、单项≤2点，按背包求最大档位增益（卡在143-144/153-154/163-164的属性可被推过线）<br>'
-'逆足：5逆×1.0 / 4逆×0.95 / 3逆×0.85　｜　口径：接口裸值+3显示+8卡强化15+<b>球员等级4(假设待游戏内确证)</b>+队套6<br>'
-'得分率=终分÷满分132。<b>全员66人(非门将)都算中锋分，≥80进榜</b>；蓝名=非中锋客串（仅数值参考，无准入门槛）；'
+'逆足：5逆×1.0 / 4逆×0.90 / 3逆×0.75（07-27调）　｜　口径：接口裸值+3显示+8卡强化15+<b>球员等级4(假设待游戏内确证)</b>+队套6<br>'
+'得分率=终分÷满分176（07-28档位上调后）。<b>全员66人(非门将)都算中锋分，≥80进榜</b>；蓝名=非中锋客串（仅数值参考，无准入门槛）；'
 '灰行=不足80的正牌中锋（明确别当中锋买）。身高/体重/模型仅参考不计分。<br>'
 '<b>工资残差</b>=终分 − 市场定价线（用28名正牌中锋拟合 终分≈' + '%.0f+%.1f×工资' % (INTC, SLOPE) + '，1点工资≈%.1f分）' % SLOPE + '——'
 '同工资档下超出/欠了多少分：<span style="color:#5cff8f">绿≥+7超模</span> / <span style="color:#ff7b7b">红≤−7工资坑</span>。'
@@ -259,16 +314,16 @@ html = ('<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="
 '公式外因素（买前自查）：①特性——大罗+中场指挥官封神/图雷-指挥官手感笨/渗透者需高AI，特性是可投资项；'
 '②体重造假——伊布被官方+11kg（唯一物理劣化）；③模型手感——梅西169瘦小打中锋数值行模型不行；'
 '④范尼问题——"全员163"体质是阈值制最大受害者，信不信165阈值论决定他被低估还是被如实定价。</div>'
-'<h2>vs 时刻：同名卡对比（按时刻8卡分排名）</h2>'
-'<div class="note">口径：两边同用中锋权重+特训+逆足；档位下探到135（135/145/155/165=1/2/3/4档，时刻卡数值低，'
-'不加135档线下差异会被抹平，故本表分数与上面主榜不同量纲，只看相对与加减）。永恒6卡=强化+8口径（现实持有状态）。<br>'
+'<h2>vs 时刻：同名卡对比 + 时刻独有卡（按时刻8卡分排名）</h2>'
+'<div class="note">口径：两边同用中锋权重+特训+逆足；档位与主榜一致（145/155/165=1/2/3，'
+'07-27起时刻计分与永恒统一，<b>本表分数与主榜同量纲可直接比</b>）。永恒6卡=强化+8口径（现实持有状态）。<br>'
 '<b>加减(永恒8卡−时刻8卡)读法：加减小=溢价大=避雷（花永恒的钱买不到提升）；加减大=永恒真升级。</b>'
 '红=加减&lt;35（智商税区：欧文+20.9全场最小/巴乔/车范根）；绿=加减≥50（换代刀刃：亨利+52/马塞洛+59/兰帕德+57/图雷+55.5，'
 '中场组整体+49~57——时刻中场是重灾区，永恒换代收益最高的是中场）。'
-'时刻天花板110（大罗/尤西比奥）：满投入口径永远矮永恒一头，但预算紧时"时刻顶卡&gt;半吊子永恒"。</div>'
+'紫名行=<b>时刻独有</b>（贝利/马拉多纳/克鲁伊夫等53人无永恒版，永恒列显—）。<b>全表可点击</b>：点任意行弹出该时刻卡29项属性的档位/权重/得分清单+特训方案+逆足算式。</div>'
 '<table><tr><th>#</th><th>球员</th><th>官方位置</th><th>时刻8卡</th><th>时刻薪</th><th>时刻每薪</th><th>永恒6卡</th><th>永恒8卡</th><th>永恒薪</th><th>永恒每薪</th><th>加减</th></tr>'
 + tm_trs + '</table>'
-'<div class="note" style="margin-top:6px">每薪=该卡8卡分÷自己的工资（本表四档量纲内比较）。<b>时刻薪普遍低3-5点</b>，'
+'<div class="note" style="margin-top:6px">每薪=该卡8卡分÷自己的工资（与主榜同量纲）。<b>时刻薪普遍低3-5点</b>，'
 '绿色=时刻每薪&gt;永恒每薪（工资效率上时刻更划算——预算/工资帽紧时的参考）。</div>'
 '</div>'
 '<div id="ov" onclick="hide()"></div><div id="md" style="display:none"></div>'
@@ -278,9 +333,20 @@ html = ('<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="
 '+"<div class=sub>"+d.phy+"　|　"+d.w5+"逆足</div>"\n'
 '+"<table><tr><th>属性</th><th>显示值</th><th>档位</th><th>权重</th><th>得分</th></tr>";\n'
 'for(var i=0;i<d.items.length;i++){var it=d.items[i];\n'
-'h+="<tr class=\'"+(it[3]?"":"w0")+"\'><td>"+it[0]+"</td><td class=t"+it[2]+">"+it[1]+"</td><td class=t"+it[2]+">"+it[2]+"档</td><td>"+(it[3]?"×"+it[3]:"×0")+"</td><td class=t"+it[2]+">"+(it[3]?it[4]:"—")+"</td></tr>";}\n'
+'var tv=it[5]||0,tt=it[6]||0;var tc=tv?tt:it[2];\n'
+'var vx=tv?(it[1]+"→<b>"+tv+"</b>"):it[1];var dx=tv?(it[2]+"档→<b>"+tt+"档</b>"):(it[2]+"档");\n'
+'h+="<tr class=\'"+(it[3]?"":"w0")+"\'><td>"+it[0]+(tv?" <span style=\'color:#ffd35c;font-size:10px\'>[特训]</span>":"")+"</td><td class=t"+tc+">"+vx+"</td><td class=t"+tc+">"+dx+"</td><td>"+(it[3]?"×"+it[3]:"×0")+"</td><td class=t"+tc+">"+(it[3]?it[4]:"—")+"</td></tr>";}\n'
 'h+="</table><div class=sum>基础分 <b>"+d.base.toFixed(1)+"</b>　＋　特训 <b>+"+d.gain.toFixed(1)+"</b>（"+d.plan+"）<br>"\n'
 '+"× 逆足系数 <b>"+d.pen+"</b>（"+d.w5+"逆）　＝　终分 <b>"+d.fin+"</b></div>";\n'
+'var m=document.getElementById("md");m.innerHTML=h;m.style.display="block";document.getElementById("ov").style.display="block"}\n'
+'var DT=' + json.dumps(dtl, ensure_ascii=False) + ';\n'
+'function popT(n){var d=DT[n];if(!d)return;var h="<span class=x onclick=hide()>&times;</span><h3>"+n+" · 时刻8卡属性清单（145/155/165三档制，与主榜同口径）</h3>"\n'
+'+"<div class=sub>"+d.phy+"　|　"+d.w5+"逆足</div>"\n'
+'+"<table><tr><th>属性</th><th>显示值</th><th>档位</th><th>权重</th><th>得分</th></tr>";\n'
+'for(var i=0;i<d.items.length;i++){var it=d.items[i];var tc=Math.min(it[2],4);\n'
+'h+="<tr class=\'"+(it[3]?"":"w0")+"\'><td>"+it[0]+"</td><td class=t"+tc+">"+it[1]+"</td><td class=t"+tc+">"+it[2]+"档</td><td>"+(it[3]?"×"+it[3]:"×0")+"</td><td class=t"+tc+">"+(it[3]?it[4]:"—")+"</td></tr>";}\n'
+'h+="</table><div class=sum>基础分 <b>"+d.base.toFixed(1)+"</b>　＋　特训 <b>+"+d.gain.toFixed(1)+"</b>（"+d.plan+"）<br>"\n'
+'+"× 逆足系数 <b>"+d.pen+"</b>（"+d.w5+"逆）　＝　时刻分 <b>"+d.fin+"</b></div>";\n'
 'var m=document.getElementById("md");m.innerHTML=h;m.style.display="block";document.getElementById("ov").style.display="block"}\n'
 'document.addEventListener("keydown",function(e){if(e.key==="Escape")hide()});\n'
 'function sortT(t,i,th){var rows=Array.prototype.slice.call(t.querySelectorAll("tr")).slice(1);'

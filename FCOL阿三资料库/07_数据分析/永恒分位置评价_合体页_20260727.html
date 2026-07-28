@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>永恒分位置评价 · 合体页</title><style>
+body{font-family:"Microsoft YaHei";background:#0f1420;color:#dde3ee;margin:0}
+.bar{display:flex;gap:8px;align-items:center;padding:10px 14px;position:sticky;top:0;background:#0f1420;z-index:5;border-bottom:1px solid #1d2438}
+.bar button{background:#1d2740;color:#9fb4d8;border:0;border-radius:8px;padding:9px 20px;font-size:14.5px;font-family:inherit;cursor:pointer;font-weight:bold}
+.bar button.on{background:#ffd35c;color:#10151f}
+.bar .lk{margin-left:auto;font-size:12.5px}
+.bar a{color:#7ec8ff;text-decoration:none;margin-left:14px}
+iframe{width:100%;height:calc(100vh - 62px);border:0;background:#0f1420;display:none}
+iframe.on{display:block}
+</style></head><body>
+<div class="bar">
+<button id="b1" class="on" onclick="sw(1)">中锋</button>
+<button id="b2" onclick="sw(2)">边锋</button>
+<button id="b3" onclick="sw(3)">前腰</button>
+<button id="b4" onclick="sw(4)">中场</button>
+<button id="b5" onclick="sw(5)">后腰</button>
+<span class="lk">
+<a href="永恒全位置拉通_得分与名次_20260727.html" target="_blank">拉通页 ↗</a>
+<a href="永恒评价体系_系统总结_20260727.html" target="_blank">体系总结 ↗</a>
+</span>
+</div>
+<iframe id="f1" class="on" src="永恒中锋评价_定稿版_20260727.html"></iframe>
+<iframe id="f2" data-src="永恒边锋评价_定稿版_20260727.html"></iframe>
+<iframe id="f3" data-src="永恒前腰评价_定稿版_20260727.html"></iframe>
+<iframe id="f4" data-src="永恒中场评价_定稿版_20260727.html"></iframe>
+<iframe id="f5" data-src="永恒后腰评价_定稿版_20260727.html"></iframe>
+<script>
+function sw(n){
+ for(var i=1;i<=5;i++){
+  var f=document.getElementById('f'+i);
+  document.getElementById('b'+i).className=(i===n?'on':'');
+  if(i===n && !f.src && f.dataset.src) f.src=f.dataset.src;
+  f.className=(i===n?'on':'');
+ }
+}
+</script>
+</body></html>

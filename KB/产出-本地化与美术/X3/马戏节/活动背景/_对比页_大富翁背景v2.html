@@ -1,0 +1,111 @@
+<meta charset="utf-8">
+<title>马戏节 大富翁背景 v2 对比</title>
+<style>
+  :root{ --bg:#14161b; --fg:#e8e6e3; --dim:#9aa0a6; --line:#2a2f38; --accent:#e0a341; }
+  *{box-sizing:border-box}
+  body{margin:0;padding:28px 22px 60px;background:var(--bg);color:var(--fg);
+       font:15px/1.6 "Microsoft YaHei","Segoe UI",sans-serif}
+  h1{font-size:22px;margin:0 0 6px}
+  .sub{color:var(--dim);font-size:13px;margin-bottom:20px}
+  .bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+       padding:12px 14px;background:#1b1f27;border:1px solid var(--line);border-radius:8px;margin-bottom:22px}
+  .bar label{display:flex;gap:6px;align-items:center;cursor:pointer;font-size:13px;color:var(--dim)}
+  .bar input{accent-color:var(--accent)}
+  .row{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
+  .card{flex:0 0 auto}
+  .cap{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+  .cap b{font-size:15px}
+  .cap span{font-size:12px;color:var(--dim)}
+  .tag{font-size:11px;padding:1px 7px;border-radius:99px;border:1px solid}
+  .bad{color:#ff8b7a;border-color:#5c2a24}
+  .good{color:#7fd6a0;border-color:#245038}
+  .stage{position:relative;width:540px;height:960px;border:1px solid var(--line);
+         border-radius:6px;overflow:hidden;background:#000}
+  .stage img.bg{width:540px;height:960px;display:block}
+  .board{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .18s}
+  .show .board{opacity:1}
+  .board img{position:absolute;width:69px;height:84px;transform:translate(-50%,-50%);
+             filter:drop-shadow(0 3px 4px rgba(0,0,0,.45))}
+  .grade{margin-top:10px;font-size:12px;color:var(--dim);max-width:540px}
+  .note{margin-top:34px;padding:16px 18px;background:#1b1f27;border:1px solid var(--line);
+        border-radius:8px;font-size:13px;color:#c9ced6;max-width:1180px}
+  .note b{color:var(--fg)}
+  .note ul{margin:8px 0 0;padding-left:20px}
+  .pend{display:inline-block;padding:2px 9px;border:1px dashed #4a5160;border-radius:5px;
+        color:var(--dim);font-size:12px}
+</style>
+
+<h1>马戏节 · 大富翁活动背景 v2 对比</h1>
+<div class="sub">按客户端实际尺寸 540×960 呈现 · 2026-07-28</div>
+
+<div class="bar">
+  <label><input type="checkbox" id="tog" checked> 叠加真实棋盘地块（判断读不读得出来）</label>
+</div>
+
+<div class="row" id="row">
+
+  <div class="card">
+    <div class="cap"><b>现版（线上）</b><span class="tag bad">背景抢戏</span></div>
+    <div class="stage"><img class="bg" src="_cmp/old_540.png">
+      <div class="board" data-board></div></div>
+    <div class="grade">中间被蜿蜒小路 + 帐篷 + 马车塞满；明度比 UI 还高；红金 ↔ 棋盘红金同色系，地块糊进背景。</div>
+  </div>
+
+  <div class="card">
+    <div class="cap"><b>方案 A</b><span>暖沙空场 · 主图</span><span class="tag good">中央留空</span></div>
+    <div class="stage"><img class="bg" src="_cmp/v2a_540.png">
+      <div class="board" data-board></div></div>
+    <div class="grade">天空占比大，标题区更透气；边缘物件密、灯串多，节日感强。</div>
+  </div>
+
+  <div class="card">
+    <div class="cap"><b>方案 A-alt</b><span>暖沙空场 · 备选</span><span class="tag good">留白最大</span></div>
+    <div class="stage"><img class="bg" src="_cmp/v2a_alt1_540.png">
+      <div class="board" data-board></div></div>
+    <div class="grade">空场面积最大、边缘更克制；热气球更明确。整体最干净，但节日热闹度略低于 A。</div>
+  </div>
+
+  <div class="card" id="slotB">
+    <div class="cap"><b>方案 B</b><span>夜场压暗</span><span class="tag good">对比最强</span></div>
+    <div class="stage"><img class="bg" src="_cmp/v2b_540.png">
+      <div class="board" data-board></div></div>
+    <div class="grade">夜晚暗场，中央深红土场，边缘暖灯自发光。跟红金棋盘的明度差最大，地块最跳。
+      代价：整体偏暗，跟其他马戏节背景的白天调子差最远。</div>
+  </div>
+
+</div>
+
+<div class="note">
+  <b>这版改了什么</b>
+  <ul>
+    <li>照抄深海原版的构图法则：中央 70% 留大面积空场，细节全部压到左右两条窄边。</li>
+    <li>整体压到中暗暖色调，不再高亮炸白，前景红金 UI 能压住背景。</li>
+    <li>顶部只留一个远景飞艇作焦点（对应深海那只小潜艇），其余不抢戏。</li>
+    <li>硬禁：中间不许有路 / 帐篷 / 人 / 动物，不许烤任何文字。</li>
+  </ul>
+  <b style="display:block;margin-top:12px">定稿后</b>
+  压成 540×960 覆盖 <code>client/Assets/Res/UI/Spirits/ActvVoyage/img_Activity_circus_monopoly_bg.png</code>，DK 不变。
+</div>
+
+<script>
+  // 12 格环形棋盘：近似线上布局，仅用于判断地块能否从背景中读出来
+  const TILES = ['start','treasure','diamond','lucky','mystery'];
+  const POS = [
+    [50,32],[27,30],[73,30],
+    [18,42],[82,42],
+    [16,56],[84,56],
+    [22,68],[78,68],
+    [34,77],[50,80],[66,77]
+  ];
+  document.querySelectorAll('[data-board]').forEach(b=>{
+    POS.forEach((p,i)=>{
+      const im=document.createElement('img');
+      im.src='_cmp/img_Activity_circus_island_'+TILES[i%TILES.length]+'.png';
+      im.style.left=p[0]+'%'; im.style.top=p[1]+'%';
+      b.appendChild(im);
+    });
+  });
+  const tog=document.getElementById('tog');
+  const sync=()=>document.querySelectorAll('.stage').forEach(s=>s.classList.toggle('show',tog.checked));
+  tog.addEventListener('change',sync); sync();
+</script>
