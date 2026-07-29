@@ -1,0 +1,166 @@
+<meta charset="utf-8">
+<title>X3 马戏节 · 美术总览（纪念卡 / 签到 / BINGO）</title>
+<style>
+:root{--bg:#12100f;--card:#1c1917;--line:#3a322c;--gold:#d9a441;--txt:#e8e0d5;--dim:#9a8f82;--ok:#4ea36b;--warn:#c9873a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.7 "Microsoft YaHei",system-ui,sans-serif;padding:32px 28px 80px}
+h1{font-size:26px;margin:0 0 4px;color:var(--gold);letter-spacing:.5px}
+.sub{color:var(--dim);font-size:13px;margin-bottom:28px}
+h2{font-size:19px;margin:40px 0 4px;color:var(--gold);border-left:4px solid var(--gold);padding-left:10px}
+.note{color:var(--dim);font-size:13px;margin:0 0 16px}
+.grid{display:flex;flex-wrap:wrap;gap:20px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;max-width:100%}
+.item img{display:block;max-width:100%;height:auto;border-radius:6px;background:
+  linear-gradient(45deg,#2a2724 25%,transparent 25%),linear-gradient(-45deg,#2a2724 25%,transparent 25%),
+  linear-gradient(45deg,transparent 75%,#2a2724 75%),linear-gradient(-45deg,transparent 75%,#2a2724 75%);
+  background-size:16px 16px;background-position:0 0,0 8px,8px -8px,-8px 0}
+.cap{margin-top:10px;font-size:13px}
+.cap b{color:var(--gold);font-weight:600}
+.spec{color:var(--dim);font-size:12px;margin-top:2px;font-family:Consolas,monospace}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;margin-top:6px}
+.t-ok{background:rgba(78,163,107,.16);color:var(--ok);border:1px solid rgba(78,163,107,.4)}
+.t-warn{background:rgba(201,135,58,.16);color:var(--warn);border:1px solid rgba(201,135,58,.4)}
+.t-run{background:rgba(120,120,140,.16);color:#9aa0b0;border:1px solid rgba(120,120,140,.4)}
+table{border-collapse:collapse;margin:14px 0 6px;font-size:13px;width:100%;max-width:920px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#231f1c;color:var(--gold);font-weight:600}
+.pending{background:var(--card);border:1px dashed var(--line);border-radius:10px;padding:40px 20px;text-align:center;color:var(--dim);min-width:280px}
+</style>
+
+<h1>X3 马戏节 · 美术总览</h1>
+<div class="sub">纪念卡两张 / 签到活动 / 新 BINGO 拼图 · 2026-07-28 · 图片为本地文件，用浏览器直接打开本页即可</div>
+
+<h2>① 纪念卡 · 成品卡面（384×523）</h2>
+<p class="note">边框直接画进卡面 PNG —— 客户端<b>不读</b> <code>MemorialCard.col6 DK_背景框</code>（全表 84 行皆空），历史 79 绿茵之星 / 80 远航之歌也都是这么做的。</p>
+<div class="grid">
+  <div class="item">
+    <img src="纪念卡/img_card_image_83.png" width="384">
+    <div class="cap"><b>83 幻紫魅影</b>（基础卡 · 猎人防御）</div>
+    <div class="spec">384×523 · img_card_image_83.png</div>
+    <div class="spec">银白细框 + 深紫内衬 + 四角卷草 / 帐篷内观众席暖光</div>
+    <div class="tag t-ok">已推 dev_festival</div>
+  </div>
+  <div class="item">
+    <img src="纪念卡/img_card_image_84.png" width="384">
+    <div class="cap"><b>84 鎏金魅影</b>（高级卡 · 猎人攻击）</div>
+    <div class="spec">384×523 · img_card_image_84.png</div>
+    <div class="spec">红框 + 厚金 + 灯泡串 + 四角紫宝石 / 暗场聚光灯谢幕</div>
+    <div class="tag t-ok">已推 dev_festival</div>
+  </div>
+</div>
+<table>
+<tr><th>品质信号</th><th>幻紫魅影（基础）</th><th>鎏金魅影（高级）</th></tr>
+<tr><td>边框</td><td>银白冷金细框 + 深紫内衬</td><td><b>红色内衬 + 厚金 + 灯泡 + 紫宝石角石</b></td></tr>
+<tr><td>背景</td><td>帐篷内观众席、暖光热闹</td><td>暗场中央舞台、单束聚光灯 + 金屑</td></tr>
+<tr><td>构图</td><td>全身（对齐 80 远航之歌）</td><td>半身偏大（对齐 79 绿茵之星）</td></tr>
+<tr><td>满级属性</td><td>+30%（6 级 / 坑深 30 张）</td><td>+60%（6 级 / 坑深 62 张）</td></tr>
+</table>
+<p class="note">红框依据：X3 自身品质色阶 = 绿 &lt; 蓝 &lt; 紫 &lt; 橙红（Item.col14 / Reward.col10 注释），紫→红踩玩家已有直觉，比「银→金」的分层信号强。</p>
+
+<h2>①·b 纪念卡 · 道具图标（256×256 透明底）</h2>
+<p class="note">不是另画的 —— 由卡面程序化派生：缩到画布 80% 高 + 左倾 4° + 高斯投影，对齐现役 <code>icon_card_image_80</code> 的观感。这样图标和卡面永远一致，卡面改了重跑一遍即可。</p>
+<div class="grid">
+  <div class="item">
+    <img src="纪念卡/icon_card_image_83.png" width="256">
+    <div class="cap"><b>83 幻紫魅影</b> 道具图标</div>
+    <div class="spec">256×256 · DK_icon_card_image_83 · Spirits/ItemIcons/</div>
+    <div class="spec">透明验证：边框透明 100% / 无假棋盘格</div>
+    <div class="tag t-ok">已推 dev_festival</div>
+  </div>
+  <div class="item">
+    <img src="纪念卡/icon_card_image_84.png" width="256">
+    <div class="cap"><b>84 鎏金魅影</b> 道具图标</div>
+    <div class="spec">256×256 · DK_icon_card_image_84 · Spirits/ItemIcons/</div>
+    <div class="spec">红框在小图上依然是最强识别信号</div>
+    <div class="tag t-ok">已推 dev_festival</div>
+  </div>
+</div>
+
+<h2>② 纪念卡 · 出图原稿（1536×2048）</h2>
+<p class="note">卡面成品由这两张裁切缩放而来（按 384:523 比例中心裁，边框不变形）。</p>
+<div class="grid">
+  <div class="item"><img src="纪念卡/card_image_83_purple_v1.png" width="300"><div class="cap"><b>83 原稿</b></div><div class="spec">card_image_83_purple_v1.png</div></div>
+  <div class="item"><img src="纪念卡/card_image_83_purple_v1_alt1.png" width="300"><div class="cap">83 备选</div><div class="spec">_alt1</div></div>
+  <div class="item"><img src="纪念卡/card_image_84_gold_v1.png" width="300"><div class="cap"><b>84 原稿</b></div><div class="spec">card_image_84_gold_v1.png</div></div>
+  <div class="item"><img src="纪念卡/card_image_84_gold_v1_alt.png" width="300"><div class="cap">84 备选</div><div class="spec">_alt</div></div>
+</div>
+
+<h2>③ 金版人物 · 新姿势候选（高级卡用）</h2>
+<p class="note">在皮肤定稿金版基础上「换姿势 + 更暴露」。<b>poseB 被 GRFal 内容安全网关拦下</b>，平台自动降级 prompt 才出的图，暴露度未达 brief；poseA 是过闸的。最终卡面采用 poseA 的谢幕摘帽姿势。</p>
+<div class="grid">
+  <div class="item"><img src="纪念卡/Amina_CardGold_poseA_v1.png" width="300"><div class="cap"><b>poseA · 谢幕摘帽</b>（采用）</div><div class="spec">1536×2048</div><div class="tag t-ok">已用于 84 卡面</div></div>
+  <div class="item"><img src="纪念卡/Amina_CardGold_poseB_v1.png" width="300"><div class="cap">poseB · 卡牌飞舞</div><div class="spec">1536×2048</div><div class="tag t-warn">安全网关降级，暴露度未达标</div></div>
+</div>
+
+<h2>④ 签到活动（AO101407 · 新建）</h2>
+<p class="note">规格与构图范式对齐深海 / 世界杯两期（两期完全一致＝标准规格）：bg＝中央节日主物件立台座发光 + 场景纵深 + 顶部光束 + 两侧金缎带 + 金屑；icon＝日历本 + 粗绿勾 + 角落节日小物。主物件选<b>本期签到实际发的东西</b>（深海用航海罗盘 → 马戏用马戏勋章）。</p>
+<div class="grid">
+  <div class="item">
+    <img src="签到/img_Activity_circus_checkin_bg.png" width="514">
+    <div class="cap"><b>签到背景</b> DK_img_Activity_circus_checkin_bg</div>
+    <div class="spec">1028×568 · Spirits/ActivityImg_Download/</div>
+    <div class="tag t-ok">已落库并推 dev_festival</div>
+  </div>
+  <div class="item">
+    <img src="签到/img_Activity_circus_checkin_icon.png" width="124">
+    <div class="cap"><b>签到图标</b> DK_img_Activity_circus_checkin_icon</div>
+    <div class="spec">124×136 透明底 · Spirits/ActivityImg/</div>
+    <div class="spec">透明验证：透明 32.4% / 边框透明 89.2% / 无假棋盘格</div>
+    <div class="tag t-ok">已落库并推 dev_festival</div>
+  </div>
+  <div class="item">
+    <img src="签到/img_Activity_circus_checkin_bg_alt1.png" width="380">
+    <div class="cap">背景 备选</div><div class="spec">_alt1</div>
+  </div>
+</div>
+
+<h2>⑤ 新 BINGO 拼图（AO101830 · 新建）</h2>
+<p class="note">804×804 正方形角色场景图，会被 5×5 格逐格揭开，所以四角都要有内容、不能大片留空。原先挂的航海之路 <code>navigation_bg_9</code> 占位已替换。</p>
+<div class="grid">
+  <div class="item">
+    <img src="BINGO/img_Activity_circus_puzzle_bg.png" width="480">
+    <div class="cap"><b>BINGO 拼图底图</b> DK_img_Activity_circus_puzzle_bg</div>
+    <div class="spec">804×804 · Spirits/ActivityImg/</div>
+    <div class="spec">阿米娜居中托金光牌扇 / 帐篷内景 · 灯笼·串灯·观众席·讲台·鼓·条纹球四角填满</div>
+    <div class="tag t-ok">已推 dev_festival</div>
+  </div>
+  <div class="item">
+    <img src="BINGO/img_Activity_circus_puzzle_bg_alt1.png" width="360">
+    <div class="cap">备选</div><div class="spec">_alt1 · 804×804</div>
+  </div>
+</div>
+
+<h2>⑥ 后续追加（2026-07-29）</h2>
+<p class="note">用户实机验收后追加/返工的三张。</p>
+<div class="grid">
+  <div class="item">
+    <img src="签到/img_Activity_circus_checkin_bg_v2.png" width="514">
+    <div class="cap"><b>签到背景 v2</b>（主物件换成门票）</div>
+    <div class="spec">1028×568 · 已覆盖 img_Activity_circus_checkin_bg.png</div>
+    <div class="spec">签到奖励改成「每天 1 张开箱门票」，banner 主物件同步从金勋章换成门票</div>
+    <div class="tag t-ok">已落库</div>
+  </div>
+  <div class="item">
+    <img src="BINGO/img_Activity_circus_puzzle_tile_160.png" width="160">
+    <div class="cap"><b>BINGO 格子遮罩图</b></div>
+    <div class="spec">160×160 · ActvVoyage/img_Activity_circus_puzzle_tile.png</div>
+    <div class="spec">原为深海蓝贝壳 navigation_bg_6；ActvPuzzle 1830 col7 已指向</div>
+    <div class="tag t-ok">已落库·三处注册</div>
+  </div>
+  <div class="item">
+    <img src="扭蛋机/img_Activity_circus_gacha_bg.png" width="300">
+    <div class="cap"><b>扭蛋机界面背景</b>（修 X3NEW-2366）</div>
+    <div class="spec">1640×2560 · ActivityImg_Download/</div>
+    <div class="spec">prefab BG 节点原引用的 guid 全工程不存在，已换指本图</div>
+    <div class="tag t-ok">已推 dev_festival</div>
+  </div>
+</div>
+
+<h2>落库状态一览</h2>
+<table>
+<tr><th>资产</th><th>规格</th><th>状态</th></tr>
+<tr><td>签到 icon / bg</td><td>124×136 透明 / 1028×568</td><td style="color:var(--ok)">✅ 已推 x3-project dev_festival，配置 AO101407 已指向（gdconfig 335ec240，jolt #2211）</td></tr>
+<tr><td>纪念卡 83 / 84 卡面</td><td>384×523</td><td style="color:var(--ok)">✅ 已推 x3-project dev_festival（ff23f683705），Display_Memory + Path_Memory 注册</td></tr>
+<tr><td>纪念卡 83 / 84 道具图标</td><td>256×256 透明</td><td style="color:var(--ok)">✅ 同上，Display_Item + Path_Item 注册</td></tr>
+<tr><td>BINGO 拼图底图</td><td>804×804</td><td style="color:var(--ok)">✅ 已推 x3-project（3298518211a），配置 ActvPuzzle 1830 已指向（gdconfig 440c4ace，jolt #2214）</td></tr>
+</table>

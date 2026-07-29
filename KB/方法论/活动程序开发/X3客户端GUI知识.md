@@ -106,6 +106,12 @@ tags: [kind/方法论, domain/前端, proj/X3, year/2026-06]
 2. **c15 MainEntrance=1/2**：主城左侧独立入口（UIMainLeftPart.cs:579-599）。1=进入口列表（有红点才显示项）；2=常驻入口（要求活动可打开，如武道挑战 104401/许愿池 102601）。
 3. **c38 GroupId=组号**：聚合进 ActvGroup 组入口（表 `ActvOnline__ActvGroup.tsv`：组名 TXT_ActvGroup_MainEntranceName_{ID} + 入口图标 + 顶底边框/页签/退出键全套 DK，现有 100 酒馆福利~143 马戏巡游 40+ 组）——组内活动成页签，一个主城图标承载多活动。
 - 选型经验：常驻单活动→MainEntrance=2；同主题多活动→挂现成组或建新组（建组=一行配置+一套 DK）；组入口在「任一组内活动开启」期间显示。
+- 🔑**第四种情况：「旁挂数据源活动」——要活动实例存在、但完全不露入口（2026-07-29 马戏庆功宴 101028 实战定型）**。场景=宿主界面（扭蛋机 101027）底部的积分轨道，数据来自一个**独立 AO**（101028），玩家不该把它当独立活动看见。三级机制里**没有"隐藏"这一档**（两个字段都空 = 兜底进活动集合界面），所以要**四件事配齐**：
+  1. **`IsOn=1` 必须保住**——🔴 千万别用 `IsOn=0` 来"藏"它：IsOn=0 → 该行不导出 → `CActvOnline.I()` 返 null → `ActivityMgr.OnLoadActivity` 判 cfg==null 直接 `DeleteActivity` 清实例 → 宿主界面 `InitScoreTrack` 拿不到实例 → **整条轨道隐藏**（`UIActvCircusGacha.ScoreTrack.cs` 注释原文："找不到积分活动实例则整条隐藏"）。我为此绕了一圈：先 IsOn=0 防误开 → 进度条没了 → 撤回。
+  2. **活动集合界面**（`UIActvMainPanel.cs` ~line 242）：加 cfgID 排除。该文件已有两个同款先例可照抄（NewQueue 活动、三选一礼包）。**按 cfgID 不按 ActvType**——这类活动常复用通用类型（101028 用 ActvType=7 最佳酒馆），按 type 排会误伤同类正常活动（马戏酒馆 10071705 等）。已建可扩展常量 `ActivityConst.DataSourceOnlyActivityCfgIds`，新增旁挂活动往里加 cfgID 即可。
+  3. **活动日历**（`UIActvCalendar.cs:87/101/117` 三处 `!cfg.Calendar` 即 skip）：配置 `ActvOnline.Calendar=0`。**这是独立于 ②的第二条链路，最容易漏**。
+  4. **主城左侧入口**（`UIMainLeftPart.cs` ~585 `cfg.MainEntrance==0 → continue`）：`MainEntrance` 留空即可，通常无需处理。
+  - **配套：让它随宿主活动一起开** = `ActvOnline__ActvGroupSchedule.tsv` 加绑定行（Main=宿主AO / Sub=数据源AO / StartTime=0 / DurationType=2 同窗），服务端 `CreateGroupActivityIds` 在主活动实例创建时自动拉起，**iGame 只需部署宿主活动**。⚠️前提：宿主活动**不能是跨服全局**（CrossServerRank 非空则不触发子活动创建）；且绑定只在**主活动实例创建那一刻**生效，已在跑的实例不会追溯拉起——验证必须 remove 主活动再 add。
 - ⚠️ 冒烟点：非常见 ActvType 首次走 MainEntrance=2 或新组，dev 起服点一次验路由（type27+MainEntrance=2 无先例）。
 - ⚠️挂新活动进**现有组**前，先查组内活动的生命周期：若组内全是一次性/限时活动（组图标随之消失=设计意图），常驻新活动进组会让组图标复活——老玩家进来看到一堆「已结束」死入口；且专属界面（如 UIMechaActiEntrance）入口 resolve 严格锁 cfgId 不回退，循环替代版活动（如 106005 老服循环转盘,不挂组）不会出现在界面里。评估=①要不要给死入口加循环版 cfgId 备选 ②知会原活动策划（2026-07-14 手册挂海妖猎场组 137 实案）。
 
@@ -164,3 +170,70 @@ tags: [kind/方法论, domain/前端, proj/X3, year/2026-06]
 - **填充实现选锚点、别选像素宽**：`rt.anchorMin=(0,0); rt.anchorMax=(ratio,1)` 即可，layout 自动按父宽换算，**不依赖运行时 `rect.width`**（首帧 layout 未 rebuild 时宽度可能为 0）。前提=该节点的 pivot/sizeDelta/anchoredPosition 与整段条一致（马戏案 Img1 与 Img2 在 prefab 里本就一致，只差锚点），否则要一并对齐。y 方向也要从 (0,0)-(0,0) 改成 (0,0)-(*,1) 才有高度，不然 sizeDelta.y 是负值 = 高度为负不可见。
 - **节点复用池不用清理残留**：`UIWidgetList` 复用时 anchorMax 会留上次的值，但每次 Refresh 要么重设、要么整个 SetActive(false)，幂等安全。
 - **视觉尾巴**：Img1/Img2 是两张不同 sprite——马戏案 Img1=`NewSprite/Common/ProgressBar/Common_Bar_Commonly2.png`、Img2=`Sprite/UIMonopolyPigBanck/Images/Common_Bar_Commonly4.png`（同 `Common_Bar_Commonly` 系列的不同色号）。若"已完成段"与"进行中段"色差突兀，把 Img1 的 Source Image 换成 Img2 那张即可，不用改代码。
+
+## Auto_UIXxx.cs 代码生成机制（2026-07-29 摸清，手加节点后必走）
+
+X3 的 UI 绑定是**全路径字符串**（`GameObject.FindByFullPath("Root/Animation/BtnXxx")`），由生成器从 SaveData 产出 `Auto_UIXxx.cs`。**手工在 prefab 加了节点，不重新生成就绑不上**。
+
+**三件套**：
+| 件 | 位置 | 内容 |
+|---|---|---|
+| prefab 节点 | `Res/UI/Prefab/.../UIXxx.prefab` | 节点名决定一切，见下"命名约定" |
+| 导出清单 | `Assets/Editor/UITools/SaveData/UIXxx.asset` | `AllData[]` = `{Path, LocalID, CmpData[]}` |
+| 生成物 | `Assets/Scripts/UI/Gen/Auto_UIXxx.cs` | 字段 + FindByFullPath + AddListener |
+
+- **`LocalID` = 该节点 RectTransform 的 fileID**（⚠️不是 GameObject 的，填错绑不上）
+- `Path` 格式 = `UIXxx/Root/Animation/BtnMarket`（带 UI 名前缀的全路径）
+- **重新生成 = `UISaveData.Save()`**（＝校验+模板变量+TrimNodeData+GeneCode）。**别直接调 `Runner.GeneCode`**，会缺模板变量 `${ID}`。
+- 一键菜单已固化：`Assets/Editor/UITools/RegenUIAutoCode.cs` → `Tools/X3/重新生成UI代码 (UIActvVoyage/UIActvCrafting)`；换 UI 加一个 MenuItem 即可。
+
+🔑**命名约定（生成器全靠它，理解了就能零改 Auto 文件加按钮）**：
+节点叫 `BtnXxx` + `CmpData.Type=EventTriggerListener` → 自动产出 `protected GameObject mBtnXxx;` + `AddListener(..., OnBtnXxxTrigger, out mBtnXxx)`。
+**所以流程是：先在业务 .cs 里写好 `OnBtnXxxTrigger` handler → prefab 加名为 `BtnXxx` 的节点 → SaveData 追加条目 → 生成 → 自动接上。** 业务代码先行、生成器后补，中间态想编译过可以手补一行 `protected GameObject mBtnXxx;`（生成时会被覆盖，正常）。
+
+🪤**改 Unity YAML 的通用铁律**：必须先按 `^--- !u!\d+ &\d+` **切 doc**、再在单个 doc 内替换字段。用跨行正则 `[\s\S]*?` 从文件级抓字段会**跨过 doc 边界改到上游别的节点**（07-29 实测：改 BoxGroup 的 pivot 改到了一个无关 100×40 节点上）。
+
+### 🪤 新加的 Editor 脚本菜单不出现 → 先查落点目录的 asmdef（2026-07-29 实测）
+
+**症状**：写了个 `[MenuItem("Tools/X3/xxx")]`，Unity 里菜单**根本没这一项**（不是灰的，是不存在），也没有明显报错指向它。
+
+**根因**：Unity 对**编译失败的脚本，其 MenuItem 直接不注册、且不会在菜单上给任何提示**。而编译失败最常见的原因是**落点目录有自己的 `.asmdef`，其 `references` 里没有你 using 的那个程序集**。
+- 实例：`Assets/Editor/UITools/UITools.Editor.asmdef` 的 references 只有 4 项，不含 `TFWEditor.UICodeGenerator` → 放这儿的脚本 `using TFWEditor.UICodeGenerator;` 编译不过 → 菜单静默消失。
+- 对照：`Assets/Editor/` **根层无 asmdef** → 归默认 `Assembly-CSharp-Editor`，引用面最大，项目里能用的工具脚本（`MemoryCardTierPackTool.cs` 等）都在这层。
+
+**动手前的一步**：往 Unity 工程加 Editor 脚本，**先 `find <目标目录> -name "*.asmdef"`**。有 asmdef → 要么往它 references 加、要么把脚本放到无 asmdef 的根层（省事且够用）。
+
+**排查顺序（菜单没出现时）**：① Console 有没有编译错误（**任何一处编译不过，全工程新 MenuItem 都不注册**，不只你这个）② 落点目录 asmdef ③ 才是菜单路径拼写。
+
+💡菜单名尽量跟同目录现有项同语种（该目录全英文就别用中文），否则中文项排序会跑到列表末尾，看起来像"没生成"。
+
+💡**反向利用：MenuItem 出不出现 = 一个零成本的「工程编译通过」验证信号**（headless 改 Unity 代码时很有用）。
+无头环境编译不了 C#，改完一堆 .cs 只能干等用户报错。此时**顺手加一个新的 `[MenuItem]`**（哪怕只是个打日志的空方法），让用户看菜单里有没有它：
+- **有** → 全工程编译通过 → 你改的所有 .cs 都编译干净（因为一处不过则全部新 MenuItem 都不注册）
+- **没有** → 有编译错误，让用户贴 Console
+
+2026-07-29 实测：靠 `RegenUICode_UIActvVoyage` 出现，一次性确认了同批改的 4 个 .cs（UIActvCrafting/Auto_UIActvCrafting/UIActvVoyage/Auto_UIActvVoyage）全部编译通过，省掉一轮"贴报错→改→再试"。
+
+🔴**改了 prefab 层级 → 必须改 SaveData，光改 `Auto_UIXxx.cs` 是半修（2026-07-29 实测踩到）**：
+`Auto_UIXxx.cs` 是**生成物**，SaveData 才是真源。手改 Auto 能骗过编译、界面主体也能跑，但会留两个雷：
+1. **内部类（列表项 widget）的 `[UINodeDescribe(path:...)]` 也是生成的，手改 Auto 主文件时容易漏**——它指向旧路径，症状是「格子出来了但**数据是空的**」（外层绑定对、内层模板定位不到）。
+2. 任何人后续点一次"重新生成"，SaveData 里的旧路径会把你的手改**全部冲回去**。
+
+**正确顺序**：改 prefab 层级 → **改 SaveData 的 Path**（同一节点 `LocalID` 不变，因为 fileID 没变）→ 重新生成。手改 Auto 只能当"让工程先编译过"的临时垫脚。
+**一次要改全**：主文件绑定 + 内部类 path + 组件类型变更（本例 BoxGroup 从 `ChildGroupController` 改挂 → SaveData 条目要从 `Name=ChildGroupControllerBoxGroup/Type=ChildGroupController` 改成 `Name=GoBoxGroup/Type=RectTransform`）。**对照同族已改好的界面逐条比 Path/Name/Type 最省事**（本例照抄 UIActvVoyage 的 6 条）。
+
+- **⑨修正 & 补充（2026-07-29 开箱奖励条移植实证）**：
+  - **⑥里"无 GetComponentInParent 兜底"已过时**：`EventTriggerListener.Start()` 里有
+    `if (enableScrollRectFilter && SRFilter == null) SRFilter = GetComponentInParent<ScrollRectFilter>();`。
+    但**仍要显式接线**——`ItemUnitView` 的点击监听是**运行时 `AddComponent`** 的，叠加克隆时序容易漏掉 Start 兜底；
+    显式遍历 `content.GetComponentsInChildren<EventTriggerListener>(true)` 逐个赋 `SRFilter` 幂等且确定。
+  - 🔴**换列表机制＝责任也跟着换，只搬调用方必翻车**（本轮最贵的一次返工）：
+    `ChildGroupController.RefreshChildCount` **自己** `childGO.SetActive(true)`；换成 `UIWidgetList` 后，
+    `Add()`/`Add(go)` 内部一律 `widget.Hide()`，**显示责任转移到 item 的 `BindData` 首行 `Show()`**。
+    我把调用方从 RefreshChildCount 换成克隆循环、却没给 `BindData` 补 `Show()` → **11 个格子全建好、全绑好数据、全隐藏**，
+    表现是"进度条数字正常但一个格子都不显示"，极易误判成数据/绑定问题。
+    ⚠️ ⑧里其实已写了"UIWidget 子项 BindData 首行 Show()"——**我没先读这篇 KB 就动手，白跑一轮**。
+    **教训：改这类 UI 机制前先通读本节⑤-⑧，它是 6 轮返工换来的。**
+  - **迁移自检清单（照抄同族界面时逐项打勾，只比节点树不够）**：①组件级差异（LayoutElement/IgnoreLayout）
+    ②HLG 参数（ForceExpandWidth/ChildAlignment）③content 的 `pivot.x=0` ④SaveData 路径 + 内部类 `UINodeDescribe` path
+    ⑤`BindData` 首行 `Show()` ⑥SRFilter 显式接线。**本轮六项漏了四项，一项一轮返工。**

@@ -133,3 +133,146 @@
   - **正确姿势（每次 commit 前固定两步）**：① `git diff --cached --stat` 看**暂存区全貌**（不是 `git status`）② 出现 ProtoGen / `.claude/skills/*/memory/*.jsonl` 等无关项 → `git reset HEAD -- client/Assets/Res/Config/ProtoGen/` 踢掉，再 commit。
   - **已经误提交的修法**：`git reset --soft HEAD~1` → `git reset HEAD -- <无关目录>` → 重新 commit（**推送前发现就零成本**；推上去再修就要动远端历史）。所以**push 前一定先 `git show --stat HEAD` 复核这次到底提了什么**。
   - 这条与 [[reference_x3_project_repo]]「提交客户端改动时的暂存区排雷」是同一件事——那条写了要踢 ProtoGen，但没说清**它可能在你动手前就已经在暂存区**，导致「我只 add 了一个文件所以肯定只提了一个文件」的误判。
+
+
+- **🔴ActvType=63（阶梯/链式礼包）的 `ActvOnline.ActvImg` 是死配置——换皮时别为它出图（2026-07-28 马戏装饰礼包实证）**：
+  换皮扫残留时会看到 63 类活动 col22 还挂着上个节日的背景 DK（实测：装饰礼包 106104=`DK_img_Activity_deepsea_turntable_bg` 深海、门票礼包 103102=`DK_img_Activity_labor_bg_01` 拓荒），
+  **看起来像必须修的残留，其实玩家一辈子看不到**——差点为此白出两张背景图。
+  - **根因**：`ActvImg` 全仓只有一个消费点 `UIHelper.Activity.cs:246-248`（`SetActivityBaseInfo` 内部设面板 BG），而
+    `ActivityChainPackCondition.cs:40` 里 `GetActivityUIType() => null` ——63 类**没有独立活动面板**，入口是商城 `UIRecharge`/独立礼包窗，
+    根本走不到那段代码。日历入口也不读 ActvImg。
+  - **63 类真正驱动界面视觉的是 ChainPack 表自己的两个字段**：`Icon`(col3 DK_图片)=礼包入口缩略图（`UIGiftPack.cs:201`）、
+    `Video`(col8 DK_视频)=弹窗内嵌视频（`UITieredPack.cs:306-346`）。**换皮只需改这两个**。
+  - **推广判据（适用于任何"这个 DK 字段要不要换皮"的疑问）**：先查该 ActvType 的 `GetActivityUIType()` 返不返回 null，
+    再 grep 该字段在 `Assets/Scripts/` 的消费点（排除 `CfgProtos` 字段定义）。**没有消费点 = 死配置，不值得出图**。
+    反过来，有独立面板的类型（推币机 `UIActivityCoinPusher.cs:86`、拓荒券 `UIActvLaborGacha.cs:93`、海妖转盘）才真的吃 ActvImg。
+  - 🪤**为什么值得单独记一条**：换皮自查工具是按"关键词扫旧节日名"跑的，**它分不清死配置和活配置**，
+    会把 63 类的 ActvImg 一并报成待修项。**扫描器报出来的每一条，落地前都要问一句「这个字段真的会被读吗」**。
+
+
+- **🔴「复核暂存区」和「commit」必须拆成两条命令——串在一条里等于没复核（2026-07-28 当场二次翻车）**：
+  上面那条已经写了「commit 前必看 `git diff --cached --stat`」，但我把它和 `git commit` 用 `&&` 串成了一条命令 →
+  diff 的输出和提交结果**同时**才看到，**看到时已经提交完了**，照样把别人已暂存的 16 个文件（纪念卡图/签到图标/拼图背景/Display_Memory）打包进了我的提交。
+  - **纪律**：`git add` → **单独一条** `git diff --cached --stat` → 人眼确认 → 再单独一条 `git commit`。复核的价值在于「能据此改变下一步动作」，串行执行就没有下一步了。
+  - 修法照旧：`git reset --soft HEAD~1` → `git reset HEAD -- <无关路径>` → 重新 commit（推送前发现零成本）。
+  - 补充一条排雷范围：不只 `ProtoGen/`，**美术目录**（`Assets/Res/UI/Spirits/**`）和 **DK 注册资产**（`Display_*.asset` / `Path_*.asset`）同样常年有别人在途的暂存改动，是同一类雷。
+
+
+- **🔴活动「加档」之后必须回头补累充白名单——加档的人只改玩法表，白名单在另一张表上（2026-07-28 存钱罐实证，用户抓出）**：
+  大富翁存钱罐从**单档改成三档复购**时，`ActvVoyage` 加了 `PiggyBankPackID2/3` 两列并配好了新礼包，
+  但累充 `ActvOnline.RechargePointPackWhitelist` 只有最初的 `280002`，后加的 `280004/280005` 没跟 →
+  **玩家买这两档的钱不计入累充积分**（活动本身完全正常，所以自测发现不了）。
+  - **触发条件（不止存钱罐）**：任何"给已有活动**追加付费档位/新礼包**"的改动 —— BP 加档、扭蛋机加券、
+    阶梯礼包加档、限时抢购填价格。**新包是后加的，白名单是早写死的，天然不同步。**
+  - **收口动作**：改完玩法表，按「该节日所有 `Price` 非空的包」对白名单做一次**全量差集**，别只补自己刚加的那个
+    （本案全量扫 23 个付费包才敢说没有第三处缺口）。收集范围＝组143/144活动 + ChainPack.PackList +
+    存钱罐 PiggyBankPackID1/2/3 + Pack 名带节日关键词。
+  - 🪤**别被 `Pack.RechargeAmount`(累计充值额度) 带偏**：这列全表仅 179/2985 个包有值，
+    已在白名单里的包大多也是空的 —— **它不是计分开关**，计分开关就是白名单本身。
+  - 同源教训：此前同一张白名单已漏过福箱BP 130051/130052 + 扭蛋机 13029-13038 共12个，**是重复发生的类别**。
+
+
+- **🔴繁体(zh)列体检：判据用「Big5 可编码性」，别用 opencc 单字转换（2026-07-29 实证，误报 993→33）**：
+  想找"没转繁/转了一半"的 zh 单元格时，直觉写法 `s2t(ch) != ch` 会**误报 993 条**——
+  `台/秘/群/丑/干/征/霉` 这些字在繁体里本就通用，opencc 只是给出 `臺/祕/羣/醜/幹/徵/黴` 这类**异体**形，原字并不算错。
+  - **正判据**：`ch` 不能用 Big5 编码 **且** `s2t(ch)` 能用 Big5 编码 → 才是真·简化字。
+    简化字（马/戏/时/抢/购/动/获/奖）根本不在 Big5 字集里，而 台/秘/群 都在。精确剩 33 条，零误报。
+  - 工具已固化：`C:/ADHD_agent/skills/x3-dk-tools/audit_zh_traditional.py`
+  - **修复纪律（同样重要）**：
+    ① 用 `s2t`(仅字形) **不要用 `s2twp`**(台湾用词)——先统计全库既有 zh 的用词习惯再定：
+       本项目是 查看47/激活90/點擊49，而 檢視/啟用/點選 各 0 次，用 s2twp 会把这些词全改掉造成用词分裂。
+    ② "只残留个别简化字"的行**只替换那几个字**，不整条重转，否则会把已正确的繁体改成异体。
+    ③ 用字对齐要单独查：本项目 著949 vs 着1，s2t 不会动 `着`，得手动补一条 `着->著`。
+    ④ **`Text_union_language_cn="简体中文"` 是豁免项**——那是语言选择器里"简体中文"这个选项的名字，本就该显示简体。
+  - 🪤**连带发现**：改 zh 会把这些行带进 `i18n_leak_audit --changed` 的扫描范围，
+    从而暴露它们**其它语言也缺**（本次因此多补了限时抢购 UI/ErrCode 共 281 格）。
+    换言之 **zh 体检是发现"整批文案只有中英"的一个有效入口**。
+
+- **🔴i18n 扫描器按"活动ID集"圈范围会漏掉 UI/错误码 key（2026-07-29 实证）**：
+  按 `TXT_<族>_<活动ID>` 匹配节日归属的扫描，**认不出不带 ID 的 key**：
+  `TXT_ActvFlashSale_*`（UI 文案）、`Text_ErrCodeActivityFlashSale*`（toast）、
+  `TXT_RuleTips_*_40003`（规则，ID 是 RuleTips 自己的编号不是活动ID）。
+  本次限时抢购整批 18 个 key 就是这么漏掉的，第一轮补译报"马戏节 0 条缺失"其实是假绿灯。
+  - **补法**：除 ID 集外，再按**功能前缀**扫一遍（活动的 C# 类名 / 玩法英文名，如 `FlashSale`/`Circus`/`Voyage`），
+    并从 `ActvOnline.col13 ActvRule` 反查该活动引用的 RuleTips ID 一并纳入。
+
+- **🔴新建"平行活动"(同节日再开一个同类型活动)的必查清单（2026-07-29 马戏节拆双累充实证）**：
+  从现有活动整行克隆时，**这几个字段克隆过去就是错的**，必须逐个判：
+  | 字段 | 为什么不能照抄 |
+  |---|---|
+  | `ActvRule`(col13) | 配置库铁律 RuleTips 禁共用；两活动奖励不同，规则文案也不同 → 新建一条 |
+  | `Priority`(col35) | 同值会导致两个入口排序不确定 |
+  | `ItemRecycle`(col44) | **最容易出事**：要回收的道具可能**已被别的活动声明过回收**，且转换目标不同。
+      本案 1207 已由 AO103101 回收成 4200110，而累充模板是转 2022 —— 同时声明=冲突。查法：全表 grep 该道具ID 在 col44 出现过没有 |
+  | `TopResource`(col33) | 顶部货币位要换成本活动真正发的道具 |
+  | `ActvIcon`/`ActvImg` | 复用会导致两个入口图一样，玩家分不清（本案暂复用并已标注待补美术） |
+  可以照抄的：`GroupId` / `CloseServerList` / `MailID`(各节日通用模板 101109) /
+  `RechargePointPackWhitelist`(若设计上就是共用一份) / `PlayerLv` / `CloseType` / `ServerMergeShield`。
+  另：累充类活动新建后，`ActvTask` 的 `TaskType=902` + `Parameter1=<新ContentID>` 必须同时对，
+  漏了 Parameter1 就会退回全局累充(900)，两个活动进度互相污染。
+
+- **🔴换皮活动的 i18n 常与源节日「共享同一行」，直接改 = 连源节日一起改掉（2026-07-29 马戏节实证）**：
+  `tsv/i18n/Text__Text.tsv` 的 key 列会把多个 key 用 `|` 合并成一格共用一条文本。
+  马戏拼图 101829 就与深海拼图 101828 共享 `TXT_ActvOnline_ActvName_101828|TXT_ActvOnline_ActvName_101829`，
+  当时把名字改成马戏的，深海拼图会跟着变成「小丑的梦境」。
+  - **正解＝拆行**：①原行 col0 只保留源节日 key（源文案一字不动）②给新活动 **append** 两条独立行
+    （col0=key / col1=AI / col2 空 / col3-18 = 16 语），只 append 不重排既有行。
+  - **查法**：改任何换皮活动的 i18n 前，先看该 key 所在行的 col0 里**有没有 `|`**；有就必须先拆。
+  - 🪤**读这张表还有一坑**：key 有两种排布——**有的在 col0、有的在 col2**（col2 为空时 key 在 col0），
+    只扫 col2 会漏掉一大半（换皮活动名基本都在 col0）。语言列固定 col3=cn col4=en …… col18=th。
+  - **工具**（别再手写解析）：`~\.claude\skills\x3-config-export\scripts\i18n_lookup.py`
+    ——按 ID 批量捞中英名/描述，自动处理上述两坑，并把「key 缺失 / 某语言为空」单列成
+    「换皮漏改高发点」清单。用法 `python i18n_lookup.py 101026 101027 -o out.md`（中文结果必须 -o 写文件看，控制台是 GBK）。
+  - **顺带**：出「给社区同学看的 What's New 文本」时，活动中英名一律用它现捞，别手写——本次就是靠它
+    抓出 101829 沿用深海名 + 106104 活动名 16 语全空（同位的 106101夏日/106102尼罗/106103深海都有名字）。
+
+
+- **🔴阶梯/链式礼包(ActvType=63)配完不显示：十有八九是漏了 `Pack__PackTypeInfo` 的商店入口行（2026-07-29 马戏装饰礼包实证，用户报"3080看不到"）**：
+  63 类活动**没有自己的活动界面**（`ActivityChainPackCondition.GetActivityUIType()` 返回 null），
+  唯一入口在**商城**，而商城列表由 `Pack__PackTypeInfo` 驱动 —— **以该礼包链的首档 `ChainPack.PackList[0]` 为 ID 建一行**。
+  `GiftNavigator.cs:211` 注释原话："无行则不出现在商店"。
+  - **最阴的地方：活动表根本不引用 PackTypeInfo**。两者的关联是隐式的（ChainPack.PackList[0] → PackTypeInfo.ID），
+    所以顺着 `ActvOnline → ChainPack → Pack → Reward` 一路查下去**每一项都是对的**
+    （IsOn=1 / 等级 / 开关服 / TimeCycle / 礼包内容 / 图标 / 视频 全绿），就是没有入口可点。
+  - **建行格式**（照抄同类现成行，如深海 211016 / 夏日 210917）：
+    `ID=首档PackID / IsOn=1 / Name=<TXT_商城名字> / MallType=9 / Icon=<DK> / Sort=9999 / Content=自身ID`
+    `MallType=9` 经代码核实 = `GiftConst.MALL_TYPE_CHAIN`（连锁礼包），别猜。
+    配套 i18n `TXT_PackTypeInfo_Name_<首档ID>`。
+  - **🪤 要"配好但暂不上架"时：必须删行，`IsOn=0` 没用！**
+    `GiftNavigator.TryBuildChainRoute`(L407-429) 的判定链是
+    `PackList[0] → CPackTypeInfo.I(firstPackId) is not {} → Content 包含首档 → 建 route`，
+    **全程不读 `IsOn`**。想藏起来只能让这一行不存在；活动本体(`ActvOnline.IsOn`/`ChainPack.IsOn`)保持 1 即可，两者互不影响。
+  - **收口自查（每次新增 63 类活动都跑一遍）**：遍历所有 `ActvType=63` 的活动 →
+    取 `ChainPackID → ChainPack.PackList[0]` → 查 `PackTypeInfo` 有没有该行 + i18n 齐不齐。
+    本案一扫发现马戏节**两个** 63 类活动全漏（夏日/深海都有），不是孤例。
+
+
+- **🔴礼包/家具展示图：动手前必须先把「实际投放的那件资产」拉出来看，别照名字让 AI 画（2026-07-29 装饰礼包实证，返工两轮）**：
+  马戏节装饰礼包卖的是「滑稽宝箱」「滑稽画像」，名字听着就是马戏主题，我照字面让 AI 画成了
+  **红白条纹金边藏宝箱** 和 **框里的马戏帐篷**。用户一看：「完全不对，你得拉投放家具的原图弄进来」。
+  真实资产是 **愚人节复用的小丑主题**——玩偶匣里弹出戴彩条纹丑角帽的小丑 / 金框里的白脸小丑肖像+紫气球。
+  - **根因**：换皮节日的道具**名字是新起的、资产是复用的**，两者不同源。`FurnitureDecorate.SourceDesc`
+    这次白纸黑字写着「愚人节活动获取」，查一眼就不会错。
+  - **正确查法（三步，别跳）**：
+    `Item.UseParameter` → `FurnitureDecorate.ID` → 该行的 `Icon`(2D图标 DK) / `DKPrefabs`(3D预设 DK)
+    → 在 `Path_*.asset` 反查 objPath → **打开真图看一眼**。
+    本案：151023 → 31001054 → `DK_icon_jiaju_statue_2_AFD` → `Assets/Res/UI/Spirits/Furniture/Actv/icon_jiaju_statue_2_AFD.png`
+  - **✅定型做法：AI 只出干净空场景，真资产用游戏内 PNG 合成进去**。
+    出背景时 prompt 必须写死「⛔不许画任何家具/箱子/画框/道具」——画了就会和合成上去的真图打架。
+    合成时给物件补一个椭圆软阴影"坐"到地面/贴到墙上，否则像硬贴。
+  - **合成图再拿去生视频时，prompt 第一优先级是「锁住这些真资产不许动」**（不许重画/改脸/移动/缩放/形变），
+    否则 AI 一重绘就把真资产改回它自己想象的样子，等于绕回原点。
+    验收要**单独抠出资产区域逐帧比对**（区域内帧间变化 <0.05），只看整体动态查不出这个。
+
+- **🔴UI 循环视频「动没动起来」要量化，别肉眼判（2026-07-29 实证）**：
+  判据 = **帧间平均像素变化**：
+  ```python
+  g = cv2.cvtColor(cv2.resize(frame,(200,266)), cv2.COLOR_BGR2GRAY).astype(float)
+  diffs.append(np.abs(g - prev).mean())   # 取 np.mean(diffs)
+  ```
+  本项目实测标尺：**深海版 0.22（好）／0.15 是及格线／0.067 明显偏静／0.02 等于静止图**。
+  肉眼看 5s 循环很容易觉得"有点动就行"，实际差 10 倍。
+  - 🪤**把动态写"轻"是主要死因**：v1 prompt 写了 `gentle/subtle ambient motion only` + `never change size or position`
+    + `no parallax`，配合首尾帧锁定直接冻成静止图（0.02）。
+    正确写法是逐条点名要动的元素并用 **OBVIOUS / clearly visible / continuous / steadily** 这类词，
+    而不是笼统说 "add gentle ambient motion"。

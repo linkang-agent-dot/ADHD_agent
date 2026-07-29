@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>X3 半年弹药带总规划（8月–次年1月）</title>
+<style>
+:root{
+  --bg:#0d1117; --panel:#141b24; --panel2:#1a232e; --line:#243040;
+  --fg:#e8f0f8; --dim:#8fa3b8; --dim2:#6b7f95;
+  --acc:#5ad1ff; --ok:#4ade80; --warn:#fbbf24; --bad:#f87171; --new:#c084fc;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);line-height:1.7;
+  font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif;font-size:14px}
+.wrap{display:flex;max-width:1560px;margin:0 auto}
+
+/* 侧栏 */
+aside{width:210px;flex:none;position:sticky;top:0;height:100vh;overflow-y:auto;
+  border-right:1px solid var(--line);padding:26px 0 40px;background:var(--panel)}
+aside .brand{padding:0 20px 18px;border-bottom:1px solid var(--line);margin-bottom:14px}
+aside .brand b{display:block;font-size:17px;letter-spacing:.04em}
+aside .brand span{font-size:10.5px;color:var(--dim2);letter-spacing:.18em;text-transform:uppercase}
+aside a{display:block;padding:7px 20px;color:var(--dim);text-decoration:none;font-size:13px;
+  border-left:2px solid transparent;transition:.15s}
+aside a:hover{color:var(--fg);background:rgba(90,209,255,.06)}
+aside a.sec{color:var(--dim2);font-size:11px;letter-spacing:.1em;margin-top:14px;pointer-events:none}
+
+main{flex:1;min-width:0;padding:34px 40px 90px}
+
+/* hero */
+.hero h1{margin:0;font-size:29px;letter-spacing:.02em}
+.hero .sub{color:var(--warn);font-size:17px;font-weight:700;margin:6px 0 10px}
+.hero .meta{color:var(--dim2);font-size:12.5px;border-bottom:1px solid var(--line);padding-bottom:18px}
+.hero .meta b{color:var(--acc)}
+
+/* verdict */
+.verdict{background:linear-gradient(180deg,#16202b,#131a23);border:1px solid var(--line);
+  border-left:3px solid var(--warn);border-radius:6px;padding:16px 20px;margin:22px 0}
+.verdict .tag{font-size:10.5px;letter-spacing:.22em;color:var(--warn);font-weight:700}
+.verdict p{margin:8px 0 0}
+.verdict b{color:#fff}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:18px 0 6px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px 16px;
+  border-top:2px solid var(--acc)}
+.kpi.bad{border-top-color:var(--bad)} .kpi.ok{border-top-color:var(--ok)} .kpi.warn{border-top-color:var(--warn)}
+.kpi b{display:block;font-size:26px;line-height:1.25;letter-spacing:-.01em}
+.kpi .t{font-size:12px;color:var(--dim);margin-top:2px}
+.kpi .n{font-size:11px;color:var(--dim2);margin-top:5px}
+
+h2{font-size:19px;margin:44px 0 4px;padding-top:8px;letter-spacing:.02em}
+h2 .no{display:inline-block;background:var(--acc);color:#06202b;font-size:12px;font-weight:700;
+  border-radius:4px;padding:1px 8px;margin-right:9px;vertical-align:2px}
+h2+.lead{color:var(--dim);margin:0 0 16px;font-size:13px}
+h3{font-size:15px;margin:26px 0 8px;color:var(--fg)}
+
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12.5px;background:var(--panel)}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:var(--panel2);color:var(--dim);font-weight:600;font-size:11.5px;white-space:nowrap}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:hover td{background:rgba(90,209,255,.035)}
+.pill{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:3px;white-space:nowrap}
+.p-new{background:rgba(192,132,252,.16);color:var(--new);border:1px solid rgba(192,132,252,.4)}
+.p-fix{background:rgba(74,222,128,.14);color:var(--ok);border:1px solid rgba(74,222,128,.35)}
+.p-hold{background:rgba(251,191,36,.14);color:var(--warn);border:1px solid rgba(251,191,36,.35)}
+.p-kill{background:rgba(248,113,113,.14);color:var(--bad);border:1px solid rgba(248,113,113,.35)}
+.p-dim{background:rgba(143,163,184,.12);color:var(--dim);border:1px solid var(--line)}
+
+/* 甘特 */
+.gantt{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0 4px}
+.gantt th{background:var(--panel2);padding:5px 8px;text-align:center;font-size:11px}
+.gantt th:first-child{text-align:left;width:210px}
+.gantt td{border:1px solid var(--line);padding:0;height:27px}
+.gantt td:first-child{padding:4px 9px;font-size:12px;background:var(--panel)}
+.bar{height:19px;margin:4px 3px;border-radius:3px;display:flex;align-items:center;
+  justify-content:center;font-size:10.5px;color:#06202b;font-weight:700;white-space:nowrap;overflow:hidden}
+.b-core{background:linear-gradient(90deg,#5ad1ff,#3aa8d8)}
+.b-new{background:linear-gradient(90deg,#c084fc,#9a5fd0);color:#1a0a26}
+.b-keep{background:linear-gradient(90deg,#4ade80,#2fa85c)}
+.b-hold{background:repeating-linear-gradient(45deg,#8a6d1f,#8a6d1f 5px,#6b5418 5px,#6b5418 10px);color:#ffe9a8}
+.b-aux{background:#2c3a4a;color:var(--dim)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--dim);margin:8px 0 2px}
+.legend i{display:inline-block;width:22px;height:10px;border-radius:2px;margin-right:5px;vertical-align:0px}
+
+.note{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--dim2);
+  border-radius:5px;padding:11px 15px;font-size:12.5px;color:var(--dim);margin:14px 0}
+.note b{color:var(--fg)}
+.note.warn{border-left-color:var(--warn)}
+.note.ok{border-left-color:var(--ok)}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:1100px){.two{grid-template-columns:1fr} aside{display:none}}
+
+/* 推演条 */
+.proj{margin:6px 0 0}
+.proj .row{display:flex;align-items:center;gap:10px;margin:7px 0}
+.proj .lbl{width:132px;flex:none;font-size:12px;color:var(--dim)}
+.proj .track{flex:1;height:22px;background:var(--panel2);border:1px solid var(--line);border-radius:4px;position:relative;overflow:hidden}
+.proj .fill{height:100%;display:flex;align-items:center;padding-left:9px;font-size:11px;font-weight:700;color:#06202b}
+.proj .v{width:120px;flex:none;text-align:right;font-size:12px;font-variant-numeric:tabular-nums;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<aside>
+  <div class="brand"><b>半年弹药带总规划</b><span>X3 · 8月–次年1月</span></div>
+  <a class="sec">结论</a>
+  <a href="#v">结论先行</a>
+  <a href="#gap">01 · 差距量化</a>
+  <a href="#mod">02 · 模块体检</a>
+  <a class="sec">规划</a>
+  <a href="#cal">03 · 半年日历</a>
+  <a href="#gantt">04 · 逐月弹药带</a>
+  <a class="sec">加法评估</a>
+  <a href="#add">05 · 加法清单</a>
+  <a href="#proj">06 · 占比推演</a>
+  <a href="#cap">07 · 产能红线</a>
+  <a class="sec">收口</a>
+  <a href="#ask">08 · 待拍板</a>
+</aside>
+
+<main>
+
+<div class="hero">
+  <h1>X3 半年弹药带总规划 · 8月 → 次年 1 月</h1>
+  <div class="sub">节日占比 15.0% → 目标 25%：靠「排满日历 + 补形式」，不靠把单个玩法做深</div>
+  <div class="meta">
+    数据窗口 <b>2026-05-30 ~ 07-29（61 天）</b> ·
+    X3 取<b>成熟服段 1000–1870（88 服）</b>＝净效果口径，已剔除 1880+ 年轻服爆发期干扰 ·
+    P2 取全服（P2 节日全服开、无年轻服稀释）·
+    来源 <b>X3/P2 累计付费监控</b>（07-29 09:10 跑）+ <b>模块级 L1 实查</b>（07-29 重跑）· 编制 2026-07-29
+  </div>
+</div>
+
+<!-- ===== 结论先行 ===== -->
+<div class="verdict" id="v">
+  <div class="tag">VERDICT · 结论先行</div>
+  <p>① <b>差的不是用户盘子，是节日运营</b>：成熟服段节日占比 <b>15.0% vs P2 37.7%（2.5×）</b>；节日贡献 ARPU <b>$4.86 vs $12.68（2.6×）</b>。而大盘 ARPPU P2 $84 vs X3 $72 —— <b>玩家钱包相当，不是买不起</b>。</p>
+  <p>② <b>X3 的节日目前"可有可无"</b>：7/20 双节下线后进入空窗，节日日流水从 $5k 掉到 $140–850，<b>大盘却几乎没掉</b>（全服 $42–49k）——说明节日没在做增量。P2 反过来：空窗周大盘从 $80–95k <b>腰斩到 $33–50k</b>，节日是命脉。<b>这是"日历必须排满"最硬的论据。</b></p>
+  <p>③ <b>先补形式、再加玩法</b>：X3 六代抽奖换皮五次、人均横盘 $33–48 半年不动；唯一爬升是世界杯 +35%，改动只有两件（锚点可复购 + 外显进付费档）。<b>形式改造 1–3 天/项、见效立刻</b>，比新做一个 5–7 天的玩法性价比高得多。</p>
+  <p>④ 半年总需求 <b>76 人天 / 总容量 120</b>，总量够——但<b>前重后轻</b>：9、10 两月挤了 53 天，各超容量 <b>+8 / +5 天</b>，<b>不挪就一定延期</b>，怎么挪见 §07。</p>
+</div>
+
+<!-- ===== 01 差距量化 ===== -->
+<h2 id="gap"><span class="no">01</span>差距量化</h2>
+<p class="lead">窗口 2026-05-30 ~ 07-29 共 61 天。<b>X3 = 成熟服段 1000–1870（88 服）</b>净效果口径；P2 = 全服。
+两边服数不同 → <b>绝对值不可比、只比率可比</b>。</p>
+
+<div class="kpis">
+  <div class="kpi bad"><b>15.0%</b><div class="t">X3 节日占比 · 成熟服</div><div class="n">P2 37.7% · <b style="color:var(--bad)">差 2.5×</b></div></div>
+  <div class="kpi warn"><b>$4.86</b><div class="t">节日贡献 ARPU</div><div class="n">P2 $12.68 · 差 2.6×</div></div>
+  <div class="kpi ok"><b>$72</b><div class="t">大盘 ARPPU</div><div class="n">P2 $84 · <b style="color:var(--ok)">钱包相当</b></div></div>
+  <div class="kpi bad"><b>$21</b><div class="t">节日 ARPPU</div><div class="n">P2 $46 · 差 2.2×＝渗透1.24×深度1.79</div></div>
+</div>
+
+<div class="note"><b>成熟服段 61 天实数</b>：大盘 $447.2k / 节日 $67.1k / 占比 15.0% ——
+其中深海 $26.9k(6.0%) · 世界杯 $18.3k(4.1%) · 夏日 $20.3k(4.5%) · 尼罗 $1.5k(0.3%)。<br>
+<b>另一口径备查</b>（全服，绝对值两边可比）：X3 大盘 $2,508k / 节日 $173k / <b>6.9%</b>；P2 大盘 $3,807k / 节日 $1,437k / 37.7%
+—— <b>大盘只差 1.5×，节日收入却差 8.3×</b>。两个口径都指向同一结论，成熟服口径是本页主口径。</div>
+
+<h3>单节日盘子对打（全服绝对值）</h3>
+<table>
+  <tr><th>节日</th><th class="num">X3</th><th>P2 同期节日</th><th class="num">P2</th><th class="num">P2/X3</th></tr>
+  <tr><td>深海节</td><td class="num">$55.7k</td><td>深海节</td><td class="num">$753.4k</td><td class="num">13.5×</td></tr>
+  <tr><td>世界杯</td><td class="num">$48.5k</td><td>世界杯竞猜</td><td class="num">$494.6k</td><td class="num">10.2×</td></tr>
+  <tr><td>夏日恋语</td><td class="num">$37.7k</td><td>拓荒节</td><td class="num">$189.0k</td><td class="num">5.0×</td></tr>
+</table>
+<div class="note">X3 单节日稳定落在 <b>$31–56k</b>，P2 最小的拓荒节都有 <b>$189k</b>。X3 要够到 P2 <b>最弱</b>那一档，单节日需 3.4×。</div>
+
+<h3>差距拆解（已量化，非估算）</h3>
+<table>
+  <tr><th>层</th><th>结论</th><th>证据</th></tr>
+  <tr><td>渗透 × 深度</td><td>节日 ARPPU P2 $46 vs X3 $21＝<b>2.2×</b>＝渗透 1.24× × <b>深度 1.79×</b>（深度是主因）</td><td>深海节 D0–D3 同窗对打</td></tr>
+  <tr><td>钱包</td><td>大盘 ARPPU P2 $84 vs X3 $72 —— <b>玩家钱包相当</b>，不是买不起</td><td>同上</td></tr>
+  <tr><td>头部天花板</td><td>X3 两族在 <b>$590 / $707 削平</b>（货架买光即封顶），P2 头部无墙（top1% 付 $1.2k–3.9k，挖孔极值 $9.4k）</td><td>付费额度分布曲线</td></tr>
+  <tr><td>中位数</td><td>P2 $8–39 vs X3 $5–13 —— <b>大众盘几乎一样</b>，人均差约 80% 来自 top10% 被截断</td><td>同上</td></tr>
+  <tr><td>转化漏斗</td><td>进场 11.2% 尚可 → <b>升档 15.6% 断裂</b> → <b>顶档 2.5% 断死</b>（整周 59 服仅 4 人碰 $99.99）</td><td>逐层转化漏斗</td></tr>
+</table>
+<div class="note ok"><b>推论：</b>X3 缺的不是玩家、不是钱包、不是大众盘，而是 <b>①日历排满（空窗太多）②头部没有可花的地方（买光即封顶）③升档/顶档的形式锁死</b>。这三件事分别对应 §04 排期、§05 形式改造与新玩法。</div>
+
+<!-- ===== 02 模块体检 ===== -->
+<h2 id="mod"><span class="no">02</span>逐节日 · 模块体检</h2>
+<p class="lead">三个节日各自窗口内、各服段实查（07-29 重跑）。付费率＝买该模块人数/该窗口总付费人数；ARPU＝模块收入/总付费人数；ARPPU＝模块收入/买家数。<b>看"要不要加东西"，先看现有模块哪些在扛、哪些是死货架。</b></p>
+
+<h3>深海节 · 59 服（7/3–7/13）<span class="pill p-dim">总付费 1,664 人 / 窗口大盘 $207.2k</span></h3>
+<table>
+  <tr><th>模块</th><th class="num">收入</th><th class="num">买家(付费率)</th><th class="num">ARPU</th><th class="num">ARPPU</th><th class="num">复购</th><th>判读</th></tr>
+  <tr><td><b>双通行证</b></td><td class="num">$14,801</td><td class="num">425 (25.5%)</td><td class="num">$8.89</td><td class="num">$34.8</td><td class="num">2.2</td><td><span class="pill p-hold">收入第1但买断制</span> 付费率最高＝流量入口，深度封顶</td></tr>
+  <tr><td><b>大富翁族</b></td><td class="num">$13,357</td><td class="num">324 (19.5%)</td><td class="num">$8.03</td><td class="num">$41.2</td><td class="num">2.9</td><td><span class="pill p-fix">压舱石</span> 付费率+复购双高，唯一健康核心</td></tr>
+  <tr><td>转盘（连锁+锚点）</td><td class="num">$5,497</td><td class="num">124 (7.5%)</td><td class="num">$3.30</td><td class="num">$44.3</td><td class="num">2.1</td><td><span class="pill p-kill">判退役</span> ARPPU 不低但<b>付费率仅 7.5%</b>＝需求真空实锤</td></tr>
+  <tr><td>每日礼包</td><td class="num">$3,789</td><td class="num">285 (17.1%)</td><td class="num">$2.28</td><td class="num">$13.3</td><td class="num">2.8</td><td><span class="pill p-fix">健康</span> 低价走量入口，付费率第3</td></tr>
+  <tr><td>拜访礼包</td><td class="num">$2,400</td><td class="num">24 (1.4%)</td><td class="num">$1.44</td><td class="num">$100.0</td><td class="num">1.0</td><td><span class="pill p-hold">曝光问题</span> <b>ARPPU $100 却只有 24 人</b>＝定价对、门槛/曝光错</td></tr>
+  <tr><td>许愿池</td><td class="num">$2,061</td><td class="num">108 (6.5%)</td><td class="num">$1.24</td><td class="num">$19.1</td><td class="num"><b>3.8</b></td><td><span class="pill p-new">关键证据</span> <b>全场复购最高</b>＝唯一可复购点位，复购意愿在</td></tr>
+  <tr><td>节日周卡</td><td class="num">$1,869</td><td class="num">54 (3.2%)</td><td class="num">$1.12</td><td class="num">$34.6</td><td class="num">1.3</td><td>偏弱</td></tr>
+  <tr><td>装饰礼包</td><td class="num">$1,299</td><td class="num">40 (2.4%)</td><td class="num">$0.78</td><td class="num">$32.5</td><td class="num">1.6</td><td>偏弱</td></tr>
+  <tr><td>头像框（深海印记）</td><td class="num" style="color:var(--bad)">$0</td><td class="num">0 (0%)</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="pill p-kill">死货架</span> 零成交</td></tr>
+</table>
+
+<h3>世界杯 · 98 服（6/26–7/13）<span class="pill p-dim">总付费 1,823 人 / 窗口大盘 $300.9k</span></h3>
+<table>
+  <tr><th>模块</th><th class="num">收入</th><th class="num">买家(付费率)</th><th class="num">ARPU</th><th class="num">ARPPU</th><th class="num">复购</th><th>判读</th></tr>
+  <tr><td><b>开箱族</b>（福箱连锁+券锚点）</td><td class="num">$14,118</td><td class="num">214 (11.7%)</td><td class="num">$7.74</td><td class="num"><b>$66.0</b></td><td class="num"><b>5.4</b></td><td><span class="pill p-fix">全场最佳</span> <b>ARPPU 与复购双料第一</b>＝唯一做出深度的模块</td></tr>
+  <tr><td>通行证 130020/21</td><td class="num">$7,335</td><td class="num">280 (15.4%)</td><td class="num">$4.02</td><td class="num">$26.2</td><td class="num">1.6</td><td>买断制，复购 1.6</td></tr>
+  <tr><td>竞猜礼包</td><td class="num">$4,576</td><td class="num">96 (5.3%)</td><td class="num">$2.51</td><td class="num">$47.7</td><td class="num">4.3</td><td><span class="pill p-hold">限定不可复用</span> 复购 4.3 不错，但世界杯限定</td></tr>
+  <tr><td>许愿池（与深海共用）</td><td class="num">$1,966</td><td class="num">104 (5.7%)</td><td class="num">$1.08</td><td class="num">$18.9</td><td class="num">3.8</td><td>复购再次 3.8，跨节稳定</td></tr>
+</table>
+
+<h3>夏日恋语 · 88 服（5/29–6/8）<span class="pill p-dim">总付费 1,217 人 / 窗口大盘 $93.3k</span></h3>
+<table>
+  <tr><th>模块</th><th class="num">收入</th><th class="num">买家(付费率)</th><th class="num">ARPU</th><th class="num">ARPPU</th><th class="num">复购</th><th>判读</th></tr>
+  <tr><td><b>开箱族</b></td><td class="num">$11,775</td><td class="num">245 (20.1%)</td><td class="num">$9.68</td><td class="num">$48.1</td><td class="num">4.2</td><td><span class="pill p-fix">同样最佳</span> 付费率 20.1% 为三节最高</td></tr>
+  <tr><td>通行证 130020/21</td><td class="num">$7,615</td><td class="num">317 (26.0%)</td><td class="num">$6.26</td><td class="num">$24.0</td><td class="num">1.6</td><td>付费率 26% 全场最高，仍买断</td></tr>
+  <tr><td>许愿池</td><td class="num">$3,268</td><td class="num">207 (17.0%)</td><td class="num">$2.69</td><td class="num">$15.8</td><td class="num">3.2</td><td>付费率 17%＋复购 3.2，性价比高</td></tr>
+  <tr><td>拜访皮肤</td><td class="num">$3,000</td><td class="num">30 (2.5%)</td><td class="num">$2.47</td><td class="num">$100.0</td><td class="num">1.0</td><td><span class="pill p-hold">同深海</span> ARPPU $100 / 30 人</td></tr>
+  <tr><td>装饰礼包</td><td class="num">$580</td><td class="num">17 (1.4%)</td><td class="num">$0.48</td><td class="num">$34.1</td><td class="num">1.7</td><td>弱</td></tr>
+  <tr><td>家具礼包</td><td class="num" style="color:var(--bad)">$0</td><td class="num">0 (0%)</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="pill p-kill">死货架</span> 零成交</td></tr>
+</table>
+
+<h3>模块体检 · 六条结论</h3>
+<table>
+  <tr><th>#</th><th>发现</th><th>对"加不加东西"的指导</th></tr>
+  <tr><td>1</td><td><b>开箱族是唯一做出深度的模块</b>：ARPPU $48–66、复购 4.2–5.4，两节都是第一梯队。它和别人的差别只有「锚点可复购 + 外显进付费档」</td><td><b>不用加新玩法，先把开箱的形式复制到其他模块</b>——这是 §05 A 类改造的直接依据</td></tr>
+  <tr><td>2</td><td><b>通行证付费率最高（15–26%）但复购只有 1.6–2.2</b>，三节都是收入前二</td><td><b>别再堆 BP</b>。它是流量入口不是深度引擎，加第三条 BP 只会摊薄</td></tr>
+  <tr><td>3</td><td><b>转盘 ARPPU $44 不低，但付费率只有 7.5%</b>——买的人愿意花，就是没人进场</td><td>判退役正确；换内外墙时<b>要保住 ARPPU、修的是进场率</b>（低价入口 + 随机双轨）</td></tr>
+  <tr><td>4</td><td><b>许愿池复购 3.8 单，全场最高</b>，且跨三节稳定（3.2–3.8）——它是唯一"可无限复购"的点位</td><td><b>复购意愿是在的，被形式锁死了</b>。A2 随机双轨 + A1 拆封顶就是在解这个锁</td></tr>
+  <tr><td>5</td><td><b>拜访礼包/皮肤 ARPPU $100，但买家只有 24–30 人（1.4–2.5%）</b></td><td>定价没错、曝光错。<b>提曝光 ≈ 0 开发成本</b>，比新做玩法便宜得多，建议 8 月就调</td></tr>
+  <tr><td>6</td><td><b>头像框、家具礼包连续零成交</b></td><td>先止损再谈加法：<b>要么砍掉腾出货架位，要么并进套装卖</b>，别再单独铺</td></tr>
+</table>
+<div class="note ok"><b>模块体检对本规划最重要的一句话：</b>X3 现有模块里，<b>能扛收入的只有开箱 + 大富翁两族</b>（其余要么买断制、要么零成交），而它俩的差别恰恰就是「有没有复购形式」。所以<b>加法的第一优先级不是新玩法，是把复购形式补进已有模块</b>（§05 A 类，9 人天）。</div>
+
+<!-- ===== 03 半年日历 ===== -->
+<h2 id="cal"><span class="no">03</span>半年日历 · 六个节日</h2>
+<p class="lead">P2 的占比恒定在 46–50%，靠的是<b>月月无空窗</b>。X3 半年要先把日历填满，再谈单节做深。</p>
+
+<table>
+  <tr><th>月份</th><th>节日</th><th>状态</th><th>本月定位</th><th>核心弹药（W1→W4）</th></tr>
+  <tr><td><b>8 月</b></td><td>马戏节</td><td><span class="pill p-fix">已定</span></td><td>框架不变、堆件做大盘子；<b>内外墙首投做效果验证</b></td><td>内外墙 → 开箱 → 扭蛋机 → 限时抢购</td></tr>
+  <tr><td><b>9 月</b></td><td>周年狂欢</td><td><span class="pill p-fix">已定</span></td><td><b>深度突破起点</b>：上挖孔 + 海妖皮肤系统</td><td>内外墙 → 开箱($500档) → <b>挖孔 v1</b> → <b>海妖皮肤抽奖</b></td></tr>
+  <tr><td><b>10 月</b></td><td>万圣节</td><td><span class="pill p-hold">待验证</span></td><td>验证成立则扩形式（弹珠 + 主城套装系统）</td><td>内外墙 → 开箱 → 挖孔+套装1 → <b>弹珠</b>+套装2</td></tr>
+  <tr><td><b>11 月</b></td><td>感恩节 <span class="pill p-dim">主题待定</span></td><td><span class="pill p-new">本轮新增</span></td><td><b>轻开发月</b>：复用 9/10 月弹药，只补「充值直参 + 排行榜」形式</td><td>内外墙 → 开箱 → <b>充值直参+榜</b> → 挖孔(复用)</td></tr>
+  <tr><td><b>12 月</b></td><td>圣诞节</td><td><span class="pill p-new">本轮新增</span></td><td>内外墙<b>回到 P2 原生场景</b>（圣诞 GACHA 是它的老家），三层皮肤结构全量复刻</td><td>内外墙(三层皮) → 开箱 → 弹珠(复用) → 钓鱼/团购</td></tr>
+  <tr><td><b>1 月</b></td><td>春节</td><td><span class="pill p-new">本轮新增</span></td><td><b>全年最大节</b>（P2 春节 $104.5万/46%）：全弹药带 + 形式四件套全开</td><td>四件弹药轮替（挖孔/内外墙/弹珠/开箱）</td></tr>
+</table>
+<div class="note warn"><b>11 月主题待你确认</b>（P2 对位是感恩节）。本页按「感恩节 + 轻开发月」占位排——它夹在周年/万圣两个重开发月与春节大月之间，<b>刻意排成复用月</b>，给 12/1 月留产能。</div>
+
+<!-- ===== 03 逐月甘特 ===== -->
+<h2 id="gantt"><span class="no">04</span>逐月弹药带 · 周级排布</h2>
+<p class="lead">铁律：<b>大富翁（+纪念卡）唯一贯穿全场</b>；其余核心付费<b>一周一个模块轮替 spotlight</b>，每周配一套外显；辅助货架层全程常驻。</p>
+<div class="legend">
+  <span><i class="b-core"></i>沿用核心</span>
+  <span><i class="b-new"></i>本轮新增/新做</span>
+  <span><i class="b-keep"></i>复用已建（近乎零开发）</span>
+  <span><i class="b-hold"></i>待验证/待拍</span>
+  <span><i class="b-aux"></i>辅助货架层</span>
+</div>
+
+<h3>9 月 · 周年狂欢 <span class="pill p-fix">已定</span></h3>
+<table class="gantt">
+  <tr><th>形式 / 活动</th><th>W1</th><th>W2</th><th>W3</th><th>W4</th></tr>
+  <tr><td>★ 大富翁 + 纪念卡（贯穿）</td><td colspan="4"><div class="bar b-core">全程压舱</div></td></tr>
+  <tr><td>内外墙抽奖（主城皮）</td><td><div class="bar b-core">W1</div></td><td></td><td></td><td></td></tr>
+  <tr><td>开箱（补 $500 档宝箱）</td><td></td><td colspan="3"><div class="bar b-core">W2 起拉到月末</div></td></tr>
+  <tr><td>挖孔 v1（配行军特效）</td><td></td><td></td><td><div class="bar b-new">新做 7d</div></td><td></td></tr>
+  <tr><td>海妖皮肤系统 + 抽奖</td><td></td><td></td><td></td><td><div class="bar b-new">新做 12d</div></td></tr>
+  <tr><td>辅助货架层（BP/每日/装饰/累充/周卡/拜访）</td><td colspan="4"><div class="bar b-aux">全程常驻</div></td></tr>
+</table>
+
+<h3>10 月 · 万圣节 <span class="pill p-hold">待 8 月验证</span></h3>
+<table class="gantt">
+  <tr><th>形式 / 活动</th><th>W1</th><th>W2</th><th>W3</th><th>W4</th></tr>
+  <tr><td>★ 大富翁 + 纪念卡（贯穿）</td><td colspan="4"><div class="bar b-core">全程压舱</div></td></tr>
+  <tr><td>内外墙抽奖</td><td><div class="bar b-core">W1</div></td><td></td><td></td><td></td></tr>
+  <tr><td>开箱</td><td></td><td><div class="bar b-core">W2</div></td><td></td><td></td></tr>
+  <tr><td>挖孔（延续）+ 主城套装 1</td><td></td><td></td><td><div class="bar b-new">套装系统 7d</div></td><td></td></tr>
+  <tr><td>弹珠（新形式）+ 主城套装 2</td><td></td><td></td><td></td><td><div class="bar b-new">弹珠 5d</div></td></tr>
+  <tr><td>英雄皮肤分品质 + 定价拉深</td><td colspan="4"><div class="bar b-hold">待拍 · 5d</div></td></tr>
+  <tr><td>辅助货架层</td><td colspan="4"><div class="bar b-aux">全程常驻</div></td></tr>
+</table>
+
+<h3>11 月 · 感恩节 <span class="pill p-new">新增 · 轻开发月</span></h3>
+<table class="gantt">
+  <tr><th>形式 / 活动</th><th>W1</th><th>W2</th><th>W3</th><th>W4</th></tr>
+  <tr><td>★ 大富翁 + 纪念卡（贯穿）</td><td colspan="4"><div class="bar b-core">全程压舱</div></td></tr>
+  <tr><td>内外墙抽奖（换皮）</td><td><div class="bar b-keep">复用</div></td><td></td><td></td><td></td></tr>
+  <tr><td>开箱（换皮）</td><td></td><td><div class="bar b-keep">复用</div></td><td></td><td></td></tr>
+  <tr><td>充值直接参与 + 强排行榜</td><td></td><td></td><td><div class="bar b-new">形式改造 3d</div></td><td></td></tr>
+  <tr><td>挖孔（第二次投放·换皮）</td><td></td><td></td><td></td><td><div class="bar b-keep">复用</div></td></tr>
+  <tr><td>辅助货架层</td><td colspan="4"><div class="bar b-aux">全程常驻</div></td></tr>
+</table>
+<div class="note">11 月<b>唯一新开发只有「充值直参 + 排行榜」3 天</b>——这正是 P2 猜酒杯打赢 X3 转盘 <b>$14.7 付费玩家 ARPU</b>（占总差 59%）的那个机制，用一个轻月把最大单项差补掉。</div>
+
+<h3>12 月 · 圣诞节 <span class="pill p-new">新增</span></h3>
+<table class="gantt">
+  <tr><th>形式 / 活动</th><th>W1</th><th>W2</th><th>W3</th><th>W4</th></tr>
+  <tr><td>★ 大富翁 + 纪念卡（贯穿）</td><td colspan="4"><div class="bar b-core">全程压舱</div></td></tr>
+  <tr><td>内外墙 · 三层皮肤结构全复刻</td><td colspan="2"><div class="bar b-new">补试用钩子+跨服榜分层 4d</div></td><td></td><td></td></tr>
+  <tr><td>开箱</td><td></td><td></td><td><div class="bar b-keep">复用</div></td><td></td></tr>
+  <tr><td>弹珠（复用）+ 钓鱼/团购（择一）</td><td></td><td></td><td></td><td><div class="bar b-new">择一 5d</div></td></tr>
+  <tr><td>辅助货架层</td><td colspan="4"><div class="bar b-aux">全程常驻</div></td></tr>
+</table>
+<div class="note">P2 圣诞 GACHA 是内外墙的<b>原生场景</b>：1,447 买家 / 人均 $153.6 / max $8,219 / 总盘 $22.2 万 / 溢出率 25.4%，皮肤走<b>三层结构</b>（2 天试用钩子 17,222 人 → 本体永久皮中位 $517 贡献 64.9% → 跨服榜 30 份高级皮 + Top3 染色，上榜线 $1,444/中位 $2,529）。8 月首投若只做了本体，12 月把<b>钩子层和榜分层补齐</b>，是同一套资产的二次收割。</div>
+
+<h3>1 月 · 春节 <span class="pill p-new">新增 · 全年最大</span></h3>
+<table class="gantt">
+  <tr><th>形式 / 活动</th><th>W1</th><th>W2</th><th>W3</th><th>W4</th></tr>
+  <tr><td>★ 大富翁 + 纪念卡（贯穿）</td><td colspan="4"><div class="bar b-core">全程压舱</div></td></tr>
+  <tr><td>挖孔（最强单品打头阵）</td><td><div class="bar b-keep">复用</div></td><td></td><td></td><td></td></tr>
+  <tr><td>内外墙抽奖</td><td></td><td><div class="bar b-keep">复用</div></td><td></td><td></td></tr>
+  <tr><td>弹珠</td><td></td><td></td><td><div class="bar b-keep">复用</div></td><td></td></tr>
+  <tr><td>开箱 + 新形式（待定）</td><td></td><td></td><td></td><td><div class="bar b-hold">待拍 5d</div></td></tr>
+  <tr><td>形式四件套全开（见 §05）</td><td colspan="4"><div class="bar b-new">全量生效</div></td></tr>
+  <tr><td>辅助货架层</td><td colspan="4"><div class="bar b-aux">全程常驻</div></td></tr>
+</table>
+<div class="note ok">P2 春节 <b>$104.5 万 / 占比 46%</b>，四周四拨弹药<b>周收入 $350k → $217k 不衰减</b>。X3 到 1 月时四件弹药全部已建成，春节是<b>纯换皮 + 排布</b>的收割月——这就是"前面几个月投的开发，在春节一次性变现"。</div>
+
+<!-- ===== 04 加法清单 ===== -->
+<h2 id="add"><span class="no">05</span>加法清单 · 效果 × 工作量</h2>
+<p class="lead">效果口径＝该项预计给<b>单个节日</b>带来的收入增量，再折成节日占比的百分点。两条独立路径互证，取交集给区间。</p>
+
+<div class="note"><b>怎么算的（两条路互证）：</b><br>
+路径 A｜<b>P2 实测盘 × 规模比 × 折损</b>：X3/P2 大盘比 = 0.66；X3 深度不足，折损取 0.3–0.5。<br>
+路径 B｜<b>付费玩家 ARPU 缺口 × 单节窗口付费人数</b>：深海 D0–D3 同窗实测总差 $24.9，其中转盘对位猜酒杯占 $14.7、其余 ~$12 分散在 8 个缺位售卖点；X3 单节窗口付费人数按 ~8,800 估。<br>
+两路结果同量级（每件 $35–60k/节）时才写进下表；<b>占比 pt = 增量 / 当期大盘（$2,508k / 61 天 ≈ 单节窗口 $1,254k）</b>。</div>
+
+<h3>A 类 · 形式改造（不做新玩法，只改卖法）</h3>
+<table>
+  <tr><th>#</th><th>改造项</th><th>X3 现状（实测）</th><th>P2 对照</th><th class="num">单节增量</th><th class="num">占比 pt</th><th class="num">开发</th><th>建议</th></tr>
+  <tr><td>A1</td><td><b>拆掉尾档限购 5 封顶</b></td><td>两族在 $590/$707 <b>削平</b>，top0.1% = top0.5%，最肯花钱的被拒收</td><td>头部无墙，top1% $1.2k–3.9k</td><td class="num">$25–45k</td><td class="num">+2.0–3.6</td><td class="num">2d</td><td><span class="pill p-fix">最高优先</span></td></tr>
+  <tr><td>A2</td><td><b>固定 + 随机双轨</b></td><td>只有固定连锁，档档限 1 次，104→50→25→8 人腰斩</td><td>随机只设 $19.99/49.99/99.99，ROI 0.25–0.31 吸鲸；X2 占星实测溢出率翻倍到 20%</td><td class="num">$20–40k</td><td class="num">+1.6–3.2</td><td class="num">3d</td><td><span class="pill p-fix">最高优先</span></td></tr>
+  <tr><td>A3</td><td><b>$0.99–4.99 宽入口</b></td><td>无低价入口，进场靠 $19.99 起</td><td>千人级 × 1 单，渗透 55–58% 的来源</td><td class="num">$8–15k</td><td class="num">+0.6–1.2</td><td class="num">1d</td><td><span class="pill p-fix">顺手做</span></td></tr>
+  <tr><td>A4</td><td><b>充值直接参与 + 强排行榜</b></td><td>转盘＝礼包送券<b>弱循环</b>；许愿池是唯一可复购点位，立刻人均 3.2 单＝<b>复购意愿在、形式锁死</b></td><td>猜酒杯＝充值直参 + 榜强循环，单项差 <b>$14.7 付费玩家 ARPU（占总差 59%）</b></td><td class="num">$40–70k</td><td class="num">+3.2–5.6</td><td class="num">3d</td><td><span class="pill p-fix">单项最大</span></td></tr>
+  <tr><td colspan="4" style="text-align:right"><b>A 类小计</b></td><td class="num"><b>$93–170k</b></td><td class="num"><b>+7.4–13.6</b></td><td class="num"><b>9d</b></td><td></td></tr>
+</table>
+<div class="note ok"><b>A 类是本规划的最高杠杆：9 人天换 +7.4–13.6 个百分点</b>，抵得上 4 个新玩法。依据＝世界杯开箱只改了「锚点可复购 + 外显进付费档」两件，人均立刻 +35%（六代唯一爬升）。<b>建议 A1–A3 在 8 月马戏节内就上，A4 放 11 月。</b></div>
+
+<h3>B 类 · 新玩法（P2 弹药库搬运）</h3>
+<table>
+  <tr><th>#</th><th>玩法</th><th>P2 实证</th><th>X3 状态</th><th class="num">单节增量</th><th class="num">占比 pt</th><th class="num">开发</th><th>排期</th></tr>
+  <tr><td>B1</td><td><b>挖孔</b></td><td><b>最强单品</b>：4 节合计 $94.5 万、渗透 44%、顶档人均 6 单；零皮肤仍 $375k</td><td>无</td><td class="num">$35–60k</td><td class="num">+2.8–4.8</td><td class="num">7d</td><td>9 月新做，10/11/1 月复用</td></tr>
+  <tr><td>B2</td><td><b>内外墙抽奖</b></td><td>P2 2024 圣诞 GACHA：1,447 人 / 人均 $153.6 / max $8,219 / $22.2 万 / 溢出 25.4%</td><td>8 月首投</td><td class="num">$30–55k</td><td class="num">+2.4–4.4</td><td class="num">已在做</td><td>8 月首投 → 每月复用</td></tr>
+  <tr><td>B3</td><td><b>弹珠</b></td><td>拓荒届 $167k（<b>无榜</b>）；带榜的圣诞 $222k ＝ 榜是关键变量</td><td>无</td><td class="num">$25–45k</td><td class="num">+2.0–3.6</td><td class="num">5d</td><td>10 月新做，12/1 月复用</td></tr>
+  <tr><td>B4</td><td><b>海妖皮肤系统 + 抽奖</b></td><td>无 P2 对照（X3 自研 IP）</td><td>无</td><td class="num">待验证</td><td class="num">—</td><td class="num">12d</td><td>9 月（周年招牌）</td></tr>
+  <tr><td>B5</td><td>钓鱼 / 团购 / 竞速（择一）</td><td>付费玩家 ARPU 各 $1.5–2.6</td><td>无</td><td class="num">$10–20k</td><td class="num">+0.8–1.6</td><td class="num">5d</td><td>12 月择一</td></tr>
+  <tr><td colspan="4" style="text-align:right"><b>B 类小计（不含 B4 未验证）</b></td><td class="num"><b>$100–180k</b></td><td class="num"><b>+8.0–14.4</b></td><td class="num"><b>17d+</b></td><td></td></tr>
+</table>
+
+<h3>C 类 · 外显深度（拉 ARPPU 天花板）</h3>
+<table>
+  <tr><th>#</th><th>项</th><th>依据</th><th class="num">单节增量</th><th class="num">开发</th><th>排期</th></tr>
+  <tr><td>C1</td><td>开箱补 $500 档 → 自选宝箱接断崖</td><td>世界杯开箱 $500 后<b>断崖 -85%</b>，有钩没梯</td><td class="num">$15–25k</td><td class="num">2d</td><td>9 月</td></tr>
+  <tr><td>C2</td><td>主城皮肤<b>套装系统</b></td><td>P2 圣诞三层皮肤：跨服榜 30 份高级皮 + Top3 染色，上榜线 $1,444 / 中位 $2,529</td><td class="num">$20–40k</td><td class="num">7d</td><td>10 月</td></tr>
+  <tr><td>C3</td><td>英雄皮肤分品质 + 定价拉深</td><td>二游打法，把"一节一款"做成付费梯队</td><td class="num">待验证</td><td class="num">5d</td><td>10 月（待拍）</td></tr>
+  <tr><td>C4</td><td>纪念卡 3 模块接目标 + 价位带填平 $29.99</td><td>付费玩家走完成就<b>失去目标</b></td><td class="num">$10–20k</td><td class="num">3d</td><td>9 月（已在做）</td></tr>
+</table>
+
+<!-- ===== 05 推演 ===== -->
+<h2 id="proj"><span class="no">06</span>节日占比推演</h2>
+<p class="lead">口径＝节日收入 / 大盘收入（全服 61 天）。保守取各项区间下沿、乐观取上沿；<b>假设大盘不变</b>（实际上节日做起来会抬大盘，所以这是偏保守的算法）。</p>
+
+<div class="proj">
+  <div class="row"><div class="lbl">现状（07-29）</div><div class="track"><div class="fill" style="width:18%;background:linear-gradient(90deg,#f87171,#dc5a5a)">6.9%</div></div><div class="v">$173k</div></div>
+  <div class="row"><div class="lbl">+ A 类形式改造</div><div class="track"><div class="fill" style="width:38%;background:linear-gradient(90deg,#fbbf24,#d99e14)">14.3% – 20.5%</div></div><div class="v">9 人天</div></div>
+  <div class="row"><div class="lbl">+ B 类新玩法</div><div class="track"><div class="fill" style="width:58%;background:linear-gradient(90deg,#4ade80,#2fa85c)">22.3% – 34.9%</div></div><div class="v">+17 人天</div></div>
+  <div class="row"><div class="lbl">+ C 类外显深度</div><div class="track"><div class="fill" style="width:66%;background:linear-gradient(90deg,#5ad1ff,#3aa8d8)">26.0% – 41.4%</div></div><div class="v">+17 人天</div></div>
+  <div class="row"><div class="lbl">P2 当前水平</div><div class="track"><div class="fill" style="width:100%;background:linear-gradient(90deg,#c084fc,#9a5fd0)">37.7%</div></div><div class="v">对标线</div></div>
+</div>
+
+<div class="note warn"><b>怎么读这张图：</b>不要把上沿当承诺。三点说明——<br>
+① <b>不可简单叠加</b>：A/B/C 之间有重叠（比如 A1 拆封顶同时也抬高了 B1 挖孔的顶档），实际总和会低于三段相加，图里已按区间下沿留了余量。<br>
+② <b>只做 A 类就能到 14–20%</b>，是投入产出比最高的一段，也是<b>唯一能在 8 月内见效</b>的一段。<br>
+③ <b>要够到 P2 的 37.7% 必须三类全做且落在乐观端</b>——建议对外承诺口径按 <b>半年到 20%</b> 讲，把 26%+ 当上限空间。</div>
+
+<!-- ===== 06 产能 ===== -->
+<h2 id="cap"><span class="no">07</span>产能红线</h2>
+<p class="lead">版本容量口径＝一个周期约 <b>20 人天</b>（开发 70% ≈ 14 天 + 测试 30% ≈ 6 天）。</p>
+
+<table>
+  <tr><th>月份</th><th>需求项</th><th class="num">需求人天</th><th class="num">容量</th><th class="num">缺口</th><th>判断</th></tr>
+  <tr><td>8 月 马戏</td><td>换皮为主 + A1–A3 形式改造（建议加塞）</td><td class="num">6</td><td class="num">20</td><td class="num" style="color:var(--ok)">+14</td><td><span class="pill p-fix">有余量 · 建议把 A 类塞进来</span></td></tr>
+  <tr><td>9 月 周年</td><td>挖孔 7 / 行军套装 7 / 海妖系统 7 / 海妖抽奖 5 / 开箱$500档 2</td><td class="num">28</td><td class="num">20</td><td class="num" style="color:var(--bad)">−8</td><td><span class="pill p-kill">超载，必砍</span></td></tr>
+  <tr><td>10 月 万圣</td><td>集卡册 5 / 英雄皮肤超凡 5 / 主城套装 7 / 弹珠 5 / 预购连锁 3</td><td class="num">25</td><td class="num">20</td><td class="num" style="color:var(--bad)">−5</td><td><span class="pill p-kill">超载，必砍</span></td></tr>
+  <tr><td>11 月 感恩</td><td>A4 充值直参+榜 3 / 其余全复用</td><td class="num">3</td><td class="num">20</td><td class="num" style="color:var(--ok)">+17</td><td><span class="pill p-fix">轻月 · 可回补 9/10 月欠账</span></td></tr>
+  <tr><td>12 月 圣诞</td><td>内外墙三层皮补齐 4 / 钓鱼或团购 5</td><td class="num">9</td><td class="num">20</td><td class="num" style="color:var(--ok)">+11</td><td><span class="pill p-fix">有余量</span></td></tr>
+  <tr><td>1 月 春节</td><td>全复用 + 新形式待定 5</td><td class="num">5</td><td class="num">20</td><td class="num" style="color:var(--ok)">+15</td><td><span class="pill p-fix">收割月</span></td></tr>
+  <tr><td colspan="2" style="text-align:right"><b>半年合计</b></td><td class="num"><b>76</b></td><td class="num"><b>120</b></td><td class="num" style="color:var(--ok)"><b>+44</b></td><td>总量够，<b>问题是前重后轻</b></td></tr>
+</table>
+
+<div class="note warn"><b>半年总产能是够的（76 / 120），卡点在 9、10 两个月挤了 53 天。</b>三个可选解，建议按顺序考虑：<br>
+① <b>把 9 月的海妖抽奖（5d）挪到 11 月</b>——11 月只有 3 天负载，挪过去正好，且海妖系统 9 月先上、抽奖 11 月接，反而形成二段收割；<br>
+② <b>10 月的英雄皮肤超凡（5d）挪到 12 月</b>——它本来就标"待拍"，不是万圣的必需件；<br>
+③ 若两条都不接受，则 9 月挖孔延到 10 月，但<b>代价是 B1 最强单品晚一个月投放</b>，半年占比曲线整体右移。</div>
+
+<!-- ===== 07 待拍 ===== -->
+<h2 id="ask"><span class="no">08</span>待你拍板</h2>
+<table>
+  <tr><th>#</th><th>要拍的事</th><th>我的建议</th></tr>
+  <tr><td>1</td><td><b>11 月节日主题</b>（本页按感恩节占位）</td><td>用感恩节；且刻意排成<b>轻开发月</b>，只上 A4</td></tr>
+  <tr><td>2</td><td><b>A 类形式改造要不要插进 8 月</b></td><td><b>要</b>。8 月有 14 天余量，A1–A3 共 6 天；这是唯一能在 8 月内见效的一段，也给内外墙首投一个干净的对照</td></tr>
+  <tr><td>3</td><td><b>9/10 月超载怎么砍</b></td><td>海妖抽奖挪 11 月 + 英雄皮肤超凡挪 12 月，两月各回到 20 天内</td></tr>
+  <tr><td>4</td><td><b>对外承诺的占比目标</b></td><td>半年 <b>6.9% → 20%</b>；26%+ 作为上限空间不写进承诺</td></tr>
+  <tr><td>5</td><td>12 月钓鱼 / 团购 / 竞速 三选一</td><td>看 11 月 A4 排行榜跑出来的数据再定，现在不锁</td></tr>
+</table>
+
+<div class="note" style="margin-top:26px">
+  <b>数据来源</b>　X3/P2 累计付费监控（2026-07-29 09:10 跑，窗口 05-30~07-29 共 61 天，全服 USD 口径）·
+  深海 D0–D3 同窗逐模块对打 · 付费额度分布曲线 · 逐层转化漏斗 · P2 三大节拉通。<br>
+  <b>口径说明</b>　本页节日占比统一用<b>全服口径</b>（与 P2 同口径，最公平）；X3 另有「成熟服 1–88 段」口径为 16.0%，两者不可混用。<br>
+  <b>估算免责</b>　§05 的"单节增量"为<b>估算区间</b>，两条独立路径互证后取交集，非实测值；实测只有 P2 侧的盘子和 X3 侧的现状。
+</div>
+
+</main>
+</div>
+</body>
+</html>
