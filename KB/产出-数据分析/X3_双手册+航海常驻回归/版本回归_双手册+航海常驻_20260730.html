@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 版本回归 · 双手册推广（船只/海妖）2026-07-30</title>
+<style>
+  :root{--green:#1a7f37;--orange:#b45309;--red:#b91c1c;--blue:#1d4ed8;--ink:#1f2430;--muted:#667085;--line:#e5e7eb;--bg:#f7f8fa;--card:#fff;}
+  *{box-sizing:border-box}
+  body{font-family:"Microsoft YaHei",system-ui,sans-serif;margin:0;background:var(--bg);color:var(--ink);line-height:1.65;font-size:14.5px}
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px}
+  h1{font-size:24px;margin:0 0 4px}
+  h2{font-size:19px;margin:42px 0 14px;padding-left:10px;border-left:5px solid var(--blue)}
+  h3{font-size:16px;margin:26px 0 10px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:22px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0}
+  .verdict{border-left:6px solid;padding:12px 16px;border-radius:8px;margin:12px 0;background:var(--card);border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .v-green{border-left-color:var(--green)} .v-orange{border-left-color:var(--orange)} .v-red{border-left-color:var(--red)}
+  .v-green .tag{background:#e7f5ec;color:var(--green)} .v-orange .tag{background:#fef3e2;color:var(--orange)} .v-red .tag{background:#fdecec;color:var(--red)}
+  .tag{display:inline-block;font-size:12px;font-weight:700;border-radius:5px;padding:1px 8px;margin-right:8px;vertical-align:1px}
+  .big{background:#fffbea;border:1px solid #f5e08a;border-radius:10px;padding:16px 20px;margin:16px 0}
+  .big b{font-size:15.5px}
+  .big a{color:var(--blue);text-decoration:none} .big a:hover{text-decoration:underline}
+  .anchor{color:var(--muted);font-size:13px}
+  table{border-collapse:collapse;width:100%;margin:10px 0;background:#fff;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:6px 10px;text-align:right}
+  th{background:#f1f3f7;font-weight:600} td:first-child,th:first-child{text-align:left}
+  .note{color:var(--muted);font-size:12.5px;margin:4px 0 0}
+  .bars{display:flex;align-items:flex-end;gap:3px;height:150px;margin:14px 0 2px;border-bottom:2px solid #cbd2dc;padding:0 4px}
+  .bgrp{flex:1;display:flex;align-items:flex-end;gap:2px;justify-content:center;position:relative}
+  .bar{width:30%;border-radius:2px 2px 0 0;min-height:2px}
+  .b-hero{background:#94a3b8}.b-ship{background:#2563eb}.b-siren{background:#0ea5a3}
+  .xlab{display:flex;gap:3px;padding:0 4px;margin-bottom:14px}
+  .xlab span{flex:1;text-align:center;font-size:10.5px;color:var(--muted)}
+  .legend{font-size:12.5px;color:var(--muted);margin:2px 0 4px}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 12px;vertical-align:-1px}
+  .tree{font-size:13px;color:#3b4252;background:#fbfcfe;border:1px dashed #c9d2e0;border-radius:8px;padding:12px 16px}
+  .tree ul{margin:2px 0 2px 18px;padding:0}
+  .tree>b{color:var(--blue)}
+  .k{font-weight:700}
+</style>
+</head>
+<body><div class="wrap">
+
+<h1>X3 版本回归 · 双手册推广（船只 102703 / 海妖 102704）</h1>
+<div class="sub">窗口 2026-07-16 ~ 07-29（14天，7/30 不完整已排除）· 对照 = 英雄手册 102702 · 收入口径 sum(pay_price) USD · 口径详见同目录《数据口径统一.md》· 航海之路常驻回归另见同目录《版本回归_航海之路常驻_20260730.html》· 生成 2026-07-30</div>
+
+<div class="big">
+<b>总判词：<span style="color:var(--green)">达到目的——纯增量，复制成功。</span></b><br>
+船只+海妖两周新增 <span class="k">$19.5k</span>（占大盘 2.9%），英雄手册同期日均反而 <span class="k">+41%</span>（$605→$851），<a href="#a1">零蚕食</a>；豪华档占比三本一致落在 <span class="k">61-62%</span>，<a href="#a2">双档结构在新养成线复制成立</a>；海妖只有船只一半，<a href="#a3">是三重闸门给的不是卖不动</a>——放回海妖线内看，<a href="#a5">手册 ARPPU 全族最高、收入第二、买家是定价锚周卡的 2.5 倍</a>；最有价值的发现是<a href="#a4">三本买家 63% 重合</a>——手册族吃同一批深度养成客，再复制第 4 条线边际递减。
+</div>
+
+<h2 id="a-mod">设计动作：把英雄手册 ActvType=27 双档范式复制到船只/海妖两条养成线</h2>
+
+<h3 id="a1">A1 净增量与蚕食 —— 靶：英雄手册是否被挪账</h3>
+<div class="verdict v-green"><span class="tag">正常</span><b>零蚕食，纯叠加。</b>新两本上线后（7/16-29）英雄手册日均 $851，比上线前（7/10-15）$605 <b>高 41%</b>；手册族合计流水 $31.4k=大盘 4.7%，其中新增两本贡献 $19.5k（2.9%）。
+<div class="anchor">锚点：英雄 $11,920 / 船只 $12,699 / 海妖 $6,780（主窗）；全服窗口付费盘 7,238 人 / $666.6k。</div></div>
+
+<div class="card">
+<div class="legend">三本手册逐日流水（USD）<span class="dot b-hero"></span>英雄<span class="dot b-ship"></span>船只<span class="dot b-siren"></span>海妖</div>
+<div class="bars" id="chart"></div><div class="xlab" id="xlab"></div>
+<div class="note">7/17-18 船只/海妖冲高 = 存量玩家一次性转化（补量效应）；7/19 起进入稳态：船只 ~$776/日、海妖 ~$409/日、英雄 ~$924/日。</div>
+</div>
+
+<h3 id="a2">A2 双档二选一 —— 靶：豪华档占比（复制英雄手册的付费深度结构）</h3>
+<div class="verdict v-green"><span class="tag">正常</span><b>豪华档 6 成占比在两条新线原样复现。</b>主窗豪华买家占比：英雄 61%（109/173）、船只 62%（114/185）、海妖 62%（61/99）——"豪华=基础×2"的定价结构不挑养成线，用户默认往高档走。</div>
+
+<table>
+<tr><th>手册（主窗 7/16-29）</th><th>基础买家</th><th>豪华买家</th><th>豪华占比</th><th>流水</th><th>付费率*</th><th>ARPU*</th><th>ARPPU</th><th>ROI 角标</th></tr>
+<tr><td>英雄 102702（对照）</td><td>109</td><td>173</td><td>61%</td><td>$11,920</td><td>3.9%</td><td>$1.65</td><td>$42.3</td><td>9600%</td></tr>
+<tr><td>船只 102703</td><td>114</td><td>185</td><td>62%</td><td>$12,699</td><td>3.8%</td><td>$1.75</td><td>$42.5</td><td>1260%/1510%</td></tr>
+<tr><td>海妖 102704</td><td>61</td><td>99</td><td>62%</td><td>$6,780</td><td>2.0%</td><td>$0.94</td><td>$42.4</td><td>890%/1070%</td></tr>
+</table>
+<div class="note">*付费率/ARPU 分母 = 主窗全服总付费人数 7,238（手册全服可买）；ARPPU 分母=该本买家。买家=逐日求和（BuyCount=1/30天循环，一人主窗内只出现一天，≈去重值）。<br>三本 ARPPU 齐刷刷 ≈$42.4——豪华 62% 占比下的结构必然值（0.38×$29.99+0.62×$49.99），坐实"手册族差异全在触达广度，不在客单"。</div>
+
+<h3 id="a3">A3 触达差 —— 靶：海妖手册为什么只有船只的一半</h3>
+<div class="verdict v-orange"><span class="tag">关注</span><b>海妖手册触达偏窄是设计给的，不是卖不动：</b>买家 148 vs 船只 278、覆盖 40 服 vs 69 服。三重闸门叠加——D13 注册门（TC5919）+ PlayerLv≥14 + 无主屏独立入口（MainEntrance 空，靠猎场组/酒馆兜底）；外加 ROI 角标全场最低（890%）。买了的人质量不差（豪华占比同 62%）。
+<div class="anchor">新服（server_id≥2000）买家占比：船只 66%、海妖 55%——D13 门把最新一批服挡在外面，方向符合预期。</div></div>
+
+<h3 id="a4">A4 与英雄手册对照（两套基线）+ 买家重合</h3>
+<div class="verdict v-green"><span class="tag">正常</span><b>同窗横比：船只≈英雄同量级（$12.7k vs $11.9k），海妖≈一半。</b>首 5 日同阶段比：船只 $6,099 / 海妖 $3,150 / 英雄加档 $2,920——但英雄加档当时逐服滚动（约 28 服可买）、船海全服即开，<b>首5日横比只作方向参考不下量级结论</b>（口径差已标）。</div>
+<div class="verdict v-orange"><span class="tag">关注</span><b>三本吃的是同一批深度养成客：</b>海妖买家 63%（93/148）同时买了船只手册、30% 买了英雄手册；船只买家 36% 买了英雄手册。手册族是"同人群多线开花"，不是拉新付费面——付费率天花板取决于深度养成人群规模，再复制第 4 条线时边际收益会递减。</div>
+
+<h3 id="a5">A5 海妖线内对标 —— 靶：手册在海妖养成线礼包族里到底算强算弱</h3>
+<div class="verdict v-green"><span class="tag">正常</span><b>海妖手册在自己养成线里不弱：付费率排第 5，但 ARPPU 全族最高（$45.8）、收入全族第二（$6.8k，仅次于破冰阶梯 $22.4k）。</b>排在它前面的四个族全是低客单宽口件（破冰 8.4%/BP 3.2%/转盘 2.7%/连锁 2.7%，ARPPU $14-37）。对比数值定价锚——海妖经验周卡（0.83%/$689）——手册买家是它的 <b>2.5 倍</b>、收入 <b>10 倍</b>。结论：手册把海妖线缺的"高客单深度位"补上了；A3 说的触达折半是<b>相对船只线</b>的差距，在海妖线内部手册是头部件。</div>
+
+<table>
+<tr><th>海妖线礼包族（主窗 7/16-29）</th><th>买家</th><th>付费率*</th><th>流水</th><th>ARPPU</th></tr>
+<tr><td>破冰阶梯礼包</td><td>609</td><td>8.41%</td><td>$22,432</td><td>$36.8</td></tr>
+<tr><td>海妖 BP 护航令</td><td>230</td><td>3.18%</td><td>$6,316</td><td>$27.5</td></tr>
+<tr><td>海妖转盘道具 $19.99</td><td>195</td><td>2.69%</td><td>$3,247</td><td>$16.7</td></tr>
+<tr><td>连锁礼包</td><td>194</td><td>2.68%</td><td>$2,741</td><td>$14.1</td></tr>
+<tr><td><b>海妖养成手册（本回归对象）</b></td><td><b>148</b></td><td><b>2.04%</b></td><td><b>$6,778</b></td><td><b>$45.8</b></td></tr>
+<tr><td>触发-经验耗尽</td><td>83</td><td>1.15%</td><td>$484</td><td>$5.8</td></tr>
+<tr><td>海妖周礼包-经验</td><td>70</td><td>0.97%</td><td>$696</td><td>$9.9</td></tr>
+<tr><td>成就礼包</td><td>69</td><td>0.95%</td><td>$1,979</td><td>$28.7</td></tr>
+<tr><td>海妖经验周卡（手册定价锚）</td><td>60</td><td>0.83%</td><td>$689</td><td>$11.5</td></tr>
+<tr><td>触发-技能升级</td><td>53</td><td>0.73%</td><td>$499</td><td>$9.4</td></tr>
+<tr><td>锚点每日</td><td>36</td><td>0.50%</td><td>$114</td><td>$3.2</td></tr>
+<tr><td>触发-等级升级</td><td>35</td><td>0.48%</td><td>$720</td><td>$20.6</td></tr>
+<tr><td>酒馆特供驯养 $4.99</td><td>30</td><td>0.41%</td><td>$340</td><td>$11.3</td></tr>
+</table>
+<div class="note">*付费率分母统一 = 主窗全服总付费人数 7,238（与 A2 同口径）。⚠️各族触点不同（触发类只在特定时机弹出、破冰阶梯是低价宽口引流件），付费率横比作方向参考；ARPPU 与流水排名是硬结论。爬塔/推关失败族（3 买家）省略。</div>
+
+<div class="tree"><b>设计回溯（手册推广）</b>
+<ul>
+<li><b>礼包</b>：双档 $29.99/$49.99 二选一互斥 · 豪华=基础×2 —— ✅豪华 62% 占比复现</li>
+<li><b>流程</b>：30天登录领奖 · 船只 D0（master 现状，D7 兼容方案在 dev/qa 未上）· 海妖 D13+Lv14+无主屏入口 —— 🟡海妖触达折半</li>
+<li><b>数值</b>：锚各线周卡（船只 38.2x/45.8x，海妖同构）—— ✅未见价格劝退信号；ROI 角标 890-1510% vs 英雄 9600%，角标差异未阻断转化</li>
+</ul></div>
+
+<h2 id="c-sug">建议与下一步</h2>
+<div class="card">
+<b>🔧 建议（按优先级）</b>
+<ol>
+<li><b>海妖手册触达</b>：三重闸门（D13/Lv14/无入口）压掉一半买家。若想抬量，先动"无主屏入口"这一层（评估轻量入口，注意别再进组 137 触发按钮不消失坑）；D13 门是设计意图，保留。</li>
+<li><b>手册族第 4 条线降预期</b>：三本 63% 重合说明吃同一批深度客，继续复制的边际收益会递减——下一条线（若做）应换人群（如纯外显向）而非再叠养成线。</li>
+<li><b>船只 D7 兼容方案（102705/MR!114）仍未上 master</b>——master 现状是 D0。若回归口径以 D7 为准，需先合 MR 再看下轮数据。</li>
+</ol>
+<b>📋 盲区/待人工补充</b>：海妖手册买家的海妖养成深度画像（是否集中在猎场活跃层）未拉。
+</div>
+
+<script>
+const days=["7/10","7/11","7/12","7/13","7/14","7/15","7/16","7/17","7/18","7/19","7/20","7/21","7/22","7/23","7/24","7/25","7/26","7/27","7/28","7/29"];
+const hero=[600,610,420,600,690,710,740,740,470,730,870,670,830,840,880,870,1080,950,890,1360];
+const ship=[0,0,0,0,0,0,50,1580,2529,780,1160,990,770,1100,930,540,680,470,430,690];
+const siren=[0,0,0,0,0,0,50,840,1390,480,390,790,260,620,280,430,260,420,270,300];
+const mx=2600, c=document.getElementById('chart'), x=document.getElementById('xlab');
+days.forEach((d,i)=>{
+  const g=document.createElement('div');g.className='bgrp';
+  [[hero[i],'b-hero'],[ship[i],'b-ship'],[siren[i],'b-siren']].forEach(([v,cls])=>{
+    const b=document.createElement('div');b.className='bar '+cls;b.style.height=Math.max(2,v/mx*150)+'px';b.title=d+' $'+v;g.appendChild(b);});
+  c.appendChild(g);
+  const s=document.createElement('span');s.textContent=(i%2==0)?d:'';x.appendChild(s);
+});
+</script>
+</div></body></html>

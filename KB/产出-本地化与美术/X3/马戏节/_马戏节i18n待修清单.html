@@ -1,0 +1,120 @@
+<title>马戏节 i18n 待修清单</title>
+<style>
+  :root{--bg:#f4f4f2;--card:#fcfcfb;--bd:#e2e1dd;--t1:#0b0b0b;--t2:#52514e;--t3:#77766f;
+        --p0:#d03b3b;--p1:#eda100;--p2:#2a78d6;--ok:#0ca30c;--dim:#8d8c83}
+  @media (prefers-color-scheme:dark){:root{--bg:#111110;--card:#1a1a19;--bd:#33322f;--t1:#fff;--t2:#c3c2b7;--t3:#8d8c83;
+        --p0:#e66767;--p1:#f0b429;--p2:#3987e5;--ok:#3cb54a;--dim:#77766f}}
+  :root[data-theme="dark"]{--bg:#111110;--card:#1a1a19;--bd:#33322f;--t1:#fff;--t2:#c3c2b7;--t3:#8d8c83;
+        --p0:#e66767;--p1:#f0b429;--p2:#3987e5;--ok:#3cb54a;--dim:#77766f}
+  :root[data-theme="light"]{--bg:#f4f4f2;--card:#fcfcfb;--bd:#e2e1dd;--t1:#0b0b0b;--t2:#52514e;--t3:#77766f;
+        --p0:#d03b3b;--p1:#eda100;--p2:#2a78d6;--ok:#0ca30c;--dim:#8d8c83}
+  *{box-sizing:border-box}
+  body{margin:0;padding:30px 18px 60px;background:var(--bg);color:var(--t1);
+       font:14.5px/1.6 -apple-system,"Segoe UI","Microsoft YaHei",system-ui,sans-serif}
+  .w{max-width:1120px;margin:0 auto}
+  h1{font-size:25px;margin:0 0 4px}
+  h2{font-size:17px;margin:34px 0 8px;display:flex;align-items:center;gap:8px}
+  .sub{color:var(--t2);margin:0 0 3px}
+  .meta{color:var(--t3);font-size:12.5px;margin:0 0 22px}
+  .tag{font-size:11.5px;font-weight:650;padding:2px 8px;border-radius:20px;color:#fff}
+  .hero{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0 6px}
+  .tile{background:var(--card);border:1px solid var(--bd);border-radius:9px;padding:13px 15px}
+  .tile .n{font-size:27px;font-weight:640;line-height:1.1}
+  .tile .k{font-size:12px;color:var(--t3);margin-top:2px}
+  .scroll{overflow-x:auto;background:var(--card);border:1px solid var(--bd);border-radius:9px;margin:10px 0}
+  table{border-collapse:collapse;width:100%;font-size:13px;min-width:900px}
+  th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--bd);vertical-align:top}
+  th{color:var(--t3);font-weight:600;font-size:12px;white-space:nowrap;background:var(--bg)}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:var(--bg)}
+  code{background:var(--bg);border:1px solid var(--bd);border-radius:4px;padding:1px 5px;font-size:12px;white-space:nowrap}
+  .done{color:var(--ok);font-weight:600}
+  .no{color:var(--p0);font-weight:600}
+  .note{font-size:12.8px;color:var(--t2);padding:11px 14px;border-left:3px solid var(--bd);background:var(--card);
+        border-radius:0 8px 8px 0;margin:10px 0}
+  .strike{text-decoration:line-through;color:var(--dim)}
+  ul{padding-left:19px;margin:7px 0}li{margin:4px 0}
+</style>
+<div class="w">
+
+<h1>马戏节 i18n 待修清单</h1>
+<p class="sub">来源：以 <code>@2026-07-01</code> 为基线扫 <code>tsv/i18n/Text__Text.tsv</code> 新增的 3,962 个逻辑行，按 <b>ActvGroup 143/144 反查配置外键</b>圈定马戏节范围（不用主题词，避免漏掉中文里不含"马戏"的条目）。</p>
+<p class="meta">生成于 2026-07-29 · 数据源 <code>origin/dev_festival</code> · ⚠️ 有并发 i18n 工作在跑（worktree <code>gdconfig-i18nfix</code> / <code>wt_dev_i18n</code>），本清单为当时快照，动手前请重新核对</p>
+
+<div class="hero">
+  <div class="tile"><div class="n" style="color:var(--p0)">4</div><div class="k">P0 结构问题</div></div>
+  <div class="tile"><div class="n" style="color:var(--p1)">13</div><div class="k">P1 高频可见</div></div>
+  <div class="tile"><div class="n" style="color:var(--p2)">8</div><div class="k">P2 纪念卡详情</div></div>
+  <div class="tile"><div class="n done">26</div><div class="k">本轮已修</div></div>
+</div>
+
+<h2><span class="tag" style="background:var(--p0)">P0</span> 结构问题 —— 不是补翻译能解决的</h2>
+<div class="scroll"><table>
+<thead><tr><th>#</th><th>位置</th><th>问题</th><th>归属 / 玩家在哪看到</th><th>怎么修</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><code>TXT_RuleTips_Content_40002</code></td>
+    <td><b class="no">th 泰语列尾部粘了 2 行旧版中文</b><br><span style="color:var(--t3)">「2.投入扭蛋币+高级扭蛋券…」「3.高级扭蛋券可通过购买…」</span></td>
+    <td>101027 马戏扭蛋机<br>规则弹窗</td>
+    <td>删掉 th 列的第 2、3 物理行，只留第 1 行泰语正文即可（其余 15 语已是新版单行，无问题）</td></tr>
+<tr><td>2</td><td><code>Pack 211046</code> Desc</td>
+    <td>①深海残留「入手<b>海滨假日</b>门头三件套，开启你的<b>滨海酒馆</b>」<br>②<code>TXT_Pack_Desc_211046</code> <b class="no">key 不存在</b>（深海版 211020 有）→ 表里躺裸中文</td>
+    <td>105606 马戏庆典之约<br>拜访礼包弹窗</td>
+    <td>先改中文源去深海词 → 建 key → 扩散 16 语</td></tr>
+<tr><td>3</td><td><code>Pack 800010</code>~<code>800014</code> Name</td>
+    <td>「马戏每日礼包」5 个 Name <b class="no">全无 i18n key</b>（上一期 800005-800009 是有的 → 本期漏扫）</td>
+    <td>102994 马戏每日礼包</td>
+    <td>建 5 个 <code>TXT_Pack_Name_*</code> + 16 语</td></tr>
+<tr><td>4</td><td><code>Pack 81302-81306</code><br><code>81310-81315</code></td>
+    <td>名字是<b>拓荒节残留</b>「拓荒券礼包N／拓荒券链免费N」且无 key<br><span style="color:var(--t3)">但拓荒节原版也没 key</span></td>
+    <td>103101 马戏团寻宝<br>（col52 引用）</td>
+    <td><b>先问程序</b>：这个位置到底显不显示礼包名？不显示就不用管</td></tr>
+</tbody></table></div>
+<div class="note">参考基数：全表 3,023 个有中文名的 Pack 里 <b>98.6% 都有 TXT key</b>，上面这 42 个是例外——所以大概率是漏配而非设计如此。</div>
+
+<h2><span class="tag" style="background:var(--p1)">P1</span> 玩家高频可见 · 只有 cn+en，缺 14 语</h2>
+<div class="scroll"><table>
+<thead><tr><th>Key</th><th>条数</th><th>归属 / 玩家在哪看到</th></tr></thead>
+<tbody>
+<tr><td><code>TXT_ActvLogin_Name_469</code> ~ <code>_475</code></td><td>7</td><td><b>101407 马戏签到</b> — 7 天签到每天的奖励名（马戏勋章×6 + 幻紫魅影）</td></tr>
+<tr><td><code>TXT_Item_Name_1214</code> / <code>TXT_Item_Desc_1214</code></td><td>2</td><td><b>101029 限时抢购</b> — 限时抢购抽奖券，道具栏/奖励弹窗都显示</td></tr>
+<tr><td><code>TXT_Pack_Name_13029</code> / <code>_13030</code></td><td>2<br><span style="color:var(--t3)">缺13语</span></td><td><b>101027 扭蛋机</b>（经累充 100599/100600 投放）— 高级扭蛋券礼包 <b>$4.99 / $9.99 付费档</b>，商城直接可见</td></tr>
+<tr><td><code>TXT_Item_Desc_81152｜81153｜81154</code></td><td>1 行 3 key</td><td>马戏节<b>岛屿皮肤「梦幻旋转木马」</b>（永久/10天/7天）</td></tr>
+<tr><td><code>TXT_Item_Desc_80116</code></td><td>1</td><td><b>欢庆之环头像框</b>（由 Pack 81321 寻宝门票特惠发放）</td></tr>
+</tbody></table></div>
+
+<h2><span class="tag" style="background:var(--p2)">P2</span> 纪念卡详情页 · 缺 14 语</h2>
+<div class="scroll"><table>
+<thead><tr><th>Key</th><th>条数</th><th>归属</th></tr></thead>
+<tbody>
+<tr><td><code>TXT_MemorialCard_Name_83</code> / <code>Desc_83</code> / <code>GetTips_83</code> / <code>GetMoreTips_83</code></td><td>4</td><td>纪念卡 83「幻紫魅影」</td></tr>
+<tr><td><code>TXT_MemorialCard_Name_84</code> / <code>Desc_84</code> / <code>GetTips_84</code> / <code>GetMoreTips_84</code></td><td>4</td><td>纪念卡 84「鎏金魅影」</td></tr>
+</tbody></table></div>
+
+<h2><span class="tag" style="background:var(--ok)">✓</span> 本轮已修（已推 dev_festival + dev）</h2>
+<div class="scroll"><table>
+<thead><tr><th>内容</th><th>规模</th><th>commit</th></tr></thead>
+<tbody>
+<tr><td><code>TXT_ActvVoyageIsland_IslandStory_301</code>~<code>_324</code> 补 14 语<br><span style="color:var(--t3)">24 格实为 5 组不重复文案（起点/彩球摊/魔术师宝箱/杂技台/小丑迷阵），译法基线取同结构的深海版 201-207</span></td><td>24 key</td><td><code>4ec79ef8</code></td></tr>
+<tr><td><code>TXT_Item_Name_1206</code> 深海宝箱→<b>航海宝箱</b>、<code>TXT_Item_Desc_1204</code> 两处深海改中性<br><span style="color:var(--t3)">这两个道具跨活动共享（1206 被深海2802+马戏2803、1204 被常驻航海之路2804 在线用），所以改的是中性说法不是马戏专属</span></td><td>2 key × 16 语</td><td><code>54476043</code></td></tr>
+</tbody></table></div>
+
+<h2>待确认 / 已排除</h2>
+<div class="note">
+<ul>
+<li><b class="strike">樱花门头相关 4 项</b> —— <b>已排除，非问题</b>。<code>Item_Desc_1213</code>／<code>RuleTips_Content_16045</code>／<code>ActvVisitPack_DailyRewardDesc_5607</code> 里的「樱花」是<b>用户指定的复用方案</b>（撤销自建马戏团横梁墙纸，改用樱花现成套 152007-009，零新美术），不是漏换。</li>
+<li><b><code>TXT_MemorialCard_Story_81</code> 疑似写错 ID</b> —— 它的中文是马戏庆典文案（"灯火与欢笑交织的庆典夜，巡游的乐声穿过帐篷"），但 <b>81 号卡是深海节的「海妖低语」</b>（Name/Desc/GetTips 都是深海且已全翻）。要么是马戏卡 83/84 的故事文案写错了 ID，要么"故事"功能压根没落地（全表仅此 1 条 <code>*_Story_*</code>，MemorialCard 表无 Story 字段，代码搜不到引用）。<b>需问策划本意，不用先翻。</b></li>
+<li><b><code>Pack 211046</code> 图标仍是深海图</b> <code>DK_img_Activity_deepsea_visit_pack</code>（非 i18n，但同批要换）。</li>
+<li><b><code>Item 80116</code> 备注列写「玩家头像框-深海节」</b>而描述是马戏节 —— 内部备注错标，不影响玩家，佐证是从深海行复制的。</li>
+</ul>
+</div>
+
+<h2>两个工具盲点（影响以后怎么扫）</h2>
+<div class="note">
+<ul>
+<li><b><code>i18n_leak_audit.py</code> 对多行 cell 是<u>假阴性</u>不是假阳性</b>：它用 <code>csv.reader</code> 逐行读，遇到裸换行会截断——本次 <code>RuleTips_Content_40002</code> 的 th 列只被读到泰语部分（判 CJK_LEAK=0），剩下的中文变成一条 key 为「2.投入扭蛋币+…」的假行被过滤掉，<b>整个泄漏彻底隐形</b>。所以这条是靠逻辑行重组才抓到的。</li>
+<li><b>Text 表里还有 <code>LC_*</code> / <code>lc_*</code> 前缀的 key</b>（红包/推币机/公会IPO）。任何只认 <code>TXT_</code>/<code>Text_</code> 的行解析器都会把它们并进上一行，导致上一行"看起来非空"。写扫描器要一并认。</li>
+<li><b>主题词圈范围会漏，实测倍数级</b>：<code>--grep 马戏</code> 只报 14 条；按 ActvGroup 反查配置外键报 46 条。漏的正是中文里不含节日名的那批——巡游地块说明、限时抢购券、扭蛋券礼包、幻紫/鎏金魅影纪念卡。</li>
+</ul>
+</div>
+
+</div>

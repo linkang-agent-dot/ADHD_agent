@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>X3 版本回归 · 航海之路常驻化（102804）2026-07-30</title>
+<style>
+  :root{--green:#1a7f37;--orange:#b45309;--red:#b91c1c;--blue:#1d4ed8;--ink:#1f2430;--muted:#667085;--line:#e5e7eb;--bg:#f7f8fa;--card:#fff;}
+  *{box-sizing:border-box}
+  body{font-family:"Microsoft YaHei",system-ui,sans-serif;margin:0;background:var(--bg);color:var(--ink);line-height:1.65;font-size:14.5px}
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px}
+  h1{font-size:24px;margin:0 0 4px}
+  h2{font-size:19px;margin:42px 0 14px;padding-left:10px;border-left:5px solid var(--blue)}
+  h3{font-size:16px;margin:26px 0 10px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:22px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0}
+  .verdict{border-left:6px solid;padding:12px 16px;border-radius:8px;margin:12px 0;background:var(--card);border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .v-green{border-left-color:var(--green)} .v-orange{border-left-color:var(--orange)} .v-red{border-left-color:var(--red)}
+  .v-green .tag{background:#e7f5ec;color:var(--green)} .v-orange .tag{background:#fef3e2;color:var(--orange)} .v-red .tag{background:#fdecec;color:var(--red)}
+  .tag{display:inline-block;font-size:12px;font-weight:700;border-radius:5px;padding:1px 8px;margin-right:8px;vertical-align:1px}
+  .big{background:#fffbea;border:1px solid #f5e08a;border-radius:10px;padding:16px 20px;margin:16px 0}
+  .big b{font-size:15.5px}
+  .big a{color:var(--blue);text-decoration:none} .big a:hover{text-decoration:underline}
+  .anchor{color:var(--muted);font-size:13px}
+  table{border-collapse:collapse;width:100%;margin:10px 0;background:#fff;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:6px 10px;text-align:right}
+  th{background:#f1f3f7;font-weight:600} td:first-child,th:first-child{text-align:left}
+  .note{color:var(--muted);font-size:12.5px;margin:4px 0 0}
+  .warnbar{background:#fdecec;border:1px solid #f3c1c1;color:var(--red);border-radius:8px;padding:10px 14px;font-weight:600;margin:14px 0}
+  .funnel td{padding:4px 10px}
+  .fbar{height:14px;border-radius:3px;background:#2563eb;display:inline-block;vertical-align:middle}
+  .fbar.old{background:#94a3b8}
+  .tree{font-size:13px;color:#3b4252;background:#fbfcfe;border:1px dashed #c9d2e0;border-radius:8px;padding:12px 16px}
+  .tree ul{margin:2px 0 2px 18px;padding:0}
+  .tree>b{color:var(--blue)}
+  .k{font-weight:700}
+</style>
+</head>
+<body><div class="wrap">
+
+<h1>X3 版本回归 · 航海之路常驻化（102801 → 102804）</h1>
+<div class="sub">窗口 2026-07-24 ~ 07-30（首批海域进窗）· 对照 = 老 102801（7/03-7/17 · 55服）· 收入口径 sum(pay_price) USD · 口径详见同目录《数据口径统一.md》· 双手册回归另见同目录独立报告 · 生成 2026-07-30</div>
+
+<div class="warnbar">⚠️ 小样本横幅：首批仅 8 服（2440-2490、2500、2510，其中 2500/2510 为 7/29-30 新进窗）· 44 买家 · 航海流水 $705。本报告全部结论为机制验证与定性信号，不下数值达标/不达标判断（2026-07-30 拍板口径）。</div>
+
+<div class="big">
+<b>总判词：<span style="color:var(--orange)">机制全通，数值待第 2-3 批海域轮。</span></b><br>
+老实例干净消亡、新窗自动开、发放链路实证活着（<a href="#b1">B1</a>）；<b>核心结论（邻服 A/B 实锤）：新服 D13 场景的变现从 0 到 1</b>——老 102801 两个月里在 42 个新服（2020-2430）D13 准点开窗跑免费玩法，但<b>全程零付费订单</b>（成就礼包老组 104 无 TimeCycle、新服实例从不创建付费件）；新 102804 把成就礼包+珍宝罐真正挂上（组 105 填 TC=2702），单服中位 <span class="k">$74 / 3.1%</span> 全是该场景净新增；邻服 A/B（2420/2430 老 vs 2440/2450 新）参与量同级无损，但服级总盘未变大——模块变现从零到一坐实、服级净拉动待批次样本（<a href="#b2">B2</a>）；成就礼包首档参与更高但 1→2 档留存 49% vs 老 86%（<a href="#b3">B3</a>）；珍宝罐"复购=0"<b>不是信号</b>——复购化功能随 7/29 版本才上线，观察窗内本就是单次买断（<a href="#b4">B4</a>）；纪念卡新节点零发放=没人到 1000 珍珠贝，非 BUG（<a href="#b5">B5</a>）。
+</div>
+
+<h2 id="b-mod">设计动作：节日成就礼包版数值（102804）接管老 102801，常驻滚动</h2>
+
+<h3 id="b1">B1 常驻化机制 —— 靶：新老交接是否干净</h3>
+<div class="verdict v-green"><span class="tag">正常</span><b>机制全通：</b>老 102801 末单 7/17、7/24 后零 2801xxx 订单（无双开残留）；新 102804 按 TC2702（海域开放 D13 开 5 天）在 8 服自动进窗产生真实购买；阶段奖励发放链路实证活着（罗盘低档 activity_reward 822 人在发）。TC=0 存量壳 + BaseActvID 互斥这套迁移范式可以放心复用。</div>
+
+<h3 id="b2">B2 航海付费占比（按服对齐）—— 靶：常驻版在服内付费盘里的分量</h3>
+<div class="verdict v-green"><span class="tag">正常·定性</span><b>按服对齐后翻案：新版单服中位 $74 / 占比 3.1%，反超老版成熟服轮中位 $17 / 2.07%。</b>此前"聚合 3.35% vs 4.61% 低七成"的说法作废——老组均值被 1910/1920 两个鲸鱼服拉高（两服航海 $2,015=老组盘子 19%），且两组服龄结构完全不同，聚合比是均值假象。</div>
+<div class="verdict v-green"><span class="tag">正常·结构发现（07-30 二次修正）</span><b>老版在新服 D13 一直在跑、但从来没收过钱：</b>按参与口径核实，老 102801 在 2020-2430 共 42 个新服每服准点 D13 开 5 天窗（免费玩法覆盖两个月），却<b>全程零付费订单</b>——机制根因 = 成就礼包老组 104 的 TimeCycle 列为空，新服 D13 实例从不创建付费件（老版只在成熟服海域轮上卖出过钱）。零变现已做<b>开放式全量验证</b>（不预设 ID，把 2420/2100/2200 三个窗口内售出的全部 iap 清单拉出逐个扫，任何 ID 段都无航海族礼包；阳性对照 1910 同法立见 2801001-007 在售），排除"老礼包换了 ID 被漏扫"的可能。7/14 改造给新组 105 填了 TC=2702，把这个洞补上——<b>常驻化的真实增量不是"覆盖"，是"新服 D13 窗的变现从 0 到 1"</b>，$74/服中位全是净新增。</div>
+
+<table>
+<tr><th>新组逐服（首轮 5 天窗）</th><th>开服日</th><th>首航单</th><th>航海付费</th><th>窗内总付费</th><th>占比</th></tr>
+<tr><td>srv 2440</td><td>07-12</td><td>07-25</td><td>$217</td><td>$4,123</td><td>5.26%</td></tr>
+<tr><td>srv 2450</td><td>07-12</td><td>07-24</td><td>$189</td><td>$6,360</td><td>2.97%</td></tr>
+<tr><td>srv 2460</td><td>07-14</td><td>07-26</td><td>$73</td><td>$1,944</td><td>3.75%</td></tr>
+<tr><td>srv 2470</td><td>07-14</td><td>07-26</td><td>$76</td><td>$2,313</td><td>3.28%</td></tr>
+<tr><td>srv 2480</td><td>07-16</td><td>07-28</td><td>$76</td><td>$3,218</td><td>2.36%</td></tr>
+<tr><td>srv 2490</td><td>07-16</td><td>07-28</td><td>$26</td><td>$2,046</td><td>1.27%</td></tr>
+<tr><td>srv 2500（在途）</td><td>07-19</td><td>07-30</td><td>$20</td><td>$223</td><td>—</td></tr>
+<tr><td>srv 2510（在途）</td><td>07-19</td><td>07-30</td><td>$7</td><td>$258</td><td>—</td></tr>
+<tr><td><b>新组中位（6 个完整窗服）</b></td><td colspan="2">D12-13 进窗 ✓</td><td><b>$74</b></td><td>—</td><td><b>3.1%</b></td></tr>
+<tr><td><b>老组 55 服分布（对照）</b></td><td colspan="2">成熟服海域轮 7/03-17</td><td><b>中位 $17 / 均值 $84</b></td><td>—</td><td><b>中位 2.07% / 均值 4.20%</b></td></tr>
+</table>
+<div class="note">口径：每服取"首笔航海单起 5 天"为该服首轮窗，占比=窗内航海付费/窗内该服全部付费。新组开服日→首航单间隔恒 12-13 天，实证 TC2702 D13 生效。老组=老 102801 在 6/1 后首个轮次（成熟服 1170-2010，服龄数月），逐服 share 0.2%-16% 离散极大，鲸鱼服 1910（$1,202/6.5%）、1920（$813/7.9%）贡献老组盘子 19%。⚠️两组人群不同（新服拓荒期 vs 成熟服衰减期）：成熟服轮中位 $17 是"老版有变现的场景"参考线；老版在新服 D13 也跑（见 B2.1）但零变现，同场景严格对照=老版 $0。航海付费=成就礼包+珍宝罐 280003（老版无此件）。</div>
+
+<div class="card">
+<b>B2.1 邻服老 vs 新 A/B（同 D13 生命周期，开服仅差 2 天）</b>——2420/2430 的 D13（7/22）落在 7/23 热更切换前跑的还是<b>老 102801</b>，2440/2450 的 D13（7/24）起跑<b>新 102804</b>，构成同场景自然实验：
+<table>
+<tr><th></th><th>2420（老 102801）</th><th>2430（老）</th><th>2440（新 102804）</th><th>2450（新）</th></tr>
+<tr><td>航海窗</td><td>7/22-27</td><td>7/22-27</td><td>7/24-29</td><td>7/24-29</td></tr>
+<tr><td>参与人数（活动事件）</td><td>854</td><td>524</td><td>817</td><td>551</td></tr>
+<tr><td>阶段领奖人数</td><td>368</td><td>192</td><td>369</td><td>213</td></tr>
+<tr><td><b>航海付费</b></td><td><b>$0</b></td><td><b>$0</b></td><td><b>$217</b></td><td><b>$211</b></td></tr>
+<tr><td>D1-12 基准盘</td><td>$8,680</td><td>$10,091</td><td>$13,341</td><td>$22,488</td></tr>
+<tr><td>D13-18 总盘 / 基准比</td><td>$3,267 / 0.376</td><td>$3,561 / 0.353</td><td>$4,827 / 0.362</td><td>$7,415 / 0.330</td></tr>
+</table>
+<div class="note">三句判词：<b>① 变现 0→1</b>——老版同场景颗粒无收（且不止这两服，42 个新服两个月全零），新版 $74/服中位是净新增；<b>② 参与无损</b>——加付费件后参与/领奖人数与老版同级（817/551 vs 854/524），免费体验没被伤到；<b>③ 服级总盘未变大</b>——四服 D13-18/D1-12 同轨（0.33-0.38），新增的航海付费在服级分不清盘内转移还是被噪声淹没（2430 D14 有 $1,809 鲸鱼日），净拉动等批次样本。⚠️老版奖励集与新版不同（老无罗盘 1057/发 11003 箱，新有罗盘/发 11002 箱），参与对比是量级对比非同物对比。</div>
+</div>
+
+<h3 id="b3">B3 成就礼包 11 档阶梯 —— 靶：逐档留存（对照老组104，只比率不比绝对值）</h3>
+<div class="verdict v-orange"><span class="tag">关注·定性</span><b>首档参与不差（每服 5.3 买家 vs 老版 3.3），但 1→2 档留存 49% vs 老版 86%。</b>窗口未走完 + n&lt;50，先记信号：如果后续海域轮维持这个形状，说明常驻语境下玩家对同一套阶梯的付费意愿前移收窄，需要看第 2-3 批海域数据再定。</div>
+
+<table class="funnel">
+<tr><th>档位（圈数门槛）</th><th>新组105 买家</th><th></th><th>老组104 买家</th><th></th><th>新留存</th><th>老留存</th></tr>
+<tr><td>1 档（3圈 $1.99）</td><td>37</td><td><span class="fbar" style="width:100px"></span></td><td>183</td><td><span class="fbar old" style="width:100px"></span></td><td>—</td><td>—</td></tr>
+<tr><td>2 档（5圈 $4.99）</td><td>18</td><td><span class="fbar" style="width:49px"></span></td><td>157</td><td><span class="fbar old" style="width:86px"></span></td><td>49%</td><td>86%</td></tr>
+<tr><td>3 档（10圈 $9.99）</td><td>7</td><td><span class="fbar" style="width:19px"></span></td><td>110</td><td><span class="fbar old" style="width:60px"></span></td><td>39%</td><td>70%</td></tr>
+<tr><td>4 档（20圈 $19.99）</td><td>3</td><td><span class="fbar" style="width:8px"></span></td><td>55</td><td><span class="fbar old" style="width:30px"></span></td><td>43%</td><td>50%</td></tr>
+<tr><td>5 档（30圈 $49.99）</td><td>1</td><td><span class="fbar" style="width:3px"></span></td><td>44</td><td><span class="fbar old" style="width:24px"></span></td><td>33%</td><td>80%</td></tr>
+<tr><td>6-11 档（50-300圈）</td><td>0</td><td></td><td>14→3</td><td><span class="fbar old" style="width:8px"></span></td><td>0%</td><td>32%起</td></tr>
+</table>
+<div class="note">老组104 = 老 102801 成就礼包，7/03-7/17 · 55 服 · $10,345；新组105 = 7/24 起 · 首批服 · $343（截至 7/29）。服数与天数不同，只比每服均值与逐档留存率。条形按各自首档归一。</div>
+
+<h3 id="b4">B4 珍宝罐 280003（$19.99）—— 靶：复购次数</h3>
+<div class="verdict v-green"><span class="tag">正常·前次误判已纠</span><b>16 买家 16 单、复购=0 —— 这不是问题信号：观察窗内 280003 就是单次买断。</b>储蓄罐复购化改造（每日 UTC0 刷新可再买 + $49.99/$99.99 新档）随 7/29 马戏节版本走（07-27 才合 dev_festival），本窗 8 服跑的还是买断版。复购效果要等复购化真上到这批服之后另开窗口观测，本报告不下结论。</div>
+
+<h3 id="b5">B5 纪念卡阶梯新 5 节点（1000-3000 珍珠贝 → ×2..×6）—— 靶：节点触达</h3>
+<div class="verdict v-orange"><span class="tag">关注·定性</span><b>新节点零发放——不是 BUG，是没人到得了：</b>8 服上 Item_180041 发放全部来自兑换商店 1332（19人/27张）+ 成就礼包第5档（1人/1张），阶段奖励节点 0 发放；同期低档阶段奖励（罗盘）正常在发，链路排除。1000 珍珠贝在 5 天窗口内的可达性存疑——纪念卡当初按"1000档=200罗盘价值"锚定，但锚的是价值不是进度可达性。下轮拿到达分布后再定是否下调首节点。</div>
+
+<div class="tree"><b>设计回溯（航海常驻化）</b>
+<ul>
+<li><b>礼包</b>：珍宝罐 $19.99 买断（复购化随 7/29 版本另算）+ 成就礼包 11 档 —— 🟡阶梯上部走弱待复核</li>
+<li><b>流程</b>：TC2702 海域 D13 滚动开 5 天 · 老 102801 TC=0 存量壳 + BaseActvID 互斥 —— ✅交接干净，迁移范式可复用；✅开服日→首航单间隔恒 12-13 天，D13 门实证生效；⚠️新老受众结构不同（新服拓荒 vs 成熟服轮），横比只能用逐服中位</li>
+<li><b>数值</b>：节日成就礼包版原样复刻（兑换价翻倍/宝藏币减半）· 纪念卡节点按价值锚 —— 🟡5 天窗 vs 千级珍珠贝门槛的可达性未经进度分布验证</li>
+</ul></div>
+
+<h2 id="c-sug">建议与下一步</h2>
+<div class="card">
+<b>🔧 建议</b>
+<ol>
+<li><b>三个观察项挂账</b>（第 2-3 批海域轮出数后复核，约 8 月中）：①单服中位（航海 $/服、占比）是否稳在老版中位（$17/2.1%）之上；②阶梯 1→2 留存是否回到 70%+；③纪念卡 1000 节点到达分布。届时单独补一页，本报告不重开。</li>
+<li><b>复购化上线后另开观测窗</b>：等 7/29 版本的储蓄罐复购化（UTC0 刷新 + 三档）真覆盖到进窗服，再单独看复购率——别把买断版数据当复购效果基线。</li>
+<li><b>下轮口径定死为"按服首轮 5 天窗 + 中位数"</b>：聚合/均值口径被鲸鱼服和服龄结构骗过一次（4.61% vs 3.35% 的假差距），逐服中位是唯一稳的横比口径。</li>
+</ol>
+<b>📋 盲区/待人工补充</b>：8 服珍珠贝进度分布未拉（等样本厚了与节点触达一起看）。
+</div>
+
+</div></body></html>

@@ -1,0 +1,543 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>X3 9-10月模块规划 · 周占比达标</title><style>
+:root{--bg:#0d1117;--panel:#141b24;--panel2:#1a232e;--line:#243040;--fg:#e8f0f8;
+--dim:#8fa3b8;--dim2:#6b7f95;--acc:#5ad1ff;--ok:#4ade80;--warn:#fbbf24;--bad:#f87171;--new:#c084fc}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);line-height:1.7;
+font-family:"Microsoft YaHei","PingFang SC",sans-serif;font-size:14px}
+main{max-width:1120px;margin:0 auto;padding:34px 32px 90px}
+h1{margin:0;font-size:27px}.sub{color:var(--warn);font-size:16.5px;font-weight:700;margin:6px 0 10px}
+.meta{color:var(--dim2);font-size:12.5px;border-bottom:1px solid var(--line);padding-bottom:16px}
+.meta b{color:var(--acc)}
+.verdict{background:linear-gradient(180deg,#16202b,#131a23);border:1px solid var(--line);
+border-left:3px solid var(--warn);border-radius:6px;padding:15px 19px;margin:20px 0}
+.verdict .t{font-size:10.5px;letter-spacing:.22em;color:var(--warn);font-weight:700}
+.verdict p{margin:8px 0 0}.verdict b{color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:13px 15px;border-top:2px solid var(--acc)}
+.kpi.bad{border-top-color:var(--bad)}.kpi.ok{border-top-color:var(--ok)}.kpi.warn{border-top-color:var(--warn)}
+.kpi b{display:block;font-size:25px;line-height:1.25}.kpi .t{font-size:12px;color:var(--dim)}
+.kpi .n{font-size:11px;color:var(--dim2);margin-top:4px}
+h2{font-size:18px;margin:42px 0 4px}h2 .no{display:inline-block;background:var(--acc);color:#06202b;
+font-size:12px;font-weight:700;border-radius:4px;padding:1px 8px;margin-right:9px;vertical-align:2px}
+h2+.lead{color:var(--dim);margin:0 0 14px;font-size:13px}
+h3{font-size:14.5px;margin:22px 0 6px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12.5px;background:var(--panel)}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:var(--panel2);color:var(--dim);font-size:11.5px;white-space:nowrap}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:hover td{background:rgba(90,209,255,.04)}
+.note{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--dim2);
+border-radius:5px;padding:11px 15px;font-size:12.5px;color:var(--dim);margin:14px 0}
+.note b{color:var(--fg)}.note.bad{border-left-color:var(--bad)}.note.ok{border-left-color:var(--ok)}
+svg{background:var(--panel);border:1px solid var(--line);border-radius:6px;margin-top:8px}
+.lg{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--dim);margin:8px 0}
+.lg i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:5px}
+.wk{border-left:3px solid;padding:12px 15px;background:var(--panel);border-radius:0 6px 6px 0;margin:10px 0}
+.wk .h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.wk .w{font-size:11px;letter-spacing:.14em;color:var(--dim2)}
+.wk .m{font-size:16px;font-weight:700}
+.wk .goal{margin-left:auto;font-size:12px;color:var(--dim)}
+.wk .goal b{font-size:17px;color:var(--warn)}
+.wk .art{font-size:12.5px;color:var(--fg);margin-top:4px}
+.wk .ev{font-size:11.5px;color:var(--dim2);margin-top:3px}
+/* 时间轴切换 */
+.tabs{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0 0}
+.tabs .mt{background:transparent;color:var(--dim);border:1px solid var(--line);border-radius:4px;
+padding:5px 13px;font-size:12.5px;cursor:pointer;font-family:inherit;transition:.15s}
+.tabs .mt:hover{color:var(--fg);border-color:var(--acc)}
+.tabs .mt.on{background:var(--acc);border-color:var(--acc);color:#06202b;font-weight:700}
+.tabs .hint{font-size:11.5px;color:var(--dim2);margin-left:6px}
+#chart svg{margin-top:8px}
+</style></head><body><main>
+
+<h1>X3 9–10 月模块规划</h1>
+<div class="sub">KPI 只看一个数：该模块当周收入 ÷ 当周大盘收入</div>
+<div class="meta">P2 对照＝2025-10 ~ 2026-07 逐周实查（全服）· X3＝成熟服 1000–1880 逐周 ·
+数仓实查 2026-07-29 · 口径统一为<b>模块周收入 / 当周大盘收入</b>（各模块周占比可直接加总，对齐节日占比目标）</div>
+
+<div class="verdict"><div class="t">VERDICT · 宏观三句话</div>
+<p>① <b>X3 单模块强度其实不弱</b>：夏日开箱单周做到 <b>15.2%</b>，已经摸到 P2 挖孔的中位线（15.9%）。<b>差的不是模块做得好不好，是一周只有一个模块在打、且一个月只有一两周有。</b></p>
+<p>② <b>真正的窟窿是空窗</b>：X3 有整周节日占比掉到 <b>0.3%–0.6%</b>（6/08、6/15、7/27），而 P2 常年 <b>40–58%</b>，最低也有 19.4%。<b>空窗周的钱是白丢的，而补空窗不需要任何新玩法。</b></p>
+<p>③ <b>40–50% 怎么凑出来</b>：P2 的做法不是把一个模块做到 50%，而是<b>每周有一个 15%+ 的主力模块顶着，再叠辅助层</b>。挖孔峰值周单个就 <b>42.7%</b>——一个模块顶起半个目标。</p>
+</div>
+
+<div class="kpis">
+<div class="kpi ok"><b>15.9%</b><div class="t">P2 挖孔 · 周占比中位</div><div class="n">16 个投放周 · 峰值 <b>42.7%</b></div></div>
+<div class="kpi"><b>9.7%</b><div class="t">P2 弹珠 · 周占比中位</div><div class="n">12 个投放周 · 峰值 26.9%</div></div>
+<div class="kpi warn"><b>15.2%</b><div class="t">X3 最好的单模块周</div><div class="n">开箱族(夏日) · 2026-06-01</div></div>
+<div class="kpi bad"><b>0.6%</b><div class="t">X3 空窗周占比</div><div class="n">3 个整周几乎归零</div></div>
+</div>
+
+<h2><span class="no">01</span>达标线 — 一个模块一周该拿多少</h2>
+<p class="lead">P2 同口径实测。<b>主力模块单周 ≥15% 算达标，峰值周应到 25%+。</b></p>
+<table>
+<tr><th>模块</th><th class="n">投放周数</th><th class="n">中位</th><th class="n">峰值</th><th class="n">最低</th><th>判读</th></tr>
+<tr><td><b>P2 挖孔</b></td><td class="n">16</td><td class="n"><b style="color:var(--ok)">15.9%</b></td><td class="n"><b>42.7%</b></td><td class="n">2.1%</td><td>单兵之王，峰值周一个模块顶起 40% 目标的全部</td></tr>
+<tr><td><b>P2 弹珠</b></td><td class="n">12</td><td class="n">9.7%</td><td class="n">26.9%</td><td class="n">0.8%</td><td>约挖孔的 6 成；<b>带排行榜 $222k vs 无榜 $167k</b></td></tr>
+<tr><td>X3 夏日开箱</td><td class="n">3</td><td class="n">—</td><td class="n">15.2%</td><td class="n">0.3%</td><td>X3 自身最好成绩，已达 P2 挖孔中位线</td></tr>
+<tr><td>X3 大富翁族</td><td class="n">3</td><td class="n">—</td><td class="n">7.6%</td><td class="n">2.8%</td><td>压舱石，但只有主力线的一半</td></tr>
+<tr><td>X3 转盘</td><td class="n">3</td><td class="n">—</td><td class="n">3.5%</td><td class="n">0.5%</td><td>判退役正确</td></tr>
+</table>
+<div class="note ok"><b>结论：把"周占比 ≥15%"当作主力模块的验收线。</b>X3 已经证明自己做得到（夏日开箱 15.2%），
+问题是<b>做到的周太少</b>——9 月的排布就是要让<b>每一周都有一个够到这条线的模块</b>。</div>
+
+<h2><span class="no">02</span>P2 实证 — 挖孔 vs 弹珠 逐周占比</h2>
+<p class="lead">柱高＝该模块当周收入占 P2 当周大盘的比例。只显示有投放的周。</p>
+<h3 style="color:var(--ok)">挖孔（16 周 · 中位 15.9% · 峰值 42.7%）</h3>
+<svg viewBox="0 0 980 170" width="100%"><line x1="56" y1="144" x2="972" y2="144" stroke="#243040"/><text x="50" y="148" font-size="10" fill="#6b7f95" text-anchor="end">0%</text><line x1="56" y1="116" x2="972" y2="116" stroke="#243040"/><text x="50" y="120" font-size="10" fill="#6b7f95" text-anchor="end">10%</text><line x1="56" y1="89" x2="972" y2="89" stroke="#243040"/><text x="50" y="93" font-size="10" fill="#6b7f95" text-anchor="end">20%</text><line x1="56" y1="61" x2="972" y2="61" stroke="#243040"/><text x="50" y="65" font-size="10" fill="#6b7f95" text-anchor="end">30%</text><line x1="56" y1="34" x2="972" y2="34" stroke="#243040"/><text x="50" y="38" font-size="10" fill="#6b7f95" text-anchor="end">40%</text><rect x="60.0" y="123.5" width="40.9" height="20.5" fill="#4ade80" rx="2"><title>2025-11-17 · 7.5%</title></rect><text x="80.5" y="160" font-size="9" fill="#6b7f95" text-anchor="middle">11-17</text><rect x="116.9" y="128.6" width="40.9" height="15.4" fill="#4ade80" rx="2"><title>2025-11-24 · 5.6%</title></rect><rect x="173.8" y="127.7" width="40.9" height="16.3" fill="#4ade80" rx="2"><title>2025-12-08 · 5.9%</title></rect><rect x="230.6" y="100.0" width="40.9" height="44.0" fill="#4ade80" rx="2"><title>2025-12-15 · 16.0%</title></rect><text x="251.1" y="160" font-size="9" fill="#6b7f95" text-anchor="middle">12-15</text><rect x="287.5" y="113.3" width="40.9" height="30.7" fill="#4ade80" rx="2"><title>2026-01-12 · 11.1%</title></rect><rect x="344.4" y="110.1" width="40.9" height="33.9" fill="#4ade80" rx="2"><title>2026-01-19 · 12.3%</title></rect><rect x="401.2" y="50.0" width="40.9" height="94.0" fill="#4ade80" rx="2"><title>2026-02-16 · 34.1%</title></rect><text x="421.7" y="46.0" font-size="9.5" fill="#4ade80" text-anchor="middle">34%</text><text x="421.7" y="160" font-size="9" fill="#6b7f95" text-anchor="middle">02-16</text><rect x="458.1" y="123.9" width="40.9" height="20.1" fill="#4ade80" rx="2"><title>2026-02-23 · 7.3%</title></rect><rect x="515.0" y="97.8" width="40.9" height="46.2" fill="#4ade80" rx="2"><title>2026-03-23 · 16.7%</title></rect><rect x="571.9" y="91.1" width="40.9" height="52.9" fill="#4ade80" rx="2"><title>2026-03-30 · 19.2%</title></rect><text x="592.4" y="160" font-size="9" fill="#6b7f95" text-anchor="middle">03-30</text><rect x="628.8" y="92.2" width="40.9" height="51.8" fill="#4ade80" rx="2"><title>2026-04-13 · 18.8%</title></rect><rect x="685.6" y="138.1" width="40.9" height="5.9" fill="#4ade80" rx="2"><title>2026-04-20 · 2.1%</title></rect><rect x="742.5" y="26.4" width="40.9" height="117.6" fill="#4ade80" rx="2"><title>2026-05-25 · 42.7%</title></rect><text x="763.0" y="22.4" font-size="9.5" fill="#4ade80" text-anchor="middle">43%</text><text x="763.0" y="160" font-size="9" fill="#6b7f95" text-anchor="middle">05-25</text><rect x="799.4" y="91.8" width="40.9" height="52.2" fill="#4ade80" rx="2"><title>2026-06-01 · 19.0%</title></rect><rect x="856.2" y="100.3" width="40.9" height="43.7" fill="#4ade80" rx="2"><title>2026-07-13 · 15.9%</title></rect><rect x="913.1" y="104.3" width="40.9" height="39.7" fill="#4ade80" rx="2"><title>2026-07-20 · 14.4%</title></rect><text x="933.6" y="160" font-size="9" fill="#6b7f95" text-anchor="middle">07-20</text></svg>
+<h3 style="color:var(--new)">弹珠（12 周 · 中位 9.7% · 峰值 26.9%）</h3>
+<svg viewBox="0 0 980 170" width="100%"><line x1="56" y1="144" x2="972" y2="144" stroke="#243040"/><text x="50" y="148" font-size="10" fill="#6b7f95" text-anchor="end">0%</text><line x1="56" y1="116" x2="972" y2="116" stroke="#243040"/><text x="50" y="120" font-size="10" fill="#6b7f95" text-anchor="end">10%</text><line x1="56" y1="89" x2="972" y2="89" stroke="#243040"/><text x="50" y="93" font-size="10" fill="#6b7f95" text-anchor="end">20%</text><line x1="56" y1="61" x2="972" y2="61" stroke="#243040"/><text x="50" y="65" font-size="10" fill="#6b7f95" text-anchor="end">30%</text><line x1="56" y1="34" x2="972" y2="34" stroke="#243040"/><text x="50" y="38" font-size="10" fill="#6b7f95" text-anchor="end">40%</text><rect x="60.0" y="136.0" width="54.6" height="8.0" fill="#c084fc" rx="2"><title>2025-10-20 · 2.9%</title></rect><text x="87.3" y="160" font-size="9" fill="#6b7f95" text-anchor="middle">10-20</text><rect x="135.8" y="94.3" width="54.6" height="49.7" fill="#c084fc" rx="2"><title>2025-10-27 · 18.0%</title></rect><rect x="211.7" y="123.1" width="54.6" height="20.9" fill="#c084fc" rx="2"><title>2025-12-08 · 7.6%</title></rect><rect x="287.5" y="115.2" width="54.6" height="28.8" fill="#c084fc" rx="2"><title>2025-12-15 · 10.4%</title></rect><text x="314.8" y="160" font-size="9" fill="#6b7f95" text-anchor="middle">12-15</text><rect x="363.3" y="128.8" width="54.6" height="15.2" fill="#c084fc" rx="2"><title>2025-12-22 · 5.5%</title></rect><rect x="439.2" y="127.1" width="54.6" height="16.9" fill="#c084fc" rx="2"><title>2026-03-09 · 6.1%</title></rect><rect x="515.0" y="98.4" width="54.6" height="45.6" fill="#c084fc" rx="2"><title>2026-03-16 · 16.5%</title></rect><text x="542.3" y="160" font-size="9" fill="#6b7f95" text-anchor="middle">03-16</text><rect x="590.8" y="141.8" width="54.6" height="2.2" fill="#c084fc" rx="2"><title>2026-03-23 · 0.8%</title></rect><rect x="666.7" y="70.0" width="54.6" height="74.0" fill="#c084fc" rx="2"><title>2026-05-18 · 26.9%</title></rect><text x="694.0" y="66.0" font-size="9.5" fill="#c084fc" text-anchor="middle">27%</text><rect x="742.5" y="127.2" width="54.6" height="16.8" fill="#c084fc" rx="2"><title>2026-05-25 · 6.1%</title></rect><text x="769.8" y="160" font-size="9" fill="#6b7f95" text-anchor="middle">05-25</text><rect x="818.3" y="117.3" width="54.6" height="26.7" fill="#c084fc" rx="2"><title>2026-06-15 · 9.7%</title></rect><rect x="894.2" y="96.0" width="54.6" height="48.0" fill="#c084fc" rx="2"><title>2026-06-22 · 17.4%</title></rect></svg>
+<div class="note"><b>看两件事</b>：① 挖孔<b>反复投放且不衰减</b>——从 2025-11 到 2026-07 投了 16 个周，中位仍有 15.9%，
+说明它不是"新鲜感收割"，是可持续弹药；② 峰值 42.7% 那周（2026-05-25 拓荒 W3），
+<b>节日整体占比冲到 66.5%</b>——一个模块把整月拉起来。</div>
+
+<h2><span class="no">03</span>X3 现状 — 逐周各模块占比（成熟服）</h2>
+<p class="lead">堆叠柱＝当周各节日模块占大盘之和。数字标在柱顶，<b style="color:var(--bad)">红色＝该周几乎无节日收入</b>。</p>
+<div class="lg"><span><i style="background:#5ad1ff"></i>开箱族(世界杯)</span><span><i style="background:#38bdf8"></i>开箱族(夏日)</span><span><i style="background:#4ade80"></i>大富翁族(深海)</span><span><i style="background:#f87171"></i>转盘(深海)</span><span><i style="background:#c084fc"></i>双通行证(深海)</span><span><i style="background:#fbbf24"></i>许愿池</span></div>
+<svg viewBox="0 0 980 210" width="100%"><line x1="56" y1="184" x2="972" y2="184" stroke="#243040"/><text x="50" y="188" font-size="10" fill="#6b7f95" text-anchor="end">0%</text><line x1="56" y1="121" x2="972" y2="121" stroke="#243040"/><text x="50" y="125" font-size="10" fill="#6b7f95" text-anchor="end">10%</text><line x1="56" y1="58" x2="972" y2="58" stroke="#243040"/><text x="50" y="62" font-size="10" fill="#6b7f95" text-anchor="end">20%</text><rect x="60.0" y="118.9" width="65.5" height="65.1" fill="#38bdf8" rx="1.5"><title>2026-05-25 · 开箱族(夏日) 10.3%</title></rect><rect x="60.0" y="94.1" width="65.5" height="24.8" fill="#fbbf24" rx="1.5"><title>2026-05-25 · 许愿池 3.9%</title></rect><text x="92.8" y="90.1" font-size="9.5" fill="#8fa3b8" text-anchor="middle">14.3%</text><text x="92.8" y="200" font-size="9" fill="#6b7f95" text-anchor="middle">05-25</text><rect x="151.0" y="88.2" width="65.5" height="95.8" fill="#38bdf8" rx="1.5"><title>2026-06-01 · 开箱族(夏日) 15.2%</title></rect><rect x="151.0" y="66.1" width="65.5" height="22.1" fill="#fbbf24" rx="1.5"><title>2026-06-01 · 许愿池 3.5%</title></rect><text x="183.8" y="62.1" font-size="9.5" fill="#8fa3b8" text-anchor="middle">18.7%</text><text x="183.8" y="200" font-size="9" fill="#6b7f95" text-anchor="middle">06-01</text><rect x="242.0" y="181.2" width="65.5" height="2.8" fill="#38bdf8" rx="1.5"><title>2026-06-08 · 开箱族(夏日) 0.4%</title></rect><rect x="242.0" y="180.5" width="65.5" height="0.7" fill="#fbbf24" rx="1.5"><title>2026-06-08 · 许愿池 0.1%</title></rect><text x="274.8" y="176.5" font-size="9.5" fill="#f87171" text-anchor="middle">0.6%</text><text x="274.8" y="200" font-size="9" fill="#6b7f95" text-anchor="middle">06-08</text><rect x="333.0" y="182.1" width="65.5" height="1.9" fill="#38bdf8" rx="1.5"><title>2026-06-15 · 开箱族(夏日) 0.3%</title></rect><rect x="333.0" y="181.8" width="65.5" height="0.3" fill="#fbbf24" rx="1.5"><title>2026-06-15 · 许愿池 0.0%</title></rect><text x="365.8" y="177.8" font-size="9.5" fill="#f87171" text-anchor="middle">0.3%</text><text x="365.8" y="200" font-size="9" fill="#6b7f95" text-anchor="middle">06-15</text><rect x="424.0" y="140.7" width="65.5" height="43.3" fill="#5ad1ff" rx="1.5"><title>2026-06-22 · 开箱族(世界杯) 6.9%</title></rect><text x="456.8" y="136.7" font-size="9.5" fill="#8fa3b8" text-anchor="middle">6.9%</text><text x="456.8" y="200" font-size="9" fill="#6b7f95" text-anchor="middle">06-22</text><rect x="515.0" y="151.6" width="65.5" height="32.4" fill="#5ad1ff" rx="1.5"><title>2026-06-29 · 开箱族(世界杯) 5.1%</title></rect><rect x="515.0" y="133.9" width="65.5" height="17.7" fill="#4ade80" rx="1.5"><title>2026-06-29 · 大富翁族(深海) 2.8%</title></rect><rect x="515.0" y="130.5" width="65.5" height="3.4" fill="#f87171" rx="1.5"><title>2026-06-29 · 转盘(深海) 0.5%</title></rect><rect x="515.0" y="92.6" width="65.5" height="37.9" fill="#c084fc" rx="1.5"><title>2026-06-29 · 双通行证(深海) 6.0%</title></rect><rect x="515.0" y="89.9" width="65.5" height="2.7" fill="#fbbf24" rx="1.5"><title>2026-06-29 · 许愿池 0.4%</title></rect><text x="547.8" y="85.9" font-size="9.5" fill="#8fa3b8" text-anchor="middle">14.9%</text><text x="547.8" y="200" font-size="9" fill="#6b7f95" text-anchor="middle">06-29</text><rect x="606.0" y="165.8" width="65.5" height="18.2" fill="#5ad1ff" rx="1.5"><title>2026-07-06 · 开箱族(世界杯) 2.9%</title></rect><rect x="606.0" y="117.9" width="65.5" height="47.9" fill="#4ade80" rx="1.5"><title>2026-07-06 · 大富翁族(深海) 7.6%</title></rect><rect x="606.0" y="96.0" width="65.5" height="21.9" fill="#f87171" rx="1.5"><title>2026-07-06 · 转盘(深海) 3.5%</title></rect><rect x="606.0" y="54.9" width="65.5" height="41.1" fill="#c084fc" rx="1.5"><title>2026-07-06 · 双通行证(深海) 6.5%</title></rect><rect x="606.0" y="48.2" width="65.5" height="6.6" fill="#fbbf24" rx="1.5"><title>2026-07-06 · 许愿池 1.1%</title></rect><text x="638.8" y="44.2" font-size="9.5" fill="#8fa3b8" text-anchor="middle">21.5%</text><text x="638.8" y="200" font-size="9" fill="#6b7f95" text-anchor="middle">07-06</text><rect x="697.0" y="153.8" width="65.5" height="30.2" fill="#5ad1ff" rx="1.5"><title>2026-07-13 · 开箱族(世界杯) 4.8%</title></rect><rect x="697.0" y="107.4" width="65.5" height="46.4" fill="#4ade80" rx="1.5"><title>2026-07-13 · 大富翁族(深海) 7.4%</title></rect><rect x="697.0" y="94.5" width="65.5" height="12.9" fill="#f87171" rx="1.5"><title>2026-07-13 · 转盘(深海) 2.0%</title></rect><rect x="697.0" y="77.0" width="65.5" height="17.5" fill="#c084fc" rx="1.5"><title>2026-07-13 · 双通行证(深海) 2.8%</title></rect><rect x="697.0" y="73.9" width="65.5" height="3.1" fill="#fbbf24" rx="1.5"><title>2026-07-13 · 许愿池 0.5%</title></rect><text x="729.8" y="69.9" font-size="9.5" fill="#8fa3b8" text-anchor="middle">17.5%</text><text x="729.8" y="200" font-size="9" fill="#6b7f95" text-anchor="middle">07-13</text><rect x="788.0" y="159.2" width="65.5" height="24.8" fill="#5ad1ff" rx="1.5"><title>2026-07-20 · 开箱族(世界杯) 3.9%</title></rect><text x="820.8" y="155.2" font-size="9.5" fill="#8fa3b8" text-anchor="middle">3.9%</text><text x="820.8" y="200" font-size="9" fill="#6b7f95" text-anchor="middle">07-20</text><text x="911.8" y="180.0" font-size="9.5" fill="#f87171" text-anchor="middle">0.0%</text><text x="911.8" y="200" font-size="9" fill="#6b7f95" text-anchor="middle">07-27</text></svg>
+<div class="note bad"><b>三个问题一目了然</b>：① <b>3 个整周归零</b>（2026-06-08, 2026-06-15, 2026-07-27）——空窗期大盘照常有 $45–53k，节日一分钱没拿到；
+② 最好的一周也只有 <b>21.5%</b>（2026-07-06），且是<b>四个模块叠出来的</b>，没有单个主力顶梁柱；
+③ 模块之间<b>此消彼长</b>而不是接力——开箱起来时大富翁还没上，大富翁上来时开箱已衰减。</div>
+
+<h2><span class="no">04</span>9 月排布 — 三个 W ＝ 21 天，全程不断档</h2>
+
+<div class="note warn"><b>先定节日期长度：9 月要做到 21 天（D0–D20）。</b>
+依据＝X3 夏日恋语只撑了 <b>12 天</b>就断（付费率中位 32.8%），而 P2 深海节 <b>21 天</b>、拓荒节 <b>23 天</b>，
+且它们在 D12 之后<b>还能反复起波</b>（见 §10 图）。
+<b>三个 W × 7 天 ＝ 21 天，正好对齐 P2 的单节日长度</b>——这一轮的核心不只是"每周有主力"，
+更是<b>把线拉到 D20 且中间不许出现空档</b>。</div>
+
+<p class="lead">右侧＝该周<b>主力模块的周占比目标</b>（依据 P2 同形式实测）。</p>
+<div class="wk" style="border-left-color:#5ad1ff">
+<div class="h"><span class="w">W1 · D0 – D6</span><span class="m" style="color:#5ad1ff">内外圈抽奖</span>
+<span class="goal">周占比目标 <b>15–19%</b></span></div>
+<div class="art">配套外显：主城皮肤 · 二周年限定（普通 + 高级）</div><div class="ev">依据：P2 圣诞 GACHA 原型：1,447 买家 / 人均 $153.6 / max $8,219 / 溢出率 25.4%</div></div><div class="wk" style="border-left-color:#4ade80">
+<div class="h"><span class="w">W2 · D7 – D13</span><span class="m" style="color:#4ade80">挖孔</span>
+<span class="goal">周占比目标 <b>16–25%</b></span></div>
+<div class="art">配套外显：英雄皮肤 · 史诗 + 英雄皮肤 · 周年限定</div><div class="ev">依据：P2 最强单品：16 个投放周中位 15.9%、峰值 42.7%（渗透 44%）</div></div><div class="wk" style="border-left-color:#c084fc">
+<div class="h"><span class="w">W3 · D14 – D20</span><span class="m" style="color:#c084fc">弹珠 ＋ 开箱（堆叠）</span>
+<span class="goal">周占比目标 <b>10+10 ≈ <b>20–27%</b></b></span></div>
+<div class="art">配套外显：弹珠→海妖皮肤 · 周年限定 + 行军皮肤 / 行军拖尾 · 周年限定　｜　开箱→<b>一批皮肤返场</b></div><div class="ev">依据：弹珠 P2 中位 9.7%／峰值 26.9%（带榜 $222k vs 无榜 $167k）＋ 开箱 X3 自身最好 15.2%</div></div>
+
+<h3>21 天填充清单 — 每一层都要接上，不留空档</h3>
+<p class="lead">横向读＝该层在三周里怎么接力；纵向读＝该周玩家能碰到的全部内容。
+<b>弹药带负责冲高，其余五层负责"不掉下来"。</b></p>
+<table>
+<tr><th style="width:132px">层</th><th>W1 · D0–D6</th><th>W2 · D7–D13</th><th>W3 · D14–D20</th></tr>
+<tr><td style="border-left:3px solid #5ad1ff"><b>★ 弹药带<br><span class='sm'>当周主力·spotlight</span></b></td><td>内外圈抽奖<br><span class='sm'>主城皮肤二周年限定（普通+高级）</span></td><td>挖孔 v1<br><span class='sm'>英雄皮肤史诗 + 周年限定</span></td><td>弹珠 ＋ 开箱（堆叠）<br><span class='sm'>海妖/行军外显 + 皮肤返场</span></td></tr><tr><td style="border-left:3px solid #4ade80"><b>贯穿压舱<br><span class='sm'>全 21 天不换</span></b></td><td colspan="3" style="text-align:center;background:rgba(74,222,128,.07)">大富翁 + 纪念卡（基础卡免费线 / 高级卡付费线）　—— 全程 D0→D20</td></tr><tr><td style="border-left:3px solid #c084fc"><b>通行证线<br><span class='sm'>拉到 D20 末</span></b></td><td>主 BP 开启（积分源＝三周通用任务）</td><td>各周核心挂子 BP（内外圈/挖孔/弹珠各一条）</td><td>BP 冲刺 + 满级奖励结算</td></tr><tr><td style="border-left:3px solid #fbbf24"><b>外显投放<br><span class='sm'>每周一套 · <span style='color:#f87171'>红＝本次新做</span></span></b></td><td><b>普通主城皮肤</b>·二周年（外圈随机走量）<br><span style='color:#f87171'><b>高级主城皮肤</b>·二周年（内圈固定收鲸）＝新增品质档</span><br><span class='sm'>现有 20 款品质全封顶在 3（紫），高级档要新开品质位</span></td><td>英雄皮肤 · 史诗（$49.99 钩子档）＋ 周年限定<br><span class='sm'>已有档位，只出新款</span></td><td><span style='color:#f87171'><b>海妖皮肤</b>＝新系统</span> + 行军皮肤 + 行军拖尾 + <b>返场皮</b></td></tr><tr><td style="border-left:3px solid #8fa3b8"><b>付费货架<br><span class='sm'>常驻</span></b></td><td>累充（分两期：W1 内外圈期）· 每日礼包 · 节日周卡</td><td>累充（W2 开箱期）· 每日礼包 · 装饰阶梯礼包 · 兑换商店①</td><td>兑换商店② · 拜访礼包 · 进度礼包 · 门票/券阶梯</td></tr><tr><td style="border-left:3px solid #2dd4bf"><b>免费向 · 留存<br><span class='sm'>拉付费率的底座</span></b></td><td>签到（7天）· BINGO 拼图开启 · 许愿池</td><td>签到续 · 拼图推进 · 酒馆积分赛开启</td><td>拼图收官（发纪念卡）· 酒馆结算 · 双榜结算发奖</td></tr>
+</table>
+
+<div class="note"><b>三周加总</b>：主力模块 15–19 + 16–25 + 20–27 ≈ <b>50–70% 分布在三周</b>，
+再叠常驻货架层（累充/每日/周卡/拜访/装饰/兑换，合计约 8–12%）。<br>
+<b>两个关键设计点</b>：① <b>W3 堆叠</b>——弹珠中位只有 9.7%，单独撑一周够不到 15% 主力线，和开箱并行才能把该周做到 20%+；
+② <b>免费向那一层是拉付费率的底座</b>——签到/拼图/酒馆/许愿池不直接赚钱，但它们决定了有多少付费玩家"进到节日里"，
+而 §09 已经算过：<b>40% 目标只需付费率从 32.1% 提到 46.8%，ARPPU 都不用动。</b></div>
+
+<h3>W3 开箱 · 皮肤返场标的（按"潜在受众"排序）</h3>
+<p class="lead">潜在受众 ＝ 该英雄解锁人数 − 该皮肤已获取人数。<b>这批皮肤的美术成本早就付过了，返场几乎零美术投入。</b></p>
+<table>
+<tr><th style="width:26px">#</th><th>皮肤</th><th>标签</th><th class="n">属性</th><th class="n">已获取</th>
+<th class="n">英雄解锁</th><th class="n">潜在受众</th><th class="n">当前获取率</th></tr>
+<tr><td class="n">1</td><td><b>红绸剑姬·阿米娜</b></td>
+<td>至尊</td>
+<td class="n">+150%</td>
+<td class="n">11</td><td class="n">599,305</td>
+<td class="n"><b style="color:var(--warn)">599,294</b></td>
+<td class="n">0.00%</td></tr><tr><td class="n">2</td><td><b>海上女王·阿米娜</b></td>
+<td>—</td>
+<td class="n">+1%</td>
+<td class="n">664</td><td class="n">599,305</td>
+<td class="n"><b style="color:var(--warn)">598,641</b></td>
+<td class="n">0.11%</td></tr><tr><td class="n">3</td><td><b>微醺·哈珀</b></td>
+<td>—</td>
+<td class="n">—</td>
+<td class="n">136</td><td class="n">264,442</td>
+<td class="n"><b style="color:var(--warn)">264,306</b></td>
+<td class="n">0.05%</td></tr><tr><td class="n">4</td><td><b>白雪公主·格蕾丝</b></td>
+<td>—</td>
+<td class="n">—</td>
+<td class="n">248</td><td class="n">225,747</td>
+<td class="n"><b style="color:var(--warn)">225,499</b></td>
+<td class="n">0.11%</td></tr><tr><td class="n">5</td><td><b>仙蒂公主·格蕾丝</b></td>
+<td>—</td>
+<td class="n">—</td>
+<td class="n">892</td><td class="n">225,747</td>
+<td class="n"><b style="color:var(--warn)">224,855</b></td>
+<td class="n">0.40%</td></tr><tr><td class="n">6</td><td><b>笑迎春·茉莉</b></td>
+<td>史诗</td>
+<td class="n">+50%</td>
+<td class="n">705</td><td class="n">177,205</td>
+<td class="n"><b style="color:var(--warn)">176,500</b></td>
+<td class="n">0.40%</td></tr><tr><td class="n">7</td><td><b>传奇舞者·奥黛丽</b></td>
+<td>—</td>
+<td class="n">—</td>
+<td class="n">102</td><td class="n">99,589</td>
+<td class="n"><b style="color:var(--warn)">99,487</b></td>
+<td class="n">0.10%</td></tr><tr><td class="n">8</td><td><b>史诗舞者·奥黛丽</b></td>
+<td>—</td>
+<td class="n">—</td>
+<td class="n">397</td><td class="n">99,589</td>
+<td class="n"><b style="color:var(--warn)">99,192</b></td>
+<td class="n">0.40%</td></tr><tr><td class="n">9</td><td><b>热浪尤物·赛米拉</b></td>
+<td>夏日</td>
+<td class="n">+100%</td>
+<td class="n">17</td><td class="n">96,796</td>
+<td class="n"><b style="color:var(--warn)">96,779</b></td>
+<td class="n">0.02%</td></tr><tr><td class="n">10</td><td><b>永恒誓约·赛米拉</b></td>
+<td>传说</td>
+<td class="n">+100%</td>
+<td class="n">35</td><td class="n">96,796</td>
+<td class="n"><b style="color:var(--warn)">96,761</b></td>
+<td class="n">0.04%</td></tr><tr><td class="n">11</td><td><b>内裤宗师·贝拉</b></td>
+<td>—</td>
+<td class="n">—</td>
+<td class="n">2,461</td><td class="n">67,391</td>
+<td class="n"><b style="color:var(--warn)">64,930</b></td>
+<td class="n">3.65%</td></tr><tr><td class="n">12</td><td><b>星马赐福·卡蜜拉</b></td>
+<td>限定</td>
+<td class="n">+30%</td>
+<td class="n">188</td><td class="n">61,640</td>
+<td class="n"><b style="color:var(--warn)">61,452</b></td>
+<td class="n">0.30%</td></tr>
+</table>
+<div class="note ok"><b>返场为什么值得做（三条依据）</b>：
+① <b>头号标的是红绸剑姬·阿米娜</b>——至尊 +150%，阿米娜有 <b>599,305 人</b>解锁，皮肤却只有 <b>11 人</b>持有，
+潜在受众近 60 万，是全表最大的一块未开发市场；
+② 榜单里 <b>热浪尤物·赛米拉（0.02%）、永恒誓约·赛米拉（0.04%）、笑迎春·茉莉（0.40%）</b>都是带属性的高级皮，
+<b>当年当纯付费品卖没卖出去，不等于没需求</b>——把它们放进开箱奖池是二次变现；
+③ P2 有现成先例：<b>返场皮走兑换商店三档（白嫖自选宝箱 → 高级返场中位 $893）</b>，形式可直接照搬。</div>
+<div class="note"><b>⚠️ 返场要避的坑</b>：返场会稀释"限定"的稀缺承诺。建议 ①<b>只返 1 年以上的老皮</b>，
+②<b>至尊/传说档返场要换获取路径</b>（当年是直购，返场走开箱概率），别原价重售，
+③把 <b>3 款零持有的皮肤</b>（黑金契约·霍普金斯 / 金海商使·霍普金斯 / 魅影魔术师·琥珀）优先塞进首批，
+它们从没被任何人拿到过，<b>返场对老玩家零伤害</b>。</div>
+
+<h2><span class="no">05</span>10 月 — 优化投放，拉「节日日均 ARPPU」</h2>
+<p class="lead">9 月把线<b>横向拉长</b>（21 天不断档、每周一个主力），10 月把线<b>纵向抬高</b>（同一批人卖更深）。
+两个动作在 §10 的图上分别是绿色横箭头和黄色竖箭头。</p>
+
+<div class="note warn"><b>KPI 口径钉死：日粒度 · 节日活跃日 · ARPPU 中位数</b>　＝ 当日节日收入 ÷ 当日节日付费人数，
+取活跃日（付费率≥10%）的中位。<b>现状 $25.3 → 目标 $30.5–34.1</b>（P2 为 $33.1）。<br>
+⚠️别跟周粒度混：同一指标按周聚合是 X3 $40.2 / P2 $68.9（周维度收入累加而人数去重，天然更高）。
+<b>考核用哪个粒度必须先说清，否则同一件事会得出两个结论。</b></div>
+
+<div class="kpis">
+<div class="kpi bad"><b>$25.3</b><div class="t">X3 节日日均 ARPPU · 中位</div><div class="n">活跃日区间 $13.6–$59.7</div></div>
+<div class="kpi ok"><b>$33.1</b><div class="t">P2 同指标 · 中位</div><div class="n">差 1.31× · 拓荒节达 $38.5</div></div>
+<div class="kpi warn"><b>32.1%</b><div class="t">X3 付费玩家付费率</div><div class="n">9 月要拉的那条（P2 51.5%）</div></div>
+<div class="kpi"><b>$30.5–34.1</b><div class="t">10 月 ARPPU 目标</div><div class="n">＝P2 的 92%–103%</div></div>
+</div>
+
+<h3>两个因子一起看 — 渗透 × ARPPU</h3>
+<div class="lg"><span><i style="background:#5ad1ff;border-radius:50%"></i>X3 每周（成熟服）</span>
+<span><i style="background:#c084fc;border-radius:50%;opacity:.5"></i>P2 每周（背景云）</span>
+<span><i style="background:#4ade80;opacity:.3;border:1px dashed #4ade80"></i>P2 主力周所在区</span></div>
+<svg viewBox="0 0 980 340" width="100%"><line x1="62" y1="14" x2="62" y2="300" stroke="#243040"/><text x="62" y="316" font-size="10" fill="#6b7f95" text-anchor="middle">0%</text><line x1="190" y1="14" x2="190" y2="300" stroke="#243040"/><text x="190" y="316" font-size="10" fill="#6b7f95" text-anchor="middle">10%</text><line x1="317" y1="14" x2="317" y2="300" stroke="#243040"/><text x="317" y="316" font-size="10" fill="#6b7f95" text-anchor="middle">20%</text><line x1="445" y1="14" x2="445" y2="300" stroke="#243040"/><text x="445" y="316" font-size="10" fill="#6b7f95" text-anchor="middle">30%</text><line x1="573" y1="14" x2="573" y2="300" stroke="#243040"/><text x="573" y="316" font-size="10" fill="#6b7f95" text-anchor="middle">40%</text><line x1="701" y1="14" x2="701" y2="300" stroke="#243040"/><text x="701" y="316" font-size="10" fill="#6b7f95" text-anchor="middle">50%</text><line x1="828" y1="14" x2="828" y2="300" stroke="#243040"/><text x="828" y="316" font-size="10" fill="#6b7f95" text-anchor="middle">60%</text><line x1="956" y1="14" x2="956" y2="300" stroke="#243040"/><text x="956" y="316" font-size="10" fill="#6b7f95" text-anchor="middle">70%</text><line x1="62" y1="300" x2="956" y2="300" stroke="#243040"/><text x="54" y="304" font-size="10" fill="#6b7f95" text-anchor="end">$0</text><line x1="62" y1="252" x2="956" y2="252" stroke="#243040"/><text x="54" y="256" font-size="10" fill="#6b7f95" text-anchor="end">$25</text><line x1="62" y1="203" x2="956" y2="203" stroke="#243040"/><text x="54" y="207" font-size="10" fill="#6b7f95" text-anchor="end">$50</text><line x1="62" y1="155" x2="956" y2="155" stroke="#243040"/><text x="54" y="159" font-size="10" fill="#6b7f95" text-anchor="end">$75</text><line x1="62" y1="107" x2="956" y2="107" stroke="#243040"/><text x="54" y="111" font-size="10" fill="#6b7f95" text-anchor="end">$100</text><line x1="62" y1="59" x2="956" y2="59" stroke="#243040"/><text x="54" y="63" font-size="10" fill="#6b7f95" text-anchor="end">$125</text><circle cx="726.5" cy="219.8" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2025-09-29｜渗透 52.0% · ARPPU $41.5</title></circle><circle cx="448.7" cy="235.9" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2025-10-06｜渗透 30.3% · ARPPU $33.2</title></circle><circle cx="475.6" cy="220.4" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2025-10-13｜渗透 32.4% · ARPPU $41.2</title></circle><circle cx="613.1" cy="189.9" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2025-10-20｜渗透 43.2% · ARPPU $57.0</title></circle><circle cx="749.8" cy="141.0" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2025-10-27｜渗透 53.9% · ARPPU $82.3</title></circle><circle cx="356.8" cy="166.9" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2025-11-03｜渗透 23.1% · ARPPU $68.9</title></circle><circle cx="655.7" cy="202.9" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2025-11-10｜渗透 46.5% · ARPPU $50.3</title></circle><circle cx="765.7" cy="128.0" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2025-11-17｜渗透 55.1% · ARPPU $89.1</title></circle><circle cx="773.1" cy="153.0" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2025-11-24｜渗透 55.7% · ARPPU $76.1</title></circle><circle cx="482.5" cy="240.0" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2025-12-01｜渗透 32.9% · ARPPU $31.1</title></circle><circle cx="652.1" cy="192.1" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2025-12-08｜渗透 46.2% · ARPPU $55.9</title></circle><circle cx="839.1" cy="112.5" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2025-12-15｜渗透 60.8% · ARPPU $97.1</title></circle><circle cx="767.1" cy="109.8" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2025-12-22｜渗透 55.2% · ARPPU $98.5</title></circle><circle cx="464.8" cy="214.6" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2025-12-29｜渗透 31.5% · ARPPU $44.2</title></circle><circle cx="93.0" cy="287.1" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-01-05｜渗透 2.4% · ARPPU $6.7</title></circle><circle cx="779.7" cy="116.9" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-01-12｜渗透 56.2% · ARPPU $94.8</title></circle><circle cx="789.2" cy="127.5" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-01-19｜渗透 56.9% · ARPPU $89.3</title></circle><circle cx="633.0" cy="166.9" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-01-26｜渗透 44.7% · ARPPU $68.9</title></circle><circle cx="674.0" cy="128.9" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-02-02｜渗透 47.9% · ARPPU $88.6</title></circle><circle cx="656.0" cy="179.0" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-02-09｜渗透 46.5% · ARPPU $62.7</title></circle><circle cx="749.3" cy="116.7" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-02-16｜渗透 53.8% · ARPPU $94.9</title></circle><circle cx="660.7" cy="150.3" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-02-23｜渗透 46.9% · ARPPU $77.5</title></circle><circle cx="449.6" cy="174.9" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-03-02｜渗透 30.3% · ARPPU $64.8</title></circle><circle cx="526.9" cy="201.1" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-03-09｜渗透 36.4% · ARPPU $51.2</title></circle><circle cx="755.5" cy="158.5" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-03-16｜渗透 54.3% · ARPPU $73.3</title></circle><circle cx="819.4" cy="138.1" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-03-23｜渗透 59.3% · ARPPU $83.9</title></circle><circle cx="800.2" cy="172.2" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-03-30｜渗透 57.8% · ARPPU $66.2</title></circle><circle cx="632.8" cy="183.9" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-04-06｜渗透 44.7% · ARPPU $60.1</title></circle><circle cx="873.4" cy="143.4" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-04-13｜渗透 63.5% · ARPPU $81.1</title></circle><circle cx="742.1" cy="185.8" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-04-20｜渗透 53.3% · ARPPU $59.1</title></circle><circle cx="485.5" cy="230.5" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-04-27｜渗透 33.2% · ARPPU $36.0</title></circle><circle cx="96.7" cy="282.9" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-05-04｜渗透 2.7% · ARPPU $8.9</title></circle><circle cx="740.5" cy="180.3" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-05-11｜渗透 53.1% · ARPPU $62.0</title></circle><circle cx="807.0" cy="120.3" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-05-18｜渗透 58.3% · ARPPU $93.1</title></circle><circle cx="861.2" cy="38.2" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-05-25｜渗透 62.6% · ARPPU $135.6</title></circle><circle cx="492.3" cy="198.4" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-06-01｜渗透 33.7% · ARPPU $52.6</title></circle><circle cx="693.5" cy="123.9" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-06-08｜渗透 49.4% · ARPPU $91.2</title></circle><circle cx="710.6" cy="131.5" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-06-15｜渗透 50.8% · ARPPU $87.3</title></circle><circle cx="804.0" cy="152.8" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-06-22｜渗透 58.1% · ARPPU $76.2</title></circle><circle cx="500.0" cy="226.5" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-06-29｜渗透 34.3% · ARPPU $38.0</title></circle><circle cx="246.7" cy="202.6" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-07-06｜渗透 14.5% · ARPPU $50.5</title></circle><circle cx="719.9" cy="156.7" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-07-13｜渗透 51.5% · ARPPU $74.2</title></circle><circle cx="715.2" cy="144.7" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-07-20｜渗透 51.1% · ARPPU $80.4</title></circle><circle cx="482.6" cy="207.9" r="4.5" fill="#c084fc" fill-opacity=".38"><title>P2 2026-07-27｜渗透 32.9% · ARPPU $47.7</title></circle><circle cx="731.3" cy="230.6" r="6" fill="#5ad1ff" stroke="#0d1117" stroke-width="1.2"><title>X3 2026-05-25｜渗透 52.4% · ARPPU $35.9</title></circle><circle cx="493.1" cy="221.8" r="6" fill="#5ad1ff" stroke="#0d1117" stroke-width="1.2"><title>X3 2026-06-01｜渗透 33.8% · ARPPU $40.5</title></circle><circle cx="153.5" cy="271.4" r="6" fill="#5ad1ff" stroke="#0d1117" stroke-width="1.2"><title>X3 2026-06-08｜渗透 7.2% · ARPPU $14.8</title></circle><circle cx="108.4" cy="276.2" r="6" fill="#5ad1ff" stroke="#0d1117" stroke-width="1.2"><title>X3 2026-06-15｜渗透 3.6% · ARPPU $12.3</title></circle><circle cx="388.4" cy="222.4" r="6" fill="#5ad1ff" stroke="#0d1117" stroke-width="1.2"><title>X3 2026-06-22｜渗透 25.6% · ARPPU $40.2</title></circle><circle cx="529.6" cy="207.4" r="6" fill="#5ad1ff" stroke="#0d1117" stroke-width="1.2"><title>X3 2026-06-29｜渗透 36.6% · ARPPU $48.0</title></circle><circle cx="600.4" cy="204.6" r="6" fill="#5ad1ff" stroke="#0d1117" stroke-width="1.2"><title>X3 2026-07-06｜渗透 42.2% · ARPPU $49.4</title></circle><circle cx="464.0" cy="200.0" r="6" fill="#5ad1ff" stroke="#0d1117" stroke-width="1.2"><title>X3 2026-07-13｜渗透 31.5% · ARPPU $51.8</title></circle><circle cx="189.9" cy="226.8" r="6" fill="#5ad1ff" stroke="#0d1117" stroke-width="1.2"><title>X3 2026-07-20｜渗透 10.0% · ARPPU $37.9</title></circle><rect x="701" y="107" width="192" height="77" fill="#4ade80" fill-opacity=".07" stroke="#4ade80" stroke-dasharray="4 3"/><text x="796" y="101" font-size="11" fill="#4ade80" text-anchor="middle">P2 主力周所在区</text><text x="490" y="334" font-size="11" fill="#8fa3b8" text-anchor="middle">节日渗透（节日付费人数 / 当周总付费人数）→</text><text x="14" y="170" font-size="11" fill="#8fa3b8" transform="rotate(-90 14 170)" text-anchor="middle">当周节日 ARPPU →</text></svg>
+<div class="note bad"><b>这张图是 9 月/10 月分开做的根据：</b>
+X3 的点<b>全部落在左下角</b>——渗透中位 31%（P2 49%）、ARPPU 中位 $40.2（P2 $68.9）。
+更关键的是 <b>X3 两个因子还互相拖</b>：渗透最高那周（52.4%）ARPPU 只有 $35.9，
+而 ARPPU 最高那周（$51.8）渗透只有 31.5%——<b>广度和深度没法同时拿到</b>。
+P2 则是两者同时高（渗透 60%+ 且 ARPPU $90+），所以它的绿色目标区在右上。</div>
+
+<h3>10 月四个方向 — 都是冲 ARPPU 的</h3>
+<table>
+<tr><th style="width:180px">方向</th><th style="width:165px">做法</th><th>为什么现在做</th><th style="width:220px">参照</th></tr>
+<tr><td><b>主城皮肤深度付费挖掘</b></td><td>主城皮肤<b>套装系统</b></td><td>现有 20 款主城皮肤是单件售卖，套装化＝把同一资产从「买一件」变成「集一套」</td><td style="color:var(--dim2)">P2 圣诞跨服榜 30 份高级皮 + Top3 染色，上榜线 $1,444 / 中位 $2,529</td></tr><tr><td><b>英雄皮肤深度品质挖掘</b></td><td>分品质 + 按品质定价</td><td>四档梯度（至尊+150%/传说+100%/史诗+50%/限定+30%）<b>早已存在但完全没跑起来</b>——至尊仅 11 人持有</td><td style="color:var(--dim2)">内部先例：家具皮肤已有青铜/白银/黄金三档带不同属性</td></tr><tr><td><b>装饰物升级系统</b></td><td>装饰从「买断」变「可升级」</td><td>现有装饰 146 件多为功能性家具，节日装饰礼包深海仅 $1.3k / 夏日 $0.58k＝几乎卖不动</td><td style="color:var(--dim2)">升级系统＝给已售出的装饰开续费口，不用新出美术</td></tr><tr><td><b>新增节日卡册</b></td><td>卡册节日版</td><td>与纪念卡分属两套系统；纪念卡 9 月已做「拆分投放定位」，卡册是另一条收集线</td><td style="color:var(--dim2)">10 月开发预估 5 天</td></tr>
+</table>
+<div class="note ok"><b>10 月的验收线</b>：节日日均 ARPPU 从 <b>$25.3</b> 拉到 <b>$30.5–34.1</b>
+（＝P2 的 92%–103%），<b>且付费率不许掉回 9 月以前</b>——占比 ＝ 付费率 × ARPPU，
+任一因子跌回去都白做（§09 恒等式）。<br>
+<b>四个方向为什么都能拉 ARPPU</b>：套装＝把"买一件"变"集一套"（同一批人多买几件）；
+分品质定价＝给愿意多花的人开更高档位；装饰升级＝给已买过的人开续费口；
+卡册＝新增一条收集线，深度由坑深决定而不是靠拉新人。<b>四条全部作用在"已经在花钱的人"身上，这才是 ARPPU 而非付费率。</b></div>
+
+<h2><span class="no">06</span>11 月 — 黑五 ＋ 查漏补缺 9/10 月</h2>
+<p class="lead">黑五是<b>价格驱动</b>的付费节点（不是玩法驱动），内容开发压力小，
+所以它同时承担两个角色：<b>用折扣拉付费率</b> ＋ <b>把 9/10 月没达成的目标补回来</b>。</p>
+
+<div class="note ok"><b>为什么黑五正好打在 X3 的短板上：</b>
+我们早就量出 X3 有四个形式差，其中一条是<b>「没有 $0.99–4.99 的宽入口」</b>。
+而 P2 黑五的头号单品「感恩节黑五小额」——<b>5,822 买家、人均仅 $10.5</b>，
+<b>比挖孔（2,757 买家）还广一倍</b>。这是全场最快的付费率杠杆，而且开发成本几乎为零（纯配置礼包）。</div>
+
+<h3>P2 黑五 / 感恩节礼包结构 — 小额宽入口 ＋ 大额收鲸双轨</h3>
+<table>
+<tr><th>礼包</th><th class="n">买家</th><th class="n">人均</th><th>定位</th><th style="width:230px">买家规模对比</th></tr>
+<tr><td>2023 感恩节黑五小额</td><td class="n"><b>5,822</b></td><td class="n">$10.5</td>
+<td><span class="pill" style="color:#2dd4bf;border:1px solid #2dd4bf55;background:#2dd4bf18">宽入口</span></td>
+<td><span class="bar" style="width:210px;background:#2dd4bf"></span></td></tr><tr><td>25 感恩节每日补给升级礼包</td><td class="n"><b>3,868</b></td><td class="n">$12.7</td>
+<td><span class="pill" style="color:#2dd4bf;border:1px solid #2dd4bf55;background:#2dd4bf18">宽入口</span></td>
+<td><span class="bar" style="width:140px;background:#2dd4bf"></span></td></tr><tr><td>黑五省省卡礼包</td><td class="n"><b>1,815</b></td><td class="n">$22.1</td>
+<td><span class="pill" style="color:#5ad1ff;border:1px solid #5ad1ff55;background:#5ad1ff18">中额</span></td>
+<td><span class="bar" style="width:65px;background:#5ad1ff"></span></td></tr><tr><td>2023 感恩节 GACHA</td><td class="n"><b>1,685</b></td><td class="n">$77.1</td>
+<td><span class="pill" style="color:#5ad1ff;border:1px solid #5ad1ff55;background:#5ad1ff18">中额抽奖</span></td>
+<td><span class="bar" style="width:61px;background:#5ad1ff"></span></td></tr><tr><td>2024 感恩节随机 GACHA</td><td class="n"><b>1,277</b></td><td class="n">$119.1</td>
+<td><span class="pill" style="color:#c084fc;border:1px solid #c084fc55;background:#c084fc18">抽奖收鲸</span></td>
+<td><span class="bar" style="width:46px;background:#c084fc"></span></td></tr><tr><td>感恩节终极连锁礼包</td><td class="n"><b>947</b></td><td class="n">$174.3</td>
+<td><span class="pill" style="color:#f87171;border:1px solid #f8717155;background:#f8717118">收鲸</span></td>
+<td><span class="bar" style="width:34px;background:#f87171"></span></td></tr><tr><td>黑五英雄专属礼包</td><td class="n"><b>888</b></td><td class="n">$44.5</td>
+<td><span class="pill" style="color:#5ad1ff;border:1px solid #5ad1ff55;background:#5ad1ff18">定向</span></td>
+<td><span class="bar" style="width:32px;background:#5ad1ff"></span></td></tr><tr><td>2023 感恩节黑五大额</td><td class="n"><b>596</b></td><td class="n">$99.3</td>
+<td><span class="pill" style="color:#f87171;border:1px solid #f8717155;background:#f8717118">收鲸</span></td>
+<td><span class="bar" style="width:21px;background:#f87171"></span></td></tr><tr><td>黑五折扣 2024</td><td class="n"><b>439</b></td><td class="n">$123.6</td>
+<td><span class="pill" style="color:#f87171;border:1px solid #f8717155;background:#f8717118">收鲸</span></td>
+<td><span class="bar" style="width:16px;background:#f87171"></span></td></tr>
+</table>
+<div class="note"><b>双轨结构看得很清楚</b>：小额三档（5,822 / 3,868 / 1,815 买家，人均 $10–22）负责<b>把人拉进来</b>；
+大额三档（947 / 596 / 439 买家，人均 $99–174）负责<b>收鲸</b>。
+<b>两头都做才是黑五</b>——只做折扣小额则 ARPPU 掉，只做大额则付费率上不去。<br>
+P2 2025 感恩节期实测（11-13~11-30，18 天）：付费率 <b>30–55%</b>、ARPPU <b>$23–57</b>、占大盘 <b>31–67%</b>，
+峰值日 11-23（付费率 51.6% / ARPPU $56.7 / <b>占大盘 67.3%</b>）。</div>
+
+<h3>查漏补缺 — 9/10 月的目标在 11 月结账</h3>
+<table>
+<tr><th style="width:170px">来源</th><th style="width:170px">原定目标</th><th>若未达成，11 月怎么补</th></tr>
+<tr><td><b>9 月 · 节日期长度</b></td><td class="n">21 天（D0–D20）不断档</td><td>黑五本身是价格驱动、内容压力小，<b>正好用来再跑一次 21 天满程</b>——验证「排满」这件事能不能稳定复制</td></tr><tr><td><b>9 月 · 付费玩家付费率</b></td><td class="n">32.1% → 46.8%</td><td><b>黑五小额是全场最快的付费率杠杆</b>：P2「感恩节黑五小额」单品 <b>5,822 买家</b>、人均仅 $10.5，比挖孔（2,757 买家）还广一倍</td></tr><tr><td><b>10 月 · 节日日均 ARPPU</b></td><td class="n">$25.3 → $30.5–34.1</td><td>黑五的<b>大额/折扣档补深度</b>：终极连锁人均 $174、黑五折扣 $124、黑五大额 $99，三档都是靠「折扣感」拉高单笔</td></tr><tr><td><b>9/10 月 · 未上线内容</b></td><td class="n">回补</td><td>11 月是<b>轻开发月</b>（原计划只有 3 天新开发），产能余量正好吃掉 9/10 月的欠账</td></tr>
+</table>
+<div class="note warn"><b>把 11 月设成"结账月"是这套半年规划的安全阀</b>：
+9 月拉广度、10 月拉深度，两个月都是<b>新东西</b>，有翻车风险；
+11 月内容压力最小、产能余量最大，<b>是唯一能回补的窗口</b>。
+所以 11 月的动作清单应该在 <b>10 月底根据实际数据再定</b>，现在只锁"黑五双轨"这一件。</div>
+
+<h2><span class="no">07</span>12 月 — 圣诞 ＋ 套装 2 期，冲流水</h2>
+<p class="lead">年度收官月。三个抓手叠在一起：内外墙回到原生场景、套装复用系统只出内容、四件弹药全部就绪。</p>
+<div class="wk" style="border-left-color:#c084fc">
+<div class="h"><span class="m" style="color:#c084fc">内外墙<b>回到原生场景</b></span></div>
+<div class="art">P2 2024 圣诞 GACHA <b>就是内外墙的老家</b>（1,447 买家 / 人均 $153.6 / max $8,219 / 总盘 $22.2 万 / 溢出率 25.4%）。8 月首投若只做了本体，12 月<b>把三层结构补齐</b>：2 天试用钩子（P2 拉到 17,222 人）→ 本体永久皮（中位 $517，132 人贡献总盘 64.9%）→ 跨服榜 30 份高级皮 + Top3 染色（上榜线 $1,444 / 中位 $2,529）</div><div class="ev">价值：同一套资产二次收割，钩子层拉付费率、榜层拉 ARPPU</div></div><div class="wk" style="border-left-color:#5ad1ff">
+<div class="h"><span class="m" style="color:#5ad1ff"><b>套装 2 期</b></span></div>
+<div class="art">10 月已把套装<b>系统</b>做出来，12 月只出<b>内容</b>——零系统开发、纯美术＋配置。这是半年里性价比最高的一次投放（系统成本已在 10 月摊掉）</div><div class="ev">价值：复用系统 ⇒ 开发成本极低，直接贡献流水</div></div><div class="wk" style="border-left-color:#fbbf24">
+<div class="h"><span class="m" style="color:#fbbf24"><b>冲流水</b>（年度收官）</span></div>
+<div class="art">P2 12 月是全年高点之一：周节日收入 <b>$369,579（占大盘 55.5%）</b>、次周 $338,081（52.0%）。年底玩家付费意愿本身最高，<b>叠加圣诞＋套装 2 期＋前三个月已建成的全部弹药</b></div><div class="ev">价值：四件弹药（内外墙/挖孔/弹珠/开箱）此时全部就绪，可同月轮转</div></div>
+<div class="note ok"><b>12 月是半年里"投入产出比"最好的一个月</b>：
+系统开发都在 9/10 月摊完了（挖孔、弹珠、套装系统、品质分档），
+12 月<b>只需出美术＋配置</b>就能把四件弹药 + 套装 2 期全部铺开。
+P2 12 月周节日收入能到 <b>$369,579（占大盘 55.5%）</b>——年底本身就是付费意愿高点，
+<b>这是全年最该冲的一个月，而不是收摊的月份。</b></div>
+
+<h2><span class="no">08</span>宏观账 — 40–50% 从哪儿来</h2>
+<div class="note"><b>先把公式摆出来，两个月各攻一个因子：</b><br>
+<span style="color:var(--fg);font-size:14px">节日占比 ＝ <b style="color:var(--warn)">节日渗透</b> × <b style="color:var(--acc)">节日 ARPPU</b> ÷ 大盘 ARPU</span><br>
+以 X3 07-13 那周实测校验：198 人 × $51.8 ÷ $48,599 ＝ <b>21.1%</b> ✓（与直接算 $10,250/$48,599 一致）<br>
+同周 P2：2,500 人 × $74.2 ÷ $453,284 ＝ <b>40.9%</b> ✓<br>
+→ <b>要从 21% 走到 40%，需要「渗透 ×1.6」×「ARPPU ×1.35」＝ ×2.16。这就是 9 月和 10 月各自的任务量。</b></div>
+<table>
+<tr><th>来源</th><th>攻哪个因子</th><th>动作</th><th class="n">贡献</th><th class="n">累计</th><th>开发成本</th></tr>
+<tr><td>现状</td><td>—</td><td>成熟服 61 天累计</td><td class="n">—</td><td class="n"><b>15.0%</b></td><td>—</td></tr>
+<tr><td><b>补空窗</b></td><td>渗透（时间维）</td><td>每月排满，消灭 0.3% 的整周</td><td class="n">+5–7pt</td><td class="n"><b>20–22%</b></td><td><b style="color:var(--ok)">0 天</b>（纯排期）</td></tr>
+<tr><td><b>9 月：每周一个主力</b></td><td><b style="color:var(--warn)">渗透 ×1.6</b></td><td>三个 W 各达 15%+ 线，W3 双模块堆叠</td><td class="n">+7–13pt</td><td class="n"><b>27–35%</b></td><td>挖孔 7d + 弹珠 5d</td></tr>
+<tr><td><b>10 月：深度付费优化</b></td><td><b style="color:var(--acc)">ARPPU ×1.35</b></td><td>套装 / 品质 / 装饰升级 / 卡册，把投放做深</td><td class="n">+8–14pt</td><td class="n"><b>35–49%</b></td><td>套装 7d + 品质 5d + 装饰 3d + 卡册 5d</td></tr>
+</table>
+<div class="note"><b>三段全做才够到 40–50%</b>，且第一段零开发成本。
+⚠️三段之间有重叠（补空窗的收益部分来自主力模块本身），表中已按下沿取值；
+<b>对外承诺建议按"半年到 35%"讲，40–50% 作为上限空间。</b></div>
+
+<h2><span class="no">09</span>目标拆解 — 按日拉通 P2 4/5/6 月</h2>
+<p class="lead">P2 取 2026-04-01~06-30（91 天，含拓荒全程 + 深海前段），X3 取 2026-05-25~07-27（64 天）。
+「节日活跃日」＝付费玩家付费率 ≥10% 的日子；下列均为<b>活跃日中位数</b>。</p>
+
+<table>
+<tr><th>指标</th><th class="n">P2</th><th class="n">X3</th><th class="n">倍数</th><th>判读</th></tr>
+<tr><td><b>付费玩家付费率</b><br><span style="color:var(--dim2);font-size:11.5px">节日付费人数 / 当日总付费人数</span></td>
+  <td class="n"><b>51.5%</b></td><td class="n"><b style="color:var(--warn)">32.1%</b></td>
+  <td class="n">1.60×</td><td><b>广度差距</b>——一半付费玩家碰不到节日</td></tr>
+<tr><td><b>付费玩家 ARPPU</b><br><span style="color:var(--dim2);font-size:11.5px">节日收入 / 节日付费人数</span></td>
+  <td class="n"><b>$33.1</b></td><td class="n"><b style="color:var(--warn)">$25.3</b></td>
+  <td class="n">1.31×</td><td><b>深度差距</b>——比广度差距小得多</td></tr>
+<tr><td>节日占大盘</td><td class="n">47.0%</td><td class="n">27.4%</td>
+  <td class="n">1.71×</td><td>＝上面两项相乘的结果</td></tr>
+<tr style="background:rgba(74,222,128,.06)"><td><b>大盘日 ARPU</b></td>
+  <td class="n">$36.0</td><td class="n">$33.4</td>
+  <td class="n"><b style="color:var(--ok)">1.08×</b></td>
+  <td><b style="color:var(--ok)">钱包几乎一样</b>——差距不在玩家有多少钱</td></tr>
+<tr style="background:rgba(248,113,113,.06)"><td><b>空窗日占比</b></td>
+  <td class="n">24.2%</td><td class="n"><b style="color:var(--bad)">43.8%</b></td>
+  <td class="n">X3 是 1.8 倍</td>
+  <td><b>这是累计占比 15% vs 37.7% 的主因</b></td></tr>
+</table>
+
+<div class="note ok"><b>三因子恒等式（两边实测都对得上，可以拿去汇报）</b><br>
+<span style="color:var(--fg);font-size:14.5px">累计节日占比 ＝ <b style="color:var(--bad)">(1 − 空窗率)</b> × <b style="color:var(--warn)">付费玩家付费率</b> × <b style="color:var(--acc)">节日 ARPPU</b> ÷ 大盘 ARPU</span><br>
+X3：(1−0.438) × 32.1% × $25.3 ÷ $33.4 ＝ <b>13.6%</b>（实测累计 15.0%）<br>
+P2：(1−0.242) × 51.5% × $33.1 ÷ $36.0 ＝ <b>35.9%</b>（实测 37.7%）<br>
+→ <b>三个因子刚好对应三件事：排期（空窗率）· 9 月（付费率）· 10 月（ARPPU）。</b></div>
+
+<h3>活跃日占比 27.4% → 40% / 50% 的三条路径</h3>
+<table>
+<tr><th style="width:88px">目标</th><th style="width:150px">路径</th><th>要把哪个数推到多少</th><th class="n">对标 P2</th><th>可行性</th></tr>
+<tr><td rowspan="3"><b>40%</b><br><span style="color:var(--dim2);font-size:11.5px">需 ×1.46</span></td>
+  <td>A · 只提付费率</td><td>付费率 32.1% → <b>46.8%</b>（ARPPU 不动）</td>
+  <td class="n">P2 51.5%</td><td><b style="color:var(--ok)">✓ 单腿可达</b>，且仍低于 P2</td></tr>
+<tr><td>B · 只提 ARPPU</td><td>ARPPU $25.3 → <b>$36.8</b>（付费率不动）</td>
+  <td class="n">P2 $33.1</td><td><span style="color:var(--bad)">✗ 要超过 P2</span></td></tr>
+<tr><td><b>C · 两者同抬</b></td><td>付费率 → <b>38.7%</b>　+　ARPPU → <b>$30.5</b></td>
+  <td class="n">P2 的 75% / 92%</td><td><b style="color:var(--ok)">✓ 最稳</b>，两项都不用超 P2</td></tr>
+<tr><td rowspan="3"><b>50%</b><br><span style="color:var(--dim2);font-size:11.5px">需 ×1.82</span></td>
+  <td>A · 只提付费率</td><td>付费率 → 58.5%</td><td class="n">P2 51.5%</td>
+  <td><span style="color:var(--bad)">✗ 要超过 P2</span></td></tr>
+<tr><td>B · 只提 ARPPU</td><td>ARPPU → $46.0</td><td class="n">P2 $33.1</td>
+  <td><span style="color:var(--bad)">✗ 远超 P2</span></td></tr>
+<tr><td><b>C · 两者同抬</b></td><td>付费率 → <b>43.3%</b>　+　ARPPU → <b>$34.1</b></td>
+  <td class="n">P2 的 84% / 103%</td>
+  <td><span style="color:var(--warn)">△ ARPPU 需略超 P2</span></td></tr>
+</table>
+
+<div class="note"><b>拆解结论（建议照这个定目标）</b><br>
+① <b>40% 是舒适目标</b>：只把付费玩家付费率从 32.1% 提到 46.8%（<b>仍低于 P2 的 51.5%</b>）就够，ARPPU 一动不用动——<b>这正是 9 月"每周一个主力模块"要干的事</b>。<br>
+② <b>50% 必须两条腿一起走</b>，且 ARPPU 要摸到 P2 的 103%。所以 <b>10 月的深度优化不是可选项，是 50% 的必要条件</b>。<br>
+③ <b>但上面两条都只是"活跃日"的账</b>。要让<b>累计占比</b>也到 40%，还得把空窗率从 43.8% 压下来——
+按恒等式：空窗率降到 15% + 活跃日占比做到 47%（＝P2 水平），累计 ＝ 0.85 × 47% ＝ <b>40.0%</b>。
+<b>三件事缺一不可：排满日历、9 月拉付费率、10 月拉 ARPPU。</b></div>
+
+<h2><span class="no">10</span>节日期时间轴 — P2 / X3 同图对比（D0 对齐）</h2>
+<p class="lead">只截取<b>节日期</b>（付费玩家付费率 ≥10% 的连续日，容 1 天间断），横轴＝<b>节日第 N 天</b>而非日历日期，
+这样两边的<b>开场高度和衰减形状可以直接叠着比</b>。纵轴三个指标可切换，图例可点击开关。</p>
+<div class="tabs">
+  <button class="mt on" data-k="payrate">付费玩家付费率</button>
+  <button class="mt" data-k="arpu">节日 ARPU</button>
+  <button class="mt" data-k="arppu">节日 ARPPU</button>
+  <span class="hint" id="mhint"></span>
+</div>
+<div class="lg" id="legend"></div>
+<div id="chart"></div>
+<div class="note" id="mnote"></div>
+
+<h3>各节日期汇总（自动切段实查）</h3>
+<table>
+<tr><th>节日期</th><th>窗口</th><th class="n">天数</th><th class="n">节日收入</th>
+<th class="n">付费率中位</th><th class="n">ARPPU 中位</th></tr>
+<tr>
+<td><b style="color:#c084fc">P2 拓荒节</b></td><td>2026-05-12 ~ 2026-06-03</td>
+<td class="n">23</td><td class="n">$1,033,100</td>
+<td class="n">54.1%</td><td class="n">$38.5</td></tr><tr>
+<td><b style="color:#a78bfa">P2 深海节</b></td><td>2026-06-10 ~ 2026-06-30</td>
+<td class="n">21</td><td class="n">$736,397</td>
+<td class="n">50.3%</td><td class="n">$36.0</td></tr><tr>
+<td><b style="color:#8b7fd0">P2 4月节日期</b></td><td>2026-04-09 ~ 2026-05-01</td>
+<td class="n">23</td><td class="n">$666,930</td>
+<td class="n">48.0%</td><td class="n">$24.7</td></tr><tr style="background:rgba(90,209,255,.05)">
+<td><b style="color:#5ad1ff">X3 世界杯+深海（双节）</b></td><td>2026-06-26 ~ 2026-07-22</td>
+<td class="n">27</td><td class="n">$45,603</td>
+<td class="n">28.9%</td><td class="n">$26.8</td></tr><tr style="background:rgba(90,209,255,.05)">
+<td><b style="color:#38bdf8">X3 夏日恋语</b></td><td>2026-05-29 ~ 2026-06-09</td>
+<td class="n">12</td><td class="n">$26,514</td>
+<td class="n">32.8%</td><td class="n">$21.4</td></tr>
+</table>
+<div class="note bad"><b>这张表最扎心的一行对比</b>：
+<b>P2 拓荒节 23 天做了 $1,033,100</b>（付费率中位 54.1% / ARPPU $38.5），
+而 <b>X3 世界杯+深海双节叠在一起、拉了 27 天，只做了 $45,603</b>（付费率 28.9% / ARPPU $26.8）。
+<b>X3 的节日期更长，但付费率只有一半、ARPPU 七成</b>——时间拉得久不等于收得多。<br>
+再看图上的形状：P2 各节日在 D0 冲高后<b>能在高位反复起波</b>（每周换弹药），
+X3 是<b>D0 冲高后单调衰减</b>，中途没有第二波。</div>
+
+<h3>X3 已上过的节日（成熟服 1000–1880 · 自夏日 D0 累计 61 天）</h3>
+<table>
+<tr><th>节日</th><th>窗口</th><th class="n">节日收入</th><th class="n">占大盘</th><th>主要模块</th></tr>
+<tr><td><b>夏日恋语</b></td><td>05-29 ~ 06-08（批一，后续批二/批三滚动）</td><td class="n">$20,338</td><td class="n">4.5%</td><td style="color:var(--dim2)">开箱族 + 通行证 + 拜访皮肤 + 装饰</td></tr><tr><td><b>世界杯</b></td><td>06-26 ~ 07-20</td><td class="n">$18,284</td><td class="n">4.1%</td><td style="color:var(--dim2)">开箱族（福箱连锁+券锚点）+ 通行证 + 竞猜</td></tr><tr><td><b>深海节</b></td><td>07-03 ~ 07-19</td><td class="n">$26,945</td><td class="n">6.0%</td><td style="color:var(--dim2)">大富翁族 + 双通行证 + 转盘 + 每日/周卡/拜访/装饰</td></tr><tr><td><b>尼罗（滚动）</b></td><td>滚动投放</td><td class="n">$1,525</td><td class="n">0.3%</td><td style="color:var(--dim2)">2106xx 专属包</td></tr>
+<tr style="background:rgba(90,209,255,.05)"><td><b>合计</b></td><td>—</td>
+  <td class="n"><b>$67,092</b></td>
+  <td class="n"><b>15.0%</b></td><td>大盘 $447,247</td></tr>
+</table>
+<div class="note"><b>空窗提醒</b>：上表是"节日期内"的账，<b>不含空窗</b>。X3 在 <b>06-09 ~ 06-25</b>（夏日结束、世界杯未开）
+和 <b>07-22 之后</b>（双节下线至今）都处于空窗，这两段合计占了统计期的 <b>44%</b>，
+是累计占比只有 15.0% 的主因（见 §09 恒等式）。</div>
+
+<div class="note" style="margin-top:24px"><b>数据来源</b>　P2＝<code>v1041.dl_user_order</code> × <code>dim_iap</code>（挖孔/弹珠按 iap_id_name 匹配，节日收入＝<code>iap_type='混合-节日活动'</code>）·
+X3＝<code>v1090.ods_user_order</code>（成熟服 1000–1880，USD 口径）· 均按自然周聚合。<br>
+<b>脚本</b>　<code>skills\p2-festival-monitor\x3_module_weekly_plan_gen.py</code>（数据 json 在 scratchpad，重跑查询后再跑本脚本即刷新）。</div>
+
+<script>
+const SEGS = [{"name": "P2 拓荒节", "side": "P2", "color": "#c084fc", "w": 2.6, "dash": "", "start": "2026-05-12", "end": "2026-06-03", "n": 23, "rev": 1033100, "pr_med": 54.1, "ap_med": 38.5, "pts": [{"i": 0, "d": "2026-05-12", "payrate": 21.72, "arpu": 6.26, "arppu": 28.82, "fest": 10634.0, "share": 17.37}, {"i": 1, "d": "2026-05-13", "payrate": 64.19, "arpu": 24.52, "arppu": 38.2, "fest": 55880.0, "share": 62.09}, {"i": 2, "d": "2026-05-14", "payrate": 60.4, "arpu": 14.01, "arppu": 23.19, "fest": 28684.0, "share": 46.77}, {"i": 3, "d": "2026-05-15", "payrate": 56.63, "arpu": 12.27, "arppu": 21.67, "fest": 27388.0, "share": 39.31}, {"i": 4, "d": "2026-05-16", "payrate": 55.5, "arpu": 11.19, "arppu": 20.17, "fest": 24649.0, "share": 42.61}, {"i": 5, "d": "2026-05-17", "payrate": 49.75, "arpu": 10.49, "arppu": 21.09, "fest": 21384.0, "share": 44.07}, {"i": 6, "d": "2026-05-18", "payrate": 38.46, "arpu": 7.84, "arppu": 20.39, "fest": 16316.0, "share": 26.9}, {"i": 7, "d": "2026-05-19", "payrate": 45.45, "arpu": 16.71, "arppu": 36.76, "fest": 33933.0, "share": 48.64}, {"i": 8, "d": "2026-05-20", "payrate": 60.24, "arpu": 26.09, "arppu": 43.31, "fest": 54922.0, "share": 62.9}, {"i": 9, "d": "2026-05-21", "payrate": 57.88, "arpu": 21.03, "arppu": 36.33, "fest": 45630.0, "share": 58.97}, {"i": 10, "d": "2026-05-22", "payrate": 55.87, "arpu": 26.26, "arppu": 47.0, "fest": 53913.0, "share": 69.17}, {"i": 11, "d": "2026-05-23", "payrate": 53.51, "arpu": 23.79, "arppu": 44.46, "fest": 51175.0, "share": 61.93}, {"i": 12, "d": "2026-05-24", "payrate": 54.12, "arpu": 20.03, "arppu": 37.0, "fest": 41593.0, "share": 60.37}, {"i": 13, "d": "2026-05-25", "payrate": 51.49, "arpu": 19.84, "arppu": 38.54, "fest": 41968.0, "share": 51.88}, {"i": 14, "d": "2026-05-26", "payrate": 68.01, "arpu": 46.19, "arppu": 67.92, "fest": 112471.0, "share": 78.15}, {"i": 15, "d": "2026-05-27", "payrate": 65.78, "arpu": 44.51, "arppu": 67.66, "fest": 95472.0, "share": 78.02}, {"i": 16, "d": "2026-05-28", "payrate": 65.17, "arpu": 28.79, "arppu": 44.18, "fest": 62254.0, "share": 69.95}, {"i": 17, "d": "2026-05-29", "payrate": 59.27, "arpu": 28.72, "arppu": 48.46, "fest": 66924.0, "share": 67.99}, {"i": 18, "d": "2026-05-30", "payrate": 52.95, "arpu": 24.68, "arppu": 46.61, "fest": 57240.0, "share": 51.34}, {"i": 19, "d": "2026-05-31", "payrate": 51.21, "arpu": 20.58, "arppu": 40.2, "fest": 42649.0, "share": 57.14}, {"i": 20, "d": "2026-06-01", "payrate": 43.95, "arpu": 21.41, "arppu": 48.71, "fest": 45109.0, "share": 50.63}, {"i": 21, "d": "2026-06-02", "payrate": 44.17, "arpu": 19.3, "arppu": 43.69, "fest": 41198.0, "share": 51.13}, {"i": 22, "d": "2026-06-03", "payrate": 9.9, "arpu": 1.12, "arppu": 11.35, "fest": 1714.0, "share": 4.73}]}, {"name": "P2 深海节", "side": "P2", "color": "#a78bfa", "w": 1.9, "dash": "6 4", "start": "2026-06-10", "end": "2026-06-30", "n": 21, "rev": 736397, "pr_med": 50.3, "ap_med": 36.0, "pts": [{"i": 0, "d": "2026-06-10", "payrate": 56.06, "arpu": 21.34, "arppu": 38.07, "fest": 44546.0, "share": 51.43}, {"i": 1, "d": "2026-06-11", "payrate": 58.92, "arpu": 27.98, "arppu": 47.49, "fest": 58361.0, "share": 62.1}, {"i": 2, "d": "2026-06-12", "payrate": 51.05, "arpu": 20.04, "arppu": 39.25, "fest": 43919.0, "share": 47.42}, {"i": 3, "d": "2026-06-13", "payrate": 53.01, "arpu": 21.61, "arppu": 40.76, "fest": 48785.0, "share": 58.61}, {"i": 4, "d": "2026-06-14", "payrate": 51.46, "arpu": 20.51, "arppu": 39.86, "fest": 42928.0, "share": 65.11}, {"i": 5, "d": "2026-06-15", "payrate": 41.46, "arpu": 15.79, "arppu": 38.09, "fest": 34203.0, "share": 43.35}, {"i": 6, "d": "2026-06-16", "payrate": 40.09, "arpu": 16.45, "arppu": 41.04, "fest": 33858.0, "share": 46.27}, {"i": 7, "d": "2026-06-17", "payrate": 37.42, "arpu": 16.03, "arppu": 42.84, "fest": 29947.0, "share": 46.65}, {"i": 8, "d": "2026-06-18", "payrate": 43.0, "arpu": 15.49, "arppu": 36.01, "fest": 29098.0, "share": 43.61}, {"i": 9, "d": "2026-06-19", "payrate": 35.35, "arpu": 11.73, "arppu": 33.19, "fest": 21376.0, "share": 42.84}, {"i": 10, "d": "2026-06-20", "payrate": 50.31, "arpu": 24.29, "arppu": 48.28, "fest": 51561.0, "share": 64.71}, {"i": 11, "d": "2026-06-21", "payrate": 55.95, "arpu": 15.93, "arppu": 28.48, "fest": 34684.0, "share": 56.58}, {"i": 12, "d": "2026-06-22", "payrate": 41.72, "arpu": 10.19, "arppu": 24.43, "fest": 23693.0, "share": 24.91}, {"i": 13, "d": "2026-06-23", "payrate": 42.75, "arpu": 13.32, "arppu": 31.16, "fest": 28009.0, "share": 39.28}, {"i": 14, "d": "2026-06-24", "payrate": 62.64, "arpu": 22.54, "arppu": 35.98, "fest": 49114.0, "share": 59.77}, {"i": 15, "d": "2026-06-25", "payrate": 62.89, "arpu": 20.82, "arppu": 33.11, "fest": 47242.0, "share": 59.96}, {"i": 16, "d": "2026-06-26", "payrate": 61.67, "arpu": 18.98, "arppu": 30.77, "fest": 45104.0, "share": 51.48}, {"i": 17, "d": "2026-06-27", "payrate": 51.41, "arpu": 12.9, "arppu": 25.1, "fest": 25201.0, "share": 42.49}, {"i": 18, "d": "2026-06-28", "payrate": 41.67, "arpu": 8.86, "arppu": 21.27, "fest": 16547.0, "share": 32.85}, {"i": 19, "d": "2026-06-29", "payrate": 34.73, "arpu": 8.16, "arppu": 23.49, "fest": 15735.0, "share": 26.9}, {"i": 20, "d": "2026-06-30", "payrate": 23.37, "arpu": 6.68, "arppu": 28.57, "fest": 12486.0, "share": 15.96}]}, {"name": "P2 4月节日期", "side": "P2", "color": "#8b7fd0", "w": 1.4, "dash": "3 3", "start": "2026-04-09", "end": "2026-05-01", "n": 23, "rev": 666930, "pr_med": 48.0, "ap_med": 24.7, "pts": [{"i": 0, "d": "2026-04-09", "payrate": 37.23, "arpu": 12.1, "arppu": 32.49, "fest": 24208.0, "share": 32.07}, {"i": 1, "d": "2026-04-10", "payrate": 57.22, "arpu": 20.06, "arppu": 35.06, "fest": 44035.0, "share": 57.91}, {"i": 2, "d": "2026-04-11", "payrate": 52.61, "arpu": 18.36, "arppu": 34.9, "fest": 41491.0, "share": 51.02}, {"i": 3, "d": "2026-04-12", "payrate": 47.98, "arpu": 13.14, "arppu": 27.39, "fest": 26977.0, "share": 47.03}, {"i": 4, "d": "2026-04-13", "payrate": 62.15, "arpu": 15.37, "arppu": 24.74, "fest": 36437.0, "share": 41.72}, {"i": 5, "d": "2026-04-14", "payrate": 66.11, "arpu": 16.05, "arppu": 24.28, "fest": 38706.0, "share": 43.89}, {"i": 6, "d": "2026-04-15", "payrate": 69.11, "arpu": 16.79, "arppu": 24.29, "fest": 39446.0, "share": 43.78}, {"i": 7, "d": "2026-04-16", "payrate": 64.8, "arpu": 14.57, "arppu": 22.49, "fest": 33483.0, "share": 39.13}, {"i": 8, "d": "2026-04-17", "payrate": 65.07, "arpu": 14.65, "arppu": 22.51, "fest": 38289.0, "share": 39.79}, {"i": 9, "d": "2026-04-18", "payrate": 61.12, "arpu": 22.55, "arppu": 36.89, "fest": 58510.0, "share": 54.41}, {"i": 10, "d": "2026-04-19", "payrate": 58.18, "arpu": 18.13, "arppu": 31.16, "fest": 42005.0, "share": 59.46}, {"i": 11, "d": "2026-04-20", "payrate": 41.31, "arpu": 9.34, "arppu": 22.61, "fest": 24075.0, "share": 27.2}, {"i": 12, "d": "2026-04-21", "payrate": 26.95, "arpu": 4.97, "arppu": 18.45, "fest": 10812.0, "share": 17.46}, {"i": 13, "d": "2026-04-22", "payrate": 29.57, "arpu": 5.65, "arppu": 19.11, "fest": 10722.0, "share": 19.63}, {"i": 14, "d": "2026-04-23", "payrate": 47.99, "arpu": 11.51, "arppu": 23.98, "fest": 25709.0, "share": 35.1}, {"i": 15, "d": "2026-04-24", "payrate": 52.82, "arpu": 12.85, "arppu": 24.34, "fest": 28472.0, "share": 43.3}, {"i": 16, "d": "2026-04-25", "payrate": 50.67, "arpu": 23.57, "arppu": 46.53, "fest": 51271.0, "share": 57.47}, {"i": 17, "d": "2026-04-26", "payrate": 45.7, "arpu": 14.6, "arppu": 31.95, "fest": 29014.0, "share": 48.17}, {"i": 18, "d": "2026-04-27", "payrate": 29.05, "arpu": 8.16, "arppu": 28.07, "fest": 18978.0, "share": 19.23}, {"i": 19, "d": "2026-04-28", "payrate": 27.45, "arpu": 6.23, "arppu": 22.71, "fest": 13128.0, "share": 17.75}, {"i": 20, "d": "2026-04-29", "payrate": 27.47, "arpu": 7.85, "arppu": 28.59, "fest": 15122.0, "share": 26.02}, {"i": 21, "d": "2026-04-30", "payrate": 27.16, "arpu": 7.12, "arppu": 26.21, "fest": 14102.0, "share": 16.1}, {"i": 22, "d": "2026-05-01", "payrate": 6.89, "arpu": 0.97, "arppu": 14.04, "fest": 1938.0, "share": 2.64}]}, {"name": "X3 世界杯+深海（双节）", "side": "X3", "color": "#5ad1ff", "w": 2.6, "dash": "", "start": "2026-06-26", "end": "2026-07-22", "n": 27, "rev": 45603, "pr_med": 28.9, "ap_med": 26.8, "pts": [{"i": 0, "d": "2026-06-26", "payrate": 34.39, "arpu": 10.26, "arppu": 29.84, "fest": 2924.0, "share": 26.9}, {"i": 1, "d": "2026-06-27", "payrate": 28.95, "arpu": 10.23, "arppu": 35.34, "fest": 2721.0, "share": 24.19}, {"i": 2, "d": "2026-06-28", "payrate": 20.81, "arpu": 5.57, "arppu": 26.76, "fest": 1231.0, "share": 17.28}, {"i": 3, "d": "2026-06-29", "payrate": 15.31, "arpu": 2.32, "arppu": 15.18, "fest": 683.0, "share": 5.45}, {"i": 4, "d": "2026-06-30", "payrate": 11.72, "arpu": 2.46, "arppu": 21.0, "fest": 714.0, "share": 7.35}, {"i": 5, "d": "2026-07-01", "payrate": 15.49, "arpu": 4.77, "arppu": 30.79, "fest": 1016.0, "share": 13.51}, {"i": 6, "d": "2026-07-02", "payrate": 17.07, "arpu": 3.23, "arppu": 18.91, "fest": 662.0, "share": 9.02}, {"i": 7, "d": "2026-07-03", "payrate": 40.86, "arpu": 11.98, "arppu": 29.32, "fest": 3342.0, "share": 30.88}, {"i": 8, "d": "2026-07-04", "payrate": 46.54, "arpu": 12.49, "arppu": 26.84, "fest": 3248.0, "share": 35.79}, {"i": 9, "d": "2026-07-05", "payrate": 45.27, "arpu": 10.94, "arppu": 24.16, "fest": 2658.0, "share": 29.08}, {"i": 10, "d": "2026-07-06", "payrate": 45.34, "arpu": 8.93, "arppu": 19.69, "fest": 2205.0, "share": 29.68}, {"i": 11, "d": "2026-07-07", "payrate": 39.13, "arpu": 7.3, "arppu": 18.66, "fest": 1847.0, "share": 27.44}, {"i": 12, "d": "2026-07-08", "payrate": 38.14, "arpu": 8.77, "arppu": 23.0, "fest": 2070.0, "share": 28.39}, {"i": 13, "d": "2026-07-09", "payrate": 32.09, "arpu": 8.83, "arppu": 27.51, "fest": 1898.0, "share": 26.42}, {"i": 14, "d": "2026-07-10", "payrate": 32.35, "arpu": 9.02, "arppu": 27.89, "fest": 1841.0, "share": 28.54}, {"i": 15, "d": "2026-07-11", "payrate": 32.65, "arpu": 8.95, "arppu": 27.41, "fest": 1754.0, "share": 24.32}, {"i": 16, "d": "2026-07-12", "payrate": 32.55, "arpu": 11.61, "arppu": 35.68, "fest": 2462.0, "share": 30.72}, {"i": 17, "d": "2026-07-13", "payrate": 24.29, "arpu": 11.63, "arppu": 47.9, "fest": 2443.0, "share": 27.83}, {"i": 18, "d": "2026-07-14", "payrate": 23.74, "arpu": 5.88, "arppu": 24.79, "fest": 1165.0, "share": 22.58}, {"i": 19, "d": "2026-07-15", "payrate": 30.1, "arpu": 9.08, "arppu": 30.15, "fest": 1779.0, "share": 31.76}, {"i": 20, "d": "2026-07-16", "payrate": 40.85, "arpu": 11.05, "arppu": 27.06, "fest": 2354.0, "share": 36.3}, {"i": 21, "d": "2026-07-17", "payrate": 17.11, "arpu": 10.22, "arppu": 59.72, "fest": 1911.0, "share": 26.25}, {"i": 22, "d": "2026-07-18", "payrate": 13.19, "arpu": 1.79, "arppu": 13.58, "fest": 326.0, "share": 3.96}, {"i": 23, "d": "2026-07-19", "payrate": 7.95, "arpu": 1.55, "arppu": 19.43, "fest": 272.0, "share": 3.85}, {"i": 24, "d": "2026-07-20", "payrate": 15.76, "arpu": 5.8, "arppu": 36.79, "fest": 1067.0, "share": 13.67}, {"i": 25, "d": "2026-07-21", "payrate": 13.6, "arpu": 3.43, "arppu": 25.26, "fest": 783.0, "share": 9.96}, {"i": 26, "d": "2026-07-22", "payrate": 5.38, "arpu": 1.02, "arppu": 18.92, "fest": 227.0, "share": 3.95}]}, {"name": "X3 夏日恋语", "side": "X3", "color": "#38bdf8", "w": 1.9, "dash": "6 4", "start": "2026-05-29", "end": "2026-06-09", "n": 12, "rev": 26514, "pr_med": 32.8, "ap_med": 21.4, "pts": [{"i": 0, "d": "2026-05-29", "payrate": 51.03, "arpu": 15.53, "arppu": 30.43, "fest": 6025.0, "share": 39.29}, {"i": 1, "d": "2026-05-30", "payrate": 50.72, "arpu": 11.05, "arppu": 21.78, "fest": 3833.0, "share": 34.8}, {"i": 2, "d": "2026-05-31", "payrate": 38.8, "arpu": 9.6, "arppu": 24.75, "fest": 3044.0, "share": 33.41}, {"i": 3, "d": "2026-06-01", "payrate": 33.55, "arpu": 6.96, "arppu": 20.73, "fest": 2094.0, "share": 28.62}, {"i": 4, "d": "2026-06-02", "payrate": 32.75, "arpu": 7.0, "arppu": 21.37, "fest": 2009.0, "share": 29.09}, {"i": 5, "d": "2026-06-03", "payrate": 39.8, "arpu": 9.14, "arppu": 22.96, "fest": 2686.0, "share": 31.68}, {"i": 6, "d": "2026-06-04", "payrate": 27.76, "arpu": 7.51, "arppu": 27.05, "fest": 2110.0, "share": 31.64}, {"i": 7, "d": "2026-06-05", "payrate": 29.24, "arpu": 6.05, "arppu": 20.68, "fest": 1675.0, "share": 22.9}, {"i": 8, "d": "2026-06-06", "payrate": 26.74, "arpu": 3.85, "arppu": 14.39, "fest": 993.0, "share": 13.53}, {"i": 9, "d": "2026-06-07", "payrate": 30.18, "arpu": 5.51, "arppu": 18.27, "fest": 1516.0, "share": 18.47}, {"i": 10, "d": "2026-06-08", "payrate": 11.37, "arpu": 1.6, "arppu": 14.03, "fest": 407.0, "share": 5.52}, {"i": 11, "d": "2026-06-09", "payrate": 3.16, "arpu": 0.48, "arppu": 15.25, "fest": 122.0, "share": 1.59}]}];
+const META = {
+  payrate: {label:"付费玩家付费率", unit:"%", fmt:v=>v.toFixed(1)+"%",
+    note:"＝当日<b>节日付费人数 ÷ 当日总付费人数</b>。衡量<b>广度</b>——有多少付费玩家碰到了节日。X3 活跃日中位 32.1%、P2 51.5%。<b>9 月要拉的就是这条线。</b>",
+    p2med:51.46, x3med:32.09},
+  arpu:    {label:"节日 ARPU", unit:"$", fmt:v=>"$"+v.toFixed(1),
+    note:"＝当日<b>节日收入 ÷ 当日总付费人数</b>（分母是全部付费玩家，不是节日付费人数——这是我们的既定口径）。它等于「付费率 × ARPPU」，是占比的直接来源。",
+    p2med:null, x3med:null},
+  arppu:   {label:"节日 ARPPU", unit:"$", fmt:v=>"$"+v.toFixed(1),
+    note:"＝当日<b>节日收入 ÷ 当日节日付费人数</b>。衡量<b>深度</b>——碰到节日的人平均掏多少。X3 活跃日中位 $25.3、P2 $33.1。<b>10 月要拉的就是这条线。</b>",
+    p2med:33.11, x3med:25.26}
+};
+const W=980,H=380,PL=58,PR=22,PT=22,PB=48;
+const maxDay=Math.max(...SEGS.map(s=>s.pts.length))-1;
+// 默认只开「P2 拓荒节」与「X3 夏日恋语」，其余点图例展开
+const DEF=["P2 拓荒节","X3 夏日恋语"];
+const off={}; SEGS.forEach(s=>off[s.name]=DEF.includes(s.name));
+const X=i=>PL+i/maxDay*(W-PL-PR);
+let curKey="payrate";
+
+function legend(){
+  document.getElementById("legend").innerHTML=SEGS.map(s=>
+    `<span style="cursor:pointer;opacity:${off[s.name]?1:.35}" data-n="${s.name}">
+      <i style="background:${s.color};border-radius:2px"></i>${s.name}
+      <span style="color:var(--dim2)">（${s.n}天 · $${s.rev.toLocaleString()}）</span></span>`).join("");
+  document.querySelectorAll("#legend span[data-n]").forEach(el=>
+    el.addEventListener("click",()=>{ off[el.dataset.n]=!off[el.dataset.n]; legend(); draw(curKey); }));
+}
+
+function draw(key){
+  curKey=key;
+  const m=META[key];
+  const vis=SEGS.filter(s=>off[s.name]);
+  const all=vis.flatMap(s=>s.pts.map(p=>p[key]));
+  const top=(Math.max(...all, m.p2med||0, 1))*1.12;
+  const Y=v=>H-PB-(v/top)*(H-PB-PT);
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%">`;
+  for(let i=0;i<=5;i++){
+    const v=top*i/5, y=Y(v);
+    s+=`<line x1="${PL}" y1="${y.toFixed(0)}" x2="${W-PR}" y2="${y.toFixed(0)}" stroke="#243040"/>`
+      +`<text x="${PL-7}" y="${(y+4).toFixed(0)}" font-size="10" fill="#6b7f95" text-anchor="end">${m.fmt(v)}</text>`;
+  }
+  for(let i=0;i<=maxDay;i+=(maxDay>20?3:2)){
+    const x=X(i);
+    s+=`<line x1="${x.toFixed(0)}" y1="${PT}" x2="${x.toFixed(0)}" y2="${H-PB}" stroke="#1c2733"/>`
+      +`<text x="${x.toFixed(0)}" y="${H-PB+16}" font-size="10" fill="#6b7f95" text-anchor="middle">D${i}</text>`;
+  }
+  if(m.p2med){
+    s+=`<line x1="${PL}" y1="${Y(m.p2med).toFixed(1)}" x2="${W-PR}" y2="${Y(m.p2med).toFixed(1)}" stroke="#c084fc" stroke-dasharray="7 4" stroke-width="1.3" opacity=".75"/>`
+      +`<text x="${W-PR-4}" y="${(Y(m.p2med)-6).toFixed(0)}" font-size="10.5" fill="#c084fc" text-anchor="end">P2 活跃日中位 ${m.fmt(m.p2med)}</text>`;
+  }
+  if(m.x3med){
+    s+=`<line x1="${PL}" y1="${Y(m.x3med).toFixed(1)}" x2="${W-PR}" y2="${Y(m.x3med).toFixed(1)}" stroke="#5ad1ff" stroke-dasharray="3 3" stroke-width="1.2" opacity=".6"/>`
+      +`<text x="${PL+4}" y="${(Y(m.x3med)-6).toFixed(0)}" font-size="10.5" fill="#5ad1ff">X3 活跃日中位 ${m.fmt(m.x3med)}</text>`;
+  }
+  vis.forEach(sg=>{
+    const d=sg.pts.map((p,i)=>(i?"L":"M")+X(p.i).toFixed(1)+" "+Y(p[key]).toFixed(1)).join(" ");
+    s+=`<path d="${d}" fill="none" stroke="${sg.color}" stroke-width="${sg.w}"`
+      +(sg.dash?` stroke-dasharray="${sg.dash}"`:"")+` opacity="${sg.side==='X3'?1:.9}"/>`;
+    sg.pts.forEach(p=>{
+      s+=`<circle cx="${X(p.i).toFixed(1)}" cy="${Y(p[key]).toFixed(1)}" r="${sg.side==='X3'?3:2.4}" fill="${sg.color}">`
+        +`<title>${sg.name} · D${p.i}（${p.d}）\n${m.label} ${m.fmt(p[key])}\n节日收入 $${p.fest.toLocaleString()} · 占大盘 ${p.share}%</title></circle>`;
+    });
+  });
+  // ---- 两个月的动作方向：9月横向拉长到 D20，10月纵向抬高 ARPPU ----
+  if(maxDay>=20){
+    const x20=X(20), x11=X(11);
+    s+=`<line x1="${x20.toFixed(0)}" y1="${PT}" x2="${x20.toFixed(0)}" y2="${H-PB}" stroke="#4ade80" stroke-dasharray="5 4" stroke-width="1.5"/>`
+      +`<text x="${(x20-4).toFixed(0)}" y="${PT+12}" font-size="10.5" fill="#4ade80" text-anchor="end">9月目标 D20（21天）</text>`;
+    const yArrow=H-PB-16;
+    s+=`<line x1="${x11.toFixed(0)}" y1="${yArrow}" x2="${(x20-6).toFixed(0)}" y2="${yArrow}" stroke="#4ade80" stroke-width="1.6" marker-end="url(#ar)"/>`
+      +`<text x="${((x11+x20)/2).toFixed(0)}" y="${yArrow-6}" font-size="10.5" fill="#4ade80" text-anchor="middle">9月：把线拉长（夏日只到 D11）</text>`;
+  }
+  if(key==="arppu" && m.x3med && m.p2med){
+    const xa=W-PR-150, y1=Y(m.x3med), y2=Y(m.p2med);
+    s+=`<line x1="${xa}" y1="${y1.toFixed(1)}" x2="${xa}" y2="${(y2+7).toFixed(1)}" stroke="#fbbf24" stroke-width="2" marker-end="url(#ar2)"/>`
+      +`<text x="${xa+8}" y="${((y1+y2)/2).toFixed(0)}" font-size="11" fill="#fbbf24">10月：抬高日均 ARPPU</text>`
+      +`<text x="${xa+8}" y="${((y1+y2)/2+14).toFixed(0)}" font-size="10.5" fill="#fbbf24">${m.fmt(m.x3med)} → ${m.fmt(m.p2med)}</text>`;
+  }
+  s+=`<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#4ade80"/></marker>
+      <marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#fbbf24"/></marker></defs>`;
+  s+=`<text x="${W/2}" y="${H-6}" font-size="11" fill="#8fa3b8" text-anchor="middle">节日第 N 天（D0 ＝ 各节日自己的开场日）→</text></svg>`;
+  document.getElementById("chart").innerHTML=s;
+  document.getElementById("mnote").innerHTML="<b>"+m.label+"</b>　"+m.note;
+  document.getElementById("mhint").textContent="点图例可开关曲线 · 悬停看当日数值";
+}
+document.querySelectorAll(".tabs .mt").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".tabs .mt").forEach(o=>o.classList.toggle("on",o===b));
+  draw(b.dataset.k);
+}));
+legend(); draw("payrate");
+</script>
+</main></body></html>

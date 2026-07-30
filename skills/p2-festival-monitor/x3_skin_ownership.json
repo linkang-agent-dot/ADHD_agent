@@ -1,0 +1,817 @@
+{
+ "segment": "成熟服 1000-1880",
+ "skins": [
+  {
+   "skin_id": "103501",
+   "hero_id": "1035",
+   "item_id": "5303501",
+   "name": "守护誓约·阿什顿",
+   "tag": "史诗",
+   "prop": "220003",
+   "prop_num": "5000",
+   "has_video": false,
+   "owners": 185,
+   "hero_owners": 37,
+   "hero_forms": [
+    "Item_50035"
+   ],
+   "rate": 500.0
+  },
+  {
+   "skin_id": "103502",
+   "hero_id": "1035",
+   "item_id": "5303502",
+   "name": "征服者·阿什顿",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 177,
+   "hero_owners": 37,
+   "hero_forms": [
+    "Item_50035"
+   ],
+   "rate": 478.37837837837844
+  },
+  {
+   "skin_id": "10081",
+   "hero_id": "1008",
+   "item_id": "530081",
+   "name": "仙女教母·克里斯塔尔",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 214,
+   "hero_owners": 99,
+   "hero_forms": [
+    "Item_50008",
+    "Item_500081"
+   ],
+   "rate": 216.16161616161617
+  },
+  {
+   "skin_id": "10321",
+   "hero_id": "1032",
+   "item_id": "530321",
+   "name": "艺术大师·斯隆",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 148,
+   "hero_owners": 106,
+   "hero_forms": [
+    "Item_50032",
+    "Item_500321"
+   ],
+   "rate": 139.62264150943395
+  },
+  {
+   "skin_id": "10311",
+   "hero_id": "1031",
+   "item_id": "530311",
+   "name": "白衣梦魇·海瑟",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 141,
+   "hero_owners": 192,
+   "hero_forms": [
+    "Item_50031",
+    "Item_500311"
+   ],
+   "rate": 73.4375
+  },
+  {
+   "skin_id": "102801",
+   "hero_id": "1028",
+   "item_id": "5302801",
+   "name": "审判之光·维奥莱特",
+   "tag": "",
+   "prop": "220002",
+   "prop_num": "100",
+   "has_video": false,
+   "owners": 294,
+   "hero_owners": 460,
+   "hero_forms": [
+    "Item_50028"
+   ],
+   "rate": 63.91304347826087
+  },
+  {
+   "skin_id": "10041",
+   "hero_id": "1004",
+   "item_id": "530041",
+   "name": "初妆·鲁比",
+   "tag": "",
+   "prop": "220011",
+   "prop_num": "100",
+   "has_video": false,
+   "owners": 4336,
+   "hero_owners": 11226,
+   "hero_forms": [
+    "Item_50004",
+    "Item_500041",
+    "Item_500042"
+   ],
+   "rate": 38.62462141457331
+  },
+  {
+   "skin_id": "10042",
+   "hero_id": "1004",
+   "item_id": "530042",
+   "name": "钢羽战衣·鲁比",
+   "tag": "",
+   "prop": "220001",
+   "prop_num": "100",
+   "has_video": false,
+   "owners": 2297,
+   "hero_owners": 11226,
+   "hero_forms": [
+    "Item_50004",
+    "Item_500041",
+    "Item_500042"
+   ],
+   "rate": 20.46142882593978
+  },
+  {
+   "skin_id": "10211",
+   "hero_id": "1021",
+   "item_id": "530211",
+   "name": "传奇女仆·贝拉",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 8353,
+   "hero_owners": 67391,
+   "hero_forms": [
+    "Item_50021",
+    "Item_500211"
+   ],
+   "rate": 12.394830170200768
+  },
+  {
+   "skin_id": "102301",
+   "hero_id": "1023",
+   "item_id": "5302301",
+   "name": "尼罗王后·克利欧佩特拉",
+   "tag": "至尊",
+   "prop": "220002",
+   "prop_num": "15000",
+   "has_video": false,
+   "owners": 11,
+   "hero_owners": 227,
+   "hero_forms": [
+    "Item_50023"
+   ],
+   "rate": 4.845814977973569
+  },
+  {
+   "skin_id": "103401",
+   "hero_id": "1034",
+   "item_id": "53034",
+   "name": "兔耳魅影·霍普金斯",
+   "tag": "",
+   "prop": "220003",
+   "prop_num": "100",
+   "has_video": false,
+   "owners": 1257,
+   "hero_owners": 31211,
+   "hero_forms": [
+    "Item_50034",
+    "Item_500341"
+   ],
+   "rate": 4.02742622793246
+  },
+  {
+   "skin_id": "102102",
+   "hero_id": "1021",
+   "item_id": "5302101",
+   "name": "内裤宗师·贝拉",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 2461,
+   "hero_owners": 67391,
+   "hero_forms": [
+    "Item_50021",
+    "Item_500211"
+   ],
+   "rate": 3.6518229437165197
+  },
+  {
+   "skin_id": "10421",
+   "hero_id": "1042",
+   "item_id": "530421",
+   "name": "圣光·夜玫瑰",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 342,
+   "hero_owners": 13982,
+   "hero_forms": [
+    "Item_50042",
+    "Item_500421"
+   ],
+   "rate": 2.446002002574739
+  },
+  {
+   "skin_id": "10431",
+   "hero_id": "1043",
+   "item_id": "530431",
+   "name": "伤痕累累·凌霜",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 478,
+   "hero_owners": 21704,
+   "hero_forms": [
+    "Item_50043",
+    "Item_500431",
+    "Item_500432"
+   ],
+   "rate": 2.2023590121636563
+  },
+  {
+   "skin_id": "10141",
+   "hero_id": "1014",
+   "item_id": "530141",
+   "name": "魔法师·柳柳",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 348,
+   "hero_owners": 17027,
+   "hero_forms": [
+    "Item_50014",
+    "Item_500141",
+    "Item_500142"
+   ],
+   "rate": 2.0438127679567746
+  },
+  {
+   "skin_id": "10241",
+   "hero_id": "1024",
+   "item_id": "530241",
+   "name": "海洋精灵·芬贝克",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 473,
+   "hero_owners": 23290,
+   "hero_forms": [
+    "Item_50024",
+    "Item_500241"
+   ],
+   "rate": 2.030914555603263
+  },
+  {
+   "skin_id": "10221",
+   "hero_id": "1022",
+   "item_id": "530221",
+   "name": "丰收女生·阿迪娜",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 323,
+   "hero_owners": 28629,
+   "hero_forms": [
+    "Item_50022"
+   ],
+   "rate": 1.1282266233539417
+  },
+  {
+   "skin_id": "103701",
+   "hero_id": "1037",
+   "item_id": "5303701",
+   "name": "猫女仆·莫妮卡",
+   "tag": "史诗",
+   "prop": "220003",
+   "prop_num": "5000",
+   "has_video": false,
+   "owners": 665,
+   "hero_owners": 61468,
+   "hero_forms": [
+    "Item_50037"
+   ],
+   "rate": 1.0818637339754018
+  },
+  {
+   "skin_id": "10432",
+   "hero_id": "1043",
+   "item_id": "530432",
+   "name": "凌霜·布鲁斯·李",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 212,
+   "hero_owners": 21704,
+   "hero_forms": [
+    "Item_50043",
+    "Item_500431",
+    "Item_500432"
+   ],
+   "rate": 0.9767784740140067
+  },
+  {
+   "skin_id": "10422",
+   "hero_id": "1042",
+   "item_id": "530422",
+   "name": "幻彩·夜玫瑰",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 128,
+   "hero_owners": 13982,
+   "hero_forms": [
+    "Item_50042",
+    "Item_500421"
+   ],
+   "rate": 0.9154627378057503
+  },
+  {
+   "skin_id": "10471",
+   "hero_id": "1047",
+   "item_id": "530471",
+   "name": "狼魂之主·艾琳娜",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 94,
+   "hero_owners": 12640,
+   "hero_forms": [
+    "Item_50047",
+    "Item_500471"
+   ],
+   "rate": 0.7436708860759493
+  },
+  {
+   "skin_id": "103001",
+   "hero_id": "1030",
+   "item_id": "5303001",
+   "name": "糖杖小红帽·弗莱彻",
+   "tag": "传说",
+   "prop": "220002",
+   "prop_num": "10000",
+   "has_video": false,
+   "owners": 154,
+   "hero_owners": 28711,
+   "hero_forms": [
+    "Item_50030"
+   ],
+   "rate": 0.536379784751489
+  },
+  {
+   "skin_id": "102201",
+   "hero_id": "1022",
+   "item_id": "5302201",
+   "name": "战斧女王·阿迪娜",
+   "tag": "史诗",
+   "prop": "220003",
+   "prop_num": "5000",
+   "has_video": false,
+   "owners": 119,
+   "hero_owners": 28629,
+   "hero_forms": [
+    "Item_50022"
+   ],
+   "rate": 0.4156624401830312
+  },
+  {
+   "skin_id": "10291",
+   "hero_id": "1029",
+   "item_id": "530291",
+   "name": "史诗舞者·奥黛丽",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 397,
+   "hero_owners": 99589,
+   "hero_forms": [
+    "Item_50029",
+    "Item_500291",
+    "Item_500292"
+   ],
+   "rate": 0.39863840383978155
+  },
+  {
+   "skin_id": "100601",
+   "hero_id": "1006",
+   "item_id": "5300601",
+   "name": "笑迎春·茉莉",
+   "tag": "史诗",
+   "prop": "220001",
+   "prop_num": "5000",
+   "has_video": false,
+   "owners": 705,
+   "hero_owners": 177205,
+   "hero_forms": [
+    "Item_50006"
+   ],
+   "rate": 0.3978443046189442
+  },
+  {
+   "skin_id": "10011",
+   "hero_id": "1001",
+   "item_id": "530011",
+   "name": "仙蒂公主·格蕾丝",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 892,
+   "hero_owners": 225747,
+   "hero_forms": [
+    "Item_50001",
+    "Item_500011",
+    "Item_500012"
+   ],
+   "rate": 0.39513260419850543
+  },
+  {
+   "skin_id": "103403",
+   "hero_id": "1034",
+   "item_id": "5303401",
+   "name": "海风旅者·霍普金斯",
+   "tag": "",
+   "prop": "220003",
+   "prop_num": "100",
+   "has_video": false,
+   "owners": 105,
+   "hero_owners": 31211,
+   "hero_forms": [
+    "Item_50034",
+    "Item_500341"
+   ],
+   "rate": 0.33641985197526514
+  },
+  {
+   "skin_id": "103901",
+   "hero_id": "1039",
+   "item_id": "5303901",
+   "name": "星马赐福·卡蜜拉",
+   "tag": "限定",
+   "prop": "220002",
+   "prop_num": "3000",
+   "has_video": false,
+   "owners": 188,
+   "hero_owners": 61640,
+   "hero_forms": [
+    "Item_50039",
+    "Item_500391"
+   ],
+   "rate": 0.30499675535366644
+  },
+  {
+   "skin_id": "103601",
+   "hero_id": "1036",
+   "item_id": "5303601",
+   "name": "万圣魔女·哈妮",
+   "tag": "传说",
+   "prop": "220001",
+   "prop_num": "10000",
+   "has_video": false,
+   "owners": 71,
+   "hero_owners": 28594,
+   "hero_forms": [
+    "Item_50036"
+   ],
+   "rate": 0.24830383996642652
+  },
+  {
+   "skin_id": "104001",
+   "hero_id": "1040",
+   "item_id": "5304001",
+   "name": "足球宝贝·爱莉希雅",
+   "tag": "限定",
+   "prop": "220003",
+   "prop_num": "3000",
+   "has_video": true,
+   "owners": 21,
+   "hero_owners": 8651,
+   "hero_forms": [
+    "Item_50040"
+   ],
+   "rate": 0.24274650329441683
+  },
+  {
+   "skin_id": "10161",
+   "hero_id": "1016",
+   "item_id": "530161",
+   "name": "战神·艾丽丝",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 143,
+   "hero_owners": 61443,
+   "hero_forms": [
+    "Item_50016",
+    "Item_500161"
+   ],
+   "rate": 0.2327360317692821
+  },
+  {
+   "skin_id": "10142",
+   "hero_id": "1014",
+   "item_id": "530142",
+   "name": "自由·柳柳",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 39,
+   "hero_owners": 17027,
+   "hero_forms": [
+    "Item_50014",
+    "Item_500141",
+    "Item_500142"
+   ],
+   "rate": 0.22904798261584544
+  },
+  {
+   "skin_id": "101501",
+   "hero_id": "1015",
+   "item_id": "5301501",
+   "name": "甜心咖啡师·海泽尔",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 106,
+   "hero_owners": 61432,
+   "hero_forms": [
+    "Item_50015",
+    "Item_500151"
+   ],
+   "rate": 0.17254850892043236
+  },
+  {
+   "skin_id": "10433",
+   "hero_id": "1043",
+   "item_id": "530433",
+   "name": "武道冠军·凌霜",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 25,
+   "hero_owners": 21704,
+   "hero_forms": [
+    "Item_50043",
+    "Item_500431",
+    "Item_500432"
+   ],
+   "rate": 0.1151861408035385
+  },
+  {
+   "skin_id": "10201",
+   "hero_id": "1020",
+   "item_id": "530201",
+   "name": "海上女王·阿米娜",
+   "tag": "",
+   "prop": "220001",
+   "prop_num": "100",
+   "has_video": false,
+   "owners": 664,
+   "hero_owners": 599305,
+   "hero_forms": [
+    "Item_50020",
+    "Item_500201"
+   ],
+   "rate": 0.11079500421321364
+  },
+  {
+   "skin_id": "10012",
+   "hero_id": "1001",
+   "item_id": "530012",
+   "name": "白雪公主·格蕾丝",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 248,
+   "hero_owners": 225747,
+   "hero_forms": [
+    "Item_50001",
+    "Item_500011",
+    "Item_500012"
+   ],
+   "rate": 0.10985749533770105
+  },
+  {
+   "skin_id": "10292",
+   "hero_id": "1029",
+   "item_id": "530292",
+   "name": "传奇舞者·奥黛丽",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 102,
+   "hero_owners": 99589,
+   "hero_forms": [
+    "Item_50029",
+    "Item_500291",
+    "Item_500292"
+   ],
+   "rate": 0.10242095010493125
+  },
+  {
+   "skin_id": "10111",
+   "hero_id": "1011",
+   "item_id": "530111",
+   "name": "微醺·哈珀",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 136,
+   "hero_owners": 264442,
+   "hero_forms": [
+    "Item_50011",
+    "Item_500111"
+   ],
+   "rate": 0.05142904682312189
+  },
+  {
+   "skin_id": "101401",
+   "hero_id": "1014",
+   "item_id": "53014",
+   "name": "盛宴礼服·柳柳",
+   "tag": "1周年",
+   "prop": "220001",
+   "prop_num": "10000",
+   "has_video": false,
+   "owners": 8,
+   "hero_owners": 17027,
+   "hero_forms": [
+    "Item_50014",
+    "Item_500141",
+    "Item_500142"
+   ],
+   "rate": 0.0469842015622247
+  },
+  {
+   "skin_id": "101702",
+   "hero_id": "1017",
+   "item_id": "5301702",
+   "name": "永恒誓约·赛米拉",
+   "tag": "传说",
+   "prop": "220002",
+   "prop_num": "10000",
+   "has_video": false,
+   "owners": 35,
+   "hero_owners": 96796,
+   "hero_forms": [
+    "Item_50017"
+   ],
+   "rate": 0.03615851894706393
+  },
+  {
+   "skin_id": "101701",
+   "hero_id": "1017",
+   "item_id": "53017",
+   "name": "热浪尤物·赛米拉",
+   "tag": "夏日",
+   "prop": "220002",
+   "prop_num": "10000",
+   "has_video": false,
+   "owners": 17,
+   "hero_owners": 96796,
+   "hero_forms": [
+    "Item_50017"
+   ],
+   "rate": 0.017562709202859624
+  },
+  {
+   "skin_id": "103402",
+   "hero_id": "1034",
+   "item_id": "53036",
+   "name": "月影华裳·霍普金斯",
+   "tag": "传说",
+   "prop": "220003",
+   "prop_num": "10000",
+   "has_video": false,
+   "owners": 5,
+   "hero_owners": 31211,
+   "hero_forms": [
+    "Item_50034",
+    "Item_500341"
+   ],
+   "rate": 0.016019992951203103
+  },
+  {
+   "skin_id": "10202",
+   "hero_id": "1020",
+   "item_id": "530202",
+   "name": "红绸剑姬·阿米娜",
+   "tag": "至尊",
+   "prop": "220001",
+   "prop_num": "15000",
+   "has_video": false,
+   "owners": 11,
+   "hero_owners": 599305,
+   "hero_forms": [
+    "Item_50020",
+    "Item_500201"
+   ],
+   "rate": 0.0018354594071466114
+  },
+  {
+   "skin_id": "100901",
+   "hero_id": "1009",
+   "item_id": "5300901",
+   "name": "魅影魔术师·琥珀",
+   "tag": "限定",
+   "prop": "220011",
+   "prop_num": "15000",
+   "has_video": true,
+   "owners": 0,
+   "hero_owners": 10706,
+   "hero_forms": [
+    "Item_50009"
+   ],
+   "rate": 0.0
+  },
+  {
+   "skin_id": "103405",
+   "hero_id": "1034",
+   "item_id": "5303405",
+   "name": "黑金契约·霍普金斯",
+   "tag": "黑金",
+   "prop": "220003",
+   "prop_num": "100",
+   "has_video": true,
+   "owners": 0,
+   "hero_owners": 31211,
+   "hero_forms": [
+    "Item_50034",
+    "Item_500341"
+   ],
+   "rate": 0.0
+  },
+  {
+   "skin_id": "103404",
+   "hero_id": "1034",
+   "item_id": "5303404",
+   "name": "金海商使·霍普金斯",
+   "tag": "史诗",
+   "prop": "220013",
+   "prop_num": "100",
+   "has_video": true,
+   "owners": 0,
+   "hero_owners": 31211,
+   "hero_forms": [
+    "Item_50034",
+    "Item_500341"
+   ],
+   "rate": 0.0
+  },
+  {
+   "skin_id": "105901",
+   "hero_id": "1059",
+   "item_id": "530591",
+   "name": "游艇假日·塞拉菲娜",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": true,
+   "owners": 87,
+   "hero_owners": 0,
+   "hero_forms": [
+    "Item_50059"
+   ],
+   "rate": null
+  },
+  {
+   "skin_id": "105601",
+   "hero_id": "1056",
+   "item_id": "530456",
+   "name": "霓裳羽衣·维丹蒂亚",
+   "tag": "",
+   "prop": "",
+   "prop_num": "",
+   "has_video": false,
+   "owners": 44,
+   "hero_owners": 0,
+   "hero_forms": [
+    "Item_50056"
+   ],
+   "rate": null
+  }
+ ]
+}

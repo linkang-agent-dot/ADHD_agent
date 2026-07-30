@@ -1,0 +1,1163 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>dev vs dev_festival 配置差异</title><style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#666;--bd:#e2e2e6;--dev:#0b6bcb;--fes:#b4690e;--mod:#7a3fb8;--card:#f7f7f9}
+@media (prefers-color-scheme:dark){:root{--bg:#16171a;--fg:#e8e8ea;--mut:#9a9aa2;--bd:#2e3036;--dev:#6aa9f0;--fes:#e0a33e;--mod:#b58ce0;--card:#1e2025}}
+:root[data-theme=dark]{--bg:#16171a;--fg:#e8e8ea;--mut:#9a9aa2;--bd:#2e3036;--dev:#6aa9f0;--fes:#e0a33e;--mod:#b58ce0;--card:#1e2025}
+:root[data-theme=light]{--bg:#fff;--fg:#1a1a1a;--mut:#666;--bd:#e2e2e6;--dev:#0b6bcb;--fes:#b4690e;--mod:#7a3fb8;--card:#f7f7f9}
+*{box-sizing:border-box}
+body{margin:0;padding:28px 22px 80px;background:var(--bg);color:var(--fg);
+ font:15px/1.6 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif;max-width:1180px;margin-inline:auto}
+h1{font-size:24px;margin:0 0 4px}
+.sub{color:var(--mut);margin:0 0 20px}
+code{font-family:ui-monospace,Consolas,monospace;font-size:.92em;background:var(--card);padding:1px 5px;border-radius:4px}
+.cards{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+.card{flex:1 1 150px;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px 16px}
+.card b{display:block;font-size:26px;line-height:1.1}
+.card span{color:var(--mut);font-size:13px}
+.card.d b{color:var(--dev)} .card.v b{color:var(--fes)} .card.m b{color:var(--mod)}
+section{border-top:1px solid var(--bd);padding-top:18px;margin-top:22px}
+h2{font-size:17px;margin:0 0 10px}
+h3{font-size:13px;margin:14px 0 8px;font-weight:600}
+h3 small{font-weight:400;color:var(--mut)}
+.hd{color:var(--dev)} .hv{color:var(--fes)} .hm{color:var(--mod)}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:12px;padding:2px 8px;border-radius:20px;border:1px solid var(--bd);background:var(--card);
+ font-family:ui-monospace,Consolas,monospace}
+.tag.d{border-color:var(--dev);color:var(--dev)} .tag.v{border-color:var(--fes);color:var(--fes)}
+.tag.more{color:var(--mut)}
+.tw{overflow-x:auto;border:1px solid var(--bd);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:720px}
+th{text-align:left;background:var(--card);padding:8px 10px;border-bottom:1px solid var(--bd);white-space:nowrap}
+td{padding:6px 10px;border-bottom:1px solid var(--bd);vertical-align:top}
+td.col{color:var(--mut);white-space:nowrap;font-family:ui-monospace,Consolas,monospace;font-size:12px}
+td.dv{color:var(--dev)} td.fv{color:var(--fes)}
+.e{color:var(--mut);opacity:.6;font-style:italic}
+.more{color:var(--mut);text-align:center}
+.warn{color:var(--fes)}
+</style></head><body>
+<h1>配置分支差异：<code>dev</code> vs <code>dev_festival</code></h1>
+<p class="sub">按表内 ID 维度对比，并精确定位到差异列。生成时不做任何合并。</p>
+<div class="cards">
+  <div class="card"><b>20</b><span>张表有差异</span></div>
+  <div class="card d"><b>337</b><span>dev 独有行<br><small>festival 没有</small></span></div>
+  <div class="card v"><b>6</b><span>festival 独有行<br><small>dev 没有</small></span></div>
+  <div class="card m"><b>424</b><span>两边都有但内容不同</span></div>
+</div>
+
+<section><h2>ActvMechaWheel__ActvMechaWheelInnerReward</h2>
+<h3 class="hm">内容不同 36 行</h3>
+<div class="tw"><table><thead><tr><th>ID</th><th>名称/备注</th><th>差异列</th><th>dev</th><th>festival</th></tr></thead><tbody>
+<tr><td rowspan="3"><code>10024</code></td><td rowspan="3">1100</td><td class="col">col2 · ItemID</td><td class="dv">4901006</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">20</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">500</td><td class="fv">600</td></tr>
+<tr><td rowspan="5"><code>10025</code></td><td rowspan="5">1100</td><td class="col">col2 · ItemID</td><td class="dv">4901007</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">5</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">400</td><td class="fv">10</td></tr>
+<tr><td class="col">col5 · IsMultiplier</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td class="col">col6 · MultiplierTimes</td><td class="dv"><i class="e">空</i></td><td class="fv">2</td></tr>
+<tr><td rowspan="3"><code>10026</code></td><td rowspan="3">1100</td><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">4901007</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">50000</td><td class="fv">1</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">300</td><td class="fv">100</td></tr>
+<tr><td rowspan="3"><code>10027</code></td><td rowspan="3">1100</td><td class="col">col2 · ItemID</td><td class="dv">4901001</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">15</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">50</td><td class="fv">540</td></tr>
+<tr><td rowspan="2"><code>10028</code></td><td rowspan="2">1100</td><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">5</td></tr>
+<tr><td rowspan="4"><code>10029</code></td><td rowspan="4">1100</td><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">4901001</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">10</td><td class="fv">20</td></tr>
+<tr><td class="col">col5 · IsMultiplier</td><td class="dv">1</td><td class="fv">0</td></tr>
+<tr><td class="col">col6 · MultiplierTimes</td><td class="dv">2</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="4"><code>10030</code></td><td rowspan="4">1102</td><td class="col">col1 · Group</td><td class="dv">1102</td><td class="fv">1101</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901006</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">15</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">500</td><td class="fv">600</td></tr>
+<tr><td rowspan="6"><code>10031</code></td><td rowspan="6">1102</td><td class="col">col1 · Group</td><td class="dv">1102</td><td class="fv">1101</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901007</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">5</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">400</td><td class="fv">1</td></tr>
+<tr><td class="col">col5 · IsMultiplier</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td class="col">col6 · MultiplierTimes</td><td class="dv"><i class="e">空</i></td><td class="fv">2</td></tr>
+<tr><td rowspan="4"><code>10032</code></td><td rowspan="4">1102</td><td class="col">col1 · Group</td><td class="dv">1102</td><td class="fv">1101</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">4901005</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">50000</td><td class="fv">2</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">300</td><td class="fv">340</td></tr>
+<tr><td rowspan="4"><code>10033</code></td><td rowspan="4">1102</td><td class="col">col1 · Group</td><td class="dv">1102</td><td class="fv">1101</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901001</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">20</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">50</td><td class="fv">300</td></tr>
+<tr><td rowspan="4"><code>10034</code></td><td rowspan="4">1102</td><td class="col">col1 · Group</td><td class="dv">1102</td><td class="fv">1101</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">5</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">10</td><td class="fv">1</td></tr>
+<tr><td rowspan="5"><code>10035</code></td><td rowspan="5">1102</td><td class="col">col1 · Group</td><td class="dv">1102</td><td class="fv">1101</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">4901006</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">10</td><td class="fv">50</td></tr>
+<tr><td class="col">col5 · IsMultiplier</td><td class="dv">1</td><td class="fv">0</td></tr>
+<tr><td class="col">col6 · MultiplierTimes</td><td class="dv">2</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="4"><code>10036</code></td><td rowspan="4">1104</td><td class="col">col1 · Group</td><td class="dv">1104</td><td class="fv">1102</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901006</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">20</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">500</td><td class="fv">600</td></tr>
+<tr><td rowspan="6"><code>10037</code></td><td rowspan="6">1104</td><td class="col">col1 · Group</td><td class="dv">1104</td><td class="fv">1102</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901007</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">5</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">400</td><td class="fv">10</td></tr>
+<tr><td class="col">col5 · IsMultiplier</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td class="col">col6 · MultiplierTimes</td><td class="dv"><i class="e">空</i></td><td class="fv">2</td></tr>
+<tr><td rowspan="4"><code>10038</code></td><td rowspan="4">1104</td><td class="col">col1 · Group</td><td class="dv">1104</td><td class="fv">1102</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">4901007</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">50000</td><td class="fv">1</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">300</td><td class="fv">100</td></tr>
+<tr><td rowspan="4"><code>10039</code></td><td rowspan="4">1104</td><td class="col">col1 · Group</td><td class="dv">1104</td><td class="fv">1102</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901001</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">15</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">50</td><td class="fv">540</td></tr>
+<tr><td rowspan="3"><code>10040</code></td><td rowspan="3">1104</td><td class="col">col1 · Group</td><td class="dv">1104</td><td class="fv">1102</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">5</td></tr>
+<tr><td rowspan="5"><code>10041</code></td><td rowspan="5">1104</td><td class="col">col1 · Group</td><td class="dv">1104</td><td class="fv">1102</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">4901001</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">10</td><td class="fv">20</td></tr>
+<tr><td class="col">col5 · IsMultiplier</td><td class="dv">1</td><td class="fv">0</td></tr>
+<tr><td class="col">col6 · MultiplierTimes</td><td class="dv">2</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="4"><code>10042</code></td><td rowspan="4">1101</td><td class="col">col1 · Group</td><td class="dv">1101</td><td class="fv">1103</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901006</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">15</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">500</td><td class="fv">600</td></tr>
+<tr><td rowspan="6"><code>10043</code></td><td rowspan="6">1101</td><td class="col">col1 · Group</td><td class="dv">1101</td><td class="fv">1103</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901007</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">5</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">400</td><td class="fv">1</td></tr>
+<tr><td class="col">col5 · IsMultiplier</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td class="col">col6 · MultiplierTimes</td><td class="dv"><i class="e">空</i></td><td class="fv">2</td></tr>
+<tr><td rowspan="4"><code>10044</code></td><td rowspan="4">1101</td><td class="col">col1 · Group</td><td class="dv">1101</td><td class="fv">1103</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">4901005</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">50000</td><td class="fv">2</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">300</td><td class="fv">340</td></tr>
+<tr><td rowspan="4"><code>10045</code></td><td rowspan="4">1101</td><td class="col">col1 · Group</td><td class="dv">1101</td><td class="fv">1103</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901001</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">20</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">50</td><td class="fv">300</td></tr>
+<tr><td rowspan="3"><code>10046</code></td><td rowspan="3">1101</td><td class="col">col1 · Group</td><td class="dv">1101</td><td class="fv">1103</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">5</td></tr>
+<tr><td rowspan="5"><code>10047</code></td><td rowspan="5">1101</td><td class="col">col1 · Group</td><td class="dv">1101</td><td class="fv">1103</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">4901006</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">50</td></tr>
+<tr><td class="col">col5 · IsMultiplier</td><td class="dv">1</td><td class="fv">0</td></tr>
+<tr><td class="col">col6 · MultiplierTimes</td><td class="dv">2</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="4"><code>10048</code></td><td rowspan="4">1103</td><td class="col">col1 · Group</td><td class="dv">1103</td><td class="fv">1104</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901006</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">20</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">500</td><td class="fv">600</td></tr>
+<tr><td rowspan="6"><code>10049</code></td><td rowspan="6">1103</td><td class="col">col1 · Group</td><td class="dv">1103</td><td class="fv">1104</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901007</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">5</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">400</td><td class="fv">10</td></tr>
+<tr><td class="col">col5 · IsMultiplier</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td class="col">col6 · MultiplierTimes</td><td class="dv"><i class="e">空</i></td><td class="fv">2</td></tr>
+<tr><td rowspan="4"><code>10050</code></td><td rowspan="4">1103</td><td class="col">col1 · Group</td><td class="dv">1103</td><td class="fv">1104</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">4901007</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">50000</td><td class="fv">1</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">300</td><td class="fv">100</td></tr>
+<tr><td rowspan="4"><code>10051</code></td><td rowspan="4">1103</td><td class="col">col1 · Group</td><td class="dv">1103</td><td class="fv">1104</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901001</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">15</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">50</td><td class="fv">540</td></tr>
+<tr><td rowspan="4"><code>10052</code></td><td rowspan="4">1103</td><td class="col">col1 · Group</td><td class="dv">1103</td><td class="fv">1104</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">5</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">10</td></tr>
+<tr><td rowspan="5"><code>10053</code></td><td rowspan="5">1103</td><td class="col">col1 · Group</td><td class="dv">1103</td><td class="fv">1104</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">4901001</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">20</td></tr>
+<tr><td class="col">col5 · IsMultiplier</td><td class="dv">1</td><td class="fv">0</td></tr>
+<tr><td class="col">col6 · MultiplierTimes</td><td class="dv">2</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="3"><code>10054</code></td><td rowspan="3">1105</td><td class="col">col2 · ItemID</td><td class="dv">4901006</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">15</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">500</td><td class="fv">600</td></tr>
+<tr><td rowspan="5"><code>10055</code></td><td rowspan="5">1105</td><td class="col">col2 · ItemID</td><td class="dv">4901007</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">5</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">400</td><td class="fv">1</td></tr>
+<tr><td class="col">col5 · IsMultiplier</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td class="col">col6 · MultiplierTimes</td><td class="dv"><i class="e">空</i></td><td class="fv">2</td></tr>
+<tr><td rowspan="3"><code>10056</code></td><td rowspan="3">1105</td><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">4901005</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">50000</td><td class="fv">2</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">300</td><td class="fv">340</td></tr>
+<tr><td rowspan="3"><code>10057</code></td><td rowspan="3">1105</td><td class="col">col2 · ItemID</td><td class="dv">4901001</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">20</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">50</td><td class="fv">300</td></tr>
+<tr><td rowspan="2"><code>10058</code></td><td rowspan="2">1105</td><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">5</td></tr>
+<tr><td rowspan="4"><code>10059</code></td><td rowspan="4">1105</td><td class="col">col2 · ItemID</td><td class="dv">1142</td><td class="fv">4901006</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">50</td></tr>
+<tr><td class="col">col5 · IsMultiplier</td><td class="dv">1</td><td class="fv">0</td></tr>
+<tr><td class="col">col6 · MultiplierTimes</td><td class="dv">2</td><td class="fv"><i class="e">空</i></td></tr>
+</tbody></table></div>
+</section>
+<section><h2>ActvMechaWheel__ActvMechaWheelMechaItemMap</h2>
+<h3 class="hd">dev 独有 17 行 <small>（festival 缺这些）</small></h3><div class="tags">
+<span class="tag d">10012 · 40011001</span>
+<span class="tag d">10013 · 40011001</span>
+<span class="tag d">10014 · 40011002</span>
+<span class="tag d">10015 · 40011003</span>
+<span class="tag d">10016 · 40011001</span>
+<span class="tag d">10017 · 40011002</span>
+<span class="tag d">10018 · 40011003</span>
+<span class="tag d">10019 · 40011001</span>
+<span class="tag d">10020 · 40011002</span>
+<span class="tag d">10021 · 40011003</span>
+<span class="tag d">10022 · 40011001</span>
+<span class="tag d">10023 · 40011002</span>
+<span class="tag d">10024 · 40011003</span>
+<span class="tag d">10025 · 40011001</span>
+<span class="tag d">10026 · 40011002</span>
+<span class="tag d">10027 · 40011003</span>
+<span class="tag d">10028 · 40011001</span>
+</div>
+</section>
+<section><h2>ActvMechaWheel__ActvMechaWheelOtherReward</h2>
+<h3 class="hm">内容不同 6 行</h3>
+<div class="tw"><table><thead><tr><th>ID</th><th>名称/备注</th><th>差异列</th><th>dev</th><th>festival</th></tr></thead><tbody>
+<tr><td rowspan="1"><code>10006</code></td><td rowspan="1">3100</td><td class="col">col5 · NeedTime</td><td class="dv">5</td><td class="fv">120</td></tr>
+<tr><td rowspan="1"><code>10007</code></td><td rowspan="1">3100</td><td class="col">col5 · NeedTime</td><td class="dv">10</td><td class="fv">240</td></tr>
+<tr><td rowspan="2"><code>10008</code></td><td rowspan="2">3100</td><td class="col">col2 · RewardID</td><td class="dv">4900102</td><td class="fv">4900021</td></tr>
+<tr><td class="col">col5 · NeedTime</td><td class="dv">20</td><td class="fv">480</td></tr>
+<tr><td rowspan="2"><code>10009</code></td><td rowspan="2">3100</td><td class="col">col2 · RewardID</td><td class="dv">4900102</td><td class="fv">4900022</td></tr>
+<tr><td class="col">col5 · NeedTime</td><td class="dv">50</td><td class="fv">1200</td></tr>
+<tr><td rowspan="2"><code>10010</code></td><td rowspan="2">3100</td><td class="col">col2 · RewardID</td><td class="dv">4900021</td><td class="fv">4900102</td></tr>
+<tr><td class="col">col5 · NeedTime</td><td class="dv">80</td><td class="fv">1920</td></tr>
+<tr><td rowspan="3"><code>10011</code></td><td rowspan="3">3100</td><td class="col">col2 · RewardID</td><td class="dv">4900022</td><td class="fv">4900102</td></tr>
+<tr><td class="col">col4 · DK_BoxIcon</td><td class="dv">DK_img_turntable_icon3</td><td class="fv">DK_img_turntable_icon2</td></tr>
+<tr><td class="col">col5 · NeedTime</td><td class="dv">100</td><td class="fv">2400</td></tr>
+</tbody></table></div>
+</section>
+<section><h2>ActvMechaWheel__ActvMechaWheelOuterReward</h2>
+<h3 class="hm">内容不同 48 行</h3>
+<div class="tw"><table><thead><tr><th>ID</th><th>名称/备注</th><th>差异列</th><th>dev</th><th>festival</th></tr></thead><tbody>
+<tr><td rowspan="3"><code>10032</code></td><td rowspan="3">2100</td><td class="col">col2 · ItemID</td><td class="dv">220001</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">20</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">500</td><td class="fv">457060</td></tr>
+<tr><td rowspan="3"><code>10033</code></td><td rowspan="3">2100</td><td class="col">col2 · ItemID</td><td class="dv">220001</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">40</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">400</td><td class="fv">277222</td></tr>
+<tr><td rowspan="3"><code>10034</code></td><td rowspan="3">2100</td><td class="col">col2 · ItemID</td><td class="dv">220001</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">3</td><td class="fv">70</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">300</td><td class="fv">207917</td></tr>
+<tr><td rowspan="3"><code>10035</code></td><td rowspan="3">2100</td><td class="col">col2 · ItemID</td><td class="dv">4901007</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">150</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">50</td><td class="fv">41583</td></tr>
+<tr><td rowspan="1"><code>10036</code></td><td rowspan="1">2100</td><td class="col">col4 · Weight</td><td class="dv">20</td><td class="fv">10396</td></tr>
+<tr><td rowspan="1"><code>10037</code></td><td rowspan="1">2100</td><td class="col">col4 · Weight</td><td class="dv">10</td><td class="fv">3327</td></tr>
+<tr><td rowspan="1"><code>10038</code></td><td rowspan="1">2100</td><td class="col">col4 · Weight</td><td class="dv">5</td><td class="fv">1663</td></tr>
+<tr><td rowspan="1"><code>10039</code></td><td rowspan="1">2100</td><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">832</td></tr>
+<tr><td rowspan="4"><code>10040</code></td><td rowspan="4">2102</td><td class="col">col1 · Group</td><td class="dv">2102</td><td class="fv">2101</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">220002</td><td class="fv">4900001</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">3</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">500</td><td class="fv">3888</td></tr>
+<tr><td rowspan="4"><code>10041</code></td><td rowspan="4">2102</td><td class="col">col1 · Group</td><td class="dv">2102</td><td class="fv">2101</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">220002</td><td class="fv">4900002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">3</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">400</td><td class="fv">3110</td></tr>
+<tr><td rowspan="3"><code>10042</code></td><td rowspan="3">2102</td><td class="col">col1 · Group</td><td class="dv">2102</td><td class="fv">2101</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">220002</td><td class="fv">4900003</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">300</td><td class="fv">2333</td></tr>
+<tr><td rowspan="4"><code>10043</code></td><td rowspan="4">2102</td><td class="col">col1 · Group</td><td class="dv">2102</td><td class="fv">2101</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901007</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">20</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">50</td><td class="fv">389</td></tr>
+<tr><td rowspan="3"><code>10044</code></td><td rowspan="3">2102</td><td class="col">col1 · Group</td><td class="dv">2102</td><td class="fv">2101</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4900101</td><td class="fv">4900011</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">20</td><td class="fv">156</td></tr>
+<tr><td rowspan="4"><code>10045</code></td><td rowspan="4">2102</td><td class="col">col1 · Group</td><td class="dv">2102</td><td class="fv">2101</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4900102</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">50</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">10</td><td class="fv">78</td></tr>
+<tr><td rowspan="3"><code>10046</code></td><td rowspan="3">2102</td><td class="col">col1 · Group</td><td class="dv">2102</td><td class="fv">2101</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4900021</td><td class="fv">4900012</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">5</td><td class="fv">39</td></tr>
+<tr><td rowspan="3"><code>10047</code></td><td rowspan="3">2102</td><td class="col">col1 · Group</td><td class="dv">2102</td><td class="fv">2101</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4900022</td><td class="fv">4900013</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">8</td></tr>
+<tr><td rowspan="4"><code>10048</code></td><td rowspan="4">2104</td><td class="col">col1 · Group</td><td class="dv">2104</td><td class="fv">2102</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">220003</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">20</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">500</td><td class="fv">457060</td></tr>
+<tr><td rowspan="4"><code>10049</code></td><td rowspan="4">2104</td><td class="col">col1 · Group</td><td class="dv">2104</td><td class="fv">2102</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">220003</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">40</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">400</td><td class="fv">277222</td></tr>
+<tr><td rowspan="4"><code>10050</code></td><td rowspan="4">2104</td><td class="col">col1 · Group</td><td class="dv">2104</td><td class="fv">2102</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">220003</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">70</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">300</td><td class="fv">207917</td></tr>
+<tr><td rowspan="4"><code>10051</code></td><td rowspan="4">2104</td><td class="col">col1 · Group</td><td class="dv">2104</td><td class="fv">2102</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901007</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">150</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">50</td><td class="fv">41583</td></tr>
+<tr><td rowspan="2"><code>10052</code></td><td rowspan="2">2104</td><td class="col">col1 · Group</td><td class="dv">2104</td><td class="fv">2102</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">20</td><td class="fv">10396</td></tr>
+<tr><td rowspan="2"><code>10053</code></td><td rowspan="2">2104</td><td class="col">col1 · Group</td><td class="dv">2104</td><td class="fv">2102</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">10</td><td class="fv">3327</td></tr>
+<tr><td rowspan="2"><code>10054</code></td><td rowspan="2">2104</td><td class="col">col1 · Group</td><td class="dv">2104</td><td class="fv">2102</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">5</td><td class="fv">1663</td></tr>
+<tr><td rowspan="2"><code>10055</code></td><td rowspan="2">2104</td><td class="col">col1 · Group</td><td class="dv">2104</td><td class="fv">2102</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">832</td></tr>
+<tr><td rowspan="4"><code>10056</code></td><td rowspan="4">2101</td><td class="col">col1 · Group</td><td class="dv">2101</td><td class="fv">2103</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">220001</td><td class="fv">4900001</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">3</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">500</td><td class="fv">3888</td></tr>
+<tr><td rowspan="4"><code>10057</code></td><td rowspan="4">2101</td><td class="col">col1 · Group</td><td class="dv">2101</td><td class="fv">2103</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">220001</td><td class="fv">4900002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">3</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">50</td><td class="fv">3110</td></tr>
+<tr><td rowspan="4"><code>10058</code></td><td rowspan="4">2101</td><td class="col">col1 · Group</td><td class="dv">2101</td><td class="fv">2103</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">220001</td><td class="fv">4900003</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">3</td><td class="fv">2</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">2333</td></tr>
+<tr><td rowspan="4"><code>10059</code></td><td rowspan="4">2101</td><td class="col">col1 · Group</td><td class="dv">2101</td><td class="fv">2103</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901007</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">20</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">389</td></tr>
+<tr><td rowspan="3"><code>10060</code></td><td rowspan="3">2101</td><td class="col">col1 · Group</td><td class="dv">2101</td><td class="fv">2103</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4900101</td><td class="fv">4900011</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">156</td></tr>
+<tr><td rowspan="4"><code>10061</code></td><td rowspan="4">2101</td><td class="col">col1 · Group</td><td class="dv">2101</td><td class="fv">2103</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4900102</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">50</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">78</td></tr>
+<tr><td rowspan="3"><code>10062</code></td><td rowspan="3">2101</td><td class="col">col1 · Group</td><td class="dv">2101</td><td class="fv">2103</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4900021</td><td class="fv">4900012</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">39</td></tr>
+<tr><td rowspan="3"><code>10063</code></td><td rowspan="3">2101</td><td class="col">col1 · Group</td><td class="dv">2101</td><td class="fv">2103</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4900022</td><td class="fv">4900013</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">8</td></tr>
+<tr><td rowspan="4"><code>10064</code></td><td rowspan="4">2103</td><td class="col">col1 · Group</td><td class="dv">2103</td><td class="fv">2104</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">220002</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">20</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">500</td><td class="fv">457060</td></tr>
+<tr><td rowspan="4"><code>10065</code></td><td rowspan="4">2103</td><td class="col">col1 · Group</td><td class="dv">2103</td><td class="fv">2104</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">220002</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">40</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">50</td><td class="fv">277222</td></tr>
+<tr><td rowspan="4"><code>10066</code></td><td rowspan="4">2103</td><td class="col">col1 · Group</td><td class="dv">2103</td><td class="fv">2104</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">220002</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">70</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">207917</td></tr>
+<tr><td rowspan="4"><code>10067</code></td><td rowspan="4">2103</td><td class="col">col1 · Group</td><td class="dv">2103</td><td class="fv">2104</td></tr>
+<tr><td class="col">col2 · ItemID</td><td class="dv">4901007</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">150</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">41583</td></tr>
+<tr><td rowspan="2"><code>10068</code></td><td rowspan="2">2103</td><td class="col">col1 · Group</td><td class="dv">2103</td><td class="fv">2104</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">10396</td></tr>
+<tr><td rowspan="2"><code>10069</code></td><td rowspan="2">2103</td><td class="col">col1 · Group</td><td class="dv">2103</td><td class="fv">2104</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">3327</td></tr>
+<tr><td rowspan="2"><code>10070</code></td><td rowspan="2">2103</td><td class="col">col1 · Group</td><td class="dv">2103</td><td class="fv">2104</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">1663</td></tr>
+<tr><td rowspan="2"><code>10071</code></td><td rowspan="2">2103</td><td class="col">col1 · Group</td><td class="dv">2103</td><td class="fv">2104</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">832</td></tr>
+<tr><td rowspan="3"><code>10072</code></td><td rowspan="3">2105</td><td class="col">col2 · ItemID</td><td class="dv">220003</td><td class="fv">4900001</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">3</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">500</td><td class="fv">3888</td></tr>
+<tr><td rowspan="3"><code>10073</code></td><td rowspan="3">2105</td><td class="col">col2 · ItemID</td><td class="dv">220003</td><td class="fv">4900002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">3</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">50</td><td class="fv">3110</td></tr>
+<tr><td rowspan="3"><code>10074</code></td><td rowspan="3">2105</td><td class="col">col2 · ItemID</td><td class="dv">220003</td><td class="fv">4900003</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">2</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">2333</td></tr>
+<tr><td rowspan="3"><code>10075</code></td><td rowspan="3">2105</td><td class="col">col2 · ItemID</td><td class="dv">4901007</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">2</td><td class="fv">20</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">389</td></tr>
+<tr><td rowspan="2"><code>10076</code></td><td rowspan="2">2105</td><td class="col">col2 · ItemID</td><td class="dv">4900101</td><td class="fv">4900011</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">156</td></tr>
+<tr><td rowspan="3"><code>10077</code></td><td rowspan="3">2105</td><td class="col">col2 · ItemID</td><td class="dv">4900102</td><td class="fv">1002</td></tr>
+<tr><td class="col">col3 · ItemNum</td><td class="dv">1</td><td class="fv">50</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">78</td></tr>
+<tr><td rowspan="2"><code>10078</code></td><td rowspan="2">2105</td><td class="col">col2 · ItemID</td><td class="dv">4900021</td><td class="fv">4900012</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">39</td></tr>
+<tr><td rowspan="2"><code>10079</code></td><td rowspan="2">2105</td><td class="col">col2 · ItemID</td><td class="dv">4900022</td><td class="fv">4900013</td></tr>
+<tr><td class="col">col4 · Weight</td><td class="dv">1</td><td class="fv">8</td></tr>
+</tbody></table></div>
+</section>
+<section><h2>ActvOnline__ActvOnline</h2>
+<h3 class="hm">内容不同 3 行</h3>
+<div class="tw"><table><thead><tr><th>ID</th><th>名称/备注</th><th>差异列</th><th>dev</th><th>festival</th></tr></thead><tbody>
+<tr><td rowspan="2"><code>10072101</code></td><td rowspan="2">与她同游-3期合并(vol.1克里斯塔尔/vol.2海瑞克斯/vol.3</td><td class="col">col31 · ChainPackID</td><td class="dv"><i class="e">空</i></td><td class="fv">755</td></tr>
+<tr><td class="col">col51 · ActivityBoundPacks</td><td class="dv">18020,18021,18022,18023,18024</td><td class="fv">18020,18021,18022,18023</td></tr>
+<tr><td rowspan="1"><code>106006</code></td><td rowspan="1">海妖地牢-深渊藏珍转盘</td><td class="col">col9 · PlayerLv</td><td class="dv">999,999</td><td class="fv">14,99</td></tr>
+<tr><td rowspan="1"><code>107001</code></td><td rowspan="1">入侵-荣耀征召英雄转盘</td><td class="col">col7 · TimeController</td><td class="dv">5950</td><td class="fv">0</td></tr>
+</tbody></table></div>
+</section>
+<section><h2>ActvTravelDate__ActvTravelDate</h2>
+<h3 class="hm">内容不同 3 行</h3>
+<div class="tw"><table><thead><tr><th>ID</th><th>名称/备注</th><th>差异列</th><th>dev</th><th>festival</th></tr></thead><tbody>
+<tr><td rowspan="1"><code>1</code></td><td rowspan="1">vol.1-克里斯塔尔-金穗庄园(卡1113麦浪拾穗)</td><td class="col">col9 · Narration</td><td class="dv">本女王亲自陪同, 账本上这一页, 从来只写给你一个人看。</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>2</code></td><td rowspan="1">vol.2-海瑞克斯-蜜桃夜园(卡1114桃夭盛夏)</td><td class="col">col9 · Narration</td><td class="dv">提示只在路上给。慢慢猜, 不急——反正今晚, 谁也别想先走。</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>3</code></td><td rowspan="1">vol.3-诺娃-星光牧场(卡1115晨牧鲜奶)</td><td class="col">col9 · Narration</td><td class="dv">经纪人~ 这一站的巡演合影收好了! 下一站的路线, 你来定!</td><td class="fv"><i class="e">空</i></td></tr>
+</tbody></table></div>
+</section>
+<section><h2>ActvTravelDate__ActvTravelDateChat</h2><p class="warn">整张表只存在于 <b>dev</b> 分支</p></section>
+<section><h2>ActvTravelDate__ActvTravelDateSpot</h2>
+<h3 class="hm">内容不同 18 行</h3>
+<div class="tw"><table><thead><tr><th>ID</th><th>名称/备注</th><th>差异列</th><th>dev</th><th>festival</th></tr></thead><tbody>
+<tr><td rowspan="1"><code>101</code></td><td rowspan="1">vol.1-庄园门口</td><td class="col">col13 · PierOpening</td><td class="dv">庄园门口的青草味特别新, 她说以后要一起看每一次麦浪~</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>102</code></td><td rowspan="5">vol.1-麦田深处</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……金色最多的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「风吹过去的时候，有一整片沙沙的响声，像在数钱。……开玩笑的。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「站进去会被淹没到腰的地方。走散了，只准你一个人来找我。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「不是建筑，没有屋顶，头顶只有天。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「想把手摊开，让穗子从掌心划过去，痒痒的。这个实验，需要牵着你的手做。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>103</code></td><td rowspan="5">vol.1-老风车磨坊</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……会转的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「有木头吱呀吱呀的声音。很旧，但听着莫名安心。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「里面凉凉的，光从木板缝里漏进来，一条一条铺在地上。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「它站得比庄园里任何东西都高——但不是山。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「想在大扇叶转过头顶的那一秒，站在它的影子里，跟你说一件从没跟人说过的事。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>104</code></td><td rowspan="5">vol.1-果酱工坊</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……甜甜的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「隔着门就能闻到，糖和果子在小火里熬成一团的味道。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「有点烫，有点黏，需要把袖子卷起来的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「不在户外。有炉子，有一排排亮晶晶的玻璃罐。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「想亲手熬一罐果酱，贴上只写一个名字的标签。那一罐，出多少钱都不卖。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>105</code></td><td rowspan="5">vol.1-周末乡集</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……热闹的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「有讨价还价的声音。正好，让你见识一下本女王的谈判艺术。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「人挤人的地方。要是走散了……你必须负责找到我。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「摊位一个挨一个，什么都卖——就是不卖安静。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「想在最不起眼的摊子上，买一对最不值钱的木戒指。一人一只。这笔账，谁也不许算。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>106</code></td><td rowspan="5">vol.1-谷仓晒场</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……晚上比白天更好的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「有干草的味道。蓬蓬的，软软的，躺上去会陷下去一点。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「要爬梯子上去。梯子有点晃——你先上，然后拉我。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「屋顶是敞开的。或者说，根本没有什么能挡住星星。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「想躺在草堆上，把星星一颗一颗数给你听。数错了，也不许笑。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>201</code></td><td rowspan="1">vol.2-桃木牌坊</td><td class="col">col13 · PierOpening</td><td class="dv">桃木牌坊下花瓣落了一地, 她说月色刚刚好~</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>202</code></td><td rowspan="5">vol.2-桃林深处</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……粉色最深的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「花瓣落下来的密度，大得像下雪。躲不开的。……别躲。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「树和树挨得很近。走进去，外面就再也看不见我们了。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「没有水声，也没有酒气。只有花，和你。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「最老的那棵桃树下。传说在它下面接住第七片花瓣，愿望就会成真——我已经，接住六片了。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>203</code></td><td rowspan="5">vol.2-石桥老井</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……凉凉的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「有水声。但不是溪水——是一滴、一滴，从很深的地方传上来的回音。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「石头是湿的，青苔滑滑的。到时候，扶稳我。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「有一座桥，桥下却没有河。奇怪吧？答案在更深的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「想让你对着那里喊一句话。回音会替我们保守秘密——我想听你喊，我的名字。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>204</code></td><td rowspan="5">vol.2-藤架花棚</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……被花包围的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「香味是缠人的那种。藤蔓爬满头顶，连光都要挤着才能进来。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「棚子下面，只放得下一张长椅。挤一点……刚好。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「晒不到太阳。一整个下午，阳光都碰不到我们。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「那里的藤椅会轻轻晃。想靠着你，打一个短短的盹——守着我。别让我做噩梦。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>205</code></td><td rowspan="5">vol.2-桃酒地窖</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……黑黑的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「有酒气。桃子在里面睡了整整三年，才睡出那样的甜。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「要提着灯笼下台阶。我走前面——还是，你走前面？」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「在地面以下。冬暖夏凉，橡木桶排成一排，像沉睡的士兵。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「最里面那一桶，埋的是我的『百年之约』。想开封……得先答应我一件事。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>206</code></td><td rowspan="5">vol.2-月下桃溪</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……夜里会发光的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「有活水的声音。哗啦啦的，把月亮揉碎了，一片一片往下游送。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「要脱了鞋才能玩的地方。水很凉——但我不怕。你会暖我。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「在园子的最边上。走到那里，桃园就到了尽头。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「月圆之夜，溪水会变成银色。想踩着那条银色的路，从这一头，走到你那一头。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>301</code></td><td rowspan="1">vol.3-牧场大门</td><td class="col">col13 · PierOpening</td><td class="dv">牧场大门口小家伙们哞哞叫着迎我们, 她说这就是开场彩排~</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>302</code></td><td rowspan="5">vol.3-挤奶棚</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……有奶香味的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「木栏杆，铁皮桶，还有一支哞哞叫的和声团。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「要坐小板凳的地方。板凳只有一张——你站着，负责看我表演。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「有屋顶，但是漏光。清晨的光柱打在干草上，像天然的追光灯。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「我的第一位『粉丝』住在那里。它有四个胃，和一双全牧场最温柔的大眼睛。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>303</code></td><td rowspan="5">vol.3-山坡鸡舍</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……很吵很吵的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「咯咯咯咯，此起彼伏——一支业余合唱团，节拍稀烂，热情满分。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「要弯腰才能进的小门。你肯定会撞头。哈哈哈。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「地上铺着稻草窝，窝里藏着圆圆的惊喜。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「每天早上那里有『寻蛋大赛』。冠军奖品是我亲手煎的蛋，爱心形状的——不许笑！」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>304</code></td><td rowspan="5">vol.3-干草仓库</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……软软的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「金色的草垛一直堆到屋顶。跳上去，会『砰』地弹起来！」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「灰尘在光柱里慢慢飘，像舞台上撒的金粉特效。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「最适合捉迷藏。整个人埋进去，只露一撮头发尖。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「从最高的草垛往下跳的那一秒，会有飞起来的感觉——那一跳，我想牵着你的手一起。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>305</code></td><td rowspan="5">vol.3-风车高坡</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……风最大的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「站上去，头发和裙摆会被吹成慢动作 MV！」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「能看到整个牧场——观众席一览无余的最佳机位。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「有一块巨大的、慢悠悠转动的背景板。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「对着大风喊出来的歌，跑调了也会被吹散。我想在那里，唱一句只给一个人听的歌。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="5"><code>306</code></td><td rowspan="5">vol.3-溪畔草场</td><td class="col">col8 · Clue1</td><td class="dv">「想去一个……有水声伴奏的地方。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · Clue2</td><td class="dv">「草长到脚踝，走过去沙沙响——自带节拍器。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col10 · Clue3</td><td class="dv">「牛群在很远的地方。近处只有蒲公英，和我们。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col11 · Clue4</td><td class="dv">「可以四仰八叉躺成大字的地方。巨星失仪也不会上头条。」</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · Clue5</td><td class="dv">「黄昏的时候，溪水会亮成金色的舞台灯。我想在那里谢幕——观众一名，鞠躬，九十度。」</td><td class="fv"><i class="e">空</i></td></tr>
+</tbody></table></div>
+</section>
+<section><h2>Audio__AudioList</h2>
+<h3 class="hd">dev 独有 159 行 <small>（festival 缺这些）</small></h3><div class="tags">
+<span class="tag d">20720001 · DK_voice_travel_a_wheat_o0</span>
+<span class="tag d">20720002 · DK_voice_travel_a_wheat_o1</span>
+<span class="tag d">20720003 · DK_voice_travel_a_wheat_r0</span>
+<span class="tag d">20720004 · DK_voice_travel_a_wheat_r1</span>
+<span class="tag d">20720005 · DK_voice_travel_a_wheat_end</span>
+<span class="tag d">20720006 · DK_voice_travel_a_mill_o0</span>
+<span class="tag d">20720007 · DK_voice_travel_a_mill_o1</span>
+<span class="tag d">20720008 · DK_voice_travel_a_mill_r0</span>
+<span class="tag d">20720009 · DK_voice_travel_a_mill_r1</span>
+<span class="tag d">20720010 · DK_voice_travel_a_mill_end</span>
+<span class="tag d">20720011 · DK_voice_travel_a_jam_o0</span>
+<span class="tag d">20720012 · DK_voice_travel_a_jam_o1</span>
+<span class="tag d">20720013 · DK_voice_travel_a_jam_r0</span>
+<span class="tag d">20720014 · DK_voice_travel_a_jam_r1</span>
+<span class="tag d">20720015 · DK_voice_travel_a_jam_end</span>
+<span class="tag d">20720016 · DK_voice_travel_a_fair_o0</span>
+<span class="tag d">20720017 · DK_voice_travel_a_fair_o1</span>
+<span class="tag d">20720018 · DK_voice_travel_a_fair_r0</span>
+<span class="tag d">20720019 · DK_voice_travel_a_fair_r1</span>
+<span class="tag d">20720020 · DK_voice_travel_a_fair_end</span>
+<span class="tag d">20720021 · DK_voice_travel_a_barn_o0</span>
+<span class="tag d">20720022 · DK_voice_travel_a_barn_o1</span>
+<span class="tag d">20720023 · DK_voice_travel_a_barn_r0</span>
+<span class="tag d">20720024 · DK_voice_travel_a_barn_r1</span>
+<span class="tag d">20720025 · DK_voice_travel_a_barn_end</span>
+<span class="tag d">20720026 · DK_voice_travel_b_grove_o0</span>
+<span class="tag d">20720027 · DK_voice_travel_b_grove_o1</span>
+<span class="tag d">20720028 · DK_voice_travel_b_grove_r0</span>
+<span class="tag d">20720029 · DK_voice_travel_b_grove_r1</span>
+<span class="tag d">20720030 · DK_voice_travel_b_grove_end</span>
+<span class="tag d">20720031 · DK_voice_travel_b_well_o0</span>
+<span class="tag d">20720032 · DK_voice_travel_b_well_o1</span>
+<span class="tag d">20720033 · DK_voice_travel_b_well_r0</span>
+<span class="tag d">20720034 · DK_voice_travel_b_well_r1</span>
+<span class="tag d">20720035 · DK_voice_travel_b_well_end</span>
+<span class="tag d">20720036 · DK_voice_travel_b_arbor_o0</span>
+<span class="tag d">20720037 · DK_voice_travel_b_arbor_o1</span>
+<span class="tag d">20720038 · DK_voice_travel_b_arbor_r0</span>
+<span class="tag d">20720039 · DK_voice_travel_b_arbor_r1</span>
+<span class="tag d">20720040 · DK_voice_travel_b_arbor_end</span>
+<span class="tag d">20720041 · DK_voice_travel_b_cellar_o0</span>
+<span class="tag d">20720042 · DK_voice_travel_b_cellar_o1</span>
+<span class="tag d">20720043 · DK_voice_travel_b_cellar_r0</span>
+<span class="tag d">20720044 · DK_voice_travel_b_cellar_r1</span>
+<span class="tag d">20720045 · DK_voice_travel_b_cellar_end</span>
+<span class="tag d">20720046 · DK_voice_travel_b_stream_o0</span>
+<span class="tag d">20720047 · DK_voice_travel_b_stream_o1</span>
+<span class="tag d">20720048 · DK_voice_travel_b_stream_r0</span>
+<span class="tag d">20720049 · DK_voice_travel_b_stream_r1</span>
+<span class="tag d">20720050 · DK_voice_travel_b_stream_end</span>
+<span class="tag d">20720051 · DK_voice_travel_c_shed_o0</span>
+<span class="tag d">20720052 · DK_voice_travel_c_shed_o1</span>
+<span class="tag d">20720053 · DK_voice_travel_c_shed_r0</span>
+<span class="tag d">20720054 · DK_voice_travel_c_shed_r1</span>
+<span class="tag d">20720055 · DK_voice_travel_c_shed_end</span>
+<span class="tag d">20720056 · DK_voice_travel_c_coop_o0</span>
+<span class="tag d">20720057 · DK_voice_travel_c_coop_o1</span>
+<span class="tag d">20720058 · DK_voice_travel_c_coop_r0</span>
+<span class="tag d">20720059 · DK_voice_travel_c_coop_r1</span>
+<span class="tag d">20720060 · DK_voice_travel_c_coop_end</span>
+<span class="tag d">20720061 · DK_voice_travel_c_hay_o0</span>
+<span class="tag d">20720062 · DK_voice_travel_c_hay_o1</span>
+<span class="tag d">20720063 · DK_voice_travel_c_hay_r0</span>
+<span class="tag d">20720064 · DK_voice_travel_c_hay_r1</span>
+<span class="tag d">20720065 · DK_voice_travel_c_hay_end</span>
+<span class="tag d">20720066 · DK_voice_travel_c_hill_o0</span>
+<span class="tag d">20720067 · DK_voice_travel_c_hill_o1</span>
+<span class="tag d">20720068 · DK_voice_travel_c_hill_r0</span>
+<span class="tag d">20720069 · DK_voice_travel_c_hill_r1</span>
+<span class="tag d">20720070 · DK_voice_travel_c_hill_end</span>
+<span class="tag d">20720071 · DK_voice_travel_c_creek_o0</span>
+<span class="tag d">20720072 · DK_voice_travel_c_creek_o1</span>
+<span class="tag d">20720073 · DK_voice_travel_c_creek_r0</span>
+<span class="tag d">20720074 · DK_voice_travel_c_creek_r1</span>
+<span class="tag d">20720075 · DK_voice_travel_c_creek_end</span>
+<span class="tag d">20720101 · DK_voice_travel_a_wheat_pre</span>
+<span class="tag d">20720102 · DK_voice_travel_a_mill_pre</span>
+<span class="tag d">20720103 · DK_voice_travel_a_jam_pre</span>
+<span class="tag d">20720104 · DK_voice_travel_a_fair_pre</span>
+<span class="tag d">20720105 · DK_voice_travel_a_barn_pre</span>
+<span class="tag more">…还有 79 行</span>
+</div>
+</section>
+<section><h2>Dialogue__Dialogue</h2>
+<h3 class="hm">内容不同 114 行</h3>
+<div class="tw"><table><thead><tr><th>ID</th><th>名称/备注</th><th>差异列</th><th>dev</th><th>festival</th></tr></thead><tbody>
+<tr><td rowspan="1"><code>720001</code></td><td rowspan="1">720002</td><td class="col">col11 · Audio</td><td class="dv">20720001</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720002</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720002</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720003</code></td><td rowspan="1">720005</td><td class="col">col11 · Audio</td><td class="dv">20720003</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720004</code></td><td rowspan="1">720005</td><td class="col">col11 · Audio</td><td class="dv">20720004</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720005</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720005</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720006</code></td><td rowspan="1">720007</td><td class="col">col11 · Audio</td><td class="dv">20720006</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720007</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720007</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720008</code></td><td rowspan="1">720010</td><td class="col">col11 · Audio</td><td class="dv">20720008</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720009</code></td><td rowspan="1">720010</td><td class="col">col11 · Audio</td><td class="dv">20720009</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720010</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720010</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720011</code></td><td rowspan="1">720012</td><td class="col">col11 · Audio</td><td class="dv">20720011</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720012</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720012</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720013</code></td><td rowspan="1">720015</td><td class="col">col11 · Audio</td><td class="dv">20720013</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720014</code></td><td rowspan="1">720015</td><td class="col">col11 · Audio</td><td class="dv">20720014</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720015</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720015</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720016</code></td><td rowspan="1">720017</td><td class="col">col11 · Audio</td><td class="dv">20720016</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720017</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720017</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720018</code></td><td rowspan="1">720020</td><td class="col">col11 · Audio</td><td class="dv">20720018</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720019</code></td><td rowspan="1">720020</td><td class="col">col11 · Audio</td><td class="dv">20720019</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720020</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720020</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720021</code></td><td rowspan="1">720022</td><td class="col">col11 · Audio</td><td class="dv">20720021</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720022</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720022</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720023</code></td><td rowspan="1">720025</td><td class="col">col11 · Audio</td><td class="dv">20720023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720024</code></td><td rowspan="1">720025</td><td class="col">col11 · Audio</td><td class="dv">20720024</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720025</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720025</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720026</code></td><td rowspan="1">720027</td><td class="col">col11 · Audio</td><td class="dv">20720026</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720027</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720027</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720028</code></td><td rowspan="1">720030</td><td class="col">col11 · Audio</td><td class="dv">20720028</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720029</code></td><td rowspan="1">720030</td><td class="col">col11 · Audio</td><td class="dv">20720029</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720030</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720030</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720031</code></td><td rowspan="1">720032</td><td class="col">col11 · Audio</td><td class="dv">20720031</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720032</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720032</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720033</code></td><td rowspan="1">720035</td><td class="col">col11 · Audio</td><td class="dv">20720033</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720034</code></td><td rowspan="1">720035</td><td class="col">col11 · Audio</td><td class="dv">20720034</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720035</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720035</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720036</code></td><td rowspan="1">720037</td><td class="col">col11 · Audio</td><td class="dv">20720036</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720037</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720037</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720038</code></td><td rowspan="1">720040</td><td class="col">col11 · Audio</td><td class="dv">20720038</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720039</code></td><td rowspan="1">720040</td><td class="col">col11 · Audio</td><td class="dv">20720039</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720040</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720040</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720041</code></td><td rowspan="1">720042</td><td class="col">col11 · Audio</td><td class="dv">20720041</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720042</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720042</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720043</code></td><td rowspan="1">720045</td><td class="col">col11 · Audio</td><td class="dv">20720043</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720044</code></td><td rowspan="1">720045</td><td class="col">col11 · Audio</td><td class="dv">20720044</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720045</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720045</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720046</code></td><td rowspan="1">720047</td><td class="col">col11 · Audio</td><td class="dv">20720046</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720047</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720047</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720048</code></td><td rowspan="1">720050</td><td class="col">col11 · Audio</td><td class="dv">20720048</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720049</code></td><td rowspan="1">720050</td><td class="col">col11 · Audio</td><td class="dv">20720049</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720050</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720050</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720051</code></td><td rowspan="1">720052</td><td class="col">col11 · Audio</td><td class="dv">20720051</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720052</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720052</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720053</code></td><td rowspan="1">720055</td><td class="col">col11 · Audio</td><td class="dv">20720053</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720054</code></td><td rowspan="1">720055</td><td class="col">col11 · Audio</td><td class="dv">20720054</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720055</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720055</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720056</code></td><td rowspan="1">720057</td><td class="col">col11 · Audio</td><td class="dv">20720056</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720057</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720057</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720058</code></td><td rowspan="1">720060</td><td class="col">col11 · Audio</td><td class="dv">20720058</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720059</code></td><td rowspan="1">720060</td><td class="col">col11 · Audio</td><td class="dv">20720059</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>720060</code></td><td rowspan="1">1</td><td class="col">col11 · Audio</td><td class="dv">20720060</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td colspan="5" class="more">…还有 54 行未展开</td></tr>
+</tbody></table></div>
+</section>
+<section><h2>FunctionUnlock__FunctionUnlock</h2>
+<h3 class="hd">dev 独有 1 行 <small>（festival 缺这些）</small></h3><div class="tags">
+<span class="tag d">1100 · 海妖地牢</span>
+</div>
+</section>
+<section><h2>ItemObtain__ItemObtain</h2>
+<h3 class="hm">内容不同 2 行</h3>
+<div class="tw"><table><thead><tr><th>ID</th><th>名称/备注</th><th>差异列</th><th>dev</th><th>festival</th></tr></thead><tbody>
+<tr><td rowspan="2"><code>100417</code></td><td rowspan="2">与她同游-邀约礼包(2026-07-29 废弃,途径只留100524)</td><td class="col">col1 · 备注</td><td class="dv">与她同游-邀约礼包(2026-07-29 废弃,途径只留100524)</td><td class="fv">与她同游-邀约礼包</td></tr>
+<tr><td class="col">col2 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="1"><code>100514</code></td><td rowspan="1">海妖地牢-每日/累计签到</td><td class="col">col6 · ObtainIcon</td><td class="dv">DK_img_mecha_dungeon_daily_gift</td><td class="fv">DK_img_shop_icon_2</td></tr>
+</tbody></table></div>
+</section>
+<section><h2>Item__Item</h2>
+<h3 class="hm">内容不同 5 行</h3>
+<div class="tw"><table><thead><tr><th>ID</th><th>名称/备注</th><th>差异列</th><th>dev</th><th>festival</th></tr></thead><tbody>
+<tr><td rowspan="1"><code>140033</code></td><td rowspan="1">同游票</td><td class="col">col10 · ObtainID</td><td class="dv">100524</td><td class="fv">100417|100524</td></tr>
+<tr><td rowspan="1"><code>4901001</code></td><td rowspan="1">潮汐晶露</td><td class="col">col6 · UseType</td><td class="dv">3</td><td class="fv">2</td></tr>
+<tr><td rowspan="1"><code>4901005</code></td><td rowspan="1">潮汐清露</td><td class="col">col6 · UseType</td><td class="dv">3</td><td class="fv">2</td></tr>
+<tr><td rowspan="1"><code>4901006</code></td><td rowspan="1">潮汐甘露</td><td class="col">col6 · UseType</td><td class="dv">3</td><td class="fv">2</td></tr>
+<tr><td rowspan="1"><code>4901007</code></td><td rowspan="1">潮汐沁露</td><td class="col">col6 · UseType</td><td class="dv">3</td><td class="fv">2</td></tr>
+</tbody></table></div>
+</section>
+<section><h2>Pack__ChainPack</h2>
+<h3 class="hm">内容不同 1 行</h3>
+<div class="tw"><table><thead><tr><th>ID</th><th>名称/备注</th><th>差异列</th><th>dev</th><th>festival</th></tr></thead><tbody>
+<tr><td rowspan="2"><code>755</code></td><td rowspan="2">与她同游</td><td class="col">col2 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td class="col">col9 · 备注</td><td class="dv">与她同游-3期合并chain(15个子档)｜2026-07-29 废弃：改为 vol.1/2/3 共用同游票获取途径礼包…</td><td class="fv">与她同游-3期合并chain(15个子档)</td></tr>
+</tbody></table></div>
+</section>
+<section><h2>Pack__Pack</h2>
+<h3 class="hd">dev 独有 1 行 <small>（festival 缺这些）</small></h3><div class="tags">
+<span class="tag d">18024 · 与她同游-同游票获取礼包-49.99</span>
+</div>
+<h3 class="hm">内容不同 32 行</h3>
+<div class="tw"><table><thead><tr><th>ID</th><th>名称/备注</th><th>差异列</th><th>dev</th><th>festival</th></tr></thead><tbody>
+<tr><td rowspan="1"><code>18020</code></td><td rowspan="1">与她同游-同游票获取礼包-4.99</td><td class="col">col19 · TimeCycleID</td><td class="dv">190008</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>18021</code></td><td rowspan="1">与她同游-同游票获取礼包-9.99</td><td class="col">col19 · TimeCycleID</td><td class="dv">190008</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>18022</code></td><td rowspan="1">与她同游-同游票获取礼包-19.99</td><td class="col">col19 · TimeCycleID</td><td class="dv">190008</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="2"><code>18023</code></td><td rowspan="2">与她同游-同游票获取礼包-99.99</td><td class="col">col19 · TimeCycleID</td><td class="dv">190008</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col39 · Priority</td><td class="dv">996</td><td class="fv">997</td></tr>
+<tr><td rowspan="2"><code>2030001</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="2"><code>2030002</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="2"><code>2030003</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="2"><code>2030004</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="2"><code>2030005</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="2"><code>2030011</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="2"><code>2030012</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="2"><code>2030013</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="2"><code>2030014</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="2"><code>2030015</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="2"><code>2030021</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="2"><code>2030022</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="2"><code>2030023</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="2"><code>2030024</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="2"><code>2030025</code></td><td rowspan="2">废弃-同游票改走18020~18023</td><td class="col">col1 · ID检查</td><td class="dv">废弃-同游票改走18020~18023</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col12 · IsOn</td><td class="dv">0</td><td class="fv">1</td></tr>
+<tr><td rowspan="1"><code>210612</code></td><td rowspan="1">尼罗之辉抽奖券-道具获取4.99</td><td class="col">col35 · Name</td><td class="dv">女王恩典卷</td><td class="fv">女王恩典卷 </td></tr>
+<tr><td rowspan="1"><code>210613</code></td><td rowspan="1">尼罗之辉抽奖券-道具获取19.99</td><td class="col">col35 · Name</td><td class="dv">女王恩典卷</td><td class="fv">女王恩典卷 </td></tr>
+<tr><td rowspan="1"><code>210614</code></td><td rowspan="1">尼罗之辉抽奖券-道具获取49.99</td><td class="col">col35 · Name</td><td class="dv">女王恩典卷</td><td class="fv">女王恩典卷 </td></tr>
+<tr><td rowspan="1"><code>210615</code></td><td rowspan="1">尼罗之辉抽奖券-道具获取99.99</td><td class="col">col35 · Name</td><td class="dv">女王恩典卷</td><td class="fv">女王恩典卷 </td></tr>
+<tr><td rowspan="1"><code>211012</code></td><td rowspan="1"></td><td class="col">col35 · Name</td><td class="dv">世界杯冠军抽奖券</td><td class="fv">世界杯冠军抽奖券 </td></tr>
+<tr><td rowspan="1"><code>211013</code></td><td rowspan="1"></td><td class="col">col35 · Name</td><td class="dv">世界杯冠军抽奖券</td><td class="fv">世界杯冠军抽奖券 </td></tr>
+<tr><td rowspan="1"><code>211014</code></td><td rowspan="1"></td><td class="col">col35 · Name</td><td class="dv">世界杯冠军抽奖券</td><td class="fv">世界杯冠军抽奖券 </td></tr>
+<tr><td rowspan="1"><code>211015</code></td><td rowspan="1"></td><td class="col">col35 · Name</td><td class="dv">世界杯冠军抽奖券</td><td class="fv">世界杯冠军抽奖券 </td></tr>
+<tr><td rowspan="1"><code>4903031</code></td><td rowspan="1">地牢深渊藏珍转盘-代币获取4.99</td><td class="col">col36 · Desc</td><td class="dv">深渊藏珍币×3，可在深渊藏珍转盘抽取海妖专属赠礼。</td><td class="fv">深渊藏珍币×60，可在深渊藏珍转盘抽取海妖专属赠礼。</td></tr>
+<tr><td rowspan="1"><code>4903032</code></td><td rowspan="1">地牢深渊藏珍转盘-代币获取9.99</td><td class="col">col36 · Desc</td><td class="dv">深渊藏珍币×5，可在深渊藏珍转盘抽取海妖专属赠礼。</td><td class="fv">深渊藏珍币×120，可在深渊藏珍转盘抽取海妖专属赠礼。</td></tr>
+<tr><td rowspan="1"><code>4903033</code></td><td rowspan="1">地牢深渊藏珍转盘-代币获取19.99</td><td class="col">col36 · Desc</td><td class="dv">深渊藏珍币×10，可在深渊藏珍转盘抽取海妖专属赠礼。</td><td class="fv">深渊藏珍币×240，可在深渊藏珍转盘抽取海妖专属赠礼。</td></tr>
+<tr><td rowspan="1"><code>4903034</code></td><td rowspan="1">地牢深渊藏珍转盘-代币获取49.99</td><td class="col">col36 · Desc</td><td class="dv">深渊藏珍币×25，可在深渊藏珍转盘抽取海妖专属赠礼。</td><td class="fv">深渊藏珍币×600，可在深渊藏珍转盘抽取海妖专属赠礼。</td></tr>
+<tr><td rowspan="1"><code>4903035</code></td><td rowspan="1">地牢深渊藏珍转盘-代币获取99.99</td><td class="col">col36 · Desc</td><td class="dv">深渊藏珍币×50，可在深渊藏珍转盘抽取海妖专属赠礼。</td><td class="fv">深渊藏珍币×1200，可在深渊藏珍转盘抽取海妖专属赠礼。</td></tr>
+</tbody></table></div>
+</section>
+<section><h2>Reward__Reward</h2>
+<h3 class="hd">dev 独有 11 行 <small>（festival 缺这些）</small></h3><div class="tags">
+<span class="tag d">16007104 · 10024</span>
+<span class="tag d">16007105 · 10024</span>
+<span class="tag d">16007106 · 10024</span>
+<span class="tag d">16007185 · 702</span>
+<span class="tag d">16007186 · 702</span>
+<span class="tag d">16007187 · 705</span>
+<span class="tag d">16007188 · 705</span>
+<span class="tag d">16007189 · 705</span>
+<span class="tag d">16007190 · 705</span>
+<span class="tag d">16007191 · 30996</span>
+<span class="tag d">16007192 · 30996</span>
+</div>
+<h3 class="hv">festival 独有 6 行 <small>（dev 缺这些）</small></h3><div class="tags">
+<span class="tag v">371 · 702</span>
+<span class="tag v">372 · 702</span>
+<span class="tag v">373 · 702</span>
+<span class="tag v">381 · 705</span>
+<span class="tag v">382 · 705</span>
+<span class="tag v">383 · 705</span>
+</div>
+<h3 class="hm">内容不同 7 行</h3>
+<div class="tw"><table><thead><tr><th>ID</th><th>名称/备注</th><th>差异列</th><th>dev</th><th>festival</th></tr></thead><tbody>
+<tr><td rowspan="1"><code>16001423</code></td><td rowspan="1">15921401</td><td class="col">col5 · MinNum</td><td class="dv">3</td><td class="fv">60</td></tr>
+<tr><td rowspan="1"><code>16001426</code></td><td rowspan="1">15921402</td><td class="col">col5 · MinNum</td><td class="dv">5</td><td class="fv">120</td></tr>
+<tr><td rowspan="1"><code>16001429</code></td><td rowspan="1">15921403</td><td class="col">col5 · MinNum</td><td class="dv">10</td><td class="fv">240</td></tr>
+<tr><td rowspan="1"><code>16001432</code></td><td rowspan="1">15921404</td><td class="col">col5 · MinNum</td><td class="dv">25</td><td class="fv">600</td></tr>
+<tr><td rowspan="1"><code>16001435</code></td><td rowspan="1">15921405</td><td class="col">col5 · MinNum</td><td class="dv">50</td><td class="fv">1200</td></tr>
+<tr><td rowspan="6"><code>16007183</code></td><td rowspan="6">702</td><td class="col">col1 · RewardID</td><td class="dv">702</td><td class="fv">30996</td></tr>
+<tr><td class="col">col3 · ItemID</td><td class="dv">1002</td><td class="fv">15155</td></tr>
+<tr><td class="col">col4 · 列1</td><td class="dv">钻石</td><td class="fv">天马启航号（永久）</td></tr>
+<tr><td class="col">col5 · MinNum</td><td class="dv">60</td><td class="fv">1</td></tr>
+<tr><td class="col">col11 · 列2</td><td class="dv">每日宝箱-2</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col14 · DisplayOrder</td><td class="dv">371</td><td class="fv">16007183</td></tr>
+<tr><td rowspan="6"><code>16007184</code></td><td rowspan="6">702</td><td class="col">col1 · RewardID</td><td class="dv">702</td><td class="fv">30996</td></tr>
+<tr><td class="col">col3 · ItemID</td><td class="dv">11032</td><td class="fv">15135</td></tr>
+<tr><td class="col">col4 · 列1</td><td class="dv">5分钟研究加速</td><td class="fv">炽焰龙舟（永久）</td></tr>
+<tr><td class="col">col5 · MinNum</td><td class="dv">10</td><td class="fv">1</td></tr>
+<tr><td class="col">col11 · 列2</td><td class="dv">每日宝箱-2</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col14 · DisplayOrder</td><td class="dv">373</td><td class="fv">16007184</td></tr>
+</tbody></table></div>
+</section>
+<section><h2>Shop__ShopItemCfg</h2>
+<h3 class="hm">内容不同 5 行</h3>
+<div class="tw"><table><thead><tr><th>ID</th><th>名称/备注</th><th>差异列</th><th>dev</th><th>festival</th></tr></thead><tbody>
+<tr><td rowspan="1"><code>21018</code></td><td rowspan="1">1022</td><td class="col">col7 · ShowLevel</td><td class="dv">999</td><td class="fv">14</td></tr>
+<tr><td rowspan="1"><code>21019</code></td><td rowspan="1">1022</td><td class="col">col7 · ShowLevel</td><td class="dv">999</td><td class="fv">14</td></tr>
+<tr><td rowspan="1"><code>21020</code></td><td rowspan="1">1022</td><td class="col">col7 · ShowLevel</td><td class="dv">999</td><td class="fv">14</td></tr>
+<tr><td rowspan="1"><code>21022</code></td><td rowspan="1">1022</td><td class="col">col7 · ShowLevel</td><td class="dv">999</td><td class="fv">14</td></tr>
+<tr><td rowspan="1"><code>21023</code></td><td rowspan="1">1022</td><td class="col">col7 · ShowLevel</td><td class="dv">999</td><td class="fv">14</td></tr>
+</tbody></table></div>
+</section>
+<section><h2>TimeCycle__TimeCycle</h2>
+<h3 class="hd">dev 独有 1 行 <small>（festival 缺这些）</small></h3><div class="tags">
+<span class="tag d">190008 · 常-与她同游-同游票礼包售卖循环-与190001同锚点(开服D28起,每</span>
+</div>
+</section>
+<section><h2>CoderTID__CoderTID</h2>
+<h3 class="hd">dev 独有 1 行 <small>（festival 缺这些）</small></h3><div class="tags">
+<span class="tag d">Text_ErrCodeSimulatorCreatePlayerForbidden · 禁止模拟器创建新角色</span>
+</div>
+</section>
+<section><h2>Text__Text</h2>
+<h3 class="hd">dev 独有 146 行 <small>（festival 缺这些）</small></h3><div class="tags">
+<span class="tag d">2.投入扭蛋币+高级扭蛋券，可在【高级奖励】池抽取更豪华奖励；</span>
+<span class="tag d">3.高级扭蛋券可通过购买高级扭蛋券礼包获取；</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_1101 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_1102 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_1201 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_1202 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_1301 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_1302 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_1303 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_1304 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_1401 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_1402 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_2101 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_2102 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_2201 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_2202 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_2301 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_2302 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_2303 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_2304 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_2401 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_2402 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_3101 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_3102 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_3201 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_3202 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_3301 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_3302 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_3303 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_3304 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_3401 · AI</span>
+<span class="tag d">TXT_ActvTravelDateChat_Txt_3402 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_102 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_103 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_104 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_105 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_106 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_202 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_203 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_204 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_205 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_206 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_302 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_303 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_304 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_305 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue1_306 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_102 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_103 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_104 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_105 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_106 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_202 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_203 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_204 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_205 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_206 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_302 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_303 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_304 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_305 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue2_306 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_102 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_103 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_104 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_105 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_106 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_202 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_203 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_204 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_205 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_206 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_302 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_303 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_304 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_305 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue3_306 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue4_102 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue4_103 · AI</span>
+<span class="tag d">TXT_ActvTravelDateSpot_Clue4_104 · AI</span>
+<span class="tag more">…还有 66 行</span>
+</div>
+<h3 class="hm">内容不同 144 行</h3>
+<div class="tw"><table><thead><tr><th>ID</th><th>名称/备注</th><th>差异列</th><th>dev</th><th>festival</th></tr></thead><tbody>
+<tr><td rowspan="2"><code>4.活动结束后未使用的扭蛋币/扭蛋券将被回收，请尽快使用。</code></td><td rowspan="2">1. Spend Festival Gacha Coins to dra</td><td class="col">col1 · AI</td><td class="dv">1. Spend Festival Gacha Coins to draw from the [Normal Rewar…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv"><i class="e">空</i></td><td class="fv">1.投入扭蛋幣，可在【普通奖励】池抽取奖励，单抽/十连均可；</td></tr>
+<tr><td rowspan="6"><code>TXT_ActvFlashSale_ComingSoon</code></td><td rowspan="6">AI</td><td class="col">col2 · TXT_IntelligenceTask_T</td><td class="dv">TXT_ActvFlashSale_ComingSoon</td><td class="fv">TXT_ActvFlashSale_ComingToSell</td></tr>
+<tr><td class="col">col3 · &quot;滑头鲭&quot;</td><td class="dv">敬请期待</td><td class="fv">即将开卖</td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">Próximamente</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">Bientôt disponible</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">Segera Hadir</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">Demnächst</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="2"><code>TXT_ActvGroup_MainEntranceName_135|TXT_ActvOnline_ActvName_101207|TXT_ActvOnline_ActvName_101208|TXT_ActvOnline_ActvName_101209|TXT_ItemObtain_ObtainName_556|TXT_ItemObtain_ObtainName_557|TXT_ItemObtain_ObtainName_600|TXT_RuleTips_Tab_1024|TXT_UnitConfigWonder_Name_243001|Text_WT_Function_Title_9|TXT_ActvOnline_ActvName_101211|TXT_ActvOnline_ActvName_101212|TXT_ActvOnline_ActvName_101213</code></td><td rowspan="2">AI</td><td class="col">col25 · 已校对</td><td class="dv">已校对</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col26 · 已校对</td><td class="dv"><i class="e">空</i></td><td class="fv">已校对</td></tr>
+<tr><td rowspan="2"><code>TXT_ActvLogin_Name_412|TXT_Item_Name_1022</code></td><td rowspan="2">已校对</td><td class="col">col25 · 已校对</td><td class="dv">已校对</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col26 · 已校对</td><td class="dv"><i class="e">空</i></td><td class="fv">已校对</td></tr>
+<tr><td rowspan="1"><code>TXT_ActvLogin_Name_412|TXT_Item_Name_1022|TXT_ActvLogin_Name_464|TXT_ActvLogin_Name_466</code></td><td rowspan="1">已校对</td><td class="col">col25 · 已校对</td><td class="dv"><i class="e">空</i></td><td class="fv">已校对</td></tr>
+<tr><td rowspan="2"><code>TXT_ActvLogin_Name_413|TXT_ActvLogin_Name_415|TXT_HeroStickers_Name_1003|TXT_ItemObtain_ObtainName_735|TXT_Item_Name_7002|TXT_Pack_Name_11600|TXT_Pack_Name_11601|TXT_Pack_Name_11602</code></td><td rowspan="2">AI</td><td class="col">col25 · 已校对</td><td class="dv">已校对</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col26 · 已校对</td><td class="dv"><i class="e">空</i></td><td class="fv">已校对</td></tr>
+<tr><td rowspan="1"><code>TXT_ActvLogin_Name_413|TXT_ActvLogin_Name_415|TXT_HeroStickers_Name_1003|TXT_ItemObtain_ObtainName_735|TXT_Item_Name_7002|TXT_Pack_Name_11600|TXT_Pack_Name_11601|TXT_Pack_Name_11602|TXT_ActvLogin_Name_463|TXT_ActvLogin_Name_465</code></td><td rowspan="1">AI</td><td class="col">col25 · 已校对</td><td class="dv"><i class="e">空</i></td><td class="fv">已校对</td></tr>
+<tr><td rowspan="2"><code>TXT_ActvOnline_ActvAimDesc_100607|TXT_ActvOnline_ActvAimDesc_100608</code></td><td rowspan="2">已校对</td><td class="col">col25 · 已校对</td><td class="dv">已校对</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col26 · 已校对</td><td class="dv"><i class="e">空</i></td><td class="fv">已校对</td></tr>
+<tr><td rowspan="1"><code>TXT_ActvOnline_ActvAimDesc_101110|TXT_ActvOnline_ActvDesc_101110</code></td><td rowspan="1">已校对</td><td class="col">col25 · 已校对</td><td class="dv">已校对</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="2"><code>TXT_ActvOnline_ActvDesc_100607|TXT_ActvOnline_ActvDesc_100608</code></td><td rowspan="2">已校对</td><td class="col">col25 · 已校对</td><td class="dv">已校对</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col26 · 已校对</td><td class="dv"><i class="e">空</i></td><td class="fv">已校对</td></tr>
+<tr><td rowspan="2"><code>TXT_ActvOnline_ActvName_100607|TXT_ItemObtain_ObtainName_546|TXT_RuleTips_Title_1012|TXT_ActvOnline_ActvName_100608</code></td><td rowspan="2">AI</td><td class="col">col25 · 已校对</td><td class="dv">已校对</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col26 · 已校对</td><td class="dv"><i class="e">空</i></td><td class="fv">已校对</td></tr>
+<tr><td rowspan="2"><code>TXT_ActvOnline_ActvName_101001|TXT_ActvOnline_ActvName_101010|TXT_ActvOnline_ActvName_103006|TXT_ItemObtain_ObtainName_100185|TXT_ItemObtain_ObtainName_100186|TXT_ItemObtain_ObtainName_100187|TXT_ItemObtain_ObtainName_100188|TXT_ItemObtain_ObtainName_532|TXT_MailTemplate_Title_101001|TXT_RuleTips_Title_16001|TXT_RuleTips_Title_16010|TXT_ItemObtain_ObtainName_100531</code></td><td rowspan="2">AI</td><td class="col">col25 · 已校对</td><td class="dv"><i class="e">空</i></td><td class="fv">已校对</td></tr>
+<tr><td class="col">col26 · 已校对</td><td class="dv">已校对</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>TXT_ActvOnline_ActvName_101102|TXT_MailTemplate_Title_101101|TXT_RuleTips_Title_18001</code></td><td rowspan="1">AI</td><td class="col">col25 · 已校对</td><td class="dv">已校对</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>TXT_ActvOnline_ActvName_101110|TXT_ItemObtain_ObtainName_100192|TXT_MailTemplate_Title_101102|TXT_RuleTips_Title_19001</code></td><td rowspan="1">AI</td><td class="col">col25 · 已校对</td><td class="dv">已校对</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>TXT_BattlePass_Desc_1102|TXT_BattlePass_Desc_1103</code></td><td rowspan="1">已校对</td><td class="col">col25 · 已校对</td><td class="dv">已校对</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="1"><code>TXT_BattlePass_Desc_1104|TXT_BattlePass_Desc_1113|TXT_BattlePass_Desc_1118|TXT_BattlePass_Desc_1119|TXT_BattlePass_Desc_1120</code></td><td rowspan="1">已校对</td><td class="col">col25 · 已校对</td><td class="dv">已校对</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_40011002_c4_p4900202_s1_v1</code></td><td rowspan="6">本座绝不屈服·混沌龙玉?尔敢戏本座?</td><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">Je ne céderai jamais — Jade du Dragon du Chaos? Oses-tu te j…</td><td class="fv">Je ne céderai jamais — Plaque de Jade au Dragon Double? Oses…</td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">Aku takkan tunduk — Giok Naga Chaos? Berani mempermainkan ak…</td><td class="fv">Aku takkan tunduk — Lempeng Giok Naga Ganda? Berani memperma…</td></tr>
+<tr><td class="col">col14 · Gli Sgombri Scivolosi</td><td class="dv">Non mi piegherò mai — Giada del Drago del Caos? Osi giocare …</td><td class="fv">Non mi piegherò mai — Giada dei Draghi Gemelli? Osi giocare …</td></tr>
+<tr><td class="col">col15 · Śliskie Makrele</td><td class="dv">Nigdy się nie ugnę — Jadeit Smoka Chaosu? Śmiesz sobie ze mn…</td><td class="fv">Nigdy się nie ugnę — Jadeit Dwóch Smoków? Śmiesz sobie ze mn…</td></tr>
+<tr><td class="col">col16 · Os Macaréus Escorregad</td><td class="dv">Jamais me submeterei — Jade do Dragao do Caos? Ousas brincar…</td><td class="fv">Jamais me submeterei — Jade dos Dragões Gêmeos? Ousas brinca…</td></tr>
+<tr><td class="col">col17 · &quot;Kaygan Uskumrular&quot;</td><td class="dv">Asla boyun eğmem — Kaos Ejder Yesimi mi? Benimle alay etmeye…</td><td class="fv">Asla boyun eğmem — İkiz Ejder Yeşimi mi? Benimle alay etmeye…</td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30106_s1_v1</code></td><td rowspan="6">（她瞪着你，眼中怒火翻涌）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She glares at you, fury surging in her eyes)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Te clava la mirada, la furia agitándose en sus ojos)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle te fixe, la fureur bouillonnant dans ses yeux)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia menatapmu tajam, amarah berkecamuk di matanya)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie starrt dich an, Zorn wogt in ihren Augen)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀가 너를 노려보고, 눈에 분노가 치솟는다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30106_s1_v2</code></td><td rowspan="6">你以为这样就能让我屈服？</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">You think this will make me yield?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">¿Crees que esto me hará ceder?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">Tu crois que cela me fera céder?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">Kau pikir ini akan membuatku tunduk?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">Du glaubst, das lässt mich nachgeben?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">이걸로 내가 굴복할 것 같아?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30106_s1_v3</code></td><td rowspan="6">（她冷笑）...你会后悔的。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She sneers) ...You will regret this.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Se burla) ...Te vas a arrepentir.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle ricane) ...Tu le regretteras.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia mencibir) ...Kau akan menyesal.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie spottet) ...Du wirst es bereuen.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀가 비웃는다) ...후회할 거야.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30106_s2_v1</code></td><td rowspan="6">（她低下头，紧咬嘴唇）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She lowers her head, biting her lip hard)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Baja la cabeza, mordiéndose el labio con fuerza)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle baisse la tête, mordant fort sa lèvre)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia menunduk, menggigit bibirnya kuat)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie senkt den Kopf und beisst sich fest auf die Lippe)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀가 고개를 숙이고 입술을 꽉 깨문다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30106_s2_v2</code></td><td rowspan="6">（她没有反抗，但也没有屈服）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She does not resist, yet she does not submit either)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(No se resiste, pero tampoco se somete)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle ne résiste pas, mais ne se soumet pas non plus)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia tidak melawan, tapi juga tidak menyerah)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie wehrt sich nicht, doch sie fügt sich auch nicht)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀는 저항하지 않지만, 굴복하지도 않는다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30106_s2_v3</code></td><td rowspan="6">你可以继续，我不会说不。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">You may go on. I will not say no.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">Puedes seguir. No diré que no.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">Tu peux continuer. Je ne dirai pas non.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">Kau boleh lanjut. Aku tak akan menolak.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">Du darfst weitermachen. Ich werde nicht Nein sagen.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">계속해도 돼. 아니라고 하지 않을 테니.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30106_s3_v1</code></td><td rowspan="6">（她安静地接受了惩罚）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She accepts the punishment in silence)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Acepta el castigo en silencio)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle accepte le châtiment en silence)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia menerima hukuman itu dalam diam)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie nimmt die Strafe schweigend hin)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀가 조용히 벌을 받아들인다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30106_s3_v2</code></td><td rowspan="6">（她眼中的光已经黯淡下去）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(The light in her eyes has already dimmed)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(La luz de sus ojos ya se ha apagado)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(La lumière dans ses yeux s&#x27;est déjà éteinte)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Cahaya di matanya sudah meredup)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Das Licht in ihren Augen ist schon erloschen)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀의 눈에 있던 빛은 이미 흐려졌다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30106_s3_v3</code></td><td rowspan="6">好...你说什么就是什么。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">Fine... whatever you say goes.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">Bien... lo que tú digas.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">Bien... ce que tu dis fait loi.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">Baik... apa pun katamu, itu berlaku.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">Gut... was du sagst, gilt.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">그래... 네가 말하는 대로 할게.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30107_s1_v1</code></td><td rowspan="6">（她瞪着你，眼中怒火翻涌）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She glares at you, fury surging in her eyes)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Te clava la mirada, la furia agitándose en sus ojos)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle te fixe, la fureur bouillonnant dans ses yeux)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia menatapmu tajam, amarah berkecamuk di matanya)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie starrt dich an, Zorn wogt in ihren Augen)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀가 너를 노려보고, 눈에 분노가 치솟는다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30107_s1_v2</code></td><td rowspan="6">你以为这样就能让我屈服？</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">You think this will make me yield?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">¿Crees que esto me hará ceder?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">Tu crois que cela me fera céder?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">Kau pikir ini akan membuatku tunduk?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">Du glaubst, das lässt mich nachgeben?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">이걸로 내가 굴복할 것 같아?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30107_s1_v3</code></td><td rowspan="6">（她冷笑）...你会后悔的。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She sneers) ...You will regret this.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Se burla) ...Te vas a arrepentir.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle ricane) ...Tu le regretteras.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia mencibir) ...Kau akan menyesal.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie spottet) ...Du wirst es bereuen.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀가 비웃는다) ...후회할 거야.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30107_s2_v1</code></td><td rowspan="6">（她低下头，紧咬嘴唇）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She lowers her head, biting her lip hard)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Baja la cabeza, mordiéndose el labio con fuerza)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle baisse la tête, mordant fort sa lèvre)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia menunduk, menggigit bibirnya kuat)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie senkt den Kopf und beisst sich fest auf die Lippe)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀가 고개를 숙이고 입술을 꽉 깨문다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30107_s2_v2</code></td><td rowspan="6">（她没有反抗，但也没有屈服）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She does not resist, yet she does not submit either)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(No se resiste, pero tampoco se somete)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle ne résiste pas, mais ne se soumet pas non plus)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia tidak melawan, tapi juga tidak menyerah)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie wehrt sich nicht, doch sie fügt sich auch nicht)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀는 저항하지 않지만, 굴복하지도 않는다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30107_s2_v3</code></td><td rowspan="6">你可以继续，我不会说不。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">You may go on. I will not say no.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">Puedes seguir. No diré que no.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">Tu peux continuer. Je ne dirai pas non.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">Kau boleh lanjut. Aku tak akan menolak.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">Du darfst weitermachen. Ich werde nicht Nein sagen.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">계속해도 돼. 아니라고 하지 않을 테니.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30107_s3_v1</code></td><td rowspan="6">（她安静地接受了惩罚）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She accepts the punishment in silence)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Acepta el castigo en silencio)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle accepte le châtiment en silence)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia menerima hukuman itu dalam diam)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie nimmt die Strafe schweigend hin)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀가 조용히 벌을 받아들인다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30107_s3_v2</code></td><td rowspan="6">（她眼中的光已经黯淡下去）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(The light in her eyes has already dimmed)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(La luz de sus ojos ya se ha apagado)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(La lumière dans ses yeux s&#x27;est déjà éteinte)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Cahaya di matanya sudah meredup)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Das Licht in ihren Augen ist schon erloschen)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀의 눈에 있던 빛은 이미 흐려졌다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30107_s3_v3</code></td><td rowspan="6">好...你说什么就是什么。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">Fine... whatever you say goes.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">Bien... lo que tú digas.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">Bien... ce que tu dis fait loi.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">Baik... apa pun katamu, itu berlaku.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">Gut... was du sagst, gilt.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">그래... 네가 말하는 대로 할게.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30108_s1_v1</code></td><td rowspan="6">（她瞪着你，眼中怒火翻涌）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She glares at you, fury surging in her eyes)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Te clava la mirada, la furia agitándose en sus ojos)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle te fixe, la fureur bouillonnant dans ses yeux)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia menatapmu tajam, amarah berkecamuk di matanya)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie starrt dich an, Zorn wogt in ihren Augen)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀가 너를 노려보고, 눈에 분노가 치솟는다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30108_s1_v2</code></td><td rowspan="6">你以为这样就能让我屈服？</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">You think this will make me yield?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">¿Crees que esto me hará ceder?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">Tu crois que cela me fera céder?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">Kau pikir ini akan membuatku tunduk?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">Du glaubst, das lässt mich nachgeben?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">이걸로 내가 굴복할 것 같아?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30108_s1_v3</code></td><td rowspan="6">（她冷笑）...你会后悔的。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She sneers) ...You will regret this.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Se burla) ...Te vas a arrepentir.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle ricane) ...Tu le regretteras.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia mencibir) ...Kau akan menyesal.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie spottet) ...Du wirst es bereuen.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀가 비웃는다) ...후회할 거야.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30108_s2_v1</code></td><td rowspan="6">（她低下头，紧咬嘴唇）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She lowers her head, biting her lip hard)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Baja la cabeza, mordiéndose el labio con fuerza)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle baisse la tête, mordant fort sa lèvre)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia menunduk, menggigit bibirnya kuat)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie senkt den Kopf und beisst sich fest auf die Lippe)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀가 고개를 숙이고 입술을 꽉 깨문다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30108_s2_v2</code></td><td rowspan="6">（她没有反抗，但也没有屈服）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She does not resist, yet she does not submit either)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(No se resiste, pero tampoco se somete)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle ne résiste pas, mais ne se soumet pas non plus)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia tidak melawan, tapi juga tidak menyerah)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie wehrt sich nicht, doch sie fügt sich auch nicht)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀는 저항하지 않지만, 굴복하지도 않는다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30108_s2_v3</code></td><td rowspan="6">你可以继续，我不会说不。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">You may go on. I will not say no.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">Puedes seguir. No diré que no.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">Tu peux continuer. Je ne dirai pas non.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">Kau boleh lanjut. Aku tak akan menolak.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">Du darfst weitermachen. Ich werde nicht Nein sagen.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">계속해도 돼. 아니라고 하지 않을 테니.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30108_s3_v1</code></td><td rowspan="6">（她安静地接受了惩罚）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She accepts the punishment in silence)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Acepta el castigo en silencio)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle accepte le châtiment en silence)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia menerima hukuman itu dalam diam)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie nimmt die Strafe schweigend hin)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀가 조용히 벌을 받아들인다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30108_s3_v2</code></td><td rowspan="6">（她眼中的光已经黯淡下去）</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(The light in her eyes has already dimmed)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(La luz de sus ojos ya se ha apagado)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(La lumière dans ses yeux s&#x27;est déjà éteinte)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Cahaya di matanya sudah meredup)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Das Licht in ihren Augen ist schon erloschen)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀의 눈에 있던 빛은 이미 흐려졌다)</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c3_p30108_s3_v3</code></td><td rowspan="6">好...你说什么就是什么。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">Fine... whatever you say goes.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">Bien... lo que tú digas.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">Bien... ce que tu dis fait loi.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">Baik... apa pun katamu, itu berlaku.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">Gut... was du sagst, gilt.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">그래... 네가 말하는 대로 할게.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p11001_v1</code></td><td rowspan="6">（她愣了一下，缓缓侧过脸）你的手...竟然是暖的。这世间原来还有不为伤害</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She freezes for a moment, then slowly turns her face aside)…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Se queda inmóvil un instante y luego aparta el rostro despa…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle se fige un instant, puis détourne lentement le visage)…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia terpaku sesaat, lalu perlahan memalingkan wajah) Tangan…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie erstarrt einen Moment, dann wendet sie langsam das Gesi…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀는 잠시 멈칫하다 천천히 얼굴을 돌린다) 네 손... 따뜻하구나. 상처 주려 오지 않는 손길도 있었나.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p11002_v1</code></td><td rowspan="6">（旋律缓缓沁入心底，紫色鳞睫轻颤）这曲子...我在深海最沉的地方，仿佛听</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(The melody seeps slowly into her heart; her violet scaled l…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(La melodía se filtra despacio en su corazón; sus pestañas d…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(La mélodie s&#x27;infiltre lentement dans son cœur; ses cils éca…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Melodi itu perlahan meresap ke hatinya; bulu mata bersisik …</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Die Melodie sinkt langsam in ihr Herz; ihre violett beschup…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(선율이 천천히 마음에 스미고, 자색 비늘 속눈썹이 떨린다) 이 곡... 심해 가장 깊은 곳에서 들어본 것 …</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p11003_v1</code></td><td rowspan="6">（她垂眸半晌，声音低下来）为什么...你的话语，像是能穿过所有的鳞甲。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She lowers her eyes a long while, her voice sinking) Why...…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Baja la mirada un largo rato y su voz se apaga) ¿Por qué...…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle baisse longuement les yeux, sa voix s&#x27;éteint) Pourquoi…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia menunduk lama, suaranya merendah) Mengapa... kata-katam…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie senkt lange den Blick, ihre Stimme wird leiser) Warum..…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀는 한참 눈을 내리깔고 목소리를 낮춘다) 어째서... 네 말은 이 비늘 전부를 뚫고 오는 것 같지?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p11004_v1</code></td><td rowspan="6">（水的清凉滑入喉间，她忽然抬眼）你不知道...这一瓶水，够我记你多久。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(The cool water slips down her throat; she suddenly lifts he…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(El frescor del agua le baja por la garganta; alza de pronto…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(La fraîcheur de l&#x27;eau glisse dans sa gorge; elle relève sou…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Kesegaran air meluncur di tenggorokannya; dia tiba-tiba men…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Die Kühle des Wassers gleitet ihre Kehle hinab; plötzlich h…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(시원한 물이 목을 타고 내려가자 그녀가 불현듯 눈을 든다) 너는 모르지... 이 물 한 병이 나를 얼마나 …</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p11005_v1</code></td><td rowspan="6">（她第一次没有背对你）原来...有人在旁边不说话，也可以是一种温柔。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(For the first time she does not turn her back to you) So th…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Por primera vez no te da la espalda) Así que... alguien que…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Pour la première fois, elle ne te tourne pas le dos) Ainsi.…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Untuk pertama kalinya dia tidak memunggungimu) Ternyata... …</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Zum ersten Mal wendet sie dir nicht den Rücken zu) So ist e…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀가 처음으로 등을 돌리지 않는다) 그렇구나... 곁에서 말없이 있어 주는 것도 다정함일 수 있어.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p11006_v1</code></td><td rowspan="6">（她听得入了神）你说的那些人间事，比我在深渊里听的所有传说都真实。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(She listens, wholly absorbed) These mortal affairs you spea…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Escucha absorta) Esas cosas del mundo mortal que cuentas su…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Elle écoute, tout absorbée) Ces choses du monde des hommes …</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Dia menyimak sampai terhanyut) Kisah dunia manusia yang kau…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Sie lauscht ganz versunken) Diese Menschendinge, von denen …</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(그녀가 넋을 잃고 듣는다) 네가 말하는 인간 세상 이야기가, 심연에서 들은 모든 전설보다 더 진짜 같아.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p11007_v1</code></td><td rowspan="6">（当梳齿滑过鳞发，她微微闭眼）这一刻，我不再是海妖，只是被温柔以待的一尾</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(As the comb glides through her scaled hair, she gently clos…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Cuando el peine desliza por su cabello escamado, cierra sua…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Quand le peigne glisse dans sa chevelure écaillée, elle fer…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Saat gigi sisir meluncur di rambut bersisiknya, dia memejam…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Als der Kamm durch ihr beschupptes Haar gleitet, schließt s…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(빗살이 비늘 머리칼을 스치자 그녀가 살며시 눈을 감는다) 이 순간 나는 세이렌이 아니라, 다정히 대해진 한…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p11008_v1</code></td><td rowspan="6">（泪光被拭去的一瞬，她终于哭出声）我从未有过...被人看见眼泪的权利。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(The instant the tears are wiped away, she finally sobs alou…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(En el instante en que le secan las lágrimas, por fin rompe …</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(À l&#x27;instant où l&#x27;on essuie ses larmes, elle éclate enfin en…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Begitu air matanya diusap, akhirnya dia menangis tersedu) A…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(In dem Augenblick, da die Tränen fortgewischt werden, weint…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(눈물이 닦이는 순간, 그녀가 끝내 소리 내어 운다) 나는 한 번도... 누군가에게 눈물을 보일 권리가 없었…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p12001_v1</code></td><td rowspan="6">（锁链勒紧的一刻，她冷笑）你以为这就能让我屈服？...哼，你连我最恨你的</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(The moment the chains bite tight, she sneers) You think thi…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(En el instante en que las cadenas aprietan, se burla) ¿Cree…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(À l&#x27;instant où les chaînes se resserrent, elle ricane) Tu c…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Saat rantai mengencang, dia mencibir) Kau pikir ini akan me…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Im Moment, da die Ketten sich straffen, spottet sie) Du gla…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(사슬이 조여드는 순간, 그녀가 비웃는다) 이걸로 내가 굴복할 것 같아? ...흥, 넌 내게 미움받을 자격조…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p12002_v1</code></td><td rowspan="6">（光线暗下，她伸手想挽留又收回）走吧。反正你们所有人，最终都会走的。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(The light dims; she reaches out to hold you back, then draw…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(La luz se apaga; alarga la mano para retenerte y la retira)…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(La lumière faiblit; elle tend la main pour te retenir, puis…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Cahaya meredup; dia mengulurkan tangan hendak menahanmu, la…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Das Licht schwindet; sie streckt die Hand aus, um dich zu h…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(빛이 어두워지고, 그녀는 붙잡으려 손을 내밀다 거둔다) 가. 어차피 너희는 모두 결국 떠나니까.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p12003_v1</code></td><td rowspan="6">（斥责如浪冲来，她低头咬唇）我听见了...但我不会道歉，永远不会。</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(The rebuke crashes over her like a wave; she lowers her hea…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(El reproche la golpea como una ola; baja la cabeza y se mue…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Le reproche la submerge comme une vague; elle baisse la têt…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Kecaman menerjang bagai gelombang; dia menunduk dan menggig…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Der Tadel bricht wie eine Welle über sie; sie senkt den Kop…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(질책이 파도처럼 밀려오고, 그녀는 고개를 숙여 입술을 깨문다) 들었어... 하지만 사과하지 않아. 영원히.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p12004_v1</code></td><td rowspan="6">（她的私藏被抽走，眼中怒火升起）那是我唯一的...你连这个也要夺走吗？</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(Her hidden keepsake is taken away; anger flares in her eyes…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Le arrebatan su tesoro escondido; la ira le enciende los oj…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(On lui arrache son trésor caché; la colère embrase ses yeux…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Simpanan rahasianya dirampas; amarah menyala di matanya) It…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Ihr verborgener Schatz wird fortgenommen; Zorn flammt in ih…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(감춰 둔 소중한 것이 빼앗기고, 눈에 분노가 인다) 그건 내게 남은 유일한... 이것까지 앗아 갈 셈이야?</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p12005_v1</code></td><td rowspan="6">（锁链紧扣的瞬间，她终于停止挣扎）好吧...我认了。你想要的服从，我给你</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(The instant the chains lock fast, she finally stops struggl…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(En el instante en que las cadenas se cierran, deja al fin d…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(À l&#x27;instant où les chaînes se verrouillent, elle cesse enfi…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Begitu rantai terkunci rapat, akhirnya dia berhenti melawan…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Im Augenblick, da die Ketten einrasten, hört sie endlich au…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(사슬이 완전히 잠기는 순간, 그녀가 마침내 저항을 멈춘다) 좋아... 인정할게. 네가 원하는 복종, 주지.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p12006_v1</code></td><td rowspan="6">（咒印封住喉咙，她的眼神愈发深沉）你不想听我说话...也罢。我的沉默，比</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(The sigil seals her throat; her gaze grows deeper still) Yo…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(El sello le cierra la garganta; su mirada se vuelve más hon…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Le sceau scelle sa gorge; son regard se creuse encore) Tu n…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Rajah menyegel tenggorokannya; tatapannya makin dalam) Kau …</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Das Siegel verschließt ihre Kehle; ihr Blick wird noch tief…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(주인이 목을 봉하자 그녀의 눈빛이 더욱 깊어진다) 내 말을 듣고 싶지 않구나... 좋아. 내 침묵이 말보다…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p12007_v1</code></td><td rowspan="6">（逆鳞被触，她浑身战栗）这是海妖最深的禁忌...你...竟敢...</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(The reverse scale is touched; a shudder runs through her) T…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(Le tocan la escama inversa; un temblor la recorre entera) E…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(On touche son écaille inversée; un frisson la parcourt tout…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Sisik baliknya tersentuh; getar merambati sekujur tubuhnya)…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Die Umkehrschuppe wird berührt; ein Schauer läuft durch sie…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(역린이 닿자 그녀의 온몸이 떨린다) 이건 세이렌의 가장 깊은 금기... 네가... 감히...</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td rowspan="6"><code>TXT_DungeonDialogue_c5_p12008_v1</code></td><td rowspan="6">（星芒鞭落下，她抬起下巴迎向）来吧。让我看看你的&quot;礼物&quot;，配得上我的骄傲</td><td class="col">col4 · The Slippery Mackerels</td><td class="dv">(The starlight whip descends; she lifts her chin to meet it)…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col5 · Los caballas resbaladi</td><td class="dv">(El látigo de luz estelar cae; ella alza el mentón para reci…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col6 · &quot;Le Maquereau Glissant</td><td class="dv">(Le fouet d&#x27;éclat stellaire s&#x27;abat; elle lève le menton pour…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col7 · Ikan Tenggiri Licik</td><td class="dv">(Cambuk cahaya bintang turun; dia mengangkat dagu menyambutn…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col8 · &quot;Die Glitschige Makrel</td><td class="dv">(Die Sternenglanzpeitsche fällt; sie hebt das Kinn ihr entge…</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td class="col">col9 · 사기꾼 고등어</td><td class="dv">(성광 채찍이 내려오고, 그녀가 턱을 들어 맞이한다) 와. 네 “선물”이 내 자존심에 어울리는지 보여 줘.</td><td class="fv"><i class="e">空</i></td></tr>
+<tr><td colspan="5" class="more">…还有 84 行未展开</td></tr>
+</tbody></table></div>
+</section></body></html>

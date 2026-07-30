@@ -237,3 +237,21 @@ X3 的 UI 绑定是**全路径字符串**（`GameObject.FindByFullPath("Root/Ani
   - **迁移自检清单（照抄同族界面时逐项打勾，只比节点树不够）**：①组件级差异（LayoutElement/IgnoreLayout）
     ②HLG 参数（ForceExpandWidth/ChildAlignment）③content 的 `pivot.x=0` ④SaveData 路径 + 内部类 `UINodeDescribe` path
     ⑤`BindData` 首行 `Show()` ⑥SRFilter 显式接线。**本轮六项漏了四项，一项一轮返工。**
+
+## 排查：Unity「疯狂 importing」怎么定位是谁造成的（2026-07-29 实操）
+症状=用户报 Unity 一直在 importing 停不下来。**十有八九是 git 操作把工作区批量改写了**（reset / merge / checkout 一个大目录），不是 Unity 抽风。
+
+**诊断三步（从快到慢）**：
+1. **`git reflog -10`** —— 一眼看出是不是 `reset: moving to ...` / `merge` / `pull` 干的，以及发生在什么时候。这步最快且信息量最大。
+2. **算改写范围＋看类型分布**（git 侧，秒出）：
+   ```bash
+   git diff --name-only <改写前> <改写后> | sed 's/.*\.//' | sort | uniq -c | sort -rn | head
+   ```
+   **重点看 mp3 / mp4 / png / jpg 的数量**——音视频和大图是导入耗时的真正大头（本次 398 mp3 + 127 mp4 + 114 jpg，所以格外久）；`.meta` 数量大不必慌，它跟着资源走。
+3. **磁盘侧印证**（可选，大仓很慢必须后台跑）：
+   ```bash
+   find client/Assets -type f -newermt "-2 hours" -not -path "*/Library/*" | wc -l
+   ```
+   ⚠️ 这条在 x3-project 上会撞 Bash 2min 超时，必须 `run_in_background`。本次 git 侧算 4385、磁盘侧 4075，两者吻合即可确认结论。
+
+**给用户的处置口径**：**让它导完、别中断、导入期间别再切分支或改文件**——中途打断会留半截 Library 缓存，下次可能触发全量重导，更久。若同时还有"要恢复被 reset 的 commit"这类需求，**别在导入期 reset 工作区**，改用 sparse worktree cherry-pick（见 memory `reference_x3_project_repo`），全程不碰工作区。

@@ -1,0 +1,342 @@
+<title>限时抢购 · 手动搬运操作台</title>
+<style>
+:root{
+  --bg:#f7f7f5; --panel:#fff; --ink:#1a1a18; --dim:#6b6b66; --line:#e2e2dd;
+  --accent:#b5541f; --ok:#2d7a4f; --warn:#c9a227; --bad:#b8342a;
+  --code:#f0efeb;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#141413;--panel:#1c1c1a;--ink:#eceae4;--dim:#9a9892;--line:#2e2e2b;
+        --accent:#e08a4c;--ok:#5fb98a;--warn:#e0c04a;--bad:#e0685c;--code:#232320;}
+}
+:root[data-theme=dark]{--bg:#141413;--panel:#1c1c1a;--ink:#eceae4;--dim:#9a9892;--line:#2e2e2b;
+        --accent:#e08a4c;--ok:#5fb98a;--warn:#e0c04a;--bad:#e0685c;--code:#232320;}
+:root[data-theme=light]{--bg:#f7f7f5;--panel:#fff;--ink:#1a1a18;--dim:#6b6b66;--line:#e2e2dd;
+        --accent:#b5541f;--ok:#2d7a4f;--warn:#c9a227;--bad:#b8342a;--code:#f0efeb;}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.65 -apple-system,"Segoe UI","Microsoft YaHei",system-ui,sans-serif;
+  padding:0 0 80px}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--line);background:var(--panel);position:sticky;top:0;z-index:20;
+  box-shadow:0 1px 12px rgba(0,0,0,.06)}
+header .wrap{padding:14px 20px 12px}
+h1{margin:0;font-size:19px;letter-spacing:-.2px}
+h1 small{font-weight:400;color:var(--dim);font-size:13px;margin-left:8px}
+.bar{height:6px;background:var(--line);border-radius:99px;margin-top:10px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+.barlab{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);margin-top:5px}
+.barlab button{font:inherit;font-size:12px;background:none;border:1px solid var(--line);
+  color:var(--dim);border-radius:5px;padding:1px 8px;cursor:pointer}
+.barlab button:hover{border-color:var(--accent);color:var(--accent)}
+
+section{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  margin:18px 0;overflow:hidden}
+section>h2{margin:0;padding:12px 16px;font-size:15px;background:var(--code);
+  border-bottom:1px solid var(--line);display:flex;align-items:center;gap:9px}
+section>h2 .n{background:var(--accent);color:#fff;width:22px;height:22px;border-radius:50%;
+  display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+section>h2 .cnt{margin-left:auto;font-size:12px;color:var(--dim);font-weight:400}
+.body{padding:14px 16px}
+p{margin:.5em 0}
+.dim{color:var(--dim);font-size:13.5px}
+
+label.ck{display:flex;gap:10px;align-items:flex-start;padding:7px 0;
+  border-bottom:1px dashed var(--line);cursor:pointer}
+label.ck:last-child{border-bottom:none}
+label.ck input{margin-top:4px;flex:none;width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+label.ck input:checked ~ .t{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.t{flex:1}
+.t b{font-weight:600}
+.exp{display:block;font-size:12.5px;color:var(--ok);margin-top:3px}
+.exp::before{content:"✓ 看到这个算对：";opacity:.75}
+
+code,kbd{background:var(--code);padding:1px 5px;border-radius:4px;
+  font:13px/1.5 "Cascadia Mono",Consolas,monospace;word-break:break-all}
+pre{background:var(--code);padding:11px 13px;border-radius:7px;overflow-x:auto;
+  font:12.5px/1.6 "Cascadia Mono",Consolas,monospace;margin:.6em 0}
+.tw{overflow-x:auto;margin:.7em 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
+th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:var(--code);font-weight:600}
+
+.cp{background:none;border:1px solid var(--line);color:var(--dim);border-radius:4px;
+  font-size:11px;padding:1px 6px;cursor:pointer;margin-left:6px;white-space:nowrap}
+.cp:hover{border-color:var(--accent);color:var(--accent)}
+.cp.done{border-color:var(--ok);color:var(--ok)}
+
+.note{background:var(--code);border-left:3px solid var(--warn);padding:9px 12px;
+  border-radius:0 6px 6px 0;margin:.7em 0;font-size:13.5px}
+.note.bad{border-left-color:var(--bad)}
+.note.ok{border-left-color:var(--ok)}
+.note b{color:var(--ink)}
+
+textarea{width:100%;background:var(--code);color:var(--ink);border:1px solid var(--line);
+  border-radius:6px;padding:8px 10px;font:13px/1.6 inherit;resize:vertical;min-height:52px}
+.fld{margin:.6em 0}
+.fld label{display:block;font-size:12.5px;color:var(--dim);margin-bottom:3px}
+
+.nodes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2px 16px}
+.nd{display:flex;gap:8px;align-items:center;padding:4px 0;font-size:13px;
+  border-bottom:1px dashed var(--line)}
+.nd code{flex:1;background:none;padding:0;font-size:12.5px}
+.nd button{border:1px solid var(--line);background:none;color:var(--dim);border-radius:4px;
+  width:24px;height:22px;cursor:pointer;font-size:12px;flex:none}
+.nd button.y.on{border-color:var(--ok);color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+.nd button.n.on{border-color:var(--bad);color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,transparent)}
+#missing{font-size:13px}
+#missing .m{display:inline-block;background:color-mix(in srgb,var(--bad) 15%,transparent);
+  color:var(--bad);border-radius:4px;padding:1px 7px;margin:2px 4px 2px 0;font-family:monospace;font-size:12px}
+.hero{border:2px solid var(--bad);border-radius:8px;padding:12px 14px;
+  background:color-mix(in srgb,var(--bad) 7%,transparent)}
+.hero h3{margin:0 0 6px;font-size:14.5px;color:var(--bad)}
+footer{text-align:center;color:var(--dim);font-size:12px;margin-top:26px}
+</style>
+
+<header><div class="wrap">
+  <h1>限时抢购 · 手动搬运操作台 <small>X2 → X3 · 对着这个干</small></h1>
+  <div class="bar"><i id="pb"></i></div>
+  <div class="barlab"><span id="pt">0 / 0</span>
+    <span><button onclick="theme()">切换主题</button> <button onclick="reset()">清空进度</button></span></div>
+</div></header>
+
+<div class="wrap">
+
+<section><h2><span class="n">0</span>准备<span class="cnt"></span></h2><div class="body">
+<label class="ck"><input type="checkbox"><span class="t"><b>关掉 Unity（X3 那边）</b>
+<span class="exp">进程列表里没有 X3 的 Unity。拷二进制资源时开着会吃到导入中间态 → 白模/糊图</span></span></label>
+<label class="ck"><input type="checkbox"><span class="t"><b>确认 X3 仓干净且在 dev_festival</b>
+<pre>cd /c/x3-project &amp;&amp; git status &amp;&amp; git branch --show-current</pre>
+<span class="exp">分支 = dev_festival；工作区只有几个 .meta churn / gdconfig 子模块，没有别人的在途改动</span></span></label>
+<label class="ck"><input type="checkbox"><span class="t"><b>打开 x2client 工程</b>
+<code>D:\UGit\x2client\client</code><button class="cp">复制</button>
+<span class="exp">Unity 2022.3.62f1c1 打开，无编译错（编译错时 Tools 菜单项不出现）</span></span></label>
+</div></section>
+
+<section><h2><span class="n">1</span>路 A 重导 4 个 prefab<span class="cnt"></span></h2><div class="body">
+<p class="dim">目的不是拿资产（AI 包已有），是<b>把 AI 包那 52 个 UNRESOLVED 变成确定答案 + 拿到译文</b>。</p>
+<div class="note"><b>不用</b>拖场景 / Unpack / 改名 / 存 Assets 根 —— 那四步只在「要落地一个改了名的自包含 prefab」时才需要。
+直接 <b>Project 选中 prefab → 右键 <code>Tools ▸ X2 ▸ Export Prefab Assets...</code></b>，目标自动填好。</div>
+<div class="tw"><table>
+<tr><th>#</th><th>Project 路径（搜 <code>FlashSale</code> 就这 4 个，无重复件）</th><th>GUID</th></tr>
+<tr><td>1 ✅</td><td><code>Assets/x2/Res/UI/Prefab/Activity/FlashSale.prefab</code><button class="cp">复制</button></td><td><code>0902ea9ddc9284741ab682cc3cbe05fa</code></td></tr>
+<tr><td>2</td><td><code>Assets/x2/Res/UI/Prefab/Activity/FlashSaleItem.prefab</code><button class="cp">复制</button></td><td><code>bce41049db034bc4294aae5968c32749</code></td></tr>
+<tr><td>3</td><td><code>Assets/x2/Res/UI/Prefab/Activity/FlashSalePop.prefab</code><button class="cp">复制</button></td><td><code>2ab46a0198f17114c8c9e98f4d512e09</code></td></tr>
+<tr><td>4</td><td><code>Assets/x2/Res/UI/Prefab/Activity/FlashSaleRewardGet.prefab</code><button class="cp">复制</button></td><td><code>e429fcf7acf40db42ab447b77b27dcfb</code></td></tr>
+</table></div>
+<p><b>面板填写</b>（输出目录记在 EditorPrefs，第一次填完后 3 次不用再填）：</p>
+<div class="tw"><table>
+<tr><th>字段</th><th>值</th></tr>
+<tr><td>输出目录</td><td><code>D:\newX2\Copy\FlashSale_manualA</code><button class="cp">复制</button> ← 新目录，<b>别覆盖 AI 包</b></td></tr>
+<tr><td>排除红点资源</td><td>✅ 默认</td></tr>
+<tr><td>复制主 Prefab 到 Prefabs</td><td>✅ 默认</td></tr>
+<tr><td>导出 TFWText 本地化 TSV</td><td>✅ <b>重点，AI 包没有这个</b></td></tr>
+</table></div>
+<label class="ck"><input type="checkbox"><span class="t">导 <b>FlashSale.prefab</b>
+<span class="exp">自动弹开 <code>...\FlashSale_manualA\FlashSale\</code>，里面有 Images/Textures/Animations/Materials/Shaders/Prefabs + _manifest.txt + localization_keys.tsv</span></span></label>
+<label class="ck"><input type="checkbox"><span class="t">导 <b>FlashSaleItem.prefab</b></span></label>
+<label class="ck"><input type="checkbox"><span class="t">导 <b>FlashSalePop.prefab</b></span></label>
+<label class="ck"><input type="checkbox"><span class="t">导 <b>FlashSaleRewardGet.prefab</b></span></label>
+<div class="note bad"><b>路 A 不导字体 / TMP FontAsset</b>（<code>.ttf</code>/<code>.asset</code> 不在它的分类表里，静默跳过）。
+AI 包 <code>Other\</code> 里那 2 个 <code>.ttf</code> 要从 B 包补 —— 别以为路 A 导完就齐了。</div>
+</div></section>
+
+<section><h2><span class="n">2</span>两包 diff（记录结果）<span class="cnt"></span></h2><div class="body">
+<p class="dim">左 = 路 A 新导 <code>FlashSale_manualA\FlashSale\</code>，右 = AI 包 <code>D:\newX2\Copy\FlashSale\</code>
+（右边只有 <code>Images 48 / Animations 8 / Prefabs 17 / Other 2</code>，<b>没有 Textures / Materials / Shaders</b>）</p>
+<label class="ck"><input type="checkbox"><span class="t"><b>① 那 52 个 UNRESOLVED 是什么</b>
+<span class="dim">AI 包 <code>_manifest.txt</code> 末尾的 UNRESOLVED 列表，逐个在路 A 的 manifest 里找 → 是材质？shader？还是本来就不存在的共享图集</span></span></label>
+<div class="fld"><label>结论（多少个是真资产、多少个是幽灵）</label><textarea data-k="d1" placeholder="例：52 个里 9 个是 Materials、1 个 shader、其余 42 个路A也没有 → 共享图集/内置资源"></textarea></div>
+<label class="ck"><input type="checkbox"><span class="t"><b>② localization_keys.tsv 有多少 Key</b>
+<span class="dim">AI 包完全没有这个文件，上次「满屏 LC_ 裸 key」缺的就是它</span></span></label>
+<div class="fld"><label>Key 数 / 语言列数</label><textarea data-k="d2" placeholder="例：N 个 lc_ Key × 17 语"></textarea></div>
+<label class="ck"><input type="checkbox"><span class="t"><b>③ 四个子目录文件计数</b></span></label>
+<div class="fld"><label>Images / Textures / Materials / Shaders 各几个</label><textarea data-k="d3" placeholder="路A FlashSale: Images __ / Textures __ / Materials __ / Shaders __"></textarea></div>
+</div></section>
+
+<section><h2><span class="n">3</span>手动落地（Explorer 拷，Unity 关着）<span class="cnt"></span></h2><div class="body">
+<div class="note bad"><b>落点不能改名不能换目录</b> —— 代码写死
+<code>Assets/Res/UI/Prefab/Activity/FlashSale.prefab</code>。上次界面全空就是这个路径下没东西（日志 <code>Empty bundle path for asset:</code>）。
+<b><code>.meta</code> 必须一起拷</b>，GUID 靠它保住。</div>
+<label class="ck"><input type="checkbox"><span class="t"><b>FlashSale.prefab</b>（+ .meta）→
+<code>C:\x3-project\client\Assets\Res\UI\Prefab\Activity\</code><button class="cp">复制</button></span></label>
+<label class="ck"><input type="checkbox"><span class="t"><b>专属图</b>（先只拷 <code>FlashSale_*</code> 那几张，+ .meta）→
+<code>C:\x3-project\client\Assets\Res\UI\Sprite\UIActvFlashSale\Images\</code><button class="cp">复制</button>
+<span class="exp">只拷了 5-8 张，不是 48 张</span></span></label>
+<label class="ck"><input type="checkbox"><span class="t"><b>3 个 anim</b>
+<code>BoxAnim</code> / <code>ui21201451BoxMain</code> / <code>ui21201451BoxMainDefault</code>（+ .meta）→
+<code>C:\x3-project\client\Assets\Res\UI\Animation\</code><button class="cp">复制</button></span></label>
+<div class="note ok"><b>为什么先少拷</b>：X2/X3 <b>同源同 guid</b>，上一版实测「24 图 / 11 公共件 / 2 字体<b>原地解析、零拷贝</b>」。
+先少拷 → Editor 里看哪些真白 → 只补白的。<b>这就是手动做的价值</b>；整包倒进去会造一堆和 X3 原件重复的副本。</div>
+</div></section>
+
+<section><h2><span class="n">4</span>开 Unity，先只看不改<span class="cnt"></span></h2><div class="body">
+<label class="ck"><input type="checkbox"><span class="t">双击 <code>FlashSale.prefab</code> 进 Prefab 模式
+<span class="exp">能打开、大结构（柜子/货架/倒计时）在</span></span></label>
+<div class="fld"><label>哪些图是白的（回第 3 步补）</label><textarea data-k="white" placeholder="节点路径 → 缺哪张图"></textarea></div>
+<div class="fld"><label>Console 报了哪些 missing script</label><textarea data-k="miss" placeholder="脚本名 / guid，先记不修"></textarea></div>
+</div></section>
+
+<section><h2><span class="n">5</span>核 Auto_ 节点契约<span class="cnt"></span></h2><div class="body">
+<div class="note bad"><b>框架对缺失节点静默容错</b>（<code>FindByFullPath</code> 返回 null、<code>AddListener</code> 仅报错）→
+少一个节点<b>不崩不报错</b>，只是「那块永远不显示」。<b>这是最难发现的一类，只能逐条核。</b></div>
+<p><b>主面板 FlashSale.prefab</b> —— 在 Hierarchy 搜索框逐个搜，✓有 / ✗缺：</p>
+<div class="nodes" id="n1"></div>
+<p style="margin-top:14px"><b>每个货架格子</b>（<code>Content/Grid/Item1</code> 等，<code>FlashSaleShelfItem</code> 绑）：</p>
+<div class="nodes" id="n2"></div>
+<div class="note" style="margin-top:12px"><b>缺失汇总</b><div id="missing" style="margin-top:5px">（还没标）</div></div>
+</div></section>
+
+<section><h2><span class="n">6</span>亲眼看上次的翻车点<span class="cnt"></span></h2><div class="body">
+<div class="hero">
+<h3>选中 Content/Grid/Item1/BoxNormal/Card/Icon，看 Inspector</h3>
+<p style="margin:0">你会看到这个节点上<b>挂了 3 个组件</b>：一个 TFWImage（底图）+ <b>2 个 X2 的 item 显示组件</b>。
+后面这两个会按自己的默认数据画「LV99 头像 + 555」，把底图盖掉。</p>
+<p style="margin:.5em 0 0">上次代码走 <code>SetItemBasicInfo(道具, 底图)</code> 只设了底图 sprite →
+<b>8 个格子图标全一样、数量全是 555</b>。正解 = 调那 2 个 item 组件的 <code>SetItem(itemId)</code>，<b>不要去设底图 sprite</b>。</p>
+<p style="margin:.5em 0 0" class="dim">这一眼就是手动做的全部意义 —— 脚本化迁移看不见「一个节点上叠了 3 个画图组件」。</p>
+</div>
+<label class="ck" style="margin-top:10px"><input type="checkbox"><span class="t">已亲眼确认那 3 个组件</span></label>
+<div class="fld"><label>那 2 个 X2 item 组件的真实脚本名 / guid</label><textarea data-k="itemcomp" placeholder="记下来，决定是驱动它还是换成 X3 UIItemTemplate"></textarea></div>
+<label class="ck"><input type="checkbox"><span class="t"><b>决定</b>：留着用 <code>SetItem(itemId)</code> 驱动 <b>或</b> 用第 7 步工具换成 X3 <code>UIItemTemplate</code></span></label>
+</div></section>
+
+<section><h2><span class="n">7</span>X2 残留换 X3 等价件<span class="cnt"></span></h2><div class="body">
+<p class="dim">Unity 菜单 <code>Tools ▸ X2 Migration ▸ ...</code>，一个个点，看报告。没命中就跳过。</p>
+<label class="ck"><input type="checkbox"><span class="t"><b>清理 LayoutRtlAlignment(RTL) missing 组件</b> ← 必跑
+<span class="exp">报告有输出或报「无命中」；不清会<b>阻断 prefab 保存</b></span></span></label>
+<label class="ck"><input type="checkbox"><span class="t"><b>多语言键回填（按 fileID）</b> ← 必跑
+<span class="exp">不跑就是满屏 <code>LC_</code> 裸 key</span></span></label>
+<label class="ck"><input type="checkbox"><span class="t"><b>CommonItemShow → UIItemTemplate 替换</b>（跟第 6 步的决定挂钩）</span></label>
+<label class="ck"><input type="checkbox"><span class="t">Head1 → UIPlayerAvatar / AllianceFlag → UIAllianceSymbolUnit / X2BetterOutline / X2 红点组件（按需）</span></label>
+<div class="note bad">剩下的 missing script <b>别用 <code>RemoveMonoBehavioursWithMissingScript</code> 一把梭</b>
+—— 无差别删会误伤「X3 有等价、只是 guid 链断了、该修不该删」的组件（官方文档有 <code>ExOutlineMix</code> 实证反例）。
+上一版处置结论可沿用：X2 特效 Graphic×14 / Spine×1 / LoopScroll×1 剥离，缺源 FX 整块删，浮雕 missing×2 保留。</div>
+</div></section>
+
+<section><h2><span class="n">8</span>补骨架 + 注册<span class="cnt"></span></h2><div class="body">
+<label class="ck"><input type="checkbox"><span class="t"><b>根节点五件套</b>
+RectTransform + UIConfig + Canvas(SortingOrder=11) + CanvasScaler(1080×1920) + GraphicRaycaster
+<span class="exp">对着任一 X3 正常界面（如 UIActvLaborGacha）核，五个都在。不补打开即 MissingComponentException</span></span></label>
+<label class="ck"><input type="checkbox"><span class="t"><b>Top 信息区</b>：从 <code>UIActvLaborGacha.prefab</code> 整棵移植 <code>CentreOther/Animation/Top</code>
+<span class="exp">Top/txt_title、Top/ActvDesc、Top/Time/txt、Top/btn_info 四个节点都在。<b>别复用 X2 顶部骨架</b>（样式不符会被打回）</span></span></label>
+<label class="ck"><input type="checkbox"><span class="t"><b>BtnShare</b>：X2 原版没有，自己摆一个，<b>名字必须叫 BtnShare</b>
+<span class="dim">代码 <code>UIHelper.AddListener(..., "BtnShare", OnBtnShareTrigger, out mBtnShare)</code></span></span></label>
+<label class="ck"><input type="checkbox"><span class="t"><b>DK 注册 7 条</b>：<code>Display_*.asset</code> + <code>Path_*.asset</code> 双表同锚平行插
+<span class="exp">keys[i] == values[i].key 且有序。⚠️ DK 表多人共用，<b>按 hunk 提别整文件提</b>（这 7 条从来没进过远端）</span></span></label>
+<label class="ck"><input type="checkbox"><span class="t"><b>Ctrl+S 保存 prefab</b>
+<span class="exp">存得下去、没被 missing script 阻断</span></span></label>
+</div></section>
+
+<section><h2><span class="n">9</span>验证六道关<span class="cnt"></span></h2><div class="body">
+<div class="note">配置先恢复：<pre>cd /c/x3/gdconfig &amp;&amp; git checkout c43303f7 -- tsv/ActvFlashSale__*.tsv</pre>
+schema / def / <code>ACTV_TYPE_FLASH_SALE=84</code> 都还在，不用重造。</div>
+<label class="ck"><input type="checkbox"><span class="t">① Unity Editor 编译过</span></label>
+<label class="ck"><input type="checkbox"><span class="t">② prefab 打得开、图不白、无 missing 阻断保存</span></label>
+<label class="ck"><input type="checkbox"><span class="t">③ 起本地服 + GM 开活动
+<code>GMAddServerActivityByCfgId 101029 43200</code><button class="cp">复制</button></span></label>
+<label class="ck"><input type="checkbox"><span class="t">④ <b>完整重登，不点任何按钮</b> → 货架直接有 8 盒
+<span class="exp">填充在 OnPostInit，<b>重连不触发</b>，必须完整重登</span></span></label>
+<label class="ck"><input type="checkbox"><span class="t">⑤ 钻石线买一次通（已售罄 / 余量减 / 价格对）</span></label>
+<label class="ck"><input type="checkbox"><span class="t">⑥ <b>8 格图标各不相同、没有 555</b>
+<span class="exp">第 6 步修对了才过</span></span></label>
+<div class="note bad">中途从命令行 / 外部改过 <code>.bytes</code> 或图 → <b>必须完全关掉 Editor 重开</b>。
+热塞对运行中的 Editor 无效（读的是已导入的 TextAsset）—— 这条上次反复踩。</div>
+</div></section>
+
+<section><h2>🪤</h2><div class="body">
+<p style="margin-top:0"><b>随时对照 · 每阶段典型翻车</b></p>
+<div class="tw"><table>
+<tr><th>症状</th><th>根因</th></tr>
+<tr><td>界面<b>全空</b>，日志 <code>Empty bundle path for asset:</code></td><td>落点/名字改了，代码写死的 assetPath 找不到</td></tr>
+<tr><td>全白图</td><td>只拷 png 没拷 <code>.meta</code>，GUID 重排</td></tr>
+<tr><td>prefab <b>存不下去</b></td><td><code>LayoutRtlAlignment</code> missing 阻断 SavePrefabAsset</td></tr>
+<tr><td>满屏 <code>LC_XXX</code></td><td>本地化脚本被剥、Key 没回填</td></tr>
+<tr><td>某块<b>永远不显示</b>、按钮点了没反应</td><td>节点路径对不上，框架静默容错不报错</td></tr>
+<tr><td>一格里图标全一样 + 555</td><td>节点上叠了多个画图组件，只驱动了其中一个</td></tr>
+<tr><td>图能显示但 DK 查不到 / 繁中空白</td><td>DK 单表插了没插另一张；i18n 没填 <code>zh</code> 列</td></tr>
+<tr><td>改了没生效、数据是旧的</td><td>外部改 bytes 没重开 Editor</td></tr>
+<tr><td>界面主体正常，某类元素全缺</td><td><code>assetPath</code> 字符串加载 = guid 扫描盲区，压根没搬</td></tr>
+</table></div>
+<p class="dim" style="margin-bottom:0">全链路方法论 = <code>KB\方法论\活动程序开发\X2到X3_UI资产搬运_PrefabAssetExport说明书.md</code>（八阶段 + 路A/B 对照）<br>
+本案唯一入口 = <code>KB\换皮档案\X3\2026-07-22_限时抢购(X2搬运).md</code></p>
+</div></section>
+
+<footer>进度自动存本地浏览器 · 换浏览器/清缓存会丢 · 2026-07-30</footer>
+</div>
+
+<script>
+const N1=["Content/Grid","Countdown","Countdown/Time/Layout1/Text1","Countdown/Time/Layout1/Text2",
+"Countdown/Time/Layout2","ChestProgress/Cont/Progress/Chest1","ChestProgress/Cont/Progress/Chest2",
+"ChestProgress/Cont/Progress/Chest3","ChestProgress/Cont/ValLayout/Num","SpecialBoxBtn",
+"SpecialBoxBtn/SpecialBox/Num","BoxAnim","BoxAnim2","Pop","Top/txt_title","Top/ActvDesc",
+"Top/Time/txt","Top/Time","Top/btn_info","BtnShare"];
+const N2=["BoxNormal","BoxSoldOut","BoxClose","Remain","Limit",
+"BoxNormal/Card/Icon","BoxNormal/Card/Value","Remain/Num","Limit/Text"];
+const KEY="fs_manual_v1";
+let S=JSON.parse(localStorage.getItem(KEY)||'{"ck":{},"nd":{},"tx":{}}');
+const save=()=>localStorage.setItem(KEY,JSON.stringify(S));
+
+function nodes(id,list,pre){
+  document.getElementById(id).innerHTML=list.map(p=>{
+    const k=pre+p, v=S.nd[k]||"";
+    return `<div class="nd"><code>${p}</code>
+      <button class="y ${v==='y'?'on':''}" data-k="${k}" data-v="y">✓</button>
+      <button class="n ${v==='n'?'on':''}" data-k="${k}" data-v="n">✗</button></div>`;
+  }).join("");
+}
+nodes("n1",N1,"a:");nodes("n2",N2,"b:");
+
+document.querySelectorAll(".nd button").forEach(b=>b.onclick=()=>{
+  const k=b.dataset.k,v=b.dataset.v;
+  S.nd[k]=S.nd[k]===v?"":v;save();
+  b.parentNode.querySelectorAll("button").forEach(x=>
+    x.classList.toggle("on",S.nd[k]===x.dataset.v));
+  sumMissing();prog();
+});
+function sumMissing(){
+  const m=Object.keys(S.nd).filter(k=>S.nd[k]==="n").map(k=>k.slice(2));
+  document.getElementById("missing").innerHTML=m.length
+    ? m.map(x=>`<span class="m">${x}</span>`).join("")
+    : '（还没标 / 全都有）';
+}
+sumMissing();
+
+document.querySelectorAll("label.ck input").forEach((c,i)=>{
+  c.dataset.i="c"+i;
+  c.checked=!!S.ck["c"+i];
+  c.onchange=()=>{S.ck[c.dataset.i]=c.checked;save();prog();};
+});
+document.querySelectorAll("textarea").forEach(t=>{
+  t.value=S.tx[t.dataset.k]||"";
+  t.oninput=()=>{S.tx[t.dataset.k]=t.value;save();};
+});
+document.querySelectorAll(".cp").forEach(b=>b.onclick=e=>{
+  e.preventDefault();
+  const box=b.closest("td")||b.closest(".t")||b.parentNode;
+  const el=[...box.querySelectorAll("code")].pop();
+  navigator.clipboard.writeText(el.textContent.trim()).then(()=>{
+    b.textContent="已复制";b.classList.add("done");
+    setTimeout(()=>{b.textContent="复制";b.classList.remove("done")},1200);
+  });
+});
+function prog(){
+  const all=document.querySelectorAll("label.ck input");
+  const d=[...all].filter(c=>c.checked).length;
+  document.getElementById("pb").style.width=(d/all.length*100)+"%";
+  document.getElementById("pt").textContent=`${d} / ${all.length} 步完成`;
+  document.querySelectorAll("section").forEach(s=>{
+    const cs=s.querySelectorAll("label.ck input"),lab=s.querySelector(".cnt");
+    if(!lab)return;
+    lab.textContent=cs.length?`${[...cs].filter(c=>c.checked).length}/${cs.length}`:"";
+  });
+}
+prog();
+function reset(){if(confirm("清空所有勾选和笔记？")){localStorage.removeItem(KEY);location.reload();}}
+function theme(){
+  const r=document.documentElement;
+  const cur=r.dataset.theme||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  r.dataset.theme=cur==="dark"?"light":"dark";
+}
+</script>
