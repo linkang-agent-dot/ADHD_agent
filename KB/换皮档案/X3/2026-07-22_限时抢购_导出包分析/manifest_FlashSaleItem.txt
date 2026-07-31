@@ -1,0 +1,60 @@
+﻿Source: Assets/FlashSaleItem.prefab
+Exported: 2026-07-31 15:10:31
+ExcludeRedDot: True
+WriteLocalizationTsv: True
+============================================================
+
+[Images 30]
+Assets/x2/Res/UI/NewSprite/Common/Bg/Common_Bg_Pop-ups.png
+Assets/x2/Res/UI/NewSprite/Common/button/Common_Button_close.png
+Assets/x2/Res/UI/NewSprite/Common/Decorate/Common_decorate_Starlight.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_BundleBg.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_hero5_Epic.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_hero5_Legendary.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_hero5_Perfect.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_ Normal.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_Epic.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_Legendary.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_mask.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_Perfect.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_Rare.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_special.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_special2.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox4_ Normal.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox_Legendary.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_Frame_selected.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_Frame_TextBox.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_icon_IconBox2_lock.png
+Assets/x2/Res/UI/HighQualitySprite/common_icon_new.png
+Assets/x2/Res/UI/Atlas/Public/Common_WhiteImg_square.png
+Assets/x2/Res/UI/NewSprite/Common/WhiteImg/Common_WhiteImg_square2.png
+Assets/x2/Res/UI/NewSprite/Common/WhiteImg/Common_WhiteImg_TickMark.png
+Assets/x2/Res/UI/NewSprite/Common/WhiteImg/Common_WhiteImg_TitleDecoration2.png
+Assets/x2/Res/UI/Atlas/Furnace/Furnace_Icon_ Tag01.png
+Assets/x2/Res/UI/NewSprite/store/GildedPrivilegeCard.png
+Assets/x2/Res/UI/Atlas/ResourcesICon/Icon_Daoju_Zanshiyige.png
+Assets/x2/Res/UI/Atlas/HeroCard/ImgHeroAvatar_Tailor.png
+Assets/x2/Res/UI/NewSprite/Slg/SLG_bg_Rating_S.png
+
+[Textures 6]
+Assets/x2/Res/Effect/Textures/glow/Glow_1005.png
+Assets/x2/Res/Effect/Textures/glow/Glow_2002.png
+Assets/x2/Res/Effect/Textures/mask/Mask_040.png
+Assets/x2/Res/Effect/Textures/mask/Mask_069_1.png
+Assets/x2/Res/Effect/Textures/mask/Mask_070.png
+Assets/x2/Res/Effect/Textures/noise/Noise_003.png
+
+[Animations 2]
+Assets/x2/Res/Effect/Animation/Fx_UI_Selected.controller
+Assets/x2/Res/Effect/Animation/Fx_UI_Selected_01.anim
+
+[Prefabs 0]
+
+[Materials 4]
+Assets/x2/Res/Effect/Material/Special/Glow1005_1a_UI.mat
+Assets/x2/Res/Effect/Material/Special/Glow2002_1a_UI.mat
+Assets/x2/Res/Effect/Material/Special/Mask040_Mask069_Noise003_2a_UI.mat
+Assets/x2/Res/Effect/Material/Special/Mask070_1a_UI.mat
+
+[Shaders 1]
+Assets/x2/Res/Shader/Effect/FX_AddBlend_DistortionDissolve_Flow_New_UI 1.shader

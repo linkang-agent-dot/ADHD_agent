@@ -1,0 +1,370 @@
+# -*- coding: utf-8 -*-
+"""X3 马戏节 上活动清单 HTML 生成器（范式照 X3_上活动清单_世界杯扩服+深海节_20260702.html）
+数据来源：origin/dev_festival 实查（2026-07-30, tip f5eeaa13）
+"""
+import os
+
+OUT = r"C:\ADHD_agent\KB\产出-数值设计\X3_上活动清单_马戏节_20260730.html"
+
+# (AO, 名, Type, CID, TC, hub, 约束级别, 约束说明, 建议窗口(起D,止D), 部署要点)
+# 约束级别: hard/soft/free/cross
+ACTS = [
+ # 组 144 主 hub
+ ("10071705","马戏酒馆",7,"720","0",144,"cross","<b>跨服</b>＋<b>正好 10 天</b>（7 阶段 1+1+2+1+2+1+2=10·实查 ScoreMulti CID720）；阶段和≠活动时长导表报错",(0,9),"<b>跨服·有榜(RankID 131)</b>·<b>唯一跨 W1/W2 分界</b>的活动"),
+ ("102994","每日礼包（进度礼包）",29,"3003","160101",144,"hard","<b>固定 7 天</b>（TC160101 触发后计 6d23h59m59s）；5 档按第 N 日解锁",(0,6),"⚠️<b>MailID 必配</b>（X3NEW-1829 终奖无人领事故）"),
+ ("101407","签到 · <b>第 1 期</b>",14,"1407","0",144,"hard","<b>≥7 天</b>（导表校验 Duration≥签到天数）·每期正好 7 天",(0,6),"<b>W1</b>·产出勋章 1210＋第 7 天发幻紫魅影卡；<b>两期＝两个 iGame 单</b>（深海同做法）"),
+ ("101407","签到 · <b>第 2 期</b>",14,"1407","0",144,"hard","同上·第二期实例化，配置不改",(7,13),"<b>W2</b>·同一 AO 部署两次；深海是 13927(P1)+13928(P2)"),
+ ("109101","节日周卡",70,"61001","",144,"hard","≥7 天（ClaimDays=7·每日 4 选 1·池 10）；客户端包已不是约束",(7,13),"<b>W2（D7 起）</b>（用户定）·产出 <b>1209 马戏门票</b>三档 6/12/18 张 ⇒ 正好补 W2 的门票缺口"),
+ ("105014","许愿池",50,"5014","0",144,"cross","<b>跨服 · 绝对时间各服对齐</b>——排期最不灵活，<b>先定它</b>",(0,6),"<b>W1</b>（用户定）；分组口径待定（深海=一个大池·无排行）"),
+ ("108201","星光巡演",82,"820001","0",144,"cross","<b>跨服</b>（Type82·深海没有这个，本期新增）",(7,13),"<b>W2</b>（用户定）；⚠️分组口径 + 有无排行<b>都没定</b>，无深海先例可抄"),
+ ("101830","BINGO 拼图 <b style='color:#f87171'>【本期不上】</b>",18,"1830","1831",144,"bind","—",(0,0),"🔴<b>已提前漏到生产</b>（32,960 玩家/121 服），用户决定本期不上；已 <b>IsOn=0</b> 关闭（MR !222）。不提单"),
+ ("105606","马戏庆典之约（拜访）",56,"5607","0",144,"soft","按天积累邀请函（设计 7 天，深海实测 14 天不报错）",(0,13),"MainBg(c30) 留空铁律"),
+ ("101026","马戏福箱（开箱）",15,"1517","0",144,"cross","<b>跨服</b>·阶段奖按次数无天数约束",(0,13),"<b>寻宝经济中枢</b>：吃 1209 → 吐 1210；<b>ServerRank=2006 ⇒ 有排行</b>；口径可抄深海转盘"),
+ ("101027","扭蛋机",83,"8201","0",144,"free","无天数约束",(7,13),"<b>W2</b>（用户定）·本期唯一新开发；⚠️奖池重配平 07-29 刚改完；返利靠 101028"),
+ ("100599","马戏累充",5,"599","0",144,"free","全次数型",(0,6),"<b>W1 当周</b>（用户定）·送 <b>1209 马戏门票</b>＝开箱燃料；白名单 col50 + c33/c44 两处都要换"),
+ ("100600","寻宝累充",5,"600","0",144,"free","全次数型",(7,13),"<b>W2</b>（用户定）·送 <b>1207 寻宝券</b>＋罗盘 ⇒ <b>必须跟拓荒者之城同周</b>，否则券无处用"),
+ ("102250","马戏福箱 BP",22,"2250","0",144,"free","积分盘按窗口设计",(0,13),"⚠️<b>满级分重算</b>（深海上线即满级教训）"),
+ ("101343","马戏珍宝集市（兑换）",13,"1343","0",144,"free","全总量限购·零每日刷新",(0,13),"花勋章 1210·15 个 SKU ⇒ <b>必须与开箱同期</b>，否则勋章无处花"),
+ ("103101","拓荒者之城",81,"81001","0",144,"cross","<b>跨服</b>·无天数约束",(7,13),"<b>W2</b>·<b>内外圈</b>：外圈吃 1207（12 格）→ 保底出 1208 彩虹星 → 内圈抽大奖 81081 旋转木马；<b>Type81 跨服无先例</b>"),
+ ("103102","门票阶梯礼包",63,"708","0",144,"bind","Type63 需 SKIP_TIMECYCLE_CHECK",(7,13),"<b style='color:#4ade80'>绑定 103101，不单独提单</b>（GS 10007）·卖 <b>1207 寻宝券</b>3 档×$19.99（各限购 1）·ChainPack708 TC6001＝礼包永久型不冲突；⚠️<b>宿主跨服 ⇒ 它被创建时继承宿主海域，也成跨服实例</b>"),
+ ("106104","装饰阶梯礼包",63,"702","0",144,"free","同上",(3,13),"HUD 页签读 TXT_ChainPack_Name_702 不是 ActvName"),
+ # 组 143 大富翁 hub
+ ("102803","马戏巡游（大富翁）",28,"2803","",143,"free","本体全次数型",(0,13),"<b>D0–D13 全程</b>（用户定·不再压第二周）；顶部资源 c33"),
+ ("101829","拼图 · 小丑的梦境",18,"1829","",143,"bind","窗口由宿主继承（GroupSchedule 10006·DurationType=2 ⇒ 与大富翁同始终）",(0,13),"<b style='color:#4ade80'>绑定 102803 大富翁，不单独提单</b>（代码+配置双证）"),
+ ("102251","巡游通行证 BP",22,"2251","0",143,"free","积分盘按 14 天设计",(0,13),"窗口跟随大富翁 D0–D13；双 BP 共任务→任务 Count 上限必查"),
+ ("101344","巡游珍宝集市（兑换）",13,"1344","",143,"free","全总量限购",(0,13),"窗口跟随大富翁 D0–D13；带「100 代币→1 马戏门票」兑换桥"),
+]
+BAN = ("101028","扭蛋庆功积分",7,"721","0","<b>备注已标【本期不上线·勿部署】，但 IsOn=1</b>——配置会导入，TC=0 不会自动开，<b>但 iGame 部署时极易被误勾</b>")
+
+import datetime as _dt
+D0 = _dt.date(2026, 7, 31)          # 用户定：明天 UTC 0 点开
+SERVERS = [1170,1270,1310,1350,1390,1400,1420,1440,1460,1510,1530,1540,1550,1560,1570,1580,1590,1600,
+ 1610,1620,1630,1640,1650,1660,1670,1680,1690,1700,1710,1720,1730,1740,1750,1760,1770,1780,1790,1800,
+ 1810,1820,1830,1840,1850,1860,1870,1880,1890,1900,1910,1920,1930,1940,1950,1960,1970,1980,1990,2000,
+ 2010,2020,2030,2040,2050,2060,2070,2080,2090,2100,2110,2120,2130,2140,2150,2160,2170,2180,2190,2200,
+ 2210,2220,2230,2240,2250,2260,2270,2280,2290]   # D35+（开服日 ≤ 2026-06-26）
+DAU_TOTAL = 10260
+def utc(a, b):
+    """相对 D 天 → 绝对 UTC 字符串"""
+    s = D0 + _dt.timedelta(days=a); e = D0 + _dt.timedelta(days=b)
+    return f"{s:%m-%d} 00:00", f"{e:%m-%d} 23:59"
+
+LV = {"hard":("#f87171","硬约束"),"cross":("#c084fc","跨服"),"soft":("#fbbf24","软约束"),
+      "free":("#4ade80","自由"),"bind":("#6b7f95","绑定")}
+SPAN = 14  # 甘特轴天数 D0..D13
+
+def bar(s, e, c):
+    left = s / SPAN * 100
+    w = (e - s + 1) / SPAN * 100
+    return (f"<div class='bar' style='left:{left:.2f}%;width:{w-0.4:.2f}%;background:{c}28;"
+            f"border:1px solid {c}88;color:{c}'>D{s}–D{e}<span class='dd'>{e-s+1}d</span></div>")
+
+rows_g = ""
+for ao, nm, tp, cid, tc, hub, lv, con, (s, e), note in ACTS:
+    c = LV[lv][0]
+    rows_g += (f"<div class='ln'><div class='nmw'><b>{nm}</b>"
+               f"<div class='sub'>{ao} · Type{tp} · 组{hub}</div></div>"
+               f"<div class='tr'>{bar(s,e,c)}</div></div>")
+
+def tbl(hub):
+    r = ""
+    for ao, nm, tp, cid, tc, h, lv, con, (s, e), note in ACTS:
+        if h != hub: continue
+        c, ln = LV[lv]
+        r += (f"<tr><td class='mono'>{ao}</td><td><b>{nm}</b></td>"
+              f"<td class='mono'>{tp}</td><td class='mono'>{cid}</td>"
+              f"<td class='mono' style=\"color:{'#fbbf24' if tc not in ('0','') else 'var(--dim2)'}\">{tc or '空'}</td>"
+              f"<td style='text-align:center'><span class='lv' style='color:{c};border-color:{c}55;background:{c}14'>{ln}</span></td>"
+              f"<td style='font-size:11.5px'>{con}</td>"
+              f"<td class='mono'>D{s}–D{e}<div style='color:var(--acc);font-size:10.5px'>{utc(s,e)[0]}<br>→ {utc(s,e)[1]}</div></td>"
+              f"<td style='color:var(--dim);font-size:11.5px'>{note}</td></tr>")
+    return r
+
+n_acts = len(set(a[0] for a in ACTS))
+n144 = len(set(a[0] for a in ACTS if a[5] == 144))
+n143 = len(set(a[0] for a in ACTS if a[5] == 143))
+n_submit = sum(1 for a in ACTS if a[6] != "bind")
+ax = "".join(f"<span>D{i}</span>" for i in range(SPAN))
+
+html = f"""<style>
+:root{{--bg:#0d1117;--panel:#141b24;--panel2:#1a232e;--line:#243040;--fg:#e8f0f8;
+--dim:#8fa3b8;--dim2:#6b7f95;--acc:#5ad1ff;--ok:#4ade80;--warn:#fbbf24;--bad:#f87171;--new:#c084fc}}
+*{{box-sizing:border-box}}
+body{{margin:0;background:var(--bg);color:var(--fg);
+font:14px/1.7 "Segoe UI","Microsoft YaHei",system-ui,sans-serif}}
+main{{max-width:1520px;margin:0 auto;padding:30px 26px 70px}}
+h1{{font-size:25px;margin:0 0 6px;letter-spacing:.3px}}
+.sub0{{color:var(--dim);font-size:13.5px;margin-bottom:4px}}
+.meta{{color:var(--dim2);font-size:11.5px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:22px}}
+h2{{font-size:17px;margin:34px 0 8px;padding-left:11px;border-left:3px solid var(--acc)}}
+h3{{font-size:14.5px;margin:22px 0 6px;color:var(--dim)}}
+.lead{{color:var(--dim);font-size:12.5px;margin:0 0 12px}}
+table{{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:12.5px;background:var(--panel)}}
+th,td{{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}}
+th{{background:var(--panel2);color:var(--dim);font-size:11.5px;white-space:nowrap}}
+.mono{{font-family:Consolas,monospace;font-size:11.5px;white-space:nowrap}}
+.lv{{border:1px solid;border-radius:3px;padding:1px 6px;font-size:10.5px;white-space:nowrap}}
+.note{{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--dim2);
+border-radius:0 6px 6px 0;padding:11px 15px;margin:14px 0;font-size:12.5px;line-height:1.8}}
+.note.bad{{border-left-color:var(--bad)}}
+.note.ok{{border-left-color:var(--ok)}}
+.note.warn{{border-left-color:var(--warn)}}
+.gt{{border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:15px 17px;margin:14px 0}}
+.gt .ax{{display:flex;margin-left:186px;border-bottom:1px solid var(--line);padding-bottom:5px;margin-bottom:9px}}
+.gt .ax span{{flex:1;font-size:10.5px;color:var(--dim2);text-align:center}}
+.ln{{display:flex;align-items:center;margin:5px 0}}
+.nmw{{width:186px;flex:none;font-size:12px;padding-right:10px}}
+.nmw .sub{{font-size:10px;color:var(--dim2);font-weight:400}}
+.tr{{flex:1;position:relative;height:26px;
+background:linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/7.143% 100%}}
+.bar{{position:absolute;top:2px;height:22px;border-radius:4px;font-size:10.5px;line-height:22px;
+padding:0 7px;white-space:nowrap;font-weight:600;overflow:hidden}}
+.bar .dd{{opacity:.65;margin-left:6px;font-weight:400}}
+.lg{{font-size:11px;color:var(--dim2);margin-top:11px;padding-top:9px;border-top:1px solid var(--line)}}
+.todo{{color:var(--warn);font-weight:700}}
+code{{background:var(--panel2);padding:1px 5px;border-radius:3px;font-size:11.5px}}
+</style>
+
+<h1>X3 上活动清单 · 2026 马戏节</h1>
+<div class="sub0">共 <b>{n_acts} 个活动</b>（主 hub 组 144 = {n144} · 大富翁 hub 组 143 = {n143}），其中 <b style="color:var(--acc)">要单独提 iGame 单的 = {n_submit} 个</b>（另 2 个由宿主自动带起）＋
+<b style="color:var(--warn)">1 个不出 UI 但配置必须在</b>（扭蛋机的后台返利层）。骨架 = 深海节 16 活动整体换皮，扭蛋机是唯一新开发。</div>
+<div class="meta">配置数据＝<b>origin/dev_festival 实查</b>（2026-07-30 · tip <code>f5eeaa13</code>）·
+范式照《X3_上活动清单_世界杯扩服+深海节_20260702.html》·
+<b style="color:var(--ok)">✅ 档期与服范围已定案（2026-07-30 用户拍板）</b>：<b>D0 = 2026-07-31 00:00 UTC</b>（明天）· 主体 14 天至 <b>08-13 23:59 UTC</b> · <b>D35+ 共 87 个服</b>（1170–2290，近 7 日均 DAU 10,260）· <b>跨服活动全部「全服一池、不分组」</b> · <b style="color:var(--bad)">BINGO 101830 本期不上</b>（已漏出，IsOn=0 关闭）</div>
+
+<h2>① 排期总览（D0 = 2026-07-31 00:00 UTC · 主体 14 天）</h2>
+<p class="lead">条的颜色＝约束级别：<span style="color:var(--bad)">■ 硬约束（天数不能随便改）</span> ·
+<span style="color:var(--new)">■ 跨服（绝对时间，最先定）</span> ·
+<span style="color:var(--warn)">■ 软约束</span> · <span style="color:var(--ok)">■ 自由</span> · <span style="color:var(--dim2)">■ 绑定（不单独提单）</span></p>
+<div class="gt">
+<div class="ax">{ax}</div>
+{rows_g}
+<div class="lg"><b>W1 / W2 分配（用户 07-30 定）</b>：
+<b>W1</b>＝许愿池 · 每日礼包 · 酒馆（10d 跨到 D9）；
+<b>W2</b>＝<b style="color:var(--warn)">扭蛋机 · 星光巡演 · BINGO 拼图 · 拓荒者之城（＋绑在它上面的门票阶梯）</b>；
+<b>全程 D0–D13</b>＝开箱 · 马戏集市 · 双累充 · 马戏福箱 BP · 拜访 ＋ <b>大富翁族整组 143</b>（不再压第二周）；
+<b>签到分两期</b>＝W1（D0–D6）＋ W2（D7–D13），同一 AO 部署两次；<b>周卡 D7 起</b>（W2）；装饰阶梯 D3 起。<br>
+⚠️ 两个跨服分在两周（许愿池 W1 / 星光巡演 W2），<b>各自都要绝对时间各服对齐，分组口径要分别定</b>。</div>
+</div>
+
+<h2>② 活动清单 · 组 144（马戏节主 hub）</h2>
+<p class="lead">HUD 图标 <code>DK_img_Activity_circus_hud_icon</code>。TC 列＝TimeController，
+<span style="color:var(--warn)">黄色＝非 0（会被时间控制器触发，不是纯部署驱动）</span>。</p>
+<table>
+<tr><th style="width:78px">AO ID</th><th>活动</th><th style="width:46px">Type</th><th style="width:58px">CID</th>
+<th style="width:58px">TC</th><th style="width:62px">约束</th><th style="width:25%">时长约束（实查）</th>
+<th style="width:96px">窗口（UTC）</th><th style="width:22%">部署要点</th></tr>
+{tbl(144)}
+</table>
+
+<h2>③ 活动清单 · 组 143（马戏巡游 = 大富翁 hub）</h2>
+<p class="lead">HUD 图标 <code>DK_img_Activity_icon_Monopoly_circus</code>。整组是第二周 depth 核心。</p>
+<table>
+<tr><th style="width:78px">AO ID</th><th>活动</th><th style="width:46px">Type</th><th style="width:58px">CID</th>
+<th style="width:58px">TC</th><th style="width:62px">约束</th><th style="width:25%">时长约束（实查）</th>
+<th style="width:96px">窗口（UTC）</th><th style="width:22%">部署要点</th></tr>
+{tbl(143)}
+</table>
+
+<h2>④ 三对绑定 — 由宿主自动带起，不要单独提单</h2>
+<p class="lead"><b>代码 + 配置双向证实</b>：<code>ServerActivityBasicMeta.cs</code> 的 <code>CreateGroupActivityIds()</code>
+在宿主活动实例启动时，按 <code>ActvGroupSchedule</code> 自动 <code>CreateNewServerActivity(子活动)</code>；
+时长 <code>DurationType=2</code> ⇒ 子活动与宿主同始终，<code>=1</code> ⇒ 按 <code>DurationTime</code>；
+<code>StartTime</code> 是相对宿主开始时间的偏移。<b>⇒ ActvGroupSchedule 管的是激活，不只是 HUD 分组。</b></p>
+<table>
+<tr><th style="width:62px">GS 行</th><th style="width:190px">宿主</th><th style="width:200px">子活动</th>
+<th style="width:74px">时长继承</th><th>含义</th></tr>
+<tr><td class="mono">10006</td><td><b>102803</b> 马戏巡游（大富翁）</td>
+<td><b>101829</b> 拼图 · 小丑的梦境</td><td class="mono">Type2<br>同始终</td>
+<td>大富翁一开，拼图自动跟着开。<b>不用提单。</b></td></tr>
+<tr><td class="mono">10007</td><td><b>103101</b> 马戏团寻宝（拓荒者之城）</td>
+<td><b>103102</b> 寻宝门票特惠（门票阶梯）</td><td class="mono">Type2<br>同始终</td>
+<td>阶梯礼包绑在拓荒者之城上 ⇒ 随它 W2 生效。<b>不用提单。</b></td></tr>
+<tr><td class="mono">10008</td><td><b>101027</b> 马戏扭蛋机</td>
+<td><b>101028</b> 马戏庆功宴（积分）</td><td class="mono">Type2<br>同始终</td>
+<td><b>这解释了 101028 备注「勿部署」的真意</b>——不是不上线，是<b>不用你去部署</b>，扭蛋机会带起来。
+它是扭蛋机的后台返利层（抽奖攒积分 → 到档回吐扭蛋币 1211，T1–T14 共 14 档 3→60 个），不出 UI。
+<b>IsOn=1 必须保留</b>，改 0 配置不导入、返利链直接断。</td></tr>
+</table>
+<div class="note bad"><b>⚠️ 顺手纠正一条知识库里的错结论</b>：深海期间记的「ActvGroupSchedule 只管 HUD 分组不管激活，
+子活动必须单独提单」<b>是错的</b>。真相是深海上线时 <b>GroupSchedule 里那条绑定行（10005）还没配</b>
+（它的行 ID 排在推币机 10717 之后＝后插入），所以拼图没被自动带起，才手动提了单。<br>
+<b>正确判据（以后照这个查）</b>：开工前查 <code>ActvGroupSchedule</code> 有没有该子活动的行、且 <code>IsOn=1</code>——
+<b>有＝不用提单（窗口自动继承宿主）；没有＝必须单独提单</b>。别再凭印象决定。</div>
+
+<h2>⑤ 跨服五个 · 口径已定案</h2>
+<p class="lead">用户 2026-07-30 定：<b>全部「全服一池、不分组」</b>（不走深海那种相邻 4 服分组）。
+排行取自 <code>ActvOnline.RankID</code>（col20）——<b>排行配在活动级，不在玩法子表里</b>。
+跨服必须绝对时间各服对齐，本次 D0 统一 <b>2026-07-31 00:00 UTC</b>。</p>
+<table>
+<tr><th style="width:78px">AO ID</th><th style="width:148px">活动</th><th style="width:128px">窗口（UTC）</th>
+<th style="width:72px">分组</th><th style="width:130px">排行</th><th>备注</th></tr>
+<tr><td class="mono">101026</td><td><b>马戏福箱（开箱）</b></td><td class="mono">07-31 → 08-13</td>
+<td>全服一池</td><td><b style="color:var(--ok)">有</b> · RankID <b>2003</b></td>
+<td>2003＝马戏节新建跨服榜（本服榜 2002 未挂）。<code>ActvCrafting 1517</code> 另有 <code>ServerRank=2006</code>，是玩法内的服务器榜，与活动级 RankID 是两个字段。</td></tr>
+<tr><td class="mono">10071705</td><td><b>马戏酒馆</b></td><td class="mono">07-31 → 08-09</td>
+<td>全服一池</td><td><b style="color:var(--ok)">有</b> · RankID <b>131</b></td>
+<td>沿用既有榜。⚠️<b>唯一跨 W1/W2 分界</b>（10 天硬约束，阶段和必须＝活动时长，改一天导表报错）。</td></tr>
+<tr><td class="mono">103101</td><td><b>拓荒者之城</b></td><td class="mono">08-07 → 08-13</td>
+<td>全服一池</td><td><b style="color:var(--ok)">有</b> · RankID <b>192</b></td>
+<td>W2 主付费点（内外圈）。子活动<b>门票阶梯 103102 继承宿主海域一起跨服</b>，不单独提单。</td></tr>
+<tr><td class="mono">105014</td><td>许愿池</td><td class="mono">07-31 → 08-06</td>
+<td>全服一池</td><td><b style="color:var(--dim2)">无</b></td><td>与深海一致（rank0）。</td></tr>
+<tr><td class="mono">108201</td><td><b>星光巡演</b></td><td class="mono">08-07 → 08-13</td>
+<td>全服一池</td><td><b style="color:var(--dim2)">无</b></td><td>用户确认：跨服但不做榜。</td></tr>
+</table>
+<div class="note bad"><b>提单前两个必查</b>：<br>
+① <b>配置必须先导表成功</b>——周卡坑4（1058→1207）＋备注清理还在 push/jolt 流程里，
+<b>导表没绿就提单＝线上跑的还是旧配置</b>。<br>
+② <b>服列表用当前存活服</b>——混进一个已合并服 ⇒ <b>整个导表 abort，一个 bytes 都不出</b>。
+本次 118 服已按「近 7 日有登录」筛过（数仓实拉 2026-07-30），合掉的空 id 自动排除。</div>
+
+<h2>⑥ 部署参数（提单直接用）</h2>
+<table>
+<tr><th style="width:128px">参数</th><th>值</th></tr>
+<tr><td><b>D0</b></td><td class="mono"><b>2026-07-31 00:00:00 UTC</b>（明天）</td></tr>
+<tr><td><b>主体结束</b></td><td class="mono">2026-08-13 23:59:59 UTC（14 天）</td></tr>
+<tr><td><b>服范围</b></td><td><b>D35+ 共 87 个</b>（1170–2290·开服日 ≤ 2026-06-26·临界服 2280/2290）· 近 7 日均 DAU <b>10,260</b>
+<div class="mono" style="font-size:10px;color:var(--dim2);margin-top:5px;word-break:break-all">{",".join(str(x) for x in SERVERS)}</div></td></tr>
+<tr><td><b>跨服 across=1</b></td><td class="mono">101026 · 10071705 · 105014 · 103101 · 108201　（全部全服一池，不分组）</td></tr>
+<tr><td><b>有排行 rank=1</b></td><td class="mono">101026(2003) · 10071705(131) · 103101(192)</td></tr>
+<tr><td><b>提单总数</b></td><td><b>19 单</b>（签到提 2 期；101829/103102/101028 绑定不提；<b style="color:var(--bad)">101830 BINGO 本期不上</b>）<div class="mono" style="font-size:10.5px;color:var(--dim2);margin-top:4px">payload: <code>~/.claude/skills/igame-x3-activity-deploy/circus_batch_0731.json</code></div></td></tr>
+<tr><td><b>时区</b></td><td>一律 <b>UTC</b> 直填</td></tr>
+</table>
+<div class="note warn"><b>⚠️ 全服口径的一个连带影响</b>：全服含最新开的服——
+<b>2600 开服 07-28（D0 时服龄 3 天）· 2580/2590 服龄 5 天 · 2560/2570 服龄 7 天</b>，
+这几个新服 DAU 很高（3,493 / 6,686 / 5,455 / 4,672 / 3,754）。
+深海当时是 <b>D35+ 门槛（59 服 / DAU 11,089）</b>，本次全服 DAU 是它的 <b>4.4 倍</b>。
+新服玩家可能还没解锁部分活动的前置（各活动有 PlayerLv / RequireFunction 门槛）——
+<b>不阻塞部署，但复盘时新服会拉低人均，做数据对比必须按服龄分段</b>。</div>
+
+<h2>⑦ 上线前必须处理的四件事</h2>
+<table>
+<tr><th style="width:44px">#</th><th style="width:190px">事项</th><th>说明</th><th style="width:150px">谁定</th></tr>
+<tr><td class="mono">1</td><td><b style="color:var(--bad)">组 142 与组 144 重名重图</b></td>
+<td>ActvGroup 表里 <b>142 和 144 都叫「马戏节」，用同一个 HUD icon</b>；
+所有活动实际挂的是 <b>144</b>，142 是早期建的<b>空壳残留</b>。
+上线前要么删 142，要么确认它不会在客户端多渲染一个入口。</td>
+<td>配置侧（linkang）</td></tr>
+<tr><td class="mono">2</td><td><b style="color:var(--new)">星光巡演 108201 的跨服口径</b></td>
+<td>Type82，<b>深海没有这个活动，没有先例可抄</b>。深海三个跨服口径各不相同
+（转盘＝全服一池+排行 / 许愿池＝一池无排行 / 酒馆＝相邻 4 服一组+排行），
+<b>星光巡演走哪种、有没有排行都没定</b> —— 定错要撤单重发。</td>
+<td>用户拍板</td></tr>
+<tr><td class="mono">3</td><td><b style="color:var(--warn)">BINGO 拼图 101830 的 TC 宽窗</b></td>
+<td>TC=1831 是<b>绝对时间宽窗占位</b>（2026-07-01 起 89 天），备注写"实际开关靠 iGame 部署，排期定了可收窄"。
+排期一定要<b>回来把窗口收窄</b>到真实档期，否则这个宽窗横跨整个 8/9 月。</td>
+<td>配置侧（linkang）</td></tr>
+<tr><td class="mono">4</td><td><b>周卡 109101 依赖客户端包</b></td>
+<td>客户端读本地 Cfg，<b>热更所见非所得</b>，必须跟新包同批。
+<b>深海就是因为这个先撤了单</b>（13930），等包到位才重发。</td>
+<td>确认包期后再发</td></tr>
+</table>
+
+<h2>⑧ 部署 SOP（照深海跑过的那套）</h2>
+<div class="note"><b>提交</b>：<code>node ~/.claude/skills/igame-x3-activity-deploy/submit-cross-server.js --env prod --file circus_batch_&lt;日期&gt;.json</code><br>
+<b>整批下架</b>：<code>--offline --ids &lt;起&gt;-&lt;止&gt;</code>　·
+提交后全是 <b>status2 待激活</b>（正常，scheduler tick 会转 live）<br>
+<b>时间一律填 UTC</b>；跨服活动必须绝对时间（TT=1）各服对齐。<br>
+<b>提交完回写单号</b>：每个 AO 对应一个 iGame 单号，写回本清单，撤单/改期时靠它定位。</div>
+<div class="note bad"><b>深海踩过、这次别再踩的三个</b>：<br>
+① <b>先查 ActvGroupSchedule 再决定提不提单</b>（详见 ④）——有绑定行且 IsOn=1 的子活动由宿主自动带起，
+提了反而会<b>撞出两个实例</b>。本期 <b>101829 / 103102 / 101028 三个都不要提</b>。<br>
+② <b>圈服名单不能含已合并服</b>——混进一个已合服的 id，<b>整个导表 abort，一个 bytes 都不出</b>。
+服列表要从当前存活服拉（<code>dl_server_login_info</code> ∩ 近 7 日有登录），别用机械区间。<br>
+③ <b>下线活动用 TC=0，绝不用 IsOn=0</b>——IsOn=0 会让服重启时把实例删掉，玩家进度和结算全丢。</div>
+
+<h2>⑨ 道具关联 — 上线顺序的真依据</h2>
+<p class="lead">全部由配置实查得出（ActvCrafting 1517 / ActvExchange 1343·1344 / ActvWeeklyCardTier 61001 /
+ActvLogin 1407 / ActvCircusGacha 8201 / Reward 表反查）。<b>三条货币线，其中线 A 是主循环</b>。</p>
+
+<h3>线 A · 寻宝 / 开箱主循环（本期的经济骨架）</h3>
+<table>
+<tr><th style="width:130px">环节</th><th style="width:150px">道具</th><th>谁产出 / 谁消耗</th></tr>
+<tr><td><b>入口（燃料）</b></td><td><b style="color:var(--warn)">1209 马戏门票</b></td>
+<td><b>产出</b>：马戏累充 100599（10 档 20→800）· 连锁礼包 211035-045 · 锚点包 13025-028（20/80/200/400）·
+门票阶梯礼包 103102 · <b style="color:var(--acc)">周卡 61001 三档奖池（6 / 12 / 18 张）</b> ·
+巡游珍宝集市 134411（100 代币 → 1 张，<b>两条线之间的兑换桥</b>）</td></tr>
+<tr><td><b style="color:var(--bad)">中枢</b></td><td><b>开箱 101026</b><br>（ActvCrafting 1517）</td>
+<td><b>吃 1209 门票 ×1/次 → 吐 1210 勋章</b>；另有转盘式阶段奖 7 档（勋章 50→3000）。
+RewardGroup 116 / OtherRewardGroup 1016 / ServerRank 2006</td></tr>
+<tr><td><b>产物</b></td><td><b style="color:var(--warn)">1210 马戏勋章</b></td>
+<td><b>产出</b>：开箱本体 + 开箱阶段奖 + <b style="color:var(--acc)">签到 101407（前 6 天固定给，第 7 天给幻紫魅影卡）</b></td></tr>
+<tr><td><b>出口</b></td><td>马戏珍宝集市 101343</td>
+<td><b>花 1210 勋章</b>·15 个 SKU：幻紫魅影卡 150 · 鎏金魅影卡 300 · 头像框自选 1000 · 幸运家具木匣 1000 ·
+传奇装备宝箱 700 · 万能信物 100/200 · 技能碎片 200 …</td></tr>
+</table>
+
+<h3>线 B · 大富翁线（沿用深海货币）</h3>
+<table>
+<tr><th style="width:130px">道具</th><th>去向</th></tr>
+<tr><td><b>1202 节日航海代币</b><br>＋ 1057 航海罗盘</td>
+<td>巡游珍宝集市 101344（13 个 SKU）：月心珍珠永久 50000 · 海风旅者·霍普金斯 30000 ·
+幻紫魅影卡 1500 · 鎏金魅影卡 3000 · <b>134411＝100 代币换 1 张马戏门票（并入线 A）</b></td></tr>
+</table>
+
+<h3>线 C · 扭蛋机（唯一新开发）</h3>
+<table>
+<tr><th style="width:130px">道具</th><th>来源与消耗</th></tr>
+<tr><td><b>1211 节日扭蛋币</b></td>
+<td><b>消耗</b>：扭蛋机单抽 ×1。<b>产出</b>：<span style="color:var(--warn)">庆功积分 101028 的 T1–T14（3→60 个）＝后台返利，绑定在扭蛋机上自动带起</span> ＋ 礼包组 13031-13033（80/200/400）</td></tr>
+<tr><td><b>1212 高级扭蛋券</b></td>
+<td><b>消耗</b>：扭蛋机十连 ×10。<b>产出</b>：礼包组 13029-13038（20/40/80/200/400）＝<b>纯付费</b></td></tr>
+</table>
+
+<h3>线 D · 拓荒者之城 内外圈（W2 的主付费点）</h3>
+<table>
+<tr><th style="width:130px">环节</th><th style="width:150px">道具</th><th>机制（ActvPioneerCity 81001 实查）</th></tr>
+<tr><td><b>外圈入口</b></td><td><b style="color:var(--warn)">1207 马戏团门票</b><br>（＝寻宝券）</td>
+<td><b>产出</b>：寻宝累充 100600（十档 1→40 张）· 门票阶梯 103102（3 档 ×$19.99 各限购 1）。
+<b>消耗</b>：外圈抽奖 ×1/次，奖池组 100，12 格</td></tr>
+<tr><td><b>内圈钥匙</b></td><td><b>1208 彩虹星</b></td>
+<td><b>不走 Reward 表，是外圈抽奖的保底产物</b>：<code>RainbowBaseRate=200</code>（2%）·
+<code>SoftPity=8</code> 次起提概率 · <code>HardPity=12</code> 次必出。<b>消耗</b>：内圈抽奖 ×1/次，奖池组 200</td></tr>
+<tr><td><b>顶奖</b></td><td>81081</td>
+<td>内圈大奖＝<b>梦幻旋转木马</b>（P2 anniversary2024 搬运）。内圈出率 <code>InnerGrandRate=50</code>，
+递增曲线 20→10000（第 12 次必出）</td></tr>
+</table>
+<div class="note"><b>⚠️ 1207 和 1209 是两个不同的道具，别混</b>：
+<b>1207 马戏团门票（寻宝券）</b>只进拓荒者之城外圈；<b>1209 马戏门票</b>只进开箱。
+两套体系的产出口也完全分开——<b>寻宝累充 100600 + 门票阶梯 103102 供 1207</b>；
+<b>马戏累充 100599 + 连锁礼包 703 + 锚点包 + 周卡 + 巡游集市兑换桥供 1209</b>。
+名字太像，配奖池 / 查客诉时极容易张冠李戴。</div>
+
+<div class="note ok"><b>道具关系对排期的两条硬要求（都已满足）</b><br>
+① <b>开箱 101026 与马戏珍宝集市 101343 必须同期</b>——一个吃门票吐勋章、一个花勋章。
+只开开箱没集市＝勋章无处花；只开集市没开箱＝勋章没来源。现在两个都是 D0–D13，✓。<br>
+② <b>周卡 / 签到必须晚于开箱</b>——周卡产门票（燃料）、签到产勋章（产物），开箱不开它们的产出就没去处。
+现在排 D3，✓。<br>
+③ <b>巡游集市 101344 带着「100 代币→1 马戏门票」的兑换桥</b>，它现在也是 D0–D13 全程
+⇒ 线 B（大富翁代币）从第一天就能回流到线 A 的开箱，两条线不再割裂。</div>
+
+<div class="note ok"><b>两个累充分周是对的，道具关系支持</b>：
+<b>100599 马戏累充（W1）送 1209 开箱燃料 · 100600 寻宝累充（W2）送 1207 寻宝券</b>——
+券的用途（拓荒者之城）在 W2，累充跟着走才不会让玩家拿着券干等。
+两个累充不重叠还有个好处：<b>每周一个独立的累充目标，充值不被分散</b>。<br>
+<b>门票阶梯 103102 W2 上也没问题</b>——它卖的是 1207 寻宝券，本来就不属于开箱那条线，
+不影响 W1 的开箱燃料供给。<br>
+<b>周卡 D7 起正好接上</b>：马戏累充只上 W1 ⇒ W2 的 1209 门票少了累充这个口，
+但<b>周卡（D7–D13，三档 6/12/18 张）刚好补进来</b>，加上连锁礼包 703（常驻）· 锚点包 · 巡游集市兑换桥
+⇒ <b>两周的门票供给都不断档</b>：W1 靠累充＋礼包，W2 靠周卡＋礼包。</div>
+
+<div class="note bad"><b>「窗口跟随」分两种，别混</b>：<br>
+· <b>有 ActvGroupSchedule 绑定行的</b>＝宿主自动创建实例、窗口自动继承 ⇒ <b>不要提单</b>。
+本期＝拼图 101829（跟大富翁）· 门票阶梯 103102（跟拓荒者之城）· 庆功积分 101028（跟扭蛋机）。<br>
+· <b>只是"我打算排同一个窗口"的</b>＝没有绑定行，纯人为对齐 ⇒ <b>照旧各自提单</b>。
+本期＝巡游 BP 102251 · 巡游集市 101344（都要自己提，只是窗口跟大富翁一致）。</div>
+
+<h2>⑩ 还缺的两块</h2>
+<div class="note warn"><b>① 档期</b>：马戏节主体几天、从哪天开，<b>都还没定</b>。
+本清单的 D0–D13 是照深海 14 天给的建议轴；如果按 9 月规划那套「拉到 21 天」的思路，
+硬约束的四个（酒馆 10d / 每日礼包 7d / 签到 ≥7d / 周卡 ≥7d）需要<b>分期部署或加期</b>，不是简单拉长。<br>
+<b>② 服范围</b>：深海是 D35+ 共 59 服（1170–2010，数仓实拉）。马戏节 8 月上，服号区间会往后推，
+<b>必须重新拉一次</b>（口径＝开服日 ≤ 门槛 ∩ 近 7 日有登录，剔掉合服空 id），不能沿用深海那份名单。</div>
+"""
+
+os.makedirs(os.path.dirname(OUT), exist_ok=True)
+tmp = OUT + ".tmp"
+open(tmp, "w", encoding="utf-8", newline="").write(html)
+os.replace(tmp, OUT)
+print(f"wrote {OUT} ({os.path.getsize(OUT)/1024:.0f} KB) · {len(ACTS)} 活动 + 1 禁上")

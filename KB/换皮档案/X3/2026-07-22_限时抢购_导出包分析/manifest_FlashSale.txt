@@ -1,0 +1,125 @@
+﻿Source: Assets/FlashSale.prefab
+Exported: 2026-07-31 14:44:12
+ExcludeRedDot: True
+WriteLocalizationTsv: True
+============================================================
+
+[Images 61]
+Assets/P2/Res/UI/Sprite/SoldierArms/Bg_Light.png
+Assets/P2/Res/UI/Atlas/Public/Partnew/CommonBgGradientGrey.png
+Assets/P2/Res/UI/Atlas/Public/Partnew/CommonWhiteRect.png
+Assets/P2/Res/UI/Atlas/Public/Partnew/CommonWhiteRectEmpty.png
+Assets/x2/Res/UI/NewSprite/Common/ProgressBar/Common_Bar_Commonly3.png
+Assets/x2/Res/UI/NewSprite/Common/ProgressBar/Common_Bar_Commonly4.png
+Assets/x2/Res/UI/NewSprite/Common/Bg/Common_Bg_tips1.png
+Assets/x2/Res/UI/NewSprite/Common/button/Common_Btn_1_obvious.png
+Assets/x2/Res/UI/NewSprite/Common/button/Common_Btn_1_unavailable.png
+Assets/x2/Res/UI/NewSprite/Common/button/Common_Button_GraphicBg.png
+Assets/x2/Res/UI/NewSprite/Common/button/Common_Button_GraphicBg2.png
+Assets/x2/Res/UI/NewSprite/Common/Decorate/Common_decorate_Starlight.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_BundleBg.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_hero5_Epic.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_hero5_Legendary.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_hero5_Perfect.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_ Normal.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_Epic.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_Legendary.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_mask.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_Perfect.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_Rare.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_special.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_special2.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox4_ Normal.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox_Legendary.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_Frame_selected.png
+Assets/x2/Res/UI/NewSprite/Common/Icon/common_icon_AFKGiftPack.png
+Assets/x2/Res/UI/NewSprite/Common/Icon/common_icon_coins.png
+Assets/x2/Res/UI/NewSprite/Craft/Common_icon_FrequencyBg1.png
+Assets/x2/Res/UI/NewSprite/Craft/Common_icon_FrequencyBg2.png
+Assets/x2/Res/UI/NewSprite/Common/Icon/common_icon_gem.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_icon_IconBox2_lock.png
+Assets/x2/Res/UI/HighQualitySprite/common_icon_new.png
+Assets/x2/Res/UI/NewSprite/Common/WhiteImg/Common_WhiteImg_Arrow3.png
+Assets/x2/Res/UI/HighQualitySprite/Common_WhiteImg_BlurCircle2.png
+Assets/x2/Res/UI/NewSprite/Common/WhiteImg/Common_whiteImg_Revenge.png
+Assets/x2/Res/UI/Atlas/Public/Common_WhiteImg_square.png
+Assets/x2/Res/UI/NewSprite/Common/WhiteImg/Common_WhiteImg_square2.png
+Assets/x2/Res/UI/NewSprite/Common/WhiteImg/Common_WhiteImg_TickMark.png
+Assets/x2/Res/UI/NewSprite/Common/WhiteImg/Common_WhiteImg_triangle.png
+Assets/x2/Res/UI/NewSprite/Common/WhiteImg/Common_WhiteImg_Upgrade.png
+Assets/x2/Res/UI/TextureNew/FlashSale_Bg.png
+Assets/x2/Res/UI/TextureNew/FlashSale_Bg_Box1.png
+Assets/x2/Res/UI/TextureNew/FlashSale_Bg_BoxClose1.png
+Assets/x2/Res/UI/TextureNew/FlashSale_Bg_Cupboard.png
+Assets/x2/Res/UI/TextureNew/FlashSale_icon_SpecialBox.png
+Assets/x2/Res/UI/TextureNew/FlashSale_Light.png
+Assets/P2/Res/UI/Sprite/Activity/EquipmentGacha/FrameYellow.png
+Assets/x2/Res/UI/Atlas/Furnace/Furnace_Icon_ Tag01.png
+Assets/x2/Res/UI/TextureNew/GiftPack/GiftPack_button_Buy.png
+Assets/x2/Res/UI/NewSprite/store/GildedPrivilegeCard.png
+Assets/P2/Res/UI/Atlas/Hud/HudIconRssCurrency.png
+Assets/x2/Res/UI/NewSprite/Hud/Hud_btn_BtnBg.png
+Assets/x2/Res/UI/Atlas/ResourcesICon/Icon_Daoju_Zanshiyige.png
+Assets/x2/Res/UI/Atlas/HeroCard/ImgHeroAvatar_Tailor.png
+Assets/x2/Res/UI/NewSprite/Mail/mail_bg_Orange.png
+Assets/x2/Res/UI/Atlas/Public/NewBieShopCardBubbleTip.png
+Assets/P2/Res/UI/Sprite/NewRank/NewrankLightbg.png
+Assets/P2/Res/UI/Sprite/SingleBossRush/ProgressBgGradient.png
+Assets/x2/Res/UI/NewSprite/Slg/SLG_bg_Rating_S.png
+
+[Textures 16]
+Assets/P2/Res/Effect/Textures/glow/Flare038.png
+Assets/x2/Res/Effect/Textures/glow/Glow_1005.png
+Assets/x2/Res/Effect/Textures/glow/Glow_2002.png
+Assets/x2/Res/Effect/Textures/glow/Glow_7304_Lc.png
+Assets/x2/Res/Effect/Textures/mask/Mask_040.png
+Assets/x2/Res/Effect/Textures/mask/Mask_069_1.png
+Assets/x2/Res/Effect/Textures/mask/Mask_070.png
+Assets/P2/Res/Spine/SceenPackClock/naozhong.png
+Assets/x2/Res/Effect/Textures/noise/Noise_003.png
+Assets/x2/Res/Effect/Textures/ring/Ring_7305_Lc.png
+Assets/x2/Res/Effect/Textures/ring/Ring_7306_Lc.png
+Assets/x2/Res/Effect/Textures/ring/Ring_7307_Lc.png
+Assets/x2/Res/Effect/Textures/ring/Ring_7308_Lc.png
+Assets/P2/Res/Effect/Textures/spur/Spur_115.tga
+Assets/P2/Res/Effect/Textures/spur/Spur_116.png
+Assets/P2/Res/Effect/Textures/trail/Trail_274.png
+
+[Animations 13]
+Assets/x2/Res/UI/Animation/BoxAnim.anim
+Assets/P2/Res/Ani/BoxReward.anim
+Assets/P2/Res/Ani/BoxReward2.anim
+Assets/P2/Res/UI/Animation/BubbleGeneralAnimIn.anim
+Assets/P2/Res/UI/Animation/BubbleGeneralAnimOut.anim
+Assets/P2/Res/UI/Animation/BubbleGeneralAnimOut2.anim
+Assets/x2/Res/Effect/Animation/Fx_UI_Selected.controller
+Assets/x2/Res/Effect/Animation/Fx_UI_Selected_01.anim
+Assets/x2/Res/Effect/Animation/Fx_UI_Up.anim
+Assets/x2/Res/Effect/Animation/Fx_UI_Up.controller
+Assets/x2/Res/UI/Animation/ui21201451BoxMain.anim
+Assets/x2/Res/UI/Animation/ui21201451BoxMainDefault.anim
+Assets/x2/Res/UI/Animation/UiCommonWidget.anim
+
+[Prefabs 0]
+
+[Materials 14]
+Assets/P2/Res/Effect/Material/Special/Flare038_1a_UI.mat
+Assets/x2/Res/Effect/Material/Special/Glow1005_1a_UI.mat
+Assets/x2/Res/Effect/Material/Special/Glow2002_1a_UI.mat
+Assets/x2/Res/Effect/Material/Special/Glow_7304_1a_UI_Ljc.mat
+Assets/x2/Res/Effect/Material/Special/Mask040_Mask069_Noise003_2a_UI.mat
+Assets/x2/Res/Effect/Material/Special/Mask070_1a_UI.mat
+Assets/P2/Res/Spine/SceenPackClock/naozhong_Material.mat
+Assets/x2/Res/Effect/Material/Special/Ring_7305_1a_UI_Ljc.mat
+Assets/x2/Res/Effect/Material/Special/Ring_7306_1a_UI_Ljc.mat
+Assets/x2/Res/Effect/Material/Special/Ring_7307_1b_UI_Ljc.mat
+Assets/x2/Res/Effect/Material/Special/Ring_7308_1a_UI_Ljc.mat
+Assets/P2/Res/Effect/Material/Special/Spur_115_1a_UI.mat
+Assets/P2/Res/Effect/Material/Special/Spur_116_a_UI.mat
+Assets/P2/Res/Effect/Material/Special/Trail_274_1a_UI.mat
+
+[Shaders 4]
+Assets/x2/Res/Shader/Effect/FX_AddBlend_DistortionDissolve_Flow_New_UI 1.shader
+Assets/P2/Res/Shader/Effect/FX_AddBlend_DistortionDissolve_Flow_New_UI.shader
+Assets/P2/Res/Shader/Effect/FX_AddBlend_Particle_UI.shader
+Assets/P2/Res/Shader/UI/P2_UI_Spine.shader

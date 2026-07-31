@@ -1,0 +1,41 @@
+﻿Source: Assets/FlashSalePop.prefab
+Exported: 2026-07-31 15:23:20
+ExcludeRedDot: True
+WriteLocalizationTsv: True
+============================================================
+
+[Images 17]
+Assets/x2/Res/UI/NewSprite/Alliance/Alliance_Decoration_flower.png
+Assets/P2/Res/UI/Atlas/Public/Partnew/CommonButtonGrey.png
+Assets/P2/Res/UI/Sprite/ActivityKvK/Kvk3/CommonCheckBg.png
+Assets/x2/Res/UI/NewSprite/Common/button/Common_Btn_1_Normal.png
+Assets/x2/Res/UI/NewSprite/Common/button/Common_Btn_1_unavailable.png
+Assets/x2/Res/UI/HighQualitySprite/Common_frame_blackBg.png
+Assets/x2/Res/UI/NewSprite/Common/WhiteImg/Common_WhiteImg_Circle.png
+Assets/x2/Res/UI/NewSprite/Common/WhiteImg/Common_WhiteImg_Gradient3.png
+Assets/x2/Res/UI/Atlas/Public/Common_WhiteImg_square.png
+Assets/x2/Res/UI/NewSprite/Common/WhiteImg/Common_WhiteImg_time.png
+Assets/x2/Res/UI/TextureNew/FlashSale_Bg_Banner.png
+Assets/x2/Res/UI/TextureNew/FlashSale_Bg_Box1.png
+Assets/x2/Res/UI/TextureNew/Gift/GiftPack_bg_LogInBg1.png
+Assets/x2/Res/UI/TextureNew/Gift/GiftPack_bg_LogInBg2.png
+Assets/x2/Res/UI/TextureNew/Gift/GiftPack_bg_LogInBg3.png
+Assets/x2/Res/UI/NewSprite/store/store_icon_value.png
+Assets/x2/Res/UI/TextureNew/Item/UiItemsSpeedupBuilding.png
+
+[Textures 3]
+Assets/x2/Res/Effect/Textures/mask/Mask_076_jq.png
+Assets/x2/Res/Effect/Textures/mask/Mask_077_jq.png
+Assets/x2/Res/Effect/Textures/mask/Mask_078_jq.png
+
+[Animations 1]
+Assets/P2/Res/UI/Animation/monthly_pkg_Switch.anim
+
+[Prefabs 0]
+
+[Materials 2]
+Assets/x2/Res/Effect/Material/Special/Mask_040_Mask_076_1a_UI_jq.mat
+Assets/x2/Res/Effect/Material/Special/Mask_077_Mask_078_1a_UI_jq.mat
+
+[Shaders 1]
+Assets/P2/Res/Shader/Effect/FX_AddBlend_DistortionDissolve_Flow_New_UI.shader

@@ -78,6 +78,22 @@
 
 > 🔑 **纠偏（2026-07-30 重读源码）：下面五步里的「拖场景 / Unpack / 改名 / 存 Assets 根」只在「要落地一个改了名的自包含 prefab」时才需要**（扭蛋机场景：X2 名 `21201326` → X3 名 `UIActvXxx`）。
 > **只想导出依赖清单做比对/看有什么** → 直接 **Project 选中源 prefab → 右键 `Tools ▸ X2 ▸ Export Prefab Assets...`**（`OpenFromContext` 会自动填好目标 Prefab），四步全省。工具本身只吃 `AssetDatabase.GetDependencies`，不要求解包。
+>
+> ### 两条路线，先定目标再选（2026-07-31 FlashSale 实测对照）
+>
+> | | **保链路线**：原地右键原件 | **断链路线**：拖场景+Unpack+改名+存根目录 |
+> |---|---|---|
+> | prefab 大小 | 3.6 MB | 29.6 MB（8×，嵌套内容硬拷进本体） |
+> | `.meta` guid | `0902ea9d…` = x2 原件真身，X3 落地即接原链 | `48aa782b…` = 新资产，与 x2 原件断链 |
+> | manifest `[Prefabs]` | 17（4 主 + 13 公共件） | **0** ← 125 个 `!u!1001` 全展平 |
+> | 公共件 | 保留为独立 prefab，跟 X3 公共件升级走 | 内联成哑拷贝，从此不跟升级；但**锁死 X2 外观** |
+> | 叶子资产完整性 | 同 | 108 条、`UNRESOLVED 0` —— 展平不丢叶子，图/材质/shader 照样全捞 |
+>
+> **选谁**：
+> - 目标是**在 X3 里重写这个界面 / 换皮改名 / 要一个自包含不受 X3 公共件影响的版本** → **断链路线**，`[Prefabs 0]` 是正确结果，不是事故。（FlashSale 走的就是这条。）
+> - 目标是**保 guid 直接落地**（X2/X3 同源资产原地解析、零拷贝）**或只想看依赖清单做比对** → 原地右键即可，四步全省；工具只吃 `AssetDatabase.GetDependencies`，不要求解包。
+>
+> ⚠️ 断链路线的第 3 步「改名」别跳：工具拿 **prefab 文件名**当输出子目录名，跳过就得事后连 `.meta` 一起手改。落地名不变（如 X3 代码硬编码 `assetPath` 仍加载 `FlashSale`）才可以跳。
 
 ### 第 1 步：把源 prefab 拖进场景
 Project 搜 `21201326` → 拖到 Hierarchy（录屏用的是最轻的 `TFW_Logo` 启动场景当白板，别开主城场景，慢）。
@@ -103,6 +119,7 @@ Inspector 顶部改根节点名 → 本例 `UIactvfesstrong`（X3 命名习惯 `
 |---|---|---|
 | 目标 Prefab | `UIactvfesstrong` | 从 Project 拖进来 |
 | 输出目录 | `D:\newX2\Copy` | 代码里的默认值，记在 EditorPrefs（下次自动带上）。真正产物在 `D:\newX2\Copy\<prefab名>\` |
+| | | 🔴 **每次导出前必须改成本次专属目录**（如 `D:\newX2\Copy\FlashSale_manualA`）。不改 = 同名 prefab 的历史导出包会被掺进新文件：`CopyAssetWithMeta` 走 `GetUniqueDestinationPath`，重名不覆盖而是**加 `_1` 后缀塞在旁边**，两次导出混成一坨且无法按后缀干净拆分（同一次导出内的重名也会吃 `_1`）。唯一真被覆盖的是生成文件 `_manifest.txt` / `localization_keys.tsv`。 |
 | 排除红点资源 | ✅ | 路径含 `reddot / red_dot / redpoint / hongdian / 红点` 的资源不导（X3 有自己的红点体系） |
 | 复制主 Prefab 到 Prefabs | ✅ | 主 prefab 自己也拷一份进 `Prefabs\` |
 | 导出 TFWText 本地化 TSV | ✅ | 见下文 §4 |
@@ -182,7 +199,8 @@ Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_Epic.png ← X2 �
 
 | 坑 | 后果 | 规避 |
 |---|---|---|
-| 忘了 Unpack Completely | 导出的 prefab 带 `!u!1001` 指回 X2 原 prefab，X3 里断链 | 导出后查 `_manifest.txt` 的 `[Prefabs 0]` |
+| **Unpack 与目标路线不匹配** | 断链路线忘了 Unpack → prefab 带 `!u!1001` 指回 X2 原件、公共件没搬齐则断链；保链路线误 Unpack → 公共件整批内联、guid 变新资产 | 导出后看 manifest 的 `[Prefabs]`：**断链路线必须 = 0，保链路线必须 ≠ 0**（FlashSale=17）。两条路线定义见 §2 顶部对照表 |
+| 输出目录沿用默认 `D:\newX2\Copy` | 同名 prefab 的历史包被掺入 `_1` 副本，混成一坨拆不干净 | 每次导出前改成本次专属目录（见 §2 第 5 步表） |
 | 只拷 png 不拷 `.meta` | GUID 重排，prefab 全白图 | 整目录拷，别挑文件 |
 | 搬 X2 通用件进 X3 | 同一张公共图两份、后续 X3 改版不同步 | 按 `_manifest.txt` 分「专属 vs 通用」 |
 | 拿 `21201326_old` 或 P2 那份当源 | 搬的是旧版界面 | 确认路径是 `Assets/x2/Res/UI/Prefab/Activity/Module/21201326.prefab` |
@@ -215,6 +233,25 @@ UI prefab    → Assets/Res/UI/Prefab/<功能模块>/
 | 菜单 | **Tools ▸ Prefab换皮** → 窗口标题 `换皮无忧`，页签 `换皮无忧 — 资源目录清理` |
 | 源码 | `x3-project\client\Assets\Editor\HuanPiWuYou\`（`HuanPiWuYouWindow.cs` + `UIPrefabResourceFolderCleanupPanel.cs`，独立 asmdef） |
 | 干什么 | 面板自述：**「删掉资源目录内 Prefab 未引用的文件；同名/同 GUID 重复项改为工程原件 GUID 后删除副本。」** |
+
+### 🔴🔴 事故实录（2026-07-31 限时抢购）：它删掉了 143 个 X3 原生 prefab
+
+**「资源目录」字段填成 `Assets/Res/UI/Prefab/Activity` ⇒ 那个目录下除根 prefab 外的 143 个 X3 原生 prefab（`ActvRank` / `ActvTaskTemplate` / `ActvWonderTemplate` / `BattlePassRwdItem` / `DailyGift` / `GlassBox` / `HeroChampionList` …）全被删，共 286 个文件（含 `.meta`），根 prefab 还被 PatchGuid 改写。**
+
+**机制**：白名单 = `GetDependencies(根prefab, true)`，目录里不在白名单的**一律删**。而**断链路线**（Unpack）的 prefab 依赖里 `[Prefabs 0]` —— 一个 prefab 都不引用 ⇒ 同目录所有 prefab 全成了「未引用」。**断链路线 + 共享目录 = 必然全灭。**
+
+**三条铁律**：
+1. **「资源目录」只能填这次搬运专属的新目录**（`Assets/Res/UI/Sprite/UIActvXxx/` 这种），**绝对不能填 `Res/UI/Prefab/Activity`、`Res/UI/Animation`、`Res/Shader/Effect` 等任何工程共享目录**。共享目录里的东西不该由这个工具管。
+2. **必须先点「预览」看 `将删 N`**。N 明显大于你这次搬进来的件数 = 立刻停手。本次预览会显示 `将删 143`，而搬进来的只有 4 个。
+3. **走断链路线（`[Prefabs 0]`）时，这个工具对 prefab 目录基本不可用** —— 它算不出「这些 prefab 是别人的」，只能靠你把目录范围框对。
+
+**恢复**（被删的是 tracked 文件，可完整复原）：
+```bash
+cd C:\x3-project && git checkout -- client/Assets/Res/UI/Prefab/Activity   # 恢复 143 个原生 prefab
+# 根 prefab 被 PatchGuid 改写过 → 从导出包重新拷（连 .meta）
+cp D:\newX2\<包>\Prefabs\<名>.prefab* client\Assets\Res\UI\Prefab\Activity\
+```
+⚠️ 先把被改写的根 prefab 另存一份再 checkout，万一里面有你手工改过的东西。
 
 ⚠️ **它不在 `Tools ▸ X2 Migration` 那一栏**，也**没登记进官方工具目录** `AIDocs\X2_to_X3_Migration\13_Migration_Tools.md`（那份只列了 6 个 `X2 Migration/` 工具）——别人翻文档找不到它，交接时要专门交代。
 

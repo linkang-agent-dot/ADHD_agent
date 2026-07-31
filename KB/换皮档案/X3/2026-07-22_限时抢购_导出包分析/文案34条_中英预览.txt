@@ -1,0 +1,36 @@
+LC_BUILDING_Bulletin_new                   | 新                            | NEW
+LC_EVENT_flash_sale_main_buy_time          | 搶購中！                         | SALE LIVE!
+LC_EVENT_flash_sale_main_gacha_button      | 抽獎                           | LOTTERY
+LC_EVENT_flash_sale_main_gacha_tips_2      | 免費抽獎                         | FREE LOTTERY
+LC_EVENT_flash_sale_main_show_time         | 展示中                          | DISPLAYING
+LC_EVENT_flash_sale_share_tips_1           | 首次分享可獲得                      | Share for the first time to receive
+LC_EVENT_flash_sale_share_tips_2           | 取得<color=#FF9D00>{0}</color>次助力並購買任意禮包 | Receive <color=#FF9D00>{0}</color> supports and purchase any pack
+LC_EVENT_flash_sale_share_title            | 分享贏好禮                        | Share to Win Prizes
+LC_IAP_flashsale_buy_participate_tip       | 搶購開啟後，購買道具可參與                | After the flash sale starts, purchase items to participate
+LC_IAP_flashsale_coming_soon               | 即將開搶                         | Coming Soon
+LC_IAP_flashsale_free_draw                 | 免費抽獎                         | Free Draw
+LC_IAP_flashsale_grand_prize_progress      | 距離大獎                         | Grand Prize Progress
+LC_IAP_flashsale_my_boost                  | 我的助力                         | My Boosts
+LC_IAP_flashsale_share                     | 分享                           | Share
+LC_IAP_flashsale_share_boost               | 分享助力                         | Share & Boost
+LC_IAP_flashsale_share_to_alliance         | 分享至商會                        | Share to Syndicate
+LC_IAP_flashsale_share_to_world            | 分享至世界                        | Share to World
+LC_IAP_flashsale_tap_box_draw              | 點擊箱子抽獎                       | Tap a box to draw
+lc_ui_get_now_cap                          | 立刻獲得                         | GET NOW
+lc_ui_guaranteed                           | 必得                           | Guaranteed
+LC_EVENT_flash_sale_name                   | 限時搶購                         | LIMITED-TIME FLASH SALE
+LC_EVENT_flash_sale_pop_goto_button        | 前往                           | HEAD TO
+LC_EVENT_flash_sale_pop_tips_1             | 全服限時搶購，超大折扣，機不可失             | Limited-time flash sale with massive discounts for all servers – don’t miss out!
+LC_EVENT_strong_consume_info_desc_2        |                              | 
+LC_IAP_flashsale_value_promotion           | VALUE PROMOTION              | VALUE PROMOTION
+LC_IAP_scene_limit                         | 限購一次！                        | One time only!
+LC_IAP_vip_super_sale                      | SUPER SALE                   | SUPER SALE
+lc_ui_tap_blank_close                      | 點擊空白區域關閉                     | Tap any blank area to close
+LC_EVENT_2024_fes_box_botton_1             | 開啟1次                         | OPEN 1X
+LC_EVENT_2024_fes_box_botton_10            | 開啟10次                        | OPEN 10X
+LC_IAP_flashsale_chest_reward_desc         | 開啟寶箱將隨機獲得以下獎勵                | Opening the chest will randomly grant the following rewards
+LC_IAP_flashsale_open_grand_prize          | 開啟{0}/{1}次獲得大獎！              | Open {0}/{1} times to win the Grand Prize!
+LC_IAP_flashsale_owned_count               | 擁有數量:{0}                     | Owned: {0}
+LC_IAP_flashsale_surprise_chest            | 驚喜寶箱                         | Surprise Chest
+
+空文案: ['LC_EVENT_strong_consume_info_desc_2']

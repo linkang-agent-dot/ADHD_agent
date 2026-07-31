@@ -1,0 +1,119 @@
+=== 映射规则验证：Assets/{P2,x2}/Res/... -> Assets/Res/... ===
+可验证的已有件: 108 （无源路径 0）
+  完全命中      : 73  (68%)
+  仅大小写不同  : 7
+  路径真的不同  : 28
+
+=== 不符合规则的（X3 侧挪过位置，落点要照 X3 现状）===
+  ButtonInfoBg.png
+     X2 源  : Assets/P2/Res/UI/Atlas/Public/Partnew/ButtonInfoBg.png
+     规则预测: Assets/Res/UI/Atlas/Public/Partnew/ButtonInfoBg.png
+     X3 实际: Assets/Res/UI/Sprite/UIActvCircusGacha/Images/ButtonInfoBg.png
+  CommonButtonGrey.png
+     X2 源  : Assets/P2/Res/UI/Atlas/Public/Partnew/CommonButtonGrey.png
+     规则预测: Assets/Res/UI/Atlas/Public/Partnew/CommonButtonGrey.png
+     X3 实际: Assets/Res/UI/Sprite/UIActvWeeklyCardSelect/Images/CommonButtonGrey.png
+  CommonWhiteRect.png
+     X2 源  : Assets/P2/Res/UI/Atlas/Public/Partnew/CommonWhiteRect.png
+     规则预测: Assets/Res/UI/Atlas/Public/Partnew/CommonWhiteRect.png
+     X3 实际: Assets/Res/UI/Sprite/UIActvWeeklyCardSelect/Images/CommonWhiteRect.png
+  CommonWhiteRectEmpty.png
+     X2 源  : Assets/P2/Res/UI/Atlas/Public/Partnew/CommonWhiteRectEmpty.png
+     规则预测: Assets/Res/UI/Atlas/Public/Partnew/CommonWhiteRectEmpty.png
+     X3 实际: Assets/Res/UI/Atlas/Public/CommonWhiteRectEmpty.png
+  Common_Bar_Commonly4.png
+     X2 源  : Assets/x2/Res/UI/NewSprite/Common/ProgressBar/Common_Bar_Commonly4.png
+     规则预测: Assets/Res/UI/NewSprite/Common/ProgressBar/Common_Bar_Commonly4.png
+     X3 实际: Assets/Res/UI/Sprite/UIMonopolyPigBanck/Images/Common_Bar_Commonly4.png
+  Glow1005_1a_UI.mat
+     X2 源  : Assets/x2/Res/Effect/Material/Special/Glow1005_1a_UI.mat
+     规则预测: Assets/Res/Effect/Material/Special/Glow1005_1a_UI.mat
+     X3 实际: Assets/Res/Effect/Materials/Special/Glow1005_1a_UI.mat
+  Glow2002_1a_UI.mat
+     X2 源  : Assets/x2/Res/Effect/Material/Special/Glow2002_1a_UI.mat
+     规则预测: Assets/Res/Effect/Material/Special/Glow2002_1a_UI.mat
+     X3 实际: Assets/Res/Effect/Materials/Special/Glow2002_1a_UI.mat
+  Glow_043.PNG
+     X2 源  : Assets/P2/Res/Effect/Textures/glow/Glow_043.PNG
+     规则预测: Assets/Res/Effect/Textures/glow/Glow_043.PNG
+     X3 实际: Assets/Res/Effect/Textures/ui_glow01.PNG
+  Glow_044_1a.mat
+     X2 源  : Assets/P2/Res/Effect/Material/Glow_044_1a.mat
+     规则预测: Assets/Res/Effect/Material/Glow_044_1a.mat
+     X3 实际: Assets/Res/UI/Materials/UIActvLaborGacha/Glow_044_1a.mat
+  Glow_2002.png
+     X2 源  : Assets/x2/Res/Effect/Textures/glow/Glow_2002.png
+     规则预测: Assets/Res/Effect/Textures/glow/Glow_2002.png
+     X3 实际: Assets/Res/Effect/Prefabs/Ship/Common/Common_Ship/tex/Glow_004.png
+  Glow_7304_1a_UI_Ljc.mat
+     X2 源  : Assets/x2/Res/Effect/Material/Special/Glow_7304_1a_UI_Ljc.mat
+     规则预测: Assets/Res/Effect/Material/Special/Glow_7304_1a_UI_Ljc.mat
+     X3 实际: Assets/Res/Effect/Materials/Special/Glow_7304_1a_UI_Ljc.mat
+  IconBtnInfo.png
+     X2 源  : Assets/P2/Res/UI/Atlas/Public/Partnew/IconBtnInfo.png
+     规则预测: Assets/Res/UI/Atlas/Public/Partnew/IconBtnInfo.png
+     X3 实际: Assets/Res/UI/Sprite/UIActvCircusGacha/Images/IconBtnInfo.png
+  Mask040_Mask069_Noise003_2a_UI.mat
+     X2 源  : Assets/x2/Res/Effect/Material/Special/Mask040_Mask069_Noise003_2a_UI.mat
+     规则预测: Assets/Res/Effect/Material/Special/Mask040_Mask069_Noise003_2a_UI.mat
+     X3 实际: Assets/Res/Effect/Materials/Special/Mask040_Mask069_Noise003_2a_UI.mat
+  Mask070_1a_UI.mat
+     X2 源  : Assets/x2/Res/Effect/Material/Special/Mask070_1a_UI.mat
+     规则预测: Assets/Res/Effect/Material/Special/Mask070_1a_UI.mat
+     X3 实际: Assets/Res/Effect/Materials/Special/Mask070_1a_UI.mat
+  Mask_040_Mask_076_1a_UI_jq.mat
+     X2 源  : Assets/x2/Res/Effect/Material/Special/Mask_040_Mask_076_1a_UI_jq.mat
+     规则预测: Assets/Res/Effect/Material/Special/Mask_040_Mask_076_1a_UI_jq.mat
+     X3 实际: Assets/Res/Effect/UI/materials/Mask_040_Mask_076_1a_UI_jq.mat
+  Mask_076_jq.png
+     X2 源  : Assets/x2/Res/Effect/Textures/mask/Mask_076_jq.png
+     规则预测: Assets/Res/Effect/Textures/mask/Mask_076_jq.png
+     X3 实际: Assets/Res/Effect/UI/Textures/Mask_076_jq.png
+  Mask_077_Mask_078_1a_UI_jq.mat
+     X2 源  : Assets/x2/Res/Effect/Material/Special/Mask_077_Mask_078_1a_UI_jq.mat
+     规则预测: Assets/Res/Effect/Material/Special/Mask_077_Mask_078_1a_UI_jq.mat
+     X3 实际: Assets/Res/Effect/UI/materials/Mask_077_Mask_078_1a_UI_jq.mat
+  Mask_077_jq.png
+     X2 源  : Assets/x2/Res/Effect/Textures/mask/Mask_077_jq.png
+     规则预测: Assets/Res/Effect/Textures/mask/Mask_077_jq.png
+     X3 实际: Assets/Res/Effect/UI/Textures/Mask_077_jq.png
+  Mask_078_jq.png
+     X2 源  : Assets/x2/Res/Effect/Textures/mask/Mask_078_jq.png
+     规则预测: Assets/Res/Effect/Textures/mask/Mask_078_jq.png
+     X3 实际: Assets/Res/Effect/UI/Textures/Mask_078_jq.png
+  Ring_7305_1a_UI_Ljc.mat
+     X2 源  : Assets/x2/Res/Effect/Material/Special/Ring_7305_1a_UI_Ljc.mat
+     规则预测: Assets/Res/Effect/Material/Special/Ring_7305_1a_UI_Ljc.mat
+     X3 实际: Assets/Res/Effect/Materials/Special/Ring_7305_1a_UI_Ljc.mat
+  Ring_7306_1a_UI_Ljc.mat
+     X2 源  : Assets/x2/Res/Effect/Material/Special/Ring_7306_1a_UI_Ljc.mat
+     规则预测: Assets/Res/Effect/Material/Special/Ring_7306_1a_UI_Ljc.mat
+     X3 实际: Assets/Res/Effect/Materials/Special/Ring_7306_1a_UI_Ljc.mat
+  Ring_7307_1b_UI_Ljc.mat
+     X2 源  : Assets/x2/Res/Effect/Material/Special/Ring_7307_1b_UI_Ljc.mat
+     规则预测: Assets/Res/Effect/Material/Special/Ring_7307_1b_UI_Ljc.mat
+     X3 实际: Assets/Res/Effect/Materials/Special/Ring_7307_1b_UI_Ljc.mat
+  Ring_7308_1a_UI_Ljc.mat
+     X2 源  : Assets/x2/Res/Effect/Material/Special/Ring_7308_1a_UI_Ljc.mat
+     规则预测: Assets/Res/Effect/Material/Special/Ring_7308_1a_UI_Ljc.mat
+     X3 实际: Assets/Res/Effect/Materials/Special/Ring_7308_1a_UI_Ljc.mat
+  Ui_150.png
+     X2 源  : Assets/P2/Res/Effect/Textures/ui/Ui_150.png
+     规则预测: Assets/Res/Effect/Textures/ui/Ui_150.png
+     X3 实际: Assets/Res/UI/Materials/UIActvLaborGacha/Textures/Ui_150.png
+  Ui_150_1a_UI.mat
+     X2 源  : Assets/P2/Res/Effect/Material/Special/Ui_150_1a_UI.mat
+     规则预测: Assets/Res/Effect/Material/Special/Ui_150_1a_UI.mat
+     X3 实际: Assets/Res/UI/Materials/UIActvLaborGacha/Ui_150_1a_UI.mat
+  Vein005_Mask009_1a_UI.mat
+     X2 源  : Assets/P2/Res/Effect/Material/update/Vein005_Mask009_1a_UI.mat
+     规则预测: Assets/Res/Effect/Material/update/Vein005_Mask009_1a_UI.mat
+     X3 实际: Assets/Res/UI/Materials/UIActvLaborGacha/Vein005_Mask009_1a_UI.mat
+  Vein_005.png
+     X2 源  : Assets/P2/Res/Effect/Textures/vein/Vein_005.png
+     规则预测: Assets/Res/Effect/Textures/vein/Vein_005.png
+     X3 实际: Assets/Res/UI/Materials/UIActvLaborGacha/Textures/Vein_005.png
+  store_icon_value.png
+     X2 源  : Assets/x2/Res/UI/NewSprite/store/store_icon_value.png
+     规则预测: Assets/Res/UI/NewSprite/store/store_icon_value.png
+     X3 实际: Assets/Res/UI/Sprite/UIMonopolyPigBanck/Images/store_icon_value.png

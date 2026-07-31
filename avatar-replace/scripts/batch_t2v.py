@@ -104,10 +104,12 @@ def gen_one(p: VolcProvider, model: str, prefix: str, suffix: str,
         body["duration"] = clip["dur"]   # 按原片时长（clamp 4-15s）
     t0 = time.time()
     try:
-        p._submit_and_poll(body, out)
+        api_meta = {}   # 接 task_id / usage（token 用量），事后算账靠它
+        p._submit_and_poll(body, out, meta_out=api_meta)
         v = verify_clip(out)
         append_progress(out_dir, {"id": cid, "status": "ok", "secs": round(time.time() - t0),
-                                  "dur_expect": clip.get("dur"), **v})
+                                  "dur_expect": clip.get("dur"), "model": model,
+                                  **{k: api_meta.get(k) for k in ("task_id", "usage")}, **v})
         return cid, "ok", (f"magic={v.get('magic_ok')} {v.get('bytes',0)/1024/1024:.1f}MB "
                            f"{v.get('vcodec')}/{v.get('acodec')} {v.get('dur')}s {time.time()-t0:.0f}s")
     except Exception as e:
@@ -121,6 +123,8 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--only", default="")
+    ap.add_argument("--model", default="",
+                    help="覆盖 config.yaml 的 video_model，用于跨模型比价/比画质")
     args = ap.parse_args()
 
     data = json.loads(Path(args.json).read_text(encoding="utf-8"))
@@ -149,7 +153,7 @@ def main():
 
     cfg = load_config(ROOT / "config.yaml", require_key=True)
     p = VolcProvider(cfg.ark)
-    model = cfg.ark.video_model
+    model = args.model or cfg.ark.video_model
     print(f"[batch] {len(clips)} 条 → {out_dir}  model={model}  并发={args.workers}"
           f"  ref图={len(ref_images)}张  audio={'生成' if gen_audio else '关(不配音轨)'}"
           f"  hidden模式={'有' if suffix_hidden else '无'}  duration=按json", flush=True)

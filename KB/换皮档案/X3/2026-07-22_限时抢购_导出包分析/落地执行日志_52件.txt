@@ -1,0 +1,71 @@
+=== 落地计划（真实执行）===
+X3 工程: C:\x3-project\client   (Unity 须关闭)
+
+[Prefabs 4]  ->  Assets\Res\UI\Prefab\Activity
+   FlashSale.prefab                                    
+   FlashSaleItem.prefab                                
+   FlashSalePop.prefab                                 
+   FlashSaleRewardGet.prefab                           
+
+[Images 24]  ->  Assets\Res\UI\Sprite\UIActvFlashSale\Images
+   Alliance_Decoration_flower.png                      
+   Bg_Light.png                                        
+   CommonBgGradientGrey.png                            
+   CommonCheckBg.png                                   
+   Common_WhiteImg_Gradient3.png                       
+   Common_icon_FrequencyBg1.png                        
+   Common_icon_FrequencyBg2.png                        
+   FlashSale_Bg.png                                    
+   FlashSale_Bg_Banner.png                             
+   FlashSale_Bg_Box1.png                                (源有2份,已判MD5相同取非_1)
+   FlashSale_Bg_BoxClose1.png                          
+   FlashSale_Bg_Cupboard.png                           
+   FlashSale_Light.png                                 
+   FlashSale_icon_SpecialBox.png                        (源有2份,已判MD5相同取非_1)
+   FrameYellow.png                                     
+   GiftPack_bg_LogInBg1.png                            
+   GiftPack_bg_LogInBg2.png                            
+   GiftPack_bg_LogInBg3.png                            
+   LuckyWheel_bg_Base1.png                             
+   NewrankLightbg.png                                  
+   ProgressBgGradient.png                              
+   UiItemsSpeedupBuilding.png                          
+   common_icon_AFKGiftPack.png                         
+   mail_bg_Orange.png                                   (源有2份,已判MD5相同取非_1)
+
+[Animations 7]  ->  Assets\Res\UI\Animation\UIActvFlashSale
+   BoxAnim.anim                                        
+   BoxReward.anim                                      
+   BoxReward2.anim                                     
+   RewardGetItemShow.anim                              
+   monthly_pkg_Switch.anim                             
+   ui21201451BoxMain.anim                              
+   ui21201451BoxMainDefault.anim                       
+
+[Materials 7]  ->  Assets\Res\UI\Materials\UIActvFlashSale
+   Flare038_1a_UI.mat                                  
+   Obj316_Ss_1a_UI.mat                                 
+   Spur_183_a_UI.mat                                   
+   Trail_274_1a_UI.mat                                 
+   Ui252_1a_UI.mat                                     
+   Ui_096_a_UI.mat                                     
+   naozhong_Material.mat                               
+
+[Textures 9]  ->  Assets\Res\UI\Materials\UIActvFlashSale\Textures
+   Flare038.png                                        
+   Mask_009.tga                                        
+   Mask_347.png                                        
+   Obj_316_Ss.png                                      
+   Spur_115.tga                                         (源有2份,已判MD5相同取非_1)
+   Spur_183.png                                        
+   Trail_274.png                                       
+   Ui_096.png                                          
+   naozhong.png                                        
+
+[Shaders 1]  ->  Assets\Res\Shader\Effect
+   FX_AddBlend_DistortionDissolve_Flow_New_UI.shader    (源有3份,已判MD5相同取非_1)
+
+合计 52 件 (+ .meta = 104 文件)
+
+=== 执行结果 ===
+  拷入 52，跳过 0

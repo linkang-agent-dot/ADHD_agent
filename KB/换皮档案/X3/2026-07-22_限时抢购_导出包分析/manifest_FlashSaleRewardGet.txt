@@ -1,0 +1,89 @@
+﻿Source: Assets/FlashSaleRewardGet.prefab
+Exported: 2026-07-31 15:23:57
+ExcludeRedDot: True
+WriteLocalizationTsv: True
+============================================================
+
+[Images 37]
+Assets/x2/Res/UI/Atlas/Public/Activity_bg_BoxReward2.png
+Assets/P2/Res/UI/Atlas/Public/Partnew/ButtonInfoBg.png
+Assets/P2/Res/UI/Atlas/Public/Partnew/CommonWhiteRect.png
+Assets/x2/Res/UI/TextureNew/Common/Common_Bg_Rewardtitle.png
+Assets/x2/Res/UI/NewSprite/Common/button/Common_Btn_1_Normal.png
+Assets/x2/Res/UI/NewSprite/Common/button/Common_Btn_1_obvious.png
+Assets/x2/Res/UI/NewSprite/Common/button/Common_Btn_1_unavailable.png
+Assets/x2/Res/UI/HighQualitySprite/Common_btn_return.png
+Assets/x2/Res/UI/NewSprite/Common/Decorate/Common_decorate_Starlight.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_BundleBg.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_hero5_Epic.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_hero5_Legendary.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_hero5_Perfect.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_ Normal.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_Epic.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_Legendary.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_mask.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_Perfect.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_Rare.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_special.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox2_special2.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox4_ Normal.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_frame_IconBox_Legendary.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_Frame_selected.png
+Assets/x2/Res/UI/NewSprite/Common/frame/Common_icon_IconBox2_lock.png
+Assets/x2/Res/UI/HighQualitySprite/common_icon_new.png
+Assets/x2/Res/UI/NewSprite/Common/WhiteImg/Common_WhiteImg_square2.png
+Assets/x2/Res/UI/NewSprite/Common/WhiteImg/Common_WhiteImg_TickMark.png
+Assets/x2/Res/UI/TextureNew/FlashSale_icon_SpecialBox.png
+Assets/x2/Res/UI/Atlas/Furnace/Furnace_Icon_ Tag01.png
+Assets/x2/Res/UI/NewSprite/store/GildedPrivilegeCard.png
+Assets/P2/Res/UI/Atlas/Public/Partnew/IconBtnInfo.png
+Assets/x2/Res/UI/Atlas/ResourcesICon/Icon_Daoju_Zanshiyige.png
+Assets/x2/Res/UI/Atlas/HeroCard/ImgHeroAvatar_Tailor.png
+Assets/x2/Res/UI/Atlas/Public/LuckyWheel_bg_Base1.png
+Assets/x2/Res/UI/NewSprite/Mail/mail_bg_Orange.png
+Assets/x2/Res/UI/NewSprite/Slg/SLG_bg_Rating_S.png
+
+[Textures 15]
+Assets/P2/Res/Effect/Textures/glow/Glow_043.PNG
+Assets/x2/Res/Effect/Textures/glow/Glow_1005.png
+Assets/x2/Res/Effect/Textures/glow/Glow_2002.png
+Assets/P2/Res/Effect/Textures/mask/Mask_009.tga
+Assets/x2/Res/Effect/Textures/mask/Mask_040.png
+Assets/x2/Res/Effect/Textures/mask/Mask_069_1.png
+Assets/x2/Res/Effect/Textures/mask/Mask_070.png
+Assets/P2/Res/Effect/Textures/mask/Mask_347.png
+Assets/x2/Res/Effect/Textures/noise/Noise_003.png
+Assets/P2/Res/Effect/Textures/obj/Obj_316_Ss.png
+Assets/P2/Res/Effect/Textures/spur/Spur_115.tga
+Assets/P2/Res/Effect/Textures/spur/Spur_183.png
+Assets/P2/Res/Effect/Textures/ui/Ui_096.png
+Assets/P2/Res/Effect/Textures/ui/Ui_150.png
+Assets/P2/Res/Effect/Textures/vein/Vein_005.png
+
+[Animations 3]
+Assets/x2/Res/Effect/Animation/Fx_UI_Selected.controller
+Assets/x2/Res/Effect/Animation/Fx_UI_Selected_01.anim
+Assets/P2/Res/UI/Animation/RewardGetItemShow.anim
+
+[Prefabs 0]
+
+[Materials 13]
+Assets/x2/Res/Effect/Material/Special/Glow1005_1a_UI.mat
+Assets/x2/Res/Effect/Material/Special/Glow2002_1a_UI.mat
+Assets/P2/Res/Effect/Material/Glow_044_1a.mat
+Assets/x2/Res/Effect/Material/Special/Mask040_Mask069_Noise003_2a_UI.mat
+Assets/x2/Res/Effect/Material/Special/Mask070_1a_UI.mat
+Assets/P2/Res/Effect/Material/Special/Mask_347_1a_UI.mat
+Assets/P2/Res/Effect/Material/update/Obj316_Ss_1a_UI.mat
+Assets/P2/Res/Effect/Material/Special/Spur_115_1a_UI.mat
+Assets/P2/Res/Effect/Material/Special/Spur_183_a_UI.mat
+Assets/P2/Res/Effect/Material/Special/Ui252_1a_UI.mat
+Assets/P2/Res/Effect/Material/Special/Ui_096_a_UI.mat
+Assets/P2/Res/Effect/Material/Special/Ui_150_1a_UI.mat
+Assets/P2/Res/Effect/Material/update/Vein005_Mask009_1a_UI.mat
+
+[Shaders 4]
+Assets/x2/Res/Shader/Effect/FX_AddBlend_DistortionDissolve_Flow_New_UI 1.shader
+Assets/P2/Res/Shader/Effect/FX_AddBlend_DistortionDissolve_Flow_New_UI.shader
+Assets/P2/Res/Shader/Effect/FX_AddBlend_Particle.shader
+Assets/P2/Res/Shader/Effect/FX_AddBlend_Particle_UI.shader

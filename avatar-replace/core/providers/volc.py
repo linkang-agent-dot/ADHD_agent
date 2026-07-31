@@ -148,7 +148,10 @@ class VolcProvider(Provider):
                 "watermark": self.cfg.watermark}
         return self._submit_and_poll(body, out_path)
 
-    def _submit_and_poll(self, body: dict, out_path: Path) -> Path:
+    def _submit_and_poll(self, body: dict, out_path: Path,
+                         meta_out: dict | None = None) -> Path:
+        """meta_out: 可选的输出字典，成功后写入 task_id / usage / model。
+        用调用方传入的 dict 而非实例属性，避免 batch 并发时互相覆盖。"""
         r = requests.post(f"{self.cfg.base_url}/contents/generations/tasks",
                           headers=self.headers, json=body, timeout=120)
         if r.status_code >= 400:
@@ -170,6 +173,11 @@ class VolcProvider(Provider):
             d = s.json()
             if d["status"] == "succeeded":
                 url = d["content"]["video_url"]
+                if meta_out is not None:
+                    # usage 用于事后算账（方舟按 token 计费）；缺字段时留 None 不报错
+                    meta_out.update({"task_id": task_id,
+                                     "usage": d.get("usage"),
+                                     "model_ret": d.get("model")})
                 break
             if d["status"] in ("failed", "cancelled", "expired"):
                 raise RuntimeError(f"video task {task_id} 失败: {d}")

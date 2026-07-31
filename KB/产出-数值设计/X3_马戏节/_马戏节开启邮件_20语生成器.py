@@ -1,0 +1,78 @@
+# -*- coding: utf-8 -*-
+"""马戏节开启邮件 · 20 语内容 + payload 生成"""
+import json, os
+
+SERVERS = [str(x) for x in [1170,1270,1310,1350,1390,1400,1420,1440,1460,1510,1530,1540,1550,1560,1570,1580,1590,1600,
+ 1610,1620,1630,1640,1650,1660,1670,1680,1690,1700,1710,1720,1730,1740,1750,1760,1770,1780,1790,1800,
+ 1810,1820,1830,1840,1850,1860,1870,1880,1890,1900,1910,1920,1930,1940,1950,1960,1970,1980,1990,2000,
+ 2010,2020,2030,2040,2050,2060,2070,2080,2090,2100,2110,2120,2130,2140,2150,2160,2170,2180,2190,2200,
+ 2210,2220,2230,2240,2250,2260,2270,2280,2290]]
+
+ASSETS = [
+    {"assetType": "PROP", "id": "1057", "amount": 5},   # 航海罗盘
+    {"assetType": "PROP", "id": "1209", "amount": 5},   # 马戏门票
+]
+
+C = {
+"cn": ("马戏节 · 盛大开演",
+"亲爱的酒馆主，\n\n灯串亮起，帐篷升顶，远处传来第一声铜管——马戏节现已正式开演！\n\n开启马戏福箱赢取节日珍稀外显，投币转动扭蛋机不空手离场；转动马戏团寻宝的外圈，抽中彩虹星直闯内圈终极大奖，榜前 50 名更有「梦幻旋转木马」岛屿皮肤等你带走。掷出骰子加入马戏巡游，沿途帐篷与惊喜宝箱一路相随。\n\n签到、拼图与集市还能免费积累「幻紫魅影」纪念卡，节日周卡每日 10 选 4，马戏酒馆跨服开赛——二十项活动，等你走进帐篷。\n\n随信附上开场好礼，祝你演出愉快！"),
+"en": ("Circus Festival — The Big Top Is Open",
+"Dear Tavern Owner,\n\nThe lights are up, the tent is raised, and the first brass note is playing — the Circus Festival has officially begun!\n\nOpen Circus Lucky Boxes for rare festival cosmetics, and spin the Circus Gacha — no one leaves empty-handed. Spin the outer ring of the Circus Treasure Hunt, land a Rainbow Star to unlock the inner ring and its ultimate prize; the top 50 on the leaderboard will claim the Carousel Dream island skin. Roll the dice to join the Circus Parade, with tents and surprise chests waiting along the way.\n\nCheck-in, Puzzle and the Treasure Market all let you collect the Phantom in Violet memorial card for free. The Festival Weekly Pass lets you pick 4 of 10 rewards daily, and the Circus Tavern cross-server contest is now live — twenty events await you under the big top.\n\nA welcome gift is attached. Enjoy the show!"),
+"zh": ("馬戲節 · 盛大開演",
+"親愛的酒館主，\n\n燈串亮起，帳篷升頂，遠處傳來第一聲銅管——馬戲節現已正式開演！\n\n開啟馬戲福箱贏取節日珍稀外顯，投幣轉動扭蛋機不空手離場；轉動馬戲團尋寶的外圈，抽中彩虹星直闖內圈終極大獎，榜前 50 名更有「夢幻旋轉木馬」島嶼皮膚等你帶走。擲出骰子加入馬戲巡遊，沿途帳篷與驚喜寶箱一路相隨。\n\n簽到、拼圖與集市還能免費累積「幻紫魅影」紀念卡，節日週卡每日 10 選 4，馬戲酒館跨服開賽——二十項活動，等你走進帳篷。\n\n隨信附上開場好禮，祝你演出愉快！"),
+"jp": ("サーカスフェスティバル開幕",
+"酒場のオーナー様へ\n\n灯りがともり、テントが張られ、遠くから金管の音が響きます——サーカスフェスティバルが開幕しました！\n\nサーカスラッキーボックスを開けて限定外装を手に入れ、ガチャを回せば手ぶらでは帰しません。トレジャーハントの外周を回してレインボースターを引けば、内周の最終大賞へ。ランキング上位 50 名には「夢幻メリーゴーランド」島スキンを贈呈。サイコロを振ってサーカスパレードへ出発しましょう。\n\nログインボーナス・パズル・マーケットでは「幻紫の幻影」記念カードを無料で集められます。フェスティバル週間パスは毎日 10 個から 4 個を選択可能、サーカス酒場のサーバー横断大会も開催中——20 のイベントがあなたを待っています。\n\n開幕記念品を同封しました。素敵なショーを！"),
+"kr": ("서커스 페스티벌 개막",
+"선술집 주인님께\n\n조명이 켜지고 천막이 세워지며 멀리서 첫 금관 소리가 울립니다 — 서커스 페스티벌이 정식 개막했습니다!\n\n서커스 럭키박스를 열어 축제 한정 외형을 획득하고, 가챠를 돌려보세요. 트레저 헌트 외곽을 돌려 레인보우 스타를 뽑으면 내부 최종 대상에 도전할 수 있으며, 랭킹 상위 50명에게는 '몽환의 회전목마' 섬 스킨이 주어집니다. 주사위를 굴려 서커스 퍼레이드에 참여하세요.\n\n출석, 퍼즐, 마켓에서 '환보라 팬텀' 기념 카드를 무료로 모을 수 있습니다. 축제 주간 패스는 매일 10개 중 4개를 선택, 서커스 선술집 서버 통합 경기도 진행 중입니다 — 20가지 이벤트가 기다립니다.\n\n개막 선물을 동봉했습니다. 즐거운 공연 되세요!"),
+"fr": ("Festival du Cirque — Le chapiteau est ouvert",
+"Cher propriétaire de taverne,\n\nLes lumières s'allument, le chapiteau se dresse, les cuivres résonnent au loin — le Festival du Cirque a officiellement commencé !\n\nOuvrez les Coffres du Cirque pour des cosmétiques rares, et tentez le Gacha du Cirque. Faites tourner l'anneau extérieur de la Chasse au Trésor : une Étoile Arc-en-ciel vous ouvre l'anneau intérieur et son grand prix. Le top 50 remportera le skin d'île « Carrousel de Rêve ». Lancez les dés et rejoignez la Parade du Cirque.\n\nLa connexion quotidienne, le Puzzle et le Marché permettent de collecter gratuitement la carte « Fantôme Violet ». Le Pass Hebdomadaire offre 4 récompenses sur 10 chaque jour, et la Taverne du Cirque inter-serveurs est lancée — vingt événements vous attendent.\n\nUn cadeau de bienvenue est joint. Bon spectacle !"),
+"de": ("Zirkusfest — Das Zelt ist eröffnet",
+"Lieber Tavernenbesitzer,\n\nDie Lichter gehen an, das Zelt steht, in der Ferne erklingt das erste Blech — das Zirkusfest hat offiziell begonnen!\n\nÖffne Zirkus-Glücksboxen für seltene Festkosmetik und drehe am Zirkus-Gacha. Drehe den äußeren Ring der Schatzsuche: Ein Regenbogenstern öffnet den inneren Ring mit dem Hauptpreis. Die Top 50 erhalten den Insel-Skin „Traumkarussell\". Würfle und schließe dich der Zirkusparade an.\n\nCheck-in, Puzzle und Markt bringen dir die Gedenkkarte „Violettes Phantom\" gratis. Der Festival-Wochenpass lässt dich täglich 4 von 10 Belohnungen wählen, und die serverübergreifende Zirkustaverne läuft — zwanzig Events warten.\n\nEin Willkommensgeschenk liegt bei. Viel Spaß bei der Show!"),
+"ru": ("Цирковой фестиваль открыт",
+"Уважаемый владелец таверны!\n\nОгни зажглись, шатёр поднят, вдали звучит первая труба — Цирковой фестиваль официально начался!\n\nОткрывайте Цирковые сундуки ради редких праздничных обликов и крутите Цирковую гачу. Вращайте внешнее кольцо Охоты за сокровищами: Радужная звезда откроет внутреннее кольцо с главным призом. Топ-50 получат скин острова «Карусель грёз». Бросайте кости и присоединяйтесь к Цирковому параду.\n\nВход в игру, Пазл и Рынок позволяют бесплатно собрать памятную карту «Фиолетовый фантом». Недельный пропуск даёт 4 награды из 10 ежедневно, межсерверная Цирковая таверна уже идёт — вас ждут двадцать событий.\n\nПодарок к открытию прилагается. Приятного представления!"),
+"sp": ("Festival del Circo — ¡La carpa está abierta!",
+"Estimado propietario de taberna:\n\nLas luces se encienden, la carpa se alza y suenan los primeros metales: ¡el Festival del Circo ha comenzado oficialmente!\n\nAbre Cajas de la Suerte del Circo para conseguir cosméticos raros y prueba la Gacha del Circo. Gira el anillo exterior de la Búsqueda del Tesoro: una Estrella Arcoíris abre el anillo interior y su gran premio. Los 50 primeros obtendrán la piel de isla «Carrusel de Ensueño». ¡Lanza los dados y únete al Desfile del Circo!\n\nEl inicio de sesión, el Puzle y el Mercado permiten conseguir gratis la carta «Fantasma Violeta». El Pase Semanal ofrece 4 de 10 recompensas al día y la Taberna del Circo entre servidores ya está activa: veinte eventos te esperan.\n\nSe adjunta un regalo de bienvenida. ¡Disfruta del espectáculo!"),
+"po": ("Festival do Circo — A tenda está aberta",
+"Caro proprietário de taverna,\n\nAs luzes acendem, a tenda se ergue e os metais soam ao longe — o Festival do Circo começou oficialmente!\n\nAbra as Caixas da Sorte do Circo para cosméticos raros e gire a Gacha do Circo. Gire o anel externo da Caça ao Tesouro: uma Estrela Arco-íris abre o anel interno e seu grande prêmio. O top 50 leva a skin de ilha «Carrossel dos Sonhos». Role os dados e junte-se ao Desfile do Circo.\n\nLogin diário, Quebra-cabeça e Mercado permitem colecionar gratuitamente a carta «Fantasma Violeta». O Passe Semanal dá 4 de 10 recompensas por dia, e a Taverna do Circo entre servidores já começou — vinte eventos esperam por você.\n\nUm presente de boas-vindas está anexado. Aproveite o espetáculo!"),
+"it": ("Festival del Circo — Il tendone è aperto",
+"Caro proprietario di taverna,\n\nLe luci si accendono, il tendone si alza e in lontananza risuonano gli ottoni: il Festival del Circo è ufficialmente iniziato!\n\nApri le Casse Fortunate del Circo per cosmetici rari e prova il Gacha del Circo. Gira l'anello esterno della Caccia al Tesoro: una Stella Arcobaleno apre l'anello interno e il suo premio finale. I primi 50 otterranno la skin isola «Giostra dei Sogni». Lancia i dadi e unisciti alla Parata del Circo.\n\nAccesso giornaliero, Puzzle e Mercato ti permettono di collezionare gratis la carta «Fantasma Viola». Il Pass Settimanale offre 4 ricompense su 10 al giorno e la Taverna del Circo cross-server è attiva: venti eventi ti aspettano.\n\nIn allegato un regalo di benvenuto. Buono spettacolo!"),
+"tr": ("Sirk Festivali — Çadır Açıldı",
+"Sayın Taverna Sahibi,\n\nIşıklar yandı, çadır kuruldu, uzaktan ilk bakır nefesli sesi geliyor — Sirk Festivali resmen başladı!\n\nNadir festival kozmetikleri için Sirk Şans Kutularını aç ve Sirk Gacha'sını çevir. Hazine Avı'nın dış halkasını çevir: Gökkuşağı Yıldızı iç halkayı ve büyük ödülü açar. İlk 50 oyuncu «Düş Atlıkarıncası» ada görünümünü kazanır. Zar at ve Sirk Geçidi'ne katıl.\n\nGiriş, Yapboz ve Pazar'dan «Mor Hayalet» anı kartını ücretsiz toplayabilirsin. Festival Haftalık Kartı her gün 10 ödülden 4'ünü seçtirir, sunucular arası Sirk Tavernası başladı — yirmi etkinlik seni bekliyor.\n\nAçılış hediyesi ektedir. İyi seyirler!"),
+"ar": ("مهرجان السيرك — الخيمة مفتوحة",
+"عزيزي صاحب الحانة،\n\nأُضيئت الأنوار ورُفعت الخيمة وعزفت الأبواق من بعيد — انطلق مهرجان السيرك رسميًا!\n\nافتح صناديق السيرك للحصول على مظاهر نادرة، وأدر آلة الغاتشا. أدر الحلقة الخارجية في البحث عن الكنز: نجمة قوس قزح تفتح الحلقة الداخلية وجائزتها الكبرى. أفضل 50 لاعبًا يفوزون بمظهر الجزيرة «دوّامة الأحلام». ارمِ النرد وانضم إلى موكب السيرك.\n\nتسجيل الدخول واللغز والسوق تتيح لك جمع بطاقة «الطيف البنفسجي» مجانًا. تمنحك البطاقة الأسبوعية 4 مكافآت من 10 يوميًا، وبدأت حانة السيرك عبر الخوادم — عشرون فعالية بانتظارك.\n\nهدية الافتتاح مرفقة. استمتع بالعرض!"),
+"th": ("เทศกาลละครสัตว์ — เปิดม่านแล้ว",
+"เรียน เจ้าของโรงเตี๊ยม\n\nไฟสว่างขึ้น เต็นท์ถูกกางออก เสียงแตรดังมาแต่ไกล — เทศกาลละครสัตว์เปิดฉากอย่างเป็นทางการแล้ว!\n\nเปิดกล่องนำโชคละครสัตว์เพื่อรับไอเทมตกแต่งหายาก และหมุนกาชาละครสัตว์ หมุนวงนอกของการล่าสมบัติ: ดาวสายรุ้งจะเปิดวงในและรางวัลใหญ่ ผู้เล่น 50 อันดับแรกจะได้รับสกินเกาะ «ม้าหมุนในฝัน» ทอยลูกเต๋าเข้าร่วมขบวนพาเหรดละครสัตว์\n\nเช็คอิน จิ๊กซอว์ และตลาดให้คุณสะสมการ์ดที่ระลึก «เงาม่วง» ได้ฟรี บัตรรายสัปดาห์ให้เลือก 4 จาก 10 รางวัลทุกวัน และโรงเตี๊ยมละครสัตว์ข้ามเซิร์ฟเวอร์เริ่มแล้ว — ยี่สิบกิจกรรมรอคุณอยู่\n\nแนบของขวัญเปิดงานมาด้วย ขอให้สนุกกับการแสดง!"),
+"vi": ("Lễ hội Xiếc — Rạp đã mở màn",
+"Kính gửi Chủ quán rượu,\n\nĐèn đã sáng, rạp đã dựng, tiếng kèn đồng vang lên từ xa — Lễ hội Xiếc đã chính thức khai màn!\n\nMở Hộp May Mắn Xiếc để nhận ngoại trang hiếm và quay Gacha Xiếc. Quay vòng ngoài của Săn Kho Báu: Ngôi Sao Cầu Vồng sẽ mở vòng trong cùng đại thưởng. Top 50 nhận skin đảo «Vòng Quay Mộng Mơ». Tung xúc xắc và tham gia Diễu Hành Xiếc.\n\nĐiểm danh, Xếp Hình và Chợ đều cho bạn sưu tầm miễn phí thẻ kỷ niệm «Bóng Tím». Thẻ Tuần cho chọn 4 trong 10 phần thưởng mỗi ngày, Quán Rượu Xiếc liên server đã khởi tranh — hai mươi sự kiện đang chờ bạn.\n\nQuà khai màn đính kèm. Chúc bạn xem vui vẻ!"),
+"id": ("Festival Sirkus — Tenda Telah Dibuka",
+"Pemilik Kedai yang terhormat,\n\nLampu menyala, tenda berdiri, dan alat tiup terdengar dari kejauhan — Festival Sirkus resmi dimulai!\n\nBuka Kotak Keberuntungan Sirkus untuk kosmetik langka dan putar Gacha Sirkus. Putar lingkaran luar Perburuan Harta: Bintang Pelangi membuka lingkaran dalam dan hadiah utamanya. 50 teratas mendapatkan skin pulau «Komidi Putar Impian». Lempar dadu dan ikuti Parade Sirkus.\n\nAbsen harian, Puzzle, dan Pasar memungkinkanmu mengumpulkan kartu «Bayangan Ungu» secara gratis. Pass Mingguan memberi 4 dari 10 hadiah setiap hari, dan Kedai Sirkus lintas server telah dimulai — dua puluh event menantimu.\n\nHadiah pembukaan terlampir. Selamat menikmati pertunjukan!"),
+"nl": ("Circusfestival — De tent is open",
+"Beste taverne-eigenaar,\n\nDe lichten gaan aan, de tent staat, en in de verte klinkt het koper — het Circusfestival is officieel begonnen!\n\nOpen Circus-geluksdozen voor zeldzame festivalcosmetica en draai aan de Circus-gacha. Draai de buitenring van de Schattenjacht: een Regenboogster opent de binnenring met de hoofdprijs. De top 50 wint de eilandskin «Droomcarrousel». Gooi de dobbelstenen en sluit je aan bij de Circusparade.\n\nInloggen, Puzzel en Markt laten je gratis de herdenkingskaart «Violet Fantoom» verzamelen. De Weekpas geeft dagelijks 4 van 10 beloningen, en de servero­verschrijdende Circustaverne is begonnen — twintig evenementen wachten op je.\n\nEen openingsgeschenk is bijgevoegd. Geniet van de show!"),
+"ro": ("Festivalul Circului — Cortul este deschis",
+"Stimate proprietar de tavernă,\n\nLuminile s-au aprins, cortul s-a ridicat, iar alămurile răsună în depărtare — Festivalul Circului a început oficial!\n\nDeschide Cutiile Norocoase ale Circului pentru cosmetice rare și învârte Gacha Circului. Învârte inelul exterior al Vânătorii de Comori: o Stea Curcubeu deschide inelul interior și marele premiu. Primii 50 primesc skin-ul de insulă «Caruselul Viselor». Aruncă zarurile și alătură-te Paradei Circului.\n\nConectarea zilnică, Puzzle-ul și Piața îți permit să colectezi gratuit cardul «Fantoma Violetă». Pasul Săptămânal oferă 4 din 10 recompense pe zi, iar Taverna Circului inter-server a început — douăzeci de evenimente te așteaptă.\n\nUn cadou de deschidere este atașat. Spectacol plăcut!"),
+"pls": ("Festiwal Cyrkowy — Namiot otwarty",
+"Drogi Właścicielu Tawerny,\n\nŚwiatła rozbłysły, namiot stanął, a z oddali dobiega dźwięk instrumentów — Festiwal Cyrkowy oficjalnie się rozpoczął!\n\nOtwieraj Cyrkowe Skrzynie Szczęścia po rzadkie kosmetyki i zakręć Cyrkową Gachą. Zakręć zewnętrznym pierścieniem Polowania na Skarby: Tęczowa Gwiazda otwiera pierścień wewnętrzny i główną nagrodę. Pierwsza 50 zdobędzie skin wyspy «Karuzela Marzeń». Rzuć kośćmi i dołącz do Cyrkowej Parady.\n\nLogowanie, Puzzle i Targ pozwalają zbierać kartę «Fioletowy Fantom» za darmo. Przepustka Tygodniowa daje 4 z 10 nagród dziennie, a międzyserwerowa Cyrkowa Tawerna już trwa — czeka na Ciebie dwadzieścia wydarzeń.\n\nW załączeniu prezent na otwarcie. Miłego widowiska!"),
+"fa": ("جشنواره سیرک — چادر باز شد",
+"صاحب میخانه گرامی،\n\nچراغ‌ها روشن شد، چادر برپا شد و صدای سازهای بادی از دور شنیده می‌شود — جشنواره سیرک رسماً آغاز شد!\n\nجعبه‌های شانس سیرک را باز کنید تا ظواهر کمیاب به دست آورید و گاچای سیرک را بچرخانید. حلقه بیرونی شکار گنج را بچرخانید: ستاره رنگین‌کمان حلقه داخلی و جایزه بزرگ آن را باز می‌کند. ۵۰ نفر برتر اسکین جزیره «چرخ‌فلک رویایی» را دریافت می‌کنند. تاس بیندازید و به رژه سیرک بپیوندید.\n\nورود روزانه، پازل و بازار امکان جمع‌آوری رایگان کارت «شبح بنفش» را می‌دهند. پاس هفتگی روزانه ۴ جایزه از ۱۰ جایزه می‌دهد و میخانه سیرک بین‌سروری آغاز شده است — بیست رویداد در انتظار شماست.\n\nهدیه افتتاحیه پیوست است. از نمایش لذت ببرید!"),
+}
+
+payload = {
+    "to": SERVERS,
+    "assets": ASSETS,
+    "content": [{"lang": k, "title": v[0], "body": v[1], "collectionId": -1} for k, v in C.items()],
+    "mailCategoryId": 1,
+    "sendType": -1,
+    "validPeriod": 1920,
+    "customParams": "",
+    "rewardVersion": "",
+    "remark": "马戏节开启公告_87服_20260731",
+}
+
+out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "circus_mail_payload.json")
+json.dump(payload, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+print(f"payload: {out}")
+print(f"  收件服: {len(SERVERS)} 个 ({SERVERS[0]}–{SERVERS[-1]})")
+print(f"  道具: " + " + ".join(f"{a['id']}×{a['amount']}" for a in ASSETS))
+print(f"  语言: {len(C)} 种 → {' '.join(C.keys())}")
+print(f"  有效期: {payload['validPeriod']}h ({payload['validPeriod']//24} 天) | 分类: {payload['mailCategoryId']} 普通邮件")
+print(f"  备注: {payload['remark']}")

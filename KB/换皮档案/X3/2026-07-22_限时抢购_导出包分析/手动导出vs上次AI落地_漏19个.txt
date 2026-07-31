@@ -1,0 +1,36 @@
+=== 手动导出算出的「必须拷」 vs AI 上次真实落地 ===
+手动: 52 个美术件
+AI  : 36 个美术件
+
+### AI 漏掉的(19) —— 这就是上次 A 类外显翻车的物证
+[Textures 9]
+   Flare038.png                                          FlashSale
+   Mask_009.tga                                          FlashSaleRewardGet
+   Mask_347.png                                          FlashSaleRewardGet
+   Obj_316_Ss.png                                        FlashSaleRewardGet
+   Spur_115.tga                                          FlashSale+FlashSaleRewardGet
+   Spur_183.png                                          FlashSaleRewardGet
+   Trail_274.png                                         FlashSale
+   Ui_096.png                                            FlashSaleRewardGet
+   naozhong.png                                          FlashSale
+[Materials 7]
+   Flare038_1a_UI.mat                                    FlashSale
+   Obj316_Ss_1a_UI.mat                                   FlashSaleRewardGet
+   Spur_183_a_UI.mat                                     FlashSaleRewardGet
+   Trail_274_1a_UI.mat                                   FlashSale
+   Ui252_1a_UI.mat                                       FlashSaleRewardGet
+   Ui_096_a_UI.mat                                       FlashSaleRewardGet
+   naozhong_Material.mat                                 FlashSale
+[Shaders 1]
+   FX_AddBlend_DistortionDissolve_Flow_New_UI.shader     FlashSale+FlashSalePop+FlashSaleRewardGet
+[Animations 2]
+   BoxReward.anim                                        FlashSale
+   BoxReward2.anim                                       FlashSale
+
+### AI 多搬的(3) —— 断链路线不需要(公共件已内联)
+   BtnInfo.prefab
+   Fx_Ui_BoxAnim_Rotate.prefab
+   Progress.prefab
+
+### 两边一致的(33)
+   Alliance_Decoration_flower.png, Bg_Light.png, BoxAnim.anim, CommonBgGradientGrey.png, CommonCheckBg.png, Common_WhiteImg_Gradient3.png, Common_icon_FrequencyBg1.png, Common_icon_FrequencyBg2.png, FlashSale.prefab, FlashSaleItem.prefab ...

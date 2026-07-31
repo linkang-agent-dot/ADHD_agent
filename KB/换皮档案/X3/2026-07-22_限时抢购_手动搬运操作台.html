@@ -116,8 +116,15 @@ footer{text-align:center;color:var(--dim);font-size:12px;margin-top:26px}
 
 <section><h2><span class="n">1</span>路 A 重导 4 个 prefab<span class="cnt"></span></h2><div class="body">
 <p class="dim">目的不是拿资产（AI 包已有），是<b>把 AI 包那 52 个 UNRESOLVED 变成确定答案 + 拿到译文</b>。</p>
-<div class="note"><b>不用</b>拖场景 / Unpack / 改名 / 存 Assets 根 —— 那四步只在「要落地一个改了名的自包含 prefab」时才需要。
-直接 <b>Project 选中 prefab → 右键 <code>Tools ▸ X2 ▸ Export Prefab Assets...</code></b>，目标自动填好。</div>
+<div class="note"><b>本案走「断链路线」</b>（07-31 定：X3 侧要重写，不保 x2 guid）——
+拖场景 → <b>Unpack Completely</b> → 改名（落地名仍叫 <code>FlashSale</code> 则可跳）→ 拖回 <code>Assets/</code> 根 → 开工具导出。
+导完把 <code>Assets/FlashSale.prefab</code> 从 Unity 里删掉（别在资源管理器删，会留 meta 孤儿）。
+<br>验收：manifest 里 <code>[Prefabs 0]</code> 是<b>正确</b>结果（125 个 <code>!u!1001</code> 全展平，自包含）；叶子资产照样全捞，实测 108 条、<code>UNRESOLVED 0</code>。
+<br>（对照：只想看依赖清单 / 要保 guid 原地解析 → 直接右键原件 <code>Tools ▸ X2 ▸ Export Prefab Assets...</code>，四步全省，那时 <code>[Prefabs]</code> 应 = 17。）</div>
+<div class="note" style="border-color:#c0392b"><b>🔴 07-31 踩过一次：输出目录一定要改。</b>
+默认 <code>D:\newX2\Copy</code> 会把产物写进 <code>...\Copy\FlashSale\</code>，正是 7/22 那个 AI 包。
+工具 <code>GetUniqueDestinationPath</code> 重名<b>不覆盖</b>、改加 <code>_1</code> 后缀塞旁边 —— 旧包一个文件没丢，但两次导出混成一坨拆不干净（同一次导出内的重名也吃 <code>_1</code>）。
+真被重写的只有生成文件 <code>_manifest.txt</code> / <code>localization_keys.tsv</code>。</div>
 <div class="tw"><table>
 <tr><th>#</th><th>Project 路径（搜 <code>FlashSale</code> 就这 4 个，无重复件）</th><th>GUID</th></tr>
 <tr><td>1 ✅</td><td><code>Assets/x2/Res/UI/Prefab/Activity/FlashSale.prefab</code><button class="cp">复制</button></td><td><code>0902ea9ddc9284741ab682cc3cbe05fa</code></td></tr>
@@ -134,7 +141,7 @@ footer{text-align:center;color:var(--dim);font-size:12px;margin-top:26px}
 <tr><td>导出 TFWText 本地化 TSV</td><td>✅ <b>重点，AI 包没有这个</b></td></tr>
 </table></div>
 <label class="ck"><input type="checkbox"><span class="t">导 <b>FlashSale.prefab</b>
-<span class="exp">自动弹开 <code>...\FlashSale_manualA\FlashSale\</code>，里面有 Images/Textures/Animations/Materials/Shaders/Prefabs + _manifest.txt + localization_keys.tsv</span></span></label>
+<span class="exp">自动弹开输出目录，里面有 Images/Textures/Animations/Materials/Shaders/Prefabs + _manifest.txt + localization_keys.tsv</span></span></label>
 <label class="ck"><input type="checkbox"><span class="t">导 <b>FlashSaleItem.prefab</b></span></label>
 <label class="ck"><input type="checkbox"><span class="t">导 <b>FlashSalePop.prefab</b></span></label>
 <label class="ck"><input type="checkbox"><span class="t">导 <b>FlashSaleRewardGet.prefab</b></span></label>
@@ -142,17 +149,29 @@ footer{text-align:center;color:var(--dim);font-size:12px;margin-top:26px}
 AI 包 <code>Other\</code> 里那 2 个 <code>.ttf</code> 要从 B 包补 —— 别以为路 A 导完就齐了。</div>
 </div></section>
 
-<section><h2><span class="n">2</span>两包 diff（记录结果）<span class="cnt"></span></h2><div class="body">
-<p class="dim">左 = 路 A 新导 <code>FlashSale_manualA\FlashSale\</code>，右 = AI 包 <code>D:\newX2\Copy\FlashSale\</code>
-（右边只有 <code>Images 48 / Animations 8 / Prefabs 17 / Other 2</code>，<b>没有 Textures / Materials / Shaders</b>）</p>
-<label class="ck"><input type="checkbox"><span class="t"><b>① 那 52 个 UNRESOLVED 是什么</b>
-<span class="dim">AI 包 <code>_manifest.txt</code> 末尾的 UNRESOLVED 列表，逐个在路 A 的 manifest 里找 → 是材质？shader？还是本来就不存在的共享图集</span></span></label>
-<div class="fld"><label>结论（多少个是真资产、多少个是幽灵）</label><textarea data-k="d1" placeholder="例：52 个里 9 个是 Materials、1 个 shader、其余 42 个路A也没有 → 共享图集/内置资源"></textarea></div>
-<label class="ck"><input type="checkbox"><span class="t"><b>② localization_keys.tsv 有多少 Key</b>
-<span class="dim">AI 包完全没有这个文件，上次「满屏 LC_ 裸 key」缺的就是它</span></span></label>
-<div class="fld"><label>Key 数 / 语言列数</label><textarea data-k="d2" placeholder="例：N 个 lc_ Key × 17 语"></textarea></div>
-<label class="ck"><input type="checkbox"><span class="t"><b>③ 四个子目录文件计数</b></span></label>
-<div class="fld"><label>Images / Textures / Materials / Shaders 各几个</label><textarea data-k="d3" placeholder="路A FlashSale: Images __ / Textures __ / Materials __ / Shaders __"></textarea></div>
+<section><h2><span class="n">2</span>两包 diff ✅ 已完成（2026-07-31）<span class="cnt"></span></h2><div class="body">
+<div class="note ok"><b>结论：AI 漏了 19 个，全在特效三层链上。根因是<u>用错工具</u>，不是"AI 全自动"。</b></div>
+<p><b>四包导出质量</b>（源在 <code>D:\newX2\&lt;包名&gt;\</code>，<b>不是</b> <code>D:\newX2\Copy\</code>）：</p>
+<div class="tw"><table>
+<tr><th>包</th><th>资产</th><th>独有</th><th>[Prefabs]</th><th>UNRESOLVED</th><th>主件</th></tr>
+<tr><td>FlashSale</td><td>108</td><td>59</td><td>0 ✅</td><td>0</td><td>28.3MB</td></tr>
+<tr><td>FlashSaleItem</td><td>43</td><td>4</td><td>0 ✅</td><td>0</td><td>0.95MB ⚠️导了两遍</td></tr>
+<tr><td>FlashSalePop</td><td>24</td><td>19</td><td>0 ✅</td><td>0</td><td>0.56MB</td></tr>
+<tr><td>FlashSaleRewardGet</td><td>72</td><td>24</td><td>0 ✅</td><td>0</td><td>2.37MB</td></tr>
+<tr><td><b>合并去重</b></td><td><b>156 路径 / 160 guid</b></td><td>—</td><td>—</td><td><b>0</b>（旧路B包 52）</td><td>—</td></tr>
+</table></div>
+<p class="dim">合并分类 Images 85 / Textures 27 / Materials 24 / Animations 15 / Shaders 5。重叠：106 单包、9 双包、41 三包共用。</p>
+<div class="note bad"><b>🔴 AI 上次漏掉的 19 个</b>（对比撤除 commit <code>973997a92ce</code> 删掉的 36 个美术件）：
+<br><b>Textures 9</b>：<code>Flare038</code> <code>Mask_009.tga</code> <code>Mask_347</code> <code>Obj_316_Ss</code> <code>Spur_115.tga</code> <code>Spur_183</code> <code>Trail_274</code> <code>Ui_096</code> <code>naozhong</code>
+<br><b>Materials 7</b>：<code>Flare038_1a_UI</code> <code>Obj316_Ss_1a_UI</code> <code>Spur_183_a_UI</code> <code>Trail_274_1a_UI</code> <code>Ui252_1a_UI</code> <code>Ui_096_a_UI</code> <code>naozhong_Material</code>
+<br><b>Shaders 1</b>：<code>FX_AddBlend_DistortionDissolve_Flow_New_UI.shader</code>（三包共用）
+<br><b>Animations 2</b>：<code>BoxReward.anim</code> <code>BoxReward2.anim</code>
+<br><br>全在 <b>Shader → Material → Texture</b> 三层链上，一层不落地整条断 ⇒ 正是第 6 节那个外显翻车点的物证。路 B 正则扫 <code>guid:</code> 看不见 <code>.mat</code>/<code>.shader</code> 内部引用（它那 52 个 UNRESOLVED 就是这批），Unity <code>GetDependencies</code> 看得见。
+<br>AI 还<b>多搬 3 个 prefab</b>（<code>BtnInfo</code>/<code>Fx_Ui_BoxAnim_Rotate</code>/<code>Progress</code>）——断链路线已内联，属污染。</div>
+<div class="note ok"><b>文案 34 条唯一 key</b>（原始 20+1+8+7=36，<code>lc_ui_guaranteed</code> 三包共用），繁中+英文齐全 →
+<code>D:\newX2\localization_keys_MERGED.tsv</code><button class="cp">复制</button>
+<br>⚠️ <code>LC_EVENT_strong_consume_info_desc_2</code> 在 X2 侧<b>本来就是空文案</b>（FlashSalePop 引用）→ 落 X3 要么删节点要么补新文案。</div>
+<p class="dim">📁 全部产物归档 <code>KB\换皮档案\X3\2026-07-22_限时抢购_导出包分析\</code>（52 件清单 / 19 件漏项 / 34 条文案 / 4 份 manifest）</p>
 </div></section>
 
 <section><h2><span class="n">3</span>手动落地（Explorer 拷，Unity 关着）<span class="cnt"></span></h2><div class="body">
@@ -161,14 +180,24 @@ AI 包 <code>Other\</code> 里那 2 个 <code>.ttf</code> 要从 B 包补 ——
 <b><code>.meta</code> 必须一起拷</b>，GUID 靠它保住。</div>
 <label class="ck"><input type="checkbox"><span class="t"><b>FlashSale.prefab</b>（+ .meta）→
 <code>C:\x3-project\client\Assets\Res\UI\Prefab\Activity\</code><button class="cp">复制</button></span></label>
-<label class="ck"><input type="checkbox"><span class="t"><b>专属图</b>（先只拷 <code>FlashSale_*</code> 那几张，+ .meta）→
+<div class="note ok"><b>拷什么已经算准了，不用再"先少拷再补"。</b>
+扫过 X3 全部 36109 个 <code>.meta</code>：160 个依赖里 <b>108 个 X3 已有同 guid（原地解析、零拷贝，别拷）</b>，<b>只需拷 52 个</b>。
+X3 侧 FlashSale 相关目录残留 = <b>0</b>（上次撤除清得干净）；已有件全是 1guid↔1路径，X3 自身无重复件。
+<br>完整 52 件清单 → <code>KB\换皮档案\X3\2026-07-22_限时抢购_导出包分析\依赖清单_X3已有vs必须拷.txt</code></div>
+<div class="note bad">⚠️ <b><code>FlashSaleItem</code> 那个包导了两遍</b>，有 44 个 MD5 完全相同的 <code>_1</code> 孪生（<code>Common_Bg_Pop-ups_1.png</code> 这种）。
+<b>只取不带 <code>_1</code> 的</b>。注意 <code>Glow_1005.png</code> / <code>Mask_040.png</code> / <code>Mask_069_1.png</code> 这类<b>本身就带数字后缀</b>，不是副本，别删错。</div>
+<label class="ck"><input type="checkbox"><span class="t"><b>Images 24 张</b>（+ .meta）→
 <code>C:\x3-project\client\Assets\Res\UI\Sprite\UIActvFlashSale\Images\</code><button class="cp">复制</button>
-<span class="exp">只拷了 5-8 张，不是 48 张</span></span></label>
-<label class="ck"><input type="checkbox"><span class="t"><b>3 个 anim</b>
-<code>BoxAnim</code> / <code>ui21201451BoxMain</code> / <code>ui21201451BoxMainDefault</code>（+ .meta）→
-<code>C:\x3-project\client\Assets\Res\UI\Animation\</code><button class="cp">复制</button></span></label>
-<div class="note ok"><b>为什么先少拷</b>：X2/X3 <b>同源同 guid</b>，上一版实测「24 图 / 11 公共件 / 2 字体<b>原地解析、零拷贝</b>」。
-先少拷 → Editor 里看哪些真白 → 只补白的。<b>这就是手动做的价值</b>；整包倒进去会造一堆和 X3 原件重复的副本。</div>
+<span class="exp">FlashSale_Bg / _Bg_Banner / _Bg_Box1 / _Bg_BoxClose1 / _Bg_Cupboard / _Light / _icon_SpecialBox、Bg_Light、CommonBgGradientGrey、CommonCheckBg、Common_WhiteImg_Gradient3、Common_icon_FrequencyBg1+2、FrameYellow、GiftPack_bg_LogInBg1-3、LuckyWheel_bg_Base1、NewrankLightbg、ProgressBgGradient、UiItemsSpeedupBuilding、common_icon_AFKGiftPack、mail_bg_Orange、Alliance_Decoration_flower</span></span></label>
+<label class="ck"><input type="checkbox"><span class="t"><b>Animations 7 个</b>（+ .meta）→
+<code>C:\x3-project\client\Assets\Res\UI\Animation\</code><button class="cp">复制</button>
+<span class="exp">BoxAnim / <b>BoxReward / BoxReward2（AI 漏的）</b> / RewardGetItemShow / monthly_pkg_Switch / ui21201451BoxMain / ui21201451BoxMainDefault</span></span></label>
+<label class="ck"><input type="checkbox"><span class="t"><b>🔴 Textures 9 + Materials 7 + Shaders 1（AI 全漏，这次必须搬）</b>
+<span class="exp">Textures：Flare038 / Mask_009.tga / Mask_347 / Obj_316_Ss / Spur_115.tga / Spur_183 / Trail_274 / Ui_096 / naozhong<br>
+Materials：Flare038_1a_UI / Obj316_Ss_1a_UI / Spur_183_a_UI / Trail_274_1a_UI / Ui252_1a_UI / Ui_096_a_UI / naozhong_Material<br>
+Shader：FX_AddBlend_DistortionDissolve_Flow_New_UI.shader（三包共用，只需一份）</span></span></label>
+<div class="fld"><label>Textures / Materials / Shader 落点（按 X3 现有同类件目录放，参考 diff 报告的「已有件落点分布」段：<code>Res/Effect/Textures/*</code>、<code>Res/Effect/Materials/Special</code>、<code>Res/Shader/Effect</code>）</label><textarea data-k="d4" placeholder="实际落在哪几个目录，填这里备查"></textarea></div>
+<div class="note"><b>为什么不整包倒</b>：X2/X3 同源同 guid，整包倒进去会造出 108 个和 X3 原件重复的副本 —— 后续 X3 公共件改版你这套不跟着走。</div>
 </div></section>
 
 <section><h2><span class="n">4</span>开 Unity，先只看不改<span class="cnt"></span></h2><div class="body">

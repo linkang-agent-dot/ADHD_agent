@@ -1,0 +1,113 @@
+=== 总览 ===
+四包唯一 guid: 160
+X3 已有(同 guid,零拷贝): 108
+X3 缺失(必须拷): 52
+
+=== 缺失件按分类 ===
+  Images       24
+  Textures     9
+  Animations   7
+  Materials    7
+  Prefabs      4
+  Shaders      1
+
+=== 缺失件按包归属 ===
+  FlashSale                                                              24
+  FlashSaleRewardGet                                                     12
+  FlashSalePop                                                           10
+  FlashSale+FlashSaleRewardGet                                           3
+  FlashSale+FlashSalePop                                                 1
+  FlashSale+FlashSalePop+FlashSaleRewardGet                              1
+  FlashSaleItem                                                          1
+
+=== 已有件落点分布(X3侧目录) ===
+  Assets/Res/UI/NewSprite/Common/frame                           17
+  Assets/Res/Effect/Materials/Special                            9
+  Assets/Res/UI/NewSprite/Common/WhiteImg                        9
+  Assets/Res/UI/NewSprite/Common/button                          6
+  Assets/Res/Effect/Animation                                    4
+  Assets/Res/Effect/Textures/ring                                4
+  Assets/Res/UI/Animation                                        4
+  Assets/Res/UI/Atlas/Public                                     4
+  Assets/Res/UI/HighQualitySprite                                4
+  Assets/Res/Effect/Material/Special                             3
+  Assets/Res/Effect/Textures/Mask                                3
+  Assets/Res/Effect/UI/Textures                                  3
+  Assets/Res/Shader/Effect                                       3
+  Assets/Res/UI/Materials/UIActvLaborGacha                       3
+  Assets/Res/Effect/Textures/Glow                                2
+  Assets/Res/Effect/UI/materials                                 2
+  Assets/Res/UI/Materials/UIActvLaborGacha/Textures              2
+  Assets/Res/UI/NewSprite/Common/Bg                              2
+  Assets/Res/UI/NewSprite/Common/Icon                            2
+  Assets/Res/UI/Sprite/UIActvCircusGacha/Images                  2
+
+!! 已有件里落在 FlashSale 相关目录的(应为0,否则是上次没清干净): 0
+
+=== 一 guid 多路径(X3内本身有重复) ===
+  条数: 0
+
+=== 必须拷贝清单(按分类分组) ===
+[Images 24]
+  Alliance_Decoration_flower.png                            FlashSalePop
+  Bg_Light.png                                              FlashSale
+  CommonBgGradientGrey.png                                  FlashSale
+  CommonCheckBg.png                                         FlashSalePop
+  Common_WhiteImg_Gradient3.png                             FlashSalePop
+  Common_icon_FrequencyBg1.png                              FlashSale
+  Common_icon_FrequencyBg2.png                              FlashSale
+  FlashSale_Bg.png                                          FlashSale
+  FlashSale_Bg_Banner.png                                   FlashSalePop
+  FlashSale_Bg_Box1.png                                     FlashSale+FlashSalePop
+  FlashSale_Bg_BoxClose1.png                                FlashSale
+  FlashSale_Bg_Cupboard.png                                 FlashSale
+  FlashSale_Light.png                                       FlashSale
+  FlashSale_icon_SpecialBox.png                             FlashSale+FlashSaleRewardGet
+  FrameYellow.png                                           FlashSale
+  GiftPack_bg_LogInBg1.png                                  FlashSalePop
+  GiftPack_bg_LogInBg2.png                                  FlashSalePop
+  GiftPack_bg_LogInBg3.png                                  FlashSalePop
+  LuckyWheel_bg_Base1.png                                   FlashSaleRewardGet
+  NewrankLightbg.png                                        FlashSale
+  ProgressBgGradient.png                                    FlashSale
+  UiItemsSpeedupBuilding.png                                FlashSalePop
+  common_icon_AFKGiftPack.png                               FlashSale
+  mail_bg_Orange.png                                        FlashSale+FlashSaleRewardGet
+
+[Textures 9]
+  Flare038.png                                              FlashSale
+  Mask_009.tga                                              FlashSaleRewardGet
+  Mask_347.png                                              FlashSaleRewardGet
+  Obj_316_Ss.png                                            FlashSaleRewardGet
+  Spur_115.tga                                              FlashSale+FlashSaleRewardGet
+  Spur_183.png                                              FlashSaleRewardGet
+  Trail_274.png                                             FlashSale
+  Ui_096.png                                                FlashSaleRewardGet
+  naozhong.png                                              FlashSale
+
+[Materials 7]
+  Flare038_1a_UI.mat                                        FlashSale
+  Obj316_Ss_1a_UI.mat                                       FlashSaleRewardGet
+  Spur_183_a_UI.mat                                         FlashSaleRewardGet
+  Trail_274_1a_UI.mat                                       FlashSale
+  Ui252_1a_UI.mat                                           FlashSaleRewardGet
+  Ui_096_a_UI.mat                                           FlashSaleRewardGet
+  naozhong_Material.mat                                     FlashSale
+
+[Animations 7]
+  BoxAnim.anim                                              FlashSale
+  BoxReward.anim                                            FlashSale
+  BoxReward2.anim                                           FlashSale
+  RewardGetItemShow.anim                                    FlashSaleRewardGet
+  monthly_pkg_Switch.anim                                   FlashSalePop
+  ui21201451BoxMain.anim                                    FlashSale
+  ui21201451BoxMainDefault.anim                             FlashSale
+
+[Shaders 1]
+  FX_AddBlend_DistortionDissolve_Flow_New_UI.shader         FlashSale+FlashSalePop+FlashSaleRewardGet
+
+[Prefabs 4]
+  FlashSale.prefab                                          FlashSale
+  FlashSaleItem.prefab                                      FlashSaleItem
+  FlashSalePop.prefab                                       FlashSalePop
+  FlashSaleRewardGet.prefab                                 FlashSaleRewardGet

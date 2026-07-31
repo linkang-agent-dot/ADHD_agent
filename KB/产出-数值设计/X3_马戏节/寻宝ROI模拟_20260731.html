@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>马戏团寻宝(103101) 数值感受报告 · 2026-07-31</title>
+<style>
+:root{
+  color-scheme:light;
+  --page:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --good:#006300; --crit:#d03b3b;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    color-scheme:dark;
+    --page:#0d0d0d; --surface:#1a1a19; --ink:#ffffff; --ink2:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,.10);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --good:#0ca30c; --crit:#d03b3b;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:22px;margin:0 0 4px}
+h2{font-size:16px;margin:36px 0 10px;padding-top:14px;border-top:1px solid var(--grid)}
+.sub{color:var(--ink2);font-size:13px;margin-bottom:20px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:18px 0}
+.tile{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.tile .v{font-size:26px;font-weight:700}
+.tile .k{font-size:12px;color:var(--ink2);margin-top:2px}
+.tile .n{font-size:11px;color:var(--muted);margin-top:4px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin:14px 0;overflow-x:auto}
+.card h3{font-size:14px;margin:0 0 2px}
+.card .cap{font-size:12px;color:var(--ink2);margin:0 0 10px}
+svg text{font-family:inherit}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin:6px 0 2px}
+.legend .sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+table{border-collapse:collapse;font-size:13px;width:100%}
+th,td{padding:6px 10px;text-align:right;border-bottom:1px solid var(--grid);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--ink2);font-weight:600;font-size:12px}
+.tip{position:fixed;pointer-events:none;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.18);opacity:0;transition:opacity .08s;z-index:9;color:var(--ink)}
+.hl{font-weight:700}
+.warn{color:var(--crit);font-weight:600}
+.ok{color:var(--good);font-weight:600}
+details{margin:10px 0}
+summary{cursor:pointer;font-size:13px;color:var(--ink2)}
+.mono{font-variant-numeric:tabular-nums}
+ul{margin:6px 0;padding-left:20px;font-size:13.5px}
+.note{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>🎪 马戏团寻宝（103101）数值感受报告</h1>
+<div class="sub">拓荒者之城骨架 · 配置=origin/dev_festival 实配 81001 · 机制严格对齐服务端代码 · 蒙特卡洛×5万 · 2026-07-31<br>
+估值口径：1USD=500钻 · 道具单价均经商店/汇率双向交叉验证（详见 memory reference_x3_roi_valuation）</div>
+
+<div class="tiles">
+  <div class="tile"><div class="v">$445</div><div class="k">全清价签（中位）</div><div class="n">拿皮肤同价位，欧皇P10=$345</div></div>
+  <div class="tile"><div class="v">270%</div><div class="k">综合ROI（含返钻）</div><div class="n">纯活动增量 169%</div></div>
+  <div class="tile"><div class="v">13星·113票</div><div class="k">全清恒定消耗</div><div class="n">每星期望8.73张门票</div></div>
+  <div class="tile"><div class="v">第11抽</div><div class="k">大奖期望命中位</div><div class="n">45%玩家吃第12抽保底</div></div>
+</div>
+
+<div class="card">
+<h3>结构一句话：「买钻送活动」</h3>
+<p style="font-size:13.5px;margin:6px 0">所有票包<span class="hl">钻石按面值返满</span>（$99.99→5万钻），门票是搭头且全档一律 <span class="hl">0.2张/$</span> 无量贩折扣 → ROI地板=100%。
+寻宝累充（AO100600，$10~$2000十档）再返 <span class="hl">200张票+335罗盘</span>，买票礼包自身计入累充——把全清裸价 ~$645 压到 <span class="hl">$445</span>。</p>
+<p style="font-size:13.5px;margin:6px 0">$445 到手：返钻 22.25万（=本金）＋ 内圈 <span class="hl">27.03万</span> ＋ 外圈 7.7万 ＋ 罗盘 3万 ＋ <span class="hl">永久岛皮「狂欢剧场」</span>。价值重心全在内圈（12坑，单坑均值2.25万钻≈$45/星）。</p>
+</div>
+
+<h2>① 外圈：彩虹星保底曲线 —— 前7抽是"白抽期"</h2>
+<div class="card">
+<h3>每抽命中彩虹星概率（按距上次的抽数）</h3>
+<p class="cap">基础2%极低 → 第8抽软保底起跳 → 第12抽必中（或11普通格抽空强制出星）。体感：星基本都在第8~12抽出。</p>
+<div id="c1"></div>
+</div>
+
+<h2>② 内圈：大奖直中曲线 —— 皮肤被锁在后段</h2>
+<div class="card">
+<h3>大奖(岛皮)每抽直中概率 与 累计到手概率</h3>
+<p class="cap">前6抽0.2%（幸运儿仅1.2%）· 第7-11抽 1/3/7/15/40% · 第12抽保底必中。中大奖不占坑 → 全清恒定13星。</p>
+<div class="legend"><span><span class="sw" style="background:var(--s1)"></span>本抽直中%</span><span><span class="sw" style="background:var(--s2)"></span>累计到手%</span></div>
+<div id="c2"></div>
+</div>
+
+<h2>③ $445 全清：到手价值构成</h2>
+<div class="card">
+<h3>价值构成（钻）</h3>
+<p class="cap">合计 ≈60.3万钻（$1206 等值）+ 永久岛皮（非卖品未计价）。返钻部分=本金原样回来。</p>
+<div id="c3"></div>
+</div>
+
+<h2>④ 现状最大问题：毕业即断崖 → 循环池改造三档对比</h2>
+<div class="card">
+<h3>毕业($445)后继续投入的累计回报 —— 四种世界线</h3>
+<p class="cap">横轴=累计消费$，纵轴=毕业后追加到手（万钻）。折线上跳的台阶=踩中寻宝累充大档返票。现状(灰虚线)毕业后每$1只回650钻(130%)，彩虹星变死货币。</p>
+<div class="legend">
+  <span><span class="sw" style="background:var(--muted)"></span>不改造(现状)</span>
+  <span><span class="sw" style="background:var(--s1)"></span>A档·循环池67%</span>
+  <span><span class="sw" style="background:var(--s2)"></span>B档·50%（推荐）</span>
+  <span><span class="sw" style="background:var(--s3)"></span>C档·33%</span>
+</div>
+<div id="c4"></div>
+<table style="margin-top:10px">
+<tr><th>档位</th><th>循环池/轮(钻)</th><th>毕业后每$1到手</th><th>循环段综合ROI</th><th>手感定性</th></tr>
+<tr><td>不改造</td><td class="mono">0</td><td class="mono">650</td><td class="mono warn">130%</td><td style="text-align:left">断崖，纯为排行</td></tr>
+<tr><td>A档 67%</td><td class="mono">180,200</td><td class="mono">994</td><td class="mono">199%→255%</td><td style="text-align:left warn"><span class="warn">后段反超首轮，通胀倒挂</span></td></tr>
+<tr><td class="hl">B档 50%</td><td class="mono">135,150</td><td class="mono">908</td><td class="mono ok">182%→229%</td><td style="text-align:left"><span class="ok">与首轮270%平滑衰减 ✓</span></td></tr>
+<tr><td>C档 33%</td><td class="mono">90,100</td><td class="mono">822</td><td class="mono">164%→204%</td><td style="text-align:left">单星仅7.5k钻，体感断层</td></tr>
+</table>
+</div>
+
+<h2>⑤ 改造要点速记（待拍板）</h2>
+<div class="card" style="font-size:13.5px">
+<ul>
+<li><b>循环内圈</b>：抽空不再锁 → 重置进下一轮；第2轮起换降配池（新列 InnerLoopRewardGroup）；死字段 InnerPoolCompleteTimes 接上=轮次上限(0=无限)。</li>
+<li><b>皮肤移排行榜</b>：外圈排行(累计扣券)现成，Top档挂皮肤，<b>不配属性链=纯展示</b>。⚠️代码须兜：GrandRewardItemID=0 时跳过大奖roll，否则第12抽白吞一星"中空奖"。</li>
+<li><b>风险</b>：中小R失去"$445确定拿皮肤"价签 → 建议首轮全清保留小确定性外显（头像框/表情）补偿毕业仪式感。</li>
+<li><b>拍板点</b>：①纯展示=无属性 or 结算前盲盒？ ②排行Top几 ③轮次上限 ④循环池档位(A/B/C)。</li>
+</ul>
+</div>
+
+<details><summary>附：单人全程实录（seed=20260731，点开看逐步过程）</summary>
+<div class="card" style="font-size:12.5px;line-height:1.8">
+领免费链包(+1票) → 免费单抽:材料票×25 → 💰$4.99/$9.99/$19.99链包一路买票 → <b>第4星区首星</b>(第4抽出星)→内圈①传奇装备宝箱 → 💰$49.99包(10票)→第10抽保底出星→内圈②传奇技能书×25 → 💰阶梯×3($59.97)→内圈③诅咒的龙骸 → 💰$99.99包<b>+触发累充$200档(送10票+35罗盘)</b> → 内圈④⑤⑥⑦: 8h加速/1.5万钻/8h加速/万能传奇信物×9 → 💰$99.99×2 → 内圈⑧⑨⑩: 龙骸/技能碎片/信物×9 → 💰$99.99<b>+累充$400档(送20票+40罗盘)</b> → 内圈⑪神秘金属×45 → <b>内圈第12抽保底直中🎪狂欢剧场永久岛皮</b> → 💰$99.99 → 内圈⑬技能碎片(全清锁池)。<br>
+<b>总账：$444.90 · 114票(其中累充白送40) · 13星 · 返钻222,500 + 外圈77,125 + 内圈270,300 + 罗盘30,000钻 + 岛皮</b>
+</div>
+</details>
+
+<p class="note">复跑：python ~\.claude\skills\x3-numerical-design\scripts\pioneer_city_sim.py · 姊妹文档：同目录 寻宝ROI模拟_20260731.md · 机制代码依据：server ActivityMeta.PioneerCity.cs（内圈锁死/死字段/外圈不锁三事实均已核）</p>
+</div>
+
+<div class="tip" id="tip"></div>
+<script>
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const tip=document.getElementById('tip');
+function showTip(html,x,y){tip.innerHTML=html;tip.style.opacity=1;tip.style.left=(x+14)+'px';tip.style.top=(y+10)+'px';}
+function hideTip(){tip.style.opacity=0;}
+const NS='http://www.w3.org/2000/svg';
+function el(t,a,parent){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(parent)parent.appendChild(e);return e;}
+function chart(id,w,h){const s=el('svg',{viewBox:`0 0 ${w} ${h}`,width:'100%',style:'max-width:900px;display:block'});document.getElementById(id).appendChild(s);return s;}
+
+// ---------- C1 外圈保底 ----------
+(()=>{
+const rates=[2,2,2,2,2,2,2,21.6,41.2,60.8,80.4,100];
+const W=900,H=260,L=44,R=10,T=14,B=34,pw=W-L-R,ph=H-T-B;
+const s=chart('c1',W,H);
+for(const g of [0,25,50,75,100]){const y=T+ph-g/100*ph;
+  el('line',{x1:L,x2:W-R,y1:y,y2:y,stroke:css('--grid'),'stroke-width':1},s);
+  el('text',{x:L-6,y:y+4,'text-anchor':'end','font-size':11,fill:css('--muted')},s).textContent=g+'%';}
+const bw=pw/12;
+rates.forEach((v,i)=>{
+  const bh=Math.max(2,v/100*ph),x=L+i*bw+bw*0.18,y=T+ph-bh;
+  const r=el('rect',{x,y,width:bw*0.64,height:bh,rx:4,fill:css('--s1')},s);
+  el('text',{x:L+i*bw+bw/2,y:H-14,'text-anchor':'middle','font-size':11,fill:css('--muted')},s).textContent=i+1;
+  if(v>2)el('text',{x:L+i*bw+bw/2,y:y-5,'text-anchor':'middle','font-size':11,fill:css('--ink2')},s).textContent=v+'%';
+  r.addEventListener('mousemove',e=>showTip(`第${i+1}抽 · 命中率 <b>${v}%</b>`,e.clientX,e.clientY));
+  r.addEventListener('mouseleave',hideTip);
+});
+el('text',{x:W/2,y:H-1,'text-anchor':'middle','font-size':11,fill:css('--muted')},s).textContent='距上次彩虹星的第 N 抽';
+})();
+
+// ---------- C2 内圈大奖 ----------
+(()=>{
+const p=[0.2,0.2,0.2,0.2,0.2,0.2,1,3,7,15,40,100];
+let surv=1;const cum=p.map(v=>{surv*=(1-v/100);return +( (1-surv)*100 ).toFixed(1);});
+const W=900,H=280,L=44,R=10,T=14,B=34,pw=W-L-R,ph=H-T-B;
+const s=chart('c2',W,H);
+for(const g of [0,25,50,75,100]){const y=T+ph-g/100*ph;
+  el('line',{x1:L,x2:W-R,y1:y,y2:y,stroke:css('--grid'),'stroke-width':1},s);
+  el('text',{x:L-6,y:y+4,'text-anchor':'end','font-size':11,fill:css('--muted')},s).textContent=g+'%';}
+const bw=pw/12;
+p.forEach((v,i)=>{
+  const bh=Math.max(2,v/100*ph),x=L+i*bw+bw*0.18,y=T+ph-bh;
+  const r=el('rect',{x,y,width:bw*0.64,height:bh,rx:4,fill:css('--s1')},s);
+  el('text',{x:L+i*bw+bw/2,y:H-14,'text-anchor':'middle','font-size':11,fill:css('--muted')},s).textContent=i+1;
+  r.addEventListener('mousemove',e=>showTip(`内圈第${i+1}抽<br>本抽直中 <b>${v}%</b> · 累计 <b>${cum[i]}%</b>`,e.clientX,e.clientY));
+  r.addEventListener('mouseleave',hideTip);
+});
+const pts=cum.map((v,i)=>[L+i*bw+bw/2,T+ph-v/100*ph]);
+el('path',{d:'M'+pts.map(p=>p.join(',')).join('L'),fill:'none',stroke:css('--s2'),'stroke-width':2},s);
+pts.forEach((pt,i)=>{const c=el('circle',{cx:pt[0],cy:pt[1],r:4,fill:css('--s2'),stroke:css('--surface'),'stroke-width':2},s);
+  c.addEventListener('mousemove',e=>showTip(`第${i+1}抽 · 累计到手 <b>${cum[i]}%</b>`,e.clientX,e.clientY));
+  c.addEventListener('mouseleave',hideTip);});
+el('text',{x:pts[10][0]-8,y:pts[10][1]-10,'text-anchor':'end','font-size':11,fill:css('--ink2')},s).textContent='第11抽累计55%';
+el('text',{x:W/2,y:H-1,'text-anchor':'middle','font-size':11,fill:css('--muted')},s).textContent='内圈累计第 N 抽（终身计数，中大奖不重置）';
+})();
+
+// ---------- C3 价值构成 ----------
+(()=>{
+const rows=[['内圈产出',270300],['礼包返钻(=本金)',222500],['外圈产出',77125],['累充罗盘',30000],['其他(免费档等)',2790]];
+const W=900,H=rows.length*44+16,L=150,R=90,pw=W-L-R;
+const s=chart('c3',W,H);
+const max=280000;
+rows.forEach((r0,i)=>{
+  const y=10+i*44,bw2=r0[1]/max*pw;
+  el('text',{x:L-8,y:y+17,'text-anchor':'end','font-size':12.5,fill:css('--ink2')},s).textContent=r0[0];
+  const r=el('rect',{x:L,y:y,width:Math.max(3,bw2),height:26,rx:4,fill:css('--s1')},s);
+  el('text',{x:L+bw2+8,y:y+17,'font-size':12,fill:css('--ink2'),'font-weight':600},s).textContent=(r0[1]/10000).toFixed(1)+'万钻';
+  r.addEventListener('mousemove',e=>showTip(`${r0[0]}<b> ${r0[1].toLocaleString()}钻</b> ≈ $${(r0[1]/500).toFixed(0)}`,e.clientX,e.clientY));
+  r.addEventListener('mouseleave',hideTip);
+});
+})();
+
+// ---------- C4 鲸鱼曲线 ----------
+(()=>{
+const D={
+ base:[[545,64954],[645,129908],[745,228543],[845,293497],[945,358451],[1045,457086],[1145,522040],[1245,586994],[1345,685629],[1445,750583],[1545,815537],[1645,914172],[1745,979126],[1845,1044080],[1945,1109034],[2045,1215146]],
+ A:[[545,99356],[645,198713],[745,383354],[845,482710],[945,582067],[1045,766708],[1145,866064],[1245,965421],[1345,1150062],[1445,1249418],[1545,1348775],[1645,1533416],[1745,1632772],[1845,1732129],[1945,1831485],[2045,2040805]],
+ B:[[545,90756],[645,181512],[745,344651],[845,435407],[945,526163],[1045,689302],[1145,780058],[1245,870814],[1345,1033954],[1445,1124710],[1545,1215465],[1645,1378605],[1745,1469361],[1845,1560117],[1945,1650872],[2045,1834390]],
+ C:[[545,82155],[645,164310],[745,305948],[845,388104],[945,470259],[1045,611897],[1145,694052],[1245,776207],[1345,917845],[1445,1000001],[1545,1082156],[1645,1223794],[1745,1305949],[1845,1388104],[1945,1470260],[2045,1627975]]};
+const series=[['base','不改造',css('--muted'),'4 3'],['A','A档67%',css('--s1'),''],['B','B档50%',css('--s2'),''],['C','C档33%',css('--s3'),'']];
+const W=900,H=360,L=56,R=16,T=14,B2=40,pw=W-L-R,ph=H-T-B2;
+const X0=445,X1=2045,Y1=210;   // y 单位:万钻
+const sx=v=>L+(v-X0)/(X1-X0)*pw, sy=v=>T+ph-(v/Y1)*ph;
+const s=chart('c4',W,H);
+for(const g of [0,50,100,150,200]){const y=sy(g);
+  el('line',{x1:L,x2:W-R,y1:y,y2:y,stroke:css('--grid'),'stroke-width':1},s);
+  el('text',{x:L-6,y:y+4,'text-anchor':'end','font-size':11,fill:css('--muted')},s).textContent=g+'万';}
+for(const x of [445,700,1000,1300,1600,2000]){
+  el('text',{x:sx(x),y:H-18,'text-anchor':'middle','font-size':11,fill:css('--muted')},s).textContent='$'+x;
+  el('line',{x1:sx(x),x2:sx(x),y1:T+ph,y2:T+ph+4,stroke:css('--axis')},s);}
+el('line',{x1:L,x2:W-R,y1:T+ph,y2:T+ph,stroke:css('--axis'),'stroke-width':1},s);
+el('text',{x:W/2,y:H-2,'text-anchor':'middle','font-size':11,fill:css('--muted')},s).textContent='累计消费（$700/1000/1300/1600/2000 为寻宝累充返票档）';
+for(const [k,name,col,dash] of series){
+  const pts=D[k].map(p=>[sx(p[0]),sy(p[1]/10000)]);
+  el('path',{d:'M'+sx(X0)+','+sy(0)+'L'+pts.map(p=>p.join(',')).join('L'),fill:'none',stroke:col,'stroke-width':2,'stroke-dasharray':dash},s);
+  const last=pts[pts.length-1];
+  el('text',{x:last[0]-4,y:last[1]-8,'text-anchor':'end','font-size':11.5,fill:col,'font-weight':600},s).textContent=name;
+  D[k].forEach((p,i)=>{const c=el('circle',{cx:sx(p[0]),cy:sy(p[1]/10000),r:6,fill:'transparent'},s);
+    c.addEventListener('mousemove',e=>{
+      const seg=p[0]-444.9, roi=(p[1]/(seg*500)*100).toFixed(0);
+      showTip(`${name} · 累计$${p[0]}<br>毕业后追加投入 $${seg.toFixed(0)}<br>追加到手 <b>${(p[1]/10000).toFixed(1)}万钻</b> · 段ROI <b>${roi}%</b>`,e.clientX,e.clientY);
+      c.setAttribute('fill',col);c.setAttribute('r',4);c.setAttribute('stroke',css('--surface'));c.setAttribute('stroke-width',2);});
+    c.addEventListener('mouseleave',()=>{hideTip();c.setAttribute('fill','transparent');c.setAttribute('r',6);c.removeAttribute('stroke');});
+  });
+}
+})();
+</script>
+</body>
+</html>
