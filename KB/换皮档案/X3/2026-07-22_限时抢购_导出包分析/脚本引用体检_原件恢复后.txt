@@ -1,0 +1,52 @@
+=== 脚本引用体检 ===
+唯一脚本 guid 43（组件实例 3018）
+  X3 有   : 42  → 开 Unity 正常认领
+  X3 没有 : 1  → 会报 missing script，共 1 个实例（＝Console 预期条数）
+
+=== 🔴 要补 X3 等价件的 ===
+      1 实例  LoopHorizontalScrollRectMulti.cs                FlashSaleItem×1
+              X2 源: Packages/com.tfw.loopscrollrect@c977d8ca8c/Runtime/LoopHorizontalScrollRectMulti.cs
+
+=== ✅ X3 共享同 guid 的（框架层通常全共享）===
+   1284 实例  TFWImage.cs                                     Assets/TFWCore/Script/UIExtensions/Component/TFWImage.cs
+    340 实例  TFWText.cs                                      Assets/TFWCore/Script/UIExtensions/Component/TFWText.cs
+    194 实例  ExOutline.cs                                    Assets/TFWCore/Script/UIExtensions/ExOutline/ExOutline.cs
+    175 实例  EventTriggerListener.cs                         Assets/TFWCore/Script/UIExtensions/Component/EventTriggerListener.cs
+    145 实例  LayoutElement.cs                                Packages/com.unity.ugui@1.0.0/Runtime/UI/Core/Layout/LayoutElement.cs
+    141 实例  X2BetterOutline.cs                              Assets/TFWCore/Script/UIExtensions/X2BetterOutline/X2BetterOutline.cs
+    115 实例  ContentSizeFitter.cs                            Packages/com.unity.ugui@1.0.0/Runtime/UI/Core/Layout/ContentSizeFitter.cs
+     86 实例  UIGradient.cs                                   Assets/TFWCore/Script/UIExtensions/UIEffect/Scripts/UIGradient.cs
+     72 实例  HorizontalLayoutGroup.cs                        Packages/com.unity.ugui@1.0.0/Runtime/UI/Core/Layout/HorizontalLayoutGroup.cs
+     70 实例  Shadow.cs                                       Packages/com.unity.ugui@1.0.0/Runtime/UI/Core/VertexModifiers/Shadow.cs
+     52 实例  UIShadow.cs                                     Assets/TFWCore/Script/UIExtensions/UIEffect/Scripts/UIShadow.cs
+     49 实例  ButtonScale.cs                                  Assets/TFWCore/Script/UIExtensions/Component/ButtonScale.cs
+     37 实例  VerticalLayoutGroup.cs                          Packages/com.unity.ugui@1.0.0/Runtime/UI/Core/Layout/VerticalLayoutGroup.cs
+     32 实例  UIParticleSystem.cs                             Library/PackageCache/com.tfw.unity-ui-extensions@2.2.7/Scripts/Effects/UIParticleSystem.cs
+     31 实例  UIParticle.cs                                   Packages/com.coffee.ui-particle@025efcbc5d/Runtime/UIParticle.cs
+     30 实例  ExOutlineMix.cs                                 Assets/TFWCore/Script/UIExtensions/ExOutlineMix/ExOutlineMix.cs
+     27 实例  Mask.cs                                         Packages/com.unity.ugui@1.0.0/Runtime/UI/Core/Mask.cs
+     26 实例  CommonItemShow.cs                               Assets/Scripts/UI/Common/CommonItemShow.cs
+     26 实例  TFWMask.cs                                      Assets/TFWCore/Script/UIExtensions/Component/TFWMask.cs
+     22 实例  Outline.cs                                      Packages/com.unity.ugui@1.0.0/Runtime/UI/Core/VertexModifiers/Outline.cs
+     18 实例  TFWButton.cs                                    Assets/TFWCore/Script/UIExtensions/Component/TFWButton.cs
+      4 实例  ButtonGreyHelper.cs                             Assets/TFWCore/Script/UIExtensions/ButtonGreyHelper/ButtonGreyHelper.cs
+      4 实例  UIConfig.cs                                     Assets/TFWCore/Script/UIBase/UIConfig.cs
+      4 实例  CanvasScaler.cs                                 Packages/com.unity.ugui@1.0.0/Runtime/UI/Core/Layout/CanvasScaler.cs
+      4 实例  GraphicRaycaster.cs                             Packages/com.unity.ugui@1.0.0/Runtime/UI/Core/GraphicRaycaster.cs
+      3 实例  GridLayoutGroup.cs                              Packages/com.unity.ugui@1.0.0/Runtime/UI/Core/Layout/GridLayoutGroup.cs
+      3 实例  ScrollRectFilter.cs                             Assets/TFWCore/Script/UIExtensions/Component/ScrollRectFilter.cs
+      2 实例  RedPointHandle.cs                               Assets/TFWCore/Script/UIExtensions/X2RedPointLegacy/RedPointHandle.cs
+      2 实例  AspectRatioFitter.cs                            Packages/com.unity.ugui@1.0.0/Runtime/UI/Core/Layout/AspectRatioFitter.cs
+      2 实例  TFWSlider.cs                                    Assets/TFWCore/Script/UIExtensions/Component/TFWSlider.cs
+      2 实例  DOTweenAnimation.cs                             Assets/TFWCore/Script/Demigiant/DOTweenPro/DOTweenAnimation.cs
+      2 实例  TFWScrollRect.cs                                Assets/TFWCore/Script/UIExtensions/Component/TFWScrollRect.cs
+      2 实例  RectMask2D.cs                                   Packages/com.unity.ugui@1.0.0/Runtime/UI/Core/RectMask2D.cs
+      2 实例  Image.cs                                        Packages/com.unity.ugui@1.0.0/Runtime/UI/Core/Image.cs
+      2 实例  Bevel.cs                                        Library/PackageCache/com.tfw.ui-text-effects@1.0.3/Bevel.cs
+      1 实例  SkeletonGraphic.cs                              Library/PackageCache/com.esotericsoftware.spine.spine-unity@6adfde3c0f/Runtime/spine-unity/Components/SkeletonGraphic.cs
+      1 实例  TFWLoopListView.cs                              Assets/TFWCore/Script/UIExtensions/LoopListView/TFWLoopListView.cs
+      1 实例  ScrollRect.cs                                   Packages/com.unity.ugui@1.0.0/Runtime/UI/Core/ScrollRect.cs
+      1 实例  TFWEmpty4Raycast.cs                             Assets/TFWCore/Script/UIExtensions/Component/TFWEmpty4Raycast.cs
+      1 实例  RectTransformScaler.cs                          Assets/TFWCore/Script/UIExtensions/Component/RectTransformScaler.cs
+      1 实例  RectTransformScaleParent.cs                     Assets/TFWCore/Script/UIExtensions/Component/RectTransformScaleParent.cs
+      1 实例  TFWOutline.cs.cs                                Assets/TFWCore/Script/UIExtensions/TFWOutline/TFWOutline.cs.cs
