@@ -11,3 +11,49 @@
 ## 复核结论（2026-08-03，Claude 批量分诊）
 - 多问题合并条目。路径漂移=.Codex污染已批量修复;业务教训(分类先抄dim.iap现有归类+人工double check)已写入 reference_x3_dim_iap_master.md
 - 状态：resolved
+
+---
+## 2026-08-03 补充：历史逻辑行对照脚本越界
+- 现象：诊断 `TXT_RuleTips_Content_40002` 跨多个历史 ref 的物理行结构时，脚本无条件读取 `lines[j]` 作为下一条 key；遇到 `j == len(lines)` 时触发 `IndexError`，只读诊断中断。
+- 根因：历史脏数据可能让逻辑块一直延伸到文件尾，脚本缺少 EOF 边界保护。
+- 处理：后续历史 TSV 诊断对 `j < len(lines)` 做显式判断；输出摘要不再假设逻辑块后必有下一行。
+
+## 2026-08-03 补充：`safe_edit_tsv.py` 安装路径假定错误
+- 现象：按 `.agents\skills\x3-config-export\scripts\safe_edit_tsv.py` 调用失败，文件不存在。
+- 根因：skill 文档位于 `.agents`，但本机 X3 导表执行脚本可能仍安装在 `.Codex\skills` 或共享 skill 真源，不能据 SKILL.md 所在目录假定脚本也已同步。
+- 处理：执行前先用 `rg --files` 定位脚本真实路径；未找到则使用 `apply_patch` 做可审计的最小编辑。
+
+## 2026-08-03 补充：`functions.exec` V8 无 `TextDecoder`
+- 现象：准备以 base64 安全传递超长 UTF-8 TSV 行并用 `apply_patch` 回插时，组合执行器抛出 `ReferenceError: TextDecoder is not defined`。
+- 影响：异常发生在 dry-run/删除/补丁之前，配置文件未发生改动。
+- 处理：该运行时用 `atob` + 百分号字节串 + `decodeURIComponent` 解码 UTF-8，不再依赖未暴露的 Web API。
+
+## 2026-08-03 补充：`functions.exec` V8 同样无 `atob`
+- 现象：替代解码方案再次抛出 `ReferenceError: atob is not defined`。
+- 影响：仍发生在任何文件修改之前。
+- 处理：停止在隔离 V8 内做 base64 解码，改由只读 Python 直接输出原始 UTF-8 单行并用明确 marker 提取，再交给 `apply_patch`。
+
+## 2026-08-03 补充：`tsv_delrows.py` 未删除无 key 的 48 条脏物理行
+- 现象：工具 dry-run/执行均报告“删 1 逻辑行 / 1 物理行”；它只删除了 `TXT_RuleTips_Content_40002` 首行，后续 48 条旧稿碎片仍在，正确行回插后落在碎片末尾。
+- 根因：这些历史碎片多数已经被补齐为 27 列，工具按“完整宽度行”把它们视为独立物理行，而不是目标 key 的多行 cell 延续。
+- 处理：不能用 `tsv_delrows.py` 清这种历史畸形块；改以 git diff/相邻 key 为边界精确删除首行与下一合法 key 之间的所有无 key 行，再保留唯一 27 列正确行。
+
+## 2026-08-03 补充：直接运行 `ExportTable.py` 出现 exit0 假绿灯
+- 现象：在 worktree 根执行 `python Tools\table_exporter\ExportTable.py` 返回 exit 0，但日志显示 `InputPath: C:\tsv`、`源文件夹不存在，退出`，实际未导表。
+- 根因：该入口依赖正确的启动目录或显式参数，不能只看进程退出码。
+- 处理：导表验收同时检查日志必须指向当前 worktree 的 `tsv` 且真正执行完；先查仓库包装入口/参数再重跑，禁止把“源目录不存在”的 exit0 当成功。
+
+## 2026-08-03 补充：Text TSV 合法空尾列触发 `git diff --check`
+- 现象：规范化后的文本行固定为 27 列，20–27 列为空，因此行尾保留 8 个 tab；`git diff --check` 报 `trailing whitespace` 并返回非零。
+- 判定：这是 TSV schema 的合法空尾列，不是可删除的格式噪音；删 tab 会把行降为 19 列。
+- 处理：Text TSV 以“27 列断言 + ExportTable 真执行成功”为准；`git diff --check` 的该行尾 tab 告警记录后豁免，其他告警仍需处理。
+
+## 2026-08-03 补充：并行 `jolt_verify` 遇 Jenkins 队列超时
+- 现象：qa 与 dev_festival 并行触发时，dev_festival queue item 2550 在 10 分钟内未分配 build 号，脚本以“等待 build 号超时”退出；组合调用也未完整保留 qa 那一路回执。
+- 判定：这是 Jenkins 排队/等待超时，不是配置构建 FAILURE，不能重复触发制造更多队列项。
+- 处理：先查既有 queue item 与最近 build 的真实状态；后续多分支远端导表串行触发/验证，避免并行挤队列和丢失单路回执。
+
+## 2026-08-03 补充：GitLab API 创建 MR 认证/项目定位失败
+- 现象：用 `GITLAB_TAP4FUN_TOKEN` + URL 编码项目路径调用 API，查询返回 `404 Project Not Found`，创建返回 `401 Unauthorized`，结果字段全空。
+- 影响：修复分支已成功推送，仅 MR 尚未创建。
+- 处理：先检查 token 是否实际注入（只看存在性/长度，不输出值）和仓库现有 GitLab CLI 认证；优先用已认证 `glab mr create`，或解析仓库 numeric project id 后再调 API。
