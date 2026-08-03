@@ -102,10 +102,18 @@ def inventory_skills(source_root: Path, destination_root: Path) -> InventoryResu
     for name in sorted(sources.keys() | destinations.keys()):
         source = sources.get(name)
         destination = destinations.get(name)
-        if source is not None and _is_junction(source):
+        if re.search(r"\.bak\.\d+$", name, flags=re.IGNORECASE):
+            kind = "non-skill-directory"
+        elif source is not None and _is_junction(source):
             kind = "shared-junction"
         elif source is None:
             kind = "codex-only"
+        elif not (source / "SKILL.md").is_file():
+            kind = (
+                "source-invalid"
+                if destination is not None and (destination / "SKILL.md").is_file()
+                else "non-skill-directory"
+            )
         elif destination is None:
             kind = "missing-destination"
         else:
@@ -133,22 +141,35 @@ def _frontmatter_values(text: str) -> tuple[dict[str, str], list[str]]:
 
     values: dict[str, str] = {}
     errors: list[str] = []
-    for line in lines[1:end]:
+    index = 1
+    while index < end:
+        line = lines[index]
         stripped = line.strip()
         if not stripped or stripped.startswith("#"):
+            index += 1
             continue
         if ":" not in line:
             errors.append(f"Unsupported frontmatter line: {line}")
+            index += 1
             continue
         key, raw_value = line.split(":", 1)
         key = key.strip()
         value = raw_value.strip()
         if value in {"|", ">", "|-", ">-", "|+", ">+"}:
-            errors.append(f"Multiline frontmatter value is unsupported: {key}")
+            continuation: list[str] = []
+            index += 1
+            while index < end:
+                candidate = lines[index]
+                if candidate and not candidate[0].isspace():
+                    break
+                continuation.append(candidate.strip())
+                index += 1
+            values[key] = "\n".join(continuation).strip()
             continue
         if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
             value = value[1:-1]
         values[key] = value
+        index += 1
     return values, errors
 
 
@@ -158,8 +179,8 @@ def validate_frontmatter(text: str, expected_name: str) -> list[str]:
     description = values.get("description", "")
     if not name:
         errors.append("frontmatter requires a non-empty name")
-    elif not re.fullmatch(r"[A-Za-z0-9-]+", name):
-        errors.append("frontmatter name may contain only letters, numbers, and hyphens")
+    elif not re.fullmatch(r"[A-Za-z0-9_.-]+", name):
+        errors.append("frontmatter name contains unsupported characters")
     elif name != expected_name:
         errors.append(f"frontmatter name {name!r} does not match directory {expected_name!r}")
     if not description:
@@ -181,15 +202,38 @@ def extract_codex_only_block(text: str) -> str | None:
     return text[start : end + len(CODEX_END)]
 
 
+def _has_frontmatter(text: str) -> bool:
+    return bool(text.splitlines() and text.splitlines()[0].strip() == "---")
+
+
+def _frontmatter_prefix(text: str) -> str:
+    lines = text.splitlines(keepends=True)
+    if not lines or lines[0].strip() != "---":
+        raise SkillFormatError("SKILL.md must start with YAML frontmatter")
+    for index in range(1, len(lines)):
+        if lines[index].strip() == "---":
+            return "".join(lines[: index + 1]).rstrip() + "\n"
+    raise SkillFormatError("YAML frontmatter is not closed")
+
+
 def merge_skill_markdown(source: str, destination: str | None, expected_name: str) -> str:
-    source_errors = validate_frontmatter(source, expected_name)
-    if source_errors:
-        raise SkillFormatError("; ".join(source_errors))
+    if _has_frontmatter(source):
+        source_errors = validate_frontmatter(source, expected_name)
+        if source_errors:
+            raise SkillFormatError("; ".join(source_errors))
+        public_source = source
+    else:
+        if destination is None:
+            raise SkillFormatError("Source lacks frontmatter and no Codex destination metadata exists")
+        destination_errors = validate_frontmatter(destination, expected_name)
+        if destination_errors:
+            raise SkillFormatError("; ".join(destination_errors))
+        public_source = _frontmatter_prefix(destination) + "\n" + source.lstrip()
     block = extract_codex_only_block(destination or "")
     if block is None:
-        merged = source
+        merged = public_source
     else:
-        merged = source.rstrip() + "\n\n" + block + "\n"
+        merged = public_source.rstrip() + "\n\n" + block + "\n"
     merged_errors = validate_frontmatter(merged, expected_name)
     if merged_errors:
         raise SkillFormatError("; ".join(merged_errors))
@@ -198,6 +242,7 @@ def merge_skill_markdown(source: str, destination: str | None, expected_name: st
 
 EXCLUDED_DIRECTORIES = {"__pycache__", ".pytest_cache", "output", "outputs"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo", ".log", ".tmp", ".temp"}
+UTF8_BOM = b"\xef\xbb\xbf"
 
 
 def sha256_file(path: Path) -> str:
@@ -206,6 +251,20 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def _decode_utf8(data: bytes) -> str:
+    return data.decode("utf-8-sig")
+
+
+def _encode_skill_markdown(text: str, source_bytes: bytes, destination_bytes: bytes | None) -> bytes:
+    reference = destination_bytes if destination_bytes is not None else source_bytes
+    newline = "\r\n" if b"\r\n" in reference else "\n"
+    normalized = text.replace("\r\n", "\n").replace("\r", "\n")
+    encoded = normalized.replace("\n", newline).encode("utf-8")
+    if reference.startswith(UTF8_BOM):
+        encoded = UTF8_BOM + encoded
+    return encoded
 
 
 def _is_excluded(relative_path: Path) -> bool:
@@ -260,7 +319,10 @@ def build_sync_plan(
         return SyncPlan(source_root, destination_root, inventory, (), tuple(blockers))
 
     for entry in inventory.entries:
-        if entry.kind in {"shared-junction", "codex-only"}:
+        if entry.kind in {"shared-junction", "codex-only", "non-skill-directory"}:
+            continue
+        if entry.kind == "source-invalid":
+            blockers.append(f"Skill {entry.name!r} destination exists but source has no SKILL.md")
             continue
         if entry.kind == "missing-destination" and not allow_create:
             blockers.append(f"Skill {entry.name!r} is missing at destination; use --allow-create")
@@ -297,13 +359,12 @@ def build_sync_plan(
 
             try:
                 if relative_path == "SKILL.md":
-                    source_text = source.read_text(encoding="utf-8")
-                    destination_text = (
-                        destination_existing.read_text(encoding="utf-8")
-                        if destination_existing is not None
-                        else None
-                    )
-                    content = merge_skill_markdown(source_text, destination_text, entry.name).encode("utf-8")
+                    source_bytes = source.read_bytes()
+                    destination_bytes = destination_existing.read_bytes() if destination_existing is not None else None
+                    source_text = _decode_utf8(source_bytes)
+                    destination_text = _decode_utf8(destination_bytes) if destination_bytes is not None else None
+                    merged_text = merge_skill_markdown(source_text, destination_text, entry.name)
+                    content = _encode_skill_markdown(merged_text, source_bytes, destination_bytes)
                 else:
                     content = source.read_bytes()
             except (OSError, UnicodeError, SkillFormatError) as exc:

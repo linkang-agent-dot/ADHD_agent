@@ -73,6 +73,27 @@ def test_inventory_reports_missing_destination(tmp_path: Path) -> None:
     assert result.by_name("new-claude-skill").kind == "missing-destination"
 
 
+def test_inventory_classifies_auxiliary_directory_without_skill_file(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    (source / "workspace").mkdir()
+    (destination / "workspace").mkdir()
+
+    result = inventory_skills(source, destination)
+
+    assert result.by_name("workspace").kind == "non-skill-directory"
+
+
+def test_inventory_classifies_timestamped_backup_directory_as_non_skill(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    backup_name = "demo.bak.1780452777247"
+    make_skill(source, backup_name, VALID_SKILL.format(name="demo"))
+    make_skill(destination, backup_name, VALID_SKILL.format(name="demo"))
+
+    result = inventory_skills(source, destination)
+
+    assert result.by_name(backup_name).kind == "non-skill-directory"
+
+
 @pytest.mark.skipif(os.name != "nt", reason="Junction behavior is Windows-specific")
 def test_inventory_skips_source_junction(tmp_path: Path) -> None:
     source, destination = make_roots(tmp_path)
@@ -119,6 +140,17 @@ def test_merge_without_codex_block_returns_source() -> None:
     assert merge_skill_markdown(source, destination, "demo") == source
 
 
+def test_merge_preserves_destination_frontmatter_when_source_has_none() -> None:
+    source = "# Shared body\n\nUpdated by Claude.\n"
+    destination = VALID_SKILL.format(name="demo") + "\nOld body.\n"
+
+    merged = merge_skill_markdown(source, destination, "demo")
+
+    assert merged.startswith("---\nname: demo\ndescription:")
+    assert "Updated by Claude." in merged
+    assert "Old body." not in merged
+
+
 @pytest.mark.parametrize(
     "destination",
     [
@@ -150,6 +182,21 @@ def test_validate_frontmatter_rejects_name_mismatch() -> None:
     assert any("does not match" in error for error in errors)
 
 
+@pytest.mark.parametrize("indicator", ["|", ">-"])
+def test_validate_frontmatter_accepts_yaml_block_description(indicator: str) -> None:
+    text = (
+        "---\n"
+        "name: demo_skill\n"
+        f"description: {indicator}\n"
+        "  Use when a long description spans lines.\n"
+        "  The continuation remains part of the scalar.\n"
+        "---\n"
+        "# Demo\n"
+    )
+
+    assert validate_frontmatter(text, "demo_skill") == []
+
+
 def operation_map(plan) -> dict[tuple[str, str], str]:
     return {(op.skill, op.relative_path): op.action for op in plan.operations}
 
@@ -174,6 +221,23 @@ def test_plan_adds_modifies_skips_and_preserves_without_writing(tmp_path: Path) 
     assert operations[("demo", "new.txt")] == "add"
     assert operations[("demo", "codex-only.txt")] == "preserve"
     assert (destination_skill / "changed.txt").read_text(encoding="utf-8") == before
+
+
+def test_plan_preserves_destination_line_endings_for_skill_markdown(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    source_skill = source / "demo"
+    destination_skill = destination / "demo"
+    source_skill.mkdir()
+    destination_skill.mkdir()
+    logical = VALID_SKILL.format(name="demo")
+    (source_skill / "SKILL.md").write_bytes(logical.encode("utf-8"))
+    (destination_skill / "SKILL.md").write_bytes(logical.replace("\n", "\r\n").encode("utf-8"))
+
+    plan = build_sync_plan(source, destination)
+
+    operation = next(op for op in plan.operations if op.relative_path == "SKILL.md")
+    assert operation.action == "skip"
+    assert operation.content == logical.replace("\n", "\r\n").encode("utf-8")
 
 
 def test_plan_excludes_runtime_artifacts(tmp_path: Path) -> None:
@@ -202,6 +266,17 @@ def test_plan_blocks_missing_destination_by_default(tmp_path: Path) -> None:
 
     assert plan.blockers
     assert any("allow-create" in blocker for blocker in plan.blockers)
+
+
+def test_plan_skips_non_skill_directories_without_blocking(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    (source / "workspace").mkdir()
+    (destination / "workspace").mkdir()
+
+    plan = build_sync_plan(source, destination)
+
+    assert plan.blockers == ()
+    assert plan.operations == ()
 
 
 @pytest.mark.skipif(os.name != "nt", reason="Junction behavior is Windows-specific")
