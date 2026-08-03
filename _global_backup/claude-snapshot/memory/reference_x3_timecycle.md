@@ -3,7 +3,7 @@ name: X3 TimeCycle 配置知识
 description: X3 项目里 TimeCycle 表与 ActvOnline 的绑定机制、活动不触发的常见原因
 type: reference
 originSessionId: f6f8a545-b15c-4f6e-a240-0fc5532e47ae
-modified: 2026-07-23T09:52:31.468Z
+modified: 2026-07-29T08:01:31.919Z
 ---
 ## 配置表位置（2026-05-25 迁移到 Git）
 - **新仓库**：`C:\x3\gdconfig\`（remote `https://git.tap4fun.com/x3/gdconfig`）
@@ -24,7 +24,8 @@ modified: 2026-07-23T09:52:31.468Z
 - 后果：`ActivityMgr.OnLoadActivity`（ActivityMgr.cs:963-967，**服启动全量 load 实例时**）遇 `cfg==null` 就把该 ServerActivity `DeleteActivity`（日志「cfgId is off, remove activityId」）→ **跑过/在跑该活动的服一重启，实例被删、玩家进度/名次/结算奖励丢失**。purge **只在重启触发，配置热更不触发**（其它 cfg==null 处只 continue/return 不删）→ 没重启的服实例还在、可救。
 - **正确姿势**：要停一个还在跑/已产生玩家数据的活动 → **`IsOn=1` 保留 + `TimeController(TC)=0`**（配置行在=实例不被清+照常结算；TC=0=无触发不再开新实例）。=船只手册迁移范式「老TC=0+新活动互斥」。
 - ⚠️**TC=0 会被导表校验拦，必须同时改导表器放行（2026-07-23 实测）**：`gdconfig/Tools/table_exporter/PostProcessData.py:1804 deal_actv_online_data` 对 IsOn=1 的行强制 `TimeController≠0`，报「活动ID:X 时间控制器ID:0 不能是0」。豁免三口（line 1668/1802）：①`SKIP_TIMECYCLE_CHECK_ACTIVITY_TYPE`（按 ActvType，已含 MULTI_STAGE_RANK/WONDER_SCORE/WC_GUESS 等榜类）②`kvkSeasonActivityCfgId` ③`ScheduleActvIDSSet`=表 `ActvGroupSchedule.ActvIDS`（但那是"子活动随主活动开"表，塞进去会改成子活动语义，别用）。**正解=把该活动 ActvType 加进 `SKIP_TIMECYCLE_CHECK_ACTIVITY_TYPE`**（冠军之路 case 已加 `ACTV_TYPE_HERO_CHAMPION_ROAD`=55）。**这条导表器改动必须随 tsv 一起提交 gdconfig 并传到 qa/master**，否则只推 tsv、jolt 导表必挂 line 1804。⚠️另 line 1695 `if not item.IsOn: continue`=IsOn=0 行整行不导出的铁证（跨表通用，ActvGroupSchedule 表头注释也写「IsOn 0/空=不导出」）。
-- **例外**：`IsOn=0` 只适合「彻底废弃、且确认没有在途实例/玩家数据」的活动（等于顺带清库）。凡「迁移开启时机 / 换排期 / 临时停」都用 TC=0。
+- **例外**：`IsOn=0` 只适合「彻底废弃、且确认没有在途实例/玩家数据」的活动（等于顺带清库）。**例外的四条核对清单（2026-07-29 马戏庆功宴 101028 实操，照着走一遍再动手）**：①**线上从未部署**——`TC=0`（从不进时间轮）+ 备注已标【勿部署】+ `ActvGroup` 空（不在任何节日面板、批量部署不会带上）三者齐 = 没有在途实例；②**本地/测试服的实例是 GM 开的测试数据**，被清正是目的，不算数据丢失；③**引用面清干净**——全表 grep 该 AO id，逐个判「真引用 vs 撞号」（怪物表/情报表常有同数字撞号）；指向它的 `ItemObtain`(type5 跳活动) 等要确认已零引用；④**改完跑本地 ExportTable 验 exit0**，日志应出现 `Skip row [<id>, ...]` = 确认该行不导出且没触发别的表的引用校验。⑤🔴**还要查「有没有别的界面把它当数据源」**（2026-07-29 补，我当天就栽在这条上）：前四条只查了"活动自己有没有数据"，漏了**宿主界面依赖**——101028 被 IsOn=0 后实例被清，扭蛋机 101027 底部那条积分轨道跟着整条消失（`InitScoreTrack` 拿不到实例即 `SetActive(false)`）。判法=全客户端 grep 该 cfgID（`grep -rn "<cfgID>" Assets/Scripts --include=*.cs`），命中常量/旁挂读取就是被人当数据源了。这类「旁挂数据源活动」正确的隐藏姿势不是 IsOn=0，见 KB\方法论\活动程序开发\X3客户端GUI知识.md「第四种情况：旁挂数据源活动」。
+- 🪤**清空 `ActvGroup` 并不能让活动"隐身"（2026-07-29 实证，别拿它当下线手段）**：101028 的 group 被清空后，本地实例反而出现在**「酒馆活动」页签**下——客户端在 group 为空时会按 `ActvType` 归到该类型的默认面板（101028 是 ActvType=7 最佳酒馆类）。所以「清 group」只能让它不进节日 hub，**只要有活动实例它就会在别处冒出来**。真要断根：没数据的用 `IsOn=0`（走上面四条核对），有数据的用 `TC=0` + 不部署。凡「迁移开启时机 / 换排期 / 临时停」都用 TC=0。
 - 迁移开启时机时**两件事一起查**：①本铁律（下线姿势 IsOn vs TC）②服龄带交集双开（老关前已开过的服 + 新窗口覆盖同批 → 双开，见 [[project-x3-wonder-schedule-mismatch]]）。
 
 ## 活动→TimeCycle 绑定机制
@@ -97,3 +98,10 @@ ActvOnline配置错误：必须是绝对时间 timeCycleId :718 activityIds: {'V
 - [[reference_x3_score_activity]] — X3 积分活动配置 + 跨服活动改造
 - [[reference_x3_project_repo]] — X3 server 代码仓查询方式
 - [[reference_x3_kadmin_deploy]] — 热更打断GM网关坑 + printserveractivity/setservertime GM 用法
+
+## ★两个活动「绑定开」三种机制速查（2026-07-27 推币机+拼图双实证，按优先级选）
+1. **🥇ActvGroupSchedule 主子活动绑定表（`tsv/ActvOnline__ActvGroupSchedule.tsv`）——通用真绑定，首选**：一行=MainActvID(主AO)+ActvID(子AO)+StartTime(相对主开启的偏移秒)+DurationType(2=终点跟主活动同窗/1=固定DurationTime)。服务端 `ServerActivityBasicMeta.CreateGroupActivityIds`：主活动实例创建时自动拉起子活动，**继承主活动圈服+ArkActivityId**，iGame 只需部署主活动。**通用不挑 ActvType**（在用：航海之路带美人鱼拼图/记录册/金海浮市、入侵、风暴、30留转盘、修女、马戏巡游102803→拼图101829=行10006、寻宝103101→门票阶梯103102=行10007）。⚠️主活动 IsGlobal（跨服全局）不触发；GM 提前下掉主活动子活动不会跟着掉（子实例创建时定死终点）。
+2. **双胞胎 TC**（推币机手法，适合 TC 排期的常驻活动）：推币机 106505→TC160006、夺宝通行证 106507→TC160007，两条 TC 参数逐字段相同 → 到点各自开、时间必然同步。变体=两 AO 共用同一条 TC（有先例，改窗口一处生效；代价见 [[feedback_x3_timecycle_name_legacy]]）。
+3. **iGame 同窗部署**（无配置绑定时的兜底运营纪律）。
+- ⚠️`ActvOnline.BaseActvID` **不是**绑定机制（服务端零逻辑消费，只作 BP 新旧版本迁移标记）；ActivityMeta 里的 `SubActivity` 是活动内任务子项，也不是这回事。
+案例落地：马戏 103101 寻宝 + 103102 门票阶梯礼包走机制1（行10007），见 [[project-x3-ticket-ladder-pack]]。

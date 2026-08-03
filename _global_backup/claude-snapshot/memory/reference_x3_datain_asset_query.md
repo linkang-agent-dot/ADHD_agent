@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 490ce72b-3baa-4614-9fe0-430f6331e079
-  modified: 2026-07-24T06:15:32.942Z
+  modified: 2026-07-29T12:13:10.991Z
 ---
 
 X3 Datain（TRINO_HF, v1090）查外显/道具的**拥有率、R级分布、付费额**。脚本走 `C:\ADHD_agent\skills\ai-to-sql\scripts\_datain_api.py` 的 `execute_sql(sql,'TRINO_HF')`。
@@ -16,6 +16,10 @@ X3 Datain（TRINO_HF, v1090）查外显/道具的**拥有率、R级分布、付�
 - 皮肤本体：`Skin_1011`（岛屿皮肤解锁，岛屿皮肤的"拥有"看这个）、`Hero_1034`（英雄）、`FurnitureSkin_1003`（家具皮肤）
 - ⚠️ `asset_id='5303401'`（裸）→ **0 条**；必须 `asset_id='Item_5303401'`。`change_type` 也是字符串，用 `change_type='1'`（不是 `=1`，否则 varchar=integer 报错）。
 - **不知道前缀就反查 `dim_asset`**：`SELECT asset_id,asset_name FROM v1090.dim_asset WHERE asset_name LIKE '%海风旅者%'` → 给出真实 asset_id。
+- 🔴**一个英雄有多个资产形态，查"解锁英雄人数"必须合并去重**（2026-07-29 皮肤获取率案踩坑）：`Item_500XX`=本体、`Item_500XXn`=晋升形态（如格蕾丝 `Item_50001`本体+`500011`史诗+`500012`传奇；霍普金斯 `50034`+`500341`）。**只查本体 → 分母偏小甚至为 0**，实测斯隆本体 0 人、克里斯塔尔仅 2 人，算出 500%/210700% 的假获取率；合并后 106/99 才对。
+  - **一条 SQL 解决（别逐英雄查，31 个英雄逐条查会跑超 10 分钟超时）**：本体与晋升形态**前 10 字符相同**，故 `SELECT substr(asset_id,1,10) AS base, count(distinct user_id) FROM ods_user_asset WHERE asset_id IN (<dim_asset 反查的全部英雄资产>) AND change_type='1' AND <服段> GROUP BY 1`，base 即英雄键（`Item_500XX`）。⚠️各形态人数**不能相加**（同一玩家会重复计）。
+  - 英雄资产全集反查：`SELECT asset_id,asset_name FROM v1090.dim_asset WHERE asset_id LIKE 'Item_50%' AND asset_name LIKE '英雄-%'`（80 条）。
+  - **成品脚本**＝`skills\p2-festival-monitor\x3_skin_ownership.py`（全皮肤清单×获取率，`--all-servers` 切全服，产出同目录 json）。
 - ⚠️**英雄本体别用 `Hero_10xx`**（dim_asset 里有但 ods_user_asset/余额快照**流水全零**=假资产形态，2026-07-10 实证）：英雄获得的真实形态=**`Item_50xxx`「英雄-XX」**（规律=50000+英雄尾号：爱莉希雅 Item_50040/霍普金斯 Item_50034/诺娃 Item_50055；晋升形态带后缀如 Item_500341）。查英雄保有一律 `asset_id='Item_50xxx' AND change_type='1'`。
 
 ## 拥有率（曾获得=拥有，外显永久）
@@ -98,3 +102,34 @@ join `ods_user_order`（pay_status=1；USD: `currency_type IN ('usd','TOKEN') ? 
 3. **只对"真替代品集合"算前后流水差**=该新礼包的蚕食额；新礼包增量 − 蚕食 = 对该货币直接销售的净增。实测：储蓄罐+$435/天，纯异国美酒礼包(11600系，只发Item_7002)−$125/天 → 净增~+$310/天；其余英雄礼包波动不算。
 - ⚠️ 别用"全品类大盘前后差"下结论：大盘可能恰好被无关礼包的生命周期波动掩盖（实测大盘看着-0.6%持平，但拆开后净增是正的）。
 - 关键道具id：Item_1002=钻石、Item_2022=100VIP点数、Item_7002=异国美酒、Item_510xx=英雄信物(碎片)。
+
+## 查「某活动有没有玩家在玩 / 开在哪些服」（2026-07-30 用于确认 BINGO 漏出）
+v1090 里活动相关只有 5 张表：`dim_activity` / `ods_user_activity` / `ods_user_activity_result` / `test_*`。
+- **参与面**：`ods_user_activity` —— 一人一行，能出 `COUNT(DISTINCT user_id)` + `COUNT(DISTINCT server_id)` + `MIN/MAX(partition_date)`。**用它判活动是否已实际对玩家开放、开在几个服、从哪天起**。
+- **结算/领奖面**：`ods_user_activity_result` —— 有领奖/结算记录才有行。**判"有没有人已经拿到奖"**（决定能不能回收窗口）。
+- `activity_id` 是字符串，比较时 `CAST(activity_id AS VARCHAR) IN ('101830',...)`；必须带 `partition_date >=` 剪分区。
+- ⚠️ `information_schema` 查表名要写 `iceberg.information_schema.tables WHERE table_schema='v1090'`——写成 `iceberg.v1090.information_schema.tables` 会报 `Too many dots in table name`。
+- **典型用途**：配置疑似提前漏出时，这两张表是**最快的事实判据**（比查 iGame/Mongo 快），能同时回答"漏没漏 / 影响多少人 / 有没有人已领奖 / 开在几个服"。
+
+## ★用数仓判「配置改动是否已在生产生效」（2026-07-30 验 BINGO 止损时定型）
+`ods_user_activity` 有 **`created_at`（timestamp 精确到秒）**，不是只有 partition_date ⇒ 能做分钟级判读。
+**判据不是"总记录还在不在"，而是"改动生效时刻之后还有没有【首次参与】的新玩家"**——老玩家在线操作会持续产生日志，看总量会误判。
+
+```sql
+WITH before AS (  -- 生效时刻之前已参与过的
+  SELECT DISTINCT user_id FROM iceberg.v1090.ods_user_activity
+  WHERE partition_date='<当天>' AND CAST(activity_id AS VARCHAR)='<活动ID>'
+    AND created_at < timestamp '<生效时刻>'),
+after_ AS (
+  SELECT user_id, MIN(created_at) AS first_seen FROM iceberg.v1090.ods_user_activity
+  WHERE partition_date='<当天>' AND CAST(activity_id AS VARCHAR)='<活动ID>'
+    AND created_at >= timestamp '<生效时刻>' GROUP BY user_id)
+SELECT COUNT(*) AS after_users,
+       COUNT(*) FILTER (WHERE b.user_id IS NULL) AS brand_new,  -- ← 关键
+       MAX(a.first_seen) AS latest_entry
+FROM after_ a LEFT JOIN before b ON a.user_id=b.user_id
+```
+- `brand_new = 0` ⇒ 已不再创建新实例 ⇒ **配置已生效**；`> 0` 且持续 ⇒ 服务器仍在用旧配置（导表或热更没到位）。
+- ⚠️**先确认数仓最新数据时间**（`MAX(created_at)`）：若它早于你的生效时刻，说明只是数据还没到，不能判失败。本案第一次查时最新数据只到 20:59:55、而 MR 20:58 才合，那 2 分钟的"仍有新玩家"是数据边界不是失败。
+- `activity_start_time/end_time` 字段是**实例创建时固化的窗口**，配置改了它也不变 ⇒ **不能用它判配置是否生效**。
+- **⚠️数仓不能用于紧急验证**：`ods_user_activity` 的入库**延迟可达 1 小时以上**（2026-07-30 实测：22:10 查询时，全表 665 万条的 `MAX(created_at)` 仍停在 20:59:59，21 点后一条都没入库）。⇒ **改配置后想立刻验证"生效没"，别等数仓**——用两个更硬的证据：①让人拿个号实际登录看（最快最准）②读代码判机制。数仓适合**事后**复盘影响面（多少人/多少服/多少人领奖），不适合实时验证。

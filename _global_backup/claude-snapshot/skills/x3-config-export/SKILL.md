@@ -98,6 +98,12 @@ python <skill>\scripts\jolt_verify.py <branch>
   整行删除（下架兑换条目等，2026-07-21 尼罗删圣甲虫实操固化）；断言每个ID恰好命中1行
 - 默认 repo `C:\x3\gdconfig`；--file 相对该目录；写盘保 LF（不被 Windows 翻 CRLF）
 
+### tsv_delrows.py — 批量删行（下线功能/清活动配置用，2026-07-30 限时抢购清配置固化）
+- `--ids 211101-211108 --expect 8`（按 col0，支持数字范围）/ `--col 1 --ids ...`（按任意列，如 Reward 的 RewardID 组）/ `--prefix TXT_Xxx_,Text_ErrCodeXxx --expect 15`（按 i18n key 前缀）/ `--all-data --header 6`
+- 比 `tsv_edit.py delrow` 强的两点：①**多行 cell 安全**（csv line_num 算逻辑行的物理行区间整段删；delrow 按物理行首字段匹配，跨行 cell 只删掉第一行）②**其余字节零改动**（绝不用 csv.writer 回写——writer 会把 tsv 里的裸引号重新转义污染无关行，Text__Text.tsv 土耳其语 cell 实测踩过）
+- 断言优先：命中数 != `--expect` 直接退出不写盘；配 `--dry-run` 先看。删完必查 `git diff --numstat` 应为纯 `0 <N>`（有 insertion = 污染了别的行）
+- ⚠️**整表下线别留空 tsv**：导表硬禁只有表头没数据行的表（`PythonWriter.py` X3NEW-20）→ 该表直接 `git rm`，`def/*_def.py` 留着当 schema 存档；恢复=`git checkout <建表commit> -- tsv/<表>__*.tsv`
+
 ### actv_lookup.py — 活动配置速查（「查一下XX活动配置/actvonline是啥」先用它，别现场 grep）
 - `python <skill>\scripts\actv_lookup.py 102993`：按 ID 查 ActvOnline 行，全部非空字段带列号+字段名+中文名打印，并**自动跟一层外键**（TimeCycle 触发方式/时长、ActvGroup 入口、Reward 组内容、悬空引用直接标出）
 - `python <skill>\scripts\actv_lookup.py 酒馆`：按关键词搜（备注/活动名/任意单元格）
@@ -148,7 +154,7 @@ python <skill>\scripts\jolt_verify.py <branch>
 
 ### 整套活动换皮 + 节日入口 ActvGroup + sync坑（2026-06-16 世界杯累充/BP/签到）
 - **节日「单独入口」= `ActvOnline__ActvGroup` 表新建一行**（非普通活动列表/非酒馆）：col1=ID col3=TXT入口名(自动key `TXT_ActvGroup_MainEntranceName_{id}`) col4=DK入口图标(HUD主按钮) col5=排序(节日97/想靠前用98) col6-11=顶/底边框·退出钮·亮/暗页签·mask。**无专属chrome就克隆组101(通用cm套:DK_img_cm_bg_1/2 + cm_anniu_return + gift_btn_1/2 + Activity_bg)**。节日组ID排到138,新世界杯=139。
-- **活动归入口=纯靠 ActvOnline.col38(=ActvGroup ID)**；ActvGroupSchedule 只给航海/入侵/KVK主子活动用,节日累充/BP/签到不需要。改 col38 即把活动从普通列表移进该入口。
+- **活动归入口=纯靠 ActvOnline.col38(=ActvGroup ID)**；ActvGroupSchedule=通用主子活动绑定表(主活动开→子活动自动同窗开,不挑ActvType,航海/入侵/KVK/30留/马戏拼图/寻宝门票阶梯都在用,三机制对比见 memory reference_x3_timecycle);普通节日累充/BP/签到归组入口仍只靠col38不用它。改 col38 即把活动从普通列表移进该入口。
 - **复用源精确列**：[4]短ID [5]ActvType [7]**TimeCycle** [17]MailID [21]ActvIcon(HUD) [22]ActvImg(背景) [33]展示道具 [38]ActvGroup [49]RechargePointPackWhitelist(累充白名单)。
 - **三模块联动表**：累充(type5)=ActvTask(TT=902,CID/P1=短ID,阈值)+Reward(同号RewardID,换item即换道具)+[49]白名单；签到(type14)=ActvLogin(col1=CID,col2=day,col7=实际奖励RewardID,col8=补签钻石);BP(type22)=ActvBattlePassScore.BattlePassScore([5]→等级组)+BattlePassScoreReward(组内每级「积分需求」列=改积分处,免/高/至尊三轨各指一个RewardID)。**BP走BattlePassScore不是ActvScore→天然不进酒馆**。
 - ★**BP/积分活动「奖励组跨节日共享RewardID」坑**(2026-06-16世界杯BP实操):克隆某节日BP的等级组后,新组的免/高/至尊轨仍指向**原节日的同一批RewardID**(如世界杯组140克隆元旦组132,两组都指4028xxx)→**直接改这些Reward行=连原节日BP一起改!** 改奖励必须先**克隆出专属Reward块**(新RewardID,如+71000到空闲段4099xxx),按需换道具/其余照抄,再把新等级组的轨道指针(BattlePassScoreReward idx4/5/6)指到新块,原节日组不动。同理任何"克隆复用源后要改其引用的子表"都先确认该子表ID是否被复用源共享。

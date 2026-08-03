@@ -1,0 +1,15 @@
+        /// <summary>
+        /// 刷新马戏节限时抢购 UI（货架/倒计时/分享/被助力进度/抽奖次数等）
+        /// </summary>
+        public static readonly EventType<long> OnRefreshFlashSaleUI = new("OnRefreshFlashSaleUI");
+
+        /// <summary>
+        /// 限时抢购购买成功（活动 id、货架包配置 id）
+        /// </summary>
+        public static readonly EventType<long, int> OnFlashSaleBought = new("OnFlashSaleBought");
+
+        /// <summary>
+        /// 限时抢购破冰抽奖结果（活动 id、抽中的货架包配置 id，免费到手不占限量/限次）
+        /// </summary>
+        public static readonly EventType<long, int> OnFlashSaleRaffleResult = new("OnFlashSaleRaffleResult");
+

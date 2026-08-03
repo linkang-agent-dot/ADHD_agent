@@ -1,0 +1,20 @@
+=== 「同名重复」检查：换皮无忧 REPLACE 那一半的范围 ===
+落地件 53 个；其中在 X3 别处存在同名文件的：4 个
+
+--- 🔴 内容完全相同（MD5 一致）＝真重复，应改指 X3 原件并删副本：2 个 ---
+  Common_icon_FrequencyBg1.png
+     我们的: Res\UI\Sprite\UIActvFlashSale\Images  guid=a38a959435ace524ebdbabbfc9646a86
+     X3原件: Res\UI\Spirits\ActvMecha\Common_icon_FrequencyBg1.png  guid=51daedaeb951f344db1e8e6b63523d61  ⚠️guid不同(要替换引用)
+  Mask_009.tga
+     我们的: Res\UI\Materials\UIActvFlashSale\Textures  guid=67145cfca8e66d14cbbe22529357fcfe
+     X3原件: Res\Effect\Textures\Mask\Mask_009.tga  guid=a2d6a1ff169276842ae207513dc1bd08  ⚠️guid不同(要替换引用)
+     X3原件: Res\Effect\UI\Textures\Mask_009.tga  guid=9b4733f8fa45d524f930284ddd843719  ⚠️guid不同(要替换引用)
+
+--- ⚪ 同名但内容不同＝不是重复，各自保留：2 个 ---
+  BoxReward.anim                           我们的 guid=7bd5df359e37acd45bda2acc47239af2
+       X3: Res\Ani\BoxReward.anim                                           guid=498955b5783837744a87c03e49c42bef
+       X3: Res\UI\Animation\BoxReward.anim                                  guid=25015a229ba111e4eb5a82c2decab9aa
+  FX_AddBlend_DistortionDissolve_Flow_New_UI.shader 我们的 guid=5cda7de149c80d74aa25088b0964aac5
+       X3: Res\Shader\X3\Effect\FX_AddBlend_DistortionDissolve_Flow_New_UI.shader guid=871d85d6126f3a842bf4656dfd96c9b2
+
+注：`.shader` 换皮无忧只比文件名不比内容（源码注释「shader 换皮场景：同名即替换」）

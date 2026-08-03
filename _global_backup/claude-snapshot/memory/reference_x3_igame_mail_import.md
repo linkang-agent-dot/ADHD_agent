@@ -47,3 +47,22 @@ X3 iGame 批量发邮件/补发导入表格式（**与 P2 的 `{"assetType":"ite
 ## 关联
 - P2/X2 用 [[reference_bulk_mail_reissue]] 的 assetType JSON 格式；X3 用本格式。
 - 补发前核查是否已发，避免重复补偿（见 [[reference_bulk_mail_reissue]] reason 核查规则）。
+
+## ★按服发全服邮件：`/mails/send/servers`（2026-07-31 从发件箱反查拿到结构）
+全服/多服公告邮件**不用逐玩家列 CSV**，走 `email/write2: sendToMap2` → **`POST /ark/mails/send/servers`**。
+🔴**路径必须带 `/ark` 前缀**（2026-07-31 踩：照路由表写 `/mails/send/servers` → HTTP 404；加 `/ark` 后成功）。路由表 `igame-routes.json` 里的 path 是**网关内部路径，不含 `/ark`**，实际调用要自己补——逐玩家端点同理（`/ark/mails/send/players`）。
+⚠️ 路由表里该接口只写 `"params": ["params"]` **没有结构文档** —— 用下面这招反查：
+1. `node scripts/igame-query.js write "email/outbox/getMailList" '{"pageIndex":1,"pageSize":80}'` → 找 `mailType != "PLAYER"` 的（SERVER 类型，80 封里约 2 封）
+2. `node scripts/igame-query.js read "email/outboxDetail/getMailDetail" '{"id":<id>}'` → 看真实字段
+**payload 结构**（与逐玩家版的唯一区别＝`to` 变成纯服号数组）：
+```json
+{"to":["1170","1270",...],
+ "assets":[{"assetType":"PROP","id":"1057","amount":5}],
+ "content":[{"lang":"en","title":"...","body":"...","collectionId":-1}, ...多语言],
+ "mailCategoryId":1, "sendType":-1, "validPeriod":1920, "customParams":"", "rewardVersion":"", "remark":"..."}
+```
+- `mailCategoryId:1`＝普通邮件 · `validPeriod`单位小时（1920h=80天）· `condition:null`
+- 正文风格：X3 线上邮件是**纯文本邮件体**（`亲爱的酒馆主，
+
+…`），不是 What's New 那种分隔线排版；标题不带 emoji（4 字节 emoji 兼容性未确认，全服邮件别冒险）
+- ⚠️ 查详情时 JSON 可能含非法转义导致 `json.loads` 失败 → 用正则抽字段，或 `errors="replace"` 读

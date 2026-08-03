@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: ae741d4f-3076-4b80-ab99-52997a1a54f4
+  modified: 2026-08-03T03:14:10.315Z
 ---
 
 # 工作/个人 Claude Code 配置隔离（2026-07-16 建）
@@ -25,6 +26,9 @@ metadata:
 - **共享**（个人配置里对默认 `junction`）：skills / agents / commands / plugins（工具两边同步、不重复维护）。
 - **个人独有**：`~/.claude-personal` 的 settings.json（多挂了一个屏蔽某媒体渠道的 PreToolUse hook）+ 自己的 memory。
 - **memory 现状**：个人配置的 memory 是隔离时的**全量快照**——个人项目 memory 在这里独立累积、永不回流工作默认；但个人配置里的"工作类"memory 是**快照会变旧**（个人会话很少用工作知识，可接受；需要刷新时把默认 memory 里的工作 topic 拷过去即可）。
+
+## Codex 侧孪生（2026-08-03 建）
+同一套隔离哲学已镜像到 Codex：`codex-personal` 命令 → `CODEX_HOME=~/.codex-personal`（个人 AGENTS.md 指个人 memory、含 GRFal 禁令 hook、需单独登个人 ChatGPT 号）。细节见 [[codex-cli-docs]]。
 
 ## 维护注意
 - 隔离操作的备份在 `~/.claude/backups/partition_<时间戳>/`（memory + settings + CLAUDE.md）。

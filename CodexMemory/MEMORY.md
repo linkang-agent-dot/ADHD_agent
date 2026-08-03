@@ -4,6 +4,10 @@
 
 ## 工具与运行时
 - [Browser失败必须自行跑完恢复链](feedback_browser_self_recovery.md) — 单版本/单 selector 失败不等于能力不可用；完整版本检查→排障→实例发现→真实页面三证验证
+- [HTML交付物完成后自动打开](feedback_auto_open_html_artifacts.md) — 本地 HTML 生成并验证通过后自动用默认浏览器打开
+- [组合命令退出码纪律](feedback_shell_composite_exitcode.md) — 探索性搜索 exit 1=零匹配非失败；rg/Select-String/check-ignore 家族；并行 jsonl 用 FileShare.ReadWrite
+- [apply_patch 上下文纪律](feedback_apply_patch_context_discipline.md) — 改前必重读目标文件；多文件拆小补丁；单行长内容带整行上下文
+- [BTW/sub-agent 持久化回主对话](workflow_subagent_btw_handoff.md) — 全部子线程按主对话建目录，用户判断与 checkpoint 增量落盘，SubagentStop 保存 final，主对话自动恢复未接管内容
 
 ## 记忆架构
 - [Codex独立记忆与Claude增量复核](reference_codex_memory_architecture.md) — Codex 专属经验独立存储；Claude memory 会话开工增量复核；项目事实继续共用 KB

@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 9e46b124-6441-4cf7-893a-41b8c4980d42
+  modified: 2026-07-29T12:34:32.849Z
 ---
 
 X3 节日白皮书的 **8 大外显模块**逐一对应到「客户端要哪些资源 + 实际路径」。白皮书本身(`C:\ADHD_agent\KB\产出-数据分析\X3\x3_festival_cosmetics_whitepaper.md`)是变现复盘，**没有资源路径**——下表是交叉 `C:\x3-project\client\Assets\` 实地核对补出来的。判断换皮工作量(3D/动画贵 vs 2D 便宜)、出美需、配活动时查。所有引用都走 DK→GUID 注册(`Res\Config\DisplayKey\Path_*.asset`，配置表写 `DK_` 名不写路径，见 [[reference_x3_client_resources]])。
@@ -21,6 +22,26 @@ X3 节日白皮书的 **8 大外显模块**逐一对应到「客户端要哪些�
 | ⑤行军皮肤 | 🆕 新做模型需求（FxID 绑航迹成套出） |
 | ⑥头像框 | 🆕 新做（2D 规范直出） |
 | ⑦纪念卡/⑧表情 | 维持现行 2D 流程 |
+
+## ★外显载体全集 · 配置实数（2026-07-29 逐表核对，做规划/盘投放位先看这张）
+| 载体 | 表 | 现有数量 | 备注 |
+|---|---|---|---|
+| 英雄皮肤 | `Hero__HeroSkin` | 106（**仅 48 款配了获取道具**） | 典藏标签仅 16 款 |
+| 头像框 | `Personalize__PersonalizeAvatarFrameCfg` | 96 | |
+| 纪念卡 | `MemorialCard__MemorialCard` | 86 | |
+| 装饰（**单个**） | `FurnitureDecorate__FurnitureDecorate` | 146 | ⚠️含大量功能性家具(储物箱/小麦袋/肉桶)，真正可当节日投放位的远少于 146 |
+| **门头三件套** | `FurnitureSkin__FurnitureSkin` | 44 | col2 类型＝**3横梁(门头)12 / 2墙纸13 / 1地板(底板)17**，带 `DK_门洞资源` |
+| 头衔 | `PlayerTitle__PlayerTitle` | 31 | |
+| 主城皮肤 | `Skin__Skin` SkinType=1 | 20 | |
+| 头像 | `Personalize__PersonalizeAvatarCfg` | 15 | **与头像框是两张表两个位** |
+| 航行特效（航迹） | `Skin__Skin` SkinType=2 | 14 | 几乎每节日一款，成熟投放位 |
+| 家具皮肤 | `FurnitureDecorate__FurnitureDecorateSkin` | 12 | 单个家具的品质皮肤(青铜/白银/黄金阿米娜雕像)，**带属性 220001 +500/700/1000** |
+| 聊天表情 | `ChatEmojyReply__ChatEmojyReply` | 11 | |
+| **船只装扮** | — | **无表** | 三处都查过没有：Skin 只有主城/拖尾两型；ShipPartsModification 是养成(升级升星给属性)非外观；i18n「装扮」词条全指家具/岛屿/头衔/酒馆门头。**＝空缺位**（X3 核心视觉主体是船，却只能卖拖尾） |
+| 海妖皮肤 | — | 规划中 | 9 月新建 |
+- 🪤**命名易混（2026-07-29 用户纠正）**：`FurnitureSkin`(44) **是门头三件套不是家具皮肤**；家具皮肤是另一张 `FurnitureDecorateSkin`(12)。装饰＝单个，门头＝三件套（门头+墙纸+底板）。
+- 💡`FurnitureDecorateSkin` 是 X3 内部已跑通的「同一外显分品质、按品质给不同属性」先例（青铜/白银/黄金三档），做"英雄皮肤分品质"提案时可引为内部依据。
+- `NationFlagCfg`(745) 是国家标识，不算节日投放位。
 
 ## 资源重量速判
 前 5 个模块要美术出 **3D/Spine动画/特效**(贵、周期长)，后 3 个只要 **2D PNG**(轻)。
@@ -43,6 +64,40 @@ X3 节日白皮书的 **8 大外显模块**逐一对应到「客户端要哪些�
 - Spine 动画数据：`Res\Spine\Role_Spine_<id>_Skin<n>\` → `.skel.bytes`(骨骼)+`.png`(图集)+`_SkeletonData.asset`+`_Material.mat`
 - 角色头图：`Res\UI\Spirits\Role\Character Portraits\Img_C_H_<英雄id>_Skin<n>.png`
 - ⚠️皮肤=重绑骨骼动画不是换图；配置字段 `DK_Role_Spine_xx_Skinxx`
+
+#### ★一款新皮肤要出的 4 件资产 + 规格基准（2026-07-27 马戏节阿米娜案实测反推）
+> **判"皮肤做完没"看这 4 件，别只看配置行在不在**——`Hero__HeroSkin.tsv` 配置行齐全但资产全缺是常态（马戏节 102001 就是：属性/道具/名字全配好，4 个 DK 指向的文件客户端一个都没有，视频还挂着足球宝贝的 `DK_video_zuqiubaobei_sbs` 占位）。
+
+| 资产 | HeroSkin 列 | 路径 | 规格 | 构图基准（实测现役资源反推） |
+|---|---|---|---|---|
+| 全身立绘 | col6 `DK_皮肤立绘` | `Spirits\Role\FullLength\Role_F_<hero>_Skin<n>.png` | 1024×1536 RGBA | 角色占高 **89~95%**（阿米娜本体89.3/霍普金斯Skin04 94.9，取92%），水平居中，**脚底锚定**底留2~4% |
+| 英雄卡 | col9 `DK_皮肤英雄卡` | `Spirits\Role\HeroCard\Role_C_<hero>_Skin<n>.png` | 308×420 RGBA | **半身**(头顶~腰)，四边**出血撑满**(skin02 实测 100%×100%) |
+| 头像 | col5 `DK_皮肤头像` | `Spirits\Role\Character Portraits\Img_C_H_<hero>_Skin<n>.png` | 256×256 RGBA | 脸部特写占高 88~90%，**圆形柔边+肩线平切**(半透明像素占 9.5%=柔边) |
+| 展示视频 | col20 `DK_皮肤视频` | `Res\Video\VideoRes\*.mp4` | SBS 1080×1920 | 走视频化管线，见 [[reference-x3-hero-skin-video-production]] |
+
+- 另有 col8 `DK_皮肤英雄模型`(世界地图小人，如 `DK_Role_Pirate`/`DK_Role_Bunny`)通常**复用现有形象不新做**。
+
+##### 🖼️批量取皮肤图的命名规律（2026-07-29 实测，做图鉴/对比页用）
+- 文件名＝`Role_C_<英雄短号>_Skin<nn>.png`(英雄卡) / `Img_C_H_<英雄短号>_Skin<nn>.png`(头像)，**英雄短号 = heroId − 1000**（1035→35），`<nn>` = skin_id 去掉 heroId 前缀后**补零两位**（103501→01、10202→02）。
+- 🪤**大小写不统一**（`Skin01` / `skin02` / `skin01` 混用）→ 建索引时一律 `.lower()` 匹配，否则漏一半。
+- 🔴**覆盖率实数：48 款可获取皮肤里只有 25 款有专属英雄卡，23 款复用本体卡 `Role_C_<短号>.png`**——即近一半皮肤在列表里显示的还是英雄本体形象。判"皮肤美术做完没"要查专属卡在不在，别只看配置行。
+- 成品脚本：`skills\p2-festival-monitor\x3_skin_report_gen.py`（自动找图→WebP→base64 内嵌出图鉴页，带缓存）。
+
+#### 🪤 克隆皮肤行必查四处「抄了没改」（2026-07-28 马戏节阿米娜实证，一次踩全）
+新皮肤行常从别的皮肤整行复制，**下游四处极易漏改**，且都不报错、只在游戏里出洋相：
+
+| 漏改处 | 症状 | 本案实例 |
+|---|---|---|
+| **col12 属性 + col16 描述文案** | 属性与英雄**兵种不匹配**，白给一个用不上的加成 | 102001 阿米娜(兵种=1猎人)抄了 104001 足球宝贝的 `220003 斗士攻击`，连描述文案「斗士攻击」都照抄。改对=`220011 猎人防御` |
+| **col14 虚战力** | 与属性数值不成比例 | 属性数值与虚战力的现役比例 = **10~12 倍**（5000→50000 / 15000→150000 / 3000→36000）。同英雄同数值优先直接对齐（本案对齐 10202 红绸剑姬 15000→150000） |
+| **i18n `TXT_HeroSkin_CollectTxt_<id>`** | **典藏标签图标上没有文字**（图在、字空） | 该 key 独独缺 102001；配置表里写的「限定」只是源文，运行时读 i18n |
+| **i18n 皮肤名与道具名是两行** | 英雄界面叫新名、背包里还是旧名 | `TXT_HeroSkin_Name_<皮肤id>` 与 `TXT_Item_Name_<道具id>` **分开两行**，改名必须两行都改 |
+
+- **典藏标签图标 `col17` 与文案 `col18` 的对应**（现役 7 款）：title1=1周年 / title2=传说 / title3=史诗 / **title4=限定** / title5=至尊 / **title6=夏日** / title7=黑金。
+  → **标签可以是品质，也可以是节日名**（title6「夏日」即先例）；要节日专属标签需美术新出一张 title 图。沿用「限定」则零美术，但会与 103901/104001 共用。
+- 🔑**三张 2D 可从一张主稿程序化派生**，不用美术分别出图：工具=`~\.claude\skills\x3-media\scripts\hero_skin_derive.py`（主稿→remove_background→三件规格图，含调参指引）。
+- ★**边缘遮罩复用手法**：头像/英雄卡的柔边形状**直接取该英雄现役皮肤的 alpha 通道当 mask**（脚本已实现自动找 skin02→skin01→Lv1），别自己画圆——保证新皮肤边缘与游戏内其它皮肤 100% 同形，避免"这张边缘不一样"的违和。
+- ⚠️主稿脸部在 1152×2048 里只占 ~100×130px，直接裁 256×256 头像会糊；糊了就补一步超分再裁。
 
 ### ②岛屿/主城皮肤 (Island/City Skin, Item_81xxx) — 带战力buff
 - ⚠️**纠错(2026-07-08 实地核对)**：早前写的 `Res\Unit\City\Buildings\Building_<itemid>_Lock.prefab` 是**功能建筑**(酒馆/巢穴等 14xxxxx)，不是岛屿皮肤本体，别再抄。
@@ -71,6 +126,20 @@ X3 节日白皮书的 **8 大外显模块**逐一对应到「客户端要哪些�
 ### ⑦纪念卡 (Memorial Card, 1800xx)
 - V1：`Res\UI\Spirits\MemorialCard\img_card_image_<n>.png`
 - V2 新集卡：`Res\UI\Spirits\CardCollectionV2\img_card_v2_<系列>_<n>.png`
+- **规格＝384×523 竖版**（近 20 张统一；老卡有 768×1044 二倍图）。
+- 🔑**一张卡只有两个图字段**：`MemorialCard.col4 DK_卡片小图` / `col5 DK_卡片大图`，客户端 `UIMemorialCardTemplate.cs:53` 只读这两个。**`col6 DK_背景框` 全表 84 行全空且客户端不读**（表注释写"该字段未使用"）→ **边框只能画进卡面 PNG**，除非让程序补一行读 col6。
+- **边框惯例（2026-07-28 实物核对）**：节日**主推卡带金框**（79绿茵之星＝金线框+四角卷草；80远航之歌＝金线框+四角卷草+**蓝色内衬**），非主推卡是无框出血图（81海妖低语/82深渊回响）。**"内衬色"是现成的品质分层抓手**。
+- ⚠️**别跟炫彩卡混**：`CMemory`（`Date\UIMemoryList` 等）才有 Rarity/7星/品质框/整图动化视频，那是约会回忆卡系统，与节日纪念卡两套表两套 UI。
+- **一张纪念卡要出的是两件资产，DK 注册在两套不同的表**（2026-07-28 马戏节实操固化）：
+
+| 资产 | 规格 | 客户端路径 | Display 注册 | Path 注册 | 配置引用处 |
+|---|---|---|---|---|---|
+| 卡面 | 384×523 不透明 | `Res\UI\Spirits\MemorialCard\img_card_image_<n>.png` | `Display_Memory.asset`(type: Memory) | `Path_Memory.asset` | `MemorialCard.col4/col5` |
+| 道具图标 | **256×256 透明底** | `Res\UI\Spirits\ItemIcons\icon_card_image_<n>.png` | `Display_Item.asset`(type: Item) | `Path_Item.asset` | `Item.col20 DK_图标` |
+
+- 💡**道具图标不用另画＝卡面程序化派生**（跟卡面永远一致，卡面改了重跑即可）：卡面缩到画布 **80% 高** → 旋转 **-4°**（expand）→ 取旋转后 alpha 作形状、`GaussianBlur(5)`、alpha×0.55 当投影、右下偏移 `(+5,+7)` → 合成到 256×256 透明画布居中。观感对齐现役 `icon_card_image_80`。
+- **拼图(BINGO)底图**＝`804×804` 正方形角色场景图，放 `Res\UI\Spirits\ActivityImg\`，注册 `Display_Activity`/`Path_Activity`，配置引用 `ActvPuzzle.col3 DK_拼图`。图会被 5×5 格逐格揭开，**四角必须有内容不能大片留空**。
+- 🪤**换皮克隆卡常连图带属性组一起继承**（83欢乐颂歌 clone 80远航之歌 → 小图大图都还指着 `DK_img_card_image_80`、属性组也共用 1012）。**判"新卡做完没"看 DK 指向自己没有，别只看行在不在。**
 
 ### ⑧聊天表情 (Chat Emoji, 154xx)
 - `Res\UI\Spirits\Chat\img_cm_emoji_*.png`(图集 `AtlasChat.spriteatlas`)
@@ -104,12 +173,12 @@ X3 节日白皮书的 **8 大外显模块**逐一对应到「客户端要哪些�
 | 头像框 | `Personalize__PersonalizeAvatarFrameCfg.tsv`(定义框+Buff) **+** `Item__Item.tsv` 80xxx(包成道具) | **256×256** | 双表：定义表定框，Item_80xxx 参数=`框ID|时长` 包成可发道具，活动发 Item / 自选礼包 1080。⚠️**框定义表 ID=10xxx**(如mermaid10019/Egypt10026,2026-06 max10075)，**80xxx 是 Item 道具 ID 不是框 ID**(2026-06 max80347)；新头像框礼包抄 Egypt 框10026+道具80110模板，9.99礼包价格档=PackPrice **107**，DK_Background 用 `DK_Bg_CM_Item4`。实例:深海印记礼包(框10076/道具80348/Pack211019) |
 | 铭牌=头衔 | `PlayerTitle__PlayerTitle.tsv`(Quality 0蓝1紫2橙3+站位Buff+Reimburse钻石补偿) | title板 **752×192**(ActvKvk/Activity `*_icon_title.png`)+小图标(ItemIcons) | 活动表直接挂(ActvKvk.PlayerTitleID/PlayerTitleID2)，KvK/世界征服头衔 |
 - ⚠️ **X3 无独立"铭牌"系统**，铭牌就是 PlayerTitle(头衔)；白皮书8模块没单列铭牌。
-- 🎯 **头像框标准尺寸限制(自产强制)**：256×256 透明PNG；头像透空内径标准 Ø165(容差150–180,必须真透空且<头像本体176让环压边)；单边环厚标准45(容差40–55,简洁取40华丽取50–64)；环外径~248留2~4px边；装饰顶满256不出血；左右对称。换尺寸=内径0.62–0.68×边长/环厚0.16–0.20×边长。明细+复测脚本见 KB 同目录图库。
+- 🎯 **头像框标准尺寸限制(自产强制)**：256×256 透明PNG；头像透空内径标准 Ø165(容差150–180,必须真透空且<头像本体176让环压边)；单边环厚标准45(容差40–55,简洁取40华丽取50–64)；环外径~248留2~4px边；装饰顶满256不出血；左右对称。换尺寸=内径0.62–0.68×边长/环厚0.16–0.20×边长。明细+复测脚本见 KB 同目录图库（`_measure_frame_geometry.py`）。**内径量出来偏小的修法=整图中心等比放大再裁回**（2026-07-27 寻宝之环实证：148→×1.05→155 进带，外径别超~248；验收加一步「176 圆头像垫底合成戴框图」目检压边，与现役框并排比）。
 - 🔑 **X3 表情共 5 套系统**（做"一波聊天表情"先认准走哪套，全集可视化见 KB 同目录 `表情全系统.html`）：
   1. 快捷回复 `ChatEmojyReply`(9个, `Chat/img_cm_emoji_*` 72×72, 内置不卖)
   2. ⭐**可售卖聊天表情 `Emoticons`**(22个,ID100-240, 主表`Emoticons__Emoticons.tsv`字段ID/Res/Pack/Name/ShowType/备注) — **节日通行证/礼包卖的就是这套**；解锁=Item **154xx表情包道具(ItemType24,"使用后获得聊天表情",param=Emoticons.ID)**进奖励 或 Emoticons.Pack绑包；UIChatEmojiPanel发,SocialMeta.Emoji.cs管,ShowType=1买了才显示。**做可卖表情走这套**
      - ⚠️**双DK结构(2026-06-15实测,现有22个清一色动图零静态)**:① `Res`字段=`DK_{名}`→**动图** `Res/UI/Gif/{名}.bytes`(+`.gif`源,~100-270KB)=**发到聊天里会动的GIF** ② `DK_icon_global_{名}`→静态PNG `Spirits/Emoticons/Icon/icon_global_*.png`**256×256**=**仅表情面板缩略图**。气泡底`Spirits/Emoticons/ui_chat_memebg_*`。Path_Emoticons.asset注册两套DK。→**做新表情要出动图GIF(Res)+静态icon(面板)两份**;只有静态会是这套里唯一不动的(快捷回复ChatEmojyReply那9个才是纯静态72×72,另一套)。
-     - ⚠️**GIF .bytes 透明铁律(2026-06-17 世界杯48表情聊天里显灰底/白框踩坑)**:游戏端 `UniGifDecoder.cs` 解码第0帧时 disposal 被强制为2→**整张贴图先用 `bgColor` 填满,之后透明像素不再覆盖**;`bgColor` 是否透明只看 line126 `背景色索引==透明色索引`。**所以 GIF 的 LSD 背景色索引必须==GCE 透明色索引**,否则透明区被填成不透明 `palette[bgIndex]`(默认 palette[0]=白)→角色背后一块实底(被聊天面板叠色显灰)。**文件用 PIL/Read 看是透明的也会中招**(PIL 认 alpha,这个解码器走索引填充,光看文件透明会误判)。正例 Bella01/2026:bgIndex==transIndex==127→白透明。修复=存 GIF 时 `background=transparency`(并把透明调色板项设白,对齐现役表情避免双线性过滤黑边渗色);48张就地批改范式:`Image.open→getpalette改t项=白→putpalette→save(format=GIF,transparency=t,background=t,disposal=2)`。`_gen_emote_gif.py`(动效版)同样缺 `background=`,改它要补。.bytes 是运行时加载资源→**改完必须重建 client 资源包/AssetBundle 并更新 dev 服才生效**(同 march-emoji/[[project-x3-worldcup-activity]] line238 "DK配置在但运行时not found":dev跑的是旧包)。
+     - ⚠️**GIF .bytes 透明铁律(2026-06-17 世界杯48表情聊天里显灰底/白框踩坑)**:游戏端 `UniGifDecoder.cs` 解码第0帧时 disposal 被强制为2→**整张贴图先用 `bgColor` 填满,之后透明像素不再覆盖**;`bgColor` 是否透明只看 line126 `背景色索引==透明色索引`。**所以 GIF 的 LSD 背景色索引必须==GCE 透明色索引**,否则透明区被填成不透明 `palette[bgIndex]`(默认 palette[0]=白)→角色背后一块实底(被聊天面板叠色显灰)。**文件用 PIL/Read 看是透明的也会中招**(PIL 认 alpha,这个解码器走索引填充,光看文件透明会误判)。正例 Bella01/2026:bgIndex==transIndex==127→白透明。修复=存 GIF 时 `background=transparency`(并把透明调色板项设白,对齐现役表情避免双线性过滤黑边渗色);48张就地批改范式:`Image.open→getpalette改t项=白→putpalette→save(format=GIF,transparency=t,background=t,disposal=2)`。~~`_gen_emote_gif.py`(动效版)~~**已废弃(2026-07-27 用户裁决:GIF 一律=先出视频→切帧→合成,静态假动效/sprite-sheet 路线全部打回,正路=x3-media video-model-routing.md §3.5)**。.bytes 是运行时加载资源→**改完必须重建 client 资源包/AssetBundle 并更新 dev 服才生效**(同 march-emoji/[[project-x3-worldcup-activity]] line238 "DK配置在但运行时not found":dev跑的是旧包)。
   3. 自制内联表情 `custom_emoji1`(31个 EmojiFace黄脸, 图集`RichText/Emoji/custom_emoji1.png`1024×512, 单格~117×121) — 通用打字插文本(rich text)非主题
   4. 标准 EmojiOne `emoji_standard`(1638个,1024×2048)/TMP EmojiOne — 第三方开源**别动**
   5. 角色头顶 `CuteEmotes`(6656×2560图集+PopupEmote prefab驱动) — 世界内冒泡,非聊天文本

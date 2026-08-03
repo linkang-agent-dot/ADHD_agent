@@ -1,0 +1,65 @@
+=== 引用 guid a38a959435ace524ebdbabbfc9646a86 的位置 ===
+命中 9 处
+
+组件 fileID=25246292503059723  类型=MonoBehaviour(脚本组件)
+  节点名 : Txt
+  完整路径: FlashSale/ChestProgress/Cont/ScrollView/Viewport/Content/Item/Txt
+  ↑ 去掉最前面的根节点名 FlashSale/ 就是 Prefab 模式里 Hierarchy 的路径
+  引用行  : m_Sprite: {fileID: 21300000, guid: a38a959435ace524ebdbabbfc9646a86, type: 3}
+  组件脚本 guid: c81b19283ff80804a88d4f1bed8bd2ef
+
+组件 fileID=7674899555205626247  类型=MonoBehaviour(脚本组件)
+  节点名 : Bk1
+  完整路径: FlashSale/ChestProgress/Cont/ScrollView/Viewport/Content/Item/Bk1
+  ↑ 去掉最前面的根节点名 FlashSale/ 就是 Prefab 模式里 Hierarchy 的路径
+  引用行  : m_Sprite: {fileID: 21300000, guid: a38a959435ace524ebdbabbfc9646a86, type: 3}
+  组件脚本 guid: c81b19283ff80804a88d4f1bed8bd2ef
+
+组件 fileID=7837492792137299192  类型=MonoBehaviour(脚本组件)
+  节点名 : Empty
+  完整路径: FlashSale/ChestProgress/Cont/Progress/Chest2/Txt/Empty
+  ↑ 去掉最前面的根节点名 FlashSale/ 就是 Prefab 模式里 Hierarchy 的路径
+  引用行  : m_Sprite: {fileID: 21300000, guid: a38a959435ace524ebdbabbfc9646a86, type: 3}
+  组件脚本 guid: c81b19283ff80804a88d4f1bed8bd2ef
+
+组件 fileID=4325583820101620889  类型=MonoBehaviour(脚本组件)
+  节点名 : Empty
+  完整路径: FlashSale/ChestProgress/Cont/Progress/Chest1/Txt/Empty
+  ↑ 去掉最前面的根节点名 FlashSale/ 就是 Prefab 模式里 Hierarchy 的路径
+  引用行  : m_Sprite: {fileID: 21300000, guid: a38a959435ace524ebdbabbfc9646a86, type: 3}
+  组件脚本 guid: c81b19283ff80804a88d4f1bed8bd2ef
+
+组件 fileID=2444920419956256305  类型=MonoBehaviour(脚本组件)
+  节点名 : Txt
+  完整路径: FlashSale/ChestProgress/Cont/Progress/Chest2/Txt
+  ↑ 去掉最前面的根节点名 FlashSale/ 就是 Prefab 模式里 Hierarchy 的路径
+  引用行  : m_Sprite: {fileID: 21300000, guid: a38a959435ace524ebdbabbfc9646a86, type: 3}
+  组件脚本 guid: c81b19283ff80804a88d4f1bed8bd2ef
+
+组件 fileID=8493208515542567681  类型=MonoBehaviour(脚本组件)
+  节点名 : Empty
+  完整路径: FlashSale/ChestProgress/Cont/Progress/Chest3/Txt/Empty
+  ↑ 去掉最前面的根节点名 FlashSale/ 就是 Prefab 模式里 Hierarchy 的路径
+  引用行  : m_Sprite: {fileID: 21300000, guid: a38a959435ace524ebdbabbfc9646a86, type: 3}
+  组件脚本 guid: c81b19283ff80804a88d4f1bed8bd2ef
+
+组件 fileID=8213656083328281305  类型=MonoBehaviour(脚本组件)
+  节点名 : Empty
+  完整路径: FlashSale/ChestProgress/Cont/ScrollView/Viewport/Content/Item/Txt/Empty
+  ↑ 去掉最前面的根节点名 FlashSale/ 就是 Prefab 模式里 Hierarchy 的路径
+  引用行  : m_Sprite: {fileID: 21300000, guid: a38a959435ace524ebdbabbfc9646a86, type: 3}
+  组件脚本 guid: c81b19283ff80804a88d4f1bed8bd2ef
+
+组件 fileID=6789853211849572276  类型=MonoBehaviour(脚本组件)
+  节点名 : Txt
+  完整路径: FlashSale/ChestProgress/Cont/Progress/Chest1/Txt
+  ↑ 去掉最前面的根节点名 FlashSale/ 就是 Prefab 模式里 Hierarchy 的路径
+  引用行  : m_Sprite: {fileID: 21300000, guid: a38a959435ace524ebdbabbfc9646a86, type: 3}
+  组件脚本 guid: c81b19283ff80804a88d4f1bed8bd2ef
+
+组件 fileID=535187427716167182  类型=MonoBehaviour(脚本组件)
+  节点名 : Txt
+  完整路径: FlashSale/ChestProgress/Cont/Progress/Chest3/Txt
+  ↑ 去掉最前面的根节点名 FlashSale/ 就是 Prefab 模式里 Hierarchy 的路径
+  引用行  : m_Sprite: {fileID: 21300000, guid: a38a959435ace524ebdbabbfc9646a86, type: 3}
+  组件脚本 guid: c81b19283ff80804a88d4f1bed8bd2ef

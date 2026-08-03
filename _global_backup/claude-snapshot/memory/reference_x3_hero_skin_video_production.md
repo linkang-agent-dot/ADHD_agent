@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 8472eced-268e-4dc5-8a24-08559cc68e5c
+  modified: 2026-07-28T08:18:30.326Z
 ---
 
 X3 英雄/活动皮肤**展示视频**生产专属知识库（替代 Spine 的视频化方案落地production层）。
@@ -29,6 +30,60 @@ X3 英雄/活动皮肤**展示视频**生产专属知识库（替代 Spine 的�
 - **★★★落客户端仓的视频 = 工程 `client\Tools\VideoTools\compress_video.py`（2026-07-13 皮肤互动定版，别跟下面 GRFal compress_video 混）**：凡是要 commit 进 X3 client 仓的视频，一律 `python client\Tools\VideoTools\compress_video.py -i <file> --no-backup`——H.264/crf28/slower/高度上限1080(竖版缩608×1080)/AAC64k，**参数对齐 `.githooks\video_policy.json`,压完能过 pre-commit 视频校验钩子**。实测每支 5s 互动视频压到 <1MB。⚠️临时文件 `_compressing.mp4` 残留=上次压缩被占用/中断→删了重压。**GRFal `compress_video`(下条)只用于 KB 侧展示片迭代,不用于落库**(落库要过 policy 钩子,归工程脚本管)
 - **★★最终压缩走 GRFal `compress_video`，别用本地 ffmpeg 手调参数（2026-06-24 大哥反馈，推翻下方本地 recipe 当最终出片手段）**：大哥实测**直接用 GRFal `compress_video` 工具压出来的效果明显更好**，本地 ffmpeg 手调 crf/preset **参数不对、效果差很多**。→ **定式：成片的最终压缩这一步提交给 GRFal `compress_video`（后端参数已调优），本地 ffmpeg 只保留给 compress_video 覆盖不到的几何操作（SBS 双半 crop+hstack、裁切、缩放、去音轨），不拿本地手调 crf 当最终质量基准**。下方 recipe 仅作 compress_video 不可用时的应急 fallback。
 - **不透明展示视频 标准化 recipe（应急 fallback，优先 compress_video）**：项目 ffmpeg `C:/x3-project/client/Tools/VideoTools/ffmpeg/ffmpeg.exe -y -i src.mp4 -vf "scale=W:H:flags=lanczos" -c:v libx264 -crf 28 -preset slower -pix_fmt yuv420p -an -movflags +faststart out.mp4`。要点:①**保原生比例别硬缩**(banner 3:4 就缩 810×1080,别压成尼罗9:16否则裁画面;裁9:16只在弹窗框确是9:16时做) ②`-an`去音轨(UI循环无声) ③crf28=项目移动端标准(恒定质量,氛围动少的循环天然压到几百KB) ④h264/yuv420p/24fps 本就是 GRFal 默认通常无需改。验:cv2 抽首尾帧算差<3=循环没破。案例:深海06装饰视频 kling 9.2Mbps→标准化 810×1080/279KB。
+
+## 一·五、★成片落库完整链路（2026-07-28 马戏节阿米娜案首次全程跑通，之前只有生成没有落库）
+
+> 生成只是一半，**这一段是"怎么进游戏"**。按序执行，每步都有验证点。
+
+### 1. 规格锚（现役皮肤视频实测，落库前对齐）
+路径 `client\Assets\Res\Video\VideoRes\HeroSkin\`，命名 `<名字>_sbs.mp4`：
+
+| 现役文件 | 规格 |
+|---|---|
+| hopkins_skin04_sbs / skin05_sbs / seraphina_sbs / seraphina_skin01_sbs / zuqiubaobei_sbs | **1216×1080**，**0.6–3.3MB**，h264，无音轨 |
+
+⚠️**左半背景现役全是白底**（取样 252,252,252）→ 说明标准流程是**白底原片→抠图→SBS**。
+暗场/舞台背景的原片属例外，边缘会混入深色（浅色 UI 上显黑边），能避则避。
+
+### 2. 压缩（关键：一步到位对齐规格）
+```
+python client\Tools\VideoTools\compress_video.py -i <sbs.mp4> --no-backup
+```
+- 脚本的 **height=1080 上限**会把 2160×1920 的 SBS 自动缩成 **1216×1080**，正好等于现役规格，不用手算
+- 实测 **23.4MB → 1.59MB**，且**音轨自动去掉**（不必为去音轨单独处理）
+- ✅**压缩后必验 alpha 边缘**（SBS 特有风险：压缩噪点会让游戏里抠边发毛）：
+  取右半转灰度，统计 `15<灰度<240` 的中间灰占比 —— **<3% = 干净**，>8% = 噪点明显要降 crf 重压。本案实测 1.7%。
+
+### 3. DK 双注册（缺一不可）
+| 文件 | key 写法 | 说明 |
+|---|---|---|
+| `client\Assets\Editor\Config\DisplayKey\Display_Video.asset` | `video_amina_skin01_sbs`（**不带 DK_ 前缀**）+ type/desc/**guid** | guid = 视频 .meta 里的 guid |
+| `client\Assets\Res\Config\DisplayKey\Path_Video.asset` | `DK_video_amina_skin01_sbs`（**带 DK_ 前缀**） | **keys 列表 + values 映射两处都要加**，漏一处不生效 |
+
+⚠️ 新视频的 .meta 可从同目录现有视频 meta 复制后**改 guid**（别直接复用，会 guid 冲突）。
+⚠️ **DK 命名两种风格并存**：`DK_video_<文件名>`（hopkins/zuqiubaobei，较新）vs `DK_video_<皮肤id>`（seraphina 系）。跟新的那种。
+
+### 4. 配置指向 —— 🔴**有两条独立链路，只配一条另一条不会生效**（2026-07-28 血泪修正）
+
+| 链路 | 配置位置 | 生效界面 | 代码 |
+|---|---|---|---|
+| A. 皮肤本体 | `Hero__HeroSkin.tsv` **col20 `DK_皮肤视频`** | 英雄详情／皮肤预览 | `HeroSkin.DKVideo` → EffectDisplay |
+| B. **活动角色展示** | `ActvOnline__ActvOnline.tsv` **col50 `DK_视频`** | **活动界面**（开箱大奖展示等） | `UIHelper.Activity.cs::ApplyActivityRoleDisplay` 读 **`CActvOnlineCfg.DKVideo`**，**压根不查 HeroSkin 表** |
+
+> **本案实证**：只配了 A，结果「英雄界面能看到视频、开箱活动界面不播」。
+> 对照组＝世界杯开箱 `101516` 两边都配（col50=`DK_video_zuqiubaobei_sbs`），所以它正常。
+> **凡是「活动里展示某皮肤」的需求，A、B 两处都要配。**
+
+`ApplyActivityRoleDisplay` 的规则（注释原文「ActvPrefab[0] 为 Spine/特效，DkVideo 为嵌入视频；二者互斥」）：
+- `ActvPrefab[0]` 非空且不以 `DK_video` 开头 → 走 Spine/特效，**视频被忽略**
+- 否则取 `cfg.DKVideo`（兼容旧配置：`ActvPrefab[0]` 以 `DK_video` 开头时也当视频）
+- 所以**活动配了 Spine 就播不了视频**，排查时先看 ActvPrefab 是不是占着。
+
+🪤**排查「皮肤视频不对」的顺序**：① 活动界面不播 → 查 `ActvOnline.col50` ② 英雄界面不对 → 查 `HeroSkin.col20`
+③ 多个皮肤共用同一 DK＝占位没摘（本案 102001 阿米娜与 104001 足球宝贝一度都指向 `DK_video_zuqiubaobei_sbs`）。
+
+### 5. 收口
+本地 `ExportTable.py` 绿 → commit/push → `jolt_verify.py <分支>` → 客户端重建 AB → 实机验证。
 
 ## 二、Spine 精髓（实机+代码双证，决定视频怎么演）
 > 实地扒了 `client/Assets/Res/Spine/` 103 个 .skel.bytes + prefab。
@@ -175,3 +230,30 @@ Preserve the character's face, outfit, colors and art style exactly. High qualit
 6. **氪佬视角验收**(色不色/吸引力/购买欲)比技术指标(联动/幅度)更接近真实成败。
 - 用户定调：**纯prompt死磕出一个好的就通吃,不走动作迁移捷径**。
 - 参考素材：`皮肤视频_参考/`(文件名=用户点评:胸部好×4/姿势自然/腿不错/整体都好,实机Spine录屏900×1600;_分析/有抽帧)。
+
+
+## ★重裁皮肤头像/英雄卡：源必须用「已抠好的立绘规格图」，不能用白底主稿（2026-07-28 实证，废了一轮）
+
+**翻车**：要把头像的脸裁大一点，我直接拿主稿 `*_entrance_firstframe_1080x1920.png`（**白底 RGB**）重裁，
+再套现役头像的 alpha 当柔边遮罩 —— 出来三档**全废**：白底从新轮廓的缝隙里透进来，
+人物旁边挂着一坨白块（举起的手臂、帽子外侧尤其明显）。
+
+**根因**：现役头像的 alpha 是**按旧裁切的人物轮廓**烤好的柔边形状。换了裁切框，
+轮廓就对不上了，遮罩里"本该是人物"的区域落到了背景上，而背景是白的不是透明的。
+
+**正解**：源用同一批派生出来的 **`规格图/Role_F_20_Skin01_*.png`（RGBA，已抠好）**，
+判据＝它的透明占比应当约等于主稿的白底占比（本案 73.7% vs 72.9%，对得上就是同一张已抠版）。
+然后：
+
+```python
+crop = src_rgba.crop(box).resize((256,256), Image.LANCZOS)
+arr  = np.array(crop).astype(float)
+arr[:,:,3] = arr[:,:,3] * oval_mask     # 人物自身alpha × 现役柔边椭圆遮罩(/255)
+```
+**alpha = 人物alpha × 柔边遮罩**，两者相乘而不是相互替换 —— 这样换任何裁切框都不会漏底。
+
+**顺带：头像构图的量化基准**（同英雄横向对比得出）
+- 脸占画高：剑姬 skin02 ≈40%、原皮 Lv1 同量级 —— **约 33-40% 是可读区间**
+- 低于 30% 就会被反馈「看不清脸」（魅影初版把整顶礼帽含羽饰都框进去，脸只剩约30%）
+- 帽子类大配饰**允许被画幅切掉**（剑姬就是切帽檐），别为了保住配饰牺牲脸
+- 出多档（脸 39%/33%/28%）给用户挑，比自己拍板快 —— 这是审美判断不是技术判断

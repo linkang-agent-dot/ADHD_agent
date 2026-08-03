@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: workflow
   originSessionId: 9fa379f1-8095-4bed-9a37-401c299ba495
+  modified: 2026-07-29T14:02:18.273Z
 ---
 
 ## ⚠️【发版铁律·先于一切】festival→dev 只能走真 3-way merge，禁止线性怼（2026-06 装备排序事故）
@@ -65,6 +66,17 @@ for sn in before:
             if vb != vn and vn == vs and vb != vs:
                 suspects.append((sn, idv, field, vb, vs, vn))
 ```
+
+## 🪤 假阳性 0：审计**别人合你的分支**时，「他那侧有大片 −行」≠丢行（2026-07-29 扭蛋机实战）
+别人（zhangli）把我的 `f3139ed3` merge 进他的线 `6159e0bb`，双向审计跑法照旧：
+```bash
+git diff <我这侧> <merge>  -- <file>   # 我的改动有没有被丢
+git diff <他那侧> <merge>  -- <file>   # 他的改动有没有被丢
+```
+- **第①条零差异 = 我的改动完整** ✅ 这条是硬结论，可以直接下判断。
+- **第②条出现大片 `-` 行时先别喊丢行**——要看那些 `-` 行**是谁的东西**。本次他那侧是**我更早推的 v3.0**（8行含神秘金属/内圈券），被我的 v3.2（6行）正常推进，`-8/+6` 是**版本前进**不是覆盖他人成果。**判据＝那些 − 行的内容在历史上属于谁**：属于你自己早先的版本＝正常收敛；属于对方独立写的＝真丢行要恢复。
+- 推论：**审计结论必须落到「行的归属」，不能只看 +/− 数量**。数量差最大的那一侧往往恰恰是落后侧。
+- 配套：merge 后**再在 `origin/<branch>` 最新 HEAD 上复验一次内容**（别停在 merge commit 上验）——多人并推时你验完可能又进来几笔，`git show origin/<br>:<file>` 直接读远端 blob 最稳。
 
 ## 假阳性排除
 
@@ -374,8 +386,31 @@ for k,v in FINAL.items():
 
 **工具已固化**：以上 cell 级三方校验 + Text 拆管道重复key/丢key 审计 = `python ~/.claude/skills/x3-config-export/scripts/merge_strict_cell_audit.py [merge_sha]`（不带参数=未提交合并态；与 merge_tsv_audit.py 整行审计互补，一个抓行一个抓 cell）。让号后 token 级引用扫描仍照 §⑰-1 现写正则（各次让号 ID 不同）。
 
+🔴**让号收尾第三步（2026-07-28 血案补上）：改完配置引用后，必须回头改所有引用旧 ID 的 memory / KB 文档 / 交接档案**。让号只保证「配置表内引用一致」，但**人和 agent 是照 memory 干活的**——扭蛋机案 memory 记的 `ChainPackID=704` 是让号前的值，让号后 704 变成了完全无关的「藏品屋」，07-28 派 agent 排查礼包 BUG 就是拿 704 交的底，靠 agent 自己查实 ActvOnline 才没跑到别人的活动上去。做法=让号总表定稿后，拿每个旧 ID 去 `grep -rn` 一遍 memory 目录和 KB 换皮档案，命中处标注「原X已让号为Y」。
 本次让号总表：RankCfg 2002/2004→2006/2007、ChainPack 702/704→706/707、AchievePack 105→106、MemorialCard 81→83、Item 180081→180083、ItemObtain 100412-14→100507-09、AvatarFrame 10089→10093、Reward 4200100/4200101(festival版)→4200110/4200111；TimeCycle 冠军之路统一用 dev 的 625（festival 624 弃）。
 
 **⑰-补：ConstCfg 行序门在大分叉合并必撞**（2026-07-27 实测）：x3_skill_merge 说「driver 锚点法正常路径下满足 ConstCfg 新key必须在末尾」——但**双侧都在 base 之后加过 key 时不成立**：dev 新 key 按 remote 锚点插到 festival 自己新增 key 之前 = 相对 origin/<本分支> 变成中间插入，pre-push 硬门拦 push。修法固定三步：① 取 `git show origin/<分支>:tsv/ConstConfig__ConstCfg.tsv` 的 key 集，工作树里不在该集的行整体移到文件末尾（保持相对顺序）② 重跑 ExportTable 到 exit0 ③ 单独 fix commit 再 push。合并后 push 前可预检：新增 key 不全在尾部就先移。
 
 本次合并终态：merge 3ce560b3 + ConstCfg fix de3d4587 已推 origin/dev_festival，jolt #2131 SUCCESS（#2130 撞列gate属§⑧预期，skip_check放行），独立 sub-agent 7项复查全 PASS。让号实体若旧 key 本就无译文（如 ObtainName_100508/ChainPack_707），新 key 缺译=存量未译非回归，下次 x3-translation-automatic 自动补。
+
+## ⑱ dev_festival→dev 2026-07-29 实战（merge 6cc5d223→最终 5f6ab547）：三条修正 + 发版侧也会高频移动
+
+**A. 🔴修正 §⑮ door 3 的「排序回退专扫」——它会误报**。那段脚本按 tsv **物理行序**比 ItemID 序列，但 Reward 真正的玩家可见顺序看 **`DisplayOrder` 列**（dev 自己的 commit 也明写「只调 DisplayOrder」；`pre_push_check.check_reward_display_order` 复刻的 `reward_def.py:68-75` 就是校验组内 DisplayOrder 唯一）。本次扫出 3 组（30954/4037310/4037313）「同多重集不同序」，逐一比 DisplayOrder 值**三方完全一致** → 玩家看到的顺序没变，纯 tsv 排版，非回退。**判据订正：行序差异先查 DisplayOrder，DisplayOrder 一致=假阳性**；只有 DisplayOrder 也被改回旧值才是真回退。（§⑮ 那次装备排序事故是真回退，但不能靠行序单独定案。）
+
+**B. i18n「校对情况」是多语种独立列，互合正解=双向并集，不是取一侧**。row3 列含义实测 col23-26 = 法/德/西/印尼**各自的**校对标。两侧分别校对不同语种时 driver cell 合并会各取一边、清掉另一边（§⑨ 静默清列的 i18n 变体，§⑯-B 只说了"整行取 dev 版恢复"、没说清是多语种独立列，照做会丢另一侧）。本次 festival 侧丢 48 行、dev 侧丢 4 行（表现为标在 col25 vs col26 反复横跳），并集后两侧全保。**工具已固化**：`python ~/.claude/skills/x3-config-export/scripts/merge_i18n_proofread_union.py [repo]`（未提交 merge 态直接跑；只在「该行相对某 parent 的全部差异都落在校对列」时才补，内容变过的行一律跳过防盖过期标）。
+
+**C. i18n 孤儿行判「不恢复」的三条件**：双向审计报 festival 独有行丢失时，同时满足①col0 与实际 key 不符（本次 col0=`TXT_ActvFlashSale_ComingSoon` 但 col2=`TXT_ActvFlashSale_ComingToSell`）②`grep -rl` 全仓 tsv **零配置引用**③对应功能已推倒重做（限时抢购 07-28 全清）→ **不恢复**，恢复反而造重复 key（§⑰-3 的坑）。区别于 §⑫-B「实体还在就恢复」。
+
+**D. ★⚡快速移动分支规则要扩到发版方向的 target**：原文只提 dev_festival 活跃；本次实测**dev 自己也在高频推**（40 分钟内被别人推了 14 个 commit，连续 3 次 push 被拒）。正解=**每轮只做「merge origin/dev → 只跑增量审计（我方丢行=0 + 冲突文件列表）→ 立刻推」**，不重跑全量 ExportTable——判据：这一轮相对上一轮**已验证过的 commit** 只多了别人已验证的文件（`git diff --name-only <上轮已验commit> HEAD` 确认）就直接推，jolt 是第二道网。追求每轮本地完美 = 永远推不上去。
+
+**E. 环境坑：worktree 里跑 `git merge --ff-only` 会触发 post-merge 钩子同步全部 feature worktree**，本次超 2 分钟被 Bash 工具超时杀掉 → 留下 `.git/worktrees/<name>/index.lock`，后续 git 全报 "Another git process seems to be running"。**修**：确认无 git 进程后手删该 lock。给这类命令留足超时（≥5min）或直接接受它慢。
+
+**F. seq 撞号让号的标准姿势（本次复用 §⑫-A）**：dev 把 RewardID 702/705 迁到表尾 16007183-190，festival 在同段加了 30996（返场船只皮肤箱）→ `row_add_conflict`。验 `local RewardID ∩ remote RewardID == ∅` 确认是纯 seq 撞车 → **保持已 push 到 dev 的一侧原位、让号后来的一侧整组**（seq 与 DisplayOrder 同步改，seq 不被外部引用、引用走 RewardID）。⚠️driver 报冲突时被挂起的那一侧的行**根本不在工作树里**（文档说的"保持 LOCAL 版本不变"），必须从 `MERGE_HEAD` 手动取回追加，别以为 driver 留了两份。
+
+## 已知故意分叉清单（互合冲突时按此裁决，别当误改还原）
+
+- **AO107001 荣耀征召英雄转盘 TimeController**：dev_festival=0（2026-07-27 ae28e9e3 故意停用，后续不上）；dev=5950（14天循环第5周周一开3天）。互合冲突时 festival 侧保 0；若 dev 侧也决定停用则两边都 0，此条即可删。
+  - **2026-07-29 更新**：dev 侧 `89505359` **重新启用**改回 5950。当次 dev_festival→dev 合并时 merge-base 与 festival 侧都是 0、festival 未改动 → 标准三方合并自动取 dev 的 5950，**没成冲突**（用户当场确认「按 dev 的来」）。往后只要 festival 不主动再改这格，正向合并都会自然保住 dev 的值；**反向 dev→dev_festival 才会把 5950 带进 festival**，那时若仍要停用需在 festival 侧显式改回 0。
+
+## ⚡ 快速移动分支:一次验证就推,别死循环(2026-07-28 血泪+用户明确纠正)
+dev_festival 这种**多人高频推送的活跃分支**,合并策略必须是**「验一遍过得去就立刻 push 抢窗口」**,不能走"合→ExportTable→查出错→修→再 ExportTable→(此时 origin 又被别人推了)→再合"的循环——**你越磨,分支越往前跑,永远追不上,一辈子卡死**(实测:限时抢购配置合并,agent 反复 ExportTable 复验,期间 dev_festival 连推开箱榜/纪念卡多个 commit,半小时没落地,用户暴怒)。**正解**:merge→解冲突(并集)→**跑一次 ExportTable**→过就 push,不过就快速定位那一个断引用修掉再推(单点修,不重跑全循环)。服务端 jolt 是第二道网(push 后 jolt FAILURE=有断引用,回补即可,不阻塞 push)。**判据**:分支移动频率 > 你的验证耗时 → 必须一次验证直接推,别追求本地完美。

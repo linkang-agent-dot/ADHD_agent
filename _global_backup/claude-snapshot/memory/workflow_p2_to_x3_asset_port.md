@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 42ce653e-2e7b-416e-a7f6-25cb4ac83e33
+  modified: 2026-07-31T09:57:56.788Z
 ---
 
 # P2→X3 Unity 3D 资产搬运手法（2026-07-10 马戏节主城皮肤实战沉淀）
@@ -83,6 +84,36 @@ P2 建筑皮肤的特效**不在 prefab 依赖树里**：prefab 上 10+ 个挂�
 ⚠️ 绿幕 removebg 的图 alpha=0 像素 RGB 仍是绿色，双线性采样会渗绿边——落盘前做**边缘色外扩**（alpha 加权模糊迭代填充透明区 RGB，PIL 十几行，见 2026-07-13 会话）再进 Unity；verify_transparency 查不出这个（它只看 alpha）。
 
 脚本范式：`scratchpad/build_port.py`（本次会话，含全部 YAML 手术+校验断言）；worktree 在 `C:\x3\client-circus`（分支 circus-homeland-port）。岛座卡片版脚本=`build_base_card.py`（2026-07-13 会话 scratchpad，同款断言风格）。
+
+## 🛠 X2 侧有现成「一键导依赖」工具：Tools▸X2▸Prefab Asset Export（2026-07-07 zhangli 造，别再手工扒图）
+搬 X2 界面进 X3 不用手工找几百张散图：x2client `Assets/Editor/PrefabAssetExport/`（commit 9990489d3991 + defd018b702d 补 shader）。
+给一个 prefab → 按 Images(Sprite)/Textures(非Sprite)/Animations/Materials/Shaders/Prefabs 分目录拷出**连 .meta**（GUID 不变→丢进 X3 引用自动成立，实证 `Activity_bg_GachaMachineA.png` guid e24ba7a9… X2/X3 两侧一致），
+外加 `_manifest.txt`（每个资源的 X2 原始路径 → 一眼分「活动专属图 vs X3 已有通用件」，扭蛋机案 64 张只留 21）+ `localization_keys.tsv`（仅 `^lc_` Key×17语，从 `P2/Config/Gen/i18n/<lang>.bytes` 读；**跟 X3 的 TXT_ 体系不通用，只当译文参考**）。
+Unpack Completely **只在断链路线要做**（见下方「路A 内部两条线」，别无脑当铁律）；走它时验证 = manifest `[Prefabs 0]`。输出子目录名 = prefab 文件名，所以**要改名的先改再导**。
+不导的：脚本/字体/音效/SO（分类表没这些后缀，静默跳过）；prefab 里 X2 脚本 GUID 到 X3 全是 Missing Script（扭蛋机案 466 处/32 个 guid），按 X3 `Auto_` 重挂。
+**X3 侧配套的去重清理工具＝Tools▸Prefab换皮**（窗口「换皮无忧」，`x3-project\client\Assets\Editor\HuanPiWuYou\`）：给根 prefab + 资源目录，①删目录内 prefab 未引用的文件 ②同 GUID / 同名+同 MD5 的重复项（shader 只比名不比内容）把引用改成**工程原件**GUID 再删副本（保留判据＝优先目录外那份）。
+🪤四个坑：①「推断」只认 `Assets/Res/UI/<prefab名>`，包放别处要右键 Copy Path 手粘 ②**必须先点「预览」再执行**（dry-run 出 REPLACE/DELETE 清单；确认框自己都提示"建议先 Git 提交"）③全工程扫 .meta + 逐文件名递归找同名，X3 体量下**分钟级卡住是正常的**（录屏 165s 结束时还在跑）④只改根 prefab + 资源目录内的引用，**目录外别的 prefab/场景引用同一副本会被删断链**；`_manifest.txt` 有硬编码保护、`localization_keys.tsv` 没有会被当未引用删掉。
+执行完报告尾部 `断链 GUID` **必须=0**。⚠️ 此工具**没登记进** `x3-project\AIDocs\X2_to_X3_Migration\13_Migration_Tools.md`（那份只列 6 个 `Tools▸X2 Migration/` 工具：道具框/头像/联盟旗/RTL清理/多语言回填/描边红点），交接要专门交代。
+**⚖️ 导出有两条路，盲区互补，别二选一（2026-07-30 两个真实包实测）**：路A=Editor `Tools▸X2▸Prefab Asset Export`，路B=`skills\unity-prefab-tools\prefab_dependency_bundler.py`。
+路A 赢在：Unity `GetDependencies` **权威无 UNRESOLVED** / 按 TextureImporter 分 Sprite→Images·非Sprite→Textures（**语义正确**，特效贴图不混进 UI 图）/ 单出 Materials+Shaders / **出 `localization_keys.tsv`（lc_ Key×17语全文案）**。
+路B 赢在：**`Other/` 兜底接住字体/`.asset`**（路A 分类表只认 图/anim/prefab/mat/shader，`.ttf`/FontAsset **静默丢**）/ 一次吃多个 prefab（共享资源只 1 份，路A 一次一个跑 N 遍会重复 N 份）/ 保留嵌套 prefab 结构 / 不用开 Unity。
+**🎯 路A vs 路B 的差距已量化（2026-07-31 限时抢购 4 包实测，逐件 diff）**：同一批 prefab，路A 算出 52 个必拷件，上次走路B 只搬到 36 个，**漏 19 个＝9 Textures + 7 Materials + 1 Shader + 2 anim**，全在 **Shader→Material→Texture 三层特效链**上（一层不落地整条断 ⇒ 界面外显组件报错）。根因＝路B 正则扫 `guid:` **看不见 `.mat`/`.shader` 内部引用**（它产出的 52 个 UNRESOLVED 正是这批），Unity `GetDependencies` 看得见。⚠️ **结论：外显翻车怪"AI 全自动"是错的，怪工具选错**——同一个 AI 拿路A 的包搬就不漏。路B 还会**多搬公共件 prefab**（断链路线已内联，属污染）。
+**🛠️ 已固化成工具，别再现写脚本**：`KB\方法论\活动程序开发\tools\x2x3_asset_port.py`
+`index --x3 <X3\client>` 建 guid 索引（扫 3~4 万 `.meta`，约 10min，**后台跑**，X3 无大改动可复用缓存）→ `plan --pkg <导出包...> --actv UIActvXxx` 出差集+落地计划（默认预演）→ 加 `--go` 执行。内置：只新增不覆盖／同名不同 guid 碰撞点名并跳过／`_1` 副本先比 MD5 再取非 `_1`／落点按下面实证约定。
+**落地前必算「X3 已有 vs 必须拷」**：X2/X3 同源，同 guid 资产原地解析零拷贝；整包倒进去会造出一堆重复副本（后续 X3 公共件改版你这套不跟着走）。限时抢购 160 guid 里 **108 已有、只需拷 52**。
+**🔑 落点别照 X2 路径平移**（2026-07-31 拿 108 个已有件实证：`Assets/{P2,x2}/Res/…`→`Assets/Res/…` 只有 **68%** 命中，7% 仅大小写差，**26% 真不同**）。两条 X3 真实约定：① `Effect/Material` 在 X3 叫 **`Materials`**（复数）② **换皮带进来的公共件塞进本活动自己的目录**（先例 `UIActvCircusGacha/Images`、`UIActvLaborGacha/{,Textures}`、`UIMonopolyPigBanck/Images`）。⚠️ 同 guid 资产在 X3 可能**被改过名**（`Glow_043.PNG`→`ui_glow01.PNG`、`Glow_2002.png`→`.../Common_Ship/tex/Glow_004.png`）——按 guid 判存在，别按文件名。
+**⚠️ 同名不同 guid 碰撞必查**：X3 可能已有同名但不同 guid 的件，平铺进去会**覆盖 X3 原件**。实例：`BoxReward.anim` X3 有**两份**（`Res/Ani/` + `Res/UI/Animation/`，都 8048B，guid 各异），X2 那份是第三变体 8360B ⇒ 落进**活动专属子目录** `Res/UI/Animation/<活动名>/`（先例：X3 自己的 `Res/UI/Animation/HeroClub/`）。guid 决定引用，目录随便放不影响链路。
+**🔴🔴 换皮无忧清理面板会删光共享目录（2026-07-31 真事故：删掉 143 个 X3 原生 prefab / 286 文件）**：白名单＝`GetDependencies(根prefab,true)`，目录里不在白名单的**一律删**。断链路线（Unpack）的 prefab `[Prefabs 0]`＝不引用任何 prefab ⇒ **同目录所有 prefab 全成"未引用"全灭**。铁律：①「资源目录」只填**本次搬运专属新目录**（`Res/UI/Sprite/UIActvXxx/`），**禁填** `Res/UI/Prefab/Activity`、`Res/UI/Animation`、`Res/Shader/Effect` 等共享目录 ②**必须先点「预览」看 `将删 N`**，N 远大于本次搬入件数＝立刻停手（本次 `将删 143` vs 搬入 4）③走断链路线时该工具对 prefab 目录基本不可用。恢复＝`git checkout -- <目录>`（被删的是 tracked 可完整复原）＋根 prefab 被 PatchGuid 改写过要从导出包重拷（先另存备份再 checkout）。
+**🔑 算 missing script 必须扫三处**（否则误报，2026-07-31 连踩两次）：`Assets/`（项目脚本）+ `Packages/`（内嵌包，UGUI 的 `LayoutElement`/`ContentSizeFitter`/`Shadow`/`Mask` 都在这）+ `Library/PackageCache/`（注册表包实际落地处，Spine `SkeletonGraphic`、UIEffect `Bevel`/`UIParticleSystem` 在这）。只扫 Assets 误报 19 个缺失、漏 PackageCache 误报 4 个，**真实答案 0 个**——X2/X3 UI 框架层脚本 guid 几乎全共享（`TFWImage` 1284 实例等）。
+**拷法**：**Explorer 拷 + 目标工程 Unity 关闭**，`.meta` 必须一起拷。拖进 Unity Project 窗口 = Import，**Unity 忽略你的 .meta 重新生成 guid** ⇒ 引用全断满屏白图；Unity 开着拷 = 导入缓存吃中间态（白模/糊图）。
+**校验坑**：`shutil.copy2` 保留源 mtime（可能是几个月前），用 `find -newermt` 数落地文件会得 **0**，要用 `git status --porcelain | grep '^??'`（目录会折叠，需展开再计数）。落地全是 untracked ⇒ 回退 = `git clean -fd <那几个目录>`。
+⇒ **最优＝两条都跑、产物摆一起 diff**（路A 导到 `..\Copy\<名字>_manualA\` 别覆盖 B 包）：路A 消灭 UNRESOLVED+拿译文，路B 补字体+看真实嵌套。实证代价：限时抢购只走路B → 52 个 UNRESOLVED + 无译文 → 落地"满屏 LC_ 裸 key"。
+**🔑 路A 内部还分两条线，先定目标再选，别把其中一条当"坑"（2026-07-31 FlashSale 实测）**：
+- **断链路线**＝拖场景/Unpack/改名/存 Assets 根 → 导。产出新 guid 的自包含件，公共件内联成哑拷贝（锁死 X2 外观、不跟 X3 公共件升级走）。**`[Prefabs 0]` 是正确结果不是事故**；叶子资产不丢（实测 108 条 `UNRESOLVED 0`），体积会涨数倍（3.6MB→29.6MB）。**要在 X3 重写界面/换皮改名 就走这条**。
+- **保链路线**＝Project 选中原件右键 `Tools▸X2▸Export Prefab Assets...` 直接导（工具只吃 GetDependencies，不要求解包）。保 x2 原 guid（X2/X3 同源资产原地解析零拷贝），公共件保留为独立 prefab（FlashSale `[Prefabs 17]`）。**只想看依赖清单 / 要保 guid 落地 走这条**。
+- 验收判据统一看 manifest `[Prefabs]`：断链必须=0，保链必须≠0。断链路线的「改名」别跳（工具拿 prefab 文件名当输出子目录名），除非落地名不变。
+**🔴 输出目录每次必须改成本次专属目录**：默认 `D:\newX2\Copy` → 产物写进 `...\Copy\<prefab名>\`，同名 prefab 的历史包会被掺入。`CopyAssetWithMeta` 走 `GetUniqueDestinationPath`，重名**不覆盖**、加 `_1` 后缀塞旁边 ⇒ 旧包一个不丢但两次导出混成一坨拆不干净（同一次导出内的重名也吃 `_1`）；真被重写的只有生成文件 `_manifest.txt`/`localization_keys.tsv`。
+👉 完整说明书（**①反查→②导出→③落地→④去重→⑤换件→⑥接线→⑦注册→⑧验证 八阶段全链路** + 路A/B 对照 + 每阶段翻车对照表）：`KB\方法论\活动程序开发\X2到X3_UI资产搬运_PrefabAssetExport说明书.md`
 
 ## X2→X3 UI prefab 迁移必补：根节点组件套装（2026-07-20 扭蛋机实证）
 X2 界面 prefab 根节点没有 X3 UIBase 要求的组件——运行时 `UIBase.InitCanvas`（UIBase.cs:681）直接设 `canvas.renderMode`，根无 Canvas = 打开即 `MissingComponentException`（Editor.log 栈顶 `WndMgr show <UI名> ... MissingComponentException: There is no 'Canvas'`）。**迁移完必对照任一 X3 正常界面（如 UIActvLaborGacha）核根组件五件套**：RectTransform + UIConfig(e8f4194e9ed83794da496c6236ff0d7f，遮罩/防连点) + Canvas(SortingOrder=11) + CanvasScaler(0cd44c1031e1…，1080×1920) + GraphicRaycaster(dc42784cf147…)。四块全自包含（只指 m_GameObject），可从 LaborGacha 照抄换新 fileID 手术进 YAML；验证=根组件列表同构 + component 引用无悬空。找真根=`m_Father: {fileID: 0}` 的 RectTransform（文件首块不一定是根）。

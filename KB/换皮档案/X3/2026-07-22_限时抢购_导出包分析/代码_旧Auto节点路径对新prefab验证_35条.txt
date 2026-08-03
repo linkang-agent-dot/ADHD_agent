@@ -1,0 +1,63 @@
+=== 新 prefab 真实层级 ===
+GameObject 2108 个，Transform 2108 个，根 1 个，可寻址路径 2107 条
+根节点: FlashSale
+
+=== 旧 Auto_ 猜的路径 35 条 ===
+  ✅ 新 prefab 里存在: 18
+  ❌ 不存在（绑了会静默拿到 null）: 17
+
+--- ❌ 对不上的 ---
+  Top/Time                                                  [Auto_UIActvFlashSale.cs]
+       同名节点实际在: ['SpecialBoxBtn/SpecialBox/Time', 'Layout/Layout/Time', 'Content/Mask/Layout/Time']
+  Top/txt_title                                             [Auto_UIActvFlashSale.cs]
+       ⚠️ 新 prefab 里没有名叫 txt_title 的节点
+  Top/ActvDesc                                              [Auto_UIActvFlashSale.cs]
+       ⚠️ 新 prefab 里没有名叫 ActvDesc 的节点
+  Top/Time/txt                                              [Auto_UIActvFlashSale.cs]
+       同名节点实际在: ['Content/Grid/Item9/BoxNormal/Price/Layout/txt', 'Content/Grid/Item5/BoxNormal/BtnBuyCd/Layout/txt', 'Content/Grid/Item8/BoxNormal/BtnBuyCd/Layout/txt']
+  BoxNormal                                                 [Auto_UIActvFlashSale.FlashSaleShelfItem.cs]
+       同名节点实际在: ['Content/Grid/Item3/BoxNormal', 'Content/Grid/Item8/BoxNormal', 'Content/Grid/Item4/BoxNormal']
+  BoxSoldOut                                                [Auto_UIActvFlashSale.FlashSaleShelfItem.cs]
+       同名节点实际在: ['Content/Grid/Item6/BoxSoldOut', 'Content/Grid/Item3/BoxSoldOut', 'Content/Grid/Item9/BoxSoldOut']
+  BoxClose                                                  [Auto_UIActvFlashSale.FlashSaleShelfItem.cs]
+       同名节点实际在: ['Content/Grid/Item6/BoxClose', 'BoxAnim2/BoxClose', 'Content/Grid/Item3/BoxClose']
+  Remain                                                    [Auto_UIActvFlashSale.FlashSaleShelfItem.cs]
+       同名节点实际在: ['Content/Grid/Item2/Remain', 'Content/Grid/Item1/Remain', 'Content/Grid/Item8/Remain']
+  Limit                                                     [Auto_UIActvFlashSale.FlashSaleShelfItem.cs]
+       同名节点实际在: ['Content/Grid/Item9/Limit', 'Content/Grid/Item5/Limit', 'Content/Grid/Item7/Limit']
+  BoxNormal/ContBubble                                      [Auto_UIActvFlashSale.FlashSaleShelfItem.cs]
+       同名节点实际在: ['Content/Grid/Item2/BoxNormal/ContBubble', 'Content/Grid/Item6/BoxNormal/ContBubble', 'Content/Grid/Item1/BoxSoldOut/BtnBuy/ContBubble']
+  BoxNormal/Card/Icon                                       [Auto_UIActvFlashSale.FlashSaleShelfItem.cs]
+       同名节点实际在: ['Content/Grid/Item8/BoxNormal/Card/Icon', 'Content/Grid/Item1/BoxNormal/ItemMid/Scale/Icon', 'Content/Grid/Item2/BoxSoldOut/BtnBuy/ContBubble/Layout/Tip/Icon']
+  BoxNormal/Card/Value                                      [Auto_UIActvFlashSale.FlashSaleShelfItem.cs]
+       同名节点实际在: ['Content/Grid/Item7/BoxNormal/ContBubble/Layout/Tip/Value', 'Content/Grid/Item4/BoxSoldOut/BtnBuy/ContBubble/Layout/Tip/Value', 'Content/Grid/Item5/BoxNormal/ContBubble/Layout/Tip/Value']
+  Limit/Text                                                [Auto_UIActvFlashSale.FlashSaleShelfItem.cs]
+       同名节点实际在: ['Content/Grid/Item1/Remain/Text', 'Content/Grid/Item4/Remain/Text', 'Content/Grid/Item1/BoxSoldOut/BtnSold/Button_Gray/Text']
+  Remain/Num                                                [Auto_UIActvFlashSale.FlashSaleShelfItem.cs]
+       同名节点实际在: ['Content/Grid/Item5/BoxSoldOut/ItemMid/Scale/Bundle/Num', 'Content/Grid/Item1/Remain/Num', 'SpecialBoxBtn/SpecialBox/Num']
+  BoxNormal/Price/Layout/txt                                [Auto_UIActvFlashSale.FlashSaleShelfItem.cs]
+       同名节点实际在: ['Content/Grid/Item9/BoxNormal/Price/Layout/txt', 'Content/Grid/Item5/BoxNormal/BtnBuyCd/Layout/txt', 'Content/Grid/Item8/BoxNormal/BtnBuyCd/Layout/txt']
+  BoxNormal/Price/txt_price                                 [Auto_UIActvFlashSale.FlashSaleShelfItem.cs]
+       同名节点实际在: ['Content/Grid/Item9/BoxSoldOut/BtnBuy/txt_price', 'Content/Grid/Item9/BoxNormal/BtnBuy/txt_price', 'Content/Grid/Item2/BoxSoldOut/BtnBuy/txt_price']
+  BoxNormal/Price/txt_get                                   [Auto_UIActvFlashSale.FlashSaleShelfItem.cs]
+       同名节点实际在: ['Content/Grid/Item5/BoxNormal/BtnBuy/txt_get', 'Content/Grid/Item8/BoxNormal/BtnBuy/txt_get', 'Content/Grid/Item9/BoxNormal/BtnBuy/txt_get']
+
+--- ✅ 对得上的 ---
+  Content/Grid
+  Countdown
+  Countdown/Time/Layout1
+  Countdown/Time/Layout2
+  ChestProgress/Cont/Progress/Chest1
+  ChestProgress/Cont/Progress/Chest2
+  ChestProgress/Cont/Progress/Chest3
+  SpecialBoxBtn
+  Btn/RedPointTips
+  BoxAnim
+  BoxAnim2
+  Pop
+  Countdown/Time/Layout1/Text1
+  Countdown/Time/Layout1/Text2
+  ChestProgress/Cont/ValLayout/Num
+  ChestProgress/Cont/ValLayout/Name
+  ChestProgress/Cont/Btn/TFWText
+  Btn/Text

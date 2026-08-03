@@ -1,0 +1,833 @@
+
+    /// <summary>
+    /// 限时抢购购买请求
+    /// </summary>
+    [ResponseType(nameof(FlashSaleBuyAck))]
+    public sealed partial class FlashSaleBuyReq : TFW.Google.Protobuf.IRequest
+    {
+        public long activityId { get; set; }
+
+        public int packCfgId { get; set; }
+
+        partial void OnBeforeEncode(bool forClient = false, bool isOwner = true);
+
+        partial void OnAfterEncode(bool forClient = false, bool isOwner = true);
+
+        #if !_CLIENTLOGIC_
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer, bool forClient = false, bool isOwner = true)
+        #else
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer)
+        #endif
+        {
+            #if _CLIENTLOGIC_
+            var isOwner = true;
+            var forClient = false;
+            #endif
+            OnBeforeEncode(forClient, isOwner);
+
+            if (activityId != 0)
+            {
+                writer.WriteTag(8);
+                writer.WriteInt64(activityId);
+            }
+
+            if (packCfgId != 0)
+            {
+                writer.WriteTag(16);
+                writer.WriteInt32(packCfgId);
+            }
+
+            OnAfterEncode(forClient, isOwner);
+        }
+
+        partial void OnBeforeDecode();
+
+        partial void OnAfterDecode();
+
+        public void Decode(TFW.Google.Protobuf.CodedInputStream reader)
+        {
+            OnBeforeDecode();
+
+            activityId = 0;
+
+            packCfgId = 0;
+
+            uint tag;
+            while ((tag = reader.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    case 8:
+                        {
+                            activityId = reader.ReadInt64();
+                        }
+                        break;
+                    case 16:
+                        {
+                            packCfgId = reader.ReadInt32();
+                        }
+                        break;
+                    default:
+                        {
+                            reader.SkipLastField();
+                        }
+                        break;
+                }
+            }
+            OnAfterDecode();
+        }
+
+        public void Reset()
+        {
+            activityId = 0;
+
+            packCfgId = 0;
+
+        }
+
+    }
+
+    /// <summary>
+    /// 限时抢购购买响应
+    /// </summary>
+    public sealed partial class FlashSaleBuyAck : TFW.Google.Protobuf.IResponse
+    {
+        public int errCode { get; set; }
+
+        public long activityId { get; set; }
+
+        public int packCfgId { get; set; }
+
+        public ActivityFlashSaleData flashSaleData { get; set; }
+
+        partial void OnBeforeEncode(bool forClient = false, bool isOwner = true);
+
+        partial void OnAfterEncode(bool forClient = false, bool isOwner = true);
+
+        #if !_CLIENTLOGIC_
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer, bool forClient = false, bool isOwner = true)
+        #else
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer)
+        #endif
+        {
+            #if _CLIENTLOGIC_
+            var isOwner = true;
+            var forClient = false;
+            #endif
+            OnBeforeEncode(forClient, isOwner);
+
+            if (errCode != 0)
+            {
+                writer.WriteTag(8032);
+                writer.WriteInt32(errCode);
+            }
+
+            if (activityId != 0)
+            {
+                writer.WriteTag(8);
+                writer.WriteInt64(activityId);
+            }
+
+            if (packCfgId != 0)
+            {
+                writer.WriteTag(16);
+                writer.WriteInt32(packCfgId);
+            }
+
+            if (flashSaleData != null)
+            {
+                writer.WriteTag(26);
+                writer.WriteMessageStart();
+                if (flashSaleData != null)
+                {
+                    #if !_CLIENTLOGIC_
+                    flashSaleData.Encode(writer, forClient, isOwner);
+                    #else
+                    flashSaleData.Encode(writer);
+                    #endif
+                }
+                writer.WriteMessageEnd();
+            }
+
+            OnAfterEncode(forClient, isOwner);
+        }
+
+        partial void OnBeforeDecode();
+
+        partial void OnAfterDecode();
+
+        public void Decode(TFW.Google.Protobuf.CodedInputStream reader)
+        {
+            OnBeforeDecode();
+
+            errCode = 0;
+
+            activityId = 0;
+
+            packCfgId = 0;
+
+            flashSaleData = null;
+
+            uint tag;
+            while ((tag = reader.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    case 8032:
+                        {
+                            errCode = reader.ReadInt32();
+                        }
+                        break;
+                    case 8:
+                        {
+                            activityId = reader.ReadInt64();
+                        }
+                        break;
+                    case 16:
+                        {
+                            packCfgId = reader.ReadInt32();
+                        }
+                        break;
+                    case 26:
+                        {
+                            flashSaleData = new cspb.ActivityFlashSaleData();
+                            if (reader.ReadMessageStart())
+                            {
+                                flashSaleData.Decode(reader);
+                                reader.ReadMessageEnd();
+                            }
+                        }
+                        break;
+                    default:
+                        {
+                            reader.SkipLastField();
+                        }
+                        break;
+                }
+            }
+            OnAfterDecode();
+        }
+
+        public void Reset()
+        {
+            errCode = 0;
+
+            activityId = 0;
+
+            packCfgId = 0;
+
+            flashSaleData = null;
+
+        }
+
+    }
+
+    /// <summary>
+    /// 限时抢购分享请求（首次分享奖）
+    /// </summary>
+    [ResponseType(nameof(FlashSaleShareAck))]
+    public sealed partial class FlashSaleShareReq : TFW.Google.Protobuf.IRequest
+    {
+        public long activityId { get; set; }
+
+        partial void OnBeforeEncode(bool forClient = false, bool isOwner = true);
+
+        partial void OnAfterEncode(bool forClient = false, bool isOwner = true);
+
+        #if !_CLIENTLOGIC_
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer, bool forClient = false, bool isOwner = true)
+        #else
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer)
+        #endif
+        {
+            #if _CLIENTLOGIC_
+            var isOwner = true;
+            var forClient = false;
+            #endif
+            OnBeforeEncode(forClient, isOwner);
+
+            if (activityId != 0)
+            {
+                writer.WriteTag(8);
+                writer.WriteInt64(activityId);
+            }
+
+            OnAfterEncode(forClient, isOwner);
+        }
+
+        partial void OnBeforeDecode();
+
+        partial void OnAfterDecode();
+
+        public void Decode(TFW.Google.Protobuf.CodedInputStream reader)
+        {
+            OnBeforeDecode();
+
+            activityId = 0;
+
+            uint tag;
+            while ((tag = reader.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    case 8:
+                        {
+                            activityId = reader.ReadInt64();
+                        }
+                        break;
+                    default:
+                        {
+                            reader.SkipLastField();
+                        }
+                        break;
+                }
+            }
+            OnAfterDecode();
+        }
+
+        public void Reset()
+        {
+            activityId = 0;
+
+        }
+
+    }
+
+    /// <summary>
+    /// 限时抢购分享响应
+    /// </summary>
+    public sealed partial class FlashSaleShareAck : TFW.Google.Protobuf.IResponse
+    {
+        public int errCode { get; set; }
+
+        public long activityId { get; set; }
+
+        public ActivityFlashSaleData flashSaleData { get; set; }
+
+        partial void OnBeforeEncode(bool forClient = false, bool isOwner = true);
+
+        partial void OnAfterEncode(bool forClient = false, bool isOwner = true);
+
+        #if !_CLIENTLOGIC_
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer, bool forClient = false, bool isOwner = true)
+        #else
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer)
+        #endif
+        {
+            #if _CLIENTLOGIC_
+            var isOwner = true;
+            var forClient = false;
+            #endif
+            OnBeforeEncode(forClient, isOwner);
+
+            if (errCode != 0)
+            {
+                writer.WriteTag(8032);
+                writer.WriteInt32(errCode);
+            }
+
+            if (activityId != 0)
+            {
+                writer.WriteTag(8);
+                writer.WriteInt64(activityId);
+            }
+
+            if (flashSaleData != null)
+            {
+                writer.WriteTag(18);
+                writer.WriteMessageStart();
+                if (flashSaleData != null)
+                {
+                    #if !_CLIENTLOGIC_
+                    flashSaleData.Encode(writer, forClient, isOwner);
+                    #else
+                    flashSaleData.Encode(writer);
+                    #endif
+                }
+                writer.WriteMessageEnd();
+            }
+
+            OnAfterEncode(forClient, isOwner);
+        }
+
+        partial void OnBeforeDecode();
+
+        partial void OnAfterDecode();
+
+        public void Decode(TFW.Google.Protobuf.CodedInputStream reader)
+        {
+            OnBeforeDecode();
+
+            errCode = 0;
+
+            activityId = 0;
+
+            flashSaleData = null;
+
+            uint tag;
+            while ((tag = reader.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    case 8032:
+                        {
+                            errCode = reader.ReadInt32();
+                        }
+                        break;
+                    case 8:
+                        {
+                            activityId = reader.ReadInt64();
+                        }
+                        break;
+                    case 18:
+                        {
+                            flashSaleData = new cspb.ActivityFlashSaleData();
+                            if (reader.ReadMessageStart())
+                            {
+                                flashSaleData.Decode(reader);
+                                reader.ReadMessageEnd();
+                            }
+                        }
+                        break;
+                    default:
+                        {
+                            reader.SkipLastField();
+                        }
+                        break;
+                }
+            }
+            OnAfterDecode();
+        }
+
+        public void Reset()
+        {
+            errCode = 0;
+
+            activityId = 0;
+
+            flashSaleData = null;
+
+        }
+
+    }
+
+    /// <summary>
+    /// 限时抢购助力请求（单服内任意玩家，P6 定案）
+    /// </summary>
+    [ResponseType(nameof(FlashSaleAssistAck))]
+    public sealed partial class FlashSaleAssistReq : TFW.Google.Protobuf.IRequest
+    {
+        public long activityId { get; set; }
+
+        /// <summary>
+        /// 被助力玩家
+        /// </summary>
+        public long targetUserId { get; set; }
+
+        partial void OnBeforeEncode(bool forClient = false, bool isOwner = true);
+
+        partial void OnAfterEncode(bool forClient = false, bool isOwner = true);
+
+        #if !_CLIENTLOGIC_
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer, bool forClient = false, bool isOwner = true)
+        #else
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer)
+        #endif
+        {
+            #if _CLIENTLOGIC_
+            var isOwner = true;
+            var forClient = false;
+            #endif
+            OnBeforeEncode(forClient, isOwner);
+
+            if (activityId != 0)
+            {
+                writer.WriteTag(8);
+                writer.WriteInt64(activityId);
+            }
+
+            if (targetUserId != 0)
+            {
+                writer.WriteTag(16);
+                writer.WriteInt64(targetUserId);
+            }
+
+            OnAfterEncode(forClient, isOwner);
+        }
+
+        partial void OnBeforeDecode();
+
+        partial void OnAfterDecode();
+
+        public void Decode(TFW.Google.Protobuf.CodedInputStream reader)
+        {
+            OnBeforeDecode();
+
+            activityId = 0;
+
+            targetUserId = 0;
+
+            uint tag;
+            while ((tag = reader.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    case 8:
+                        {
+                            activityId = reader.ReadInt64();
+                        }
+                        break;
+                    case 16:
+                        {
+                            targetUserId = reader.ReadInt64();
+                        }
+                        break;
+                    default:
+                        {
+                            reader.SkipLastField();
+                        }
+                        break;
+                }
+            }
+            OnAfterDecode();
+        }
+
+        public void Reset()
+        {
+            activityId = 0;
+
+            targetUserId = 0;
+
+        }
+
+    }
+
+    /// <summary>
+    /// 限时抢购助力响应
+    /// </summary>
+    public sealed partial class FlashSaleAssistAck : TFW.Google.Protobuf.IResponse
+    {
+        public int errCode { get; set; }
+
+        public long activityId { get; set; }
+
+        public long targetUserId { get; set; }
+
+        partial void OnBeforeEncode(bool forClient = false, bool isOwner = true);
+
+        partial void OnAfterEncode(bool forClient = false, bool isOwner = true);
+
+        #if !_CLIENTLOGIC_
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer, bool forClient = false, bool isOwner = true)
+        #else
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer)
+        #endif
+        {
+            #if _CLIENTLOGIC_
+            var isOwner = true;
+            var forClient = false;
+            #endif
+            OnBeforeEncode(forClient, isOwner);
+
+            if (errCode != 0)
+            {
+                writer.WriteTag(8032);
+                writer.WriteInt32(errCode);
+            }
+
+            if (activityId != 0)
+            {
+                writer.WriteTag(8);
+                writer.WriteInt64(activityId);
+            }
+
+            if (targetUserId != 0)
+            {
+                writer.WriteTag(16);
+                writer.WriteInt64(targetUserId);
+            }
+
+            OnAfterEncode(forClient, isOwner);
+        }
+
+        partial void OnBeforeDecode();
+
+        partial void OnAfterDecode();
+
+        public void Decode(TFW.Google.Protobuf.CodedInputStream reader)
+        {
+            OnBeforeDecode();
+
+            errCode = 0;
+
+            activityId = 0;
+
+            targetUserId = 0;
+
+            uint tag;
+            while ((tag = reader.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    case 8032:
+                        {
+                            errCode = reader.ReadInt32();
+                        }
+                        break;
+                    case 8:
+                        {
+                            activityId = reader.ReadInt64();
+                        }
+                        break;
+                    case 16:
+                        {
+                            targetUserId = reader.ReadInt64();
+                        }
+                        break;
+                    default:
+                        {
+                            reader.SkipLastField();
+                        }
+                        break;
+                }
+            }
+            OnAfterDecode();
+        }
+
+        public void Reset()
+        {
+            errCode = 0;
+
+            activityId = 0;
+
+            targetUserId = 0;
+
+        }
+
+    }
+
+    /// <summary>
+    /// 限时抢购破冰抽奖请求（达标免费抽）
+    /// </summary>
+    [ResponseType(nameof(FlashSaleRaffleAck))]
+    public sealed partial class FlashSaleRaffleReq : TFW.Google.Protobuf.IRequest
+    {
+        public long activityId { get; set; }
+
+        partial void OnBeforeEncode(bool forClient = false, bool isOwner = true);
+
+        partial void OnAfterEncode(bool forClient = false, bool isOwner = true);
+
+        #if !_CLIENTLOGIC_
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer, bool forClient = false, bool isOwner = true)
+        #else
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer)
+        #endif
+        {
+            #if _CLIENTLOGIC_
+            var isOwner = true;
+            var forClient = false;
+            #endif
+            OnBeforeEncode(forClient, isOwner);
+
+            if (activityId != 0)
+            {
+                writer.WriteTag(8);
+                writer.WriteInt64(activityId);
+            }
+
+            OnAfterEncode(forClient, isOwner);
+        }
+
+        partial void OnBeforeDecode();
+
+        partial void OnAfterDecode();
+
+        public void Decode(TFW.Google.Protobuf.CodedInputStream reader)
+        {
+            OnBeforeDecode();
+
+            activityId = 0;
+
+            uint tag;
+            while ((tag = reader.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    case 8:
+                        {
+                            activityId = reader.ReadInt64();
+                        }
+                        break;
+                    default:
+                        {
+                            reader.SkipLastField();
+                        }
+                        break;
+                }
+            }
+            OnAfterDecode();
+        }
+
+        public void Reset()
+        {
+            activityId = 0;
+
+        }
+
+    }
+
+    /// <summary>
+    /// 限时抢购破冰抽奖响应
+    /// </summary>
+    public sealed partial class FlashSaleRaffleAck : TFW.Google.Protobuf.IResponse
+    {
+        public int errCode { get; set; }
+
+        public long activityId { get; set; }
+
+        /// <summary>
+        /// 抽中的货架包配置 ID（免费到手，不占限量/限次）
+        /// </summary>
+        public int hitPackCfgId { get; set; }
+
+        public ActivityFlashSaleData flashSaleData { get; set; }
+
+        partial void OnBeforeEncode(bool forClient = false, bool isOwner = true);
+
+        partial void OnAfterEncode(bool forClient = false, bool isOwner = true);
+
+        #if !_CLIENTLOGIC_
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer, bool forClient = false, bool isOwner = true)
+        #else
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer)
+        #endif
+        {
+            #if _CLIENTLOGIC_
+            var isOwner = true;
+            var forClient = false;
+            #endif
+            OnBeforeEncode(forClient, isOwner);
+
+            if (errCode != 0)
+            {
+                writer.WriteTag(8032);
+                writer.WriteInt32(errCode);
+            }
+
+            if (activityId != 0)
+            {
+                writer.WriteTag(8);
+                writer.WriteInt64(activityId);
+            }
+
+            if (hitPackCfgId != 0)
+            {
+                writer.WriteTag(16);
+                writer.WriteInt32(hitPackCfgId);
+            }
+
+            if (flashSaleData != null)
+            {
+                writer.WriteTag(26);
+                writer.WriteMessageStart();
+                if (flashSaleData != null)
+                {
+                    #if !_CLIENTLOGIC_
+                    flashSaleData.Encode(writer, forClient, isOwner);
+                    #else
+                    flashSaleData.Encode(writer);
+                    #endif
+                }
+                writer.WriteMessageEnd();
+            }
+
+            OnAfterEncode(forClient, isOwner);
+        }
+
+        partial void OnBeforeDecode();
+
+        partial void OnAfterDecode();
+
+        public void Decode(TFW.Google.Protobuf.CodedInputStream reader)
+        {
+            OnBeforeDecode();
+
+            errCode = 0;
+
+            activityId = 0;
+
+            hitPackCfgId = 0;
+
+            flashSaleData = null;
+
+            uint tag;
+            while ((tag = reader.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    case 8032:
+                        {
+                            errCode = reader.ReadInt32();
+                        }
+                        break;
+                    case 8:
+                        {
+                            activityId = reader.ReadInt64();
+                        }
+                        break;
+                    case 16:
+                        {
+                            hitPackCfgId = reader.ReadInt32();
+                        }
+                        break;
+                    case 26:
+                        {
+                            flashSaleData = new cspb.ActivityFlashSaleData();
+                            if (reader.ReadMessageStart())
+                            {
+                                flashSaleData.Decode(reader);
+                                reader.ReadMessageEnd();
+                            }
+                        }
+                        break;
+                    default:
+                        {
+                            reader.SkipLastField();
+                        }
+                        break;
+                }
+            }
+            OnAfterDecode();
+        }
+
+        public void Reset()
+        {
+            errCode = 0;
+
+            activityId = 0;
+
+            hitPackCfgId = 0;
+
+            flashSaleData = null;
+
+        }
+
+    }
+
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleBuyReq", typeof(cspb.FlashSaleBuyReq), () => new cspb.FlashSaleBuyReq(), true);
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleBuyAck", typeof(cspb.FlashSaleBuyAck), () => new cspb.FlashSaleBuyAck(), true);
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleShareReq", typeof(cspb.FlashSaleShareReq), () => new cspb.FlashSaleShareReq(), true);
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleShareAck", typeof(cspb.FlashSaleShareAck), () => new cspb.FlashSaleShareAck(), true);
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleAssistReq", typeof(cspb.FlashSaleAssistReq), () => new cspb.FlashSaleAssistReq(), true);
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleAssistAck", typeof(cspb.FlashSaleAssistAck), () => new cspb.FlashSaleAssistAck(), true);
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleRaffleReq", typeof(cspb.FlashSaleRaffleReq), () => new cspb.FlashSaleRaffleReq(), true);
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleRaffleAck", typeof(cspb.FlashSaleRaffleAck), () => new cspb.FlashSaleRaffleAck(), true);
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleBuyReq", typeof(cspb.FlashSaleBuyReq), () => new cspb.FlashSaleBuyReq());
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleBuyAck", typeof(cspb.FlashSaleBuyAck), () => new cspb.FlashSaleBuyAck());
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleShareReq", typeof(cspb.FlashSaleShareReq), () => new cspb.FlashSaleShareReq());
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleShareAck", typeof(cspb.FlashSaleShareAck), () => new cspb.FlashSaleShareAck());
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleAssistReq", typeof(cspb.FlashSaleAssistReq), () => new cspb.FlashSaleAssistReq());
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleAssistAck", typeof(cspb.FlashSaleAssistAck), () => new cspb.FlashSaleAssistAck());
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleRaffleReq", typeof(cspb.FlashSaleRaffleReq), () => new cspb.FlashSaleRaffleReq());
+        ProtoBuf.PType.RegisterType("cspb.FlashSaleRaffleAck", typeof(cspb.FlashSaleRaffleAck), () => new cspb.FlashSaleRaffleAck());

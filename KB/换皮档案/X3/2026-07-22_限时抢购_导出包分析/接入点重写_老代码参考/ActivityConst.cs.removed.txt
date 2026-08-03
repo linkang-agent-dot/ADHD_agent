@@ -1,0 +1,2 @@
+        public const int TRIGGER_TYPE_FLASH_SALE = 84; // 马戏节限时抢购（单服限量货架+每场限购+助力破冰免费抽，单服活动）
+            TRIGGER_TYPE_FLASH_SALE,

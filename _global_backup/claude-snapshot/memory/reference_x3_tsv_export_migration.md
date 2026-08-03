@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 6d162bb7-4b67-48ce-a1e5-225a2fab7f22
+  modified: 2026-07-30T04:33:56.857Z
 ---
 
 ## 🔴 2026-06-22 终态：xlsx 工作流废弃，tsv 唯一权威源（推翻下方所有 gate 章节）
@@ -75,6 +76,20 @@ gate 日志关键行：`[sync_xlsx_tsv] auto-safe decision group=data/Reward.xls
 - `Pack.xlsx column order changed; hot update may not support it; programmer confirmation is required` → **另一个独立 push 钩子**（`pre_push_check.py`/`excel_diff`）检测到列顺序/类型漂移（如 `#礼包表备份` sheet '10011'字符串→数字），常由**别人合并/openpyxl 重存**引入，**与你的改动无关**，需程序员确认放行。2026-06-04 实测：我只改 Reward，gate_rc=0/mismatch=0 全过，但龚亮海妖3合 dev 带进 Pack.xlsx 列漂移 → 整个 dev 导表 FAILURE。先 `git log -- data/<报错表>.xlsx` 看是不是自己改的，不是就别背锅、找对应改动人。
 - `! [rejected] HEAD -> dev (fetch first)` + `failed to push some refs to 'git@git.tap4fun.com:x3/x3-project.git'` → **导表 job 末尾把生成的配置推回 x3-project(client_master)仓时撞了并发 push**（别人同时也在 push x3-project/dev）。**表转换/depend_checks 全过了，纯下游 push race，跟你的数据无关**。解法：直接**重新触发导表**（job 会重新 fetch 再 push）；可能 build 已在队列中（`触发失败:任务已在队列`），轮询那个 build 号即可。2026-06-05 实测：#612 因此 FAILURE，重触发 #613 SUCCESS。
 - **本地 pre-commit 钩子已自动同步**：只改 tsv 时，gdconfig 的 `git commit` 本地 pre-commit hook (`sync_xlsx_tsv`) 会当场 `direction=tsv->xlsx` 把改动同步进 data/<表>.xlsx 并**把重生成的 xlsx 一起 add 进本次 commit**（输出末尾 `mismatch=0 crlf=0`）→ 提交即 xlsx/tsv 一致，导表一步过，**不再是旧版的 rc=24 两步**。副作用：commit 会顺带带进 xlsx 里别人之前只改 tsv 攒下的历史漂移（一次性刷掉，正常）。
+
+## ⚠️ 删表数据时：「只留表头的空 tsv」= 导表硬失败（2026-07-30 限时抢购清配置实测）
+
+`PythonWriter.py:93`（X3NEW-20）硬 raise：`<表名>: tsv 只有表头无数据行,禁止导表`。原因=def 的逐行逻辑（`delattr` / `setAttrNameFieldDef`）只在遍历数据行时触发，空表下 `{msg}Cfg` 字段退化成原始 tsv 表头，与该表将来变非空后的 sub_msg 分歧 → proto wire 不兼容。**没有豁免名单，导表清单 = `os.listdir(tsv/)`。**
+- 所以「下线一个功能但想留着表结构」只有两条路：①**整个 tsv 文件删掉**（`git rm`），def/*.py 留着当 schema 存档，恢复=`git checkout <当初建表的commit> -- tsv/<表>__*.tsv`；②留 ≥1 行占位数据——但占位行的 FK 列（row3 有 `Reward`/`Item`/`XxYy.Group` 注解的）会进 depend_checks，得指向真实存在的 id，等于把死表接回活配置，脏，一般选 ①。
+- 删了 tsv 之后 `ActvType` 注册（`actvonline_def.py` 的常量/SINGLE_SERVER/`register_depend_config_and_val` elif）可以留：它只在有该 type 的 ActvOnline 行时才跑，是惰性代码，留着还能占住号段防复用。
+- 下游：导表**不会删除 x3-project 里既有的生成物**（`Res/Config/Proto/*.proto`、`ProtoGen/*.bytes`、`CfgProtos/*.cs`），删表后它们原样留在代码仓；确认无手写代码引用（`git grep -li <表名> origin/<分支>` 只剩生成物）就不会有编译问题。
+
+## ⚠️ 批量删 tsv 行别用 csv.writer 回写（2026-07-30 Text__Text.tsv 实测）
+
+`csv.reader` → 过滤 → `csv.writer` 回写看着最自然，但 tsv 里有**非 RFC 的裸引号 cell**（如 Text 表土耳其语 `avatar çerçevesi "Coşku Halkası"nı`）：reader 按字面读进来没事，writer 会把整格重新加引号+把 `"` 转义成 `""` → **无关行被改写**，diff 出现莫名的 1 insertion。
+- **正确手法**：用 `csv.reader` 只做「定位」——靠 `rdr.line_num` 算出每条逻辑行占用的**物理行区间**（多行 cell 会跨行），再对**原始字节** `split(b'\n')` 按行号剔除、`b'\n'.join` 写回。其余字节零改动，`git diff --numstat` 必须是纯 `0 <N>`。
+- 配套断言：命中数 == 预期数才写盘；ID 范围再断言一次（防同号不同表语义撞车，如 Reward 的 seq 列 1214 vs Item 1214）。
+- **已固化成工具**：`~/.claude/skills/x3-config-export/scripts/tsv_delrows.py`（`--ids`/`--col`/`--prefix`/`--all-data` + `--expect` 断言 + `--dry-run`）。老的 `tsv_edit.py delrow` 是**按物理行**匹配首字段：引号安全（它不走 csv.writer），但**跨行 cell 只会删掉第一行**，删含多行 cell 的表（ActvOnline/Pack/Text 这类）改用 tsv_delrows.py。
 
 ## ★xlsx 需要插行/改值时的安全编辑法（2026-06-12 HeroSkin 104001 实测）
 
@@ -190,3 +205,21 @@ return True  # protobuf>=4 移除 FileDescriptor.syntax；本工具链全 proto3
 
 ## 关联
 - [[reference_x3_gdconfig_repo]] [[workflow_x3_auto_jolt_export]] [[reference_x3_i18n_workflow]] [[project_x3_worldcup_activity]] [[workflow_x3_local_server_gm_telnet]]
+
+## ★ExportTable.py 必须 cd 到脚本目录跑（假成功坑，2026-07-30 踩）
+`Tools/table_exporter/ExportTable.py` 的入口是 `export_tables(r'../../temp_dev', r'../../tsv', [])`——**路径相对脚本所在目录写死**。
+- ❌ 在仓库根跑：`../../tsv` 解析成 `C:	sv` → 日志打印 `InputPath: C:	sv` + `源文件夹不存在，退出` → **然后 return，进程 exit 0**。看着像跑过了，实际一张表都没导 ⇒ **最危险的假成功**。
+- ✅ 正确：`cd <仓库>/Tools/table_exporter && python ExportTable.py`
+- **判成功不能只看 exit code**，要看日志尾部三条完成标志齐全：`protoc 编译成功` + `generate localization bytes success` + `MD5 values generated`，且全文无 ERROR/Traceback/Exception。全量导表约 3-5 分钟、日志 5000+ 行；只有几十行就结束＝没真跑。
+
+## ★安全改 tsv 的正确姿势（2026-07-30 定型，每次手改 tsv 都照这个来）
+**❌ 禁止按换行符 split 行**：X3 有多张表含**多行 cell**（字段内含换行、用引号包裹）。典型：ActvOnline 主表第 4 行起是行内换行的枚举注释（1=周登录 / 2=成长奖励 / …）⇒ 按换行切会把一个 cell 拆成多行，**行号全错，改错行还不报错**。
+- 症状：找表头时 `next(i for i,r in enumerate(rows[:8]) if r[0]=="ID")` 抛 StopIteration 或返回 None（真实表头在第 5 行，被错位的注释挤开）。
+
+**✅ 正确姿势**：用 `csv.reader(io.StringIO(raw), delimiter=制表符)` 读（按 CSV 规则正确处理引号内换行），改完用 `csv.writer(..., delimiter=制表符, quoting=csv.QUOTE_MINIMAL, lineterminator=换行符)` 写回。
+
+**✅✅ 动手前必做 dry-run：原样读写验证逐字节一致**
+读进来不改、直接写到内存 buffer，`assert buf.getvalue() == orig`。
+一致 ⇒ writer 的引号规则与原文件相同，改单元格安全（实测 ActvOnline 528 行 × 57 列往返完全一致）；不一致 ⇒ 换方式别硬改。
+- 改完 `git diff --stat` 确认只动了预期行数，再逐行看 diff 有没有串列。
+- ⚠️ 旧记载提到的 x3-config-export/scripts/tsv_edit.py **实际不存在**（2026-07-30 查证），别去找。

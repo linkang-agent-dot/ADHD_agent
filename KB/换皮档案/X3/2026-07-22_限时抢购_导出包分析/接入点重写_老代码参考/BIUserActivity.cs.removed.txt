@@ -1,0 +1,19 @@
+        /// <summary>
+        /// 马戏节限时抢购打点：buy/share/assist/raffle 四动作各记一条（照 CircusGacha 单方法带 action 参数的简洁惯例）。
+        /// buy: windowKey=全活动唯一场次号, packCfgId=货架行, priceType/price=扣费; share/raffle: rewardId=Reward包/中奖行; assist: targetUserId=被助力者。
+        /// </summary>
+        public static void FlashSale(ServerPlayer serverPlayer, long activityID, int activityCfgID, long startTime, long endTime,
+            string action, long windowKey, int packCfgId, int priceType, int price, int rewardId, long targetUserId)
+        {
+            using var _ = DictionaryConcurrentPool<string, object>.Get(out var extraInfo);
+            extraInfo.Add("action", action);
+            extraInfo.Add("windowKey", windowKey);
+            extraInfo.Add("packCfgId", packCfgId);
+            extraInfo.Add("priceType", priceType);
+            extraInfo.Add("price", price);
+            extraInfo.Add("rewardID", rewardId);
+            extraInfo.Add("targetUserId", targetUserId);
+            Create(serverPlayer, activityID, activityCfgID, BIActivityType.FlashSale, startTime, endTime,
+                BIActivityTargetType.Player, serverPlayer.ID.ToString(), extraInfo);
+        }
+

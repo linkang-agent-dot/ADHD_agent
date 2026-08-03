@@ -1,0 +1,6 @@
+=== 谁引用我们这两份副本 ===
+  Common_icon_FrequencyBg1.png(ours)         <- Res\UI\Prefab\Activity\FlashSale.prefab
+
+=== shader 内部声明名（同名会导致 Shader.Find 歧义）===
+  Res\Shader\Effect\FX_AddBlend_DistortionDissolve_Flow_New_UI.shader Shader "TFW/Effect/UI/FX_AddBlend_DistortionDissovle_Flow_New_UI"  (10863字节)
+  Res\Shader\X3\Effect\FX_AddBlend_DistortionDissolve_Flow_New_UI.shader Shader "TFW/Effect/FX_AddBlend_DistortionDissovle_Flow_New_UI"  (10716字节)

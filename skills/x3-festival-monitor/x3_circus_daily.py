@@ -577,6 +577,340 @@ def main():
             f.write(ph)
         sys.exit(0)
 
+    # ---- 5c. 模块分日对比（大/小模块 × 付费总额/付费率/ARPPU/付费玩家ARPU × 分日/累计） ----
+    # 口径：付费率=模块付费人数/当日总付费人数(付费玩家付费率)；付费玩家ARPU=模块收入/当日总付费人数；
+    #       ARPPU=模块收入/模块付费人数。累计模式的人数=跨日去重(distinct)——用「每人每模块首购日」
+    #       的新增数 running-sum 得到，不能按日人数求和（会重复计人）。
+    mcase = build_module_case(pack_module)
+    dates_fest = [d["date"] for d in all_days]
+    didx = {d: i for i, d in enumerate(dates_fest)}
+    nD = len(dates_fest)
+    mc = {}
+
+    def _mc_slot(mod):
+        if mod not in mc:
+            mc[mod] = {"rev": [0] * nD, "payers": [0] * nD, "newp": [0] * nD}
+        return mc[mod]
+
+    sql_mc_daily = f"""
+    SELECT {UD} AS d, {mcase} AS mod,
+      round(sum({REV_EXPR}),2) AS rev, count(distinct o.user_id) AS payers
+    FROM v1090.ods_user_order o
+    WHERE o.pay_status=1 AND {utc_range_where(FESTIVAL_D0, report_date)} AND {fest_cond}
+    {SERVER_FILTER}
+    GROUP BY {UD}, {mcase}
+    """
+    for r in query(sql_mc_daily, limit=4000):
+        i = didx.get(r["d"])
+        if i is None:
+            continue
+        s = _mc_slot(r["mod"])
+        s["rev"][i] = round(float(r["rev"] or 0))
+        s["payers"][i] = int(r["payers"] or 0)
+
+    sql_mc_first = f"""
+    SELECT mod, fd, count(*) AS n FROM (
+      SELECT {mcase} AS mod, o.user_id, min({UD}) AS fd
+      FROM v1090.ods_user_order o
+      WHERE o.pay_status=1 AND {utc_range_where(FESTIVAL_D0, report_date)} AND {fest_cond}
+      {SERVER_FILTER}
+      GROUP BY {mcase}, o.user_id
+    ) GROUP BY mod, fd
+    """
+    for r in query(sql_mc_first, limit=4000):
+        i = didx.get(r["fd"])
+        if i is not None:
+            _mc_slot(r["mod"])["newp"][i] = int(r["n"] or 0)
+
+    sql_tot_first = f"""
+    SELECT fd, count(*) AS n FROM (
+      SELECT o.user_id, min({UD}) AS fd
+      FROM v1090.ods_user_order o
+      WHERE o.pay_status=1 AND {utc_range_where(FESTIVAL_D0, report_date)}
+      {SERVER_FILTER}
+      GROUP BY o.user_id
+    ) GROUP BY fd
+    """
+    mc_tot_new = [0] * nD
+    for r in query(sql_tot_first, limit=400):
+        i = didx.get(r["fd"])
+        if i is not None:
+            mc_tot_new[i] = int(r["n"] or 0)
+
+    # 本期节日级整体指标（供「整体节日同比」区块）：节日付费人数(逐日distinct) + 节日首购新增(累计去重用)
+    sql_fest_payers = f"""
+    SELECT {UD} AS d, count(distinct o.user_id) AS p FROM v1090.ods_user_order o
+    WHERE o.pay_status=1 AND {utc_range_where(FESTIVAL_D0, report_date)} AND {fest_cond}
+    {SERVER_FILTER} GROUP BY {UD}
+    """
+    fc_payers = [0] * nD
+    for r in query(sql_fest_payers, limit=400):
+        i = didx.get(r["d"])
+        if i is not None:
+            fc_payers[i] = int(r["p"] or 0)
+    sql_fest_first = f"""
+    SELECT fd, count(*) AS n FROM (
+      SELECT o.user_id, min({UD}) AS fd FROM v1090.ods_user_order o
+      WHERE o.pay_status=1 AND {utc_range_where(FESTIVAL_D0, report_date)} AND {fest_cond}
+      {SERVER_FILTER} GROUP BY o.user_id
+    ) GROUP BY fd
+    """
+    fc_newp = [0] * nD
+    for r in query(sql_fest_first, limit=400):
+        i = didx.get(r["fd"])
+        if i is not None:
+            fc_newp[i] = int(r["n"] or 0)
+
+    # 大/小模块分组：按节日累计收入占比 ≥5% 划大模块（动态，随数据每小时重算；扭蛋机 W2 上线后会自动升组）
+    _cumrev = {m: sum(v["rev"]) for m, v in mc.items()}
+    _fest_cum = sum(_cumrev.values()) or 1
+    _sorted_mods = sorted(_cumrev, key=lambda m: _cumrev[m], reverse=True)
+    mc_big = [m for m in _sorted_mods if _cumrev[m] / _fest_cum >= 0.05]
+    mc_small = [m for m in _sorted_mods if m not in mc_big]
+    if not mc_big:
+        mc_big, mc_small = mc_small, []
+    # ---- 5d. 往期节日同比数据（模块分日对比可多选叠加，D0 对齐同比） ----
+    # 往期已收官、数据不变 → 首次查询后缓存到脚本目录 _prev_modcmp_cache.json，之后每小时任务零额外查询。
+    # 改了 pred/模块归类想强制重查：删缓存文件即可。
+    PREV_FESTS = [
+        {"key": "deepsea", "name": "深海节", "short": "深海", "d0": "2026-07-03", "days": 14,
+         "pred": BENCHMARK_FEST_PRED, "sf": SERVER_FILTER_VAL,
+         "over": {}, "like": {}, "enum_prefixes": []},
+        {"key": "worldcup", "name": "世界杯", "short": "世杯", "d0": "2026-06-26", "days": 14,
+         "pred": ("(o.iap_id LIKE '894%' OR o.iap_id IN ('211002','211004','211006','211008','211010',"
+                  "'211012','211013','211014','211015','130020','130021','1002001'))"),
+         "sf": "AND TRY_CAST(o.server_id AS INTEGER) BETWEEN 1000 AND 1970",
+         "over": {"211002": "开箱连锁", "211004": "开箱连锁", "211006": "开箱连锁", "211008": "开箱连锁",
+                  "211010": "开箱连锁", "211012": "抽奖券锚点", "211013": "抽奖券锚点", "211014": "抽奖券锚点",
+                  "211015": "抽奖券锚点", "130020": "通行证", "130021": "通行证", "1002001": "许愿池"},
+         "like": {"894": "竞猜礼包"}, "enum_prefixes": []},
+        {"key": "summer", "name": "夏日恋语", "short": "夏日", "d0": "2026-05-29", "days": 10,
+         "pred": "(o.iap_id LIKE '2109%' OR o.iap_id LIKE '2107%' OR o.iap_id IN ('130020','130021','1002001'))",
+         "sf": "AND TRY_CAST(o.server_id AS INTEGER) BETWEEN 1000 AND 1870",
+         "over": {"210917": "装饰礼包", "210918": "装饰礼包", "210919": "装饰礼包", "210921": "拜访礼包",
+                  "210717": "家具礼包", "130020": "通行证", "130021": "通行证", "1002001": "许愿池"},
+         "like": {}, "enum_prefixes": ["2107", "2109"]},
+    ]
+    ptm_all = load_pack_type_map()
+
+    def _prev_case(spec):
+        """往期节日 iap_id→模块 的 SQL CASE：LIKE 前缀桶 + 显式 id 枚举（over 优先，其余按 PackType 兜底）。
+        模块粒度的去重人数必须在 SQL 侧算，所以 LIKE 前缀涉及多模块时要把 Pack 表命中 id 全枚举进 CASE。"""
+        import re as _re
+        id2mod = dict(spec["over"])
+        for pid in _re.findall(r"'(\d+)'", spec["pred"]):
+            id2mod.setdefault(pid, module_of(pid, ptm_all))
+        for pre in spec["enum_prefixes"]:
+            for pid in ptm_all:
+                if pid.startswith(pre):
+                    id2mod.setdefault(pid, module_of(pid, ptm_all))
+        likes = " ".join(f"WHEN o.iap_id LIKE '{p}%' THEN '{m}'" for p, m in spec["like"].items())
+        whens = " ".join(f"WHEN o.iap_id = '{k}' THEN '{v}'" for k, v in id2mod.items())
+        return f"CASE {likes} {whens} ELSE '其他' END"
+
+    def _query_prev(spec):
+        case_sql = _prev_case(spec)
+        d0, days, sf = spec["d0"], spec["days"], spec["sf"]
+        dlast = (datetime.strptime(d0, "%Y-%m-%d") + timedelta(days=days - 1)).strftime("%Y-%m-%d")
+        dix = {(datetime.strptime(d0, "%Y-%m-%d") + timedelta(days=i)).strftime("%Y-%m-%d"): i for i in range(days)}
+        mods = {}
+
+        def slot(m):
+            if m not in mods:
+                mods[m] = {"rev": [0] * days, "payers": [0] * days, "newp": [0] * days}
+            return mods[m]
+
+        base_where = f"o.pay_status=1 AND {utc_range_where(d0, dlast)}"
+        q1 = f"""SELECT {UD} AS d, {case_sql} AS mod, round(sum({REV_EXPR}),2) AS rev,
+          count(distinct o.user_id) AS payers
+        FROM v1090.ods_user_order o WHERE {base_where} AND {spec['pred']} {sf} GROUP BY {UD}, {case_sql}"""
+        for r in query(q1, limit=4000):
+            i = dix.get(r["d"])
+            if i is None:
+                continue
+            s = slot(r["mod"])
+            s["rev"][i] = round(float(r["rev"] or 0))
+            s["payers"][i] = int(r["payers"] or 0)
+        q2 = f"""SELECT mod, fd, count(*) AS n FROM (
+          SELECT {case_sql} AS mod, o.user_id, min({UD}) AS fd FROM v1090.ods_user_order o
+          WHERE {base_where} AND {spec['pred']} {sf} GROUP BY {case_sql}, o.user_id) GROUP BY mod, fd"""
+        for r in query(q2, limit=4000):
+            i = dix.get(r["fd"])
+            if i is not None:
+                slot(r["mod"])["newp"][i] = int(r["n"] or 0)
+        q3 = f"""SELECT fd, count(*) AS n FROM (
+          SELECT o.user_id, min({UD}) AS fd FROM v1090.ods_user_order o
+          WHERE {base_where} {sf} GROUP BY o.user_id) GROUP BY fd"""
+        tot_new = [0] * days
+        for r in query(q3, limit=400):
+            i = dix.get(r["fd"])
+            if i is not None:
+                tot_new[i] = int(r["n"] or 0)
+        q4 = f"""SELECT {UD} AS d, count(distinct o.user_id) AS p FROM v1090.ods_user_order o
+        WHERE {base_where} {sf} GROUP BY {UD}"""
+        daily_payers = [0] * days
+        for r in query(q4, limit=400):
+            i = dix.get(r["d"])
+            if i is not None:
+                daily_payers[i] = int(r["p"] or 0)
+        # 节日级整体指标（v2 追加）：节日付费人数(逐日distinct)/节日首购新增(跨日去重用)/服段总流水
+        q5 = f"""SELECT {UD} AS d, count(distinct o.user_id) AS p FROM v1090.ods_user_order o
+        WHERE {base_where} AND {spec['pred']} {sf} GROUP BY {UD}"""
+        fest_payers = [0] * days
+        for r in query(q5, limit=400):
+            i = dix.get(r["d"])
+            if i is not None:
+                fest_payers[i] = int(r["p"] or 0)
+        q6 = f"""SELECT fd, count(*) AS n FROM (
+          SELECT o.user_id, min({UD}) AS fd FROM v1090.ods_user_order o
+          WHERE {base_where} AND {spec['pred']} {sf} GROUP BY o.user_id) GROUP BY fd"""
+        fest_newp = [0] * days
+        for r in query(q6, limit=400):
+            i = dix.get(r["fd"])
+            if i is not None:
+                fest_newp[i] = int(r["n"] or 0)
+        q7 = f"""SELECT {UD} AS d, round(sum({REV_EXPR}),2) AS rev FROM v1090.ods_user_order o
+        WHERE {base_where} {sf} GROUP BY {UD}"""
+        total_rev = [0] * days
+        for r in query(q7, limit=400):
+            i = dix.get(r["d"])
+            if i is not None:
+                total_rev[i] = round(float(r["rev"] or 0))
+        cr = {m: sum(v["rev"]) for m, v in mods.items()}
+        tot = sum(cr.values()) or 1
+        srt = sorted(cr, key=lambda m: cr[m], reverse=True)
+        big = [m for m in srt if cr[m] / tot >= 0.05]
+        return {"v": 2, "name": spec["name"], "short": spec["short"], "days": days,
+                "mods": mods, "totNew": tot_new, "dailyPayers": daily_payers,
+                "festPayers": fest_payers, "festNewp": fest_newp, "totalRev": total_rev,
+                "big": big, "small": [m for m in srt if m not in big]}
+
+    _prev_cache_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_prev_modcmp_cache.json")
+    try:
+        with open(_prev_cache_path, encoding="utf-8") as f:
+            prev_cache = json.load(f)
+    except Exception:
+        prev_cache = {}
+    prev_dirty = False
+    for spec in PREV_FESTS:
+        if spec["key"] not in prev_cache or prev_cache[spec["key"]].get("v") != 2:  # 缓存结构升级自动重查
+            print(f"往期同比：查询 {spec['name']}（仅首次/缓存版本升级，之后走缓存 {os.path.basename(_prev_cache_path)}）")
+            prev_cache[spec["key"]] = _query_prev(spec)
+            prev_dirty = True
+    if prev_dirty:
+        with open(_prev_cache_path, "w", encoding="utf-8") as f:
+            json.dump(prev_cache, f, ensure_ascii=False)
+    # 往期模块名也进配色表：同名模块自动同色（本期实线 vs 往期虚线），新模块名走调色板
+    for pdata in prev_cache.values():
+        for m in pdata["mods"]:
+            if m not in module_colors:
+                module_colors[m] = PALETTE[pi % len(PALETTE)]
+                pi += 1
+
+    mod_compare_json = json.dumps(
+        {"mods": mc, "totNew": mc_tot_new, "big": mc_big, "small": mc_small,
+         "fest": {"payers": fc_payers, "newp": fc_newp},
+         "prev": prev_cache, "prevOrder": [s["key"] for s in PREV_FESTS]}, ensure_ascii=False)
+
+    # ---- 5e. 每日同比快评（放报告最顶部）：截至最后完整日，对深海节同 Dn 累计的规则化判读 ----
+    # 判据 = 付费玩家ARPU（模块累计收入/服段累计去重总付费人数，跨期服数不同唯一可比口径）：
+    #   ±15% 内 🟡持平 / ≥+15% 🟢跑赢 / ≤-15% 🔴跑输；归因看付费率差与 ARPPU 差谁主导。
+    # 当天(UTC)进行中会低估同比 → 快评只算到最后一个完整日。
+    VERDICT_PAIRS = {"开箱豪礼连锁": "转盘连锁", "门票锚点": "藏宝图锚点"}  # 异名对位（同位玩法）；同名模块自动对
+    _partial = (report_date == datetime.now(timezone.utc).strftime("%Y-%m-%d"))
+    idx_cmp = nD - 2 if (_partial and nD >= 2) else nD - 1
+    _ds = prev_cache.get("deepsea")
+
+    def _cum(arr, i):
+        return sum(arr[:i + 1])
+
+    # ---- 5f. 每日观察记录（用户人工结论）----
+    # 用户在对话里说的每日感受/结论，由 agent 追加进 _circus_user_notes.json（[{date, dn, note}]），
+    # 本区每小时随报告重渲、持久保留全程；文件不存在或为空则整节隐藏。
+    notes_html = ""
+    _notes_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_circus_user_notes.json")
+    try:
+        with open(_notes_path, encoding="utf-8") as f:
+            _notes = json.load(f)
+    except Exception:
+        _notes = []
+    if _notes:
+        _rows_n = []
+        for it in sorted(_notes, key=lambda x: x.get("date", ""), reverse=True):
+            _rows_n.append(f"<div class='vrow'><span style='color:var(--accent);font-weight:700'>D{it.get('dn', '?')}"
+                           f"<span class='vpair'>（{it.get('date', '')}）</span></span> {it.get('note', '')}</div>")
+        notes_html = f"""  <div class="section">
+    <div class="section-title">每日观察记录 · 人工结论（新在上）</div>
+    <div class="verdict-box">
+      {"".join(_rows_n)}
+      <div class="vnote">在对话窗口说出当天感受/结论即可入档（agent 写入 _circus_user_notes.json 后重渲日报）；与上方机器快评互为对照，节日收官后随报告一并归档。</div>
+    </div>
+  </div>
+"""
+
+    verdict_html = ""
+    if _ds and idx_cmp >= 0:
+        i2 = min(idx_cmp, _ds["days"] - 1)
+        c_tot = _cum(mc_tot_new, idx_cmp) or 1
+        p_tot = _cum(_ds["totNew"], i2) or 1
+        c_fest = sum(_cum(v["rev"], idx_cmp) for v in mc.values())
+        p_fest = sum(_cum(v["rev"], i2) for v in _ds["mods"].values())
+        c_arpu, p_arpu = c_fest / c_tot, p_fest / p_tot
+        d_all = (c_arpu / p_arpu - 1) * 100 if p_arpu else 0
+        rows_v, n_g, n_y, n_r = [], 0, 0, 0
+        for m in sorted(mc, key=lambda x: _cum(mc[x]["rev"], idx_cmp), reverse=True):
+            if m == "其他":
+                continue
+            crev = _cum(mc[m]["rev"], idx_cmp)
+            if crev <= 0:
+                continue
+            cpay = _cum(mc[m]["newp"], idx_cmp)
+            arpu_c, rate_c = crev / c_tot, cpay / c_tot * 100
+            arppu_c = crev / cpay if cpay else 0
+            pm = m if m in _ds["mods"] else VERDICT_PAIRS.get(m)
+            if pm and pm in _ds["mods"]:
+                prev_rev = _cum(_ds["mods"][pm]["rev"], i2)
+                ppay = _cum(_ds["mods"][pm]["newp"], i2)
+                arpu_p, rate_p = prev_rev / p_tot, ppay / p_tot * 100
+                arppu_p = prev_rev / ppay if ppay else 0
+                dpc = (arpu_c / arpu_p - 1) * 100 if arpu_p else 0
+                if dpc >= 15:
+                    icon = "🟢"; n_g += 1
+                elif dpc <= -15:
+                    icon = "🔴"; n_r += 1
+                else:
+                    icon = "🟡"; n_y += 1
+                rr = (rate_c / rate_p) if rate_p else 1
+                ra = (arppu_c / arppu_p) if arppu_p else 1
+                if abs(rr - 1) > abs(ra - 1) * 1.3:
+                    attr = f"主因付费率（{rate_c:.1f}% vs {rate_p:.1f}%）"
+                elif abs(ra - 1) > abs(rr - 1) * 1.3:
+                    attr = f"主因ARPPU（${arppu_c:,.0f} vs ${arppu_p:,.0f}）"
+                else:
+                    attr = f"付费率 {rate_c:.1f}%vs{rate_p:.1f}% · ARPPU ${arppu_c:,.0f}vs${arppu_p:,.0f}"
+                pair_note = f"<span class='vpair'>（对位深海·{pm}）</span>" if pm != m else ""
+                rows_v.append(f"<div class='vrow'>{icon} <b>{m}</b>{pair_note}：付费玩家ARPU ${arpu_c:.2f} vs ${arpu_p:.2f}"
+                              f"（<b>{dpc:+.0f}%</b>），{attr}</div>")
+            elif pm:  # 显式对位过、但深海侧全程零销售（如藏宝图锚点$0）→ 从零激活，不是"无基准"
+                n_g += 1
+                rows_v.append(f"<div class='vrow'>🟢 <b>{m}</b><span class='vpair'>（对位深海·{pm}）</span>：深海同位全程 $0，"
+                              f"本期累计 ${crev:,.0f} = 从零激活（付费率 {rate_c:.1f}% · ARPPU ${arppu_c:,.0f}）</div>")
+            else:
+                rows_v.append(f"<div class='vrow'>🆕 <b>{m}</b>：新形式无深海基准——累计 ${crev:,.0f}（占节日 {crev / max(c_fest, 1) * 100:.0f}%），"
+                              f"付费率 {rate_c:.1f}% · ARPPU ${arppu_c:,.0f}</div>")
+        tone = "🟢 整体跑赢深海同期" if d_all >= 15 else ("🔴 整体跑输深海同期" if d_all <= -15 else "🟡 整体与深海同期大体持平")
+        scope_note = (f"截至 D{idx_cmp} 完整日，D{nD - 1} 进行中不计入防低估" if (_partial and nD >= 2)
+                      else f"截至 D{idx_cmp}")
+        verdict_html = f"""  <div class="section">
+    <div class="section-title">每日同比快评 · vs 深海节同期（D0 对齐 · {scope_note}）</div>
+    <div class="verdict-box">
+      <div class="vhead">{tone}：节日付费玩家ARPU <b>${c_arpu:.2f}</b> vs 深海 <b>${p_arpu:.2f}</b>（<b>{d_all:+.0f}%</b>）；模块 🟢{n_g} / 🟡{n_y} / 🔴{n_r}</div>
+      {"".join(rows_v)}
+      <div class="vnote">判定：付费玩家ARPU（累计到同 Dn，分母=各期服段累计去重总付费）±15% 为持平带；服数不同（87 vs 59）绝对金额不可比，本区只比比率。🆕=马戏新增形式，无同位基准。机器规则判读，仅作每日初步信号，深钻以回归报告为准。</div>
+    </div>
+  </div>
+"""
+
     # ---- 5a. 分时收入立方（天 × 小时 × R级 → 总/节日流水），驱动分时图 R级筛选 ----
     sql_cube = f"""
     SELECT {UD} AS d, {HRU} AS hr, {RCLASS} AS rb,
@@ -811,6 +1145,12 @@ def main():
   .section {{ margin-bottom: 36px; }}
   .section-title {{ font-size: 14px; font-weight: 700; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }}
   .day-tabs {{ display: flex; gap: 0; margin-bottom: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; flex-wrap: wrap; }}
+  .verdict-box {{ background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }}
+  .vhead {{ font-size: 15px; font-weight: 700; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }}
+  .vrow {{ font-size: 12.5px; line-height: 1.9; color: #e2e8f0; }}
+  .vrow b {{ color: #fff; }}
+  .vpair {{ color: var(--text-muted); font-size: 11px; }}
+  .vnote {{ font-size: 11px; color: var(--text-muted); margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border); }}
   .day-tab {{ flex: 1; min-width: 70px; padding: 12px 0; text-align: center; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-muted); border-right: 1px solid var(--border); transition: all .15s; }}
   .day-tab:last-child {{ border-right: none; }}
   .day-tab:hover {{ background: var(--surface2); color: var(--text); }}
@@ -867,7 +1207,7 @@ def main():
 </div>
 <div class="container">
   <div class="day-tabs" id="dayTabs"></div>
-  <div class="section"><div class="kpi-grid" id="kpiGrid"></div></div>
+{verdict_html}{notes_html}  <div class="section"><div class="kpi-grid" id="kpiGrid"></div></div>
   <div class="section row-2col">
     <div>
       <div class="section-title">ARPU 增量分析</div>
@@ -899,6 +1239,35 @@ def main():
   <div class="section">
     <div class="section-title">模块变化趋势</div>
     <div class="chart-box"><div class="mod-tabs" id="modTabs"></div><canvas id="modTrendChart" class="canvas-220"></canvas></div>
+  </div>
+  <div class="section">
+    <div class="section-title">整体节日同比 · 大盘四指标（D0 对齐 · 马戏 vs 深海/世界杯/夏日）</div>
+    <div class="chart-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+        <div class="mod-tabs" id="fcMetricTabs" style="margin-bottom:0"></div>
+        <div class="mod-tabs" id="fcModeToggle" style="margin-bottom:0"></div>
+      </div>
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">口径：节日ARPU = 节日收入 / 总付费人数；付费率 = 节日付费人数 / 总付费人数；ARPPU = 节日收入 / 节日付费人数；节日占比 = 节日收入 / 服段总流水。累计模式人数跨日去重。各期分母 = 各自服段（马戏87 / 深海59 / 世界杯98 / 夏日88 服），比率跨期可比。点图例聚焦单个节日，再点恢复。</div>
+      <div id="fcLegend" style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;margin:6px 0"></div>
+      <canvas id="fcChart" class="canvas-280"></canvas>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">模块分日对比 · 礼包改动效果追踪</div>
+    <div class="chart-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+        <div class="mod-tabs" id="mcMetricTabs" style="margin-bottom:0"></div>
+        <div class="mod-tabs" id="mcModeToggle" style="margin-bottom:0"></div>
+      </div>
+      <div class="mod-tabs" id="mcFestChips" style="margin-bottom:8px"></div>
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">口径：付费率 = 模块付费人数 / 当日总付费人数（付费玩家付费率）；付费玩家ARPU = 模块收入 / 当日总付费人数；ARPPU = 模块收入 / 模块付费人数。累计模式人数为跨日去重。同比 = 各期 D0 对齐（虚线为往期，同名模块与本期同色）；跨期服段不同（马戏87 / 深海59 / 世界杯98 / 夏日88 服），<b>付费总额绝对值不可比，同比看付费率 / ARPPU / 付费玩家ARPU 比率指标</b>。点击图例任一模块＝<b>聚焦</b>该模块（本期实线＋已选往期的同名虚线一起留下，其余隐藏），再点一次恢复全部。</div>
+      <div class="chart-label">大模块（节日累计收入占比 ≥5%，动态分组）</div>
+      <div id="mcLegendBig" style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;margin:6px 0"></div>
+      <canvas id="mcBigChart" class="canvas-280"></canvas>
+      <div class="chart-label" style="margin-top:18px">小模块（其余）</div>
+      <div id="mcLegendSmall" style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;margin:6px 0"></div>
+      <canvas id="mcSmallChart" class="canvas-280"></canvas>
+    </div>
   </div>
   <div class="section">
     <div class="section-title">分时收入趋势</div>
@@ -991,6 +1360,7 @@ def main():
 <div class="footer">X3 {FESTIVAL_NAME} | 数据口径：{SERVER_LABEL}，节日收入 = ActvOnline {RECHARGE_ACTV_ID} 累充白名单 {pack_count} 个 Pack（USD口径，pay_status=1）；模块按 Pack.PackType 归类</div>
 <script>
 const allDays = {all_days_json};
+const modCompare = {mod_compare_json};
 const hourly = {hourly_json};
 const baselineHourly = {baseline_hourly_json};
 const rlevels = {rlevels_json};
@@ -1530,12 +1900,253 @@ function renderCompareDay() {{
   }}
 }}
 
+// ===== 模块分日对比（大/小模块 × 四指标 × 分日/累计） =====
+let mcMetric = 'rev', mcMode = 'daily';
+let mcFocus = null;  // 聚焦模块名：点图例聚焦该模块(本期+往期同名一起)，再点恢复全部
+const MC_METRICS = [['rev','付费总额'],['payrate','付费率'],['arppu','ARPPU'],['arpu','付费玩家ARPU']];
+const MC_MODES = [['daily','分日'],['cum','累计']];
+let mcFestSel = new Set();
+function mcRun(arr) {{ const o = []; let s = 0; for (const v of arr) {{ s += v; o.push(s); }} return o; }}
+function mcCurD() {{ return {{ mods: modCompare.mods, totNew: modCompare.totNew, dailyPayers: allDays.map(x => x.payers) }}; }}
+function mcCalc(D, mod) {{
+  const d = D.mods[mod]; if (!d) return [];
+  const totD = D.dailyPayers, totC = mcRun(D.totNew);
+  const crev = mcRun(d.rev), cpay = mcRun(d.newp), out = [];
+  for (let i = 0; i < d.rev.length; i++) {{
+    let v = 0;
+    if (mcMode === 'daily') {{
+      if (mcMetric === 'rev') v = d.rev[i];
+      else if (mcMetric === 'payrate') v = totD[i] > 0 ? d.payers[i] / totD[i] * 100 : 0;
+      else if (mcMetric === 'arppu') v = d.payers[i] > 0 ? d.rev[i] / d.payers[i] : 0;
+      else v = totD[i] > 0 ? d.rev[i] / totD[i] : 0;
+    }} else {{
+      if (mcMetric === 'rev') v = crev[i];
+      else if (mcMetric === 'payrate') v = totC[i] > 0 ? cpay[i] / totC[i] * 100 : 0;
+      else if (mcMetric === 'arppu') v = cpay[i] > 0 ? crev[i] / cpay[i] : 0;
+      else v = totC[i] > 0 ? crev[i] / totC[i] : 0;
+    }}
+    out.push(v);
+  }}
+  return out;
+}}
+function mcEntries(group, withAll) {{
+  // 返回该图（大/小模块组）所有系列：本期实线 + 选中往期虚线。
+  // 聚焦模式：mcFocus 命中本组时只留同名模块(本期+往期一起)；本组没有该模块则不受影响。
+  const out = [];
+  modCompare[group].forEach(m => out.push({{ label: m, mod: m, color: modColors[m] || '#8892a4', dash: null, D: mcCurD() }}));
+  (modCompare.prevOrder || []).forEach(k => {{
+    if (!mcFestSel.has(k)) return;
+    const p = modCompare.prev[k];
+    (p[group] || []).forEach(m => out.push({{ label: p.short + '·' + m, mod: m, color: modColors[m] || '#8892a4', dash: [5, 4], D: p }}));
+  }});
+  if (withAll) return out;
+  if (mcFocus && out.some(e => e.mod === mcFocus)) return out.filter(e => e.mod === mcFocus);
+  return out;
+}}
+function mcFmt(v) {{
+  if (mcMetric === 'payrate') return v.toFixed(1) + '%';
+  if (v >= 1000) return '$' + Math.round(v).toLocaleString();
+  return '$' + (v >= 100 ? v.toFixed(0) : v.toFixed(2));
+}}
+function buildMCControls() {{
+  const mt = $('mcMetricTabs'); mt.innerHTML = '';
+  MC_METRICS.forEach(([k, label]) => {{
+    const b = document.createElement('div'); b.className = 'mod-tab' + (mcMetric === k ? ' active' : '');
+    if (mcMetric === k) {{ b.style.background = '#6c63ff'; b.style.borderColor = 'transparent'; }}
+    b.textContent = label; b.onclick = () => {{ mcMetric = k; buildMCControls(); drawMCAll(); }}; mt.appendChild(b);
+  }});
+  const md = $('mcModeToggle'); md.innerHTML = '';
+  MC_MODES.forEach(([k, label]) => {{
+    const b = document.createElement('div'); b.className = 'mod-tab' + (mcMode === k ? ' active' : '');
+    if (mcMode === k) {{ b.style.background = '#22c55e'; b.style.borderColor = 'transparent'; }}
+    b.textContent = label; b.onclick = () => {{ mcMode = k; buildMCControls(); drawMCAll(); }}; md.appendChild(b);
+  }});
+}}
+function buildMCFestChips() {{
+  const el = $('mcFestChips'); el.innerHTML = '';
+  const lab = document.createElement('span');
+  lab.textContent = '同比往期(D0对齐)：'; lab.style.cssText = 'font-size:11px;color:var(--text-muted);align-self:center;margin-right:2px';
+  el.appendChild(lab);
+  (modCompare.prevOrder || []).forEach(k => {{
+    const p = modCompare.prev[k]; if (!p) return;
+    const on = mcFestSel.has(k);
+    const b = document.createElement('div'); b.className = 'mod-tab' + (on ? ' active' : '');
+    if (on) {{ b.style.background = '#f59e0b'; b.style.borderColor = 'transparent'; }}
+    b.textContent = p.name;
+    b.onclick = () => {{ if (mcFestSel.has(k)) mcFestSel.delete(k); else mcFestSel.add(k); buildMCFestChips(); drawMCAll(); }};
+    el.appendChild(b);
+  }});
+}}
+function buildMCLegend(elId, group) {{
+  const el = $(elId); el.innerHTML = '';
+  mcEntries(group, true).forEach(e => {{
+    const off = mcFocus && e.mod !== mcFocus;
+    const sp = document.createElement('span');
+    sp.style.cssText = 'display:flex;align-items:center;gap:5px;cursor:pointer;user-select:none;' + (off ? 'opacity:.35' : '');
+    const sw = e.dash
+      ? '<span style="width:14px;height:0;border-top:2px dashed ' + e.color + ';display:inline-block"></span>'
+      : '<span style="width:10px;height:10px;border-radius:3px;background:' + e.color + ';display:inline-block"></span>';
+    sp.innerHTML = sw + '<span style="color:' + (off ? 'var(--text-muted)' : '#e2e8f0') + '">' + e.label + '</span>';
+    sp.onclick = () => {{ mcFocus = (mcFocus === e.mod ? null : e.mod); drawMCAll(); }};
+    el.appendChild(sp);
+  }});
+}}
+function drawMC(canvasId, group) {{
+  const canvas = $(canvasId), W0 = canvas.offsetWidth, H = 280;
+  canvas.width = W0 * dpr; canvas.height = H * dpr;
+  const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
+  const pad = {{ top: 16, right: 140, bottom: 28, left: 56 }}, cW = W0 - pad.left - pad.right, cH = H - pad.top - pad.bottom;
+  const entries = mcEntries(group, false);
+  let maxV = 0;
+  entries.forEach(e => {{ e.s = mcCalc(e.D, e.mod); maxV = Math.max(maxV, ...e.s); }});
+  maxV = (maxV || 1) * 1.12;
+  const nX = Math.max(allDays.length, ...entries.map(e => e.s.length));
+  const xp = i => pad.left + (nX > 1 ? i / (nX - 1) * cW : cW / 2);
+  const yp = v => pad.top + cH - v / maxV * cH;
+  ctx.strokeStyle = '#2e3248'; ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 4; i++) {{
+    const yy = pad.top + cH * i / 4; ctx.beginPath(); ctx.moveTo(pad.left, yy); ctx.lineTo(W0 - pad.right, yy); ctx.stroke();
+    const gv = maxV * (4 - i) / 4;
+    ctx.fillStyle = '#8892a4'; ctx.font = '10px -apple-system,sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(mcMetric === 'payrate' ? gv.toFixed(1) + '%' : '$' + Math.round(gv).toLocaleString(), pad.left - 6, yy + 3);
+  }}
+  ctx.fillStyle = '#8892a4'; ctx.font = '10px -apple-system,sans-serif'; ctx.textAlign = 'center';
+  for (let i = 0; i < nX; i++) ctx.fillText('D' + i, xp(i), H - pad.bottom + 14);
+  entries.forEach(e => {{
+    const s = e.s, n = s.length; if (!n) return;
+    ctx.setLineDash(e.dash || []);
+    ctx.beginPath(); ctx.moveTo(xp(0), yp(s[0])); for (let i = 1; i < n; i++) ctx.lineTo(xp(i), yp(s[i]));
+    ctx.strokeStyle = e.color; ctx.lineWidth = e.dash ? 1.6 : 2.2; ctx.stroke();
+    ctx.setLineDash([]);
+    if (!e.dash) for (let i = 0; i < n; i++) {{ ctx.beginPath(); ctx.arc(xp(i), yp(s[i]), 2.6, 0, Math.PI * 2); ctx.fillStyle = e.color; ctx.fill(); }}
+  }});
+  // 末点标签（右侧留白区，防重叠：按 y 排序后强制 12px 间距）
+  const lbl = entries.filter(e => e.s.length).map(e => ({{ e: e, y: yp(e.s[e.s.length - 1]) }})).sort((a, b) => a.y - b.y);
+  for (let i = 1; i < lbl.length; i++) if (lbl[i].y - lbl[i - 1].y < 12) lbl[i].y = lbl[i - 1].y + 12;
+  ctx.textAlign = 'left'; ctx.font = '10px -apple-system,sans-serif';
+  lbl.forEach(o => {{ ctx.fillStyle = o.e.color; ctx.globalAlpha = o.e.dash ? 0.75 : 1; ctx.fillText(o.e.label + ' ' + mcFmt(o.e.s[o.e.s.length - 1]), W0 - pad.right + 6, o.y + 3); ctx.globalAlpha = 1; }});
+}}
+function drawMCAll() {{
+  buildMCLegend('mcLegendBig', 'big');
+  buildMCLegend('mcLegendSmall', 'small');
+  drawMC('mcBigChart', 'big');
+  drawMC('mcSmallChart', 'small');
+}}
+
+// ===== 整体节日同比（大盘四指标 × 分日/累计 × 四节日） =====
+let fcMetric = 'arpu', fcMode = 'daily', fcFocus = null;
+const FC_METRICS = [['arpu','节日ARPU'],['payrate','付费率'],['arppu','ARPPU'],['share','节日占比']];
+const FC_FESTS = [
+  {{ key: 'cur', name: '{FESTIVAL_NAME}', color: '#f472b6', dash: null }},
+  {{ key: 'deepsea', name: '深海节', color: '#38bdf8', dash: [5, 4] }},
+  {{ key: 'worldcup', name: '世界杯', color: '#c08a17', dash: [5, 4] }},
+  {{ key: 'summer', name: '夏日恋语', color: '#2ea856', dash: [5, 4] }},
+];
+function fcData(key) {{
+  if (key === 'cur') return {{
+    festRev: allDays.map(d => d.festival), totalRev: allDays.map(d => d.total),
+    dailyPayers: allDays.map(d => d.payers), totNew: modCompare.totNew,
+    festPayers: modCompare.fest.payers, festNewp: modCompare.fest.newp
+  }};
+  const p = modCompare.prev[key]; if (!p || !p.festPayers) return null;
+  const festRev = [];
+  for (let i = 0; i < p.days; i++) {{ let s = 0; for (const m in p.mods) s += p.mods[m].rev[i] || 0; festRev.push(s); }}
+  return {{ festRev: festRev, totalRev: p.totalRev, dailyPayers: p.dailyPayers,
+            totNew: p.totNew, festPayers: p.festPayers, festNewp: p.festNewp }};
+}}
+function fcCalc(D) {{
+  const cfr = mcRun(D.festRev), ctr = mcRun(D.totalRev), cfp = mcRun(D.festNewp), ctp = mcRun(D.totNew), out = [];
+  for (let i = 0; i < D.festRev.length; i++) {{
+    let v = 0;
+    if (fcMode === 'daily') {{
+      if (fcMetric === 'arpu') v = D.dailyPayers[i] > 0 ? D.festRev[i] / D.dailyPayers[i] : 0;
+      else if (fcMetric === 'payrate') v = D.dailyPayers[i] > 0 ? D.festPayers[i] / D.dailyPayers[i] * 100 : 0;
+      else if (fcMetric === 'arppu') v = D.festPayers[i] > 0 ? D.festRev[i] / D.festPayers[i] : 0;
+      else v = D.totalRev[i] > 0 ? D.festRev[i] / D.totalRev[i] * 100 : 0;
+    }} else {{
+      if (fcMetric === 'arpu') v = ctp[i] > 0 ? cfr[i] / ctp[i] : 0;
+      else if (fcMetric === 'payrate') v = ctp[i] > 0 ? cfp[i] / ctp[i] * 100 : 0;
+      else if (fcMetric === 'arppu') v = cfp[i] > 0 ? cfr[i] / cfp[i] : 0;
+      else v = ctr[i] > 0 ? cfr[i] / ctr[i] * 100 : 0;
+    }}
+    out.push(v);
+  }}
+  return out;
+}}
+function fcFmt(v) {{
+  if (fcMetric === 'payrate' || fcMetric === 'share') return v.toFixed(1) + '%';
+  return '$' + (v >= 100 ? Math.round(v).toLocaleString() : v.toFixed(2));
+}}
+function buildFCControls() {{
+  const mt = $('fcMetricTabs'); mt.innerHTML = '';
+  FC_METRICS.forEach(([k, label]) => {{
+    const b = document.createElement('div'); b.className = 'mod-tab' + (fcMetric === k ? ' active' : '');
+    if (fcMetric === k) {{ b.style.background = '#6c63ff'; b.style.borderColor = 'transparent'; }}
+    b.textContent = label; b.onclick = () => {{ fcMetric = k; buildFCControls(); drawFC(); }}; mt.appendChild(b);
+  }});
+  const md = $('fcModeToggle'); md.innerHTML = '';
+  MC_MODES.forEach(([k, label]) => {{
+    const b = document.createElement('div'); b.className = 'mod-tab' + (fcMode === k ? ' active' : '');
+    if (fcMode === k) {{ b.style.background = '#22c55e'; b.style.borderColor = 'transparent'; }}
+    b.textContent = label; b.onclick = () => {{ fcMode = k; buildFCControls(); drawFC(); }}; md.appendChild(b);
+  }});
+}}
+function drawFC() {{
+  const el = $('fcLegend'); el.innerHTML = '';
+  const fests = FC_FESTS.map(f => ({{ ...f, D: fcData(f.key) }})).filter(f => f.D);
+  fests.forEach(f => {{
+    const off = fcFocus && fcFocus !== f.key;
+    const sp = document.createElement('span');
+    sp.style.cssText = 'display:flex;align-items:center;gap:5px;cursor:pointer;user-select:none;' + (off ? 'opacity:.35' : '');
+    const sw = f.dash
+      ? '<span style="width:14px;height:0;border-top:2px dashed ' + f.color + ';display:inline-block"></span>'
+      : '<span style="width:10px;height:10px;border-radius:3px;background:' + f.color + ';display:inline-block"></span>';
+    sp.innerHTML = sw + '<span style="color:' + (off ? 'var(--text-muted)' : '#e2e8f0') + '">' + f.name + '</span>';
+    sp.onclick = () => {{ fcFocus = (fcFocus === f.key ? null : f.key); drawFC(); }};
+    el.appendChild(sp);
+  }});
+  const act = fcFocus ? fests.filter(f => f.key === fcFocus) : fests;
+  const canvas = $('fcChart'), W0 = canvas.offsetWidth, H = 280;
+  canvas.width = W0 * dpr; canvas.height = H * dpr;
+  const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
+  const pad = {{ top: 16, right: 140, bottom: 28, left: 56 }}, cW = W0 - pad.left - pad.right, cH = H - pad.top - pad.bottom;
+  let maxV = 0;
+  act.forEach(f => {{ f.s = fcCalc(f.D); maxV = Math.max(maxV, ...f.s); }});
+  maxV = (maxV || 1) * 1.12;
+  const nX = Math.max(...act.map(f => f.s.length));
+  const xp = i => pad.left + (nX > 1 ? i / (nX - 1) * cW : cW / 2);
+  const yp = v => pad.top + cH - v / maxV * cH;
+  ctx.strokeStyle = '#2e3248'; ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 4; i++) {{
+    const yy = pad.top + cH * i / 4; ctx.beginPath(); ctx.moveTo(pad.left, yy); ctx.lineTo(W0 - pad.right, yy); ctx.stroke();
+    const gv = maxV * (4 - i) / 4;
+    ctx.fillStyle = '#8892a4'; ctx.font = '10px -apple-system,sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText((fcMetric === 'payrate' || fcMetric === 'share') ? gv.toFixed(1) + '%' : '$' + Math.round(gv).toLocaleString(), pad.left - 6, yy + 3);
+  }}
+  ctx.fillStyle = '#8892a4'; ctx.font = '10px -apple-system,sans-serif'; ctx.textAlign = 'center';
+  for (let i = 0; i < nX; i++) ctx.fillText('D' + i, xp(i), H - pad.bottom + 14);
+  act.forEach(f => {{
+    const s = f.s, n = s.length; if (!n) return;
+    ctx.setLineDash(f.dash || []);
+    ctx.beginPath(); ctx.moveTo(xp(0), yp(s[0])); for (let i = 1; i < n; i++) ctx.lineTo(xp(i), yp(s[i]));
+    ctx.strokeStyle = f.color; ctx.lineWidth = f.dash ? 1.6 : 2.4; ctx.stroke();
+    ctx.setLineDash([]);
+    if (!f.dash) for (let i = 0; i < n; i++) {{ ctx.beginPath(); ctx.arc(xp(i), yp(s[i]), 2.6, 0, Math.PI * 2); ctx.fillStyle = f.color; ctx.fill(); }}
+  }});
+  const lbl = act.filter(f => f.s.length).map(f => ({{ f: f, y: yp(f.s[f.s.length - 1]) }})).sort((a, b) => a.y - b.y);
+  for (let i = 1; i < lbl.length; i++) if (lbl[i].y - lbl[i - 1].y < 12) lbl[i].y = lbl[i - 1].y + 12;
+  ctx.textAlign = 'left'; ctx.font = '10px -apple-system,sans-serif';
+  lbl.forEach(o => {{ ctx.fillStyle = o.f.color; ctx.fillText(o.f.name + ' ' + fcFmt(o.f.s[o.f.s.length - 1]), W0 - pad.right + 6, o.y + 3); }});
+}}
+
 function renderAll() {{
   buildDayTabs(); renderKPI(); renderARPU(); renderModBars();
   drawTrend('totalChart', 'total', '#6c63ff', 'rgba(108,99,255,.1)', {bl_total_int}, '基线 {bl_total_str}');
   drawTrend('festChart', 'festival', '#ffd166', 'rgba(255,209,102,.1)', 0, '', true);
   renderModTotals();
   buildModTabs(); drawModTrend();
+  buildMCControls(); buildMCFestChips(); drawMCAll();
+  buildFCControls(); drawFC();
   buildRFilter(); buildHrChips(); buildHrModeToggle(); buildHrBaselineToggle(); drawHourly(); drawHourlyAll();
   renderRLevels();
   renderRGain();

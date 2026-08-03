@@ -118,3 +118,10 @@ png > 1 MB 的图（如 AI 生成的活动 banner 4-5 MB）走 LFS。
 
 - x3-project 仓配置详情：[[reference_x3_project_repo]]
 - GITLAB_TAP4FUN_TOKEN：从 Windows User 环境变量取（`powershell -Command "[Environment]::GetEnvironmentVariable('GITLAB_TAP4FUN_TOKEN','User')"`）
+
+## MR 报冲突先看 master 是否前进（2026-07-30 实例）
+MR `has_conflicts: True` / `merge_status: cannot_be_merged` 时，**第一归因不是自己的改动，而是建分支后目标分支前进了**。
+判据＝比对 GitLab API 的 `diff_refs`：**`base_sha`（你建分支时的目标 tip）≠ `start_sha`（目标分支当前 tip）⇒ 目标分支已前进**。
+查 `git log <base_sha>..origin/master -- <你改的文件>` 就知道撞在哪。
+- **改动很小（一两行）时，重新基于最新目标分支建分支重做，比解冲突快得多**（本例：改动仅 1 行，重做 3 分钟；merge 解冲突因 tsv3way driver 处理 5000+ 行大表跑了 2 分钟还没完）。重做后记得**关掉旧 MR 并在新 MR 描述里注明重提原因**。
+- 用 API 查状态：`GET /projects/<urlencoded path>/merge_requests/<iid>` 看 `has_conflicts` / `merge_status` / `diff_refs`；关闭旧 MR：`PUT` + `{"state_event":"close"}`。Token 走环境变量 `GITLAB_TAP4FUN_TOKEN` + `PRIVATE-TOKEN` header。

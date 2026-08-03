@@ -200,6 +200,58 @@ Shader：FX_AddBlend_DistortionDissolve_Flow_New_UI.shader（三包共用，只�
 <div class="note"><b>为什么不整包倒</b>：X2/X3 同源同 guid，整包倒进去会造出 108 个和 X3 原件重复的副本 —— 后续 X3 公共件改版你这套不跟着走。</div>
 </div></section>
 
+<section><h2><span class="n">3.5</span>换皮无忧去重（跑 3 次，只换「资源目录」）<span class="cnt"></span></h2><div class="body">
+<div class="note bad"><b>🔴 唯一的危险在「资源目录」这个字段 —— 只能填本次搬运的专属目录。</b>
+它的删除范围＝该目录内所有「根 prefab 没引用到的」文件，无差别删。
+<b>2026-07-31 真事故</b>：这个字段填成共享目录 <code>Res/UI/Prefab/Activity</code>（含 256 个 X3 原生件）→ 删掉 143 个 X3 原生 prefab（286 文件）。
+断链路线的 prefab <code>[Prefabs 0]</code>＝不引用任何 prefab ⇒ 同目录所有 prefab 全成「未引用」全灭。</div>
+
+<div class="note"><b>共同步骤</b>：Project 里选中 <code>FlashSale.prefab</code> → <code>Tools ▸ Prefab换皮</code> → 「根 Prefab」会自动填好 →
+资源目录：Project 里右键那个文件夹 → <b>Copy Path（Alt+Ctrl+C）</b> → 粘进字段 →
+<b>先点「预览」</b> → 看清 <code>将删 N</code> → 再「执行清理」。
+<br>⏱ 它很慢（分钟级），Unity 会挂 <code>Hold on (busy for 58s…)</code>，<b>别以为卡死，也别在里面点别的</b>。</div>
+
+<div class="note bad"><b>预览是唯一的后悔机会 —— 看 <code>将删 N</code> 这个数字：</b>
+<br>N = <b>0～2</b> → 正常，可以执行
+<br>N = <b>几十／几百</b> → <b>立刻停手</b>，目录填错了，别点执行</div>
+
+<div class="tw"><table>
+<tr><th>#</th><th>资源目录（复制这个粘进字段）</th><th>预期结果</th></tr>
+<tr><td>1</td><td><code>Assets/Res/UI/Sprite/UIActvFlashSale/Images</code><button class="cp">复制</button></td>
+    <td>收掉 <code>Common_icon_FrequencyBg1.png</code>：改引用指向 <code>Res/UI/Spirits/ActvMecha/</code> 那份 + 删我们的副本（prefab 里 9 处引用，全在 <code>ChestProgress</code>）</td></tr>
+<tr><td>2</td><td><code>Assets/Res/UI/Materials/UIActvFlashSale</code><button class="cp">复制</button></td>
+    <td>收掉 <code>Mask_009.tga</code>（含子目录 Textures）。它<b>没人引用</b>会被当「未引用」删掉 —— 正合意</td></tr>
+<tr><td>3</td><td><code>Assets/Res/UI/Animation/UIActvFlashSale</code><button class="cp">复制</button></td>
+    <td>预期<b>啥也不动</b>（<code>BoxReward.anim</code> 跟 X3 那两份同名但内容不同，不判重）</td></tr>
+</table></div>
+
+<div class="note bad"><b>⛔ 这两个目录绝对不能填</b>
+<br><code>Assets/Res/UI/Prefab/Activity</code> —— 共享目录，会删 143 个 X3 原生 prefab（7-31 就是这么炸的）
+<br><code>Assets/Res/Shader/Effect</code> —— 共享目录；且它对 <code>.shader</code> <b>只比文件名不比内容</b>，会把我们的 UI 变体
+<code>TFW/Effect/<b>UI</b>/FX_AddBlend…</code> 换成 X3 通用版 <code>TFW/Effect/FX_AddBlend…</code>，<b>特效渲染直接变</b></div>
+
+<label class="ck"><input type="checkbox"><span class="t"><b>跑前先 git commit</b>（确认框自己也这么提示）
+<span class="exp">出事能一键回退：<code>git checkout -- &lt;目录&gt;</code></span></span></label>
+<label class="ck"><input type="checkbox"><span class="t">第 1 次：Images 目录 —— <b>先预览看 N</b>，正常再执行</span></label>
+<div class="fld"><label>第 1 次预览的 <code>将删 N，GUID 替换 M</code> 是多少</label><textarea data-k="r1" placeholder="将删 __，GUID 替换 __"></textarea></div>
+<label class="ck"><input type="checkbox"><span class="t">第 2 次：Materials 目录 —— <b>先预览</b></span></label>
+<div class="fld"><label>第 2 次预览数字</label><textarea data-k="r2" placeholder="将删 __，GUID 替换 __"></textarea></div>
+<label class="ck"><input type="checkbox"><span class="t">第 3 次：Animation 目录 —— <b>先预览</b>（预期 0）</span></label>
+<div class="fld"><label>第 3 次预览数字</label><textarea data-k="r3" placeholder="将删 __，GUID 替换 __"></textarea></div>
+
+<div class="note ok"><b>跑完看报告尾部的 <code>断链 GUID：M</code> —— 这是交叉验证。</b>
+我用脚本独立扫过一遍，答案是 <b>7 个</b>（已排除 Unity 内置资源）。它报的数应该接近这个（它可能不排除内置资源，那就是 8）。
+<br>这 7 个已经查清：<b>2 个真漏搬</b>（Spine 骨骼数据 <code>naozhong_SkeletonData.asset</code> + 脚本 <code>LoopHorizontalScrollRectMulti</code>）／
+<b>5 个是 X2 自己就断的</b>（<code>Fx_Ui_BoxAnim_Rotate.prefab</code> 里的粒子 <code>m_Mesh</code>，X2 线上也这样，不用管）。
+<br>⚠️ 所以 <b>M ≠ 0 是预期的，不是你点错了</b>。</div>
+<div class="fld"><label>报告尾部的 <code>已删除：N，断链 GUID：M</code></label><textarea data-k="r4" placeholder="已删除 __，断链 GUID __"></textarea></div>
+
+<label class="ck"><input type="checkbox"><span class="t"><b>跑完自检</b>
+<span class="exp">① <code>git status</code> 里只有 <code>UIActvFlashSale</code> 那几个目录有变化，<b><code>Res/UI/Prefab/Activity</code> 下不该有 D（删除）</b>
+② Prefab 模式里 <code>ChestProgress</code> 那片图正常显示、没变白
+③ 那个 shader 还在 <code>Res/Shader/Effect/</code>，没被换掉</span></span></label>
+</div></section>
+
 <section><h2><span class="n">4</span>开 Unity，先只看不改<span class="cnt"></span></h2><div class="body">
 <label class="ck"><input type="checkbox"><span class="t">双击 <code>FlashSale.prefab</code> 进 Prefab 模式
 <span class="exp">能打开、大结构（柜子/货架/倒计时）在</span></span></label>
@@ -303,7 +355,7 @@ const N1=["Content/Grid","Countdown","Countdown/Time/Layout1/Text1","Countdown/T
 "Top/Time/txt","Top/Time","Top/btn_info","BtnShare"];
 const N2=["BoxNormal","BoxSoldOut","BoxClose","Remain","Limit",
 "BoxNormal/Card/Icon","BoxNormal/Card/Value","Remain/Num","Limit/Text"];
-const KEY="fs_manual_v1";
+const KEY="fs_manual_v2";
 let S=JSON.parse(localStorage.getItem(KEY)||'{"ck":{},"nd":{},"tx":{}}');
 const save=()=>localStorage.setItem(KEY,JSON.stringify(S));
 

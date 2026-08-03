@@ -1,0 +1,69 @@
+=== X3 Text__Text.tsv 结构 ===
+数据行 27269，其中 4299 行是 | 分隔多 key；展开后总 key 数 65782
+⇒ X3 约定：同一句文案的所有 key 合并在一行，新增同义 key 应追加到已有行，而不是另起一行
+
+=== 34 条落法 ===
+  追加到 X3 已有行 : 10  （文案完全一致，复用现成译文，18 语全齐）
+  新起一行         : 24
+
+--- 追加到已有行（在该行键值列末尾加 |<我们的key>）---
+  LC_BUILDING_Bulletin_new                    [cn匹配]
+      X3 第 11676 行  cn=新
+      现有 key: Text_Item_Shop_New
+      ⚠️ 有 3 行文案相同，需人工选一行
+  LC_IAP_flashsale_coming_soon                [en匹配]
+      X3 第 21074 行  cn=等待后续开启
+      现有 key: Text_MemoryPhotoIncome_UnlockTip
+  LC_IAP_flashsale_free_draw                  [en匹配]
+      X3 第 24411 行  cn=免费抽取
+      现有 key: LC_EVENT_2022chrismas_gacha_icon4
+  LC_IAP_flashsale_share                      [cn匹配]
+      X3 第 12171 行  cn=分享
+      现有 key: Text_troops_Control_Btn_8
+      ⚠️ 有 2 行文案相同，需人工选一行
+  lc_ui_get_now_cap                           [cn匹配]
+      X3 第 23994 行  cn=立刻获得
+      现有 key: Text_Actv_CumRecharge_GetNow
+  lc_ui_guaranteed                            [cn匹配]
+      X3 第 20291 行  cn=必得
+      现有 key: lc_ui_guaranteed
+  LC_EVENT_flash_sale_pop_goto_button         [cn匹配]
+      X3 第 3000 行  cn=前往
+      现有 key: TXT_Dialogue_OptionsTxt1_200 | TXT_Dialogue_OptionsTxt1_201 | TXT_Dialogue_OptionsTxt1_202 …共14个
+      ⚠️ 有 3 行文案相同，需人工选一行
+  lc_ui_tap_blank_close                       [cn匹配]
+      X3 第 20110 行  cn=点击空白区域关闭
+      现有 key: lc_ui_tap_blank_close
+  LC_EVENT_2024_fes_box_botton_1              [cn匹配]
+      X3 第 4098 行  cn=开启1次
+      现有 key: Text_Actv_Btn_Open_Once
+  LC_IAP_flashsale_owned_count                [cn匹配]
+      X3 第 7687 行  cn=拥有数量:{0}
+      现有 key: Text_StarFish_Have_Num
+
+--- 新起一行 24 条（cn/en 已有，其余 16 语需翻译）---
+  key                                        cn                       en
+  LC_EVENT_flash_sale_main_buy_time          抢购中！                     SALE LIVE!
+  LC_EVENT_flash_sale_main_gacha_button      抽奖                       LOTTERY
+  LC_EVENT_flash_sale_main_gacha_tips_2      免费抽奖                     FREE LOTTERY
+  LC_EVENT_flash_sale_main_show_time         展示中                      DISPLAYING
+  LC_EVENT_flash_sale_share_tips_1           首次分享可获得                  Share for the first time to receive
+  LC_EVENT_flash_sale_share_tips_2           获得<color=#FF9D00>{0}</co Receive <color=#FF9D00>{0}</color> supports and purchase
+  LC_EVENT_flash_sale_share_title            分享赢好礼                    Share to Win Prizes
+  LC_IAP_flashsale_buy_participate_tip       抢购开启后，购买道具可参与            After the flash sale starts, purchase items to participa
+  LC_IAP_flashsale_grand_prize_progress      距离大奖                     Grand Prize Progress
+  LC_IAP_flashsale_my_boost                  我的助力                     My Boosts
+  LC_IAP_flashsale_share_boost               分享助力                     Share & Boost
+  LC_IAP_flashsale_share_to_alliance         分享至商会                    Share to Syndicate
+  LC_IAP_flashsale_share_to_world            分享至世界                    Share to World
+  LC_IAP_flashsale_tap_box_draw              点击箱子抽奖                   Tap a box to draw
+  LC_EVENT_flash_sale_name                   限时抢购                     LIMITED-TIME FLASH SALE
+  LC_EVENT_flash_sale_pop_tips_1             全服限时抢购，超大折扣，机不可失         Limited-time flash sale with massive discounts for all s
+  LC_EVENT_strong_consume_info_desc_2                                 
+  LC_IAP_flashsale_value_promotion           VALUE PROMOTION          VALUE PROMOTION
+  LC_IAP_scene_limit                         限购一次！                    One time only!
+  LC_IAP_vip_super_sale                      超值贩售                     SUPER SALE
+  LC_EVENT_2024_fes_box_botton_10            开启10次                    OPEN 10X
+  LC_IAP_flashsale_chest_reward_desc         开启宝箱将随机获得以下奖励            Opening the chest will randomly grant the following rewa
+  LC_IAP_flashsale_open_grand_prize          开启{0}/{1}次获得大奖！          Open {0}/{1} times to win the Grand Prize!
+  LC_IAP_flashsale_surprise_chest            惊喜宝箱                     Surprise Chest

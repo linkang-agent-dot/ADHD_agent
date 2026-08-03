@@ -16,6 +16,7 @@ metadata:
 
 ## 读 GSheet
 - 入口：`node C:\ADHD_agent\scripts\gws_stdin.js`
+- 交互授权已发起、任务要自动续跑时：`python C:\ADHD_agent\scripts\wait_gws_auth.py --timeout 600 --interval 3`。脚本用只读 Sheets metadata 请求轮询；401 继续等待，凭证恢复 exit 0，其他错误 exit 1，超时 exit 2。不要再要求用户授权后额外回复“好了”。
 
 ## Token 过期（401）重授权
 1. 跑 `gws auth login -s sheets,drive`

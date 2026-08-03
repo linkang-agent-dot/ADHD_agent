@@ -1,0 +1,28 @@
+=== 这些 guid 在 X2 原 prefab 里是否也被引用 ===
+(在＝X2 自己就这么写的；X2 侧又解析不到 ⇒ X2 原来就是断的，不是我们漏搬)
+
+  67a3b7960a2279c429c3cb7db972e708  X2 原 prefab: 未出现
+  a8100ab1914973a43933cb3e52e8a5db  X2 原 prefab: 未出现
+  a167a40c7b5fad84ca2f9721bdff1850  X2 原 prefab: 未出现
+  94765041646461243a5a6f423a11829e  X2 原 prefab: 未出现
+  b7fbc9ece99545d43b258cf0475737cc  X2 原 prefab: 未出现
+  2447dafac877d0f4f928f408a5b55e29  X2 原 prefab: 出现在 FlashSale.prefab
+
+=== 引用它们的字段（字段名反推缺的类型）===
+  67a3b7960a2279c429c3cb7db972e708
+     字段 m_Mesh                 fileID=-6440043391323712751 ×5   @FlashSale.prefab
+
+  a8100ab1914973a43933cb3e52e8a5db
+     (没匹配到标准字段行，可能在数组元素里)
+
+  a167a40c7b5fad84ca2f9721bdff1850
+     (没匹配到标准字段行，可能在数组元素里)
+
+  94765041646461243a5a6f423a11829e
+     (没匹配到标准字段行，可能在数组元素里)
+
+  b7fbc9ece99545d43b258cf0475737cc
+     (没匹配到标准字段行，可能在数组元素里)
+
+  2447dafac877d0f4f928f408a5b55e29
+     字段 skeletonDataAsset      fileID=11400000     ×1   @FlashSale.prefab

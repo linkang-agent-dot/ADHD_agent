@@ -1,0 +1,148 @@
+X3 逻辑行 27191，ua 已填 26785 (99%)
+
+=== 术语调研：X3 现有 ua 译法 ===
+【抽奖】命中 13 条，取最短的 4 条：
+   cn=抽奖1次           en=Draw 1x                    ua=Тягнути 1x
+      key=Text_Lucky_Wheel_One_Time
+   cn=抽奖10次          en=Draw 10x                   ua=Витягнути 10x
+      key=Text_Lucky_Wheel_Ten_Time
+   cn=抽奖券不足          en=Not enough Draw Tickets    ua=Недостатньо Квитків Розіграшу
+      key=Text_ErrCodeActivityPioneerCityOuterItemNotEnough
+   cn=抽奖100次         en=Draw 100x                  ua=Витягнути 100x
+      key=Text_Lucky_Wheel_Btn_Draw_3
+
+【免费抽奖】命中 0 条，取最短的 4 条：
+
+【分享】命中 20 条，取最短的 4 条：
+   cn=分享             en=Share                      ua=Поділитися
+      key=Text_troops_Control_Btn_8
+   cn=分享             en=Share                      ua=Поділ.
+      key=lc_menu_share_map_hold
+   cn=分享台账           en=Share Ledger               ua=Книга акцій
+      key=Text_Log_Share_Title
+   cn=分享成功           en=Share Success              ua=Поділитися успіхом
+      key=Text_Map_Unit_Share_success
+
+【助力】命中 17 条，取最短的 4 条：
+   cn=舞娘助力           en=Dancer Support             ua=Підтримка танцівниці
+      key=TXT_ActvOnline_ActvName_100514
+   cn=甜心助力           en=Sweetheart Boost           ua=Буст «Коханий»
+      key=TXT_FunctionUnlock_ShowName_1059
+   cn=旗舰助力           en=Flagship Assistance        ua=Допомога флагману
+      key=Text_GvG_BtnFlagship
+   cn=城建助力           en=Construction Boost         ua=Будівельний Бустер
+      key=TXT_ActvBuff_BuffText_21051
+
+【商会】命中 28 条，取最短的 4 条：
+   cn=商会认证           en=Company Certification      ua=Сертифікація компанії
+      key=TXT_ItemObtain_ObtainName_729
+   cn=商会赠礼           en=Company Present            ua=Подарунок компанії
+      key=Text_Guild_gift_tab2
+   cn=金海商会           en=Aurum Maritime Company     ua=Aurum Maritime Company
+      key=TXT_MailType_Title_47
+   cn=商会力量           en=Company Power              ua=Потужність компанії
+      key=TXT_HeroSkillInfo_Name_7023
+
+【宝箱】命中 65 条，取最短的 4 条：
+   cn=宝箱             en=Chest                      ua=Скриня
+      key=Text_title_chest
+   cn=魔海宝箱           en=Demon Sea Chest            ua=Скриня Демонічного Моря
+      key=TXT_Item_Name_12501
+   cn=征召宝箱           en=Recruitment Chest          ua=Скриня найму
+      key=TXT_Item_Name_12701
+   cn=人鱼宝箱           en=Mermaid Chest              ua=Скриня русалки
+      key=TXT_Item_Name_1093
+
+【大奖】命中 8 条，取最短的 4 条：
+   cn=本周大奖           en=Weekly Grand Prize         ua=Щотижневий Головний Приз
+      key=Text_BlackMarketWeekTask_FinalRewardTitle
+   cn=幸运大奖           en=Jackpot Prize              ua=Приз джекпота
+      key=LC_EVENT_shoot_airship_lucky_prize
+   cn=排行榜大奖皮肤        en=Top Rank Skin Prizes       ua=Призи за скіни найвищого рангу
+      key=LC_EVENT_anni_gacha_2024_rankreward_name_1
+   cn=已经达到超级大奖奖励次数   en=You've reached the Grand P ua=Ви досягли ліміту головної нагороди
+      key=Text_ErrCodeActivityLuckyWheelAlreadyGetMaxSRewardCount
+
+【限时】命中 20 条，取最短的 4 条：
+   cn=限时             en=Limited Time               ua=Обмежений час
+      key=Text_Extra_Reward_Tip
+   cn=限时增益           en=Time-Limited Buff          ua=Обмежений у часі баф
+      key=TXT_Privilege_PrivilegeName2_101
+   cn=限时活动           en=Limited-Time Event         ua=Обмежена подія
+      key=TXT_NotifySetting_Title_5
+   cn=限时任务           en=Limited-Time Quest         ua=Квест з обмеженим часом
+      key=Text_KVK_BP_Task_Title01
+
+【抢购】命中 0 条，取最短的 4 条：
+
+【立刻获得】命中 1 条，取最短的 4 条：
+   cn=立刻获得           en=Get Now                    ua=Отримати
+      key=Text_Actv_CumRecharge_GetNow
+
+【前往】命中 52 条，取最短的 4 条：
+   cn=前往             en=Go                         ua=Йти
+      key=TXT_Dialogue_OptionsTxt1_200
+   cn=前往             en=Go                         ua=Йти
+      key=LC_HERO_mecha_go_to
+   cn=前往             en=GO                         ua=ВПЕРЕД
+      key=LC_MENU_go_to
+   cn=前往击杀           en=Go to Kill                 ua=Йти вбивати
+      key=Text_Actv_Hero_Skill_Sell_Goto
+
+【拥有数量】命中 2 条，取最短的 4 条：
+   cn=拥有数量:{0}       en=Owned: {0}                 ua=У власності: {0}
+      key=Text_StarFish_Have_Num
+   cn=无主内裤拥有数量：{0}   en=Unclaimed Knickers Owned:  ua=Невитребуваних трусиків у власності: {0}
+      key=Text_FindUnderpants_Number
+
+【开启】命中 115 条，取最短的 4 条：
+   cn=开启             en=Enable                     ua=Увімкнути
+      key=Text_Rally_Auto_Join_UI_Open_Btn
+   cn=开启             en=Open                       ua=Відкрити
+      key=LC_EVENT_shoot_plane_on
+   cn=距开启            en=Time to Activation         ua=Час до активації
+      key=Text_Actv_Start_time_title
+   cn=可开启            en=Activate                   ua=Активувати
+      key=Text_Actv_Can_Open
+
+【惊喜】命中 13 条，取最短的 4 条：
+   cn=惊喜奖励           en=Surprise Reward            ua=Сюрпризна Нагорода
+      key=Text_Btn_Actv_Random_Reward_Title
+   cn=惊喜彩球           en=Surprise Ball              ua=Куля-сюрприз
+      key=TXT_Item_Name_1056
+   cn=惊喜好物           en=Surprise Deal              ua=Сюрпризні Вибори
+      key=TXT_ShopCfg_ShopName_1302
+   cn=惊喜回馈           en=Surprise Reward            ua=Сюрпризна нагорода
+      key=Text_Hero_Champion_Road_Rank_Surprise_Reward
+
+【限购】命中 8 条，取最短的 4 条：
+   cn=限购             en=LIMIT                      ua=ЛІМІТ
+      key=lc_iap_pkg_limit
+   cn=限购1次           en=Purchase limit: 1          ua=Ліміт покупки: 1
+      key=Text_Vip_gift_buy_limit_desc
+   cn=今日限购           en=Daily limit                ua=Денний ліміт покупки
+      key=LC_UNION_ipo_daily_purchase_limit
+   cn=限购：{0}         en=Purchase Limit: {0}        ua=Ліміт покупок: {0}
+      key=Text_BluePrintsShopTabs_BugLimit
+
+【即将】命中 7 条，取最短的 4 条：
+   cn=即将开始           en=STARTS IN                  ua=НАЧАЛО ЧЕРЕЗ
+      key=LC_EVENT_start_in
+   cn=活动即将开启         en=Event Starting Soon        ua=Подія скоро почнеться
+      key=Text_Actv_Open_Countdown_Title
+   cn=黑市即将开启         en=Black Market Opening Soon! ua=Чорний ринок скоро відкриється!
+      key=Text_BlackMarket_Unlock_Time_Title
+   cn=战场即将关闭         en=Battlefield Closing Soon   ua=Поле бою скоро закриється
+      key=Text_Actv_Kvk_Stage_desc_4
+
+【展示中】命中 0 条，取最短的 4 条：
+
+【首次】命中 6 条，取最短的 4 条：
+   cn=首次             en=First                      ua=Перший
+      key=Text_Reward_tip_first
+   cn=首次占领获得         en=First Capture Reward       ua=Перший трофей за захоплення
+      key=Text_Actv_Wonder_Reward_1
+   cn=首次进入竞技场可获取     en=Get rewards upon first ent ua=Отримайте нагороди при першому вході на Арен
+      key=TXT_MemorialCard_GetTips_56
+   cn=任意玩家首次通关即可领取   en=Any player who clears for  ua=Будь-який гравець, який вперше проходить, мо
+      key=Text_Idle_Actv_Sever_Level_Tips

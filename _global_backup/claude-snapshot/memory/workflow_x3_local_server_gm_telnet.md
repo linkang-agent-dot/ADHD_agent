@@ -5,14 +5,16 @@ metadata:
   node_type: memory
   type: project
   originSessionId: bc47406f-de36-414c-b81a-a24b401015f1
-  modified: 2026-07-27T02:28:15.565Z
+  modified: 2026-07-29T12:22:52.904Z
 ---
 
 X3 **本地服**（`-e local`，`Tools/start_local_server.bat`）发 GM 命令、调服务器时间走 telnet。helper 脚本：`C:\Users\linkang\x3_gm.py`（`python x3_gm.py "!gm @<uid> <cmd args>" ...`）。
 
+⚠️**热更/拷 bytes 前先确认服进程起自哪个 worktree(2026-07-28 限时抢购案实证)**:本地服 3080 曾起自 `C:\x3-wt-piggybank` worktree,其 `Resource/.../ProtoGen` 软链指向**那个 worktree 的 client ProtoGen**——往主仓 `C:\x3-project\client` 拷 bytes 服务端吃不到(客户端 Unity 读的才是主仓那份,两边受众不同)。判定=`Get-CimInstance Win32_Process` 查 GameServer 进程 CommandLine/WorkingDirectory。服务端要吃新配置就拷进它实际软链的那份+同步 manifest。
+
 **关键参数**
 - telnet 端口 = `23000 + NodeID`（`TelnetModule.cs`，port = 23*1000+NodeID）。3080 服 `-nid 3080` → **端口 26080**。NodeID 看启动命令行（`Get-CimInstance Win32_Process` 查 GameServer 进程 CommandLine）。
-- 时间相关 GM（`GMSetServerTime`/`GMGetServerTime`/`GMSetServerTimeOffset`）都在 `BasicMeta`，是 **player-scope** → 必须 `!gm @<uid> <cmd>`，纯 `!gm <cmd>` 是 server-scope 找不到。uid 随便挑个该服玩家：从 BI 日志 `server\GameServer\bin\Debug\net8.0\logs\game-<sid>.bi.log` 的 user_event/user_login 行取。⚠️**旧记录的 uid 会因清库失效**：2026-06-22 实测 27065 已报 `errCode=1001005 LoadPlayerFail`(清库重建后号没了)，当前有效活跃 uid=~~27798~~→**28094**(2026-07-14实测,27798也已1001005)。报 1001005 就去 bi.log 尾部 grep 一个新 uid 换上。
+- 时间相关 GM（`GMSetServerTime`/`GMGetServerTime`/`GMSetServerTimeOffset`）都在 `BasicMeta`，是 **player-scope** → 必须 `!gm @<uid> <cmd>`，纯 `!gm <cmd>` 是 server-scope 找不到。uid 随便挑个该服玩家：从 BI 日志 `server\GameServer\bin\Debug\net8.0\logs\game-<sid>.bi.log` 的 user_event/user_login 行取。⚠️**旧记录的 uid 会因清库失效**：2026-06-22 实测 27065 已报 `errCode=1001005 LoadPlayerFail`(清库重建后号没了)，当前有效活跃 uid=~~27798~~→~~28094~~→**28297**(2026-07-27实测,28094也已1001005;bi.log 是 pipe 分隔,uid=第5字段,grep `user_event` 行取)。报 1001005 就去 bi.log 尾部 grep 一个新 uid 换上。
 - **跨天/推进一天**：读 `GMGetServerTime` 拿当前日期 → `GMSetServerTimeOffset <次日同时刻>`(格式 `yyyy-MM-dd/HH:mm:ss`，持久化)。2026-06-22 实例：06-23/12:49(passDay6)→ set `2026-06-24/12:50:00` → passDay7，跨一个自然日；客户端退登重进同步每日刷新。
 
 **❗telnet 分包协议大坑**（`ServerCommon/TelnetServer/Server.cs` receiveData）：服务端**每个 recv 包只看 data[0]**，仅当包**首字节是 CR(0x0D)** 才判定为回车并派发命令。所以 `!cmd\r\n` 一个包发出去 = 首字节是 `!`，CR 被埋在中间，永远只回显不执行。**必须把命令体和 `\r\n` 分两个包发**（先发 body，sleep 0.3s，再发 `b"\r\n"`）。x3_gm.py 已处理。另：首字节 ≥0xF0 的包被当 IAC 丢弃。
@@ -31,6 +33,13 @@ X3 **本地服**（`-e local`，`Tools/start_local_server.bat`）发 GM 命令�
 ⚠️**测「活动到期结算」(排行榜发奖/道具回收)：直接跳时间过活动end 不一定触发结算**（2026-06-24 用户实测：`GMSetServerTimeOffset` 一把跳到活动窗口外，发奖没跑）。原因：很多结算/发奖挂在**跨天事件(OnNewDay/每日0点 tick)**上，`SetServerTimeOffset` 是**直接跳**目标时刻、不逐日触发跨天，所以日界驱动的结算逻辑没跑。**测发奖的正确姿势（2026-06-24 已实测验证）**：① 先 `GMSetServerTimeOffset` 跳到活动 **end 之后、但下一个午夜之前**（如活动 end=9/26 06:00 → 跳到 `9/26 23:59`）——此时活动已过 end **但仍 `count=1` 没结算**（实证：GMPrint 还在）；② 再 `GMSetServerTimeOffset` **小步跨过一个午夜**（跳到 `9/27 00:05`）——日志立刻出 `DayUpdateNtf` + `ServerRank ... SendRankRewards` + `SendMailImp`（发奖邮件），结算触发。**关键=最后那一下必须干净跨过 00:00**；一把大跳直接到窗口外不会逐日触发跨天=不发奖（用户实测"感觉少了"的根因）。GM 里 daily 系（`GMDailyTaskRefresh`/`GMUpdateAllActivityDailyActivityPlayer`@`ServerActivityDailyRankMeta.cs`）印证日系统 tick/事件驱动。⚠️注意 `ServerRank` 结算行会打印 `sendMailReward: True/False`——**False 的榜不发邮件奖**（排查"某榜没发奖"先看这个标志，可能是该 RankCfg 本就 NeedSendMailReward=0，非 bug）。
 
 实例（2026-06-05）：3080 开服 2026-05-27 09:31:06，D8 → set 2026-06-26/09:31:06 → passDay 30。
+
+## 本地服的 Center 服＝**61**，且默认没起（2026-07-29 查证）
+- 3080 的 Game/Map 启动参数都是 `-csid 61` → **Center 服 ID 固定 61**，telnet 端口按公式 `23000+nid` ＝ **23061**。
+- ⚠️**平时它根本没在跑**：本次查时只有 GameServer(3080)+MapServer(3081) 两个 dotnet 进程，23061 不通，CenterServer 最近日志还停在一个多月前。
+- 🔑**这就是跨服活动本地开不了的原因**：许愿池 105014 / 星光巡演 108201 这类 `cross-server activity is not supported via this GM` 的报错，根子是 **Center 没起**，不是配置问题。要验这类活动必须先起 Center。
+- 起法（cwd=`C:\x3-project\server`）：`Start-Process dotnet -ArgumentList 'run --no-build --project CenterServer -- -sid 61 -nid 61 -e local -ll debug -lf logs/center.log' -WorkingDirectory 'C:\x3-project\server'`
+- 两个坑：①Center 长期不跑 → **Hotfix 多半没跟上当前代码**，直接 `--no-build` 起会在 preload 崩（`InvalidProtocolBuffer`），先 `dotnet build CenterServer.Hotfix`；②`drop_db.py --server_id 3080` **不清 Center 的库**（只有 sid<100 才动 Center 的 PrefsInfo），所以清库重开后 Center 里仍是旧数据。
 
 ## ★清库全服重启（清玩家数据那种，2026-06-16 实操）
 工具 `Tools/reset_local_server.bat`（停→drop_db→重编→起），但有 `pause`+`dotnet test` 卡非交互。**手动版**（cwd=`C:\x3-project\server`，比普通重启多一步清库）：
@@ -57,6 +66,19 @@ Start-Process dotnet -ArgumentList 'run --no-build --project MapServer  -- -sid 
 **✅ GMSetServerTimeOffset 真的持久化**：重启后服务器**直接从 D30 起**（日志游戏时间戳 `[2026-06-26 ...]`），不用再 set；也 set 不了（已是 D30，再 set 同一秒=rewind 被拒）。
 
 **❗大坑：导表后裸 --no-build 重启会崩**。本地服 config 读 `server\Resource\Assets\Res\Config\ProtoGen\*.bytes`；这目录被 config 导出/同步覆盖后（一批 .bytes + `AllTableDataMd5.txt` 同一时刻刷新），若 server 二进制没跟着重编 → 启动期 config 预载抛 `InvalidProtocolBufferException: input ended unexpectedly`（栈：`CfgHelper.StartPreloadData → CConstCfg.get_Instance`），日志 `Server Start Failed`。**现象很迷惑**：telnet 端口照常起（crash 在端口之后），连得上、脚本引擎也 ready，但所有 `!gm`/`!dump` 只回显不返结果（游戏逻辑没起来）。老进程没事只因 config 在内存里，一重启就暴露。
+## 🔴🔴 `ConstCfg invalid UTF-8` 的**第二个根因**：整目录 checkout 引入新 schema（2026-07-29 实测，与下条 LFS 根因是两回事）
+**先用 MD5 分诊，别急着 lfs pull**：`本地 .bytes MD5 == manifest(AllTableDataMd5.txt) 里该表 MD5` → **不是 LFS 陈旧**，是 **bytes 的 schema 比本地服务端二进制新**（`git checkout origin/<br> -- ProtoGen/` 整目录时，把**别人改过的表**一起拉进来了；本地代码 `GameServer/CSSharedCommon/Cfg/CfgProtos/ConstCfg.cs` 还是旧的 → 按旧字段解析新 bytes → `String is invalid UTF-8`）。本次 ConstCfg 新版 5346B vs 服务端能吃的旧版 5332B，差 14 字节即炸。
+- 🪤**telnet 回 `errCode=0` 不代表 reload 成功**——异常只在服务端日志里。**每次 reload 必查日志**：成功＝`OnReload finished` + `reload[N] success` 且无 `Reload error`；失败＝`ERROR TFW.D - Reload error: ... InvalidProtocolBufferException`。
+- 🪤 reload 是**遍历到哪炸到哪**，不回滚：日志按序 `Load Table Data: X.bytes`，炸点之前的表**已经进内存生效了**（本次 ActvScoreGroup 就是在炸点前载入的，实际已生效）。
+- ✅**正解＝最小侵入法**（工作区有在途改动时尤其必须这么做，别整目录 checkout）：
+  1. `git checkout HEAD -- <ProtoGen目录>` 回 HEAD 版 → `git lfs pull --include="<ProtoGen>/**"`（**用 `**` 不是 `*`，`*` 漏 i18n/ 子目录**）
+  2. 还原备份的本地改动文件 ＝ 精确复原「服务端启动时的状态」
+  3. **只** `git checkout origin/<br> -- <你改的那几张>.bytes` + 单独 lfs pull 它们
+  4. **手改 manifest 里这几行的 MD5**（不改＝服务端认为没变直接跳过，配置不生效）
+  5. reload → 此时 reload 清单只含目标表，碰不到别人的新 schema
+- 🪤 备份 ProtoGen 本地改动时**别平铺 cp**：`i18n/` 下有 `cn/en/jp/kr.bytes`，平铺后与顶层文件名空间混在一起。还原判归属法＝`[ -f "$P/$name" ]` 优先顶层、否则试 `$P/i18n/$name`（本次 79/79 全部归位）。
+- 🪤 Python 脚本吃的是 **Windows 路径**，Git Bash 的 `/c/...` 会 `FileNotFoundError`——heredoc 里一律写 `C:/...`。
+
 ## 🔴 checkout ProtoGen 后 reload 报 `ConstCfg invalid UTF-8` = LFS blob 陈旧（2026-07-22 实测）
 `client/*.bytes` 是 **Git LFS 跟踪**（`.gitattributes: *.bytes filter=lfs`）。`git checkout origin/<分支> -- Assets/Res/Config/ProtoGen/` 后，若本地 LFS 缓存没有目标 blob，工作树可能是**陈旧/半更新的 .bytes** → `!gm ReloadGameServer` 抛 `InvalidProtocolBufferException: String is invalid UTF-8`（栈在 `CConstCfg.Reload → CfgHelper.CreateCfgType`，报在 ConstCfg 但根因是 LFS 未拉齐，未必是 ConstCfg 本身）。**修复**：`cd client && git lfs pull --include="Assets/Res/Config/ProtoGen/*"` 拉齐真 blob，再 reload。**判定**：`git cat-file -s origin:.../X.bytes` 返 ~129（=LFS指针大小）是正常的（git 只存指针），要比的是**本地文件 MD5 vs manifest(AllTableDataMd5.txt)里该表的 MD5**——一致=blob 对，reload 就过。**热更本地服标准链路补一步**：checkout ProtoGen → **`git lfs pull` ProtoGen** → ReloadGameServer。reload 失败不杀进程（旧配置留内存），从容拉齐重试即可。
 

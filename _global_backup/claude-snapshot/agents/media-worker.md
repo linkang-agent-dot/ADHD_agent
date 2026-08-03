@@ -63,6 +63,30 @@ SKILL_ROOT=<absolute path to skill root>
 - 成功后跑 type 指定的后处理脚本（路径用 `<SKILL_ROOT>\scripts\<script>.py`，如 skill_icon 跑 `skill_icon_postprocess.py`，ui_extract 跑 `ui_extract_postprocess.py`）
 - 追加 1 行到 `<SKILL_ROOT>\state\history.jsonl`（字段：ts、type、model、saved_to、backend、task_id）
 
+### Step 4.5 — 长任务（视频 / gpt 图生图）必须主动轮询，禁止起后台任务
+
+> 2026-07-29 单场会话内**复现 4 次**的头号损耗点。视频（seadance/kling，8-20 分钟）和 gpt 图生图（可跑满 20 分钟）都属于此类。
+
+GRFal 对长任务是**异步**的：提交后立刻返回一个任务 id（形如 `generate_video_xxxxxxxx_yyyyyyyyyy`），成品要另行查询。
+
+⚠️**关键前提：你的 Bash 工具禁用前台 `sleep`，所以你根本没有"等一会儿再查"的能力。** 别试图自己扛完等待——那正是反复卡死的根因。正确姿势是**把等待交还给主 agent**（它能起后台命令，你不能）：
+
+1. **提交后立刻把 GRFal 任务 id 写进 task json 的 `params._grfal_task_id`**，`status` 保持 `running`。这是断线重连的唯一锚点，漏记就只能翻 transcript 捞。
+2. 用 `call_grfal.py --check-task <该任务id>` **连查 3 次**（不用间隔，纯碰运气看是不是已经好了）。已完成 → 正常下载、写终态、走 Step 5/6 收尾。
+3. 3 次仍 running → **立刻结束本轮，不要继续等**。最终输出改成：
+   ```
+   TASK_DONE <task_id> pending_poll <grfal_task_id>
+   ```
+   主 agent 见到 `pending_poll` 会自行接管轮询并下载。
+4. 🚫**绝对禁止**为了等结果去起后台作业（`Start-Job`、`run_in_background`、后台轮询脚本、派生子 agent）。你一把等待交给后台就**当场停止**，而完成通知**经常不触发** → 主 agent 看到任务永远停在 `running`、`saved_to` 为空，误判成超时/认证失效，进而重派 → **白烧一次生成额度**（视频尤其贵）。
+5. 被主 agent 用 SendMessage 唤醒要求"查真实状态"时：**先 `--check-task`，绝不重新提交**。多数情况成品早就生成好了，只差下载。
+6. **判完成一律读 JSON 的 `status` 字段**（`completed`/`running`/`failed`）。🚫别 grep `success`——响应体里恒有 `"success": true`（那是 HTTP 层成功），grep 它必然假阳性。
+7. 判别信号：`call_grfal.py --list-tools` 能通 = 认证没掉 → 那是轮询问题不是生成问题，更不该重新提交。
+8. `--check-task` **不接受 `--download-dir`**；完成后从响应里取结果 URL 自行下载。
+9. 只有 `--check-task` **明确返回 failed** 时才允许重新提交。
+
+> 主 agent 侧的现成轮询器：`poll_grfal.py <grfal_task_id> <输出目录> <文件名> [次数]`（按 status 精确判、递归抠结果 URL、自动下载）。本会话固化于 scratchpad，长期应移进 `<SKILL_ROOT>\scripts\`。
+
 ### Step 5 — 写入终态
 
 成功路径：

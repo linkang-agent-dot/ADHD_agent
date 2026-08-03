@@ -5,9 +5,26 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 3b1aba42-1219-4e1a-9d3d-9e5abdfa0ef0
+  modified: 2026-07-29T13:56:13.638Z
 ---
 
 # Unity Editor「一直读条」诊断链路（2026-07-07 X3 客户端实战沉淀）
+
+## 🔴 情形 A：不是卡死，是**大批量 reimport**——定位「谁动了盘」三步法（2026-07-29 实战）
+症状＝Editor.log **秒级持续在写** `Start importing Assets/... -> (artifact id ...) in 0.xx seconds`，一跑一个多小时。这不是卡死，是真在干活，**别强杀**（中断会让 Library 半残，下次重来更久）。查元凶：
+1. **看在导什么**：`Get-Content Editor.log -Tail 25` → 本次是 `Assets/Res/Audio/Voice/*.mp3`，每个 0.2~0.8s × 数千个＝小时级。
+2. **看资源何时落盘**（关键一步，直接指认时间点）：
+   ```powershell
+   Get-ChildItem <资源目录> -Recurse -Filter *.mp3 |
+     Group-Object { $_.LastWriteTime.ToString("MM-dd HH:00") } | Sort-Object Name -Descending
+   ```
+   出现「今天某小时突然 N 百个文件」＝那个时间窗有人动了盘。
+3. **用 reflog 对时间**：`git reflog --date=format:"%m-%d %H:%M"` → 本次命中 `reset: moving to origin/dev_festival`，`git diff <旧> <新> --stat` 显示 **4385 files / 286225 insertions** ＝ 全量 reimport 的真凶。
+- 🪤**判反了的两个坑**（本次都踩过，别重蹈）：①**看到 `M xxx.mp3.meta` 别当成原因**——`.meta` 被改是 Unity import 的**产物**不是起因；②**先查 `.gitattributes` 再赖 LFS**——本次 mp3 **不是** LFS 跟踪（只有 `*.bytes` 是），所以 `git lfs pull` 根本碰不到它，怀疑方向一开始就错了。**mtime 变但 `git status` 不报内容改 ＝ 文件被同内容重写**（reset/checkout 的典型副作用），Unity 只认 mtime 就会重导。
+- ✅**预防**：Unity 项目里**别对整仓 `git reset --hard origin/<br>`** 去拿几个产物文件——它重写数千文件 mtime＝必然触发小时级 reimport。只要某几个文件就用 **`git checkout <ref> -- <精确路径>`**（本次取 ProtoGen 两个 .bytes 即此法，只重导几个 TextAsset，秒级）。
+
+## 🪤 附带：`git merge-base --is-ancestor` 判「提交丢没丢」会**假阳性**
+reset 后拿 `--is-ancestor <commit> origin/<br>` 判断，返回 false **不等于工作丢了**——若那些改动是被 **cherry-pick / 别人重新提交**进远端的，**commit hash 变了但内容在**。**必须验内容**：`git show origin/<br>:<文件> | grep <关键符号>`、`git cat-file -e origin/<br>:<新增文件>`、`git diff origin/<br> <commit> -- <文件>`（空输出＝内容一致）。本次三笔"丢失"提交经此法验证内容全在。
 
 不猜、不瞎等，四步定位卡在哪：
 

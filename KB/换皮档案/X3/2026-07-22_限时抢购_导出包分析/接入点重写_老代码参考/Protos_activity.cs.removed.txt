@@ -1,0 +1,470 @@
+        /// <summary>
+        /// 马戏节限时抢购活动数据（ActvType=84）；merge dev→festival 让号 67→70
+        /// </summary>
+        public ActivityFlashSaleData flashSaleData { get; set; }
+
+
+            if (flashSaleData != null)
+            {
+                writer.WriteTag(562);
+                writer.WriteMessageStart();
+                if (flashSaleData != null)
+                {
+                    #if !_CLIENTLOGIC_
+                    flashSaleData.Encode(writer, forClient, isOwner);
+                    #else
+                    flashSaleData.Encode(writer);
+                    #endif
+                }
+                writer.WriteMessageEnd();
+            }
+
+            flashSaleData = null;
+
+                    case 562:
+                        {
+                            flashSaleData = new cspb.ActivityFlashSaleData();
+                            if (reader.ReadMessageStart())
+                            {
+                                flashSaleData.Decode(reader);
+                                reader.ReadMessageEnd();
+                            }
+                        }
+                        break;
+            flashSaleData = null;
+
+
+    /// <summary>
+    /// 限时抢购货架格状态
+    /// </summary>
+    public sealed partial class FlashSalePackInfo : TFW.Google.Protobuf.IMessage
+    {
+        /// <summary>
+        /// 货架包配置 ID
+        /// </summary>
+        public int packCfgId { get; set; }
+
+        /// <summary>
+        /// 本服本场剩余限量（P1 定案：单服口径）
+        /// </summary>
+        public int globalRemain { get; set; }
+
+        /// <summary>
+        /// 本人本场已购次数（每场每包限 1）
+        /// </summary>
+        public int personalBought { get; set; }
+
+        /// <summary>
+        /// 直购档(PriceType=1)的 gift 实例 id，走标准 gift 系统本地下单；钻石档=0
+        /// </summary>
+        public long giftId { get; set; }
+
+        partial void OnBeforeEncode(bool forClient = false, bool isOwner = true);
+
+        partial void OnAfterEncode(bool forClient = false, bool isOwner = true);
+
+        #if !_CLIENTLOGIC_
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer, bool forClient = false, bool isOwner = true)
+        #else
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer)
+        #endif
+        {
+            #if _CLIENTLOGIC_
+            var isOwner = true;
+            var forClient = false;
+            #endif
+            OnBeforeEncode(forClient, isOwner);
+
+            if (packCfgId != 0)
+            {
+                writer.WriteTag(8);
+                writer.WriteInt32(packCfgId);
+            }
+
+            if (globalRemain != 0)
+            {
+                writer.WriteTag(16);
+                writer.WriteInt32(globalRemain);
+            }
+
+            if (personalBought != 0)
+            {
+                writer.WriteTag(24);
+                writer.WriteInt32(personalBought);
+            }
+
+            if (giftId != 0)
+            {
+                writer.WriteTag(32);
+                writer.WriteInt64(giftId);
+            }
+
+            OnAfterEncode(forClient, isOwner);
+        }
+
+        partial void OnBeforeDecode();
+
+        partial void OnAfterDecode();
+
+        public void Decode(TFW.Google.Protobuf.CodedInputStream reader)
+        {
+            OnBeforeDecode();
+
+            packCfgId = 0;
+
+            globalRemain = 0;
+
+            personalBought = 0;
+
+            giftId = 0;
+
+            uint tag;
+            while ((tag = reader.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    case 8:
+                        {
+                            packCfgId = reader.ReadInt32();
+                        }
+                        break;
+                    case 16:
+                        {
+                            globalRemain = reader.ReadInt32();
+                        }
+                        break;
+                    case 24:
+                        {
+                            personalBought = reader.ReadInt32();
+                        }
+                        break;
+                    case 32:
+                        {
+                            giftId = reader.ReadInt64();
+                        }
+                        break;
+                    default:
+                        {
+                            reader.SkipLastField();
+                        }
+                        break;
+                }
+            }
+            OnAfterDecode();
+        }
+
+        public void Reset()
+        {
+            packCfgId = 0;
+
+            globalRemain = 0;
+
+            personalBought = 0;
+
+            giftId = 0;
+
+        }
+
+    }
+
+    /// <summary>
+    /// 马戏节限时抢购活动数据（玩家侧，与服务器同步）
+    /// </summary>
+    public sealed partial class ActivityFlashSaleData : TFW.Google.Protobuf.IMessage
+    {
+        /// <summary>
+        /// 本场 8 货架包状态
+        /// </summary>
+        public List<FlashSalePackInfo> packs { get; private set; } = new ();
+
+        /// <summary>
+        /// 当前第几场（-1=预告期）
+        /// </summary>
+        public int curWindowIndex { get; set; }
+
+        /// <summary>
+        /// 本场开始时间（预告期=首场开始）
+        /// </summary>
+        public long windowStartTime { get; set; }
+
+        /// <summary>
+        /// 本场结束时间
+        /// </summary>
+        public long windowEndTime { get; set; }
+
+        /// <summary>
+        /// 首次分享奖是否已领
+        /// </summary>
+        public bool shareDone { get; set; }
+
+        /// <summary>
+        /// 被助力次数（破冰链进度）
+        /// </summary>
+        public int assistedCount { get; set; }
+
+        /// <summary>
+        /// 3 档助力奖领取位标记（bit0-2）
+        /// </summary>
+        public int assistRewardClaimed { get; set; }
+
+        /// <summary>
+        /// 剩余抽奖次数
+        /// </summary>
+        public int raffleTicketCount { get; set; }
+
+        /// <summary>
+        /// 已抽次数
+        /// </summary>
+        public int raffleUsedCount { get; set; }
+
+        /// <summary>
+        /// 已助力过我的玩家（同一助力者对同一目标限 1 次，防重复）
+        /// </summary>
+        public List<long> supporterIds { get; private set; } = new ();
+
+        /// <summary>
+        /// 活动内累计购买次数（抽奖资格=买过≥1 包；packs 的 personalBought 每场清零，不能承担此职责）
+        /// </summary>
+        public int totalBoughtCount { get; set; }
+
+        partial void OnBeforeEncode(bool forClient = false, bool isOwner = true);
+
+        partial void OnAfterEncode(bool forClient = false, bool isOwner = true);
+
+        #if !_CLIENTLOGIC_
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer, bool forClient = false, bool isOwner = true)
+        #else
+        public void Encode(TFW.Google.Protobuf.CodedOutputStream writer)
+        #endif
+        {
+            #if _CLIENTLOGIC_
+            var isOwner = true;
+            var forClient = false;
+            #endif
+            OnBeforeEncode(forClient, isOwner);
+
+            foreach (var itor in packs)
+            {
+                writer.WriteTag(10);
+                writer.WriteMessageStart();
+                if (itor != null)
+                {
+                    #if !_CLIENTLOGIC_
+                    itor.Encode(writer, forClient, isOwner);
+                    #else
+                    itor.Encode(writer);
+                    #endif
+                }
+                writer.WriteMessageEnd();
+            }
+
+            if (curWindowIndex != 0)
+            {
+                writer.WriteTag(16);
+                writer.WriteInt32(curWindowIndex);
+            }
+
+            if (windowStartTime != 0)
+            {
+                writer.WriteTag(24);
+                writer.WriteInt64(windowStartTime);
+            }
+
+            if (windowEndTime != 0)
+            {
+                writer.WriteTag(32);
+                writer.WriteInt64(windowEndTime);
+            }
+
+            if (shareDone != false)
+            {
+                writer.WriteTag(40);
+                writer.WriteBool(shareDone);
+            }
+
+            if (assistedCount != 0)
+            {
+                writer.WriteTag(48);
+                writer.WriteInt32(assistedCount);
+            }
+
+            if (assistRewardClaimed != 0)
+            {
+                writer.WriteTag(56);
+                writer.WriteInt32(assistRewardClaimed);
+            }
+
+            if (raffleTicketCount != 0)
+            {
+                writer.WriteTag(64);
+                writer.WriteInt32(raffleTicketCount);
+            }
+
+            if (raffleUsedCount != 0)
+            {
+                writer.WriteTag(72);
+                writer.WriteInt32(raffleUsedCount);
+            }
+
+            writer.WriteTag(82);
+            writer.WriteMessageStart();
+            foreach (var itor in supporterIds)
+            {
+                writer.WriteInt64(itor);
+            }
+            writer.WriteMessageEnd();
+
+            if (totalBoughtCount != 0)
+            {
+                writer.WriteTag(88);
+                writer.WriteInt32(totalBoughtCount);
+            }
+
+            OnAfterEncode(forClient, isOwner);
+        }
+
+        partial void OnBeforeDecode();
+
+        partial void OnAfterDecode();
+
+        public void Decode(TFW.Google.Protobuf.CodedInputStream reader)
+        {
+            OnBeforeDecode();
+
+            packs.Clear();
+
+            curWindowIndex = 0;
+
+            windowStartTime = 0;
+
+            windowEndTime = 0;
+
+            shareDone = false;
+
+            assistedCount = 0;
+
+            assistRewardClaimed = 0;
+
+            raffleTicketCount = 0;
+
+            raffleUsedCount = 0;
+
+            supporterIds.Clear();
+
+            totalBoughtCount = 0;
+
+            uint tag;
+            while ((tag = reader.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    case 10:
+                        {
+                            cspb.FlashSalePackInfo o = null;
+                            o = new cspb.FlashSalePackInfo();
+                            if (reader.ReadMessageStart())
+                            {
+                                o.Decode(reader);
+                                reader.ReadMessageEnd();
+                            }
+                            packs.Add(o);
+                        }
+                        break;
+                    case 16:
+                        {
+                            curWindowIndex = reader.ReadInt32();
+                        }
+                        break;
+                    case 24:
+                        {
+                            windowStartTime = reader.ReadInt64();
+                        }
+                        break;
+                    case 32:
+                        {
+                            windowEndTime = reader.ReadInt64();
+                        }
+                        break;
+                    case 40:
+                        {
+                            shareDone = reader.ReadBool();
+                        }
+                        break;
+                    case 48:
+                        {
+                            assistedCount = reader.ReadInt32();
+                        }
+                        break;
+                    case 56:
+                        {
+                            assistRewardClaimed = reader.ReadInt32();
+                        }
+                        break;
+                    case 64:
+                        {
+                            raffleTicketCount = reader.ReadInt32();
+                        }
+                        break;
+                    case 72:
+                        {
+                            raffleUsedCount = reader.ReadInt32();
+                        }
+                        break;
+                    case 82:
+                        {
+                            if (reader.ReadMessageStart())
+                            {
+                                while (!reader.ReachedLimit)
+                                {
+                                    var o = reader.ReadInt64();
+                                    supporterIds.Add(o);
+                                }
+                                reader.ReadMessageEnd();
+                            }
+                        }
+                        break;
+                    case 88:
+                        {
+                            totalBoughtCount = reader.ReadInt32();
+                        }
+                        break;
+                    default:
+                        {
+                            reader.SkipLastField();
+                        }
+                        break;
+                }
+            }
+            OnAfterDecode();
+        }
+
+        public void Reset()
+        {
+            packs.Clear();
+
+            curWindowIndex = 0;
+
+            windowStartTime = 0;
+
+            windowEndTime = 0;
+
+            shareDone = false;
+
+            assistedCount = 0;
+
+            assistRewardClaimed = 0;
+
+            raffleTicketCount = 0;
+
+            raffleUsedCount = 0;
+
+            supporterIds.Clear();
+
+            totalBoughtCount = 0;
+
+        }
+
+    }
+
+        ProtoBuf.PType.RegisterType("cspb.ActivityFlashSaleData", typeof(cspb.ActivityFlashSaleData), () => new cspb.ActivityFlashSaleData());
+        ProtoBuf.PType.RegisterType("cspb.FlashSalePackInfo", typeof(cspb.FlashSalePackInfo), () => new cspb.FlashSalePackInfo());

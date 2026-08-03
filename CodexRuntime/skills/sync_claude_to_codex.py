@@ -13,11 +13,29 @@ import shutil
 import stat
 import sys
 import uuid
-from typing import Callable
+from typing import Callable, Collection
 
 
 CODEX_START = "<!-- CODEX-ONLY:START -->"
 CODEX_END = "<!-- CODEX-ONLY:END -->"
+
+# Claude can keep legacy workflow skills that Codex replaces with native
+# orchestration or durable AGENTS.md rules. Never recreate these in the Codex
+# skill root during a routine sync.
+DEFAULT_CODEX_EXCLUDED_SKILLS = frozenset(
+    {
+        "brainstorming",
+        "dispatching-parallel-agents",
+        "executing-plans",
+        "planning-with-files",
+        "skill-creator",
+        "subagent-driven-development",
+        "using-superpowers",
+        "verification-before-completion",
+        "writing-plans",
+        "writing-skills",
+    }
+)
 
 
 class SkillFormatError(ValueError):
@@ -91,7 +109,11 @@ def _is_reparse_point(path: Path) -> bool:
     return bool(attributes & stat.FILE_ATTRIBUTE_REPARSE_POINT)
 
 
-def inventory_skills(source_root: Path, destination_root: Path) -> InventoryResult:
+def inventory_skills(
+    source_root: Path,
+    destination_root: Path,
+    excluded_skills: Collection[str] = DEFAULT_CODEX_EXCLUDED_SKILLS,
+) -> InventoryResult:
     """Classify source/destination top-level skills without traversing them."""
     source_root = Path(source_root)
     destination_root = Path(destination_root)
@@ -99,10 +121,13 @@ def inventory_skills(source_root: Path, destination_root: Path) -> InventoryResu
     destinations = _top_level_directories(destination_root)
     entries: list[SkillEntry] = []
 
+    excluded = {name.casefold() for name in excluded_skills}
     for name in sorted(sources.keys() | destinations.keys()):
         source = sources.get(name)
         destination = destinations.get(name)
-        if re.search(r"\.bak\.\d+$", name, flags=re.IGNORECASE):
+        if name.casefold() in excluded:
+            kind = "excluded"
+        elif re.search(r"\.bak\.\d+$", name, flags=re.IGNORECASE):
             kind = "non-skill-directory"
         elif source is not None and _is_junction(source):
             kind = "shared-junction"
@@ -316,11 +341,12 @@ def build_sync_plan(
     destination_root: Path,
     *,
     allow_create: bool = False,
+    excluded_skills: Collection[str] = DEFAULT_CODEX_EXCLUDED_SKILLS,
 ) -> SyncPlan:
     """Return a read-only synchronization plan."""
     source_root = Path(source_root)
     destination_root = Path(destination_root)
-    inventory = inventory_skills(source_root, destination_root)
+    inventory = inventory_skills(source_root, destination_root, excluded_skills)
     operations: list[FileOperation] = []
     blockers: list[str] = []
 
@@ -329,7 +355,7 @@ def build_sync_plan(
         return SyncPlan(source_root, destination_root, inventory, (), tuple(blockers))
 
     for entry in inventory.entries:
-        if entry.kind in {"shared-junction", "codex-only", "non-skill-directory"}:
+        if entry.kind in {"excluded", "shared-junction", "codex-only", "non-skill-directory"}:
             continue
         if entry.kind == "source-invalid":
             blockers.append(f"Skill {entry.name!r} destination exists but source has no SKILL.md")

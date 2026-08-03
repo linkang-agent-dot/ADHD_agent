@@ -242,6 +242,7 @@ python scripts/verify_transparency.py <产出.png>
 - 已指定 → 直接用，不再询问
 - 未指定 → **必须先问**（列表见 `references/available-models.md`）
 - 若 `config.json` 中 `preferred_image_model` 非空，可跳过询问直接使用偏好模型
+- ★**视频例外（2026-07-27 强制）**：任何生成视频请求，选模型前**必读 `references/video-model-routing.md`** 按视频类别路由（UI 氛围循环=kling fflf / 角色表演带脸=seedance），**禁止直接用 `preferred_video_model` 或凭单条 history 选型**——vidu 误选案（马戏门票视频）根因即 config 偏好过时。
 
 ### 超时设置
 
@@ -392,6 +393,14 @@ Cookie 通常在服务端会话超时后失效。症状：API 返回 `未认证�
 14. **worker prompt 只传 task_id** — 调用 Agent 工具派 worker 时，prompt **只**包含 `TASK_ID=<id>` 一行，所有参数在 task json 里。塞参数副本进 prompt 会造成两份数据不一致，且浪费 token。
 
 15. **生成任务"假卡死"= 后台轮询没触发通知（2026-07-01 实证）** — worker 发起 GRFal 异步 `generate_image` 后靠后台轮询等结果，**轮询脚本偶尔卡住不发完成通知**，表现为 task json 长期 `running`、`saved_to` 空，误判成超时/认证挂了。**别重跑生成**（图其实早出好了，重跑=白烧一次 gpt）。正确处置：主 agent 用 `SendMessage` 唤起该 worker，让它 **`call_grfal.py --check-task <generate_image_任务id>` 直接查真实状态**——多半已 `completed` 拿到 URL，接着跑 removebg/后处理即可。判据：`--list-tools` 通=认证没掉，那就是轮询问题不是生成问题。
+
+15b. **批量派发时「假卡死」是高发不是偶发（2026-07-28 实证）** — 同批派 2 个 worker，**两个都卡在轮询上**，各自空转 20-30 分钟仍报 `waiting for background polling`。主 agent 别干等也别重派生成，直接 `SendMessage` 给 worker，**把 Gotcha 15 的三步明写给它**（--check-task 查真实状态 → 拿 URL 用 `~/.config/grfal-api/token_store.json` 的 bearer token 下载 → 回写 task json + history）。两个 worker 收到这条后都在一轮内收工，图确实早就 completed 在服务端。**判据**：worker 报"等轮询"且 task json 仍 running/saved_to 空 = 轮询问题，不是生成问题。
+
+15c. **GRFal 有内容安全网关，会静默降级你的 prompt（2026-07-28 实证）** — 提交含较露骨着装描述（deep cutout / garter straps / bare midriff）的 prompt 时，GRFal 直接 `error: 内容不符合安全策略, subject: prompt`，并返回一个 `rescue.suggested` 的**软化版 prompt**。worker 若拿它重试会成功，但**产出的暴露度达不到原始 brief**。所以：①这类任务完成后必须在播报里**明确告知用户"内容被平台降级"**，别让用户以为是 AI 没画到位；②同批任务可能一个过闸一个被拦（实测 poseA 过、poseB 被拦），**产出之间的尺度会不一致**；③再怎么改 prompt 措辞也绕不过闸门，要那个尺度得走人工美术，别在 prompt engineering 上反复烧钱。
+
+15d. **落库后要做「批量透明体检」，别只信落库时那次闸门（2026-07-28 马戏节实证）** — 用户肉眼在游戏里发现一张活动图标是白底方块，回查才知道**同批 44 张里有 2 张假透明**：拜访礼包图（边框仅 44.9% 透明 + 37% 假棋盘格）和扭蛋机活动图标（**transp 0.0% / border 0.0%＝整张全不透明**）。都是早期出图时没跑 `verify_transparency` 就落库的。
+**做法**：一个节日/模块的美术收尾时跑 **`python scripts/audit_transparency_batch.py <根目录> <关键词>`**（已固化，别再现写内联脚本）——判据＝**四边边框透明率 <80% 即假透明**（正常件普遍 93~100%），RGB 模式自动跳过；退出码 1＝存在假透明，可当流水线卡口。例：`audit_transparency_batch.py "C:/x3-project/client/Assets/Res/UI/Spirits" circus`。
+**修法**：对判坏的图调 grfal `remove_background` 重抠（输入直接用客户端现役文件），再过 `verify_transparency` 闸门，通过才替换落库。
 
 16. **image-cache 参考图会被环境中途清理（2026-07-08 实证）** — 用户在对话里贴的图落在 `~\.claude\image-cache\<session>\`，该目录**会话进行中就可能被自动清空**（实测 14:40 确认存在、15:09 整目录消失，worker 无参考图可传直接 failed）。**主 agent 派发前必须先把 image-cache 里的参考图拷到稳定路径**（如 `<skill>\state\tmp\`），task json 的 `reference_images` 写稳定路径，禁止直接写 image-cache 路径。若已丢失：可从会话 transcript 恢复图片（base64 解码），恢复后同样先落稳定路径再用。
 

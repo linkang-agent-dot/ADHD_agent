@@ -70,3 +70,8 @@ cd C:/x3/gdconfig/Tools/table_exporter && python ExportTable.py
 ## robot 回写两坑（2026-07-21 奇观排期案实证）
 - **「没有可提交的导表改动，跳过上传」≠ 失败**：连推场景下（多人/多会话接连 push），前一班 build 在拉 gdconfig tip 时可能已包含你的提交 → robot 提交挂着**别人的 commit message**，你自己 build 的上传步骤自然无 diff 可交。判 robot 回写落没落地：**解码 ProtoGen bytes 验内容**（`decode_protogen_timecycle.py` 等），别死等带自己 message/-robot 号的提交（会误判成"回写没跑"）。
 - **`git show <branch>:client/.../ProtoGen/X.bytes` 拿到的是 LFS 指针（~130 字节），解码必空**：ProtoGen .bytes 是 LFS 跟踪的，验内容要用**工作树里 smudge 过的真文件**（先 `git checkout origin/<branch> -- .../ProtoGen/` 再解码），或 `git lfs smudge`。
+
+## jolt 结果有第三种形态：ABORTED ≠ 配置错（2026-07-30 实例 #2351）
+`jolt_verify.py` 报 **ABORTED** 且日志末尾是 `Aborted by admin` ⇒ **有人手动中止了构建**，不是你的配置有问题。
+判别：看中止前的阶段——若**表转换 + protoc 已全部通过**才被掐，基本可确定是人为/调度中止。**直接重触发即可**（#2351 ABORTED → 重跑 #2354/#2355 均 SUCCESS）。
+⚠️ 这个形态最容易被误读成"我改错了"而回头翻配置，白耗时间。归因顺序：**先看是 ABORTED 还是 FAILURE**，再分「构建机基础设施 vs 配置错」。

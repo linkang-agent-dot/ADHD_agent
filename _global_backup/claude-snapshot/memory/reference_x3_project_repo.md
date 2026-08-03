@@ -5,8 +5,92 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 8c95a774-9d05-4760-9550-0dc41ff62e68
-  modified: 2026-07-22T06:24:20.797Z
+  modified: 2026-07-29T13:28:28.135Z
 ---
+
+## 🔴🔴 推不上去时的正解＝sparse worktree cherry-pick（2026-07-28 实测，别再在主工作区折腾）
+
+**症状**：本地有干净提交，push 被拒（远端 robot 领先），但 **`git rebase --autostash` 必定失败**，报
+`cannot rebase: You have unstaged changes` 并把 stash 又 Applied 回去。
+
+**根因（两个，都不是能简单清掉的脏）**：
+1. **`M gdconfig`（gitlink）** —— autostash **吃不下 submodule 指针修改**。而这个 M 是本仓**常驻正常态**（gdconfig 跟分支不跟 pin），**不能 reset**。
+2. **`.githooks/post-checkout|post-merge|pre-push` 被本地 install_hooks 改过** → 也算 unstaged。
+
+外加主工作区常年有几十个在途改动（别的任务的切图/prefab/i18n bytes），stash 风险大。**所以主工作区这条路本身就是死的，不是保守。**
+
+**正解（全程不碰主工作区，实测 63 个在途改动零影响）**：
+```bash
+cd C:/x3-project
+git worktree add --no-checkout --detach C:/x3-wt-push origin/dev_festival
+cd C:/x3-wt-push
+git sparse-checkout init --cone
+git sparse-checkout set <只要你改动涉及的目录>      # 关键：避免拉整个 6000+ 文件 58GB LFS 仓
+git checkout
+git cherry-pick <你的commit>
+git checkout -- .githooks/                        # worktree 里钩子同样会脏，还原掉
+git fetch origin <分支> && git rebase origin/<分支>  # 干净了就能过
+git push origin HEAD:<分支>
+cd C:/x3-project && git worktree remove C:/x3-wt-push --force
+```
+- 🪤 **cherry-pick 的 "N files changed" 会小于原 commit，别据此判断丢没丢（2026-07-29 实测）**：原 commit 5 files/71 insertions，cherry-pick 到 origin 后只报 **2 files/22 insertions**——因为其中 3 个文件的改动**远端已经有了**（此前 agent 或别的会话推过），git 只应用了差集，日志里会出现 `Auto-merging <file>`。**这个数字既不能证明丢了、也不能证明推全了**。**必须逐条 grep 特征串核实**：给每处改动挑一个独有字符串（新增的常量名/方法名/注释关键词），在 worktree 的 HEAD 里 `grep -c` 一遍，全部命中才算数。本次核的六处=段内填充注释 / CheckChainPackFullyExhaustedForShop / BuyGiftSuccess / 注释里的 ChainPack 707 / DataSourceOnlyActivityCfgIds（常量定义处 + 使用处各一次）。
+- ⚠️ **建 worktree 要 `run_in_background`**（仓大，前台会撞 Bash 2min 超时）
+- 💡 **sparse-checkout 目录要覆盖 commit 涉及的全部路径**：漏了某个目录，cherry-pick 会因文件不在工作树而失败或静默跳过。本次 `set client/Assets/Scripts/UI client/Assets/Scripts/CSShared/Common/Const`（7432 文件，远小于整仓）。
+- ⚠️ **推送期间 robot 可能又提交**，push 再被拒就在 worktree 里再 fetch+rebase 一次（干净工作区可以无限重试）
+- 💡 收尾：主工作区仍停在被 cherry-pick 走的旧 commit 上（内容同、hash 不同），**下次 pull 时 git 自会识别，不用管**
+- 🔴🔴**判「某个 commit 丢没丢」只能按内容判——hash 和 message 两种判法都会误报（2026-07-29 同一天连栽两次）**：
+  - ❌ **按 hash**：`git merge-base --is-ancestor <sha> origin/<分支>` —— 对 cherry-pick 过去的 commit 返回 false（内容在、hash 变了）。
+  - ❌ **按 commit message**：`git log --grep=<关键词> origin/<分支>` —— 同样的改动若以**别的 message** 进的远端（别处提交／squash／另一台机器推的），照样查不到。本次两个 commit 用 message 判"四个分支全没有"，一度判定"工作被 reset 丢了"要抢救，**实际 dev 和 dev_festival 早就都有了**。
+  - ✅ **正确＝比内容**：① 挑该 commit 的**标志性特征串**（新增的方法名/注释关键词/常量名）`git show origin/<分支>:<文件> | grep -c "<特征串>"`；② 或整体比 `git diff --stat <commit> origin/<分支> -- <该 commit 涉及的文件列表>`，**无输出＝内容一致＝已在远端**；③ 新增文件最好判：`git cat-file -e origin/<分支>:<新文件路径>`。
+  - **教训**：hash/message 都只是标识，reset/cherry-pick/squash/多机推送都会让标识对不上而内容一致。**碰到"疑似丢 commit"先别喊抢救，花 30 秒比内容**——误报会让用户白紧张、还可能重复推送造成冲突。
+- 🪤**`reset: moving to ...` 之后先别急着做任何事——先点收 reflog**：`git reflog -10` 找到 reset 那行，它**上面几行**就是被丢掉的本地 commit。reflog 默认留 90 天，内容都在，但**若此时 Unity 正在 importing，别立刻 reset 回去**（工作区再改写一次＝重导从头再来），改用 sparse worktree cherry-pick 把它们推走，全程不碰工作区。
+
+## 🔴 用 sparse worktree 推完之后：用户工作区**没有那些文件**（2026-07-28 实证，极易误判成"AB 没重建"）
+sparse worktree 推送法的代价＝**全程不碰主工作区，所以主工作区也拿不到你推的东西**。表现：用户在 Editor 里跑游戏「图看不到」，第一反应是问"怎么重建 AB"——**但真因是那些 png 在他磁盘上根本不存在**（本次落后远端 12 个提交）。
+
+**排查顺序（别一上来就重建 AB）**：
+1. `ls` 目标图片路径 → 文件在不在？不在＝没拉，跟 AB 无关。
+2. 在 → 看 DK 注册（Display_*/Path_*）有没有该 key。
+3. 都在还看不到 → 才是 Unity 导入/AB 缓存问题（Ctrl+R 刷新导入 → Ctrl+T 重载 DisplayKey → 仍旧图才重建 AB）。
+- **判据**：**白图/空图＝DK 没生效**；**显示旧图＝AB 缓存**。
+
+**安全补齐配方（工作区有在途改动、不能 pull 时）**：
+- **图片等新增文件**：`git checkout origin/<分支> -- <路径列表>`（新增文件零冲突，不动任何已改文件）。
+- **DK 注册表（Display_*/Path_*，用户常有在途改动，禁止整文件 checkout 覆盖）**：从远端 `git show origin/<分支>:<path>` 里 **正则抠出该 key 的 guid**，再**追加**进本地文件（锚点插入），不碰用户改的行。本地无改动的表（如 Display_Memory/Path_Memory）才可以直接 checkout。
+- 收尾必 grep `<<<<<<< / >>>>>>>` 复查（见下条）。
+
+## 🔴 解决冲突后必须 grep 复查残留标记——只看 `git status` 会翻车（2026-07-28 血泪）
+
+**症状极具迷惑性**：用户报「DK 资源全掉了」，看着像资源丢失/引用断裂，
+实际是 **`.asset` 文件里残留了 `<<<<<<< / ======= / >>>>>>>` 冲突标记**。
+Unity 的 `.asset / .meta / .prefab` 都是 **YAML**，混进这几行非法内容会让**整个文件解析失败**，
+于是该文件注册的 DK **全部失效**——不报错，就是"东西没了"。
+
+**怎么栽的**：`git stash pop` 冲突 → 手动合并 → `git add`（此时 `git status` 显示已解决）
+→ **第二次 `git stash pop` 又往同一文件写入了新的一组冲突标记** → 我只看 status 没复查文件内容 → 标记留在文件里。
+
+**铁律**：
+1. `git add` 只是**标记状态**，**不检查内容**。解决冲突后一律再 grep 一次：
+   `grep -n "^<<<<<<<\|^=======\|^>>>>>>>" <file>`
+2. **连续多次 stash pop / merge 时，每次之后都要复查**——前一次解决了不代表后一次不会再写入
+3. 改动 Unity YAML 资产后，用结构自检兜底（见下）
+
+### ✅ DK 注册文件完整性自检法（好用，改完必跑）
+`Path_*.asset` 的三段条目数**必须完全相等**，对不上就是有条目缺胳膊少腿：
+```bash
+grep -c $'\n    - DK_' <Path_x.asset>        # keys 列表
+grep -c $'\n    - key: DK_' <Path_x.asset>   # values 映射
+grep -c 'objPath:' <Path_x.asset>            # 路径
+```
+本案修复后三者均 =1359 ✅。另可与远端比行数：本地 ≥ 远端才正常（本地含未推的在途注册）。
+
+### 💡 纯追加型冲突可安全两边全留
+DK 注册冲突多是「两边各加了新 key」（本案：远端加 linfeng 系列 74 个 / 本地 stash 加 FlashSale 系列 7 个）。
+**先验重名**：`两边 key 集合取交集为空` → 直接删标记、两边内容都保留，不用二选一。
+
+## 🪤 commit message 格式钩子（x3-project 有，gdconfig 没有）
+必须 `X3-<jira单号>描述` 或 `X3NEW-描述` 开头，否则 commit 直接被拒、message 要重写一遍。
+例：`X3NEW-马戏节阿米娜魔术师皮肤展示视频落库: ...`
 
 ## 提交客户端改动时的暂存区排雷（2026-07-22 实测）
 提交 x3-project 客户端改动前 `git status` 常混入两类**不该提交的**：① `client/Assets/Res/Config/ProtoGen/*.bytes`（robot 导表管，我若跑过 `git checkout origin -- ProtoGen/` 拉配置会把它们暂存进来）② `.claude/skills/*/memory/*.jsonl`（skill 运行时记忆，无关）。做法：**只 `git add` 明确的业务文件**（列全路径），若 ProtoGen 被顺带暂存了用 `git reset HEAD -- ProtoGen/` 踢掉。push 被拒(远端robot领先)→rebase 前工作区必须干净：ProtoGen 用 `git checkout -- ProtoGen/` 丢弃(pull带回最新)、无关脏文件 `git stash push -- <file>` 收起，rebase+push 后 `stash pop`。日志出现 `[gdconfig] fast-forwarded ... left superproject gdconfig pointer unstaged` 是钩子正常行为(gdconfig gitlink 跟分支不跟 pin)，别 reset。
@@ -124,3 +208,61 @@ x3-project 仓 `git commit` 时 pre-commit hook 强制 message 格式：
 - **`git merge --abort` 清不干净**：abort 后工作区残留「被自动合并的 tracked .asset 改动 + 未跟踪的新 png」（pre-merge 明明只有 `M gdconfig`）。**清理只能按显式路径** `git checkout -- <文件>` + `rm <具体未跟踪文件>`；**绝对别在 client/ 跑 `git clean`**——会连 AVProVideo/Domain/WeatherSystem 等**合法的未跟踪 Unity 目录**一起删。
 - ✅**正解=让合并发生在远端**（喊大哥/走 MR 在 origin 上把 A 合进 B），本地只做**干净切换**：`git fetch` → 确认 `git rev-list --count origin/B..A == 0`（A 已全进 B）→ `git checkout B && git merge --ff-only origin/B`。ff-only 无冲突、无 LFS 涂抹噩梦。切换后 `M gdconfig` 指针残留是 hook 的正常产物（无害）。
 - ⚠️切分支后**本地服(3080)还跑着旧分支的编译** → 客户端配置+服务端代码都变了 → 要 3080 跟上得重编 Hotfix+重启（见 [[workflow_x3_local_server_gm_telnet]] 重启预检：config mtime > dll 必重编）。
+
+
+## ★主工作区脏时推送客户端改动：用 `commit-tree` 底层构造，别动工作区（2026-07-28 定型）
+
+**场景**：x3-project 主工作区常年挂着别人的在途改动（DK 资产 / prefab / 脚本，本次 10+ 项未提交），
+本地分支又落后远端。此时 `git pull --rebase` / `rebase --autostash` 都会失败或搅乱别人的活；
+另开 worktree 也常撞上既有 worktree 自己是脏的（本次 `x3-wt-push2` 有暂存的删除）。
+
+**定型做法（全程零工作区改动）**：
+```bash
+git fetch origin dev_festival
+# 1. 先在本地正常 commit（工作区照旧脏着，只 add 自己的文件）
+#    ⚠️ commit 前必看 git diff --cached --stat，别把别人已暂存的文件带走
+# 2. 取出本次提交涉及的 blob
+git ls-tree HEAD <path>          # -> <blob sha>
+# 3. 在临时 index 上，基于远端最新 tree 打补丁
+export GIT_INDEX_FILE=/tmp/idx && rm -f $GIT_INDEX_FILE
+git read-tree origin/dev_festival
+git update-index --add --cacheinfo 100644,<blob>,<path>   # 新增文件带 --add
+git update-index --cacheinfo 100644,<blob>,<path>          # 改动已有文件不用 --add
+TREE=$(git write-tree)
+NEW=$(git commit-tree $TREE -p origin/dev_festival -F msg.txt)
+unset GIT_INDEX_FILE
+# 4. 推送前必须复核这个提交到底改了什么
+git diff --stat origin/dev_festival $NEW
+git push origin $NEW:dev_festival
+```
+
+**⚠️ LFS 必须额外处理**：x3-project 的 `.mp4` 等大文件走 LFS，
+`git ls-tree` 拿到的 blob 只有 **132 字节的指针**。绕过正常 `git push` 就**绕过了 lfs pre-push 钩子**，
+只推指针不推对象 → 别人拉下来是坏文件。所以：
+```bash
+OID=$(git cat-file -p <blob> | grep '^oid' | sed 's/oid sha256://')
+git lfs push origin --object-id "$OID"     # 推送前先单独推对象
+```
+**并且要验证真的上去了**（`git lfs push` 静默成功，看不出对象是否已存在）：
+```bash
+git clone --no-checkout --depth 1 --branch dev_festival <url> /tmp/chk
+cd /tmp/chk && git lfs fetch origin dev_festival --include "<path>"
+find .git/lfs -name "<oid前10位>*"     # 命中且字节数 == 本地文件 = 真的在远端
+```
+
+**代价与边界**：这样推出去的提交**不经过 pre-commit / pre-push 钩子**，
+所以钩子管的事要自己先做完（视频过 `compress_video.py`、提交信息符合 `X3NEW-` 格式、配置过导表验证）。
+本地分支会与远端分叉且**不去修它**——那些在途改动是谁的活谁来合，别替别人 merge。
+
+## 🔴 核对「是否真推上去」必须用 `git diff <remote> -- <file>`，别用 `git hash-object`（2026-07-29 差点漏掉坏文件）
+
+**场景**：交接/多人并行时，别人可能已经把你工作区的东西批量提交推走了（也可能**漏几个**）。收尾必须逐文件核对远端。
+
+- ❌ `git hash-object <工作区文件>` 对 `git rev-parse origin/<branch>:<file>`：**CRLF 文件必假阳性**——工作区是 CRLF、入库是 LF，哈希天然不同。本轮 11 个文件里 2 个报"不一致"，差点被当成噪音跳过。
+- ✅ `git diff origin/<branch> -- <file>`，**输出行数 0 才算一致**（git 自己处理 EOL 归一化）。
+- 更狠一点：直接抽验远端内容 `git show origin/<branch>:<file> | grep -c "<关键代码>"`。
+
+🪤**本轮真实后果**：大哥把工作区整批推了，但**漏了 2 个文件**，远端处于"格子一个都不显示 + 数据是空的"的坏态——正好退回我们调了两轮才修掉的症状。是最后这轮内容比对兜住的。
+**交接纪律：对方从你工作区批量提交后，你要逐文件核对远端，别默认他推全了。**
+
+🪤**自伤**：sparse worktree 里 cherry-pick 后我又 `git reset --hard`，把已经带进来的文件丢了、只提交了一个新增文件。**worktree 里 reset --hard 会连 cherry-pick 成果一起清掉**——要么先 push 再 reset，要么别 reset。

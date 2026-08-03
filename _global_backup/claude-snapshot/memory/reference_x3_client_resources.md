@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 9fa379f1-8095-4bed-9a37-401c299ba495
+  modified: 2026-07-28T12:00:35.576Z
 ---
 
 ## ⚠️ client 仓美术图是 Git LFS 指针（2026-06-14 实证，反复读不到图的根因）
@@ -225,6 +226,42 @@ git show <commit>^:.../Path_Activity.asset | grep -A1 "key: DK_xxx$"   # 取回 
 - **`sValidDisplayKeys` 不是运行时门**：`DisplayKeyExtension.ToDisplayKeyAssetPath` 里 `#if UNITY_EDITOR` 的 "未被配置表使用或导出到代码" 校验**仅当 `OpenDisplayKeyValidation()` 被调用(DK 审计工具)时才生效**；正常 Play/Editor 下 `sValidDisplayKeys==null`→跳过，DK 直接按 Path_*.asset 解析。
 - **直接手编辑 Path_*.asset 注册 DK（无 Unity Ctrl+T）即可**：按单锚平行插 keys[]/values[] 段(见 [[project-x3-worldcup-activity]] v0.37 注册脚本)，Unity 重导后 DisplayKey 系统读取生效。
 
+## 🏗️ DisplayKey 系统三层结构 + 排查顺序（2026-07-28 全面摸底，排查"DK 全掉"必读）
+
+**运行时读的不是 `Path_*.asset`，是汇总清单 `PathAssetList.asset`**——这点搞错会白查一圈。
+
+| 层 | 文件 | 作用 |
+|---|---|---|
+| ① 运行时配置 | `Assets/Res/Config/DisplayKey/DisplayKeySetting.asset`（路径写死在 `TFW.DisplayKeySetting` 的 `[SerializedPath]`） | 定义 `runtime.configPath` + `manifestName`（=`PathAssetList`），拼出②的路径 |
+| ② **运行时汇总清单** | `Assets/Res/Config/DisplayKey/PathAssetList.asset`（~3KB） | 列出全部 50 个 `Path_*.asset` 的路径 + **`displayKeyTotal`（DK 总数）**。**运行时实际加载的是它** |
+| ③ 分组注册 | `Path_*.asset`（50个，运行时）/ `Display_*.asset`（Editor 侧） | 真正的 DK→路径映射 |
+
+调用链：`DisplayKeyExtension.ToDisplayKeyAssetPath` → `EnsureLoaded` → `GetDisplayKeys` → `FetchDisplayKeys` → `DisplayKeySetting.GetRuntimePathAssetListPath`
+
+### ✅ `displayKeyTotal` 是最好用的验证指标
+改完 `Path_*.asset` 后看 `PathAssetList.asset` 的 `displayKeyTotal` 有没有涨——**涨了就说明 Unity 已认到新 DK**（本案实测 8597→8618，正好＝新增的 21 个）。
+`git diff PathAssetList.asset` 通常只有这一行变化，一眼可判。**文件才 3KB 是正常的**（只存路径列表不存 DK 内容），别当成"被清空了"。
+
+### 🪤 两个同名易混类，别搞错
+| 类 | 位置 | 用途 |
+|---|---|---|
+| `TFW.DisplayKeySetting` | `Assets/Scripts/DisplayKey/` | **运行时真正用的**，配置在 `Res/Config/DisplayKey/DisplayKeySetting.asset`（有值） |
+| `Displaykey.DisplayKeySettings` | `Packages/com.tfw.resources/` | **Export 工具**用的，配置在 `ProjectSettings/TFW Settings/`（**resPath 等全空，远端也空＝仓库常态**） |
+
+→ **`Framework/Config/Export Display Key` 这个菜单在本项目用不了**：它第一步 `CheckSettingPath` 就因路径空抛异常（还会弹对话框+打开 Project Settings）。**团队不走这条路，DK 靠直接编辑 `Path_*.asset` 管理。别照 README 去点它。**
+
+### 📋 "DK 全掉"排查顺序（按这个走，别乱猜）
+1. **冲突标记**（最高频真凶）→ 见 [[reference_x3_project_repo]]「解决冲突后必须 grep 复查」。YAML 混入标记＝整个文件解析失败＝该文件所有 DK 失效
+2. **注册文件结构** → 体检脚本 `~\AppData\...\scratchpad\check_all_dk.py` 的逻辑：冲突标记／YAML 头／`m_Script`／keys=values=objPath 条目数一致
+3. **`displayKeyTotal` 有没有涨** → 没涨＝Unity 没认到改动，先 `AssetDatabase.Refresh` + Reimport 目录
+4. **重启 Unity** → `Path_*.asset` 是**加载进内存的字典**，Refresh/Reimport 都不一定换得掉内存旧字典
+5. 以上全过还不显示 → 才是 **AB 包问题**（新 DK 没烘进包，见上文「有的 DK 不用打 AB、有的要」）
+
+> 🤖 **可用 DebugUtils 桥远程操作 Unity**（无需人工点）：
+> `python "../.claude/skills/DebugUtils/scripts/client.py" invoke --type UnityEditor.AssetDatabase --member Refresh --kind call`
+> Reimport 目录：`--member ImportAsset --args "<路径>" 1 --arg-types "System.String" "UnityEditor.ImportAssetOptions"`
+> ⚠️ Play 模式中/编译中桥会「连接被拒(WinError 10061)」，等域重载完再试。
+
 ## ★DK 入库后需 Ctrl+T Save（2026-06-23 用户嘱·通用）
 手编/脚本注册 DK 进 `Path_*.asset`(+`Display_*.asset`) 后，**在 Unity 里 Ctrl+T(DisplayKey 面板) Save 一下**让注册正式生效/持久化（编辑器内存的 DK 字典靠这个刷新）。⚠️Ctrl+T=全量重导出→Save 前必 `git pull` 同步最新，否则静默删别人后加的 DK（e255 事故同源）。
 
@@ -236,3 +273,62 @@ git show <commit>^:.../Path_Activity.asset | grep -A1 "key: DK_xxx$"   # 取回 
 
 ## ★坑：工作区 .meta 纯 guid 改动 = Unity 重导 churn·别提交（2026-06-23 深海节实证）
 多 agent/分支来回切时，client 仓常冒出一批 `.meta` **只改 `guid:` 那一行**(别的没动)的未提交改动；同文件**每次切分支新 guid 都不一样**(随机重滚)=Unity 反复重导入触发，非有意改。**危险**：老 guid 多被 prefab/mat 引用→**一旦提交引用就断**(资产 missing 丢图/丢材质)。判别:`git diff <meta>` 只有 guid 一行变 + 资产是真文件(非LFS指针)。**处理:别 commit·别在 Ctrl+T Save 时连带提交→`git checkout -- <meta>` 还原基线 guid**。
+
+
+## ★`PathAssetList.displayKeyTotal` 是真实计数，加/删 DK 必须同步（2026-07-28 实证）
+
+`Assets/Res/Config/DisplayKey/PathAssetList.asset` 末尾的 `displayKeyTotal` **不是装饰字段**，
+它等于全部 `Path_*.asset` 里 `- key: DK_` 条目的**总数**：
+```python
+sum(len(re.findall(r'^\s+- key: DK_', open(p).read(), re.M))
+    for p in glob.glob('Assets/Res/Config/DisplayKey/Path_*.asset'))
+```
+**验证方法可信**：Unity 自己重算出 8618，用上式数工作区（含我新加的 1 条）得 8619，**严丝合缝**。
+
+**实测发现的两个坑**：
+1. **已提交状态长期漂移**：仓库里声明 `8597`，实际数出来 `8623`，**差 26**——
+   说明历史上多次加 DK 没更新总数。Unity 打开工程会**自动重算并把文件改脏**，
+   这就是 `PathAssetList.asset` 老是出现在 `git status` 里的原因。
+2. **该字段是全局的，所以它把不相关的人的改动绑在了一起**：
+   本次工作区里 `Path_Activity.asset` 比 HEAD **少 5 条**（他人未提交的在途删除）。
+   此时如果我把重算后的 total 一起提交，就等于**替别人的删除拍了板**——
+   提交后「声明值」会与「已提交内容的实际值」对不上。
+   → **纪律：自己只加了 DK 就别顺手提交 `PathAssetList.asset`**，除非工作区里没有他人的 `Path_*` 在途改动。
+   判断方法就是上式，分别对 `HEAD:` 版本和工作区版本数一遍做差。
+
+**配套**：`C:/ADHD_agent/skills/x3-dk-tools/check_all_dk.py` 查的是「冲突标记 / YAML 头 / 条目数一致性」，
+**它不查 displayKeyTotal 对不对**，两者互补，别以为它全过就没问题。
+
+## 🔴🔴DK 注册是**三处**不是两处（2026-07-28 马戏节实证，一次踩穿）
+以前记的「Display+Path 双补」**不完整**，漏掉的第三处才是真 master：
+
+| # | 文件 | 内容 | 少了会怎样 |
+|---|---|---|---|
+| 1 | `Assets/Editor/Config/DisplayKey/Display_<组>.asset` | `key / type / desc / guid / exportCode` | 编辑器侧查不到；Ctrl+T 全量重生成时该 DK 会被清掉 |
+| 2 | `Assets/Res/Config/DisplayKey/Path_<组>.asset` | 名单 `- DK_xxx` + 映射 `key/objPath` | 运行时找不到资源 |
+| 3 | **`Assets/Editor/Config/tableResInfo.txt`** | **一行一个 `DK_xxx`，字典序** | 🔴**DK 悬空、运行时不生效**——本次签到 icon/bg + BINGO 底图 + 扭蛋机 bg 四个 DK 就是只做了 1+2、漏了 3，游戏里全不显示 |
+
+- **`tableResInfo.txt` 是 master**：Unity 里 **Ctrl+T（LoadFromDisk → Save）是拿它去全量重生成 `Path_*.asset`**。所以 Path-only（甚至 Display+Path 但没登 master）的 DK，Ctrl+T 之后会被清掉——深海那次三个 DK 平白消失就是这个机制。
+- **判"某 DK 到底注册好没有"＝三处都 grep 一遍**，缺一不可：
+  ```bash
+  grep -c "key: <key>$"  Assets/Editor/Config/DisplayKey/Display_*.asset
+  grep -c "DK_<key>$"    Assets/Res/Config/DisplayKey/Path_*.asset
+  grep -c "^DK_<key>$"   Assets/Editor/Config/tableResInfo.txt
+  ```
+- ⚠️**Ctrl+T 之前先确认工作区状态**：它是全量重生成，任何没登 master 的 Path-only DK 都会在这一步被清掉（包括别人在途未提交的）。
+
+## 「图不显示」排查顺序（别一上来就重建 AB）
+1. **文件在不在**磁盘上？——用 sparse worktree 推远端的资源，主工作区并没有（见 [[reference_x3_project_repo]]）。
+2. **三处注册**齐不齐？（上表）
+3. 配置指向对不对？（`ActvOnline.col21/col22`、`ActvPuzzle.col3`、`MemorialCard.col4/col5`、`Item.col20`）
+4. 以上都对才轮到 Unity 导入 / AB：**白图空图＝DK 没生效；显示旧图＝AB 缓存**。
+- **两种报错文案含义完全不同，别混着查（2026-07-28 实证）**：
+
+| 日志 | 含义 | 处置 |
+|---|---|---|
+| `displayKey DK_xxx not found!` | **真·找不到**：文件缺 / 三处注册缺 | 按上面 1-2 步查 |
+| `displayKey 'DK_xxx' 未被配置表使用或导出到代码!` | DK **注册好了**，但客户端认为**配置表没人引用它** | **先别改配置**——去验 bytes：`grep -ac "<关键词>" Assets/Res/Config/ProtoGen/<表>.bytes`；**grep 得到 ≥1 就说明配置是对的，问题是 Unity 缓存了旧配置** |
+
+- 🔴**配置表 和 DK 字典都是进程内 static 缓存**（`DisplayKeyExtension.EnsureLoaded()`: `if (sDisplayKeyAsset != null) return;`）。**Ctrl+R / Ctrl+T / 退出 Play 重进都不保证清掉**（关了 Domain Reload 时静态变量根本不重置）→ **改完配置 bytes 或 DK 注册，最保险是重启 Unity Editor**。
+  - 判据：**bytes 文件的修改时间 早于 Unity 启动时间＝一定读到了新的；晚于＝Unity 手里是旧的**。本次即 bytes 写于 22:34、报错发生在次日 10:12 而 Editor 从未重启，故一直用的旧配置。
+- 💡`PathAssetList.asset` 的 `displayKeyTotal` **只是字典初始容量**（`new Dictionary<>(total)`），数值不准不影响功能，**别把它当校验去追**。

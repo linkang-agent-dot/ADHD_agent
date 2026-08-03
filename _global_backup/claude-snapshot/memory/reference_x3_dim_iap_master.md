@@ -43,6 +43,7 @@ A iap_id(Pack ID纯数字) | B 中文名 | C 英文名 | D iap_price(USD) | E ia
 
 ## 操作铁律
 - **先 backup 再写**：`gs.backup_tab(SID,'dim.iap')`（duplicateSheet 便宜，4277行无压力）→ 用户明确要求过
+- **主数据名必须双层闭环**：Pack c35/AJ `Name` 非空只是第一层；`bi_upload.py` 实际会拿生成后的 `PackData.Name=TXT_Pack_Name_<id>` 去 i18n 的 cn/en 取值。若 Text 缺这个自动 key，c35 有中文也会上传出空名。修名时必须同时核 `Pack c35 → TXT_Pack_Name_<id> → Text cn/en → dim.iap B/C`，最后用本地导表产物 `temp_*/data/PackData.py + i18n/cn.py/en.py` 实读验证。
 - 节日 Pack 行在 dim.iap **可能已半填**（id/price/asset 有，E–H/名称空）——这时是「补分类」不是「append新行」，按 id 定位逐行 `update_range A{row}:N{row}`，保留已有 D/L/N
 - 行**非连续**（字符串排序+夹杂别的id，如 211010@2523 / 21101@2524 / 211011@2525）→ 必须按 id 定位行号，别假设连续块
 - 写完逐行反读校验（E=节日活动 & G含节日资源包 & H=节日礼包）
@@ -63,6 +64,8 @@ A iap_id(Pack ID纯数字) | B 中文名 | C 英文名 | D iap_price(USD) | E ia
 - **存钱罐** 280001 → `SLG/SLG-城建研究/-系统功能 + H=SLG`（照抄储蓄罐 500000-021 先例；先例 M 列还有 `M=储蓄罐` 标记，280001 未补 M）
 
 ## 已处理 / 待办
+- 2026-08-03：马戏寻宝豪礼 `81302-81306` 的“配置+GSheet”双层空名已闭环。配置：Pack c35 与内部备注去掉拓荒残留、统一“寻宝豪礼”；5 个 `TXT_Pack_Name` 复用 `TXT_ChainPack_Name_705` 已有全语言官译。GSheet：B/C=`寻宝豪礼/Treasure Hunt Luxury Pack`，E-H 按节日链式资源包分类，D/L/N 保留。远端 `dev_festival` commit `239f43d7`，本地 ExportTable exit0，Jenkins #2404 SUCCESS，5 行端到端反读通过。
+- 2026-08-03：马戏节两条 BP 的 4 个购买包主数据分类已补齐并逐条反读通过：巡游 `130047/130048`、福箱 `130051/130052`。统一口径=`节日活动 / 节日活动-节日资源包 / 节日活动-节日资源包-链式套装 / 节日礼包`；写前备份 `_bak_0803_dim.iap`。引用链=`BattlePassScore 2251/2250 → Pack 130047/48/51/52`。
 - 2026-07-06：36 行空分类已补齐（BP×4/每日礼包800005-009/周卡2026101-104/大富翁成就22行/存钱罐280001）+ 深海期两条 BP 改名，备份 `_bak_0706_dim.iap`，逐行反读+邻行抽查 0 失败
 - ⏳ 待办：邻近 130038-130045（登录好礼/海盗赏金等）E~H 仍空，未在授权范围，下次批处理
 - 2026-06-25：世界杯主礼包 211001-211015、世界杯国家应援 894010-894483(192行)、深海节 211016-211031(16行) 已全部补全分类并校验(未分类=0)

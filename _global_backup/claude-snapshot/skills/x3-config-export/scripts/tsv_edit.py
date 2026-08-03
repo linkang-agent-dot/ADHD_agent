@@ -205,9 +205,14 @@ def main():
     s.add_argument("--after", required=True, help="插在这个锚点ID之后")
     s.add_argument("--dry-run", action="store_true")
 
+    s = sub.add_parser("delrow", help="整行删除(断言每ID恰好命中1行)")
+    s.add_argument("--file", required=True); s.add_argument("--id", required=True)
+    s.add_argument("--dry-run", action="store_true")
+
     args = ap.parse_args()
     repo = Path(args.repo)
-    {"show": cmd_show, "set": cmd_set, "remove": cmd_remove, "add": cmd_add}[args.cmd](args, repo)
+    {"show": cmd_show, "set": cmd_set, "remove": cmd_remove, "add": cmd_add,
+     "delrow": cmd_delrow}[args.cmd](args, repo)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,6 @@
+# x3-media skill 依赖
+# 安装：pip install -r requirements.txt
+Pillow>=9.0.0
+opencv-python>=4.5.0
+numpy>=1.21.0
+playwright>=1.30.0  # Cookie 自动获取（可选，手动获取时不需要）

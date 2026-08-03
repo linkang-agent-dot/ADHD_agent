@@ -1,0 +1,15 @@
+=== 断链 GUID 自检（等价换皮无忧结尾的「断链 GUID：M」）===
+prefab 引用唯一 guid 181（引用点 5127 处）
+X3 工程索引 guid 48614（扫 48818 个 .meta，含 Assets+Packages+PackageCache）
+
+断链 GUID：8   ❌ 有引用指向工程里不存在的资源
+
+--- 断链明细（按引用次数降序）---
+  67a3b7960a2279c429c3cb7db972e708  被引用   5 次  出现在: FlashSale.prefab
+  a8100ab1914973a43933cb3e52e8a5db  被引用   2 次  出现在: FlashSale.prefab
+  0000000000000000f000000000000000  被引用   2 次  出现在: FlashSaleItem.prefab
+  a167a40c7b5fad84ca2f9721bdff1850  被引用   1 次  出现在: FlashSale.prefab
+  2447dafac877d0f4f928f408a5b55e29  被引用   1 次  出现在: FlashSale.prefab
+  94765041646461243a5a6f423a11829e  被引用   1 次  出现在: FlashSale.prefab
+  b7fbc9ece99545d43b258cf0475737cc  被引用   1 次  出现在: FlashSale.prefab
+  0aa64ab4e86f574469b5d4fda2e9c85f  被引用   1 次  出现在: FlashSaleItem.prefab

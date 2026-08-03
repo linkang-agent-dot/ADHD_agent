@@ -1,0 +1,3 @@
+                case ActivityConst.TRIGGER_TYPE_FLASH_SALE:
+                    // 无排行榜;货架包即买即得无挂账;本服库存随 ServerActivityFlashSaleMeta 活动移除清理(阶段1b)
+                    break;

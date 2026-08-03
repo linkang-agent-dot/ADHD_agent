@@ -73,6 +73,16 @@ def test_inventory_reports_missing_destination(tmp_path: Path) -> None:
     assert result.by_name("new-claude-skill").kind == "missing-destination"
 
 
+def test_inventory_classifies_default_codex_exclusion(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    make_skill(source, "brainstorming")
+    make_skill(destination, "brainstorming")
+
+    result = inventory_skills(source, destination)
+
+    assert result.by_name("brainstorming").kind == "excluded"
+
+
 def test_inventory_classifies_auxiliary_directory_without_skill_file(tmp_path: Path) -> None:
     source, destination = make_roots(tmp_path)
     (source / "workspace").mkdir()
@@ -280,6 +290,17 @@ def test_plan_blocks_missing_destination_by_default(tmp_path: Path) -> None:
 
     assert plan.blockers
     assert any("allow-create" in blocker for blocker in plan.blockers)
+
+
+def test_plan_does_not_recreate_default_codex_exclusion(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    make_skill(source, "writing-plans")
+
+    plan = build_sync_plan(source, destination)
+
+    assert plan.blockers == ()
+    assert plan.operations == ()
+    assert plan.inventory.by_name("writing-plans").kind == "excluded"
 
 
 def test_plan_skips_non_skill_directories_without_blocking(tmp_path: Path) -> None:

@@ -234,6 +234,32 @@ UI prefab    → Assets/Res/UI/Prefab/<功能模块>/
 | 源码 | `x3-project\client\Assets\Editor\HuanPiWuYou\`（`HuanPiWuYouWindow.cs` + `UIPrefabResourceFolderCleanupPanel.cs`，独立 asmdef） |
 | 干什么 | 面板自述：**「删掉资源目录内 Prefab 未引用的文件；同名/同 GUID 重复项改为工程原件 GUID 后删除副本。」** |
 
+### ⚠️ 不跑这工具时，`REPLACE` 那一半的活要自己补（2026-07-31 限时抢购实证）
+
+按 guid 算差集只挡住「同 guid 重复」，**漏掉「同文件名 + MD5 相同 + guid 不同」的重复件** —— 那才是 `REPLACE` 负责的。落地后必须补一道**同名件检查**：拷进去的每个文件名，在 X3 全仓找同名件比 MD5。
+
+实测 53 件落地件 → 4 件在 X3 有同名件：
+
+| 文件 | X3 原件 | MD5 | 处置 |
+|---|---|---|---|
+| `Common_icon_FrequencyBg1.png` | `Res/UI/Spirits/ActvMecha/`（`51daedae…`） | 相同 | 真重复：prefab 里 `a38a9594…`→`51daedae…` + 删副本 |
+| `Mask_009.tga` | `Res/Effect/Textures/Mask/` + `Res/Effect/UI/Textures/` 两份 | 相同 | 真重复，但**无人引用**（依赖它的材质 X3 本来就有、指向 X3 自己那份）⇒ 直接删，不用改引用 |
+| `BoxReward.anim` | `Res/Ani/` + `Res/UI/Animation/` 两份（都 8048B） | **不同**（我们 8360B） | 各自保留，落活动子目录 |
+| `FX_AddBlend_DistortionDissolve_Flow_New_UI.shader` | `Res/Shader/X3/Effect/`（`871d85d6…`） | **不同** | 各自保留，见下方 shader 坑 |
+
+**删前必查引用**：无人引用的直接删，有引用的才做 guid 文本替换。
+
+### 🔴 它对 `.shader` 只比文件名不比内容 → 会误替换不同的 shader
+
+源码注释「shader 换皮场景：同名即替换」。实测两份同名 shader **内部声明不同**：
+
+| 文件 | `Shader "..."` 声明 |
+|---|---|
+| `Res/Shader/Effect/FX_AddBlend_DistortionDissolve_Flow_New_UI.shader` | `TFW/Effect/**UI**/FX_AddBlend_DistortionDissovle_Flow_New_UI` ← UI 变体 |
+| `Res/Shader/X3/Effect/FX_AddBlend_DistortionDissolve_Flow_New_UI.shader` | `TFW/Effect/FX_AddBlend_DistortionDissovle_Flow_New_UI` ← 通用版 |
+
+跑那工具会把 UI 变体替换成通用版，**特效渲染直接变**。判据＝比 `.shader` 里的 `Shader "路径名"` 声明，**不是比文件名**。（顺带：两者声明名不同，所以两份共存**不会**造成 `Shader.Find` 歧义。）
+
 ### 🔴🔴 事故实录（2026-07-31 限时抢购）：它删掉了 143 个 X3 原生 prefab
 
 **「资源目录」字段填成 `Assets/Res/UI/Prefab/Activity` ⇒ 那个目录下除根 prefab 外的 143 个 X3 原生 prefab（`ActvRank` / `ActvTaskTemplate` / `ActvWonderTemplate` / `BattlePassRwdItem` / `DailyGift` / `GlassBox` / `HeroChampionList` …）全被删，共 286 个文件（含 `.meta`），根 prefab 还被 PatchGuid 改写。**
@@ -243,7 +269,21 @@ UI prefab    → Assets/Res/UI/Prefab/<功能模块>/
 **三条铁律**：
 1. **「资源目录」只能填这次搬运专属的新目录**（`Assets/Res/UI/Sprite/UIActvXxx/` 这种），**绝对不能填 `Res/UI/Prefab/Activity`、`Res/UI/Animation`、`Res/Shader/Effect` 等任何工程共享目录**。共享目录里的东西不该由这个工具管。
 2. **必须先点「预览」看 `将删 N`**。N 明显大于你这次搬进来的件数 = 立刻停手。本次预览会显示 `将删 143`，而搬进来的只有 4 个。
-3. **走断链路线（`[Prefabs 0]`）时，这个工具对 prefab 目录基本不可用** —— 它算不出「这些 prefab 是别人的」，只能靠你把目录范围框对。
+3. **走断链路线（`[Prefabs 0]`）时，只有 prefab 目录不能交给它** —— 它算不出「这些 prefab 是别人的」，只能靠你把目录范围框对。
+
+> **⚠️ 纠正（2026-08-03）：别把上面读成「整个工具不能用」。** 危险的只是「资源目录」这个字段填了共享目录，**不是工具本身**——它的删除范围**只限该字段指向的目录内**。填本次搬运的**专属目录**就是安全的，而且正是收掉「同名+MD5 重复」和「孤儿文件」的正解。
+>
+> **正确姿势＝按专属目录分多次跑**，每次只换「资源目录」，每次**先点「预览」看 `将删 N`**（N=0~2 正常；N 几十/几百＝目录填错，立刻停手）。
+>
+> 限时抢购实操（3 次）：
+> | # | 资源目录 | 预期 |
+> |---|---|---|
+> | 1 | `Assets/Res/UI/Sprite/UIActvFlashSale/Images` | 收掉 `Common_icon_FrequencyBg1.png`（改引用 + 删副本，prefab 里 9 处全在 `ChestProgress`） |
+> | 2 | `Assets/Res/UI/Materials/UIActvFlashSale`（含子目录 Textures） | 收掉 `Mask_009.tga`（无人引用，按"未引用"删，正合意） |
+> | 3 | `Assets/Res/UI/Animation/UIActvFlashSale` | 预期 0 改动（`BoxReward.anim` 同名但内容不同，不判重） |
+>
+> **禁填清单**：`Res/UI/Prefab/Activity`（共享，143 件事故）· `Res/Shader/Effect`（共享 + shader 只比名会误换 UI 变体）。
+> 它结尾的 `断链 GUID：M` 可当独立交叉验证 —— **M≠0 常常是正常的**（按 §「断链三类判读」判），别当点错了。
 
 **恢复**（被删的是 tracked 文件，可完整复原）：
 ```bash

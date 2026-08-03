@@ -1,0 +1,52 @@
+=== 新增 30 行体检 ===
+
+列数/状态/备注/16语齐全 检查: 全部通过 ✅
+
+=== 抽 3 条看内容 ===
+key=LC_EVENT_2024_fes_box_botton_1  状态=AI
+  备注=限时抢购迁移-X2;X2:LC_EVENT_2024_fes_box_botton_1
+  cn  开启1次
+  en  OPEN 1X
+  zh  開啟1次
+  ru  Открыть 1X
+  ua  Відкрити 1x
+  kr  열기 1X
+  th  เปิด 1 ครั้ง
+
+key=LC_EVENT_flash_sale_share_tips_2  状态=AI
+  备注=限时抢购迁移-X2;X2:LC_EVENT_flash_sale_share_tips_2
+  cn  获得<color=#FF9D00>{0}</color>次助力并购买任意礼包
+  en  Receive <color=#FF9D00>{0}</color> supports and purchase any pack
+  zh  取得<color=#FF9D00>{0}</color>次助力並購買任意禮包
+  ru  Получите <color=#FF9D00>{0}</color> поддержек и купите любой набор
+  ua  Отримайте <color=#FF9D00>{0}</color> бустів і придбайте будь-який набір
+  kr  <color=#FF9D00>{0}</color> 지원을 받고 아무 팩이나 구매하세요
+  th  รับการสนับสนุน <color=#FF9D00>{0}</color> และซื้อแพ็คใดๆ
+
+key=lc_ui_get_now_cap  状态=AI
+  备注=限时抢购迁移-X2;X2:lc_ui_get_now_cap
+  cn  立刻获得
+  en  GET NOW
+  zh  立刻獲得
+  ru  ПОЛУЧИТЬ СЕЙЧАС
+  ua  ОТРИМАТИ
+  kr  지금 받기
+  th  รับเลยตอนนี้
+
+=== 商会术语修正确认 ===
+  cn  分享至商会
+  en  Share to Company
+  sp  Compartir con la Compañía
+  fr  Partager avec la compagnie
+  id  Bagikan ke Serikat Dagang
+  de  Mit der Firma teilen
+  kr  상회에 공유
+  zh  分享至商會
+  ru  Поделиться с компанией
+  ua  Поділитися з компанією
+  jp  商会に共有
+  it  Condividi con la Compagnia
+  pl  Udostępnij Spółce
+  po  Compartilhar com a Companhia
+  tr  Şirketle paylaş
+  th  แชร์ไปยังบริษัท

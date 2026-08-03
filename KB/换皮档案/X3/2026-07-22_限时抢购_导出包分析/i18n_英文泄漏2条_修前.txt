@@ -1,0 +1,40 @@
+=== 含 cn/zh 的全面同形检查 ===
+LC_IAP_flashsale_value_promotion
+   en=VALUE PROMOTION
+   同形列: ['cn', 'zh']
+      cn  VALUE PROMOTION
+      en  VALUE PROMOTION
+      sp  PROMOCIÓN DE VALOR
+      fr  PROMOTION EXCEPTIONNELLE
+      id  PROMOSI NILAI
+      de  SUPER ANGEBOT
+      kr  밸류 프로모션
+      zh  VALUE PROMOTION
+      ru  СУПЕРПРЕДЛОЖЕНИЕ
+      ua  СУПЕРПРОПОЗИЦІЯ
+      jp  バリュープロモーション
+      it  PROMOZIONE DI VALORE
+      pl  PROMOCJA WARTOŚCIOWA
+      po  PROMOÇÃO DE VALOR
+      tr  DEĞER PROMOSYONU
+      th  โปรโมชั่นสุดคุ้ม
+
+LC_IAP_vip_super_sale
+   en=SUPER SALE
+   同形列: ['sp', 'fr', 'id', 'de', 'zh', 'ru', 'po', 'tr', 'th']
+      cn  超值贩售
+      en  SUPER SALE
+      sp  SUPER SALE
+      fr  SUPER SALE
+      id  SUPER SALE
+      de  SUPER SALE
+      kr  슈퍼 세일
+      zh  SUPER SALE
+      ru  SUPER SALE
+      ua  СУПЕРРОЗПРОДАЖ
+      jp  スーパーセール
+      it  SVENDITA
+      pl  WYPRZEDAŻ
+      po  SUPER SALE
+      tr  SUPER SALE
+      th  SUPER SALE

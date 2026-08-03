@@ -1,0 +1,150 @@
+# -*- coding: utf-8 -*-
+"""生成 C# 插入 FlashSale —— 纯按行操作版（前两版用字符串 index/rindex 都插错了作用域）
+
+三种插入物、三个作用域，必须分开插：
+  ① ActivityItem 的 4 处接入（属性/Encode/Decode case/两处 reset）—— 仅 Scripts/Protos 有
+  ② message 类块 -> **namespace cspb 内**，插在「ILRuntime_* 之前最近的顶格 `}`」那一行之前
+  ③ RegisterType 行 -> 各注册方法体内，紧跟兄弟行
+
+踩过的坑（都因作用域搞错）：
+  v1 把 ②③ 一起插到方法外 -> 24 个语法错
+  v2/v3 用 rindex('\\n}\\n') 定位 namespace 闭合 -> 实际插到了 namespace 外，类进了全局命名空间
+        -> `cspb 中不存在 FlashSalePackInfo` 6 个错
+  ⇒ 结论：这种超万行生成文件上定位作用域边界，**按行找**（`l.rstrip()=='}'` 顶格闭合）才可靠
+
+tag 70 -> 72 ⇒ WriteTag / case 562 -> 578（n<<3|2）
+"""
+import io, os, re, sys, shutil
+
+R = r'C:\x3-project'
+SP = os.path.dirname(os.path.abspath(__file__))
+GO = '--go' in sys.argv
+WIRE = (72 << 3) | 2
+assert WIRE == 578
+
+
+def split_removed(txt):
+    regs = [l.rstrip('\r') for l in txt.split('\n') if 'PType.RegisterType' in l]
+    m = re.search(r'public sealed partial class \w+', txt)
+    i = txt.rfind('    /// <summary>', 0, m.start())
+    body = [l.rstrip('\r') for l in txt[i:].split('\n') if 'PType.RegisterType' not in l]
+    while body and not body[-1].strip():
+        body.pop()
+    return body, regs
+
+
+def ns_close_line(L, ilmark):
+    """返回 namespace 闭合行的下标：ILRuntime 声明行往上第一个顶格 '}'"""
+    i = next(k for k, l in enumerate(L) if l.startswith(ilmark))
+    return next(k for k in range(i - 1, -1, -1) if l_eq(L[k], '}'))
+
+
+def l_eq(line, txt):
+    return line.rstrip('\r') == txt
+
+
+def find1(L, pred, what):
+    hits = [k for k, l in enumerate(L) if pred(l)]
+    assert len(hits) == 1, '%s 命中 %d 处' % (what, len(hits))
+    return hits[0]
+
+
+def report(rel, L0, L, extra=''):
+    s = '\n'.join(L)
+    print('%s' % rel)
+    print('  行数 %d -> %d   类 %d 个   注册 %d 行%s' % (
+        len(L0), len(L),
+        len(re.findall(r'public sealed partial class (?:FlashSale\w+|ActivityFlashSaleData)', s)),
+        s.count('RegisterType("cspb.FlashSale') + s.count('RegisterType("cspb.ActivityFlashSaleData'), extra))
+
+
+out = []
+
+# ---------- 文件 1 ----------
+rel = r'client\Assets\Scripts\Protos\activity.cs'
+p = os.path.join(R, rel)
+raw = io.open(p, encoding='utf-8', newline='').read()
+nl = '\r\n' if '\r\n' in raw[:4000] else '\n'
+L0 = raw.split(nl)
+L = list(L0)
+assert not any('flashSaleData' in l for l in L), '已改过，先回滚 .bak'
+body, regs = split_removed(io.open(os.path.join(SP, 'gen', 'Protos_activity.cs.removed.txt'), encoding='utf-8').read())
+assert len(regs) == 2
+
+# ① 属性
+i = find1(L, lambda l: l_eq(l, '        public ActivityTravelDateData travelDateData { get; set; }'), '属性锚点')
+L[i + 1:i + 1] = ['', '        /// <summary>',
+   '        /// 马戏节限时抢购活动数据（ActvType=84）；原实现用 tag 70，撤除期间 70 被 travelDate、71 被 memoryData 占用，双分支复查后改 72',
+   '        /// </summary>', '        public ActivityFlashSaleData flashSaleData { get; set; }']
+# ① Encode（travelDate 块之后）
+i = find1(L, lambda l: l_eq(l, '                writer.WriteTag(562);'), 'encode WriteTag562')
+e = next(k for k in range(i, len(L)) if l_eq(L[k], '            }'))
+L[e + 1:e + 1] = ['', '            if (flashSaleData != null)', '            {',
+   '                writer.WriteTag(%d);' % WIRE, '                writer.WriteMessageStart();',
+   '                if (flashSaleData != null)', '                {', '                    #if !_CLIENTLOGIC_',
+   '                    flashSaleData.Encode(writer, forClient, isOwner);', '                    #else',
+   '                    flashSaleData.Encode(writer);', '                    #endif', '                }',
+   '                writer.WriteMessageEnd();', '            }']
+# ① Decode case
+i = find1(L, lambda l: l_eq(l, '                    case 562:'), 'case562')
+e = next(k for k in range(i, len(L)) if l_eq(L[k], '                        break;'))
+L[e + 1:e + 1] = ['                    case %d:' % WIRE, '                        {',
+   '                            flashSaleData = new ActivityFlashSaleData();',
+   '                            if (reader.ReadMessageStart())', '                            {',
+   '                                flashSaleData.Decode(reader);', '                                reader.ReadMessageEnd();',
+   '                            }', '                        }', '                        break;']
+# ① 两处 reset
+hits = [k for k, l in enumerate(L) if l_eq(l, '            travelDateData = null;')]
+assert len(hits) == 2, 'reset 应 2 处，实为 %d' % len(hits)
+for k in reversed(hits):
+    L[k + 1:k + 1] = ['            flashSaleData = null;']
+# ② 类块 -> namespace 内
+j = ns_close_line(L, 'public class ILRuntime_activity')
+L[j:j] = body + ['']
+# ③ 注册行
+i = find1(L, lambda l: 'RegisterType("cspb.ActivityCircusGachaData"' in l, '注册兄弟行')
+L[i + 1:i + 1] = regs
+report(rel, L0, L, '   WriteTag(%d) %d / case %d %d' % (WIRE, sum(1 for l in L if 'WriteTag(%d)' % WIRE in l), WIRE, sum(1 for l in L if 'case %d:' % WIRE in l)))
+# 作用域自检：类必须在 namespace 闭合行之前
+jc = ns_close_line(L, 'public class ILRuntime_activity')
+kc = find1(L, lambda l: 'public sealed partial class ActivityFlashSaleData' in l, '类定义')
+assert kc < jc, '[FAIL] 类(%d) 在 namespace 闭合(%d) 之后 —— 又插错作用域' % (kc + 1, jc + 1)
+print('  [OK] 作用域自检：类在行 %d，namespace 闭合在行 %d' % (kc + 1, jc + 1))
+out.append((p, nl.join(L), nl))
+
+# ---------- 文件 2 ----------
+rel2 = r'client\Assets\Scripts\CSSharedHotfix\Common\Protos\activity.cs'
+p2 = os.path.join(R, rel2)
+raw2 = io.open(p2, encoding='utf-8', newline='').read()
+nl2 = '\r\n' if '\r\n' in raw2[:4000] else '\n'
+L02 = raw2.split(nl2)
+L2 = list(L02)
+assert not any('FlashSaleBuyReq' in l for l in L2), '已改过，先回滚 .bak'
+body2, regs2 = split_removed(io.open(os.path.join(SP, 'gen', 'CSSharedHotfix_Common_Protos_activity.cs.removed.txt'), encoding='utf-8').read())
+assert len(regs2) == 16
+reg_il = [l for l in regs2 if l.rstrip().endswith(', true);')]
+reg_pl = [l for l in regs2 if not l.rstrip().endswith(', true);')]
+assert len(reg_il) == 8 and len(reg_pl) == 8
+
+j2 = ns_close_line(L2, 'public class ILRuntime_Hotfix_activity')
+L2[j2:j2] = body2 + ['']
+i = find1(L2, lambda l: 'RegisterType("cspb.SkipCircusGachaAnimAck"' in l and ', true);' in l, 'IL 注册兄弟行')
+L2[i + 1:i + 1] = reg_il
+i = find1(L2, lambda l: 'RegisterType("cspb.SkipCircusGachaAnimAck"' in l and ', true);' not in l, '普通注册兄弟行')
+L2[i + 1:i + 1] = reg_pl
+report(rel2, L02, L2)
+jc2 = ns_close_line(L2, 'public class ILRuntime_Hotfix_activity')
+kc2 = find1(L2, lambda l: 'public sealed partial class FlashSaleRaffleAck' in l, '类定义')
+assert kc2 < jc2, '[FAIL] 类(%d) 在 namespace 闭合(%d) 之后' % (kc2 + 1, jc2 + 1)
+print('  [OK] 作用域自检：末类在行 %d，namespace 闭合在行 %d' % (kc2 + 1, jc2 + 1))
+out.append((p2, nl2.join(L2), nl2))
+
+if GO:
+    for pp, ss, _ in out:
+        if not os.path.exists(pp + '.bak'):
+            shutil.copy2(pp, pp + '.bak')
+        io.open(pp + '.tmp', 'w', encoding='utf-8', newline='').write(ss)
+        os.replace(pp + '.tmp', pp)
+    print('\n已写入')
+else:
+    print('\nDRY RUN（加 --go）')

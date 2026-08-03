@@ -25,6 +25,10 @@
 
 | 中文名 | 英文名 | 立绘文件 | AI Prompt 关键词 |
 |---|---|---|---|
-| _（待填）_ | _（待填）_ | _（待填）_ | _（待填）_ |
+| 阿米娜（英雄20） | Amina | `Amina_20_official_fulllength.png` | mature confident female pirate captain, vivid crimson-red long wavy hair with a signature side braid, red headscarf/bandana, tanned olive skin, sharp almond eyes with dark lashes, full lips, athletic hourglass figure, gold jewelry (hoop earrings, layered gold necklaces, arm bangles), knowing half-smile |
+| 阿米娜·马戏节皮肤稿 | Amina (Circus skin draft) | `Amina_20_circus_v1alt_ref.png` | same Amina character in circus performer costume, top hat with feather, tailcoat, corset, thigh-high stockings, tall boots — ⚠️**此稿配色(红黑金)已废弃**，仅供构图/姿势/服装形制参考，配色一律以任务 prompt 为准 |
 
-> 当前为空模板。请把角色立绘 PNG 拖到本目录，并按上表格式登记。x3-media skill 触发涉及角色生图时会自动来这里找。
+### 使用注意
+- **阿米娜的红发是不可改的核心识别符**，任何皮肤都保留；但**服装配色可以完全改**（2026-07-27 马戏节案：红黑金→深紫金，因与本体/春节剑姬/活动背景三重撞车）。
+- 喂 `Amina_20_circus_v1alt_ref.png` 当参考时，**必须在 prompt 里显式压制红色服装**（如 `NO red or crimson in the costume, the red hair is the only red`），否则 AI 会继承废弃稿的红黑金。
+- 官方本体立绘用于锁脸/发/身材/画风；皮肤稿仅用于锁构图与服装形制。
