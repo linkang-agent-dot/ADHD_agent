@@ -3,13 +3,17 @@ from __future__ import annotations
 import argparse
 from collections import Counter
 from dataclasses import dataclass
+from datetime import datetime, timezone
 import hashlib
 import json
 import os
 from pathlib import Path
 import re
+import shutil
 import stat
 import sys
+import uuid
+from typing import Callable
 
 
 CODEX_START = "<!-- CODEX-ONLY:START -->"
@@ -56,6 +60,14 @@ class SyncPlan:
     inventory: InventoryResult
     operations: tuple[FileOperation, ...]
     blockers: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class ApplyResult:
+    exit_code: int
+    backup_directory: Path | None
+    rollback_complete: bool | None
+    error: str | None = None
 
 
 def _top_level_directories(root: Path) -> dict[str, Path]:
@@ -353,6 +365,109 @@ def plan_to_dict(plan: SyncPlan, *, mode: str) -> dict[str, object]:
     }
 
 
+def _write_json(path: Path, payload: dict[str, object]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def _atomic_write(
+    destination: Path,
+    content: bytes,
+    *,
+    replace_func: Callable[[Path, Path], None],
+) -> None:
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    temporary = destination.with_name(f".{destination.name}.skill-sync-{uuid.uuid4().hex}.tmp")
+    try:
+        temporary.write_bytes(content)
+        replace_func(temporary, destination)
+    finally:
+        if temporary.exists():
+            temporary.unlink()
+
+
+def apply_sync_plan(
+    plan: SyncPlan,
+    backup_root: Path,
+    *,
+    replace_func: Callable[[Path, Path], None] = os.replace,
+) -> ApplyResult:
+    """Apply a blocker-free plan and roll back every completed write on failure."""
+    if plan.blockers:
+        return ApplyResult(exit_code=2, backup_directory=None, rollback_complete=None)
+
+    writable = [operation for operation in plan.operations if operation.action in {"add", "modify"}]
+    if not writable:
+        return ApplyResult(exit_code=0, backup_directory=None, rollback_complete=None)
+
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
+    backup_directory = Path(backup_root) / timestamp
+    backup_files = backup_directory / "files"
+    backup_directory.mkdir(parents=True, exist_ok=False)
+    manifest_path = backup_directory / "manifest.json"
+    manifest: dict[str, object] = {
+        "schema_version": 1,
+        "status": "prepared",
+        "source_root": str(plan.source_root),
+        "destination_root": str(plan.destination_root),
+        "operations": [],
+    }
+
+    for operation in writable:
+        record = {
+            "skill": operation.skill,
+            "relative_path": operation.relative_path,
+            "action": operation.action,
+            "destination": str(operation.destination),
+            "pre_hash": sha256_file(operation.destination) if operation.destination.exists() else None,
+        }
+        cast_operations = manifest["operations"]
+        assert isinstance(cast_operations, list)
+        cast_operations.append(record)
+        if operation.action == "modify":
+            backup = backup_files / operation.skill / Path(operation.relative_path)
+            backup.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(operation.destination, backup)
+    _write_json(manifest_path, manifest)
+
+    applied: list[FileOperation] = []
+    try:
+        for operation in writable:
+            assert operation.content is not None
+            _atomic_write(operation.destination, operation.content, replace_func=replace_func)
+            applied.append(operation)
+    except Exception as exc:
+        rollback_errors: list[str] = []
+        for operation in reversed(applied):
+            try:
+                if operation.action == "modify":
+                    backup = backup_files / operation.skill / Path(operation.relative_path)
+                    _atomic_write(operation.destination, backup.read_bytes(), replace_func=replace_func)
+                elif operation.destination.exists():
+                    operation.destination.unlink()
+            except Exception as rollback_exc:
+                rollback_errors.append(f"{operation.destination}: {rollback_exc}")
+        rollback_complete = not rollback_errors
+        manifest["status"] = "rolled-back" if rollback_complete else "rollback-incomplete"
+        manifest["error"] = str(exc)
+        manifest["rollback_errors"] = rollback_errors
+        _write_json(manifest_path, manifest)
+        return ApplyResult(
+            exit_code=3 if rollback_complete else 4,
+            backup_directory=backup_directory,
+            rollback_complete=rollback_complete,
+            error=str(exc),
+        )
+
+    manifest["status"] = "applied"
+    _write_json(manifest_path, manifest)
+    return ApplyResult(
+        exit_code=0,
+        backup_directory=backup_directory,
+        rollback_complete=None,
+    )
+
+
 def _print_summary(plan: SyncPlan, *, mode: str) -> None:
     inventory_counts = Counter(entry.kind for entry in plan.inventory.entries)
     operation_counts = Counter(operation.action for operation in plan.operations)
@@ -381,16 +496,26 @@ def main(argv: list[str] | None = None) -> int:
     mode = "apply" if args.apply else "dry-run"
     plan = build_sync_plan(args.source, args.destination, allow_create=args.allow_create)
     _print_summary(plan, mode=mode)
-    if args.json_report is not None:
-        args.json_report.parent.mkdir(parents=True, exist_ok=True)
-        args.json_report.write_text(
-            json.dumps(plan_to_dict(plan, mode=mode), ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
+    report = plan_to_dict(plan, mode=mode)
     if plan.blockers:
+        if args.json_report is not None:
+            _write_json(args.json_report, report)
         return 2
     if args.apply:
-        raise RuntimeError("Apply mode is not implemented yet")
+        result = apply_sync_plan(plan, Path.home() / ".codex" / "tmp" / "skill-sync-backups")
+        report["application"] = {
+            "exit_code": result.exit_code,
+            "backup_directory": str(result.backup_directory) if result.backup_directory else None,
+            "rollback_complete": result.rollback_complete,
+            "error": result.error,
+        }
+        if args.json_report is not None:
+            _write_json(args.json_report, report)
+        if result.backup_directory is not None:
+            print(f"Backup: {result.backup_directory}")
+        return result.exit_code
+    if args.json_report is not None:
+        _write_json(args.json_report, report)
     return 0
 
 

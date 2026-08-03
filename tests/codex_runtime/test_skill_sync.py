@@ -9,6 +9,7 @@ import pytest
 
 from CodexRuntime.skills.sync_claude_to_codex import (
     SkillFormatError,
+    apply_sync_plan,
     build_sync_plan,
     inventory_skills,
     main,
@@ -282,3 +283,85 @@ def test_cli_returns_two_when_plan_has_blockers(tmp_path: Path) -> None:
     exit_code = main(["--source", str(source), "--destination", str(destination)])
 
     assert exit_code == 2
+
+
+def test_apply_backs_up_then_updates_and_adds_files(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    source_skill = make_skill(source, "demo")
+    destination_skill = make_skill(destination, "demo")
+    (source_skill / "changed.txt").write_text("new", encoding="utf-8")
+    (destination_skill / "changed.txt").write_text("old", encoding="utf-8")
+    (source_skill / "added.txt").write_text("added", encoding="utf-8")
+    plan = build_sync_plan(source, destination)
+    backup_root = tmp_path / "backups"
+
+    result = apply_sync_plan(plan, backup_root)
+
+    assert result.exit_code == 0
+    assert result.backup_directory is not None
+    assert (destination_skill / "changed.txt").read_text(encoding="utf-8") == "new"
+    assert (destination_skill / "added.txt").read_text(encoding="utf-8") == "added"
+    assert (result.backup_directory / "files" / "demo" / "changed.txt").read_text(encoding="utf-8") == "old"
+    manifest = json.loads((result.backup_directory / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["status"] == "applied"
+
+
+def test_apply_failure_rolls_back_all_written_files(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    source_skill = make_skill(source, "demo")
+    destination_skill = make_skill(destination, "demo")
+    for name in ("a.txt", "b.txt"):
+        (source_skill / name).write_text(f"new-{name}", encoding="utf-8")
+        (destination_skill / name).write_text(f"old-{name}", encoding="utf-8")
+    plan = build_sync_plan(source, destination)
+    calls = 0
+
+    def fail_second_replace(source_path, destination_path):
+        nonlocal calls
+        calls += 1
+        if calls == 2:
+            raise OSError("injected apply failure")
+        os.replace(source_path, destination_path)
+
+    result = apply_sync_plan(plan, tmp_path / "backups", replace_func=fail_second_replace)
+
+    assert result.exit_code == 3
+    assert result.rollback_complete is True
+    assert (destination_skill / "a.txt").read_text(encoding="utf-8") == "old-a.txt"
+    assert (destination_skill / "b.txt").read_text(encoding="utf-8") == "old-b.txt"
+
+
+def test_apply_with_blockers_performs_zero_writes(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    make_skill(source, "missing-at-destination")
+    plan = build_sync_plan(source, destination)
+    backup_root = tmp_path / "backups"
+
+    result = apply_sync_plan(plan, backup_root)
+
+    assert result.exit_code == 2
+    assert not backup_root.exists()
+    assert not (destination / "missing-at-destination").exists()
+
+
+def test_apply_reports_incomplete_rollback(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    source_skill = make_skill(source, "demo")
+    destination_skill = make_skill(destination, "demo")
+    for name in ("a.txt", "b.txt"):
+        (source_skill / name).write_text(f"new-{name}", encoding="utf-8")
+        (destination_skill / name).write_text(f"old-{name}", encoding="utf-8")
+    plan = build_sync_plan(source, destination)
+    calls = 0
+
+    def fail_apply_and_rollback(source_path, destination_path):
+        nonlocal calls
+        calls += 1
+        if calls >= 2:
+            raise OSError("injected persistent failure")
+        os.replace(source_path, destination_path)
+
+    result = apply_sync_plan(plan, tmp_path / "backups", replace_func=fail_apply_and_rollback)
+
+    assert result.exit_code == 4
+    assert result.rollback_complete is False
