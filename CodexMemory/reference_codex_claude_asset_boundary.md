@@ -36,6 +36,7 @@
 - `state/`、`state/history.jsonl`、实际 `config.json`、`.env*`、批次输入/结果 JSON 都属于运行态或私密资产，必须在计划阶段直接排除；共享配置只允许无密钥模板。
 - 首轮未过滤时曾出现 89 add + 13 modify；修正后为 20 add + 11 modify，且 `x3-media` 的 cookie/token 配置和 69 个运行态/批次文件全部退出计划。
 - `x3-feature-test` 的 Unity CLI/MCP/DebugUtils 路由已收进 Codex 侧显式 `CODEX-ONLY` 区块，公共正文仍由 Claude 真源覆盖。
+- 首次正式 apply 已于 2026-08-03 完成：备份点 `~/.codex/tmp/skill-sync-backups/20260803T091802.021062Z`；写后 dry-run 为 `preserve=11, skip=322, blockers=0`，无待新增/修改项。证据见 `CodexMemory/reports/skill-sync-post-apply-20260803.json`。
 
 ### D-1 首轮同步器 dry-run（2026-08-03）
 
