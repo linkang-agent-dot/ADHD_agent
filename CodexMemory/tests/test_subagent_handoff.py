@@ -159,6 +159,18 @@ class HandoffTests(unittest.TestCase):
         self.assertTrue(record.is_dir())
         self.assertEqual("claimed", handoff.load_json(record / "state.json")["status"])
 
+    def test_locate_uses_session_index_instead_of_guessing_folder_name(self):
+        handoff.handle_event(self.event("SessionStart"), self.root)
+        handoff.handle_event(
+            self.event("UserPromptSubmit", prompt="标题不会包含完整 session id"), self.root
+        )
+        expected = self.conversation_folder()
+        self.assertNotIn(self.session, expected.name)
+        self.assertEqual(
+            expected,
+            handoff.resolve_conversation_folder(self.root, self.session),
+        )
+
     def test_concurrent_checkpoints_do_not_overwrite(self):
         handoff.handle_event(self.event("SessionStart"), self.root)
         handoff.handle_event(

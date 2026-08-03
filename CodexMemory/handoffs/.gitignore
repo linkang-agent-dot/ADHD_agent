@@ -1,3 +1,5 @@
-/.handoff.lock
-/_index/
-/**/transcript-snapshot.jsonl
+# This tree contains local runtime state and may include verbatim user prompts.
+# Keep only the policy files versioned; never commit generated handoff content.
+*
+!.gitignore
+!README.md

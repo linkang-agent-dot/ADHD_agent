@@ -460,6 +460,19 @@ def resolve_record(root: Path, session_id: str, channel: str, record_id: str) ->
     raise SystemExit(f"Handoff record not found: {channel}/{record_id}")
 
 
+def resolve_conversation_folder(root: Path, session_id: str) -> Path:
+    """Resolve a handoff folder through the session index; never guess its name."""
+    idx = load_index(root, session_id)
+    if not idx.get("folder"):
+        raise SystemExit(f"No handoff conversation found for session {session_id}")
+    return root / idx["folder"]
+
+
+def cmd_locate(args: argparse.Namespace) -> int:
+    print(resolve_conversation_folder(root_dir(), args.session_id))
+    return 0
+
+
 def cmd_checkpoint(args: argparse.Namespace) -> int:
     root = root_dir()
     with ledger_lock(root):
@@ -518,6 +531,8 @@ def build_parser() -> argparse.ArgumentParser:
     checkpoint.add_argument("--message", required=True)
     claim = sub.add_parser("claim")
     claim.add_argument("--session-id", required=True)
+    locate = sub.add_parser("locate")
+    locate.add_argument("--session-id", required=True)
     return parser
 
 
@@ -529,6 +544,8 @@ def main() -> int:
         return cmd_checkpoint(args)
     if args.command == "claim":
         return cmd_claim(args)
+    if args.command == "locate":
+        return cmd_locate(args)
     return 2
 
 

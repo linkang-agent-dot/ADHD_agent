@@ -61,6 +61,7 @@
 ## 保持本机，不进入 Git
 - `auth.json`、cookie、token、浏览器 profile。
 - `sessions/`、history、SQLite/WAL、日志、缓存、临时文件。
+- `CodexMemory/handoffs/` 下生成的用户原话、checkpoint、final、state、index 与 transcript；该目录只版本化 README 和 `.gitignore`。
 - 插件下载缓存、Node REPL 状态和 browser runtime 状态。
 
 ## 推荐仓库结构

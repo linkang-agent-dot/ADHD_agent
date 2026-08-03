@@ -1,4 +1,0 @@
-
-## 2026-08-03T17:44:26+08:00 turn=btw-1
-
-LIVE BTW FINAL
