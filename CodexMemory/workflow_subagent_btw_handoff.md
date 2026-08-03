@@ -49,4 +49,4 @@ python -m py_compile C:\ADHD_agent\CodexMemory\scripts\subagent_handoff.py
 python -m unittest discover -s C:\ADHD_agent\CodexMemory\tests -p test_subagent_handoff.py -v
 ```
 
-2026-08-03 组件证据：6 项测试通过；带 `--dangerously-bypass-hook-trust` 的冷启动在模型响应前创建了 smoke 对话目录，仅证明该绕过信任场景下的 SessionStart/UserPromptSubmit 接线。真实模型 sub-agent E2E 在首 prompt 后无响应超时，根因未确认；正常交互 hooks 又缺少新定义的信任哈希。因此当前不得宣称机制验收通过。
+2026-08-03 证据进展：7 项组件测试通过；早期带 `--dangerously-bypass-hook-trust` 的 smoke 只证明绕过信任时的接线。随后已按本机 Codex App Server 的 `currentHash` 补齐信任，独立查询确认 9/9 `trusted`，且不带 bypass 的最小 `codex exec` 在 37 秒内完成并由 SessionStart 创建记录。要求 spawn explorer 的原生 sub-agent E2E 及真实交互 `/side` 仍未通过，因此整套机制仍不得宣称验收完成。
