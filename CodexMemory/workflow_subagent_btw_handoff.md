@@ -1,6 +1,6 @@
 # BTW / sub-agent 持久化回主对话
 
-> **验收状态：未通过（2026-08-03）。** 9 个 hook 实例中只有原 4 个受信任；本机制新增的 SessionStart、UserPromptSubmit、SubagentStart、SubagentStop、Stop 共 5 个实例未信任。真实交互 `/side` 与原生 Codex sub-agent E2E 均未跑通。单元测试、事件模拟和绕过信任的接线 smoke 只能作为组件证据，不能替代端到端验收。另：`collaboration.spawn_agent` 不经过本机 CLI hooks，需单独的运行时接力层。
+> **验收状态：部分通过（2026-08-03）。** 本机 Codex 0.146.0 App Server 已复核 9/9 hook 实例均为 `trusted`；不带 trust bypass 的全新 `codex exec` 成功完成并由 SessionStart 真实创建本机会话记录。真实交互 `/side` 与原生 Codex sub-agent E2E 仍未跑通，所以整套持久化机制尚不能宣称验收完成。另：`collaboration.spawn_agent` 不经过本机 CLI hooks，需单独的运行时接力层。
 
 ## 入口
 
