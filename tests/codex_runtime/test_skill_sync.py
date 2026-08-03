@@ -8,6 +8,7 @@ import pytest
 
 from CodexRuntime.skills.sync_claude_to_codex import (
     SkillFormatError,
+    build_sync_plan,
     inventory_skills,
     merge_skill_markdown,
     validate_frontmatter,
@@ -144,3 +145,81 @@ def test_validate_frontmatter_rejects_name_mismatch() -> None:
     errors = validate_frontmatter(text, "demo")
 
     assert any("does not match" in error for error in errors)
+
+
+def operation_map(plan) -> dict[tuple[str, str], str]:
+    return {(op.skill, op.relative_path): op.action for op in plan.operations}
+
+
+def test_plan_adds_modifies_skips_and_preserves_without_writing(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    source_skill = make_skill(source, "demo")
+    destination_skill = make_skill(destination, "demo")
+    (source_skill / "same.txt").write_text("same", encoding="utf-8")
+    (destination_skill / "same.txt").write_text("same", encoding="utf-8")
+    (source_skill / "changed.txt").write_text("new", encoding="utf-8")
+    (destination_skill / "changed.txt").write_text("old", encoding="utf-8")
+    (source_skill / "new.txt").write_text("new", encoding="utf-8")
+    (destination_skill / "codex-only.txt").write_text("keep", encoding="utf-8")
+    before = (destination_skill / "changed.txt").read_text(encoding="utf-8")
+
+    plan = build_sync_plan(source, destination)
+
+    operations = operation_map(plan)
+    assert operations[("demo", "same.txt")] == "skip"
+    assert operations[("demo", "changed.txt")] == "modify"
+    assert operations[("demo", "new.txt")] == "add"
+    assert operations[("demo", "codex-only.txt")] == "preserve"
+    assert (destination_skill / "changed.txt").read_text(encoding="utf-8") == before
+
+
+def test_plan_excludes_runtime_artifacts(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    source_skill = make_skill(source, "demo")
+    make_skill(destination, "demo")
+    cache = source_skill / "__pycache__"
+    cache.mkdir()
+    (cache / "module.pyc").write_bytes(b"compiled")
+    (source_skill / "debug.log").write_text("noise", encoding="utf-8")
+    (source_skill / "scratch.tmp").write_text("noise", encoding="utf-8")
+
+    plan = build_sync_plan(source, destination)
+
+    planned_paths = {op.relative_path for op in plan.operations}
+    assert "__pycache__/module.pyc" not in planned_paths
+    assert "debug.log" not in planned_paths
+    assert "scratch.tmp" not in planned_paths
+
+
+def test_plan_blocks_missing_destination_by_default(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    make_skill(source, "new-skill")
+
+    plan = build_sync_plan(source, destination)
+
+    assert plan.blockers
+    assert any("allow-create" in blocker for blocker in plan.blockers)
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Junction behavior is Windows-specific")
+def test_plan_blocks_nested_junction(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    source_skill = make_skill(source, "demo")
+    make_skill(destination, "demo")
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    (outside / "secret.txt").write_text("do not follow", encoding="utf-8")
+    nested = source_skill / "linked"
+    completed = subprocess.run(
+        ["cmd", "/c", "mklink", "/J", str(nested), str(outside)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if completed.returncode != 0:
+        pytest.skip(f"Junction creation unavailable: {completed.stderr}")
+
+    plan = build_sync_plan(source, destination)
+
+    assert any("reparse" in blocker.lower() or "junction" in blocker.lower() for blocker in plan.blockers)
+    assert all(op.relative_path != "linked/secret.txt" for op in plan.operations)

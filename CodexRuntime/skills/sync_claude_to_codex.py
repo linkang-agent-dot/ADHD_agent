@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
+import os
 from pathlib import Path
 import re
+import stat
 
 
 CODEX_START = "<!-- CODEX-ONLY:START -->"
@@ -32,6 +35,25 @@ class InventoryResult:
         raise KeyError(name)
 
 
+@dataclass(frozen=True)
+class FileOperation:
+    skill: str
+    relative_path: str
+    action: str
+    source: Path | None
+    destination: Path
+    content: bytes | None = None
+
+
+@dataclass(frozen=True)
+class SyncPlan:
+    source_root: Path
+    destination_root: Path
+    inventory: InventoryResult
+    operations: tuple[FileOperation, ...]
+    blockers: tuple[str, ...]
+
+
 def _top_level_directories(root: Path) -> dict[str, Path]:
     if not root.is_dir():
         raise ValueError(f"Skill root is not a directory: {root}")
@@ -41,6 +63,16 @@ def _top_level_directories(root: Path) -> dict[str, Path]:
 def _is_junction(path: Path) -> bool:
     is_junction = getattr(path, "is_junction", None)
     return bool(is_junction and is_junction())
+
+
+def _is_reparse_point(path: Path) -> bool:
+    if path.is_symlink() or _is_junction(path):
+        return True
+    try:
+        attributes = path.lstat().st_file_attributes
+    except (AttributeError, OSError):
+        return False
+    return bool(attributes & stat.FILE_ATTRIBUTE_REPARSE_POINT)
 
 
 def inventory_skills(source_root: Path, destination_root: Path) -> InventoryResult:
@@ -146,3 +178,143 @@ def merge_skill_markdown(source: str, destination: str | None, expected_name: st
     if merged_errors:
         raise SkillFormatError("; ".join(merged_errors))
     return merged
+
+
+EXCLUDED_DIRECTORIES = {"__pycache__", ".pytest_cache", "output", "outputs"}
+EXCLUDED_SUFFIXES = {".pyc", ".pyo", ".log", ".tmp", ".temp"}
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _is_excluded(relative_path: Path) -> bool:
+    return bool(
+        any(part in EXCLUDED_DIRECTORIES for part in relative_path.parts)
+        or relative_path.suffix.lower() in EXCLUDED_SUFFIXES
+    )
+
+
+def _walk_skill_files(skill_root: Path) -> tuple[dict[str, Path], list[str]]:
+    files: dict[str, Path] = {}
+    blockers: list[str] = []
+
+    def visit(directory: Path) -> None:
+        for child in sorted(directory.iterdir(), key=lambda item: item.name.lower()):
+            relative = child.relative_to(skill_root)
+            if _is_excluded(relative):
+                continue
+            if _is_reparse_point(child):
+                blockers.append(f"Reparse point/Junction is not allowed inside Skill: {child}")
+                continue
+            if child.is_dir():
+                visit(child)
+            elif child.is_file():
+                files[relative.as_posix()] = child
+
+    visit(skill_root)
+    return files, blockers
+
+
+def _roots_overlap(source_root: Path, destination_root: Path) -> bool:
+    source = source_root.resolve()
+    destination = destination_root.resolve()
+    return source == destination or source in destination.parents or destination in source.parents
+
+
+def build_sync_plan(
+    source_root: Path,
+    destination_root: Path,
+    *,
+    allow_create: bool = False,
+) -> SyncPlan:
+    """Return a read-only synchronization plan."""
+    source_root = Path(source_root)
+    destination_root = Path(destination_root)
+    inventory = inventory_skills(source_root, destination_root)
+    operations: list[FileOperation] = []
+    blockers: list[str] = []
+
+    if _roots_overlap(source_root, destination_root):
+        blockers.append("Source and destination roots must not overlap")
+        return SyncPlan(source_root, destination_root, inventory, (), tuple(blockers))
+
+    for entry in inventory.entries:
+        if entry.kind in {"shared-junction", "codex-only"}:
+            continue
+        if entry.kind == "missing-destination" and not allow_create:
+            blockers.append(f"Skill {entry.name!r} is missing at destination; use --allow-create")
+            continue
+        assert entry.source is not None
+        destination_skill = entry.destination or destination_root / entry.name
+        source_files, source_blockers = _walk_skill_files(entry.source)
+        blockers.extend(source_blockers)
+        if destination_skill.exists():
+            destination_files, destination_blockers = _walk_skill_files(destination_skill)
+            blockers.extend(destination_blockers)
+        else:
+            destination_files = {}
+
+        if "SKILL.md" not in source_files:
+            blockers.append(f"Skill {entry.name!r} has no source SKILL.md")
+            continue
+
+        for relative_path in sorted(source_files.keys() | destination_files.keys()):
+            source = source_files.get(relative_path)
+            destination = destination_skill / Path(relative_path)
+            destination_existing = destination_files.get(relative_path)
+            if source is None:
+                operations.append(
+                    FileOperation(
+                        skill=entry.name,
+                        relative_path=relative_path,
+                        action="preserve",
+                        source=None,
+                        destination=destination,
+                    )
+                )
+                continue
+
+            try:
+                if relative_path == "SKILL.md":
+                    source_text = source.read_text(encoding="utf-8")
+                    destination_text = (
+                        destination_existing.read_text(encoding="utf-8")
+                        if destination_existing is not None
+                        else None
+                    )
+                    content = merge_skill_markdown(source_text, destination_text, entry.name).encode("utf-8")
+                else:
+                    content = source.read_bytes()
+            except (OSError, UnicodeError, SkillFormatError) as exc:
+                blockers.append(f"Skill {entry.name!r} file {relative_path!r}: {exc}")
+                continue
+
+            if destination_existing is None:
+                action = "add"
+            elif hashlib.sha256(content).hexdigest() == sha256_file(destination_existing):
+                action = "skip"
+            else:
+                action = "modify"
+            operations.append(
+                FileOperation(
+                    skill=entry.name,
+                    relative_path=relative_path,
+                    action=action,
+                    source=source,
+                    destination=destination,
+                    content=content,
+                )
+            )
+
+    return SyncPlan(
+        source_root=source_root,
+        destination_root=destination_root,
+        inventory=inventory,
+        operations=tuple(operations),
+        blockers=tuple(blockers),
+    )
