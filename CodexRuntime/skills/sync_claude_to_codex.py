@@ -240,8 +240,9 @@ def merge_skill_markdown(source: str, destination: str | None, expected_name: st
     return merged
 
 
-EXCLUDED_DIRECTORIES = {"__pycache__", ".pytest_cache", "output", "outputs"}
+EXCLUDED_DIRECTORIES = {"__pycache__", ".pytest_cache", "output", "outputs", "state"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo", ".log", ".tmp", ".temp"}
+EXCLUDED_FILENAMES = {"config.json", ".env"}
 UTF8_BOM = b"\xef\xbb\xbf"
 
 
@@ -268,9 +269,18 @@ def _encode_skill_markdown(text: str, source_bytes: bytes, destination_bytes: by
 
 
 def _is_excluded(relative_path: Path) -> bool:
+    parts = tuple(part.lower() for part in relative_path.parts)
+    filename = relative_path.name.lower()
+    is_batch_artifact = relative_path.suffix.lower() == ".json" and (
+        "_batch_" in relative_path.stem.lower()
+        or "-results-" in relative_path.stem.lower()
+    )
     return bool(
-        any(part in EXCLUDED_DIRECTORIES for part in relative_path.parts)
+        any(part in EXCLUDED_DIRECTORIES for part in parts)
         or relative_path.suffix.lower() in EXCLUDED_SUFFIXES
+        or filename in EXCLUDED_FILENAMES
+        or filename.startswith(".env.")
+        or is_batch_artifact
     )
 
 

@@ -249,6 +249,16 @@ def test_plan_excludes_runtime_artifacts(tmp_path: Path) -> None:
     (cache / "module.pyc").write_bytes(b"compiled")
     (source_skill / "debug.log").write_text("noise", encoding="utf-8")
     (source_skill / "scratch.tmp").write_text("noise", encoding="utf-8")
+    state = source_skill / "state" / "tasks"
+    state.mkdir(parents=True)
+    (state / "job.json").write_text("{}", encoding="utf-8")
+    (source_skill / "config.json").write_text(
+        '{"token": "local-secret"}', encoding="utf-8"
+    )
+    (source_skill / "circus_batch_0731.json").write_text("[]", encoding="utf-8")
+    (source_skill / "circus_batch_0731-results-1.json").write_text(
+        "{}", encoding="utf-8"
+    )
 
     plan = build_sync_plan(source, destination)
 
@@ -256,6 +266,10 @@ def test_plan_excludes_runtime_artifacts(tmp_path: Path) -> None:
     assert "__pycache__/module.pyc" not in planned_paths
     assert "debug.log" not in planned_paths
     assert "scratch.tmp" not in planned_paths
+    assert "state/tasks/job.json" not in planned_paths
+    assert "config.json" not in planned_paths
+    assert "circus_batch_0731.json" not in planned_paths
+    assert "circus_batch_0731-results-1.json" not in planned_paths
 
 
 def test_plan_blocks_missing_destination_by_default(tmp_path: Path) -> None:

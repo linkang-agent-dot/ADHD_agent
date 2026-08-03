@@ -32,6 +32,11 @@
 5. Codex 专属 wrapper 不混入公共脚本，放 `CodexRuntime/skill-overrides/<skill>/`。
 6. 同步脚本必须支持 `--dry-run`、差异清单、备份/回滚点，并在同步后扫描错误的 `.Codex` 路径和执行 skill 加载验证。
 
+首次真实 dry-run 审计补充（2026-08-03）：
+- `state/`、`state/history.jsonl`、实际 `config.json`、`.env*`、批次输入/结果 JSON 都属于运行态或私密资产，必须在计划阶段直接排除；共享配置只允许无密钥模板。
+- 首轮未过滤时曾出现 89 add + 13 modify；修正后为 20 add + 11 modify，且 `x3-media` 的 cookie/token 配置和 69 个运行态/批次文件全部退出计划。
+- `x3-feature-test` 的 Unity CLI/MCP/DebugUtils 路由已收进 Codex 侧显式 `CODEX-ONLY` 区块，公共正文仍由 Claude 真源覆盖。
+
 ### D-1 首轮同步器 dry-run（2026-08-03）
 
 - 工具：`CodexRuntime/skills/sync_claude_to_codex.py`；默认 dry-run，支持 JSON 报告、事务备份和失败回滚。
