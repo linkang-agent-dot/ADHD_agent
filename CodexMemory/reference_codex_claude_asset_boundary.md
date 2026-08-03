@@ -37,6 +37,8 @@
 - 首轮未过滤时曾出现 89 add + 13 modify；修正后为 20 add + 11 modify，且 `x3-media` 的 cookie/token 配置和 69 个运行态/批次文件全部退出计划。
 - `x3-feature-test` 的 Unity CLI/MCP/DebugUtils 路由已收进 Codex 侧显式 `CODEX-ONLY` 区块，公共正文仍由 Claude 真源覆盖。
 - 首次正式 apply 已于 2026-08-03 完成：备份点 `~/.codex/tmp/skill-sync-backups/20260803T091802.021062Z`；写后 dry-run 为 `preserve=11, skip=322, blockers=0`，无待新增/修改项。证据见 `CodexMemory/reports/skill-sync-post-apply-20260803.json`。
+- Codex 原生能力清理（2026-08-03）：`brainstorming`、`writing-plans`、`executing-plans` 等 10 个旧元流程 skill 已从 `~/.agents/skills` 卸载，并在同步器 `DEFAULT_CODEX_EXCLUDED_SKILLS` 中永久排除；Claude 侧改为实体备份，不受 Codex 清理影响。`using-git-worktrees` 与 `systematic-debugging` 因仍有独立标准流程而保留。
+- 活跃 skill 根禁止放 `.bak.<timestamp>` 备份和 `*-workspace` 评测目录；前者进入 `CodexMemory/skill-quarantine/`，后者进入 `CodexMemory/skill-workspaces/`，两类运行内容均不进 Git。
 
 ### D-1 首轮同步器 dry-run（2026-08-03）
 

@@ -1,0 +1,2696 @@
+{
+  "schema_version": 1,
+  "mode": "dry-run",
+  "source_root": "C:\\Users\\linkang\\.claude\\skills",
+  "destination_root": "C:\\Users\\linkang\\.agents\\skills",
+  "inventory": [
+    {
+      "name": "L1_game_ux",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\L1_game_ux",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\L1_game_ux"
+    },
+    {
+      "name": "activity-check",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\activity-check",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\activity-check"
+    },
+    {
+      "name": "activity-config",
+      "kind": "non-skill-directory",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\activity-config",
+      "destination": null
+    },
+    {
+      "name": "agent-reach",
+      "kind": "non-skill-directory",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\agent-reach",
+      "destination": null
+    },
+    {
+      "name": "brainstorming",
+      "kind": "excluded",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\brainstorming",
+      "destination": null
+    },
+    {
+      "name": "bug-scan",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\bug-scan",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\bug-scan"
+    },
+    {
+      "name": "bulk-mail-reissue",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\bulk-mail-reissue",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\bulk-mail-reissue"
+    },
+    {
+      "name": "chart-visualization",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\chart-visualization",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\chart-visualization"
+    },
+    {
+      "name": "competitor-monitor",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\competitor-monitor",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\competitor-monitor"
+    },
+    {
+      "name": "competitor-recorder",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\competitor-recorder",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\competitor-recorder"
+    },
+    {
+      "name": "data-analysis",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\data-analysis",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\data-analysis"
+    },
+    {
+      "name": "datain-skill",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\datain-skill",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\datain-skill"
+    },
+    {
+      "name": "dispatching-parallel-agents",
+      "kind": "excluded",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\dispatching-parallel-agents",
+      "destination": null
+    },
+    {
+      "name": "doc-coauthoring",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\doc-coauthoring",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\doc-coauthoring"
+    },
+    {
+      "name": "docx",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\docx",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\docx"
+    },
+    {
+      "name": "dws",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\dws",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\dws"
+    },
+    {
+      "name": "executing-plans",
+      "kind": "excluded",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\executing-plans",
+      "destination": null
+    },
+    {
+      "name": "frontend-design",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\frontend-design",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\frontend-design"
+    },
+    {
+      "name": "game-localization-translator",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\game-localization-translator",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\game-localization-translator"
+    },
+    {
+      "name": "google-docs",
+      "kind": "codex-only",
+      "source": null,
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\google-docs"
+    },
+    {
+      "name": "grfal-api",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\grfal-api",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\grfal-api"
+    },
+    {
+      "name": "html-deployer",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\html-deployer",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\html-deployer"
+    },
+    {
+      "name": "igame-activity-deploy",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-activity-deploy",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-activity-deploy"
+    },
+    {
+      "name": "igame-actv",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-actv",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-actv"
+    },
+    {
+      "name": "igame-gm-send",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-gm-send",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-gm-send"
+    },
+    {
+      "name": "igame-player-info-query",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-player-info-query",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-player-info-query"
+    },
+    {
+      "name": "igame-player-udid",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-player-udid",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-player-udid"
+    },
+    {
+      "name": "igame-skill",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-skill",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-skill"
+    },
+    {
+      "name": "igame-x3-activity-deploy",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy"
+    },
+    {
+      "name": "koubo-remix",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\koubo-remix",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\koubo-remix"
+    },
+    {
+      "name": "mcp-builder",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\mcp-builder",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\mcp-builder"
+    },
+    {
+      "name": "p2-festival-art-brief",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\p2-festival-art-brief",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\p2-festival-art-brief"
+    },
+    {
+      "name": "p2-x2-reskin",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\p2-x2-reskin",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\p2-x2-reskin"
+    },
+    {
+      "name": "pdf",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\pdf",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\pdf"
+    },
+    {
+      "name": "planning-with-files",
+      "kind": "excluded",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\planning-with-files",
+      "destination": null
+    },
+    {
+      "name": "pptx",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\pptx",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\pptx"
+    },
+    {
+      "name": "skill-creator",
+      "kind": "excluded",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\skill-creator",
+      "destination": null
+    },
+    {
+      "name": "subagent-driven-development",
+      "kind": "excluded",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\subagent-driven-development",
+      "destination": null
+    },
+    {
+      "name": "systematic-debugging",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\systematic-debugging",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\systematic-debugging"
+    },
+    {
+      "name": "test-env-prepare-x3",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3"
+    },
+    {
+      "name": "url-reader",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\url-reader",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\url-reader"
+    },
+    {
+      "name": "using-git-worktrees",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\using-git-worktrees",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\using-git-worktrees"
+    },
+    {
+      "name": "using-superpowers",
+      "kind": "excluded",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\using-superpowers",
+      "destination": null
+    },
+    {
+      "name": "verification-before-completion",
+      "kind": "excluded",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\verification-before-completion",
+      "destination": null
+    },
+    {
+      "name": "writing-plans",
+      "kind": "excluded",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\writing-plans",
+      "destination": null
+    },
+    {
+      "name": "writing-skills",
+      "kind": "excluded",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\writing-skills",
+      "destination": null
+    },
+    {
+      "name": "x2-art-requirement",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-art-requirement",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-art-requirement"
+    },
+    {
+      "name": "x2-dk-manager",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-dk-manager",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-dk-manager"
+    },
+    {
+      "name": "x2-kadmin",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-kadmin",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-kadmin"
+    },
+    {
+      "name": "x2-localization-translator",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-localization-translator",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-localization-translator"
+    },
+    {
+      "name": "x3-config-export",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export"
+    },
+    {
+      "name": "x3-feature-test",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test"
+    },
+    {
+      "name": "x3-media",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media"
+    },
+    {
+      "name": "x3-media.bak.1780452777247",
+      "kind": "non-skill-directory",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media.bak.1780452777247",
+      "destination": null
+    },
+    {
+      "name": "x3-numerical-design",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-numerical-design",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-numerical-design"
+    },
+    {
+      "name": "x3-numerical-design-workspace",
+      "kind": "non-skill-directory",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-numerical-design-workspace",
+      "destination": null
+    },
+    {
+      "name": "x3-translation-automatic",
+      "kind": "physical-pair",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-translation-automatic",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-translation-automatic"
+    },
+    {
+      "name": "xlsx",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\xlsx",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\xlsx"
+    },
+    {
+      "name": "youtube-analyzer",
+      "kind": "shared-junction",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\youtube-analyzer",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\youtube-analyzer"
+    }
+  ],
+  "operations": [
+    {
+      "skill": "L1_game_ux",
+      "relative_path": "ARCHITECTURE.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\L1_game_ux\\ARCHITECTURE.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\L1_game_ux\\ARCHITECTURE.md"
+    },
+    {
+      "skill": "L1_game_ux",
+      "relative_path": "ETHOS.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\L1_game_ux\\ETHOS.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\L1_game_ux\\ETHOS.md"
+    },
+    {
+      "skill": "L1_game_ux",
+      "relative_path": "README.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\L1_game_ux\\README.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\L1_game_ux\\README.md"
+    },
+    {
+      "skill": "L1_game_ux",
+      "relative_path": "SELF_TEST.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\L1_game_ux\\SELF_TEST.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\L1_game_ux\\SELF_TEST.md"
+    },
+    {
+      "skill": "L1_game_ux",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\L1_game_ux\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\L1_game_ux\\SKILL.md"
+    },
+    {
+      "skill": "L1_game_ux",
+      "relative_path": "references/check-self.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\L1_game_ux\\references\\check-self.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\L1_game_ux\\references\\check-self.md"
+    },
+    {
+      "skill": "L1_game_ux",
+      "relative_path": "references/ux-checklist.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\L1_game_ux\\references\\ux-checklist.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\L1_game_ux\\references\\ux-checklist.md"
+    },
+    {
+      "skill": "L1_game_ux",
+      "relative_path": "references/ux-methodology.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\L1_game_ux\\references\\ux-methodology.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\L1_game_ux\\references\\ux-methodology.md"
+    },
+    {
+      "skill": "L1_game_ux",
+      "relative_path": "templates/ui_spec.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\L1_game_ux\\templates\\ui_spec.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\L1_game_ux\\templates\\ui_spec.md"
+    },
+    {
+      "skill": "L1_game_ux",
+      "relative_path": "templates/wireframe.html",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\L1_game_ux\\templates\\wireframe.html",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\L1_game_ux\\templates\\wireframe.html"
+    },
+    {
+      "skill": "L1_game_ux",
+      "relative_path": "templates/workflow/interaction_flow.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\L1_game_ux\\templates\\workflow\\interaction_flow.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\L1_game_ux\\templates\\workflow\\interaction_flow.md"
+    },
+    {
+      "skill": "L1_game_ux",
+      "relative_path": "templates/workflow/兵种轮换.mmd",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\L1_game_ux\\templates\\workflow\\兵种轮换.mmd",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\L1_game_ux\\templates\\workflow\\兵种轮换.mmd"
+    },
+    {
+      "skill": "L1_game_ux",
+      "relative_path": "templates/workflow/联盟红包.mmd",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\L1_game_ux\\templates\\workflow\\联盟红包.mmd",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\L1_game_ux\\templates\\workflow\\联盟红包.mmd"
+    },
+    {
+      "skill": "activity-check",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\activity-check\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\activity-check\\SKILL.md"
+    },
+    {
+      "skill": "bug-scan",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\bug-scan\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\bug-scan\\SKILL.md"
+    },
+    {
+      "skill": "bulk-mail-reissue",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\bulk-mail-reissue\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\bulk-mail-reissue\\SKILL.md"
+    },
+    {
+      "skill": "bulk-mail-reissue",
+      "relative_path": "generate.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\bulk-mail-reissue\\generate.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\bulk-mail-reissue\\generate.py"
+    },
+    {
+      "skill": "bulk-mail-reissue",
+      "relative_path": "multilang_mail.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\bulk-mail-reissue\\multilang_mail.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\bulk-mail-reissue\\multilang_mail.py"
+    },
+    {
+      "skill": "grfal-api",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\grfal-api\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\grfal-api\\SKILL.md"
+    },
+    {
+      "skill": "grfal-api",
+      "relative_path": "references/evals/capability-rubric.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\grfal-api\\references\\evals\\capability-rubric.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\grfal-api\\references\\evals\\capability-rubric.md"
+    },
+    {
+      "skill": "grfal-api",
+      "relative_path": "references/evals/trigger-cases.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\grfal-api\\references\\evals\\trigger-cases.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\grfal-api\\references\\evals\\trigger-cases.md"
+    },
+    {
+      "skill": "grfal-api",
+      "relative_path": "references/tool_catalog.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\grfal-api\\references\\tool_catalog.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\grfal-api\\references\\tool_catalog.md"
+    },
+    {
+      "skill": "grfal-api",
+      "relative_path": "scripts/CUserslinkangAppDataLocalTempclaudeC--Users-linkang7f62bc78-a352-4bc4-a781-fbebf7babf20scratchpadlogs.txt",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\grfal-api\\scripts\\CUserslinkangAppDataLocalTempclaudeC--Users-linkang7f62bc78-a352-4bc4-a781-fbebf7babf20scratchpadlogs.txt",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\grfal-api\\scripts\\CUserslinkangAppDataLocalTempclaudeC--Users-linkang7f62bc78-a352-4bc4-a781-fbebf7babf20scratchpadlogs.txt"
+    },
+    {
+      "skill": "grfal-api",
+      "relative_path": "scripts/call_grfal.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\grfal-api\\scripts\\call_grfal.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\grfal-api\\scripts\\call_grfal.py"
+    },
+    {
+      "skill": "igame-activity-deploy",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-activity-deploy\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-activity-deploy\\SKILL.md"
+    },
+    {
+      "skill": "igame-activity-deploy",
+      "relative_path": "reference.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-activity-deploy\\reference.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-activity-deploy\\reference.md"
+    },
+    {
+      "skill": "igame-activity-deploy",
+      "relative_path": "scripts/submit_activity.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-activity-deploy\\scripts\\submit_activity.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-activity-deploy\\scripts\\submit_activity.py"
+    },
+    {
+      "skill": "igame-actv",
+      "relative_path": "DEPLOY_CHECKLIST.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-actv\\DEPLOY_CHECKLIST.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-actv\\DEPLOY_CHECKLIST.md"
+    },
+    {
+      "skill": "igame-actv",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-actv\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-actv\\SKILL.md"
+    },
+    {
+      "skill": "igame-actv",
+      "relative_path": "deploy-from-gantt.js",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-actv\\deploy-from-gantt.js",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-actv\\deploy-from-gantt.js"
+    },
+    {
+      "skill": "igame-actv",
+      "relative_path": "deploy-from-table.js",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-actv\\deploy-from-table.js",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-actv\\deploy-from-table.js"
+    },
+    {
+      "skill": "igame-actv",
+      "relative_path": "igame-actv-skill-intro.html",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-actv\\igame-actv-skill-intro.html",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-actv\\igame-actv-skill-intro.html"
+    },
+    {
+      "skill": "igame-actv",
+      "relative_path": "scripts/_patch2.js",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-actv\\scripts\\_patch2.js",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-actv\\scripts\\_patch2.js"
+    },
+    {
+      "skill": "igame-actv",
+      "relative_path": "scripts/fetch-server-config.js",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-actv\\scripts\\fetch-server-config.js",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-actv\\scripts\\fetch-server-config.js"
+    },
+    {
+      "skill": "igame-actv",
+      "relative_path": "scripts/x2_actv_ops.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-actv\\scripts\\x2_actv_ops.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-actv\\scripts\\x2_actv_ops.py"
+    },
+    {
+      "skill": "igame-actv",
+      "relative_path": "server-config.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-actv\\server-config.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-actv\\server-config.json"
+    },
+    {
+      "skill": "igame-gm-send",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-gm-send\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-gm-send\\SKILL.md"
+    },
+    {
+      "skill": "igame-gm-send",
+      "relative_path": "scripts/batch_add_score.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-gm-send\\scripts\\batch_add_score.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-gm-send\\scripts\\batch_add_score.py"
+    },
+    {
+      "skill": "igame-gm-send",
+      "relative_path": "scripts/batch_reduce_items.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-gm-send\\scripts\\batch_reduce_items.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-gm-send\\scripts\\batch_reduce_items.py"
+    },
+    {
+      "skill": "igame-gm-send",
+      "relative_path": "scripts/gen_gm_commands.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-gm-send\\scripts\\gen_gm_commands.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-gm-send\\scripts\\gen_gm_commands.py"
+    },
+    {
+      "skill": "igame-gm-send",
+      "relative_path": "scripts/send_gm.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-gm-send\\scripts\\send_gm.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-gm-send\\scripts\\send_gm.py"
+    },
+    {
+      "skill": "igame-player-info-query",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-player-info-query\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-player-info-query\\SKILL.md"
+    },
+    {
+      "skill": "igame-player-info-query",
+      "relative_path": "scripts/get_player_info.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-player-info-query\\scripts\\get_player_info.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-player-info-query\\scripts\\get_player_info.py"
+    },
+    {
+      "skill": "igame-player-udid",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-player-udid\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-player-udid\\SKILL.md"
+    },
+    {
+      "skill": "igame-player-udid",
+      "relative_path": "reference.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-player-udid\\reference.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-player-udid\\reference.md"
+    },
+    {
+      "skill": "igame-player-udid",
+      "relative_path": "scripts/get_udid.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-player-udid\\scripts\\get_udid.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-player-udid\\scripts\\get_udid.py"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "README.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\README.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\README.md"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\SKILL.md"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "beta_all11_220.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\beta_all11_220.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\beta_all11_220.json"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "beta_all16_220.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\beta_all16_220.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\beta_all16_220.json"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "beta_retest_102922_220.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\beta_retest_102922_220.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\beta_retest_102922_220.json"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "beta_test_102922_220.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\beta_test_102922_220.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\beta_test_102922_220.json"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "deepsea_tavern_cross.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\deepsea_tavern_cross.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\deepsea_tavern_cross.json"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "deepsea_wheel_cross.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\deepsea_wheel_cross.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\deepsea_wheel_cross.json"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "deepsea_wishpool.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\deepsea_wishpool.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\deepsea_wishpool.json"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "deploy_final.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\deploy_final.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\deploy_final.py"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "deploy_r16.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\deploy_r16.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\deploy_r16.py"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "deploy_sf.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\deploy_sf.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\deploy_sf.py"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "deploy_wc.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\deploy_wc.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\deploy_wc.py"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "deploy_wc_newservers.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\deploy_wc_newservers.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\deploy_wc_newservers.py"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "prod_all16_wcservers.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\prod_all16_wcservers.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\prod_all16_wcservers.json"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "prod_r32_rest12.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\prod_r32_rest12.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\prod_r32_rest12.json"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "submit-cross-server.js",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\submit-cross-server.js",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\submit-cross-server.js"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "wc_bp_leichong_now.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\wc_bp_leichong_now.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\wc_bp_leichong_now.json"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "wc_expand_1980_2250.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\wc_expand_1980_2250.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\wc_expand_1980_2250.json"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "wc_free_102920_1970.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\wc_free_102920_1970.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\wc_free_102920_1970.json"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "wc_kaixiang_now.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\wc_kaixiang_now.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\wc_kaixiang_now.json"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "wc_kx_dh_now.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\wc_kx_dh_now.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\wc_kx_dh_now.json"
+    },
+    {
+      "skill": "igame-x3-activity-deploy",
+      "relative_path": "wc_qiandao_periods.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\igame-x3-activity-deploy\\wc_qiandao_periods.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\igame-x3-activity-deploy\\wc_qiandao_periods.json"
+    },
+    {
+      "skill": "koubo-remix",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\koubo-remix\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\koubo-remix\\SKILL.md"
+    },
+    {
+      "skill": "koubo-remix",
+      "relative_path": "references/切分标准.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\koubo-remix\\references\\切分标准.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\koubo-remix\\references\\切分标准.md"
+    },
+    {
+      "skill": "koubo-remix",
+      "relative_path": "references/环境与坑.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\koubo-remix\\references\\环境与坑.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\koubo-remix\\references\\环境与坑.md"
+    },
+    {
+      "skill": "koubo-remix",
+      "relative_path": "references/边界质检协议.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\koubo-remix\\references\\边界质检协议.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\koubo-remix\\references\\边界质检协议.md"
+    },
+    {
+      "skill": "koubo-remix",
+      "relative_path": "scripts/analyze.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\koubo-remix\\scripts\\analyze.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\koubo-remix\\scripts\\analyze.py"
+    },
+    {
+      "skill": "koubo-remix",
+      "relative_path": "scripts/common.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\koubo-remix\\scripts\\common.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\koubo-remix\\scripts\\common.py"
+    },
+    {
+      "skill": "koubo-remix",
+      "relative_path": "scripts/cut.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\koubo-remix\\scripts\\cut.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\koubo-remix\\scripts\\cut.py"
+    },
+    {
+      "skill": "koubo-remix",
+      "relative_path": "scripts/remix.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\koubo-remix\\scripts\\remix.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\koubo-remix\\scripts\\remix.py"
+    },
+    {
+      "skill": "p2-x2-reskin",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\p2-x2-reskin\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\p2-x2-reskin\\SKILL.md"
+    },
+    {
+      "skill": "test-env-prepare-x3",
+      "relative_path": ".gitignore",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3\\.gitignore",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3\\.gitignore"
+    },
+    {
+      "skill": "test-env-prepare-x3",
+      "relative_path": "ID_REFERENCE.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3\\ID_REFERENCE.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3\\ID_REFERENCE.md"
+    },
+    {
+      "skill": "test-env-prepare-x3",
+      "relative_path": "SETUP.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3\\SETUP.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3\\SETUP.md"
+    },
+    {
+      "skill": "test-env-prepare-x3",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3\\SKILL.md"
+    },
+    {
+      "skill": "test-env-prepare-x3",
+      "relative_path": "scripts/config_query.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3\\scripts\\config_query.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3\\scripts\\config_query.py"
+    },
+    {
+      "skill": "test-env-prepare-x3",
+      "relative_path": "scripts/deploy_beta.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3\\scripts\\deploy_beta.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3\\scripts\\deploy_beta.py"
+    },
+    {
+      "skill": "test-env-prepare-x3",
+      "relative_path": "scripts/gm_combo.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3\\scripts\\gm_combo.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3\\scripts\\gm_combo.py"
+    },
+    {
+      "skill": "test-env-prepare-x3",
+      "relative_path": "scripts/gm_execute.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3\\scripts\\gm_execute.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3\\scripts\\gm_execute.py"
+    },
+    {
+      "skill": "test-env-prepare-x3",
+      "relative_path": "scripts/igame_activity.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3\\scripts\\igame_activity.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3\\scripts\\igame_activity.py"
+    },
+    {
+      "skill": "test-env-prepare-x3",
+      "relative_path": "scripts/jenkins_api.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3\\scripts\\jenkins_api.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3\\scripts\\jenkins_api.py"
+    },
+    {
+      "skill": "test-env-prepare-x3",
+      "relative_path": "scripts/jira_api.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3\\scripts\\jira_api.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3\\scripts\\jira_api.py"
+    },
+    {
+      "skill": "test-env-prepare-x3",
+      "relative_path": "scripts/jumpserver_client.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3\\scripts\\jumpserver_client.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3\\scripts\\jumpserver_client.py"
+    },
+    {
+      "skill": "test-env-prepare-x3",
+      "relative_path": "scripts/kadmin_api.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3\\scripts\\kadmin_api.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3\\scripts\\kadmin_api.py"
+    },
+    {
+      "skill": "test-env-prepare-x3",
+      "relative_path": "scripts/mongo_query.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\test-env-prepare-x3\\scripts\\mongo_query.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\test-env-prepare-x3\\scripts\\mongo_query.py"
+    },
+    {
+      "skill": "x2-art-requirement",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-art-requirement\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-art-requirement\\SKILL.md"
+    },
+    {
+      "skill": "x2-kadmin",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-kadmin\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-kadmin\\SKILL.md"
+    },
+    {
+      "skill": "x2-kadmin",
+      "relative_path": "scripts/_wf402.txt",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-kadmin\\scripts\\_wf402.txt",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-kadmin\\scripts\\_wf402.txt"
+    },
+    {
+      "skill": "x2-kadmin",
+      "relative_path": "scripts/_wf_out.txt",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-kadmin\\scripts\\_wf_out.txt",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-kadmin\\scripts\\_wf_out.txt"
+    },
+    {
+      "skill": "x2-kadmin",
+      "relative_path": "scripts/build.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-kadmin\\scripts\\build.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-kadmin\\scripts\\build.py"
+    },
+    {
+      "skill": "x2-kadmin",
+      "relative_path": "scripts/deploy.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-kadmin\\scripts\\deploy.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-kadmin\\scripts\\deploy.py"
+    },
+    {
+      "skill": "x2-kadmin",
+      "relative_path": "scripts/find.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-kadmin\\scripts\\find.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-kadmin\\scripts\\find.py"
+    },
+    {
+      "skill": "x2-kadmin",
+      "relative_path": "scripts/workflow_execute.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-kadmin\\scripts\\workflow_execute.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-kadmin\\scripts\\workflow_execute.py"
+    },
+    {
+      "skill": "x2-kadmin",
+      "relative_path": "scripts/workflow_select.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-kadmin\\scripts\\workflow_select.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-kadmin\\scripts\\workflow_select.py"
+    },
+    {
+      "skill": "x2-localization-translator",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-localization-translator\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-localization-translator\\SKILL.md"
+    },
+    {
+      "skill": "x2-localization-translator",
+      "relative_path": "reference.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x2-localization-translator\\reference.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-localization-translator\\reference.md"
+    },
+    {
+      "skill": "x2-localization-translator",
+      "relative_path": "scripts/_tmp_row.json",
+      "action": "preserve",
+      "source": null,
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-localization-translator\\scripts\\_tmp_row.json"
+    },
+    {
+      "skill": "x2-localization-translator",
+      "relative_path": "scripts/all_existing_keys.json",
+      "action": "preserve",
+      "source": null,
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-localization-translator\\scripts\\all_existing_keys.json"
+    },
+    {
+      "skill": "x2-localization-translator",
+      "relative_path": "scripts/build_translation_memory.py",
+      "action": "preserve",
+      "source": null,
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-localization-translator\\scripts\\build_translation_memory.py"
+    },
+    {
+      "skill": "x2-localization-translator",
+      "relative_path": "scripts/check_duplicates.py",
+      "action": "preserve",
+      "source": null,
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-localization-translator\\scripts\\check_duplicates.py"
+    },
+    {
+      "skill": "x2-localization-translator",
+      "relative_path": "scripts/lookup_tm.py",
+      "action": "preserve",
+      "source": null,
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-localization-translator\\scripts\\lookup_tm.py"
+    },
+    {
+      "skill": "x2-localization-translator",
+      "relative_path": "scripts/scan_all_keys.py",
+      "action": "preserve",
+      "source": null,
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-localization-translator\\scripts\\scan_all_keys.py"
+    },
+    {
+      "skill": "x2-localization-translator",
+      "relative_path": "scripts/translation_memory.json",
+      "action": "preserve",
+      "source": null,
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-localization-translator\\scripts\\translation_memory.json"
+    },
+    {
+      "skill": "x2-localization-translator",
+      "relative_path": "scripts/write_labor_lc.py",
+      "action": "preserve",
+      "source": null,
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x2-localization-translator\\scripts\\write_labor_lc.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\SKILL.md"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/actv_lookup.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\actv_lookup.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\actv_lookup.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/decode_protogen_reward.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\decode_protogen_reward.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\decode_protogen_reward.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/decode_protogen_timecycle.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\decode_protogen_timecycle.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\decode_protogen_timecycle.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/derive_xlsx_from_changed_tsv.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\derive_xlsx_from_changed_tsv.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\derive_xlsx_from_changed_tsv.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/i18n_lookup.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\i18n_lookup.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\i18n_lookup.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/jolt_verify.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\jolt_verify.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\jolt_verify.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/merge_i18n_proofread_union.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\merge_i18n_proofread_union.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\merge_i18n_proofread_union.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/merge_strict_cell_audit.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\merge_strict_cell_audit.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\merge_strict_cell_audit.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/merge_tsv_audit.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\merge_tsv_audit.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\merge_tsv_audit.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/pack_masterdata_scan.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\pack_masterdata_scan.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\pack_masterdata_scan.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/recycle_audit.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\recycle_audit.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\recycle_audit.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/reward_group_migrate.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\reward_group_migrate.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\reward_group_migrate.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/sync_client_manifest.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\sync_client_manifest.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\sync_client_manifest.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/tsv_delrows.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\tsv_delrows.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\tsv_delrows.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/tsv_edit.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\tsv_edit.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\tsv_edit.py"
+    },
+    {
+      "skill": "x3-config-export",
+      "relative_path": "scripts/xlsx_cache_repair.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-config-export\\scripts\\xlsx_cache_repair.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-config-export\\scripts\\xlsx_cache_repair.py"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\SKILL.md"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "docs/plans/2026-07-22-unity-cli-routing-design.md",
+      "action": "preserve",
+      "source": null,
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\docs\\plans\\2026-07-22-unity-cli-routing-design.md"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "docs/plans/2026-07-22-unity-cli-routing-implementation.md",
+      "action": "preserve",
+      "source": null,
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\docs\\plans\\2026-07-22-unity-cli-routing-implementation.md"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "references/bridge-debug-lessons.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test\\references\\bridge-debug-lessons.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\references\\bridge-debug-lessons.md"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "references/brief-templates.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test\\references\\brief-templates.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\references\\brief-templates.md"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "references/client-runtime.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test\\references\\client-runtime.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\references\\client-runtime.md"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "references/gm-commands.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test\\references\\gm-commands.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\references\\gm-commands.md"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "references/recipes.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test\\references\\recipes.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\references\\recipes.md"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "references/server-arch.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test\\references\\server-arch.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\references\\server-arch.md"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "references/stuck-escalation.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test\\references\\stuck-escalation.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\references\\stuck-escalation.md"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "references/unity-cli-routing.md",
+      "action": "preserve",
+      "source": null,
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\references\\unity-cli-routing.md"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "samples/x3new-592/README.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test\\samples\\x3new-592\\README.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\samples\\x3new-592\\README.md"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "samples/x3new-592/popup_state_175d.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test\\samples\\x3new-592\\popup_state_175d.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\samples\\x3new-592\\popup_state_175d.png"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "samples/x3new-592/recruit_175d_lingshuang.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test\\samples\\x3new-592\\recruit_175d_lingshuang.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\samples\\x3new-592\\recruit_175d_lingshuang.png"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "samples/x3new-592/report_X3NEW-592.html",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test\\samples\\x3new-592\\report_X3NEW-592.html",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\samples\\x3new-592\\report_X3NEW-592.html"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "samples/x3new-592/spec.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test\\samples\\x3new-592\\spec.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\samples\\x3new-592\\spec.json"
+    },
+    {
+      "skill": "x3-feature-test",
+      "relative_path": "scripts/make_html_report.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-feature-test\\scripts\\make_html_report.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-feature-test\\scripts\\make_html_report.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": ".gitignore",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\.gitignore",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\.gitignore"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "README.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\README.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\README.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\SKILL.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "_params_beilacoin.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\_params_beilacoin.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\_params_beilacoin.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "_params_beilashop.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\_params_beilashop.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\_params_beilashop.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "_params_beilashop2.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\_params_beilashop2.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\_params_beilashop2.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "_params_chest_empty.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\_params_chest_empty.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\_params_chest_empty.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "_params_chest_full.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\_params_chest_full.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\_params_chest_full.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "_params_mcoin_shop.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\_params_mcoin_shop.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\_params_mcoin_shop.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "_params_replace_beilabi.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\_params_replace_beilabi.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\_params_replace_beilabi.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "_params_replace_coin.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\_params_replace_coin.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\_params_replace_coin.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "_params_scroll_exp.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\_params_scroll_exp.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\_params_scroll_exp.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "_params_scroll_exp_big.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\_params_scroll_exp_big.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\_params_scroll_exp_big.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "_params_scroll_exp_v3.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\_params_scroll_exp_v3.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\_params_scroll_exp_v3.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "_params_scroll_exp_v4.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\_params_scroll_exp_v4.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\_params_scroll_exp_v4.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "_params_scroll_exp_v5.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\_params_scroll_exp_v5.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\_params_scroll_exp_v5.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "_params_ui_frame_extract.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\_params_ui_frame_extract.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\_params_ui_frame_extract.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "config.example.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\config.example.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\config.example.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/achievement_badge_bases/base_01_hex_sage.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\achievement_badge_bases\\base_01_hex_sage.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\achievement_badge_bases\\base_01_hex_sage.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/achievement_badge_bases/base_02_crown_orange.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\achievement_badge_bases\\base_02_crown_orange.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\achievement_badge_bases\\base_02_crown_orange.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/achievement_badge_bases/base_03_hex_lime.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\achievement_badge_bases\\base_03_hex_lime.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\achievement_badge_bases\\base_03_hex_lime.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/achievement_badge_bases/base_04_hex_blue.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\achievement_badge_bases\\base_04_hex_blue.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\achievement_badge_bases\\base_04_hex_blue.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/achievement_badge_bases/base_05_oct_purple.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\achievement_badge_bases\\base_05_oct_purple.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\achievement_badge_bases\\base_05_oct_purple.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/achievement_badge_manifest.json",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\achievement_badge_manifest.json",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\achievement_badge_manifest.json"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/achievement_badge_style_template.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\achievement_badge_style_template.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\achievement_badge_style_template.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/activity-icon-ref/Achievement__chengjiu_rukou_btn.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\activity-icon-ref\\Achievement__chengjiu_rukou_btn.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\activity-icon-ref\\Achievement__chengjiu_rukou_btn.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/activity-icon-ref/ActivityKvK__kvktime_icon.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\activity-icon-ref\\ActivityKvK__kvktime_icon.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\activity-icon-ref\\ActivityKvK__kvktime_icon.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/activity-icon-ref/Activity__15114996.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\activity-icon-ref\\Activity__15114996.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\activity-icon-ref\\Activity__15114996.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/activity-icon-ref/Alliance__Profit.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\activity-icon-ref\\Alliance__Profit.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\activity-icon-ref\\Alliance__Profit.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/activity-icon-ref/ItemIcon__151101752.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\activity-icon-ref\\ItemIcon__151101752.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\activity-icon-ref\\ItemIcon__151101752.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/activity-icon-ref/ItemIcon__151101753.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\activity-icon-ref\\ItemIcon__151101753.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\activity-icon-ref\\ItemIcon__151101753.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/activity-icon-ref/ItemIcon__151101760.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\activity-icon-ref\\ItemIcon__151101760.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\activity-icon-ref\\ItemIcon__151101760.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/activity-icon-ref/RegionUnlockOptimization__Icon4.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\activity-icon-ref\\RegionUnlockOptimization__Icon4.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\activity-icon-ref\\RegionUnlockOptimization__Icon4.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/activity-icon-ref/Rouge__ZZSL_Kapai.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\activity-icon-ref\\Rouge__ZZSL_Kapai.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\activity-icon-ref\\Rouge__ZZSL_Kapai.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/activity-icon-ref/VIP__Icon15115709.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\activity-icon-ref\\VIP__Icon15115709.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\activity-icon-ref\\VIP__Icon15115709.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/activity-icon-ref/ValentineGacha__Icon15115834.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\activity-icon-ref\\ValentineGacha__Icon15115834.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\activity-icon-ref\\ValentineGacha__Icon15115834.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/activity_icon_style_template.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\activity_icon_style_template.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\activity_icon_style_template.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/api-calling.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\api-calling.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\api-calling.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/available-models.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\available-models.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\available-models.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/button/img_bm_anniu_jianding_1.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\button\\img_bm_anniu_jianding_1.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\button\\img_bm_anniu_jianding_1.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/button/img_bm_anniu_jianding_2.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\button\\img_bm_anniu_jianding_2.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\button\\img_bm_anniu_jianding_2.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/button/img_ck_anniu_shilian_1.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\button\\img_ck_anniu_shilian_1.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\button\\img_ck_anniu_shilian_1.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/button/img_cm_anniu3_blue.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\button\\img_cm_anniu3_blue.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\button\\img_cm_anniu3_blue.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/button/img_cm_anniu3_geen.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\button\\img_cm_anniu3_geen.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\button\\img_cm_anniu3_geen.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/button/img_cm_anniu3_orange.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\button\\img_cm_anniu3_orange.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\button\\img_cm_anniu3_orange.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/button/img_cm_anniu3_red.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\button\\img_cm_anniu3_red.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\button\\img_cm_anniu3_red.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/button/img_cm_anniu_delete.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\button\\img_cm_anniu_delete.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\button\\img_cm_anniu_delete.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/button/img_cm_anniu_gaiming.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\button\\img_cm_anniu_gaiming.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\button\\img_cm_anniu_gaiming.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/button_style_template.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\button_style_template.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\button_style_template.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/card_gallery/00_cover.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\card_gallery\\00_cover.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\card_gallery\\00_cover.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/card_gallery_style_template.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\card_gallery_style_template.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\card_gallery_style_template.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/character-visuals/Amina_20_circus_v1alt_ref.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\character-visuals\\Amina_20_circus_v1alt_ref.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\character-visuals\\Amina_20_circus_v1alt_ref.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/character-visuals/Amina_20_official_fulllength.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\character-visuals\\Amina_20_official_fulllength.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\character-visuals\\Amina_20_official_fulllength.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/character-visuals/_index.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\character-visuals\\_index.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\character-visuals\\_index.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/default-styles.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\default-styles.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\default-styles.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/dispatch-protocol.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\dispatch-protocol.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\dispatch-protocol.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/effect_texture_samples/README.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\effect_texture_samples\\README.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\effect_texture_samples\\README.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/effect_texture_samples/common_icon_CrossServer_Wonder2.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\effect_texture_samples\\common_icon_CrossServer_Wonder2.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\effect_texture_samples\\common_icon_CrossServer_Wonder2.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/effect_texture_style_template.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\effect_texture_style_template.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\effect_texture_style_template.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/herofragment_icon_style_template.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\herofragment_icon_style_template.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\herofragment_icon_style_template.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-herofragment/Img_Hero_Token_2.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-herofragment\\Img_Hero_Token_2.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-herofragment\\Img_Hero_Token_2.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-herofragment/Img_Hero_Token_3.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-herofragment\\Img_Hero_Token_3.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-herofragment\\Img_Hero_Token_3.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-herofragment/Img_Hero_Token_9.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-herofragment\\Img_Hero_Token_9.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-herofragment\\Img_Hero_Token_9.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-item/151100877.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-item\\151100877.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-item\\151100877.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-item/AllianceRedPacket_icon_Goblet02.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-item\\AllianceRedPacket_icon_Goblet02.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-item\\AllianceRedPacket_icon_Goblet02.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-item/Loot_Icon_lootbox1.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-item\\Loot_Icon_lootbox1.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-item\\Loot_Icon_lootbox1.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-item/Loot_Icon_lootbox2.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-item\\Loot_Icon_lootbox2.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-item\\Loot_Icon_lootbox2.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-item/Loot_Icon_lootbox3.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-item\\Loot_Icon_lootbox3.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-item\\Loot_Icon_lootbox3.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-item/Loot_Icon_lootbox4.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-item\\Loot_Icon_lootbox4.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-item\\Loot_Icon_lootbox4.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-item/Loot_Icon_lootbox5.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-item\\Loot_Icon_lootbox5.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-item\\Loot_Icon_lootbox5.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-item/MiniGame_icon_CardPack1.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-item\\MiniGame_icon_CardPack1.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-item\\MiniGame_icon_CardPack1.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-item/MiniGame_icon_CardPack2.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-item\\MiniGame_icon_CardPack2.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-item\\MiniGame_icon_CardPack2.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-item/MiniGame_icon_CardPack3.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-item\\MiniGame_icon_CardPack3.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-item\\MiniGame_icon_CardPack3.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-item/chuatubiaotubiao.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-item\\chuatubiaotubiao.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-item\\chuatubiaotubiao.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-resource/1img_icon_earsofwheat.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-resource\\1img_icon_earsofwheat.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-resource\\1img_icon_earsofwheat.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-resource/icon_material_1.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-resource\\icon_material_1.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-resource\\icon_material_1.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-resource/img_cm_icon_gem.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-resource\\img_cm_icon_gem.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-resource\\img_cm_icon_gem.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-small/icon_global_interplay_furniture.png.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-small\\icon_global_interplay_furniture.png.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-small\\icon_global_interplay_furniture.png.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-small/img_cm_bg_icon_zhanli2.png.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-small\\img_cm_bg_icon_zhanli2.png.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-small\\img_cm_bg_icon_zhanli2.png.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/Amulet.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\Amulet.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\Amulet.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/Bow.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\Bow.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\Bow.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/Claymore.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\Claymore.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\Claymore.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/Clothes.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\Clothes.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\Clothes.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/Handgun.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\Handgun.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\Handgun.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/HeavyArmor.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\HeavyArmor.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\HeavyArmor.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/HeavyFootwear.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\HeavyFootwear.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\HeavyFootwear.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/Helmet.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\Helmet.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\Helmet.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/LightArmor.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\LightArmor.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\LightArmor.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/LightFootwear.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\LightFootwear.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\LightFootwear.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/LongGun.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\LongGun.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\LongGun.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/MagicianHat.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\MagicianHat.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\MagicianHat.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/Necklace.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\Necklace.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\Necklace.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/Potion.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\Potion.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\Potion.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/Ring.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\Ring.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\Ring.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/RogueHat.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\RogueHat.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\RogueHat.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/Shield.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\Shield.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\Shield.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/Spear.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\Spear.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\Spear.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/Staff.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\Staff.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\Staff.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/icon-ref-white/Sword.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\icon-ref-white\\Sword.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\icon-ref-white\\Sword.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/item_icon_style_template.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\item_icon_style_template.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\item_icon_style_template.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/march_emoji/Img_C_H_emoji.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\march_emoji\\Img_C_H_emoji.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\march_emoji\\Img_C_H_emoji.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/march_emoji_style_template.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\march_emoji_style_template.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\march_emoji_style_template.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/memory-protocol.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\memory-protocol.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\memory-protocol.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/onboarding.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\onboarding.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\onboarding.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/resource_icon_style_template.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\resource_icon_style_template.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\resource_icon_style_template.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/skill_icon/icon_research_skill_48.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\skill_icon\\icon_research_skill_48.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\skill_icon\\icon_research_skill_48.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/skill_icon/icon_research_skill_49.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\skill_icon\\icon_research_skill_49.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\skill_icon\\icon_research_skill_49.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/skill_icon/icon_research_skill_59.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\skill_icon\\icon_research_skill_59.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\skill_icon\\icon_research_skill_59.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/skill_icon/icon_skill_1016.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\skill_icon\\icon_skill_1016.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\skill_icon\\icon_skill_1016.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/skill_icon/icon_skill_1025.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\skill_icon\\icon_skill_1025.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\skill_icon\\icon_skill_1025.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/skill_icon/icon_skill_1037.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\skill_icon\\icon_skill_1037.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\skill_icon\\icon_skill_1037.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/skill_icon/icon_skill_1047.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\skill_icon\\icon_skill_1047.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\skill_icon\\icon_skill_1047.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/skill_icon/icon_skill_1049.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\skill_icon\\icon_skill_1049.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\skill_icon\\icon_skill_1049.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/skill_icon_style_template.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\skill_icon_style_template.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\skill_icon_style_template.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/small_icon_style_template.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\small_icon_style_template.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\small_icon_style_template.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-achievement-badge.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-achievement-badge.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-achievement-badge.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-activity-icon.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-activity-icon.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-activity-icon.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-button.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-button.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-button.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-card-gallery.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-card-gallery.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-card-gallery.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-dynamic-march-emoji.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-dynamic-march-emoji.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-dynamic-march-emoji.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-effect-texture.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-effect-texture.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-effect-texture.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-game-video.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-game-video.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-game-video.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-herofragment-icon.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-herofragment-icon.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-herofragment-icon.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-item-icon.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-item-icon.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-item-icon.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-march-emoji.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-march-emoji.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-march-emoji.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-resource-icon.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-resource-icon.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-resource-icon.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-skill-icon.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-skill-icon.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-skill-icon.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-small-icon.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-small-icon.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-small-icon.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-ui-extract-fine.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-ui-extract-fine.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-ui-extract-fine.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-ui-extract.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-ui-extract.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-ui-extract.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-ui-reskin.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-ui-reskin.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-ui-reskin.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-uiframe.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-uiframe.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-uiframe.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/type-white-icon.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\type-white-icon.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\type-white-icon.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/uiframe/img_cm_bg_icon_touxiangkuang1.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\uiframe\\img_cm_bg_icon_touxiangkuang1.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\uiframe\\img_cm_bg_icon_touxiangkuang1.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/uiframe/img_cm_bg_icon_touxiangkuang2.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\uiframe\\img_cm_bg_icon_touxiangkuang2.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\uiframe\\img_cm_bg_icon_touxiangkuang2.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/uiframe/img_cm_bg_tanchu.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\uiframe\\img_cm_bg_tanchu.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\uiframe\\img_cm_bg_tanchu.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/uiframe/img_cm_biaoti.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\uiframe\\img_cm_biaoti.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\uiframe\\img_cm_biaoti.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/uiframe/img_ledger_bg_taizhangliebiao.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\uiframe\\img_ledger_bg_taizhangliebiao.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\uiframe\\img_ledger_bg_taizhangliebiao.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/uiframe/img_ledger_bg_taizhangliebiao4.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\uiframe\\img_ledger_bg_taizhangliebiao4.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\uiframe\\img_ledger_bg_taizhangliebiao4.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/uiframe_style_template.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\uiframe_style_template.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\uiframe_style_template.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/video-code-patterns.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\video-code-patterns.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\video-code-patterns.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/video-model-routing.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\video-model-routing.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\video-model-routing.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/video-naming.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\video-naming.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\video-naming.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "references/white_icon_style_template.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\references\\white_icon_style_template.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\references\\white_icon_style_template.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "requirements.txt",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\requirements.txt",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\requirements.txt"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "rules/x3-media.mdc",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\rules\\x3-media.mdc",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\rules\\x3-media.mdc"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/_t_black.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\_t_black.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\_t_black.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/_t_out.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\_t_out.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\_t_out.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/_t_white.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\_t_white.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\_t_white.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/audit_transparency_batch.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\audit_transparency_batch.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\audit_transparency_batch.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/banner_postprocess.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\banner_postprocess.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\banner_postprocess.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/chroma_key.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\chroma_key.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\chroma_key.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/compose_achievement_badge.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\compose_achievement_badge.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\compose_achievement_badge.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/effect_texture_postprocess.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\effect_texture_postprocess.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\effect_texture_postprocess.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/fix_dynamic_march_sheet.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\fix_dynamic_march_sheet.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\fix_dynamic_march_sheet.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/gen_role_stories.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\gen_role_stories.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\gen_role_stories.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/gen_ui_reskin_template.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\gen_ui_reskin_template.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\gen_ui_reskin_template.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/get_grfal_cookie.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\get_grfal_cookie.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\get_grfal_cookie.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/hero_skin_derive.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\hero_skin_derive.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\hero_skin_derive.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/install_cursor_rule.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\install_cursor_rule.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\install_cursor_rule.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/make_bbox_mask.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\make_bbox_mask.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\make_bbox_mask.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/make_video_firstframe.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\make_video_firstframe.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\make_video_firstframe.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/poll_grfal.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\poll_grfal.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\poll_grfal.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/rearrange_sprite_sheet.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\rearrange_sprite_sheet.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\rearrange_sprite_sheet.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/sheet_to_gif.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\sheet_to_gif.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\sheet_to_gif.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/skill_icon_postprocess.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\skill_icon_postprocess.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\skill_icon_postprocess.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/skill_icon_reference/README.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\skill_icon_reference\\README.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\skill_icon_reference\\README.md"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/skill_icon_reference/gen_template.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\skill_icon_reference\\gen_template.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\skill_icon_reference\\gen_template.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/skill_icon_reference/template_256x256_circle.png",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\skill_icon_reference\\template_256x256_circle.png",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\skill_icon_reference\\template_256x256_circle.png"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/slice_card_gallery_sheet.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\slice_card_gallery_sheet.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\slice_card_gallery_sheet.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/split_transparent_by_blob.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\split_transparent_by_blob.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\split_transparent_by_blob.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/transparify_asset.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\transparify_asset.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\transparify_asset.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/transparify_dual_bg.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\transparify_dual_bg.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\transparify_dual_bg.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/ui_extract_fine.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\ui_extract_fine.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\ui_extract_fine.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/ui_extract_postprocess.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\ui_extract_postprocess.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\ui_extract_postprocess.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/verify_transparency.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\verify_transparency.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\verify_transparency.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "scripts/x3_dk_ingest.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\scripts\\x3_dk_ingest.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\scripts\\x3_dk_ingest.py"
+    },
+    {
+      "skill": "x3-media",
+      "relative_path": "templates/BubbleVideoPlayer.cs.template",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-media\\templates\\BubbleVideoPlayer.cs.template",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-media\\templates\\BubbleVideoPlayer.cs.template"
+    },
+    {
+      "skill": "x3-numerical-design",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-numerical-design\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-numerical-design\\SKILL.md"
+    },
+    {
+      "skill": "x3-numerical-design",
+      "relative_path": "references/foundation.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-numerical-design\\references\\foundation.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-numerical-design\\references\\foundation.md"
+    },
+    {
+      "skill": "x3-numerical-design",
+      "relative_path": "references/past-references.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-numerical-design\\references\\past-references.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-numerical-design\\references\\past-references.md"
+    },
+    {
+      "skill": "x3-numerical-design",
+      "relative_path": "references/playbook-by-form.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-numerical-design\\references\\playbook-by-form.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-numerical-design\\references\\playbook-by-form.md"
+    },
+    {
+      "skill": "x3-numerical-design",
+      "relative_path": "scripts/pioneer_city_sim.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-numerical-design\\scripts\\pioneer_city_sim.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-numerical-design\\scripts\\pioneer_city_sim.py"
+    },
+    {
+      "skill": "x3-numerical-design",
+      "relative_path": "scripts/pool_roi.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-numerical-design\\scripts\\pool_roi.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-numerical-design\\scripts\\pool_roi.py"
+    },
+    {
+      "skill": "x3-translation-automatic",
+      "relative_path": "README.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-translation-automatic\\README.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-translation-automatic\\README.md"
+    },
+    {
+      "skill": "x3-translation-automatic",
+      "relative_path": "SKILL.md",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-translation-automatic\\SKILL.md",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-translation-automatic\\SKILL.md"
+    },
+    {
+      "skill": "x3-translation-automatic",
+      "relative_path": "scripts/festival_i18n_completeness.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-translation-automatic\\scripts\\festival_i18n_completeness.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-translation-automatic\\scripts\\festival_i18n_completeness.py"
+    },
+    {
+      "skill": "x3-translation-automatic",
+      "relative_path": "scripts/i18n_leak_audit.py",
+      "action": "skip",
+      "source": "C:\\Users\\linkang\\.claude\\skills\\x3-translation-automatic\\scripts\\i18n_leak_audit.py",
+      "destination": "C:\\Users\\linkang\\.agents\\skills\\x3-translation-automatic\\scripts\\i18n_leak_audit.py"
+    }
+  ],
+  "blockers": []
+}
