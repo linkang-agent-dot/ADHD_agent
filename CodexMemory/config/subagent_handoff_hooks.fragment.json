@@ -1,0 +1,20 @@
+{
+  "SessionStart": {
+    "matcher": "startup|resume|clear|compact",
+    "command": "python C:/ADHD_agent/CodexMemory/scripts/subagent_handoff.py hook"
+  },
+  "UserPromptSubmit": {
+    "command": "python C:/ADHD_agent/CodexMemory/scripts/subagent_handoff.py hook"
+  },
+  "SubagentStart": {
+    "matcher": "",
+    "command": "python C:/ADHD_agent/CodexMemory/scripts/subagent_handoff.py hook"
+  },
+  "SubagentStop": {
+    "matcher": "",
+    "command": "python C:/ADHD_agent/CodexMemory/scripts/subagent_handoff.py hook"
+  },
+  "Stop": {
+    "command": "python C:/ADHD_agent/CodexMemory/scripts/subagent_handoff.py hook"
+  }
+}
