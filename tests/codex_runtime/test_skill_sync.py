@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import subprocess
+import json
 from pathlib import Path
 
 import pytest
@@ -10,6 +11,7 @@ from CodexRuntime.skills.sync_claude_to_codex import (
     SkillFormatError,
     build_sync_plan,
     inventory_skills,
+    main,
     merge_skill_markdown,
     validate_frontmatter,
 )
@@ -223,3 +225,60 @@ def test_plan_blocks_nested_junction(tmp_path: Path) -> None:
 
     assert any("reparse" in blocker.lower() or "junction" in blocker.lower() for blocker in plan.blockers)
     assert all(op.relative_path != "linked/secret.txt" for op in plan.operations)
+
+
+def test_cli_defaults_to_dry_run_and_does_not_write_target(tmp_path: Path, capsys) -> None:
+    source, destination = make_roots(tmp_path)
+    source_skill = make_skill(source, "demo")
+    destination_skill = make_skill(destination, "demo")
+    (source_skill / "value.txt").write_text("new", encoding="utf-8")
+    target = destination_skill / "value.txt"
+    target.write_text("old", encoding="utf-8")
+    before = (target.read_bytes(), target.stat().st_mtime_ns)
+
+    exit_code = main(["--source", str(source), "--destination", str(destination)])
+
+    after = (target.read_bytes(), target.stat().st_mtime_ns)
+    output = capsys.readouterr().out
+    assert exit_code == 0
+    assert before == after
+    assert "DRY RUN" in output
+    assert "physical-pair" in output
+    assert "modify" in output
+
+
+def test_cli_writes_json_report_with_documented_shape(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    make_skill(source, "demo")
+    make_skill(destination, "demo")
+    report = tmp_path / "report.json"
+
+    exit_code = main(
+        [
+            "--source",
+            str(source),
+            "--destination",
+            str(destination),
+            "--json-report",
+            str(report),
+        ]
+    )
+
+    payload = json.loads(report.read_text(encoding="utf-8"))
+    assert exit_code == 0
+    assert payload["schema_version"] == 1
+    assert payload["mode"] == "dry-run"
+    assert payload["source_root"] == str(source)
+    assert payload["destination_root"] == str(destination)
+    assert isinstance(payload["inventory"], list)
+    assert isinstance(payload["operations"], list)
+    assert payload["blockers"] == []
+
+
+def test_cli_returns_two_when_plan_has_blockers(tmp_path: Path) -> None:
+    source, destination = make_roots(tmp_path)
+    make_skill(source, "missing-at-destination")
+
+    exit_code = main(["--source", str(source), "--destination", str(destination)])
+
+    assert exit_code == 2

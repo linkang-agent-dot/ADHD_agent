@@ -1,11 +1,15 @@
 from __future__ import annotations
 
+import argparse
+from collections import Counter
 from dataclasses import dataclass
 import hashlib
+import json
 import os
 from pathlib import Path
 import re
 import stat
+import sys
 
 
 CODEX_START = "<!-- CODEX-ONLY:START -->"
@@ -318,3 +322,77 @@ def build_sync_plan(
         operations=tuple(operations),
         blockers=tuple(blockers),
     )
+
+
+def plan_to_dict(plan: SyncPlan, *, mode: str) -> dict[str, object]:
+    return {
+        "schema_version": 1,
+        "mode": mode,
+        "source_root": str(plan.source_root),
+        "destination_root": str(plan.destination_root),
+        "inventory": [
+            {
+                "name": entry.name,
+                "kind": entry.kind,
+                "source": str(entry.source) if entry.source is not None else None,
+                "destination": str(entry.destination) if entry.destination is not None else None,
+            }
+            for entry in plan.inventory.entries
+        ],
+        "operations": [
+            {
+                "skill": operation.skill,
+                "relative_path": operation.relative_path,
+                "action": operation.action,
+                "source": str(operation.source) if operation.source is not None else None,
+                "destination": str(operation.destination),
+            }
+            for operation in plan.operations
+        ],
+        "blockers": list(plan.blockers),
+    }
+
+
+def _print_summary(plan: SyncPlan, *, mode: str) -> None:
+    inventory_counts = Counter(entry.kind for entry in plan.inventory.entries)
+    operation_counts = Counter(operation.action for operation in plan.operations)
+    print("DRY RUN" if mode == "dry-run" else "APPLY")
+    print("Inventory: " + ", ".join(f"{key}={value}" for key, value in sorted(inventory_counts.items())))
+    print("Operations: " + ", ".join(f"{key}={value}" for key, value in sorted(operation_counts.items())))
+    print(f"Blockers: {len(plan.blockers)}")
+    for blocker in plan.blockers:
+        print(f"  BLOCK: {blocker}")
+
+
+def _argument_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description="Safely synchronize Claude Skills to Codex Skills")
+    parser.add_argument("--source", type=Path, default=Path(r"C:\Users\linkang\.claude\skills"))
+    parser.add_argument("--destination", type=Path, default=Path(r"C:\Users\linkang\.agents\skills"))
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--dry-run", action="store_true", help="Plan changes without writing (default)")
+    mode.add_argument("--apply", action="store_true", help="Apply a blocker-free plan transactionally")
+    parser.add_argument("--allow-create", action="store_true", help="Allow creation of missing destination Skills")
+    parser.add_argument("--json-report", type=Path, help="Write a structured JSON report")
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = _argument_parser().parse_args(argv)
+    mode = "apply" if args.apply else "dry-run"
+    plan = build_sync_plan(args.source, args.destination, allow_create=args.allow_create)
+    _print_summary(plan, mode=mode)
+    if args.json_report is not None:
+        args.json_report.parent.mkdir(parents=True, exist_ok=True)
+        args.json_report.write_text(
+            json.dumps(plan_to_dict(plan, mode=mode), ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+    if plan.blockers:
+        return 2
+    if args.apply:
+        raise RuntimeError("Apply mode is not implemented yet")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
