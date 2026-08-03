@@ -32,6 +32,24 @@
 5. Codex 专属 wrapper 不混入公共脚本，放 `CodexRuntime/skill-overrides/<skill>/`。
 6. 同步脚本必须支持 `--dry-run`、差异清单、备份/回滚点，并在同步后扫描错误的 `.Codex` 路径和执行 skill 加载验证。
 
+首次真实 dry-run 审计补充（2026-08-03）：
+- `state/`、`state/history.jsonl`、实际 `config.json`、`.env*`、批次输入/结果 JSON 都属于运行态或私密资产，必须在计划阶段直接排除；共享配置只允许无密钥模板。
+- 首轮未过滤时曾出现 89 add + 13 modify；修正后为 20 add + 11 modify，且 `x3-media` 的 cookie/token 配置和 69 个运行态/批次文件全部退出计划。
+- `x3-feature-test` 的 Unity CLI/MCP/DebugUtils 路由已收进 Codex 侧显式 `CODEX-ONLY` 区块，公共正文仍由 Claude 真源覆盖。
+- 首次正式 apply 已于 2026-08-03 完成：备份点 `~/.codex/tmp/skill-sync-backups/20260803T091802.021062Z`；写后 dry-run 为 `preserve=11, skip=322, blockers=0`，无待新增/修改项。证据见 `CodexMemory/reports/skill-sync-post-apply-20260803.json`。
+
+### D-1 首轮同步器 dry-run（2026-08-03）
+
+- 工具：`CodexRuntime/skills/sync_claude_to_codex.py`；默认 dry-run，支持 JSON 报告、事务备份和失败回滚。
+- 自动化：29 项测试通过，覆盖 Junction、CODEX-ONLY、frontmatter、多行 YAML、路径安全、零删除、备份与回滚。
+- 真实分类：`shared-junction=32`、`physical-pair=22`、`non-skill-directory=4`、`codex-only=1`。
+- 真实计划：`add=88`、`modify=13`、`preserve=11`、`skip=1052`；其中修改 `SKILL.md=7`、其他文件=6。
+- 零写入证明：dry-run 前后 Codex Skills 全树指纹均为 `3CE435C9C3AE29836D62B68071E52390758E84A7BF0F0FA5B6CA6C31E49C620F`。
+- 唯一 blocker：`x2-localization-translator` 的 Claude 与 Codex `SKILL.md` 都没有 frontmatter；在补齐 Codex 所需元数据前禁止 apply。
+- 7 个真实 SKILL 正文差异：`bug-scan`、`bulk-mail-reissue`、`igame-x3-activity-deploy`、`x3-config-export`、`x3-feature-test`、`x3-media`、`x3-translation-automatic`。目前均无 CODEX-ONLY 标记。
+- 差异审计：前六项中，机械把 Claude 改成 Codex 的文案/命令应由 Claude 真源覆盖；`x3-config-export`、`x3-media`、`x3-translation-automatic` 的 Codex 侧主要是落后于 Claude 真源。`x3-feature-test` 含 Unity CLI/Codex 工具路由增量，首次 apply 前需先迁入 CODEX-ONLY 或回流 Claude 真源。
+- 报告：`CodexMemory/reports/skill-sync-dry-run-20260803.json`。当前结论为 **apply 不安全**，保持只读。
+
 ## 只同步模板，禁止上传运行状态
 1. `config.toml`、hooks 配置：同步去密钥模板，不同步机器路径差异和账号信息。
 2. Browser/插件配置：同步安装说明，不同步 profile、cookie、登录态。

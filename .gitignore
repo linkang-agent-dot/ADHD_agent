@@ -14,3 +14,7 @@ KB/产出-配置仓库/推币机/P2换皮X2-推币机（单服版）.xlsx
 
 # Local Git worktrees
 /.worktrees/
+
+# Python runtime caches
+__pycache__/
+*.pyc
