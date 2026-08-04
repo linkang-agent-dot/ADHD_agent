@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>挖孔·竖屏交互 Demo v0.1</title>
+<style>
+/* ============================================================
+   挖孔 P2→X3 横转竖 交互 Demo v0.1
+   分区注释均标注 P2 原分区名（见《P2原界面布局与交互流拆解_代码版.md》）
+   ============================================================ */
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body { background:#0d1420; color:#dfe9f5; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+body { min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:18px 10px 60px; }
+
+/* ---------- 页面顶部：标题 + 模式切换 ---------- */
+.pageHead { text-align:center; margin-bottom:14px; }
+.pageHead h1 { font-size:22px; letter-spacing:2px; color:#7fd4ff; text-shadow:0 0 12px rgba(80,180,255,.45); }
+.pageHead .sub { font-size:12px; color:#5d768f; margin-top:4px; }
+.modeBtns { display:flex; gap:10px; justify-content:center; margin-top:12px; flex-wrap:wrap; }
+.modeBtns button {
+  background:#16283e; color:#9fc6e8; border:1px solid #2c4a6b; border-radius:8px;
+  padding:8px 18px; font-size:14px; cursor:pointer; transition:.15s;
+}
+.modeBtns button:hover { border-color:#4d8cc8; color:#cfe8ff; }
+.modeBtns button.on { background:#1e4a74; color:#fff; border-color:#5fb0f0; box-shadow:0 0 10px rgba(70,160,240,.4); }
+
+.view { display:none; width:100%; justify-content:center; }
+.view.on { display:flex; }
+
+/* ============================================================
+   视图① 竖屏新版 —— 手机壳 + 1080×1920 逻辑舞台（scale 到 390 宽）
+   ============================================================ */
+.phoneShell {
+  width:406px; padding:8px; border-radius:38px; background:#05080d;
+  border:2px solid #223349; box-shadow:0 12px 50px rgba(0,0,0,.7), inset 0 0 8px #000;
+  position:relative;
+}
+.phoneShell .notch { position:absolute; top:14px; left:50%; transform:translateX(-50%);
+  width:110px; height:16px; border-radius:10px; background:#05080d; z-index:50; border:1px solid #17222f; }
+.stageClip { width:390px; height:693px; overflow:hidden; border-radius:30px; position:relative; background:#000; }
+#stage {
+  width:1080px; height:1920px; transform:scale(.3611); transform-origin:0 0;
+  position:relative; overflow:hidden; user-select:none;
+  display:flex; flex-direction:column;
+}
+/* 背景（P2 原图 DigKeyBg1 2080×1610 横构图，竖屏 cover 裁切 —— 正式版需竖构图美术，见改动说明#9） */
+#stage .bg { position:absolute; inset:0; background:url(assets/DigKeyBg1.jpg) center/cover; z-index:0;
+  filter:brightness(.85); }
+#stage .bgShade { position:absolute; inset:0; z-index:0;
+  background:linear-gradient(180deg, rgba(4,10,20,.78) 0%, rgba(4,10,20,.25) 22%, rgba(4,10,20,.15) 55%, rgba(4,10,20,.8) 100%); }
+#stage > .layer { position:relative; z-index:1; }
+
+/* ---------- 顶栏（P2: LeftTop 返回/活动名/规则 + Rss 资源条 + Cuntdown 倒计时） ---------- */
+.topbar { padding:34px 28px 0; }
+.topRow1 { display:flex; align-items:center; gap:16px; height:112px; }
+.btnBack { /* P2: LeftTop/BtnBack 188×112 */
+  width:120px; height:88px; border-radius:16px;
+  background:linear-gradient(180deg,#2a4c74,#17304e); border:2px solid #4b7fb4; color:#cfe8ff;
+  font-size:44px; line-height:80px; text-align:center; cursor:pointer;
+}
+.actTitle { /* P2: LeftTop 活动名，底图 TitleBgDIgKey */
+  height:92px; padding:0 44px; display:flex; align-items:center; font-size:42px; font-weight:bold; color:#eaf6ff;
+  background:url(assets/TitleBgDIgKey.png) center/100% 100% no-repeat; text-shadow:0 2px 6px #003; letter-spacing:2px;
+}
+.btnRule { /* P2: LeftTop/BtnDescription 66×66 */
+  width:66px; height:66px; border-radius:50%; border:2px solid #4b7fb4; background:#17304e;
+  color:#9fd0ff; font-size:40px; line-height:60px; text-align:center; cursor:pointer;
+}
+.rss { /* P2: Rss 右上资源条（BtnIcon=挖掘道具 / BtnIcon2=探测器道具） */
+  margin-left:auto; display:flex; gap:14px;
+}
+.rssPill { display:flex; align-items:center; gap:8px; background:rgba(6,16,30,.82);
+  border:1px solid #2f5a86; border-radius:40px; padding:6px 22px 6px 8px; height:72px; }
+.rssPill img { width:58px; height:58px; }
+.rssPill span { font-size:34px; color:#ffe8a0; font-weight:bold; min-width:96px; text-align:right; }
+.rssPill .plus { color:#7dff9a; font-size:38px; margin-left:2px; font-weight:bold; }
+.topRow2 { display:flex; align-items:center; height:64px; margin-top:8px; gap:16px; }
+.countdown { /* P2: Cuntdown（原右下角，竖屏挪顶栏第二行） */
+  margin-left:auto; font-size:30px; color:#9fd0ff; background:rgba(6,16,30,.7); border-radius:30px; padding:8px 24px; }
+.slotToggle { font-size:26px; color:#a8ffc9; background:#123a2a; border:1px solid #2f8a5c; border-radius:30px;
+  padding:8px 20px; cursor:pointer; }
+
+/* ---------- 惊喜关预告横幅（P2: Other/SpecialTip 800×100 特殊关预告） ---------- */
+.surpriseBanner {
+  margin:10px 40px 0; padding:14px 0; text-align:center; border-radius:14px;
+  background:linear-gradient(90deg, rgba(120,60,190,0) 0%, rgba(130,70,210,.85) 18%, rgba(160,90,240,.9) 50%, rgba(130,70,210,.85) 82%, rgba(120,60,190,0) 100%);
+  font-size:32px; color:#ffe9ff; text-shadow:0 0 10px #a050ff; letter-spacing:2px;
+  animation:bannerIn .5s ease-out; display:none;
+}
+.surpriseBanner.show { display:block; }
+@keyframes bannerIn { from { transform:translateY(-40px); opacity:0; } to { transform:none; opacity:1; } }
+
+/* ---------- 宝物插槽横条（P2: Slot 485×733 左侧竖长条 → 竖屏横条，A/B 可切上/下） ---------- */
+.slotbar {
+  margin:12px 28px 0; padding:12px 20px; border-radius:20px;
+  background:rgba(8,20,38,.8); border:2px solid #2f5a86;
+  display:flex; align-items:center; gap:20px; height:190px;
+}
+.slotbar .slotLabel { writing-mode:vertical-lr; font-size:28px; color:#8fd4ff; letter-spacing:6px; }
+.slotCells { display:flex; gap:22px; flex:1; }
+.slotCell { /* P2: Slot 门槽格，底图 BkgrideSlot */
+  width:210px; height:140px; background:url(assets/BkgrideSlot.png) center/100% 100% no-repeat;
+  display:flex; align-items:center; justify-content:center; position:relative;
+}
+.slotCell img { width:104px; height:104px; filter:brightness(0) opacity(.7); transition:filter .4s; }
+.slotCell.got img { filter:none; }
+.slotCell.got::after { content:""; position:absolute; inset:-6px; border-radius:16px;
+  box-shadow:0 0 22px rgba(120,220,255,.75); pointer-events:none; animation:slotGlow 1.6s ease-in-out infinite alternate; }
+@keyframes slotGlow { from { opacity:.4; } to { opacity:1; } }
+
+/* ---------- 主战区（P2: AutoSizeBG/Bk → DI/Grid8 棋盘，竖屏归零居中，见结论#1） ---------- */
+.boardZone { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 28px; }
+.boardHead { /* P2: Lv 关卡标 + Title「每次消耗N道具」 */
+  display:flex; align-items:center; gap:26px; margin-bottom:16px; height:86px; }
+.lvBadge { font-size:44px; font-weight:bold; color:#ffe9a8; text-shadow:0 0 12px rgba(255,190,60,.6);
+  display:flex; align-items:center; gap:10px; }
+.lvBadge img { width:76px; height:76px; display:none; }
+.lvBadge.surprise img { display:block; }
+.lvBadge.surprise .lvNum { display:none; } /* 惊喜关不显示关卡号（老文档规则） */
+.costTip { font-size:30px; color:#bfe0ff; background:rgba(6,16,30,.72); border-radius:30px; padding:8px 26px;
+  display:flex; align-items:center; gap:8px; }
+.costTip img { width:44px; height:44px; }
+#board { /* P2: DI/Grid8（GridLayoutGroup cell100 8×8=800）→ demo 6×6，cell 放大 */
+  width:1010px; display:grid; grid-template-columns:repeat(6,1fr); gap:8px; position:relative;
+}
+.cell { position:relative; aspect-ratio:1; border-radius:14px; background:rgba(10,24,44,.6); overflow:visible; }
+.cell .under { /* 埋藏层：P2 DIKey/Grid 宝物图标层（在 cover 之下） */
+  position:absolute; inset:8%; display:flex; align-items:center; justify-content:center; z-index:1; }
+.cell .under img { max-width:100%; max-height:100%; filter:drop-shadow(0 4px 8px rgba(0,0,0,.6)); }
+.cell .pit { position:absolute; inset:0; border-radius:14px; background:radial-gradient(circle at 50% 40%, #1b2c46 0%, #0a1524 80%);
+  border:1px solid #16283e; z-index:0; }
+.cell .cover { /* 未挖表层：gridcellbg1（普通）/ gridcellbg2（惊喜关紫色） */
+  position:absolute; inset:0; z-index:2; cursor:pointer; border-radius:14px;
+  background:url(assets/gridcellbg1.png) center/100% 100% no-repeat;
+  transition:transform .28s ease, opacity .28s ease;
+}
+#stage.surpriseLv .cell .cover { background-image:url(assets/gridcellbg2.png); }
+.cell.dug .cover { transform:scale(1.35); opacity:0; pointer-events:none; }
+.gemSpan { /* 跨格宝物大图（对应 P2 KeyIcon 模板：NewKeyIcon1..15） */
+  position:absolute; z-index:1; display:flex; align-items:center; justify-content:center; pointer-events:none; }
+.gemSpan img { width:86%; height:86%; object-fit:contain; filter:drop-shadow(0 6px 14px rgba(0,0,0,.7)); }
+/* 引导光圈（P2: C-10 第1关 UIGuideMask 挖洞高亮，仅一格，挖一格跳下一格） */
+#guideRing { position:absolute; z-index:6; border:6px solid #ffe27a; border-radius:18px; pointer-events:none;
+  box-shadow:0 0 26px rgba(255,220,110,.9), inset 0 0 18px rgba(255,220,110,.6);
+  animation:guidePulse 1s ease-in-out infinite alternate; display:none; }
+@keyframes guidePulse { from { transform:scale(.96); opacity:.65; } to { transform:scale(1.06); opacity:1; } }
+
+/* ---------- 底部功能栏（P2: BtnsDigKey 比例锚0.8-0.9 挂机/图鉴/探测器 + Btns/BtnRank/BtnPiggyBank 合并收编，见结论#2） ---------- */
+.bottomBar {
+  display:flex; justify-content:space-around; align-items:flex-end; padding:10px 30px 46px; gap:10px;
+}
+.funcBtn { width:170px; display:flex; flex-direction:column; align-items:center; gap:8px; cursor:pointer;
+  transition:transform .12s; }
+.funcBtn:active { transform:scale(.92); }
+.funcBtn .iconWrap { width:132px; height:132px; border-radius:26px; background:rgba(10,26,48,.85);
+  border:2px solid #35618f; display:flex; align-items:center; justify-content:center; position:relative; }
+.funcBtn .iconWrap img { width:96px; height:96px; }
+.funcBtn .name { font-size:28px; color:#cfe6ff; text-shadow:0 2px 4px #000; }
+.funcBtn .ring { position:absolute; inset:-8px; } /* 挂机进度环（P2: 每秒 tick fillAmount=时长/上限） */
+.funcBtn .dot { position:absolute; top:-6px; right:-6px; width:28px; height:28px; border-radius:50%;
+  background:#ff4d4d; border:2px solid #fff; display:none; }
+.funcBtn .dot.show { display:block; }
+
+/* ---------- 弹窗通用 ---------- */
+.overlay { position:absolute; inset:0; z-index:20; background:rgba(0,0,0,.72); display:none;
+  align-items:center; justify-content:center; flex-direction:column; }
+.overlay.show { display:flex; }
+.popCard { width:900px; border-radius:28px; background:linear-gradient(180deg,#12253f,#0b1728);
+  border:2px solid #3a6ba0; box-shadow:0 20px 60px rgba(0,0,0,.8); padding:36px 40px; position:relative;
+  animation:popIn .3s cubic-bezier(.2,1.4,.4,1); }
+@keyframes popIn { from { transform:scale(.7); opacity:0; } to { transform:none; opacity:1; } }
+.popTitle { text-align:center; font-size:46px; font-weight:bold; color:#ffdf8e; letter-spacing:4px;
+  text-shadow:0 0 16px rgba(255,200,90,.5); margin-bottom:8px; }
+.popClose { position:absolute; top:18px; right:24px; width:64px; height:64px; border-radius:50%;
+  background:#25436b; color:#cfe8ff; font-size:38px; line-height:60px; text-align:center; cursor:pointer;
+  border:1px solid #4d80b8; }
+.btnGreen { /* P2: BtnGreenL1 */ display:block; margin:26px auto 0; min-width:320px; padding:18px 50px;
+  font-size:38px; font-weight:bold; color:#0a2412; background:linear-gradient(180deg,#7fe28a,#3aa64e);
+  border:none; border-radius:18px; cursor:pointer; box-shadow:0 6px 0 #1d6e30; }
+.btnGreen:disabled { filter:grayscale(1) brightness(.7); box-shadow:none; cursor:default; }
+.btnBlue { display:inline-block; padding:12px 36px; font-size:30px; color:#dff0ff;
+  background:linear-gradient(180deg,#3f74ab,#22497a); border:1px solid #5c96d0; border-radius:14px; cursor:pointer; }
+
+/* 结算弹窗（P2: UiDigKeyNewResult 中央卡片+黑底，点 HitBG 关） */
+.resultCards { display:flex; gap:28px; justify-content:center; margin:26px 0 6px; }
+.resultCard { /* P2: DigKeyCard 280×340 */
+  width:280px; border-radius:20px; background:rgba(16,40,70,.9); border:2px solid #4d80b8;
+  padding:20px 12px; text-align:center; position:relative; }
+.resultCard img { width:150px; height:150px; }
+.resultCard .nm { font-size:30px; color:#cfe8ff; margin-top:6px; }
+.resultCard .fray { font-size:34px; color:#ffd76e; font-weight:bold; margin-top:4px; } /* 成色 fray/10000 */
+.resultCard .newTag { position:absolute; top:-16px; right:-12px; background:#ff5050; color:#fff; font-size:24px;
+  padding:4px 14px; border-radius:20px; transform:rotate(12deg); box-shadow:0 2px 8px rgba(0,0,0,.5); }
+.rewardRow { display:flex; gap:30px; justify-content:center; margin-top:22px; }
+.rewardItem { display:flex; flex-direction:column; align-items:center; gap:4px; }
+.rewardItem img { width:100px; height:100px; }
+.rewardItem span { font-size:26px; color:#bfe0ff; }
+.tapHint { text-align:center; font-size:26px; color:#7d97b5; margin-top:26px; }
+
+/* 挂机弹窗（P2: UiDigKeyNewOfflineReward 原横幅 1920 写死 → 竖版卡片「欢迎回来」，样式按老文档挂机收益弹窗） */
+.idleDrone { display:block; margin:0 auto; width:330px; }
+.idleBarWrap { margin:16px 40px 4px; height:44px; border-radius:22px; background:#0a1a2e; border:1px solid #2f5a86;
+  position:relative; overflow:hidden; }
+.idleBarFill { height:100%; width:0%; border-radius:22px;
+  background:linear-gradient(90deg,#39c46a,#8ef0a8); transition:width .5s; }
+.idleBarText { position:absolute; inset:0; text-align:center; line-height:44px; font-size:26px; color:#eaffee;
+  text-shadow:0 1px 3px #000; }
+.idleDesc { text-align:center; font-size:28px; color:#bfe0ff; margin-top:14px; }
+
+/* 商店页（P2: UiDigKeyNewShop 原横向滚动 444×648 → 竖屏纵向滚动列表，见结论#7） */
+.shopList { max-height:1000px; overflow-y:auto; margin-top:20px; padding-right:8px; }
+.shopCard { display:flex; align-items:center; gap:26px; background:rgba(14,34,60,.9); border:2px solid #35618f;
+  border-radius:20px; padding:20px 26px; margin-bottom:20px; }
+.shopCard img.goods { width:130px; height:130px; }
+.shopCard .info { flex:1; }
+.shopCard .info .nm { font-size:34px; color:#eaf4ff; font-weight:bold; }
+.shopCard .info .desc { font-size:26px; color:#8fb2d4; margin-top:6px; }
+.shopCard .info .limit { font-size:24px; color:#6d8caa; margin-top:6px; }
+.shopCard .buy { display:flex; flex-direction:column; align-items:center; gap:6px; }
+.shopCard .buy button { display:flex; align-items:center; gap:8px; padding:12px 26px; font-size:30px; color:#0a2412;
+  background:linear-gradient(180deg,#ffd977,#e8a83a); border:none; border-radius:14px; cursor:pointer; font-weight:bold; }
+.shopCard .buy button img { width:40px; height:40px; }
+
+/* 图鉴页（P2: UiDigKeyAtlas 全屏翻书 左列表+右详情 → 上半屏固定详情卡 + 下半屏类型网格，见结论#3） */
+.atlasPage { position:absolute; inset:0; z-index:22; background:rgba(4,10,20,.96); display:none; flex-direction:column; }
+.atlasPage.show { display:flex; }
+.atlasTop { padding:40px 36px 0; display:flex; align-items:center; gap:20px; }
+.atlasTitle { font-size:44px; font-weight:bold; color:#ffdf8e; letter-spacing:4px; }
+.atlasDetail { /* 上半屏固定详情卡（替代原“右页”，保持同屏对照） */
+  margin:24px 36px 0; border-radius:26px; background:linear-gradient(180deg,#122a48,#0b1a30);
+  border:2px solid #3a6ba0; padding:28px 36px; display:flex; gap:36px; align-items:center; min-height:470px; }
+.atlasBigWrap { width:340px; height:340px; flex:none; display:flex; align-items:center; justify-content:center;
+  background:url(assets/DigKeyBg_Guang.png) center/contain no-repeat; }
+.atlasBigWrap img { width:250px; height:250px; transition:opacity .18s; }
+.atlasBigWrap img.uncol { filter:brightness(0) opacity(.8); }
+.atlasInfo { flex:1; }
+.atlasInfo .nm { font-size:42px; font-weight:bold; color:#eaf4ff; }
+.atlasInfo .desc { font-size:27px; color:#8fb2d4; margin-top:10px; line-height:1.5; }
+.atlasInfo .rec { margin-top:18px; font-size:28px; color:#ffd76e; line-height:1.7; } /* 个人纪录/全服纪录/保持者 */
+.atlasTabs { display:flex; gap:16px; margin:26px 36px 0; }
+.atlasTabs button { flex:1; padding:16px 0; font-size:32px; border-radius:16px 16px 0 0; cursor:pointer;
+  background:#122036; color:#7d9cbd; border:1px solid #26456b; border-bottom:none; }
+.atlasTabs button.on { background:#1e4a74; color:#fff; }
+.atlasGridWrap { flex:1; overflow-y:auto; margin:0 36px 30px; border:1px solid #26456b; border-top:none;
+  border-radius:0 0 16px 16px; padding:24px; background:rgba(10,22,40,.6); }
+.atlasGrid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.atlasItem { border-radius:18px; background:rgba(16,36,64,.85); border:2px solid #2c4a6b; padding:16px 8px;
+  text-align:center; cursor:pointer; transition:.15s; }
+.atlasItem img { width:110px; height:110px; }
+.atlasItem .nm { font-size:24px; color:#a8c8e8; margin-top:6px; }
+.atlasItem.uncol img { filter:brightness(0) opacity(.65); }
+.atlasItem.uncol .nm { color:#5a7490; }
+.atlasItem.sel { border-color:#6fc2ff; box-shadow:0 0 18px rgba(90,190,255,.55); background:rgba(30,74,116,.9); }
+
+/* toast / 飘窗 */
+#toastLayer { position:absolute; left:0; right:0; top:420px; z-index:40; display:flex; flex-direction:column;
+  align-items:center; gap:14px; pointer-events:none; }
+.toast { background:rgba(8,20,38,.92); border:1px solid #4d80b8; color:#dff0ff; font-size:32px;
+  padding:16px 48px; border-radius:40px; animation:toastIn .25s ease-out; box-shadow:0 6px 24px rgba(0,0,0,.6); }
+.toast.gold { color:#ffe08e; border-color:#c8a04a; }
+@keyframes toastIn { from { transform:translateY(-24px); opacity:0; } to { transform:none; opacity:1; } }
+.toast.out { transition:opacity .4s, transform .4s; opacity:0; transform:translateY(-20px); }
+
+/* 宝物飞行层（P2: FlyItem 贝塞尔飞 Slot，EndScale0.45 —— 竖屏改纵向轨迹，见结论#4） */
+#flyLayer { position:absolute; inset:0; z-index:35; pointer-events:none; }
+.flyGem { position:absolute; transition:transform .75s cubic-bezier(.3,-.35,.25,1), width .75s, height .75s;
+  filter:drop-shadow(0 0 18px rgba(140,220,255,.9)); }
+
+/* ============================================================
+   视图② 横屏原版对照（静态示意，按拆解文档分区表）
+   ============================================================ */
+.landWrap { width:min(960px,96vw); }
+.landScaleBox { position:relative; width:100%; overflow:hidden; border-radius:14px; border:2px solid #223349;
+  box-shadow:0 10px 40px rgba(0,0,0,.6); }
+#landStage { width:1920px; height:1080px; position:relative; transform-origin:0 0;
+  background:url(assets/DigKeyBg1.jpg) center/cover; font-size:24px; }
+.zone { position:absolute; border:2px dashed rgba(255,220,120,.85); background:rgba(10,24,44,.35);
+  border-radius:10px; }
+.zone .tag { position:absolute; left:6px; top:4px; background:rgba(180,120,20,.92); color:#fff; font-size:22px;
+  padding:2px 12px; border-radius:8px; white-space:nowrap; z-index:3; }
+.zone .tag small { opacity:.85; font-size:18px; }
+.landLegend { margin-top:14px; font-size:13px; color:#8fb2d4; line-height:1.9; }
+.landLegend b { color:#ffd76e; }
+.landBoard { position:absolute; display:grid; grid-template-columns:repeat(8,1fr); gap:5px; padding:8px; }
+.landBoard i { background:url(assets/gridcellbg1.png) center/100% 100% no-repeat; border-radius:6px; }
+.miniBtn { position:absolute; display:flex; flex-direction:column; align-items:center; gap:2px; }
+.miniBtn img { width:64px; height:64px; }
+.miniBtn span { font-size:20px; color:#dfe9f5; text-shadow:0 1px 3px #000; background:rgba(0,0,0,.45);
+  padding:0 8px; border-radius:6px; }
+
+/* ============================================================
+   视图③ 改动说明
+   ============================================================ */
+.notesWrap { width:min(1020px,96vw); }
+.notesWrap h2 { font-size:18px; color:#7fd4ff; margin-bottom:12px; }
+.notesTableBox { overflow-x:auto; border-radius:12px; border:1px solid #223349; }
+.notesTable { width:100%; border-collapse:collapse; font-size:13px; min-width:900px; }
+.notesTable th { background:#16283e; color:#9fc6e8; padding:10px 12px; text-align:left; border-bottom:2px solid #2c4a6b; white-space:nowrap; }
+.notesTable td { padding:10px 12px; border-bottom:1px solid #1a2a40; color:#c9d9ea; vertical-align:top; line-height:1.55; }
+.notesTable tr:nth-child(even) td { background:rgba(255,255,255,.02); }
+.notesTable td.blk { color:#ffd76e; font-weight:bold; white-space:nowrap; }
+.notesTable .warn td { background:rgba(180,80,40,.12); }
+.notesTable .warn td.blk { color:#ff9d6e; }
+.notesFoot { margin-top:12px; font-size:12px; color:#5d768f; line-height:1.8; }
+</style>
+</head>
+<body>
+
+<div class="pageHead">
+  <h1>挖孔 · 竖屏交互 Demo v0.1</h1>
+  <div class="sub">P2「异星探索/NewDigKey」横屏 → X3 竖屏搬运 · 汇报用可交互原型 · 图素=P2 真图</div>
+  <div class="modeBtns">
+    <button id="mBtn0" class="on" onclick="switchView(0)">① 竖屏新版（可玩）</button>
+    <button id="mBtn1" onclick="switchView(1)">② 横屏原版对照</button>
+    <button id="mBtn2" onclick="switchView(2)">③ 改动说明</button>
+  </div>
+</div>
+
+<!-- ================= 视图① 竖屏新版 ================= -->
+<div class="view on" id="view0">
+  <div class="phoneShell">
+    <div class="notch"></div>
+    <div class="stageClip">
+      <div id="stage">
+        <div class="bg"></div><div class="bgShade"></div>
+
+        <!-- 顶栏：P2 LeftTop + Rss + Cuntdown 三区收编为两行 -->
+        <div class="layer topbar">
+          <div class="topRow1">
+            <div class="btnBack" onclick="toast('返回（对应 BtnBack：WndMgr.Hide 退出活动）')">◀</div>
+            <div class="actTitle">异星探索</div>
+            <div class="btnRule" onclick="openRule()">?</div>
+            <div class="rss">
+              <!-- P2: Rss/BtnIcon 挖掘道具（点开礼包）-->
+              <div class="rssPill" onclick="toast('铲子入口→礼包购买（二期演示）')">
+                <img src="assets/DigKeyIcon.png" alt=""><span id="shovelCnt">9999</span><span class="plus">+</span>
+              </div>
+              <!-- P2: Rss/BtnIcon2 探测器道具 -->
+              <div class="rssPill" onclick="toast('探测器道具（二期演示）')">
+                <img src="assets/Icon1.png" alt=""><span>3</span>
+              </div>
+            </div>
+          </div>
+          <div class="topRow2">
+            <div class="slotToggle" id="slotToggleBtn" onclick="toggleSlotPos()">插槽位置：上（A 方案）⇅</div>
+            <div class="countdown" id="countdown">⏱ 剩余 2天 13:59:59</div>
+          </div>
+        </div>
+
+        <!-- 惊喜关预告横幅：P2 Other/SpecialTip -->
+        <div class="layer surpriseBanner" id="surpriseBanner">✦ 探测仪发现了惊喜关卡！完成本关后即可进入 ✦</div>
+
+        <!-- 宝物插槽横条：P2 Slot（原左栏 485×733）——A 方案挂顶部 -->
+        <div class="layer" id="slotAnchorTop"></div>
+
+        <!-- 主战区：P2 Bk / DI Grid8 -->
+        <div class="layer boardZone">
+          <div class="boardHead">
+            <div class="lvBadge" id="lvBadge">
+              <img src="assets/151105551.png" alt=""><span class="lvNum" id="lvNum">关卡 1</span>
+            </div>
+            <div class="costTip">每次挖掘消耗 20 <img src="assets/DigKeyIcon.png" alt=""></div>
+          </div>
+          <div id="board"></div>
+        </div>
+
+        <!-- B 方案插槽锚点（底部功能栏上方） -->
+        <div class="layer" id="slotAnchorBottom"></div>
+
+        <!-- 底部功能栏：P2 BtnsDigKey（挂机=BtnShop!/图鉴=BtnAtlas/探测器=BtnRadar）+ BtnRank + 礼包类入口收编 -->
+        <div class="layer bottomBar">
+          <div class="funcBtn" onclick="openIdle()">
+            <div class="iconWrap">
+              <img src="assets/IconDigKeyguaji.png" alt="">
+              <svg class="ring" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="46" fill="none" stroke="#123" stroke-width="6"/>
+                <circle id="idleRing" cx="50" cy="50" r="46" fill="none" stroke="#5df08a" stroke-width="6"
+                  stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289" transform="rotate(-90 50 50)"/>
+              </svg>
+              <div class="dot" id="idleDot"></div>
+            </div>
+            <div class="name">挂机</div>
+          </div>
+          <div class="funcBtn" onclick="openAtlas()">
+            <div class="iconWrap"><img src="assets/Icon2.png" alt=""></div>
+            <div class="name">图鉴</div>
+          </div>
+          <div class="funcBtn" onclick="toast('探测器 · 二期演示')">
+            <div class="iconWrap"><img src="assets/Icon1.png" alt=""></div>
+            <div class="name">探测器</div>
+          </div>
+          <div class="funcBtn" onclick="toast('排行榜 · 二期演示')">
+            <div class="iconWrap"><img src="assets/151105567.png" alt=""></div>
+            <div class="name">排行</div>
+          </div>
+          <div class="funcBtn" onclick="toast('礼包 · 二期演示')">
+            <div class="iconWrap"><img src="assets/DigPiggyIcon.png" alt=""></div>
+            <div class="name">礼包</div>
+          </div>
+        </div>
+
+        <!-- 飞行层 / toast -->
+        <div id="flyLayer"></div>
+        <div id="toastLayer"></div>
+
+        <!-- 结算弹窗：P2 UiDigKeyNewResult（点空白关闭；Defer：关闭后才切关） -->
+        <div class="overlay" id="resultOverlay" onclick="closeResult()">
+          <div class="popCard" onclick="event.stopPropagation()">
+            <div class="popTitle">恭喜获得</div>
+            <div class="resultCards" id="resultCards"></div>
+            <div class="rewardRow">
+              <div class="rewardItem"><img src="assets/151105551.png" alt=""><span>宝箱 ×1</span></div>
+              <div class="rewardItem"><img src="assets/DigKeyIcon.png" alt=""><span>铲子 ×40</span></div>
+              <div class="rewardItem"><img src="assets/IconDigKeyguaji.png" alt=""><span>电池 ×500</span></div>
+            </div>
+          </div>
+          <div class="tapHint" style="margin-top:30px;color:#9db8d5;font-size:30px;">点击任意处关闭 · 关闭后进入下一关</div>
+        </div>
+
+        <!-- 挂机弹窗：老文档「欢迎回来」样式 -->
+        <div class="overlay" id="idleOverlay">
+          <div class="popCard">
+            <div class="popClose" onclick="closePop('idleOverlay')">×</div>
+            <img class="idleDrone" src="assets/wurenji.png" alt="">
+            <div class="popTitle">欢迎回来</div>
+            <div class="idleBarWrap">
+              <div class="idleBarFill" id="idleBarFill"></div>
+              <div class="idleBarText" id="idleBarText">04:29:00 / 06:00:00</div>
+            </div>
+            <div class="idleDesc" id="idleDesc">您已离线4小时29分。可获得收益：</div>
+            <div class="rewardRow">
+              <div class="rewardItem"><img src="assets/IconDigKeyguaji.png" alt=""><span>电池 +10,000</span></div>
+              <div class="rewardItem"><img src="assets/DigKeyIcon.png" alt=""><span>铲子 +20</span></div>
+              <div class="rewardItem"><img src="assets/Icon1.png" alt=""><span>探测器 +2</span></div>
+            </div>
+            <button class="btnGreen" id="idleClaimBtn" onclick="claimIdle()">领 取</button>
+            <div style="text-align:center;margin-top:22px;">
+              <!-- ⚠️ P2 命名坑：主界面叫 BtnShop 的其实是挂机入口；真商店入口在挂机弹窗里（C-6） -->
+              <span class="btnBlue" onclick="openShop()">无人机补给站（商店）→</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 商店页：P2 UiDigKeyNewShop（横滑 444×648 → 纵向滚动列表） -->
+        <div class="overlay" id="shopOverlay">
+          <div class="popCard" style="max-height:1500px;">
+            <div class="popClose" onclick="backToIdle()">‹</div>
+            <div class="popTitle">无人机补给站</div>
+            <div style="text-align:center;font-size:26px;color:#8fb2d4;">用挂机产出的电池兑换道具 · 活动结束回收</div>
+            <div class="shopList">
+              <div class="shopCard">
+                <img class="goods" src="assets/IconUseRocket.png" alt="">
+                <div class="info"><div class="nm">定向火箭 ×1</div><div class="desc">消除目标所在整列区块</div><div class="limit">剩余可兑换：50</div></div>
+                <div class="buy"><button onclick="toast('兑换成功（演示）','gold')"><img src="assets/IconDigKeyguaji.png" alt="">1400</button></div>
+              </div>
+              <div class="shopCard">
+                <img class="goods" src="assets/IconUsedilei.png" alt="">
+                <div class="info"><div class="nm">脉冲地雷 ×1</div><div class="desc">消除目标所在整行区块</div><div class="limit">剩余可兑换：50</div></div>
+                <div class="buy"><button onclick="toast('兑换成功（演示）','gold')"><img src="assets/IconDigKeyguaji.png" alt="">2800</button></div>
+              </div>
+              <div class="shopCard">
+                <img class="goods" src="assets/DigKeyIcon.png" alt="">
+                <div class="info"><div class="nm">挖掘铲 ×10</div><div class="desc">挖掘消耗道具，多多益善</div><div class="limit">剩余可兑换：300</div></div>
+                <div class="buy"><button onclick="toast('兑换成功（演示）','gold')"><img src="assets/IconDigKeyguaji.png" alt="">200</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 规则弹窗（P2: BtnDescription → UiDigKeyNewPlayRule 原写死 1920×1080 → 竖版卡片） -->
+        <div class="overlay" id="ruleOverlay" onclick="closePop('ruleOverlay')">
+          <div class="popCard" onclick="event.stopPropagation()">
+            <div class="popClose" onclick="closePop('ruleOverlay')">×</div>
+            <div class="popTitle">活动规则</div>
+            <div style="font-size:30px;color:#bfe0ff;line-height:2;margin-top:16px;">
+              1、挖出关卡全部宝物，即可领取过关奖励。<br>
+              2、挖到埋藏的工具会立即触发整行/整列连锁挖掘。<br>
+              3、关卡层数越高，挂机奖励越好。<br>
+              4、通关过程中会触发惊喜关卡，奖励更佳。<br>
+              5、所有活动道具将在活动结束后回收。
+            </div>
+          </div>
+        </div>
+
+        <!-- 图鉴页：上半详情卡 + 下半网格（保翻书同屏对照，见结论#3） -->
+        <div class="atlasPage" id="atlasPage">
+          <div class="atlasTop">
+            <div class="btnBack" onclick="closeAtlas()">◀</div>
+            <div class="atlasTitle">探索记录</div>
+            <div style="margin-left:auto;font-size:28px;color:#8fd4ff;">收集进度 <b id="atlasProg" style="color:#ffd76e;"></b></div>
+          </div>
+          <div class="atlasDetail">
+            <div class="atlasBigWrap"><img id="atlasBigImg" src="" alt=""></div>
+            <div class="atlasInfo">
+              <div class="nm" id="atlasNm">—</div>
+              <div class="desc" id="atlasDesc">—</div>
+              <div class="rec" id="atlasRec"></div>
+            </div>
+          </div>
+          <div class="atlasTabs">
+            <button id="atlasTab0" class="on" onclick="atlasTab(0)">普通地形探索</button>
+            <button id="atlasTab1" onclick="atlasTab(1)">宝藏地形探索</button>
+          </div>
+          <div class="atlasGridWrap"><div class="atlasGrid" id="atlasGrid"></div></div>
+        </div>
+
+      </div><!-- /stage -->
+    </div>
+  </div>
+</div>
+
+<!-- ================= 视图② 横屏原版对照 ================= -->
+<div class="view" id="view1">
+  <div class="landWrap">
+    <div class="landScaleBox" id="landScaleBox">
+      <div id="landStage">
+        <!-- LeftTop：返回+活动名+规则 (0,1)锚 -->
+        <div class="zone" style="left:12px;top:12px;width:480px;height:112px;">
+          <span class="tag">LeftTop <small>返回+活动名+规则</small></span>
+          <div class="miniBtn" style="left:14px;top:20px;"><span style="font-size:34px;padding:8px 22px;">◀</span></div>
+          <div class="miniBtn" style="left:150px;top:26px;"><span style="font-size:26px;">异星探索</span></div>
+          <div class="miniBtn" style="left:400px;top:30px;"><span style="font-size:26px;">?</span></div>
+        </div>
+        <!-- Rss：右上资源条 (1,1)锚 -->
+        <div class="zone" style="right:20px;top:8px;width:430px;height:84px;">
+          <span class="tag">Rss <small>挖掘道具/探测器道具</small></span>
+          <div class="miniBtn" style="left:30px;top:16px;"><img src="assets/DigKeyIcon.png" style="width:52px;height:52px;" alt=""></div>
+          <div class="miniBtn" style="left:220px;top:16px;"><img src="assets/Icon1.png" style="width:52px;height:52px;" alt=""></div>
+        </div>
+        <!-- Slot：左侧竖长条 485×733 -->
+        <div class="zone" style="left:53px;top:174px;width:485px;height:733px;background:url(assets/DigkeySlotBg.png) center/100% 100% no-repeat;">
+          <span class="tag">Slot 485×733 <small>宝物插槽(纯展示)</small></span>
+          <div class="miniBtn" style="left:150px;top:180px;"><img src="assets/151105484.png" style="width:120px;height:120px;filter:brightness(0) opacity(.7);" alt=""></div>
+          <div class="miniBtn" style="left:150px;top:400px;"><img src="assets/151105465.png" style="width:120px;height:120px;filter:brightness(0) opacity(.7);" alt=""></div>
+        </div>
+        <!-- 棋盘 DI/Grid8 800×800，中心 x+110 右偏 -->
+        <div class="zone landBoard" style="left:670px;top:140px;width:800px;height:800px;">
+          <span class="tag">DI/Grid8 800×800 <small>8×8 · 中心x+110右偏(给Slot让位)</small></span>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <!-- BtnsDigKey：比例锚 0.8~0.9 → 1536~1728px 竖排 挂机/图鉴/探测器 -->
+        <div class="zone" style="left:1536px;top:300px;width:192px;height:480px;border-color:#ff8d6e;">
+          <span class="tag" style="background:rgba(190,70,30,.92);">BtnsDigKey <small>比例锚0.8-0.9 ⚠最硬横屏依赖</small></span>
+          <div class="miniBtn" style="left:56px;top:60px;"><img src="assets/IconDigKeyguaji.png" alt=""><span>挂机</span></div>
+          <div class="miniBtn" style="left:56px;top:200px;"><img src="assets/Icon2.png" alt=""><span>图鉴</span></div>
+          <div class="miniBtn" style="left:56px;top:340px;"><img src="assets/Icon1.png" alt=""><span>探测器</span></div>
+        </div>
+        <!-- BtnRank / BtnReward：右上双钮 200×100 -->
+        <div class="zone" style="right:10px;top:109px;width:210px;height:260px;">
+          <span class="tag">BtnRank/BtnReward</span>
+          <div class="miniBtn" style="left:70px;top:44px;"><img src="assets/151105567.png" alt=""><span>排行</span></div>
+          <div class="miniBtn" style="left:70px;top:150px;"><img src="assets/151105551.png" alt=""><span>奖励预览</span></div>
+        </div>
+        <!-- Btns：右中三入口 储蓄罐/成就/装饰 -->
+        <div class="zone" style="right:58px;top:400px;width:110px;height:330px;">
+          <span class="tag">Btns</span>
+          <div class="miniBtn" style="left:20px;top:40px;"><img src="assets/DigPiggyIcon.png" alt=""><span>储蓄罐</span></div>
+          <div class="miniBtn" style="left:20px;top:150px;"><img src="assets/151105551.png" alt=""><span>成就</span></div>
+          <div class="miniBtn" style="left:20px;top:255px;"><img src="assets/gridcellbg3.png" style="border-radius:10px;" alt=""><span>装饰</span></div>
+        </div>
+        <!-- Cuntdown：右下倒计时 -->
+        <div class="zone" style="right:18px;bottom:9px;width:360px;height:64px;">
+          <span class="tag">Cuntdown</span>
+          <div class="miniBtn" style="left:100px;top:12px;"><span>⏱ 2天 13:59:59</span></div>
+        </div>
+        <!-- Lv + Title：棋盘上方 -->
+        <div class="zone" style="left:870px;top:60px;width:400px;height:70px;border-style:dotted;">
+          <span class="tag">Lv/Title <small>关卡标+每次消耗</small></span>
+        </div>
+      </div>
+    </div>
+    <div class="landLegend">
+      <b>横屏原版（1920×1080）分区示意</b> —— 按拆解文档 §A 一级节点表绘制：三栏结构 = 左 <b>Slot</b>(485 宽，纯展示插槽)
+      ｜中 <b>DI/Grid8</b>(800×800 棋盘，中心 x+110 右偏给左栏让位)｜右 <b>BtnsDigKey</b>(比例锚 0.8-0.9，⚠竖屏 1080 下塌缩到约 108px，
+      是最硬的横屏依赖) + <b>BtnRank/BtnReward/Btns</b> 双列入口。顶部 LeftTop+Rss、右下 Cuntdown。
+      宝物飞行 FlyItem = 棋盘→左 Slot 的<b>横向</b>贝塞尔轨迹(0.5s, EndScale 0.45)。
+    </div>
+  </div>
+</div>
+
+<!-- ================= 视图③ 改动说明 ================= -->
+<div class="view" id="view2">
+  <div class="notesWrap">
+    <h2>横 → 竖 改动说明（v0.1 我方初案）</h2>
+    <div class="notesTableBox">
+    <table class="notesTable">
+      <tr><th>区块（P2 节点）</th><th>原位置（横屏 1920×1080）</th><th>新位置（竖屏 1080×1920）</th><th>理由 / 依据</th></tr>
+      <tr><td class="blk">宝物插槽 Slot</td><td>左侧竖长条 485×733，纯展示</td><td>顶部横条（demo 带 A/B 开关：可切到底部功能栏上方）</td><td>竖屏没有左栏空间；横条保留「挖出→飞入插槽」核心反馈动线，上/下两案交给交互拍板</td></tr>
+      <tr><td class="blk">棋盘 DI/Grid8</td><td>中央 800×800，中心 x+110 右偏</td><td>居中归零，cell 放大（demo 6×6，cell≈162px）</td><td>拆解结论#1：右偏是给左栏让位，竖屏必须归零；棋盘正方形天然适配竖屏（结论#8）</td></tr>
+      <tr><td class="blk">BtnsDigKey（挂机/图鉴/探测器）</td><td>右侧竖排，比例锚 aMin.x=0.8/0.9（绑死屏宽10%）</td><td>底部功能栏（拇指区）</td><td>拆解结论#2：<b>最硬横屏依赖</b>——竖屏 1080 下该区塌缩到 ~108px 装不下 3 个 200px 按钮，必须首先重排</td></tr>
+      <tr><td class="blk">BtnRank / BtnReward / Btns</td><td>右上双列 5+ 入口（排行/奖励预览/储蓄罐/成就/装饰）</td><td>排行、礼包并入底部功能栏；其余二期收进「更多」或礼包页</td><td>竖屏入口密度收敛，优先保核心动线；demo 中点击弹「二期演示」占位</td></tr>
+      <tr><td class="blk">资源条 Rss</td><td>右上角横排（挖掘道具/探测器道具）</td><td>顶栏第一行右侧</td><td>顶部两行内收完；「+」保留礼包购买入口语义（Rss/BtnIcon→ShowPackages）</td></tr>
+      <tr><td class="blk">倒计时 Cuntdown</td><td>右下角</td><td>顶栏第二行右侧</td><td>底部整段让给功能栏/拇指操作区</td></tr>
+      <tr><td class="blk">图鉴 UiDigKeyAtlas</td><td>全屏翻书：左页类型列表 + 右页详情同屏对照</td><td>上半屏固定详情卡 + 下半屏类型网格（点击切换，选中高亮）</td><td>拆解结论#3：翻书是竖屏体验损失最大的一屏；此方案保住「同屏对照」，不拆两级页面</td></tr>
+      <tr><td class="blk">宝物飞行 FlyItem</td><td>横向轨迹：棋盘→左 Slot（约500-700px，0.5s，EndScale0.45）</td><td>纵向轨迹：棋盘→顶部插槽（demo 0.75s 贝塞尔）</td><td>拆解结论#4：Slot 挪位后飞行改纵向，贝塞尔控制点与时长需重调（纵向距离短，原 0.5s 显慢→demo 实测取 0.75s 带回勾曲线）</td></tr>
+      <tr><td class="blk">背景 Bg/BgNew</td><td>2080×1610 横构图</td><td>demo 暂用原图 cover 裁切 + 上下渐变压暗</td><td>拆解结论#5：竖屏 1080×1920 会露大量空白，<b>正式版需出竖构图背景（美术需求项）</b></td></tr>
+      <tr><td class="blk">商店 UiDigKeyNewShop</td><td>横向滚动，商品卡 444×648 竖长卡横排</td><td>纵向滚动列表（挂机弹窗内二层页）</td><td>拆解结论#7：横滑改纵滑；结算/探测器的 2 列 Grid 竖屏反而更优可保留</td></tr>
+      <tr><td class="blk">挂机领奖 OfflineReward</td><td>横幅条 Content 左右拉满 1920，BtnShop@x=1626</td><td>居中竖版卡片，「欢迎回来」+ 离线时长进度条 04:29:00/06:00:00 + 收益行 + 领取</td><td>拆解结论#6：按 1920 写死必改；样式按老交互文档「挂机收益」弹窗范式；商店入口保留在弹窗内（沿袭 C-6 动线，注意 BtnShop 命名坑）</td></tr>
+      <tr><td class="blk">规则页 PlayRule</td><td>Panel1 写死 1920×1080 全屏图文</td><td>竖版居中卡片弹窗</td><td>拆解结论#6：写死尺寸必改</td></tr>
+      <tr class="warn"><td class="blk">⚠ 工具道具形态（两代差异）</td><td>X2 v81 老版：兑换道具→选中→棋盘范围框→拖动定位→✓/✗ 确认 三段式</td><td>本 demo = P2 v86 现行版：工具<b>埋在棋盘格里，挖到即触发</b>（整行/整列连锁）</td><td>v86 明确的优化方向是「不需要兑换道具，挖掘时触发即刻生效」；demo 按现行版实现。<b>两代方案取舍留作交互设计决策项</b>（若恢复三段式，确认钮需落拇指区）</td></tr>
+      <tr><td class="blk">惊喜关卡链 SpecialTip</td><td>预告横幅锚在「门上方显示屏」（横屏元素，800×100）</td><td>顶部全宽横幅预告（前一关常驻）；惊喜关=紫色棋盘 + 关卡号隐藏（显示宝箱）</td><td>老文档特殊关卡链：前一关预告「完成本关后即可进入」→ 惊喜关不显示关卡等级、用特殊配色；成本低观感好，demo 已实装（每第 3 关）</td></tr>
+      <tr><td class="blk">引导 C-10</td><td>第1关 UIGuideMask 挖洞高亮，挖一格跳下一格</td><td>同规则保留（光圈锚点改竖屏坐标）</td><td>逻辑与横竖无关，直接平移；demo 已实装</td></tr>
+    </table>
+    </div>
+    <div class="notesFoot">
+      依据：《P2原界面布局与交互流拆解_代码版.md》🔶横转竖关键结论 8 条 + 《老交互文档摘录_图片版.md》★提炼 3 条。<br>
+      免改清单（结论#8）：棋盘正方形天然适配 / 工具火箭·炸弹特效方向跟棋盘走 / 探测器 CenterScrollOn 代码已兼容横竖 / 结算弹窗结构基本可保。<br>
+      ⚠ P2 代码坑随附：①主界面 BtnShop 实为挂机入口（命名遗留）②ItemEffect 编号与方向相反（Item1=纵向火箭/Item2=横向火箭）③结算 Defer 机制——弹窗关闭后才切关。
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   挖孔竖屏 Demo v0.1 —— vanilla JS，无外部依赖
+   ============================================================ */
+
+/* ---------- 视图切换 ---------- */
+function switchView(n){
+  for(let i=0;i<3;i++){
+    document.getElementById('view'+i).classList.toggle('on', i===n);
+    document.getElementById('mBtn'+i).classList.toggle('on', i===n);
+  }
+  if(n===1) fitLandscape();
+}
+function fitLandscape(){
+  const box=document.getElementById('landScaleBox');
+  const s=box.clientWidth/1920;
+  const st=document.getElementById('landStage');
+  st.style.transform='scale('+s+')';
+  box.style.height=(1080*s)+'px';
+}
+window.addEventListener('resize',()=>{ if(document.getElementById('view1').classList.contains('on')) fitLandscape(); });
+
+/* ---------- toast ---------- */
+function toast(msg, cls){
+  const t=document.createElement('div');
+  t.className='toast'+(cls?' '+cls:'');
+  t.textContent=msg;
+  document.getElementById('toastLayer').appendChild(t);
+  setTimeout(()=>{ t.classList.add('out'); setTimeout(()=>t.remove(),450); }, 1500);
+}
+
+/* ---------- 舞台坐标换算（rect → 1080×1920 逻辑坐标） ---------- */
+const stage=document.getElementById('stage');
+function stageRect(el){
+  const r=el.getBoundingClientRect(), s=stage.getBoundingClientRect();
+  const sc=s.width/1080;
+  return { x:(r.left-s.left)/sc, y:(r.top-s.top)/sc, w:r.width/sc, h:r.height/sc };
+}
+
+/* ============================================================
+   宝物插槽横条（P2: Slot）—— A/B 位置开关
+   ============================================================ */
+const slotbar=document.createElement('div');
+slotbar.className='slotbar';
+slotbar.innerHTML='<div class="slotLabel">探索目标</div><div class="slotCells" id="slotCells"></div>';
+let slotOnTop=true;
+document.getElementById('slotAnchorTop').appendChild(slotbar);
+function toggleSlotPos(){
+  slotOnTop=!slotOnTop;
+  document.getElementById(slotOnTop?'slotAnchorTop':'slotAnchorBottom').appendChild(slotbar);
+  document.getElementById('slotToggleBtn').textContent=
+    slotOnTop?'插槽位置：上（A 方案）⇅':'插槽位置：下（B 方案）⇅';
+  toast(slotOnTop?'插槽切到顶部（A 方案）':'插槽切到底部（B 方案）');
+}
+
+/* ============================================================
+   棋盘数据与构建（P2: Board.cs / C-1）
+   demo 6×6；预埋 2×2 宝石 + 1×3 宝石 + 2 个工具格
+   ============================================================ */
+const SIZE=6;
+const GEM_DEFS=[ // 宝物定义（对应关卡数值90版：田字2×2=浅蓝 / 横三1×3=红 → demo 换真图icon）
+  { id:'g22', name:'棱镜钻核', icon:'assets/151105484.png', w:2, h:2 },
+  { id:'g13', name:'火箭残片', icon:'assets/151105465.png', w:3, h:1 },
+];
+// 工具（⚠️P2 坑：Item1Anim=纵向火箭 / Item2Anim=横向火箭，编号与方向相反）
+const TOOL_DEFS=[
+  { id:'tCol', name:'定向火箭', icon:'assets/IconUseRocket.png', mode:'col' }, // 整列连锁（对应 ColDig→Item1Anim）
+  { id:'tRow', name:'脉冲地雷', icon:'assets/IconUsedilei.png', mode:'row' }, // 整行连锁（对应 RowDig→Item2Anim）
+];
+
+let level=1, shovel=9999;
+let cells=[];       // {dug, gem:gemInst|null, tool:toolDef|null}
+let gems=[];        // {def, r,c, cellsLeft:Set, collected}
+let digging=false;  // 挖掘动画锁（C-2 拦截链）
+let lastDigTime=0;  // 200ms 同格节流 → demo 全局 250ms
+let chainRunning=false;
+
+function isSurpriseLevel(lv){ return lv%3===0; } // 每第 3 关 = 惊喜关
+
+function buildLevel(){
+  const board=document.getElementById('board');
+  board.innerHTML='';
+  cells=[]; gems=[]; digging=false; chainRunning=false;
+  const surprise=isSurpriseLevel(level);
+  stage.classList.toggle('surpriseLv', surprise);
+  // 关卡标（惊喜关不显示关卡号，显示宝箱 icon —— 老文档规则）
+  const lvBadge=document.getElementById('lvBadge');
+  lvBadge.classList.toggle('surprise', surprise);
+  document.getElementById('lvNum').textContent='关卡 '+level;
+  // 预告横幅：下一关是惊喜关时，本关常驻预告（P2: Other/SpecialTip）
+  document.getElementById('surpriseBanner').classList.toggle('show', isSurpriseLevel(level+1));
+  if(surprise) toast('✦ 进入惊喜关卡！奖励更佳 ✦','gold');
+
+  for(let i=0;i<SIZE*SIZE;i++) cells.push({dug:false, gem:null, tool:null});
+
+  // ---- 随机放置：2×2 + 1×3 宝石（不重叠），2 个工具格 ----
+  const occupied=new Set();
+  GEM_DEFS.forEach(def=>{
+    let r,c,ok=false,tries=0;
+    while(!ok && tries++<200){
+      r=Math.floor(Math.random()*(SIZE-def.h+1));
+      c=Math.floor(Math.random()*(SIZE-def.w+1));
+      ok=true;
+      for(let dr=0;dr<def.h;dr++)for(let dc=0;dc<def.w;dc++)
+        if(occupied.has((r+dr)*SIZE+(c+dc))) ok=false;
+    }
+    const inst={def, r, c, cellsLeft:new Set(), collected:false};
+    for(let dr=0;dr<def.h;dr++)for(let dc=0;dc<def.w;dc++){
+      const idx=(r+dr)*SIZE+(c+dc);
+      occupied.add(idx); cells[idx].gem=inst; inst.cellsLeft.add(idx);
+    }
+    gems.push(inst);
+  });
+  TOOL_DEFS.forEach(def=>{
+    let idx, tries=0;
+    do { idx=Math.floor(Math.random()*SIZE*SIZE); } while(occupied.has(idx) && tries++<200);
+    occupied.add(idx); cells[idx].tool=def;
+  });
+
+  // ---- DOM：格子（对应 NewDigKeyCell，P2 预置 Cell_11..88 不 Instantiate；demo 直接建） ----
+  for(let i=0;i<SIZE*SIZE;i++){
+    const d=document.createElement('div');
+    d.className='cell'; d.dataset.idx=i;
+    let underHTML='';
+    if(cells[i].tool) underHTML='<div class="under"><img src="'+cells[i].tool.icon+'" alt=""></div>';
+    d.innerHTML='<div class="pit"></div>'+underHTML+'<div class="cover"></div>';
+    d.querySelector('.cover').addEventListener('click',()=>onCellClick(i));
+    board.appendChild(d);
+  }
+  // 跨格宝物大图层（对应 DIKey/Grid 宝物图标层，位于 cover 之下）
+  // 注：读 offsetWidth 会强制同步布局，无需等帧（P2 侧才需要 WaitForEndOfFrame）
+  gems.forEach(g=>{
+    const first=board.children[g.r*SIZE+g.c];
+    const span=document.createElement('div');
+    span.className='gemSpan'; span.id='span_'+g.def.id;
+    const cw=first.offsetWidth, gap=8;
+    span.style.left=first.offsetLeft+'px';
+    span.style.top=first.offsetTop+'px';
+    span.style.width=(cw*g.def.w+gap*(g.def.w-1))+'px';
+    span.style.height=(cw*g.def.h+gap*(g.def.h-1))+'px';
+    span.innerHTML='<img src="'+g.def.icon+'" alt="">';
+    board.appendChild(span);
+  });
+  updateSlots(); updateGuide();
+}
+
+/* ---------- 插槽刷新 ---------- */
+function updateSlots(){
+  const sc=document.getElementById('slotCells');
+  sc.innerHTML='';
+  gems.forEach(g=>{
+    const d=document.createElement('div');
+    d.className='slotCell'+(g.collected?' got':'');
+    d.id='slot_'+g.def.id;
+    d.innerHTML='<img src="'+g.def.icon+'" alt="">';
+    sc.appendChild(d);
+  });
+}
+
+/* ---------- 引导光圈（C-10：仅第1关，挖一格自动跳下一格） ---------- */
+function updateGuide(){
+  let ring=document.getElementById('guideRing');
+  const board=document.getElementById('board');
+  if(!ring){ ring=document.createElement('div'); ring.id='guideRing'; board.appendChild(ring); }
+  if(level!==1){ ring.style.display='none'; return; }
+  const idx=cells.findIndex(c=>!c.dug);
+  if(idx<0){ ring.style.display='none'; return; }
+  const el=board.children[idx];
+  ring.style.display='block';
+  ring.style.left=(el.offsetLeft-4)+'px'; ring.style.top=(el.offsetTop-4)+'px';
+  ring.style.width=el.offsetWidth+'px'; ring.style.height=el.offsetHeight+'px';
+}
+
+/* ============================================================
+   点格子（P2: C-2 OnCellClick 拦截链 + C-3 挖掘动画）
+   ============================================================ */
+function onCellClick(idx){
+  const now=Date.now();
+  if(digging||chainRunning) return;                    // 挖掘动画中→拦
+  if(cells[idx].dug) return;                            // 已挖→拦
+  if(now-lastDigTime<250) return;                       // 节流（P2 同格 200ms）
+  if(shovel<20){ toast('铲子不足！（正式版 Lv≠1 弹礼包）'); return; }
+  lastDigTime=now;
+  shovel-=20; document.getElementById('shovelCnt').textContent=shovel;
+  digCell(idx, true);
+}
+
+function digCell(idx, userDig){
+  const c=cells[idx];
+  if(c.dug) return;
+  c.dug=true;
+  digging=userDig;
+  const el=document.getElementById('board').children[idx];
+  el.classList.add('dug'); // cover scale+fade（对应 DigKeyUseItemMainDispel 简化版）
+  setTimeout(()=>{
+    // 工具触发：整行/整列连锁（0.3s 逐格延迟）
+    if(c.tool){ triggerTool(idx, c.tool); }
+    // 宝石判定
+    if(c.gem){
+      c.gem.cellsLeft.delete(idx);
+      if(c.gem.cellsLeft.size===0 && !c.gem.collected){
+        c.gem.collected=true;
+        flyGemToSlot(c.gem);
+      }
+    }
+    updateGuide();
+    if(userDig) digging=false;
+    checkLevelComplete();
+  }, 300);
+}
+
+/* ---------- 工具连锁（P2: RowDig/ColDig 工具特效 → demo 逐格 0.3s 延迟连锁挖） ---------- */
+function triggerTool(idx, tool){
+  chainRunning=true;
+  const r=Math.floor(idx/SIZE), col=idx%SIZE;
+  const targets=[];
+  for(let k=0;k<SIZE;k++){
+    const t=(tool.mode==='row')? r*SIZE+k : k*SIZE+col;
+    if(!cells[t].dug) targets.push(t);
+  }
+  toast((tool.mode==='row'?'💥 脉冲地雷：整行连锁！':'🚀 定向火箭：整列连锁！'),'gold');
+  targets.forEach((t,i)=>{
+    setTimeout(()=>{
+      digCell(t,false);
+      if(i===targets.length-1) setTimeout(()=>{ chainRunning=false; checkLevelComplete(); },350);
+    }, 300*(i+1)); // 0.3s 逐格延迟
+  });
+  if(targets.length===0) chainRunning=false;
+}
+
+/* ---------- 宝物飞入插槽（P2: FlyItem 贝塞尔→Slot，EndScale0.45 → 竖屏纵向轨迹） ---------- */
+function flyGemToSlot(gem){
+  const span=document.getElementById('span_'+gem.def.id);
+  const slot=document.getElementById('slot_'+gem.def.id);
+  if(!span||!slot){ updateSlots(); return; }
+  const from=stageRect(span), to=stageRect(slot);
+  const fly=document.createElement('img');
+  fly.className='flyGem'; fly.src=gem.def.icon;
+  fly.style.left='0px'; fly.style.top='0px';
+  fly.style.width=from.w+'px'; fly.style.height=from.h+'px';
+  fly.style.transform='translate('+from.x+'px,'+from.y+'px)';
+  document.getElementById('flyLayer').appendChild(fly);
+  span.remove();
+  const tx=to.x+to.w/2-52, ty=to.y+to.h/2-52;
+  requestAnimationFrame(()=>{ requestAnimationFrame(()=>{
+    fly.style.width='104px'; fly.style.height='104px';
+    fly.style.transform='translate('+tx+'px,'+ty+'px)'; // cubic-bezier 带回勾（css .flyGem）
+  });});
+  // transitionend + 定时兜底双保险（对应 P2 段2.5「兜底关 CellBg」思路）
+  let flyDone=false;
+  function finishFly(){ if(flyDone) return; flyDone=true; fly.remove(); updateSlots(); }
+  fly.addEventListener('transitionend', finishFly, { once:true });
+  setTimeout(finishFly, 950);
+}
+
+/* ---------- 过关→结算（P2: C-4，StageCompletePopupDelay=0.4 / Defer 关弹窗才切关） ---------- */
+let resultShown=false;
+function checkLevelComplete(){
+  if(resultShown) return;
+  if(!gems.every(g=>g.collected)) return;
+  if(chainRunning) return;
+  resultShown=true;
+  setTimeout(showResult, 900); // 等飞行动画 + 0.4s Delay
+}
+function showResult(){
+  const wrap=document.getElementById('resultCards');
+  wrap.innerHTML='';
+  gems.forEach(g=>{
+    const fray=(Math.random()*120+10).toFixed(2);            // 成色（P2: fray/10000 保留4位 → demo 简化2位）
+    const isNew=Math.random()<0.5;
+    const d=document.createElement('div');
+    d.className='resultCard';
+    d.innerHTML='<img src="'+g.def.icon+'" alt=""><div class="nm">'+g.def.name+'</div>'+
+      '<div class="fray">'+fray+' pt</div>'+(isNew?'<div class="newTag">新纪录!</div>':'');
+    wrap.appendChild(d);
+  });
+  document.getElementById('resultOverlay').classList.add('show');
+}
+function closeResult(){
+  document.getElementById('resultOverlay').classList.remove('show');
+  // Defer 机制：弹窗关闭后才 RestructLevel（P2: BeginDeferLevelRestructForSettlement）
+  level++; resultShown=false;
+  buildLevel();
+}
+
+/* ============================================================
+   挂机（P2: C-0 进界面自动开挂机 + 每秒 tick 进度环 / C-5 领奖 / C-6 商店）
+   ============================================================ */
+let idleSec=4*3600+29*60;       // 04:29:00（老文档示例值）
+const IDLE_CAP=6*3600;          // 上限 6 小时
+let idleClaimed=false;
+function fmt(s){ const h=String(Math.floor(s/3600)).padStart(2,'0'),
+  m=String(Math.floor(s%3600/60)).padStart(2,'0'), ss=String(s%60).padStart(2,'0');
+  return h+':'+m+':'+ss; }
+setInterval(()=>{ // 每秒 tick（对应 P2 fillAmount=时长/上限，满了亮红点）
+  if(idleSec<IDLE_CAP && !idleClaimed) idleSec++;
+  const ratio=idleSec/IDLE_CAP;
+  document.getElementById('idleRing').style.strokeDashoffset=289*(1-ratio);
+  document.getElementById('idleDot').classList.toggle('show', ratio>=1);
+  document.getElementById('idleBarFill').style.width=(ratio*100)+'%';
+  document.getElementById('idleBarText').textContent=fmt(idleSec)+' / '+fmt(IDLE_CAP);
+  // 倒计时（Cuntdown）
+  cdSec--; document.getElementById('countdown').textContent='⏱ 剩余 2天 '+fmt(cdSec);
+},1000);
+let cdSec=13*3600+59*60+59;
+
+function openIdle(){
+  document.getElementById('idleDesc').textContent=
+    '您已离线'+Math.floor(idleSec/3600)+'小时'+Math.floor(idleSec%3600/60)+'分。可获得收益：';
+  document.getElementById('idleOverlay').classList.add('show');
+}
+function claimIdle(){
+  if(idleClaimed) return;
+  idleClaimed=true;
+  const b=document.getElementById('idleClaimBtn');
+  b.disabled=true; b.textContent='已领取';
+  toast('+10,000 电池 · +20 铲子 · +2 探测器','gold');
+  shovel+=20; document.getElementById('shovelCnt').textContent=shovel;
+  idleSec=0;
+}
+function openShop(){ closePop('idleOverlay'); document.getElementById('shopOverlay').classList.add('show'); }
+function backToIdle(){ closePop('shopOverlay'); document.getElementById('idleOverlay').classList.add('show'); }
+function closePop(id){ document.getElementById(id).classList.remove('show'); }
+function openRule(){ document.getElementById('ruleOverlay').classList.add('show'); }
+
+/* ============================================================
+   图鉴（P2: C-8 UiDigKeyAtlas 翻书 → 上半详情卡+下半网格）
+   ============================================================ */
+const ATLAS=[ // group 0=普通地形 / 1=宝藏地形（对应 P2 CollectionGroup Low/High 两页签）
+  { icon:'assets/151105461.png', name:'军用笔记本', desc:'先驱者留下的作战终端，屏幕仍在闪烁。', got:true,  grp:0 },
+  { icon:'assets/151105463.png', name:'密封补给箱', desc:'未开封的远征补给，保存完好。',           got:true,  grp:0 },
+  { icon:'assets/151105465.png', name:'火箭残片',   desc:'坠毁探测火箭的推进器残骸。',             got:true,  grp:0 },
+  { icon:'assets/151105472.png', name:'能量电池',   desc:'仍存有余电的高能电池。',                 got:true,  grp:0 },
+  { icon:'assets/151105489.png', name:'时光沙漏',   desc:'砂砾中似乎封存着时间本身。',             got:false, grp:0 },
+  { icon:'assets/151105490.png', name:'显微镜台',   desc:'野外科研站的分析仪器。',                 got:false, grp:0 },
+  { icon:'assets/151105481.png', name:'星核水晶',   desc:'散发幽紫光芒的异星晶簇。',               got:true,  grp:1 },
+  { icon:'assets/151105484.png', name:'棱镜钻核',   desc:'折射七彩光的完美晶体，价值连城。',       got:true,  grp:1 },
+  { icon:'assets/151105487.png', name:'引力球',     desc:'内部悬浮着微型星云的神秘装置。',         got:false, grp:1 },
+  { icon:'assets/151105488.png', name:'机械头颅',   desc:'古老机械文明的遗物，眼中蓝光未熄。',     got:false, grp:1 },
+];
+let atlasSel=0, atlasGrp=0;
+function openAtlas(){
+  document.getElementById('atlasPage').classList.add('show');
+  atlasTab(atlasGrp);
+}
+function closeAtlas(){ document.getElementById('atlasPage').classList.remove('show'); }
+function atlasTab(g){
+  atlasGrp=g;
+  document.getElementById('atlasTab0').classList.toggle('on',g===0);
+  document.getElementById('atlasTab1').classList.toggle('on',g===1);
+  const grid=document.getElementById('atlasGrid');
+  grid.innerHTML='';
+  const list=ATLAS.map((a,i)=>({a,i})).filter(x=>x.a.grp===g);
+  if(!list.some(x=>x.i===atlasSel)) atlasSel=list[0].i;
+  list.forEach(({a,i})=>{
+    const d=document.createElement('div');
+    d.className='atlasItem'+(a.got?'':' uncol')+(i===atlasSel?' sel':'');
+    d.innerHTML='<img src="'+a.icon+'" alt=""><div class="nm">'+(a.got?a.name:'？？？')+'</div>';
+    d.onclick=()=>{ atlasSel=i; atlasTab(g); };
+    grid.appendChild(d);
+  });
+  const got=ATLAS.filter(a=>a.got).length;
+  document.getElementById('atlasProg').textContent=got+' / '+ATLAS.length;
+  renderAtlasDetail();
+}
+function renderAtlasDetail(){
+  const a=ATLAS[atlasSel];
+  const img=document.getElementById('atlasBigImg');
+  img.style.opacity=0;
+  setTimeout(()=>{
+    img.src=a.icon; img.classList.toggle('uncol',!a.got); img.style.opacity=1;
+  },140);
+  document.getElementById('atlasNm').textContent=a.got?a.name:'？？？（未收集）';
+  document.getElementById('atlasDesc').textContent=a.got?a.desc:'挖掘出该宝物后解锁详情。';
+  document.getElementById('atlasRec').innerHTML=a.got?
+    ('盘面剩余：'+Math.floor(Math.random()*3)+'<br>个人纪录：218.22 成色<br>全服纪录：12218.44 成色<br>纪录保持者：[AOB]StevenJam'):
+    '个人纪录：—<br>全服纪录：12218.44 成色';
+}
+
+/* ---------- 启动 ---------- */
+buildLevel();
+</script>
+</body>
+</html>

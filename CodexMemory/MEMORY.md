@@ -9,6 +9,9 @@
 - [apply_patch 上下文纪律](feedback_apply_patch_context_discipline.md) — 改前必重读目标文件；多文件拆小补丁；单行长内容带整行上下文
 - [BTW/sub-agent 持久化回主对话](workflow_subagent_btw_handoff.md) — 全部子线程按主对话建目录，用户判断与 checkpoint 增量落盘，SubagentStop 保存 final，主对话自动恢复未接管内容
 
+## 需求理解
+- [复刻需求先固定 ID 角色映射](feedback_clone_request_id_role_mapping.md) — 多个相邻 ID 同时出现时，先明确 source → target；unchanged，再开始查改，禁止让知识库历史替代当前需求语义
+
 ## 记忆架构
 - [Codex独立记忆与Claude增量复核](reference_codex_memory_architecture.md) — Codex 专属经验独立存储；Claude memory 会话开工增量复核；项目事实继续共用 KB
 - [Codex与Claude资产边界](reference_codex_claude_asset_boundary.md) — 哪些必须独立、哪些必须共用、哪些只同步模板不上传运行状态

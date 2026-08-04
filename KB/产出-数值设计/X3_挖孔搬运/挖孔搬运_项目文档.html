@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>挖孔搬运 · 项目文档（唯一入口）</title>
+<style>
+  :root { --bg:#12141a; --panel:#1a1e27; --panel2:#20252f; --line:#2c3340; --txt:#d8dee9; --dim:#8b95a7; --acc:#e8b04b; --red:#e06c75; --green:#7bc275; --blue:#61afef; --purple:#c678dd; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--txt); font:15px/1.75 "Microsoft YaHei",system-ui,sans-serif; padding:28px 4vw 80px; }
+  h1 { font-size:24px; color:var(--acc); margin-bottom:4px; }
+  .sub { color:var(--dim); font-size:13px; margin-bottom:18px; }
+  h2 { font-size:18px; color:var(--acc); margin:30px 0 12px; padding-left:10px; border-left:4px solid var(--acc); }
+  h3 { font-size:15.5px; color:var(--blue); margin:20px 0 8px; }
+  p { margin:8px 0; }
+  table { border-collapse:collapse; width:100%; margin:10px 0 16px; font-size:13.5px; }
+  th { background:var(--panel2); color:var(--acc); text-align:left; padding:7px 10px; border:1px solid var(--line); white-space:nowrap; }
+  td { padding:6px 10px; border:1px solid var(--line); vertical-align:top; }
+  tr:nth-child(even) td { background:var(--panel); }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:12px 0; }
+  .warnCard { border-left:4px solid var(--red); }
+  code { background:#262c38; padding:1px 6px; border-radius:4px; font:13px Consolas,monospace; color:#a8d0f0; }
+  .g { color:var(--green); } .r { color:var(--red); } .b { color:var(--blue); } .y { color:var(--acc); }
+  .dim { color:var(--dim); font-size:13px; }
+  ul,ol { margin:6px 0 10px 22px; } li { margin:4px 0; }
+  a { color:var(--blue); }
+  .tag { display:inline-block; padding:1px 8px; border-radius:10px; font-size:12px; margin-right:6px; }
+  .t-red { background:#4a2a2e; color:#ff9aa2; } .t-green { background:#2a3f2c; color:#9fe0a0; }
+  .t-blue { background:#243447; color:#8cc4f5; } .t-yellow { background:#453d22; color:#eed48a; }
+  .t-gray { background:#2a2f3a; color:#9aa4b5; } .t-purple { background:#3a2a47; color:#d9a7f0; }
+
+  /* ── 页签导航（一个页签=项目一步，按时间轴） ── */
+  .tabs { display:flex; flex-wrap:wrap; gap:6px; margin:16px 0 4px; position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:10; border-bottom:1px solid var(--line); }
+  .tab-btn { background:var(--panel); border:1px solid var(--line); color:var(--dim); border-radius:8px; padding:7px 12px; font:13.5px "Microsoft YaHei",sans-serif; cursor:pointer; transition:all .15s; white-space:nowrap; }
+  .tab-btn:hover { border-color:var(--acc); color:var(--txt); }
+  .tab-btn.active { background:var(--panel2); border-color:var(--acc); color:var(--acc); font-weight:bold; }
+  .tab-btn .st { font-size:12px; margin-left:4px; }
+  .pane { display:none; animation:fade .18s ease; }
+  .pane.show { display:block; }
+  @keyframes fade { from{opacity:0;transform:translateY(4px);} to{opacity:1;transform:none;} }
+
+  /* ── 页首四行卡片：输入→产出→验收标准→状态+负责人 ── */
+  .meta { background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow:hidden; margin:14px 0 6px; }
+  .meta-row { display:grid; grid-template-columns:110px 1fr; border-bottom:1px solid var(--line); }
+  .meta-row:last-child { border-bottom:none; }
+  .meta-k { background:var(--panel2); color:var(--acc); font-size:13px; font-weight:bold; padding:9px 12px; display:flex; align-items:center; }
+  .meta-v { padding:9px 14px; font-size:13.5px; }
+  .flow { background:var(--panel2); border-radius:8px; padding:12px 16px; font-size:13.5px; line-height:2.05; margin:8px 0 12px; overflow-x:auto; }
+  .flow.nw { white-space:nowrap; }
+  .stt { display:inline-block; background:#243447; border:1px solid var(--blue); border-radius:6px; padding:1px 10px; color:#8cc4f5; font-weight:bold; }
+  .stt.g2 { background:#2a3f2c; border-color:var(--green); color:#9fe0a0; }
+  .stt.r2 { background:#3a2a2e; border-color:var(--red); color:#ff9aa2; }
+  .ev { color:var(--acc); font-size:12px; padding:0 4px; }
+</style>
+</head>
+<body>
+
+<h1>🕳️ 挖孔搬运 · 项目文档（唯一入口）</h1>
+<div class="sub">P2 DigKey（NewDigKey）→ X3 ActvType 85 · 目标：9 月周年 W2 主力模块 · 更新 2026-08-04<br>
+<b>一个页签 = 项目一步，按时间轴排</b>。负责人：<b>linkang</b>=交互 / 配置 / 数值 / 美需 ｜ <b>力总(zhangli)</b>=服务端 ｜ <b>yaoxu</b>=GUI 表现。<br>
+agent 接管入口 = memory <code>project_x3_digkeys_porting.md</code> ｜ 早期汇总快照 = <a href="挖孔搬运_案子总览.html">案子总览</a>（已降级，以本文档为准）</div>
+
+<div class="tabs" id="tabs">
+  <button class="tab-btn active" data-p="p1">① 立项评审 <span class="st">✅</span></button>
+  <button class="tab-btn" data-p="p2">② 原型拆解 <span class="st">✅</span></button>
+  <button class="tab-btn" data-p="p3">③ 交互设计 <span class="st">🔨</span></button>
+  <button class="tab-btn" data-p="p4">④ 服务端实现 <span class="st">✅骨架</span></button>
+  <button class="tab-btn" data-p="p5">⑤ Prefab搬运清单 <span class="st">⏸</span></button>
+  <button class="tab-btn" data-p="p6">⑥ 客户端逻辑 <span class="st">⏸</span></button>
+  <button class="tab-btn" data-p="p7">⑦ 美术资源搬运 <span class="st">🔲</span></button>
+  <button class="tab-btn" data-p="p8">⑧ 配置数值 <span class="st">✅底座</span></button>
+  <button class="tab-btn" data-p="p9">⑨ 联调测试 <span class="st">🔲</span></button>
+</div>
+
+<!-- ═══════════════ ① 立项评审 ═══════════════ -->
+<div class="pane show" id="p1">
+<div class="meta">
+  <div class="meta-row"><div class="meta-k">本步输入</div><div class="meta-v">9 月周年规划（挖孔=P2 最强付费单品：单节 $94.5 万 / 渗透 44% / 单周占大盘中位 15.9%·峰值 42.7%）· Jira 单「周年-挖孔小游戏拓荒搬运」（程序原估 10d）· P2/X2 双仓实证扫描</div></div>
+  <div class="meta-row"><div class="meta-k">产出</div><div class="meta-v"><a href="挖孔P2到X3搬运说明书_需求评审_20260804.html">评审说明书</a>（一页结论 / 4 决策点 / 资产清单 / 坑位 10 条 / 分工 18.5 人天）+ 决策全拍 + <a href="挖孔搬运_分工流程一图流.html">分工流程一图流</a></div></div>
+  <div class="meta-row"><div class="meta-k">验收标准</div><div class="meta-v">4 个决策点全部有结论、三人分工认领、汇报节点定死</div></div>
+  <div class="meta-row"><div class="meta-k">状态·负责人</div><div class="meta-v"><span class="tag t-green">✅ 08-04 评审完，决策全拍</span> 负责人：linkang（主持+说明书）</div></div>
+</div>
+
+<h2>玩法一句话 + 搬运源裁决</h2>
+<div class="card">
+<p><b>棋盘挖掘</b>：用锄头点开格子，挖出埋着的宝石图形过关；挖掘过程中按配置窗口概率触发工具（整行/整列/3×3 连锁）<span class="r">（机制见页签⑧ 修正①）</span>，关卡无限推进，挂机产锄头/道具，商店+礼包+储蓄罐变现。</p>
+<p><b>搬运源 = P2 新版 NewDigKey 直搬</b>。X2 只立项没做（「X2-第一期开发内容」页签只是需求稿，x2client 协议层/GameScript 全查无 DigKeys，08-03 实证）⇒ <b>没有 X2→X3 同源 guid 快捷路</b>，美术/prefab 按 P2→X3 全链路搬运评估（比扭蛋机/限时抢购重）。⚠️ 挖孔 ≠ 挖矿（挖矿=另一玩法）。</p>
+</div>
+
+<h2>决策记录（全部已拍，按模块）</h2>
+<table>
+<tr><th>决策</th><th>结论</th><th>理由 / 被否方案</th></tr>
+<tr><td>搬运源</td><td><b>P2 新版 NewDigKey</b></td><td>X2 只立项没做（v81 晶核探秘停留在文档）；新版≈独立重写（6613 行 vs 旧 2809 行），旧版 DigKey 不搬</td></tr>
+<tr><td>图鉴（D1）</td><td><b>搬，范围全量</b></td><td>否掉评审稿"砍图鉴省 35-40%"方案；技术路线=<b>不搬 P2 Decorate 系统</b>，收集状态轻量自建进 ActivityDigKeysData（collectedTreasureIds+图鉴任务领奖状态），收集判定=宝石首次完整挖出登记</td></tr>
+<tr><td>范围（D2）</td><td>结构按 P2 现行版搬，内容量按第一期配</td><td>协议/表结构一步到位；宝石种数/关卡数是配置不是代码，策划填表决定</td></tr>
+<tr><td>变现件（D3）</td><td>v1 = 商店 + 礼包直售；储蓄罐二期</td><td>X3 储蓄罐是独立系统，硬拼进 v1 吃联调时间</td></tr>
+<tr><td>棋盘摆放（D4）</td><td>明文下发（照 P2）</td><td>单人玩法、锄头照扣不亏钱，服务端裁决保底不受影响；P2 线上就这么跑</td></tr>
+<tr><td>工具形态</td><td><b>v86 埋格即挖即触发</b></td><td>否掉 X2 v81 三段式（选中→范围框→确认）；与已搬服务端逻辑零返工</td></tr>
+<tr><td>汇报节点</td><td><b>只两个、全是 demo</b>：①HTML 横转竖交互 demo ②Unity 实机 demo</td><td>不发文字简表；汇报=拿得出手的东西</td></tr>
+</table>
+
+<h2>分工定案（串行依赖链）</h2>
+<table>
+<tr><th>人</th><th>职责</th><th>关键点</th></tr>
+<tr><td><b>linkang（先行）</b></td><td>全部活动开出来（全功能含图鉴）+ 界面横转竖 + 交互设计</td><td>交互逻辑基本完成 = yaoxu 的开工闸门；先放行主界面屏（80% 体验），弹窗逐屏放行；图鉴最大屏放最后设计不卡核心</td></tr>
+<tr><td><b>力总(zhangli)</b></td><td>继续现有工作，不新增</td><td>服务端骨架已就位（页签④）；收尾（保底/礼包商店接线/图鉴字段/边界推送）待交互定稿后按需排入</td></tr>
+<tr><td><b>yaoxu（等闸门）</b></td><td>GUI 表现流程</td><td>输入=linkang 交互稿（页签③⑤⑥⑦）；验收口径=拿稿能拼不用问</td></tr>
+</table>
+<p class="dim">执行流程：阶段0摸底 → 阶段1交互设计（唯一闸门）→ 阶段2 GUI 表现 → 阶段3服务端收尾联调；数值/i18n/美需并行。横转竖是本案独有关键路径（与限时抢购/扭蛋机同构之外的增量）。</p>
+</div>
+
+<!-- ═══════════════ ② 原型拆解 ═══════════════ -->
+<div class="pane" id="p2">
+<div class="meta">
+  <div class="meta-row"><div class="meta-k">本步输入</div><div class="meta-v">P2 client 仓（<code>E:\P2\client\client</code>，bugfix 分支@2026-07-09）· P2 老交互文档（v86 异星探索 / v81 晶核探秘两代）· 策划案 GSheet 活文档</div></div>
+  <div class="meta-row"><div class="meta-k">产出</div><div class="meta-v">资产全景清单（说明书 §3）· 横转竖 8 条结论 · 老文档 3 发现 · 拆解底稿两份：<a href="02_P2原流程分析/P2原界面布局与交互流拆解_代码版.md">代码版</a>（节点级布局/动画时序，yaoxu 对照用）+ <a href="02_P2原流程分析/老交互文档摘录_图片版.md">图片版</a>（7 图标注）· <a href="04_老交互界面图/_清单.md">老交互界面裁图 48 张</a> · 坑位 10 条</div></div>
+  <div class="meta-row"><div class="meta-k">验收标准</div><div class="meta-v">资产有账可查（数量/位置/体量）、guid 盲区显式列出、横竖差异逐屏有处置、坑位全部来自实弹</div></div>
+  <div class="meta-row"><div class="meta-k">状态·负责人</div><div class="meta-v"><span class="tag t-green">✅ 完成（底稿 FINAL）</span> 负责人：linkang</div></div>
+</div>
+
+<h2>P2 资产扫描结论（数字总账）</h2>
+<table>
+<tr><th>类别</th><th>数量/体量</th><th>位置 / 备注</th></tr>
+<tr><td>客户端代码</td><td><b>6613 行</b>（14 UI + 2 逻辑 Module）</td><td><code>P2/GameScript/Activity/NewDigKey/</code>；不能照抄，按 X3 范式重写（页签⑥）</td></tr>
+<tr><td>协议</td><td>6 组 Req/Ack + 8 struct + 3 枚举</td><td>清单见页签④（服务端索引）· 逐条用法见页签⑥（消息接线）</td></tr>
+<tr><td>配置表</td><td>2 张专属 + 5 个引用组</td><td><code>event_hole_digging_new</code>（<b>真表 119 关</b>）/<code>event_hole_type</code>（46 种宝物）。<br>🔴🔴 <b>08-04 已用 P2 真配置表（本机 <code>C:\Users\linkang\gdconfig\fo\config\</code>）推翻本行早前结论</b>：真表含 <code>treasure_pool</code>/<code>tool_trigger</code>/<code>blocked_cells</code>/<code>reward_window</code> 四列（生成类没暴露），<b>宝物池与不可挖格是配表的</b>，只有随机落位由服务端算。三条机制修正见 <b>页签⑧</b>；全文=<a href="02_P2原流程分析/P2真配置机制解剖_修正版.md">P2真配置机制解剖_修正版.md</a>（配置/服务端权威源）</td></tr>
+<tr><td>prefab</td><td>主界面 1（1.26MB）+ 弹窗 23（12MB）</td><td>搬运口径折成 27 件拼装账，见页签⑤</td></tr>
+<tr><td>Sprite / 特效 / 动画 / 音效</td><td>83 张 28MB / 54 件 9.3MB / 13 个 / 15 Wwise event</td><td>搬运路径与盲区清单见页签⑦</td></tr>
+<tr><td>i18n</td><td>≈128 key × 16 语</td><td>X3 走 TXT_ 体系重录（页签⑧）</td></tr>
+</table>
+
+<h2>横转竖关键结论（交互设计输入，8 条）</h2>
+<table>
+<tr><th>#</th><th>结论</th><th>处置</th></tr>
+<tr><td>1</td><td>主界面=三栏：左插槽 485 宽｜中 800×800 棋盘（x+110 右偏让位）｜右双列按钮</td><td>竖屏：棋盘归零居中，左右栏改上/下</td></tr>
+<tr><td>2</td><td class="r">最硬依赖=右侧功能栏用比例锚（屏宽 80%-90%），竖屏塌缩到 108px 装不下</td><td>优先重排（demo 已改底部功能栏）</td></tr>
+<tr><td>3</td><td class="r">图鉴=翻书左列表右详情，竖屏体验损失最大的一屏</td><td>方案=上半屏详情卡+下半屏类型条，保同屏对照（demo 在验证）</td></tr>
+<tr><td>4</td><td>宝物飞行是横向轨迹（棋盘→左插槽 500-700px）</td><td>插槽挪位后改纵向，0.5s 时长要重调（demo 实测取 0.75s）</td></tr>
+<tr><td>5</td><td class="r">背景图 2080×1610 横构图，竖屏露白</td><td>美术需求：换竖构图（页签⑦ / demo 美需页）</td></tr>
+<tr><td>6</td><td>挂机领奖横幅/规则页按 1920 写死</td><td>必改</td></tr>
+<tr><td>7</td><td>商店横向滚动（卡 444×648）</td><td>改纵向滚动</td></tr>
+<tr><td>8</td><td class="g">免改清单：工具特效跟棋盘走；结算 2 列 Grid 竖屏反而更优；探测器滚动定位已兼容横竖</td><td>照搬</td></tr>
+<tr><td>9</td><td class="r"><b>棋盘不都是正方形（08-04 真表推翻结论 8 的"正方形天然适配"）</b>：119 关里 26 关是长方形，含 <b>4×8</b>；范围 3×3~8×8</td><td>竖屏要定「棋盘区最小格边长」+ 超宽棋盘处理（缩放 or 横滚），进交互稿</td></tr>
+</table>
+
+<h2>老交互文档三发现</h2>
+<ul>
+<li><b>两代设计别混用</b>：v86「异星探索」=现行 P2（即挖即触发）；v81「晶核探秘」=X2 未落地稿（三段式道具、破译开门包装）。工具形态已拍 v86。</li>
+<li><b>值得吸收的两个细节（已进 demo）</b>：惊喜关卡链（前一关预告横幅→进入送道具→惊喜关不显等级）；挂机弹窗「欢迎回来」式样式。</li>
+<li><b>二期候选</b>：探测仪定向保底（选缺失图鉴宝物→下次特殊关必得，未拥有显问号）——图鉴×探测器联动钩子。</li>
+</ul>
+
+<h2>坑位清单 10 条（全项目做之前必读，全部实弹踩过）</h2>
+<table>
+<tr><th>#</th><th>坑</th><th>对策</th></tr>
+<tr><td>1</td><td>P2 prefab Layer 残留（19=P2 建筑层，X3 相机不渲→隐形）</td><td>搬运时全刷 Layer 0，先 grep 对照 TagManager</td></tr>
+<tr><td>2</td><td>特效/音效走字符串动态加载，guid 依赖扫描永远漏</td><td>按 11 特效名 + 15 Wwise event 清单人肉核对（页签⑦）</td></tr>
+<tr><td>3</td><td>P2 静态文本=LC_ key 字面量，剥脚本后满屏裸 key</td><td>prefab YAML grep LC_ 列全清单→逐个接管或隐藏</td></tr>
+<tr><td>4</td><td>i18n 只填 cn/en → 繁中客户端全空白</td><td>至少 cn+en+zh 三列，完整 16 语走翻译管线</td></tr>
+<tr><td>5</td><td>登录只建空壳数据→界面全空；边界时刻（挂机满）不推送→界面不自己变</td><td>OnPostInit 填一次 + 定时器到点推 Ntf，成对做</td></tr>
+<tr><td>6</td><td>新增 ErrCode 不配 Text_ErrCode 文案 → toast 弹裸 key</td><td>每个 ErrCode 配一条 i18n，列进文案清单（页签⑧）</td></tr>
+<tr><td>7</td><td>嵌套 prefab 实例内部文本/按钮不被外层绑定接管 → 占位数字上屏/点击被吞</td><td>搬完 YAML 搜占位值，嵌套实例单独过一遍</td></tr>
+<tr><td>8</td><td>改客户端 bytes/代码后 Editor 不完全重启 → 读旧导入资产（假失败）</td><td>验证前完全关 Unity 重开</td></tr>
+<tr><td>9</td><td>proto tag/ActvType 号双分支漂移（72 号 dev/festival 语义不同）</td><td>号位已按双分支核死（页签⑧），别自行改号</td></tr>
+<tr><td>10</td><td>dev_festival 基线有上游编译错（船只4.0 Parameter2）</td><td>feature 分支已带临时修复 commit，合并时若上游已修则丢弃</td></tr>
+</table>
+</div>
+
+<!-- ═══════════════ ③ 交互设计 ═══════════════ -->
+<div class="pane" id="p3">
+<div class="meta">
+  <div class="meta-row"><div class="meta-k">本步输入</div><div class="meta-v">页签② 的拆解底稿（布局数据/动画时序/横转竖 8 条）+ 老文档吸收点 + P2 真图素 30 张</div></div>
+  <div class="meta-row"><div class="meta-k">产出</div><div class="meta-v">HTML 竖屏交互 demo（<b>汇报节点 1 载体</b>，v0.4=四页签单文件：可玩原型+状态机常驻右侧 / 横屏对照 / 改动说明 / 美需）+ 四状态机 + 交互稿主界面屏定稿（= yaoxu 开工闸门）</div></div>
+  <div class="meta-row"><div class="meta-k">验收标准</div><div class="meta-v">yaoxu 拿稿能拼不用问；demo headless 断言全绿为交互逻辑基线（v0.4 = <b>102 项全绿</b>）；待拍点全部有结论</div></div>
+  <div class="meta-row"><div class="meta-k">状态·负责人</div><div class="meta-v"><span class="tag t-blue">🔨 进行中（demo v0.4 已出（实机对齐版），待用户验收定主界面稿）</span> 负责人：linkang</div></div>
+</div>
+
+<h2>Demo（汇报节点 1）</h2>
+<table>
+<tr><th>版本</th><th>链接</th><th>说明</th></tr>
+<tr><td>v0.1</td><td><a href="03_横转竖demo/挖孔竖屏交互demo_v01.html">挖孔竖屏交互demo_v01.html</a></td><td>三视图（可玩原型/横屏对照/15 行改动说明）+ 插槽上下 A/B 开关 + 惊喜关链 + 30 张 P2 真图素（外链 assets）；headless 19 断言全绿</td></tr>
+<tr><td><b>v0.4（现行，实机对齐版）</b></td><td><a href="03_横转竖demo/挖孔竖屏交互demo_v02_单文件版.html">挖孔竖屏交互demo_v02_单文件版.html</a></td><td>单文件全内嵌可转发（2.3MB）。四页签：<b>① 可玩原型 + 状态机常驻右侧面板</b>（主循环实时高亮联动，格子/挂机/弹窗导航三折叠）｜② 横屏原版对照｜③ 改动说明 15 行｜<b>④ 美需</b>（19 资源项卡片：资源项+主题+来源+状态，给美术对方向）。headless <b>72 断言全绿</b>（文件名沿用 v02，内容已是 v0.3）</td></tr>
+</table>
+
+<h2>🔴 待拍点（demo 验收时定）</h2>
+<table>
+<tr><th>#</th><th>待拍点</th><th>说明</th></tr>
+<tr><td>1</td><td>插槽放上还是放下</td><td>demo 内置 A/B 开关，直接切着看</td></tr>
+<tr><td>2</td><td>底部功能栏按钮排序</td><td>横屏右侧双列改竖屏底栏后的顺序</td></tr>
+<tr><td>3</td><td>图鉴竖屏方案</td><td>上半屏详情卡+下半屏类型条（保同屏对照），demo 在验证</td></tr>
+<tr><td>4</td><td>排行榜 v1 悬置</td><td>服务端骨架没接榜，做不做待用户与力总确认（prefab 账里的唯一悬置项）</td></tr>
+</table>
+
+<h2>核心状态机（四个，依据 P2 线上代码行为，X3 照此实现）</h2>
+<p class="dim">可交互版=demo 视图① 右侧常驻面板（边玩边看高亮）；独立可读版：<a href="挖孔搬运_核心状态机.html">挖孔搬运_核心状态机.html</a>。服务端已实现 ①③ 的协议闭环（页签④）；②④ 是客户端实现范围（页签⑥，yaoxu）。</p>
+
+<h3>① 主循环状态机（界面级，核心）</h3>
+<div class="flow nw">
+<span class="stt g2">Idle 待机</span> <span class="ev">─点格子(过守卫)→</span> <span class="stt">WaitAck 锁输入</span> <span class="ev">─DigAck→</span> <span class="stt">AnimSeq 动画序列</span> <span class="ev">─未过关→</span> <span class="stt g2">Idle</span>&nbsp;&nbsp;<span class="ev">─stageComplete→</span> <span class="stt">GateAnim 过关演出</span> <span class="ev">→</span> <span class="stt r2">Settlement 结算(挂起切关)</span> <span class="ev">─点空白关闭→</span> <span class="stt">LevelSwitch 切关动画</span> <span class="ev">→</span> <span class="stt g2">Idle(新关)</span>
+</div>
+<table>
+<tr><th>当前态</th><th>触发</th><th>守卫（全过才转移）</th><th>动作</th><th>次态</th></tr>
+<tr><td>Idle</td><td>点格子(row,col)</td><td>非动画中 ∧ 界内 ∧ 非Block ∧ 未挖 ∧ 同格节流200ms ∧ 锄头足够</td><td><code>m_IsDigging=true</code>，发 DigReq</td><td>WaitAck</td></tr>
+<tr><td>Idle</td><td>点格子·锄头不足</td><td>Level≠1</td><td>弹礼包（Level==1 只飘字，新手不打扰）</td><td>Idle</td></tr>
+<tr><td>WaitAck</td><td>Ack errCode≠0 / 超时2s</td><td>—</td><td>toast + 解锁</td><td>Idle</td></tr>
+<tr><td>WaitAck</td><td>DigAck 成功</td><td>—</td><td>串行动画：①挖开 ②消散∥工具连锁 ③揭示+飞插槽(Delay1.0/Dur0.5)</td><td>AnimSeq</td></tr>
+<tr><td>AnimSeq</td><td>播完 ∧ !stageComplete</td><td>—</td><td>解锁 + 重拉数据刷新（引导光圈重算）</td><td>Idle</td></tr>
+<tr><td>AnimSeq</td><td>播完 ∧ stageComplete</td><td>—</td><td>0.4s 后过关演出</td><td>GateAnim</td></tr>
+<tr><td>GateAnim</td><td>演出完</td><td>—</td><td>弹结算（宝物卡+成色+破纪录标），<b>切关挂起 defer</b></td><td>Settlement</td></tr>
+<tr><td>Settlement</td><td>点空白关闭</td><td>—</td><td>OnHidden 回调→执行挂起切关：隐旧盘→切关动画→InitGrid→Refresh</td><td>LevelSwitch→Idle</td></tr>
+</table>
+<p class="dim">🔴 两条铁规则：结算弹窗打开期间<b>禁止切关</b>（defer 机制）；WaitAck/AnimSeq 全程输入锁，任何异常路径必须回 Idle 解锁（否则卡死盘面）。</p>
+
+<h3>② 格子状态机（单元格级）</h3>
+<div class="flow nw">
+<span class="stt">Hidden·Normal</span> / <span class="stt">Hidden·Special(提示)</span> / <span class="stt">Hidden·Premium(惊喜关)</span> / <span class="stt r2">Block(不可点·无监听)</span> <span class="ev">─被挖开(直接点或工具连锁)→</span> <span class="stt g2">Dug(底图隐藏·清监听)</span> <span class="ev">─所在宝石集齐→</span> <span class="stt g2">Revealed(footprint 整体消隐)</span>
+</div>
+
+<h3>③ 挂机状态机</h3>
+<div class="flow nw">
+<span class="stt">NotStarted</span> <span class="ev">─进界面自动发 HangUpStartReq→</span> <span class="stt g2">Accruing 累计中</span> <span class="ev">─elapsed≥上限→</span> <span class="stt r2">Full 已满(红点+tips)</span> <span class="ev">─领取 HangUpRewardReq→</span> <span class="stt">Settle 发奖</span> <span class="ev">─hangUpTime 重计→</span> <span class="stt g2">Accruing</span>
+</div>
+<p class="dim">🔴 服务端配套：挂机满这类<b>边界时刻必须服务端主动推送</b> + 登录 OnPostInit 填充 + 重连覆盖——三处缺一个就是"看不到"（页签④/⑨）。</p>
+
+<h3>④ 弹窗导航状态机（窗口栈）</h3>
+<div class="flow nw">
+<span class="stt g2">主界面</span> <span class="ev">→</span> <span class="stt">结算(模态·关闭回调驱动切关)</span> ｜ <span class="ev">→</span> <span class="stt">挂机弹窗</span> <span class="ev">→</span> <span class="stt">商店(二层)</span> <span class="ev">→</span> <span class="stt">数量选择(三层)</span> ｜ <span class="ev">→</span> <span class="stt">图鉴(全屏·可复用为探测器选择器)</span> ｜ <span class="ev">→</span> <span class="stt">探测器(选目标→二次确认→关窗→扫描特效3s)</span> ｜ <span class="ev">→</span> <span class="stt">规则 / 奖励预览 / 排行 / 礼包 / 储蓄罐</span>
+</div>
+<p class="dim">格子态视觉表 / 挂机 tick 表 / 弹窗导航规则表全文在 demo 右侧面板与独立状态机页，此处不重复。</p>
+</div>
+
+<!-- ═══════════════ ④ 服务端实现（仅入口索引） ═══════════════ -->
+<div class="pane" id="p4">
+<div class="card warnCard"><b>⚠️ 本页仅作入口索引</b>——服务端实现细节（数据结构 / 摆放算法 / 发奖裁决 / 推送时机）由<b>程序线自行讨论</b>，本文档不展开、不当权威。索引内容：分支 / commit / 号位 / 协议 / 遗留 TODO。</div>
+<div class="meta">
+  <div class="meta-row"><div class="meta-k">本步输入</div><div class="meta-v">P2 客户端协议（req_9 / ack_12 / struct_19 的 DigKeys* / NewDigKeys*）+ 策划案规则（P2 服务端代码本机无仓 → 在 X3 重写）+ 页签⑧ 配置底座 + 扭蛋机代码骨架模板（commit <code>b68261ca</code>）</div></div>
+  <div class="meta-row"><div class="meta-k">产出</div><div class="meta-v">x3-project <b>dev_digkeys</b>（worktree <code>C:\x3-wt-digkeys</code>，已 push 远端）：<code>547c121fd4c</code> 基线修复 + <code>02b8004176b</code> 骨架 <b>22 文件 +3239 行</b>（挖掘/挂机 handler + 协议 + 全套注册）</div></div>
+  <div class="meta-row"><div class="meta-k">验收标准</div><div class="meta-v">三工程 dotnet build <b>0 error</b>（独立复验通过）；协议闭环覆盖状态机①③（挖掘+挂机）</div></div>
+  <div class="meta-row"><div class="meta-k">状态·负责人</div><div class="meta-v"><span class="tag t-green">✅ 骨架完·已 push</span><span class="tag t-yellow">收尾待排（含工具机制改造）</span> 负责人：力总（骨架已由 linkang 侧搬完就位；收尾待交互定稿后按需排入）</div></div>
+</div>
+
+<h2>入口索引</h2>
+<table>
+<tr><th>项</th><th>值</th></tr>
+<tr><td>代码分支</td><td>x3-project <code>dev_digkeys</code>（worktree <code>C:\x3-wt-digkeys</code>）；<span class="g">已 push 远端（08-04）</span>，力总/yaoxu 可直接 <code>git fetch && git checkout dev_digkeys</code> 接活。命名走团队 <code>dev_xxx</code> 惯例（原 feature/* 已换名）</td></tr>
+<tr><td>commit</td><td><code>547c121fd4c</code>=基线修复（删 CActvTaskEx.Parameter2，上游船只4.0 错——合并时若上游已修则丢弃）；<code>02b8004176b</code>=骨架 22 文件 +3239 行</td></tr>
+<tr><td>核心文件</td><td><code>ActivityMeta.DigKeys.cs</code>（684 行）：三个 MsgHandler=挖掘（摆放生成+旋转+工具连锁+揭示检测+通关发奖推关）/ 挂机开始 / 挂机结算；另 Condition + 常量/ErrCode/SysOpReason/BI 接线；CfgProtos 4 个配置类=TableProtoGen 真生成物（非手写）</td></tr>
+<tr><td>号位（详见页签⑧）</td><td>ActvType <b>85</b> · ActivityItem proto tag <b>73</b> · ErrCode 段 <b>1017240-1017249</b> · msgid 7 条（BKDR-131 已算好）· 单服玩法进 SingleServerActivityTypes（C#+导表工具双侧登记）</td></tr>
+<tr><td>协议</td><td>6 组 Req/Ack + 8 struct + 3 枚举；核心=<code>NewDigKeysDigReq/Ack</code>（连锁/工具/揭示一个 Ack 全带）；挂机=<code>DigKeysHangUpStartReq/Ack</code> + <code>DigKeysGetHangUpRewardReq/Ack</code>（P2 新旧共用可整搬）；+ 活动数据 Data 结构</td></tr>
+<tr><td>关键约定</td><td>boardMap 工具格=<b>treasureId 负值</b>（-1 整行 / -2 整列 / -3=3×3），宝石=Treasure.ID 正值；工具连锁不级联(v1)；发奖走 <code>StorageMeta.EndowReward(RewardID)</code>；摆放=服务端算法生成、明文下发（D4）<br>🔴🔴 <b>08-04 修正：工具"埋格"机制与 P2 真配置不符</b>——P2 是按挖掘次数窗口概率投放（见页签⑧ 修正①），此约定<b>待程序线裁决改造</b>（收尾 TODO #0）</td></tr>
+</table>
+
+<h2>🔴 遗留 TODO（收尾清单）</h2>
+<table>
+<tr><th>#</th><th>项</th><th>去向</th></tr>
+<tr><td class="r"><b>0</b></td><td class="r"><b>工具触发机制改造（08-04 新增，最高优先）</b>：现实现=工具埋进 boardMap（treasureId 负值），P2 真机制=按挖掘次数窗口概率投放 <code>{dig_min,dig_max,trigger_count,tool_pool[权重]}</code></td><td>力总裁决：照 P2 改（推荐，策划可精控节奏）or 保留埋格（则数值填表口径要另立）。配套 gdconfig 补列见页签⑧。<b>依据=<a href="02_P2原流程分析/P2真配置机制解剖_修正版.md">真配置机制解剖</a></b></td></tr>
+<tr><td>1</td><td><b>边界推送</b>：挂机满必须服务端主动推 Ntf + 登录 OnPostInit 填充 + 重连覆盖（限时抢购实弹坑，三处缺一个就是"看不到"）</td><td>力总收尾 · 页签⑨ 验证</td></tr>
+<tr><td>2</td><td>保底机制 / 礼包商店接线 / 图鉴收集字段（collectedTreasureIds + 领奖状态）</td><td>力总收尾（待交互定稿）</td></tr>
+<tr><td>3</td><td>客户端全部未动（Condition 的 UIType 暂返 null，TODO 指 UIActvDigKeys）</td><td>yaoxu · 页签⑥</td></tr>
+<tr><td>4</td><td>i18n 全未配 / ActvOnline 主行未加 / DK 占位 / 数值占位</td><td>页签⑦⑧</td></tr>
+<tr><td>5</td><td>排行榜未接（v1 唯一悬置项，做不做待拍）</td><td>用户 × 力总</td></tr>
+</table>
+</div>
+
+<!-- ═══════════════ ⑤ Prefab 搬运清单 ═══════════════ -->
+<div class="pane" id="p5">
+<div class="meta">
+  <div class="meta-row"><div class="meta-k">本步输入</div><div class="meta-v">页签② 拆解底稿（弹窗结构表 §B）+ 页签③ 交互稿（横转竖布局定稿）+ P2 prefab 源目录</div></div>
+  <div class="meta-row"><div class="meta-k">产出</div><div class="meta-v">X3 侧 27 个 prefab 拼装落地（重拼 4 / 中改 4 / 轻改直搬 19）</div></div>
+  <div class="meta-row"><div class="meta-k">验收标准</div><div class="meta-v">27 件账实相符；重拼件按交互稿布局、轻改件保 P2 结构；Layer 全刷 0；根节点五件套齐</div></div>
+  <div class="meta-row"><div class="meta-k">状态·负责人</div><div class="meta-v"><span class="tag t-gray">⏸ 等闸门（linkang 交互稿放行后开工）</span> 负责人：yaoxu</div></div>
+</div>
+
+<h2>拼装总账（v1 全量口径共 27 个）</h2>
+<div class="card">
+<p>口径拆分：<b>界面级 11</b>（主界面 1 + 新版弹窗 7 + 沿用旧版小弹窗 3）+ <b>元件级 16</b>（棋盘格子 1 + 宝物 icon 15）。<br>
+储蓄罐弹窗=<b>二期</b>（D3 已拍）；<b>排行榜界面=v1 唯一悬置项</b>（服务端骨架没接榜，做不做待用户与力总确认）。</p>
+</div>
+
+<h2>三档难度 × 来源路径</h2>
+<p class="dim">P2 源仓根：<code>E:\P2\client\client\Assets</code>（bugfix 分支）。「重拼」=P2 布局不能直搬，按交互稿竖屏重拼、图素照搬；「中改」=结构可保、改锚点/滚动方向；「轻改直搬」=居中弹窗/元件，搬过来换注册即可。</p>
+<table>
+<tr><th>难度</th><th>数</th><th>件</th><th>来源路径（P2）</th><th>改动要点</th></tr>
+<tr><td rowspan="4"><span class="tag t-red">重拼</span></td><td rowspan="4">4</td><td>主界面（模块）</td><td><code>Res/UI/Prefab/Activity/Module/21201620.prefab</code>（1.26MB）</td><td>三栏→竖屏单列：插槽改顶部横条、功能栏改底栏（比例锚必拆）、棋盘归零居中；174 GO / 91 嵌套实例</td></tr>
+<tr><td>图鉴 UiDigKeyAtlas</td><td><code>Res/UI/Prefab/Activity/DigKeyNew/</code>（7.5MB，最大件）</td><td>全屏翻书→上半详情卡+下半类型网格；底部进度奖励条换自建收集（不搬 Decorate）</td></tr>
+<tr><td>商店 UiDigKeyNewShop</td><td>同上目录</td><td>横向滚动（卡 444×648）→纵向滚动列表</td></tr>
+<tr><td>挂机领奖 UiDigKeyNewOfflineReward</td><td>同上目录</td><td>1920 写死横幅→居中竖版卡片（「欢迎回来」范式）；BtnShop@x=1626 挪回卡内</td></tr>
+<tr><td rowspan="4"><span class="tag t-yellow">中改</span></td><td rowspan="4">4</td><td>结算 UiDigKeyNewResult</td><td>同上目录（3.7MB）</td><td>结构基本可保（2 列 Grid 竖屏更优）；关闭路径保持唯一（点空白）</td></tr>
+<tr><td>探测器 UiDigKeyNewProbe</td><td>同上目录</td><td>中央大板 1957 宽收窄；CenterScrollOn 代码已兼容横竖不用改</td></tr>
+<tr><td>规则 UiDigKeyNewPlayRule</td><td>同上目录</td><td>Panel1 写死 1920×1080→竖版居中卡片</td></tr>
+<tr><td>挂机预览 UiDigKeyNewOfflineRewardPreview</td><td>同上目录</td><td>中央卡片 1400×920 收窄适配</td></tr>
+<tr><td rowspan="3"><span class="tag t-green">轻改直搬</span></td><td rowspan="3">19</td><td>沿用旧版小弹窗 ×3（数量选择等挂机/商店链路二级小窗）</td><td><code>Res/UI/Prefab/Activity/DigKeyNew/</code> 内旧版命名件</td><td>标准居中小弹窗，竖屏零成本复用；具体件名搬运时按目录核对</td></tr>
+<tr><td>棋盘格子 NewDigKeyCell ×1</td><td>同上目录</td><td>P2 预置 Cell_11..88 按名取不 Instantiate——X3 沿用该模式</td></tr>
+<tr><td>宝物 icon prefab ×15（NewKeyIcon1..15）</td><td>同上目录（各 ~30KB）</td><td>美术模板池，图鉴复用 GetAtlasKeyIconTemplate；原样搬</td></tr>
+</table>
+<p class="dim">搬运手法=P2→X3 Unity 资产搬运工作流（原 GUID 整搬保内链 + Layer19 刷 0 + assetPath 动态加载盲区人肉核对，memory <code>workflow_p2_to_x3_asset_port</code>）。坑位 #1/#7/#8（页签②）在本步高发。</p>
+</div>
+
+<!-- ═══════════════ ⑥ 客户端逻辑 ═══════════════ -->
+<div class="pane" id="p6">
+<div class="meta">
+  <div class="meta-row"><div class="meta-k">本步输入</div><div class="meta-v">🔒 闸门=linkang 交互逻辑基本完成（先放行主界面+棋盘一屏=80% 体验，弹窗逐屏放行）· 页签③ 状态机 · <a href="02_P2原流程分析/P2原界面布局与交互流拆解_代码版.md">拆解代码版</a>（动线 C-0~C-10 + 动画时长常量）· P2 源码当逻辑参考</div></div>
+  <div class="meta-row"><div class="meta-k">产出</div><div class="meta-v">X3 客户端逻辑（UIActvDigKeys 族 + 消息接线 + 状态机实现 + HUD 入口红点）+ <b>Unity 实机 demo（汇报节点 2）</b></div></div>
+  <div class="meta-row"><div class="meta-k">验收标准</div><div class="meta-v">实机 demo 走通挖掘主循环；状态机①②④行为对齐 demo 断言基线；坑位 3 条逐项过</div></div>
+  <div class="meta-row"><div class="meta-k">状态·负责人</div><div class="meta-v"><span class="tag t-gray">⏸ 等闸门</span> 负责人：yaoxu（Condition/UIType 挂钩已留 TODO）</div></div>
+</div>
+
+<h2>UI 类结构（P2 → X3 映射）</h2>
+<table>
+<tr><th>项</th><th>P2 现状</th><th>X3 做法</th></tr>
+<tr><td>代码规模</td><td>14 个 UI 文件 + 2 个逻辑 Module ≈ 6613 行（<code>P2/GameScript/Activity/NewDigKey/</code>）</td><td><b>不能照抄</b>——按 X3 UIBase/Auto_ 范式重写，P2 代码当逻辑参考；入口类=<code>UIActvDigKeys</code>（服务端 Condition 的 UIType 暂返 null，TODO 已指到位）</td></tr>
+<tr><td>主界面加载</td><td>内嵌 Module 无自己 Canvas，宿主=UIActivityStandaloneProxy 横屏 Canvas，模块 prefab 按活动 UI 模块 ID 命名加载</td><td>按 X3 活动界面骨架挂载（竖屏）；退出=关活动窗口</td></tr>
+<tr><td>棋盘构建</td><td>Max 8×8 预置 Cell 按名取；小棋盘 rowOffset 居中；非 Block 格才绑 Click；建完 ForceRebuild + 等帧算阴影</td><td>沿用该模式（实际 rows/cols 由服务端 MapInfo 下发）</td></tr>
+<tr><td>命名坑</td><td class="r">主界面节点 BtnShop 其实是挂机入口（历史遗留）；ItemEffect 编号与方向相反（Item1=纵向火箭/Item2=横向火箭）</td><td>X3 侧重命名避免踩坑；特效映射照拆解 C-3 表抄</td></tr>
+</table>
+
+<h2>消息接线</h2>
+<table>
+<tr><th>消息</th><th>用途</th><th>要点</th></tr>
+<tr><td><code>NewDigKeysDigReq/Ack</code></td><td>核心挖掘</td><td>一个 Ack 全带：digPoints（连锁挖开格）+ toolTriggers（工具触发）+ reveals（宝藏揭示）+ stageComplete；客户端按 C-3 串行 5 段动画消费</td></tr>
+<tr><td><code>DigKeysHangUpStartReq/Ack</code></td><td>进界面自动开挂机</td><td>玩家无感，FormatImplement 检测未挂机即发</td></tr>
+<tr><td><code>DigKeysGetHangUpRewardReq/Ack</code></td><td>挂机领奖</td><td>回包复用结算弹窗 ShowRewards</td></tr>
+<tr><td>活动数据 Data</td><td>登录/重连下发</td><td>ActivityItem proto tag=<b>73</b>；含整盘摆放（明文，D4 已拍）+ 挂机时间戳 + 图鉴收集态</td></tr>
+</table>
+<p class="dim">另有探测器 UseMapToken、商店走 X3 活动兑换通道——待交互定稿后与力总对齐（页签④ 收尾清单 #2）。</p>
+
+<h2>状态机对接（实现基线）</h2>
+<ul>
+<li>四状态机全文=页签③ + demo 视图① 右侧面板（可交互对照）。<b>②格子 ④弹窗导航 = 客户端实现范围</b>；①主循环 ③挂机的协议侧已由服务端闭环。</li>
+<li>🔴 铁规则三条照抄：结算 defer 切关（关闭路径唯一=点空白，别加 X）；WaitAck/AnimSeq 输入锁、异常必回 Idle；挂机满红点靠服务端推送不靠客户端自算。</li>
+<li>动画时长常量表（拆解 §C-3）：StageCompletePopupDelay=0.4 / TreasureFlyDelay=1.0 / FlyDur=0.5 / EndScale=0.45 / ToolDefault=1.5 / FxRadar=3.0 / 同格节流=0.2——竖屏飞行轨迹改纵向后时长重调（demo 实测 0.75s 带回勾）。</li>
+<li>HUD 入口按 X3 惯例重做（显隐判定链参考推币机先例），红点三条件照抄 P2：没进过活动 / 锄头够一挖 / 挂机满。引导只一步：Level==1 光圈锁第一个可挖格，挖一格重算跳下一格。</li>
+</ul>
+
+<h2>🔴 坑位三条（开工必读）</h2>
+<table>
+<tr><th>#</th><th>坑</th><th>对策</th></tr>
+<tr><td>1</td><td>根节点五件套必补</td><td>新拼 prefab 按 X3 活动界面骨架补齐根节点标配组件</td></tr>
+<tr><td>2</td><td>特效按字符串名动态加载，guid 扫描漏</td><td>按 11 特效名 + 15 Wwise event 清单人肉核对（页签⑦）</td></tr>
+<tr><td>3</td><td>嵌套 prefab 实例内部文本/按钮不被外层接管 → 占位数字上屏/点击被吞</td><td>搬完 YAML 搜占位值，嵌套实例逐个过</td></tr>
+</table>
+</div>
+
+<!-- ═══════════════ ⑦ 美术资源搬运 ═══════════════ -->
+<div class="pane" id="p7">
+<div class="meta">
+  <div class="meta-row"><div class="meta-k">本步输入</div><div class="meta-v">页签② 资产账 + demo 美需页（方向对齐稿）+ X3 周年主题方向（待策划）</div></div>
+  <div class="meta-row"><div class="meta-k">产出</div><div class="meta-v">P2 图素/特效/动画/音效整包搬进 X3 + DK 注册 + 美需执行单（新做/改造件出图）</div></div>
+  <div class="meta-row"><div class="meta-k">验收标准</div><div class="meta-v">四类物料账实相符、guid 盲区三清单逐项人肉核对勾销、DK 占位全部换真图、透明资源差分法验真</div></div>
+  <div class="meta-row"><div class="meta-k">状态·负责人</div><div class="meta-v"><span class="tag t-gray">🔲 未开工（美需方向稿已出=demo ④美需页；等 demo 验收后立执行单）</span> 负责人：linkang（美需）→ 美术 / yaoxu（进包+注册）</div></div>
+</div>
+
+<h2>搬运物料四类（账目）</h2>
+<table>
+<tr><th>物料</th><th>量</th><th>源位置（P2）</th><th>注意</th></tr>
+<tr><td>Sprite 图素</td><td><b>83 张 ≈ 28MB</b></td><td><code>Res/UI/Sprite/Activity/Digkey2/</code>（含 <code>NewDigkeyIcon/</code> 40 张按 DK 号命名宝物图）</td><td>P2→X3 无同源 guid，全部走搬运 + DK 重注册</td></tr>
+<tr><td>特效</td><td><b>54 件 · 9.3MB</b></td><td><code>Res/Effect/Prefab/UINew/21201620/</code></td><td>🔴 11 个按字符串名动态加载 + 3 个外部公共特效要一起搬</td></tr>
+<tr><td>动画</td><td><b>13 个 · ~300KB</b></td><td><code>Res/UI/Animation/Activity/DigKey/</code>（新旧混放）</td><td>只挑 New 前缀 + 3 个共用；⚠️ Assets 根目录有游离同名 controller 别搬错。clip 名清单：DigKeyUseItemMainDispel / DigKeyGateRightKeyDisappear / DigKeyGateLeftSlotShow / DigKeyGateRestore / DigKeyGatePass / DigLevelSwitch 等</td></tr>
+<tr><td>音效</td><td><b>15 个 Wwise event</b></td><td>字符串引用（含 BGM Play_music_alien_exploration / 结算 Play_ui_collect_congrats / 开门 scifi_door 等）</td><td>X3 音频管线不同：音频侧对接重配，或 v1 先静音</td></tr>
+</table>
+
+<h2>🔴 guid 扫描盲区三清单（搬运时人肉核对，勾销制）</h2>
+<table>
+<tr><th>盲区</th><th>量</th><th>为什么扫不到</th><th>核对法</th></tr>
+<tr><td>特效字符串名</td><td>11 个（+3 外部公共特效）</td><td>代码按字符串名动态加载，不走 guid 引用</td><td>对照说明书 §3 清单逐个在 X3 侧实例化验证</td></tr>
+<tr><td>Wwise event</td><td>15 个</td><td>音效走字符串 event 名</td><td>对照清单交音频侧；v1 静音方案也要留清单防丢</td></tr>
+<tr><td>按 DK 号命名 PNG</td><td>40 张</td><td>文件名=DK 数字号，图集/代码动态拼名</td><td>DK 注册表与文件清单一对一核对</td></tr>
+</table>
+
+<h2>DK 注册</h2>
+<ul>
+<li>40 张宝物图 + 界面图素按 X3 DK 体系重注册；配置侧挂点：主表 <code>DK_Icon</code> + Treasure 表 <code>DK</code> 列（现全部用扭蛋机图标 <code>DK_img_Activity_circus_gacha_icon</code> 占位，页签⑧）。</li>
+<li>Layer 19 残留全刷 0（坑位#1）；透明资源交付必须差分法验真透明（memory <code>feedback_transparent_asset_diff_check</code>）。</li>
+</ul>
+
+<h2>美需（方向对齐稿已出）</h2>
+<div class="card">
+<p>👉 <b>美需卡片页 = <a href="03_横转竖demo/挖孔竖屏交互demo_v02_单文件版.html">demo v0.4</a> 打开后切「④ 美需（给美术）」页签</b>：19 个资源项卡片（资源项 + 主题一句话 + 来源[P2直搬/改造/新做] + 状态[待评审/已有]，参考图内嵌卡片）。</p>
+<p>汇总：新做 3（竖构图主背景 / 惊喜关预告横幅 / 活动入口 icon）· 改造 3（活动标题横幅 / 宝物插槽横条件 / Wwise 音效重配）· P2 直搬 7。<br>
+立单规范：给 PM 的美需清单只写资源项+主题+状态，<b>制作规格后置</b>（方向定案后另出美术执行单）；参考图必须内嵌卡片不图文分离。</p>
+</div>
+</div>
+
+<!-- ═══════════════ ⑧ 配置数值 ═══════════════ -->
+<div class="pane" id="p8">
+<div class="meta">
+  <div class="meta-row"><div class="meta-k">本步输入</div><div class="meta-v">号位双分支实查（dev + dev_festival）· 扭蛋机 gdconfig 底座模板（<code>2d3a46bf</code>）· P2 策划案活文档 GSheet <code>1wRnbpUytVpOUYjireni0FKrryefgYUrl26rphBIEeLw</code>（<b>关卡数值设计 90 版本=最新</b>；离线快照=<a href="01_参考资料_P2策划案摘录/">01_参考资料</a>）</div></div>
+  <div class="meta-row"><div class="meta-k">产出</div><div class="meta-v">gdconfig <b>dev_digkeys</b> commit <code>d48b0269</code>（11 文件 +210 行：4 新表+4 def+ActvType85 注册+Item/Reward 占位）<span class="g">已 push 远端，Jenkins 导表 SUCCESS（#2453）</span>→ <b>下一步=按真表补列（见下「🔴 真配置机制修正」）</b> + 填真值数值 + i18n ≈128 key 全量</div></div>
+  <div class="meta-row"><div class="meta-k">验收标准</div><div class="meta-v">ExportTable.py <b>exit 0</b>（底座已独立复验过）；号位无双分支撞号；数值收工派 task-checker（type=numerical）防投爆；i18n 无裸 key、繁中 zh 列必填</div></div>
+  <div class="meta-row"><div class="meta-k">状态·负责人</div><div class="meta-v"><span class="tag t-green">✅ 底座完（未 push）</span><span class="tag t-gray">🔲 数值/i18n 未开工（可与 GUI 并行）</span> 负责人：linkang（worktree <code>C:\X3\gdconfig-digkeys</code>）</div></div>
+</div>
+
+<h2>号位裁决（双分支实查过，直接用别重查）</h2>
+<table>
+<tr><th>项</th><th>值</th><th>依据</th></tr>
+<tr><td>ActvType</td><td><b>85</b>（TRIGGER_TYPE_DIG_KEYS）</td><td>C# 双分支最大 83；84 被限时抢购在 gdconfig def 占号（撤除案只清代码没清 def）</td></tr>
+<tr><td>ActivityItem proto tag</td><td><b>73</b></td><td>dev 用到 71 / festival 到 70 / 72 被 feature/flash-sale-redo 在飞占用；34 是历史删字段空洞不复用</td></tr>
+<tr><td>ErrCode 段</td><td><b>1017240-1017249</b></td><td>dev 最大 1017227；1017222-39 留给限时抢购重编号缓冲</td></tr>
+<tr><td>msgid</td><td>7 条（Dig / HangUpStart / HangUpReward 三对 + Data），BKDR-131 已算好</td><td>算法用扭蛋机现值校验通过</td></tr>
+<tr><td>活动归类</td><td>单服个人玩法 → SingleServerActivityTypes（C#+导表工具<b>双侧登记</b>），不进 CenterHosted</td><td>照扭蛋机</td></tr>
+</table>
+<p class="dim">顺手发现的两个既有问题（非本案范围）：①flash-sale-redo ErrCode 与 dev Memory 段全段撞号；②gdconfig 双分支残留 3 个孤儿 def（actvflashsale*_def.py）。</p>
+
+<h2>🔴🔴 真配置机制修正（08-04 拿到 P2 真配置表后，推翻早前从生成代码扫的结论）</h2>
+<div class="card">
+<p>真源=<b><code>C:\Users\linkang\gdconfig\fo\config\</code></b>（P2 配置仓，本机就有）：<code>event_hole_digging_new.tsv</code> 119 行 + <code>event_hole_type.tsv</code> 46 行。<br>
+全文解剖=<a href="02_P2原流程分析/P2真配置机制解剖_修正版.md"><b>P2真配置机制解剖_修正版.md</b></a>（<b>配置/服务端权威源，优先于代码版拆解与说明书</b>）。</p>
+</div>
+<table>
+<tr><th>#</th><th>修正</th><th>P2 真机制</th><th>影响</th></tr>
+<tr><td>①</td><td class="r"><b>工具触发 ≠ 埋在格子里</b></td><td><code>tool_trigger</code> 列：<code>{dig_min:3, dig_max:5, trigger_count:1, tool_pool:[{tool_type,weight}]}</code> = 本关第 3~5 次挖掘之间触发 1 次工具，类型按权重随机，<b>与挖到哪格无关</b>；一关可配多窗口</td><td>服务端"treasureId 负值埋格"要改（页签④ TODO #0）；配置 <code>ToolIDs</code> 列作废换 JSON</td></tr>
+<tr><td>②</td><td class="r"><b>奖励关 ≠ 每 5 关固定</b></td><td><code>reward_window</code> 列（<code>window_end_level</code> + 候选权重）定义窗口内随机插入；奖励关是<b>独立负数 level 行</b>（lv −1~−15 / id 21830101-115 / 固定 3×3 / pool 带 weight 随机出 1 个）</td><td>玩家侧=不知哪关撞到，期待感更强；X3 要支持负数 level + 窗口配置</td></tr>
+<tr><td>③</td><td class="g"><b>tip_num = 福利关高亮格数量</b>（我们 TipNum 语义正确）</td><td>实测 91 关 0 个 / 14 关 1 个 / 13 关 2 个 / 1 关 4 个 → 客户端 TipsPoints → 格子 Special 态</td><td>服务端摆放时从宝石占格挑 tip_num 个；⚠️ 与「第 1 关引导光圈」是<b>两个机制</b>别混</td></tr>
+</table>
+<h3>Level 编号约定（P2 四类关卡混塞一张表，靠 level 值区分）</h3>
+<table>
+<tr><th>level 值</th><th>type</th><th>数量</th><th>含义</th><th>特征</th></tr>
+<tr><td>1 ~ 100</td><td>1</td><td>100</td><td><b>主线关</b></td><td>棋盘 3×3→8×8 渐进；cost 0→12（前 2 关免费）；49 关带 blocked_cells</td></tr>
+<tr><td><b>−1 ~ −15</b></td><td>2</td><td>15</td><td><b>奖励关/福利关</b></td><td>固定 3×3，cost 1→10，pool 带 weight</td></tr>
+<tr><td><b>9995 ~ 9998</b></td><td>3</td><td>4</td><td><b>特殊地形关</b>（实机整关换肤）</td><td>固定 3×3，cost=10</td></tr>
+<tr><td><b>9999</b></td><td>4</td><td>1</td><td><b>循环关</b>（100 关后无限循环）</td><td>8×8，tip_num=1</td></tr>
+</table>
+<p class="dim">⇒ X3 的 <code>Level</code> 列<b>必须允许负数与哨兵值</b>（导表 def 别加 <code>Level&gt;0</code> 校验）；建议改「<code>LevelKind</code> 语义枚举 + 序号」两列，避免负数/9995 魔法值。</p>
+<h3>🔧 X3 表补列清单（下一步执行，负责人 linkang）</h3>
+<table>
+<tr><th>缺口</th><th>现状</th><th>要改成</th></tr>
+<tr><td>工具触发</td><td class="r"><code>ToolIDs</code> 竖线 id（机制错）</td><td><code>ToolTrigger</code> JSON string 列，或拆子表 <code>ActvDigKeysToolWindow</code></td></tr>
+<tr><td>宝物池结构</td><td><code>TreasureIDs</code> 竖线 id</td><td>需带 <b>num / allow_rotate / weight</b> → JSON 列或子表</td></tr>
+<tr><td>不可挖格</td><td>无</td><td>补 <code>BlockedCells</code>（JSON Row/Col，<b>49 关在用</b>，做非矩形棋盘）</td></tr>
+<tr><td>奖励关窗口</td><td>无</td><td>补 <code>RewardWindow</code></td></tr>
+<tr><td>免费奖励 / 预览开关</td><td>无</td><td>补 <code>FreeRewardID</code> / <code>RewardShow</code>（P2 还有 reward_s6 服差异化列，X3 可不要但需知情）</td></tr>
+<tr><td>关卡种类</td><td>LevelType 0/1 两值</td><td><code>LevelKind</code> 四值（主线/奖励/特殊地形/循环）</td></tr>
+</table>
+<p class="dim">⚠️ 竖线/JSON string 列无法挂 tsv row3 跨表引用 → 依赖校验要在 def 里逐 id <code>register_depend_config_and_val</code>（BD_ 前缀坑见 <code>reference_x3_new_actvtype_playbook</code>）。</p>
+
+<h2>4 张新表 Schema（<span class="r">下方为补列前的现状</span>，2026-08-04 从 <code>C:\X3\gdconfig-digkeys\tsv\ActvDigKeys__*.tsv</code> 实读反填）</h2>
+
+<h3>1. ActvDigKeys（主表，1 行 8501）</h3>
+<table>
+<tr><th>字段</th><th>类型</th><th>说明</th></tr>
+<tr><td>ID</td><td>int</td><td>活动内容配置 ID（ActvOnline.ContentID 引用）＝8501</td></tr>
+<tr><td>CostItem</td><td>int → Item</td><td>挖掘每格消耗的锄头道具＝5304002（新建占位）</td></tr>
+<tr><td>HangUpMaxMinutes</td><td>int</td><td>挂机收益结算上限（分钟），超出不计；占位 720</td></tr>
+<tr><td>HangUpCoinItem</td><td>int → Item</td><td>挂机产出金币道具＝5304003（新建占位）</td></tr>
+<tr><td>DK_Icon</td><td>string</td><td>现值 <code>DK_img_Activity_circus_gacha_icon</code>（扭蛋机图标占位），真值待美术（页签⑦）</td></tr>
+</table>
+
+<h3>2. ActvDigKeysLevel（关卡表，占位 3 行 850101-）</h3>
+<table>
+<tr><th>字段</th><th>类型</th><th>说明</th></tr>
+<tr><td>ID / Level</td><td>int</td><td>全表唯一编号 / 关卡序号从 1 起，通关进 Level+1（def 校验关卡连续）</td></tr>
+<tr><td>LevelType</td><td>int</td><td>现值 0=普通关 1=惊喜关 → <span class="r">要扩成四类（主线/奖励关/特殊地形/循环），见上「Level 编号约定」</span></td></tr>
+<tr><td>CostNum</td><td>int</td><td>挖掘每格消耗锄头数量</td></tr>
+<tr><td>BoardRows / BoardCols</td><td>int</td><td>棋盘行/列数</td></tr>
+<tr><td>TreasureIDs</td><td>string</td><td>该关宝石清单，竖线分隔，引用 ActvDigKeysTreasure.ID（def 登记依赖）</td></tr>
+<tr><td class="r">ToolIDs</td><td>string</td><td><span class="r"><b>待作废</b></span>：工具格效果清单，竖线分隔可空（1=整行 2=整列 3=3×3）→ 换 <code>ToolTrigger</code> 窗口结构（修正①）</td></tr>
+<tr><td>RewardID</td><td>int → Reward</td><td>通关奖励（占位 85011-）</td></tr>
+<tr><td>TipNum</td><td>int</td><td>提示次数</td></tr>
+</table>
+
+<h3>3. ActvDigKeysTreasure（宝石形状表，占位 3 行 850201-）</h3>
+<table>
+<tr><th>字段</th><th>类型</th><th>说明</th></tr>
+<tr><td>ID</td><td>int</td><td>被 Level.TreasureIDs 引用</td></tr>
+<tr><td>Shape</td><td>string</td><td>相对左上角偏移集合，格式 <code>r,c;r,c</code>，def 校验<b>归一化</b>（min 行=0 且 min 列=0）</td></tr>
+<tr><td>DK / TxtName</td><td>string</td><td>宝石图 DK（扭蛋机图标占位）/ 名字文本 key（<code>TXT_ActvDigKeys_Treasure_*</code>）</td></tr>
+<tr><td>MinLevel</td><td>int</td><td>最低出现关卡</td></tr>
+</table>
+
+<h3>4. ActvDigKeysHangUp（挂机段表，占位 2 行 850301-）</h3>
+<table>
+<tr><th>字段</th><th>类型</th><th>说明</th></tr>
+<tr><td>ID / LevelMin / LevelMax</td><td>int</td><td>关卡段（含两端，def 校验段不重叠）；占位=L1-2 段 + L3-999 段</td></tr>
+<tr><td>CoinPerMin</td><td>int</td><td>每分钟产出金币数量（道具=主表 HangUpCoinItem）</td></tr>
+<tr><td>ToolItemIDs / ToolWeights / ToolNums</td><td>string</td><td>挂机随机工具池 / 权重 / 数量，竖线分隔三列等长（def 登记 Item 依赖）</td></tr>
+</table>
+<p class="dim">配套占位：Item 5304002（锄头）/ 5304003（金币）· Reward 16010001-03 占位奖池 · def 三类校验=关卡连续 / 形状归一化 / 挂机段不重叠。<b>ActvOnline 主行未加</b>（评审后配排期，MailID 必填铁律）。</p>
+
+<h2>数值方法（已定）</h2>
+<ul>
+<li><b>抄 P2「关卡数值设计 90 版本」页签结构</b>，再按相对守恒缩放法调整：照抄 P2 投放结构 <b>× k（k=目标ROI ÷ ROI_P2）</b>；X3 ROI 口径 1USD=500钻、正常带 17-19x（memory <code>reference_x3_roi_valuation</code>）。</li>
+<li>P2 现行 87 版锚点：总期望成本 <b>$3063.65</b>（主线 $3024.65 + 宝藏关 $39）。</li>
+<li>棋盘节奏（P2 90 版）：3×3（L1-19 学习期）→ 4×4（L20-29）→ 5×5（L30-44/82-100/循环）→ 6×6（L45-55）→ 7×7（L56-71 高消耗段）→ 终段小棋盘回落。</li>
+<li>15 种宝石（1×1 至 3×3，40 表实例）按段位阶梯投放；内容量按「第一期」口径起步（7 种宝石/55 关/4 道具），结构支持扩到现行版（D2 已拍）。</li>
+<li>挂机产出表（关卡段→金币/分钟 + 权重工具池）结构已落 ActvDigKeysHangUp，填真值即可。</li>
+<li>数值收工必派 task-checker（type=numerical）独立复查防投爆。</li>
+</ul>
+
+<h2>i18n（≈128 key × 16 语，含 5 个 Text_ErrCode）</h2>
+<table>
+<tr><th>类别</th><th>内容</th><th>注意</th></tr>
+<tr><td>界面文案</td><td>主界面/弹窗族/规则页 ≈ 上百条（图鉴占 80 条）</td><td>X3 走 TXT_ 体系重录，P2 译文只当参考</td></tr>
+<tr><td>配置引用 key</td><td>Item 名（锄头/金币）· Treasure TxtName（<code>TXT_ActvDigKeys_Treasure_*</code>）</td><td>表里已占 key 位（上方 schema）</td></tr>
+<tr><td><b>Text_ErrCode</b></td><td><b>5 个</b>（ErrCode 段 1017240-49 内已用的 5 个）</td><td>🔴 不配 = toast 弹裸 key（坑位#6）</td></tr>
+<tr><td>语言覆盖</td><td>完整 16 语走 x3-translation-automatic 管线</td><td>🔴 至少 cn+en+zh 三列——繁中不填客户端全空白（坑位#4）</td></tr>
+</table>
+</div>
+
+<!-- ═══════════════ ⑨ 联调测试 ═══════════════ -->
+<div class="pane" id="p9">
+<div class="meta">
+  <div class="meta-row"><div class="meta-k">本步输入</div><div class="meta-v">页签④ 服务端收尾完成 + 页签⑤⑥ 实机 demo + 页签⑧ 真值数值；测试环境走 test-env-prepare-x3（kadmin/GM/Mongo 全链路）</div></div>
+  <div class="meta-row"><div class="meta-k">产出</div><div class="meta-v">端到端验证报告（挖掘主循环/挂机/商店/图鉴/礼包全通）+ ActvOnline 排期行上线</div></div>
+  <div class="meta-row"><div class="meta-k">验收标准</div><div class="meta-v">demo 断言基线（项数以页签③ Demo 表的现行版本为准）在实机逐条对照全过；边界推送三件套全验；GM 造数覆盖各关卡段</div></div>
+  <div class="meta-row"><div class="meta-k">状态·负责人</div><div class="meta-v"><span class="tag t-gray">🔲 未开工</span> 负责人：linkang（编排）+ 力总（服务端）+ yaoxu（客户端）</div></div>
+</div>
+
+<h2>测试三板斧</h2>
+<table>
+<tr><th>板块</th><th>内容</th><th>方法</th></tr>
+<tr><td><b>GM 造数</b></td><td>造各关卡段状态（跨挂机段边界）、锄头/金币余额、图鉴收集态、惊喜关进入态</td><td>本地服 telnet GM（~/x3_gm.py）/ beta 服 gm_combo.py；改服务器时间验挂机累计与封顶</td></tr>
+<tr><td><b>边界推送验证</b></td><td>🔴 三件套逐一验：①挂机满在线主动推 Ntf（界面自己变）②登录 OnPostInit 填充（打开界面不空）③重连覆盖（断线回来数据不旧）</td><td>限时抢购实弹坑复验口径；在线挂到满点观察 + 杀进程重登对照</td></tr>
+<tr><td><b>断言口径</b></td><td>demo 断言当交互验收基线（项数见页签③ Demo 表）：主循环守卫（锁输入/节流/锄头校验）、工具连锁结果、宝石揭示判定、结算 defer 切关、状态机高亮联动、惊喜关链、图鉴/商店/挂机弹窗行为、挂机封顶等——实机行为逐条对 demo</td><td>HTML demo headless 跑一遍留预期值 → 实机人工/日志比对</td></tr>
+</table>
+
+<h2>补充检查项</h2>
+<ul>
+<li>结算弹窗关闭路径唯一性（别加右上 X 漏切关回调）——状态机④铁规则</li>
+<li>异常路径回 Idle 解锁（Ack 失败/超时 2s 不卡盘）——状态机①铁规则</li>
+<li>Editor 验证前完全重启（坑位#8：不重启读旧导入资产=假失败）</li>
+<li>ErrCode toast 全部出文案不出裸 key（页签⑧ 5 个 Text_ErrCode）</li>
+<li>ActvOnline 排期行：MailID 必填铁律；上线前跑活动配置 ID 引用检查（activity-check）</li>
+<li>合并注意：feature 分支的基线修复 commit（船只4.0 Parameter2）若上游已修则丢弃（坑位#10）</li>
+</ul>
+</div>
+
+<script>
+(function(){
+  var btns = document.querySelectorAll('.tab-btn');
+  var panes = document.querySelectorAll('.pane');
+  function show(id){
+    btns.forEach(function(b){ b.classList.toggle('active', b.dataset.p===id); });
+    panes.forEach(function(p){ p.classList.toggle('show', p.id===id); });
+    try { history.replaceState(null,'','#'+id); } catch(e){}
+    window.scrollTo(0,0);
+  }
+  btns.forEach(function(b){ b.addEventListener('click', function(){ show(b.dataset.p); }); });
+  var h = location.hash.replace('#','');
+  if (h && document.getElementById(h)) show(h);
+})();
+</script>
+
+</body>
+</html>

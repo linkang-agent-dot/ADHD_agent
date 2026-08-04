@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>挖孔搬运 · 分工流程一图流</title>
+<style>
+  :root { --bg:#12141a; --panel:#1a1e27; --line:#2c3340; --txt:#d8dee9; --dim:#8b95a7; --acc:#e8b04b; --green:#7bc275; --yellow:#e5c07b; --blue:#61afef; --red:#e06c75; --gray:#4b5363; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--txt); font:14px/1.6 "Microsoft YaHei",system-ui,sans-serif; padding:24px 3vw 40px; }
+  h1 { font-size:20px; color:var(--acc); margin-bottom:2px; }
+  .sub { color:var(--dim); font-size:12px; margin-bottom:16px; }
+  .legend { display:flex; gap:16px; margin-bottom:14px; font-size:12px; color:var(--dim); flex-wrap:wrap; }
+  .legend b { display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:4px; vertical-align:-1px; }
+  .lane { display:grid; grid-template-columns:110px repeat(5, 1fr); gap:8px; margin-bottom:10px; align-items:stretch; }
+  .who { background:var(--panel); border:1px solid var(--line); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:bold; color:var(--acc); font-size:15px; text-align:center; padding:6px; }
+  .step { border-radius:8px; padding:8px 10px; font-size:12.5px; position:relative; border:1px solid var(--line); background:var(--panel); }
+  .step .t { font-weight:bold; font-size:13px; display:block; margin-bottom:2px; }
+  .step .d { color:var(--dim); font-size:11.5px; line-height:1.45; display:block; }
+  .s-done { border-left:4px solid var(--green); } .s-done .t::before { content:"✅ "; }
+  .s-doing { border-left:4px solid var(--yellow); background:#242618; } .s-doing .t::before { content:"🔨 "; }
+  .s-wait { border-left:4px solid var(--blue); opacity:.92; }
+  .s-idle { border-left:4px solid var(--gray); opacity:.65; }
+  .arrow { text-align:center; color:var(--acc); font-size:13px; line-height:1.3; padding:2px 0 8px; }
+  .gate { background:#3a2a2e; border:1.5px dashed var(--red); border-radius:8px; padding:8px 10px; font-size:12.5px; }
+  .gate .t { color:var(--red); font-weight:bold; display:block; }
+  .mile { display:grid; grid-template-columns:110px repeat(5, 1fr); gap:8px; margin-top:14px; }
+  .mile .who { color:var(--blue); }
+  .m { background:#1d2735; border:1.5px solid var(--blue); border-radius:8px; padding:8px 10px; font-size:12.5px; text-align:center; }
+  .m b { color:var(--blue); display:block; font-size:13px; }
+  .empty { border:none; background:none; }
+  .note { margin-top:16px; background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:10px 14px; font-size:12.5px; color:var(--dim); }
+  .note b { color:var(--red); }
+</style>
+</head>
+<body>
+
+<h1>🕳️ 挖孔搬运 · 分工流程一图流</h1>
+<div class="sub">2026-08-04 · 目标 9 月周年 W2 上线 · 横向=时间先后，纵向=三条人力线 + 里程碑带</div>
+
+<div class="legend">
+  <span><b style="background:var(--green)"></b>已完成</span>
+  <span><b style="background:var(--yellow)"></b>进行中</span>
+  <span><b style="background:var(--blue)"></b>待启动</span>
+  <span><b style="background:var(--gray)"></b>暂不占人</span>
+  <span><b style="background:var(--red)"></b>🔴 闸门（唯一串行依赖）</span>
+</div>
+
+<!-- linkang -->
+<div class="lane">
+  <div class="who">linkang<br><span style="font-size:11px;color:var(--dim)">交互/配置/数值</span></div>
+  <div class="step s-done"><span class="t">评审定案</span><span class="d">图鉴搬·范围全量·v86 工具形态·分工敲定</span></div>
+  <div class="step s-doing"><span class="t">横转竖交互设计</span><span class="d">载体=HTML demo（现行 v0.4 实机对齐版，四页签含美需）：主界面重排 / 插槽上下 A/B / 图鉴同屏方案；待拍插槽位置+功能栏排序+图鉴方案</span></div>
+  <div class="gate"><span class="t">🔴 闸门：主界面屏交互定稿</span>定一屏放行一屏（主界面先行=80% 体验），弹窗逐屏跟进，图鉴最后</div>
+  <div class="step s-wait"><span class="t">弹窗族交互稿</span><span class="d">挂机→商店→结算→探测器→图鉴（逐屏放行 yaoxu）</span></div>
+  <div class="step s-wait"><span class="t">数值+文案+美需（并行）</span><span class="d">关卡/挂机/商店 ROI 抄 P2 90 版缩放 · i18n ≈128 key · 竖构图背景美需单</span></div>
+</div>
+
+<!-- yaoxu -->
+<div class="lane">
+  <div class="who">yaoxu<br><span style="font-size:11px;color:var(--dim)">GUI 表现</span></div>
+  <div class="step s-idle"><span class="t">待命</span><span class="d">可提前熟悉两份底稿：P2 布局拆解（节点级坐标）+ 图素清单</span></div>
+  <div class="step s-idle"><span class="t">（等闸门）</span><span class="d">——</span></div>
+  <div class="step s-wait"><span class="t">主界面 GUI</span><span class="d">竖屏 prefab 拼装 + P2 图素进包 + DK 注册 + 棋盘/格子状态</span></div>
+  <div class="step s-wait"><span class="t">弹窗族 + 表现流程</span><span class="d">挖掘动画序列/宝物飞行(改纵向)/结算演出/HUD 入口红点；坑位：根五件套/字符串特效/嵌套占位</span></div>
+  <div class="step s-wait"><span class="t">Unity 实机 demo → 联调</span><span class="d">= 汇报节点2；随后与服务端联调提测</span></div>
+</div>
+
+<!-- 服务端 -->
+<div class="lane">
+  <div class="who">服务端<br><span style="font-size:11px;color:var(--dim)">力总现有工作优先<br>挖孔按需排入</span></div>
+  <div class="step s-done"><span class="t">核心逻辑骨架</span><span class="d">挖掘/挂机/4 张表已落 feature 分支，编译+导表双验证 0 错</span></div>
+  <div class="step s-idle"><span class="t">（不占人）</span><span class="d">交互定稿前无服务端活</span></div>
+  <div class="step s-wait"><span class="t">按交互定稿补齐</span><span class="d"><b style="color:var(--red)">🔴 头号=工具触发机制改造</b>（P2 真机制=挖掘次数窗口概率投放，非埋格；项目文档④TODO#0）+ 保底/礼包商店接线/图鉴收集字段（交互若改数据流<b style="color:var(--red)">趁早提</b>）</span></div>
+  <div class="step s-wait"><span class="t">边界推送+登录填充</span><span class="d">挂机满主动推 Ntf / OnPostInit+重连（限时抢购实弹坑）</span></div>
+  <div class="step s-wait"><span class="t">联调 + ActvOnline 排期行</span><span class="d">GM 造数 · i18n 错误码 5 条 · 上线配置</span></div>
+</div>
+
+<!-- 里程碑 -->
+<div class="mile">
+  <div class="who">📍 里程碑</div>
+  <div class="m"><b>M1 ✅</b>服务端核心跑通<br><span style="color:var(--dim)">已达成 08-03</span></div>
+  <div class="m"><b>节点1：HTML demo</b>横转竖交互 demo<br><span style="color:var(--dim)">≈本周 · 汇报用</span></div>
+  <div class="m"><b>M2</b>交互全屏定稿<br>GUI 全面开工</div>
+  <div class="m"><b>节点2：Unity 实机 demo</b>端到端可玩<br><span style="color:var(--dim)">汇报用</span></div>
+  <div class="m"><b>M3</b>联调完成→提测<br>→ 9 月周年 W2 上线</div>
+</div>
+
+<div class="note">
+<b>三条把控规则</b>：① 闸门拆小——交互稿定一屏放行一屏，不整体等；② 图鉴最大最重，放最后设计，不卡核心动线；③ 交互设计若要改玩法数据流（如动画分步揭示），在 GUI 开工前提出，改协议成本此刻最低。<br>
+资源包：服务端分支 dev_digkeys（已 push）· 底稿两份在 02_P2原流程分析 · 图素清单在说明书 §3 · 案子总览 = 挖孔搬运_案子总览.html
+</div>
+
+</body>
+</html>

@@ -54,7 +54,8 @@ NAME_CN = {'Cristiano Ronaldo': 'C罗', 'L. Messi': '梅西', 'T. Henry': '亨�
  'Iniesta': '伊涅斯塔', 'T. Kroos': '克罗斯', 'B. Schweinsteiger': '小猪', 'Rivaldo': '里瓦尔多', 'J. Zanetti': '萨内蒂',
  'M. Essien': '埃辛', 'Casemiro': '卡塞米罗', 'E. Petit': '佩蒂特', 'Cesc Fàbregas': '法布雷加斯', 'Fernando Hierro': '耶罗',
  'R. Ferdinand': '费迪南德', 'F. Cannavaro': '卡纳瓦罗', 'A. Nesta': '内斯塔', 'N. Vidić': '维迪奇', 'Marquinhos': '马尔基尼奥斯',
- 'G. Chiellini': '基耶利尼', 'Guti': '古蒂'}
+ 'G. Chiellini': '基耶利尼', 'Guti': '古蒂', 'L. Matthäus': '马特乌斯', 'A. Pirlo': '皮尔洛',
+ 'O. Solskjaer': '索尔斯克亚'}
 def tier(v):
     # 07-28: 165档3分->4分
     return 4 if v >= 165 else 2 if v >= 155 else 1 if v >= 145 else 0

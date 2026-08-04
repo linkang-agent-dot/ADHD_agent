@@ -1,0 +1,35 @@
+
+完整路径: UIActvCircusGacha/Cont/Top
+子树:
+  Top
+    - ContTop
+      - LayoutTitle
+        - BtnInfo
+          - SpriteInfo
+          - hitzone
+        - Txt   [文案: LC_EVENT_new_strong_consume_gacha_task_title]
+      - Icon
+      - Num
+    - Bk
+    - Layout
+      - ContDes
+        - Bk
+        - Txt   [文案: LC_EVENT_new_strong_consume_task_desc]
+        - LayoutTime
+          - Icon
+          - Num   [文案: 5]
+          - Txt   [文案: LC_EVENT_new_strong_consume_gacha_get]
+
+完整路径: UIActvCircusGacha/Top
+子树:
+  Top
+    - ActvDesc   [文案: Text_LingShuang_Pack_Desc]
+    - Time
+      - Icon
+      - bg
+      - txt   [文案: Text_HeroUpRoute_Time]
+    - GiftEntry
+      - icon
+    - txt_title   [文案: Text_HeroUpRoute_Title]
+    - btn_info
+      - bg

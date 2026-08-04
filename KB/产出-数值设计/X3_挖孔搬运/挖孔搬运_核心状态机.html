@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>挖孔 · 核心状态机</title>
+<style>
+  :root { --bg:#12141a; --panel:#1a1e27; --line:#2c3340; --txt:#d8dee9; --dim:#8b95a7; --acc:#e8b04b; --green:#7bc275; --blue:#61afef; --red:#e06c75; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--txt); font:14px/1.7 "Microsoft YaHei",system-ui,sans-serif; padding:26px 4vw 60px; }
+  h1 { font-size:20px; color:var(--acc); margin-bottom:2px; }
+  .sub { color:var(--dim); font-size:12px; margin-bottom:20px; }
+  h2 { font-size:17px; color:var(--acc); margin:30px 0 8px; padding-left:9px; border-left:4px solid var(--acc); }
+  .flow { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:12px 16px; font-size:13px; margin:8px 0 12px; line-height:2.1; overflow-x:auto; white-space:nowrap; }
+  .st { display:inline-block; background:#243447; border:1px solid var(--blue); border-radius:6px; padding:1px 10px; color:#8cc4f5; font-weight:bold; }
+  .st.g { background:#2a3f2c; border-color:var(--green); color:#9fe0a0; }
+  .st.r { background:#3a2a2e; border-color:var(--red); color:#ff9aa2; }
+  .ev { color:var(--acc); font-size:12px; padding:0 4px; }
+  table { border-collapse:collapse; width:100%; margin:6px 0 14px; font-size:12.5px; }
+  th { background:#20252f; color:var(--acc); text-align:left; padding:6px 9px; border:1px solid var(--line); white-space:nowrap; }
+  td { padding:5px 9px; border:1px solid var(--line); vertical-align:top; }
+  tr:nth-child(even) td { background:var(--panel); }
+  code { background:#262c38; padding:0 5px; border-radius:4px; font:12px Consolas,monospace; color:#a8d0f0; }
+  .dim { color:var(--dim); font-size:12px; }
+</style>
+</head>
+<body>
+
+<h1>🕳️ 挖孔 · 核心状态机（依据 P2 线上代码行为，X3 照此实现）</h1>
+<div class="sub">2026-08-04 · 来源=02_P2原流程分析\拆解代码版 §C · 四个状态机：主循环 / 格子 / 挂机 / 弹窗导航</div>
+
+<h2>① 主循环状态机（界面级，核心）</h2>
+<div class="flow">
+<span class="st g">Idle 待机</span> <span class="ev">─点格子(过守卫)→</span> <span class="st">WaitAck 锁输入</span> <span class="ev">─DigAck→</span> <span class="st">AnimSeq 动画序列</span> <span class="ev">─未过关→</span> <span class="st g">Idle</span>&nbsp;&nbsp;<span class="ev">─stageComplete→</span> <span class="st">GateAnim 过关演出</span> <span class="ev">→</span> <span class="st r">Settlement 结算(挂起切关)</span> <span class="ev">─点空白关闭→</span> <span class="st">LevelSwitch 切关动画</span> <span class="ev">→</span> <span class="st g">Idle(新关)</span>
+</div>
+<table>
+<tr><th>当前态</th><th>触发</th><th>守卫（全过才转移）</th><th>动作</th><th>次态</th></tr>
+<tr><td>Idle</td><td>点格子(row,col)</td><td>非动画中 ∧ 界内 ∧ 非Block ∧ 未挖 ∧ 同格节流200ms ∧ 锄头足够</td><td><code>m_IsDigging=true</code>，发 <code>DoDigKeysDigReq</code></td><td>WaitAck</td></tr>
+<tr><td>Idle</td><td>点格子·锄头不足</td><td>Level≠1</td><td>弹礼包（Level==1 只飘字，新手不打扰）</td><td>Idle</td></tr>
+<tr><td>WaitAck</td><td>Ack errCode≠0 / 超时2s</td><td>—</td><td>toast + 解锁</td><td>Idle</td></tr>
+<tr><td>WaitAck</td><td>DigAck 成功</td><td>—</td><td>串行动画：①挖开 ②消散∥工具连锁 ③揭示+飞插槽(Delay1.0/Dur0.5)</td><td>AnimSeq</td></tr>
+<tr><td>AnimSeq</td><td>播完 ∧ !stageComplete</td><td>—</td><td>解锁 + 重拉数据刷新（引导光圈重算）</td><td>Idle</td></tr>
+<tr><td>AnimSeq</td><td>播完 ∧ stageComplete</td><td>—</td><td>0.4s 后过关演出(GatePass/Restore)</td><td>GateAnim</td></tr>
+<tr><td>GateAnim</td><td>演出完</td><td>—</td><td>弹结算（宝物卡+成色+破纪录标），<b>切关挂起 defer</b></td><td>Settlement</td></tr>
+<tr><td>Settlement</td><td>点空白关闭</td><td>—</td><td>OnHidden 回调→执行挂起的切关：隐旧盘→切关动画→InitGrid→Refresh</td><td>LevelSwitch→Idle</td></tr>
+</table>
+<p class="dim">🔴 两条铁规则：结算弹窗打开期间<b>禁止切关</b>（defer 机制，玩家要看到过场）；WaitAck/AnimSeq 全程输入锁 <code>m_IsDigging</code>，任何异常路径必须回 Idle 解锁（否则卡死盘面）。</p>
+<p class="dim" style="color:#e06c75">🔴🔴 <b>08-04 机制修正（工具触发）</b>：上表「工具连锁」的触发源<b>不是格子内容</b>——P2 真配置是按<b>挖掘次数窗口概率投放</b>（<code>tool_trigger</code>：dig_min~dig_max 之间触发 N 次，类型按权重随机），与挖到哪格无关。服务端现实现（工具埋进 boardMap 取 treasureId 负值）待改造，详见项目文档⑧修正① / ④TODO #0。</p>
+
+<h2>② 格子状态机（单元格级）</h2>
+<div class="flow">
+<span class="st">Hidden·Normal</span> / <span class="st">Hidden·Special(提示)</span> / <span class="st">Hidden·Premium(惊喜关)</span> / <span class="st r">Block(不可点·无监听)</span> <span class="ev">─被挖开(直接点或工具连锁)→</span> <span class="st g">Dug(底图隐藏·清监听)</span> <span class="ev">─所在宝石集齐→</span> <span class="st g">Revealed(footprint 整体消隐)</span>
+</div>
+<table>
+<tr><th>态</th><th>视觉</th><th>进入条件</th></tr>
+<tr><td>Hidden·Normal</td><td>普通底图</td><td>默认</td></tr>
+<tr><td>Hidden·Special</td><td>提示高亮底</td><td>该格在 TipsPoints，<b>两个来源</b>：① 探测器标记 ② <b>福利关自带高亮</b>（数量=关卡表 <code>tip_num</code>，高亮格下必有宝物）。⚠️ 与「第 1 关引导光圈」是两个机制（那个走 UIGuideMask 遮罩），别混</td></tr>
+<tr><td>Hidden·Premium</td><td>惊喜关底图</td><td>惊喜关整盘生效</td></tr>
+<tr><td>Block</td><td>禁用底图</td><td>BlockPoints；<b>不绑点击监听</b></td></tr>
+<tr><td>Dug</td><td>底图 SetActive(false)</td><td>DugPoints 或 Ack.digPoints；同时清监听（防末帧回弹兜底再关一次）</td></tr>
+<tr><td>Revealed</td><td>宝石图标消失动画→飞插槽</td><td>Ack.reveals：宝石全部占格(footprint+rotate)已挖</td></tr>
+</table>
+
+<h2>③ 挂机状态机</h2>
+<div class="flow">
+<span class="st">NotStarted</span> <span class="ev">─进界面自动发 HangUpStartReq→</span> <span class="st g">Accruing 累计中</span> <span class="ev">─elapsed≥上限→</span> <span class="st r">Full 已满(红点+tips)</span> <span class="ev">─领取 HangUpRewardReq→</span> <span class="st">Settle 发奖</span> <span class="ev">─hangUpTime 重计→</span> <span class="st g">Accruing</span>
+</div>
+<table>
+<tr><th>态</th><th>触发/tick</th><th>动作</th></tr>
+<tr><td>NotStarted</td><td>FormatImplement 检测未挂机</td><td>自动 <code>DigKeysHangUpStartReq</code>（玩家无感）</td></tr>
+<tr><td>Accruing</td><td>每秒 tick</td><td>进度环 <code>fill=elapsed/max</code>，文本 hh:mm:ss</td></tr>
+<tr><td>Full</td><td>elapsed≥HangUpMaxMinutes</td><td>入口红点亮 + 满提示；收益按 min(elapsed,max) 封顶</td></tr>
+<tr><td>Settle</td><td>领取成功 Ack</td><td>结算弹窗展示奖励（金币按关卡段×分钟 + 权重池道具）→ <code>hangUpTime=now</code> 回 Accruing</td></tr>
+</table>
+<p class="dim">🔴 服务端配套：挂机满这类<b>边界时刻必须服务端主动推送</b>（在线玩家界面不会自己变）+ 登录 OnPostInit 填充 + 重连覆盖——三处缺一个就是"看不到"。</p>
+
+<h2>④ 弹窗导航状态机（窗口栈）</h2>
+<div class="flow">
+<span class="st g">主界面</span> <span class="ev">→</span> <span class="st">结算(模态·关闭回调驱动切关)</span> ｜ <span class="ev">→</span> <span class="st">挂机弹窗</span> <span class="ev">→</span> <span class="st">商店(二层)</span> <span class="ev">→</span> <span class="st">数量选择(三层)</span> ｜ <span class="ev">→</span> <span class="st">图鉴(全屏·可复用为探测器选择器)</span> ｜ <span class="ev">→</span> <span class="st">探测器(选目标→二次确认→关窗→全屏扫描特效3s)</span> ｜ <span class="ev">→</span> <span class="st">规则 / 奖励预览 / 排行 / 礼包 / 储蓄罐</span>
+</div>
+<table>
+<tr><th>规则</th><th>说明</th></tr>
+<tr><td>结算弹窗是唯一带副作用关闭的窗</td><td>OnHidden 必须触发挂起的切关回调——关闭路径只有一条（点空白），别加右上 X 造成第二条路径漏回调</td></tr>
+<tr><td>商店入口在挂机弹窗内</td><td>P2 主界面节点名 BtnShop 其实是挂机入口（历史遗留），X3 重命名避免踩坑</td></tr>
+<tr><td>探测器确认前不扣道具</td><td>开面板不校验；点使用才校验（不足只飘字不关窗）；确认走二次弹窗</td></tr>
+<tr><td>图鉴双模式</td><td>普通浏览模式 / selectMapTarget=true 时点类型直接回调+关窗（当探测器选择器用）</td></tr>
+<tr><td>引导</td><td>仅 Level==1：光圈锁第一个可挖格，每挖一格重算跳下一格；Level≥2 自动消失。无正式引导流程依赖</td></tr>
+</table>
+
+<p class="dim" style="margin-top:18px">配套：服务端已实现 ①③ 对应的协议闭环（dev_digkeys）；②④ 是客户端实现范围（yaoxu）。数据字段对照见拆解文档 §C，动画时长常量表见 §C-3。</p>
+
+</body>
+</html>

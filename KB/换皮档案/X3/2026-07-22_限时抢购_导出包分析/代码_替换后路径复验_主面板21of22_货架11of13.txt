@@ -1,0 +1,55 @@
+=== 现在的 FlashSale.prefab ===
+GameObject 723 个，可寻址路径 722 条
+
+=== 主面板：老 Auto_ 的 22 条绝对路径 ===
+  命中 21 / 缺 1
+   OK   Content/Grid
+   OK   Countdown
+   OK   Countdown/Time/Layout1
+   OK   Countdown/Time/Layout2
+   OK   ChestProgress/Cont/Progress/Chest1
+   OK   ChestProgress/Cont/Progress/Chest2
+   OK   ChestProgress/Cont/Progress/Chest3
+   OK   SpecialBoxBtn
+   OK   BoxAnim
+   OK   BoxAnim2
+   OK   Pop
+   OK   Top/Time
+   OK   Countdown/Time/Layout1/Text1
+   OK   Countdown/Time/Layout1/Text2
+   OK   ChestProgress/Cont/ValLayout/Num
+   OK   ChestProgress/Cont/ValLayout/Name
+   OK   ChestProgress/Cont/Btn/TFWText
+   OK   Btn/Text
+   OK   Top/txt_title
+   OK   Top/ActvDesc
+   OK   Top/Time/txt
+   MISS Btn/RedPointTips
+        同名节点实际在: (全无此名节点)
+
+=== 货架格子：老 Auto_ 的 13 条相对路径（相对 Content/Grid/ItemN）===
+  以 Content/Grid/Item1 为基准：
+   OK    BoxNormal
+   OK    BoxSoldOut
+   OK    BoxClose
+   OK    Remain
+   OK    Limit
+   OK    BoxNormal/ContBubble
+   OK    BoxNormal/Card/Icon
+   OK    BoxNormal/Card/Value
+   OK    Limit/Text
+   OK    Remain/Num
+   OK    BoxNormal/Price/Layout/txt
+   MISS  BoxNormal/Price/txt_price
+   MISS  BoxNormal/Price/txt_get
+
+=== Item1..Item9 现在各有几个子节点（替换后的新结构）===
+  Item1: ['BoxClose', 'BoxNormal', 'BoxSoldOut', 'Limit', 'Remain']
+  Item2: ['BoxClose', 'BoxNormal', 'BoxSoldOut', 'Limit', 'Remain']
+  Item3: ['BoxClose', 'BoxNormal', 'BoxSoldOut', 'Limit', 'Remain']
+  Item4: ['BoxClose', 'BoxNormal', 'BoxSoldOut', 'Limit', 'Remain']
+  Item5: ['BoxClose', 'BoxNormal', 'BoxSoldOut', 'Limit', 'Remain']
+  Item6: ['BoxClose', 'BoxNormal', 'BoxSoldOut', 'Limit', 'Remain']
+  Item7: ['BoxClose', 'BoxNormal', 'BoxSoldOut', 'Limit', 'Remain']
+  Item8: ['BoxClose', 'BoxNormal', 'BoxSoldOut', 'Limit', 'Remain']
+  Item9: ['BoxClose', 'BoxNormal', 'BoxSoldOut', 'Limit', 'Remain']

@@ -260,6 +260,195 @@ def cs_index(root, with_packages=True):
     return idx
 
 
+def prefab_paths(path):
+    """解析 prefab，返回 {可寻址路径} —— 路径从根的子节点算起（与 X3 `FindByFullPath` 一致）"""
+    txt = io.open(path, encoding='utf-8', errors='ignore').read()
+    go_name, tr_of_go, tr_parent, tr_go = {}, {}, {}, {}
+    for b in txt.split('--- !u!'):
+        m = re.match(r'(\d+)\s+&(-?\d+)', b)
+        if not m:
+            continue
+        cls, fid = m.group(1), m.group(2)
+        if cls == '1':
+            nm = re.search(r'^  m_Name:\s*(.*)$', b, re.M)
+            go_name[fid] = nm.group(1).strip() if nm else ''
+            c = re.search(r'component:\s*\{fileID:\s*(-?\d+)\}', b)
+            if c:
+                tr_of_go[fid] = c.group(1)
+        elif cls in ('4', '224'):
+            g = re.search(r'm_GameObject:\s*\{fileID:\s*(-?\d+)\}', b)
+            f = re.search(r'm_Father:\s*\{fileID:\s*(-?\d+)\}', b)
+            if g:
+                tr_go[fid] = g.group(1)
+            if f:
+                tr_parent[fid] = f.group(1)
+    ch = {}
+    for t, p in tr_parent.items():
+        ch.setdefault(p, []).append(t)
+    out = set()
+
+    def walk(tr, prefix):
+        nm = go_name.get(tr_go.get(tr), '?')
+        p = nm if not prefix else prefix + '/' + nm
+        out.add(p)
+        for c in ch.get(tr, []):
+            walk(c, p)
+
+    for r in [t for t, p in tr_parent.items() if p == '0']:
+        for c in ch.get(r, []):
+            walk(c, '')
+    return out
+
+
+PATH_PATS = [re.compile(r'FindByFullPath\(\s*"([^"]+)"'),
+             re.compile(r'GetComponent<\s*[\w\.]+\s*>\(\s*"([^"]+)"'),
+             re.compile(r'FindComponent<\s*[\w\.]+\s*>\(\s*"([^"]+)"'),
+             # ⚠️ 2026-08-03 修：AddListener 的路径在**第 3 个参数**
+             #    （`UIHelper.AddListener(EventTriggerType.Click, GameObject, "路径", handler, out mBtn)`），
+             #    旧正则 `AddListener\([^,]+,\s*"` 只吃一段参数 ⇒ 这类路径全漏验 = 假绿灯。
+             #    改成允许跨若干个不含括号的参数再取第一个字符串字面量。
+             re.compile(r'AddListener\(\s*(?:[^,()"]+,\s*){0,4}"([^"]+)"')]
+
+
+def cmd_paths(args):
+    """把一批节点路径对真 prefab 逐条断言。
+    🔑 为什么必须有这个：X3 的 `Auto_UIXxx.cs` 只按**路径字符串**绑定（`FindByFullPath` / `GetComponent<T>(path)`），
+       且框架**静默容错**——路径写错返回 null 不报错 ⇒ 界面某块空白、Console 干净、肉眼查不出。
+       限时抢购老实现就是这么烂的：`Auto_` 手写猜路径、从没对真 prefab 验过。
+    ⇒ **手写或改 `Auto_` 后必跑本命令**；缺一条就当编译错处理。
+    --from-cs 可直接从 .cs 里正则抽路径（省得手抄）；--rel-base 用于校验"相对某节点"的子路径（如货架格子）。
+    """
+    p = args.prefab if os.path.isabs(args.prefab) else os.path.join(
+        args.x3, 'Assets', 'Res', 'UI', 'Prefab', 'Activity', args.prefab)
+    paths = prefab_paths(p)
+
+    want = []
+    if args.from_cs:
+        for f in args.from_cs:
+            raw = io.open(f, encoding='utf-8', errors='ignore').read()
+            # ⚠️ 2026-08-04 修：必须先剥掉 `//` 行注释再抽路径。
+            #    否则注释里写的示例/历史路径（如"上一版曾绑 FindByFullPath(\"X\")"）会被当成真绑定去断言 ⇒ 假报错。
+            #    只剥行注释足够（本类文件不用块注释放代码），且要避开字符串里的 "//"（http:// 之类）——
+            #    做法＝逐行找第一个不在引号内的 //。
+            lines = []
+            for ln in raw.split('\n'):
+                inq, cut = False, None
+                i = 0
+                while i < len(ln) - 1:
+                    c = ln[i]
+                    if c == '"' and (i == 0 or ln[i - 1] != '\\'):
+                        inq = not inq
+                    elif not inq and c == '/' and ln[i + 1] == '/':
+                        cut = i
+                        break
+                    i += 1
+                lines.append(ln if cut is None else ln[:cut])
+            s = '\n'.join(lines)
+            for pat in PATH_PATS:
+                for m in pat.finditer(s):
+                    if m.group(1) not in want:
+                        want.append(m.group(1))
+    if args.path:
+        want += [x for x in args.path if x not in want]
+    assert want, '没给路径（用 --path 或 --from-cs）'
+
+    L = []
+    def P(x=''):
+        L.append(x)
+    P('=== 节点路径断言：%s ===' % os.path.basename(p))
+    P('prefab 可寻址路径 %d 条；待验 %d 条%s'
+      % (len(paths), len(want), ('（相对基准 %s）' % args.rel_base) if args.rel_base else ''))
+    P()
+    miss = []
+    for w in want:
+        full = (args.rel_base + '/' + w) if args.rel_base else w
+        if full in paths:
+            P('  OK   %s' % w)
+        else:
+            miss.append(w)
+    for w in miss:
+        full = (args.rel_base + '/' + w) if args.rel_base else w
+        leaf = full.split('/')[-1]
+        cand = sorted(q for q in paths if q.split('/')[-1] == leaf)
+        P('  MISS %s' % w)
+        P('       同名节点实际在: %s' % (cand[:3] if cand else '(全 prefab 无此名节点)'))
+    P()
+    P('命中 %d / 缺 %d   %s' % (len(want) - len(miss), len(miss),
+                               '[OK] 全部可绑' if not miss else '[FAIL] 有路径绑不上，界面会空白且不报错'))
+    txt = '\n'.join(L)
+    if args.log:
+        io.open(args.log, 'w', encoding='utf-8').write(txt)
+        print('log -> %s' % args.log)
+    try:
+        print(txt)
+    except UnicodeEncodeError:
+        print('(控制台 GBK 编码不了，看 --log)')
+    return 1 if miss else 0
+
+
+def cmd_stripcomp(args):
+    """按 guid 精确摘除 prefab 上的一个组件（通常是 missing script）。
+    为什么需要：`PrefabUtility.SaveAsPrefabAsset` 拒绝保存层级含 missing script 的 prefab
+              ⇒ Tools▸X2 Migration 各替换工具会卡在存盘、**全部回滚**（官方文档 13_Migration_Tools §3.5）。
+    为什么不用 Unity 的 RemoveMonoBehavioursWithMissingScript：它无差别删 GameObject 上所有 missing，
+              会误伤「X3 有等价、只是 guid 链断了、该修不该删」的组件（文档 §4 反例 ExOutlineMix）。
+    ⚠️ 两处都要动：① MonoBehaviour 组件块整块 ② 宿主 GameObject 的 `- component: {fileID: X}` 引用条目
+       只删块不删引用 ⇒ Unity 报 "missing component reference"。
+    先判「搬还是删」：看它的**继承链在目标工程有没有**。实例 `LoopHorizontalScrollRectMulti : LoopScrollRectMulti`，
+       X3 的 com.tfw.loopscrollrect 版本连基类都没有 ⇒ 搬要连带 3+ 文件跨包版本、API 漂移风险大 ⇒ 删 + 用 X3 等价件。
+    """
+    p = args.prefab if os.path.isabs(args.prefab) else os.path.join(
+        args.x3, 'Assets', 'Res', 'UI', 'Prefab', 'Activity', args.prefab)
+    raw = io.open(p, encoding='utf-8', newline='').read()
+    nl = '\r\n' if '\r\n' in raw[:4000] else '\n'
+    L = raw.split(nl)
+
+    gi = [i for i, l in enumerate(L) if args.guid in l]
+    if len(gi) != 1:
+        print('guid 命中 %d 处（预期 1），停手' % len(gi))
+        return 1
+    g = gi[0]
+    start = next(i for i in range(g, -1, -1) if L[i].startswith('--- !u!'))
+    m = re.match(r'--- !u!(\d+) &(-?\d+)', L[start])
+    assert m, '块头解析失败: %r' % L[start]
+    cls, fid = m.group(1), m.group(2)
+    end = next((i for i in range(start + 1, len(L)) if L[i].startswith('--- !u!')), len(L))
+
+    host = None
+    for i in range(start, end):
+        mm = re.match(r'\s*m_GameObject:\s*\{fileID:\s*(-?\d+)\}', L[i])
+        if mm:
+            host = mm.group(1)
+            break
+    assert host, '找不到 m_GameObject（宿主）'
+    hstart = next(i for i, l in enumerate(L) if l.startswith('--- !u!1 &' + host))
+    hend = next((i for i in range(hstart + 1, len(L)) if L[i].startswith('--- !u!')), len(L))
+    ref = [i for i in range(hstart, hend)
+           if re.match(r'\s*- component:\s*\{fileID:\s*%s\}\s*$' % fid, L[i])]
+    if len(ref) != 1:
+        print('宿主里 component 引用命中 %d 处（预期 1），停手' % len(ref))
+        return 1
+
+    print('prefab   : %s' % os.path.relpath(p, args.x3))
+    print('组件块   : 行 %d-%d  (class %s, fileID %s)' % (start + 1, end, cls, fid))
+    print('宿主 GO  : 行 %d  fileID %s' % (hstart + 1, host))
+    print('引用条目 : 行 %d' % (ref[0] + 1))
+    print('将删     : %d 行(组件块) + 1 行(引用)' % (end - start))
+    if not args.go:
+        print('\nDRY RUN（加 --go 写盘）')
+        return 0
+
+    for i in sorted([ref[0]] + list(range(start, end)), reverse=True):
+        L.pop(i)
+    shutil.copy2(p, p + '.before_strip.bak')
+    io.open(p + '.tmp', 'w', encoding='utf-8', newline='').write(nl.join(L))
+    os.replace(p + '.tmp', p)
+    r2 = io.open(p, encoding='utf-8', newline='').read()
+    print('\n复验: guid 残留 %d / fileID 残留 %d / %d -> %d 字节（备份 .before_strip.bak）'
+          % (r2.count(args.guid), r2.count('fileID: ' + fid), len(raw), len(r2)))
+    return 0
+
+
 def cmd_dupes(args):
     """同名重复件收敛（＝换皮无忧 REPLACE 那一半）。
     guid 差集只挡同 guid 的；X3 里可能有「同名 + MD5 相同 + guid 不同」的原件，这类才归这里。
@@ -543,6 +732,22 @@ def main():
     b.set_defaults(func=cmd_plan)
 
     # 注意：help 文本禁用 emoji —— Windows 控制台是 GBK，argparse 打印 --help 会 UnicodeEncodeError
+    h = sub.add_parser('paths', help='[写完 Auto_ 必跑] 节点路径对真 prefab 逐条断言（框架静默容错，绑错不报错）')
+    h.add_argument('--x3', default=r'C:\x3-project\client')
+    h.add_argument('--prefab', required=True)
+    h.add_argument('--path', nargs='*', help='要验的路径（可多个）')
+    h.add_argument('--from-cs', nargs='*', dest='from_cs', help='从这些 .cs 里正则抽路径')
+    h.add_argument('--rel-base', dest='rel_base', help='相对基准节点（如 Content/Grid/Item1）')
+    h.add_argument('--log', default='paths.txt')
+    h.set_defaults(func=cmd_paths)
+
+    f = sub.add_parser('stripcomp', help='按 guid 精确摘除 prefab 上一个组件（清 missing script 阻断用）')
+    f.add_argument('--x3', default=r'C:\x3-project\client')
+    f.add_argument('--prefab', required=True, help='文件名（默认在 Res/UI/Prefab/Activity 下）或绝对路径')
+    f.add_argument('--guid', required=True, help='要摘除的组件脚本 guid')
+    f.add_argument('--go', action='store_true')
+    f.set_defaults(func=cmd_stripcomp)
+
     e = sub.add_parser('dupes', help='同名重复件收敛（guid 差集查不到这类；默认预览，--go 执行）')
     e.add_argument('--x3', default=r'C:\x3-project\client')
     e.add_argument('--actv', required=True)

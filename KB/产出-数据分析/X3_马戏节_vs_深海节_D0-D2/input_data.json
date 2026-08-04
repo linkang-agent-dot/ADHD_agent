@@ -1,0 +1,61 @@
+{
+  "generated_at": "2026-08-03T19:55:00+08:00",
+  "source": {
+    "platform": "Datain",
+    "game_code": "1090",
+    "game": "X3",
+    "algorithm_id": "user_id",
+    "server_dimension": {
+      "id": "62623e30aaba015c204eb5f1",
+      "name": "角色登录服务器ID （可范围筛选）"
+    },
+    "indicators": {
+      "revenue": {"id": "60d412c3e862647e69cfe707", "name": "付费额"},
+      "daily_unique_payers": {"id": "66a1e5b21213c94d214e8820", "name": "去重付费用户数"},
+      "dau": {"id": "612c7942b27d3b153da7e954", "name": "平均 DAU"}
+    }
+  },
+  "server_scope": {
+    "name": "深海节 SRV59 共同服段",
+    "servers": [1170,1270,1310,1350,1390,1400,1420,1440,1460,1510,1530,1540,1550,1560,1570,1580,1590,1600,1610,1620,1630,1640,1650,1660,1670,1680,1690,1700,1710,1720,1730,1740,1750,1760,1770,1780,1790,1800,1810,1820,1830,1840,1850,1860,1870,1880,1890,1900,1910,1920,1930,1940,1950,1960,1970,1980,1990,2000,2010]
+  },
+  "periods": {
+    "deep_sea": {
+      "launch": [
+        {"relative_day":"D0","date":"2026-07-03","revenue":23504.769859552383,"daily_unique_payers":536,"dau":6828},
+        {"relative_day":"D1","date":"2026-07-04","revenue":24526.619891822338,"daily_unique_payers":508,"dau":6619},
+        {"relative_day":"D2","date":"2026-07-05","revenue":18280.70995360613,"daily_unique_payers":495,"dau":6505}
+      ],
+      "baseline": [
+        {"relative_day":"D-3","date":"2026-06-30","revenue":19941.089944779873,"daily_unique_payers":513,"dau":7208},
+        {"relative_day":"D-2","date":"2026-07-01","revenue":16096.719875693321,"daily_unique_payers":429,"dau":6923},
+        {"relative_day":"D-1","date":"2026-07-02","revenue":15883.389960229397,"daily_unique_payers":425,"dau":6893}
+      ]
+    },
+    "circus": {
+      "launch": [
+        {"relative_day":"D0","date":"2026-07-31","revenue":15762.169979333878,"daily_unique_payers":398,"dau":5089},
+        {"relative_day":"D1","date":"2026-08-01","revenue":17504.89995855093,"daily_unique_payers":413,"dau":5217},
+        {"relative_day":"D2","date":"2026-08-02","revenue":13158.689892292023,"daily_unique_payers":360,"dau":5087}
+      ],
+      "baseline": [
+        {"relative_day":"D-3","date":"2026-07-28","revenue":12810.759954810143,"daily_unique_payers":366,"dau":5399},
+        {"relative_day":"D-2","date":"2026-07-29","revenue":10218.09998446703,"daily_unique_payers":314,"dau":5311},
+        {"relative_day":"D-1","date":"2026-07-30","revenue":10568.429949045181,"daily_unique_payers":293,"dau":5220}
+      ]
+    }
+  },
+  "aggregates": {
+    "deep_sea_launch": {"revenue":66312.09970498085,"payer_days":1539,"dau_days":19952,"pay_rate":0.07713512429831595,"arppu":43.08778408380822,"arpu":3.323581581043547},
+    "deep_sea_baseline": {"revenue":51921.19978070259,"payer_days":1367,"dau_days":21024,"pay_rate":0.06502092846270928,"arppu":37.981857922971905,"arpu":2.469615666890344},
+    "circus_launch": {"revenue":46425.75983017683,"payer_days":1171,"dau_days":15393,"pay_rate":0.0760735399207432,"arppu":39.64625092243965,"arpu":3.0160306522560143},
+    "circus_baseline": {"revenue":33597.28988832235,"payer_days":973,"dau_days":15930,"pay_rate":0.0610797237915882,"arppu":34.52958878553171,"arpu":2.109057745657398}
+  },
+  "whole_game_observation_not_primary": {
+    "circus_d0_d2_revenue": 152144.49940502644,
+    "deep_sea_d0_d2_revenue": 135551.43937832117,
+    "change": 0.12241156808011765,
+    "warning": "全游戏范围混入非共同服与非节日收入，不用于节日强弱结论。"
+  }
+}
+

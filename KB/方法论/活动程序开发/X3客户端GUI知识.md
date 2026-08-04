@@ -90,6 +90,55 @@ tags: [kind/方法论, domain/前端, proj/X3, year/2026-06]
 - **手写 prefab YAML 加节点组方法论**（本案 235 行纯增、12 项结构审查全绿）：① 模板块**从同 prefab 内抄**（GameObject/RectTransform/CanvasRenderer/TFWImage/TFWText 整块，字段集不脑补，TFWText 连字体材质抄现成倒计时文本）；② 新 fileID 用统一前缀大数（如 88990011223344550xx），写前 grep 全文件零碰撞；③ **父子接线三处缺一不可**：新 GO 的 m_Component 表 / 新 RT 的 m_Father+m_Children / **父节点 RT 的 m_Children 追加**；④ sprite 引用 `{fileID: 21300000, guid: <png.meta的guid>, type: 3}`（单 sprite 默认 21300000，meta textureType:8 确认）；⑤ 新块全放文件末尾（YAML 文档顺序无关），保持原行尾（X3 prefab 纯 LF）；⑥ 自检 = `python C:\ADHD_agent\scripts\unity_prefab_tree.py <prefab> 5` 看到新节点 + fileID 引用闭合 + `git diff --numstat` 纯增。改前备份；**Unity 开着该 prefab 时禁改文本**（内存版覆盖磁盘，见 §4 血泪）。
 - **审查清单可复用**（给审查 agent 的 8 条：组件表回指/父子闭环/fileID唯一/sprite guid对meta/m_Script guid同文件一致/classID匹配(1=GO,224=RT,222=CR,114=Mono)/行尾BOM文件尾/惯例字段齐）——本案审查 prompt 见 memory `project_x3_piggybank_hud` 关联会话。
 
+## 控件模式：活动界面标准顶部信息区 `Top`（X2→X3 搬运必补，2026-08-03 从 UIActvCircusGacha 实扒）
+
+X2 的活动 prefab **没有**这一组（X2 顶部骨架样式不对，playbook 明写「别复用，会被打回」）。每次 X2→X3 搬活动界面都要从 X3 现成活动整棵移植。
+
+**标准结构**（源 = `Res/UI/Prefab/Activity/UIActvCircusGacha.prefab` 的 **根级** `Top`）：
+
+```
+Top
+ ├─ txt_title      [TFWText]  活动标题
+ ├─ ActvDesc       [TFWText]  活动一句话说明
+ ├─ Time                      倒计时组
+ │   ├─ Icon
+ │   ├─ bg
+ │   └─ txt        [TFWText]  「距结束 HH:mm:ss」
+ ├─ btn_info                  右上角「i」规则说明入口
+ │   └─ bg
+ └─ GiftEntry                 礼包入口（**按活动需要，多数可删**）
+     └─ icon
+```
+
+**🪤 同一个 prefab 里常有两个叫 `Top` 的节点，别拿错**：
+- **根级 `<Root>/Top`** ＝ 上面这个标准顶部信息区 ← **要搬的是这个**
+- **`<Root>/Cont/Top`** ＝ 该活动自己的业务条（扭蛋机那个是任务标题+进度 `ContTop/LayoutTitle/BtnInfo` + `Layout/ContDes`），跟标准区无关，搬了是错的
+
+**为什么必须补**（缺一条验收就挂）：① X3 全节日活动样式统一，缺了会被打回 ② `btn_info` 是玩法规则入口，玩家看不到规则 ③ 活动窗口几十天，倒计时是刚需。
+
+**🔑 与代码的关系**：X3 各活动的 `Auto_UIXxx.cs` 就是照这套标准路径预绑的（`Top/txt_title`、`Top/ActvDesc`、`Top/Time`、`Top/Time/txt`、`Top/btn_info`）。**实证反面教材**：限时抢购老实现的 `Auto_` 绑了这 5 条，但 prefab 里从没加过 `Top` 组 —— 框架 `FindByFullPath` 返回 null 静默容错，界面顶部一片空白且**零报错**。所以「`Auto_` 里有 `Top/*` 绑定 + prefab 里没有 `Top` 节点」是个高频组合坑，搬运时先 grep 一遍节点名。
+
+**搬法**：Unity 里直接复制粘贴节点（自动处理 fileID 重映射 + 嵌套 prefab 引用），**优于手写 YAML**。文案 key 不用管，业务代码用 `LocalizationMgr` 覆盖成本活动自己的。
+
+## 控件模式：X2 搬来的"商品格"里常有**多个互斥态按钮**，只绑一个会让某些档位点了走错逻辑（2026-08-03 限时抢购实证）
+
+X2 的货架/商品格 prefab，`BoxNormal` 下常同时挂**三个按钮**，靠**默认 `m_IsActive` + 运行时互斥切换**表达不同购买态。实测限时抢购 `Item1/BoxNormal`：
+
+| 节点 | 默认 `m_IsActive` | 组件 | 用途 |
+|---|---|---|---|
+| `Price` | **1**（默认显） | TFWImage + **EventTriggerListener** | 软货币档（`Layout/{Bk,icon,txt}` = 图标+数量） |
+| `BtnBuy` | 0（默认隐） | TFWImage + **EventTriggerListener** | **IAP 直购档**（`txt_price` + `txt_get`） |
+| `BtnBuyCd` | 0（默认隐） | TFWImage + **EventTriggerListener** | CD/冷却态 |
+
+**三个都自带 `EventTriggerListener`** ⇒ 三个都要单独挂监听（嵌套钮自带 Button 会吞点击、不冒泡到父节点，这条另见本文「嵌套 prefab 实例」段）。
+
+**🔴 实证反面教材**：老实现只绑了 `Price` 一个，且把 `txt_price`/`txt_get` **猜**在 `BoxNormal/Price/` 下（真实位置是 `BoxNormal/BtnBuy/`）⇒ **IAP 档那几个包点下去走的是软货币逻辑** ⇒ 报「礼包不存在」。服务端数据本身是对的（8 个包里前 4 个 `giftId=0`＝软货币、后 4 个带 gift 实例＝IAP）。
+
+**搬运时的自查动作**：
+1. 把商品格容器（如 `BoxNormal`）**整棵子树 dump 出来**，别只看老代码绑了哪几个 —— 老代码可能本身就漏
+2. 逐个查 `m_IsActive` + 组件表：**带 `EventTriggerListener` 的都是可点钮，都要接**
+3. 对着**服务端下发的数据字段**（如 `giftId` 是否为 0）确认"哪个态显哪个钮"，别凭节点名猜
+
 ## 待补（这里随项目积累继续加控件模式）
 - 价格购买按钮 / 倒计时 / 道具格 等**业务级可复用组件**清单已在 memory `reference_x3_client_new_ui_workflow`。
 - 后续遇到新控件模式（弹窗 / 红点 / Tab 页签 / LoopScroll 大列表虚拟化 等）往本文「控件模式库」追加。
@@ -191,6 +240,52 @@ X3 的 UI 绑定是**全路径字符串**（`GameObject.FindByFullPath("Root/Ani
 节点叫 `BtnXxx` + `CmpData.Type=EventTriggerListener` → 自动产出 `protected GameObject mBtnXxx;` + `AddListener(..., OnBtnXxxTrigger, out mBtnXxx)`。
 **所以流程是：先在业务 .cs 里写好 `OnBtnXxxTrigger` handler → prefab 加名为 `BtnXxx` 的节点 → SaveData 追加条目 → 生成 → 自动接上。** 业务代码先行、生成器后补，中间态想编译过可以手补一行 `protected GameObject mBtnXxx;`（生成时会被覆盖，正常）。
 
+### 🔑 改完客户端 .cs 不用等用户点 Unity —— 自己验编译（2026-08-04 限时抢购案实操）
+
+改客户端代码后**别问用户"编译过没"**，两条路自己拿结果：
+
+**① 主动触发重编译并等结果**（不进 Play、不开第二个 Editor）：
+```bash
+cd /c/x3-project/client
+python "../.claude/skills/DebugUtils/scripts/client.py" editors     # 先确认桥连的是哪个工程（多开时必做）
+python "../.claude/skills/DebugUtils/scripts/client.py" recompile --timeout 300
+# 返回 {success, hasErrors, compilationTime, message}；hasErrors:false = 编译过
+```
+⚠️ hotfix 程序集重编译 ~120s，**会超单次前台超时 ⇒ 跑后台等通知**。
+
+**② 直接读 Unity 日志拿错误**（用户已经点过编译时最快）：
+```bash
+grep -aE "error CS[0-9]+" /c/Users/linkang/AppData/Local/Unity/Editor/Editor.log | tail -30 | sed 's/^.*Assets/Assets/' | sort -u
+```
+本案两次都是这么自己拿到错误的，全程没让用户贴过一行报错。
+
+**🪤 中间态的错误要能认出来**：重写一批文件时，改完 `Auto_` 但业务文件还是旧的 ⇒ 必然报一堆 `CS0103 名称不存在`（旧业务引用了改名/删掉的字段 + `Auto_` 引用了还没写的 handler）。**这是预期，不是写错了**——判据＝报错的符号是否正好落在"我改名/新增的那批"上。别看到红字就回滚。
+
+路由（出自 [[reference_x3_unity_mcp]]）：编辑器批处理→Unity CLI；场景/prefab 操作→CoplayDev Unity MCP；**编译验证/Play 运行时/截图→DebugUtils 桥**。
+
+### 🔑 AI 其实不需要那个「重新生成」按钮 —— 但必须换成路径断言（2026-08-03 限时抢购案实证）
+
+**实测生成物只按路径字符串绑定**，没有 fileID/GUID/InstanceID 之类手写复现不了的东西：
+```csharp
+mGoXxx      = GameObject.FindByFullPath("Content/Grid");
+mTFWTextXxx = GameObject.GetComponent<TFWText>("Top/txt_title");
+AddListener(..., OnBtnXxxTrigger, out mBtnXxx);
+```
+（`SaveData` 里的 `LocalID`＝RectTransform fileID **只在生成器内部**用于校验清单条目指向哪个节点，运行时不参与。）
+⇒ **AI 可以直接手写 `Auto_UIXxx.cs`**，功能等价。
+
+**⚠️ 但"手写"本身不是老实现翻车的原因，"路径是猜的且无任何校验"才是。** 框架**静默容错**：`FindByFullPath` 路径写错返回 null 不报错、`AddListener` 只打日志 ⇒ **界面某块空白 + Console 干净 + 肉眼查不出**。
+⇒ **手写/改完 `Auto_` 必跑路径断言**（已固化）：
+```
+python KB\方法论\活动程序开发\tools\x2x3_asset_port.py paths --prefab FlashSale.prefab --from-cs <Auto_.cs>
+python ...\x2x3_asset_port.py paths --prefab X.prefab --rel-base Content/Grid/Item1 --from-cs <子件Auto_.cs>
+```
+`--from-cs` 直接从 .cs 正则抽路径；`--rel-base` 验"相对某节点"的子路径（子件 `Auto_` 用 `mGo.FindByFullPath(相对路径)`）。缺一条当编译错处理，非零退出码。
+
+**代价：跳过生成器＝没有 `SaveData` 清单**（`Assets/Editor/UITools/SaveData/<UI>.asset`）。X3 全项目 1060 个 UI 都有清单，缺了这个 UI 就脱离标准维护流程——下次别人改 prefab 想跑生成器会发现生成不出来，只能手改 `Auto_`。**属交接债，可后置但要记账。**
+
+**🪤 纠正一处旧表述**：`[GameCommon.Identifier(N)]` **不一定是 `BKDR-131(类名)`**。实测 `BKDR-131("UIActvFlashSale")=588322711`（老代码用的正是这个，对得上），但 `UIActvLaborGacha` 实际用 `1732646954` 而 `BKDR-131` 算出 `2049456798` —— **不一致**。规则只是**全局唯一**（重复会在 `ScanUITypes` throw）。用 BKDR-131 生成只是个省事的取值法，**别当成必须**；取完 `grep -r "Identifier(N)"` 确认无碰撞即可。
+
 🪤**改 Unity YAML 的通用铁律**：必须先按 `^--- !u!\d+ &\d+` **切 doc**、再在单个 doc 内替换字段。用跨行正则 `[\s\S]*?` 从文件级抓字段会**跨过 doc 边界改到上游别的节点**（07-29 实测：改 BoxGroup 的 pivot 改到了一个无关 100×40 节点上）。
 
 ### 🪤 新加的 Editor 脚本菜单不出现 → 先查落点目录的 asmdef（2026-07-29 实测）
@@ -255,3 +350,83 @@ X3 的 UI 绑定是**全路径字符串**（`GameObject.FindByFullPath("Root/Ani
    ⚠️ 这条在 x3-project 上会撞 Bash 2min 超时，必须 `run_in_background`。本次 git 侧算 4385、磁盘侧 4075，两者吻合即可确认结论。
 
 **给用户的处置口径**：**让它导完、别中断、导入期间别再切分支或改文件**——中途打断会留半截 Library 缓存，下次可能触发全量重导，更久。若同时还有"要恢复被 reset 的 commit"这类需求，**别在导入期 reset 工作区**，改用 sparse worktree cherry-pick（见 memory `reference_x3_project_repo`），全程不碰工作区。
+
+---
+
+## 🪤 X3 界面"文字全空"头号陷阱：`TXT_` 前缀缺 key 会**静默返回空串**（2026-08-04 限时抢购实证）
+
+`LocalizationMgr.Get()` 的 miss 分支（`client/Assets/TFWCore/Localization/LocalizationMgr.cs:169-184`）**按 key 前缀分两种行为**：
+
+```csharp
+if (sCurLangDict.TryGetValue(key, out var value)) return value;
+else {
+    if (IsTxtPrefix(key)) {            // key 以 "TXT_" 开头
+        sCurLangDict.TryAdd(key, string.Empty);
+        return string.Empty;            // ← 静默空串，不报错、不返回 key
+    }
+    else return key;                    // ← 非 TXT_ 前缀才返回 key 原文
+}
+```
+
+**判读口诀**：
+- 界面上看到**裸 key**（`LC_xxx` / `lc_xxx`）＝ 非 `TXT_` 前缀 + key 没落地 → 一眼可见，好查。
+- 界面上看到**空白**＝ `TXT_` 前缀 + key 没落地 → **Console 全干净、肉眼查不出**，极易误判成"绑定错了/配置缺行/UI 坏了"。
+  `Format(key, args)` 同样中招（`string.Format("", args)` 还是空）。
+
+**⇒ 排查"界面某块没字"的正确第一步**：先把该处用的 key 逐个 `grep -F` 查 `tsv/i18n/Text__Text.tsv`（按 `|` 展开），**别先去怀疑节点绑定**。
+本次教训：我为此把 prefab 节点、client/server 配置 md5、`Pack` 行全查了一遍才想到查 i18n，顺序反了。
+
+## 🪤 X2 搬来的界面：道具图必须刷 `ItemMid`，写 `Card/Icon` 无效（2026-08-04 限时抢购实证）
+
+`Tools ▸ X2 Migration ▸ CommonItemShow → UIItemTemplate` 会把 X2 的 `CommonItemShow` 换成 **X3 通用道具组件**
+（嵌套 prefab `Assets/Res/UI/Prefab/Common/Item/ItemMid.prefab`，节点名 `ItemMid`，挂 `ItemUnitView`）。
+
+- **X2 原有的 `Card/Icon`、`Card/Value` 不会被删**，仍在 prefab 里，且 `Card` 是**激活态** ⇒ 看着像"图标槽"，
+  往它 `SetItemBasicInfo` 写图**不会显示**，屏幕上是 `ItemMid` 的未刷新默认态 ⇒ 现象＝**多格图标全一样**。
+- 正确写法（全仓一致，多处可抄）：
+  ```csharp
+  var itemView = UIHelper.GetComponent<ItemUnitView>(itemGo, "ItemMid");
+  itemView.Refresh(endowItemData);   // 另有 Refresh(int rewardID) / Refresh(long id, long amount)
+  ```
+  参照：`UiActivityCommonRules.cs:480` · `UISlgMeteorWarSettlement.cs:173` · `UIActivitySLGMeteorWar.IAP.cs:312` · `UICardBookRecycleMain.cs`
+- ⚠️ **`ItemMid` 有两种形态，别照抄错的那个**：
+  - **已转换**（限时抢购/CardBook/流星战）→ 挂 `ItemUnitView`，走 `Refresh(...)`
+  - **未转换**（`UIActvCircusGacha`）→ 还是 X2 `CommonItemShow` 结构，绑 `ItemMid/Scale/Icon` 裸 `TFWImage`
+  判别＝运行时打 `go.GetComponents<Component>()` 看有没有 `ItemUnitView`（prefab YAML 里查不到——它在嵌套 PrefabInstance 内）。
+- `ItemMid` 自带子节点：`Img_icon` / `Img_quality` / `txt_count` / `txt_limit` / `DescArea` / `EffectRoot` / `Received` …
+
+## X3 标准按钮件库（换掉 X2 按钮美术时直接取）
+
+`Assets/Res/UI/Prefab/Common/Button/`：
+
+| 件 | 内部节点 | 用途 |
+|---|---|---|
+| `button_Payment` | `txt_price` `txt_get` | **IAP 内购钮**（X2 限时抢购 `BtnBuy` 的子节点名恰好同名 ⇒ 换件后绑定路径不用改） |
+| `button_PaymentClaim` | — | 内购已购/领取态 |
+| `ButtonYellowBig` / `ButtonOrangeBig` / `ButtonGreenMid` / `ButtonBlueMid` … | `icon` `text` `Text` `icon_text` | 软货币/通用钮（`icon`=货币图标，`icon_text`=数值） |
+| `Button_Gray` / `ButtonGray2` | `text` `Text` `icon` `icon_text` | 置灰/不可点态 |
+
+⚠️ **X2 Migration 菜单只有 5 个工具，没有"按钮替换"**（只有 `AllianceFlag` / `CommonItemShow` / `Head1` 三个换件工具
++ 多语言键回填 + RTL 清理）⇒ 按钮换 X3 样式**必须手动换件**，换完记得重跑路径断言（子节点名变了）。
+
+## ✅ 改完客户端 .cs 自己全自动验到底（不用用户点 Unity·2026-08-04 打通）
+
+`python .claude/skills/DebugUtils/scripts/client.py`（注意路径在 **`.claude/skills/DebugUtils/scripts/`**，不是 `client/DebugUtils/`）：
+
+```bash
+client.py recompile --timeout 300      # 编译，返回 hasErrors
+client.py invoke --type "UnityEditor.EditorApplication, UnityEditor" --member ExitPlaymode  --kind call
+client.py invoke --type "UnityEditor.EditorApplication, UnityEditor" --member EnterPlaymode --kind call
+client.py eval --code "Logic.G.PlayerID"        # 轮询到非 0 ＝ 已自动登录（本地服约 40s）
+client.py invoke --type "UI.UIHelper" --member OpenActivityPanel --kind call --args <activityId> false
+grep -a "FSDIAG" ~/AppData/Local/Unity/Editor/Editor.log | tail -30
+```
+
+**本地工程会自动登录（PlayerID=28297）⇒ 编译→进游戏→开界面→读日志 全程可无人值守。**
+
+坑：
+- `eval` 是**迷你表达式解析器**：不支持赋值 `=`、不支持 `!=`。要改状态用 `invoke`。
+- `--type` **别带 `, Assembly-CSharp`**（解析不到），写 `"UI.UIHelper"` 即可；Unity 内置类型要带 `, UnityEditor`。
+- **`recompile` 不一定退出 Play**：可能在 Play 中热重载程序集 ⇒ `isPlaying=true` 但 `PlayerID=0`（登录态丢了、登录流程不会自己重跑），
+  且此时 `EnterPlaymode` 返回 `ok:false`。**要拿干净状态必须显式 `ExitPlaymode` → 等 `isPlaying=false` → `EnterPlaymode`**。
+- 诊断里用 `static` 计数器限流（防刷屏）时，**只有域重载才归零** ⇒ 想重复取样必须走上面的退出再进。

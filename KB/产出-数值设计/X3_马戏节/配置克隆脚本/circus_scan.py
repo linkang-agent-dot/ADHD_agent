@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 """马戏节收口扫描：c33族规/hub/FK/白名单/i18n残留（deepsea_scan 精简版，换节日可复用）"""
-import io, os, sys
+import argparse, io, os, sys
 sys.stdout.reconfigure(encoding="utf-8")
-BASE = r"C:\x3\gdconfig-circus\tsv"
+parser = argparse.ArgumentParser()
+parser.add_argument("--repo", default=r"C:\x3\gdconfig")
+args = parser.parse_args()
+BASE = os.path.join(os.path.abspath(args.repo), "tsv")
 
 def rd(p):
     return io.open(os.path.join(BASE, p), encoding="utf-8", newline="").read().split("\n")
@@ -10,11 +13,11 @@ def rd(p):
 issues = []
 # 1. 马戏 13 个 AO 的 c33/c38
 ao = {ln.split("\t")[0]: ln.split("\t") for ln in rd("ActvOnline__ActvOnline.tsv") if ln.split("\t")[0].isdigit()}
-CIRCUS = {"101026": ("1209|5302001", "142"), "100599": ("1209|1057", "142"), 
+CIRCUS = {"101026": ("1209", "144"), "100599": ("1209|1057", "144"), 
           "102251": ("1057|1202", "143"), "102803": ("1057|1202", "143"), "101829": ("1057|1202", "143"),
-          "102994": ("", "142"), "10071705": ("1209|1210", "142"), "106104": ("", "142"),
-          "101343": ("1209|1210", "142"), "101344": ("1057|1202", "143"), "105606": ("1209|1057", "142"),
-          "105014": ("1209|1210", "142")}
+          "102994": ("", "144"), "10071705": ("1209|1210", "144"), "106104": ("", "144"),
+          "101343": ("1209|1210", "144"), "101344": ("1057|1202", "143"), "105606": ("1209|1057", "144"),
+          "105014": ("1209|1210", "144"), "101830": ("1210", "144"), "101831": ("1210", "144")}
 for aid, (c33, hub) in CIRCUS.items():
     if aid not in ao:
         issues.append("AO缺失:" + aid)

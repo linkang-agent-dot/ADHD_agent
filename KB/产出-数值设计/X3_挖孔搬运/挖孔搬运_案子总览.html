@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>挖孔搬运 · 案子总览</title>
+<style>
+  :root { --bg:#12141a; --panel:#1a1e27; --panel2:#20252f; --line:#2c3340; --txt:#d8dee9; --dim:#8b95a7; --acc:#e8b04b; --red:#e06c75; --green:#7bc275; --blue:#61afef; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--txt); font:15px/1.75 "Microsoft YaHei",system-ui,sans-serif; padding:32px 5vw 80px; }
+  h1 { font-size:24px; color:var(--acc); margin-bottom:4px; }
+  .sub { color:var(--dim); font-size:13px; margin-bottom:24px; }
+  h2 { font-size:18px; color:var(--acc); margin:34px 0 12px; padding-left:10px; border-left:4px solid var(--acc); }
+  table { border-collapse:collapse; width:100%; margin:10px 0 16px; font-size:13.5px; }
+  th { background:var(--panel2); color:var(--acc); text-align:left; padding:7px 10px; border:1px solid var(--line); white-space:nowrap; }
+  td { padding:6px 10px; border:1px solid var(--line); vertical-align:top; }
+  tr:nth-child(even) td { background:var(--panel); }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:12px 0; }
+  .done { border-left:4px solid var(--green); }
+  code { background:#262c38; padding:1px 6px; border-radius:4px; font:13px Consolas,monospace; color:#a8d0f0; }
+  .g { color:var(--green); } .r { color:var(--red); } .b { color:var(--blue); } .dim { color:var(--dim); font-size:13px; }
+  ul { margin:6px 0 10px 22px; } li { margin:4px 0; }
+  a { color:var(--blue); }
+</style>
+</head>
+<body>
+
+<h1>🕳️ 挖孔搬运 · 案子总览（<span style="color:#e06c75">已降级为早期快照</span>）</h1>
+<div class="card" style="border-left:4px solid #e06c75">
+<b>⚠️ 本页已被 <a href="挖孔搬运_项目文档.html">挖孔搬运_项目文档.html</a>（9 页签=项目九步）取代，且其中配置结论已过期</b>（工具触发/奖励关插入/棋盘形状/摆放是否配表，均见项目文档⑧「真配置机制修正」）。保留仅为历史快照，勿据此干活。
+</div>
+<div class="sub">更新：2026-08-04 · P2 DigKey → X3 ActvType 85 · 目标：9 月周年 W2 主力模块</div>
+
+<div class="card done">
+<b>当前状态</b>：服务端核心逻辑已搬完（双验证通过，已 push）｜ HTML 竖屏交互 demo v0.1 制作中（汇报节点 1）｜ 下一步：demo 验收 → 定主界面交互稿 → 放行 yaoxu GUI。
+</div>
+
+<h2>1. 决策记录（全部已拍，按模块）</h2>
+<table>
+<tr><th>决策</th><th>结论</th><th>理由 / 被否方案</th></tr>
+<tr><td>搬运源</td><td><b>P2 新版 NewDigKey</b></td><td>X2 只立项没做（v81 晶核探秘停留在文档）；新版≈独立重写，旧版 DigKey 不搬</td></tr>
+<tr><td>图鉴</td><td><b>搬，范围全量</b></td><td>否掉"砍图鉴省 35-40%"方案；技术路线=不搬 P2 Decorate 系统，收集状态轻量自建进活动数据</td></tr>
+<tr><td>工具形态</td><td><b>v86 埋格即挖即触发</b></td><td>否掉 X2 v81 三段式（选中→范围框→确认）；与已搬服务端逻辑零返工</td></tr>
+<tr><td>棋盘摆放</td><td>明文下发（照 P2）</td><td>单人玩法、锄头照扣不亏钱</td></tr>
+<tr><td>分工</td><td>linkang 横转竖+交互设计先行 → yaoxu 接 GUI 表现；力总现有工作不新增</td><td>闸门=交互逻辑基本完成；先放行主界面屏（80% 体验），弹窗逐屏放行</td></tr>
+<tr><td>汇报节点</td><td><b>只两个、全是 demo</b>：①HTML 横转竖交互 demo ②Unity 实机 demo</td><td>不发文字简表；汇报=拿得出手的东西</td></tr>
+</table>
+
+<h2>2. P2 资产扫描结论</h2>
+<ul>
+<li>客户端代码 <b>6613 行</b>（14 UI + 2 逻辑 Module）——按 X3 范式重写，P2 代码当逻辑参考</li>
+<li>prefab 24 个（主界面 21201620 + 23 弹窗，13.5MB）；Sprite <b>83 张 28MB</b>（含 40 张宝物 DK 图）；特效 54 件；动画 13 个；i18n ≈128 key</li>
+<li>协议核心=<code>NewDigKeysDigReq/Ack</code>（连锁/工具/揭示一包全带）；挂机协议新旧共用</li>
+<li>🔴 <b>三个 guid 扫描盲区</b>：11 个特效字符串名（含 3 个外部公共特效）、15 个 Wwise 音效 event、40 张按 DK 号命名的 PNG——搬运时人肉核对清单（在说明书 §3）</li>
+<li><s>没有摆放数据</s>（<b>08-04 已修正</b>：真表含 treasure_pool/tool_trigger/blocked_cells/reward_window，宝物池与不可挖格都是配表的，详见项目文档⑧）——宝石摆放是服务端算法生成（X3 侧已实现）</li>
+</ul>
+
+<h2>3. 横转竖关键结论（交互设计输入，8 条）</h2>
+<table>
+<tr><th>#</th><th>结论</th><th>处置</th></tr>
+<tr><td>1</td><td>主界面=三栏：左插槽 485 宽｜中 800×800 棋盘（x+110 右偏给左栏让位）｜右双列按钮</td><td>竖屏：棋盘归零居中，左右栏改上/下</td></tr>
+<tr><td>2</td><td class="r">最硬依赖=右侧功能栏用比例锚（屏宽 80%-90%），竖屏塌缩到 108px 装不下</td><td>优先重排（demo 已改底部功能栏）</td></tr>
+<tr><td>3</td><td class="r">图鉴=翻书左列表右详情，竖屏体验损失最大的一屏</td><td>方案=上半屏详情卡+下半屏类型条，保同屏对照（demo 在验证）</td></tr>
+<tr><td>4</td><td>宝物飞行是横向轨迹（棋盘→左插槽 500-700px）</td><td>插槽挪位后改纵向，0.5s 时长要重调</td></tr>
+<tr><td>5</td><td class="r">背景图 2080×1610 横构图，竖屏露白</td><td>美术需求：换竖构图（进美需单）</td></tr>
+<tr><td>6</td><td>挂机领奖横幅/规则页按 1920 写死</td><td>必改</td></tr>
+<tr><td>7</td><td>商店横向滚动（卡 444×648）</td><td>改纵向滚动</td></tr>
+<tr><td>8</td><td class="g">免改清单：正方形棋盘天然适配；工具火箭/炸弹特效跟棋盘走；结算 2 列 Grid 竖屏反而更优；探测器滚动定位代码已兼容横竖</td><td>照搬</td></tr>
+</table>
+
+<h2>4. 老交互文档三发现</h2>
+<ul>
+<li><b>两代设计别混用</b>：v86「异星探索」=现行 P2（即挖即触发）；v81「晶核探秘」=X2 未落地稿（三段式道具、破译开门包装）。工具形态已拍 v86。</li>
+<li><b>值得吸收的两个细节</b>（已进 demo）：惊喜关卡链（前一关预告横幅→进入送道具→惊喜关不显等级）；挂机弹窗「欢迎回来」式样式。</li>
+<li><b>二期候选</b>：探测仪定向保底（选缺失图鉴宝物→下次特殊关必得，未拥有显问号）——图鉴×探测器联动钩子。</li>
+</ul>
+
+<h2>5. 服务端进度（已完成，双硬门独立复验）</h2>
+<ul>
+<li>x3-project <code>dev_digkeys</code>：22 文件 +3239 行（挖掘/挂机 handler + 协议 + 全套注册），<span class="g">三工程编译 0 error</span>；另含基线修复 commit（上游船只4.0 Parameter2 重复，合并时若上游已修则丢弃）</li>
+<li>gdconfig <code>dev_digkeys</code>：4 张新表 + def + ActvType 85 注册，<span class="g">ExportTable exit 0</span></li>
+<li>关键约定：工具格=treasureId 负值（-1 整行/-2 整列/-3=3×3）；发奖走 EndowReward(RewardID)</li>
+<li>遗留（=后续分工的活）：客户端全部、i18n（含 5 个 Text_ErrCode）、ActvOnline 排期行、DK 占位换真图、数值占位待策划</li>
+</ul>
+
+<h2>6. 产物目录</h2>
+<table>
+<tr><th>产物</th><th>状态</th></tr>
+<tr><td><a href="挖孔P2到X3搬运说明书_需求评审_20260804.html">评审说明书</a>（资产清单/依赖对照/坑位10条/分工）</td><td>FINAL（已按定案更新）</td></tr>
+<tr><td><a href="02_P2原流程分析/P2原界面布局与交互流拆解_代码版.md">P2 布局+交互流拆解（代码版）</a>——节点级布局数据/动画时序，yaoxu 拼界面对照用</td><td>FINAL</td></tr>
+<tr><td><a href="02_P2原流程分析/老交互文档摘录_图片版.md">老交互文档摘录（图片版）</a>——7 张图标注全文</td><td>FINAL</td></tr>
+<tr><td><a href="01_参考资料_P2策划案摘录/">01 策划案摘录</a>（规则/道具挂机/关卡90版/配置引用）</td><td>参考快照（权威=GSheet 活文档）</td></tr>
+<tr><td><a href="03_横转竖demo/挖孔竖屏交互demo_v01.html">竖屏交互 demo v0.1</a>（三视图：可玩原型/横屏对照/改动说明；插槽上下 A/B 开关）</td><td>v0.1 完成（汇报节点 1 载体，待验收定稿）</td></tr>
+<tr><td><a href="挖孔搬运_分工流程一图流.html">分工流程一图流</a>（三泳道+闸门+里程碑，同步程序用）</td><td>FINAL</td></tr>
+<tr><td>代码：x3-project dev_digkeys ｜ 配置：gdconfig dev_digkeys</td><td>已提交已 push</td></tr>
+</table>
+
+</body>
+</html>

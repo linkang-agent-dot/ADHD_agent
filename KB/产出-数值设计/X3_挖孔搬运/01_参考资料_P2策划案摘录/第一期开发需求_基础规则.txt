@@ -1,0 +1,58 @@
+
+======================================================================
+■ X2-第一期开发内容!A1:M200  (192 行)
+======================================================================
+A1=活动目的
+A2=小游戏形式优化养成线活动，关卡沉浸奖励提升付费转化
+A5=付费点： | B5=消耗道具
+A8=玩家追求：
+B9=关卡奖励——全养成线
+B10=挂机奖励——关卡道具
+B11=（后续考虑在挖钥匙过程种加入宝藏图鉴）
+B12=最终大奖——高级机甲染色，通过外显增加吸引
+A14=竞品示意 | B14=State Of Survival : Complete the Gem of the Jungle Event?
+B15=活动主界面
+B28=奖励关卡
+B41=奖励展示
+B54=挂机界面
+A69=各功能跳转
+B70=关卡排布规则 | C70=https://docs.google.com/spreadsheets/d/1wRnbpUytVpOUYjireni0FKrryefgYUrl26rphBIEeLw/edit?gid=0#gid=0&range=A155:H183
+B71=界面、礼包及奖励 | C71=https://docs.google.com/spreadsheets/d/1wRnbpUytVpOUYjireni0FKrryefgYUrl26rphBIEeLw/edit?gid=0#gid=0&range=A186:O247
+B72=流程 | C72=https://docs.google.com/spreadsheets/d/1wRnbpUytVpOUYjireni0FKrryefgYUrl26rphBIEeLw/edit?gid=0#gid=0&range=B248:J248
+B73=道具说明 | C73=https://docs.google.com/spreadsheets/d/1wRnbpUytVpOUYjireni0FKrryefgYUrl26rphBIEeLw/edit?gid=0#gid=0&range=B323
+B74=挂机收益说明 | C74=https://docs.google.com/spreadsheets/d/1wRnbpUytVpOUYjireni0FKrryefgYUrl26rphBIEeLw/edit?gid=0#gid=0&range=B368
+B75=关卡设计 | C75=https://docs.google.com/spreadsheets/d/1wRnbpUytVpOUYjireni0FKrryefgYUrl26rphBIEeLw/edit?gid=2005022797#gid=2005022797&range=55:55
+B76=关卡数值设计 | C76=https://docs.google.com/spreadsheets/d/1wRnbpUytVpOUYjireni0FKrryefgYUrl26rphBIEeLw/edit?gid=22902757#gid=22902757&range=I86:N98
+A77=规则
+A78=【基础规则】
+B79=1、挖出关卡宝石，即可领取过关奖励，宝石共7种，每关内容见关卡设计。
+B80=2、道具共4种，分别为炸弹、鞭炮、火箭、透视镜，通过挂机或兑换获得。
+B81=3、关卡层数越高，挂机奖励越好。
+B82=4、通关过程中每5关触发惊喜关卡，完成后可领取惊喜奖励。
+B83=5、所有活动道具将在活动结束后回收。
+A85=【宝石类型示意】
+B86=过关所需图形共7种，种类及所占格子见下图：
+B94=6 | C94=1 | D94=2 | E94=3 | F94=4 | G94=7 | H94=5
+A95=【棋盘示意】
+B96=棋盘共5种类型，分别为3*3、4*4、5*5、6*6、7*7
+B108=点击棋盘挖空示意 | E108=点击棋盘挖到但未完全挖出示意
+J114=0,0.01 | K114=0 | L114=1
+J115=0 | K115=0.1
+J116=0.003 | K116=0.009
+A122=【锁孔示意】
+A139=【整体流程示意】
+A155=关卡排布规则
+B156=1、关卡排布规则：
+C157=a、1~30关，根据格子每关需要格子数随机生成图形，图形内容如下
+C165=b、31~55关加入新图形，注：绿色方块只在黄色标明的特定关卡出现，见关卡设计
+C172=c、第30关绿色方块需至少点击3次，31关设置保底，玩家点击空格必定生成绿色方块。
+B173=2、每5关设置一次奖励关卡，关卡设置如下，在通过奖励关卡后，赠送锄头及奖励；从第6次开始，奖励关卡关卡内容为绿色方块类型
+F176=注：绿色方块的位置随机生成
+F177=奖励关卡不设置点击次数保底
+B181=3、方块根据左侧锁孔规定随机排列，设置特定关卡控制方差，确保玩家保底点击次数。
+B182=4、30关开始，设置隐藏保底，根据赠送的锄头个数，点击次数内必定点出绿色方块，每次点击概率相同。
+B183=5、关卡所需方格个数见关卡数值设计
+A185=玩法示意
+B186=有独立hud
+B187=主界面
+K192=点【+】进入礼包购买界面，锄头可通过多个渠道获得
