@@ -1,0 +1,5 @@
+=== UIBtnGift.prefab (GO=3) ===
+UIBtnGift  sz[170.0, 170.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+  EffectRoot  sz[100.0, 100.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+  Img  sz[168.0, 168.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+    · IMG img_turntable_icon4 Spirits/Activity/img_turntable_icon4.png

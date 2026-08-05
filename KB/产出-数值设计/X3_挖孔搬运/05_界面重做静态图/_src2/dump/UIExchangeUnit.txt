@@ -1,0 +1,32 @@
+=== UIExchangeUnit.prefab  (GameObject 数=9) ===
+UIExchangeUnit  size[320.0, 388.0] pos[0.0, 0.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 0.5]
+  Root  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+      · CanvasRenderer
+      · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+      · EventTriggerListener
+      · ButtonScale
+      · GraphicGreyModifier
+    Bg  size[320.0, 388.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWImage | sprite=img_Activity_bg_Heroexchange_3 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_bg_Heroexchange_3.png]
+    <嵌套prefab:UIItemTemplate>
+        ↳ 源: Public/UIItemTemplate.prefab
+        ↳ 覆盖: Name=UIItemTemplate, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=-40, SizeDelta.y=220, LocalScale.x=0.95
+    Price  size[0.0, 70.0] pos[-4.5, 5.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.0]
+        · CanvasRenderer
+      TextPrice  size[0.0, 0.0] pos[20.0, -1.8] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+          · CanvasRenderer
+          · TFWText | col=#F7EDD6 | TEXT='1000' | fs=40
+          · BetterOutline
+          · guid:3245ec927659c4140ac4f8d17403cc18
+        PriceIcon  size[72.0, 68.0] pos[-66.0, 3.7] anc[0.0, 0.5]-[0.0, 0.5] piv[0.0, 0.5]
+            · CanvasRenderer
+            · TFWImage | sprite=img_icon_Heroexchange | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonIcons/img_icon_Heroexchange.png]
+    Limit  size[278.0, 45.97] pos[-1.0, 122.3] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWText | col=#EFE3BD | TEXT='限购：999' | fs=32
+    Unlock  size[268.05, 49.79] pos[0.0, 37.6] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+      Txt  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+          · CanvasRenderer
+          · TFWText | col=#F2DB5C | TEXT='languageKey: Text_Actv_Hero_Exchange_Unlock' | fs=28
+          · BetterOutline

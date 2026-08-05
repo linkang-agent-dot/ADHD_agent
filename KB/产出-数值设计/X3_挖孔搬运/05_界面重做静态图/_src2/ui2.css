@@ -1,0 +1,172 @@
+/* ==========================================================================
+   X3 挖孔 · v2「对齐 X3 现成界面」静态图样式
+   所有尺寸/坐标/切片都来自真 prefab 的 RectTransform 与 sprite .meta
+   九宫格：Unity spriteBorder{x左,y下,z右,w上} → CSS border-image-slice「上 右 下 左」
+   ========================================================================== */
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{background:#000;}
+body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;-webkit-font-smoothing:antialiased;}
+.stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#120c08;color:#F4EACE;}
+.nine{position:relative;border-style:solid;border-color:transparent;border-image-repeat:stretch;border-width:0;}
+.abs{position:absolute !important;}
+
+/* 描边（X3 文本普遍带 BetterOutline） */
+.ol{text-shadow:0 0 6px rgba(0,0,0,.85),0 2px 3px rgba(0,0,0,.9),1px 0 0 rgba(0,0,0,.6),-1px 0 0 rgba(0,0,0,.6);}
+.olL{text-shadow:0 1px 0 rgba(255,250,235,.55);}  /* 浅底深字用的浅描边 */
+
+/* ============ 全屏活动页 · 背景（BG 944 高活动大图 + 下方深底） ============ */
+.actBG{position:absolute;left:0;top:0;width:1080px;height:944px;
+  background:url(assets/DigKeyBg1.jpg) center 22%/cover no-repeat;filter:brightness(.72) saturate(.85);}
+.actBGfade{position:absolute;left:0;top:0;width:1080px;height:944px;
+  background:linear-gradient(180deg,rgba(10,7,14,.55) 0%,rgba(10,7,14,.18) 40%,rgba(18,12,8,.9) 88%,#120c08 100%);}
+.actBGlow{position:absolute;left:0;top:900px;width:1080px;height:1020px;background:#120c08;}
+.bgFull{position:absolute;left:0;top:0;width:1080px;height:1920px;background:url(assets/DigKeyBg1.jpg) center/cover no-repeat;filter:brightness(.6) saturate(.85);}
+.bgFullShade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,7,14,.55),rgba(10,7,14,.25) 40%,rgba(14,9,6,.8));}
+
+/* ---- 活动页头（UIActvExchange/SchedulePack/DailyRank/VisitPack/CumRecharge 共用范式）---- */
+.actTitle{position:absolute;left:24px;top:125px;height:80px;line-height:80px;font-size:52px;font-weight:bold;color:#fff;}
+.actTime{position:absolute;left:21px;top:203px;height:60px;display:flex;align-items:center;gap:15px;padding:0 30px 0 20px;
+  border-image-source:url(assets/x3/img_gift_bg_4.png);border-image-slice:0 43 0 41 fill;}
+.actTime img{width:45px;height:45px;}
+.actTime span{font-size:32px;color:#EED376;}
+.actDesc{position:absolute;left:25px;top:280px;width:920px;font-size:36px;line-height:1.34;color:#F4EACE;}
+.btnInfo{position:absolute;right:23px;top:134px;width:64px;height:64px;
+  background:url(assets/x3/img_cm_anniu_guize.png) center/contain no-repeat;}
+.btnGift{position:absolute;width:170px;height:170px;}
+.btnGift img{width:100%;height:100%;object-fit:contain;transform:scaleX(-1);}
+.btnGift .lb{position:absolute;left:-20px;right:-20px;bottom:-8px;text-align:center;font-size:28px;color:#EEDCC1;}
+
+/* ---- 活动内容板 img_gift_bg_17（官方即半透明，压在活动大图上）---- */
+.panel17{position:absolute;border-image-source:url(assets/x3/img_gift_bg_17.png);border-image-slice:28 fill;}
+.panel17under{position:absolute;background:#1b1310;}   /* HTML 预览用垫底，Unity 侧不需要 */
+
+/* ---- 标题条 img_cm_bg_biaoti2 1020×68 ---- */
+.biaoti2{position:relative;height:68px;line-height:66px;text-align:center;font-size:36px;color:#FFF1B9;
+  border-image-source:url(assets/x3/img_cm_bg_biaoti2.png);border-image-slice:0 52 0 52 fill;}
+
+/* ---- 列表行底 img_ledger_bg_taizhangliebiao（浅米色 → 深字）---- */
+.rowLB{position:relative;border-image-source:url(assets/x3/img_ledger_bg_taizhangliebiao.png);
+  border-image-slice:47 51 45 51 fill;}
+.dk{color:#3E2411;} .dk2{color:#7F5F38;} .dk3{color:#5F4430;}
+
+/* ---- 标准按钮 ---- */
+.btnGold{position:relative;width:380px;height:100px;display:flex;align-items:center;justify-content:center;
+  font-size:46px;color:#FFF6E9;border-image-source:url(assets/x3/img_cm_anniu_gold.png);border-image-slice:0 36 0 36 fill;}
+.btnGreen{position:relative;width:296px;height:100px;display:flex;align-items:center;justify-content:center;
+  font-size:45px;color:#FFF6E9;border-image-source:url(assets/x3/img_cm_anniu3_geen.png);border-image-slice:0 40 0 40 fill;}
+.btnGreenS{position:relative;width:204px;height:84px;display:flex;align-items:center;justify-content:center;
+  font-size:36px;color:#FFF6E9;background:url(assets/x3/img_cm_anniu1_geen.png) center/100% 100% no-repeat;}
+.btnBlueS{position:relative;width:214px;height:90px;display:flex;align-items:center;justify-content:center;
+  font-size:36px;color:#FFF6E9;background:url(assets/x3/img_cm_anniu1_blue.png) center/100% 100% no-repeat;}
+.btnOff{position:relative;display:flex;align-items:center;justify-content:center;font-size:36px;color:#cfc4ae;
+  background:url(assets/x3/img_cm_anniu1_geen.png) center/100% 100% no-repeat;filter:grayscale(1) brightness(.62);}
+.origPrice{position:relative;font-size:28px;color:#8A6A3A;text-align:center;}
+.origPrice i{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:150px;height:10px;
+  background:url(assets/x3/img_gift_line.png) center/100% 100% no-repeat;}
+
+/* ---- 折扣角标 img_gift_bg_Discount ---- */
+.disc{position:absolute;width:156px;height:156px;background:url(assets/x3/img_gift_bg_Discount.png) center/contain no-repeat;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.disc b{font-size:42px;color:#EFE39B;line-height:1;} .disc s{font-size:26px;color:#EFD373;text-decoration:none;}
+
+/* ---- 道具格 UIItemTemplate（200 基准，可缩放）---- */
+.item{position:relative;background:url(assets/x3/img_cm_bg_iconkuang.png) center/100% 100% no-repeat;}
+.item>img.ic{position:absolute;left:12.5%;top:12.5%;width:75%;height:75%;object-fit:contain;}
+.item .cnt{position:absolute;left:0;right:0;bottom:4%;text-align:center;font-size:.18em;color:#F9EED7;}
+.item.named .cnt{bottom:31%;}
+.item .nmp{position:absolute;left:2%;right:2%;bottom:-6%;height:24%;display:flex;align-items:center;justify-content:center;
+  font-size:.155em;color:#FFF6E9;text-align:center;line-height:1.1;
+  border-image-source:url(assets/x3/img_cm_bg_ditu5.png);border-image-slice:44 fill;}
+.item .got{position:absolute;inset:0;background:rgba(0,0,0,.58);display:flex;align-items:center;justify-content:center;}
+.item .got img{width:44%;}
+
+/* ---- 进度条 ---- */
+.sldA{position:relative;border-image-source:url(assets/x3/img_TXDS_jindutiao2.png);border-image-slice:16 fill;}
+.sldA i{position:absolute;left:9px;top:9px;bottom:9px;border-image-source:url(assets/x3/img_TXDS_jindutiao1.png);
+  border-image-slice:8 fill;border-style:solid;border-color:transparent;border-width:0;}
+.sldA span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:36px;color:#fff;}
+
+/* ============ 标准弹窗（UIIdleIncome / UIPiggyBank 范式）============ */
+.mask{position:absolute;inset:0;background:rgba(6,4,10,.72);}
+.popup{position:absolute;left:50%;transform:translateX(-50%);
+  border-image-source:url(assets/x3/img_cm_bg_tanchu.png);border-image-slice:120 240 120 240 fill;}
+.popTitlePlate{position:absolute;left:50%;transform:translateX(-50%);top:-8px;width:660px;height:88px;
+  background:url(assets/x3/img_cm_biaoti.png) center/100% 100% no-repeat;
+  display:flex;align-items:center;justify-content:center;font-size:46px;color:#F7E497;}
+.popClose{position:absolute;right:-52px;top:16px;width:104px;height:104px;
+  background:url(assets/x3/img_cm_zhizuo_guanbianniu.png) center/contain no-repeat;}
+
+/* ============ 全屏台账页（UiActivityCommonRules 范式）============ */
+.ledgerBG{position:absolute;left:0;top:0;width:1110px;height:1920px;
+  background:url(assets/x3/img_ledger_bg_taizhang1.png) center/100% 100% no-repeat;}
+.ledgerTitleBar{position:absolute;left:0;top:0;width:1080px;height:127px;
+  background:url(assets/x3/img_cm_bg_1.png) center/100% 100% no-repeat;}
+.ledgerTitleBar span{position:absolute;left:30px;top:34px;font-size:52px;color:#FFF6E9;}
+.ledgerBottom{position:absolute;left:0;bottom:0;width:1080px;height:207px;}
+.ledgerBottom .bk{position:absolute;left:0;bottom:0;width:1080px;height:140px;
+  border-image-source:url(assets/x3/img_cm_bg_2.png);border-image-slice:33 0 14 0 fill;}
+.ledgerBottom .ret{position:absolute;left:-7px;bottom:4px;width:184px;height:136px;
+  background:url(assets/x3/img_cm_anniu_return.png) center/contain no-repeat;}
+.tabLedger{position:relative;height:100px;display:flex;align-items:center;justify-content:center;font-size:42px;}
+.tabLedger.on{border-image-source:url(assets/x3/img_ledger_anniu_taizhang_fenye.png);
+  border-image-slice:0 116 0 114 fill;color:#6C4E33;z-index:3;}
+.tabLedger.off{border-image-source:url(assets/x3/img_ledger_anniu_taizhang_fenye2.png);
+  border-image-slice:0 118 0 115 fill;color:#FFF1B9;}
+.blackRound{position:absolute;border-image-source:url(assets/x3/CommonBlackRound.png);border-image-slice:6 fill;
+  filter:none;}
+
+/* 台账正文行模板 */
+.itTitle{display:flex;align-items:center;gap:16px;font-size:34px;color:#D6934A;}
+.itTitle i{flex:1;height:4px;background:rgba(209,171,84,.35);}
+.itTitleBg{width:990px;height:112px;display:flex;align-items:center;font-size:50px;color:#5F4430;}
+.itText{width:990px;padding:20px 50px;font-size:26px;line-height:1.55;color:#5F4430;
+  border-image-source:url(assets/x3/img_ledger_bg_taizhangliebiao.png);border-image-slice:47 51 45 51 fill;}
+
+/* ============ 页签（活动内 DayTab：img_Activity_schedule_btn_1/2）============ */
+.dayTab{position:relative;width:193px;height:92px;display:flex;align-items:center;justify-content:center;}
+.dayTab.on{border-image-source:url(assets/x3/img_Activity_schedule_btn_2.png);border-image-slice:0 13 0 12 fill;
+  font-size:42px;color:#fff;z-index:3;}
+.dayTab.off{border-image-source:url(assets/x3/img_Activity_schedule_btn_1.png);border-image-slice:0 16 0 15 fill;
+  font-size:32px;color:#DEBA84;}
+/* 阶段页签 StageTabs img_Activity_arrow_1/2 */
+.stageTab{position:relative;height:64px;min-width:150px;display:flex;align-items:center;justify-content:center;font-size:40px;}
+.stageTab.on{border-image-source:url(assets/x3/img_Activity_arrow_2.png);border-image-slice:0 44 0 44 fill;color:#A6693E;z-index:3;}
+.stageTab.off{border-image-source:url(assets/x3/img_Activity_arrow_1.png);border-image-slice:0 44 0 44 fill;color:#FCE291;}
+
+/* ============ 分段条 im_bm_bg_13 ============ */
+.seg13{position:relative;border-image-source:url(assets/x3/im_bm_bg_13.png);border-image-slice:37 0 34 0 fill;}
+/* 道具横条底 img_ledger_bg_ditu1 */
+.ditu1{position:relative;border-image-source:url(assets/x3/img_ledger_bg_ditu1.png);border-image-slice:5 168 6 168 fill;}
+/* 阶梯礼包行底 img_gift_bg_7（317/0/159/0）*/
+.chainBg{position:absolute;inset:0;border-image-source:url(assets/x3/img_gift_bg_7.png);border-image-slice:0 159 0 317 fill;}
+.hr{width:100%;height:4px;background:url(assets/x3/img_heros_line.png) center/100% 100% no-repeat;}
+
+/* ---- 档位行 TierItem 1000×167（UIMultiTierPack 原件）---- */
+.tier{position:absolute;width:1000px;height:167px;}
+.tier .bg{position:absolute;inset:0;background:url(assets/x3/img_multi_tier_buy_bg1.png) center/100% 100% no-repeat;transform:scaleX(-1);}
+.tier.done .bg{background-image:url(assets/x3/img_multi_tier_buy_bg2.png);}
+.tier .pt{position:absolute;left:12px;top:47px;width:76px;height:76px;
+  background:url(assets/x3/ui_battlepass_point_2.png) center/contain no-repeat;
+  display:flex;align-items:center;justify-content:center;font-size:38px;color:#F5EACE;}
+.tier.reach .pt{width:88px;height:88px;left:6px;top:41px;color:#4A2F1B;
+  background-image:url(assets/x3/ui_battlepass_point_1.png);}
+.tier .vline{position:absolute;left:37px;top:-18px;width:18px;height:203px;opacity:.9;
+  border-style:solid;border-width:0;border-image:url(assets/x3/img_TXDS_pd_5.png) 7 0 6 0 fill stretch;}
+.tier .vline i{position:absolute;left:3px;top:0;width:12px;
+  border-style:solid;border-width:0;border-image:url(assets/x3/img_TXDS_pd_1.png) 4 14 3 13 fill stretch;}
+.tier .btnBuy{position:absolute;right:88px;top:36px;width:200px;height:100px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;border-style:solid;border-width:0;
+  border-image:url(assets/x3/img_cm_anniu_gold.png) 0 36 0 36 fill stretch;}
+.tier .btnBuy b{font-size:34px;color:#313131;line-height:1;}
+.tier .btnBuy s{font-size:22px;color:#5a4a2a;text-decoration:line-through;}
+.tier .tag{position:absolute;right:14px;top:-8px;width:126px;height:126px;
+  background:url(assets/x3/img_gift_bg_Discount.png) center/contain no-repeat;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.tier .tag b{font-size:26px;color:#EFE39B;line-height:1;white-space:nowrap;}
+.tier .tag s{font-size:20px;color:#EFD373;text-decoration:none;}
+.tier .bought{position:absolute;right:88px;top:52px;width:200px;height:80px;display:flex;align-items:center;
+  justify-content:center;font-size:44px;color:#8b7a55;}
+.tier .soldout{position:absolute;right:60px;top:12px;width:156px;height:156px;
+  background:url(assets/x3/ui_giftpack_img_soldout.png) center/contain no-repeat;}
+.selFrame{position:absolute;inset:-8px;border-image-source:url(assets/x3/img_chouka_kuang.png);border-image-slice:20 fill;}
+.reddot{position:absolute;width:44px;height:44px;background:url(assets/x3/img_cm_hongdian.png) center/contain no-repeat;}

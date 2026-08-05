@@ -1,0 +1,156 @@
+/* ============================================================
+   X3 挖孔 · 界面重做静态图 用样式
+   9 宫格：Unity spriteBorder{x左,y下,z右,w上} → CSS border-image-slice「上 右 下 左」
+   件与切片值沿用 03_横转竖demo v0.8 已核过的映射（源 = Assets/Res/UI/Spirits/）
+   ============================================================ */
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{background:#000;}
+body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;-webkit-font-smoothing:antialiased;}
+.stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#07100c;color:#e8dcc4;}
+
+/* 9 宫格公共复位 */
+.nine{position:relative;border-style:solid;border-color:transparent;border-image-repeat:stretch;border-image-width:auto;border-radius:0;border-width:0;}
+
+/* ---------- 背景 ---------- */
+.bg{position:absolute;inset:0;z-index:-1;background:url(assets/DigKeyBg1.jpg) center/cover;filter:brightness(.85);}
+.bgShade{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(4,10,20,.8) 0%,rgba(4,10,20,.25) 22%,rgba(4,10,20,.15) 55%,rgba(4,10,20,.82) 100%);}
+
+/* ---------- 顶栏 ---------- */
+.topbar{position:relative;padding:34px 28px 0;background:url(assets/x3_topbar.webp) top left/100% 172px no-repeat;}
+.topRow1{display:flex;align-items:center;gap:16px;height:112px;}
+.btnBack{width:138px;height:102px;flex:none;background:url(assets/x3_back.webp) center/contain no-repeat;}
+.actTitle{height:96px;padding:0 40px;display:flex;align-items:center;font-size:42px;font-weight:bold;color:#ffeab4;
+  text-shadow:0 2px 5px rgba(46,20,0,.9);letter-spacing:2px;white-space:nowrap;flex:none;
+  border-image-source:url(assets/x3_title_plate.webp);border-image-slice:0 52 0 52 fill;}
+.btnRule{width:76px;height:76px;flex:none;background:url(assets/x3_rule.webp) center/contain no-repeat;}
+.rss{margin-left:auto;display:flex;gap:14px;}
+.rssPill{display:flex;align-items:center;gap:8px;padding:0 22px 0 10px;height:78px;
+  border-image-source:url(assets/x3_res_pill.webp);border-image-slice:23 11 20 11 fill;}
+.rssPill img{width:58px;height:58px;}
+.rssPill span{font-size:34px;color:#ffe8a0;font-weight:bold;min-width:92px;text-align:right;}
+.rssPill .plus{color:#8dffa8;font-size:38px;min-width:0;}
+.topRow2{display:flex;align-items:center;height:64px;margin-top:6px;}
+.countdown{margin-left:auto;font-size:30px;color:#ffe6b8;padding:10px 28px;
+  border-image-source:url(assets/x3_pill_sm.webp);border-image-slice:14 15 14 14 fill;}
+
+/* ---------- 插槽条 / 关卡 / 棋盘 / 底栏（仅作弹窗背景，示意） ---------- */
+.slotbar{position:relative;margin:12px 28px 0;padding:16px 30px;display:flex;align-items:center;gap:20px;height:186px;
+  border-image-source:url(assets/x3_panel_in.webp);border-image-slice:147 166 124 191 fill;}
+.slotLabel{writing-mode:vertical-lr;font-size:28px;color:#ffd76e;letter-spacing:6px;}
+.slotCells{display:flex;gap:20px;flex:1;}
+.slotCell{width:196px;height:132px;background:url(assets/BkgrideSlot.png) center/100% 100% no-repeat;
+  display:flex;align-items:center;justify-content:center;}
+.slotCell img{width:100px;height:100px;}
+.slotCell.off img{filter:brightness(0) opacity(.65);}
+.boardZone{position:relative;display:flex;flex-direction:column;align-items:center;margin-top:18px;}
+.boardHead{display:flex;align-items:center;gap:24px;height:88px;margin-bottom:14px;}
+.lvBadge{height:88px;padding:0 22px;display:flex;align-items:center;font-size:42px;font-weight:bold;color:#ffe9a8;
+  border-image-source:url(assets/x3_title_plate.webp);border-image-slice:0 52 0 52 fill;}
+.costTip{display:flex;align-items:center;gap:8px;font-size:30px;color:#ffe6b8;padding:9px 26px;
+  border-image-source:url(assets/x3_pill_sm.webp);border-image-slice:14 15 14 14 fill;}
+.costTip img{width:44px;height:44px;}
+.board{display:grid;gap:8px;}
+.board .cell{position:relative;}
+.board .cell i{position:absolute;inset:0;background:url(assets/gridcellbg1.png) center/100% 100% no-repeat;}
+.board .cell.blk i{background-image:url(assets/gridcellbg3.png);filter:brightness(.72) saturate(.4);}
+.bottomBar{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-around;align-items:flex-end;padding:10px 26px 46px;}
+.funcBtn{width:170px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.funcBtn .iconWrap{position:relative;width:132px;height:132px;background:url(assets/x3_icon_frame.webp) center/100% 100% no-repeat;
+  display:flex;align-items:center;justify-content:center;}
+.funcBtn .iconWrap img{width:96px;height:96px;}
+.funcBtn .name{font-size:28px;color:#ffeab4;text-shadow:0 2px 4px #000;}
+.funcBtn .dot{position:absolute;top:-8px;right:-8px;width:36px;height:36px;background:url(assets/x3_reddot.webp) center/contain no-repeat;}
+
+/* ---------- 弹窗 ---------- */
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,.74);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;}
+.popCard{position:relative;width:940px;background:#151009;padding:34px 48px 42px;border-radius:22px;color:#e8dcc4;
+  border-image-source:url(assets/x3_popup_bg.webp);border-image-slice:28 fill;}
+.popTitle{width:660px;max-width:100%;height:88px;margin:0 auto 22px;line-height:88px;text-align:center;
+  font-size:40px;font-weight:bold;letter-spacing:3px;white-space:nowrap;
+  background:url(assets/x3_popup_title.webp) center/100% 100% no-repeat;color:#ffeab4;text-shadow:0 2px 5px rgba(46,20,0,.9);}
+.popClose{position:absolute;width:104px;height:104px;top:-16px;right:-16px;
+  background:url(assets/x3_close.webp) center/contain no-repeat;}
+.popBack{position:absolute;width:132px;height:98px;top:-16px;left:-18px;
+  background:url(assets/x3_back.webp) center/contain no-repeat;}
+
+/* 按钮 */
+.btnGreen{display:block;margin:0 auto;min-width:400px;height:104px;line-height:104px;padding:0 54px;text-align:center;
+  font-size:38px;font-weight:bold;color:#123f14;text-shadow:0 1px 0 rgba(255,255,255,.4);
+  border-image-source:url(assets/x3_btn_green.webp);border-image-slice:0 40 0 40 fill;}
+.btnBlue{display:inline-block;padding:14px 40px;font-size:30px;color:#0c2d47;text-shadow:0 1px 0 rgba(255,255,255,.35);
+  border-image-source:url(assets/x3_btn_blue.webp);border-image-slice:0 40 0 40 fill;}
+.btnGold{display:inline-block;padding:14px 30px;font-size:30px;font-weight:bold;color:#5a3406;
+  text-shadow:0 1px 0 rgba(255,246,214,.55);white-space:nowrap;
+  border-image-source:url(assets/x3_btn_gold.webp);border-image-slice:0 36 0 36 fill;}
+.btnOff{display:inline-block;padding:14px 30px;font-size:30px;font-weight:bold;color:#d8d0c4;
+  text-shadow:0 1px 2px rgba(0,0,0,.5);white-space:nowrap;
+  border-image-source:url(assets/x3_btn_off.webp);border-image-slice:32 32 40 32 fill;}
+
+/* 行底 / 面板 */
+.row{padding:16px 22px;border-image-source:url(assets/x3_row.webp);border-image-slice:0 43 0 41 fill;}
+.rowGold{padding:16px 22px;border-image-source:url(assets/x3_row_gold.webp);border-image-slice:13 16 16 15 fill;}
+.row2{padding:16px 22px;border-image-source:url(assets/x3_row2.webp);border-image-slice:17 fill;}
+.panelDark{padding:26px 30px;border-image-source:url(assets/x3_panel_dark.webp);border-image-slice:7 fill;}
+.boxSm{padding:4px 18px;border-image-source:url(assets/x3_box_sm.webp);border-image-slice:17 fill;}
+.plate{padding:3px 14px;border-image-source:url(assets/x3_plate_dark.webp);border-image-slice:12 fill;border-image-width:10px;}
+.frameThin{padding:20px 26px;border-image-source:url(assets/x3_frame_thin.webp);border-image-slice:24 fill;}
+.slotBox{border-image-source:url(assets/x3_slot.webp);border-image-slice:7 fill;}
+.banner{width:100%;padding:18px 0;text-align:center;font-size:32px;font-weight:bold;color:#4a2c0c;
+  text-shadow:0 1px 0 rgba(255,240,200,.55);background:url(assets/x3_banner.webp) center/100% 100% no-repeat;}
+.ribbon{width:760px;height:112px;line-height:112px;margin:0 auto;text-align:center;font-size:44px;font-weight:bold;
+  letter-spacing:4px;color:#6b3608;text-shadow:0 1px 0 rgba(255,244,210,.6);
+  background:url(assets/x3_ribbon.webp) center/100% 100% no-repeat;}
+
+/* 进度条 */
+.barWrap{position:relative;height:48px;border-image-source:url(assets/x3_bar_track.webp);border-image-slice:16 fill;}
+.barFill{height:100%;border-image-source:url(assets/x3_bar_fill_green.webp);border-image-slice:8 fill;border-image-width:8px;
+  border-style:solid;border-color:transparent;}
+.barFillGold{height:100%;border-image-source:url(assets/x3_bar_fill.webp);border-image-slice:0 8 0 8 fill;border-image-width:0 8px;
+  border-style:solid;border-color:transparent;}
+.barText{position:absolute;inset:0;line-height:48px;text-align:center;font-size:26px;color:#fff;text-shadow:0 2px 4px #000;}
+
+/* 页签 */
+.tabs{display:flex;gap:14px;}
+.tabs .tab{flex:1;height:82px;line-height:82px;text-align:center;font-size:30px;color:#6b5028;
+  border-image-source:url(assets/x3_tab_off.webp);border-image-slice:0 13 0 12 fill;filter:brightness(.78) saturate(.8);}
+.tabs .tab.on{color:#432608;border-image-source:url(assets/x3_tab_on.webp);border-image-slice:0 16 0 15 fill;filter:none;}
+
+/* ---------- 全屏页 ---------- */
+.fullPage{position:absolute;inset:0;background:#0a0704;display:flex;flex-direction:column;}
+.fullPage .fpBg{position:absolute;inset:0;z-index:-1;background:url(assets/DigKeyBg1.jpg) center/cover;filter:brightness(.22) saturate(.6);}
+.fpHead{position:relative;padding:40px 34px 0;display:flex;align-items:center;gap:20px;}
+.fpTitle{padding:12px 40px;font-size:44px;font-weight:bold;color:#ffeab4;letter-spacing:4px;text-shadow:0 2px 5px rgba(46,20,0,.9);
+  border-image-source:url(assets/x3_title_plate.webp);border-image-slice:0 52 0 52 fill;}
+.fpHeadRight{margin-left:auto;font-size:28px;color:#e8dcc4;display:flex;align-items:center;gap:10px;}
+.fpHeadRight b{color:#ffd76e;font-size:34px;}
+.fpHeadRight img{width:52px;height:52px;}
+.fpSub{position:relative;margin:16px 34px 0;font-size:26px;color:#c9b894;line-height:1.55;}
+.fpBody{position:relative;flex:1;margin:20px 34px 0;overflow:hidden;}
+.fpFoot{position:relative;padding:18px 34px 40px;}
+
+/* 文字层级 */
+.h1t{font-size:38px;font-weight:bold;color:#ffeab4;}
+.h2t{font-size:30px;font-weight:bold;color:#ffd76e;}
+.sub{font-size:26px;color:#c9b894;line-height:1.55;}
+.dim{font-size:24px;color:#a89878;line-height:1.55;}
+.gold{color:#ffd76e;}
+.green{color:#8fe6a0;}
+.warn{color:#ffb08a;}
+
+/* 道具格 */
+.itemCell{position:relative;width:96px;height:96px;flex:none;
+  border-image-source:url(assets/x3_slot.webp);border-image-slice:7 fill;border-style:solid;border-color:transparent;border-image-width:auto;}
+.itemCell img{width:84px;height:84px;margin:6px;}
+.itemCell .num{position:absolute;right:-2px;bottom:-6px;font-size:24px;color:#fff;
+  text-shadow:0 2px 4px #000,0 0 6px #000;background:rgba(4,12,24,.82);border-radius:8px;padding:0 6px;}
+.itemLine{display:flex;align-items:center;gap:8px;font-size:26px;color:#e8dcc4;}
+.itemLine img{width:66px;height:66px;}
+
+/* 滚动指示（静态图用：手绘滚动条 + 底部渐隐） */
+.scrollTrack{position:absolute;right:0;top:0;bottom:0;width:14px;border-radius:7px;background:rgba(255,255,255,.08);}
+.scrollThumb{position:absolute;right:0;width:14px;border-radius:7px;background:#9a7b42;}
+.fadeBot{position:absolute;left:0;right:20px;bottom:0;height:70px;pointer-events:none;
+  background:linear-gradient(transparent,rgba(8,6,3,.92));}
+
+.reddot{position:absolute;width:36px;height:36px;background:url(assets/x3_reddot.webp) center/contain no-repeat;}

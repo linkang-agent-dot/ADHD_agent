@@ -71,7 +71,7 @@ def main():
     heroes = sorted({s["hero_id"] for s in skins if s["hero_id"].isdigit()})
     dim = execute_sql("SELECT asset_id, asset_name FROM v1090.dim_asset "
                       "WHERE asset_id LIKE 'Item_50%' AND asset_name LIKE '英雄-%'",
-                      datasource="TRINO_HF")["data"]
+                      datasource="TRINO_HF", limit=1000)["data"]
     hero_assets = {}
     for h in heroes:
         base = f"Item_{50000 + int(h) - 1000}"
@@ -85,7 +85,7 @@ def main():
             lst = ",".join(f"'{x}'" for x in chunk)
             sql = (f"SELECT asset_id, count(distinct user_id) o FROM v1090.ods_user_asset "
                    f"WHERE asset_id IN ({lst}) AND change_type='1'{seg} GROUP BY 1")
-            for row in execute_sql(sql, datasource="TRINO_HF")["data"]:
+            for row in execute_sql(sql, datasource="TRINO_HF", limit=1000)["data"]:
                 out[row["asset_id"]] = int(row["o"])
         return out
 
@@ -101,7 +101,7 @@ def main():
         sql = (f"SELECT substr(asset_id,1,10) AS base, count(distinct user_id) o "
                f"FROM v1090.ods_user_asset "
                f"WHERE asset_id IN ({lst}) AND change_type='1'{seg} GROUP BY 1")
-        by_base = {r["base"]: int(r["o"]) for r in execute_sql(sql, datasource="TRINO_HF")["data"]}
+        by_base = {r["base"]: int(r["o"]) for r in execute_sql(sql, datasource="TRINO_HF", limit=1000)["data"]}
         return {h: by_base.get(f"Item_{50000 + int(h) - 1000}", 0) for h in mapping}
 
     print(f"查询中… 皮肤 {len(skins)} 款 / 英雄 {len(heroes)} 个 · 服段={seg_name}")

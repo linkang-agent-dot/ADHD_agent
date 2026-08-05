@@ -1,0 +1,44 @@
+=== UICoinPiggyBankTips.prefab  (GameObject 数=12) ===
+UICoinPiggyBankTips  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.0, 0.0] scale[0.0, 0.0]
+    · Canvas
+    · guid:0cd44c1031e13a943bb63640046fad76
+    · guid:dc42784cf147c0c48a680349fa168899
+    · CanvasRenderer
+    · UIConfig
+  Touch  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+      · CanvasRenderer
+      · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+      · EventTriggerListener
+    Root  size[750.0, 0.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWImage | sprite=img_cm_bg_tanchukuang | Sliced | border(L,B,R,T)=[20.0, 20.0, 20.0, 20.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_bg_tanchukuang.png]
+        · guid:59f8146938fff824cb5fd77236b75775 | pad(L,R,T,B)=[40, 40, 30, 40]
+        · guid:3245ec927659c4140ac4f8d17403cc18
+        · AutoFollowBubbleTip
+      bg  size[-26.0, -26.0] pos[0.0, -13.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 1.0]
+          · CanvasRenderer
+          · TFWImage | sprite=img_hs_bg_kuang | Sliced | border(L,B,R,T)=[24.0, 24.0, 24.0, 24.0] | col=#FFFFFF | [Spirits/CommonNew/img_hs_bg_kuang.png]
+          · guid:306cc8c2b49d7114eaa3623786fc2126
+      cont_arrows  size[-8.0, -4.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+          · guid:306cc8c2b49d7114eaa3623786fc2126
+        arrow_left [INACTIVE]  size[56.0, 36.0] pos[5.3, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 1.0]
+            · CanvasRenderer
+            · TFWImage | sprite=img_cm_bg_tanchukuang2 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_bg_tanchukuang2.png]
+        arrow_right [INACTIVE]  size[56.0, 36.0] pos[-5.3, 0.0] anc[1.0, 0.5]-[1.0, 0.5] piv[0.5, 1.0]
+            · CanvasRenderer
+            · TFWImage | sprite=img_cm_bg_tanchukuang2 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_bg_tanchukuang2.png]
+        arrow_top  size[56.0, 36.0] pos[0.0, -7.0] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 1.0]
+            · CanvasRenderer
+            · TFWImage | sprite=img_cm_bg_tanchukuang2 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_bg_tanchukuang2.png]
+        arrow_bottom [INACTIVE]  size[56.0, 36.0] pos[0.0, 7.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 1.0]
+            · CanvasRenderer
+            · TFWImage | sprite=img_cm_bg_tanchukuang2 | Sliced | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_bg_tanchukuang2.png]
+      Content  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 1.0]
+          · CanvasRenderer
+          · guid:59f8146938fff824cb5fd77236b75775 | spacing=10.0 | pad(L,R,T,B)=[0, 0, 10, 0]
+        txt_title  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 1.0]
+            · CanvasRenderer
+            · TFWText | col=#6E4E34 | TEXT='酒馆等级加成' | fs=40
+        txt_base  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 1.0]
+            · CanvasRenderer
+            · TFWText | col=#6E4E34 | TEXT='酒馆等级越高，购买可得的金币数量越多！' | fs=32

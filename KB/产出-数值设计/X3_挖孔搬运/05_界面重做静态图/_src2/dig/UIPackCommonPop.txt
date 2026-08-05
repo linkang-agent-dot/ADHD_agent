@@ -1,0 +1,146 @@
+=== UIPackCommonPop.prefab (GO=91) ===
+UIPackCommonPop  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.0, 0.0] scl[0.0, 0.0]
+  · guid:0cd44c1031e13a943bb63640046fad76
+  · guid:dc42784cf147c0c48a680349fa168899
+  · UIConfig
+  · UIAnimation
+  · UIBlur
+  Root  sz[1020.0, 1340.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+    BG  sz[0.0, -0.0] p[0.0, 121.0] STRETCH
+      · IMG img_gift_bg_tc_8 Sliced border(L,B,R,T)=[0, 312, 0, 601] Spirits/Pack/img_gift_bg_tc_8.png
+      Img  sz[1016.0, 980.0] p[-9.0, -488.0] a[0.5, 1.0][0.5, 1.0]
+        · IMG img_gift_bg_11 Spirits/Pack/img_gift_bg_11.png
+      Mask  sz[2160.0, 1536.0] p[185.0, 335.0] a[0.5, 0.5][0.5, 0.5]
+        · guid:3312d7739989d2b4e91e6319e9a96d76
+        · TFWImage
+        RoleImg  sz[544.74, 583.31] p[60.57, -893.62] a[0.5, 1.0][0.5, 1.0]
+          · IMG img_gift_bg_53 Spirits/Pack_Download/PackImg/img_gift_bg_53.png
+        HeroSpine  sz[1024.0, 1536.0] p[0.0, -280.0] a[0.5, 0.5][0.5, 0.5] scl[0.9, 0.9]
+          EffectRoot  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+    <嵌套prefab:VideoRoot>
+      >> Assets/Res/Video/Prefab/VideoRoot.prefab
+      >> 覆盖 sz=['540', '960'] pos=['255', '255']
+    Top  sz[520.0, 335.0] p[65.0, -80.0] a[0.0, 1.0][0.0, 1.0] piv[0.0, 1.0]
+      · guid:59f8146938fff824cb5fd77236b75775 spacing=20.0 padding_LRTB=[0, 0, 0, 0]
+      Title  sz[620.0, 70.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.5, 1.0]
+        · TXT '礼包名字几个字' fs=56 #FFFFFF
+        · guid:45facfdc6a639f041b007c036dc527b8
+      Time  sz[533.81, 60.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.5, 0.0]
+        Bg  sz[400.0, 60.0] p[0.0, 0.0] a[0.0, 0.5][0.0, 0.5] piv[0.0, 0.5]
+          · IMG img_gift_bg_4 Sliced border(L,B,R,T)=[41, 0, 43, 0] Spirits/Pack/img_gift_bg_4.png
+        text_time  sz[260.0, 60.0] p[100.0, 0.0] a[0.0, 0.5][0.0, 0.5] piv[0.0, 0.5]
+          · TXT '7d 59:59:59' fs=40 #EFD376
+        icon  sz[40.0, 40.0] p[45.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+          · IMG img_gift_time Spirits/Pack/img_gift_time.png
+      Desc  sz[600.0, 300.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.5, 1.0]
+        · TXT '礼包描述礼包描述礼包描述礼包描述礼包描述礼包描述礼包描述礼包描述礼包描述礼包描述' fs=36 #EFDCC1
+    Middle  sz[-102.23, -875.0] p[0.65, -156.91] STRETCH
+      Bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+        · IMG img_gift_bg_tc_5 Spirits/Pack/img_gift_bg_tc_5.png
+      Content  sz[816.04, 412.92] p[-0.0, -25.39] a[0.5, 0.5][0.5, 0.5]
+        MainItem  sz[673.52, 226.82] p[-14.04, 164.0] a[0.5, 0.5][0.5, 0.5]
+          Bg  sz[496.71, 87.67] p[64.92, -6.0] a[0.5, 0.5][0.5, 0.5]
+            · IMG img_gift_bg_5 Sliced border(L,B,R,T)=[44, 36, 49, 37] Spirits/Pack/img_gift_bg_5.png
+          Bg1  sz[236.0, 112.0] p[-158.0, -59.0] a[0.5, 0.5][0.5, 0.5]
+            · IMG img_gift_bg_31 Spirits/Pack/img_gift_bg_31.png
+          <嵌套prefab:UIItemTemplate>
+            >> Public/UIItemTemplate.prefab
+            >> 覆盖 sz=['127.841', '185'] pos=['344.62054', '43']
+        Loop Horizontal Scroll Rect  sz[782.35, 157.53] p[-6.52, -36.3] a[0.5, 0.5][0.5, 0.5]
+          · LoopHorizontalScrollRect scroll=horizontal
+          · guid:3312d7739989d2b4e91e6319e9a96d76
+          · ScrollRectFilter
+          · RewardAdaptHelper
+          Viewport  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+            · guid:3312d7739989d2b4e91e6319e9a96d76
+            · TFWImage
+            Content  sz[0.0, 150.0] p[0.0, 0.0] a[0.0, 0.5][0.0, 0.5] piv[0.0, 0.5]
+              · guid:30649d3a9faa99c48a7b1166b86bf2a0 spacing=5.0 padding_LRTB=[0, 0, 0, 0]
+              · guid:3245ec927659c4140ac4f8d17403cc18
+            <嵌套prefab:UIItemTemplate>
+              >> Public/UIItemTemplate.prefab
+              >> 覆盖 sz=['150', '150'] pos=['71.25', '-78.76336']
+      Discount  sz[200.0, 200.0] p[421.8, 218.5] a[0.5, 0.5][0.5, 0.5]
+        Bg  sz[156.0, 156.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+          · IMG img_gift_bg_Discount Spirits/Pack/img_gift_bg_Discount.png
+        Txt  sz[131.36, 58.06] p[1.0, 7.1] a[0.5, 0.5][0.5, 0.5]
+          · TXT '9999%' fs=42 #EFE39B
+          · IgnoreTidCheckTag
+      Limit  sz[387.97, 51.79] p[0.0, -182.9] a[0.5, 0.5][0.5, 0.5]
+        Txt  sz[387.97, 56.73] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+          · TXT '剩余购买次数：1' fs=32 #3E2310
+      BgDown  sz[980.0, 244.0] p[0.0, -228.0] a[0.5, 0.5][0.5, 0.5]
+        · IMG img_gift_bg_tc_3 Spirits/Pack/img_gift_bg_tc_3.png
+    <嵌套prefab:UIPrivilege>
+      >> Common/UIPrivilege.prefab
+      >> 覆盖 sz=['870', '60'] pos=['435', '-80']
+    Chain [OFF]  sz[-20.0, -665.5] p[-0.0, 77.75] STRETCH
+      · LoopVerticalScrollRect scroll=vertical
+      · guid:3312d7739989d2b4e91e6319e9a96d76
+      · ScrollRectFilter
+      Viewport  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+        · guid:3312d7739989d2b4e91e6319e9a96d76
+        · TFWImage
+        Content  sz[950.0, 325.0] p[0.0, 0.0] a[0.5, 1.0][0.5, 1.0] piv[0.5, 1.0]
+          · guid:59f8146938fff824cb5fd77236b75775 spacing=38.0 padding_LRTB=[0, 0, 10, 35]
+          · guid:3245ec927659c4140ac4f8d17403cc18
+          ChainItem  sz[920.0, 280.0] p[475.0, -150.0] a[0.0, 1.0][0.0, 1.0]
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+            Arrow  sz[328.0, 60.0] p[0.0, -20.0] a[0.5, 0.0][0.5, 0.0]
+              · IMG ui_giftpack_img_arrow Spirits/Pack/ui_giftpack_img_arrow.png
+            Bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              · IMG img_gift_bg_7 Sliced border(L,B,R,T)=[317, 0, 159, 0] Spirits/Pack/img_gift_bg_7.png
+              ...(1 子节点省略)
+            Free  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              ...(2 子节点省略)
+            Pack  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              ...(4 子节点省略)
+            Soldout  sz[238.08, 159.06] p[319.11, -36.4] a[0.5, 0.5][0.5, 0.5]
+              ...(2 子节点省略)
+            Btn  sz[204.0, 84.0] p[-140.0, -38.0] a[1.0, 0.5][1.0, 0.5]
+              ...(2 子节点省略)
+            Discount  sz[145.49, 143.94] p[407.5, 70.6] a[0.5, 0.5][0.5, 0.5]
+              ...(2 子节点省略)
+    Img1  sz[240.61, 310.36] p[391.7, -414.68] a[0.5, 0.5][0.5, 0.5]
+      · IMG img_gift_bg_10 Spirits/Pack/img_gift_bg_10.png
+    Btn  sz[300.0, 120.0] p[0.0, 246.8] a[0.5, 0.0][0.5, 0.0]
+      <嵌套prefab:UIBtnPurchase>
+        >> Button/UIBtnPurchase.prefab
+        >> 覆盖 sz=['66', '33'] pos=['73', '-17.5']
+    Return  sz[100.0, 100.0] p[-3.7, 613.9] a[1.0, 0.5][1.0, 0.5] piv[1.0, 0.5]
+      · TFWImage
+      BG  sz[104.0, 104.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+        · IMG img_cm_zhizuo_guanbianniu Spirits/CommonNew/img_cm_zhizuo_guanbianniu.png
+  Pools  sz[1080.0, 250.0] p[0.0, -700.0] a[0.5, 0.5][0.5, 0.5]
+    line  sz[-100.0, 30.0] p[0.0, -13.0] STRETCH piv[0.5, 0.0]
+      · IMG im_bm_bg_13 Sliced border(L,B,R,T)=[0, 34, 0, 37] Spirits/BlackMarket/im_bm_bg_13.png
+    List  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+      · IMG img_idle_bg_jilu Sliced border(L,B,R,T)=[0, 4, 0, 12] Spirits/Fish/img_idle_bg_jilu.png
+      · ScrollRectFilter
+      · FancySelectScroller
+      · FancySelectScrollView
+      Viewport  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+        · guid:3312d7739989d2b4e91e6319e9a96d76
+        · TFWImage
+        Content  sz[0.0, 0.0] p[0.0, 0.0] STRETCH piv[0.0, 0.5]
+        Tab [OFF]  sz[0.0, 236.0] p[0.0, 0.0] a[0.0, 0.5][1.0, 0.5]
+          Root  sz[420.0, 236.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+            Normal  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              ...(4 子节点省略)
+            Select [OFF]  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              ...(5 子节点省略)
+            Red  sz[40.0, 40.0] p[-45.0, -45.0] a[1.0, 1.0][1.0, 1.0]
+    Selected  sz[430.0, 220.31] p[0.0, 3.14] a[0.5, 0.5][0.5, 0.5]
+      · IMG img_chouka_kuang Sliced border(L,B,R,T)=[20, 20, 20, 20] Spirits/Gacha/img_chouka_kuang.png
+    BtnLeft  sz[90.14, 144.25] p[-239.6, 4.9] a[0.5, 0.5][0.5, 0.5]
+      · TweenAnimation
+      · guid:4e29b1a8efbd4b44bb3f3716e73f07ff
+      · TFWImage
+      bg  sz[60.0, 108.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+        · IMG img_ledger_anniu_jiantou2 Spirits/CommonNew/img_ledger_anniu_jiantou2.png
+    BtnRight  sz[90.14, 144.25] p[231.0, 4.7] a[0.5, 0.5][0.5, 0.5]
+      · TweenAnimation
+      · guid:4e29b1a8efbd4b44bb3f3716e73f07ff
+      · TFWImage
+      bg  sz[60.0, 108.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5] scl[-1.0, 1.0]
+        · IMG img_ledger_anniu_jiantou2 Spirits/CommonNew/img_ledger_anniu_jiantou2.png

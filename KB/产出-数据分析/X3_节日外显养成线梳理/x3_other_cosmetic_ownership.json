@@ -1,0 +1,2944 @@
+{
+  "segment": "成熟服 1000-1880",
+  "active_window": "2026-07-07~2026-08-05",
+  "denominator": 16969,
+  "formula": "近30日活跃玩家中历史曾获得人数 / 同服段近30日活跃人数",
+  "items": [
+    {
+      "key": "主城皮肤|81001",
+      "module": "主城皮肤",
+      "id": "81001",
+      "name": "南瓜灯岬",
+      "asset_ids": [
+        "Item_81001",
+        "Item_81002",
+        "Item_81003",
+        "Item_81004",
+        "Item_81005",
+        "Skin_1002"
+      ],
+      "owners": 10,
+      "denominator": 16969,
+      "rate": 0.05893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "主城皮肤|81041",
+      "module": "主城皮肤",
+      "id": "81041",
+      "name": "雪舞奇缘",
+      "asset_ids": [
+        "Item_81041",
+        "Item_81043",
+        "Skin_1005"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "主城皮肤|81051",
+      "module": "主城皮肤",
+      "id": "81051",
+      "name": "柔情海湾",
+      "asset_ids": [
+        "Item_81051",
+        "Item_81053",
+        "Skin_1006"
+      ],
+      "owners": 33,
+      "denominator": 16969,
+      "rate": 0.19447227296835407,
+      "status": "measured"
+    },
+    {
+      "key": "主城皮肤|81081",
+      "module": "主城皮肤",
+      "id": "81081",
+      "name": "狂欢剧场",
+      "asset_ids": [
+        "Item_81081",
+        "Item_81083",
+        "Item_81084",
+        "Skin_1009"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "主城皮肤|81091",
+      "module": "主城皮肤",
+      "id": "81091",
+      "name": "夏日甜筒小屋",
+      "asset_ids": [
+        "Item_81091",
+        "Item_81092",
+        "Item_81093",
+        "Item_81094",
+        "Skin_1010"
+      ],
+      "owners": 19,
+      "denominator": 16969,
+      "rate": 0.11196888443632508,
+      "status": "measured"
+    },
+    {
+      "key": "主城皮肤|81101",
+      "module": "主城皮肤",
+      "id": "81101",
+      "name": "月心珍珠",
+      "asset_ids": [
+        "Item_81101",
+        "Item_81103",
+        "Item_81104",
+        "Skin_1011"
+      ],
+      "owners": 14,
+      "denominator": 16969,
+      "rate": 0.08250338853202899,
+      "status": "measured"
+    },
+    {
+      "key": "主城皮肤|81111",
+      "module": "主城皮肤",
+      "id": "81111",
+      "name": "周年庆典",
+      "asset_ids": [
+        "Item_81111",
+        "Skin_1012"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "主城皮肤|81121",
+      "module": "主城皮肤",
+      "id": "81121",
+      "name": "深海花园",
+      "asset_ids": [
+        "Item_81121",
+        "Item_81123",
+        "Item_81124",
+        "Skin_1013"
+      ],
+      "owners": 10,
+      "denominator": 16969,
+      "rate": 0.05893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "主城皮肤|81151",
+      "module": "主城皮肤",
+      "id": "81151",
+      "name": "金字塔之城",
+      "asset_ids": [
+        "Item_81151",
+        "Skin_1016"
+      ],
+      "owners": 21,
+      "denominator": 16969,
+      "rate": 0.1237550827980435,
+      "status": "measured"
+    },
+    {
+      "key": "主城皮肤|81131",
+      "module": "主城皮肤",
+      "id": "81131",
+      "name": "回声魔山",
+      "asset_ids": [
+        "Item_81131",
+        "Item_81133",
+        "Item_81134",
+        "Item_81135",
+        "Item_81136",
+        "Skin_1014"
+      ],
+      "owners": 95,
+      "denominator": 16969,
+      "rate": 0.5598444221816253,
+      "status": "measured"
+    },
+    {
+      "key": "主城皮肤|81141",
+      "module": "主城皮肤",
+      "id": "81141",
+      "name": "梦幻王蝶巢穴",
+      "asset_ids": [
+        "Item_81141",
+        "Item_81143",
+        "Item_81144",
+        "Item_81145",
+        "Item_81146",
+        "Skin_1015"
+      ],
+      "owners": 52,
+      "denominator": 16969,
+      "rate": 0.30644115740467914,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001033",
+      "module": "家具",
+      "id": "31001033",
+      "name": "魔法稻草人",
+      "asset_ids": [
+        "Item_151001"
+      ],
+      "owners": 78,
+      "denominator": 16969,
+      "rate": 0.45966173610701866,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001034",
+      "module": "家具",
+      "id": "31001034",
+      "name": "诡夜枯木",
+      "asset_ids": [
+        "Item_151002"
+      ],
+      "owners": 28,
+      "denominator": 16969,
+      "rate": 0.16500677706405797,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001035",
+      "module": "家具",
+      "id": "31001035",
+      "name": "感恩餐桌",
+      "asset_ids": [
+        "Item_151004"
+      ],
+      "owners": 66,
+      "denominator": 16969,
+      "rate": 0.38894454593670813,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001036",
+      "module": "家具",
+      "id": "31001036",
+      "name": "火鸡宝贝",
+      "asset_ids": [
+        "Item_151005"
+      ],
+      "owners": 35,
+      "denominator": 16969,
+      "rate": 0.2062584713300725,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001037",
+      "module": "家具",
+      "id": "31001037",
+      "name": "雪人",
+      "asset_ids": [
+        "Item_151006"
+      ],
+      "owners": 24,
+      "denominator": 16969,
+      "rate": 0.14143438034062114,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001038",
+      "module": "家具",
+      "id": "31001038",
+      "name": "圣诞树",
+      "asset_ids": [
+        "Item_151007"
+      ],
+      "owners": 94,
+      "denominator": 16969,
+      "rate": 0.5539513230007661,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001039",
+      "module": "家具",
+      "id": "31001039",
+      "name": "新年舞狮",
+      "asset_ids": [
+        "Item_151008"
+      ],
+      "owners": 75,
+      "denominator": 16969,
+      "rate": 0.4419824385644411,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001040",
+      "module": "家具",
+      "id": "31001040",
+      "name": "新年灯笼",
+      "asset_ids": [
+        "Item_151009"
+      ],
+      "owners": 27,
+      "denominator": 16969,
+      "rate": 0.15911367788319877,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001052",
+      "module": "家具",
+      "id": "31001052",
+      "name": "绯梦沙发",
+      "asset_ids": [
+        "Item_151021"
+      ],
+      "owners": 136,
+      "denominator": 16969,
+      "rate": 0.8014614885968531,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001053",
+      "module": "家具",
+      "id": "31001053",
+      "name": "雷霆核心",
+      "asset_ids": [
+        "Item_151022"
+      ],
+      "owners": 1095,
+      "denominator": 16969,
+      "rate": 6.45294360304084,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001054",
+      "module": "家具",
+      "id": "31001054",
+      "name": "滑稽宝箱",
+      "asset_ids": [
+        "Item_151023"
+      ],
+      "owners": 29,
+      "denominator": 16969,
+      "rate": 0.1708998762449172,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001055",
+      "module": "家具",
+      "id": "31001055",
+      "name": "滑稽画像",
+      "asset_ids": [
+        "Item_151024"
+      ],
+      "owners": 36,
+      "denominator": 16969,
+      "rate": 0.2121515705109317,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001058",
+      "module": "家具",
+      "id": "31001058",
+      "name": "齿轮转椅",
+      "asset_ids": [
+        "Item_151027"
+      ],
+      "owners": 68,
+      "denominator": 16969,
+      "rate": 0.40073074429842653,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001059",
+      "module": "家具",
+      "id": "31001059",
+      "name": "蒸汽酒柜",
+      "asset_ids": [
+        "Item_151028"
+      ],
+      "owners": 95,
+      "denominator": 16969,
+      "rate": 0.5598444221816253,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001060",
+      "module": "家具",
+      "id": "31001060",
+      "name": "蔷薇王座",
+      "asset_ids": [
+        "Item_151030"
+      ],
+      "owners": 138,
+      "denominator": 16969,
+      "rate": 0.8132476869585715,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001063",
+      "module": "家具",
+      "id": "31001063",
+      "name": "萤火树桌",
+      "asset_ids": [
+        "Item_151033"
+      ],
+      "owners": 54,
+      "denominator": 16969,
+      "rate": 0.31822735576639755,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001067",
+      "module": "家具",
+      "id": "31001067",
+      "name": "童趣木马",
+      "asset_ids": [
+        "Item_151037"
+      ],
+      "owners": 80,
+      "denominator": 16969,
+      "rate": 0.4714479344687371,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001068",
+      "module": "家具",
+      "id": "31001068",
+      "name": "烧烤架",
+      "asset_ids": [
+        "Item_151038"
+      ],
+      "owners": 68,
+      "denominator": 16969,
+      "rate": 0.40073074429842653,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001069",
+      "module": "家具",
+      "id": "31001069",
+      "name": "自由意志雕像",
+      "asset_ids": [
+        "Item_151039"
+      ],
+      "owners": 63,
+      "denominator": 16969,
+      "rate": 0.3712652483941305,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001070",
+      "module": "家具",
+      "id": "31001070",
+      "name": "1周年蛋糕！",
+      "asset_ids": [
+        "Item_151040"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001072",
+      "module": "家具",
+      "id": "31001072",
+      "name": "亡者墓碑",
+      "asset_ids": [
+        "Item_151042"
+      ],
+      "owners": 47,
+      "denominator": 16969,
+      "rate": 0.27697566150038305,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001073",
+      "module": "家具",
+      "id": "31001073",
+      "name": "椰风遮阳椅",
+      "asset_ids": [
+        "Item_151043"
+      ],
+      "owners": 111,
+      "denominator": 16969,
+      "rate": 0.6541340090753727,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001074",
+      "module": "家具",
+      "id": "31001074",
+      "name": "鲸灵",
+      "asset_ids": [
+        "Item_151044"
+      ],
+      "owners": 35,
+      "denominator": 16969,
+      "rate": 0.2062584713300725,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001075",
+      "module": "家具",
+      "id": "31001075",
+      "name": "贝语之泉",
+      "asset_ids": [
+        "Item_151046"
+      ],
+      "owners": 70,
+      "denominator": 16969,
+      "rate": 0.412516942660145,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001076",
+      "module": "家具",
+      "id": "31001076",
+      "name": "烈焰舞台",
+      "asset_ids": [
+        "Item_151047"
+      ],
+      "owners": 168,
+      "denominator": 16969,
+      "rate": 0.990040662384348,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001077",
+      "module": "家具",
+      "id": "31001077",
+      "name": "月之梦语",
+      "asset_ids": [
+        "Item_151048"
+      ],
+      "owners": 40,
+      "denominator": 16969,
+      "rate": 0.23572396723436856,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001081",
+      "module": "家具",
+      "id": "31001081",
+      "name": "幽魂鬼影餐桌",
+      "asset_ids": [
+        "Item_151052"
+      ],
+      "owners": 129,
+      "denominator": 16969,
+      "rate": 0.7602097943308386,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001082",
+      "module": "家具",
+      "id": "31001082",
+      "name": "麋鹿餐桌",
+      "asset_ids": [
+        "Item_151054"
+      ],
+      "owners": 33,
+      "denominator": 16969,
+      "rate": 0.19447227296835407,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001083",
+      "module": "家具",
+      "id": "31001083",
+      "name": "小桶里的耶诞梦",
+      "asset_ids": [
+        "Item_151055"
+      ],
+      "owners": 11,
+      "denominator": 16969,
+      "rate": 0.06482409098945136,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001085",
+      "module": "家具",
+      "id": "31001085",
+      "name": "守望者·斯芬克斯",
+      "asset_ids": [
+        "Item_151057"
+      ],
+      "owners": 27,
+      "denominator": 16969,
+      "rate": 0.15911367788319877,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001086",
+      "module": "家具",
+      "id": "31001086",
+      "name": "黑猫神龛",
+      "asset_ids": [
+        "Item_151058"
+      ],
+      "owners": 93,
+      "denominator": 16969,
+      "rate": 0.548058223819907,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001087",
+      "module": "家具",
+      "id": "31001087",
+      "name": "永恒长椅",
+      "asset_ids": [
+        "Item_151059"
+      ],
+      "owners": 23,
+      "denominator": 16969,
+      "rate": 0.13554128115976194,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001088",
+      "module": "家具",
+      "id": "31001088",
+      "name": "爱之廊玫瑰",
+      "asset_ids": [
+        "Item_151060"
+      ],
+      "owners": 12,
+      "denominator": 16969,
+      "rate": 0.07071719017031057,
+      "status": "measured"
+    },
+    {
+      "key": "家具|31001089",
+      "module": "家具",
+      "id": "31001089",
+      "name": "誓言之门",
+      "asset_ids": [
+        "Item_151061"
+      ],
+      "owners": 10,
+      "denominator": 16969,
+      "rate": 0.05893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "家具|51001004",
+      "module": "家具",
+      "id": "51001004",
+      "name": "蓝色精灵",
+      "asset_ids": [
+        "Item_151045"
+      ],
+      "owners": 49,
+      "denominator": 16969,
+      "rate": 0.2887618598621015,
+      "status": "measured"
+    },
+    {
+      "key": "家具|51001005",
+      "module": "家具",
+      "id": "51001005",
+      "name": "咕咕地毯",
+      "asset_ids": [
+        "Item_151053"
+      ],
+      "owners": 62,
+      "denominator": 16969,
+      "rate": 0.36537214921327127,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|1001006",
+      "module": "装饰三件套",
+      "id": "1001006",
+      "name": "樱花浮雕",
+      "asset_ids": [
+        "Item_152008"
+      ],
+      "owners": 7,
+      "denominator": 16969,
+      "rate": 0.041251694266014494,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|2001010",
+      "module": "装饰三件套",
+      "id": "2001010",
+      "name": "樱花地板",
+      "asset_ids": [
+        "Item_152007"
+      ],
+      "owners": 7,
+      "denominator": 16969,
+      "rate": 0.041251694266014494,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|3001007",
+      "module": "装饰三件套",
+      "id": "3001007",
+      "name": "樱花墙纸",
+      "asset_ids": [
+        "Item_152009"
+      ],
+      "owners": 7,
+      "denominator": 16969,
+      "rate": 0.041251694266014494,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|1001008",
+      "module": "装饰三件套",
+      "id": "1001008",
+      "name": "灵潮之殿",
+      "asset_ids": [
+        "Item_152014"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|2001012",
+      "module": "装饰三件套",
+      "id": "2001012",
+      "name": "海灵归途",
+      "asset_ids": [
+        "Item_152015"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|3001009",
+      "module": "装饰三件套",
+      "id": "3001009",
+      "name": "灵魂之径",
+      "asset_ids": [
+        "Item_152016"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|1001009",
+      "module": "装饰三件套",
+      "id": "1001009",
+      "name": "海滨假日",
+      "asset_ids": [
+        "Item_152017"
+      ],
+      "owners": 12,
+      "denominator": 16969,
+      "rate": 0.07071719017031057,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|2001013",
+      "module": "装饰三件套",
+      "id": "2001013",
+      "name": "海滨假日",
+      "asset_ids": [
+        "Item_152018"
+      ],
+      "owners": 21,
+      "denominator": 16969,
+      "rate": 0.1237550827980435,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|3001010",
+      "module": "装饰三件套",
+      "id": "3001010",
+      "name": "海滨假日",
+      "asset_ids": [
+        "Item_152019"
+      ],
+      "owners": 22,
+      "denominator": 16969,
+      "rate": 0.1296481819789027,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|1001010",
+      "module": "装饰三件套",
+      "id": "1001010",
+      "name": "团圆之夜",
+      "asset_ids": [
+        "Item_152021"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|2001015",
+      "module": "装饰三件套",
+      "id": "2001015",
+      "name": "团圆之夜",
+      "asset_ids": [
+        "Item_152022"
+      ],
+      "owners": 2,
+      "denominator": 16969,
+      "rate": 0.011786198361718427,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|3001011",
+      "module": "装饰三件套",
+      "id": "3001011",
+      "name": "团圆之夜",
+      "asset_ids": [
+        "Item_152023"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|1001011",
+      "module": "装饰三件套",
+      "id": "1001011",
+      "name": "圣诞庆典",
+      "asset_ids": [
+        "Item_152024"
+      ],
+      "owners": 11,
+      "denominator": 16969,
+      "rate": 0.06482409098945136,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|2001016",
+      "module": "装饰三件套",
+      "id": "2001016",
+      "name": "圣诞庆典",
+      "asset_ids": [
+        "Item_152025"
+      ],
+      "owners": 11,
+      "denominator": 16969,
+      "rate": 0.06482409098945136,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|3001012",
+      "module": "装饰三件套",
+      "id": "3001012",
+      "name": "圣诞庆典",
+      "asset_ids": [
+        "Item_152026"
+      ],
+      "owners": 11,
+      "denominator": 16969,
+      "rate": 0.06482409098945136,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|1001012",
+      "module": "装饰三件套",
+      "id": "1001012",
+      "name": "新春典藏",
+      "asset_ids": [
+        "Item_152027"
+      ],
+      "owners": 8,
+      "denominator": 16969,
+      "rate": 0.04714479344687371,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|2001017",
+      "module": "装饰三件套",
+      "id": "2001017",
+      "name": "新春典藏",
+      "asset_ids": [
+        "Item_152028"
+      ],
+      "owners": 8,
+      "denominator": 16969,
+      "rate": 0.04714479344687371,
+      "status": "measured"
+    },
+    {
+      "key": "装饰三件套|3001013",
+      "module": "装饰三件套",
+      "id": "3001013",
+      "name": "新春典藏",
+      "asset_ids": [
+        "Item_152029"
+      ],
+      "owners": 8,
+      "denominator": 16969,
+      "rate": 0.04714479344687371,
+      "status": "measured"
+    },
+    {
+      "key": "行军皮肤|9",
+      "module": "行军皮肤",
+      "id": "9",
+      "name": "感恩之翼",
+      "asset_ids": [
+        "Item_15011",
+        "Item_15012",
+        "Item_15013",
+        "Item_15014",
+        "Item_15015",
+        "ShipSkin_9"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "行军皮肤|10",
+      "module": "行军皮肤",
+      "id": "10",
+      "name": "极光驯鹿号",
+      "asset_ids": [
+        "Item_15021",
+        "Item_15022",
+        "Item_15025",
+        "ShipSkin_10"
+      ],
+      "owners": 4,
+      "denominator": 16969,
+      "rate": 0.023572396723436854,
+      "status": "measured"
+    },
+    {
+      "key": "行军皮肤|11",
+      "module": "行军皮肤",
+      "id": "11",
+      "name": "菌伞幽航",
+      "asset_ids": [
+        "Item_15031",
+        "Item_15032",
+        "Item_15035",
+        "ShipSkin_11"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "行军皮肤|12",
+      "module": "行军皮肤",
+      "id": "12",
+      "name": "熊猫之旅",
+      "asset_ids": [
+        "Item_15041",
+        "Item_15042",
+        "Item_15045",
+        "ShipSkin_12"
+      ],
+      "owners": 7,
+      "denominator": 16969,
+      "rate": 0.041251694266014494,
+      "status": "measured"
+    },
+    {
+      "key": "行军皮肤|13",
+      "module": "行军皮肤",
+      "id": "13",
+      "name": "风暴王座",
+      "asset_ids": [
+        "Item_15051",
+        "Item_15054",
+        "Item_15055",
+        "ShipSkin_13"
+      ],
+      "owners": 64,
+      "denominator": 16969,
+      "rate": 0.37715834757498967,
+      "status": "measured"
+    },
+    {
+      "key": "行军皮肤|14",
+      "module": "行军皮肤",
+      "id": "14",
+      "name": "深海猎手",
+      "asset_ids": [
+        "Item_15061",
+        "Item_15062",
+        "Item_15065",
+        "ShipSkin_14"
+      ],
+      "owners": 10,
+      "denominator": 16969,
+      "rate": 0.05893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "行军皮肤|15",
+      "module": "行军皮肤",
+      "id": "15",
+      "name": "Duck You!",
+      "asset_ids": [
+        "ShipSkin_15"
+      ],
+      "owners": 8,
+      "denominator": 16969,
+      "rate": 0.04714479344687371,
+      "status": "measured"
+    },
+    {
+      "key": "行军皮肤|16",
+      "module": "行军皮肤",
+      "id": "16",
+      "name": "冰淇淋大冒险号",
+      "asset_ids": [
+        "Item_15081",
+        "Item_15082",
+        "Item_15085",
+        "Item_15086",
+        "Item_15087",
+        "ShipSkin_16"
+      ],
+      "owners": 13,
+      "denominator": 16969,
+      "rate": 0.07661028935116979,
+      "status": "measured"
+    },
+    {
+      "key": "行军皮肤|17",
+      "module": "行军皮肤",
+      "id": "17",
+      "name": "天际彩飨",
+      "asset_ids": [
+        "Item_15091",
+        "Item_15092",
+        "ShipSkin_17"
+      ],
+      "owners": 40,
+      "denominator": 16969,
+      "rate": 0.23572396723436856,
+      "status": "measured"
+    },
+    {
+      "key": "行军皮肤|18",
+      "module": "行军皮肤",
+      "id": "18",
+      "name": "守护鲸灵",
+      "asset_ids": [
+        "Item_15111",
+        "Item_15112",
+        "ShipSkin_18"
+      ],
+      "owners": 11,
+      "denominator": 16969,
+      "rate": 0.06482409098945136,
+      "status": "measured"
+    },
+    {
+      "key": "行军皮肤|19",
+      "module": "行军皮肤",
+      "id": "19",
+      "name": "回声圣鳐",
+      "asset_ids": [
+        "Item_15121",
+        "Item_15122",
+        "Item_15123",
+        "Item_15124",
+        "Item_15125",
+        "ShipSkin_19"
+      ],
+      "owners": 67,
+      "denominator": 16969,
+      "rate": 0.3948376451175673,
+      "status": "measured"
+    },
+    {
+      "key": "行军皮肤|20",
+      "module": "行军皮肤",
+      "id": "20",
+      "name": "炽焰龙舟",
+      "asset_ids": [
+        "Item_15131",
+        "Item_15132",
+        "Item_15133",
+        "Item_15134",
+        "Item_15135",
+        "ShipSkin_20"
+      ],
+      "owners": 6,
+      "denominator": 16969,
+      "rate": 0.035358595085155285,
+      "status": "measured"
+    },
+    {
+      "key": "行军皮肤|21",
+      "module": "行军皮肤",
+      "id": "21",
+      "name": "梦幻王蝶",
+      "asset_ids": [
+        "Item_15141",
+        "Item_15142",
+        "Item_15143",
+        "Item_15144",
+        "Item_15145",
+        "ShipSkin_21"
+      ],
+      "owners": 14,
+      "denominator": 16969,
+      "rate": 0.08250338853202899,
+      "status": "measured"
+    },
+    {
+      "key": "行军皮肤|22",
+      "module": "行军皮肤",
+      "id": "22",
+      "name": "天马启航号",
+      "asset_ids": [
+        "Item_15151",
+        "Item_15152",
+        "Item_15153",
+        "Item_15154",
+        "Item_15155",
+        "ShipSkin_22"
+      ],
+      "owners": 381,
+      "denominator": 16969,
+      "rate": 2.2452707879073603,
+      "status": "measured"
+    },
+    {
+      "key": "航迹|3002 / Item_15029",
+      "module": "航迹",
+      "id": "3002 / Item_15029",
+      "name": "极光航迹",
+      "asset_ids": [
+        "Item_15029",
+        "Skin_3002"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "航迹|3006 / Item_15069",
+      "module": "航迹",
+      "id": "3006 / Item_15069",
+      "name": "蒸猎航迹",
+      "asset_ids": [
+        "Item_15069",
+        "Skin_3006"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "航迹|3007 / Item_15079",
+      "module": "航迹",
+      "id": "3007 / Item_15079",
+      "name": "鸭力航迹",
+      "asset_ids": [
+        "Item_15079",
+        "Skin_3007"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "航迹|3008 / Item_15089",
+      "module": "航迹",
+      "id": "3008 / Item_15089",
+      "name": "缤纷航迹",
+      "asset_ids": [
+        "Item_15089",
+        "Item_15090",
+        "Skin_3008"
+      ],
+      "owners": 69,
+      "denominator": 16969,
+      "rate": 0.40662384347928576,
+      "status": "measured"
+    },
+    {
+      "key": "航迹|3009 / Item_15093",
+      "module": "航迹",
+      "id": "3009 / Item_15093",
+      "name": "庆典航迹",
+      "asset_ids": [
+        "Item_15093",
+        "Skin_3009"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "航迹|3010 / Item_15113",
+      "module": "航迹",
+      "id": "3010 / Item_15113",
+      "name": "鲸灵航迹",
+      "asset_ids": [
+        "Item_15113",
+        "Skin_3010"
+      ],
+      "owners": 2,
+      "denominator": 16969,
+      "rate": 0.011786198361718427,
+      "status": "measured"
+    },
+    {
+      "key": "航迹|3012 / Item_15136",
+      "module": "航迹",
+      "id": "3012 / Item_15136",
+      "name": "炎龙航迹",
+      "asset_ids": [
+        "Item_15136",
+        "Skin_3012"
+      ],
+      "owners": 2,
+      "denominator": 16969,
+      "rate": 0.011786198361718427,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80010",
+      "module": "头像框",
+      "id": "80010",
+      "name": "捣蛋小鬼",
+      "asset_ids": [
+        "Item_80010",
+        "Item_80011",
+        "Item_80012",
+        "Item_80013",
+        "Item_80014"
+      ],
+      "owners": 333,
+      "denominator": 16969,
+      "rate": 1.9624020272261182,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80031",
+      "module": "头像框",
+      "id": "80031",
+      "name": "冰雪欢歌",
+      "asset_ids": [
+        "Item_80031",
+        "Item_80033"
+      ],
+      "owners": 77,
+      "denominator": 16969,
+      "rate": 0.45376863692615943,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80051",
+      "module": "头像框",
+      "id": "80051",
+      "name": "瑞蛇迎春",
+      "asset_ids": [
+        "Item_80051",
+        "Item_80052",
+        "Item_80053"
+      ],
+      "owners": 93,
+      "denominator": 16969,
+      "rate": 0.548058223819907,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80061",
+      "module": "头像框",
+      "id": "80061",
+      "name": "爱意缠绕",
+      "asset_ids": [
+        "Item_80061",
+        "Item_80062",
+        "Item_80063"
+      ],
+      "owners": 131,
+      "denominator": 16969,
+      "rate": 0.771995992692557,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80091",
+      "module": "头像框",
+      "id": "80091",
+      "name": "滑稽舞台",
+      "asset_ids": [
+        "Item_80091",
+        "Item_80092"
+      ],
+      "owners": 86,
+      "denominator": 16969,
+      "rate": 0.5068065295538924,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80101",
+      "module": "头像框",
+      "id": "80101",
+      "name": "彩虹甜圈圈",
+      "asset_ids": [
+        "Item_80101",
+        "Item_80102"
+      ],
+      "owners": 7,
+      "denominator": 16969,
+      "rate": 0.041251694266014494,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80103",
+      "module": "头像框",
+      "id": "80103",
+      "name": "1周年彩环",
+      "asset_ids": [
+        "Item_80103"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80104",
+      "module": "头像框",
+      "id": "80104",
+      "name": "灵魂之环",
+      "asset_ids": [
+        "Item_80104"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80105",
+      "module": "头像框",
+      "id": "80105",
+      "name": "人鱼之歌",
+      "asset_ids": [
+        "Item_80105"
+      ],
+      "owners": 2,
+      "denominator": 16969,
+      "rate": 0.011786198361718427,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80106",
+      "module": "头像框",
+      "id": "80106",
+      "name": "玉兔逐月",
+      "asset_ids": [
+        "Item_80106"
+      ],
+      "owners": 18,
+      "denominator": 16969,
+      "rate": 0.10607578525546585,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80110",
+      "module": "头像框",
+      "id": "80110",
+      "name": "双羽冠辉",
+      "asset_ids": [
+        "Item_80110"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80112",
+      "module": "头像框",
+      "id": "80112",
+      "name": "龙焰誓约",
+      "asset_ids": [
+        "Item_80112"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80100",
+      "module": "头像框",
+      "id": "80100",
+      "name": "深海之冠",
+      "asset_ids": [
+        "Item_80100"
+      ],
+      "owners": 186,
+      "denominator": 16969,
+      "rate": 1.096116447639814,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80113",
+      "module": "头像框",
+      "id": "80113",
+      "name": "金樽之冠",
+      "asset_ids": [
+        "Item_80113"
+      ],
+      "owners": 22,
+      "denominator": 16969,
+      "rate": 0.1296481819789027,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80114",
+      "module": "头像框",
+      "id": "80114",
+      "name": "银樽之冠",
+      "asset_ids": [
+        "Item_80114"
+      ],
+      "owners": 24,
+      "denominator": 16969,
+      "rate": 0.14143438034062114,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80115",
+      "module": "头像框",
+      "id": "80115",
+      "name": "铜樽之冠",
+      "asset_ids": [
+        "Item_80115"
+      ],
+      "owners": 25,
+      "denominator": 16969,
+      "rate": 0.14732747952148034,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80300",
+      "module": "头像框",
+      "id": "80300",
+      "name": "世界杯·阿尔及利亚助威头像框",
+      "asset_ids": [
+        "Item_80300"
+      ],
+      "owners": 2,
+      "denominator": 16969,
+      "rate": 0.011786198361718427,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80301",
+      "module": "头像框",
+      "id": "80301",
+      "name": "世界杯·阿根廷助威头像框",
+      "asset_ids": [
+        "Item_80301"
+      ],
+      "owners": 4,
+      "denominator": 16969,
+      "rate": 0.023572396723436854,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80302",
+      "module": "头像框",
+      "id": "80302",
+      "name": "世界杯·澳大利亚助威头像框",
+      "asset_ids": [
+        "Item_80302"
+      ],
+      "owners": 2,
+      "denominator": 16969,
+      "rate": 0.011786198361718427,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80303",
+      "module": "头像框",
+      "id": "80303",
+      "name": "世界杯·奥地利助威头像框",
+      "asset_ids": [
+        "Item_80303"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80304",
+      "module": "头像框",
+      "id": "80304",
+      "name": "世界杯·比利时助威头像框",
+      "asset_ids": [
+        "Item_80304"
+      ],
+      "owners": 2,
+      "denominator": 16969,
+      "rate": 0.011786198361718427,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80305",
+      "module": "头像框",
+      "id": "80305",
+      "name": "世界杯·波黑助威头像框",
+      "asset_ids": [
+        "Item_80305"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80306",
+      "module": "头像框",
+      "id": "80306",
+      "name": "世界杯·巴西助威头像框",
+      "asset_ids": [
+        "Item_80306"
+      ],
+      "owners": 2,
+      "denominator": 16969,
+      "rate": 0.011786198361718427,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80307",
+      "module": "头像框",
+      "id": "80307",
+      "name": "世界杯·加拿大助威头像框",
+      "asset_ids": [
+        "Item_80307"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80308",
+      "module": "头像框",
+      "id": "80308",
+      "name": "世界杯·科特迪瓦助威头像框",
+      "asset_ids": [
+        "Item_80308"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80309",
+      "module": "头像框",
+      "id": "80309",
+      "name": "世界杯·刚果助威头像框",
+      "asset_ids": [
+        "Item_80309"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80310",
+      "module": "头像框",
+      "id": "80310",
+      "name": "世界杯·哥伦比亚助威头像框",
+      "asset_ids": [
+        "Item_80310"
+      ],
+      "owners": 2,
+      "denominator": 16969,
+      "rate": 0.011786198361718427,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80311",
+      "module": "头像框",
+      "id": "80311",
+      "name": "世界杯·佛得角助威头像框",
+      "asset_ids": [
+        "Item_80311"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80312",
+      "module": "头像框",
+      "id": "80312",
+      "name": "世界杯·克罗地亚助威头像框",
+      "asset_ids": [
+        "Item_80312"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80313",
+      "module": "头像框",
+      "id": "80313",
+      "name": "世界杯·库拉索助威头像框",
+      "asset_ids": [
+        "Item_80313"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80314",
+      "module": "头像框",
+      "id": "80314",
+      "name": "世界杯·捷克助威头像框",
+      "asset_ids": [
+        "Item_80314"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80315",
+      "module": "头像框",
+      "id": "80315",
+      "name": "世界杯·厄瓜多尔助威头像框",
+      "asset_ids": [
+        "Item_80315"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80316",
+      "module": "头像框",
+      "id": "80316",
+      "name": "世界杯·埃及助威头像框",
+      "asset_ids": [
+        "Item_80316"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80317",
+      "module": "头像框",
+      "id": "80317",
+      "name": "世界杯·英格兰助威头像框",
+      "asset_ids": [
+        "Item_80317"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80318",
+      "module": "头像框",
+      "id": "80318",
+      "name": "世界杯·西班牙助威头像框",
+      "asset_ids": [
+        "Item_80318"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80319",
+      "module": "头像框",
+      "id": "80319",
+      "name": "世界杯·法国助威头像框",
+      "asset_ids": [
+        "Item_80319"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80320",
+      "module": "头像框",
+      "id": "80320",
+      "name": "世界杯·德国助威头像框",
+      "asset_ids": [
+        "Item_80320"
+      ],
+      "owners": 3,
+      "denominator": 16969,
+      "rate": 0.017679297542577643,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80321",
+      "module": "头像框",
+      "id": "80321",
+      "name": "世界杯·加纳助威头像框",
+      "asset_ids": [
+        "Item_80321"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80322",
+      "module": "头像框",
+      "id": "80322",
+      "name": "世界杯·海地助威头像框",
+      "asset_ids": [
+        "Item_80322"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80323",
+      "module": "头像框",
+      "id": "80323",
+      "name": "世界杯·伊朗助威头像框",
+      "asset_ids": [
+        "Item_80323"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80324",
+      "module": "头像框",
+      "id": "80324",
+      "name": "世界杯·伊拉克助威头像框",
+      "asset_ids": [
+        "Item_80324"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80325",
+      "module": "头像框",
+      "id": "80325",
+      "name": "世界杯·约旦助威头像框",
+      "asset_ids": [
+        "Item_80325"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80326",
+      "module": "头像框",
+      "id": "80326",
+      "name": "世界杯·日本助威头像框",
+      "asset_ids": [
+        "Item_80326"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80327",
+      "module": "头像框",
+      "id": "80327",
+      "name": "世界杯·韩国助威头像框",
+      "asset_ids": [
+        "Item_80327"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80328",
+      "module": "头像框",
+      "id": "80328",
+      "name": "世界杯·沙特助威头像框",
+      "asset_ids": [
+        "Item_80328"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80329",
+      "module": "头像框",
+      "id": "80329",
+      "name": "世界杯·摩洛哥助威头像框",
+      "asset_ids": [
+        "Item_80329"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80330",
+      "module": "头像框",
+      "id": "80330",
+      "name": "世界杯·墨西哥助威头像框",
+      "asset_ids": [
+        "Item_80330"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80331",
+      "module": "头像框",
+      "id": "80331",
+      "name": "世界杯·荷兰助威头像框",
+      "asset_ids": [
+        "Item_80331"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80332",
+      "module": "头像框",
+      "id": "80332",
+      "name": "世界杯·挪威助威头像框",
+      "asset_ids": [
+        "Item_80332"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80333",
+      "module": "头像框",
+      "id": "80333",
+      "name": "世界杯·新西兰助威头像框",
+      "asset_ids": [
+        "Item_80333"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80334",
+      "module": "头像框",
+      "id": "80334",
+      "name": "世界杯·巴拿马助威头像框",
+      "asset_ids": [
+        "Item_80334"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80335",
+      "module": "头像框",
+      "id": "80335",
+      "name": "世界杯·巴拉圭助威头像框",
+      "asset_ids": [
+        "Item_80335"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80336",
+      "module": "头像框",
+      "id": "80336",
+      "name": "世界杯·葡萄牙助威头像框",
+      "asset_ids": [
+        "Item_80336"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80337",
+      "module": "头像框",
+      "id": "80337",
+      "name": "世界杯·卡塔尔助威头像框",
+      "asset_ids": [
+        "Item_80337"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80338",
+      "module": "头像框",
+      "id": "80338",
+      "name": "世界杯·南非助威头像框",
+      "asset_ids": [
+        "Item_80338"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80339",
+      "module": "头像框",
+      "id": "80339",
+      "name": "世界杯·苏格兰助威头像框",
+      "asset_ids": [
+        "Item_80339"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80340",
+      "module": "头像框",
+      "id": "80340",
+      "name": "世界杯·塞内加尔助威头像框",
+      "asset_ids": [
+        "Item_80340"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80341",
+      "module": "头像框",
+      "id": "80341",
+      "name": "世界杯·瑞士助威头像框",
+      "asset_ids": [
+        "Item_80341"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80342",
+      "module": "头像框",
+      "id": "80342",
+      "name": "世界杯·瑞典助威头像框",
+      "asset_ids": [
+        "Item_80342"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80343",
+      "module": "头像框",
+      "id": "80343",
+      "name": "世界杯·突尼斯助威头像框",
+      "asset_ids": [
+        "Item_80343"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80344",
+      "module": "头像框",
+      "id": "80344",
+      "name": "世界杯·土耳其助威头像框",
+      "asset_ids": [
+        "Item_80344"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80345",
+      "module": "头像框",
+      "id": "80345",
+      "name": "世界杯·乌拉圭助威头像框",
+      "asset_ids": [
+        "Item_80345"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80346",
+      "module": "头像框",
+      "id": "80346",
+      "name": "世界杯·美国助威头像框",
+      "asset_ids": [
+        "Item_80346"
+      ],
+      "owners": 12,
+      "denominator": 16969,
+      "rate": 0.07071719017031057,
+      "status": "measured"
+    },
+    {
+      "key": "头像框|80347",
+      "module": "头像框",
+      "id": "80347",
+      "name": "世界杯·乌兹别克斯坦助威头像框",
+      "asset_ids": [
+        "Item_80347"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "纪念卡|180074",
+      "module": "纪念卡",
+      "id": "180074",
+      "name": "礼物堆里的小精灵",
+      "asset_ids": [
+        "Item_180074",
+        "MemorialCard_74"
+      ],
+      "owners": 284,
+      "denominator": 16969,
+      "rate": 1.6736401673640167,
+      "status": "measured"
+    },
+    {
+      "key": "纪念卡|180075",
+      "module": "纪念卡",
+      "id": "180075",
+      "name": "天马的守护",
+      "asset_ids": [
+        "Item_180075",
+        "MemorialCard_75"
+      ],
+      "owners": 428,
+      "denominator": 16969,
+      "rate": 2.5222464494077435,
+      "status": "measured"
+    },
+    {
+      "key": "纪念卡|180076",
+      "module": "纪念卡",
+      "id": "180076",
+      "name": "尼罗回响",
+      "asset_ids": [
+        "Item_180076",
+        "MemorialCard_76"
+      ],
+      "owners": 819,
+      "denominator": 16969,
+      "rate": 4.826448229123696,
+      "status": "measured"
+    },
+    {
+      "key": "纪念卡|180077",
+      "module": "纪念卡",
+      "id": "180077",
+      "name": "我对你的誓言",
+      "asset_ids": [
+        "Item_180077",
+        "MemorialCard_77"
+      ],
+      "owners": 1485,
+      "denominator": 16969,
+      "rate": 8.751252283575933,
+      "status": "measured"
+    },
+    {
+      "key": "纪念卡|180078",
+      "module": "纪念卡",
+      "id": "180078",
+      "name": "新春特辑",
+      "asset_ids": [
+        "Item_180078",
+        "MemorialCard_78"
+      ],
+      "owners": 1165,
+      "denominator": 16969,
+      "rate": 6.865460545700984,
+      "status": "measured"
+    },
+    {
+      "key": "纪念卡|180079",
+      "module": "纪念卡",
+      "id": "180079",
+      "name": "绿茵之星",
+      "asset_ids": [
+        "Item_180079",
+        "MemorialCard_79"
+      ],
+      "owners": 1108,
+      "denominator": 16969,
+      "rate": 6.529553892392009,
+      "status": "measured"
+    },
+    {
+      "key": "纪念卡|180080",
+      "module": "纪念卡",
+      "id": "180080",
+      "name": "远航之歌",
+      "asset_ids": [
+        "Item_180080",
+        "MemorialCard_80"
+      ],
+      "owners": 499,
+      "denominator": 16969,
+      "rate": 2.9406564912487476,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15415",
+      "module": "聊天表情",
+      "id": "15415",
+      "name": "送礼",
+      "asset_ids": [
+        "Item_15415"
+      ],
+      "owners": 45,
+      "denominator": 16969,
+      "rate": 0.26518946313866465,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15416",
+      "module": "聊天表情",
+      "id": "15416",
+      "name": "烟花",
+      "asset_ids": [
+        "Item_15416"
+      ],
+      "owners": 51,
+      "denominator": 16969,
+      "rate": 0.3005480582238199,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15417",
+      "module": "聊天表情",
+      "id": "15417",
+      "name": "猫神之舞",
+      "asset_ids": [
+        "Item_15417"
+      ],
+      "owners": 96,
+      "denominator": 16969,
+      "rate": 0.5657375213624846,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15418",
+      "module": "聊天表情",
+      "id": "15418",
+      "name": "嫁给我！",
+      "asset_ids": [
+        "Item_15418"
+      ],
+      "owners": 273,
+      "denominator": 16969,
+      "rate": 1.6088160763745654,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15419",
+      "module": "聊天表情",
+      "id": "15419",
+      "name": "祝福",
+      "asset_ids": [
+        "Item_15419"
+      ],
+      "owners": 114,
+      "denominator": 16969,
+      "rate": 0.6718133066179504,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15420",
+      "module": "聊天表情",
+      "id": "15420",
+      "name": "阿尔及利亚加油",
+      "asset_ids": [
+        "Item_15420"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15421",
+      "module": "聊天表情",
+      "id": "15421",
+      "name": "阿根廷加油",
+      "asset_ids": [
+        "Item_15421"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15422",
+      "module": "聊天表情",
+      "id": "15422",
+      "name": "澳大利亚加油",
+      "asset_ids": [
+        "Item_15422"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15423",
+      "module": "聊天表情",
+      "id": "15423",
+      "name": "奥地利加油",
+      "asset_ids": [
+        "Item_15423"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15424",
+      "module": "聊天表情",
+      "id": "15424",
+      "name": "比利时加油",
+      "asset_ids": [
+        "Item_15424"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15425",
+      "module": "聊天表情",
+      "id": "15425",
+      "name": "波黑加油",
+      "asset_ids": [
+        "Item_15425"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15426",
+      "module": "聊天表情",
+      "id": "15426",
+      "name": "巴西加油",
+      "asset_ids": [
+        "Item_15426"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15427",
+      "module": "聊天表情",
+      "id": "15427",
+      "name": "加拿大加油",
+      "asset_ids": [
+        "Item_15427"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15428",
+      "module": "聊天表情",
+      "id": "15428",
+      "name": "科特迪瓦加油",
+      "asset_ids": [
+        "Item_15428"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15429",
+      "module": "聊天表情",
+      "id": "15429",
+      "name": "刚果民主共和国加油",
+      "asset_ids": [
+        "Item_15429"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15430",
+      "module": "聊天表情",
+      "id": "15430",
+      "name": "哥伦比亚加油",
+      "asset_ids": [
+        "Item_15430"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15431",
+      "module": "聊天表情",
+      "id": "15431",
+      "name": "佛得角加油",
+      "asset_ids": [
+        "Item_15431"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15432",
+      "module": "聊天表情",
+      "id": "15432",
+      "name": "克罗地亚加油",
+      "asset_ids": [
+        "Item_15432"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15433",
+      "module": "聊天表情",
+      "id": "15433",
+      "name": "库拉索加油",
+      "asset_ids": [
+        "Item_15433"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15434",
+      "module": "聊天表情",
+      "id": "15434",
+      "name": "捷克加油",
+      "asset_ids": [
+        "Item_15434"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15435",
+      "module": "聊天表情",
+      "id": "15435",
+      "name": "厄瓜多尔加油",
+      "asset_ids": [
+        "Item_15435"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15436",
+      "module": "聊天表情",
+      "id": "15436",
+      "name": "埃及加油",
+      "asset_ids": [
+        "Item_15436"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15437",
+      "module": "聊天表情",
+      "id": "15437",
+      "name": "英格兰加油",
+      "asset_ids": [
+        "Item_15437"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15438",
+      "module": "聊天表情",
+      "id": "15438",
+      "name": "西班牙加油",
+      "asset_ids": [
+        "Item_15438"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15439",
+      "module": "聊天表情",
+      "id": "15439",
+      "name": "法国加油",
+      "asset_ids": [
+        "Item_15439"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15440",
+      "module": "聊天表情",
+      "id": "15440",
+      "name": "德国加油",
+      "asset_ids": [
+        "Item_15440"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15441",
+      "module": "聊天表情",
+      "id": "15441",
+      "name": "加纳加油",
+      "asset_ids": [
+        "Item_15441"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15442",
+      "module": "聊天表情",
+      "id": "15442",
+      "name": "海地加油",
+      "asset_ids": [
+        "Item_15442"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15443",
+      "module": "聊天表情",
+      "id": "15443",
+      "name": "伊朗加油",
+      "asset_ids": [
+        "Item_15443"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15444",
+      "module": "聊天表情",
+      "id": "15444",
+      "name": "伊拉克加油",
+      "asset_ids": [
+        "Item_15444"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15445",
+      "module": "聊天表情",
+      "id": "15445",
+      "name": "约旦加油",
+      "asset_ids": [
+        "Item_15445"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15446",
+      "module": "聊天表情",
+      "id": "15446",
+      "name": "日本加油",
+      "asset_ids": [
+        "Item_15446"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15447",
+      "module": "聊天表情",
+      "id": "15447",
+      "name": "韩国加油",
+      "asset_ids": [
+        "Item_15447"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15448",
+      "module": "聊天表情",
+      "id": "15448",
+      "name": "沙特阿拉伯加油",
+      "asset_ids": [
+        "Item_15448"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15449",
+      "module": "聊天表情",
+      "id": "15449",
+      "name": "摩洛哥加油",
+      "asset_ids": [
+        "Item_15449"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15450",
+      "module": "聊天表情",
+      "id": "15450",
+      "name": "墨西哥加油",
+      "asset_ids": [
+        "Item_15450"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15451",
+      "module": "聊天表情",
+      "id": "15451",
+      "name": "荷兰加油",
+      "asset_ids": [
+        "Item_15451"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15452",
+      "module": "聊天表情",
+      "id": "15452",
+      "name": "挪威加油",
+      "asset_ids": [
+        "Item_15452"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15453",
+      "module": "聊天表情",
+      "id": "15453",
+      "name": "新西兰加油",
+      "asset_ids": [
+        "Item_15453"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15454",
+      "module": "聊天表情",
+      "id": "15454",
+      "name": "巴拿马加油",
+      "asset_ids": [
+        "Item_15454"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15455",
+      "module": "聊天表情",
+      "id": "15455",
+      "name": "巴拉圭加油",
+      "asset_ids": [
+        "Item_15455"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15456",
+      "module": "聊天表情",
+      "id": "15456",
+      "name": "葡萄牙加油",
+      "asset_ids": [
+        "Item_15456"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15457",
+      "module": "聊天表情",
+      "id": "15457",
+      "name": "卡塔尔加油",
+      "asset_ids": [
+        "Item_15457"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15458",
+      "module": "聊天表情",
+      "id": "15458",
+      "name": "南非加油",
+      "asset_ids": [
+        "Item_15458"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15459",
+      "module": "聊天表情",
+      "id": "15459",
+      "name": "苏格兰加油",
+      "asset_ids": [
+        "Item_15459"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15460",
+      "module": "聊天表情",
+      "id": "15460",
+      "name": "塞内加尔加油",
+      "asset_ids": [
+        "Item_15460"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15461",
+      "module": "聊天表情",
+      "id": "15461",
+      "name": "瑞士加油",
+      "asset_ids": [
+        "Item_15461"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15462",
+      "module": "聊天表情",
+      "id": "15462",
+      "name": "瑞典加油",
+      "asset_ids": [
+        "Item_15462"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15463",
+      "module": "聊天表情",
+      "id": "15463",
+      "name": "突尼斯加油",
+      "asset_ids": [
+        "Item_15463"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15464",
+      "module": "聊天表情",
+      "id": "15464",
+      "name": "土耳其加油",
+      "asset_ids": [
+        "Item_15464"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15465",
+      "module": "聊天表情",
+      "id": "15465",
+      "name": "乌拉圭加油",
+      "asset_ids": [
+        "Item_15465"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15466",
+      "module": "聊天表情",
+      "id": "15466",
+      "name": "美国加油",
+      "asset_ids": [
+        "Item_15466"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "聊天表情|15467",
+      "module": "聊天表情",
+      "id": "15467",
+      "name": "乌兹别克斯坦加油",
+      "asset_ids": [
+        "Item_15467"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "称号 / 铭牌|101",
+      "module": "称号 / 铭牌",
+      "id": "101",
+      "name": "风暴领主",
+      "asset_ids": [
+        "Item_80071",
+        "Item_80072",
+        "Item_80073",
+        "Item_80074",
+        "Item_82001"
+      ],
+      "owners": 31,
+      "denominator": 16969,
+      "rate": 0.18268607460663563,
+      "status": "measured"
+    },
+    {
+      "key": "称号 / 铭牌|102",
+      "module": "称号 / 铭牌",
+      "id": "102",
+      "name": "海皇",
+      "asset_ids": [
+        "Item_82002"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "称号 / 铭牌|103",
+      "module": "称号 / 铭牌",
+      "id": "103",
+      "name": "魔海之主",
+      "asset_ids": [
+        "Item_80111",
+        "Item_80122",
+        "Item_82003"
+      ],
+      "owners": 13,
+      "denominator": 16969,
+      "rate": 0.07661028935116979,
+      "status": "measured"
+    },
+    {
+      "key": "称号 / 铭牌|104",
+      "module": "称号 / 铭牌",
+      "id": "104",
+      "name": "世界之巅",
+      "asset_ids": [
+        "Item_82004"
+      ],
+      "owners": 3,
+      "denominator": 16969,
+      "rate": 0.017679297542577643,
+      "status": "measured"
+    },
+    {
+      "key": "称号 / 铭牌|105",
+      "module": "称号 / 铭牌",
+      "id": "105",
+      "name": "航者徽记",
+      "asset_ids": [
+        "Item_82005"
+      ],
+      "owners": 1,
+      "denominator": 16969,
+      "rate": 0.005893099180859214,
+      "status": "measured"
+    },
+    {
+      "key": "称号 / 铭牌|107",
+      "module": "称号 / 铭牌",
+      "id": "107",
+      "name": "绿茵之王",
+      "asset_ids": [
+        "Item_82007"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    },
+    {
+      "key": "称号 / 铭牌|106",
+      "module": "称号 / 铭牌",
+      "id": "106",
+      "name": "欢庆之星",
+      "asset_ids": [
+        "Item_82006"
+      ],
+      "owners": 0,
+      "denominator": 16969,
+      "rate": 0.0,
+      "status": "measured"
+    }
+  ]
+}

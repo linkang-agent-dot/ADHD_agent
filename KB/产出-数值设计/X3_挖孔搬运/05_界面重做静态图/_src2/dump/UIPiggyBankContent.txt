@@ -1,0 +1,117 @@
+=== UIPiggyBankContent.prefab  (GameObject 数=33) ===
+UIPiggyBankContent  size[920.0, 520.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+    · Canvas
+    · guid:dc42784cf147c0c48a680349fa168899
+    · guid:306cc8c2b49d7114eaa3623786fc2126
+  Bg  size[910.0, 504.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+      · CanvasRenderer
+      · TFWImage | sprite=ui_Howtogetit_bg_2 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/PiggyBank/ui_Howtogetit_bg_2.png]
+  Bg2  size[308.0, 448.0] pos[220.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+      · CanvasRenderer
+      · TFWImage | sprite=ui_Howtogetit_bg_3 | Sliced | border(L,B,R,T)=[100.0, 50.0, 100.0, 50.0] | col=#FFFFFF | [Spirits/PiggyBank/ui_Howtogetit_bg_3.png]
+  MainPigBg  size[448.0, 404.0] pos[200.0, 60.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+      · CanvasRenderer
+      · TFWImage | sprite=ui_Howtogetit_piggybank_3 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/PiggyBank/ui_Howtogetit_piggybank_3.png]
+      · DOTweenAnimation
+  Name  size[300.0, 66.0] pos[218.0, 174.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+      · CanvasRenderer
+      · TFWText | col=#FFFFFF | TEXT='小型存钱罐' | fs=38
+      · guid:45facfdc6a639f041b007c036dc527b8
+      · BetterOutline
+      · IgnoreTidCheckTag
+  Info  size[64.0, 64.0] pos[-65.0, -65.0] anc[1.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+      · EventTriggerListener
+      · ButtonScale
+      · CanvasRenderer
+      · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+    bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        · CanvasRenderer
+        · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_cm_anniu_guize | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_anniu_guize.png]
+  DescText  size[300.0, 50.0] pos[218.0, -192.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 0.5]
+      · CanvasRenderer
+      · TFWText | col=#EFDBBD | TEXT='languageKey: Text_Coin_Piggy_Bank_Desc' | fs=26
+      · BetterOutline
+  ResIcon  size[88.0, 88.0] pos[108.0, 20.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+      · CanvasRenderer
+      · TFWImage | sprite=icon_global_gold | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ItemIcons/icon_global_gold.png]
+  ResourceNum  size[200.0, 50.0] pos[218.0, 20.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+    Bg  size[250.0, 48.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWImage | sprite=ui_Howtogetit_bg_4 | Simple | border(L,B,R,T)=[50.0, 16.0, 50.0, 16.0] | col=#FFFFFF | [Spirits/PiggyBank/ui_Howtogetit_bg_4.png]
+    Num  size[200.0, 50.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWText | col=#FFFFFF | TEXT='175.2K' | fs=40
+        · guid:45facfdc6a639f041b007c036dc527b8
+        · BetterOutline
+  ExtraRewards  size[300.0, 50.0] pos[218.0, -40.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+      · CanvasRenderer
+      · TFWText | col=#EEDBBD | TEXT='languageKey: Text_Lucky_Wheel_Other_Reward' | fs=26
+      · BetterOutline
+  LoopList  size[300.0, 140.0] pos[218.0, -133.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+      · LoopHorizontalScrollRect | scroll=horizontal
+      · ScrollRectFilter
+    Viewport  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        · guid:3312d7739989d2b4e91e6319e9a96d76
+        · CanvasRenderer
+        · TFWEmpty4Raycast | col=#FFFFFF
+      Content  size[0.0, 160.0] pos[0.0, 4.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.0, 0.5]
+          · guid:30649d3a9faa99c48a7b1166b86bf2a0 | spacing=23.0 | pad(L,R,T,B)=[10, 0, 0, 0]
+          · guid:3245ec927659c4140ac4f8d17403cc18
+        <嵌套prefab:UIItemTemplate>
+            ↳ 源: Public/UIItemTemplate.prefab
+            ↳ 覆盖: Name=UIItemTemplate, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0, AnchorMax.y=0, AnchorMin.x=0, AnchorMin.y=0, SizeDelta.x=128, SizeDelta.y=128, AnchoredPosition.x=0
+  Break  size[200.0, 50.0] pos[174.0, -72.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+    Bg  size[200.0, 48.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWImage | sprite=ui_Howtogetit_bg_6 | Simple | border(L,B,R,T)=[80.0, 0.0, 80.0, 0.0] | col=#FFFFFF | [Spirits/PiggyBank/ui_Howtogetit_bg_6.png]
+    BreakText  size[200.0, 50.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWText | col=#FFFFFF | TEXT='languageKey: Text_Coin_Piggy_Bank_Break' | fs=32
+        · guid:45facfdc6a639f041b007c036dc527b8
+        · BetterOutline
+  Slider  size[257.0, 54.0] pos[218.0, 124.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+      · guid:67db9e8f0e2ae9c40bc1e2b64352a6b4
+    Background  size[0.0, -24.0] pos[13.0, 1.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        · CanvasRenderer
+        · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=ui_piggybank_JDT_1 | Sliced | border(L,B,R,T)=[10.0, 12.0, 10.0, 12.0] | col=#FFFFFF | [Spirits/PiggyBank/ui_piggybank_JDT_1.png]
+    Fill Area  size[2.0, -22.0] pos[13.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+      Fill  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+          · CanvasRenderer
+          · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=ui_piggybank_JDT_2 | Sliced | border(L,B,R,T)=[12.0, 12.0, 12.0, 12.0] | col=#FFFFFF | [Spirits/PiggyBank/ui_piggybank_JDT_2.png]
+    icon  size[36.0, 48.0] pos[-6.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWImage | sprite=ui_Howtogetit_icon | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/PiggyBank/ui_Howtogetit_icon.png]
+    Val  size[300.0, 40.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWText | col=#FEF3DE | TEXT='11：59：59' | fs=24
+        · BetterOutline
+    ValFull  size[250.0, 40.0] pos[14.0, 1.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWText | col=#EFDBBD | TEXT='languageKey: Text_Coin_Piggy_Bank_Time_Full' | fs=22
+        · BetterOutline
+        · DOTweenAnimation
+  <嵌套prefab:UIBtnPurchase>
+      ↳ 源: Button/UIBtnPurchase.prefab
+      ↳ 覆盖: AnchorMax.y=0, AnchorMin.y=0, SizeDelta.x=0, SizeDelta.y=0, AnchoredPosition.x=0, AnchoredPosition.y=0, Text=objectReference: {fileID: 0}, IsActive=0, Pivot.x=0.5, Pivot.y=0.5
+  ValueText  size[156.0, 156.0] pos[364.0, -104.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+      · IgnoreTidCheckTag
+    Bg  size[156.0, 156.0] pos[-3.0, -4.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWImage | sprite=img_gift_bg_Discount | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_Discount.png]
+    TxtSuper  size[120.0, 50.0] pos[4.0, 29.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWText | col=#EFD373 | TEXT='languageKey: Text_Coin_Piggy_Bank_Value_Text' | fs=36
+        · BetterOutline
+    Txt  size[120.0, 50.0] pos[-12.0, -13.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWText | col=#EFD373 | TEXT='20倍' | fs=40
+        · BetterOutline
+  Arrow  size[905.78, 100.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+    Left  size[60.0, 108.0] pos[22.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWImage | sprite=img_ledger_anniu_jiantou2 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_ledger_anniu_jiantou2.png]
+        · EventTriggerListener
+    Right  size[60.0, 108.0] pos[-26.0, 0.0] anc[1.0, 0.5]-[1.0, 0.5] piv[0.5, 0.5] scale[-1.0, 1.0]
+        · CanvasRenderer
+        · TFWImage | sprite=img_ledger_anniu_jiantou2 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_ledger_anniu_jiantou2.png]
+        · EventTriggerListener

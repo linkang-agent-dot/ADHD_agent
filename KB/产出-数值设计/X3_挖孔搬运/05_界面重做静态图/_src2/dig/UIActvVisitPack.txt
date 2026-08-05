@@ -1,0 +1,110 @@
+=== UIActvVisitPack.prefab (GO=61) ===
+UIActvVisitPack  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.0, 0.0] scl[0.0, 0.0]
+  · guid:0cd44c1031e13a943bb63640046fad76
+  · guid:dc42784cf147c0c48a680349fa168899
+  · UIConfig
+  · UIAnimation
+  Root  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+    Animation  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+      BG  sz[1080.0, 1920.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5] scl[0.0, 0.0]
+        · IMG img_ui_visit_bg04 Spirits/ActivityImg_Download/img_ui_visit_bg04.png
+      Top  sz[0.0, 600.0] p[0.0, -90.0] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+        Role  sz[1024.0, 1536.0] p[247.0, -785.0] a[0.5, 1.0][0.5, 1.0]
+          EffectRoot  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+        txt_title  sz[686.0, 80.0] p[25.0, -55.0] a[0.0, 1.0][0.0, 1.0] piv[0.0, 0.5]
+          · TXT '活动标题几个字' fs=52 #FFFFFF
+          · guid:45facfdc6a639f041b007c036dc527b8
+        Time  sz[0.0, 60.0] p[25.0, -107.0] a[0.0, 1.0][0.0, 1.0] piv[0.0, 1.0]
+          · guid:30649d3a9faa99c48a7b1166b86bf2a0 spacing=15.0 padding_LRTB=[20, 0, 0, 0]
+          · guid:3245ec927659c4140ac4f8d17403cc18
+          bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+            · IMG img_gift_bg_4 Sliced border(L,B,R,T)=[41, 0, 43, 0] Spirits/Pack/img_gift_bg_4.png
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+          Icon  sz[0.0, 45.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+            · IMG img_gift_time Spirits/Pack/img_gift_time.png
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+          txt  sz[0.0, 60.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+            · TXT '距结束：{0}' fs=32 #EED376
+        txt_desc  sz[686.0, 150.0] p[25.0, -175.0] a[0.0, 1.0][0.0, 1.0] piv[0.0, 1.0]
+          · TXT '活动期间，拜访拥有<color=#2FFF2D>圣诞酒馆</color>的玩家，可获得额外奖励！' fs=36 #F4EACE
+        Info  sz[64.0, 64.0] p[-55.0, -57.0] a[1.0, 1.0][1.0, 1.0]
+          · TFWImage
+          bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+            · IMG img_cm_anniu_guize Spirits/CommonNew/img_cm_anniu_guize.png
+        <嵌套prefab:UIBtnGift>
+          >> Button/UIBtnGift.prefab
+          >> 覆盖 sz=['170', '170'] pos=['-108', '-252']
+        <嵌套prefab:UIBtnProperty>
+          >> Button/UIBtnProperty.prefab
+          >> 覆盖 sz=['100', '100'] pos=['240', '-395']
+        <嵌套prefab:DailyGift>
+          >> Activity/DailyGift.prefab
+          >> 覆盖 sz=['135', '135'] pos=['92.5', '187.5']
+      Content  sz[0.0, -220.0] p[0.0, 10.0] STRETCH
+        Reward  sz[960.0, 300.0] p[0.0, 925.0] a[0.5, 0.0][0.5, 0.0]
+          Detailed  sz[0.0, 180.0] p[0.0, -112.0] a[0.0, 1.0][1.0, 1.0]
+            RewardSlider  sz[-75.0, 52.0] p[17.5, -45.0] a[0.0, 0.5][1.0, 0.5]
+              · guid:67db9e8f0e2ae9c40bc1e2b64352a6b4
+              ...(2 子节点省略)
+            BoxGroup  sz[-75.0, 52.0] p[55.0, -45.0] a[0.0, 0.5][1.0, 0.5] piv[0.0, 0.5]
+              · ChildGroupController
+              ...(1 子节点省略)
+            Icon  sz[72.0, 68.0] p[45.0, -45.0] a[0.0, 0.5][0.0, 0.5] scl[1.2, 1.2]
+              · IMG img_cm_icon_integral Spirits/Rank/img_cm_icon_integral.png
+          Rewardtitle  sz[920.0, 60.0] p[0.0, 60.0] a[0.5, 0.0][0.5, 0.0] piv[0.5, 0.0]
+            · TXT '被拜访次数：{0}\r' fs=42 #FFFBB0
+            · guid:45facfdc6a639f041b007c036dc527b8
+          Rewardcondition  sz[920.0, 50.0] p[0.0, 10.0] a[0.5, 0.0][0.5, 0.0] piv[0.5, 0.0]
+            · TXT '需拥有圣诞酒馆装扮' fs=36 #422C18
+        BtnInvitation  sz[1020.0, 190.0] p[0.0, 665.0] a[0.5, 0.0][0.5, 0.0]
+          · IMG img_cm_bg_ditu5 Sliced border(L,B,R,T)=[44, 44, 44, 44] Spirits/CommonNew/img_cm_bg_ditu5.png
+          Item  sz[160.0, 160.0] p[100.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+            <嵌套prefab:UIItemTemplate>
+              >> Public/UIItemTemplate.prefab
+              >> 覆盖 sz=['160', '160'] pos=['0', '0']
+            Receive [OFF]  sz[144.0, 144.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+              ...(2 子节点省略)
+            Effect [OFF]  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              · TFWImage
+              ...(1 子节点省略)
+          InvitationDesc  sz[-230.0, -30.0] p[85.0, 0.0] STRETCH
+            · TXT '活动期间，每天可领取<color=#5C9729>3张圣诞邀请函</color>。拜访拥有<co' fs=32 #3F2411
+        Pack  sz[1040.0, 245.0] p[0.0, 420.0] a[0.5, 0.0][0.5, 0.0]
+          Packsp_reward  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+            · IMG img_ui_visit_bg03 Sliced border(L,B,R,T)=[120, 100, 120, 100] Spirits/ActivityImg_Download/img_ui_visit_bg03.png
+            PackRewardBg  sz[368.0, 260.0] p[189.0, 27.5] a[0.0, 0.5][0.0, 0.5]
+              · IMG img_Activity_VD_bg_14 Spirits/ActivityImg/img_Activity_VD_bg_14.png
+          PackName  sz[240.0, 80.0] p[190.0, -48.0] a[0.0, 0.5][0.0, 0.5]
+            · TXT '圣诞酒馆' fs=42 #F9EF81
+          PackDesc  sz[920.0, 50.0] p[0.0, -15.0] a[0.5, 0.0][0.5, 0.0]
+            · TXT '获得圣诞酒馆装饰后，被拜访可获得<color=#2F911F>双倍</color>奖励！' fs=32 #553120
+          PackRewardList  sz[-430.0, -10.0] p[155.0, 5.0] STRETCH
+            · LoopHorizontalScrollRect scroll=horizontal
+            · ScrollRectFilter
+            Viewport  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              · guid:3312d7739989d2b4e91e6319e9a96d76
+              · TFWImage
+              ...(2 子节点省略)
+          Discount  sz[150.0, 150.0] p[-57.0, -15.0] a[1.0, 1.0][1.0, 1.0]
+            Bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              · IMG img_gift_bg_Discount Spirits/Pack/img_gift_bg_Discount.png
+            Txt  sz[-20.0, 80.0] p[0.0, 5.0] a[0.0, 0.5][1.0, 0.5]
+              · TXT '9999%' fs=46 #F3E69E
+              · IgnoreTidCheckTag
+          Btn  sz[360.0, 120.0] p[0.0, -140.0] a[0.5, 0.0][0.5, 0.0]
+            <嵌套prefab:UIBtnPurchase>
+              >> Button/UIBtnPurchase.prefab
+              >> 覆盖 sz=['54', '36'] pos=['67', '-18']
+        Btn  sz[1020.0, 120.0] p[0.0, 157.5] a[0.5, 0.0][0.5, 0.0]
+          Btn_InviteVisit  sz[136.0, 136.0] p[-420.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+            · TFWImage
+            icon  sz[136.0, 136.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+              · IMG img_cm_xiaoshoushangpin_btn5 Spirits/Chat/img_cm_xiaoshoushangpin_btn5.png
+            Text  sz[200.0, 50.0] p[0.0, 0.0] a[0.5, 0.0][0.5, 0.0] piv[0.5, 0.0]
+              · TXT 'languageKey: Text_Btn_Invite_visit' fs=32 #FFEBD0
+          ThumbsUp  sz[136.0, 136.0] p[420.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+            · IMG img_player_icon_bg Spirits/CommonNew/img_player_icon_bg.png
+            Icon  sz[136.0, 136.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+              · IMG img_gift_icon_visit02 Spirits/ActivityImg_Download/img_gift_icon_visit02.png
+            ThumbsUpNum  sz[200.0, 50.0] p[0.0, 0.0] a[0.5, 0.0][0.5, 0.0] piv[0.5, 0.0]
+              · TXT 'languageKey: Text_Btn_Vist_list' fs=32 #FFEED4

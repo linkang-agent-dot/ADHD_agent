@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """完整复刻马戏拼图 101830 -> 101831，所有可变子配置使用独立 ID。
 
+新活动额外补齐必填安全字段 MailID=101109；源活动保持不变。
+
 默认只校验并打印计划；传 --apply 才追加 TSV。脚本幂等：目标任一 ID 已存在即拒绝执行。
 """
 
@@ -94,6 +96,7 @@ def main() -> None:
     ao[1] = "26马戏节-BINGO拼图(复刻101830·独立活动)"
     ao[4] = TARGET["puzzle"]
     ao[7] = TARGET["tc"]
+    ao[17] = "101109"
 
     puzzle = one(tables["puzzle"], 0, SOURCE["puzzle"], "ActvPuzzle")
     puzzle[0] = TARGET["puzzle"]

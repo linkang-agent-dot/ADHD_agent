@@ -25,3 +25,11 @@
 - 现象：按本会话 AGENTS.md 读取 `reference_x3_timecycle.md` 与 `reference_jira.md` 时再次报路径不存在。
 - 绕道：改读 `.claude\projects\C--Users-linkang\memory\` 下同名共享真源。
 - 额外工具错误：误按指令文字去 `errata\open\README.md` 找格式，实际 README 在 `errata\README.md`；后续先检查父目录。
+
+## 再次复发：马戏节总体扫描
+
+- 时间：2026-08-04
+- 现象：按 AGENTS 路由读取 `.Codex\...\reference_x3_timecycle.md` 再次失败；随后用 `rg --files C:\Users\linkang` 搜隐藏目录也以 exit 1 无结果。
+- 原因：真源仍在 `.claude\projects\...\memory`；`rg --files` 默认受隐藏目录/忽略规则影响，不适合用来兜底发现点目录文件。
+- 绕道：对已知候选路径用 `Test-Path -LiteralPath`，确认 `.claude` 真源存在后直接读取。
+- 后续规则：共享 memory 路由失败时优先做 `.Codex → .claude` 的精确候选检查，不再从用户目录根用默认 `rg --files` 扫点目录。

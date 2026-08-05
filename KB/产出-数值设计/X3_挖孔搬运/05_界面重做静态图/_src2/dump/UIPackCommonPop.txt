@@ -1,0 +1,297 @@
+=== UIPackCommonPop.prefab  (GameObject 数=91) ===
+UIPackCommonPop  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.0, 0.0] scale[0.0, 0.0]
+    · Canvas
+    · guid:0cd44c1031e13a943bb63640046fad76
+    · guid:dc42784cf147c0c48a680349fa168899
+    · UIConfig
+    · UIAnimation
+    · UIBlur
+  Root  size[1020.0, 1340.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+      · DOTweenAnimation
+    BG  size[0.0, -0.0] pos[0.0, 121.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWImage | sprite=img_gift_bg_tc_8 | Sliced | border(L,B,R,T)=[0.0, 312.0, 0.0, 601.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_tc_8.png]
+      Img  size[1016.0, 980.0] pos[-9.0, -488.0] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 0.5]
+          · CanvasRenderer
+          · TFWImage | sprite=img_gift_bg_11 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_11.png]
+      Mask  size[2160.0, 1536.0] pos[185.0, 335.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+          · guid:3312d7739989d2b4e91e6319e9a96d76
+          · CanvasRenderer
+          · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+        RoleImg  size[544.74, 583.31] pos[60.57, -893.62] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 0.5]
+            · CanvasRenderer
+            · TFWImage | sprite=img_gift_bg_53 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack_Download/PackImg/img_gift_bg_53.png]
+        HeroSpine  size[1024.0, 1536.0] pos[0.0, -280.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5] scale[0.9, 0.9]
+            · CanvasRenderer
+            · EffectDisplay
+          EffectRoot  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+    <嵌套prefab:VideoRoot>
+        ↳ 源: Assets/Res/Video/Prefab/VideoRoot.prefab
+        ↳ 覆盖: Name=VideoRoot, IsActive=0, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=540, SizeDelta.y=960
+    Top  size[520.0, 335.0] pos[65.0, -80.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 1.0]
+        · guid:59f8146938fff824cb5fd77236b75775 | spacing=20.0 | pad(L,R,T,B)=[0, 0, 0, 0]
+      Title  size[620.0, 70.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 1.0]
+          · CanvasRenderer
+          · TFWText | col=#FFFFFF | TEXT='礼包名字几个字' | fs=56
+          · BetterOutline
+          · guid:45facfdc6a639f041b007c036dc527b8
+      Time  size[533.81, 60.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.0]
+        Bg  size[400.0, 60.0] pos[0.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.0, 0.5]
+            · CanvasRenderer
+            · TFWImage | sprite=img_gift_bg_4 | Sliced | border(L,B,R,T)=[41.0, 0.0, 43.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_4.png]
+        text_time  size[260.0, 60.0] pos[100.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.0, 0.5]
+            · CanvasRenderer
+            · TFWText | col=#EFD376 | TEXT='7d 59:59:59' | fs=40
+            · BetterOutline
+        icon  size[40.0, 40.0] pos[45.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+            · CanvasRenderer
+            · TFWImage | sprite=img_gift_time | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_time.png]
+      Desc  size[600.0, 300.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 1.0]
+          · CanvasRenderer
+          · TFWText | col=#EFDCC1 | TEXT='礼包描述礼包描述礼包描述礼包描述礼包描述礼包描述礼包描述礼包描述礼包描述礼包描述' | fs=36
+          · BetterOutline
+    Middle  size[-102.23, -875.0] pos[0.65, -156.91] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+      Bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+          · CanvasRenderer
+          · TFWImage | sprite=img_gift_bg_tc_5 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_tc_5.png]
+      Content  size[816.04, 412.92] pos[-0.0, -25.39] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        MainItem  size[673.52, 226.82] pos[-14.04, 164.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+          Bg  size[496.71, 87.67] pos[64.92, -6.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWImage | sprite=img_gift_bg_5 | Sliced | border(L,B,R,T)=[44.0, 36.0, 49.0, 37.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_5.png]
+          Bg1  size[236.0, 112.0] pos[-158.0, -59.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWImage | sprite=img_gift_bg_31 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_31.png]
+          <嵌套prefab:UIItemTemplate>
+              ↳ 源: Public/UIItemTemplate.prefab
+              ↳ 覆盖: Name=UIItemTemplate, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=127.841, SizeDelta.y=185, AnchoredPosition.x=344.62054
+        Loop Horizontal Scroll Rect  size[782.35, 157.53] pos[-6.52, -36.3] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+            · LoopHorizontalScrollRect | scroll=horizontal
+            · guid:3312d7739989d2b4e91e6319e9a96d76
+            · ScrollRectFilter
+            · RewardAdaptHelper
+          Viewport  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · guid:3312d7739989d2b4e91e6319e9a96d76
+              · CanvasRenderer
+              · TFWImage | sprite=(none) | col=#000000 a=0.00
+            Content  size[0.0, 150.0] pos[0.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.0, 0.5]
+                · guid:30649d3a9faa99c48a7b1166b86bf2a0 | spacing=5.0 | pad(L,R,T,B)=[0, 0, 0, 0]
+                · guid:3245ec927659c4140ac4f8d17403cc18
+            <嵌套prefab:UIItemTemplate>
+                ↳ 源: Public/UIItemTemplate.prefab
+                ↳ 覆盖: Name=UIItemTemplate, IsActive=0, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0, AnchorMax.y=1, AnchorMin.x=0, AnchorMin.y=1, SizeDelta.x=150, SizeDelta.y=150
+      Discount  size[200.0, 200.0] pos[421.8, 218.5] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        Bg  size[156.0, 156.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+            · CanvasRenderer
+            · TFWImage | sprite=img_gift_bg_Discount | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_Discount.png]
+        Txt  size[131.36, 58.06] pos[1.0, 7.1] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+            · CanvasRenderer
+            · TFWText | col=#EFE39B | TEXT='9999%' | fs=42
+            · BetterOutline
+            · IgnoreTidCheckTag
+      Limit  size[387.97, 51.79] pos[0.0, -182.9] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        Txt  size[387.97, 56.73] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+            · CanvasRenderer
+            · TFWText | col=#3E2310 | TEXT='剩余购买次数：1' | fs=32
+      BgDown  size[980.0, 244.0] pos[0.0, -228.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+          · CanvasRenderer
+          · TFWImage | sprite=img_gift_bg_tc_3 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_tc_3.png]
+    <嵌套prefab:UIPrivilege>
+        ↳ 源: Common/UIPrivilege.prefab
+        ↳ 覆盖: AnchorMax.y=1, AnchorMin.y=1, SizeDelta.y=60, Pivot.x=0, Pivot.y=1, AnchorMax.x=0, AnchorMin.x=0, SizeDelta.x=870, AnchoredPosition.x=435, AnchoredPosition.y=-80
+    Chain [INACTIVE]  size[-20.0, -665.5] pos[-0.0, 77.75] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        · LoopVerticalScrollRect | scroll=vertical
+        · guid:3312d7739989d2b4e91e6319e9a96d76
+        · ScrollRectFilter
+      Viewport  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+          · guid:3312d7739989d2b4e91e6319e9a96d76
+          · CanvasRenderer
+          · TFWImage | sprite=(none) | col=#000000 a=0.00
+        Content  size[950.0, 325.0] pos[0.0, 0.0] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 1.0]
+            · guid:59f8146938fff824cb5fd77236b75775 | spacing=38.0 | pad(L,R,T,B)=[0, 0, 10, 35]
+            · guid:3245ec927659c4140ac4f8d17403cc18
+          ChainItem  size[920.0, 280.0] pos[475.0, -150.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 0.5]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+            Arrow  size[328.0, 60.0] pos[0.0, -20.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+                · CanvasRenderer
+                · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=ui_giftpack_img_arrow | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/ui_giftpack_img_arrow.png]
+            Bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                · CanvasRenderer
+                · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_gift_bg_7 | Sliced | border(L,B,R,T)=[317.0, 0.0, 159.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_7.png]
+              Bg  size[460.0, 60.0] pos[25.0, 80.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.0, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_gift_bg_30 | Sliced | border(L,B,R,T)=[219.0, 6.0, 220.0, 7.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_30.png]
+            Free  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              Title  size[-50.0, 60.0] pos[0.0, -60.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+                Txt  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  Name  size[167.11, 60.0] pos[20.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.0, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#FFFDC4 | TEXT='钻石礼包' | fs=42
+                      · BetterOutline
+                      · guid:3245ec927659c4140ac4f8d17403cc18
+                      · guid:45facfdc6a639f041b007c036dc527b8
+                    Time  size[360.0, 40.0] pos[20.0, 5.0] anc[1.0, 0.0]-[1.0, 0.0] piv[0.0, 0.0]
+                        · CanvasRenderer
+                        · TFWText | col=#FFEBD0 | TEXT='剩余可购买次数：1次' | fs=28
+                        · BetterOutline
+              List  size[-305.0, 130.0] pos[-117.5, -35.0] anc[0.0, 0.5]-[1.0, 0.5] piv[0.5, 0.5]
+                  · LoopHorizontalScrollRect | scroll=horizontal
+                  · guid:3312d7739989d2b4e91e6319e9a96d76
+                  · ScrollRectFilter
+                Viewport  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · guid:3312d7739989d2b4e91e6319e9a96d76
+                    · CanvasRenderer
+                    · TFWImage | sprite=(none) | col=#000000 a=0.00
+                  Content  size[125.0, 130.0] pos[0.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.0, 0.5]
+                      · guid:30649d3a9faa99c48a7b1166b86bf2a0 | pad(L,R,T,B)=[0, 0, 0, 0]
+                      · guid:3245ec927659c4140ac4f8d17403cc18
+                    <嵌套prefab:UIItemTemplate>
+                        ↳ 源: Public/UIItemTemplate.prefab
+                        ↳ 覆盖: Name=UIItemTemplate, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0, AnchorMax.y=1, AnchorMin.x=0, AnchorMin.y=1, SizeDelta.x=125, SizeDelta.y=125, AnchoredPosition.x=62.5
+            Pack  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              Bg  size[476.0, 264.0] pos[270.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_remember_icon_bg_3 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Memory/img_remember_icon_bg_3.png]
+                Bg  size[460.0, 60.0] pos[-7.0, 80.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.0, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_gift_bg_30 | Sliced | border(L,B,R,T)=[219.0, 6.0, 220.0, 7.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_30.png]
+              MainItem  size[220.0, 220.0] pos[150.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+                <嵌套prefab:UIItemTemplate>
+                    ↳ 源: Public/UIItemTemplate.prefab
+                    ↳ 覆盖: IsActive=0, Name=UIItemTemplate, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=220, SizeDelta.y=220
+              Title  size[-50.0, 60.0] pos[0.0, -60.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+                Txt  size[-244.37, 0.0] pos[122.18, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  Name  size[512.0, 60.0] pos[0.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.0, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#FFFCC4 | TEXT='钻石礼包' | fs=42
+                      · BetterOutline
+                      · guid:45facfdc6a639f041b007c036dc527b8
+                  Time  size[625.63, 40.0] pos[0.0, -40.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.0, 0.0]
+                      · CanvasRenderer
+                      · TFWText | col=#FFECD0 | TEXT='剩余可购买次数：1次' | fs=28
+                      · BetterOutline
+              List  size[-515.0, 130.0] pos[2.5, -55.0] anc[0.0, 0.5]-[1.0, 0.5] piv[0.5, 0.5]
+                  · LoopHorizontalScrollRect | scroll=horizontal
+                  · guid:3312d7739989d2b4e91e6319e9a96d76
+                  · ScrollRectFilter
+                Viewport  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · guid:3312d7739989d2b4e91e6319e9a96d76
+                    · CanvasRenderer
+                    · TFWImage | sprite=(none) | col=#000000 a=0.00
+                  Content  size[125.0, 130.0] pos[0.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.0, 0.5]
+                      · guid:30649d3a9faa99c48a7b1166b86bf2a0 | pad(L,R,T,B)=[0, 0, 0, 0]
+                      · guid:3245ec927659c4140ac4f8d17403cc18
+                    <嵌套prefab:UIItemTemplate>
+                        ↳ 源: Public/UIItemTemplate.prefab
+                        ↳ 覆盖: Name=UIItemTemplate, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0, AnchorMax.y=1, AnchorMin.x=0, AnchorMin.y=1, SizeDelta.x=125, SizeDelta.y=125, AnchoredPosition.x=62.5
+            Soldout  size[238.08, 159.06] pos[319.11, -36.4] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+              Img  size[156.0, 156.0] pos[24.0, 12.2] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=ui_giftpack_img_soldout | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/ui_giftpack_img_soldout.png]
+              Txt  size[169.04, 68.02] pos[-59.3, -42.2] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWText | col=#FFF6E9 | TEXT='languageKey: Text_SecretShopOut' | fs=52
+            Btn  size[204.0, 84.0] pos[-140.0, -38.0] anc[1.0, 0.5]-[1.0, 0.5] piv[0.5, 0.5]
+              <嵌套prefab:UIBtnFreeBuy>
+                  ↳ 源: Button/UIBtnFreeBuy.prefab
+                  ↳ 覆盖: AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=204, SizeDelta.y=84, AnchoredPosition.x=0, AnchoredPosition.y=0, Name=UIBtnFreeBuy, IsActive=1
+              <嵌套prefab:UIBtnPurchase>
+                  ↳ 源: Button/UIBtnPurchase.prefab
+                  ↳ 覆盖: AnchorMax.y=1, AnchorMin.y=1, SizeDelta.x=53.333332, SizeDelta.y=36, AnchoredPosition.x=66.666664, AnchoredPosition.y=-18, IsActive=1, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5
+            Discount  size[145.49, 143.94] pos[407.5, 70.6] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+              Bg  size[156.0, 156.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_gift_bg_Discount | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_Discount.png]
+              Txt  size[100.0, 67.15] pos[-2.3, 9.9] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWText | col=#EFE39B | TEXT='免费' | fs=42
+                  · BetterOutline
+    Img1  size[240.61, 310.36] pos[391.7, -414.68] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWImage | sprite=img_gift_bg_10 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_10.png]
+    Btn  size[300.0, 120.0] pos[0.0, 246.8] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+      <嵌套prefab:UIBtnPurchase>
+          ↳ 源: Button/UIBtnPurchase.prefab
+          ↳ 覆盖: AnchorMax.y=1, AnchorMin.y=1, SizeDelta.x=66, AnchoredPosition.x=73, AnchoredPosition.y=-17.5, IsActive=0, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMin.x=0.5
+    Return  size[100.0, 100.0] pos[-3.7, 613.9] anc[1.0, 0.5]-[1.0, 0.5] piv[1.0, 0.5]
+        · CanvasRenderer
+        · EventTriggerListener
+        · ButtonScale
+        · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+      BG  size[104.0, 104.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+          · CanvasRenderer
+          · TFWImage | sprite=img_cm_zhizuo_guanbianniu | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_zhizuo_guanbianniu.png]
+  Pools  size[1080.0, 250.0] pos[0.0, -700.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+    line  size[-100.0, 30.0] pos[0.0, -13.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.0]
+        · CanvasRenderer
+        · TFWImage | sprite=im_bm_bg_13 | Sliced | border(L,B,R,T)=[0.0, 34.0, 0.0, 37.0] | col=#FFFFFF | [Spirits/BlackMarket/im_bm_bg_13.png]
+    List  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        · CanvasRenderer
+        · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_idle_bg_jilu | Sliced | border(L,B,R,T)=[0.0, 4.0, 0.0, 12.0] | col=#FFFFFF | [Spirits/Fish/img_idle_bg_jilu.png]
+        · ScrollRectFilter
+        · FancySelectScroller
+        · FancySelectScrollView
+      Viewport  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+          · CanvasRenderer
+          · guid:3312d7739989d2b4e91e6319e9a96d76
+          · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+        Content  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.0, 0.5]
+            · CanvasRenderer
+        Tab [INACTIVE]  size[0.0, 236.0] pos[0.0, 0.0] anc[0.0, 0.5]-[1.0, 0.5] piv[0.5, 0.5]
+            · UIAudio
+            · ButtonState
+            · EventTriggerListener
+          Root  size[420.0, 236.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+            Normal  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              Bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Main_gift_bg_1 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_Main_gift_bg_1.png]
+              BgTxt  size[-23.28, -180.96] pos[0.4, -61.85] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Main_gift_bg | Sliced | border(L,B,R,T)=[32.0, 0.0, 32.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_Main_gift_bg.png]
+              Icon  size[204.2, 204.2] pos[317.9, 118.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=icon_island_transfer_2 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ItemIcons/icon_island_transfer_2.png]
+              Txt  size[-60.0, 55.0] pos[30.0, 30.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.0, 0.0]
+                  · CanvasRenderer
+                  · TFWText | col=#F5EF99 | TEXT='Resident Pool' | fs=40
+                  · BetterOutline
+            Select [INACTIVE]  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              Bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Main_gift_bg_1 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_Main_gift_bg_1.png]
+              BgTxt  size[-23.28, -180.96] pos[0.4, -61.85] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Main_gift_bg | Sliced | border(L,B,R,T)=[32.0, 0.0, 32.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_Main_gift_bg.png]
+              Icon  size[204.2, 204.2] pos[317.9, 118.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=icon_island_transfer_2 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ItemIcons/icon_island_transfer_2.png]
+              BgBound [INACTIVE]  size[13.08, 16.21] pos[-0.99, 2.57] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_chouka_kuang | Sliced | border(L,B,R,T)=[20.0, 20.0, 20.0, 20.0] | col=#FFFFFF | [Spirits/Gacha/img_chouka_kuang.png]
+              Txt  size[0.0, 100.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.0, 0.0]
+                  · CanvasRenderer
+                  · TFWText | col=#F4EE99 | TEXT='Resident Pool' | fs=52
+                  · BetterOutline
+            Red  size[40.0, 40.0] pos[-45.0, -45.0] anc[1.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+    Selected  size[430.0, 220.31] pos[0.0, 3.14] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWImage | sprite=img_chouka_kuang | Sliced | border(L,B,R,T)=[20.0, 20.0, 20.0, 20.0] | col=#FFFFFF | [Spirits/Gacha/img_chouka_kuang.png]
+    BtnLeft  size[90.14, 144.25] pos[-239.6, 4.9] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · EventTriggerListener
+        · TweenAnimation
+        · guid:4e29b1a8efbd4b44bb3f3716e73f07ff
+        · CanvasRenderer
+        · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+      bg  size[60.0, 108.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+          · CanvasRenderer
+          · TFWImage | sprite=img_ledger_anniu_jiantou2 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_ledger_anniu_jiantou2.png]
+    BtnRight  size[90.14, 144.25] pos[231.0, 4.7] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+        · EventTriggerListener
+        · TweenAnimation
+        · guid:4e29b1a8efbd4b44bb3f3716e73f07ff
+        · CanvasRenderer
+        · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+      bg  size[60.0, 108.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5] scale[-1.0, 1.0]
+          · CanvasRenderer
+          · TFWImage | sprite=img_ledger_anniu_jiantou2 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_ledger_anniu_jiantou2.png]

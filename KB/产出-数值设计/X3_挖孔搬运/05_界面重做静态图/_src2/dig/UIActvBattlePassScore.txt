@@ -1,0 +1,135 @@
+=== UIActvBattlePassScore.prefab (GO=87) ===
+UIActvBattlePassScore  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.0, 0.0] scl[0.0, 0.0]
+  · guid:0cd44c1031e13a943bb63640046fad76
+  · guid:dc42784cf147c0c48a680349fa168899
+  · UIConfig
+  · UIAnimation
+  Root  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+    BG  sz[0.0, 944.0] p[0.0, 0.0] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+      · IMG img_battlepass_bg_1 Spirits/ActivityImg_Download/img_battlepass_bg_1.png
+    Role  sz[1024.0, 1536.0] p[0.0, -100.0] a[0.5, 1.0][0.5, 1.0] piv[0.5, 1.0]
+      EffectRoot  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+      <嵌套prefab:VideoRoot>
+        >> Assets/Res/Video/Prefab/VideoRoot.prefab
+        >> 覆盖 sz=['0', '0'] pos=['0', '0']
+    Animation  sz[1080.0, 0.0] p[0.0, 0.0] a[0.5, 0.0][0.5, 1.0]
+      Top  sz[0.0, 600.0] p[0.0, -100.0] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+        txt_title  sz[700.0, 80.0] p[23.0, -65.0] a[0.0, 1.0][0.0, 1.0] piv[0.0, 0.5]
+          · TXT '活动标题几个字' fs=52 #FFFFFF
+          · guid:45facfdc6a639f041b007c036dc527b8
+        txt_desc  sz[700.0, 150.0] p[23.0, -370.0] a[0.0, 1.0][0.0, 1.0] piv[0.0, 1.0]
+          · TXT '活动描述一段字' fs=36 #F4EACE
+        Time  sz[0.0, 60.0] p[23.0, -100.1] a[0.0, 1.0][0.0, 1.0] piv[0.0, 1.0]
+          · guid:30649d3a9faa99c48a7b1166b86bf2a0 spacing=15.0 padding_LRTB=[0, 0, 0, 0]
+          · guid:3245ec927659c4140ac4f8d17403cc18
+          bg  sz[50.0, 0.0] p[25.0, 0.0] STRETCH
+            · IMG img_gift_bg_4 Sliced border(L,B,R,T)=[41, 0, 43, 0] Spirits/Pack/img_gift_bg_4.png
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+          Icon  sz[0.0, 40.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+            · IMG img_gift_time Spirits/Pack/img_gift_time.png
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+          txt  sz[0.0, 60.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+            · TXT '距结束：{0}' fs=32 #EED376
+        btn_info  sz[64.0, 64.0] p[-55.0, -55.0] a[1.0, 1.0][1.0, 1.0]
+          · TFWImage
+          bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+            · IMG img_cm_anniu_guize Spirits/CommonNew/img_cm_anniu_guize.png
+        <嵌套prefab:UIBtnGift>
+          >> Button/UIBtnGift.prefab
+          >> 覆盖 sz=['170', '170'] pos=['-108', '-185.09998']
+        <嵌套prefab:UIBtnProperty>
+          >> Button/UIBtnProperty.prefab
+          >> 覆盖 sz=['100', '100'] pos=['-268', '-220.1']
+        UIBtnClaimAll  sz[296.0, 100.0] p[-181.0, 120.0] a[1.0, 0.0][1.0, 0.0]
+          · IMG img_cm_anniu_gold Sliced border(L,B,R,T)=[36, 0, 36, 0] Spirits/CommonNew/img_cm_anniu_gold.png
+          title  sz[-50.0, -20.0] p[0.0, 0.0] STRETCH
+            · TXT 'languageKey: Text_union_btn_claimall' fs=46 #FFF6E9
+        <嵌套prefab:DailyGift>
+          >> Activity/DailyGift.prefab
+          >> 覆盖 sz=['135', '135'] pos=['90.5', '300']
+      Content  sz[1040.0, -968.0] p[0.0, -276.0] a[0.5, 0.0][0.5, 1.0]
+        Bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+          · guid:30649d3a9faa99c48a7b1166b86bf2a0 padding_LRTB=[10, 10, 10, 10]
+          1  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.0, 0.5]
+            · IMG img_Activity_bg_integral_6 Sliced border(L,B,R,T)=[16, 16, 4, 16] Spirits/Activity/img_Activity_bg_integral_6.png
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+          2  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+            · IMG img_Activity_bg_integral_7 Sliced border(L,B,R,T)=[12, 12, 12, 12] Spirits/Activity/img_Activity_bg_integral_7.png
+            img  sz[4.5, 0.0] p[0.75, 0.0] STRETCH
+              · IMG img_Activity_bg_integral_7 Sliced border(L,B,R,T)=[12, 12, 12, 12] Spirits/Activity/img_Activity_bg_integral_7.png
+          3  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[1.0, 0.5]
+            · IMG img_Activity_bg_integral_8 Sliced border(L,B,R,T)=[4, 16, 16, 16] Spirits/Activity/img_Activity_bg_integral_8.png
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+          frame  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+            · IMG img_Activity_bg_integral_5 Sliced border(L,B,R,T)=[44, 44, 44, 44] Spirits/Activity/img_Activity_bg_integral_5.png
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+        Level  sz[1040.0, 80.0] p[0.0, 68.0] a[0.5, 1.0][0.5, 1.0]
+          bg  sz[-70.0, 0.0] p[35.0, 0.0] STRETCH
+            · IMG img_Activity_woodenstake_jdt_1 Sliced border(L,B,R,T)=[15, 16, 16, 13] Spirits/Activity/img_Activity_woodenstake_jdt_1.png
+          btn_Score  sz[150.0, 150.0] p[75.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+            · TFWImage
+            bg  sz[152.0, 152.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+              · IMG img_Activity_yjrq_rule Spirits/Activity/img_Activity_yjrq_rule.png
+          Level  sz[130.0, 60.0] p[215.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+            Text  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              · TXT '2级' fs=42 #F7EBCE
+          Slider  sz[-380.0, 42.0] p[90.0, 0.0] a[0.0, 0.5][1.0, 0.5]
+            · guid:67db9e8f0e2ae9c40bc1e2b64352a6b4
+            Background  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              · IMG img_VIP_bg_jindutiao_1 Sliced border(L,B,R,T)=[12, 12, 12, 12] Spirits/CommonNew/img_VIP_bg_jindutiao_1.png
+            Fill Area  sz[-8.0, -8.5] p[0.0, 1.75] STRETCH
+              ...(1 子节点省略)
+            Text  sz[0.0, -3.0] p[0.0, 1.5] STRETCH
+              · TXT '150/1,000' fs=36 #FFFFFF
+          BtnAdd  sz[70.0, 70.0] p[-40.0, 0.0] a[1.0, 0.5][1.0, 0.5]
+            · TFWImage
+            Image  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              · IMG img_dtc_btn_+ Spirits/CommonNew/img_dtc_btn_+.png
+        List  sz[-20.0, -156.0] p[0.0, -64.5] STRETCH
+          · LoopVerticalScrollRect scroll=vertical
+          · ScrollRectFilter
+          View  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+            · TFWImage
+            · guid:3312d7739989d2b4e91e6319e9a96d76
+            Content  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+              · guid:3245ec927659c4140ac4f8d17403cc18
+              · guid:59f8146938fff824cb5fd77236b75775 spacing=10.0 padding_LRTB=[0, 0, 10, 0]
+              ...(1 子节点省略)
+        Title  sz[-20.0, 132.0] p[0.0, -17.0] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+          · guid:30649d3a9faa99c48a7b1166b86bf2a0 padding_LRTB=[125, 0, 0, 0]
+          Level  sz[130.0, 0.0] p[65.0, 0.0] a[0.0, 0.0][0.0, 1.0]
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+            Bg  sz[104.0, 112.0] p[0.0, -12.0] a[0.5, 0.5][0.5, 0.5]
+              · IMG img_battlepass_bg_2 Spirits/Activity/img_battlepass_bg_2.png
+            Txt  sz[75.0, 40.0] p[-0.0, 15.0] a[0.5, 0.5][0.5, 0.5]
+              · TXT 'languageKey: Text_System_Level' fs=28 #EEE48E
+            Num  sz[90.0, 60.0] p[0.8, -25.0] a[0.5, 0.5][0.5, 0.5]
+              · TXT '2' fs=42 #F5EACE
+          Free  sz[231.67, 132.0] p[240.83, -66.0] a[0.0, 1.0][0.0, 1.0]
+            Bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              · IMG img_Activity_bg_integral_2 Sliced border(L,B,R,T)=[28, 0, 4, 0] Spirits/Activity/img_Activity_bg_integral_2.png
+            Icon  sz[113.0, 106.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+              · IMG img_Activity_icon_integral_1 Spirits/Activity/img_Activity_icon_integral_1.png
+          AdvancePack  sz[231.67, 132.0] p[472.5, -66.0] a[0.0, 1.0][0.0, 1.0]
+            · TFWImage
+            · guid:4e29b1a8efbd4b44bb3f3716e73f07ff
+            Bg  sz[4.5, -1.62] p[0.75, -1.99] STRETCH scl[-1.0, 1.0]
+              · IMG img_Activity_bg_integral_4 Sliced border(L,B,R,T)=[4, 0, 4, 0] Spirits/Activity/img_Activity_bg_integral_4.png
+            Item_FX_21  sz[100.0, 100.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+              ...(1 子节点省略)
+            Icon  sz[116.0, 108.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+              · IMG img_Activity_icon_integral_2 Spirits/Activity/img_Activity_icon_integral_2.png
+            sp_Lock  sz[48.0, 60.0] p[36.0, -22.0] a[0.5, 0.5][0.5, 0.5]
+              · IMG img_remember_icon_lock Spirits/Memory/img_remember_icon_lock.png
+          SuperPack  sz[431.67, 132.0] p[804.17, -66.0] a[0.0, 1.0][0.0, 1.0]
+            · TFWImage
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+            · guid:4e29b1a8efbd4b44bb3f3716e73f07ff
+            Bg  sz[0.0, 2.15] p[0.0, -0.08] STRETCH
+              · IMG img_Activity_bg_integral_3 Sliced border(L,B,R,T)=[4, 0, 28, 0] Spirits/Activity/img_Activity_bg_integral_3.png
+            Item_FX_21  sz[100.0, 100.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+              ...(1 子节点省略)
+            Icon  sz[116.0, 108.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+              · IMG img_Activity_icon_integral_3 Spirits/Activity/img_Activity_icon_integral_3.png
+            sp_Lock  sz[48.0, 60.0] p[36.0, -22.0] a[0.5, 0.5][0.5, 0.5]
+              · IMG img_remember_icon_lock Spirits/Memory/img_remember_icon_lock.png

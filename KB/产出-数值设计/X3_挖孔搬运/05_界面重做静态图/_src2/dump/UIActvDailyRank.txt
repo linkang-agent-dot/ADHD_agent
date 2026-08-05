@@ -1,0 +1,388 @@
+=== UIActvDailyRank.prefab  (GameObject 数=115) ===
+UIActvDailyRank  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.0, 0.0] scale[0.0, 0.0]
+    · Canvas
+    · guid:0cd44c1031e13a943bb63640046fad76
+    · guid:dc42784cf147c0c48a680349fa168899
+    · RectTransformScaleParent
+    · UIConfig
+    · UIAnimation
+  mask  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 1.0]
+      · CanvasRenderer
+      · TFWImage | sprite=(none) | col=#F0D7A5
+    sp_bottom  size[0.0, 264.0] pos[0.0, 120.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.0]
+        · CanvasRenderer
+        · TFWImage | sprite=img_hs_bg_1 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/AllianceTrap/img_hs_bg_1.png]
+  Root  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+      · RectTransformScaleParent
+    ScrollRect  size[0.0, -90.0] pos[0.0, -45.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        · CanvasRenderer
+        · LoopVerticalScrollRect | scroll=vertical
+        · ScrollRectFilter
+      viewport  size[0.0, -120.0] pos[0.0, 60.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+          · CanvasRenderer
+          · guid:3312d7739989d2b4e91e6319e9a96d76
+          · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+        Animation  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 1.0]
+            · CanvasRenderer
+            · guid:59f8146938fff824cb5fd77236b75775 | pad(L,R,T,B)=[0, 0, 0, 130]
+            · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+            · guid:3245ec927659c4140ac4f8d17403cc18
+          sp_top  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 1.0]
+              · guid:59f8146938fff824cb5fd77236b75775 | spacing=10.0 | pad(L,R,T,B)=[0, 0, 900, 0]
+            BG  size[0.0, 1256.0] pos[0.0, 95.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 1.0]
+                · CanvasRenderer
+                · TFWImage | sprite=img_Activity_rank_bg03 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_bg03.png]
+                · guid:306cc8c2b49d7114eaa3623786fc2126
+            Top  size[1080.0, 450.0] pos[0.0, 0.0] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 1.0]
+                · CanvasRenderer
+                · guid:306cc8c2b49d7114eaa3623786fc2126
+              txt_title  size[686.0, 80.0] pos[25.0, -65.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 0.5] scale[0.0, 0.0]
+                  · CanvasRenderer
+                  · TFWText | col=#FFFFFF | TEXT='活动标题几个字' | fs=52
+                  · BetterOutline
+                  · guid:45facfdc6a639f041b007c036dc527b8
+              txt_stage_name  size[686.0, 80.0] pos[25.0, -65.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 0.5]
+                  · CanvasRenderer
+                  · TFWText | col=#FFFFFF | TEXT='阶段名字几个字' | fs=52
+                  · BetterOutline
+                  · guid:45facfdc6a639f041b007c036dc527b8
+              txt_desc  size[800.0, 149.0] pos[25.0, -116.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 1.0]
+                  · CanvasRenderer
+                  · TFWText | col=#F4EACE | TEXT='活动描述一段字' | fs=36
+                  · BetterOutline
+              Time  size[0.0, 60.0] pos[25.0, -105.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 1.0] scale[0.0, 0.0]
+                  · CanvasRenderer
+                  · guid:30649d3a9faa99c48a7b1166b86bf2a0 | spacing=15.0 | pad(L,R,T,B)=[20, 30, 0, 0]
+                  · guid:3245ec927659c4140ac4f8d17403cc18
+                bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_gift_bg_4 | Sliced | border(L,B,R,T)=[41.0, 0.0, 43.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_4.png]
+                    · guid:306cc8c2b49d7114eaa3623786fc2126
+                Icon  size[0.0, 45.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_gift_time | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_time.png]
+                    · guid:306cc8c2b49d7114eaa3623786fc2126
+                txt  size[0.0, 60.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWText | col=#EED376 | TEXT='距结束：{0}' | fs=32
+                    · BetterOutline
+              Info  size[64.0, 64.0] pos[-55.3, -65.0] anc[1.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · EventTriggerListener
+                  · ButtonScale
+                  · CanvasRenderer
+                  · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+                bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_cm_anniu_guize | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_anniu_guize.png]
+              <嵌套prefab:UIBtnGift>
+                  ↳ 源: Button/UIBtnGift.prefab
+                  ↳ 覆盖: Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=1, AnchorMax.y=1, AnchorMin.x=1, AnchorMin.y=1, SizeDelta.x=170, SizeDelta.y=170, AnchoredPosition.x=-108.30005, AnchoredPosition.y=-365
+              <嵌套prefab:UIBtnProperty>
+                  ↳ 源: Button/UIBtnProperty.prefab
+                  ↳ 覆盖: Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0, AnchorMax.y=0, AnchorMin.x=0, AnchorMin.y=0, SizeDelta.x=120, SizeDelta.y=120, AnchoredPosition.x=85, AnchoredPosition.y=-176
+              <嵌套prefab:DailyGift>
+                  ↳ 源: Activity/DailyGift.prefab
+                  ↳ 覆盖: Name=DailyGift, IsActive=0, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0, AnchorMax.y=0, AnchorMin.x=0, AnchorMin.y=0, SizeDelta.x=135, SizeDelta.y=135
+              BtnCalender  size[120.0, 120.0] pos[85.0, -340.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · EventTriggerListener
+                  · TFWImage | sprite=img_rank_toyxiangkuang | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Rank/img_rank_toyxiangkuang.png]
+                Img  size[120.0, 120.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5] scale[-1.0, 1.0]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_Activity_icon_19 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_icon_19.png]
+                DailyRewardTitle  size[170.0, 50.0] pos[0.0, 25.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWText | col=#FFF6E9 | TEXT='languageKey: Text_Actv_calender' | fs=32
+                    · BetterOutline
+            mask  size[0.0, -90.0] pos[0.0, -50.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 1.0]
+                · CanvasRenderer
+                · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+                · guid:306cc8c2b49d7114eaa3623786fc2126
+                · guid:3312d7739989d2b4e91e6319e9a96d76
+              Role  size[1024.0, 1536.0] pos[210.0, -75.0] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 1.0]
+                  · EffectDisplay
+                EffectRoot  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                <嵌套prefab:VideoRoot>
+                    ↳ 源: Assets/Res/Video/Prefab/VideoRoot.prefab
+                    ↳ 覆盖: Name=VideoRoot, IsActive=0, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=1, AnchorMax.y=1, AnchorMin.x=0, AnchorMin.y=0, SizeDelta.x=0, SizeDelta.y=0
+              Img  size[324.0, 108.0] pos[253.0, -1460.0] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 1.0] scale[2.0, 2.0]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Assemble_bg_ditu5 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Rally/img_Assemble_bg_ditu5.png]
+                  · guid:306cc8c2b49d7114eaa3623786fc2126
+            bg  size[-60.0, -615.0] pos[0.0, -540.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 1.0]
+                · CanvasRenderer
+                · guid:306cc8c2b49d7114eaa3623786fc2126
+                · TFWImage | sprite=img_gift_bg_17 | Sliced | border(L,B,R,T)=[28.0, 28.0, 28.0, 28.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_17.png]
+              line  size[0.0, 4.0] pos[0.0, -340.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 1.0]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_heros_line | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/HeroNew/img_heros_line.png]
+                  · guid:306cc8c2b49d7114eaa3623786fc2126
+            StageReward  size[1020.0, 320.0] pos[0.0, -540.0] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 1.0]
+                · CanvasRenderer
+                · guid:306cc8c2b49d7114eaa3623786fc2126
+              Slider  size[-140.0, 52.0] pos[-70.0, 26.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.5]
+                  · guid:67db9e8f0e2ae9c40bc1e2b64352a6b4
+                Background  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_TXDS_jindutiao2 | Sliced | border(L,B,R,T)=[16.0, 16.0, 16.0, 16.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_jindutiao2.png]
+                Fill Area  size[-18.5, -17.0] pos[-0.75, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  Fill  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_TXDS_jindutiao1 | Sliced | border(L,B,R,T)=[8.0, 8.0, 8.0, 8.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_jindutiao1.png]
+              Reward  size[880.0, 300.0] pos[0.0, -10.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+                Box1  size[200.0, 180.0] pos[220.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · EventTriggerListener
+                    · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+                  bg  size[170.0, 170.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_rank_toyxiangkuang | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Rank/img_rank_toyxiangkuang.png]
+                  effectroot [INACTIVE]  size[1.0, 1.0] pos[0.0, 10.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · EffectDisplay
+                    EffectRoot  size[100.0, 100.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                  box_close  size[208.0, 208.0] pos[0.0, 20.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_rank_box04 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_box04.png]
+                  box_open [INACTIVE]  size[208.0, 208.0] pos[-9.5, 20.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_rank_box07 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_box07.png]
+                  sp  size[72.0, 68.0] pos[0.0, -125.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_rank_icon01 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_icon01.png]
+                  Value [INACTIVE]  size[187.0, 68.0] pos[-61.0, 0.0] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 0.5] scale[0.0, 0.0]
+                      · CanvasRenderer
+                    bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                        · CanvasRenderer
+                        · TFWImage | sprite=img_gift_bg_integral | Sliced | border(L,B,R,T)=[57.0, 15.0, 19.0, 34.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_integral.png]
+                    icon  size[72.0, 68.0] pos[35.0, -26.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 0.5] scale[0.5, 0.5]
+                        · CanvasRenderer
+                        · TFWImage | sprite=img_cm_icon_gem | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonIcons/img_cm_icon_gem.png]
+                    txt  size[-75.0, 36.0] pos[22.5, -45.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 0.0]
+                        · CanvasRenderer
+                        · TFWText | col=#3F2411 | TEXT='3,000' | fs=36
+                  sp_num  size[204.0, 48.0] pos[0.0, 0.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.0]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_rank_bg01 | Simple | border(L,B,R,T)=[0.0, 16.0, 0.0, 4.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_bg01.png]
+                  txt_num  size[-40.0, 40.0] pos[0.0, 10.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.0]
+                      · CanvasRenderer
+                      · TFWText | col=#EEE48E | TEXT='5,000' | fs=36
+                      · BetterOutline
+                Box2  size[200.0, 180.0] pos[440.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · EventTriggerListener
+                    · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+                  bg  size[170.0, 170.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_rank_toyxiangkuang | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Rank/img_rank_toyxiangkuang.png]
+                  effectroot [INACTIVE]  size[1.0, 1.0] pos[0.0, 10.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · EffectDisplay
+                    EffectRoot  size[100.0, 100.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                  box_close  size[208.0, 208.0] pos[0.0, 20.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_rank_box05 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_box05.png]
+                  box_open [INACTIVE]  size[208.0, 208.0] pos[-5.0, 20.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_rank_box08 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_box08.png]
+                  sp  size[72.0, 68.0] pos[0.0, -125.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_rank_icon01 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_icon01.png]
+                  Value [INACTIVE]  size[187.0, 68.0] pos[-61.0, 0.0] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 0.5] scale[0.0, 0.0]
+                      · CanvasRenderer
+                    bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                        · CanvasRenderer
+                        · TFWImage | sprite=img_gift_bg_integral | Sliced | border(L,B,R,T)=[57.0, 15.0, 19.0, 34.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_integral.png]
+                    icon  size[72.0, 68.0] pos[35.0, -26.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 0.5] scale[0.5, 0.5]
+                        · CanvasRenderer
+                        · TFWImage | sprite=img_cm_icon_gem | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonIcons/img_cm_icon_gem.png]
+                    txt  size[-75.0, 36.0] pos[22.5, -45.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 0.0]
+                        · CanvasRenderer
+                        · TFWText | col=#3F2411 | TEXT='languageKey:' | fs=36
+                  sp_num  size[204.0, 48.0] pos[0.0, 0.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.0]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_rank_bg01 | Simple | border(L,B,R,T)=[0.0, 16.0, 0.0, 4.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_bg01.png]
+                  txt_num  size[-40.0, 40.0] pos[0.0, 10.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.0]
+                      · CanvasRenderer
+                      · TFWText | col=#EEE48E | TEXT='languageKey:' | fs=36
+                      · BetterOutline
+                Box3  size[200.0, 180.0] pos[880.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · EventTriggerListener
+                    · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+                  bg  size[170.0, 170.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_rank_toyxiangkuang | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Rank/img_rank_toyxiangkuang.png]
+                  effectroot [INACTIVE]  size[1.0, 1.0] pos[0.0, 10.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · EffectDisplay
+                    EffectRoot  size[100.0, 100.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                  box_close  size[208.0, 208.0] pos[0.0, 20.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_rank_box06 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_box06.png]
+                  box_open [INACTIVE]  size[208.0, 208.0] pos[0.0, 20.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_rank_box09 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_box09.png]
+                  sp  size[72.0, 68.0] pos[0.0, -125.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_rank_icon01 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_icon01.png]
+                  Value [INACTIVE]  size[187.0, 68.0] pos[-61.0, 0.0] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 0.5] scale[0.0, 0.0]
+                      · CanvasRenderer
+                    bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                        · CanvasRenderer
+                        · TFWImage | sprite=img_gift_bg_integral | Sliced | border(L,B,R,T)=[57.0, 15.0, 19.0, 34.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_integral.png]
+                    icon  size[72.0, 68.0] pos[35.0, -26.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 0.5] scale[0.5, 0.5]
+                        · CanvasRenderer
+                        · TFWImage | sprite=img_cm_icon_gem | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonIcons/img_cm_icon_gem.png]
+                    txt  size[-75.0, 36.0] pos[22.5, -45.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 0.0]
+                        · CanvasRenderer
+                        · TFWText | col=#3F2411 | TEXT='languageKey:' | fs=36
+                  sp_num  size[204.0, 48.0] pos[0.0, 0.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.0]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_rank_bg01 | Simple | border(L,B,R,T)=[0.0, 16.0, 0.0, 4.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_bg01.png]
+                  txt_num  size[-40.0, 40.0] pos[0.0, 10.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.0]
+                      · CanvasRenderer
+                      · TFWText | col=#EEE48E | TEXT='languageKey:' | fs=36
+                      · BetterOutline
+              Score  size[230.0, 60.0] pos[0.0, -5.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 1.0]
+                  · CanvasRenderer
+                Background  size[-35.0, -10.0] pos[17.5, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_cm_bg_biaoti3 | Sliced | border(L,B,R,T)=[19.0, 16.0, 19.0, 17.0] | col=#372B21 | [Spirits/CommonNew/img_cm_bg_biaoti3.png]
+                Icon  size[72.0, 68.0] pos[0.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.0, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_Activity_rank_icon01 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_icon01.png]
+                txt_num  size[-82.0, 0.0] pos[31.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWText | col=#EEE48E | TEXT='300,000' | fs=36
+                    · BetterOutline
+              Time  size[0.0, 60.0] pos[-15.0, -5.0] anc[1.0, 1.0]-[1.0, 1.0] piv[1.0, 1.0]
+                  · CanvasRenderer
+                  · guid:30649d3a9faa99c48a7b1166b86bf2a0 | spacing=15.0 | pad(L,R,T,B)=[20, 30, 0, 0]
+                  · guid:3245ec927659c4140ac4f8d17403cc18
+                bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_gift_bg_4 | Sliced | border(L,B,R,T)=[41.0, 0.0, 43.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_4.png]
+                    · guid:306cc8c2b49d7114eaa3623786fc2126
+                Icon  size[0.0, 45.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_gift_time | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_time.png]
+                    · guid:306cc8c2b49d7114eaa3623786fc2126
+                txt  size[0.0, 60.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWText | col=#EED376 | TEXT='距结束：{0}' | fs=32
+                    · BetterOutline
+            ScoreGroupTemplate  size[1020.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 1.0]
+                · CanvasRenderer
+                · guid:59f8146938fff824cb5fd77236b75775 | spacing=10.0 | pad(L,R,T,B)=[0, 0, 0, 0]
+                · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+              Item  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                  · guid:306cc8c2b49d7114eaa3623786fc2126
+                sp_bg  size[-20.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=UI_Img_common_bar_white | Sliced | border(L,B,R,T)=[16.0, 14.0, 15.0, 14.0] | col=#DDB991 a=0.43 | [Chat/Sprite/CommonBg/UI_Img_common_bar_white.png]
+                txt_task  size[-350.0, -10.0] pos[-145.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWText | col=#F9E9C1 | TEXT='任务描述几个字' | fs=36
+                    · BetterOutline
+                txt_score  size[0.0, 80.0] pos[-150.0, 0.0] anc[1.0, 0.5]-[1.0, 0.5] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWText | col=#EEE48E | TEXT='+9,999' | fs=36
+                    · guid:3245ec927659c4140ac4f8d17403cc18
+                    · BetterOutline
+                  icon  size[72.0, 68.0] pos[0.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[1.0, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_rank_icon01 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_icon01.png]
+                btn_go  size[0.0, -10.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · EventTriggerListener
+                    · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+                    · guid:306cc8c2b49d7114eaa3623786fc2126
+                  icon  size[40.0, 56.0] pos[-50.0, 0.0] anc[1.0, 0.5]-[1.0, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_cm_anniu_Goto | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_anniu_Goto.png]
+            ScoreGroupTempateList  size[100.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                · EventTriggerListener
+                · ChildGroupController
+            Title  size[1020.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 1.0]
+                · CanvasRenderer
+                · TFWImage | sprite=img_cm_bg_biaoti2 | Sliced | border(L,B,R,T)=[52.0, 0.0, 52.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_bg_biaoti2.png]
+                · guid:306cc8c2b49d7114eaa3623786fc2126
+              txt  size[0.0, -5.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWText | col=#FFF1B9 | TEXT='languageKey: Text_Actv_GroupMember' | fs=36
+          UIRankTemplate  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+            <嵌套prefab:UIRankTemplate>
+                ↳ 源: Public/UIRankTemplate.prefab
+                ↳ 覆盖: IsActive=1, Name=UIRankTemplate, AnchorMax.x=0, AnchorMax.y=0, Pivot.x=0.5, Pivot.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0, SizeDelta.x=-600, SizeDelta.y=196
+            Reward  size[135.0, 135.0] pos[-120.0, 0.0] anc[1.0, 0.5]-[1.0, 0.5] piv[0.5, 0.5]
+                · CanvasRenderer
+                · EventTriggerListener
+                · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+              Img  size[150.0, 150.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=icon_Monopoly_chest | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ItemIcons/icon_Monopoly_chest.png]
+              txt  size[160.0, 50.0] pos[0.0, 25.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWText | col=#F9E9C1 | TEXT='languageKey: Text_Guild_Rank_Award_Title' | fs=28
+                  · BetterOutline
+    MyRank  size[496.0, 104.0] pos[0.0, 475.0] anc[1.0, 0.0]-[1.0, 0.0] piv[1.0, 0.0]
+        · guid:306cc8c2b49d7114eaa3623786fc2126
+        · CanvasRenderer
+        · TFWImage | sprite=img_Activity_rank_bg02 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_bg02.png]
+        · EventTriggerListener
+      icon  size[80.0, 80.0] pos[125.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+          · CanvasRenderer
+          · TFWImage | sprite=img_ui_guild_icon_4 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Alliance/img_ui_guild_icon_4.png]
+      txt  size[-245.0, -20.0] pos[42.5, 10.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.0]
+          · CanvasRenderer
+          · TFWText | col=#F9E9C1 | TEXT='我的排名：10' | fs=36
+          · BetterOutline
+    RankEmpty [INACTIVE]  size[0.0, -90.0] pos[0.0, -45.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+      BG  size[0.0, 1256.0] pos[0.0, 95.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 1.0]
+          · CanvasRenderer
+          · TFWImage | sprite=img_Activity_rank_bg03 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_rank_bg03.png]
+          · guid:306cc8c2b49d7114eaa3623786fc2126
+      mask  size[0.0, -580.0] pos[0.0, -50.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 1.0]
+          · CanvasRenderer
+          · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+          · guid:306cc8c2b49d7114eaa3623786fc2126
+          · guid:3312d7739989d2b4e91e6319e9a96d76
+        Role  size[1024.0, 1536.0] pos[210.0, -75.0] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 1.0]
+            · EffectDisplay
+          EffectRoot  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        Img  size[324.0, 108.0] pos[253.0, -1460.0] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 1.0] scale[2.0, 2.0]
+            · CanvasRenderer
+            · TFWImage | sprite=img_Assemble_bg_ditu5 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Rally/img_Assemble_bg_ditu5.png]
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+      bg  size[0.0, 264.0] pos[0.0, 120.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.0]
+          · CanvasRenderer
+          · TFWImage | sprite=img_hs_bg_1 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/AllianceTrap/img_hs_bg_1.png]
+      txt_title  size[686.0, 80.0] pos[25.0, -65.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 0.5]
+          · CanvasRenderer
+          · TFWText | col=#FFFFFF | TEXT='languageKey: TXT_ActvOnline_ActvName_104801' | fs=52
+          · BetterOutline
+          · guid:45facfdc6a639f041b007c036dc527b8
+      txt_desc  size[800.0, 149.0] pos[25.0, -116.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 1.0]
+          · CanvasRenderer
+          · TFWText | col=#F4EACE | TEXT='languageKey: TXT_ActvOnline_ActvDesc_104801' | fs=36
+          · BetterOutline
+      Time  size[1080.0, 320.0] pos[0.0, 250.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.0]
+          · guid:59f8146938fff824cb5fd77236b75775 | pad(L,R,T,B)=[0, 0, 10, 0]
+        Title  size[1020.0, 68.0] pos[540.0, -10.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 1.0]
+            · CanvasRenderer
+            · TFWImage | sprite=img_cm_bg_biaoti2 | Sliced | border(L,B,R,T)=[52.0, 0.0, 52.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_bg_biaoti2.png]
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+          txt  size[0.0, -5.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWText | col=#FFF1B9 | TEXT='languageKey: Text_Actv_GroupMember' | fs=36
+        Content  size[1020.0, 242.0] pos[540.0, -78.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 1.0]
+            · CanvasRenderer
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+          txt_title  size[0.0, 104.55] pos[0.0, -23.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 1.0]
+              · CanvasRenderer
+              · TFWText | col=#3F2411 | TEXT='languageKey: Text_Actv_DailyRank_Empty_Desc' | fs=42
+          txt_time  size[0.0, 80.0] pos[0.0, 34.45] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.0]
+              · CanvasRenderer
+              · TFWText | col=#EFD376 | TEXT='17:01:28' | fs=60
+              · BetterOutline

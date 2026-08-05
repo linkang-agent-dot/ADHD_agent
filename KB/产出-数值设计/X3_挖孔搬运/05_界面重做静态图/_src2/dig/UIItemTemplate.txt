@@ -1,0 +1,55 @@
+=== UIItemTemplate.prefab (GO=26) ===
+UIItemTemplate  sz[200.0, 200.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+  · TFWImage
+  · TFWButton
+  · ItemUnitView
+  · IgnoreTidCheckTag
+  Img_quality  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+    · IMG img_cm_bg_iconkuang Spirits/CommonNew/img_cm_bg_iconkuang.png
+  Select [OFF]  sz[36.0, 52.0] p[0.0, 0.0] STRETCH
+    · IMG img_chouka_kuang border(L,B,R,T)=[20, 20, 20, 20] Spirits/Gacha/img_chouka_kuang.png
+  EffectRoot  sz[1.0, 1.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+  Img_icon  sz[-25.0, -25.0] p[0.0, 0.0] STRETCH
+    · IMG icon_material_1 Spirits/Components/icon_material_1.png
+  TypeLimitedTime [OFF]  sz[40.0, 40.0] p[-36.0, -25.0] a[0.5, 0.5][0.5, 0.5]
+    · IMG img_gift_time Spirits/Pack/img_gift_time.png
+    · guid:e19747de3f5aca642ab2be37e372fb86
+  DescArea [OFF]  sz[-20.0, 40.0] p[0.0, -9.5] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+    BG  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+      · IMG image_global_popup_bg_top_white Sliced border(L,B,R,T)=[52, 4, 52, 52] #000000 a=0.59 Spirits/Common/image_global_popup_bg_top_white.png
+    txt_minidesc  sz[-20.0, 40.0] p[0.0, 0.0] a[0.0, 0.5][1.0, 0.5]
+      · TXT '1min' fs=36 #FFF6E9
+      · guid:e19747de3f5aca642ab2be37e372fb86
+  Tier [OFF]  sz[45.0, 45.0] p[25.0, -25.0] a[0.0, 1.0][0.0, 1.0]
+    Bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+      · IMG img_cm_bg_icon_touxiangkuang1 Spirits/CommonNew/img_cm_bg_icon_touxiangkuang1.png
+    txt  sz[44.0, 44.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+      · TXT '12' fs=28 #FFF6E9
+  txt_count [OFF]  sz[-30.0, 50.0] p[0.0, 12.0] a[0.0, 0.0][1.0, 0.0] piv[0.5, 0.0]
+    · TXT '\\xD71,111' fs=36 #F9EED7
+  txt_limit [OFF]  sz[-30.0, 50.0] p[-15.0, 12.0] a[0.0, 0.0][1.0, 0.0] piv[1.0, 0.0]
+    · TXT 'languageKey: Text_uper_limit' fs=32 #06FF14
+    · guid:e19747de3f5aca642ab2be37e372fb86
+  txt_extra [OFF]  sz[-20.0, 40.0] p[0.0, -9.5] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+    · TXT 'languageKey: Text_Extra_Reward_Tip' fs=32 #FFF6E9
+  Item_name [OFF]  sz[20.0, 50.0] p[0.0, 10.0] a[0.0, 0.0][1.0, 0.0] piv[0.5, 1.0]
+    BG [OFF]  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+      · IMG img_cm_bg_ditu5 Sliced border(L,B,R,T)=[44, 44, 44, 44] #090909 a=0.59 Spirits/CommonNew/img_cm_bg_ditu5.png
+    txt_name  sz[-20.0, 50.0] p[0.0, 0.0] a[0.0, 0.5][1.0, 0.5]
+      · TXT '道具名字' fs=36 #FFF6E9
+      · guid:e19747de3f5aca642ab2be37e372fb86
+  txt_gold [OFF]  sz[150.0, 40.0] p[30.0, 0.0] a[0.0, 1.0][0.0, 1.0] piv[0.0, 0.0]
+    · TXT '\\xD710000' fs=36 #06FF14
+    icon  sz[50.0, 50.0] p[-25.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+      · IMG icon_global_gold Spirits/ItemIcons/icon_global_gold.png
+  Received [OFF]  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+    · IMG img_cm_bg_iconkuang #000000 a=0.59 Spirits/CommonNew/img_cm_bg_iconkuang.png
+    Icon  sz[56.0, 56.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5] scl[2.0, 2.0]
+      · IMG img_TXDS_icon_gou Spirits/WorldTend/img_TXDS_icon_gou.png
+  TroopType [OFF]  sz[60.0, 60.0] p[40.0, -44.9] a[0.0, 1.0][0.0, 1.0]
+    · IMG im_force_icon_fighter Spirits/Troop/im_force_icon_fighter.png
+  Label [OFF]  sz[74.0, 74.0] p[25.0, -25.0] a[0.0, 1.0][0.0, 1.0]
+    Bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+      · IMG img_cm_bg_icon_touxiangkuang1 Spirits/CommonNew/img_cm_bg_icon_touxiangkuang1.png
+    Img  sz[55.0, 55.0] p[0.0, 2.5] a[0.5, 0.5][0.5, 0.5]
+      · IMG icon_global_interplay_icon Spirits/CommonNew/icon_global_interplay_icon.png

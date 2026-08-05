@@ -1,0 +1,50 @@
+=== UIBtnPurchase.prefab (GO=24) ===
+UIBtnPurchase  sz[296.0, 100.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+  text_claimed  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+    · TXT 'languageKey: Text_Recharge_Item_Success' fs=46 #FFF6E9
+  <嵌套prefab:UIBtnGemUnlock>
+    >> Button/UIBtnGemUnlock.prefab
+    >> 覆盖 sz=['54', '36'] pos=['67', '-18']
+  UIBtnCurrency  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+    · GraphicGreyModifier
+    originalprice  sz[-50.0, 40.0] p[0.0, 40.0] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+      · TXT '价值$35.98！' fs=30 #FEF6E9
+    line [OFF]  sz[150.0, 10.0] p[-7.5, 67.3] a[0.5, 0.5][0.5, 0.5]
+      · IMG img_gift_line Spirits/Pack/img_gift_line.png
+    bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+      · IMG img_cm_anniu_gold Sliced border(L,B,R,T)=[36, 0, 36, 0] Spirits/CommonNew/img_cm_anniu_gold.png
+      title  sz[0.0, 0.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+        · TXT 'US$17.99' fs=46 #FFF6E9
+        · guid:3245ec927659c4140ac4f8d17403cc18
+        goldstrick [OFF]  sz[50.0, 50.0] p[-30.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+          · IMG icon_global_gold1 Spirits/ItemIcons/icon_global_gold1.png
+      Again [OFF]  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+        title  sz[-136.0, 41.0] p[0.0, -35.0] a[0.0, 1.0][1.0, 1.0]
+          · TXT 'US$17.99' fs=36 #FFF6E9
+          · guid:3245ec927659c4140ac4f8d17403cc18
+          goldstrick  sz[50.0, 50.0] p[-30.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+            · IMG icon_global_gold1 Spirits/ItemIcons/icon_global_gold1.png
+        Tips  sz[-50.0, 27.97] p[0.0, 32.5] a[0.0, 0.0][1.0, 0.0]
+          · TXT 'languageKey: Text_Buy_Again' fs=25 #3F1414
+      Allowance [OFF]  sz[-50.0, -20.0] p[0.0, 0.0] STRETCH
+        AllowanceTip  sz[428.53, 51.06] p[0.0, 75.53] a[0.5, 0.5][0.5, 0.5]
+          · TXT 'languageKey: Text_Pack_Allowance_UI_Tips' fs=25 #EFDBBD
+        originalprice  sz[-176.0, 40.0] p[0.0, 4.3] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+          · TXT '$ 9.99' fs=25 #FEF6E9
+          · guid:3245ec927659c4140ac4f8d17403cc18
+          goldstrick [OFF]  sz[35.0, 35.0] p[-20.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+            · IMG icon_global_gold1 Spirits/ItemIcons/icon_global_gold1.png
+        line  sz[150.0, 10.0] p[0.0, 21.6] a[0.5, 0.5][0.5, 0.5]
+          · IMG img_gift_line Spirits/Pack/img_gift_line.png
+        Price  sz[0.0, 0.0] p[0.0, -11.4] STRETCH
+          · TXT 'US$17.99' fs=40 #FFF6E9
+    Integral  sz[282.75, 66.19] p[-0.31, -60.6] a[0.5, 0.5][0.5, 0.5]
+      Bg  sz[234.47, 68.34] p[2.41, 1.08] a[0.5, 0.5][0.5, 0.5]
+        · IMG img_gift_bg_integral Sliced border(L,B,R,T)=[57, 15, 19, 34] Spirits/Pack/img_gift_bg_integral.png
+      Txt  sz[0.0, 0.0] p[21.3, -6.22] a[0.5, 0.5][0.5, 0.5]
+        · TXT '999,900' fs=30 #604624
+        · guid:3245ec927659c4140ac4f8d17403cc18
+        Icon900  sz[51.0, 51.0] p[-26.1, -0.0] a[0.0, 0.5][0.0, 0.5]
+          · IMG icon_global_integral Spirits/Pack/icon_global_integral.png
+        Icon902  sz[51.0, 51.0] p[-26.1, -0.0] a[0.0, 0.5][0.0, 0.5]
+          · IMG icon_global_integral_round_FES Spirits/Pack/icon_global_integral_round_FES.png

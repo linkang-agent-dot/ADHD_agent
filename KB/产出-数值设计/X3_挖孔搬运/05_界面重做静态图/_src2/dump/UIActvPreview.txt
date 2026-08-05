@@ -1,0 +1,73 @@
+=== UIActvPreview.prefab  (GameObject 数=21) ===
+UIActvPreview  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.0, 0.0] scale[0.0, 0.0]
+    · Canvas
+    · guid:0cd44c1031e13a943bb63640046fad76
+    · guid:dc42784cf147c0c48a680349fa168899
+  Root  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+    Animation  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        · CanvasRenderer
+      BG  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+          · CanvasRenderer
+          · TFWImage | sprite=img_calendar_bg | Sliced | border(L,B,R,T)=[0.0, 200.0, 0.0, 260.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_calendar_bg.png]
+      Img  size[1056.0, 1424.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+          · CanvasRenderer
+          · TFWImage | sprite=Img_Actv_3 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/Img_Actv_3.png]
+      top_mask  size[0.0, 500.0] pos[0.0, -70.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 0.0]
+          · CanvasRenderer
+          · TFWImage | sprite=(none) | col=#000000
+      bottom_mask  size[0.0, 500.0] pos[0.0, 70.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 1.0]
+          · CanvasRenderer
+          · TFWImage | sprite=(none) | col=#000000
+      txt_title  size[960.0, 80.0] pos[60.0, -290.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 1.0]
+          · CanvasRenderer
+          · TFWText | col=#FFFFFF | TEXT='活动标题几个字' | fs=52
+          · BetterOutline
+          · guid:45facfdc6a639f041b007c036dc527b8
+      txt_desc  size[960.0, 320.0] pos[60.0, -370.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 1.0]
+          · CanvasRenderer
+          · EmojiText | col=#F5EACE | TEXT='languageKey:' | fs=36
+          · BetterOutline
+      btn_info  size[80.0, 80.0] pos[-100.0, -250.0] anc[1.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+          · EventTriggerListener
+          · ButtonScale
+          · CanvasRenderer
+          · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+        bg  size[64.0, 64.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+            · CanvasRenderer
+            · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_cm_anniu_guize | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_anniu_guize.png]
+      Time  size[1000.0, 160.0] pos[0.0, 710.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+          · CanvasRenderer
+        bg  size[0.0, 38.0] pos[0.0, -1.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+            · CanvasRenderer
+            · TFWImage | sprite=im_bm_bg_13 | Sliced | border(L,B,R,T)=[0.0, 34.0, 0.0, 37.0] | col=#FFFFFF | [Spirits/BlackMarket/im_bm_bg_13.png]
+        txt_title  size[0.0, 60.0] pos[0.0, -22.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 1.0]
+            · CanvasRenderer
+            · TFWText | col=#FCF6D9 | TEXT='languageKey: Text_Actv_Open_Countdown_Title' | fs=42
+            · BetterOutline
+        txt_time  size[0.0, 80.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.0]
+            · CanvasRenderer
+            · TFWText | col=#FBC930 | TEXT='17:01:28' | fs=52
+            · BetterOutline
+      Reward  size[1000.0, 290.0] pos[0.0, 302.4] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.0]
+          · CanvasRenderer
+        bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+            · CanvasRenderer
+            · TFWImage | sprite=im_bm_bg_13 | Sliced | border(L,B,R,T)=[0.0, 34.0, 0.0, 37.0] | col=#FFFFFF | [Spirits/BlackMarket/im_bm_bg_13.png]
+        txt_title  size[0.0, 60.0] pos[0.0, -37.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 1.0]
+            · CanvasRenderer
+            · TFWText | col=#FCF6D9 | TEXT='languageKey: Text_Explore_Troop_Reward_Show' | fs=36
+            · BetterOutline
+        RewardList  size[0.0, -127.0] pos[0.0, 30.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.0]
+            · LoopHorizontalScrollRect | scroll=horizontal
+            · ScrollRectFilter
+            · RewardAdaptHelper
+          View  size[-120.0, 0.0] pos[60.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.0, 0.5]
+              · CanvasRenderer
+              · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+              · guid:3312d7739989d2b4e91e6319e9a96d76
+            Content  size[0.0, 160.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.0, 0.5]
+                · guid:3245ec927659c4140ac4f8d17403cc18
+                · guid:30649d3a9faa99c48a7b1166b86bf2a0 | spacing=5.0 | pad(L,R,T,B)=[0, 0, 0, 0]
+            <嵌套prefab:UIItemTemplate>
+                ↳ 源: Public/UIItemTemplate.prefab
+                ↳ 覆盖: IsActive=0, Name=UIItemTemplate, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0, AnchorMax.y=1, AnchorMin.x=0, AnchorMin.y=1, SizeDelta.x=150, SizeDelta.y=150

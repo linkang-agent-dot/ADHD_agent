@@ -430,3 +430,232 @@ grep -a "FSDIAG" ~/AppData/Local/Unity/Editor/Editor.log | tail -30
 - **`recompile` 不一定退出 Play**：可能在 Play 中热重载程序集 ⇒ `isPlaying=true` 但 `PlayerID=0`（登录态丢了、登录流程不会自己重跑），
   且此时 `EnterPlaymode` 返回 `ok:false`。**要拿干净状态必须显式 `ExitPlaymode` → 等 `isPlaying=false` → `EnterPlaymode`**。
 - 诊断里用 `static` 计数器限流（防刷屏）时，**只有域重载才归零** ⇒ 想重复取样必须走上面的退出再进。
+
+## 🪤 prefab 里同名节点不止一个 —— `grep m_Name` 会误判（2026-08-04 限时抢购实证）
+
+`FlashSale.prefab` 里有**两个** `Btn`：根级 `FlashSale/Btn`（幸运抽奖入口，子节点
+`icon_text`/`Text`/`Red`）和另一个深层的 `Btn`（只有 `TFWText`）。
+
+- `grep -c "m_Name: Btn"` 只能证明"这个名字存在于文件某处"，**证不了它在你要的那条父子链上**。
+- `FindByFullPath("Btn")` 是从界面根按路径走的，取的是根的直接子节点 ⇒ 本例绑对了；
+  但**如果你要的节点在深层，光靠名字 grep 就会绑到错的那个**，而且框架静默容错、不报错。
+- ✅ **正确姿势**：写绑定前先跑 `tools/prefab_tree.py <prefab> [节点名] [深度]` 解析真实层级
+  （它会把**所有同名实例**分别列出来），写完再跑 `x2x3_asset_port.py paths` 逐条断言。
+- ⚠️ 嵌套 PrefabInstance 的内部节点**不在父 prefab 文件里**（如 `ItemMid` 的子节点），
+  静态解析看不到，只能运行时遍历 `go.transform`。
+
+
+---
+
+## 坑：人工开着 Prefab 模式时，禁止从磁盘/桥改那个 prefab（2026-08-04 实吃）
+
+**现象**：我用 Editor 工具（`PrefabUtility.LoadPrefabContents` + `SaveAsPrefabAsset`）无头删了 36 个死节点，
+用户那边正开着同一个 prefab 的 Prefab 模式且有未存盘改动 ⇒ Unity 弹
+`Prefab Has Been Changed on Disk — Keep Changes / Discard Changes`。
+
+**危险在于两个选项都会静默丢东西**：
+- `Keep Changes` = 保住编辑器内那份（**不含我的改动**），用户一存盘就把磁盘改动**整个盖回去**
+- `Discard Changes` = 重载磁盘（含我的改动），**丢掉用户所有未存盘编辑**
+
+没有"合并"选项。谁的改动更值钱只能人判。
+
+### 铁律（扩展版）
+之前那条是「人工操作 Unity 期间禁发 reload 类指令（`recompile`/`AssetDatabase.Refresh`/
+`Enter|ExitPlaymode`）」。**这条要扩到资源写入**：
+
+> **人工在 Unity 里编辑某个资源时，AI 不许从任何途径写那个资源** ——
+> 桥调 Editor 工具、直接改 YAML、`git checkout` 覆盖，全算。
+
+**正确姿势**：动 prefab 前先让用户**退出 Prefab 模式并存盘**（或明确说"这个我没在编辑"），
+再开工。写之前顺手 `cp` 一份到 scratchpad 当安全网——这次靠它才敢让用户放心点 Discard。
+
+---
+
+## 坑：X2 的「换容器切状态」搬到 X3 会切出空白格（2026-08-04 限时抢购实例）
+
+**X2 常见写法**：一个格子里并排放 N 个互斥容器，按状态 `SetActive` 切整块。
+限时抢购货架格 = `BoxNormal`（可购）/ `BoxSoldOut`（售罄）/ `BoxClose`（未开启）。
+
+**坑**：这几个容器的**内容并不对等**。`BoxSoldOut` 里**没有道具展示**（没 `ItemMid`）
+⇒ 玩家买完切过去，看到一个空格子，连自己买了什么都看不见。X2 那边能忍是因为它另有别的信息补位。
+
+**改法（推荐范式）**：**容器只留一个，状态靠"按钮互斥"切**。
+道具展示、限量角标这些**始终在**，只有购买钮在「钻石钮 / IAP 钮 / 灰色售罄钮」之间三选一：
+```csharp
+var showCd      = soldOut || !inWindow;
+var showIap     = !soldOut && inWindow && giftId > 0;
+var showDiamond = !soldOut && inWindow && giftId <= 0;
+```
+副作用是那些弃用容器变成死 UI，**要连节点一起删**（见下条）。
+
+### 顺带：X2 死容器里常有跟主容器**撞名**的节点
+`BoxSoldOut` 下也有个 `BtnBuy`，还有个**手拷拍平**的 `BtnSold/Button_Gray`
+（名字像 X3 标准件，实际不是嵌套实例，改源件不会同步）。
+后果：① Hierarchy 里一眼看去"怎么有两个 BtnBuy"，调尺寸时容易改错那个；
+② 排查时按名字搜会搜出双份。⇒ **确认恒隐的容器就整棵删掉，别留着"以后可能用"**。
+
+判断"能不能删"的三步（别凭感觉）：
+1. prefab 里 `m_IsActive` 是不是 0
+2. 全仓 grep 该绑定字段，有没有**任何一处**把它设 true（只有 `SetActive(x,false)` = 恒隐，可删）
+3. 删之前确认框架的 `SetActive` 是 null 安全的（X3 的写法是 `if (go != null && ...)`），
+   这样即使漏删绑定也不崩——但**绑定该一起删**，留着就是假绑定，下个人会以为接好了
+
+
+---
+
+## ★判据：「在 Common/ 公共目录下」≠「是本项目的标准件」（2026-08-04 吃了好几轮）
+
+**事故**：限时抢购三个购买钮换 X3 标准件，我给 IAP 钮挑了
+`Assets/Res/UI/Prefab/Common/Button/button_Payment.prefab`。
+结果实机上**钻石钮是新图、IAP 钮还是旧图** —— 因为 `button_Payment` 本身就是**搬过来的 X2 件**。
+
+> 根因认知错误：**换皮项目的 `Common/` 公共目录是混装的** ——
+> 既有本项目的标准件，也有历次搬运带进来的旧件。目录位置**不能**当作"是标准件"的证据。
+
+### 两条一眼判据（选模板前必过）
+| 判据 | X3 真标准件 | X2 残留件 |
+|---|---|---|
+| **命名风格** | PascalCase：`ButtonYellowBig` `Button_Gray` `ButtonGreenMid` | 小写+下划线：`button_Payment` `button_PaymentClaim` |
+| **子节点结构** | X3 自己的一套（如 `Text` + `icon_text/{icon,text}` 两层） | **与 X2 原件雷同**（如 `txt_price`/`txt_get`） |
+
+### 🔴 最该记住的一条：**「子节点名跟 X2 原件恰好一致」是警报，不是便利**
+我当时在注释里写的原话是
+> "② IAP（button_Payment 子节点名与 X2 原件**恰好一致**，不用改）"
+
+—— 把"省事"当成了运气。**结构雷同 = 大概率同源**。
+正确反应是立刻怀疑这个件的血统，而不是庆幸不用改路径。
+
+### 补充验真手段（判据存疑时用）
+- 解件里的 `m_Sprite` GUID → 反查资源路径：X3 正式美术只在 `Spirits/`，
+  `NewSprite/` 是 X2 残留（详见 memory `reference_x3_aidocs_index`：**看路径不看 GUID**）
+- 数引用：把候选件的 GUID 在全部界面 prefab 里数引用数，X3 自己在用的件引用面广；
+  只被少数几个搬过来的界面引用 = 可疑
+- **最省事的一条**：直接问"这个界面上已经确认对的那个钮用的是哪个件"，照它抄
+  （本案最终答案就是 IAP 钮和钻石钮**同用 `ButtonYellowBig`**，用户一句话点破）
+
+### 换模板后必须同步改绑定
+不同模板内部结构不同，换完**一定**要改 `Auto_` 里该钮的子节点路径：
+```
+button_Payment   →  txt_price / txt_get              （X2 结构）
+ButtonYellowBig  →  Text  +  icon_text/{icon, text}  （X3 两层结构）
+```
+本案 IAP 钮的落法：价格进 `Text`（纯文案槽），`icon_text` 整个常隐
+（IAP 没有货币图标要显）；X2 的「获得」副文案取消——X3 标准件只有一个文案槽。
+
+
+---
+
+## ★范式：多状态按钮要「统一」＝**同一个件 + SetGray**，不是去找一个灰件
+
+**需求原话**（2026-08-04 限时抢购）："两个按钮要统一，只是颜色不一样"。
+
+### ❌ 我先走错的两版
+| 版本 | 做法 | 结果 |
+|---|---|---|
+| v1 | 可购=`ButtonYellowBig` / IAP=`button_Payment` / 灰=`Button_Gray` | 三个件不同，尺寸 **472 / 684 / 420** 各异 |
+| v2 | 灰态改 `ButtonGray2` | 更糟，灰钮宽度掉到 **260**，切状态时按钮忽大忽小 |
+
+我一直在"给灰态找一个正确的灰色件"，方向本身就错了。
+
+### ✅ 正确做法
+**所有状态钮用同一个件、同一个尺寸，"不可用"这个视觉完全靠 `UIHelper.SetGray()` 出。**
+```csharp
+// 三个互斥状态钮全是 ButtonYellowBig，472×136
+SetActive(mGoBuyDiamond, showDiamond);   // 黄：icon_text{货币图, 数量}，Text 隐
+SetActive(mGoBuyIap,     showIap);       // 黄：Text 显现金价，icon_text 隐
+SetActive(mGoBuyCd,      showCd);        // 同款黄件 + 置灰
+UIHelper.SetGray(mGoBuyCd, true);        // 🔴 恒真！见下
+```
+
+### 🔴 最容易漏的一步：`SetGray` 必须**恒真**，不能按业务条件给
+我原来写的是 `UIHelper.SetGray(mGoBuyCd, soldOut)` —— 于是「即将开卖」态**不置灰**，
+显出来是个**看着能点的黄钮**，这正是用户说的"没统一"。
+
+> 判据：**当灰态钮和可用态钮是同一个件时，"灰"是这个钮的固有属性，不是一个业务状态。**
+> 只要这个钮在显，就一定该灰。别把它跟 `soldOut` 之类的业务标志绑在一起。
+
+（`UIHelper.SetGray` 范式参考：`ActvWonderSlotItem:70` / `UIActvBattlePassFund:167`）
+
+### 好处
+- 天然统一：尺寸/圆角/描边都不可能对不上
+- 少维护一个件：不用为每种颜色找/建一个 prefab
+- 改尺寸只改一处（三个钮同宽同高）
+
+### 🔑 元教训：选件时**照"界面上已确认对的那个钮"抄**
+这轮我查命名风格、查引用数、查 sprite 路径，绕了好几轮；
+用户一句"**price 就是对的图**"直接给出答案。
+⇒ **有已知正确样例时，先照抄样例，别去做血统考古。**
+考古只在"一个正确样例都没有"时才值得做（判据见本文档上一节）。
+
+
+---
+
+## ★ButtonScale 三连坑：想把 X3 标准按钮「整体调小」怎么改（2026-08-04 绕了很多轮）
+
+X3 的标准按钮（`ButtonYellowBig` 等）身上挂着 `ButtonScale` 组件
+（`client/Assets/TFWCore/Script/UIExtensions/Component/ButtonScale.cs`）。
+想把按钮整体缩小时，**前两条直觉路都是死的**：
+
+| # | 你会先想到的做法 | 结果 | 为什么 |
+|---|---|---|---|
+| 1 | 改 Transform 的 **Scale** | ❌ **必被覆盖** | `ButtonScale.OnEnable()` 里有 `actionTarget.transform.localScale = normal;`——**无条件执行**。手改的值一进运行时就被写回组件配的 `normal` |
+| 2 | 改 **Width / Height**（`sizeDelta`） | ⚠️ 不被覆盖，但**只缩矩形不缩字** | 字号是子节点 TFWText 自己的属性，跟 rect 无关 ⇒ 钮变小了、字还是原来那么大，直接溢出钮外 |
+| 3 | ✅ **改 `ButtonScale` 组件的 `normal` 字段** | 正解 | 它就是 `localScale` 的真正来源，改它等于改整体等比缩放，**字跟着一起缩** |
+
+### 🔴 而正解那条偏偏没法手工批量改
+`ButtonScale` **没有 `[CanEditMultipleObjects]`** ⇒ Inspector 里多选会显示
+`Multi-object editing not supported`，只能一个一个点。
+限时抢购是 9 格 × 3 钮 = **27 次** ⇒ 必须脚本批量。
+
+已固化工具：`X2ButtonReplaceTool.RunHeadlessSetButtonScale`
+（无头，一条命令刷完 27 个；同时把 rect 复位成源件原生尺寸，避免"缩放叠在已缩过的矩形上"）：
+```bash
+client.py invoke --type "Migration.X2ButtonReplaceTool" --member "RunHeadlessSetButtonScale" --kind call   --args "<prefab>" "Content/Grid/Item*/BoxNormal" "Price,BtnBuy,BtnBuyCd" 0.65 1
+```
+最后一个参数 = 是否把 rect 复位成原生（0/1）。**必须复位**：
+否则 `normal=0.65` 会乘在你先前手改过的 rect 上，越调越小。
+
+### 排查口径：遇到「我改了某个 Transform 属性但不生效」
+**先查这个节点上有没有组件在抢这个属性**，别先怀疑保存/刷新/缓存。
+- 抢 `localScale` 的：`ButtonScale`（`OnEnable` 里写死）
+- 抢 rect 的：父节点上的 `LayoutGroup` / `ContentSizeFitter` / `GridLayoutGroup`
+  （判定：搜 prefab YAML 里 `m_ChildForceExpand` / `m_HorizontalFit` / `m_CellSize` 这些独有字段，
+   再把所在 fileID 映射回节点名——纯文件内解析，不用查 GUID，秒出）
+- Inspector 里那排「是否导出XXX」开关会**顺带告诉你这个节点挂了哪些组件**，是个快速线索
+
+> 元教训：这轮我一路怀疑"存盘没生效 / 编辑器没刷新 / Play 不热更 / LayoutGroup 覆盖"，
+> 全错。真因是**一个组件在 OnEnable 里抢属性**。
+> ⇒ 「改了不生效」的第一动作应该是**列出该节点的全部组件**，而不是查存盘链路。
+
+### ⚠️ 别在人家开着 Prefab 模式时写盘（本会话触发了两次）
+每次从桥写 `FlashSale.prefab`，用户那边只要开着 Prefab 模式且有未存盘改动，
+就会弹 `Prefab Has Been Changed on Disk`（Keep / Discard 两个选项**都会静默丢一边的改动**，没有合并）。
+**协议**：写共享 prefab 前先问一句「Prefab 模式退了吗」，或让对方在编辑期间明确告知、AI 这段只读不写。
+
+
+---
+
+## 坑：从桥改完 `.cs` 后**不能直接 recompile**，要先 `AssetDatabase.Refresh()`
+
+**症状（非常迷惑）**：文件已经改对、`grep` 全仓零引用，但 `client.py recompile` 仍在报
+**同一个已删字段**的 `CS0103: The name 'xxx' does not exist`，而且连报两轮。
+
+**根因**：Unity 编的是 **AssetDatabase 里的旧副本**。用外部工具（python / Edit）改完 `.cs`，
+Unity 还没把改动收进资产库就被我立刻 `recompile` 触发了，于是它拿旧内容编。
+
+**✅ 正确姿势**：
+```bash
+client.py eval --code 'UnityEditor.AssetDatabase.Refresh()'
+# 等几秒
+client.py recompile
+```
+实测：Refresh 后那次编译只花 **5.68s**（增量），而之前两次白编各花 **96s / 63s**。
+
+**判据 —— 出现下面这组自相矛盾就是它**：
+① 报错行号指向的那行，文件里已经不是报错内容了
+② 全仓 grep 报错里的标识符 = 0 处
+③ 连续两次 recompile 报**完全一样**的错
+
+⚠️ 另一个容易混淆的干扰源：`Editor.log` 里的旧错误行不会被清。
+**查"最新一次编译"的错误必须限定日志尾部**（如 `awk 'NR>总行数-4000'`），
+否则 `grep ... | sort -u | tail` 会把上一轮的旧错当成本轮的 —— 我也踩了这一下。

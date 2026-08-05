@@ -1,0 +1,198 @@
+=== UIActvVisitPack.prefab  (GameObject 数=61) ===
+UIActvVisitPack  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.0, 0.0] scale[0.0, 0.0]
+    · Canvas
+    · guid:0cd44c1031e13a943bb63640046fad76
+    · guid:dc42784cf147c0c48a680349fa168899
+    · RectTransformScaleParent
+    · UIConfig
+    · UIAnimation
+  Root  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+      · RectTransformScaleParent
+    Animation  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        · CanvasRenderer
+        · RectTransformScaleParent
+      BG  size[1080.0, 1920.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5] scale[0.0, 0.0]
+          · CanvasRenderer
+          · TFWImage | sprite=img_ui_visit_bg04 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_ui_visit_bg04.png]
+          · RectTransformScaler
+      Top  size[0.0, 600.0] pos[0.0, -90.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 1.0]
+          · CanvasRenderer
+          · DOTweenAnimation
+        Role  size[1024.0, 1536.0] pos[247.0, -785.0] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 0.5]
+            · CanvasRenderer
+            · EffectDisplay
+          EffectRoot  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        txt_title  size[686.0, 80.0] pos[25.0, -55.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 0.5]
+            · CanvasRenderer
+            · TFWText | col=#FFFFFF | TEXT='活动标题几个字' | fs=52
+            · BetterOutline
+            · guid:45facfdc6a639f041b007c036dc527b8
+        Time  size[0.0, 60.0] pos[25.0, -107.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 1.0]
+            · CanvasRenderer
+            · guid:30649d3a9faa99c48a7b1166b86bf2a0 | spacing=15.0 | pad(L,R,T,B)=[20, 0, 0, 0]
+            · guid:3245ec927659c4140ac4f8d17403cc18
+          bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWImage | sprite=img_gift_bg_4 | Sliced | border(L,B,R,T)=[41.0, 0.0, 43.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_4.png]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+          Icon  size[0.0, 45.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWImage | sprite=img_gift_time | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_time.png]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+          txt  size[0.0, 60.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWText | col=#EED376 | TEXT='距结束：{0}' | fs=32
+              · BetterOutline
+        txt_desc  size[686.0, 150.0] pos[25.0, -175.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 1.0]
+            · CanvasRenderer
+            · TFWText | col=#F4EACE | TEXT='活动期间，拜访拥有<color=#2FFF2D>圣诞酒馆</color>的玩家，可获得额外奖励！' | fs=36
+            · BetterOutline
+        Info  size[64.0, 64.0] pos[-55.0, -57.0] anc[1.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+            · EventTriggerListener
+            · ButtonScale
+            · CanvasRenderer
+            · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+          bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_cm_anniu_guize | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_anniu_guize.png]
+        <嵌套prefab:UIBtnGift>
+            ↳ 源: Button/UIBtnGift.prefab
+            ↳ 覆盖: Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=1, AnchorMax.y=1, AnchorMin.x=1, AnchorMin.y=1, SizeDelta.x=170, SizeDelta.y=170, AnchoredPosition.x=-108, AnchoredPosition.y=-252
+        <嵌套prefab:UIBtnProperty>
+            ↳ 源: Button/UIBtnProperty.prefab
+            ↳ 覆盖: Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0, AnchorMax.y=1, AnchorMin.x=0, AnchorMin.y=1, SizeDelta.x=100, SizeDelta.y=100, AnchoredPosition.x=240, AnchoredPosition.y=-395
+        <嵌套prefab:DailyGift>
+            ↳ 源: Activity/DailyGift.prefab
+            ↳ 覆盖: Name=DailyGift, IsActive=0, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0, AnchorMax.y=0, AnchorMin.x=0, AnchorMin.y=0, SizeDelta.x=135, SizeDelta.y=135
+      Content  size[0.0, -220.0] pos[0.0, 10.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        Reward  size[960.0, 300.0] pos[0.0, 925.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+          Detailed  size[0.0, 180.0] pos[0.0, -112.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+            RewardSlider  size[-75.0, 52.0] pos[17.5, -45.0] anc[0.0, 0.5]-[1.0, 0.5] piv[0.5, 0.5]
+                · guid:67db9e8f0e2ae9c40bc1e2b64352a6b4
+              Background  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_TXDS_jindutiao2 | Sliced | border(L,B,R,T)=[16.0, 16.0, 16.0, 16.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_jindutiao2.png]
+              Fill Area  size[-18.5, -17.0] pos[-0.75, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                Fill  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_TXDS_jindutiao1 | Sliced | border(L,B,R,T)=[8.0, 8.0, 8.0, 8.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_jindutiao1.png]
+            BoxGroup  size[-75.0, 52.0] pos[55.0, -45.0] anc[0.0, 0.5]-[1.0, 0.5] piv[0.0, 0.5]
+                · ChildGroupController
+              UIActvVisitPackRewardItem  size[100.0, 100.0] pos[387.4, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                Root  size[0.0, 52.0] pos[-0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.0, 0.5]
+                    · EventTriggerListener
+                    · CanvasRenderer
+                  Bg  size[88.0, 104.0] pos[-1.5, 76.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_ui_visit_bg01 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_ui_visit_bg01.png]
+                  <嵌套prefab:UIItemTemplate>
+                      ↳ 源: Public/UIItemTemplate.prefab
+                      ↳ 覆盖: AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=80, SizeDelta.y=30.572, AnchoredPosition.x=20, AnchoredPosition.y=-30, IsActive=0, Name=UIItemTemplate
+                  Receive [INACTIVE]  size[56.0, 56.0] pos[0.0, 80.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_TXDS_icon_gou | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_icon_gou.png]
+                  Red  size[40.0, 40.0] pos[22.5, 108.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                  NumBg  size[48.0, 48.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_ui_turntable_bg8 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_ui_turntable_bg8.png]
+                  Num  size[100.0, 40.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#F7EBCE | TEXT='3000' | fs=30
+                      · BetterOutline
+            Icon  size[72.0, 68.0] pos[45.0, -45.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5] scale[1.2, 1.2]
+                · CanvasRenderer
+                · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_cm_icon_integral | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Rank/img_cm_icon_integral.png]
+          Rewardtitle  size[920.0, 60.0] pos[0.0, 60.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.0]
+              · CanvasRenderer
+              · TFWText | col=#FFFBB0 | TEXT='被拜访次数：{0}\r' | fs=42
+              · BetterOutline
+              · guid:45facfdc6a639f041b007c036dc527b8
+          Rewardcondition  size[920.0, 50.0] pos[0.0, 10.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.0]
+              · CanvasRenderer
+              · TFWText | col=#422C18 | TEXT='需拥有圣诞酒馆装扮' | fs=36
+        BtnInvitation  size[1020.0, 190.0] pos[0.0, 665.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+            · CanvasRenderer
+            · TFWImage | sprite=img_cm_bg_ditu5 | Sliced | border(L,B,R,T)=[44.0, 44.0, 44.0, 44.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_bg_ditu5.png]
+          Item  size[160.0, 160.0] pos[100.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+            <嵌套prefab:UIItemTemplate>
+                ↳ 源: Public/UIItemTemplate.prefab
+                ↳ 覆盖: IsActive=0, Name=InvitationItem, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=160, SizeDelta.y=160
+            Receive [INACTIVE]  size[144.0, 144.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+              Bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_hgd_bg6 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/HeroFavor/img_hgd_bg6.png]
+              Img  size[96.0, 92.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_TXDS_icon_gou | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_icon_gou.png]
+            Effect [INACTIVE]  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                · CanvasRenderer
+                · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+                · EffectDisplay
+              EffectRoot  size[150.0, 150.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+          InvitationDesc  size[-230.0, -30.0] pos[85.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWText | col=#3F2411 | TEXT='活动期间，每天可领取<color=#5C9729>3张圣诞邀请函</color>。拜访拥有<color=#5C9729>' | fs=32
+        Pack  size[1040.0, 245.0] pos[0.0, 420.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+          Packsp_reward  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWImage | sprite=img_ui_visit_bg03 | Sliced | border(L,B,R,T)=[120.0, 100.0, 120.0, 100.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_ui_visit_bg03.png]
+            PackRewardBg  size[368.0, 260.0] pos[189.0, 27.5] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+                · CanvasRenderer
+                · TFWImage | sprite=img_Activity_VD_bg_14 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg/img_Activity_VD_bg_14.png]
+          PackName  size[240.0, 80.0] pos[190.0, -48.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWText | col=#F9EF81 | TEXT='圣诞酒馆' | fs=42
+              · BetterOutline
+          PackDesc  size[920.0, 50.0] pos[0.0, -15.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWText | col=#553120 | TEXT='获得圣诞酒馆装饰后，被拜访可获得<color=#2F911F>双倍</color>奖励！' | fs=32
+          PackRewardList  size[-430.0, -10.0] pos[155.0, 5.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · LoopHorizontalScrollRect | scroll=horizontal
+              · ScrollRectFilter
+            Viewport  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                · guid:3312d7739989d2b4e91e6319e9a96d76
+                · CanvasRenderer
+                · TFWImage | sprite=(none) | col=#000000 a=0.00
+              Content  size[0.0, 180.0] pos[0.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.0, 0.5]
+                  · guid:30649d3a9faa99c48a7b1166b86bf2a0 | spacing=5.0 | pad(L,R,T,B)=[0, 0, 0, 0]
+                  · guid:3245ec927659c4140ac4f8d17403cc18
+              <嵌套prefab:UIItemTemplate>
+                  ↳ 源: Public/UIItemTemplate.prefab
+                  ↳ 覆盖: Name=UIItemTemplate, IsActive=0, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0, AnchorMax.y=1, AnchorMin.x=0, AnchorMin.y=1, SizeDelta.x=180, SizeDelta.y=180
+          Discount  size[150.0, 150.0] pos[-57.0, -15.0] anc[1.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+            Bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                · CanvasRenderer
+                · TFWImage | sprite=img_gift_bg_Discount | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_Discount.png]
+            Txt  size[-20.0, 80.0] pos[0.0, 5.0] anc[0.0, 0.5]-[1.0, 0.5] piv[0.5, 0.5]
+                · CanvasRenderer
+                · TFWText | col=#F3E69E | TEXT='9999%' | fs=46
+                · BetterOutline
+                · IgnoreTidCheckTag
+          Btn  size[360.0, 120.0] pos[0.0, -140.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+            <嵌套prefab:UIBtnPurchase>
+                ↳ 源: Button/UIBtnPurchase.prefab
+                ↳ 覆盖: AnchorMax.y=1, AnchorMin.y=1, SizeDelta.x=54, SizeDelta.y=36, AnchoredPosition.x=67, AnchoredPosition.y=-18, Text=objectReference: {fileID: 0}, IsActive=0, Pivot.x=0.5, Pivot.y=0.5
+        Btn  size[1020.0, 120.0] pos[0.0, 157.5] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+          Btn_InviteVisit  size[136.0, 136.0] pos[-420.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+              · EventTriggerListener
+              · ButtonScale
+              · CanvasRenderer
+              · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+            icon  size[136.0, 136.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                · CanvasRenderer
+                · TFWImage | sprite=img_cm_xiaoshoushangpin_btn5 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Chat/img_cm_xiaoshoushangpin_btn5.png]
+            Text  size[200.0, 50.0] pos[0.0, 0.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.0]
+                · CanvasRenderer
+                · TFWText | col=#FFEBD0 | TEXT='languageKey: Text_Btn_Invite_visit' | fs=32
+                · BetterOutline
+          ThumbsUp  size[136.0, 136.0] pos[420.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+              · EventTriggerListener
+              · CanvasRenderer
+              · TFWImage | sprite=img_player_icon_bg | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_player_icon_bg.png]
+            Icon  size[136.0, 136.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                · CanvasRenderer
+                · TFWImage | sprite=img_gift_icon_visit02 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_gift_icon_visit02.png]
+            ThumbsUpNum  size[200.0, 50.0] pos[0.0, 0.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.0]
+                · CanvasRenderer
+                · TFWText | col=#FFEED4 | TEXT='languageKey: Text_Btn_Vist_list' | fs=32
+                · BetterOutline

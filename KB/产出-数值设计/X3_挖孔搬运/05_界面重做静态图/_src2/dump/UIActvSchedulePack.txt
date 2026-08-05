@@ -1,0 +1,367 @@
+=== UIActvSchedulePack.prefab  (GameObject 数=112) ===
+UIActvSchedulePack  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.0, 0.0] scale[0.0, 0.0]
+    · Canvas
+    · guid:0cd44c1031e13a943bb63640046fad76
+    · guid:dc42784cf147c0c48a680349fa168899
+    · RectTransformScaleParent
+    · UIConfig
+    · UIAnimation
+  Root  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+      · RectTransformScaleParent
+    Bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWImage | sprite=img_Activity_schedule_bg_1 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActivityImg_Download/img_Activity_schedule_bg_1.png]
+        · RectTransformScaler
+    Animation  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        · CanvasRenderer
+        · RectTransformScaleParent
+      Top  size[0.0, 600.0] pos[0.0, -100.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 1.0]
+          · CanvasRenderer
+          · DOTweenAnimation
+        txt_title  size[686.0, 80.0] pos[24.4, -65.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 0.5]
+            · CanvasRenderer
+            · TFWText | col=#FFFFFF | TEXT='活动标题几个字' | fs=52
+            · BetterOutline
+            · guid:45facfdc6a639f041b007c036dc527b8
+        Time  size[0.0, 60.0] pos[21.2, -103.4] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 1.0]
+            · CanvasRenderer
+            · guid:30649d3a9faa99c48a7b1166b86bf2a0 | spacing=15.0 | pad(L,R,T,B)=[20, 20, 0, 0]
+            · guid:3245ec927659c4140ac4f8d17403cc18
+          bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWImage | sprite=img_gift_bg_4 | Sliced | border(L,B,R,T)=[41.0, 0.0, 43.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_4.png]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+          Icon  size[0.0, 45.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWImage | sprite=img_gift_time | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_time.png]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+          txt  size[0.0, 60.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWText | col=#EED376 | TEXT='距结束：{0}' | fs=32
+              · BetterOutline
+        txt_desc  size[920.0, 250.0] pos[25.0, -188.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 1.0]
+            · CanvasRenderer
+            · TFWText | col=#F4EACE | TEXT='languageKey: TXT_ActvOnline_ActvDesc_102901' | fs=36
+            · BetterOutline
+        Info  size[64.0, 64.0] pos[-54.7, -66.3] anc[1.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+            · EventTriggerListener
+            · ButtonScale
+            · CanvasRenderer
+            · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+          bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_cm_anniu_guize | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_anniu_guize.png]
+        <嵌套prefab:DailyGift>
+            ↳ 源: Activity/DailyGift.prefab
+            ↳ 覆盖: Name=DailyGift, IsActive=1, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0, AnchorMax.y=1, AnchorMin.x=0, AnchorMin.y=1, SizeDelta.x=152, SizeDelta.y=152
+      Content  size[0.0, 1220.0] pos[0.0, 610.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.5]
+        Reward  size[0.0, 660.0] pos[0.0, 890.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.5]
+          Line  size[1080.0, 584.0] pos[0.0, -150.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+            1  size[300.0, 584.0] pos[-285.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+              Bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Activity_schedule_bg_3 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_bg_3.png]
+              Filling  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Activity_schedule_jdt_3 | Filled | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_jdt_3.png]
+            2  size[232.0, 584.0] pos[-108.0, -60.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+              Bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Activity_schedule_bg_4 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_bg_4.png]
+              Filling  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Activity_schedule_jdt_4 | Filled | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_jdt_4.png]
+            3  size[36.0, 400.0] pos[0.0, -50.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+              Bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5] scale[-1.0, 1.0]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Activity_schedule_bg_5 | Sliced | border(L,B,R,T)=[0.0, 17.0, 0.0, 16.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_bg_5.png]
+              Filling  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5] scale[-1.0, 1.0]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Activity_schedule_jdt_2 | Sliced | border(L,B,R,T)=[15.0, 16.0, 16.0, 16.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_jdt_2.png]
+            4  size[232.0, 584.0] pos[108.0, -60.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5] scale[-1.0, 1.0]
+              Bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Activity_schedule_bg_4 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_bg_4.png]
+              Filling  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Activity_schedule_jdt_4 | Filled | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_jdt_4.png]
+            5  size[300.0, 584.0] pos[285.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5] scale[-1.0, 1.0]
+              Bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Activity_schedule_bg_3 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_bg_3.png]
+              Filling  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_Activity_schedule_jdt_3 | Filled | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_jdt_3.png]
+          Item  size[668.0, 608.0] pos[0.0, 190.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+            BtnHeart  size[668.0, 608.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                · CanvasRenderer
+                · TFWImage | sprite=img_Activity_schedule_bg_2 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_bg_2.png]
+                · EventTriggerListener
+              Red  size[60.0, 60.0] pos[180.0, 160.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+            Img  size[520.0, 436.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                · CanvasRenderer
+                · TFWImage | sprite=img_Activity_schedule_jdt_1 | Filled | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_jdt_1.png]
+            Mask  size[512.0, 836.0] pos[0.0, 436.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+                · CanvasRenderer
+                · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_Activity_schedule_mask | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF a=0.00 | [Spirits/Activity/img_Activity_schedule_mask.png]
+                · guid:31a19414c41e5ae4aae2af33fee712f6
+              Role  size[1024.0, 1536.0] pos[0.0, -921.6] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 0.5] scale[1.2, 1.2]
+                  · EffectDisplay
+                  · CanvasRenderer
+                  · DOTweenAnimation
+                EffectRoot  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                <嵌套prefab:VideoRoot>
+                    ↳ 源: Assets/Res/Video/Prefab/VideoRoot.prefab
+                    ↳ 覆盖: Name=VideoRoot, IsActive=0, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=1, AnchorMax.y=1, AnchorMin.x=0, AnchorMin.y=0, SizeDelta.x=0, SizeDelta.y=0
+            Tips  size[620.0, 80.0] pos[0.0, -264.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                · CanvasRenderer
+                · TFWText | col=#2CFF00 | TEXT='languageKey: Text_Mail_Battle_Report_Reward_Btn01' | fs=36
+                · BetterOutline
+        RewardItem  size[0.0, 660.0] pos[0.0, 796.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.5]
+          Item  size[668.0, 608.0] pos[0.0, 190.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+            Bg  size[638.0, 860.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                · CanvasRenderer
+                · TFWImage | sprite=showcase_frame_empty_final | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Activity/showcase_frame_empty_final.png]
+            <嵌套prefab:UIItemTemplate>
+                ↳ 源: Public/UIItemTemplate.prefab
+                ↳ 覆盖: Name=UIItemTemplate, IsActive=1, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=155, SizeDelta.y=155
+            Buy [INACTIVE]  size[175.0, 168.0] pos[0.0, -95.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                · CanvasRenderer
+                · TFWImage | sprite=img_TXDS_icon_gou | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_icon_gou.png]
+                · guid:306cc8c2b49d7114eaa3623786fc2126
+        Down  size[0.0, 571.99] pos[0.0, 286.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.5]
+          Bg  size[1080.0, 505.68] pos[0.0, -33.16] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWImage | sprite=im_bm_bg_10 | Sliced | border(L,B,R,T)=[282.0, 84.0, 220.0, 120.0] | col=#FFFFFF | [Spirits/BlackMarket/im_bm_bg_10.png]
+          TabCtr  size[-6.0, 105.2] pos[-3.0, 0.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 1.0]
+              · TabGroupController
+            LayoutTab  size[-8.01, 0.0] pos[-18.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                · guid:30649d3a9faa99c48a7b1166b86bf2a0 | spacing=-25.0 | pad(L,R,T,B)=[0, 0, 0, 0]
+              DayTab  size[0.0, 95.75] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                  · UIAudio
+                  · CanvasGroup
+                  · ButtonState
+                  · CanvasRenderer
+                  · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+                Normal [INACTIVE]  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  Bg  size[192.88, 92.47] pos[22.39, -5.45] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_schedule_btn_1 | Sliced | border(L,B,R,T)=[15.0, 0.0, 16.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_btn_1.png]
+                  Txt  size[172.87, 70.0] pos[22.76, -3.55] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#DEBA84 | TEXT='languageKey: Text_Actv_Login_Count_Title' | fs=32
+                      · BetterOutline
+                  Lock  size[40.17, 50.22] pos[93.47, 22.34] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_route_icon_lock | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Route/img_route_icon_lock.png]
+                  Buy  size[96.0, 92.0] pos[71.9, 3.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_TXDS_icon_gou | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_icon_gou.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                Select  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  Bg  size[192.88, 92.47] pos[22.39, -5.45] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_schedule_btn_2 | Sliced | border(L,B,R,T)=[12.0, 0.0, 13.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_btn_2.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                  Txt  size[172.87, 70.0] pos[22.76, -3.55] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#FFFFFF | TEXT='languageKey: Text_Actv_Login_Count_Title' | fs=42
+                      · guid:45facfdc6a639f041b007c036dc527b8
+                      · BetterOutline
+                  Lock [INACTIVE]  size[40.17, 50.22] pos[93.47, 22.34] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_route_icon_lock | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Route/img_route_icon_lock.png]
+                  Buy [INACTIVE]  size[96.0, 92.0] pos[71.9, 3.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_TXDS_icon_gou | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_icon_gou.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                Red  size[65.0, 65.0] pos[-33.8, -25.0] anc[1.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · guid:306cc8c2b49d7114eaa3623786fc2126
+              DayTab (1)  size[0.0, 95.75] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                  · UIAudio
+                  · CanvasGroup
+                  · ButtonState
+                  · CanvasRenderer
+                  · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+                Normal [INACTIVE]  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  Bg  size[192.88, 92.47] pos[22.39, -5.45] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_schedule_btn_1 | Sliced | border(L,B,R,T)=[15.0, 0.0, 16.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_btn_1.png]
+                  Txt  size[172.87, 70.0] pos[22.76, -3.55] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#DEBA84 | TEXT='languageKey: Text_Actv_Login_Count_Title' | fs=32
+                      · BetterOutline
+                  Lock  size[40.17, 50.22] pos[93.47, 22.34] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_route_icon_lock | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Route/img_route_icon_lock.png]
+                  Buy  size[96.0, 92.0] pos[71.9, 3.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_TXDS_icon_gou | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_icon_gou.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                Select  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  Bg  size[192.88, 92.47] pos[22.39, -5.45] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_schedule_btn_2 | Sliced | border(L,B,R,T)=[12.0, 0.0, 13.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_btn_2.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                  Txt  size[172.87, 70.0] pos[22.76, -3.55] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#FFFFFF | TEXT='languageKey: Text_Actv_Login_Count_Title' | fs=42
+                      · guid:45facfdc6a639f041b007c036dc527b8
+                      · BetterOutline
+                  Lock [INACTIVE]  size[40.17, 50.22] pos[93.47, 22.34] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_route_icon_lock | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Route/img_route_icon_lock.png]
+                  Buy [INACTIVE]  size[96.0, 92.0] pos[71.9, 3.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_TXDS_icon_gou | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_icon_gou.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                Red  size[65.0, 65.0] pos[-33.8, -25.0] anc[1.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · guid:306cc8c2b49d7114eaa3623786fc2126
+              DayTab (2)  size[0.0, 95.75] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                  · UIAudio
+                  · CanvasGroup
+                  · ButtonState
+                  · CanvasRenderer
+                  · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+                Normal [INACTIVE]  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  Bg  size[192.88, 92.47] pos[22.39, -5.45] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_schedule_btn_1 | Sliced | border(L,B,R,T)=[15.0, 0.0, 16.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_btn_1.png]
+                  Txt  size[172.87, 70.0] pos[22.76, -3.55] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#DEBA84 | TEXT='languageKey: Text_Actv_Login_Count_Title' | fs=32
+                      · BetterOutline
+                  Lock  size[40.17, 50.22] pos[93.47, 22.34] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_route_icon_lock | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Route/img_route_icon_lock.png]
+                  Buy  size[96.0, 92.0] pos[71.9, 3.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_TXDS_icon_gou | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_icon_gou.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                Select  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  Bg  size[192.88, 92.47] pos[22.39, -5.45] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_schedule_btn_2 | Sliced | border(L,B,R,T)=[12.0, 0.0, 13.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_btn_2.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                  Txt  size[172.87, 70.0] pos[22.76, -3.55] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#FFFFFF | TEXT='languageKey: Text_Actv_Login_Count_Title' | fs=42
+                      · guid:45facfdc6a639f041b007c036dc527b8
+                      · BetterOutline
+                  Lock [INACTIVE]  size[40.17, 50.22] pos[93.47, 22.34] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_route_icon_lock | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Route/img_route_icon_lock.png]
+                  Buy [INACTIVE]  size[96.0, 92.0] pos[71.9, 3.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_TXDS_icon_gou | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_icon_gou.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                Red  size[65.0, 65.0] pos[-33.8, -25.0] anc[1.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · guid:306cc8c2b49d7114eaa3623786fc2126
+              DayTab (3)  size[0.0, 95.75] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                  · UIAudio
+                  · CanvasGroup
+                  · ButtonState
+                  · CanvasRenderer
+                  · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+                Normal [INACTIVE]  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  Bg  size[192.88, 92.47] pos[22.39, -5.45] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_schedule_btn_1 | Sliced | border(L,B,R,T)=[15.0, 0.0, 16.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_btn_1.png]
+                  Txt  size[172.87, 70.0] pos[22.76, -3.55] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#DEBA84 | TEXT='languageKey: Text_Actv_Login_Count_Title' | fs=32
+                      · BetterOutline
+                  Lock  size[40.17, 50.22] pos[93.47, 22.34] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_route_icon_lock | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Route/img_route_icon_lock.png]
+                  Buy  size[96.0, 92.0] pos[71.9, 3.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_TXDS_icon_gou | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_icon_gou.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                Select  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  Bg  size[192.88, 92.47] pos[22.39, -5.45] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_schedule_btn_2 | Sliced | border(L,B,R,T)=[12.0, 0.0, 13.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_btn_2.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                  Txt  size[172.87, 70.0] pos[22.76, -3.55] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#FFFFFF | TEXT='languageKey: Text_Actv_Login_Count_Title' | fs=42
+                      · guid:45facfdc6a639f041b007c036dc527b8
+                      · BetterOutline
+                  Lock [INACTIVE]  size[40.17, 50.22] pos[93.47, 22.34] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_route_icon_lock | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Route/img_route_icon_lock.png]
+                  Buy [INACTIVE]  size[96.0, 92.0] pos[71.9, 3.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_TXDS_icon_gou | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_icon_gou.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                Red  size[65.0, 65.0] pos[-33.8, -25.0] anc[1.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · guid:306cc8c2b49d7114eaa3623786fc2126
+              DayTab (4)  size[0.0, 95.75] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                  · UIAudio
+                  · CanvasGroup
+                  · ButtonState
+                  · CanvasRenderer
+                  · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+                Normal [INACTIVE]  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  Bg  size[192.88, 92.47] pos[22.39, -5.45] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_schedule_btn_1 | Sliced | border(L,B,R,T)=[15.0, 0.0, 16.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_btn_1.png]
+                  Txt  size[172.87, 70.0] pos[22.76, -3.55] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#DEBA84 | TEXT='languageKey: Text_Actv_Login_Count_Title' | fs=32
+                      · BetterOutline
+                  Lock  size[40.17, 50.22] pos[93.47, 22.34] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_route_icon_lock | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Route/img_route_icon_lock.png]
+                  Buy  size[96.0, 92.0] pos[71.9, 3.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_TXDS_icon_gou | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_icon_gou.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                Select  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  Bg  size[192.88, 92.47] pos[22.39, -5.45] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_Activity_schedule_btn_2 | Sliced | border(L,B,R,T)=[12.0, 0.0, 13.0, 0.0] | col=#FFFFFF | [Spirits/Activity/img_Activity_schedule_btn_2.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                  Txt  size[172.87, 70.0] pos[22.76, -3.55] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#FFFFFF | TEXT='languageKey: Text_Actv_Login_Count_Title' | fs=42
+                      · guid:45facfdc6a639f041b007c036dc527b8
+                      · BetterOutline
+                  Lock [INACTIVE]  size[40.17, 50.22] pos[93.47, 22.34] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_route_icon_lock | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Route/img_route_icon_lock.png]
+                  Buy [INACTIVE]  size[96.0, 92.0] pos[71.9, 3.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_TXDS_icon_gou | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_icon_gou.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                Red  size[65.0, 65.0] pos[-33.8, -25.0] anc[1.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · guid:306cc8c2b49d7114eaa3623786fc2126
+          Pack  size[923.74, 260.13] pos[0.0, 35.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+            Loop Horizontal Scroll Rect  size[923.73, 162.72] pos[0.0, 48.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                · LoopHorizontalScrollRect | scroll=horizontal
+                · guid:3312d7739989d2b4e91e6319e9a96d76
+                · ScrollRectFilter
+                · RewardAdaptHelper
+              Viewport  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · guid:3312d7739989d2b4e91e6319e9a96d76
+                  · CanvasRenderer
+                  · TFWEmpty4Raycast | col=#FFFFFF
+                Content  size[0.0, 200.0] pos[0.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.0, 0.5]
+                    · guid:30649d3a9faa99c48a7b1166b86bf2a0 | spacing=38.7 | pad(L,R,T,B)=[0, 0, 0, 0]
+                    · guid:3245ec927659c4140ac4f8d17403cc18
+                  <嵌套prefab:UIItemTemplate>
+                      ↳ 源: Public/UIItemTemplate.prefab
+                      ↳ 覆盖: Name=UIItemTemplate, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0, AnchorMax.y=0, AnchorMin.x=0, AnchorMin.y=0, SizeDelta.x=155, SizeDelta.y=155, AnchoredPosition.x=0
+            <嵌套prefab:UIBtnPurchase>
+                ↳ 源: Button/UIBtnPurchase.prefab
+                ↳ 覆盖: Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=0, SizeDelta.y=0, AnchoredPosition.x=7.8, AnchoredPosition.y=-81.3
+            BuyTips [INACTIVE]  size[740.69, 80.0] pos[0.0, 49.04] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+                · CanvasRenderer
+                · TFWText | col=#EFD376 | TEXT='languageKey: Text_Actv_Pack_Buy_First' | fs=46
+                · BetterOutline

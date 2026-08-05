@@ -1,0 +1,43 @@
+=== UIRankTemplate.prefab (GO=20) ===
+UIRankTemplate  sz[930.0, 196.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+  · guid:306cc8c2b49d7114eaa3623786fc2126
+  Bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+    · IMG img_ledger_bg_taizhangliebiao Sliced border(L,B,R,T)=[51, 45, 51, 47] Spirits/CommonNew/img_ledger_bg_taizhangliebiao.png
+    Ranks  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+      Rank1 [OFF]  sz[268.0, 180.0] p[8.0, 0.0] a[0.0, 0.5][0.0, 0.5] piv[0.0, 0.5]
+        · IMG img_cm_rankbg_icon_1st Spirits/WorldTend/img_cm_rankbg_icon_1st.png
+        Icon  sz[172.0, 194.0] p[110.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+          · IMG img_cm_rank_icon_1st Spirits/WorldTend/img_cm_rank_icon_1st.png
+      Rank2 [OFF]  sz[268.0, 180.0] p[8.0, 0.0] a[0.0, 0.5][0.0, 0.5] piv[0.0, 0.5]
+        · IMG img_cm_rankbg_icon_2ed Spirits/WorldTend/img_cm_rankbg_icon_2ed.png
+        Icon  sz[172.0, 194.0] p[110.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+          · IMG img_cm_rank_icon_2ed Spirits/WorldTend/img_cm_rank_icon_2ed.png
+      Rank3 [OFF]  sz[268.0, 180.0] p[8.0, 0.0] a[0.0, 0.5][0.0, 0.5] piv[0.0, 0.5]
+        · IMG img_cm_rankbg_icon_3th Spirits/WorldTend/img_cm_rankbg_icon_3th.png
+        Icon  sz[172.0, 194.0] p[110.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+          · IMG img_cm_rank_icon_3th Spirits/WorldTend/img_cm_rank_icon_3th.png
+  <嵌套prefab:UIPlayerAvatar>
+    >> Player/UIPlayerAvatar.prefab
+    >> 覆盖 sz=['208', '212'] pos=['311', '-3']
+  <嵌套prefab:UIAllianceSymbolUnit>
+    >> Alliance/UIAllianceSymbolUnit.prefab
+    >> 覆盖 sz=['200', '200'] pos=['311', '-3']
+  txt_order  sz[190.0, 194.0] p[120.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+    · TXT '3' fs=60 #7F5F38
+  Content  sz[-450.0, -50.0] p[420.0, 0.0] STRETCH piv[0.0, 0.5]
+    · guid:59f8146938fff824cb5fd77236b75775 padding_LRTB=[0, 0, 0, 0]
+    txt_name  sz[0.0, 50.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.0, 0.5]
+      · TXT '[联盟简称]玩家名字几个字' fs=32 #3E2411
+    RankScore  sz[0.0, 60.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.0, 0.5]
+      SliderProgress [OFF]  sz[0.0, 52.0] p[0.0, 0.0] a[0.0, 0.5][1.0, 0.5]
+        · guid:67db9e8f0e2ae9c40bc1e2b64352a6b4
+        Background  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+          · IMG img_TXDS_jindutiao2 Sliced border(L,B,R,T)=[16, 16, 16, 16] Spirits/WorldTend/img_TXDS_jindutiao2.png
+        Fill Area  sz[-18.5, -18.0] p[-0.25, 0.0] STRETCH
+          Fill  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+            · IMG img_TXDS_jindutiao1 Sliced border(L,B,R,T)=[8, 8, 8, 8] Spirits/WorldTend/img_TXDS_jindutiao1.png
+      Score  sz[0.0, 60.0] p[60.0, 0.0] a[0.0, 0.5][0.0, 0.5] piv[0.0, 0.5]
+        · TXT '999,999,999' fs=32 #7F5F38
+        · guid:3245ec927659c4140ac4f8d17403cc18
+        Icon  sz[72.0, 68.0] p[-36.0, 5.0] a[0.0, 0.5][0.0, 0.5]
+          · IMG img_cm_bg_icon_zhanli2 Spirits/CommonIcons/img_cm_bg_icon_zhanli2.png

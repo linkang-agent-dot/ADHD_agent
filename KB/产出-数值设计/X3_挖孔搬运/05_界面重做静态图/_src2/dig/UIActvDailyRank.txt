@@ -1,0 +1,99 @@
+=== UIActvDailyRank.prefab (GO=115) ===
+UIActvDailyRank  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.0, 0.0] scl[0.0, 0.0]
+  · guid:0cd44c1031e13a943bb63640046fad76
+  · guid:dc42784cf147c0c48a680349fa168899
+  · UIConfig
+  · UIAnimation
+  mask  sz[0.0, 0.0] p[0.0, 0.0] STRETCH piv[0.5, 1.0]
+    · TFWImage
+    sp_bottom  sz[0.0, 264.0] p[0.0, 120.0] a[0.0, 0.0][1.0, 0.0] piv[0.5, 0.0]
+      · IMG img_hs_bg_1 Spirits/AllianceTrap/img_hs_bg_1.png
+  Root  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+    ScrollRect  sz[0.0, -90.0] p[0.0, -45.0] STRETCH
+      · LoopVerticalScrollRect scroll=vertical
+      · ScrollRectFilter
+      viewport  sz[0.0, -120.0] p[0.0, 60.0] STRETCH
+        · guid:3312d7739989d2b4e91e6319e9a96d76
+        · TFWImage
+        Animation  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+          · guid:59f8146938fff824cb5fd77236b75775 padding_LRTB=[0, 0, 0, 130]
+          · TFWImage
+          · guid:3245ec927659c4140ac4f8d17403cc18
+          sp_top  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.5, 1.0]
+            · guid:59f8146938fff824cb5fd77236b75775 spacing=10.0 padding_LRTB=[0, 0, 900, 0]
+            BG  sz[0.0, 1256.0] p[0.0, 95.0] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+              · IMG img_Activity_rank_bg03 Spirits/ActivityImg_Download/img_Activity_rank_bg03.png
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+            Top  sz[1080.0, 450.0] p[0.0, 0.0] a[0.5, 1.0][0.5, 1.0] piv[0.5, 1.0]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+              ...(9 子节点省略)
+            mask  sz[0.0, -90.0] p[0.0, -50.0] STRETCH piv[0.5, 1.0]
+              · TFWImage
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+              · guid:3312d7739989d2b4e91e6319e9a96d76
+              ...(2 子节点省略)
+            bg  sz[-60.0, -615.0] p[0.0, -540.0] STRETCH piv[0.5, 1.0]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+              · IMG img_gift_bg_17 Sliced border(L,B,R,T)=[28, 28, 28, 28] Spirits/Pack/img_gift_bg_17.png
+              ...(1 子节点省略)
+            StageReward  sz[1020.0, 320.0] p[0.0, -540.0] a[0.5, 1.0][0.5, 1.0] piv[0.5, 1.0]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+              ...(4 子节点省略)
+            ScoreGroupTemplate  sz[1020.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.5, 1.0]
+              · guid:59f8146938fff824cb5fd77236b75775 spacing=10.0 padding_LRTB=[0, 0, 0, 0]
+              · TFWImage
+              ...(1 子节点省略)
+            ScoreGroupTempateList  sz[100.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+              · ChildGroupController
+            Title  sz[1020.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.5, 1.0]
+              · IMG img_cm_bg_biaoti2 Sliced border(L,B,R,T)=[52, 0, 52, 0] Spirits/CommonNew/img_cm_bg_biaoti2.png
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+              ...(1 子节点省略)
+          UIRankTemplate  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+            <嵌套prefab:UIRankTemplate>
+              >> Public/UIRankTemplate.prefab
+              >> 覆盖 sz=['-600', '196'] pos=['337', '0']
+            Reward  sz[135.0, 135.0] p[-120.0, 0.0] a[1.0, 0.5][1.0, 0.5]
+              · TFWImage
+              ...(2 子节点省略)
+    MyRank  sz[496.0, 104.0] p[0.0, 475.0] a[1.0, 0.0][1.0, 0.0] piv[1.0, 0.0]
+      · guid:306cc8c2b49d7114eaa3623786fc2126
+      · IMG img_Activity_rank_bg02 Spirits/ActivityImg_Download/img_Activity_rank_bg02.png
+      icon  sz[80.0, 80.0] p[125.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+        · IMG img_ui_guild_icon_4 Spirits/Alliance/img_ui_guild_icon_4.png
+      txt  sz[-245.0, -20.0] p[42.5, 10.0] STRETCH piv[0.5, 0.0]
+        · TXT '我的排名：10' fs=36 #F9E9C1
+    RankEmpty [OFF]  sz[0.0, -90.0] p[0.0, -45.0] STRETCH
+      BG  sz[0.0, 1256.0] p[0.0, 95.0] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+        · IMG img_Activity_rank_bg03 Spirits/ActivityImg_Download/img_Activity_rank_bg03.png
+        · guid:306cc8c2b49d7114eaa3623786fc2126
+      mask  sz[0.0, -580.0] p[0.0, -50.0] STRETCH piv[0.5, 1.0]
+        · TFWImage
+        · guid:306cc8c2b49d7114eaa3623786fc2126
+        · guid:3312d7739989d2b4e91e6319e9a96d76
+        Role  sz[1024.0, 1536.0] p[210.0, -75.0] a[0.5, 1.0][0.5, 1.0] piv[0.5, 1.0]
+          EffectRoot  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+        Img  sz[324.0, 108.0] p[253.0, -1460.0] a[0.5, 1.0][0.5, 1.0] piv[0.5, 1.0] scl[2.0, 2.0]
+          · IMG img_Assemble_bg_ditu5 Spirits/Rally/img_Assemble_bg_ditu5.png
+          · guid:306cc8c2b49d7114eaa3623786fc2126
+      bg  sz[0.0, 264.0] p[0.0, 120.0] a[0.0, 0.0][1.0, 0.0] piv[0.5, 0.0]
+        · IMG img_hs_bg_1 Spirits/AllianceTrap/img_hs_bg_1.png
+      txt_title  sz[686.0, 80.0] p[25.0, -65.0] a[0.0, 1.0][0.0, 1.0] piv[0.0, 0.5]
+        · TXT 'languageKey: TXT_ActvOnline_ActvName_104801' fs=52 #FFFFFF
+        · guid:45facfdc6a639f041b007c036dc527b8
+      txt_desc  sz[800.0, 149.0] p[25.0, -116.0] a[0.0, 1.0][0.0, 1.0] piv[0.0, 1.0]
+        · TXT 'languageKey: TXT_ActvOnline_ActvDesc_104801' fs=36 #F4EACE
+      Time  sz[1080.0, 320.0] p[0.0, 250.0] a[0.5, 0.0][0.5, 0.0] piv[0.5, 0.0]
+        · guid:59f8146938fff824cb5fd77236b75775 padding_LRTB=[0, 0, 10, 0]
+        Title  sz[1020.0, 68.0] p[540.0, -10.0] a[0.0, 1.0][0.0, 1.0] piv[0.5, 1.0]
+          · IMG img_cm_bg_biaoti2 Sliced border(L,B,R,T)=[52, 0, 52, 0] Spirits/CommonNew/img_cm_bg_biaoti2.png
+          · guid:306cc8c2b49d7114eaa3623786fc2126
+          txt  sz[0.0, -5.0] p[0.0, 0.0] STRETCH
+            · TXT 'languageKey: Text_Actv_GroupMember' fs=36 #FFF1B9
+        Content  sz[1020.0, 242.0] p[540.0, -78.0] a[0.0, 1.0][0.0, 1.0] piv[0.5, 1.0]
+          · guid:306cc8c2b49d7114eaa3623786fc2126
+          txt_title  sz[0.0, 104.55] p[0.0, -23.0] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+            · TXT 'languageKey: Text_Actv_DailyRank_Empty_Desc' fs=42 #3F2411
+          txt_time  sz[0.0, 80.0] p[0.0, 34.45] a[0.0, 0.0][1.0, 0.0] piv[0.5, 0.0]
+            · TXT '17:01:28' fs=60 #EFD376

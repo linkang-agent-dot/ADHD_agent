@@ -1,0 +1,194 @@
+=== UIActvCumRecharge.prefab (GO=96) ===
+UIActvCumRecharge  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.0, 0.0] scl[0.0, 0.0]
+  · guid:0cd44c1031e13a943bb63640046fad76
+  · guid:dc42784cf147c0c48a680349fa168899
+  · UIConfig
+  · UIAnimation
+  Root  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+    mask  sz[1080.0, 1920.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5] scl[0.0, 0.0]
+      · IMG img_Activity_bg_32 Spirits/ActivityImg/img_Activity_bg_32.png
+    BG  sz[0.0, 944.0] p[0.0, 0.0] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+      · IMG img_Activity_bg_1 Spirits/ActivityImg/img_Activity_bg_1.png
+    Animation  sz[1080.0, 0.0] p[0.0, 0.0] a[0.5, 0.0][0.5, 1.0]
+      Bk  sz[59.69, 1469.4] p[2.39, 721.69] a[0.0, 0.0][1.0, 0.0]
+        Bk  sz[1235.99, -0.6] p[5.07, 0.0] a[0.5, 0.0][0.5, 1.0]
+          · IMG cumrecharge_img_08_n Sliced border(L,B,R,T)=[191, 124, 166, 147] Spirits/CumRecharge/cumrecharge_img_08_n.png
+        Line  sz[6.0, 120.0] p[-390.0, -95.0] a[0.5, 1.0][0.5, 1.0]
+          · IMG 82c9d5c8726c57249b51c39e76eee072 #000000 a=0.40
+        [重复兄弟已折叠] Line ×6
+      Tabs  sz[0.0, 190.92] p[0.0, 1255.0] a[0.0, 0.0][1.0, 0.0] piv[0.5, 0.0]
+        tabs  sz[0.0, -1.0] p[0.0, -0.5] STRETCH
+          · guid:30649d3a9faa99c48a7b1166b86bf2a0 padding_LRTB=[0, 0, 0, 0]
+          · TFWTabGroup
+          tab1  sz[154.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+            · TFWTab
+            · CanvasGroup
+            Bg1  sz[24.0, 10.57] p[0.0, -5.29] STRETCH
+              · IMG cumrecharge_img_10_n Sliced border(L,B,R,T)=[40, 41, 44, 22] Spirits/CumRecharge/cumrecharge_img_10_n.png
+            Bg2 [OFF]  sz[-142.31, -5.8] p[83.6, -13.47] STRETCH
+              · IMG cumrecharge_img_10_n Sliced border(L,B,R,T)=[40, 41, 44, 22] #FFFFFF a=0.00 Spirits/CumRecharge/cumrecharge_img_10_n.png
+            Num1  sz[191.33, 57.0] p[-4.33, -25.0] a[0.5, 0.5][0.5, 0.5]
+              · TXT '1,200' fs=40 #FFF6E9
+            Num2 [OFF]  sz[191.33, 57.0] p[-4.33, -25.0] a[0.5, 0.5][0.5, 0.5]
+              · TXT '1,200' fs=40 #4F2A00
+            icon1  sz[86.0, 86.0] p[0.0, 38.0] a[0.5, 0.5][0.5, 0.5]
+              · IMG icon_global_integral Spirits/Pack/icon_global_integral.png
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+            icon2 [OFF]  sz[86.0, 86.0] p[0.0, 38.0] a[0.5, 0.5][0.5, 0.5]
+              · IMG icon_global_integral #715945 Spirits/Pack/icon_global_integral.png
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+            Img_Received  sz[40.36, 39.69] p[52.0, 69.9] a[0.5, 0.5][0.5, 0.5]
+              · IMG img_task_bubble_check_mark_icon Spirits/MechaMain/img_task_bubble_check_mark_icon.png
+            fx_Claim [OFF]  sz[160.0, 160.08] p[0.0, 9.0] a[0.5, 0.5][0.5, 0.5]
+              · TFWImage
+              EffectRoot  sz[150.0, 150.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+            Hit  sz[176.33, 214.0] p[1.28, 0.0] a[0.5, 0.5][0.5, 0.5]
+              · IMG ChatWhiteRect #1A1A1A a=0.00 Atlas/Chat/ChatWhiteRect.png
+      Page  sz[0.0, 1320.37] p[0.0, 809.18] a[0.0, 0.0][1.0, 0.0]
+        CumRechargeGallery  sz[1080.0, 1157.4] p[540.0, -741.68] a[0.0, 1.0][0.0, 1.0]
+          · guid:306cc8c2b49d7114eaa3623786fc2126
+          bg  sz[1092.04, 141.75] p[6.56, -71.15] a[0.5, 0.0][0.5, 1.0]
+            · IMG img_Activity_linfeng_bg_3 Sliced border(L,B,R,T)=[0, 200, 0, 200] Spirits/HeroUpRoute/img_Activity_linfeng_bg_3.png
+          PreviewWindows  sz[1080.0, 1155.7] p[0.0, 578.7] a[0.5, 0.5][0.5, 0.5] piv[0.5, 1.0]
+            HeroBg  sz[1080.0, 1148.24] p[4.34, 537.79] a[0.5, 0.5][0.5, 0.5] piv[0.5, 1.0]
+              · IMG img_furniture_Avatar_bg2 Spirits/ActivityImg_Download/img_furniture_Avatar_bg2.png
+            BG  sz[0.0, -459.32] p[0.0, 156.34] STRETCH
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+              HeroBg [OFF]  sz[992.0, 792.57] p[4.34, 370.0] a[0.5, 0.5][0.5, 0.5] piv[0.5, 1.0]
+                · IMG img_gift_barbecue_btn_2 Spirits/ActivityImg_Download/img_gift_barbecue_btn_2.png
+              CityBg [OFF]  sz[992.0, 792.57] p[4.34, 370.0] a[0.5, 0.5][0.5, 0.5] piv[0.5, 1.0]
+                · IMG img_gift_barbecue_btn_1 Spirits/ActivityImg_Download/img_gift_barbecue_btn_1.png
+              ShipBg [OFF]  sz[992.0, 792.57] p[4.34, 370.0] a[0.5, 0.5][0.5, 0.5] piv[0.5, 1.0]
+                · IMG img_Actv_Siren_Task_bg2 Spirits/ActivityImg_Download/img_Actv_Siren_Task_bg2.png
+              FurnitureBg  sz[1079.95, 1177.79] p[4.34, 408.0] a[0.5, 0.5][0.5, 0.5] piv[0.5, 1.0]
+                · IMG img_furniture_Avatar_bg2 Spirits/ActivityImg_Download/img_furniture_Avatar_bg2.png
+            Content  sz[1075.6, 1044.68] p[2.17, -17.81] a[0.5, 0.5][0.5, 0.5]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+              · guid:3312d7739989d2b4e91e6319e9a96d76
+              NormalBanner  sz[1075.6, 1075.61] p[-0.0, 509.77] a[0.5, 0.5][0.5, 0.5] piv[0.5, 1.0]
+                · IMG Img_actv_cumrecharge_4 Spirits/CumRecharge/Img_actv_cumrecharge_4.png
+                · guid:3312d7739989d2b4e91e6319e9a96d76
+              FurnitureModel  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+                · ModelDisplayConfig
+                · guid:3312d7739989d2b4e91e6319e9a96d76
+              CityModel  sz[1075.6, 1318.7] p[-0.0, -58.3] a[0.5, 0.5][0.5, 0.5]
+                · ModelDisplayConfig
+                · guid:3312d7739989d2b4e91e6319e9a96d76
+              ShipModel  sz[1075.6, 1318.7] p[-0.0, -58.3] a[0.5, 0.5][0.5, 0.5]
+                · ModelDisplayConfig
+                · guid:3312d7739989d2b4e91e6319e9a96d76
+              Role  sz[1083.22, 1624.83] p[0.0, -689.64] a[0.5, 1.0][0.5, 1.0] scl[0.8, 0.8]
+                · guid:3312d7739989d2b4e91e6319e9a96d76
+                ...(2 子节点省略)
+              Sp_Effect  sz[900.0, 0.0] p[0.0, 152.0] a[0.5, 0.0][0.5, 0.0] piv[0.5, 0.0]
+                · guid:59f8146938fff824cb5fd77236b75775 spacing=8.0 padding_LRTB=[0, 0, 35, 35]
+                · guid:3245ec927659c4140ac4f8d17403cc18
+                ...(3 子节点省略)
+            Mask  sz[1079.4, 1167.5] p[0.27, -5.9] a[0.5, 0.5][0.5, 0.5]
+              · IMG img_Activity_linfeng_bg_3_mask Sliced border(L,B,R,T)=[0, 80, 0, 139] Spirits/HeroUpRoute/img_Activity_linfeng_bg_3_mask.png
+            Title  sz[717.09, 108.0] p[19.91, -182.0] a[0.5, 1.0][0.5, 1.0] piv[0.5, 1.0]
+              · IMG img_route_bg_4 Spirits/Route/img_route_bg_4.png
+              TextTitle  sz[522.72, 66.66] p[5.0, 9.0] a[0.5, 0.5][0.5, 0.5]
+                · TXT '度假酒馆（永久）' fs=35 #F7E794
+          Layout  sz[0.0, 120.0] p[0.0, 487.0] a[0.5, 0.5][0.5, 0.5]
+            · guid:30649d3a9faa99c48a7b1166b86bf2a0 spacing=12.0 padding_LRTB=[0, 0, 0, 0]
+            · guid:3245ec927659c4140ac4f8d17403cc18
+            txt_title1  sz[0.0, 58.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.0, 0.5]
+              · TXT 'languageKey: Text_Actv_CumRecharge_Spend' fs=35 #FFFFFF
+              · guid:45facfdc6a639f041b007c036dc527b8
+            text_count  sz[0.0, 120.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+              · TXT '<color=#e85b23>8,888</color>/9,999' fs=58 #664C2B
+              · guid:e19747de3f5aca642ab2be37e372fb86
+            txt_title2  sz[0.0, 58.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.0, 0.5]
+              · TXT 'languageKey: Text_Actv_CumRecharge_GetNow' fs=35 #FFFFFF
+              · guid:45facfdc6a639f041b007c036dc527b8
+          RewardList  sz[-390.0, 140.0] p[4.0, 278.0] a[0.0, 0.0][1.0, 0.0]
+            · IMG img_ledger_bg_ditu1 Sliced border(L,B,R,T)=[168, 6, 168, 5] #000000 Spirits/Ledger/img_ledger_bg_ditu1.png
+            <嵌套prefab:UIItemTemplate>
+              >> Public/UIItemTemplate.prefab
+              >> 覆盖 sz=['130', '130'] pos=['0', '0']
+          HeroBtn [OFF]  sz[116.77, 117.94] p[-147.0, -869.0] a[1.0, 1.0][1.0, 1.0]
+            · IMG img_cm_bg_icon_touxiangkuang1 Spirits/CommonNew/img_cm_bg_icon_touxiangkuang1.png
+            Icon  sz[122.65, 120.31] p[-0.9, 7.8] a[0.5, 0.5][0.5, 0.5]
+              · IMG Img_C_H_31 Spirits/Role/Character Portraits/Img_C_H_31.png
+            Txt  sz[139.43, 49.42] p[-4.7, 10.9] a[0.5, 0.0][0.5, 0.0]
+              · TXT 'languageKey: Text_BlackMarket_Unlock_Hero_Btn' fs=28 #F4E4C4
+          btn_locked  sz[296.0, 100.0] p[0.0, -453.0] a[0.5, 0.5][0.5, 0.5]
+            · IMG img_cm_anniu1_geen #FFFFFF a=0.00 Spirits/CommonNew/img_cm_anniu1_geen.png
+            bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              · IMG img_cm_anniu1_geen Spirits/CommonNew/img_cm_anniu1_geen.png
+            txt  sz[-40.0, 0.0] p[0.0, 0.0] STRETCH
+              · TXT 'languageKey: Text_Btn_claimed' fs=45 #FFF6E9
+          <嵌套prefab:UIBtnGoto>
+            >> Button/UIBtnGoto.prefab
+            >> 覆盖 sz=['465.4264', '122.1131'] pos=['-3', '-453']
+          btn_Claim  sz[296.0, 100.0] p[0.0, -453.0] a[0.5, 0.5][0.5, 0.5]
+            · TFWImage
+            bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              · IMG img_cm_anniu1_geen Spirits/CommonNew/img_cm_anniu1_geen.png
+            txt  sz[-40.0, 0.0] p[0.0, 0.0] STRETCH
+              · TXT 'languageKey: Text_Btn_claim' fs=45 #FFF6E9
+      Top  sz[0.0, 374.08] p[0.0, -100.0] a[0.0, 1.0][1.0, 1.0] piv[0.5, 1.0]
+        txt_title  sz[700.0, 80.0] p[23.0, -65.0] a[0.0, 1.0][0.0, 1.0] piv[0.0, 0.5]
+          · TXT '累计储值' fs=52 #FFFFFF
+          · guid:45facfdc6a639f041b007c036dc527b8
+        txt_desc  sz[700.0, 145.0] p[23.0, -165.0] a[0.0, 1.0][0.0, 1.0] piv[0.0, 1.0]
+          · TXT 'languageKey:' fs=36 #F5EACE
+        Time  sz[0.0, 60.0] p[23.0, -105.0] a[0.0, 1.0][0.0, 1.0] piv[0.0, 1.0]
+          · guid:30649d3a9faa99c48a7b1166b86bf2a0 spacing=15.0 padding_LRTB=[20, 0, 0, 0]
+          · guid:3245ec927659c4140ac4f8d17403cc18
+          bg  sz[50.0, 0.0] p[25.0, 0.0] STRETCH
+            · IMG img_gift_bg_4 Sliced border(L,B,R,T)=[41, 0, 43, 0] Spirits/Pack/img_gift_bg_4.png
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+          Icon  sz[0.0, 40.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+            · IMG img_gift_time Spirits/Pack/img_gift_time.png
+            · guid:306cc8c2b49d7114eaa3623786fc2126
+          txt  sz[0.0, 60.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+            · TXT '距结束：{0}' fs=32 #EED376
+        btn_info  sz[64.0, 64.0] p[-55.0, -66.0] a[1.0, 1.0][1.0, 1.0]
+          · TFWImage
+          bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+            · IMG img_cm_anniu_guize Spirits/CommonNew/img_cm_anniu_guize.png
+        <嵌套prefab:UIPrivilege>
+          >> Common/UIPrivilege.prefab
+          >> 覆盖 sz=['770', '60'] pos=['465', '-80']
+        <嵌套prefab:UIBtnGift>
+          >> Button/UIBtnGift.prefab
+          >> 覆盖 sz=['170', '170'] pos=['-108', '100']
+        <嵌套prefab:UIBtnProperty>
+          >> Button/UIBtnProperty.prefab
+          >> 覆盖 sz=['120', '120'] pos=['83', '75']
+        <嵌套prefab:DailyGift>
+          >> Activity/DailyGift.prefab
+          >> 覆盖 sz=['135', '135'] pos=['90.5', '82.49994']
+      MaskPop  sz[0.0, 1960.0] p[0.0, 1940.0] a[0.0, 0.0][1.0, 0.0] piv[0.5, 1.0]
+        Bg [OFF]  sz[0.0, 855.0] p[0.0, 555.0] STRETCH piv[0.5, 1.0]
+          · IMG CommonWhiteRect_1 #000000 a=0.91 Sprite/UIActvWeeklyCardSelect/Images/CommonWhiteRect_1.png
+          · CanvasGroup
+        Progress  sz[703.0, 80.0] p[0.0, 190.0] a[0.5, 0.5][0.5, 0.5]
+          · CanvasGroup
+          Banner [OFF]  sz[927.13, 522.29] p[0.0, 151.0] a[0.5, 0.5][0.5, 0.5]
+            · CanvasGroup
+            GameObject  sz[100.0, 100.0] p[5.0, 3.0] a[0.5, 0.5][0.5, 0.5] scl[4.0, 4.0]
+              EffectRoot  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+            Banner  sz[927.13, 522.29] p[-0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+              · IMG CumBgGift Spirits/CumRecharge/CumBgGift.png
+              · CanvasGroup
+            Bg  sz[723.03, 41.06] p[0.74, -149.43] a[0.5, 0.5][0.5, 0.5]
+              · IMG img_idle_shouyi_shijian1 Sliced border(L,B,R,T)=[20, 0, 20, 0] Spirits/CommonNew/img_idle_shouyi_shijian1.png
+              · CanvasGroup
+          Slider  sz[703.0, 42.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+            · guid:67db9e8f0e2ae9c40bc1e2b64352a6b4
+            Background  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              · IMG img_VIP_bg_jindutiao_1 Sliced border(L,B,R,T)=[12, 12, 12, 12] Spirits/CommonNew/img_VIP_bg_jindutiao_1.png
+            Handle  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+              Effect [OFF]  sz[100.0, 100.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+                ...(1 子节点省略)
+            Fill Area  sz[-8.0, -8.5] p[0.0, 1.75] STRETCH
+              Fill  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+                · IMG img_TXDS_jindutiao1 Sliced border(L,B,R,T)=[8, 8, 8, 8] Spirits/WorldTend/img_TXDS_jindutiao1.png
+            Text  sz[0.0, -3.0] p[0.0, 1.5] STRETCH
+              · TXT '0 / 2000' fs=36 #FFFFFF
+        FlyIcon [OFF]  sz[86.0, 86.0] p[0.0, 668.0] a[0.5, 0.5][0.5, 0.5]
+          · IMG icon_global_integral Spirits/Pack/icon_global_integral.png
+          · guid:306cc8c2b49d7114eaa3623786fc2126

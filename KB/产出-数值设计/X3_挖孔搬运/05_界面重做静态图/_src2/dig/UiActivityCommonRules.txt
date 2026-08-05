@@ -1,0 +1,52 @@
+=== UiActivityCommonRules.prefab (GO=75) ===
+UiActivityCommonRules  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0] piv[0.0, 0.0] scl[0.0, 0.0]
+  · guid:0cd44c1031e13a943bb63640046fad76
+  · guid:dc42784cf147c0c48a680349fa168899
+  · UIBlur
+  <嵌套prefab:AutoSizeBG>
+    >> Activity/AllianceCrossBattle/AutoSizeBG.prefab
+    >> 覆盖 sz=['0', '0'] pos=['0', '0']
+  CentreOther  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+    BG  sz[50.0, 0.0] p[25.0, 0.0] STRETCH
+      · IMG img_ledger_bg_taizhang1 Spirits/BigPictureNoAtlas/img_ledger_bg_taizhang1.png
+    Board  sz[0.0, 1920.0] p[0.0, 0.0] a[0.0, 0.0][1.0, 0.0] piv[0.5, 0.0]
+      TitleBar  sz[0.0, 126.82] p[0.0, -126.86] a[0.0, 1.0][1.0, 1.0] piv[0.5, 0.0]
+        · IMG img_cm_bg_1 Sliced Spirits/CommonNew/img_cm_bg_1.png
+        TxtTitle  sz[365.0, 58.0] p[212.5, 76.86] a[0.0, 0.0][0.0, 0.0]
+          · TXT 'DISPATCH' fs=52 #FFF6E9
+          · UIGradient
+          · guid:2f3c2d59b68f4dc47b5943a9b56f8f35
+      <嵌套prefab:BottomPublicBtnEmpty>
+        >> Common/PanelNew/BottomPublicBtnEmpty.prefab
+        >> 覆盖 sz=['0', '207'] pos=['0', '0.000015258789']
+      Content  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+        Content  sz[0.0, -430.0] p[0.0, -23.0] STRETCH
+          BG  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+            · IMG CommonBlackRound Sliced border(L,B,R,T)=[6, 6, 6, 6] #FFFFFF a=0.12 Atlas/Public/Partnew/CommonBlackRound.png
+          Tabs  sz[-79.71, 100.0] p[-17.85, 65.0] a[0.0, 1.0][1.0, 1.0]
+            · TFWTabGroup
+            · guid:30649d3a9faa99c48a7b1166b86bf2a0 spacing=-27.1 padding_LRTB=[0, 0, 0, 0]
+            Tab0  sz[0.0, 100.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+              · TFWTab
+              ...(2 子节点省略)
+            Tab1  sz[0.0, 100.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+              · TFWTab
+              ...(2 子节点省略)
+            Tab2  sz[0.0, 100.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+              · TFWTab
+              ...(2 子节点省略)
+            Tab3  sz[0.0, 100.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+              · TFWTab
+              ...(2 子节点省略)
+          Basic  sz[-32.0, -10.0] p[0.0, 5.0] STRETCH
+            · TFWScrollRect scroll=vertical
+            · ScrollRectFilter
+            · TFWLoopListView
+            · guid:3312d7739989d2b4e91e6319e9a96d76
+            Viewport  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+              · IMG CommonWhiteRect #FFFFFF a=0.00 Sprite/UIActvWeeklyCardSelect/Images/CommonWhiteRect.png
+              ...(1 子节点省略)

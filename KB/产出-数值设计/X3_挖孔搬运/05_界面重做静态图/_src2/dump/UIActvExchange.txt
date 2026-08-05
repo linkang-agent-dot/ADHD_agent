@@ -1,0 +1,139 @@
+=== UIActvExchange.prefab  (GameObject 数=36) ===
+UIActvExchange  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.0, 0.0] scale[0.0, 0.0]
+    · Canvas
+    · guid:0cd44c1031e13a943bb63640046fad76
+    · guid:dc42784cf147c0c48a680349fa168899
+    · UIConfig
+    · UIAnimation
+  Root  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+    mask  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 1.0]
+        · CanvasRenderer
+        · TFWImage | sprite=(none) | col=#241317
+    BG  size[0.0, 944.0] pos[0.0, 0.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 1.0]
+        · CanvasRenderer
+        · TFWImage | sprite=img_Activity_navigation_bg_2 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/ActvVoyage/img_Activity_navigation_bg_2.png]
+    Role  size[1024.0, 1536.0] pos[210.0, -840.0] anc[0.5, 1.0]-[0.5, 1.0] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWImage | sprite=Role_F_27 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Role/FullLength/Role_F_27.png]
+        · EffectDisplay
+      EffectRoot  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+      <嵌套prefab:VideoRoot>
+          ↳ 源: Assets/Res/Video/Prefab/VideoRoot.prefab
+          ↳ 覆盖: Name=VideoRoot, IsActive=0, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=1, AnchorMax.y=1, AnchorMin.x=0, AnchorMin.y=0, SizeDelta.x=0, SizeDelta.y=0
+    Animation  size[1080.0, 0.0] pos[0.0, 0.0] anc[0.5, 0.0]-[0.5, 1.0] piv[0.5, 0.5]
+        · CanvasRenderer
+        · DOTweenAnimation
+      Top  size[0.0, 360.0] pos[0.0, -100.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 1.0]
+          · CanvasRenderer
+        txt_title  size[700.0, 80.0] pos[23.0, -65.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 0.5]
+            · CanvasRenderer
+            · TFWText | col=#FFFFFF | TEXT='活动标题几个字' | fs=52
+            · BetterOutline
+            · guid:45facfdc6a639f041b007c036dc527b8
+        txt_desc  size[828.86, 180.5] pos[23.0, -171.5] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 1.0]
+            · CanvasRenderer
+            · TFWText | col=#F4EACE | TEXT='活动描述一段字' | fs=36
+            · BetterOutline
+        <嵌套prefab:UIBtnGift>
+            ↳ 源: Button/UIBtnGift.prefab
+            ↳ 覆盖: Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=1, AnchorMax.y=1, AnchorMin.x=1, AnchorMin.y=1, SizeDelta.x=170, SizeDelta.y=170, AnchoredPosition.x=-108, AnchoredPosition.y=-267
+        Time  size[0.0, 60.0] pos[23.0, -105.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.0, 1.0]
+            · CanvasRenderer
+            · guid:30649d3a9faa99c48a7b1166b86bf2a0 | spacing=15.0 | pad(L,R,T,B)=[20, 0, 0, 0]
+            · guid:3245ec927659c4140ac4f8d17403cc18
+          bg  size[50.0, 0.0] pos[25.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWImage | sprite=img_gift_bg_4 | Sliced | border(L,B,R,T)=[41.0, 0.0, 43.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_4.png]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+          Icon  size[0.0, 40.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWImage | sprite=img_gift_time | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_time.png]
+              · guid:306cc8c2b49d7114eaa3623786fc2126
+          txt  size[0.0, 60.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWText | col=#EED376 | TEXT='距结束：{0}' | fs=32
+              · BetterOutline
+        btn_info  size[64.0, 64.0] pos[-55.0, -66.0] anc[1.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+            · EventTriggerListener
+            · ButtonScale
+            · CanvasRenderer
+            · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+          bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · guid:fe87c0e1cc204ed48ad3b37840f39efc | sprite=img_cm_anniu_guize | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_anniu_guize.png]
+        <嵌套prefab:UIBtnProperty>
+            ↳ 源: Button/UIBtnProperty.prefab
+            ↳ 覆盖: Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0, AnchorMax.y=1, AnchorMin.x=0, AnchorMin.y=1, SizeDelta.x=100, SizeDelta.y=100, AnchoredPosition.x=73, AnchoredPosition.y=-310
+        <嵌套prefab:DailyGift>
+            ↳ 源: Activity/DailyGift.prefab
+            ↳ 覆盖: Name=DailyGift, IsActive=0, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=1, AnchorMax.y=1, AnchorMin.x=1, AnchorMin.y=1, SizeDelta.x=135, SizeDelta.y=135
+      Page  size[1020.0, -865.0] pos[0.0, -212.5] anc[0.5, 0.0]-[0.5, 1.0] piv[0.5, 0.5]
+          · CanvasRenderer
+          · TFWImage | sprite=img_gift_bg_17 | Sliced | border(L,B,R,T)=[28.0, 28.0, 28.0, 28.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_17.png]
+        List  size[0.0, -20.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+            · LoopVerticalScrollRect | scroll=vertical
+            · ScrollRectFilter
+          View  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+              · guid:3312d7739989d2b4e91e6319e9a96d76
+            Content  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 1.0]
+                · guid:3245ec927659c4140ac4f8d17403cc18
+                · ChildGroupController
+                · guid:8a8695521f0d02e499659fee002a26c2 | spacing=[20.0, 80.0] | cell=[300.0, 380.0] | pad(L,R,T,B)=[40, 0, 0, 70]
+            ActvTaskTemplate  size[300.0, 380.0] pos[200.0, -190.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 0.5]
+              btn_locked [INACTIVE]  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · EventTriggerListener
+                  · ButtonScale
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_shop_bg_8 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Shop/img_shop_bg_8.png]
+              btn_Claim  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  · EventTriggerListener
+                  · ButtonScale
+                  · CanvasRenderer
+                  · TFWImage | sprite=img_shop_bg_8 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Shop/img_shop_bg_8.png]
+              GoodsItem  size[220.0, 220.0] pos[0.0, 55.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                  · CanvasRenderer
+                <嵌套prefab:UIItemTemplate>
+                    ↳ 源: Public/UIItemTemplate.prefab
+                    ↳ 覆盖: IsActive=1, Name=UIItemTemplate, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=-40, SizeDelta.y=220
+                Mask [INACTIVE]  size[220.0, 220.0] pos[0.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_cm_bg_iconkuang | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#000000 a=0.59 | [Spirits/CommonNew/img_cm_bg_iconkuang.png]
+                  Txt  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#FF3703 | TEXT='languageKey: Text_Furniture_UI_Have_Item' | fs=28
+                      · BetterOutline
+                GoodsTips  size[120.0, 120.0] pos[0.0, -36.0] anc[1.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+                  Bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_gift_bg_Discount | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/Pack/img_gift_bg_Discount.png]
+                  GoodsTips  size[120.0, 80.0] pos[0.0, 3.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#EFD373 | TEXT='超值' | fs=28
+                      · BetterOutline
+              ExchangeItem  size[-26.0, 60.0] pos[0.0, 48.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                <嵌套prefab:UIItemTemplate>
+                    ↳ 源: Public/UIItemTemplate.prefab
+                    ↳ 覆盖: LocalScale.x=4, LocalScale.y=4, LocalScale.z=4, IsActive=0, Name=UIItemTemplate, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5
+              Btn_tips  size[300.0, 60.0] pos[0.0, -30.0] anc[0.5, 0.0]-[0.5, 0.0] piv[0.5, 0.5]
+                Btn  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · EventTriggerListener
+                    · ButtonScale
+                    · CanvasRenderer
+                    · TFWImage | sprite=(none) | col=#FFFFFF a=0.00
+                    · guid:306cc8c2b49d7114eaa3623786fc2126
+                  bg  size[55.0, 55.0] pos[40.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_VIP_bg_jindutiao_1 | Sliced | border(L,B,R,T)=[12.0, 12.0, 12.0, 12.0] | col=#FFFFFF | [Spirits/CommonNew/img_VIP_bg_jindutiao_1.png]
+                  Img  size[55.0, 56.0] pos[40.0, 0.0] anc[0.0, 0.5]-[0.0, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_TXDS_icon_gou | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/WorldTend/img_TXDS_icon_gou.png]
+                  Txt  size[230.0, 50.0] pos[0.0, 0.0] anc[1.0, 0.5]-[1.0, 0.5] piv[1.0, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#EFCB52 | TEXT='languageKey: Text_Actv_exchange_caution' | fs=36
+                      · BetterOutline
+              text_count  size[-26.0, 50.0] pos[0.0, 110.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.5]
+                  · CanvasRenderer
+                  · TFWText | col=#422919 | TEXT='剩余次数：3' | fs=32

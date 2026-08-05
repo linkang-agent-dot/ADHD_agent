@@ -43,3 +43,27 @@ created: 2026-06-24
 - 自包含 HTML（截图 base64 内嵌）一份即可转发，无需另发图。
 - 归档到 `KB/产出-验证报告/<单号_功能名>/`，挂首页"产出归档"。
 - 透明交代环境改动（测试分支未提交、GM 临时开的活动、测试号被改的状态），供回滚判断。
+
+---
+
+## 🔴 铁律：人工操作 Unity 期间，禁止从桥发 reload 类指令（2026-08-04 撞死一次）
+
+`recompile` / `AssetDatabase.Refresh` / `EnterPlaymode` / `ExitPlaymode` —— **四个都触发 domain reload**。
+与用户在 Unity 里手动跑 EditorWindow / 改 prefab 撞在一起，会把编辑器主线程锁死：
+
+```
+症状: CPU 增量≈0（不是满转）/ Editor.log 零写入 / 日志末尾一堆 "Thread was being aborted"
+      / 桥端口 21891 无监听
+```
+
+⇒ **两种模式互斥，不能重叠**：
+- **我全自动**：我发桥指令跑「编译→进Play→自动登录→开界面→读 Editor.log」，用户不碰 Unity
+- **用户手动**：让用户去点菜单/改 prefab 之前，我**停掉一切桥调用**，等用户说"好了"再恢复
+
+让用户动手前必须明说"这段我不动桥"，别一边让人点一边自己发指令。
+
+## ⚠️ 自写 EditorWindow 工具的两条约束（同日实证）
+1. **报告要同时 `Debug.Log` 一份**，别只写进窗口的 TextArea —— 否则我从 `Editor.log` 读不到，
+   只能让用户截图或复述，白丢一次自动化能力（本次就吃了这个亏）。
+2. **`EditorUtility.DisplayDialog` 是模态的**，会阻塞主线程且不写日志，
+   症状和 domain reload 死锁**无法区分** ⇒ 要么别用，要么在诊断卡死时**第一步就排除它**。

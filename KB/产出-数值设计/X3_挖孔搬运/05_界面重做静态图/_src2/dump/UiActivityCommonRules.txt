@@ -1,0 +1,242 @@
+=== UiActivityCommonRules.prefab  (GameObject 数=75) ===
+UiActivityCommonRules  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.0, 0.0] scale[0.0, 0.0]
+    · Canvas
+    · guid:0cd44c1031e13a943bb63640046fad76
+    · guid:dc42784cf147c0c48a680349fa168899
+    · UIBlur
+  <嵌套prefab:AutoSizeBG>
+      ↳ 源: Activity/AllianceCrossBattle/AutoSizeBG.prefab
+      ↳ 覆盖: Name=AutoSizeBG, IsActive=0, LocalScale.x=0, LocalScale.y=0, LocalScale.z=0, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=1, AnchorMax.y=1, AnchorMin.x=0
+  CentreOther  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+    BG  size[50.0, 0.0] pos[25.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        · CanvasRenderer
+        · TFWImage | sprite=img_ledger_bg_taizhang1 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/BigPictureNoAtlas/img_ledger_bg_taizhang1.png]
+    Board  size[0.0, 1920.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 0.0] piv[0.5, 0.0]
+      TitleBar  size[0.0, 126.82] pos[0.0, -126.86] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 0.0]
+          · CanvasRenderer
+          · TFWImage | sprite=img_cm_bg_1 | Sliced | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Spirits/CommonNew/img_cm_bg_1.png]
+        TxtTitle  size[365.0, 58.0] pos[212.5, 76.86] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+            · CanvasRenderer
+            · TFWText | col=#FFF6E9 | TEXT='DISPATCH' | fs=52
+            · UIGradient
+            · guid:2f3c2d59b68f4dc47b5943a9b56f8f35
+            · BetterOutline
+      <嵌套prefab:BottomPublicBtnEmpty>
+          ↳ 源: Common/PanelNew/BottomPublicBtnEmpty.prefab
+          ↳ 覆盖: Name=CommonBack, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=1, AnchorMax.y=0, AnchorMin.x=0, AnchorMin.y=0, SizeDelta.x=0, SizeDelta.y=207, AnchoredPosition.x=0
+      Content  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+        Content  size[0.0, -430.0] pos[0.0, -23.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+          BG  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · CanvasRenderer
+              · TFWImage | sprite=CommonBlackRound | Sliced | border(L,B,R,T)=[6.0, 6.0, 6.0, 6.0] | col=#FFFFFF a=0.12 | [Atlas/Public/Partnew/CommonBlackRound.png]
+          Tabs  size[-79.71, 100.0] pos[-17.85, 65.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · TFWTabGroup
+              · guid:30649d3a9faa99c48a7b1166b86bf2a0 | spacing=-27.1 | pad(L,R,T,B)=[0, 0, 0, 0]
+            Tab0  size[0.0, 100.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                · guid:306cc8c2b49d7114eaa3623786fc2126
+                · UIAudio
+                · TFWTab
+                · EventTriggerListener
+              Select  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                BG  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_ledger_anniu_taizhang_fenye | Sliced | border(L,B,R,T)=[114.0, 0.0, 116.0, 0.0] | col=#FFFFFF | [Spirits/Ledger/img_ledger_anniu_taizhang_fenye.png]
+                Txt  size[220.0, 70.0] pos[0.0, -7.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWText | col=#6C4E33 | TEXT='languageKey: BASIC EXPLAIN' | fs=42
+              DisSelect [INACTIVE]  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                BG  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_ledger_anniu_taizhang_fenye2 | Sliced | border(L,B,R,T)=[115.0, 0.0, 118.0, 0.0] | col=#FFFFFF | [Spirits/Ledger/img_ledger_anniu_taizhang_fenye2.png]
+                Txt  size[220.0, 70.0] pos[0.0, -15.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWText | col=#FFF1B9 | TEXT='languageKey: BASIC EXPLAIN' | fs=42
+            Tab1  size[0.0, 100.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                · guid:306cc8c2b49d7114eaa3623786fc2126
+                · UIAudio
+                · TFWTab
+                · EventTriggerListener
+              Select [INACTIVE]  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                BG  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_ledger_anniu_taizhang_fenye | Sliced | border(L,B,R,T)=[114.0, 0.0, 116.0, 0.0] | col=#FFFFFF | [Spirits/Ledger/img_ledger_anniu_taizhang_fenye.png]
+                Txt  size[220.0, 70.0] pos[0.0, -7.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWText | col=#6C4E33 | TEXT='languageKey: BASIC EXPLAIN' | fs=42
+              DisSelect  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                BG  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_ledger_anniu_taizhang_fenye2 | Sliced | border(L,B,R,T)=[115.0, 0.0, 118.0, 0.0] | col=#FFFFFF | [Spirits/Ledger/img_ledger_anniu_taizhang_fenye2.png]
+                Txt  size[220.0, 70.0] pos[0.0, -15.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWText | col=#FFF1B9 | TEXT='languageKey: BASIC EXPLAIN' | fs=42
+            Tab2  size[0.0, 100.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                · guid:306cc8c2b49d7114eaa3623786fc2126
+                · UIAudio
+                · TFWTab
+                · EventTriggerListener
+              Select [INACTIVE]  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                BG  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_ledger_anniu_taizhang_fenye | Sliced | border(L,B,R,T)=[114.0, 0.0, 116.0, 0.0] | col=#FFFFFF | [Spirits/Ledger/img_ledger_anniu_taizhang_fenye.png]
+                Txt  size[220.0, 70.0] pos[0.0, -7.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWText | col=#6C4E33 | TEXT='languageKey: BASIC EXPLAIN' | fs=42
+              DisSelect  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                BG  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_ledger_anniu_taizhang_fenye2 | Sliced | border(L,B,R,T)=[115.0, 0.0, 118.0, 0.0] | col=#FFFFFF | [Spirits/Ledger/img_ledger_anniu_taizhang_fenye2.png]
+                Txt  size[220.0, 70.0] pos[0.0, -15.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWText | col=#FFF1B9 | TEXT='languageKey: BASIC EXPLAIN' | fs=42
+            Tab3  size[0.0, 100.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                · guid:306cc8c2b49d7114eaa3623786fc2126
+                · UIAudio
+                · TFWTab
+                · EventTriggerListener
+              Select [INACTIVE]  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                BG  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_ledger_anniu_taizhang_fenye | Sliced | border(L,B,R,T)=[114.0, 0.0, 116.0, 0.0] | col=#FFFFFF | [Spirits/Ledger/img_ledger_anniu_taizhang_fenye.png]
+                Txt  size[220.0, 70.0] pos[0.0, -7.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWText | col=#6C4E33 | TEXT='languageKey: BASIC EXPLAIN' | fs=42
+              DisSelect  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                BG  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_ledger_anniu_taizhang_fenye2 | Sliced | border(L,B,R,T)=[115.0, 0.0, 118.0, 0.0] | col=#FFFFFF | [Spirits/Ledger/img_ledger_anniu_taizhang_fenye2.png]
+                Txt  size[220.0, 70.0] pos[0.0, -15.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWText | col=#FFF1B9 | TEXT='languageKey: BASIC EXPLAIN' | fs=42
+          Basic  size[-32.0, -10.0] pos[0.0, 5.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+              · TFWScrollRect | scroll=vertical
+              · ScrollRectFilter
+              · TFWLoopListView
+              · guid:3312d7739989d2b4e91e6319e9a96d76
+            Viewport  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                · CanvasRenderer
+                · TFWImage | sprite=CommonWhiteRect | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF a=0.00 | [Sprite/UIActvWeeklyCardSelect/Images/CommonWhiteRect.png]
+              Content  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                ItemTitle  size[0.0, 0.0] pos[0.0, 93.8] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · guid:30649d3a9faa99c48a7b1166b86bf2a0 | spacing=16.0 | pad(L,R,T,B)=[0, 0, 0, 10]
+                    · guid:3245ec927659c4140ac4f8d17403cc18
+                    · TFWLoopListViewItem
+                  Img1  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=Common_WhiteImg_TitleDecoration2 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#D1AB54 a=0.30 | [NewSprite/Common/WhiteImg/Common_WhiteImg_TitleDecoration2.png]
+                  Txt  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.0, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#D6934A | TEXT='BACKGROUND' | fs=34
+                  Img2  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=Common_WhiteImg_TitleDecoration2 | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#D1AB54 a=0.30 | [NewSprite/Common/WhiteImg/Common_WhiteImg_TitleDecoration2.png]
+                ItemTitleWithBg  size[990.0, 112.0] pos[0.0, 412.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · TFWLoopListViewItem
+                  Txt  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.0, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#5F4430 | TEXT='普通模式' | fs=50
+                ItemText  size[990.0, 0.0] pos[0.0, 194.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · guid:59f8146938fff824cb5fd77236b75775 | pad(L,R,T,B)=[50, 50, 20, 20]
+                    · guid:3245ec927659c4140ac4f8d17403cc18
+                    · TFWLoopListViewItem
+                  Bk  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_ledger_bg_taizhangliebiao | Sliced | border(L,B,R,T)=[51.0, 45.0, 51.0, 47.0] | col=#F6EAC1 | [Spirits/CommonNew/img_ledger_bg_taizhangliebiao.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                  Txt  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#5F4430 | TEXT='Satellite!Great Discovery! The Spacesuit Has Discovered The ' | fs=26
+                ItemImg [INACTIVE]  size[990.0, 480.0] pos[0.0, 429.6] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · TFWLoopListViewItem
+                  Bg  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=ActivityMonkeyBg | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#FFFFFF | [Sprite/Activity/Other/ActivityMonkeyBg.png]
+                ItemRewardsWithDesc  size[990.0, 0.0] pos[0.0, -341.6] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · TFWLoopListViewItem
+                    · guid:8a8695521f0d02e499659fee002a26c2 | spacing=[30.0, 20.0] | cell=[110.0, 110.0] | pad(L,R,T,B)=[0, 0, 108, 30]
+                    · guid:3245ec927659c4140ac4f8d17403cc18
+                  Bk  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[1.0, 1.0] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_ledger_bg_taizhangliebiao | Sliced | border(L,B,R,T)=[51.0, 45.0, 51.0, 47.0] | col=#F6EAC1 | [Spirits/CommonNew/img_ledger_bg_taizhangliebiao.png]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                  Desc  size[0.0, 92.0] pos[0.0, -56.0] anc[0.0, 1.0]-[1.0, 1.0] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#5F4430 | TEXT='这是奖励描述' | fs=24
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                  Item  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                    <嵌套prefab:UIItemTemplate>
+                        ↳ 源: Public/UIItemTemplate.prefab
+                        ↳ 覆盖: Name=ItemMid, IsActive=1, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.y=0.5, SizeDelta.x=202, SizeDelta.y=202, LocalScale.x=0
+                ItemSubtitle2 [INACTIVE]  size[990.0, 80.0] pos[0.0, 87.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · CanvasRenderer
+                    · TFWImage | sprite=img_ledger_bg_taizhangliebiao | Sliced | border(L,B,R,T)=[51.0, 45.0, 51.0, 47.0] | col=#F6EAC1 | [Spirits/CommonNew/img_ledger_bg_taizhangliebiao.png]
+                    · guid:306cc8c2b49d7114eaa3623786fc2126
+                    · TFWLoopListViewItem
+                  Txt1  size[326.0, 31.0] pos[-319.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#D69349 | TEXT='INDIVIDUAL SCORE' | fs=28
+                      · guid:3245ec927659c4140ac4f8d17403cc18
+                  Txt2  size[326.0, 31.0] pos[160.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                      · CanvasRenderer
+                      · TFWText | col=#D69349 | TEXT='BONUS' | fs=28
+                      · guid:3245ec927659c4140ac4f8d17403cc18
+                ItemRewards2  size[990.0, 0.0] pos[0.0, -4.6] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                    · guid:59f8146938fff824cb5fd77236b75775 | spacing=10.0 | pad(L,R,T,B)=[0, 0, 0, 0]
+                    · guid:3245ec927659c4140ac4f8d17403cc18
+                    · TFWLoopListViewItem
+                  ListItem  size[990.0, 160.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                      · guid:306cc8c2b49d7114eaa3623786fc2126
+                      · CanvasRenderer
+                      · TFWImage | sprite=img_ledger_bg_taizhangliebiao | Sliced | border(L,B,R,T)=[51.0, 45.0, 51.0, 47.0] | col=#F6EAC1 | [Spirits/CommonNew/img_ledger_bg_taizhangliebiao.png]
+                    Rewards  size[650.0, 0.0] pos[160.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                        · TFWLoopListViewItem
+                        · guid:8a8695521f0d02e499659fee002a26c2 | spacing=[18.0, 8.0] | cell=[100.0, 100.0] | pad(L,R,T,B)=[0, 0, 0, 0]
+                        · guid:3245ec927659c4140ac4f8d17403cc18
+                      Item  size[0.0, 0.0] pos[0.0, 0.0] anc[0.0, 0.0]-[0.0, 0.0] piv[0.5, 0.5]
+                        <嵌套prefab:UIItemTemplate>
+                            ↳ 源: Public/UIItemTemplate.prefab
+                            ↳ 覆盖: Name=ItemMid, IsActive=1, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=202, SizeDelta.y=202
+                      Item (1) [INACTIVE]  size[100.0, 100.0] pos[384.0, -50.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 0.5]
+                        <嵌套prefab:UIItemTemplate>
+                            ↳ 源: Public/UIItemTemplate.prefab
+                            ↳ 覆盖: Name=ItemMid, IsActive=1, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=202, SizeDelta.y=202
+                      Item (2) [INACTIVE]  size[100.0, 100.0] pos[271.0, -50.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 0.5]
+                        <嵌套prefab:UIItemTemplate>
+                            ↳ 源: Public/UIItemTemplate.prefab
+                            ↳ 覆盖: Name=ItemMid, IsActive=1, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=202, SizeDelta.y=202
+                      Item (3) [INACTIVE]  size[100.0, 100.0] pos[379.0, -50.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 0.5]
+                        <嵌套prefab:UIItemTemplate>
+                            ↳ 源: Public/UIItemTemplate.prefab
+                            ↳ 覆盖: Name=ItemMid, IsActive=1, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=202, SizeDelta.y=202
+                      Item (4) [INACTIVE]  size[100.0, 100.0] pos[487.0, -50.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 0.5]
+                        <嵌套prefab:UIItemTemplate>
+                            ↳ 源: Public/UIItemTemplate.prefab
+                            ↳ 覆盖: Name=ItemMid, IsActive=1, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=202, SizeDelta.y=202
+                      Item (5) [INACTIVE]  size[100.0, 100.0] pos[595.0, -50.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 0.5]
+                        <嵌套prefab:UIItemTemplate>
+                            ↳ 源: Public/UIItemTemplate.prefab
+                            ↳ 覆盖: Name=ItemMid, IsActive=1, Pivot.x=0.5, Pivot.y=0.5, AnchorMax.x=0.5, AnchorMax.y=0.5, AnchorMin.x=0.5, AnchorMin.y=0.5, SizeDelta.x=202, SizeDelta.y=202
+                    Txt  size[272.0, 0.0] pos[-326.0, 0.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                        · CanvasRenderer
+                        · TFWText | col=#5F4430 | TEXT='胜利得分1' | fs=28
+                        · guid:3245ec927659c4140ac4f8d17403cc18
+                        · guid:306cc8c2b49d7114eaa3623786fc2126
+                    Line  size[2.0, -40.0] pos[308.0, 0.0] anc[0.0, 0.0]-[0.0, 1.0] piv[0.5, 0.5]
+                        · CanvasRenderer
+                        · TFWImage | sprite=Common_WhiteImg_square | Simple | border(L,B,R,T)=[0.0, 0.0, 0.0, 0.0] | col=#A8885A a=0.50 | [Atlas/Public/Common_WhiteImg_square.png]
+                    TextLose [INACTIVE]  size[105.0, 57.0] pos[37.0, -31.0] anc[0.0, 1.0]-[0.0, 1.0] piv[0.5, 0.5]
+                        · CanvasRenderer
+                        · TFWText | col=#FFFFFF | TEXT='languageKey: LOSE' | fs=40
+                        · UIGradient
+                        · X2BetterOutline
+                        · guid:3245ec927659c4140ac4f8d17403cc18
+                    TextWin [INACTIVE]  size[202.0, 80.0] pos[-456.0, 28.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                        · CanvasRenderer
+                        · TFWText | col=#FFFFFF | TEXT="languageKey: 'wIN" | fs=40
+                        · UIGradient
+                        · X2BetterOutline
+                    TextDraw [INACTIVE]  size[202.0, 80.0] pos[-456.0, 28.0] anc[0.5, 0.5]-[0.5, 0.5] piv[0.5, 0.5]
+                        · CanvasRenderer
+                        · TFWText | col=#FFFFFF | TEXT='Draw' | fs=40
+                        · UIGradient
+                        · X2BetterOutline

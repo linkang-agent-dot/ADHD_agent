@@ -1,0 +1,77 @@
+=== UIPiggyBankContent.prefab (GO=33) ===
+UIPiggyBankContent  sz[920.0, 520.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+  · guid:dc42784cf147c0c48a680349fa168899
+  · guid:306cc8c2b49d7114eaa3623786fc2126
+  Bg  sz[910.0, 504.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+    · IMG ui_Howtogetit_bg_2 Spirits/PiggyBank/ui_Howtogetit_bg_2.png
+  Bg2  sz[308.0, 448.0] p[220.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+    · IMG ui_Howtogetit_bg_3 Sliced border(L,B,R,T)=[100, 50, 100, 50] Spirits/PiggyBank/ui_Howtogetit_bg_3.png
+  MainPigBg  sz[448.0, 404.0] p[200.0, 60.0] a[0.5, 0.5][0.5, 0.5]
+    · IMG ui_Howtogetit_piggybank_3 Spirits/PiggyBank/ui_Howtogetit_piggybank_3.png
+  Name  sz[300.0, 66.0] p[218.0, 174.0] a[0.0, 0.5][0.0, 0.5]
+    · TXT '小型存钱罐' fs=38 #FFFFFF
+    · guid:45facfdc6a639f041b007c036dc527b8
+    · IgnoreTidCheckTag
+  Info  sz[64.0, 64.0] p[-65.0, -65.0] a[1.0, 1.0][1.0, 1.0]
+    · TFWImage
+    bg  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+      · IMG img_cm_anniu_guize Spirits/CommonNew/img_cm_anniu_guize.png
+  DescText  sz[300.0, 50.0] p[218.0, -192.0] a[0.0, 1.0][0.0, 1.0]
+    · TXT 'languageKey: Text_Coin_Piggy_Bank_Desc' fs=26 #EFDBBD
+  ResIcon  sz[88.0, 88.0] p[108.0, 20.0] a[0.0, 0.5][0.0, 0.5]
+    · IMG icon_global_gold Spirits/ItemIcons/icon_global_gold.png
+  ResourceNum  sz[200.0, 50.0] p[218.0, 20.0] a[0.0, 0.5][0.0, 0.5]
+    Bg  sz[250.0, 48.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+      · IMG ui_Howtogetit_bg_4 border(L,B,R,T)=[50, 16, 50, 16] Spirits/PiggyBank/ui_Howtogetit_bg_4.png
+    Num  sz[200.0, 50.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+      · TXT '175.2K' fs=40 #FFFFFF
+      · guid:45facfdc6a639f041b007c036dc527b8
+  ExtraRewards  sz[300.0, 50.0] p[218.0, -40.0] a[0.0, 0.5][0.0, 0.5]
+    · TXT 'languageKey: Text_Lucky_Wheel_Other_Reward' fs=26 #EEDBBD
+  LoopList  sz[300.0, 140.0] p[218.0, -133.0] a[0.0, 0.5][0.0, 0.5]
+    · LoopHorizontalScrollRect scroll=horizontal
+    · ScrollRectFilter
+    Viewport  sz[0.0, 0.0] p[0.0, 0.0] STRETCH
+      · guid:3312d7739989d2b4e91e6319e9a96d76
+      · TFWEmpty4Raycast
+      Content  sz[0.0, 160.0] p[0.0, 4.0] a[0.0, 0.5][0.0, 0.5] piv[0.0, 0.5]
+        · guid:30649d3a9faa99c48a7b1166b86bf2a0 spacing=23.0 padding_LRTB=[10, 0, 0, 0]
+        · guid:3245ec927659c4140ac4f8d17403cc18
+        <嵌套prefab:UIItemTemplate>
+          >> Public/UIItemTemplate.prefab
+          >> 覆盖 sz=['128', '128'] pos=['0', '0']
+  Break  sz[200.0, 50.0] p[174.0, -72.0] a[0.5, 0.5][0.5, 0.5]
+    Bg  sz[200.0, 48.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+      · IMG ui_Howtogetit_bg_6 border(L,B,R,T)=[80, 0, 80, 0] Spirits/PiggyBank/ui_Howtogetit_bg_6.png
+    BreakText  sz[200.0, 50.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+      · TXT 'languageKey: Text_Coin_Piggy_Bank_Break' fs=32 #FFFFFF
+      · guid:45facfdc6a639f041b007c036dc527b8
+  Slider  sz[257.0, 54.0] p[218.0, 124.0] a[0.0, 0.5][0.0, 0.5]
+    · guid:67db9e8f0e2ae9c40bc1e2b64352a6b4
+    Background  sz[0.0, -24.0] p[13.0, 1.0] STRETCH
+      · IMG ui_piggybank_JDT_1 Sliced border(L,B,R,T)=[10, 12, 10, 12] Spirits/PiggyBank/ui_piggybank_JDT_1.png
+    Fill Area  sz[2.0, -22.0] p[13.0, 0.0] STRETCH
+      Fill  sz[0.0, 0.0] p[0.0, 0.0] a[0.0, 0.0][0.0, 0.0]
+        · IMG ui_piggybank_JDT_2 Sliced border(L,B,R,T)=[12, 12, 12, 12] Spirits/PiggyBank/ui_piggybank_JDT_2.png
+    icon  sz[36.0, 48.0] p[-6.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+      · IMG ui_Howtogetit_icon Spirits/PiggyBank/ui_Howtogetit_icon.png
+    Val  sz[300.0, 40.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+      · TXT '11：59：59' fs=24 #FEF3DE
+    ValFull  sz[250.0, 40.0] p[14.0, 1.0] a[0.5, 0.5][0.5, 0.5]
+      · TXT 'languageKey: Text_Coin_Piggy_Bank_Time_Full' fs=22 #EFDBBD
+  <嵌套prefab:UIBtnPurchase>
+    >> Button/UIBtnPurchase.prefab
+    >> 覆盖 sz=['0', '0'] pos=['0', '0']
+  ValueText  sz[156.0, 156.0] p[364.0, -104.0] a[0.5, 0.5][0.5, 0.5]
+    · IgnoreTidCheckTag
+    Bg  sz[156.0, 156.0] p[-3.0, -4.0] a[0.5, 0.5][0.5, 0.5]
+      · IMG img_gift_bg_Discount Spirits/Pack/img_gift_bg_Discount.png
+    TxtSuper  sz[120.0, 50.0] p[4.0, 29.0] a[0.5, 0.5][0.5, 0.5]
+      · TXT 'languageKey: Text_Coin_Piggy_Bank_Value_Text' fs=36 #EFD373
+    Txt  sz[120.0, 50.0] p[-12.0, -13.0] a[0.5, 0.5][0.5, 0.5]
+      · TXT '20倍' fs=40 #EFD373
+  Arrow  sz[905.78, 100.0] p[0.0, 0.0] a[0.5, 0.5][0.5, 0.5]
+    Left  sz[60.0, 108.0] p[22.0, 0.0] a[0.0, 0.5][0.0, 0.5]
+      · IMG img_ledger_anniu_jiantou2 Spirits/CommonNew/img_ledger_anniu_jiantou2.png
+    Right  sz[60.0, 108.0] p[-26.0, 0.0] a[1.0, 0.5][1.0, 0.5] scl[-1.0, 1.0]
+      · IMG img_ledger_anniu_jiantou2 Spirits/CommonNew/img_ledger_anniu_jiantou2.png
