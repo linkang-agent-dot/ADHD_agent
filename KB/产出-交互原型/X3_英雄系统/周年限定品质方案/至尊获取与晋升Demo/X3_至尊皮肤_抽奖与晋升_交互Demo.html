@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>X3 至尊皮肤｜抽奖获取与套装晋升 Demo</title>
+<style>
+:root{
+  --gold:#f8d67b;--gold2:#b87520;--cream:#fff4cc;--wine:#54151f;
+  --emerald:#123d34;--purple:#3b214f;--ink:#110c0a;--muted:#bcae92;
+}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:"Microsoft YaHei UI","PingFang SC",sans-serif;background:#080706;color:#f6e8c4}
+body{background:radial-gradient(circle at 50% -10%,#583017 0,#17100b 35%,#070706 78%);overflow-x:hidden}
+button{font:inherit}.page{min-height:100vh;padding:18px 18px 60px;position:relative}
+.page:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background:repeating-linear-gradient(115deg,transparent 0 70px,#d5a44a18 71px,transparent 72px),radial-gradient(circle at 13% 30%,#b448351b,transparent 28%)}
+.mast{max-width:1180px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid #6e4d23;padding:0 4px 12px}
+.mast small{color:#b6955b;letter-spacing:.2em;font:11px Georgia,serif}.mast h1{margin:5px 0 0;color:#fff0bd;font:900 26px/1.1 "STKaiti","KaiTi",serif;letter-spacing:.08em}.mast p{margin:0;color:#8d7c63;font-size:12px;text-align:right;line-height:1.6}
+.workspace{max-width:1180px;margin:auto;display:grid;grid-template-columns:250px 482px 1fr;gap:20px;align-items:start}
+.side{background:linear-gradient(150deg,#21160eef,#0f0c09f5);border:1px solid #5c4324;box-shadow:0 22px 60px #0009;padding:15px;border-radius:14px}
+.side h2{margin:0;color:#f3d486;font:900 17px "STKaiti","KaiTi",serif}.side>p{margin:4px 0 14px;color:#897b68;font-size:11px;line-height:1.6}
+.module-tabs{display:grid;gap:8px}.module-tab{height:50px;border:1px solid #644822;background:#17100b;color:#9f8d72;text-align:left;padding:0 13px;cursor:pointer;border-radius:7px;position:relative}.module-tab b{display:block;color:#d6bf93}.module-tab.on{background:linear-gradient(90deg,#6b3a19,#24140d);border-color:#e1ad4d;box-shadow:inset 3px 0 #ffd678,0 0 16px #ca812229}.module-tab.on b{color:#fff0b5}.module-tab i{position:absolute;right:10px;top:16px;font-style:normal;color:#e4ba63;font-size:11px}
+.dev{margin-top:16px;border-top:1px solid #47341e;padding-top:13px}.dev h3{margin:0 0 9px;color:#d9bc7c;font-size:12px}.dev button{border:1px solid #6d5431;background:#2a1b10;color:#d9c49e;border-radius:14px;padding:6px 9px;margin:0 4px 6px 0;font-size:11px;cursor:pointer}.dev button:hover{border-color:#f0bd5f;color:white}.dev button.hot{background:#5f231d;border-color:#d86b4c}.readout{margin-top:8px;padding:10px;background:#0d0a08;border:1px solid #3c2d1d;color:#9e8e76;font-size:11px;line-height:1.65}.readout b{color:#ffe19a}
+.phone-shell{width:482px;padding:7px;border-radius:35px;background:#030303;border:1px solid #33261b;box-shadow:0 28px 80px #000,inset 0 0 0 1px #6f5330;position:relative}.phone-shell:before{content:"";position:absolute;z-index:80;left:50%;top:10px;transform:translateX(-50%);width:112px;height:13px;border-radius:9px;background:#030303}.phone{width:466px;height:831px;position:relative;overflow:hidden;border-radius:29px;background:#1a100b;user-select:none}.screen{position:absolute;inset:0;display:none}.screen.on{display:block}.full-shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}.dim{position:absolute;inset:0;background:linear-gradient(#0001 0,#0000 45%,#120904c7 78%,#0c0704ef 100%);pointer-events:none}
+.game-title{position:absolute;z-index:8;left:0;right:0;top:17px;text-align:center;color:#ffe6a1;text-shadow:0 2px 4px #3a1305;font:900 22px "STKaiti","KaiTi",serif;letter-spacing:.08em}.back{position:absolute;z-index:20;left:10px;top:14px;width:48px;height:36px;border:0;background:linear-gradient(145deg,#ffd86a,#a75b16);clip-path:polygon(0 50%,38% 0,38% 25%,100% 25%,100% 75%,38% 75%,38% 100%);cursor:pointer;filter:drop-shadow(0 2px 2px #3a1808)}
+/* 抽奖页：在真实底图上只叠必要的活层 */
+.gacha-top-mask{position:absolute;z-index:5;left:0;right:0;top:44px;height:154px;background:linear-gradient(180deg,#28120fe8,#5b1f19de 64%,transparent);border-bottom:1px solid #e1a84677}
+.collection-switch{position:absolute;z-index:12;left:14px;right:14px;top:54px;height:61px;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;padding:5px;background:#1f100bdc;border:1px solid #c88c38;border-radius:12px;box-shadow:0 7px 18px #0008}
+.reward-tab{border:1px solid #76522b;background:#321a10;color:#bba77f;border-radius:8px;padding:3px 2px;cursor:pointer;font-size:10px;line-height:1.25;position:relative}.reward-tab b{display:block;color:#ead39b;font-size:11px}.reward-tab.on{background:linear-gradient(#744329,#321a10);border-color:#ffe293;box-shadow:inset 0 0 10px #f1b34f55}.reward-tab.final{background:linear-gradient(#3f264f,#25142d)}.reward-tab.final.on{border-color:#e7b9ff;box-shadow:inset 0 0 12px #b868e355}.reward-tab .owned{position:absolute;right:-3px;top:-5px;width:16px;height:16px;border-radius:50%;display:none;place-items:center;background:#3f8a51;color:#fff6c7;border:1px solid #ffe49a;font-size:10px}.reward-tab.got .owned{display:grid}
+.showcase{position:absolute;z-index:10;left:21px;right:21px;top:122px;height:238px;border:1px solid #dfb45d88;border-radius:12px;background:radial-gradient(circle at 50% 34%,#f3c86731,transparent 44%),linear-gradient(#1b0f0a91,#29140bb5);box-shadow:inset 0 0 32px #0008;overflow:hidden}.showcase:before{content:"";position:absolute;inset:8px;border:1px solid #e9c47c33;border-radius:9px;pointer-events:none}.show-art{position:absolute;left:17px;top:17px;width:164px;height:202px;border-radius:84px 84px 13px 13px;border:2px solid #d3a24e;background:#20130d center 15%/cover no-repeat;box-shadow:0 0 24px #efb94e44;overflow:hidden}.show-art.frame:after{content:"";position:absolute;inset:18px;border:9px double #f5ce70;border-radius:50%;box-shadow:0 0 0 3px #51305f,0 0 18px #f2b965}.show-art.medal{background:radial-gradient(circle,#81432b 0 18%,#f5d170 19% 22%,#482039 23% 36%,#d39a3f 37% 42%,transparent 43%),conic-gradient(from 22deg,#d9ab4e,#5d263f,#f1d783,#40234b,#d9ab4e)}.show-art.medal:after{content:"✦";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:900 62px Georgia;color:#fff0b2;text-shadow:0 0 15px #fff0a7,0 3px #59230e}.show-art.full{width:184px;border-radius:12px;background-position:center 10%;filter:saturate(1.08)}
+.show-copy{position:absolute;left:202px;right:15px;top:31px;color:#d7c39e}.show-copy small{color:#dcaa50;letter-spacing:.13em;font-size:9px}.show-copy h3{margin:5px 0 4px;color:#fff0ba;font:900 20px/1.2 "STKaiti","KaiTi",serif;text-shadow:0 2px #381607}.show-copy p{margin:0;color:#c8b795;font-size:11px;line-height:1.55}.rarity{display:inline-block;margin-top:9px;border:1px solid #c89443;background:#381d13;color:#ffe2a1;border-radius:12px;padding:4px 9px;font-size:10px}.preview-btn{position:absolute;right:15px;bottom:18px;width:112px;height:38px;border:1px solid #ffe09a;border-radius:18px;background:linear-gradient(#80532a,#3f2112);color:#fff0be;font-weight:900;cursor:pointer;box-shadow:0 4px 12px #0008}.preview-btn:hover{filter:brightness(1.18)}
+.set-progress{position:absolute;z-index:13;left:31px;right:31px;bottom:140px;height:76px;background:linear-gradient(90deg,#1c110be8,#3c2114ee,#1c110be8);border:1px solid #d1a04f;border-radius:10px;padding:8px 12px;box-shadow:0 8px 18px #0008}.set-progress-head{display:flex;justify-content:space-between;color:#dbc797;font-size:11px}.set-progress-head b{color:#ffe39e}.progress-line{margin-top:8px;height:9px;border:1px solid #8b6231;border-radius:7px;background:#120c08;overflow:hidden}.progress-line i{display:block;height:100%;width:0;background:linear-gradient(90deg,#9b5a25,#ffd775);box-shadow:0 0 10px #ffd775;transition:.35s}.progress-icons{display:flex;justify-content:center;gap:16px;margin-top:-16px}.progress-icons span{width:29px;height:29px;border-radius:50%;display:grid;place-items:center;background:#25170f;border:2px solid #695038;color:#685b49;font-size:12px;transition:.25s}.progress-icons span.got{background:#5f3b1e;border-color:#ffe08a;color:#fff1bd;box-shadow:0 0 12px #f7c45b}.advance-entry{position:absolute;z-index:18;right:12px;top:370px;width:62px;height:62px;border-radius:50%;border:2px solid #e9c16c;background:radial-gradient(circle,#72472a,#25130d 68%);color:#ffe5a5;font-size:10px;font-weight:900;cursor:pointer;box-shadow:0 0 18px #e5ad4c88}.advance-entry b{display:block;font-size:14px}.advance-entry.pulse{animation:pulse 1.25s infinite}@keyframes pulse{50%{box-shadow:0 0 30px #ffd671}}
+.draw-hot{position:absolute;z-index:15;bottom:76px;height:51px;border-radius:26px;border:2px solid transparent;color:transparent;background:transparent;cursor:pointer}.draw-hot.one{left:38px;width:194px}.draw-hot.all{right:28px;width:196px}.draw-hot:hover{border-color:#fff2a8;box-shadow:0 0 18px #ffe07c}.draw-tip{position:absolute;z-index:16;left:50%;bottom:132px;transform:translateX(-50%);background:#130b07db;border:1px solid #b9853d;color:#dbc695;padding:4px 9px;border-radius:11px;font-size:9px;white-space:nowrap}
+/* 晋升页 */
+.advance-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:.35s;filter:brightness(.82)}
+.advance-vignette{position:absolute;inset:0;background:linear-gradient(#150a06a6 0,transparent 16%,transparent 53%,#100806eb 72%),radial-gradient(circle at 50% 42%,transparent 32%,#0008 92%)}
+.form-switch{position:absolute;z-index:15;top:57px;left:112px;right:112px;height:36px;border:1px solid #d4a650;border-radius:20px;background:#160d09e8;display:grid;grid-template-columns:1fr 1fr;padding:3px}.form-switch button{border:0;border-radius:16px;background:transparent;color:#9f8d73;cursor:pointer;font-size:11px;font-weight:900}.form-switch button.on{background:linear-gradient(#815127,#3d2011);color:#fff0b6;box-shadow:0 0 11px #efa92c55}
+.locked-ribbon{position:absolute;z-index:14;top:105px;left:50%;transform:translateX(-50%);padding:5px 14px;border:1px solid #bb8a42;border-radius:15px;background:#1c0f0bdc;color:#e1c792;font-size:10px;white-space:nowrap}.locked-ribbon b{color:#ffe39a}
+.collection-panel{position:absolute;z-index:20;left:15px;right:15px;bottom:12px;min-height:282px;padding:14px 14px 12px;border:1px solid #d6aa57;border-radius:16px;background:linear-gradient(155deg,#2b180ff2,#130d09f7 70%);box-shadow:0 16px 45px #000,inset 0 0 25px #7e481822}.collection-panel h2{margin:0;text-align:center;color:#ffe5a6;font:900 19px "STKaiti","KaiTi",serif}.collection-panel .sub{text-align:center;margin:3px 0 10px;color:#aa987d;font-size:9px}.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.slot{position:relative;min-height:82px;border:1px solid #5f4930;border-radius:9px;background:#150e0b;padding:7px;text-align:center;color:#706453;cursor:pointer}.slot.got{border-color:#e6ba63;background:linear-gradient(#54331d,#20120c);color:#f5d98f;box-shadow:inset 0 0 14px #f1bb4933}.slot .sicon{width:39px;height:39px;margin:auto;border-radius:50%;display:grid;place-items:center;border:1px solid currentColor;font:900 18px Georgia}.slot b{display:block;margin-top:4px;font-size:10px}.slot small{font-size:8px;color:#8c7a62}.slot .check{display:none;position:absolute;right:4px;top:3px;color:#8ff0a4}.slot.got .check{display:block}.rules{margin:9px 0 8px;padding:7px 9px;background:#0e0907;border-left:3px solid #c99746;color:#a99980;font-size:9px;line-height:1.55}.rules b{color:#ffe09a}.final-reward{display:flex;align-items:center;justify-content:center;gap:7px;color:#c5b28e;font-size:9px}.final-reward span{border:1px solid #72562f;border-radius:10px;padding:3px 7px}.final-reward span.on{color:#ffe7a6;border-color:#dfb259;box-shadow:0 0 8px #edb44444}.final-action{display:block;width:244px;height:41px;margin:9px auto 0;border:1px solid #8d7655;border-radius:22px;background:#41352b;color:#8f8273;font-weight:900}.final-action.ready{border-color:#fff0ae;background:linear-gradient(#efc86b,#9b5c1c);color:#3c210b;cursor:pointer;box-shadow:0 0 16px #e8b84666}
+/* 最终英雄页 */
+.interaction-entry{position:absolute;z-index:20;right:14px;top:280px;width:61px;height:61px;border-radius:50%;border:2px solid #e2bd68;background:radial-gradient(circle,#6c3d72,#23112d 68%);color:#ffe5a9;font-weight:900;font-size:10px;cursor:pointer;box-shadow:0 0 18px #bd6ddd88}.interaction-entry svg{display:block;width:25px;margin:0 auto 2px}.final-tag{position:absolute;z-index:18;left:50%;top:106px;transform:translateX(-50%);border:1px solid #e2bc68;background:#1c0e13dc;color:#ffe4a0;border-radius:15px;padding:5px 13px;font-size:10px;white-space:nowrap}.final-back{position:absolute;z-index:20;left:9px;bottom:12px;width:73px;height:50px;border:0;background:transparent;cursor:pointer}
+.interaction-entry.locked{top:278px;filter:saturate(.55);border-color:#a58a62;background:radial-gradient(circle,#4f3b52,#1b161d 68%);box-shadow:0 0 12px #0008}.interaction-entry.locked:after{content:"锁";position:absolute;right:-3px;top:-5px;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;background:#4b4239;border:1px solid #e3c991;color:#ffe9b7;font-size:9px}.interaction-entry.locked:hover{filter:none;border-color:#ffe19a;box-shadow:0 0 20px #dca85f88}
+/* 预览 / 结果 / 互动覆盖层 */
+.overlay{position:absolute;z-index:60;inset:0;background:#080403d9;display:none;align-items:center;justify-content:center;padding:18px}.overlay.on{display:flex}.sheet{width:100%;max-height:760px;overflow:hidden;border:1px solid #e0b45d;border-radius:16px;background:linear-gradient(155deg,#301a11,#120c09 72%);box-shadow:0 25px 70px #000;position:relative;padding:15px}.sheet-close{position:absolute;right:10px;top:9px;width:31px;height:31px;border-radius:50%;border:1px solid #c89a4b;background:#2b180f;color:#ffe7aa;cursor:pointer;z-index:4}.sheet h2{text-align:center;margin:2px 36px 10px;color:#ffe6a5;font:900 21px "STKaiti","KaiTi",serif}.preview-stage{height:456px;border:1px solid #6f4d2b;border-radius:10px;position:relative;overflow:hidden;background:#0c0806}.preview-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%;transition:.28s}.preview-stage .shade{position:absolute;inset:0;background:linear-gradient(transparent 55%,#0b0705ee)}.preview-copy{position:absolute;left:12px;right:12px;bottom:12px}.preview-copy small{color:#d7aa55;font-size:9px;letter-spacing:.12em}.preview-copy h3{margin:3px 0;color:#fff0ba;font:900 20px "STKaiti","KaiTi",serif}.preview-copy p{margin:0;color:#c7b799;font-size:10px;line-height:1.55}.mini-switch{position:absolute;z-index:3;left:50%;top:10px;transform:translateX(-50%);display:flex;background:#120a07e8;border:1px solid #c59243;border-radius:16px;padding:3px}.mini-switch button{border:0;background:transparent;color:#9d8b70;padding:5px 13px;border-radius:12px;font-size:10px}.mini-switch button.on{background:#704326;color:#fff0b6}.sheet-foot{margin-top:10px;display:flex;gap:8px}.sheet-foot button{flex:1;height:41px;border-radius:21px;border:1px solid #d0a550;background:linear-gradient(#67411f,#32190d);color:#ffe4a6;font-weight:900;cursor:pointer}.sheet-foot button.primary{background:linear-gradient(#efc667,#9a5919);color:#321b09;border-color:#fff0ac}.result-mark{width:104px;height:104px;margin:7px auto 13px;border-radius:50%;display:grid;place-items:center;border:4px double #ffe39a;background:radial-gradient(circle,#7b4225,#25120e 68%);color:#fff0b4;font:900 48px Georgia;box-shadow:0 0 30px #f3bd55}.result-text{text-align:center;color:#d8c5a1;font-size:12px;line-height:1.7}.result-text b{display:block;color:#ffe5a1;font:900 23px "STKaiti","KaiTi",serif}.ceremony{position:absolute;z-index:75;inset:0;display:none;place-items:center;background:radial-gradient(circle,#fbd97daa 0,#462027e8 40%,#050303f5 75%)}.ceremony.on{display:grid;animation:fadeIn .35s both}.ceremony .seal{width:210px;height:210px;border-radius:50%;display:grid;place-items:center;text-align:center;border:5px double #ffe9a5;background:radial-gradient(circle,#81522c,#28131e 70%);color:#ffeab0;font:900 30px "STKaiti","KaiTi",serif;box-shadow:0 0 75px #ffe08c;animation:sealIn 1s cubic-bezier(.2,.8,.2,1) both}.ceremony .seal small{display:block;font:11px "Microsoft YaHei UI";letter-spacing:.15em}.interaction-scene{height:590px;background:radial-gradient(circle at 50% 30%,#5a3766,#130b1a 55%,#050306);border-radius:12px;position:relative;overflow:hidden}.interaction-scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.72}.interaction-scene:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,transparent 30%,#080309a8 72%)}.interaction-copy{position:absolute;z-index:3;left:20px;right:20px;bottom:25px;text-align:center;color:#dcc6df}.interaction-copy b{display:block;color:#ffe5a3;font:900 24px "STKaiti","KaiTi",serif;margin-bottom:5px}.interaction-copy button{margin-top:13px;border:1px solid #ffe3a0;border-radius:20px;background:#734875;color:#fff1c4;padding:9px 24px;font-weight:900;cursor:pointer}.toast{position:absolute;z-index:90;left:55px;right:55px;top:47%;padding:10px;text-align:center;border:1px solid #e6b95f;border-radius:20px;background:#160d09ed;color:#ffe5a3;font-size:11px;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s}.toast.on{opacity:1;transform:none}
+.interaction-scene video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#050306}.interaction-scene:has(video):after{left:0;right:0;top:auto;height:125px;background:linear-gradient(transparent,#080309e8);pointer-events:none}.interaction-scene:has(video) .interaction-copy{bottom:54px;pointer-events:none;text-shadow:0 2px 5px #000}.interaction-copy .lock-note{display:inline-block;margin-top:8px;border:1px solid #d4ad68;border-radius:13px;background:#160e13dc;color:#ffe2a4;padding:5px 10px;font-size:9px}
+@keyframes fadeIn{from{opacity:0}}@keyframes sealIn{from{transform:scale(.25) rotate(-18deg);opacity:0}70%{transform:scale(1.13)}to{transform:none;opacity:1}}
+.notes h3{margin:0 0 10px;color:#f0d187;font:900 17px "STKaiti","KaiTi",serif}.flow{display:grid;gap:8px}.flow div{display:grid;grid-template-columns:27px 1fr;gap:9px;align-items:start;padding:9px;border-bottom:1px solid #3d2d1b}.flow i{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#3a2413;color:#f6d175;font-style:normal;font:700 12px Georgia}.flow b{display:block;color:#dac395;font-size:12px}.flow span{display:block;color:#817564;font-size:10px;line-height:1.5;margin-top:2px}.principle{margin-top:13px;padding:12px;border-left:3px solid #d6a348;background:#21150d;color:#a99778;font-size:11px;line-height:1.7}.principle b{color:#ffe19a}.legend{margin-top:14px;display:grid;gap:6px}.legend div{display:flex;justify-content:space-between;font-size:10px;color:#857865}.legend strong{color:#d9c18e}
+@media(max-width:1040px){.workspace{grid-template-columns:250px 482px}.notes{grid-column:1/-1}.mast{max-width:760px}}@media(max-width:760px){.page{padding:10px 6px 40px}.mast{display:block}.mast p{display:none}.workspace{display:flex;flex-direction:column;align-items:center}.side{width:min(100%,520px)}.phone-shell{transform:scale(.84);transform-origin:top center;margin-bottom:-140px}.notes{width:min(100%,520px)}}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="mast"><div><small>X3 · SUPREME SKIN COLLECTION</small><h1>至尊皮肤｜抽奖获取与套装晋升</h1></div><p>真底图挖孔 Demo<br>抽奖展示 × 组件预览 × 集齐晋升</p></header>
+  <section class="workspace">
+    <aside class="side">
+      <h2>Demo 模块</h2><p>切换只是评审工具；游戏内通过抽奖页的“至尊晋升”入口衔接。</p>
+      <div class="module-tabs">
+        <button class="module-tab on" data-screen="gacha"><b>01 抽奖获取</b>切换展示并预览至尊组件<i>奖池</i></button>
+        <button class="module-tab" data-screen="advance"><b>02 套装晋升</b>规则、收集进度与最终解锁<i id="navProgress">0/3</i></button>
+        <button class="module-tab" data-screen="final"><b>03 最终形态</b>主题英雄页与专属互动<i>结果</i></button>
+      </div>
+      <div class="dev"><h3>快速测试</h3><button id="reset">重置 0/3</button><button data-grant="medal">获得勋章</button><button data-grant="frame">获得头像框</button><button data-grant="skin">获得高级皮肤</button><button class="hot" id="grantAll">直接集齐</button></div>
+      <div class="readout" id="readout"></div>
+    </aside>
+
+    <div class="phone-shell"><div class="phone" id="phone">
+      <section class="screen on" id="gachaScreen">
+        <img class="full-shot" src="_assets/抽奖界面_马戏福箱.png" alt="抽奖界面">
+        <div class="gacha-top-mask"></div>
+        <div class="game-title">至尊主题珍藏</div>
+        <div class="collection-switch" id="rewardTabs">
+          <button class="reward-tab on" data-item="skin"><b>高级皮肤</b>主体换装<span class="owned">✓</span></button>
+          <button class="reward-tab" data-item="frame"><b>主题头像框</b>社交外显<span class="owned">✓</span></button>
+          <button class="reward-tab" data-item="medal"><b>至尊勋章</b>身份收藏<span class="owned">✓</span></button>
+          <button class="reward-tab final" data-item="full"><b>至尊完整效果</b>集齐解锁<span class="owned">✓</span></button>
+        </div>
+        <article class="showcase">
+          <div class="show-art" id="showArt"></div>
+          <div class="show-copy"><small id="showEyebrow">SUPREME OUTFIT</small><h3 id="showTitle">万圣魔女·月冕形态</h3><p id="showDesc">角色主体换装与动态升格，获得后可独立穿戴。</p><span class="rarity" id="showRarity">至尊组件 · 单件可用</span></div>
+          <button class="preview-btn" id="previewBtn">效果预览</button>
+        </article>
+        <button class="advance-entry" id="advanceEntry"><b id="entryProgress">0/3</b>至尊晋升</button>
+        <div class="set-progress"><div class="set-progress-head"><span>至尊套装收集</span><b id="progressText">0 / 3</b></div><div class="progress-line"><i id="progressFill"></i></div><div class="progress-icons"><span data-mark="skin">衣</span><span data-mark="frame">框</span><span data-mark="medal">章</span></div></div>
+        <div class="draw-tip">Demo：抽取当前展示组件，便于验证完整流程</div>
+        <button class="draw-hot one" id="drawOne" aria-label="开启1次">开启1次</button><button class="draw-hot all" id="drawAll" aria-label="开启所有">开启所有</button>
+      </section>
+
+      <section class="screen" id="advanceScreen">
+        <img class="advance-bg" id="advanceBg" src="_assets/传说基础版_英雄页.png" alt="皮肤形态预览">
+        <div class="advance-vignette"></div><button class="back" data-back="gacha" aria-label="返回"></button><div class="game-title">至尊晋升</div>
+        <div class="form-switch"><button class="on" data-form="base">传说基础版</button><button data-form="supreme">至尊完整版</button></div>
+        <div class="locked-ribbon" id="lockRibbon">已拥有基础皮肤 · 收集至尊套装 <b id="ribbonProgress">0/3</b></div>
+        <button class="interaction-entry locked" id="lockedInteractionEntry" aria-label="预览专属互动"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 11V6a2 2 0 0 1 4 0v4-2a2 2 0 0 1 4 0v3-1a2 2 0 0 1 4 0v4c0 4-3 7-7 7h-1c-3 0-5-1-7-4l-2-3a2 2 0 0 1 3-2l2 2"/></svg>互动预览</button>
+        <section class="collection-panel">
+          <h2>月冕夜宴 · 至尊套装</h2><p class="sub">三件组件均可单独使用，集齐后不消耗组件，自动完成至尊晋升</p>
+          <div class="slots">
+            <article class="slot" data-slot="skin"><span class="check">✓</span><div class="sicon">衣</div><b>高级皮肤</b><small>主体换装</small></article>
+            <article class="slot" data-slot="frame"><span class="check">✓</span><div class="sicon">框</div><b>主题头像框</b><small>社交外显</small></article>
+            <article class="slot" data-slot="medal"><span class="check">✓</span><div class="sicon">章</div><b>至尊勋章</b><small>身份收藏</small></article>
+          </div>
+          <div class="rules"><b>晋升规则：</b>先拥有传说基础皮肤；再从同一奖池获得三件至尊组件。组件获得后立即可用，重复品转化为活动代币；集齐 3/3 时直接解锁完整至尊形态。</div>
+          <div class="final-reward"><span>主题UI</span><span>专属背景</span><span>专属互动</span></div>
+          <button class="final-action" id="finalAction">还差 3 件至尊组件</button>
+        </section>
+      </section>
+
+      <section class="screen" id="finalScreen">
+        <img class="full-shot" src="_assets/至尊最终形态_英雄页.png" alt="至尊最终英雄页"><div class="final-tag">月冕夜宴 · 至尊形态已解锁</div>
+        <button class="interaction-entry" id="interactionEntry" aria-label="专属互动"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 11V6a2 2 0 0 1 4 0v4-2a2 2 0 0 1 4 0v3-1a2 2 0 0 1 4 0v4c0 4-3 7-7 7h-1c-3 0-5-1-7-4l-2-3a2 2 0 0 1 3-2l2 2"/></svg>专属互动</button>
+        <button class="final-back" data-back="advance" aria-label="返回晋升页"></button>
+      </section>
+
+      <div class="overlay" id="previewOverlay"><section class="sheet"><button class="sheet-close" data-close="previewOverlay">×</button><h2 id="previewTitle">效果预览</h2><div class="preview-stage"><img id="previewImage" src="_assets/至尊最终形态_英雄页.png" alt="预览"><div class="mini-switch" id="miniSwitch"><button class="on" data-preview-form="base">基础版</button><button data-preview-form="supreme">至尊版</button></div><div class="shade"></div><div class="preview-copy"><small id="previewEyebrow">SUPREME PREVIEW</small><h3 id="previewName">万圣魔女·月冕形态</h3><p id="previewDesc">高级皮肤负责角色主体换装；集齐套装后，英雄主页背景与 UI 同步完成至尊升格。</p></div></div><div class="sheet-foot"><button data-close="previewOverlay">返回抽奖</button><button class="primary" id="previewToAdvance">查看晋升规则</button></div></section></div>
+      <div class="overlay" id="resultOverlay"><section class="sheet"><button class="sheet-close" data-close="resultOverlay">×</button><h2>至尊组件获得</h2><div class="result-mark" id="resultMark">衣</div><div class="result-text"><b id="resultTitle">高级皮肤</b><span id="resultDesc">组件已点亮，可立即使用</span><br><span id="resultProgress">至尊套装进度 1/3</span></div><div class="sheet-foot"><button data-close="resultOverlay">继续抽取</button><button class="primary" id="resultToAdvance">查看晋升</button></div></section></div>
+      <div class="overlay" id="interactionOverlay"><section class="sheet"><button class="sheet-close" data-close="interactionOverlay">×</button><h2 id="interactionHeading">专属互动</h2><div class="interaction-scene"><video id="interactionVideo" src="_assets/专属互动_既有Demo.mp4" controls playsinline preload="metadata"></video><div class="interaction-copy"><b>专属互动实机 Demo</b><span id="interactionDesc">至尊套装集齐后开放的专属互动场景</span><span class="lock-note" id="interactionLockNote">预览模式 · 集齐后正式解锁</span></div></div></section></div>
+      <div class="ceremony" id="ceremony"><div class="seal"><div><small>SUPREME ASCENSION</small>至尊晋升<br>完成</div></div></div>
+      <div class="toast" id="toast"></div>
+    </div></div>
+
+    <aside class="side notes">
+      <h3>本版验证重点</h3>
+      <div class="flow"><div><i>1</i><span><b>抽奖前就能看懂至尊</b>奖池内切换三件组件与完整效果，不把最贵的内容藏到获得后。</span></div><div><i>2</i><span><b>每次获得都有独立价值</b>高级皮肤、头像框、勋章均可单独使用，不是三块无意义钥匙。</span></div><div><i>3</i><span><b>晋升规则一屏讲清</b>基础皮肤是前置，三件套是条件，集齐不消耗并直接解锁。</span></div><div><i>4</i><span><b>专属互动提前露出</b>未晋升时皮肤界面保留锁态入口，可预览；集齐后同一入口去锁并正式开放。</span></div><div><i>5</i><span><b>集齐奖励负责最终高潮</b>主题 UI、专属背景、专属互动在完成至尊晋升后正式开放。</span></div></div>
+      <div class="principle"><b>核心产品关系：</b>高级皮肤解决“角色升级了”；勋章与头像框解决“身份被看见”；集齐奖励解决“整个英雄主页进入最终形态”。</div>
+      <div class="legend"><div><span>当前假设</span><strong>基础皮肤已拥有</strong></div><div><span>重复组件</span><strong>转活动代币</strong></div><div><span>晋升消耗</span><strong>不消耗组件</strong></div><div><span>完成时机</span><strong>3/3 自动解锁</strong></div></div>
+    </aside>
+  </section>
+</main>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const ASSETS={base:'_assets/传说基础版_英雄页.png',supreme:'_assets/至尊最终形态_英雄页.png'};
+const ITEMS={
+  skin:{mark:'衣',eyebrow:'SUPREME OUTFIT',title:'万圣魔女·月冕形态',desc:'角色主体换装与动态升格，获得后可独立穿戴。',rarity:'至尊组件 · 单件可用',art:ASSETS.supreme,cls:''},
+  frame:{mark:'框',eyebrow:'SOCIAL IDENTITY',title:'月庭秘仪头像框',desc:'动态主题头像框，获得后立即用于个人头像与聊天展示。',rarity:'至尊组件 · 单件可用',art:ASSETS.base,cls:'frame'},
+  medal:{mark:'章',eyebrow:'COLLECTION MEDAL',title:'月冕誓约勋章',desc:'主题收藏与身份凭证，记录本期至尊套装获取。',rarity:'至尊组件 · 单件可用',art:'',cls:'medal'},
+  full:{mark:'冠',eyebrow:'COMPLETE SUPREME FORM',title:'月冕夜宴·至尊完整形态',desc:'集齐三件组件后，直接解锁主题 UI、专属背景与专属互动。',rarity:'集齐 3/3 自动解锁',art:ASSETS.supreme,cls:'full'}
+};
+let current='skin', owned=new Set(), unlocked=false, previewForm='base';
+function showScreen(name){
+  $$('.screen').forEach(x=>x.classList.remove('on')); $('#'+name+'Screen').classList.add('on');
+  $$('.module-tab').forEach(x=>x.classList.toggle('on',x.dataset.screen===name));
+  if(name==='advance')refreshAdvance(); if(name==='final'&&!unlocked){toast('集齐三件至尊组件后开放最终形态');showScreen('advance');}
+}
+function selectItem(key){current=key;const it=ITEMS[key];
+  $$('.reward-tab').forEach(x=>x.classList.toggle('on',x.dataset.item===key));
+  const art=$('#showArt');art.className='show-art '+it.cls;art.style.backgroundImage=it.art?`url("${it.art}")`:'';
+  $('#showEyebrow').textContent=it.eyebrow;$('#showTitle').textContent=it.title;$('#showDesc').textContent=it.desc;$('#showRarity').textContent=it.rarity;
+  $('#drawOne').style.pointerEvents=key==='full'?'none':'auto';$('#drawAll').style.pointerEvents=key==='full'?'none':'auto';
+}
+function progress(){return owned.size}
+function refresh(){const n=progress();$('#progressText').textContent=`${n} / 3`;$('#entryProgress').textContent=`${n}/3`;$('#navProgress').textContent=`${n}/3`;$('#progressFill').style.width=`${n/3*100}%`;
+  ['skin','frame','medal'].forEach(k=>{$(`[data-mark="${k}"]`).classList.toggle('got',owned.has(k));$(`.reward-tab[data-item="${k}"]`).classList.toggle('got',owned.has(k));});
+  $('.reward-tab[data-item="full"]').classList.toggle('got',unlocked);$('#advanceEntry').classList.toggle('pulse',n>0);
+  $('#readout').innerHTML=`基础皮肤：<b>已拥有</b><br>至尊组件：<b>${n}/3</b><br>至尊状态：<b>${unlocked?'已晋升':'未晋升'}</b><br>当前展示：<b>${ITEMS[current].title}</b>`;
+  refreshAdvance();
+}
+function refreshAdvance(){const n=progress();$('#ribbonProgress').textContent=`${n}/3`;$$('.slot').forEach(x=>x.classList.toggle('got',owned.has(x.dataset.slot)));$$('.final-reward span').forEach(x=>x.classList.toggle('on',unlocked));
+  const btn=$('#finalAction'); if(unlocked){btn.textContent='查看至尊最终形态';btn.classList.add('ready')}else{btn.textContent=`还差 ${3-n} 件至尊组件`;btn.classList.remove('ready')}
+}
+function grant(key,show=true){if(key==='full'){toast('完整形态需集齐三件组件');return}const duplicate=owned.has(key);owned.add(key);const it=ITEMS[key];
+  if(show){$('#resultMark').textContent=it.mark;$('#resultTitle').textContent=duplicate?'重复组件已转化':it.title;$('#resultDesc').textContent=duplicate?'已转化为本期活动代币':`${it.title} 已点亮，可立即使用`;$('#resultProgress').textContent=`至尊套装进度 ${progress()}/3`;$('#resultOverlay').classList.add('on')}
+  if(progress()===3&&!unlocked){unlocked=true;setTimeout(()=>{closeAll();playCeremony()},show?650:0)}refresh();
+}
+function grantAll(){['skin','frame','medal'].forEach(k=>owned.add(k));if(!unlocked){unlocked=true;refresh();playCeremony()}else refresh()}
+function openPreview(){const it=ITEMS[current];previewForm=current==='full'?'supreme':'base';$('#previewTitle').textContent=it.title;$('#previewEyebrow').textContent=it.eyebrow;$('#previewName').textContent=it.title;$('#previewDesc').textContent=it.desc;$('#miniSwitch').style.display=(current==='skin'||current==='full')?'flex':'none';setPreviewForm(previewForm);$('#previewOverlay').classList.add('on')}
+function setPreviewForm(form){previewForm=form;$$('[data-preview-form]').forEach(x=>x.classList.toggle('on',x.dataset.previewForm===form));const it=ITEMS[current];$('#previewImage').src=(current==='skin'||current==='full')?ASSETS[form]:(it.art||ASSETS.base)}
+function setAdvanceForm(form){$$('[data-form]').forEach(x=>x.classList.toggle('on',x.dataset.form===form));$('#advanceBg').src=ASSETS[form];if(form==='supreme'&&!unlocked)toast('可提前预览；集齐三件组件后正式解锁')}
+function playCeremony(){closeAll();$('#ceremony').classList.add('on');setTimeout(()=>{ $('#ceremony').classList.remove('on');showScreen('final');refresh()},1700)}
+function closeAll(){$$('.overlay').forEach(x=>x.classList.remove('on'))}
+let toastTimer;function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('on');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('on'),1800)}
+$$('.reward-tab').forEach(x=>x.onclick=()=>selectItem(x.dataset.item));$('#previewBtn').onclick=openPreview;$('#drawOne').onclick=()=>grant(current);$('#drawAll').onclick=()=>grant(current);$('#advanceEntry').onclick=()=>showScreen('advance');
+$$('.module-tab').forEach(x=>x.onclick=()=>showScreen(x.dataset.screen));$$('[data-back]').forEach(x=>x.onclick=()=>showScreen(x.dataset.back));$$('[data-close]').forEach(x=>x.onclick=()=>$('#'+x.dataset.close).classList.remove('on'));
+$$('[data-grant]').forEach(x=>x.onclick=()=>grant(x.dataset.grant,false));$('#grantAll').onclick=grantAll;$('#reset').onclick=()=>{owned.clear();unlocked=false;current='skin';selectItem('skin');refresh();showScreen('gacha');closeAll();toast('Demo 已重置')};
+$$('[data-preview-form]').forEach(x=>x.onclick=()=>setPreviewForm(x.dataset.previewForm));$$('[data-form]').forEach(x=>x.onclick=()=>setAdvanceForm(x.dataset.form));$$('.slot').forEach(x=>x.onclick=()=>{const k=x.dataset.slot;if(owned.has(k))toast(`${ITEMS[k].title} 已获得，可单独使用`);else{current=k;selectItem(k);showScreen('gacha');toast(`已定位到缺失组件：${ITEMS[k].title}`)}});
+$('#previewToAdvance').onclick=()=>{closeAll();showScreen('advance')};$('#resultToAdvance').onclick=()=>{closeAll();showScreen('advance')};$('#finalAction').onclick=()=>unlocked?showScreen('final'):toast(`还需获得 ${3-progress()} 件至尊组件`);
+function openInteractionPreview(locked){const v=$('#interactionVideo');$('#interactionHeading').textContent=locked?'专属互动预览 · 未解锁':'专属互动';$('#interactionDesc').textContent=locked?'可提前观看互动表现；集齐三件至尊组件后正式开放。':'已解锁 · 可完整播放专属互动';$('#interactionLockNote').style.display=locked?'inline-block':'none';$('#interactionOverlay').classList.add('on');v.currentTime=0;v.play().catch(()=>{})}
+$('#lockedInteractionEntry').onclick=()=>openInteractionPreview(true);$('#interactionEntry').onclick=()=>openInteractionPreview(false);
+selectItem('skin');refresh();
+</script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>X3 英雄皮肤主动 BUFF 方案</title>
+  <style>
+    :root{
+      --ink:#211912;--muted:#74685c;--paper:#f4efe4;--card:#fffaf0;
+      --gold:#c99a43;--gold-dark:#7a5218;--red:#9e352d;--green:#4e7d4c;
+      --line:rgba(83,59,31,.18);--shadow:0 18px 60px rgba(48,31,14,.13);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;color:var(--ink);background:
+      radial-gradient(circle at 14% 3%,rgba(201,154,67,.18),transparent 28rem),
+      linear-gradient(90deg,rgba(91,60,23,.035) 1px,transparent 1px),
+      var(--paper);background-size:auto,36px 36px,auto;
+      font-family:"Microsoft YaHei UI","PingFang SC",sans-serif;font-size:16px;line-height:1.72}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.3;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E")}
+    a{color:inherit}.shell{width:min(1440px,calc(100% - 40px));margin:auto;position:relative}
+    .mast{padding:72px 0 46px;border-bottom:1px solid var(--line)}
+    .eyebrow{display:flex;gap:12px;align-items:center;color:var(--red);font-weight:800;letter-spacing:.18em;font-size:13px;text-transform:uppercase}
+    .eyebrow:before{content:"";width:42px;height:2px;background:var(--red)}
+    h1,h2,h3,.serif{font-family:"Noto Serif SC","Songti SC",Georgia,serif}
+    h1{font-size:clamp(44px,7vw,92px);line-height:.98;letter-spacing:-.06em;margin:22px 0 26px;max-width:1120px;font-weight:900}
+    h1 em{font-style:normal;color:var(--gold-dark)}
+    .lead{font-size:20px;max-width:860px;color:#504437;margin:0}
+    .stamp{position:absolute;right:2%;top:60px;width:96px;height:96px;border:3px double var(--red);border-radius:50%;display:grid;place-items:center;color:var(--red);font-weight:900;transform:rotate(9deg);line-height:1.2;text-align:center;background:rgba(244,239,228,.76)}
+    .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:42px}
+    .fact{background:rgba(255,250,240,.78);padding:20px 22px}.fact b{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}.fact span{font-weight:800}
+    .nav{position:sticky;top:0;z-index:20;background:rgba(244,239,228,.91);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+    .nav .shell{display:flex;align-items:center;gap:28px;height:58px;overflow:auto;white-space:nowrap}.nav a{text-decoration:none;font-weight:700;font-size:14px;color:#655849}.nav a:hover{color:var(--red)}
+    main{padding:34px 0 100px}.section{padding:70px 0;border-bottom:1px solid var(--line);scroll-margin-top:58px}
+    .section-head{display:grid;grid-template-columns:180px 1fr;gap:32px;margin-bottom:34px}.section-no{font:700 48px/1 Georgia;color:rgba(122,82,24,.25)}
+    h2{font-size:clamp(30px,4vw,52px);line-height:1.1;margin:0 0 12px;letter-spacing:-.04em}.sub{color:var(--muted);max-width:780px;margin:0}
+    .decision{background:#211912;color:#fff7e8;padding:34px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .decision:after{content:"BUFF";position:absolute;right:-12px;bottom:-35px;font:900 130px/1 Georgia;color:rgba(255,255,255,.035)}
+    .decision strong{color:#f2ca77}.decision p{font-size:23px;line-height:1.6;margin:0;max-width:1050px}
+    .rule-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+    .rule{background:var(--card);border:1px solid var(--line);padding:24px;min-height:190px}.rule i{font:800 12px/1 Georgia;color:var(--red);letter-spacing:.1em}.rule h3{font-size:21px;margin:20px 0 8px}.rule p{color:var(--muted);margin:0;font-size:15px}
+    .flow{display:grid;grid-template-columns:repeat(7,auto);align-items:center;gap:12px;margin:34px 0;padding:26px;background:rgba(255,250,240,.74);border:1px solid var(--line);overflow:auto}
+    .step{min-width:132px;text-align:center;padding:16px 12px;border:1px solid var(--line);background:white;font-weight:800}.arrow{font-size:23px;color:var(--gold-dark)}
+    .state-cycle{display:flex;align-items:stretch;gap:0;margin-top:18px}.state{flex:1;padding:24px;border:1px solid var(--line);background:var(--card);position:relative}.state+.state{border-left:0}.state b{display:block;font-size:19px;margin-bottom:8px}.state small{color:var(--muted);font-size:14px}.state.ready{border-top:5px solid var(--green)}.state.live{border-top:5px solid var(--gold)}.state.cool{border-top:5px solid #777}
+    .screens{display:grid;grid-template-columns:1fr 1fr;gap:24px}.screen-card{background:#1f1711;padding:18px;color:white;box-shadow:var(--shadow)}
+    .screen-card figure{margin:0;display:grid;grid-template-columns:minmax(220px,42%) 1fr;gap:24px;align-items:start}.screen-card img{width:100%;max-height:680px;object-fit:contain;object-position:top;background:#111}.screen-card figcaption{padding-top:10px}
+    .screen-card h3{font-size:25px;margin:0 0 12px;color:#f0c66f}.screen-card ul{padding-left:20px;margin:0;color:#e0d6c8}.screen-card li{margin-bottom:12px}
+    .callout{border-left:4px solid var(--gold);padding:15px 18px;background:rgba(201,154,67,.12);margin-top:20px;font-size:15px}
+    .demo-wrap{display:grid;grid-template-columns:330px 1fr;gap:34px;background:#241a13;color:#fff7e7;padding:30px;box-shadow:var(--shadow)}
+    .device{border:1px solid rgba(255,255,255,.22);border-radius:30px;padding:14px;background:linear-gradient(155deg,#483421,#160f0b);box-shadow:inset 0 0 0 5px #0c0907;min-height:620px}
+    .phone-head{padding:18px 12px 10px;border-bottom:1px solid rgba(255,255,255,.16)}.phone-head b{font-size:19px}.phone-head small{display:block;color:#c7b9a7}
+    .buff-list{padding:12px 4px}.buff{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);padding:14px;margin-bottom:10px;display:grid;grid-template-columns:48px 1fr;gap:12px}.icon{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#f5d68c,#8e5c18);color:#2a1c0c;font:900 19px Georgia;border:2px solid #f4d484}.buff h4{margin:0 0 2px;font-size:16px}.buff p{margin:0;color:#cabdaa;font-size:13px;line-height:1.45}.buff .status{grid-column:2;display:flex;justify-content:space-between;align-items:center;margin-top:6px}.pill{font-size:12px;padding:4px 8px;border-radius:20px;background:#5e5249}.pill.ready{background:#35653b}.pill.active{background:#9c6c20}.pill.cooldown{background:#57535a}.buff button,.demo-controls button,.confirm-actions button{border:0;cursor:pointer;font-weight:900;padding:8px 12px;background:#d5a94f;color:#21170a}.buff button:disabled{background:#5e554b;color:#aaa;cursor:not-allowed}
+    .demo-notes h3{font-size:31px;margin:0 0 12px}.demo-notes p{color:#cfc1af}.demo-controls{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}.demo-controls button{padding:12px 16px}.demo-controls .ghost{background:transparent;color:#e7d5b7;border:1px solid rgba(255,255,255,.25)}
+    .log{font-family:Consolas,monospace;font-size:13px;background:#100c09;padding:14px;min-height:180px;max-height:230px;overflow:auto;border:1px solid rgba(255,255,255,.1);color:#d6c6ad}.log div{border-bottom:1px dashed rgba(255,255,255,.1);padding:5px 0}.log time{color:#d4a84f;margin-right:8px}
+    table{width:100%;border-collapse:collapse;background:var(--card);font-size:15px}th,td{text-align:left;padding:15px 16px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#2a2018;color:#fff4df;font-size:13px;letter-spacing:.06em}td:first-child{font-weight:800;white-space:nowrap}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:22px}.panel{background:var(--card);border:1px solid var(--line);padding:26px}.panel h3{margin:0 0 16px;font-size:23px}.checklist{list-style:none;padding:0;margin:0}.checklist li{padding:10px 0 10px 34px;border-bottom:1px dashed var(--line);position:relative}.checklist li:before{content:"✓";position:absolute;left:0;top:10px;width:22px;height:22px;border-radius:50%;background:#e1eddc;color:#315b33;text-align:center;line-height:22px;font-weight:900}
+    .pending{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.pending article{background:#fff8e9;border-top:4px solid var(--red);padding:22px}.pending h3{font-size:18px;margin:0 0 8px}.pending p{margin:0;color:var(--muted);font-size:15px}.priority{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.08em;padding:3px 7px;margin-bottom:10px;background:#ead8bd;color:#6f4c20}.priority.block{background:#f1d1cd;color:#862e29}
+    .table-scroll{overflow:auto;border:1px solid var(--line)}.table-scroll table{min-width:1120px}.schema th:first-child,.schema td:first-child{position:sticky;left:0;z-index:1}.schema td:first-child{background:#f3e9d7}.schema th:first-child{background:#2a2018}.schema td{white-space:normal;min-width:130px}.schema td:first-child{min-width:95px}
+    .footer{padding:38px 0;color:var(--muted);display:flex;justify-content:space-between;gap:20px;font-size:14px}
+    dialog{border:0;padding:0;box-shadow:0 40px 100px rgba(0,0,0,.45);width:min(450px,calc(100% - 36px));background:#fff9ed;color:var(--ink)}dialog::backdrop{background:rgba(20,13,8,.72);backdrop-filter:blur(5px)}.confirm{padding:28px}.confirm h3{font-size:25px;margin:0 0 10px}.confirm p{color:var(--muted)}.confirm-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}.confirm-actions .cancel{background:#e7ded0;color:#3f352b}
+    @media(max-width:1050px){.facts,.rule-grid{grid-template-columns:1fr 1fr}.screens,.two{grid-template-columns:1fr}.screen-card figure{grid-template-columns:300px 1fr}.pending{grid-template-columns:1fr 1fr}.demo-wrap{grid-template-columns:310px 1fr}}
+    @media(max-width:760px){.shell{width:min(100% - 24px,1440px)}.mast{padding-top:44px}.stamp{display:none}.facts,.rule-grid,.pending{grid-template-columns:1fr}.section{padding:50px 0}.section-head{grid-template-columns:1fr;gap:8px}.section-no{font-size:30px}.screens{grid-template-columns:1fr}.screen-card figure{grid-template-columns:1fr}.demo-wrap{grid-template-columns:1fr;padding:18px}.device{max-width:360px;margin:auto;width:100%}.state-cycle{display:grid}.state+.state{border-left:1px solid var(--line);border-top:0}.footer{display:block}.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+  <header class="mast">
+    <div class="shell">
+      <div class="eyebrow">Feature proposal · UX specification</div>
+      <h1>英雄皮肤<br><em>主动 BUFF</em> 方案</h1>
+      <p class="lead">把皮肤的被动说明，升级成玩家可主动安排时机的全局增益。拥有即解锁、换装不失效、多技能并行、每个技能独立计时。</p>
+      <div class="stamp">方案<br>V0.1</div>
+      <div class="facts">
+        <div class="fact"><b>核心目标</b><span>提升皮肤功能价值与回访动机</span></div>
+        <div class="fact"><b>解锁条件</b><span>拥有对应皮肤</span></div>
+        <div class="fact"><b>生效范围</b><span>账号全局，不绑定穿戴</span></div>
+        <div class="fact"><b>计时模型</b><span>生效 X 小时 / 冷却 X 小时</span></div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="nav"><div class="shell">
+    <a href="#decision">方案结论</a><a href="#rules">机制规则</a><a href="#ui">界面改造</a><a href="#demo">状态演示</a><a href="#data">配置与数据</a><a href="#handoff">包装与对接</a><a href="#acceptance">验收标准</a><a href="#pending">待定事项</a>
+  </div></nav>
+
+  <main class="shell">
+    <section class="section" id="decision">
+      <div class="section-head"><div class="section-no">01</div><div><h2>方案结论</h2><p class="sub">评审者最需要快速确认：玩家从哪里使用、使用后是否受换装影响、多个技能如何共存。</p></div></div>
+      <div class="decision"><p><strong>新增“皮肤增益”聚合入口。</strong> 玩家拥有带主动技能的皮肤后，即可在英雄主页查看并激活对应 BUFF；BUFF 在账号全局生效，切换英雄或皮肤不失效。不同皮肤技能允许同时生效，生效时间与冷却时间各自独立计算。</p></div>
+      <div class="rule-grid">
+        <article class="rule"><i>OWNERSHIP</i><h3>拥有即解锁</h3><p>能力归属“皮肤收藏”，不要求当前穿戴；未拥有时只展示预览与获取提示。</p></article>
+        <article class="rule"><i>GLOBAL</i><h3>全局持续生效</h3><p>激活后作用于账号全局。换英雄、换皮肤、退出登录均不打断倒计时。</p></article>
+        <article class="rule"><i>PARALLEL</i><h3>允许并行</h3><p>多个不同皮肤 BUFF 可以同时开启，不设置公共槽位或公共冷却。</p></article>
+        <article class="rule"><i>INDEPENDENT</i><h3>独立计时</h3><p>每个技能保存自己的生效结束时间与冷却结束时间，互不覆盖。</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="rules">
+      <div class="section-head"><div class="section-no">02</div><div><h2>机制与状态机</h2><p class="sub">技能解锁后，玩家只需要理解三个核心状态；未拥有、网络失败、配置失效属于外围状态。所有倒计时均按服务器时间运行，离线期间继续流逝。</p></div></div>
+      <div class="flow"><div class="step">获得皮肤</div><div class="arrow">→</div><div class="step">技能解锁</div><div class="arrow">→</div><div class="step">主动激活</div><div class="arrow">→</div><div class="step">全局生效</div></div>
+      <div class="state-cycle">
+        <div class="state ready"><b>① 可使用</b><small>按钮高亮，入口显示可用提醒。点击后弹出二次确认。</small></div>
+        <div class="state live"><b>② 生效中</b><small>展示“生效剩余 02:43:18”；不可重复激活，不刷新持续时间。</small></div>
+        <div class="state cool"><b>③ 冷却中</b><small>BUFF 结束后进入冷却，展示“冷却剩余 05:12:09”；结束后回到可使用。</small></div>
+      </div>
+      <div class="callout"><b>推荐计时口径：</b>激活时同时写入 <span class="serif">active_end_at</span> 与 <span class="serif">cooldown_end_at</span>。冷却从 BUFF 结束后开始计算，文案最符合玩家直觉；若产品希望“激活即开始冷却”，需在配置中明确为另一种模式。</div>
+    </section>
+
+    <section class="section" id="ui">
+      <div class="section-head"><div class="section-no">03</div><div><h2>两个页面，各司其职</h2><p class="sub">主页负责统一管理与使用；皮肤选择页负责解释“这个皮肤带来什么”。不要让玩家为了收一个到期 BUFF，在皮肤卡之间翻来翻去。</p></div></div>
+      <div class="screens">
+        <article class="screen-card"><figure>
+          <img src="_assets/英雄主页.png" alt="英雄主页截图，右侧皮肤按钮下方以红框标注可新增入口区域">
+          <figcaption><h3>A · 英雄主页：主入口</h3><ul>
+            <li>在右侧“皮肤”下方新增圆形入口，命名建议：<b>皮肤增益</b>。</li>
+            <li>点击打开聚合面板，列出所有已拥有且带主动技能的皮肤。</li>
+            <li>存在可使用技能时显示红点与可用数量；只有生效/冷却状态时不打红点。</li>
+            <li>入口不要并入底部“技能”页签：英雄战斗技能与皮肤全局增益是两套心智。</li>
+          </ul><div class="callout">图中红框位置正好靠近“皮肤”，关系明确，也不会抢占底部成长页签。</div></figcaption>
+        </figure></article>
+        <article class="screen-card"><figure>
+          <img src="_assets/皮肤选择页.png" alt="皮肤选择页截图，顶部展示瞬移技能说明，底部为皮肤选择卡和使用按钮">
+          <figcaption><h3>B · 皮肤选择页：解释入口</h3><ul>
+            <li>技能 TIP 增加类型标签“主动增益”、生效时长、冷却时长与当前状态。</li>
+            <li>“使用中”仅表达当前穿戴皮肤，禁止让玩家误解成 BUFF 正在生效。</li>
+            <li>此页只展示技能效果、生效时长、冷却时长与当前状态，不提供激活或“前往使用”入口。</li>
+            <li>未拥有时展示“获得皮肤后解锁”，不显示可点击的激活按钮。</li>
+          </ul><div class="callout">关键文案拆开：<b>皮肤使用中</b> ≠ <b>增益生效中</b>。两者颜色与标签不可复用。</div></figcaption>
+        </figure></article>
+      </div>
+    </section>
+
+    <section class="section" id="demo">
+      <div class="section-head"><div class="section-no">04</div><div><h2>可点击状态演示</h2><p class="sub">模拟多个技能同时存在：一个可使用、一个生效中、一个冷却中。点击激活后可推进时间观察独立变化。</p></div></div>
+      <div class="demo-wrap">
+        <div class="device">
+          <div class="phone-head"><b>皮肤增益</b><small>已拥有 3 个主动增益</small></div>
+          <div class="buff-list" id="buffList"></div>
+        </div>
+        <div class="demo-notes">
+          <h3>交互反馈原则</h3>
+          <p>激活是低频且带较长机会成本的操作，因此保留一次确认；成功后技能卡立即切换为“生效中”，主页入口重新聚合计算可用数量——仅当没有其他可用技能时红点才消失。倒计时归零时原位切态，不弹窗打断玩家。</p>
+          <div class="demo-controls"><button id="advance">推进 1 小时</button><button class="ghost" id="reset">重置演示</button></div>
+          <div class="log" id="eventLog" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="data">
+      <div class="section-head"><div class="section-no">05</div><div><h2>配置、存档与埋点</h2><p class="sub">本节给程序与数值确认边界，不指定现有表名；字段可接入当前皮肤技能配置体系。</p></div></div>
+      <div class="table-scroll"><table class="schema">
+        <thead><tr><th>Schema</th><th>SkinSkillID</th><th>SkinID</th><th>BuffID</th><th>Duration</th><th>Cooldown</th><th>CooldownMode</th><th>NameKey / DescKey</th><th>IconDK</th></tr></thead>
+        <tbody>
+          <tr><td>类型</td><td>int</td><td>int</td><td>int / list</td><td>int（秒）</td><td>int（秒）</td><td>enum</td><td>string</td><td>string</td></tr>
+          <tr><td>引用</td><td>唯一主键 / 状态存档主键</td><td>HeroSkin.SkinID</td><td>BuffTemplate.ID</td><td>无；必填且 &gt;0</td><td>无；必填且 ≥0</td><td>客户端与服务端公共枚举</td><td>i18n.Text.Key</td><td>DisplayKey</td></tr>
+          <tr><td>中文字段</td><td>主动技能ID</td><td>来源皮肤ID</td><td>增益效果ID</td><td>生效时长</td><td>冷却时长</td><td>冷却起算模式</td><td>名称Key / 描述Key</td><td>技能图标DK</td></tr>
+          <tr><td>英文字段</td><td>SkinSkillID</td><td>SkinID</td><td>BuffID</td><td>Duration</td><td>Cooldown</td><td>CooldownMode</td><td>NameKey / DescKey</td><td>IconDK</td></tr>
+        </tbody>
+      </table></div>
+      <div class="two" style="margin-top:22px">
+        <article class="panel"><h3>关键埋点</h3><ul class="checklist"><li>皮肤增益入口曝光 / 点击</li><li>技能卡曝光 / 技能说明展开</li><li>激活确认 / 取消 / 成功 / 失败原因</li><li>激活时剩余冷却、玩家层级、来源皮肤</li><li>BUFF 生效期间目标行为量与基线对比</li></ul></article>
+        <article class="panel"><h3>失败反馈</h3><ul class="checklist"><li>皮肤未拥有：状态刷新并引导获取</li><li>技能已生效：返回最新结束时间</li><li>技能冷却中：返回最新冷却时间</li><li>网络失败：不抢先切态，可重试</li><li>配置失效：隐藏入口并记录异常，不显示空技能卡</li></ul></article>
+      </div>
+    </section>
+
+    <section class="section" id="handoff">
+      <div class="section-head"><div class="section-no">06</div><div><h2>包装、本地化与对接</h2><p class="sub">本功能不新增大面积美术包装，重点是把现有皮肤技能资源组织成稳定、可翻译、可追踪的一套表达。</p></div></div>
+      <div class="two">
+        <article class="panel"><h3>本地化 Text Key</h3><table><tbody><tr><td>入口名</td><td>TXT_UI_SkinActiveBuff_Entry｜皮肤增益</td></tr><tr><td>状态</td><td>TXT_UI_SkinActiveBuff_Ready / Active / Cooldown</td></tr><tr><td>确认标题</td><td>TXT_UI_SkinActiveBuff_ConfirmTitle</td></tr><tr><td>确认正文</td><td>TXT_UI_SkinActiveBuff_ConfirmDesc（参数：效果、持续时长、冷却时长）</td></tr><tr><td>失败提示</td><td>TXT_UI_SkinActiveBuff_Fail_*（未拥有 / 状态变化 / 网络失败）</td></tr></tbody></table></article>
+        <article class="panel"><h3>美术与包装</h3><ul class="checklist"><li>新增 1 个“皮肤增益”圆形入口图标，规格复用右侧“皮肤”入口</li><li>聚合面板复用现有技能 TIP 框、按钮与倒计时样式</li><li>每个技能优先复用当前皮肤技能图标；缺失时才补 IconDK</li><li>三态只改变标签、按钮和环形进度，不为每个 BUFF 单独出背景</li><li>商业化页统一写“拥有皮肤后永久解锁该主动增益”</li></ul></article>
+        <article class="panel"><h3>数值方案边界</h3><ul class="checklist"><li>Duration 与 Cooldown 为逐技能配置变量，本案不擅自填写最终值</li><li>评审至少校验：日均覆盖率、理论常驻率、玩家错过成本</li><li>推荐起点：短收益配短冷却，强全局收益配长冷却</li><li>同属性效果叠加规则拍板后，才能计算组合上限</li><li>上线前产出单独数值表，并由数值负责人签字</li></ul></article>
+        <article class="panel"><h3>服务端日志规范</h3><ul class="checklist"><li>activate：player_id、skill_id、skin_id、active_end_at、cooldown_end_at</li><li>reject：skill_id、request_time、server_state、reason_code</li><li>expire：skill_id、active_end_at、实际结束原因</li><li>皮肤回收或技能下线导致中断时记录 source 与补偿标记</li><li>客户端埋点只做体验分析，服务端日志作为状态争议真源</li></ul></article>
+      </div>
+      <div class="table-scroll" style="margin-top:22px"><table>
+        <thead><tr><th>界面元素</th><th>读取配置 / 状态</th><th>Text Key</th><th>显示规则</th></tr></thead>
+        <tbody>
+          <tr><td>主页“皮肤增益”入口</td><td>拥有任一 SkinID 且关联 SkinSkillID</td><td>TXT_UI_SkinActiveBuff_Entry</td><td>有功能内容时显示；无任何关联皮肤时隐藏。</td></tr>
+          <tr><td>入口红点 / 数量</td><td>聚合 state=ready 的技能数</td><td>无</td><td>数量 &gt;0 时显示；激活、冷却完成、获得皮肤后重算。</td></tr>
+          <tr><td>技能名 / 效果</td><td>NameKey、DescKey、BuffID</td><td>配置对应 NameKey / DescKey</td><td>主页聚合面板与皮肤 TIP 共用同一数据源。</td></tr>
+          <tr><td>生效 / 冷却时长</td><td>Duration、Cooldown</td><td>TXT_UI_SkinActiveBuff_Duration / Cooldown</td><td>配置秒数格式化为小时或时分秒。</td></tr>
+          <tr><td>可使用 / 生效中 / 冷却中</td><td>active_end_at、cooldown_end_at</td><td>TXT_UI_SkinActiveBuff_Ready / Active / Cooldown</td><td>服务器时间裁决，客户端只显示。</td></tr>
+          <tr><td>激活按钮</td><td>state=ready</td><td>TXT_UI_SkinActiveBuff_Activate</td><td>仅可使用态高亮；其余状态禁用。</td></tr>
+          <tr><td>确认弹窗</td><td>当前 SkinSkillID 对应效果、Duration、Cooldown、CooldownMode</td><td>TXT_UI_SkinActiveBuff_ConfirmTitle / ConfirmDesc</td><td>必须动态读取当前点击技能，不得写死示例。</td></tr>
+          <tr><td>皮肤“使用中”标签</td><td>当前穿戴 SkinID</td><td>沿用现有皮肤标签 Key</td><td>只表达穿戴，不参与 BUFF 状态。</td></tr>
+          <tr><td>增益“生效中”标签</td><td>active_end_at &gt; server_now</td><td>TXT_UI_SkinActiveBuff_Active</td><td>独立颜色与倒计时，禁止复用“使用中”。</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="section" id="acceptance">
+      <div class="section-head"><div class="section-no">07</div><div><h2>验收标准</h2><p class="sub">测试只要跑通这组用例，就能证明“拥有解锁、全局生效、并行独立”没有被实现歪。</p></div></div>
+      <div class="two">
+        <article class="panel"><h3>功能验收</h3><ul class="checklist"><li>拥有皮肤但未穿戴，仍可激活对应 BUFF</li><li>激活后切换英雄与皮肤，BUFF 不消失、不重置</li><li>两个皮肤 BUFF 可同时生效，结束时间互不影响</li><li>单个 BUFF 生效中或冷却中不可重复激活</li><li>退出重登、跨设备登录后倒计时与服务端一致</li><li>离线期间生效与冷却时间继续流逝</li></ul></article>
+        <article class="panel"><h3>界面验收</h3><ul class="checklist"><li>主页红点只提示“存在可使用技能”，不提示纯倒计时</li><li>聚合面板清晰区分可使用 / 生效中 / 冷却中</li><li>技能 TIP 同时展示效果、生效时长与冷却时长</li><li>“皮肤使用中”与“增益生效中”视觉不混用</li><li>确认弹窗明确本次生效时长与之后的冷却时长</li><li>倒计时归零后，界面无需重开即可切换状态</li></ul></article>
+      </div>
+    </section>
+
+    <section class="section" id="pending">
+      <div class="section-head"><div class="section-no">08</div><div><h2>评审待定项</h2><p class="sub">交互骨架已经成立；标为“开发阻塞”的规则必须在进入实现前拍板，其余可在首批投放前补齐。</p></div></div>
+      <div class="pending">
+        <article><span class="priority block">开发阻塞</span><h3>① 时长与冷却口径</h3><p>逐技能配置 X 小时；同时确认冷却从“激活时”还是“BUFF 结束时”起算。本文推荐后者。</p></article>
+        <article><span class="priority block">开发阻塞</span><h3>② 同效果叠加规则</h3><p>不同技能可以并行已确定；若两个技能修改同一属性，还需确认数值相加、取高或互斥。</p></article>
+        <article><span class="priority">投放前确认</span><h3>③ 首批开放范围</h3><p>全量历史皮肤补主动技能，还是只从新皮肤开始；这会决定入口的首发内容量。</p></article>
+        <article><span class="priority block">开发阻塞</span><h3>④ BUFF 失效边界</h3><p>限时/试用皮肤是否算“拥有”；皮肤到期、被回收或技能下线时，已激活效果如何处理。</p></article>
+        <article><span class="priority">联调前确认</span><h3>⑤ 红点刷新频率</h3><p>推荐登录、获得皮肤、激活成功、冷却结束时聚合刷新；不做每秒全局轮询。</p></article>
+        <article><span class="priority">投放前确认</span><h3>⑥ 商业化表达</h3><p>皮肤售卖页是否直接展示“拥有后永久解锁该主动增益”，以及是否标注每周期可用次数。</p></article>
+        <article><span class="priority block">开发阻塞</span><h3>⑦ 旧被动关系</h3><p>原有皮肤被动属性保留并叠加主动 BUFF，还是由主动化替换；必须避免重复投放同一价值。</p></article>
+        <article><span class="priority block">开发阻塞</span><h3>⑧ 数据模型关系</h3><p>推荐一张皮肤对应一个主动技能；若允许一皮多技或多皮共技，需要改用技能实例而非皮肤 ID 存档。</p></article>
+        <article><span class="priority">投放前确认</span><h3>⑨ 全局作用域</h3><p>列清覆盖的英雄、行军队列、采集/建造/战斗玩法，以及跨服场景，避免“全局”在实现中缩水。</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell footer"><span>X3 · 英雄皮肤主动 BUFF 方案 · V0.1</span><span>依据 2026-08-05 两张实机截图整理</span></footer>
+
+  <dialog id="confirmDialog"><div class="confirm"><h3 id="confirmTitle">确认激活？</h3><p id="confirmCopy"></p><div class="confirm-actions"><button class="cancel" id="cancelConfirm">取消</button><button id="doConfirm">确认激活</button></div></div></dialog>
+
+  <script>
+    const initial = [
+      {id:'blink',icon:'move',name:'瞬移',skin:'自由·柳柳',effect:'全局行军速度提升 10%',state:'ready',remain:0,duration:4,cooldown:8},
+      {id:'harvest',icon:'harvest',name:'丰收号令',skin:'丰饶祭司',effect:'全局采集速度提升 8%',state:'active',remain:2.75,duration:6,cooldown:10},
+      {id:'forge',icon:'forge',name:'熔炉祝福',skin:'赤焰工匠',effect:'全局建造速度提升 5%',state:'cooldown',remain:5.2,duration:3,cooldown:12}
+    ];
+    let skills = JSON.parse(JSON.stringify(initial));
+    let pendingId = null;
+    const list = document.querySelector('#buffList');
+    const log = document.querySelector('#eventLog');
+    const dialog = document.querySelector('#confirmDialog');
+    function fmt(hours){const total=Math.max(0,Math.round(hours*3600));const h=String(Math.floor(total/3600)).padStart(2,'0');const m=String(Math.floor(total%3600/60)).padStart(2,'0');const s=String(total%60).padStart(2,'0');return `${h}:${m}:${s}`}
+    function label(s){return s.state==='ready'?'可使用':s.state==='active'?`生效 ${fmt(s.remain)}`:`冷却 ${fmt(s.remain)}`}
+    function addLog(text){const d=document.createElement('div');d.innerHTML=`<time>${new Date().toLocaleTimeString('zh-CN',{hour12:false})}</time>${text}`;log.prepend(d)}
+    function iconSvg(type){const path={move:'<path d="M5 19 19 5m-8 0h8v8M5 8v11h11"/>',harvest:'<path d="M12 3v18M7 7c3 0 5 2 5 5-3 0-5-2-5-5Zm10 5c-3 0-5 2-5 5 3 0 5-2 5-5Z"/>',forge:'<path d="M5 4h14l-2 6H7L5 4Zm2 6v10h10V10M9 15h6"/>'}[type];return `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`}
+    function render(){list.innerHTML='';skills.forEach(s=>{const el=document.createElement('article');el.className='buff';el.innerHTML=`<div class="icon">${iconSvg(s.icon)}</div><div><h4>${s.name}</h4><p>${s.skin}｜${s.effect}</p></div><div class="status"><span class="pill ${s.state}">${label(s)}</span><button ${s.state!=='ready'?'disabled':''} data-use="${s.id}">${s.state==='ready'?'激活':'不可用'}</button></div>`;list.append(el)});list.querySelectorAll('[data-use]').forEach(btn=>btn.addEventListener('click',()=>{pendingId=btn.dataset.use;const s=skills.find(x=>x.id===pendingId);document.querySelector('#confirmTitle').textContent=`激活「${s.name}」？`;document.querySelector('#confirmCopy').innerHTML=`激活后，${s.effect}，持续 <b>${s.duration} 小时</b>；效果结束后进入 <b>${s.cooldown} 小时冷却</b>。切换皮肤不会中断效果。`;dialog.showModal()}))}
+    function advance(){skills.forEach(s=>{if(s.state==='active'){s.remain-=1;if(s.remain<=0){s.state='cooldown';s.remain=s.cooldown;addLog(`${s.name}效果结束，进入冷却`)}}else if(s.state==='cooldown'){s.remain-=1;if(s.remain<=0){s.state='ready';s.remain=0;addLog(`${s.name}冷却完成，现在可使用`)}}});render()}
+    document.querySelector('#advance').addEventListener('click',()=>{advance();addLog('服务器时间推进 1 小时')});
+    document.querySelector('#reset').addEventListener('click',()=>{skills=JSON.parse(JSON.stringify(initial));render();log.innerHTML='';addLog('演示已重置')});
+    document.querySelector('#cancelConfirm').addEventListener('click',()=>{dialog.close();pendingId=null;addLog('取消激活')});
+    document.querySelector('#doConfirm').addEventListener('click',()=>{const s=skills.find(x=>x.id===pendingId);if(s&&s.state==='ready'){s.state='active';s.remain=s.duration;addLog(`${s.name}激活成功，持续 ${s.duration} 小时`)}dialog.close();pendingId=null;render()});
+    render();addLog('状态已从服务端同步');
+  </script>
+</body>
+</html>

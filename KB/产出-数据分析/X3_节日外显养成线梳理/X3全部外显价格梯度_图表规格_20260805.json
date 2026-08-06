@@ -1,0 +1,26 @@
+{
+  "tool": "generate_bar_chart",
+  "args": {
+    "data": [
+      { "category": "轻量英雄皮肤", "value": 19.99 },
+      { "category": "头像框·三阶第2阶累计", "value": 39.98 },
+      { "category": "装饰三件套 / 表情第3阶累计", "value": 59.97 },
+      { "category": "行军皮肤兑换", "value": 100 },
+      { "category": "贴图版主城", "value": 300 },
+      { "category": "动态主城上榜门槛", "value": 600 },
+      { "category": "航迹上榜门槛", "value": 600 },
+      { "category": "完整主城套装", "value": 2000 }
+    ],
+    "title": "X3节日外显价格锚点（USD）",
+    "axisXTitle": "美元；$600仅为上榜资格，不代表获得",
+    "axisYTitle": "外显档位",
+    "theme": "academy",
+    "width": 1500,
+    "height": 760,
+    "style": {
+      "backgroundColor": "#F4EFE4",
+      "palette": ["#184A4E", "#D7683A"],
+      "texture": "rough"
+    }
+  }
+}

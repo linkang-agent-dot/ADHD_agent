@@ -1,0 +1,34 @@
+{
+  "title": "X3 马戏巡游随机奖励 BUG · 本地 MCP 验收报告",
+  "ticket": "C325",
+  "headline": "停靠格子奖励恒为最低档 · 修复验收",
+  "subtitle": "玩家反馈航海/走格子探索活动的随机奖励始终命中最小值。本报告覆盖根因、代码修复、Unity MCP 与 GameServer 双层运行时抽样。",
+  "status": "pass",
+  "banner": "<b>本地验收通过 —— 随机奖励已从 100% 最低档恢复为配置权重分布</b><p>Unity Editor 与本地服 3080 均使用真实 <code>CActvVoyageEvent.Group2Weights</code> 和业务函数 <code>GetActvVoyageEventId</code> 各抽样 1,000 次，五档均实际出现。当前修复提交已推至 feature 分支；因 <code>dev</code> 为受保护分支，尚待 MR 合入 dev。</p>",
+  "screenshots": [
+    {
+      "path": "C:/x3-project/client/voyage_random_fix_mcp.png",
+      "caption": "<b>Unity MCP 实机截图 · 马戏巡游</b><br>玩家 <code>28297</code>，真实活动实例 <code>7667592672388841472</code>。通过 <code>UIHelper.OpenActivityPanel</code> 打开当前运行中的马戏巡游活动后，由 <code>ScreenCapture.CaptureScreenshot</code> 落盘。"
+    }
+  ],
+  "sections": [
+    {
+      "h2": "验收结论 · 修复前后对照",
+      "html": "<p class='lead'>受众最重要关心的是：玩家是否还会永远拿最低档，以及服务端真实发奖逻辑是否已经加载修复。</p><div class='scroll'><table><thead><tr><th>验证层</th><th>样本数</th><th>第1档</th><th>第2档</th><th>第3档</th><th>第4档</th><th>第5档（最低）</th><th>结论</th></tr></thead><tbody><tr><td class='k'>修复前算法穷举</td><td class='mono'>10,000</td><td>0</td><td>0</td><td>0</td><td>0</td><td class='mono'>10,000</td><td><span class='pill no'>100% 最低档</span></td></tr><tr><td class='k'>Unity MCP</td><td class='mono'>1,000</td><td class='mono'>15</td><td class='mono'>81</td><td class='mono'>223</td><td class='mono'>265</td><td class='mono'>416</td><td><span class='pill yes'>五档齐全</span></td></tr><tr><td class='k'>GameServer 3080</td><td class='mono'>1,000</td><td class='mono'>23</td><td class='mono'>83</td><td class='mono'>177</td><td class='mono'>288</td><td class='mono'>429</td><td><span class='pill yes'>权威链通过</span></td></tr><tr><td class='k'>配置期望</td><td>—</td><td>2%</td><td>8%</td><td>20%</td><td>30%</td><td>40%</td><td>随机波动合理</td></tr></tbody></table></div><p class='sub' style='margin-top:12px'>两轮独立抽样均接近配置比例 <code>200 / 800 / 2000 / 3000 / 4000</code>，不存在退化为单一档位。</p>"
+    },
+    {
+      "h2": "根因与最小修复",
+      "html": "<div class='grid2'><div><h3>根因</h3><ul><li>导表器把原始权重转成累计数组：<code>[200, 1000, 3000, 6000, 10000]</code>。</li><li>旧代码从数组末尾反向判断 <code>cumulativeWeight &lt;= random</code>。</li><li>随机数范围为 <code>[0, 10000)</code>，末尾累计值 10000 永远大于随机数，因此第一次判断就返回最后一档。</li><li>马戏巡游及旧航海配置的最后一档恰好都是最低奖励，完全吻合玩家反馈。</li></ul></div><div><h3>修复</h3><ul><li>从第 1 档开始正向遍历累计权重。</li><li>首次满足 <code>random &lt; cumulativeWeight</code> 时返回该档事件。</li><li>只修改 <code>ActivityUtils.GetActvVoyageEventId</code>，不调整任何配置权重。</li><li>影响范围：普通航海、深海大富翁、马戏巡游等所有复用该函数的多档事件组。</li></ul></div></div>"
+    },
+    {
+      "h2": "编译、运行时与环境恢复",
+      "html": "<div class='scroll'><table><thead><tr><th>检查项</th><th>结果</th><th>证据</th></tr></thead><tbody><tr><td class='k'>Unity 编译</td><td><span class='pill yes'>通过</span></td><td><code>88.44s · hasErrors=false</code></td></tr><tr><td class='k'>Unity Play Mode</td><td><span class='pill yes'>已恢复</span></td><td><code>PlayerID=28297</code>，HTTP MCP 端口 <code>21891</code></td></tr><tr><td class='k'>GameServer 编译</td><td><span class='pill yes'>通过</span></td><td><code>0 error</code>；仅 1 条既有 log4net 漏洞 warning</td></tr><tr><td class='k'>3080 GameServer</td><td><span class='pill yes'>已恢复</span></td><td>新进程 + telnet <code>26080</code> 可达</td></tr><tr><td class='k'>3090 GameServer</td><td><span class='pill yes'>已恢复</span></td><td>新进程 + telnet <code>26090</code> 可达</td></tr><tr><td class='k'>Map / Center</td><td><span class='pill yes'>未扰动</span></td><td>仅为解除共享 exe 锁短暂停止并恢复两个 GameServer</td></tr></tbody></table></div>"
+    },
+    {
+      "h2": "提交状态与待办",
+      "html": "<div class='note'><b>本地修复已完成，dev 合入尚待 MR。</b><br>提交：<code>ed528ab8246f3fdd8b958f99df8552e869caa0ec</code><br>远端分支：<code>fix/voyage-random-min-reward-0806</code><br>目标：<code>dev</code>（受保护分支，不能直接 push）。本轮创建 MR 的动作在用户要求先看截图时中断，因此报告不把“已进 dev”写成完成态。</div><p class='sub' style='margin-top:12px'>神秘宝箱的道具奖池走独立 <code>EndowReward</code> 链路；本次根因和修复明确覆盖的是停靠格子的 <code>ActvVoyageEvent</code> 随机奖励。</p>"
+    }
+  ],
+  "footer_left": "本地验收：Unity MCP + GameServer 双层通过 → 🟢",
+  "footer_right": "2026-08-06"
+}

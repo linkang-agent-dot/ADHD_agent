@@ -1,0 +1,174 @@
+from __future__ import annotations
+
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parent
+OUTPUT = ROOT / "X3全部外显价格梯度总表_20260805.html"
+
+
+ROWS = [
+    ("英雄皮肤", "核心深度", "免费 / $19.99 / 排行榜", "稀有/史诗老皮自选；$19.99节日装扮＋偏静态视频；排行榜全新旗舰皮", "免费与$19.99档可确定获得；排行榜档无固定保底价", "$19.99档BUFF较弱且无任何技能；排行榜档更高规格视频＋更强BUFF＋主动技能"),
+    ("主城皮肤", "核心深度", "$300 / $600 / $2,000", "$300贴图版；$600动态版上榜资格；$2,000完整套装", "$300与$2,000为明确价格锚；$600仅获上榜资格", "完整套装拆分仍为高级主城$800＋组件$300×2＋特效$600"),
+    ("家具", "中层收集", "$19.99起", "$19.99单件或阶梯包，按系列多件收集", "购买对应档可得；整套总价随件数变化", "不再用$99.99单件作为主价格锚"),
+    ("装饰三件套", "中层凑套", "$19.99 × 3 = $59.97", "三阶礼包逐件凑套", "完成三阶即可集齐", "比$99.99一口价更平滑"),
+    ("行军皮肤", "潜在核心", "$100", "航海之路按目标付费深度兑换", "达到兑换条件可得", "兑换币数量在当月数值方案中确定"),
+    ("航迹 / 行军特效", "排行榜奖励", "$600上榜资格", "挖矿小游戏排行榜", "不保证获得；仍需达到最终名次", "不得与$100行军皮肤本体混用"),
+    ("头像框", "稳定节点", "$39.98累计 / 活动节点", "英雄三阶礼包第2阶；也可放BP、累充或榜单节点", "对应节点可得", "$39.98=两个$19.99阶梯累计，不是独立标价"),
+    ("纪念卡", "成长节点", "暂无统一独立售价", "活动进度、BP、兑换或装入付费包", "随容器获得；升级深度另算", "当前唯一真等级成长线，不应硬塞固定单卡价"),
+    ("聊天表情", "氛围奖励", "$59.97累计 / 免费节点", "英雄三阶礼包第3阶；也可由BP或活动免费发放", "对应节点可得", "$59.97=三个$19.99阶梯累计，不是独立标价"),
+    ("称号 / 铭牌", "头部竞争", "Top N，无固定价", "排行榜分层奖励", "不保证获得；由最终名次决定", "需要继续补Top N品质与时效梯度"),
+]
+
+
+def render_rows() -> str:
+    cells = []
+    for index, row in enumerate(ROWS, 1):
+        line, role, anchor, channel, certainty, boundary = row
+        risk = " risk" if "不保证" in certainty else ""
+        cells.append(
+            f'''<tr>
+              <td><span class="row-no">{index:02d}</span><strong>{line}</strong></td>
+              <td><span class="role">{role}</span></td>
+              <td class="anchor{risk}">{anchor}</td>
+              <td>{channel}</td>
+              <td class="certainty{risk}">{certainty}</td>
+              <td class="boundary">{boundary}</td>
+            </tr>'''
+        )
+    return "".join(cells)
+
+
+def build() -> None:
+    page = f'''<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>X3 全部外显价格梯度总表</title>
+  <style>
+    :root {{
+      --ink:#172427; --paper:#f3eee3; --deep:#153f42; --line:#c8bfae;
+      --orange:#df673e; --gold:#d9aa4a; --mint:#c9dece; --cream:#fffaf0;
+      --muted:#6d756f; --risk:#a82f27;
+    }}
+    * {{ box-sizing:border-box; }}
+    html {{ background:#d9d2c6; }}
+    body {{
+      margin:0; color:var(--ink); background:var(--paper);
+      font-family:"Microsoft YaHei UI","PingFang SC","Noto Sans CJK SC",sans-serif;
+    }}
+    .sheet {{
+      width:min(1880px,calc(100vw - 24px)); min-height:calc(100vh - 24px); margin:12px auto;
+      padding:28px 34px 24px; border:1px solid #b9ae9c; background:var(--paper);
+      box-shadow:0 24px 80px rgba(24,41,42,.18); position:relative; overflow:hidden;
+    }}
+    .sheet::before {{
+      content:""; position:absolute; inset:0; pointer-events:none; opacity:.28;
+      background-image:linear-gradient(rgba(21,63,66,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(21,63,66,.06) 1px,transparent 1px);
+      background-size:22px 22px;
+    }}
+    header,.ladder,.table-wrap,.foot {{ position:relative; }}
+    header {{ display:grid; grid-template-columns:minmax(0,1fr) auto; gap:30px; align-items:end; padding-bottom:17px; border-bottom:2px solid var(--deep); }}
+    .eyebrow {{ color:var(--orange); font:700 12px/1.2 Georgia,serif; letter-spacing:.2em; }}
+    h1 {{ margin:7px 0 7px; font:700 32px/1.1 Georgia,"STSong",serif; letter-spacing:-.03em; }}
+    header p {{ margin:0; color:var(--muted); font-size:16px; line-height:1.5; }}
+    .legend {{ display:flex; flex-wrap:wrap; justify-content:flex-end; gap:8px; max-width:720px; }}
+    .legend span {{ padding:7px 10px; border:1px solid var(--line); border-radius:999px; background:rgba(255,250,240,.78); font-size:14px; }}
+    .legend i {{ display:inline-block; width:8px; height:8px; margin-right:6px; border-radius:50%; background:var(--deep); }}
+    .legend .step i {{ background:var(--gold); }} .legend .gate i {{ background:var(--orange); }} .legend .rank i {{ background:var(--risk); }}
+    .ladder {{ padding:18px 0 16px; }}
+    .ladder-head {{ display:flex; align-items:baseline; justify-content:space-between; gap:20px; margin-bottom:10px; }}
+    .ladder h2,.table-head h2 {{ margin:0; font:700 19px/1.2 Georgia,"STSong",serif; }}
+    .ladder-head p {{ margin:0; color:var(--muted); font-size:14px; }}
+    .tiers {{ display:grid; grid-template-columns:.8fr 1fr 1fr 1.05fr 1fr 1fr 1.22fr 1.28fr; gap:8px; align-items:stretch; }}
+    .tier {{
+      min-height:142px; padding:13px 12px 11px; border:1px solid var(--line); background:rgba(255,250,240,.86);
+      display:flex; flex-direction:column; position:relative; overflow:hidden;
+    }}
+    .tier::after {{ content:""; position:absolute; left:0; right:0; bottom:0; height:5px; background:var(--deep); }}
+    .tier.step::after {{ background:var(--gold); }} .tier.gate {{ border-color:#d67a5b; background:#fff1e8; }} .tier.gate::after {{ background:var(--orange); }}
+    .tier.premium {{ color:#fff8ea; background:var(--deep); border-color:var(--deep); }} .tier.premium::after {{ background:var(--gold); }}
+    .price {{ font:700 25px/1 Georgia,serif; letter-spacing:-.03em; }}
+    .price small {{ font:700 11px/1 sans-serif; letter-spacing:.08em; opacity:.62; }}
+    .tier b {{ margin-top:10px; font-size:15px; line-height:1.25; }}
+    .tier p {{ margin:6px 0 0; color:var(--muted); font-size:14px; line-height:1.45; }}
+    .tier.premium p {{ color:#c7d8d2; }}
+    .tier em {{ margin-top:auto; padding-top:8px; font-style:normal; font-size:14px; font-weight:700; color:var(--orange); }}
+    .tier.gate em {{ color:var(--risk); }}
+    .rank-strip {{
+      margin-top:8px; display:grid; grid-template-columns:140px 1fr auto; gap:14px; align-items:center;
+      padding:9px 13px; color:#fff6e9; background:#692e2b; border-left:8px solid var(--orange);
+    }}
+    .rank-strip strong {{ font:700 16px/1.2 Georgia,"STSong",serif; }}
+    .rank-strip span {{ font-size:14px; }} .rank-strip b {{ color:#ffd18c; font-size:14px; }}
+    .table-wrap {{ border:1px solid var(--line); background:rgba(255,250,240,.82); }}
+    .table-head {{ display:flex; align-items:center; justify-content:space-between; gap:20px; padding:11px 14px; background:#e5ddd0; border-bottom:1px solid var(--line); }}
+    .table-head p {{ margin:0; color:var(--muted); font-size:14px; }}
+    table {{ width:100%; border-collapse:collapse; table-layout:fixed; }}
+    col:nth-child(1){{width:13%}} col:nth-child(2){{width:9%}} col:nth-child(3){{width:15%}} col:nth-child(4){{width:22%}} col:nth-child(5){{width:20%}} col:nth-child(6){{width:21%}}
+    th {{ padding:9px 10px; color:#eaf1ed; background:var(--deep); border-right:1px solid rgba(255,255,255,.16); text-align:left; font-size:14px; letter-spacing:.04em; }}
+    td {{ padding:8px 10px; border-right:1px solid #ddd4c6; border-bottom:1px solid #ddd4c6; vertical-align:middle; font-size:14px; line-height:1.38; }}
+    tbody tr:nth-child(even) {{ background:rgba(201,222,206,.22); }}
+    tbody tr:hover {{ background:#fff1d8; }}
+    .row-no {{ display:inline-block; min-width:24px; margin-right:6px; color:#9a8e7c; font:700 10px/1 Georgia,serif; }}
+    .role {{ display:inline-block; padding:4px 7px; border-radius:3px; color:var(--deep); background:var(--mint); font-size:14px; font-weight:700; }}
+    .anchor {{ font-weight:800; color:var(--deep); }} .anchor.risk,.certainty.risk {{ color:var(--risk); }}
+    .boundary {{ color:#59645f; }}
+    .foot {{ display:flex; justify-content:space-between; gap:20px; padding-top:10px; color:var(--muted); font-size:14px; }}
+    .foot b {{ color:var(--ink); }}
+    @media (max-width:1300px) {{
+      .sheet {{ width:calc(100vw - 16px); margin:8px; padding:22px; }}
+      .tiers {{ grid-template-columns:repeat(4,1fr); }}
+      .table-wrap {{ overflow:auto; }} table {{ min-width:1350px; }}
+    }}
+    @media print {{ html,body {{ background:#fff; }} .sheet {{ width:100%; margin:0; box-shadow:none; border:0; }} }}
+  </style>
+</head>
+<body>
+<main class="sheet">
+  <header>
+    <div>
+      <div class="eyebrow">X3 · FESTIVAL COSMETICS · PRICE ARCHITECTURE</div>
+      <h1>全部外显价格梯度总表</h1>
+      <p>当前规划口径 · 2026-08-05｜覆盖10条外显线；价格单位USD。重点区分“明确获得”“阶梯累计”“上榜资格”和“纯排名竞争”。</p>
+    </div>
+    <div class="legend" aria-label="价格性质图例">
+      <span><i></i>明确获得 / 兑换</span><span class="step"><i></i>阶梯累计</span><span class="gate"><i></i>只解锁上榜资格</span><span class="rank"><i></i>最终仍由排名决定</span>
+    </div>
+  </header>
+
+  <section class="ladder">
+    <div class="ladder-head"><h2>价格阶梯｜先看玩家花到哪一档，能拿到什么</h2><p>卡片按业务阶梯等距排布，不按金额线性缩放，避免 $2,000 把低价档压扁。</p></div>
+    <div class="tiers">
+      <article class="tier"><div class="price">FREE</div><b>活跃与氛围入口</b><p>免费旧英雄皮肤、活动/BP表情、纪念卡节点</p><em>参与即可触达</em></article>
+      <article class="tier"><div class="price">$19.99</div><b>轻付费破冰</b><p>轻量英雄皮肤、单件家具、装饰第1件</p><em>对应档明确获得</em></article>
+      <article class="tier step"><div class="price">$39.98 <small>累计</small></div><b>第二阶节点</b><p>三阶礼包第2阶头像框</p><em>$19.99 × 2</em></article>
+      <article class="tier step"><div class="price">$59.97 <small>累计</small></div><b>小套装完成</b><p>装饰三件套；三阶礼包第3阶聊天表情</p><em>$19.99 × 3</em></article>
+      <article class="tier"><div class="price">$100</div><b>完整行军皮肤</b><p>航海之路兑换；兑换币数量按当月数值确定</p><em>达标可兑换</em></article>
+      <article class="tier"><div class="price">$300</div><b>贴图版主城</b><p>基础主城主题贴图与轻量挂件</p><em>明确价格锚</em></article>
+      <article class="tier gate"><div class="price">$600 <small>门槛</small></div><b>动态主城 / 航迹</b><p>仅取得排行榜上榜资格，仍需竞争最终名次</p><em>≠ 花$600必得</em></article>
+      <article class="tier premium"><div class="price">$2,000</div><b>完整主城套装</b><p>高级主城$800＋组件$300×2＋主城特效$600</p><em>当前最高明确套装锚</em></article>
+    </div>
+    <div class="rank-strip"><strong>TOP N · 无固定价</strong><span>排行榜旗舰英雄皮肤、称号 / 铭牌：最终由名次决定，不能写成固定“售价”。</span><b>竞争深度与活动结构相关</b></div>
+  </section>
+
+  <section class="table-wrap">
+    <div class="table-head"><h2>10条外显线｜价格、容器与获得确定性对照</h2><p>同一外显可在不同节日进入不同容器；本表优先展示当前规划中的主价格锚。</p></div>
+    <table>
+      <colgroup><col><col><col><col><col><col></colgroup>
+      <thead><tr><th>外显线</th><th>业务层级</th><th>当前价格锚</th><th>主要投放 / 交付</th><th>玩家花到该档是否确定获得</th><th>关键边界</th></tr></thead>
+      <tbody>{render_rows()}</tbody>
+    </table>
+  </section>
+  <footer class="foot"><span><b>一句话：</b>低价档负责参与与凑套，$100–$300负责完整单品，$600是竞争门槛，$2,000才是当前最高明确套装价。</span><span>来源：节日外显全景＋2026-08-05英雄/主城/行军/航迹最新决策记录</span></footer>
+</main>
+</body>
+</html>'''
+    OUTPUT.write_text(page, encoding="utf-8", newline="\n")
+    print(f"output={OUTPUT}")
+    print(f"rows={len(ROWS)} size={OUTPUT.stat().st_size}")
+
+
+if __name__ == "__main__":
+    build()

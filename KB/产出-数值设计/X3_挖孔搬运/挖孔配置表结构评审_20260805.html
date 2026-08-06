@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>异星探索（挖孔·ActvType 85）配置表结构评审 · 2026-08-05</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#fff; --ink:#1a1d21; --dim:#6b7280; --line:#e3e6ea;
+  --acc:#2b7a6f; --acc-bg:#e8f4f1; --warn:#b45309; --warn-bg:#fef3c7;
+  --bad:#b91c1c; --bad-bg:#fee2e2; --ok:#15803d; --ok-bg:#dcfce7;
+  --code:#f1f3f5; --mono:'Cascadia Mono',Consolas,'SF Mono',Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#15181c;--card:#1d2126;--ink:#e6e8ea;--dim:#9aa3ad;--line:#2f353c;
+    --acc:#5fd3bf;--acc-bg:#16302c;--warn:#f5b942;--warn-bg:#3a2c10;
+    --bad:#f87171;--bad-bg:#3a1a1a;--ok:#6ee7a0;--ok-bg:#14301f;--code:#23282e;}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.65 -apple-system,'Segoe UI','Microsoft YaHei',sans-serif;}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.2px}
+h2{font-size:19px;margin:34px 0 12px;padding-bottom:7px;border-bottom:2px solid var(--line)}
+h3{font-size:15px;margin:20px 0 8px}
+.sub{color:var(--dim);font-size:13.5px;margin-bottom:18px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 24px}
+.pill{padding:5px 11px;border-radius:20px;font-size:12.5px;font-weight:600;
+  background:var(--acc-bg);color:var(--acc);border:1px solid transparent}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.pill.bad{background:var(--bad-bg);color:var(--bad)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:16px 18px;margin:0 0 16px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:640px}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--code);font-weight:600;font-size:12.5px;color:var(--dim);
+  white-space:nowrap;position:sticky;top:0}
+td.n,th.n{text-align:right;width:38px;color:var(--dim);font-family:var(--mono)}
+code,.m{font-family:var(--mono);font-size:12.5px;background:var(--code);
+  padding:1px 5px;border-radius:4px;white-space:nowrap}
+td code{white-space:normal}
+.tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:11.5px;
+  font-weight:600;white-space:nowrap}
+.t-ok{background:var(--ok-bg);color:var(--ok)}
+.t-ph{background:var(--warn-bg);color:var(--warn)}
+.t-no{background:var(--bad-bg);color:var(--bad)}
+.chain{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:6px 0}
+.node{background:var(--card);border:1.5px solid var(--acc);border-radius:8px;
+  padding:9px 12px;min-width:150px}
+.node.dash{border-style:dashed;border-color:var(--bad)}
+.node .nm{font-family:var(--mono);font-size:13px;font-weight:700}
+.node .ds{font-size:11.5px;color:var(--dim);margin-top:2px}
+.arrow{align-self:center;color:var(--dim);font-size:18px;font-weight:700}
+.col2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.gap{border-left:4px solid var(--bad);padding:12px 14px;background:var(--card);
+  border-radius:0 8px 8px 0;margin:0 0 12px;border-top:1px solid var(--line);
+  border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.gap.mid{border-left-color:var(--warn)}
+.gap.low{border-left-color:var(--dim)}
+.gap h4{margin:0 0 5px;font-size:14.5px}
+.gap p{margin:5px 0}
+.q{font-weight:600;color:var(--acc)}
+.note{font-size:12.5px;color:var(--dim)}
+ul{margin:6px 0;padding-left:20px}
+li{margin:3px 0}
+.foot{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>异星探索（挖孔）· 配置表结构评审</h1>
+<div class="sub">ActvType <b>85</b> ·  gdconfig 分支 <code>dev_digkeys</code> · 配置提交 <code>07f1b39b</code> · 导表 Jenkins <b>#2502 SUCCESS</b> · 2026-08-05</div>
+
+<div class="bar">
+  <span class="pill ok">导表全绿（本地 ExportTable exit 0 + Jenkins #2502）</span>
+  <span class="pill ok">活动能自己开（真时间窗，不依赖 iGame）</span>
+  <span class="pill warn">数值 / 美术 / 文案 均为占位</span>
+  <span class="pill bad">结构有 3 处缺口需拍板</span>
+</div>
+
+<div class="card">
+  <b>这页要你过的是「字段够不够、含义对不对」，不是数值。</b>
+  下面 §2 是四张自有表的逐列结构，<b>§4 是我认为结构层面缺东西、需要你拍板的清单</b>（3 条硬缺口 + 4 条待确认 + 08-06 复查新增 ⑧⑨ 两条）。
+  08-06 已做全链复核：四表手写生成类 proto tag 与真导表逐一吻合、i18n 键全部唯一、关卡↔宝物↔奖励↔挂机交叉引用全通。
+  数值（消耗 / 产出 / 奖池 / ROI）全是占位，等结构定了再填。
+</div>
+
+<h2>§1 引用链（两层以上全展开）</h2>
+<div class="card">
+  <div class="chain">
+    <div class="node"><div class="nm">ActvOnline</div><div class="ds">108501 · 活动主行</div></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="nm">ActvDigKeys</div><div class="ds">8501 · 玩法主表<br>（ContentID 指向它）</div></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="nm">ActvDigKeysLevel</div><div class="ds">850101-03 · 关卡</div></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="nm">ActvDigKeysTreasure</div><div class="ds">850201-03 · 宝物形状</div></div>
+  </div>
+  <div class="chain">
+    <div class="node"><div class="nm">ActvOnline.TimeController</div><div class="ds">→ TimeCycle 8501</div></div>
+    <div class="node"><div class="nm">ActvOnline.ActvRule</div><div class="ds">→ RuleTips 40003</div></div>
+    <div class="node"><div class="nm">ActvOnline.MailID</div><div class="ds">→ MailTemplate 101109（通用补领）</div></div>
+    <div class="node"><div class="nm">Level.RewardID</div><div class="ds">→ Reward 组 85011-85013</div></div>
+    <div class="node"><div class="nm">主表 / 挂机表</div><div class="ds">→ Item 5304002 能量铲 · 5304003 核心电量</div></div>
+    <div class="node"><div class="nm">ActvDigKeysHangUp</div><div class="ds">850301-02 · 按关卡段挂机产出</div></div>
+  </div>
+  <div class="chain">
+    <div class="node dash"><div class="nm">（缺）工具投放表</div><div class="ds">窗口概率 + 权重池 · 见 §4-①</div></div>
+    <div class="node dash"><div class="nm">（缺）商店 / 兑换</div><div class="ds">核心电量换奖励 · 见 §4-③</div></div>
+    <div class="node dash"><div class="nm">（缺）图鉴 / 纪念卡 / 储蓄罐 / 成就礼包</div><div class="ds">主表没有指针字段 · 见 §4-③</div></div>
+  </div>
+  <p class="note">实线 = 已建成并通过导表依赖校验；虚线红框 = 界面文案里已经有、但配置表里还没有对应结构。</p>
+</div>
+
+<h2>§2 四张自有表 · 逐列结构</h2>
+
+<h3>2.1 <code>ActvDigKeys</code> — 玩法主表（一行 = 一个活动实例）</h3>
+<div class="card scroll">
+<table>
+<tr><th class="n">列</th><th>字段</th><th>类型</th><th>含义</th><th>现值</th><th>状态</th></tr>
+<tr><td class="n">0</td><td><code>ID</code></td><td>int</td><td>内容配置 ID，被 <code>ActvOnline.ContentID</code> 引用</td><td class="m">8501</td><td><span class="tag t-ok">已定</span></td></tr>
+<tr><td class="n">1</td><td><code>CostItem</code></td><td>int → Item</td><td>挖每格消耗的道具（能量铲）</td><td class="m">5304002</td><td><span class="tag t-ok">已定</span></td></tr>
+<tr><td class="n">2</td><td><code>HangUpMaxMinutes</code></td><td>int</td><td>挂机收益结算上限（分钟），超出不计</td><td class="m">720（=12h）</td><td><span class="tag t-ph">占位</span></td></tr>
+<tr><td class="n">3</td><td><code>HangUpCoinItem</code></td><td>int → Item</td><td>挂机产出货币（核心电量）</td><td class="m">5304003</td><td><span class="tag t-ok">已定</span></td></tr>
+<tr><td class="n">4</td><td><code>DK_Icon</code></td><td>string</td><td>活动图标 DisplayKey</td><td class="m">DK_img_Activity_circus_gacha_icon</td><td><span class="tag t-ph">借扭蛋机占位</span></td></tr>
+<tr><td class="n">5</td><td>备注</td><td>—</td><td>不导出</td><td>—</td><td>—</td></tr>
+</table>
+<p class="note">⚠️ 这张表现在<b>只有 5 个字段</b>。界面文案里已经出现的探测仪消耗、储蓄罐"每 N 铲存 1"的 N、商店/图鉴/成就礼包/纪念卡的指针，<b>一个都没有落点</b> —— 见 §4-③。</p>
+</div>
+
+<h3>2.2 <code>ActvDigKeysLevel</code> — 关卡表（一行 = 一关）</h3>
+<div class="card scroll">
+<table>
+<tr><th class="n">列</th><th>字段</th><th>类型</th><th>含义 / 约束</th><th>现值（3 关）</th><th>状态</th></tr>
+<tr><td class="n">0</td><td><code>ID</code></td><td>int</td><td>全表唯一</td><td class="m">850101 / 850102 / 850103</td><td><span class="tag t-ok">已定</span></td></tr>
+<tr><td class="n">1</td><td><code>Level</code></td><td>int</td><td>关卡序号，通关后进 <code>Level+1</code>（服务端就是 <code>levelId += 1</code>）</td><td class="m">1 / 2 / 3</td><td><span class="tag t-no">只到 3 关，见 §4-②</span></td></tr>
+<tr><td class="n">2</td><td><code>LevelType</code></td><td>int</td><td>0=普通关　1=惊喜关</td><td class="m">0 / 0 / 1</td><td><span class="tag t-ph">待确认，见 §4-④</span></td></tr>
+<tr><td class="n">3</td><td><code>CostNum</code></td><td>int</td><td>挖单格消耗几个能量铲</td><td class="m">1 / 1 / 2</td><td><span class="tag t-ph">占位</span></td></tr>
+<tr><td class="n">4</td><td><code>BoardRows</code></td><td>int</td><td>棋盘行数（P2 真表范围 3~8，含 26 关非方形）</td><td class="m">3 / 3 / 3</td><td><span class="tag t-ph">占位</span></td></tr>
+<tr><td class="n">5</td><td><code>BoardCols</code></td><td>int</td><td>棋盘列数</td><td class="m">3 / 3 / 3</td><td><span class="tag t-ph">占位</span></td></tr>
+<tr><td class="n">6</td><td><code>TreasureIDs</code></td><td>string → Treasure</td><td>本关宝物清单，竖线分隔；服务端按形状<b>随机位置 + 随机 4 向旋转</b>摆放</td><td class="m">850201&#124;850202 …</td><td><span class="tag t-ph">待确认，见 §4-⑤</span></td></tr>
+<tr><td class="n">7</td><td><code>ToolIDs</code></td><td>string</td><td><b>埋在格子里的工具效果</b>，竖线分隔；1=整行 2=整列 3=3×3（枚举非表引用）</td><td class="m">（空） / 1&#124;2 / 3</td><td><span class="tag t-no">机制与定案冲突，见 §4-①</span></td></tr>
+<tr><td class="n">8</td><td><code>RewardID</code></td><td>int → Reward</td><td>通关奖励组</td><td class="m">85011 / 85012 / 85013</td><td><span class="tag t-ph">占位</span></td></tr>
+<tr><td class="n">9</td><td><code>TipNum</code></td><td>int</td><td>提示高亮格数量（与第 1 关引导遮罩是两个机制）</td><td class="m">1 / 1 / 2</td><td><span class="tag t-ph">占位</span></td></tr>
+<tr><td class="n">10</td><td>备注</td><td>—</td><td>不导出</td><td>—</td><td>—</td></tr>
+</table>
+</div>
+
+<h3>2.3 <code>ActvDigKeysTreasure</code> — 宝物形状表（一行 = 一种宝物）</h3>
+<div class="card scroll">
+<table>
+<tr><th class="n">列</th><th>字段</th><th>类型</th><th>含义 / 约束</th><th>现值（3 个）</th><th>状态</th></tr>
+<tr><td class="n">0</td><td><code>ID</code></td><td>int</td><td>被 <code>Level.TreasureIDs</code> 引用</td><td class="m">850201 / 850202 / 850203</td><td><span class="tag t-ok">已定</span></td></tr>
+<tr><td class="n">1</td><td><code>Shape</code></td><td>string</td><td>相对左上角偏移集合 <code>"r,c;r,c"</code>。<b>导表强校验</b>：必须归一化（min 行=0 且 min 列=0）、不许重复格、不许负数</td><td class="m">0,0 ／ 0,0;0,1 ／ 0,0;0,1;1,0;1,1</td><td><span class="tag t-ok">机制已定</span></td></tr>
+<tr><td class="n">2</td><td><code>DK</code></td><td>string</td><td>宝物图 DisplayKey</td><td class="m">全部 = 扭蛋机图标</td><td><span class="tag t-ph">占位待美术</span></td></tr>
+<tr><td class="n">3</td><td><code>TxtName</code></td><td>string</td><td><b>i18n key 直填</b>（不是自动拼 key）</td><td class="m">TXT_ActvDigKeys_Treasure_1x1 …</td><td><span class="tag t-ok">已录文案</span></td></tr>
+<tr><td class="n">4</td><td><code>MinLevel</code></td><td>int</td><td>最低出现关卡，导表校验 &gt; 0</td><td class="m">1 / 1 / 2</td><td><span class="tag t-ph">占位</span></td></tr>
+<tr><td class="n">5</td><td>备注</td><td>—</td><td>不导出</td><td>—</td><td>—</td></tr>
+</table>
+<p class="note">文案已由本地化那笔录入：<b>星图终端</b>（1×1）／<b>密封补给箱</b>（1×2）／<b>棱镜钻核</b>（2×2）。
+⚠️ 这张表<b>没有品质列、没有图鉴分组列</b> —— 但界面已经有品质光和图鉴分页，见 §4-⑥⑦。</p>
+</div>
+
+<h3>2.4 <code>ActvDigKeysHangUp</code> — 挂机产出表（一行 = 一个关卡段）</h3>
+<div class="card scroll">
+<table>
+<tr><th class="n">列</th><th>字段</th><th>类型</th><th>含义</th><th>现值（2 段）</th><th>状态</th></tr>
+<tr><td class="n">0</td><td><code>ID</code></td><td>int</td><td>全表唯一</td><td class="m">850301 / 850302</td><td><span class="tag t-ok">已定</span></td></tr>
+<tr><td class="n">1-2</td><td><code>LevelMin</code> / <code>LevelMax</code></td><td>int</td><td>关卡段闭区间；服务端按<b>当前关卡</b>查段</td><td class="m">1~2 ／ 3~999</td><td><span class="tag t-ph">占位</span></td></tr>
+<tr><td class="n">3</td><td><code>CoinPerMin</code></td><td>int</td><td>每分钟产出核心电量数量</td><td class="m">10 ／ 20</td><td><span class="tag t-ph">占位</span></td></tr>
+<tr><td class="n">4</td><td><code>ToolItemIDs</code></td><td>string → Item</td><td>挂机随机工具道具池，竖线分隔（string 列挂不了 row3 引用，依赖在 def 里逐 id 登记）</td><td class="m">5304002（拿能量铲顶班）</td><td><span class="tag t-no">工具道具还没建，见 §4-①</span></td></tr>
+<tr><td class="n">5-6</td><td><code>ToolWeights</code> / <code>ToolNums</code></td><td>string</td><td>权重 / 数量，与 <code>ToolItemIDs</code> 等长</td><td class="m">100 ／ 1</td><td><span class="tag t-ph">占位</span></td></tr>
+<tr><td class="n">7</td><td>备注</td><td>—</td><td>不导出</td><td>—</td><td>—</td></tr>
+</table>
+</div>
+
+<h2>§3 挂在通用表上的部分（我这轮补的）</h2>
+<div class="col2">
+  <div class="card">
+    <h3 style="margin-top:0"><code>ActvOnline</code> 108501</h3>
+    <div class="scroll"><table style="min-width:340px">
+      <tr><th class="n">列</th><th>字段</th><th>值</th></tr>
+      <tr><td class="n">0</td><td>ID</td><td class="m">108501</td></tr>
+      <tr><td class="n">4</td><td>ContentID</td><td class="m">8501 → ActvDigKeys</td></tr>
+      <tr><td class="n">5</td><td>ActvType</td><td class="m">85</td></tr>
+      <tr><td class="n">6</td><td>IsOn</td><td class="m">1</td></tr>
+      <tr><td class="n">7</td><td>TimeController</td><td class="m">8501 → TimeCycle</td></tr>
+      <tr><td class="n">8</td><td>TriggerType</td><td class="m">0（服务器活动必须 0）</td></tr>
+      <tr><td class="n">9</td><td>PlayerLv</td><td class="m">6,99</td></tr>
+      <tr><td class="n">13</td><td>ActvRule</td><td class="m">40003 → RuleTips</td></tr>
+      <tr><td class="n">17</td><td>MailID</td><td class="m">101109（只能是这个值）</td></tr>
+      <tr><td class="n">21/22</td><td>ActvIcon / ActvImg</td><td><span class="tag t-ph">借扭蛋机 DK 占位</span></td></tr>
+      <tr><td class="n">33</td><td>TopResource</td><td class="m">5304002&#124;5304003</td></tr>
+      <tr><td class="n">35</td><td>Priority</td><td class="m">999</td></tr>
+      <tr><td class="n">38</td><td>GroupId</td><td>空 = 进普通活动列表<br><span class="note">要归节日入口就填组号</span></td></tr>
+      <tr><td class="n">39</td><td>ShopID</td><td><span class="tag t-no">空 —— 商店可能该走这里</span></td></tr>
+    </table></div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">其余四张</h3>
+    <div class="scroll"><table style="min-width:340px">
+      <tr><th>表</th><th>行</th><th>内容</th></tr>
+      <tr><td><code>TimeCycle</code></td><td class="m">8501</td><td>Attribution=4（服务器主体）+ TriggerType=1（绝对时间）<br>2026-08-01 00:00:00 起 <code>120d23h59m59s</code>，不循环</td></tr>
+      <tr><td><code>RuleTips</code></td><td class="m">40003</td><td>Title / Content 两列直接存 i18n key</td></tr>
+      <tr><td><code>Item</code></td><td class="m">5304002<br>5304003</td><td>能量铲 / 核心电量<br><span class="note">名+描述已对齐本地化定名；<code>TXT_Item_Name_/Desc_</code> 已补（原先一个都没有＝资源条会空白）</span></td></tr>
+      <tr><td><code>Reward</code></td><td class="m">85011<br>85012<br>85013</td><td>三关通关奖励，各发核心电量 100 / 200 / 500<br><span class="tag t-ph">纯占位</span></td></tr>
+    </table></div>
+    <p class="note">i18n 已录 cn / en / zh 三列（客户端繁体读 zh 列，只填 cn 会满屏空白），其余 15 语走翻译流程。</p>
+  </div>
+</div>
+
+<h2>§4 结构缺口 —— 要你拍板的部分</h2>
+
+<div class="gap">
+  <h4>① 工具触发机制：表结构还是「埋格」，和定案的「窗口概率投放」冲突 <span class="tag t-no">最高优先</span></h4>
+  <p>现在 <code>Level.ToolIDs</code> 是<b>把工具埋在某个格子里</b>，挖到才触发（服务端也照这个实现）。
+  但 08-04 从 P2 真配置表得出的结论是：<b>工具按挖掘次数窗口概率投放</b>（<code>dig_min</code> / <code>dig_max</code> / <code>trigger_count</code> / <code>tool_pool</code> 带权重）。</p>
+  <p class="q">要你定：走窗口概率（则关卡表要删 <code>ToolIDs</code>、加那 4 类字段，服务端同步改），还是就用埋格这个更简单的模型？</p>
+  <p class="note">连带：挂机表的 <code>ToolItemIDs</code> 现在拿能量铲顶班 —— <b>三种工具道具（整行 / 整列 / 3×3）还没建 Item 行</b>，等这条定了一起建。</p>
+</div>
+
+<div class="gap">
+  <h4>② 关卡只有 3 关，过第 3 关会卡死 <span class="tag t-no">阻塞真机跑通</span></h4>
+  <p>服务端是 <code>levelId += 1</code>，查不到关卡配置就返回 null —— 现在配到 Level 3，第 4 关直接卡住。</p>
+  <p>已定的编号规划是四类混一张表：<b>1~100 主线 / −1~−15 奖励关 / 9995~9998 特殊地形 / 9999 循环关</b>。
+  表结构（Level 是 int）支持，但<b>服务端没有任何循环关 / 负数关的处理逻辑</b>。</p>
+  <p class="q">要你定：这轮是先把 P2 的 119 关真数据整批搬进来（够玩到底），还是先只让程序把 9999 循环关跑通、关卡数据随数值一起定？</p>
+</div>
+
+<div class="gap">
+  <h4>③ 主表缺一批指针：界面已经有的模块，配置上没有落点 <span class="tag t-no">高</span></h4>
+  <p>本地化那 84 个键里已经出现了这些模块，但 <code>ActvDigKeys</code> 主表只有 5 个字段，装不下：</p>
+  <ul>
+    <li><b>探测仪</b>（<code>TXT_ActvDigKeys_BtnStartScanCost</code>）→ 缺「一次扫描消耗什么、多少」</li>
+    <li><b>储蓄罐</b>（"每消耗 {0} 个能量铲即可储存 ×1"）→ 缺那个 N，以及储蓄罐奖池</li>
+    <li><b>无人机补给站（商店）</b>（<code>ShopTitle</code> / <code>ExchangeLeft</code>）→ 缺兑换表，或者复用 <code>ActvOnline.ShopID</code>（现在是空的）</li>
+    <li><b>成就礼包</b>（<code>AchieveTitle</code> / <code>BuyLimit</code> / <code>LevelReq</code>）→ 缺档位表（含限购）</li>
+    <li><b>限定纪念卡 3 张</b>（<code>MemLv</code> / <code>MemNext</code>）→ 缺「哪一关发哪张」的映射</li>
+    <li><b>图鉴里程奖励</b>（<code>AtlasMileTitle</code>）→ 缺里程档位</li>
+  </ul>
+  <p class="q">要你定：这些各自开新子表，还是尽量复用 X3 现成表（商店走 ShopID、成就礼包走礼包表、纪念卡走 MemorialCard）？<b>复用的话工作量差一个量级</b>，建议逐个过一遍再动手建表。</p>
+</div>
+
+<div class="gap mid">
+  <h4>④ 惊喜关 / 奖励关是同一个东西还是两个？ <span class="tag t-ph">中</span></h4>
+  <p>现在关卡表用 <code>LevelType=1</code> 表示惊喜关；而编号规划里另有「−1~−15 奖励关」是<b>独立的负数 level 行、按窗口随机插入</b>。这两套现在同时存在。</p>
+  <p class="q">要你定：惊喜关＝奖励关（那就只留一套，删 <code>LevelType</code> 或删负数段），还是确实是两种不同的关？</p>
+</div>
+
+<div class="gap mid">
+  <h4>⑤ 宝物摆放：随机位置 + 随机旋转，对不对？ <span class="tag t-ph">中</span></h4>
+  <p>服务端现在的实现是：全格 Fisher-Yates 打乱 → 逐个宝物找空位放下，<b>还会随机 4 向旋转</b>。也就是同一关每次进来布局都不同。</p>
+  <p class="q">要你确认：P2 是不是也这样（而不是每关固定坐标）？旋转要不要留？—— 旋转会让"提示格"和玩家心理预期都变化。</p>
+</div>
+
+<div class="gap mid">
+  <h4>⑥ 缺「不可挖格」字段 <span class="tag t-ph">中</span></h4>
+  <p>P2 真表有不可挖格（原型 v0.5 用的就是真数据），但关卡表现在<b>只有行列数</b>，服务端把棋盘当满格矩阵；界面文案里还有「特殊地形」标签。</p>
+  <p class="q">要你定：不可挖格是加一列坐标清单（如 <code>BlockCells="r,c;r,c"</code>），还是靠 9995~9998 那几个「特殊地形」关卡整关预设？</p>
+</div>
+
+<div class="gap mid">
+  <h4>⑧ 道具回收没配（08-06 复查新增）<span class="tag t-no">文案与行为不符</span></h4>
+  <p>道具描述和商店 tip 都写了「<b>活动结束回收</b>」，但 <code>ActvOnline.ItemRecycle</code>(col44) 是空的
+  —— 活动结束后能量铲/核心电量会<b>留在背包里不回收</b>。既有格式参照：扭蛋机 <code>1211,2100|1212,2100</code>、大转盘 <code>1067,2022</code>（道具ID,回收目标）。</p>
+  <p class="q">要你定：回收目标折算成什么、比例多少 —— 建议随数值定稿一起配，配之前先把文案里"回收"字样的口径对上。</p>
+</div>
+
+<div class="gap low">
+  <h4>⑨ 合并预警（自开型窗口）<span class="tag t-ok">✅ 08-06 已解决</span></h4>
+  <p>已切生产姿势（commit <code>c2b605d1</code>，导表 #2527 SUCCESS）：<code>TimeController=0</code> + ActvType 85 进导表
+  SKIP_TIMECYCLE 集，与扭蛋机(83)/限时抢购(84)同姿势，开窗交给 iGame 逐服部署，测试环境用 <code>gm_combo.py open-activity</code>。
+  TimeCycle 8501 行保留未删（无人引用即失效，QA 要自开窗口把 col7 指回 8501 即可）。</p>
+</div>
+
+<div class="gap low">
+  <h4>⑦ 宝物缺品质列、缺图鉴分组列 <span class="tag t-ph">低（可后补）</span></h4>
+  <p>prefab 里已经加了品质光节点，程序那边的做法是<b>按占格数推品质</b>（Perfect / Epic / Legendary）；图鉴还有两个页签 + 分组（<code>AtlasTab0/1</code> / <code>AtlasGroup</code>），表里都没有对应列。</p>
+  <p class="q">要你定：品质就按占格数推（省一列，但以后想让 1×1 出个稀有款就做不到），还是显式加 <code>Quality</code> 列？图鉴分组同理。</p>
+</div>
+
+<h2>§5 导表硬约束（已满足，改的时候别碰）</h2>
+<div class="card">
+<ul>
+  <li><b>85 属服务器活动</b>（<code>SINGLE_SERVER_ACTIVITY_TYPES</code>）⇒ <code>ActvOnline.TriggerType</code> 和 <code>RechargeAmount</code> <b>必须 0</b>，且绑的 TimeCycle <code>Attribution</code> <b>不能是 1（玩家）</b>。三条一套。</li>
+  <li><code>MailID</code> 只要 &gt; 0 就<b>必须等于 101109</b>（通用补领模板）。</li>
+  <li>TimeCycle 的 <code>Duration</code> <b>必须收尾 59s</b>（<code>Nd23h59m59s</code>），否则报"持续时间需要少 1s"。</li>
+  <li><code>Treasure.Shape</code> 必须归一化（min 行=0 且 min 列=0）、无重复格；<code>MinLevel</code> 必须 &gt; 0。</li>
+  <li>关卡编号四类混排 ⇒ 配置校验<b>不能</b>加 <code>Level &gt; 0</code> 的条件。</li>
+  <li>竖线分隔的 string 列挂不了表头引用，依赖要在 <code>def</code> 里逐 id 登记（<code>TreasureIDs</code> / <code>ToolItemIDs</code> 已登记）。</li>
+</ul>
+</div>
+
+<div class="foot">
+  真源：<code>C:\X3\gdconfig-digkeys\tsv\ActvDigKeys__*.tsv</code> 等 · 本页数据由脚本从 tsv 现读，非手抄。<br>
+  遗留未动：数值全部占位；美术 DK 全部借扭蛋机占位；Reward 表备注列还留着旧道具名"挖宝金币"（注释列，不影响运行）。
+</div>
+
+</div>
+</body>
+</html>

@@ -96,10 +96,16 @@ PACK_OVERRIDE = {
     "2801015": "大富翁成就礼包", "2801016": "大富翁成就礼包", "2801017": "大富翁成就礼包",
     "2801018": "大富翁成就礼包", "2801019": "大富翁成就礼包", "2801020": "大富翁成就礼包",
     "2801021": "大富翁成就礼包", "2801022": "大富翁成就礼包",
-    # 通行证（马戏双 BP：巡游通行证 130047/048 + 福箱通行证 130051/052）
-    "130047": "通行证", "130048": "通行证", "130051": "通行证", "130052": "通行证",
-    # 星光巡演 BP 集结通行证（BpFund 82xxxx，$9.99/$19.99）
-    "820011": "星光巡演BP", "820012": "星光巡演BP",
+    # 通行证 ⚠️马戏是双 BP，必须拆成两个模块（2026-08-06 用户定）：
+    #   合并算的"付费率"= 买过任一 BP 的人 / 总付费人数，两条 BP 各自可买 → 合并率(19%)既不是任一条的
+    #   渗透率、也没法跟只有单条同位的往期对打。拆开后每条 = 该 BP 自己的渗透率，才可比。
+    #   巡游BP  = ActvOnline 102251 / BattlePassScore 2251（挂 巡游大富翁 102803 线）
+    #   福箱BP  = ActvOnline 102250 / BattlePassScore 2250（挂 马戏福箱开箱 101026 线）
+    "130047": "巡游通行证", "130048": "巡游通行证",   # 高级 $9.99 / 至尊 $19.99
+    "130051": "福箱通行证", "130052": "福箱通行证",   # 高级 $9.99 / 至尊 $19.99
+    # 星光巡演 BP 集结通行证（BpFund 82xxxx，$9.99/$19.99；820099=全服礼包解锁挡位 PackType16，
+    # 不归模块会掉进 PackType 兜底"礼包"，W2(8/7) 开卖前先钉死）
+    "820011": "星光巡演BP", "820012": "星光巡演BP", "820099": "星光巡演BP",
     # 其余单点模块
     "211032": "装饰礼包", "211033": "装饰礼包", "211034": "装饰礼包",   # 马戏装饰特惠 1-3
     "211046": "拜访礼包",       # 马戏庆典-拜访门头礼包 $99.99
@@ -117,7 +123,9 @@ PACK_OVERRIDE = {
     "2801004": "大富翁成就礼包", "2801005": "大富翁成就礼包", "2801006": "大富翁成就礼包",
     "2801007": "大富翁成就礼包", "2801008": "大富翁成就礼包", "2801009": "大富翁成就礼包",
     "2801010": "大富翁成就礼包", "2801011": "大富翁成就礼包",
-    "130035": "通行证", "130036": "通行证", "130037": "通行证", "130046": "通行证",
+    # 深海也是双 BP，同步拆开才能跟马戏逐条对打（BattlePassScore 2244=深海节BP / 2246=航海通行证BP）
+    "130035": "深海通行证", "130046": "深海通行证",   # 深海节-至尊/高级护航令（节日主线 BP）
+    "130036": "航海通行证", "130037": "航海通行证",   # 航海通行证-高级/至尊护航令（大富翁/航海之路线 BP）
     "211016": "装饰礼包", "211017": "装饰礼包", "211018": "装饰礼包",
     "211019": "头像框礼包",
     "211020": "拜访礼包",
@@ -169,11 +177,13 @@ RCLASS = f"COALESCE(rl.rb, {_LTV_CASE})"
 BASE_COLORS = {
     "开箱豪礼连锁": "#6c63ff", "门票锚点": "#ffd166", "扭蛋券礼包": "#f59e0b",
     "寻宝豪礼阶梯": "#34d399", "寻宝门票特惠": "#a3e635",
-    "大富翁成就礼包": "#22c55e", "通行证": "#fb923c", "星光巡演BP": "#fdba74", "许愿池": "#38bdf8",
+    "大富翁成就礼包": "#22c55e", "巡游通行证": "#fb923c", "福箱通行证": "#f97316",
+    "通行证": "#fb923c", "星光巡演BP": "#fdba74", "许愿池": "#38bdf8",
     "每日礼包": "#f472b6", "节日周卡": "#c084fc", "存钱罐": "#2dd4bf",
     "装饰礼包": "#fbbf24", "拜访礼包": "#fb7185",
     # 对比侧（深海）模块
     "转盘连锁": "#60a5fa", "藏宝图锚点": "#facc15", "大富翁罗盘连锁": "#4ade80", "头像框礼包": "#f43f5e",
+    "深海通行证": "#f97316", "航海通行证": "#fb923c",   # 与对位的马戏 福箱/巡游 同色（实线本期·虚线往期）
     "付费连锁": "#93c5fd", "抽奖券锚点": "#fde047", "皮肤礼包": "#ec4899",
     "常规礼包": "#00d4aa", "每日特惠": "#818cf8", "其他": "#8892a4",
 }
@@ -816,7 +826,12 @@ def main():
     # 判据 = 付费玩家ARPU（模块累计收入/服段累计去重总付费人数，跨期服数不同唯一可比口径）：
     #   ±15% 内 🟡持平 / ≥+15% 🟢跑赢 / ≤-15% 🔴跑输；归因看付费率差与 ARPPU 差谁主导。
     # 当天(UTC)进行中会低估同比 → 快评只算到最后一个完整日。
-    VERDICT_PAIRS = {"开箱豪礼连锁": "转盘连锁", "门票锚点": "藏宝图锚点"}  # 异名对位（同位玩法）；同名模块自动对
+    # 异名对位（同位玩法）；同名模块自动对
+    # 双 BP 逐条对位（2026-08-06 拆通行证后）：按"BP 挂在哪条玩法线"配对，不按价格档
+    #   福箱通行证(挂开箱 101026) ↔ 深海通行证(深海节主线 BP)
+    #   巡游通行证(挂大富翁 102803) ↔ 航海通行证(深海大富翁/航海之路线 BP)
+    VERDICT_PAIRS = {"开箱豪礼连锁": "转盘连锁", "门票锚点": "藏宝图锚点",
+                     "福箱通行证": "深海通行证", "巡游通行证": "航海通行证"}
     _partial = (report_date == datetime.now(timezone.utc).strftime("%Y-%m-%d"))
     idx_cmp = nD - 2 if (_partial and nD >= 2) else nD - 1
     _ds = prev_cache.get("deepsea")
@@ -1297,6 +1312,27 @@ def main():
     <div id="rlevelBars"></div>
     <div class="conclusion" id="rlevelNote" style="margin-top:12px"></div>
   </div>
+  <div class="section" id="rdistSection" style="display:none">
+    <div class="section-title">付费玩家 R级分布 · 人数结构（本期 vs 上期<span id="rdistName"></span>·D0对齐同期）</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+      <span style="font-size:11px;color:var(--text-muted);flex-shrink:0">口径</span>
+      <div class="mod-tabs" id="rdistMode" style="margin-bottom:0"></div>
+    </div>
+    <div id="rdistBars"></div>
+    <div class="conclusion" id="rdistNote" style="margin:14px 0"></div>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th>R级</th>
+        <th class="num">人数<br>上→本</th>
+        <th class="num">人数占比<br>上→本</th>
+        <th class="num">节日渗透率<br>上→本</th>
+        <th class="num">层节日ARPU<br>上→本</th>
+        <th class="num">收入占比<br>上→本</th>
+      </tr></thead>
+      <tbody id="rdistBody"></tbody>
+    </table></div>
+    <div class="chart-label" style="margin-top:8px;font-size:11px">口径「全部付费玩家」= 服段内当期有过任意付费的人；「节日付费玩家」= 买过节日礼包的人。人数占比分母 = 该期该口径总人数（各期各自分母，跨期服数不同只可比结构不可比绝对值）。节日渗透率 = 该层节日付费人数 / 该层总付费人数。层节日ARPU = 该层节日流水 / 该层总付费人数。<br>R级口径：分级表快照优先；分级表漏收的付费用户按累充(USD)估档（≥$1500超R/≥$500大R/≥$50中R/&gt;0小R）。非R 为零充免费玩家，付费口径下天然为 0，已隐藏。</div>
+  </div>
   <div class="section" id="rgainSection" style="display:none">
     <div class="section-title">R级付费玩家付费率 & ARPU · 本期 vs 上期<span id="rgainName"></span>（累计同期·排除免费玩家）</div>
     <div class="conclusion" id="rgainNote" style="margin-bottom:14px"></div>
@@ -1673,6 +1709,85 @@ function renderRLevels() {{
   if (top && top.festival > 0) note += '，其中 ' + top.rlevel + ' 单层 ' + fmtMoney(top.festival) + '（' + (top.festival / sumFest * 100).toFixed(0) + '%）领跑';
   note += '。层节日ARPU = 该层节日流水 / 该层总付费人数。';
   $('rlevelNote').textContent = note;
+}}
+
+// ===== 付费玩家 R级分布（人数结构，本期 vs 上期同期）=====
+// 数据全部复用 compare.cumulative.summer_r / valentine_r（query_by_r 的窗口对齐结果），不额外查库。
+let rdistMode = 'all';   // 'all'=全部付费玩家 / 'fest'=节日付费玩家
+const SERVER_LABEL_CUR = '87服 D35+', SERVER_LABEL_VAL = '59服 D35+';
+const RD_ORDER = ['超R', '大R', '中R', '小R'];   // 非R 在付费口径下恒为 0，隐藏
+
+function rdCnt(o) {{ return rdistMode === 'fest' ? (o ? o.fest_payers : 0) : (o ? o.payers : 0); }}
+
+function buildRDistMode() {{
+  const el = $('rdistMode'); el.innerHTML = '';
+  [['all', '全部付费玩家'], ['fest', '节日付费玩家']].forEach(([k, label]) => {{
+    const on = rdistMode === k, btn = document.createElement('div');
+    btn.className = 'mod-tab' + (on ? ' active' : '');
+    btn.textContent = label;
+    btn.onclick = () => {{ rdistMode = k; buildRDistMode(); renderRDist(); }};
+    el.appendChild(btn);
+  }});
+}}
+
+function renderRDist() {{
+  if (!compare || !compare.cumulative || !compare.cumulative.summer_r || !compare.cumulative.valentine_r) return;
+  const cu = compare.cumulative, S = cu.summer_r, V = cu.valentine_r;
+  $('rdistSection').style.display = '';
+  $('rdistName').textContent = compare.val_name;
+  const sumOf = src => RD_ORDER.reduce((s, rb) => s + rdCnt(src[rb]), 0);
+  const sTot = sumOf(S), vTot = sumOf(V);
+  // --- 两条 100% 堆叠条：上期(深海) / 本期(马戏) ---
+  function bar(title, src, tot, sub) {{
+    const segs = RD_ORDER.map(rb => {{
+      const n = rdCnt(src[rb]), p = tot ? n / tot * 100 : 0;
+      if (!n) return '';
+      const label = p >= 9 ? (rb + ' ' + p.toFixed(1) + '%') : (p >= 4.5 ? p.toFixed(1) + '%' : '');
+      return '<div title="' + rb + ' ' + n + '人 (' + p.toFixed(1) + '%)" style="width:' + p + '%;background:'
+        + (rLevelColors[rb] || '#8892a4') + ';display:flex;align-items:center;justify-content:center;'
+        + 'font-size:10px;font-weight:700;color:#10131a;white-space:nowrap;overflow:hidden">' + label + '</div>';
+    }}).join('');
+    return '<div style="margin-bottom:14px">'
+      + '<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px">'
+      + '<span style="color:var(--text)">' + title + '</span>'
+      + '<span class="muted">' + tot.toLocaleString() + ' 人 · ' + sub + '</span></div>'
+      + '<div style="display:flex;height:26px;border-radius:4px;overflow:hidden;background:#1a1e27">' + segs + '</div></div>';
+  }}
+  $('rdistBars').innerHTML =
+    bar('上期 ' + compare.val_name + '（' + cu.val_date + '）', V, vTot, SERVER_LABEL_VAL)
+    + bar('本期 ' + compare.summer_name + '（' + cu.summer_date + '）', S, sTot, SERVER_LABEL_CUR);
+  // --- 明细表 ---
+  const pct = (n, t) => (t ? n / t * 100 : 0);
+  // 上→本 单元格（本节全部指标都是越高越好：↑绿 ↓红），与 renderRGain 的 cell() 同款
+  function cell2(vOld, vNew, fmt) {{
+    const cls = vNew > vOld ? 'up' : (vNew < vOld ? 'down' : 'muted');
+    return '<td class="num"><span class="muted">' + fmt(vOld) + '</span> → <span class="' + cls + '">' + fmt(vNew) + '</span></td>';
+  }}
+  const n0 = v => Math.round(v).toLocaleString(), p1 = v => v.toFixed(1) + '%', m2 = v => '$' + v.toFixed(2);
+  const sFestRev = RD_ORDER.reduce((s, rb) => s + (S[rb] ? S[rb].festival : 0), 0);
+  const vFestRev = RD_ORDER.reduce((s, rb) => s + (V[rb] ? V[rb].festival : 0), 0);
+  $('rdistBody').innerHTML = RD_ORDER.map(rb => {{
+    const s = S[rb] || {{payers: 0, fest_payers: 0, festival: 0}}, v = V[rb] || {{payers: 0, fest_payers: 0, festival: 0}};
+    return '<tr><td style="color:' + (rLevelColors[rb] || '#8892a4') + ';font-weight:600">' + rb + '</td>'
+      + cell2(rdCnt(v), rdCnt(s), n0)
+      + cell2(pct(rdCnt(v), vTot), pct(rdCnt(s), sTot), p1)
+      + cell2(pct(v.fest_payers, v.payers), pct(s.fest_payers, s.payers), p1)
+      + cell2(v.payers ? v.festival / v.payers : 0, s.payers ? s.festival / s.payers : 0, m2)
+      + cell2(pct(v.festival, vFestRev), pct(s.festival, sFestRev), p1)
+      + '</tr>';
+  }}).join('');
+  // --- 结论 ---
+  const modeName = rdistMode === 'fest' ? '节日付费玩家' : '全部付费玩家';
+  const shiftUp = RD_ORDER.slice(0, 2).reduce((a, rb) => a + pct(rdCnt(S[rb]), sTot) - pct(rdCnt(V[rb]), vTot), 0);
+  const topRev = RD_ORDER.slice().sort((a, b) => (S[b] ? S[b].festival : 0) - (S[a] ? S[a].festival : 0))[0];
+  let note = modeName + '：本期 ' + sTot.toLocaleString() + ' 人 vs 上期' + compare.val_name + ' ' + vTot.toLocaleString()
+    + ' 人（服数不同，看结构不看绝对值）。头部（超R+大R）人数占比 '
+    + p1(RD_ORDER.slice(0, 2).reduce((a, rb) => a + pct(rdCnt(V[rb]), vTot), 0)) + ' → '
+    + p1(RD_ORDER.slice(0, 2).reduce((a, rb) => a + pct(rdCnt(S[rb]), sTot), 0))
+    + '（' + (shiftUp >= 0 ? '+' : '') + shiftUp.toFixed(1) + 'pp）';
+  note += '；节日收入最靠 ' + topRev + '（占本期节日流水 ' + p1(pct(S[topRev] ? S[topRev].festival : 0, sFestRev)) + '）。';
+  note += ' 结构没变而收入变了 → 问题在投放/形式；结构变了（头部占比缩水）→ 问题在人来没来。';
+  $('rdistNote').textContent = note;
 }}
 
 function renderRGain() {{
@@ -2149,6 +2264,7 @@ function renderAll() {{
   buildFCControls(); drawFC();
   buildRFilter(); buildHrChips(); buildHrModeToggle(); buildHrBaselineToggle(); drawHourly(); drawHourlyAll();
   renderRLevels();
+  buildRDistMode(); renderRDist();
   renderRGain();
   buildModrFilter(); renderModR();
   renderAlerts();
