@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "project": {
+    "name": "",
+    "source_video": "",
+    "target_product": "",
+    "target_angle": "",
+    "output_file": "output/final/final.mp4"
+  },
+  "pricing": {
+    "plan": "jimeng-standard",
+    "subscription_cny": 199,
+    "monthly_points": 2210,
+    "verified_at": "2026-08-15"
+  },
+  "modules": [
+    {
+      "id": "P01",
+      "name": "示例模块",
+      "start_sec": 0.0,
+      "end_sec": 5.0,
+      "purpose": "pain",
+      "action": "reuse",
+      "route": "ORIGINAL",
+      "post_camera": false,
+      "reference_video": "",
+      "product_refs": [],
+      "keyframe_required": false,
+      "keyframe_status": "not_required",
+      "prompt_path": "",
+      "output_path": "",
+      "status": "planned",
+      "risk_frames": [],
+      "notes": "Replace this sample with the real module list."
+    }
+  ],
+  "cost_entries": []
+}

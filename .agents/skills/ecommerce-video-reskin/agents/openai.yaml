@@ -1,0 +1,4 @@
+interface:
+  display_name: "电商短视频换皮制作"
+  short_description: "按完整痛点拆片并完成商品换皮、关键帧、成片与成本核算"
+  default_prompt: "Use $ecommerce-video-reskin to turn this source ecommerce video into a modular product reskin with keyframes, prompts, QC, and a cost ledger."

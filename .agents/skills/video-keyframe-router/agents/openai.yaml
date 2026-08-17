@@ -1,0 +1,4 @@
+interface:
+  display_name: "视频关键帧路由"
+  short_description: "生成视频前逐镜头判断纯文本、首帧、首尾帧与后期运镜路线"
+  default_prompt: "Use $video-keyframe-router to classify each shot before generating this video."
